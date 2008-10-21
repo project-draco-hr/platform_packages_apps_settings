@@ -1,0 +1,10 @@
+{
+  Preference pref=mDeviceMap.get(address);
+  if (pref != null) {
+    pref.setEnabled(true);
+    updateRemoteDeviceStatus(address);
+  }
+ else   if (result) {
+    addDeviceToUI(address,STR_PAIRED,mBluetooth.getRemoteName(address),WEIGHT_PAIRED);
+  }
+}

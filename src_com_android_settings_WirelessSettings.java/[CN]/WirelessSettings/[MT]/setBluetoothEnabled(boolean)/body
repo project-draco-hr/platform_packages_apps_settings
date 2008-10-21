@@ -1,0 +1,24 @@
+{
+  try {
+    BluetoothDevice device=(BluetoothDevice)getSystemService(BLUETOOTH_SERVICE);
+    if (enabled) {
+      mToggleBluetooth.setChecked(false);
+      if (device.enable(mBtCallback)) {
+        mToggleBluetooth.setSummary(R.string.bluetooth_enabling);
+        mToggleBluetooth.setEnabled(false);
+      }
+    }
+ else {
+      if (device.disable()) {
+        Settings.System.putInt(getContentResolver(),Settings.System.BLUETOOTH_ON,0);
+      }
+ else {
+        mToggleBluetooth.setChecked(true);
+      }
+    }
+  }
+ catch (  NullPointerException e) {
+    mToggleBluetooth.setChecked(false);
+    mToggleBluetooth.setEnabled(false);
+  }
+}

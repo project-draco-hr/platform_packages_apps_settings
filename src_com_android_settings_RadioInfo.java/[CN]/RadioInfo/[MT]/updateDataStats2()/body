@@ -1,0 +1,15 @@
+{
+  Resources r=getResources();
+  try {
+    int txPackets=netstat.getTxPackets();
+    int rxPackets=netstat.getRxPackets();
+    int txBytes=netstat.getTxBytes();
+    int rxBytes=netstat.getRxBytes();
+    String packets=r.getString(R.string.radioInfo_display_packets);
+    String bytes=r.getString(R.string.radioInfo_display_bytes);
+    sent.setText(txPackets + " " + packets+ ", "+ txBytes+ " "+ bytes);
+    received.setText(rxPackets + " " + packets+ ", "+ rxBytes+ " "+ bytes);
+  }
+ catch (  RemoteException e) {
+  }
+}

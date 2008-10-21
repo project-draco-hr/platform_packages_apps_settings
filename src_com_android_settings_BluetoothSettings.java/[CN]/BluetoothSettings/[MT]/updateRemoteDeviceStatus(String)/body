@@ -1,0 +1,35 @@
+{
+  if (address != null) {
+    Preference device=mDeviceMap.get(address);
+    if (device == null) {
+      if (mIsEnabled) {
+        addDeviceToUI(address,null,null,WEIGHT_PAIRED);
+      }
+      return;
+    }
+    device.setEnabled(true);
+    if (address.equals(mBluetoothHeadset.getHeadsetAddress())) {
+      int state=mBluetoothHeadset.getState();
+switch (state) {
+case BluetoothHeadset.STATE_CONNECTED:
+        device.setSummary(STR_CONNECTED);
+      mLastConnected=address;
+    break;
+case BluetoothHeadset.STATE_CONNECTING:
+  device.setSummary(STR_CONNECTING);
+break;
+case BluetoothHeadset.STATE_DISCONNECTED:
+if (mBluetooth.hasBonding(address)) {
+device.setSummary(STR_PAIRED);
+}
+break;
+}
+}
+ else if (mBluetooth.hasBonding(address)) {
+device.setSummary(STR_PAIRED);
+}
+ else {
+device.setSummary(STR_NOT_CONNECTED);
+}
+}
+}

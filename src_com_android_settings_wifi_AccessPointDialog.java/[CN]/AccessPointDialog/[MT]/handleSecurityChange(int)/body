@@ -1,0 +1,32 @@
+{
+switch (security) {
+case SECURITY_NONE:
+{
+      setWepVisible(false);
+      setGenericPasswordVisible(false);
+      break;
+    }
+case SECURITY_WEP:
+{
+    setGenericPasswordVisible(false);
+    setWepVisible(true);
+    updatePasswordCaption(AccessPointState.WEP);
+    break;
+  }
+case SECURITY_AUTO:
+{
+  setWepVisible(false);
+  setGenericPasswordVisible(mState.hasSecurity());
+  updatePasswordCaption(AccessPointState.WPA);
+  break;
+}
+case SECURITY_WPA_PERSONAL:
+case SECURITY_WPA2_PERSONAL:
+{
+setWepVisible(false);
+setGenericPasswordVisible(true);
+updatePasswordCaption(AccessPointState.WPA);
+break;
+}
+}
+}

@@ -1,0 +1,23 @@
+{
+  super.onCreate(icicle);
+  setContentView(R.layout.bluetooth_data_entry);
+  mDataLabel=(TextView)findViewById(R.id.dataLabel);
+  mDataEntry=(EditText)findViewById(R.id.dataEntry);
+  mConfirmButton=(Button)findViewById(R.id.confirmButton);
+  mCancelButton=(Button)findViewById(R.id.cancelButton);
+  mDataEntry.setOnKeyListener(this);
+  Intent intent=getIntent();
+  String label=null;
+{
+    String labelExtra=intent.getStringExtra("label");
+    if (labelExtra != null) {
+      label=labelExtra;
+    }
+  }
+  extras=intent.getBundleExtra("extras");
+  if (label != null && label.length() > 0) {
+    mDataLabel.setText(label);
+  }
+  mConfirmButton.setOnClickListener(new ConfirmButtonListener());
+  mCancelButton.setOnClickListener(new CancelButtonListener());
+}

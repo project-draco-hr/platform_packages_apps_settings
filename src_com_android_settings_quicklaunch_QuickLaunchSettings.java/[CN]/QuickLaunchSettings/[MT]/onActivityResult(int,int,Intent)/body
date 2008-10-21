@@ -1,0 +1,17 @@
+{
+  if (resultCode != RESULT_OK) {
+    return;
+  }
+  if (requestCode == REQUEST_PICK_BOOKMARK) {
+    if (data == null) {
+      Log.w(TAG,"Result from bookmark picker does not have an intent.");
+      return;
+    }
+    String title=data.getStringExtra(BookmarkPicker.EXTRA_TITLE);
+    char shortcut=data.getCharExtra(BookmarkPicker.EXTRA_SHORTCUT,(char)0);
+    updateShortcut(shortcut,title,data);
+  }
+ else {
+    super.onActivityResult(requestCode,resultCode,data);
+  }
+}

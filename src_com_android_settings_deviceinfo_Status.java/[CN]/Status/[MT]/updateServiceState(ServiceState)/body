@@ -1,0 +1,24 @@
+{
+  int state=serviceState.getState();
+  String display=mRes.getString(R.string.radioInfo_unknown);
+switch (state) {
+case ServiceState.STATE_IN_SERVICE:
+    display=mRes.getString(R.string.radioInfo_service_in);
+  break;
+case ServiceState.STATE_OUT_OF_SERVICE:
+case ServiceState.STATE_EMERGENCY_ONLY:
+display=mRes.getString(R.string.radioInfo_service_out);
+break;
+case ServiceState.STATE_POWER_OFF:
+display=mRes.getString(R.string.radioInfo_service_off);
+break;
+}
+setSummaryText("service_state",display);
+if (serviceState.getRoaming()) {
+setSummaryText("roaming_state",mRes.getString(R.string.radioInfo_roaming_in));
+}
+ else {
+setSummaryText("roaming_state",mRes.getString(R.string.radioInfo_roaming_not));
+}
+setSummaryText("operator_name",serviceState.getOperatorAlphaLong());
+}

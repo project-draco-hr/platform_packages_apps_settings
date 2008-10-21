@@ -1,0 +1,7 @@
+{
+  mContext=context;
+  mCheckBoxPref=airplaneModeCheckBoxPreference;
+  airplaneModeCheckBoxPreference.setPersistent(false);
+  mPhoneStateReceiver=new PhoneStateIntentReceiver(mContext,mHandler);
+  mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
+}

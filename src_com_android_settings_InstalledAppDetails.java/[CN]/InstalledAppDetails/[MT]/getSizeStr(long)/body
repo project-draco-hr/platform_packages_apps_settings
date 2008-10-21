@@ -1,0 +1,22 @@
+{
+  String retStr="";
+  if (size < 1024) {
+    return String.valueOf(size) + mBStr;
+  }
+  long kb, mb, rem;
+  kb=size >> 10;
+  rem=size - (kb << 10);
+  if (kb < 1024) {
+    if (rem > 512) {
+      kb++;
+    }
+    retStr+=String.valueOf(kb) + mKbStr;
+    return retStr;
+  }
+  mb=kb >> 10;
+  if (kb >= 512) {
+    mb++;
+  }
+  retStr+=String.valueOf(mb) + mMbStr;
+  return retStr;
+}

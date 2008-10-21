@@ -1,0 +1,19 @@
+{
+  Status status=mStatus.get();
+  if (status == null) {
+    return;
+  }
+switch (msg.what) {
+case EVENT_SIGNAL_STRENGTH_CHANGED:
+    status.updateSignalStrength();
+  break;
+case EVENT_SERVICE_STATE_CHANGED:
+ServiceState serviceState=status.mPhoneStateReceiver.getServiceState();
+status.updateServiceState(serviceState);
+break;
+case EVENT_FIX_UPTIME:
+status.updateTimes();
+sendMessageDelayed(obtainMessage(EVENT_FIX_UPTIME),1000);
+break;
+}
+}

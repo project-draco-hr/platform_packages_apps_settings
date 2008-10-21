@@ -1,0 +1,6 @@
+{
+  sIsRunning=false;
+  unregisterReceiver(mReceiver);
+  mHandler.sendMessageDelayed(mHandler.obtainMessage(HANDLE_PAUSE_TIMEOUT,new Object[]{mBluetooth,mPinAddress}),PAUSE_TIMEOUT);
+  super.onPause();
+}

@@ -1,0 +1,24 @@
+{
+  if (mPinDialog != null) {
+    return mPinDialog;
+  }
+  View view=LayoutInflater.from(this).inflate(R.layout.bluetooth_pin_entry,null);
+  mPinEdit=(EditText)view.findViewById(R.id.text);
+  mPinEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
+  mPinEdit.setOnKeyListener(this);
+  mPinAddress=pinAddress;
+  if (savedPin != null) {
+    mPinEdit.setText(savedPin);
+  }
+  String remoteName=mBluetooth.getRemoteName(mPinAddress);
+  if (remoteName == null) {
+    remoteName=mPinAddress;
+  }
+  AlertDialog ad=new AlertDialog.Builder(this).setTitle(getString(R.string.bluetooth_notif_title)).setMessage(getString(R.string.bluetooth_enter_pin_msg) + remoteName).setView(view).setPositiveButton(android.R.string.ok,mDisconnectListener).setNegativeButton(android.R.string.cancel,mDisconnectListener).setOnCancelListener(mCancelListener).show();
+  ad.setCanceledOnTouchOutside(false);
+  mPinButton1=ad.findViewById(com.android.internal.R.id.button1);
+  if (mPinButton1 != null) {
+    mPinButton1.setEnabled(savedPin != null ? savedPin.length() > 0 : false);
+  }
+  return ad;
+}

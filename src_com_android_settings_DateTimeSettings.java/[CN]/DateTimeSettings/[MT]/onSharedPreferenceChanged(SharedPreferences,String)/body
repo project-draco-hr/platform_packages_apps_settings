@@ -1,0 +1,14 @@
+{
+  if (key.equals(KEY_DATE_FORMAT)) {
+    String format=preferences.getString(key,getResources().getString(R.string.default_date_format));
+    Settings.System.putString(getContentResolver(),Settings.System.DATE_FORMAT,format);
+    updateTimeAndDateDisplay();
+  }
+ else   if (key.equals(KEY_AUTO_TIME)) {
+    boolean autoEnabled=preferences.getBoolean(key,true);
+    Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,autoEnabled ? 1 : 0);
+    mTimePref.setEnabled(!autoEnabled);
+    mDatePref.setEnabled(!autoEnabled);
+    mTimeZone.setEnabled(!autoEnabled);
+  }
+}

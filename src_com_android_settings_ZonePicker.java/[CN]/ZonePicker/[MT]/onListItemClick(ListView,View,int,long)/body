@@ -1,0 +1,10 @@
+{
+  String filter=(String)mFilterAdapter.getItem(position);
+  if (filter.equals("All")) {
+    filter=null;
+  }
+  Intent zoneList=new Intent();
+  zoneList.setClass(this,ZoneList.class);
+  zoneList.putExtra("filter",filter);
+  startActivityForResult(zoneList,0);
+}

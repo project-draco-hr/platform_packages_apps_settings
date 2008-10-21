@@ -1,0 +1,11 @@
+{
+  super.onCreate(savedInstanceState);
+  String action=getIntent().getAction();
+  if (action.equals(Intent.ACTION_MANAGE_PACKAGE_STORAGE)) {
+    mSortOrder=SORT_ORDER_SIZE;
+  }
+  mPm=getPackageManager();
+  mBStr=getString(R.string.b_text);
+  mKbStr=getString(R.string.kb_text);
+  mMbStr=getString(R.string.mb_text);
+}

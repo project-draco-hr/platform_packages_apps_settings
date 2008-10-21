@@ -1,0 +1,7 @@
+{
+  if (!o.getClass().equals(getClass())) {
+    return false;
+  }
+  final AccessPointState other=(AccessPointState)o;
+  return matches(other.networkId,other.bssid,other.ssid,other.security) >= MATCH_WEAK;
+}

@@ -1,0 +1,7 @@
+{
+  AccessPointState ap=findApLocked(mApScanList,networkId,bssid,ssid,security);
+  if (ap == null) {
+    ap=findApLocked(mApOtherList,networkId,bssid,ssid,security);
+  }
+  return ap;
+}

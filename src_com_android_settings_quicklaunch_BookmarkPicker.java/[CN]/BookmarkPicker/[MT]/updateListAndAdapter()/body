@@ -1,0 +1,15 @@
+{
+  new Thread("data updater"){
+    @Override public void run(){
+synchronized (BookmarkPicker.this) {
+        ArrayList<ResolveInfo> newResolveList=new ArrayList<ResolveInfo>();
+        ArrayList<Map<String,?>> newAdapterList=new ArrayList<Map<String,?>>();
+        fillResolveList(newResolveList);
+        Collections.sort(newResolveList,new ResolveInfo.DisplayNameComparator(getPackageManager()));
+        fillAdapterList(newAdapterList,newResolveList);
+        updateAdapterToUseNewLists(newAdapterList,newResolveList);
+      }
+    }
+  }
+.start();
+}

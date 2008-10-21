@@ -1,0 +1,25 @@
+{
+  if (sScanning == null) {
+    fillStrings(context);
+  }
+switch (detailedState) {
+case AUTHENTICATING:
+    return sAuthenticating;
+case CONNECTED:
+  return sConnected;
+case CONNECTING:
+return sConnecting;
+case DISCONNECTED:
+return sDisconnected;
+case DISCONNECTING:
+return sDisconnecting;
+case FAILED:
+return sFailed;
+case OBTAINING_IPADDR:
+return sObtainingIp;
+case SCANNING:
+return sScanning;
+default :
+return null;
+}
+}

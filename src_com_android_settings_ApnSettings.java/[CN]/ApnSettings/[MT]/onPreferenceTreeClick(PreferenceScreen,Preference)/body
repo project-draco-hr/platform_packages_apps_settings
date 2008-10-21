@@ -1,0 +1,6 @@
+{
+  int pos=Integer.parseInt(preference.getKey());
+  Uri url=ContentUris.withAppendedId(Telephony.Carriers.CONTENT_URI,pos);
+  startActivity(new Intent(Intent.ACTION_EDIT,url));
+  return true;
+}

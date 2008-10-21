@@ -1,0 +1,8 @@
+{
+  if (state.hasSecurity() && !state.hasPassword()) {
+    showAccessPointDialog(state,AccessPointDialog.MODE_INFO);
+  }
+ else {
+    mWifiLayer.connectToNetwork(state);
+  }
+}

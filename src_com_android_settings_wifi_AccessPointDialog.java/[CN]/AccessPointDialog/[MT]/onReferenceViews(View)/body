@@ -1,0 +1,18 @@
+{
+  mPasswordText=(TextView)view.findViewById(R.id.password_text);
+  mPasswordEdit=(EditText)view.findViewById(R.id.password_edit);
+  mShowPasswordCheckBox=(CheckBox)view.findViewById(R.id.show_password_checkbox);
+  if (mShowPasswordCheckBox != null) {
+    mShowPasswordCheckBox.setOnClickListener(this);
+  }
+  if (mMode == MODE_CONFIGURE) {
+    mSsidEdit=(EditText)view.findViewById(R.id.ssid_edit);
+    mSecuritySpinner=(Spinner)view.findViewById(R.id.security_spinner);
+    mSecuritySpinner.setOnItemSelectedListener(this);
+    setSecuritySpinnerAdapter();
+    mWepTypeSpinner=(Spinner)view.findViewById(R.id.wep_type_spinner);
+  }
+ else   if (mMode == MODE_INFO) {
+    mTable=(ViewGroup)view.findViewById(R.id.table);
+  }
+}

@@ -1,0 +1,21 @@
+{
+  final List<WifiConfiguration> configs=getConfiguredNetworks();
+  for (int i=configs.size() - 1; i >= 0; i--) {
+    final WifiConfiguration config=configs.get(i);
+    AccessPointState ap;
+synchronized (this) {
+      ap=findApLocked(config.networkId,config.BSSID,config.SSID,AccessPointState.getWifiConfigurationSecurity(config));
+      if (ap != null) {
+        continue;
+      }
+      ap=new AccessPointState(mContext);
+      ap.updateFromWifiConfiguration(config);
+      if (LOGV)       Log.v(TAG,"Created " + ap + " in loadConfiguredAccessPoints");
+      mApOtherList.add(ap);
+    }
+    checkNextHighestPriority(ap.priority);
+    if (mCallback != null) {
+      mCallback.onAccessPointSetChanged(ap,true);
+    }
+  }
+}

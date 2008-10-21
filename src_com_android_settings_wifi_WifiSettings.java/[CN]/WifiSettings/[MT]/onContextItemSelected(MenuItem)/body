@@ -1,0 +1,19 @@
+{
+  AccessPointState state=getStateFromMenuInfo(item.getMenuInfo());
+  if (state == null) {
+    return false;
+  }
+switch (item.getItemId()) {
+case CONTEXT_MENU_ID_CONNECT:
+    connectToNetwork(state);
+  return true;
+case CONTEXT_MENU_ID_FORGET:
+mWifiLayer.forgetNetwork(state);
+return true;
+case CONTEXT_MENU_ID_CHANGE_PASSWORD:
+showAccessPointDialog(state,AccessPointDialog.MODE_CONFIGURE);
+return true;
+default :
+return false;
+}
+}

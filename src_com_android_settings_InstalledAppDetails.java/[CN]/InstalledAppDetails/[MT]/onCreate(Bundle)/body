@@ -1,0 +1,111 @@
+{
+  super.onCreate(icicle);
+  mPm=getPackageManager();
+  Intent intent=getIntent();
+  final String packageName=intent.getStringExtra(ManageApplications.APP_PKG_NAME);
+  mSizeInfo=intent.getParcelableExtra(ManageApplications.APP_PKG_SIZE);
+  long total=-1;
+  long code=-1;
+  long data=-1;
+  if (mSizeInfo != null) {
+    total=mSizeInfo.cacheSize + mSizeInfo.codeSize + mSizeInfo.dataSize;
+    code=mSizeInfo.codeSize;
+    data=mSizeInfo.dataSize + mSizeInfo.cacheSize;
+  }
+  String unknownStr=getString(_UNKNOWN_APP);
+  mBStr=getString(R.string.b_text);
+  mKbStr=getString(R.string.kb_text);
+  mMbStr=getString(R.string.mb_text);
+  String totalSizeStr=unknownStr;
+  if (total != -1) {
+    totalSizeStr=getSizeStr(total);
+  }
+  String appSizeStr=unknownStr;
+  if (code != -1) {
+    appSizeStr=getSizeStr(code);
+  }
+  String dataSizeStr=unknownStr;
+  if (data != -1) {
+    dataSizeStr=getSizeStr(data);
+  }
+  if (localLOGV)   Log.i(TAG,"packageName:" + packageName + ", total="+ total+ "code="+ code+ ", data="+ data);
+  try {
+    mAppInfo=mPm.getApplicationInfo(packageName,0);
+  }
+ catch (  NameNotFoundException e) {
+    Throwable th=e.fillInStackTrace();
+    Log.e(TAG,"Exception when retrieving package:" + packageName,e);
+    displayErrorDialog(R.string.app_not_found_dlg_text,true,true);
+  }
+  setContentView(R.layout.installed_app_details);
+  ((ImageView)findViewById(R.id.app_icon)).setImageDrawable(mPm.getApplicationIcon(mAppInfo));
+  CharSequence appName=mPm.getApplicationLabel(mAppInfo);
+  if (appName == null) {
+    appName=getString(_UNKNOWN_APP);
+  }
+  ((TextView)findViewById(R.id.app_name)).setText(appName);
+  CharSequence appDesc=mAppInfo.loadDescription(mPm);
+  if (appDesc != null) {
+    ((TextView)findViewById(R.id.app_description)).setText(appDesc);
+  }
+  mTotalSize=(TextView)findViewById(R.id.total_size_text);
+  mTotalSize.setText(totalSizeStr);
+  mAppSize=(TextView)findViewById(R.id.application_size_text);
+  mAppSize.setText(appSizeStr);
+  mDataSize=(TextView)findViewById(R.id.data_size_text);
+  mDataSize.setText(dataSizeStr);
+  mUninstallButton=((Button)findViewById(R.id.uninstall_button));
+  mSysPackage=isSystemPackage();
+  if (localLOGV)   Log.i(TAG,"Is systemPackage " + mSysPackage);
+  int btnText;
+  boolean btnClickable=true;
+  if (mSysPackage) {
+    if ((mAppInfo.flags & ApplicationInfo.FLAG_ALLOW_CLEAR_USER_DATA) == ApplicationInfo.FLAG_ALLOW_CLEAR_USER_DATA) {
+      mUninstallButton.setText(R.string.clear_user_data_text);
+      if (data == 0) {
+        mUninstallButton.setEnabled(false);
+      }
+ else {
+        mUninstallButton.setOnClickListener(this);
+      }
+    }
+ else {
+      mUninstallButton.setVisibility(View.GONE);
+    }
+  }
+ else {
+    mUninstallButton.setText(R.string.uninstall_text);
+    mUninstallButton.setOnClickListener(this);
+  }
+  mActivitiesButton=(Button)findViewById(R.id.clear_activities_button);
+  List<ComponentName> prefActList=new ArrayList<ComponentName>();
+  List<IntentFilter> intentList=new ArrayList<IntentFilter>();
+  mPm.getPreferredActivities(intentList,prefActList,packageName);
+  if (localLOGV)   Log.i(TAG,"Have " + prefActList.size() + " number of activities in prefered list");
+  TextView autoLaunchView=(TextView)findViewById(R.id.auto_launch);
+  if (prefActList.size() <= 0) {
+    autoLaunchView.setText(R.string.auto_launch_disable_text);
+    mActivitiesButton.setEnabled(false);
+  }
+ else {
+    autoLaunchView.setText(R.string.auto_launch_enable_text);
+    mActivitiesButton.setOnClickListener(this);
+  }
+  mManageSpaceButton=(Button)findViewById(R.id.manage_space_button);
+  if (mAppInfo.manageSpaceActivityName != null) {
+    mManageSpaceButton.setVisibility(View.VISIBLE);
+    mManageSpaceButton.setOnClickListener(this);
+  }
+  AppSecurityPermissions asp=new AppSecurityPermissions(this);
+  PackageInfo pkgInfo;
+  try {
+    pkgInfo=mPm.getPackageInfo(packageName,PackageManager.GET_PERMISSIONS);
+  }
+ catch (  NameNotFoundException e) {
+    Log.w(TAG,"Couldnt retrieve permissions for package:" + packageName);
+    return;
+  }
+  asp.setSecurityPermissionsView(pkgInfo);
+  LinearLayout securityList=(LinearLayout)findViewById(R.id.security_settings_list);
+  securityList.addView(asp.getPermissionsView());
+}

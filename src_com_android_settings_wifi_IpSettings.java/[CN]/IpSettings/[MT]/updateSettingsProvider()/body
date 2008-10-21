@@ -1,0 +1,8 @@
+{
+  ContentResolver contentResolver=getContentResolver();
+  System.putInt(contentResolver,System.WIFI_USE_STATIC_IP,mUseStaticIpCheckBox.isChecked() ? 1 : 0);
+  for (int i=0; i < mSettingNames.length; i++) {
+    EditTextPreference preference=(EditTextPreference)findPreference(mPreferenceKeys[i]);
+    System.putString(contentResolver,mSettingNames[i],preference.getText());
+  }
+}

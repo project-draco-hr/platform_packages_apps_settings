@@ -1,0 +1,7 @@
+{
+  GsmCellLocation loc=(GsmCellLocation)location;
+  Resources r=getResources();
+  int lac=loc.getLac();
+  int cid=loc.getCid();
+  mLocation.setText(r.getString(R.string.radioInfo_lac) + " = " + ((lac == -1) ? "unknown" : Integer.toHexString(lac))+ "   "+ r.getString(R.string.radioInfo_cid)+ " = "+ ((cid == -1) ? "unknown" : Integer.toHexString(cid)));
+}

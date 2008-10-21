@@ -1,0 +1,10 @@
+{
+  if (mBlockRefresh > 0) {
+    mNeedsRefresh=true;
+    return;
+  }
+  if (mCallback != null) {
+    mCallback.refreshAccessPointState();
+  }
+  mNeedsRefresh=false;
+}

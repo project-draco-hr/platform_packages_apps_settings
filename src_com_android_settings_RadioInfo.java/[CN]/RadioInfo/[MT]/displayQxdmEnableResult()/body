@@ -1,0 +1,10 @@
+{
+  String status=mQxdmLogEnabled ? "Start QXDM Log" : "Stop QXDM Log";
+  DialogInterface mProgressPanel=new AlertDialog.Builder(this).setMessage(status).show();
+  mHandler.postDelayed(new Runnable(){
+    public void run(){
+      finish();
+    }
+  }
+,2000);
+}

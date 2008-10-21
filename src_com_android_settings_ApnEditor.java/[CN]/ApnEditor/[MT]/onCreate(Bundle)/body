@@ -1,0 +1,47 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.apn_editor);
+  sNotSet=getResources().getString(R.string.apn_not_set);
+  mName=(EditTextPreference)findPreference("apn_name");
+  mApn=(EditTextPreference)findPreference("apn_apn");
+  mProxy=(EditTextPreference)findPreference("apn_http_proxy");
+  mPort=(EditTextPreference)findPreference("apn_http_port");
+  mUser=(EditTextPreference)findPreference("apn_user");
+  mServer=(EditTextPreference)findPreference("apn_server");
+  mPassword=(EditTextPreference)findPreference("apn_password");
+  mMmsProxy=(EditTextPreference)findPreference("apn_mms_proxy");
+  mMmsPort=(EditTextPreference)findPreference("apn_mms_port");
+  mMmsc=(EditTextPreference)findPreference("apn_mmsc");
+  mMcc=(EditTextPreference)findPreference("apn_mcc");
+  mMnc=(EditTextPreference)findPreference("apn_mnc");
+  mApnType=(EditTextPreference)findPreference("apn_type");
+  mRes=getResources();
+  final Intent intent=getIntent();
+  final String action=intent.getAction();
+  mFirstTime=icicle == null;
+  if (action.equals(Intent.ACTION_EDIT)) {
+    mUri=intent.getData();
+  }
+ else   if (action.equals(Intent.ACTION_INSERT)) {
+    if (mFirstTime) {
+      mUri=getContentResolver().insert(intent.getData(),new ContentValues());
+    }
+ else {
+      mUri=ContentUris.withAppendedId(Telephony.Carriers.CONTENT_URI,icicle.getInt(SAVED_POS));
+    }
+    mNewApn=true;
+    if (mUri == null) {
+      Log.w(TAG,"Failed to insert new telephony provider into " + getIntent().getData());
+      finish();
+      return;
+    }
+    setResult(RESULT_OK,(new Intent()).setAction(mUri.toString()));
+  }
+ else {
+    finish();
+    return;
+  }
+  mCursor=managedQuery(mUri,sProjection,null,null);
+  mCursor.moveToFirst();
+  fillUi();
+}

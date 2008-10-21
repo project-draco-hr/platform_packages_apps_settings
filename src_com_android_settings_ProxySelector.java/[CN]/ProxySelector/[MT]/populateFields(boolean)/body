@@ -1,0 +1,27 @@
+{
+  String hostname=null;
+  int port=-1;
+  if (useDefault) {
+    hostname=Proxy.getDefaultHost();
+    port=Proxy.getDefaultPort();
+  }
+ else {
+    hostname=Proxy.getHost(this);
+    port=Proxy.getPort(this);
+  }
+  if (hostname == null) {
+    hostname="";
+  }
+  mHostnameField.setText(hostname);
+  String portStr=port == -1 ? "" : Integer.toString(port);
+  mPortField.setText(portStr);
+  Intent intent=getIntent();
+  String buttonLabel=intent.getStringExtra("button-label");
+  if (!TextUtils.isEmpty(buttonLabel)) {
+    mOKButton.setText(buttonLabel);
+  }
+  String title=intent.getStringExtra("title");
+  if (!TextUtils.isEmpty(title)) {
+    setTitle(title);
+  }
+}

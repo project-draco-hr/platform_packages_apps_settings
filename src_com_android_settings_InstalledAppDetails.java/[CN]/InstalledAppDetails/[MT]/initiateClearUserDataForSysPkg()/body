@@ -1,0 +1,16 @@
+{
+  mUninstallButton.setEnabled(false);
+  boolean recomputeSizes=false;
+  String packageName=mAppInfo.packageName;
+  Log.i(TAG,"Clearing user data for system package");
+  ClearUserDataObserver observer=new ClearUserDataObserver();
+  ActivityManager am=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+  boolean res=am.clearApplicationUserData(packageName,observer);
+  if (!res) {
+    Log.i(TAG,"Couldnt clear application user data for package:" + packageName);
+    displayErrorDialog(R.string.clear_data_failed,false,false);
+  }
+ else {
+    mUninstallButton.setText(R.string.recompute_size);
+  }
+}

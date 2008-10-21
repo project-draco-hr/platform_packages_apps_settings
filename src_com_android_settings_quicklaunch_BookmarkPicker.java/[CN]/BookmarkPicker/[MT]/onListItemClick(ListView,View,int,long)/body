@@ -1,0 +1,14 @@
+{
+  if (position >= mResolveList.size())   return;
+  ResolveInfo info=mResolveList.get(position);
+switch (mDisplayMode) {
+case DISPLAY_MODE_LAUNCH:
+    Intent intent=getIntentForResolveInfo(info,Intent.ACTION_MAIN);
+  intent.addCategory(Intent.CATEGORY_LAUNCHER);
+finish(intent,getResolveInfoTitle(info));
+break;
+case DISPLAY_MODE_SHORTCUT:
+startShortcutActivity(info);
+break;
+}
+}

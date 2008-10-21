@@ -1,0 +1,11 @@
+{
+  list.clear();
+  int resolveListSize=resolveList.size();
+  for (int i=0; i < resolveListSize; i++) {
+    ResolveInfo info=resolveList.get(i);
+    Map<String,Object> map=new TreeMap<String,Object>();
+    map.put(KEY_TITLE,getResolveInfoTitle(info));
+    map.put(KEY_RESOLVE_INFO,info);
+    list.add(map);
+  }
+}

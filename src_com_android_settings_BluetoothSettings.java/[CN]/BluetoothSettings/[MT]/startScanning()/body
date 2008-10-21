@@ -1,0 +1,9 @@
+{
+  if (mIsEnabled && mBluetooth.isDiscovering()) {
+    return;
+  }
+  resetDeviceListUI();
+  if (mIsEnabled) {
+    mBluetooth.startDiscovery();
+  }
+}

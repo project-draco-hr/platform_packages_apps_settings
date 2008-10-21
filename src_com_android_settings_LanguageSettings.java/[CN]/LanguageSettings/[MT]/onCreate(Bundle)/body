@@ -1,0 +1,12 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.language_settings);
+  if (getAssets().getLocales().length == 1) {
+    getPreferenceScreen().removePreference(findPreference("language_category"));
+  }
+  ContentResolver resolver=getContentResolver();
+  for (int i=0; i < mSettingsUiKey.length; i++) {
+    CheckBoxPreference pref=(CheckBoxPreference)findPreference(mSettingsUiKey[i]);
+    pref.setChecked(System.getInt(resolver,mSettingsSystemId[i],mSettingsDefault[i]) > 0);
+  }
+}

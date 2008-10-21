@@ -1,0 +1,9 @@
+{
+  String value=(String)newValue;
+  if (!isIpAddress(value)) {
+    Toast.makeText(this,R.string.wifi_ip_settings_invalid_ip,Toast.LENGTH_LONG).show();
+    return false;
+  }
+  preference.setSummary(value);
+  return true;
+}

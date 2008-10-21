@@ -1,0 +1,29 @@
+{
+  super.onCreate(savedInstanceState);
+  mLockPatternUtils=new LockPatternUtils(getContentResolver());
+  requestWindowFeature(Window.FEATURE_NO_TITLE);
+  setContentView(R.layout.confirm_lock_pattern);
+  mHeaderTextView=(TextView)findViewById(R.id.headerText);
+  mLockPatternView=(LockPatternView)findViewById(R.id.lockPattern);
+  mFooterTextView=(TextView)findViewById(R.id.footerText);
+  final LinearLayoutWithDefaultTouchRecepient topLayout=(LinearLayoutWithDefaultTouchRecepient)findViewById(R.id.topLayout);
+  topLayout.setDefaultTouchRecepient(mLockPatternView);
+  Intent intent=getIntent();
+  if (intent != null) {
+    mHeaderText=intent.getCharSequenceExtra(HEADER_TEXT);
+    mFooterText=intent.getCharSequenceExtra(FOOTER_TEXT);
+    mHeaderWrongText=intent.getCharSequenceExtra(HEADER_WRONG_TEXT);
+    mFooterWrongText=intent.getCharSequenceExtra(FOOTER_WRONG_TEXT);
+  }
+  mLockPatternView.setOnPatternListener(mConfirmExistingLockPatternListener);
+  updateStage(Stage.NeedToUnlock);
+  if (savedInstanceState != null) {
+    mNumWrongConfirmAttempts=savedInstanceState.getInt(KEY_NUM_WRONG_ATTEMPTS);
+  }
+ else {
+    if (!mLockPatternUtils.savedPatternExists()) {
+      setResult(RESULT_OK);
+      finish();
+    }
+  }
+}

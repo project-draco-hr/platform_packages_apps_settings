@@ -1,0 +1,10 @@
+{
+  removeFutureScans();
+  if (!mWifiManager.isWifiEnabled())   return;
+  if (!mWifiManager.startScan()) {
+    postAttemptScan();
+  }
+ else {
+    mScanRetryCount=0;
+  }
+}

@@ -1,0 +1,17 @@
+{
+  Phone.State state=mPhoneStateReceiver.getPhoneState();
+  Resources r=getResources();
+  String display=r.getString(R.string.radioInfo_unknown);
+switch (state) {
+case IDLE:
+    display=r.getString(R.string.radioInfo_phone_idle);
+  break;
+case RINGING:
+display=r.getString(R.string.radioInfo_phone_ringing);
+break;
+case OFFHOOK:
+display=r.getString(R.string.radioInfo_phone_offhook);
+break;
+}
+callState.setText(display);
+}

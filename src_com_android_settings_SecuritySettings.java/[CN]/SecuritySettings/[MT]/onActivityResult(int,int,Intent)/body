@@ -1,0 +1,9 @@
+{
+  super.onActivityResult(requestCode,resultCode,data);
+  if (requestCode != CONFIRM_PATTERN_REQUEST_CODE) {
+    return;
+  }
+  if (resultCode == Activity.RESULT_OK) {
+    mLockPatternUtils.setLockPatternEnabled(false);
+  }
+}

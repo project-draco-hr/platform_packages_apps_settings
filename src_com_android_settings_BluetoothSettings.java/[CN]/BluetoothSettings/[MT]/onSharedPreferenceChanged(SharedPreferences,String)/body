@@ -1,0 +1,11 @@
+{
+  if (key.equals(BT_NAME)) {
+    String name=sharedPreferences.getString(key,null);
+    if (name == null) {
+      return;
+    }
+    if (mBluetooth.setName(name)) {
+      mBTName.setSummary(name);
+    }
+  }
+}

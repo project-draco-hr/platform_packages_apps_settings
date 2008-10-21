@@ -1,0 +1,14 @@
+{
+  super.onOptionsItemSelected(item);
+switch (item.getItemId()) {
+case MENU_ID_SCAN:
+    mWifiLayer.attemptScan();
+  return true;
+case MENU_ID_ADVANCED:
+Intent intent=new Intent(this,IpSettings.class);
+startActivity(intent);
+return true;
+default :
+return false;
+}
+}

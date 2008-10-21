@@ -1,0 +1,15 @@
+{
+  Bundle data=new Bundle();
+  ps=pStats;
+  succeeded=pSucceeded;
+  if (mChained) {
+    data.putInt(ATTR_APP_IDX,mIdx);
+    if (succeeded) {
+      mIdx++;
+    }
+  }
+  data.putBoolean(ATTR_CHAINED,mChained);
+  getAppDetails();
+  if (localLOGV)   Log.i(TAG,"onGetStatsCompleted::" + appInfo.packageName + ", ("+ ps.cacheSize+ ","+ ps.codeSize+ ", "+ ps.dataSize);
+  sendMessageToHandler(COMPUTE_PKG_SIZE_DONE,data,0);
+}

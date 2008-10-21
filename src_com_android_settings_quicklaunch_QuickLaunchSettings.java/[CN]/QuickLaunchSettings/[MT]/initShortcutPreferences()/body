@@ -1,0 +1,11 @@
+{
+  SparseBooleanArray shortcutSeen=new SparseBooleanArray();
+  KeyCharacterMap keyMap=KeyCharacterMap.load(KeyCharacterMap.BUILT_IN_KEYBOARD);
+  for (int keyCode=KeyEvent.MAX_KEYCODE - 1; keyCode >= 0; keyCode--) {
+    char shortcut=(char)Character.toLowerCase(keyMap.getDisplayLabel(keyCode));
+    if (shortcut == 0 || shortcutSeen.get(shortcut,false))     continue;
+    if (!Character.isLetterOrDigit(shortcut))     continue;
+    shortcutSeen.put(shortcut,true);
+    createPreference(shortcut);
+  }
+}

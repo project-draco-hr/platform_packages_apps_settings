@@ -1,0 +1,12 @@
+{
+  int imax=mAppList.size();
+  if (localLOGV)   Log.i(TAG,"Creating new adapter list");
+  List<Map<String,?>> adapterList=new ArrayList<Map<String,?>>();
+  ApplicationInfo tmpInfo;
+  for (int i=0; i < imax; i++) {
+    tmpInfo=mAppList.get(i);
+    Map<String,Object> newObj=new TreeMap<String,Object>(mAppAdapterMap.get(tmpInfo.packageName));
+    adapterList.add(newObj);
+  }
+  return adapterList;
+}

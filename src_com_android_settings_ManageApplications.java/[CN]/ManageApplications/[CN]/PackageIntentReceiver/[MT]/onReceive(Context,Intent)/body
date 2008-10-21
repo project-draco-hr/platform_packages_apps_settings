@@ -1,0 +1,7 @@
+{
+  String actionStr=intent.getAction();
+  Uri data=intent.getData();
+  String pkgName=data.getEncodedSchemeSpecificPart();
+  if (localLOGV)   Log.i(TAG,"action:" + actionStr + ", for package:"+ pkgName);
+  updatePackageList(actionStr,pkgName);
+}

@@ -1,0 +1,9 @@
+{
+  boolean patternExistedBefore=mLockPatternUtils.savedPatternExists();
+  mLockPatternUtils.saveLockPattern(mChosenPattern);
+  if (!patternExistedBefore) {
+    mLockPatternUtils.setLockPatternEnabled(true);
+    mLockPatternUtils.setVisiblePatternEnabled(true);
+  }
+  finish();
+}

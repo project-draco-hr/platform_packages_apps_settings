@@ -1,0 +1,20 @@
+{
+  for (int i=0; i < addresses.length; i++) {
+    String status=deviceStatus[i];
+    String name=mBluetooth.getRemoteName(addresses[i]);
+    String address=addresses[i];
+    if (status == null) {
+      if (mBluetoothHeadset.isConnected(addresses[i])) {
+        status=STR_CONNECTED;
+        mLastConnected=address;
+      }
+ else       if (mBluetooth.hasBonding(addresses[i])) {
+        status=STR_PAIRED;
+      }
+ else {
+        status=STR_NOT_CONNECTED;
+      }
+    }
+    addDeviceToUI(address,status,name,rssi[i]);
+  }
+}

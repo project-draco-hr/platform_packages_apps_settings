@@ -1,0 +1,10 @@
+{
+  String name=mBluetooth.getRemoteName(address);
+  if (name == null) {
+    name=mRes.getString(R.string.bluetooth_device);
+  }
+  String message=mRes.getString(R.string.bluetooth_disconnect_blank,name);
+  mDisconnectAddress=address;
+  AlertDialog ad=new AlertDialog.Builder(this).setTitle(message).setPositiveButton(android.R.string.ok,mDisconnectListener).setNegativeButton(android.R.string.cancel,null).show();
+  ad.setCanceledOnTouchOutside(false);
+}

@@ -1,0 +1,12 @@
+{
+synchronized (mHandler) {
+    Message msg=mHandler.obtainMessage(msgId);
+    msg.setData(data);
+    if (delayMillis == 0) {
+      mHandler.sendMessage(msg);
+    }
+ else {
+      mHandler.sendMessageDelayed(msg,delayMillis);
+    }
+  }
+}

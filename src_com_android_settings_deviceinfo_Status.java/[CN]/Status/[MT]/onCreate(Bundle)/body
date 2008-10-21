@@ -1,0 +1,25 @@
+{
+  super.onCreate(icicle);
+  mHandler=new MyHandler(this);
+  mTelephonyManager=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+  addPreferencesFromResource(R.xml.device_info_status);
+  mBatteryLevel=findPreference("battery_level");
+  mBatteryStatus=findPreference("battery_status");
+  mRes=getResources();
+  if (sUnknown == null) {
+    sUnknown=mRes.getString(R.string.device_info_default);
+  }
+  mPhone=PhoneFactory.getDefaultPhone();
+  mSignalStrength=findPreference("signal_strength");
+  mUptime=findPreference("up_time");
+  mAwakeTime=findPreference("awake_time");
+  setSummaryText("imei",mPhone.getDeviceId());
+  setSummaryText("imei_sv",((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
+  setSummaryText("imsi",mPhone.getSubscriberId());
+  setSummaryText("number",mPhone.getLine1Number());
+  mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
+  mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
+  mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
+  setWifiStatus();
+  setBtStatus();
+}

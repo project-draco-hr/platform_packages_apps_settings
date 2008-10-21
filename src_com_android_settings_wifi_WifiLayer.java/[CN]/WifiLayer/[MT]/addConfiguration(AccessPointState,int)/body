@@ -1,0 +1,20 @@
+{
+  WifiConfiguration config=new WifiConfiguration();
+  state.updateWifiConfiguration(config);
+  final int networkId=mWifiManager.addNetwork(config);
+  if (networkId == -1) {
+    return null;
+  }
+  state.setNetworkId(networkId);
+  state.setConfigured(true);
+  if ((flags & ADD_CONFIGURATION_ENABLE) != 0 && !managerEnableNetwork(state,false)) {
+    return null;
+  }
+  if ((flags & ADD_CONFIGURATION_SAVE) != 0 && !managerSaveConfiguration()) {
+    return null;
+  }
+  if (mCallback != null) {
+    mCallback.onAccessPointSetChanged(state,true);
+  }
+  return config;
+}

@@ -1,0 +1,13 @@
+{
+  final String key=preference.getKey();
+  if (KEY_LOCK_ENABLED.equals(key)) {
+    mLockPatternUtils.setLockPatternEnabled(isToggled(preference));
+  }
+ else   if (KEY_VISIBLE_PATTERN.equals(key)) {
+    mLockPatternUtils.setVisiblePatternEnabled(isToggled(preference));
+  }
+ else   if (preference == mShowPassword) {
+    Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,mShowPassword.isChecked() ? 1 : 0);
+  }
+  return false;
+}

@@ -1,0 +1,32 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.bluetooth_settings);
+  if (sDeviceCallback == null) {
+    sDeviceCallback=new DeviceCallback();
+  }
+  sDeviceCallback.setHandler(mHandler);
+  mDiscoverableTime=SystemProperties.getInt(DISCOVERABLE_TIME,-1);
+  if (mDiscoverableTime <= 0) {
+    mDiscoverableTime=DISCOVERABLE_TIME_DEFAULT;
+  }
+  mAutoDiscovery=SystemProperties.getBoolean(AUTO_DISCOVERY,true);
+  if (!initBluetoothAPI()) {
+    finish();
+    return;
+  }
+  initUI();
+  getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+  mDeviceMap=new HashMap<String,Preference>();
+  if (icicle != null && icicle.containsKey(FREEZE_ADDRESSES)) {
+    addDevices(icicle.getStringArray(FREEZE_ADDRESSES),icicle.getStringArray(FREEZE_TYPES),icicle.getIntArray(FREEZE_RSSI));
+    if (icicle.containsKey(FREEZE_PIN)) {
+      String savedPin=icicle.getString(FREEZE_PIN);
+      String pinAddress=icicle.getString(FREEZE_PIN_ADDRESS);
+      mPinDialog=showPinDialog(savedPin,pinAddress);
+    }
+    mDiscoverableStartTime=icicle.getLong(FREEZE_DISCOVERABLE_START);
+  }
+ else {
+    mStartScan=true;
+  }
+}

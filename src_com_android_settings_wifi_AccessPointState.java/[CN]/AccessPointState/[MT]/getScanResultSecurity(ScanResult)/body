@@ -1,0 +1,10 @@
+{
+  final String cap=scanResult.capabilities;
+  final String[] securityModes={WEP,WPA,WPA2};
+  for (int i=securityModes.length - 1; i >= 0; i--) {
+    if (cap.contains(securityModes[i])) {
+      return securityModes[i];
+    }
+  }
+  return OPEN;
+}

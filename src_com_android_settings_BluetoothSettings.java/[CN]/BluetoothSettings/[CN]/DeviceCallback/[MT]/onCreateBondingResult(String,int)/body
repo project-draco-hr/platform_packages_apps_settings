@@ -1,0 +1,12 @@
+{
+synchronized (this) {
+    if (messageHandler != null) {
+      if (result == BluetoothDevice.RESULT_FAILURE) {
+        messageHandler.sendMessage(messageHandler.obtainMessage(HANDLE_PAIRING_FAILED,address));
+      }
+ else {
+        messageHandler.sendMessage(messageHandler.obtainMessage(HANDLE_PAIRING_PASSED,address));
+      }
+    }
+  }
+}

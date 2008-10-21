@@ -1,0 +1,23 @@
+{
+  mBTToggle=(CheckBoxPreference)findPreference(BT_ENABLE);
+  mBTVisibility=(CheckBoxPreference)findPreference(BT_VISIBILITY);
+  mBTName=(EditTextPreference)findPreference(BT_NAME);
+  mBTDeviceList=(ProgressCategory)findPreference("bt_device_list");
+  mBTDeviceList.setOrderingAsAdded(false);
+  mRes=getResources();
+  if (mIsEnabled) {
+    String name=mBluetooth.getName();
+    if (name != null) {
+      mBTName.setSummary(name);
+    }
+  }
+  mBTVisibility.setEnabled(mIsEnabled);
+  mBTName.setEnabled(mIsEnabled);
+  STR_CONNECTED=mRes.getString(R.string.bluetooth_connected);
+  STR_PAIRED=mRes.getString(R.string.bluetooth_paired);
+  STR_PAIRED_NOT_NEARBY=mRes.getString(R.string.bluetooth_paired_not_nearby);
+  STR_CONNECTING=mRes.getString(R.string.bluetooth_connecting);
+  STR_PAIRING=mRes.getString(R.string.bluetooth_pairing);
+  STR_NOT_CONNECTED=mRes.getString(R.string.bluetooth_not_connected);
+  getListView().setOnCreateContextMenuListener(this);
+}

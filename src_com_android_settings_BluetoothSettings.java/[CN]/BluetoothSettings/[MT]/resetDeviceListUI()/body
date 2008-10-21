@@ -1,0 +1,19 @@
+{
+  mDeviceMap.clear();
+  while (mBTDeviceList.getPreferenceCount() > 0) {
+    mBTDeviceList.removePreference(mBTDeviceList.getPreference(0));
+  }
+  if (!mIsEnabled) {
+    return;
+  }
+  String connectedDevice=mBluetoothHeadset.getHeadsetAddress();
+  if (connectedDevice != null && mBluetoothHeadset.isConnected(connectedDevice)) {
+    addDeviceToUI(connectedDevice,STR_CONNECTED,mBluetooth.getRemoteName(connectedDevice),WEIGHT_CONNECTED);
+  }
+  String[] bondedDevices=mBluetooth.listBondings();
+  if (bondedDevices != null) {
+    for (int i=0; i < bondedDevices.length; i++) {
+      addDeviceToUI(bondedDevices[i],STR_PAIRED_NOT_NEARBY,mBluetooth.getRemoteName(bondedDevices[i]),WEIGHT_PAIRED);
+    }
+  }
+}

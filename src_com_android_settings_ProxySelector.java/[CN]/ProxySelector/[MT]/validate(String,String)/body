@@ -1,0 +1,23 @@
+{
+  Matcher match=HOSTNAME_PATTERN.matcher(hostname);
+  if (!match.matches())   return R.string.proxy_error_invalid_host;
+  if (hostname.length() > 0 && port.length() == 0) {
+    return R.string.proxy_error_empty_port;
+  }
+  if (port.length() > 0) {
+    if (hostname.length() == 0) {
+      return R.string.proxy_error_empty_host_set_port;
+    }
+    int portVal=-1;
+    try {
+      portVal=Integer.parseInt(port);
+    }
+ catch (    NumberFormatException ex) {
+      return R.string.proxy_error_invalid_port;
+    }
+    if (portVal <= 0 || portVal > 0xFFFF) {
+      return R.string.proxy_error_invalid_port;
+    }
+  }
+  return 0;
+}

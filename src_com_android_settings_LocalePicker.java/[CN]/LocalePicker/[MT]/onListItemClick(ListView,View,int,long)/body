@@ -1,0 +1,24 @@
+{
+  try {
+    IActivityManager am=ActivityManagerNative.getDefault();
+    Configuration config=am.getConfiguration();
+    Loc loc=mLocales[position];
+    config.locale=loc.locale;
+    final String language=loc.locale.getLanguage();
+    final String region=loc.locale.getCountry();
+    am.updateConfiguration(config);
+    SystemProperties.set("user.language",language);
+    SystemProperties.set("user.region",region);
+    try {
+      BufferedWriter bw=new BufferedWriter(new java.io.FileWriter(System.getenv("ANDROID_DATA") + "/locale"));
+      bw.write(language + "_" + region);
+      bw.close();
+    }
+ catch (    java.io.IOException ioe) {
+      Log.e(TAG,"Unable to persist locale. Error writing to locale file." + ioe);
+    }
+  }
+ catch (  RemoteException e) {
+  }
+  finish();
+}

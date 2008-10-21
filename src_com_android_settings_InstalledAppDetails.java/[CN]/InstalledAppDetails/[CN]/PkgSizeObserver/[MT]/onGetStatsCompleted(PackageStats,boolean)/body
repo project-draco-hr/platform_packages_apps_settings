@@ -1,0 +1,7 @@
+{
+  Message msg=mHandler.obtainMessage(GET_PKG_SIZE);
+  Bundle data=new Bundle();
+  data.putParcelable(ATTR_PACKAGE_STATS,pStats);
+  msg.setData(data);
+  mHandler.sendMessage(msg);
+}

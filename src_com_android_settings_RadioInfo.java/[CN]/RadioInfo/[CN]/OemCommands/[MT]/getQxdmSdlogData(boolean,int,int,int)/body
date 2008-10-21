@@ -1,0 +1,16 @@
+{
+  ByteArrayOutputStream bos=new ByteArrayOutputStream();
+  DataOutputStream dos=new DataOutputStream(bos);
+  try {
+    writeIntLittleEndian(dos,OEM_QXDM_SDLOG_FUNCTAG);
+    writeIntLittleEndian(dos,OEM_QXDM_SDLOG_LEN * SIZE_OF_INT);
+    writeIntLittleEndian(dos,enable ? OEM_FEATURE_ENABLE : OEM_FEATURE_DISABLE);
+    writeIntLittleEndian(dos,fileSize);
+    writeIntLittleEndian(dos,mask);
+    writeIntLittleEndian(dos,maxIndex);
+  }
+ catch (  IOException e) {
+    return null;
+  }
+  return bos.toByteArray();
+}

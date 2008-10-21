@@ -1,0 +1,12 @@
+{
+  addPreferencesFromResource(R.xml.wifi_settings);
+  final PreferenceScreen preferenceScreen=getPreferenceScreen();
+  mApCategory=(ProgressCategory)preferenceScreen.findPreference(KEY_ACCESS_POINTS);
+  mApCategory.setOrderingAsAdded(false);
+  mWifiEnabled=(CheckBoxPreference)preferenceScreen.findPreference(KEY_WIFI_ENABLED);
+  mWifiEnabler=new WifiEnabler(this,(WifiManager)getSystemService(WIFI_SERVICE),mWifiEnabled);
+  mOpenNetworkNotificationsEnabled=(CheckBoxPreference)preferenceScreen.findPreference(KEY_OPEN_NETWORK_NOTIFICATIONS_ENABLED);
+  mOpenNetworkNotificationsEnabled.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,0) == 1);
+  mAddOtherNetwork=preferenceScreen.findPreference(KEY_ADD_OTHER_NETWORK);
+  registerForContextMenu(getListView());
+}

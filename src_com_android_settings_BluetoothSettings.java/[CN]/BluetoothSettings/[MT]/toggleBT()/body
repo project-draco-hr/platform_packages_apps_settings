@@ -1,0 +1,16 @@
+{
+  if (mIsEnabled) {
+    mBTToggle.setSummaryOn(mRes.getString(R.string.bluetooth_stopping));
+    mBTDeviceList.setProgress(false);
+    mBluetooth.cancelDiscovery();
+    mBluetooth.disable();
+  }
+ else {
+    mBTToggle.setSummaryOff(mRes.getString(R.string.bluetooth_enabling));
+    mBTToggle.setChecked(false);
+    mBTToggle.setEnabled(false);
+    if (!mBluetooth.enable()) {
+      mBTToggle.setEnabled(true);
+    }
+  }
+}

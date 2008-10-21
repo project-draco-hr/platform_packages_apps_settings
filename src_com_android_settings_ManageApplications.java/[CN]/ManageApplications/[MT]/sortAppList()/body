@@ -1,0 +1,8 @@
+{
+  if (mSortOrder == SORT_ORDER_ALPHA) {
+    Collections.sort(mAppList,new ApplicationInfo.DisplayNameComparator(mPm));
+  }
+ else   if (mSortOrder == SORT_ORDER_SIZE) {
+    Collections.sort(mAppList,new AppInfoComparator(mSizeMap));
+  }
+}

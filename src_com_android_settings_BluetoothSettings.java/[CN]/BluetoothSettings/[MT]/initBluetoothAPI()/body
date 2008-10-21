@@ -1,0 +1,22 @@
+{
+  mIntentFilter=new IntentFilter(BluetoothIntent.REMOTE_DEVICE_CONNECTED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.REMOTE_DEVICE_DISCONNECTED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.BONDING_CREATED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.ENABLED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.DISABLED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.REMOTE_DEVICE_FOUND_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.REMOTE_DEVICE_DISAPPEARED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.REMOTE_NAME_UPDATED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.PAIRING_REQUEST_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.HEADSET_STATE_CHANGED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.DISCOVERY_COMPLETED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.DISCOVERY_STARTED_ACTION);
+  mIntentFilter.addAction(BluetoothIntent.MODE_CHANGED_ACTION);
+  mBluetooth=(BluetoothDevice)getSystemService(BLUETOOTH_SERVICE);
+  mBluetoothHeadset=new BluetoothHeadset(this);
+  if (mBluetooth == null) {
+    return false;
+  }
+  mIsEnabled=mBluetooth.isEnabled();
+  return true;
+}

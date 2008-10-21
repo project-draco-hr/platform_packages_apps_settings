@@ -1,0 +1,21 @@
+{
+  super.onCreate(savedInstanceState);
+  mLockPatternUtils=new LockPatternUtils(getContentResolver());
+  requestWindowFeature(Window.FEATURE_NO_TITLE);
+  setupViews();
+  final LinearLayoutWithDefaultTouchRecepient topLayout=(LinearLayoutWithDefaultTouchRecepient)findViewById(R.id.topLayout);
+  topLayout.setDefaultTouchRecepient(mLockPatternView);
+  if (savedInstanceState == null) {
+    updateStage(Stage.Introduction);
+    if (mLockPatternUtils.savedPatternExists()) {
+      confirmPattern();
+    }
+  }
+ else {
+    final String patternString=savedInstanceState.getString(KEY_PATTERN_CHOICE);
+    if (patternString != null) {
+      mChosenPattern=LockPatternUtils.stringToPattern(patternString);
+    }
+    updateStage(Stage.values()[savedInstanceState.getInt(KEY_UI_STAGE)]);
+  }
+}

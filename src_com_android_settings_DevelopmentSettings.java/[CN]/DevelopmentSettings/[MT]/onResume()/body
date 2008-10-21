@@ -1,0 +1,5 @@
+{
+  super.onResume();
+  mEnableAdb.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.ADB_ENABLED,0) != 0);
+  mKeepScreenOn.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.STAY_ON_WHILE_PLUGGED_IN,0) != 0);
+}

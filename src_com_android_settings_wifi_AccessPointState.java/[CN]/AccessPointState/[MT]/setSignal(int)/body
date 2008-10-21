@@ -1,0 +1,12 @@
+{
+  if (signalForSorting == Float.MIN_VALUE) {
+    signalForSorting=signal;
+  }
+ else {
+    signalForSorting=(DAMPING_FACTOR * signal) + ((1 - DAMPING_FACTOR) * signalForSorting);
+  }
+  if (this.signal != signal) {
+    this.signal=signal;
+    requestRefresh();
+  }
+}

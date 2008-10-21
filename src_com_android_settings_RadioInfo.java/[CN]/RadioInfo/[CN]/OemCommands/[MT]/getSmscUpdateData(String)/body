@@ -1,0 +1,14 @@
+{
+  ByteArrayOutputStream bos=new ByteArrayOutputStream();
+  DataOutputStream dos=new DataOutputStream(bos);
+  try {
+    byte[] smsc_bytes=smsc.getBytes();
+    writeIntLittleEndian(dos,OEM_SMSC_UPDATE_FUNCTAG);
+    writeIntLittleEndian(dos,smsc_bytes.length);
+    dos.write(smsc_bytes);
+  }
+ catch (  IOException e) {
+    return null;
+  }
+  return bos.toByteArray();
+}

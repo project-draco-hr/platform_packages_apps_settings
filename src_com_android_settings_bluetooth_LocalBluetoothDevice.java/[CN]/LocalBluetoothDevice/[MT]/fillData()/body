@@ -1,0 +1,9 @@
+{
+  BluetoothDevice manager=mLocalManager.getBluetoothManager();
+  fetchName();
+  mBtClass=manager.getRemoteClass(mAddress);
+  LocalBluetoothProfileManager.fill(mBtClass,mProfiles);
+  mPairingStatus=manager.hasBonding(mAddress) ? SettingsBtStatus.PAIRING_STATUS_PAIRED : SettingsBtStatus.PAIRING_STATUS_UNPAIRED;
+  mVisible=false;
+  dispatchAttributesChanged();
+}

@@ -1,0 +1,14 @@
+{
+  if (BluetoothClass.Service.hasService(btClass,BluetoothClass.Service.RENDER)) {
+    return true;
+  }
+switch (BluetoothClass.Device.getDevice(btClass)) {
+case BluetoothClass.Device.AUDIO_VIDEO_HIFI_AUDIO:
+case BluetoothClass.Device.AUDIO_VIDEO_HEADPHONES:
+case BluetoothClass.Device.AUDIO_VIDEO_LOUDSPEAKER:
+case BluetoothClass.Device.AUDIO_VIDEO_CAR_AUDIO:
+    return true;
+default :
+  return false;
+}
+}

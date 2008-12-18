@@ -37,7 +37,12 @@
     config.allowedPairwiseCiphers.set(PairwiseCipher.TKIP);
     config.allowedProtocols.set(security.equals(WPA2) ? Protocol.RSN : Protocol.WPA);
     if (!TextUtils.isEmpty(mPassword)) {
-      config.preSharedKey=convertToQuotedString(mPassword);
+      if (mPassword.length() == 64 && isHex(mPassword)) {
+        config.preSharedKey=mPassword;
+      }
+ else {
+        config.preSharedKey=convertToQuotedString(mPassword);
+      }
     }
   }
  else   if (security.equals(OPEN)) {

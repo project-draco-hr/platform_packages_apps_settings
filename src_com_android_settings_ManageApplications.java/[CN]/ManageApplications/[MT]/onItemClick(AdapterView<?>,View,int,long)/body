@@ -1,7 +1,4 @@
 {
-  mCurrentPkgIdx=position;
-  ApplicationInfo info=mAppList.get(position);
-  mCurrentPkg=info;
-  PackageStats ps=mSizeMap.get(info.packageName);
-  startApplicationDetailsActivity(info,ps);
+  ApplicationInfo info=(ApplicationInfo)mAppInfoAdapter.getItem(position);
+  startApplicationDetailsActivity(info,mAppInfoAdapter.getAppStats(info.packageName));
 }

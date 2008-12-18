@@ -1,0 +1,7 @@
+{
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+  int status=profileManager.getConnectionStatus(mAddress);
+  if (SettingsBtStatus.isConnectionStatusConnected(status)) {
+    profileManager.disconnect(mAddress);
+  }
+}

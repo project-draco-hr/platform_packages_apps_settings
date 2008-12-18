@@ -1,0 +1,12 @@
+{
+  int pairingStatus=getPairingStatus();
+  if (isConnected()) {
+    askDisconnect();
+  }
+ else   if (pairingStatus == SettingsBtStatus.PAIRING_STATUS_PAIRED) {
+    connect();
+  }
+ else   if (pairingStatus == SettingsBtStatus.PAIRING_STATUS_UNPAIRED) {
+    pair();
+  }
+}

@@ -1,0 +1,10 @@
+{
+  if (mLocalManager == null) {
+    return;
+  }
+  ExtendedBluetoothState state=mLocalManager.getBluetoothState();
+  mCheckBoxPreference.setEnabled(state == ExtendedBluetoothState.ENABLED || state == ExtendedBluetoothState.DISABLED);
+  handleStateChanged(state);
+  mContext.registerReceiver(mReceiver,new IntentFilter(LocalBluetoothManager.EXTENDED_BLUETOOTH_STATE_CHANGED_ACTION));
+  mCheckBoxPreference.setOnPreferenceChangeListener(this);
+}

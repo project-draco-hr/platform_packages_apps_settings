@@ -42,24 +42,7 @@ catch (  IOException e) {
     return;
   }
   WebView webView=new WebView(this);
-  if (LOGV)   Log.v(TAG,"Started encode at " + System.currentTimeMillis());
-  String dataStr;
-  try {
-    byte[] base64Bytes=Base64.encodeBase64(data.toString().getBytes("ISO8859_1"));
-    dataStr=new String(base64Bytes);
-  }
- catch (  UnsupportedEncodingException e) {
-    Log.e(TAG,"Could not convert to base64",e);
-    showErrorAndFinish();
-    return;
-  }
-  if (LOGV)   Log.v(TAG,"Ended encode at " + System.currentTimeMillis());
-  if (LOGV) {
-    Log.v(TAG,"Started test decode at " + System.currentTimeMillis());
-    Base64.decodeBase64(dataStr.getBytes());
-    Log.v(TAG,"Ended decode at " + System.currentTimeMillis());
-  }
-  webView.loadData(dataStr,"text/html","base64");
+  webView.loadDataWithBaseURL(null,data.toString(),"text/html","utf-8",null);
   webView.setWebViewClient(new WebViewClient(){
     @Override public void onPageFinished(    WebView view,    String url){
       mAlert.setTitle(getString(R.string.settings_license_activity_title));

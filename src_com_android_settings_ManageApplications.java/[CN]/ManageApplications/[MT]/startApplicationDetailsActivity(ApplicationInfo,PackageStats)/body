@@ -1,11 +1,8 @@
 {
   Intent intent=new Intent(Intent.ACTION_VIEW);
   intent.setClass(this,InstalledAppDetails.class);
-  intent.putExtra(APP_PKG_NAME,info.packageName);
-  if (localLOGV)   Log.i(TAG,"code=" + ps.codeSize + ", cache="+ ps.cacheSize+ ", data="+ ps.dataSize);
+  mCurrentPkgName=info.packageName;
+  intent.putExtra(APP_PKG_NAME,mCurrentPkgName);
   intent.putExtra(APP_PKG_SIZE,ps);
-  if (localLOGV)   Log.i(TAG,"Starting sub activity to display info for app:" + info + " with intent:"+ intent);
-  if ((info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-  }
   startActivityForResult(intent,INSTALLED_APP_DETAILS);
 }

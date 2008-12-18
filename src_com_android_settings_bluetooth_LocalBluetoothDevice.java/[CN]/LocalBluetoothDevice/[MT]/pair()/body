@@ -1,0 +1,9 @@
+{
+  BluetoothDevice manager=mLocalManager.getBluetoothManager();
+  if (manager.isDiscovering()) {
+    manager.cancelDiscovery();
+  }
+  if (mLocalManager.createBonding(mAddress)) {
+    setPairingStatus(SettingsBtStatus.PAIRING_STATUS_PAIRING);
+  }
+}

@@ -1,0 +1,22 @@
+{
+  ListPreference pref=(ListPreference)findPreference(KEY_NUM_CHANNELS);
+  pref.setOnPreferenceChangeListener(this);
+  WifiManager wifiManager=(WifiManager)getSystemService(WIFI_SERVICE);
+  int[] validChannelCounts=wifiManager.getValidChannelCounts();
+  if (validChannelCounts == null) {
+    Toast.makeText(this,R.string.wifi_setting_num_channels_error,Toast.LENGTH_SHORT).show();
+    return;
+  }
+  String[] entries=new String[validChannelCounts.length];
+  String[] entryValues=new String[validChannelCounts.length];
+  for (int i=0; i < validChannelCounts.length; i++) {
+    entryValues[i]=String.valueOf(validChannelCounts[i]);
+    entries[i]=getString(R.string.wifi_setting_num_channels_channel_phrase,validChannelCounts[i]);
+  }
+  pref.setEntries(entries);
+  pref.setEntryValues(entryValues);
+  int numChannels=wifiManager.getNumAllowedChannels();
+  if (numChannels >= 0) {
+    pref.setValue(String.valueOf(numChannels));
+  }
+}

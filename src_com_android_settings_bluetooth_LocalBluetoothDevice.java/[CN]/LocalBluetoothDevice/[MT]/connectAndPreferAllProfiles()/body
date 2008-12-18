@@ -1,0 +1,8 @@
+{
+  if (!ensurePaired())   return;
+  Context context=mLocalManager.getContext();
+  for (  Profile profile : mProfiles) {
+    LocalBluetoothProfileManager.setPreferredProfile(context,mAddress,profile,true);
+    connect(profile);
+  }
+}

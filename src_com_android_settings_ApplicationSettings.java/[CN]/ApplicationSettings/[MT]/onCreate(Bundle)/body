@@ -3,4 +3,8 @@
   addPreferencesFromResource(R.xml.application_settings);
   mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
   mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
+  if (getResources().getConfiguration().keyboard == Configuration.KEYBOARD_NOKEYS) {
+    Preference quickLaunchSetting=findPreference(KEY_QUICK_LAUNCH);
+    getPreferenceScreen().removePreference(quickLaunchSetting);
+  }
 }

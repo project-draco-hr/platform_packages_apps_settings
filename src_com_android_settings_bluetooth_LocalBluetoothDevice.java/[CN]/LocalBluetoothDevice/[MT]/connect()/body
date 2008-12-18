@@ -1,0 +1,14 @@
+{
+  if (!ensurePaired())   return;
+  Context context=mLocalManager.getContext();
+  boolean hasAtLeastOnePreferredProfile=false;
+  for (  Profile profile : mProfiles) {
+    if (LocalBluetoothProfileManager.isPreferredProfile(context,mAddress,profile)) {
+      hasAtLeastOnePreferredProfile=true;
+      connect(profile);
+    }
+  }
+  if (!hasAtLeastOnePreferredProfile) {
+    connectAndPreferAllProfiles();
+  }
+}

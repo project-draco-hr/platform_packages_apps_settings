@@ -4,7 +4,7 @@
     showAddOtherNetworkDialog();
   }
  else   if (preference == mOpenNetworkNotificationsEnabled) {
-    Settings.System.putInt(getContentResolver(),Settings.System.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,mOpenNetworkNotificationsEnabled.isChecked() ? 1 : 0);
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,mOpenNetworkNotificationsEnabled.isChecked() ? 1 : 0);
   }
  else   if (preference instanceof AccessPointPreference) {
     AccessPointState state=((AccessPointPreference)preference).getAccessPointState();

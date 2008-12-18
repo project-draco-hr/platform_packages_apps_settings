@@ -1,7 +1,7 @@
 {
   String packageName=mAppInfo.packageName;
-  if (v == mUninstallButton) {
-    if (mSysPackage) {
+  if (v == mAppButton) {
+    if (mCanUninstall) {
       new AlertDialog.Builder(this).setTitle(getString(R.string.clear_data_dlg_title)).setIcon(R.drawable.ic_dialog_alert).setMessage(getString(R.string.clear_data_dlg_text)).setPositiveButton(R.string.dlg_ok,this).setNegativeButton(R.string.dlg_cancel,this).show();
     }
  else {
@@ -19,5 +19,11 @@
     Intent intent=new Intent(Intent.ACTION_DEFAULT);
     intent.setClassName(mAppInfo.packageName,mAppInfo.manageSpaceActivityName);
     startActivityForResult(intent,-1);
+  }
+ else   if (v == mClearCacheButton) {
+    if (mClearCacheObserver == null) {
+      mClearCacheObserver=new ClearCacheObserver();
+    }
+    mPm.deleteApplicationCacheFiles(packageName,mClearCacheObserver);
   }
 }

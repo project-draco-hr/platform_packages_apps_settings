@@ -12,6 +12,10 @@
   mVisiblePattern.setKey(KEY_VISIBLE_PATTERN);
   mVisiblePattern.setTitle(R.string.lockpattern_settings_enable_visible_pattern_title);
   inlinePrefCat.addPreference(mVisiblePattern);
+  mTactileFeedback=new CheckBoxPreference(this);
+  mTactileFeedback.setKey(KEY_TACTILE_FEEDBACK_ENABLED);
+  mTactileFeedback.setTitle(R.string.lockpattern_settings_enable_tactile_feedback_title);
+  inlinePrefCat.addPreference(mTactileFeedback);
   Intent intent=new Intent();
   intent.setClassName("com.android.settings","com.android.settings.ChooseLockPatternTutorial");
   mChoosePattern=getPreferenceManager().createPreferenceScreen(this);

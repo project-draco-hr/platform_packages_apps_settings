@@ -7,4 +7,21 @@
   if (phoneVibrate != mVibrate.isChecked() || force) {
     mVibrate.setChecked(phoneVibrate);
   }
+  boolean animations=true;
+  try {
+    mAnimationScales=mWindowManager.getAnimationScales();
+  }
+ catch (  RemoteException e) {
+  }
+  if (mAnimationScales != null) {
+    for (int i=0; i < mAnimationScales.length; i++) {
+      if (mAnimationScales[i] == 0) {
+        animations=false;
+        break;
+      }
+    }
+  }
+  if (animations != mAnimations.isChecked() || force) {
+    mAnimations.setChecked(animations);
+  }
 }

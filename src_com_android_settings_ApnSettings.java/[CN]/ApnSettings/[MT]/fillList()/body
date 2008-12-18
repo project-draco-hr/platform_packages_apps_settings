@@ -6,12 +6,14 @@
   while (!mCursor.isAfterLast()) {
     String name=mCursor.getString(NAME_INDEX);
     String apn=mCursor.getString(APN_INDEX);
-    Preference pref=new Preference((Context)this);
-    pref.setKey(mCursor.getString(ID_INDEX));
-    pref.setTitle(name);
-    pref.setSummary(apn);
-    pref.setPersistent(false);
-    apnList.addPreference(pref);
+    if (name != null && apn != null && TextUtils.getTrimmedLength(name) > 0 && TextUtils.getTrimmedLength(apn) > 0) {
+      Preference pref=new Preference((Context)this);
+      pref.setKey(mCursor.getString(ID_INDEX));
+      pref.setTitle(name);
+      pref.setSummary(apn);
+      pref.setPersistent(false);
+      apnList.addPreference(pref);
+    }
     mCursor.moveToNext();
   }
 }

@@ -6,6 +6,9 @@
  else   if (KEY_VISIBLE_PATTERN.equals(key)) {
     mLockPatternUtils.setVisiblePatternEnabled(isToggled(preference));
   }
+ else   if (KEY_TACTILE_FEEDBACK_ENABLED.equals(key)) {
+    mLockPatternUtils.setTactileFeedbackEnabled(isToggled(preference));
+  }
  else   if (preference == mShowPassword) {
     Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,mShowPassword.isChecked() ? 1 : 0);
   }

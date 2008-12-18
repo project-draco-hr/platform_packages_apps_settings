@@ -1,0 +1,7 @@
+{
+  String depKey=mCheckBoxPreference.getDependency();
+  if (TextUtils.isEmpty(depKey)) {
+    return null;
+  }
+  return mCheckBoxPreference.getPreferenceManager().findPreference(depKey);
+}

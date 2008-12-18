@@ -1,0 +1,11 @@
+{
+  super.onCreate(savedInstanceState);
+  mLocalManager=LocalBluetoothManager.getInstance(this);
+  if (mLocalManager == null)   finish();
+  addPreferencesFromResource(R.xml.bluetooth_settings);
+  mEnabler=new BluetoothEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_CHECKBOX));
+  mDiscoverableEnabler=new BluetoothDiscoverableEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_DISCOVERABLE));
+  mNamePreference=(BluetoothNamePreference)findPreference(KEY_BT_NAME);
+  mDeviceList=(ProgressCategory)findPreference(KEY_BT_DEVICE_LIST);
+  registerForContextMenu(getListView());
+}

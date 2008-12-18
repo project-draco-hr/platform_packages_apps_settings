@@ -1,0 +1,23 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.input_methods_prefs);
+  InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+  mInputMethodProperties=imm.getInputMethodList();
+  mLastInputMethodId=Settings.Secure.getString(getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD);
+  int N=(mInputMethodProperties == null ? 0 : mInputMethodProperties.size());
+  for (int i=0; i < N; ++i) {
+    InputMethodInfo property=mInputMethodProperties.get(i);
+    String prefKey=property.getId();
+    CharSequence label=property.loadLabel(getPackageManager());
+    CheckBoxPreference chkbxPref=new CheckBoxPreference(this);
+    chkbxPref.setKey(prefKey);
+    chkbxPref.setTitle(label);
+    getPreferenceScreen().addPreference(chkbxPref);
+    if (null != property.getSettingsActivity()) {
+      PreferenceScreen prefScreen=new PreferenceScreen(this,null);
+      prefScreen.setKey(property.getSettingsActivity());
+      prefScreen.setTitle(label + " settings");
+      getPreferenceScreen().addPreference(prefScreen);
+    }
+  }
+}

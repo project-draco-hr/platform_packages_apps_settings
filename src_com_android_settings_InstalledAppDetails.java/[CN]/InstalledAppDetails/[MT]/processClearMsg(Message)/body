@@ -3,11 +3,10 @@
   String packageName=mAppInfo.packageName;
   if (result == OP_SUCCESSFUL) {
     Log.i(TAG,"Cleared user data for system package:" + packageName);
-    PkgSizeObserver observer=new PkgSizeObserver();
-    mPm.getPackageSizeInfo(packageName,observer);
+    mPm.getPackageSizeInfo(packageName,mSizeObserver);
   }
  else {
-    mUninstallButton.setText(R.string.clear_user_data_text);
-    mUninstallButton.setEnabled(true);
+    mAppButton.setText(R.string.clear_user_data_text);
+    mAppButton.setEnabled(true);
   }
 }

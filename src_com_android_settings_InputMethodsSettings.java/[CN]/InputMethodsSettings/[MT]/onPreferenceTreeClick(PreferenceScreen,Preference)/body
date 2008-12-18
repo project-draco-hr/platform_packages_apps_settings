@@ -1,0 +1,28 @@
+{
+  if (!TextUtils.isEmpty(SystemProperties.get("ro.monkey"))) {
+    return false;
+  }
+  if (preference instanceof CheckBoxPreference) {
+    CheckBoxPreference chkPref=(CheckBoxPreference)preference;
+    String id=getInputMethodIdFromKey(chkPref.getKey());
+    if (chkPref.isChecked()) {
+      mLastTickedInputMethodId=id;
+    }
+ else     if (id.equals(mLastTickedInputMethodId)) {
+      mLastTickedInputMethodId=null;
+    }
+  }
+ else   if (preference instanceof PreferenceScreen) {
+    if (preference.getIntent() == null) {
+      PreferenceScreen pref=(PreferenceScreen)preference;
+      String activityName=pref.getKey();
+      String packageName=activityName.substring(0,activityName.lastIndexOf("."));
+      if (activityName.length() > 0) {
+        Intent i=new Intent(Intent.ACTION_MAIN);
+        i.setClassName(packageName,activityName);
+        startActivity(i);
+      }
+    }
+  }
+  return false;
+}

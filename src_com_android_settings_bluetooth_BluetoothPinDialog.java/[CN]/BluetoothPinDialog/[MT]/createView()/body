@@ -1,0 +1,8 @@
+{
+  View view=getLayoutInflater().inflate(R.layout.bluetooth_pin_entry,null);
+  String name=mLocalManager.getLocalDeviceManager().getName(mAddress);
+  TextView messageView=(TextView)view.findViewById(R.id.message);
+  messageView.setText(getString(R.string.bluetooth_enter_pin_msg,name));
+  mPinView=(EditText)view.findViewById(R.id.text);
+  return view;
+}

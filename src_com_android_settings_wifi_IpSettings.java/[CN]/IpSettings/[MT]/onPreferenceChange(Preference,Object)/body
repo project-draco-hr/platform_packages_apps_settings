@@ -1,9 +1,26 @@
 {
-  String value=(String)newValue;
-  if (!isIpAddress(value)) {
-    Toast.makeText(this,R.string.wifi_ip_settings_invalid_ip,Toast.LENGTH_LONG).show();
-    return false;
+  String key=preference.getKey();
+  if (key == null)   return true;
+  if (key.equals(KEY_NUM_CHANNELS)) {
+    try {
+      int numChannels=Integer.parseInt((String)newValue);
+      WifiManager wifiManager=(WifiManager)getSystemService(WIFI_SERVICE);
+      if (!wifiManager.setNumAllowedChannels(numChannels)) {
+        Toast.makeText(this,R.string.wifi_setting_num_channels_error,Toast.LENGTH_SHORT).show();
+      }
+    }
+ catch (    NumberFormatException e) {
+      Toast.makeText(this,R.string.wifi_setting_num_channels_error,Toast.LENGTH_SHORT).show();
+      return false;
+    }
   }
-  preference.setSummary(value);
+ else {
+    String value=(String)newValue;
+    if (!isIpAddress(value)) {
+      Toast.makeText(this,R.string.wifi_ip_settings_invalid_ip,Toast.LENGTH_LONG).show();
+      return false;
+    }
+    preference.setSummary(value);
+  }
   return true;
 }

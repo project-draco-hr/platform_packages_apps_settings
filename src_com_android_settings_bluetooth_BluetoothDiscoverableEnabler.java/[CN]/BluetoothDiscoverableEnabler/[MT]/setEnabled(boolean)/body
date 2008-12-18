@@ -1,0 +1,14 @@
+{
+  BluetoothDevice manager=mLocalManager.getBluetoothManager();
+  if (enable) {
+    int timeout=getDiscoverableTimeout();
+    manager.setDiscoverableTimeout(timeout);
+    long endTimestamp=System.currentTimeMillis() + timeout * 1000;
+    persistDiscoverableEndTimestamp(endTimestamp);
+    manager.setMode(BluetoothDevice.MODE_DISCOVERABLE);
+    handleModeChanged(BluetoothDevice.MODE_DISCOVERABLE);
+  }
+ else {
+    manager.setMode(BluetoothDevice.MODE_CONNECTABLE);
+  }
+}

@@ -1,6 +1,12 @@
 {
+  IMountService mountService=getMountService();
   try {
-    mMountService.unmountMedia(Environment.getExternalStorageDirectory().toString());
+    if (mountService != null) {
+      mountService.unmountMedia(Environment.getExternalStorageDirectory().toString());
+    }
+ else {
+      Log.e(TAG,"Mount service is null, can't unmount");
+    }
   }
  catch (  RemoteException ex) {
     updateMemoryStatus();

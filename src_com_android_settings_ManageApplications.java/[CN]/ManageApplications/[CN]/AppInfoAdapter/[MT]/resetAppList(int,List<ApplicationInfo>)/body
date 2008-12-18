@@ -1,0 +1,15 @@
+{
+  mAppLocalList=appList;
+  for (  ApplicationInfo applicationInfo : mAppLocalList) {
+    AppInfo appInfo=mAppPropMap.get(applicationInfo.packageName);
+    if (appInfo == null) {
+      AppInfo rInfo=getFromCache(applicationInfo.packageName);
+      if (rInfo == null) {
+        return false;
+      }
+      mAppPropMap.put(applicationInfo.packageName,rInfo);
+    }
+  }
+  sortList(mSortOrder);
+  return true;
+}

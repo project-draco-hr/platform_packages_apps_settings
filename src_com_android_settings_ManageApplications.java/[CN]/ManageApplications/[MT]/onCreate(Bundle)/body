@@ -1,11 +1,21 @@
 {
   super.onCreate(savedInstanceState);
-  String action=getIntent().getAction();
+  Intent lIntent=getIntent();
+  String action=lIntent.getAction();
   if (action.equals(Intent.ACTION_MANAGE_PACKAGE_STORAGE)) {
     mSortOrder=SORT_ORDER_SIZE;
   }
   mPm=getPackageManager();
-  mBStr=getString(R.string.b_text);
-  mKbStr=getString(R.string.kb_text);
-  mMbStr=getString(R.string.mb_text);
+  requestWindowFeature(Window.FEATURE_RIGHT_ICON);
+  requestWindowFeature(Window.FEATURE_PROGRESS);
+  requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+  mLoadingDlg=new ProgressDialog(this);
+  mLoadingDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+  mLoadingDlg.setMessage(getText(R.string.loading));
+  mLoadingDlg.setIndeterminate(true);
+  mLoadingDlg.setOnCancelListener(this);
+  mDefaultAppIcon=Resources.getSystem().getDrawable(com.android.internal.R.drawable.sym_def_app_icon);
+  mInvalidSizeStr=getText(R.string.invalid_size_value);
+  mComputingSizeStr=getText(R.string.computing_size);
+  mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 }

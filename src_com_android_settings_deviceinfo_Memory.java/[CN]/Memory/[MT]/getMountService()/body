@@ -1,0 +1,12 @@
+{
+  if (mMountService == null) {
+    IBinder service=ServiceManager.getService("mount");
+    if (service != null) {
+      mMountService=IMountService.Stub.asInterface(service);
+    }
+ else {
+      Log.e(TAG,"Can't get mount service");
+    }
+  }
+  return mMountService;
+}

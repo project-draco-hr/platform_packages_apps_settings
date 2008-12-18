@@ -1,18 +1,8 @@
 {
-  PackageStats aps, bps;
-  aps=mSizeMap.get(a.packageName);
-  bps=mSizeMap.get(b.packageName);
-  if (aps == null && bps == null) {
-    return 0;
-  }
- else   if (aps == null) {
-    return 1;
-  }
- else   if (bps == null) {
-    return -1;
-  }
-  long atotal=aps.dataSize + aps.codeSize + aps.cacheSize;
-  long btotal=bps.dataSize + bps.codeSize + bps.cacheSize;
+  AppInfo ainfo=mAppPropMap.get(a.packageName);
+  AppInfo binfo=mAppPropMap.get(b.packageName);
+  long atotal=ainfo.getTotalSize();
+  long btotal=binfo.getTotalSize();
   long ret=atotal - btotal;
   if (ret < 0) {
     return 1;

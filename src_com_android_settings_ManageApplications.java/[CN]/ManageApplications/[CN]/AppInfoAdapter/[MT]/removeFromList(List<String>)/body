@@ -1,0 +1,45 @@
+{
+  if (pkgNames == null) {
+    Log.w(TAG,"Removing null pkg list from List Adapter");
+    return;
+  }
+  int imax=mAppLocalList.size();
+  boolean found=false;
+  ApplicationInfo info;
+  int i, k;
+  String pkgName;
+  int kmax=pkgNames.size();
+  if (kmax <= 0) {
+    Log.w(TAG,"Removing empty pkg list from List Adapter");
+    return;
+  }
+  int idxArr[]=new int[kmax];
+  for (k=0; k < kmax; k++) {
+    idxArr[k]=-1;
+  }
+  for (i=0; i < imax; i++) {
+    info=mAppLocalList.get(i);
+    for (k=0; k < kmax; k++) {
+      pkgName=pkgNames.get(k);
+      if (info.packageName.equalsIgnoreCase(pkgName)) {
+        idxArr[k]=i;
+        found=true;
+        break;
+      }
+    }
+  }
+  Arrays.sort(idxArr);
+  for (k=kmax - 1; k >= 0; k--) {
+    if (idxArr[k] == -1) {
+      break;
+    }
+    info=mAppLocalList.get(idxArr[k]);
+    mAppLocalList.remove(idxArr[k]);
+    mAppPropMap.remove(info.packageName);
+    if (localLOGV)     Log.i(TAG,"Removed pkg:" + info.packageName + " list");
+  }
+  if (found) {
+    adjustIndex();
+    notifyDataSetChanged();
+  }
+}

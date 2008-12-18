@@ -1,0 +1,19 @@
+{
+  if (isBusy())   return;
+  if (mProfiles.size() == 0)   return;
+  int pairingStatus=getPairingStatus();
+  boolean isConnected=isConnected();
+  menu.setHeaderTitle(getName());
+  if (isConnected) {
+    menu.add(0,CONTEXT_ITEM_DISCONNECT,0,R.string.bluetooth_device_context_disconnect);
+  }
+ else {
+    int connectString=pairingStatus == SettingsBtStatus.PAIRING_STATUS_UNPAIRED ? R.string.bluetooth_device_context_pair_connect : R.string.bluetooth_device_context_connect;
+    menu.add(0,CONTEXT_ITEM_CONNECT,0,connectString);
+  }
+  if (pairingStatus == SettingsBtStatus.PAIRING_STATUS_PAIRED) {
+    int unpairString=isConnected ? R.string.bluetooth_device_context_disconnect_unpair : R.string.bluetooth_device_context_unpair;
+    menu.add(0,CONTEXT_ITEM_UNPAIR,0,unpairString);
+    menu.add(0,CONTEXT_ITEM_CONNECT_ADVANCED,0,R.string.bluetooth_device_context_connect_advanced);
+  }
+}

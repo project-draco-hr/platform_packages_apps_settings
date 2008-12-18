@@ -1,0 +1,6 @@
+{
+  if (device.getPairingStatus() == SettingsBtStatus.PAIRING_STATUS_UNPAIRED && !device.isVisible()) {
+    mDevices.remove(device);
+    dispatchDeviceDeleted(device);
+  }
+}

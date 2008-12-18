@@ -1,11 +1,11 @@
 {
   if (v == mSkipButton) {
+    setResult(ChooseLockPattern.RESULT_FINISHED);
     finish();
   }
  else   if (v == mNextButton) {
     stopAnimation(mAnimation);
     Intent intent=new Intent(this,ChooseLockPattern.class);
-    startActivity(intent);
-    finish();
+    startActivityForResult(intent,REQUESTCODE_CHOOSE);
   }
 }

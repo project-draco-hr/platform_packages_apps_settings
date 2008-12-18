@@ -1,0 +1,11 @@
+{
+  if (mManager.isDiscovering()) {
+    dispatchScanningStateChanged(true);
+  }
+ else {
+    if (!force && mLastScan + SCAN_EXPIRATION_MS > System.currentTimeMillis())     return;
+    if (mManager.startDiscovery(true)) {
+      mLastScan=System.currentTimeMillis();
+    }
+  }
+}

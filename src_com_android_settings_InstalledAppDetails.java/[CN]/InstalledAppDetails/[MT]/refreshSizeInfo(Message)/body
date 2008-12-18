@@ -1,26 +1,40 @@
 {
   boolean changed=false;
-  Intent intent=new Intent();
   PackageStats newPs=msg.getData().getParcelable(ATTR_PACKAGE_STATS);
   long newTot=newPs.cacheSize + newPs.codeSize + newPs.dataSize;
-  long oldTot=mSizeInfo.cacheSize + mSizeInfo.codeSize + mSizeInfo.dataSize;
-  if (newTot != oldTot) {
-    mTotalSize.setText(getSizeStr(newTot));
-    changed=true;
-  }
-  if (newPs.codeSize != mSizeInfo.codeSize) {
-    mAppSize.setText(getSizeStr(newPs.codeSize));
-    changed=true;
-  }
-  if ((newPs.dataSize != mSizeInfo.dataSize) || (newPs.cacheSize != mSizeInfo.cacheSize)) {
-    mDataSize.setText(getSizeStr(newPs.dataSize + newPs.cacheSize));
-    changed=true;
-  }
-  if (changed) {
-    mUninstallButton.setText(R.string.clear_user_data_text);
+  if (mSizeInfo == null) {
     mSizeInfo=newPs;
-    intent.putExtra(ManageApplications.APP_PKG_SIZE,mSizeInfo);
+    mTotalSize.setText(getSizeStr(newTot));
+    mAppSize.setText(getSizeStr(newPs.codeSize));
+    mDataSize.setText(getSizeStr(newPs.dataSize + newPs.cacheSize));
   }
-  intent.putExtra(ManageApplications.APP_CHG,changed);
-  setResult(ManageApplications.RESULT_OK,intent);
+ else {
+    long oldTot=mSizeInfo.cacheSize + mSizeInfo.codeSize + mSizeInfo.dataSize;
+    if (newTot != oldTot) {
+      mTotalSize.setText(getSizeStr(newTot));
+      changed=true;
+    }
+    if (newPs.codeSize != mSizeInfo.codeSize) {
+      mAppSize.setText(getSizeStr(newPs.codeSize));
+      changed=true;
+    }
+    if ((newPs.dataSize != mSizeInfo.dataSize) || (newPs.cacheSize != mSizeInfo.cacheSize)) {
+      mDataSize.setText(getSizeStr(newPs.dataSize + newPs.cacheSize));
+    }
+    if (changed) {
+      mSizeInfo=newPs;
+    }
+  }
+  long data=mSizeInfo.dataSize + mSizeInfo.cacheSize;
+  if (mAppButtonState != AppButtonStates.NONE) {
+    mAppButton.setText(mAppButtonText);
+    if ((mAppButtonState == AppButtonStates.CLEAR_DATA) && (data == 0)) {
+      mAppButton.setEnabled(false);
+    }
+ else {
+      mAppButton.setEnabled(true);
+      mAppButton.setOnClickListener(this);
+    }
+  }
+  refreshCacheInfo(newPs.cacheSize);
 }

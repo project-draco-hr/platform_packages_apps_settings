@@ -11,7 +11,7 @@
       addInfoRow(R.string.security,mState.getHumanReadableSecurity());
     }
     if (mState.primary && mState.ipAddress != 0) {
-      addInfoRow(R.string.ip_address,ipAddressToString(mState.ipAddress));
+      addInfoRow(R.string.ip_address,Formatter.formatIpAddress(mState.ipAddress));
     }
   }
  else   if (mMode == MODE_CONFIGURE) {

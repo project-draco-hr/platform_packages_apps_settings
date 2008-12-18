@@ -1,0 +1,11 @@
+{
+  BluetoothDevice manager=mLocalManager.getBluetoothManager();
+switch (getPairingStatus()) {
+case SettingsBtStatus.PAIRING_STATUS_PAIRED:
+    manager.removeBonding(mAddress);
+  break;
+case SettingsBtStatus.PAIRING_STATUS_PAIRING:
+manager.cancelBondingProcess(mAddress);
+break;
+}
+}

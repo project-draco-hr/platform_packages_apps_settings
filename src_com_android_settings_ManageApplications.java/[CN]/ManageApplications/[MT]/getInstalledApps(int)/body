@@ -1,0 +1,44 @@
+{
+  List<ApplicationInfo> installedAppList=mPm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
+  if (installedAppList == null) {
+    return new ArrayList<ApplicationInfo>();
+  }
+  if (filterOption == FILTER_APPS_THIRD_PARTY) {
+    List<ApplicationInfo> appList=new ArrayList<ApplicationInfo>();
+    for (    ApplicationInfo appInfo : installedAppList) {
+      if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+        appList.add(appInfo);
+      }
+    }
+    return appList;
+  }
+ else   if (filterOption == FILTER_APPS_RUNNING) {
+    List<ApplicationInfo> appList=new ArrayList<ApplicationInfo>();
+    List<ActivityManager.RunningAppProcessInfo> procList=getRunningAppProcessesList();
+    if ((procList == null) || (procList.size() == 0)) {
+      return appList;
+    }
+    for (    ActivityManager.RunningAppProcessInfo appProcInfo : procList) {
+      if ((appProcInfo != null) && (appProcInfo.pkgList != null)) {
+        int size=appProcInfo.pkgList.length;
+        for (int i=0; i < size; i++) {
+          ApplicationInfo appInfo=null;
+          try {
+            appInfo=mPm.getApplicationInfo(appProcInfo.pkgList[i],PackageManager.GET_UNINSTALLED_PACKAGES);
+          }
+ catch (          NameNotFoundException e) {
+            Log.w(TAG,"Error retrieving ApplicationInfo for pkg:" + appProcInfo.pkgList[i]);
+            continue;
+          }
+          if (appInfo != null) {
+            appList.add(appInfo);
+          }
+        }
+      }
+    }
+    return appList;
+  }
+ else {
+    return installedAppList;
+  }
+}

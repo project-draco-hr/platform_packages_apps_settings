@@ -1,0 +1,24 @@
+{
+switch (item.getItemId()) {
+case CONTEXT_ITEM_DISCONNECT:
+    disconnect();
+  break;
+case CONTEXT_ITEM_CONNECT:
+connect();
+break;
+case CONTEXT_ITEM_UNPAIR:
+unpair();
+break;
+case CONTEXT_ITEM_CONNECT_ADVANCED:
+Intent intent=new Intent();
+Context context=mLocalManager.getForegroundActivity();
+if (context == null) {
+context=mLocalManager.getContext();
+intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+}
+intent.setClass(context,ConnectSpecificProfilesActivity.class);
+intent.putExtra(ConnectSpecificProfilesActivity.EXTRA_ADDRESS,mAddress);
+context.startActivity(intent);
+break;
+}
+}

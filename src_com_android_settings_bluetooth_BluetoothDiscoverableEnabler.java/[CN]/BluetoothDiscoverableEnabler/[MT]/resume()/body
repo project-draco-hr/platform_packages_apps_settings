@@ -2,7 +2,9 @@
   if (mLocalManager == null) {
     return;
   }
-  mContext.registerReceiver(mReceiver,new IntentFilter(BluetoothIntent.MODE_CHANGED_ACTION));
+  IntentFilter filter=new IntentFilter(BluetoothIntent.MODE_CHANGED_ACTION);
+  filter.addAction(BluetoothIntent.DISABLED_ACTION);
+  mContext.registerReceiver(mReceiver,filter);
   mCheckBoxPreference.setOnPreferenceChangeListener(this);
   handleModeChanged(mLocalManager.getBluetoothManager().getMode());
 }

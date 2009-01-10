@@ -1,6 +1,8 @@
 {
   int mode=mLocalManager.getBluetoothManager().getMode();
-  if (mode != BluetoothDevice.MODE_DISCOVERABLE)   return;
+  if (mode != BluetoothDevice.MODE_DISCOVERABLE) {
+    return;
+  }
   long currentTimestamp=System.currentTimeMillis();
   long endTimestamp=mLocalManager.getSharedPreferences().getLong(SHARED_PREFERENCES_KEY_DISCOVERABLE_END_TIMESTAMP,0);
   if (currentTimestamp > endTimestamp) {

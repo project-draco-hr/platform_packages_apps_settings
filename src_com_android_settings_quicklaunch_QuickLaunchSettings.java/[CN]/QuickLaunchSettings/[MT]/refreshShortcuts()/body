@@ -13,7 +13,7 @@
     char shortcut=Character.toLowerCase((char)c.getInt(COLUMN_SHORTCUT));
     if (shortcut == 0)     continue;
     ShortcutPreference pref=getOrCreatePreference(shortcut);
-    pref.setTitle(c.getString(COLUMN_TITLE));
+    pref.setTitle(Bookmarks.getTitle(this,c));
     pref.setSummary(getString(R.string.quick_launch_shortcut,String.valueOf(shortcut)));
     pref.setHasBookmark(true);
     newBookmarkedShortcuts.put(shortcut,true);

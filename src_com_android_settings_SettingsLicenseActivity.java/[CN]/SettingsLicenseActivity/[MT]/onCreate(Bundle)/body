@@ -6,14 +6,19 @@
     showErrorAndFinish();
     return;
   }
-  FileReader fileReader=null;
+  InputStreamReader inputReader=null;
   StringBuilder data=null;
   try {
     data=new StringBuilder(2048);
     char tmp[]=new char[2048];
     int numRead;
-    fileReader=new FileReader(fileName);
-    while ((numRead=fileReader.read(tmp)) >= 0) {
+    if (fileName.endsWith(".gz")) {
+      inputReader=new InputStreamReader(new GZIPInputStream(new FileInputStream(fileName)));
+    }
+ else {
+      inputReader=new FileReader(fileName);
+    }
+    while ((numRead=inputReader.read(tmp)) >= 0) {
       data.append(tmp,0,numRead);
     }
   }
@@ -29,8 +34,8 @@ catch (  IOException e) {
   }
  finally {
     try {
-      if (fileReader != null) {
-        fileReader.close();
+      if (inputReader != null) {
+        inputReader.close();
       }
     }
  catch (    IOException e) {

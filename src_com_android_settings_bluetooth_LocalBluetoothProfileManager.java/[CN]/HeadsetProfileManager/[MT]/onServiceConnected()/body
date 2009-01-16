@@ -1,0 +1,10 @@
+{
+  mUiHandler.post(new Runnable(){
+    public void run(){
+      String address=mService.getHeadsetAddress();
+      if (TextUtils.isEmpty(address))       return;
+      mLocalManager.getLocalDeviceManager().onProfileStateChanged(address);
+    }
+  }
+);
+}

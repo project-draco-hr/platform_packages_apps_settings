@@ -1,0 +1,6 @@
+{
+  ListPreference pref=(ListPreference)findPreference(KEY_SLEEP_POLICY);
+  pref.setOnPreferenceChangeListener(this);
+  int value=Settings.System.getInt(getContentResolver(),Settings.System.WIFI_SLEEP_POLICY,Settings.System.WIFI_SLEEP_POLICY_DEFAULT);
+  pref.setValue(String.valueOf(value));
+}

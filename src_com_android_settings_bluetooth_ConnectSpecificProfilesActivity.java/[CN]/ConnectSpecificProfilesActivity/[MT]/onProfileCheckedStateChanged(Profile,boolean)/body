@@ -7,5 +7,6 @@
       mDevice.disconnect(profile);
     }
   }
-  LocalBluetoothProfileManager.setPreferredProfile(this,mDevice.getAddress(),profile,checked);
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
+  profileManager.setPreferred(mDevice.getAddress(),checked);
 }

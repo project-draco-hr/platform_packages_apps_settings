@@ -3,7 +3,8 @@
   Context context=mLocalManager.getContext();
   boolean hasAtLeastOnePreferredProfile=false;
   for (  Profile profile : mProfiles) {
-    if (LocalBluetoothProfileManager.isPreferredProfile(context,mAddress,profile)) {
+    LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+    if (profileManager.isPreferred(mAddress)) {
       hasAtLeastOnePreferredProfile=true;
       connect(profile);
     }

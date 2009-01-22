@@ -1,6 +1,6 @@
 {
   BluetoothDevice manager=mLocalManager.getBluetoothManager();
-  String[] bondedAddresses=manager.listBondings();
+  String[] bondedAddresses=manager.listBonds();
   if (bondedAddresses == null)   return;
   for (  String address : bondedAddresses) {
     LocalBluetoothDevice device=findDevice(address);

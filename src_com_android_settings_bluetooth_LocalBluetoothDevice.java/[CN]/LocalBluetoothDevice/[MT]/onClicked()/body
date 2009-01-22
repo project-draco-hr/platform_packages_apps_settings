@@ -1,12 +1,12 @@
 {
-  int pairingStatus=getPairingStatus();
+  int bondState=getBondState();
   if (isConnected()) {
     askDisconnect();
   }
- else   if (pairingStatus == SettingsBtStatus.PAIRING_STATUS_PAIRED) {
+ else   if (bondState == BluetoothDevice.BOND_BONDED) {
     connect();
   }
- else   if (pairingStatus == SettingsBtStatus.PAIRING_STATUS_UNPAIRED) {
+ else   if (bondState == BluetoothDevice.BOND_NOT_BONDED) {
     pair();
   }
 }

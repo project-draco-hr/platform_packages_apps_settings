@@ -1,0 +1,8 @@
+{
+  if (mDialogEditingWord != null) {
+    deleteWord(mDialogEditingWord);
+  }
+  deleteWord(word);
+  UserDictionary.Words.addWord(this,word.toString(),1,UserDictionary.Words.LOCALE_TYPE_ALL);
+  mCursor.requery();
+}

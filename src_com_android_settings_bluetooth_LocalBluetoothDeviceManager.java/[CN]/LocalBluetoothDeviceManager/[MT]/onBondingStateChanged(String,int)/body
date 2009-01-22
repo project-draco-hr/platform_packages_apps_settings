@@ -1,0 +1,12 @@
+{
+  LocalBluetoothDevice device=findDevice(address);
+  if (device == null) {
+    Log.e(TAG,"Got bonding state changed for " + address + ", but we have no record of that device.");
+    return;
+  }
+  device.setBondState(bondState);
+  checkForDeviceRemoval(device);
+  if (bondState == BluetoothDevice.BOND_BONDED) {
+    device.connect();
+  }
+}

@@ -1,10 +1,10 @@
 {
-switch (pairingStatus) {
-case PAIRING_STATUS_PAIRED:
+switch (bondState) {
+case BluetoothDevice.BOND_BONDED:
     return R.string.bluetooth_paired;
-case PAIRING_STATUS_PAIRING:
+case BluetoothDevice.BOND_BONDING:
   return R.string.bluetooth_pairing;
-case PAIRING_STATUS_UNPAIRED:
+case BluetoothDevice.BOND_NOT_BONDED:
 return R.string.bluetooth_not_connected;
 default :
 return 0;

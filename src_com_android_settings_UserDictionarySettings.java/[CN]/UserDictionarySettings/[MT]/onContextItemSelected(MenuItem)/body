@@ -1,0 +1,15 @@
+{
+  ContextMenuInfo menuInfo=item.getMenuInfo();
+  if (!(menuInfo instanceof AdapterContextMenuInfo))   return false;
+  AdapterContextMenuInfo adapterMenuInfo=(AdapterContextMenuInfo)menuInfo;
+  String word=getWord(adapterMenuInfo.position);
+switch (item.getItemId()) {
+case CONTEXT_MENU_DELETE:
+    deleteWord(word);
+  return true;
+case CONTEXT_MENU_EDIT:
+showAddOrEditDialog(word);
+return true;
+}
+return false;
+}

@@ -1,0 +1,14 @@
+{
+  Log.i(TAG,"onDraw: w = " + getWidth() + ", h = "+ getHeight());
+  int xmin=getPaddingLeft();
+  int xmax=getWidth() - getPaddingRight();
+  int ymin=getPaddingTop();
+  int ymax=getHeight() - getPaddingBottom();
+  int startx=xmin;
+  for (int i=0; i < mValues.length; i++) {
+    int endx=xmin + (int)(mValues[i] * (xmax - xmin));
+    canvas.drawRect(startx,ymin,endx,ymax,sPaint[i]);
+    startx=endx;
+  }
+  super.onDraw(canvas);
+}

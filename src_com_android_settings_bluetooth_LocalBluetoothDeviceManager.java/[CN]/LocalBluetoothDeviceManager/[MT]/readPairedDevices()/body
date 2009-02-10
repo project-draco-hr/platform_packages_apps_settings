@@ -1,13 +1,16 @@
 {
   BluetoothDevice manager=mLocalManager.getBluetoothManager();
   String[] bondedAddresses=manager.listBonds();
-  if (bondedAddresses == null)   return;
+  if (bondedAddresses == null)   return false;
+  boolean deviceAdded=false;
   for (  String address : bondedAddresses) {
     LocalBluetoothDevice device=findDevice(address);
     if (device == null) {
       device=new LocalBluetoothDevice(mLocalManager.getContext(),address);
       mDevices.add(device);
       dispatchDeviceAdded(device);
+      deviceAdded=true;
     }
   }
+  return deviceAdded;
 }

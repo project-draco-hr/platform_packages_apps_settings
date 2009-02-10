@@ -11,9 +11,10 @@ case EVENT_SERVICE_STATE_CHANGED:
 ServiceState serviceState=status.mPhoneStateReceiver.getServiceState();
 status.updateServiceState(serviceState);
 break;
-case EVENT_FIX_UPTIME:
+case EVENT_UPDATE_STATS:
 status.updateTimes();
-sendMessageDelayed(obtainMessage(EVENT_FIX_UPTIME),1000);
+status.setNetworkTrafficStats();
+sendEmptyMessageDelayed(EVENT_UPDATE_STATS,1000);
 break;
 }
 }

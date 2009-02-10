@@ -11,25 +11,25 @@
     int len=s.length();
     if (len == 2) {
       Locale l=new Locale(s);
-      preprocess[finalSize++]=new Loc(l.getDisplayLanguage(),l);
+      preprocess[finalSize++]=new Loc(toTitleCase(l.getDisplayLanguage()),l);
     }
  else     if (len == 5) {
       String language=s.substring(0,2);
       String country=s.substring(3,5);
       Locale l=new Locale(language,country);
       if (finalSize == 0) {
-        preprocess[finalSize++]=new Loc(l.getDisplayLanguage(),l);
+        preprocess[finalSize++]=new Loc(toTitleCase(l.getDisplayLanguage()),l);
       }
  else {
         if (preprocess[finalSize - 1].locale.getLanguage().equals(language)) {
           String prevCountry=preprocess[finalSize - 1].locale.getCountry();
           if (prevCountry.length() == 0) {
             preprocess[finalSize - 1].locale=l;
-            preprocess[finalSize - 1].label=l.getDisplayLanguage();
+            preprocess[finalSize - 1].label=toTitleCase(l.getDisplayLanguage());
           }
  else {
-            preprocess[finalSize - 1].label=preprocess[finalSize - 1].locale.getDisplayName();
-            preprocess[finalSize++]=new Loc(l.getDisplayName(),l);
+            preprocess[finalSize - 1].label=toTitleCase(preprocess[finalSize - 1].locale.getDisplayName());
+            preprocess[finalSize++]=new Loc(toTitleCase(l.getDisplayName()),l);
           }
         }
  else {
@@ -38,7 +38,7 @@
             displayName="Pseudo...";
           }
  else {
-            displayName=l.getDisplayLanguage();
+            displayName=toTitleCase(l.getDisplayLanguage());
           }
           preprocess[finalSize++]=new Loc(displayName,l);
         }

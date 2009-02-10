@@ -1,11 +1,4 @@
 {
-  if (!ensurePaired())   return;
-  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
-  int status=profileManager.getConnectionStatus(mAddress);
-  if (!SettingsBtStatus.isConnectionStatusConnected(status)) {
-    mIsConnectingErrorPossible=true;
-    if (profileManager.connect(mAddress) != BluetoothDevice.RESULT_SUCCESS) {
-      showConnectingError();
-    }
-  }
+  mIsConnectingErrorPossible=true;
+  connectInt(profile);
 }

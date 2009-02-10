@@ -1,0 +1,45 @@
+{
+  mSensorUsage.clear();
+  HashMap<Integer,SensorRecord> records=new HashMap<Integer,SensorRecord>();
+  long uSecTime=SystemClock.elapsedRealtime() * 1000;
+  final long uSecNow=mStats.getBatteryUptime(uSecTime);
+  SparseArray<? extends Uid> uidStats=mStats.getUidStats();
+  final int NU=uidStats.size();
+  for (int iu=0; iu < NU; iu++) {
+    Uid u=uidStats.valueAt(iu);
+    int uid=u.getUid();
+    Map<Integer,? extends BatteryStats.Uid.Sensor> sensorStats=u.getSensorStats();
+    if (sensorStats.size() > 0) {
+      for (      Map.Entry<Integer,? extends BatteryStats.Uid.Sensor> ent : sensorStats.entrySet()) {
+        Uid.Sensor se=ent.getValue();
+        String name=se.getName();
+        int sensorNumber=ent.getKey();
+        Timer timer=se.getSensorTime();
+        if (timer != null) {
+          long totalTime=(timer.getTotalTime(uSecNow,mWhich) + 500) / 1000;
+          int count=timer.getCount(mWhich);
+          SensorRecord record=records.get(sensorNumber);
+          if (record == null) {
+            record=new SensorRecord();
+          }
+          record.name=name;
+          record.totalTime+=totalTime;
+          Integer c=record.counts.get(uid);
+          if (c == null) {
+            record.counts.put(uid,count);
+          }
+ else {
+            record.counts.put(uid,c.intValue() + count);
+          }
+          records.put(sensorNumber,record);
+        }
+      }
+    }
+  }
+  for (  Map.Entry<Integer,SensorRecord> record : records.entrySet()) {
+    int sensorNumber=record.getKey().intValue();
+    SensorRecord r=record.getValue();
+    mSensorUsage.add(new SensorUsage(sensorNumber,r.name,r.totalTime,r.counts));
+  }
+  Collections.sort(mSensorUsage);
+}

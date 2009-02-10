@@ -1,0 +1,9 @@
+{
+  super.onResume();
+  if (getIntent().getAction().equals("com.android.settings.USER_DICTIONARY_INSERT")) {
+    String word=getIntent().getStringExtra(EXTRA_WORD);
+    if (word != null) {
+      showAddOrEditDialog(word);
+    }
+  }
+}

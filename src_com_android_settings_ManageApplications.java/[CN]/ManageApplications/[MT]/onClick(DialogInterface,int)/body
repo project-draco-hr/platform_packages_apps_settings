@@ -1,0 +1,17 @@
+{
+  int newOption;
+switch (which) {
+case 0:
+    newOption=FILTER_APPS_ALL;
+  break;
+case 1:
+newOption=FILTER_APPS_RUNNING;
+break;
+case 2:
+newOption=FILTER_APPS_THIRD_PARTY;
+break;
+default :
+return;
+}
+sendMessageToHandler(REORDER_LIST,newOption);
+}

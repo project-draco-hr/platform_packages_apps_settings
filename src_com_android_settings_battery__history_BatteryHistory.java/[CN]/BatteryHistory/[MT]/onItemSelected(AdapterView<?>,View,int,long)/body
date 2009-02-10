@@ -1,0 +1,25 @@
+{
+  if (parent.equals(mTypeSpinner)) {
+    mType=position;
+switch (position) {
+case CPU_USAGE:
+      mWhichSpinner.setEnabled(true);
+    break;
+case NETWORK_USAGE:
+  mWhichSpinner.setEnabled(true);
+break;
+case SENSOR_USAGE:
+mWhichSpinner.setEnabled(true);
+break;
+case SCREEN_ON:
+mWhichSpinner.setEnabled(false);
+break;
+case WAKE_LOCKS:
+break;
+}
+}
+ else if (parent.equals(mWhichSpinner)) {
+mWhich=position;
+}
+refresh();
+}

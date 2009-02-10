@@ -1,0 +1,12 @@
+{
+  super.onActivityResult(requestCode,resultCode,data);
+  if (requestCode != KEYGUARD_REQUEST) {
+    return;
+  }
+  if (resultCode == Activity.RESULT_OK) {
+    establishFinalConfirmationState();
+  }
+ else {
+    establishInitialState();
+  }
+}

@@ -1,0 +1,10 @@
+{
+  try {
+    mStats=mBatteryInfo.getStatistics();
+    collectStatistics();
+    displayGraph();
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"RemoteException:",e);
+  }
+}

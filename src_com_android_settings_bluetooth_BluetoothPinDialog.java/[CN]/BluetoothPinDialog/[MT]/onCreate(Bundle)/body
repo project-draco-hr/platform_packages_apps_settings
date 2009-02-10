@@ -16,4 +16,7 @@
   p.mNegativeButtonText=getString(android.R.string.cancel);
   p.mNegativeButtonListener=this;
   setupAlert();
+  mOkButton=mAlert.getButton(DialogInterface.BUTTON_POSITIVE);
+  mOkButton.setEnabled(false);
+  registerReceiver(mReceiver,new IntentFilter(BluetoothIntent.PAIRING_CANCEL_ACTION));
 }

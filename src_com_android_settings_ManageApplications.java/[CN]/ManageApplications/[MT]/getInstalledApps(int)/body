@@ -6,7 +6,14 @@
   if (filterOption == FILTER_APPS_THIRD_PARTY) {
     List<ApplicationInfo> appList=new ArrayList<ApplicationInfo>();
     for (    ApplicationInfo appInfo : installedAppList) {
+      boolean flag=false;
       if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+        flag=true;
+      }
+ else       if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+        flag=true;
+      }
+      if (flag) {
         appList.add(appInfo);
       }
     }

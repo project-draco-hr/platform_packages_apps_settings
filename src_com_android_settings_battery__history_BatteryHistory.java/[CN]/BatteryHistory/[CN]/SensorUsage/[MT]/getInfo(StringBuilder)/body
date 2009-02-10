@@ -1,0 +1,27 @@
+{
+  info.append(getString(R.string.battery_history_sensor));
+  info.append(mName);
+  info.append("\n\n");
+  info.append(getString(R.string.battery_history_total_time));
+  formatTime(mUsage[0],info);
+  info.append("\n\n");
+  PackageManager pm=getPackageManager();
+  String[] packageNames=null;
+  for (  Map.Entry<Integer,Integer> ent : mCounts.entrySet()) {
+    int uid=ent.getKey().intValue();
+    int count=ent.getValue().intValue();
+    packageNames=pm.getPackagesForUid(uid).clone();
+    if (packageNames.length == 1) {
+      info.append(getString(R.string.battery_history_sensor_usage,count,packageNames[0]));
+    }
+ else {
+      info.append(getString(R.string.battery_history_sensor_usage_multi,count));
+      info.append("\n");
+      for (int i=0; i < packageNames.length; i++) {
+        info.append("    ");
+        info.append(BatteryHistory.getLabel(packageNames[i],pm));
+        info.append("\n");
+      }
+    }
+  }
+}

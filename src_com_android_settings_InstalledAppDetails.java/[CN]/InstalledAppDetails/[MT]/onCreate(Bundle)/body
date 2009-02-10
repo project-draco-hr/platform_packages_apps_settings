@@ -23,10 +23,8 @@
     appName=getString(_UNKNOWN_APP);
   }
   ((TextView)findViewById(R.id.app_name)).setText(appName);
-  CharSequence appDesc=mAppInfo.loadDescription(mPm);
-  if (appDesc != null) {
-    ((TextView)findViewById(R.id.app_description)).setText(appDesc);
-  }
+  mAppSnippetSize=((TextView)findViewById(R.id.app_size));
+  mAppSnippetSize.setText(totalSizeStr);
   mTotalSize=(TextView)findViewById(R.id.total_size_text);
   mTotalSize.setText(totalSizeStr);
   mAppSize=(TextView)findViewById(R.id.application_size_text);
@@ -45,6 +43,8 @@
   mCachePanel=findViewById(R.id.cache_panel);
   mCacheSize=(TextView)findViewById(R.id.cache_size_text);
   mClearCacheButton=(Button)findViewById(R.id.clear_cache_button);
+  mForceStopButton=(Button)findViewById(R.id.force_stop_button);
+  mForceStopButton.setOnClickListener(this);
   mActivitiesButton=(Button)findViewById(R.id.clear_activities_button);
   List<ComponentName> prefActList=new ArrayList<ComponentName>();
   List<IntentFilter> intentList=new ArrayList<IntentFilter>();

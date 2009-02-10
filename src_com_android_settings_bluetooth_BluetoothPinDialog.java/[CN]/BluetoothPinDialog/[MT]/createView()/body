@@ -4,5 +4,7 @@
   TextView messageView=(TextView)view.findViewById(R.id.message);
   messageView.setText(getString(R.string.bluetooth_enter_pin_msg,name));
   mPinView=(EditText)view.findViewById(R.id.text);
+  mPinView.addTextChangedListener(this);
+  mPinView.setFilters(new InputFilter[]{new LengthFilter(10)});
   return view;
 }

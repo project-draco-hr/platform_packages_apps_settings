@@ -12,12 +12,8 @@
   lv.setAdapter(mAppInfoAdapter);
   mReceiver=new PackageIntentReceiver();
   mReceiver.registerReceiver();
-  if (localLOGV)   Log.i(TAG,"Initiating compute sizes for first time");
-  mObserver=new PkgSizeObserver();
-  if (appList.size() > 0) {
-    mObserver.invokeGetSizeInfo(appList.get(0),COMPUTE_PKG_SIZE_DONE);
+  if (mResourceThread.isAlive()) {
+    mResourceThread.interrupt();
   }
- else {
-    mDoneIniting=true;
-  }
+  mResourceThread.loadAllResources(appList);
 }

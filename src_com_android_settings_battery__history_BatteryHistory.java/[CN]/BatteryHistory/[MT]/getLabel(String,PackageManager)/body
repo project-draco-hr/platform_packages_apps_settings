@@ -1,0 +1,13 @@
+{
+  try {
+    ApplicationInfo ai=pm.getApplicationInfo(packageName,0);
+    CharSequence label=ai.loadLabel(pm);
+    if (label != null) {
+      return label.toString();
+    }
+  }
+ catch (  NameNotFoundException e) {
+    return packageName;
+  }
+  return "";
+}

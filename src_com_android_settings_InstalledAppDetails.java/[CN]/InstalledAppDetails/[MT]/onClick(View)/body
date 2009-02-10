@@ -26,4 +26,8 @@
     }
     mPm.deleteApplicationCacheFiles(packageName,mClearCacheObserver);
   }
+ else   if (v == mForceStopButton) {
+    ActivityManager am=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+    am.restartPackage(packageName);
+  }
 }

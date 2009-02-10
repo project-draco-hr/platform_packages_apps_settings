@@ -6,5 +6,5 @@
   updateServiceState(mPhone.getServiceState());
   updateDataState();
   mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
-  mHandler.sendMessageDelayed(mHandler.obtainMessage(EVENT_FIX_UPTIME),0);
+  mHandler.sendEmptyMessage(EVENT_UPDATE_STATS);
 }

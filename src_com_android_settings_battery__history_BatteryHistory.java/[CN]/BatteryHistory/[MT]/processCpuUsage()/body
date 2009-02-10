@@ -1,0 +1,21 @@
+{
+  mCpuUsage.clear();
+  SparseArray<? extends Uid> uidStats=mStats.getUidStats();
+  final int NU=uidStats.size();
+  for (int iu=0; iu < NU; iu++) {
+    Uid u=uidStats.valueAt(iu);
+    Map<String,? extends BatteryStats.Uid.Proc> processStats=u.getProcessStats();
+    if (processStats.size() > 0) {
+      for (      Map.Entry<String,? extends BatteryStats.Uid.Proc> ent : processStats.entrySet()) {
+        Uid.Proc ps=ent.getValue();
+        long userTime=ps.getUserTime(mWhich);
+        long systemTime=ps.getSystemTime(mWhich);
+        long starts=ps.getStarts(mWhich);
+        if (userTime != 0 || systemTime != 0) {
+          mCpuUsage.add(new CpuUsage(ent.getKey(),userTime,systemTime,starts));
+        }
+      }
+    }
+  }
+  Collections.sort(mCpuUsage);
+}

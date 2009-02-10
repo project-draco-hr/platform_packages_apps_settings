@@ -1,13 +1,13 @@
 {
   if (isBusy())   return;
-  if (mProfiles.size() == 0)   return;
   int bondState=getBondState();
   boolean isConnected=isConnected();
+  boolean hasProfiles=mProfiles.size() > 0;
   menu.setHeaderTitle(getName());
   if (isConnected) {
     menu.add(0,CONTEXT_ITEM_DISCONNECT,0,R.string.bluetooth_device_context_disconnect);
   }
- else {
+ else   if (hasProfiles) {
     int connectString=(bondState == BluetoothDevice.BOND_NOT_BONDED) ? R.string.bluetooth_device_context_pair_connect : R.string.bluetooth_device_context_connect;
     menu.add(0,CONTEXT_ITEM_CONNECT,0,connectString);
   }

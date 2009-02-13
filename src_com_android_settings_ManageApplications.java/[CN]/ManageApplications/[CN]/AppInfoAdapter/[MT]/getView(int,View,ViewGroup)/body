@@ -1,4 +1,8 @@
 {
+  if (position >= mAppLocalList.size()) {
+    Log.w(TAG,"Invalid view position:" + position + ", actual size is:"+ mAppLocalList.size());
+    return null;
+  }
   AppViewHolder holder;
   if (convertView == null) {
     convertView=mInflater.inflate(R.layout.manage_applications_item,null);

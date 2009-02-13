@@ -1,12 +1,12 @@
 {
-  List<GadgetInfo> installed=mGadgetManager.getInstalledProviders();
+  List<GadgetProviderInfo> installed=mGadgetManager.getInstalledProviders();
   PackageManager pm=getPackageManager();
   Drawable defaultIcon=null;
   IconResizer resizer=new IconResizer();
   ArrayList<ListItem> result=new ArrayList();
   final int N=installed.size();
   for (int i=0; i < N; i++) {
-    GadgetInfo info=installed.get(i);
+    GadgetProviderInfo info=installed.get(i);
     LauncherActivity.ListItem item=new LauncherActivity.ListItem();
     item.packageName=info.provider.getPackageName();
     item.className=info.provider.getClassName();
@@ -27,5 +27,12 @@
     }
     result.add(item);
   }
+  Collections.sort(result,new Comparator<ListItem>(){
+    Collator mCollator=Collator.getInstance();
+    public int compare(    ListItem lhs,    ListItem rhs){
+      return mCollator.compare(lhs.label,rhs.label);
+    }
+  }
+);
   return result;
 }

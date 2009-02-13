@@ -1,19 +1,7 @@
 {
-  mDoneIniting=false;
+  mComputeSizes=false;
   List<ApplicationInfo> appList=getInstalledApps(filterOption);
   mAddRemoveMap=new TreeMap<String,Boolean>();
   mAppInfoAdapter=new AppInfoAdapter(this,appList);
-  dismissLoadingMsg();
-  ListView lv=(ListView)findViewById(android.R.id.list);
-  lv.setOnItemClickListener(this);
-  lv.setSaveEnabled(true);
-  lv.setItemsCanFocus(true);
-  lv.setOnItemClickListener(this);
-  lv.setAdapter(mAppInfoAdapter);
-  mReceiver=new PackageIntentReceiver();
   mReceiver.registerReceiver();
-  if (mResourceThread.isAlive()) {
-    mResourceThread.interrupt();
-  }
-  mResourceThread.loadAllResources(appList);
 }

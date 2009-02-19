@@ -1,11 +1,6 @@
 {
   super.onCreate(icicle);
   Log.i(TAG,"onCreate");
-  String knownApps=getString(R.string.battery_history_known_apps);
-  String[] knownAppNames=knownApps.split(";");
-  for (  String name : knownAppNames) {
-    mKnownApps.add(name);
-  }
   setContentView(R.layout.battery_history);
   mGraphLayout=(LinearLayout)findViewById(R.id.graphLayout);
   mTextLayout=(LinearLayout)findViewById(R.id.textLayout);
@@ -29,5 +24,16 @@
     mButtons[i].setOnClickListener(this);
   }
   mBatteryInfo=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
-  refresh();
+  mStats=(BatteryStats)getLastNonConfigurationInstance();
+  if (icicle != null) {
+    if (mStats == null) {
+      mStats=(BatteryStats)icicle.getParcelable("stats");
+    }
+    mType=icicle.getInt("type");
+    mWhich=icicle.getInt("which");
+  }
+  if (mStats == null) {
+    load();
+  }
+  displayGraph();
 }

@@ -1,0 +1,28 @@
+{
+  mWakelockUsage.clear();
+  long uSecTime=SystemClock.elapsedRealtime() * 1000;
+  final long uSecNow=mStats.getBatteryUptime(uSecTime);
+  SparseArray<? extends Uid> uidStats=mStats.getUidStats();
+  final int NU=uidStats.size();
+  for (int iu=0; iu < NU; iu++) {
+    Uid u=uidStats.valueAt(iu);
+    int uid=u.getUid();
+    Map<String,? extends BatteryStats.Uid.Wakelock> wakelockStats=u.getWakelockStats();
+    long time=0;
+    int count=0;
+    if (wakelockStats.size() > 0) {
+      for (      Map.Entry<String,? extends BatteryStats.Uid.Wakelock> ent : wakelockStats.entrySet()) {
+        Uid.Wakelock wl=ent.getValue();
+        Timer timer=wl.getWakeTime(BatteryStats.WAKE_TYPE_PARTIAL);
+        if (timer != null) {
+          time+=(timer.getTotalTime(uSecNow,mWhich) + 500) / 1000;
+          count+=timer.getCount(mWhich);
+        }
+      }
+    }
+    if (time > 0) {
+      mWakelockUsage.add(new WakelockUsage(uid,time,count));
+    }
+  }
+  Collections.sort(mWakelockUsage);
+}

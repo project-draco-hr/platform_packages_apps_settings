@@ -1,19 +1,35 @@
 {
   PackageManager pm=getPackageManager();
-  mPackageNames=pm.getPackagesForUid(uid);
+  mPackages=pm.getPackagesForUid(uid);
+  if (mPackages == null) {
+    mName=Integer.toString(uid);
+    mNamePackage=null;
+    return;
+  }
+  mPackageNames=new String[mPackages.length];
+  System.arraycopy(mPackages,0,mPackageNames,0,mPackages.length);
   for (int i=0; i < mPackageNames.length; i++) {
     mPackageNames[i]=BatteryHistory.getLabel(mPackageNames[i],pm);
   }
   if (mPackageNames.length == 1) {
+    mNamePackage=mPackages[0];
     mName=mPackageNames[0];
     mUniqueName=true;
   }
  else {
     mName=getString(R.string.battery_history_uid,uid);
-    for (    String name : mPackageNames) {
-      if (mKnownApps.contains(name)) {
-        mName=name;
-        break;
+    for (    String name : mPackages) {
+      try {
+        PackageInfo pi=pm.getPackageInfo(name,0);
+        if (pi.sharedUserLabel != 0) {
+          CharSequence nm=pm.getText(name,pi.sharedUserLabel,pi.applicationInfo);
+          if (nm != null) {
+            mName=nm.toString();
+            break;
+          }
+        }
+      }
+ catch (      PackageManager.NameNotFoundException e) {
       }
     }
   }

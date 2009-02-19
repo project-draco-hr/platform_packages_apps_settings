@@ -1,6 +1,6 @@
 {
+  mGpsUsage.clear();
   mSensorUsage.clear();
-  HashMap<Integer,SensorRecord> records=new HashMap<Integer,SensorRecord>();
   long uSecTime=SystemClock.elapsedRealtime() * 1000;
   final long uSecNow=mStats.getBatteryUptime(uSecTime);
   SparseArray<? extends Uid> uidStats=mStats.getUidStats();
@@ -9,37 +9,36 @@
     Uid u=uidStats.valueAt(iu);
     int uid=u.getUid();
     Map<Integer,? extends BatteryStats.Uid.Sensor> sensorStats=u.getSensorStats();
+    long timeGps=0;
+    int countGps=0;
+    long timeOther=0;
+    int countOther=0;
     if (sensorStats.size() > 0) {
       for (      Map.Entry<Integer,? extends BatteryStats.Uid.Sensor> ent : sensorStats.entrySet()) {
         Uid.Sensor se=ent.getValue();
-        String name=se.getName();
-        int sensorNumber=ent.getKey();
+        int handle=se.getHandle();
         Timer timer=se.getSensorTime();
         if (timer != null) {
           long totalTime=(timer.getTotalTime(uSecNow,mWhich) + 500) / 1000;
           int count=timer.getCount(mWhich);
-          SensorRecord record=records.get(sensorNumber);
-          if (record == null) {
-            record=new SensorRecord();
-          }
-          record.name=name;
-          record.totalTime+=totalTime;
-          Integer c=record.counts.get(uid);
-          if (c == null) {
-            record.counts.put(uid,count);
+          if (handle == BatteryStats.Uid.Sensor.GPS) {
+            timeGps+=totalTime;
+            countGps+=count;
           }
  else {
-            record.counts.put(uid,c.intValue() + count);
+            timeOther+=totalTime;
+            countOther+=count;
           }
-          records.put(sensorNumber,record);
         }
       }
     }
+    if (timeGps > 0) {
+      mGpsUsage.add(new SensorUsage(uid,timeGps,countGps));
+    }
+    if (timeOther > 0) {
+      mSensorUsage.add(new SensorUsage(uid,timeOther,countOther));
+    }
   }
-  for (  Map.Entry<Integer,SensorRecord> record : records.entrySet()) {
-    int sensorNumber=record.getKey().intValue();
-    SensorRecord r=record.getValue();
-    mSensorUsage.add(new SensorUsage(sensorNumber,r.name,r.totalTime,r.counts));
-  }
+  Collections.sort(mGpsUsage);
   Collections.sort(mSensorUsage);
 }

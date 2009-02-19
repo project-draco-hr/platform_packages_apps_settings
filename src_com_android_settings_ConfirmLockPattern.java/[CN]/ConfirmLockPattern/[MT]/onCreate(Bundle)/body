@@ -15,6 +15,7 @@
     mHeaderWrongText=intent.getCharSequenceExtra(HEADER_WRONG_TEXT);
     mFooterWrongText=intent.getCharSequenceExtra(FOOTER_WRONG_TEXT);
   }
+  mLockPatternView.setTactileFeedbackEnabled(mLockPatternUtils.isTactileFeedbackEnabled());
   mLockPatternView.setOnPatternListener(mConfirmExistingLockPatternListener);
   updateStage(Stage.NeedToUnlock);
   if (savedInstanceState != null) {

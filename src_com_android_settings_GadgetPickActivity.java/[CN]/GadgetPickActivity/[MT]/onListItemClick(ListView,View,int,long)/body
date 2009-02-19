@@ -1,6 +1,13 @@
 {
   Intent intent=intentForPosition(position);
-  mGadgetManager.bindGadgetId(mGadgetId,intent.getComponent());
-  setResultData(RESULT_OK);
+  int result;
+  try {
+    mGadgetManager.bindGadgetId(mGadgetId,intent.getComponent());
+    result=RESULT_OK;
+  }
+ catch (  IllegalArgumentException e) {
+    result=RESULT_CANCELED;
+  }
+  setResultData(result);
   finish();
 }

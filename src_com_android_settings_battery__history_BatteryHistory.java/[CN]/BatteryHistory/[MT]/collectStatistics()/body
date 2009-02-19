@@ -1,6 +1,32 @@
 {
-  processCpuUsage();
-  processNetworkUsage();
-  processSensorUsage();
-  processScreenOn();
+  if (mType == CPU_USAGE) {
+    if (!mHaveCpuUsage) {
+      mHaveCpuUsage=true;
+      processCpuUsage();
+    }
+  }
+  if (mType == NETWORK_USAGE) {
+    if (!mHaveNetworkUsage) {
+      mHaveNetworkUsage=true;
+      processNetworkUsage();
+    }
+  }
+  if (mType == GPS_USAGE || mType == SENSOR_USAGE) {
+    if (!mHaveSensorUsage) {
+      mHaveSensorUsage=true;
+      processSensorUsage();
+    }
+  }
+  if (mType == WAKE_LOCKS) {
+    if (!mHaveWakelockUsage) {
+      mHaveWakelockUsage=true;
+      processWakelockUsage();
+    }
+  }
+  if (mType == SCREEN_ON) {
+    if (!mHaveScreenOnTime) {
+      mHaveScreenOnTime=true;
+      processScreenOn();
+    }
+  }
 }

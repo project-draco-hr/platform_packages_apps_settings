@@ -4,7 +4,7 @@
   int status=profileManager.getConnectionStatus(mAddress);
   if (!SettingsBtStatus.isConnectionStatusConnected(status)) {
     if (profileManager.connect(mAddress) != BluetoothDevice.RESULT_SUCCESS) {
-      showConnectingError();
+      Log.i(TAG,"Failed to connect " + profile.toString() + " to "+ mName);
     }
   }
 }

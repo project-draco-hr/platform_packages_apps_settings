@@ -1,7 +1,7 @@
 {
   mWakelockUsage.clear();
   long uSecTime=SystemClock.elapsedRealtime() * 1000;
-  final long uSecNow=mStats.getBatteryUptime(uSecTime);
+  final long uSecNow=mStats.computeBatteryRealtime(uSecTime,mWhich) / 1000;
   SparseArray<? extends Uid> uidStats=mStats.getUidStats();
   final int NU=uidStats.size();
   for (int iu=0; iu < NU; iu++) {
@@ -21,7 +21,7 @@
       }
     }
     if (time > 0) {
-      mWakelockUsage.add(new WakelockUsage(uid,time,count));
+      mWakelockUsage.add(new WakelockUsage(uid,time,count,uSecNow));
     }
   }
   Collections.sort(mWakelockUsage);

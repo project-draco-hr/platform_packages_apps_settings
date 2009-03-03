@@ -1,5 +1,7 @@
 {
   mCpuUsage.clear();
+  long uSecTime=SystemClock.uptimeMillis() * 1000;
+  final long uSecNow=mStats.computeBatteryUptime(uSecTime,mWhich) / 1000;
   SparseArray<? extends Uid> uidStats=mStats.getUidStats();
   final int NU=uidStats.size();
   for (int iu=0; iu < NU; iu++) {
@@ -12,7 +14,7 @@
         long systemTime=ps.getSystemTime(mWhich);
         long starts=ps.getStarts(mWhich);
         if (userTime != 0 || systemTime != 0) {
-          mCpuUsage.add(new CpuUsage(u.getUid(),ent.getKey(),userTime,systemTime,starts));
+          mCpuUsage.add(new CpuUsage(u.getUid(),ent.getKey(),userTime,systemTime,starts,uSecNow));
         }
       }
     }

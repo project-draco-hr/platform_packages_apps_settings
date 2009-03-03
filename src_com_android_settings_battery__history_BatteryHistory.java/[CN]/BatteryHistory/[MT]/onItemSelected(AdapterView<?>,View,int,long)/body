@@ -2,34 +2,14 @@
   int oldWhich=mWhich;
   if (parent.equals(mTypeSpinner)) {
     mType=position;
-switch (position) {
-case CPU_USAGE:
-      mWhichSpinner.setEnabled(true);
-    break;
-case NETWORK_USAGE:
-  mWhichSpinner.setEnabled(true);
-break;
-case GPS_USAGE:
-mWhichSpinner.setEnabled(true);
-break;
-case SENSOR_USAGE:
-mWhichSpinner.setEnabled(true);
-break;
-case WAKE_LOCKS:
-mWhichSpinner.setEnabled(true);
-break;
-case SCREEN_ON:
-mWhichSpinner.setEnabled(false);
-break;
-}
-}
- else if (parent.equals(mWhichSpinner)) {
+  }
+ else   if (parent.equals(mWhichSpinner)) {
 switch (position) {
 case UNPLUGGED:
-mWhich=BatteryStats.STATS_UNPLUGGED;
-break;
+      mWhich=BatteryStats.STATS_UNPLUGGED;
+    break;
 case CURRENT:
-mWhich=BatteryStats.STATS_CURRENT;
+  mWhich=BatteryStats.STATS_CURRENT;
 break;
 case TOTAL:
 mWhich=BatteryStats.STATS_TOTAL;
@@ -37,7 +17,7 @@ break;
 }
 }
 if (oldWhich != mWhich) {
-mHaveCpuUsage=mHaveNetworkUsage=mHaveSensorUsage=mHaveWakelockUsage=mHaveScreenOnTime=false;
+mHaveCpuUsage=mHaveNetworkUsage=mHaveSensorUsage=mHaveWakelockUsage=mHaveMiscUsage=false;
 }
 displayGraph();
 }

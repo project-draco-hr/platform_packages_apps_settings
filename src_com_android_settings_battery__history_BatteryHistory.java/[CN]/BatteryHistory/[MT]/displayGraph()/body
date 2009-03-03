@@ -5,15 +5,12 @@
   for (int i=0; i < mButtons.length; i++) {
     mButtons[i].setVisibility(View.INVISIBLE);
   }
-  if (mType == SCREEN_ON) {
-    displayScreenUsage();
-    return;
-  }
   double maxValue=-Double.MAX_VALUE;
   List<? extends Graphable> records=getGraphRecords();
   for (  Graphable g : records) {
     double[] values=g.getValues();
     maxValue=Math.max(maxValue,values[values.length - 1]);
+    maxValue=Math.max(maxValue,g.getMaxValue());
   }
   int[] colors=new int[2];
   colors[0]=0xff0000ff;

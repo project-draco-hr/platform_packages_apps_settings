@@ -5,7 +5,7 @@
     parcel.unmarshall(data,0,data.length);
     parcel.setDataPosition(0);
     mStats=com.android.internal.os.BatteryStatsImpl.CREATOR.createFromParcel(parcel);
-    mHaveCpuUsage=mHaveNetworkUsage=mHaveSensorUsage=mHaveWakelockUsage=mHaveScreenOnTime=false;
+    mHaveCpuUsage=mHaveNetworkUsage=mHaveSensorUsage=mHaveWakelockUsage=mHaveMiscUsage=false;
   }
  catch (  RemoteException e) {
     Log.e(TAG,"RemoteException:",e);

@@ -8,7 +8,12 @@
     AppInfo pInfo=iconMap.get(info.packageName);
     if (pInfo != null) {
       AppInfo aInfo=mAppPropMap.get(info.packageName);
-      aInfo.refreshIcon(pInfo);
+      if (aInfo != null) {
+        aInfo.refreshIcon(pInfo);
+      }
+ else {
+        mAppPropMap.put(info.packageName,pInfo);
+      }
       changed=true;
     }
   }

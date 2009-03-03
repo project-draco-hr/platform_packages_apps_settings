@@ -2,7 +2,7 @@
   mGpsUsage.clear();
   mSensorUsage.clear();
   long uSecTime=SystemClock.elapsedRealtime() * 1000;
-  final long uSecNow=mStats.computeBatteryRealtime(uSecTime,mWhich) / 1000;
+  final long uSecNow=mStats.getBatteryUptime(uSecTime);
   SparseArray<? extends Uid> uidStats=mStats.getUidStats();
   final int NU=uidStats.size();
   for (int iu=0; iu < NU; iu++) {
@@ -33,10 +33,10 @@
       }
     }
     if (timeGps > 0) {
-      mGpsUsage.add(new SensorUsage(uid,timeGps,countGps,uSecNow));
+      mGpsUsage.add(new SensorUsage(uid,timeGps,countGps));
     }
     if (timeOther > 0) {
-      mSensorUsage.add(new SensorUsage(uid,timeOther,countOther,uSecNow));
+      mSensorUsage.add(new SensorUsage(uid,timeOther,countOther));
     }
   }
   Collections.sort(mGpsUsage);

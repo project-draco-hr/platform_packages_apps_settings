@@ -17,16 +17,16 @@
       processSensorUsage();
     }
   }
-  if (mType == WAKELOCK_USAGE) {
+  if (mType == WAKE_LOCKS) {
     if (!mHaveWakelockUsage) {
       mHaveWakelockUsage=true;
       processWakelockUsage();
     }
   }
-  if (mType == MISC_USAGE) {
-    if (!mHaveMiscUsage) {
-      mHaveMiscUsage=true;
-      processMiscUsage();
+  if (mType == SCREEN_ON) {
+    if (!mHaveScreenOnTime) {
+      mHaveScreenOnTime=true;
+      processScreenOn();
     }
   }
 }

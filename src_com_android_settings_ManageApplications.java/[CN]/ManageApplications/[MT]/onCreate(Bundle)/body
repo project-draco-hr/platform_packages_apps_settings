@@ -11,6 +11,11 @@
   requestWindowFeature(Window.FEATURE_PROGRESS);
   requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
   setContentView(R.layout.compute_sizes);
+  mLoadingDlg=new ProgressDialog(this);
+  mLoadingDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+  mLoadingDlg.setMessage(getText(R.string.loading));
+  mLoadingDlg.setIndeterminate(true);
+  mLoadingDlg.setOnCancelListener(this);
   mDefaultAppIcon=Resources.getSystem().getDrawable(com.android.internal.R.drawable.sym_def_app_icon);
   mInvalidSizeStr=getText(R.string.invalid_size_value);
   mComputingSizeStr=getText(R.string.computing_size);
@@ -18,13 +23,4 @@
   mReceiver=new PackageIntentReceiver();
   mEmptyView=(TextView)findViewById(R.id.empty_view);
   mObserver=new PkgSizeObserver();
-  List<ApplicationInfo> appList=getInstalledApps(mSortOrder);
-  mAppInfoAdapter=new AppInfoAdapter(this,appList);
-  ListView lv=(ListView)findViewById(android.R.id.list);
-  lv.setOnItemClickListener(this);
-  lv.setSaveEnabled(true);
-  lv.setItemsCanFocus(true);
-  lv.setOnItemClickListener(this);
-  mListView=lv;
-  showLoadingMsg();
 }

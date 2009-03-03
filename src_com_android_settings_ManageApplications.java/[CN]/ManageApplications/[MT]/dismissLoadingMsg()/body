@@ -1,4 +1,6 @@
 {
-  if (localLOGV)   Log.i(TAG,"Dismissing Loading message");
-  dismissDialog(DLG_LOADING);
+  if ((mLoadingDlg != null) && (mLoadingDlg.isShowing())) {
+    if (localLOGV)     Log.i(TAG,"Dismissing Loading message");
+    mLoadingDlg.dismiss();
+  }
 }

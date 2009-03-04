@@ -1,7 +1,0 @@
-{
-  mState=state;
-  mContext.sendBroadcast(new Intent(EXTENDED_BLUETOOTH_STATE_CHANGED_ACTION));
-  if (state == ExtendedBluetoothState.ENABLED || state == ExtendedBluetoothState.DISABLED) {
-    mLocalDeviceManager.onBluetoothStateChanged(state == ExtendedBluetoothState.ENABLED);
-  }
-}

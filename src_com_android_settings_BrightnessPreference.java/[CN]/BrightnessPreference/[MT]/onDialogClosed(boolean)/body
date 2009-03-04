@@ -1,9 +1,0 @@
-{
-  super.onDialogClosed(positiveResult);
-  if (positiveResult) {
-    Settings.System.putInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS,mSeekBar.getProgress() + MINIMUM_BACKLIGHT);
-  }
- else {
-    setBrightness(mOldBrightness);
-  }
-}

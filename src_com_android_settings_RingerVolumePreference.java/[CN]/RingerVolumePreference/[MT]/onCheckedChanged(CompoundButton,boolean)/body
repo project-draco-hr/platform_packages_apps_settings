@@ -1,8 +1,0 @@
-{
-  setNotificationVolumeVisibility(!isChecked);
-  Settings.System.putInt(getContext().getContentResolver(),Settings.System.NOTIFICATIONS_USE_RING_VOLUME,isChecked ? 1 : 0);
-  if (isChecked) {
-    AudioManager audioManager=(AudioManager)getContext().getSystemService(Context.AUDIO_SERVICE);
-    audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,audioManager.getStreamVolume(AudioManager.STREAM_RING),0);
-  }
-}

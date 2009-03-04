@@ -1,7 +1,0 @@
-{
-  String str=getString(R.string.band_mode_loading);
-  if (DBG)   log(str);
-  mProgressPanel=new AlertDialog.Builder(this).setMessage(str).show();
-  Message msg=mHandler.obtainMessage(EVENT_BAND_SCAN_COMPLETED);
-  mPhone.queryAvailableBandMode(msg);
-}

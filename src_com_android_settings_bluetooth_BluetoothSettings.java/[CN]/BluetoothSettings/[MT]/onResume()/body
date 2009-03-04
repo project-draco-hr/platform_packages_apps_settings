@@ -1,0 +1,13 @@
+{
+  super.onResume();
+  mDevicePreferenceMap.clear();
+  mDeviceList.removeAll();
+  addDevices();
+  mEnabler.resume();
+  mDiscoverableEnabler.resume();
+  mNamePreference.resume();
+  mLocalManager.registerCallback(this);
+  mLocalManager.startScanning(false);
+  registerReceiver(mReceiver,new IntentFilter(LocalBluetoothManager.EXTENDED_BLUETOOTH_STATE_CHANGED_ACTION));
+  mLocalManager.setForegroundActivity(this);
+}

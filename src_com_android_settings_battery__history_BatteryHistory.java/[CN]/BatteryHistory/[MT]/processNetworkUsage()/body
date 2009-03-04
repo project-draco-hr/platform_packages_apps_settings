@@ -1,0 +1,14 @@
+{
+  mNetworkUsage.clear();
+  SparseArray<? extends Uid> uidStats=mStats.getUidStats();
+  final int NU=uidStats.size();
+  for (int iu=0; iu < NU; iu++) {
+    Uid u=uidStats.valueAt(iu);
+    long received=u.getTcpBytesReceived(mWhich);
+    long sent=u.getTcpBytesSent(mWhich);
+    if (received + sent > 0) {
+      mNetworkUsage.add(new NetworkUsage(u.getUid(),received,sent));
+    }
+  }
+  Collections.sort(mNetworkUsage);
+}

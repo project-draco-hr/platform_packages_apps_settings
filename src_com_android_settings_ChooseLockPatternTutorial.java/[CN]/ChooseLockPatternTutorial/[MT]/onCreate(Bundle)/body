@@ -1,0 +1,13 @@
+{
+  super.onCreate(savedInstanceState);
+  LockPatternUtils lockPatternUtils=new LockPatternUtils(getContentResolver());
+  if (savedInstanceState == null && lockPatternUtils.savedPatternExists()) {
+    Intent intent=new Intent();
+    intent.setClassName("com.android.settings","com.android.settings.ChooseLockPattern");
+    startActivity(intent);
+    finish();
+  }
+ else {
+    initViews();
+  }
+}

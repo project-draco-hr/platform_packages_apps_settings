@@ -1,0 +1,11 @@
+{
+synchronized (this) {
+    if (mCurrentPrimaryAp != null) {
+      mCurrentPrimaryAp.setPrimary(false);
+    }
+    mCurrentPrimaryAp=ap;
+  }
+  if (ap != null) {
+    ap.setPrimary(true);
+  }
+}

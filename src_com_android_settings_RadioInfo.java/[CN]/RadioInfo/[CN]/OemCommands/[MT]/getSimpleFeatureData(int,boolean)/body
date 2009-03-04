@@ -1,0 +1,13 @@
+{
+  ByteArrayOutputStream bos=new ByteArrayOutputStream();
+  DataOutputStream dos=new DataOutputStream(bos);
+  try {
+    writeIntLittleEndian(dos,tag);
+    writeIntLittleEndian(dos,OEM_SIMPE_FEAUTURE_LEN * SIZE_OF_INT);
+    writeIntLittleEndian(dos,enable ? OEM_FEATURE_ENABLE : OEM_FEATURE_DISABLE);
+  }
+ catch (  IOException e) {
+    return null;
+  }
+  return bos.toByteArray();
+}

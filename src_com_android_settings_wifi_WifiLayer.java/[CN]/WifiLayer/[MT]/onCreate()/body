@@ -1,0 +1,12 @@
+{
+  mWifiManager=(WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
+  mIntentFilter=new IntentFilter();
+  mIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+  mIntentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+  mIntentFilter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
+  mIntentFilter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
+  mIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+  mIntentFilter.addAction(WifiManager.RSSI_CHANGED_ACTION);
+  mIntentFilter.addAction(WifiManager.NETWORK_IDS_CHANGED_ACTION);
+  WIFI_NUM_OPEN_NETWORKS_KEPT=Settings.Secure.getInt(mContext.getContentResolver(),Settings.Secure.WIFI_NUM_OPEN_NETWORKS_KEPT,10);
+}

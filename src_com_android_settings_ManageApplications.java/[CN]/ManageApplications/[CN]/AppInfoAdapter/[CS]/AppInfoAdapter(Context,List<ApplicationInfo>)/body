@@ -1,0 +1,24 @@
+{
+  mAppLocalList=appList;
+  boolean useCache=false;
+  int sortOrder=SORT_ORDER_ALPHA;
+  int imax=mAppLocalList.size();
+  if (mAppPropCache != null) {
+    useCache=true;
+    mAppPropMap=mAppPropCache;
+    sortOrder=mSortOrder;
+  }
+  sortAppList(sortOrder);
+  mAppPropMap=new TreeMap<String,AppInfo>();
+  for (int i=0; i < imax; i++) {
+    ApplicationInfo info=mAppLocalList.get(i);
+    AppInfo aInfo=getFromCache(info.packageName);
+    if (aInfo == null) {
+      aInfo=new AppInfo(info.packageName,i,info.packageName,mDefaultAppIcon,null);
+    }
+ else {
+      aInfo.index=i;
+    }
+    mAppPropMap.put(info.packageName,aInfo);
+  }
+}

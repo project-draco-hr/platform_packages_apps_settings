@@ -1,0 +1,32 @@
+{
+  String action=intent.getAction();
+  if (action.equals(BluetoothIntent.PAIRING_REQUEST_ACTION)) {
+    LocalBluetoothManager localManager=LocalBluetoothManager.getInstance(context);
+    String address=intent.getStringExtra(BluetoothIntent.ADDRESS);
+    Intent pinIntent=new Intent();
+    pinIntent.setClass(context,BluetoothPinDialog.class);
+    pinIntent.putExtra(BluetoothIntent.ADDRESS,address);
+    pinIntent.setAction(BluetoothIntent.PAIRING_REQUEST_ACTION);
+    pinIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    if (localManager.getForegroundActivity() != null) {
+      context.startActivity(pinIntent);
+    }
+ else {
+      Resources res=context.getResources();
+      Notification notification=new Notification(android.R.drawable.stat_sys_data_bluetooth,res.getString(R.string.bluetooth_notif_ticker),System.currentTimeMillis());
+      PendingIntent pending=PendingIntent.getActivity(context,0,pinIntent,PendingIntent.FLAG_ONE_SHOT);
+      String name=intent.getStringExtra(BluetoothIntent.NAME);
+      if (TextUtils.isEmpty(name)) {
+        name=localManager.getLocalDeviceManager().getName(address);
+      }
+      notification.setLatestEventInfo(context,res.getString(R.string.bluetooth_notif_title),res.getString(R.string.bluetooth_notif_message) + name,pending);
+      notification.flags|=Notification.FLAG_AUTO_CANCEL;
+      NotificationManager manager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+      manager.notify(NOTIFICATION_ID,notification);
+    }
+  }
+ else   if (action.equals(BluetoothIntent.PAIRING_CANCEL_ACTION)) {
+    NotificationManager manager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+    manager.cancel(NOTIFICATION_ID);
+  }
+}

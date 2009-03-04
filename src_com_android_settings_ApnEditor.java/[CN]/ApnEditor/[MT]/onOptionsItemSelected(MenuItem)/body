@@ -1,0 +1,19 @@
+{
+switch (item.getItemId()) {
+case MENU_DELETE:
+    deleteApn();
+  return true;
+case MENU_SAVE:
+if (validateAndSave(false)) {
+  finish();
+}
+return true;
+case MENU_CANCEL:
+if (mNewApn) {
+getContentResolver().delete(mUri,null,null);
+}
+finish();
+return true;
+}
+return super.onOptionsItemSelected(item);
+}

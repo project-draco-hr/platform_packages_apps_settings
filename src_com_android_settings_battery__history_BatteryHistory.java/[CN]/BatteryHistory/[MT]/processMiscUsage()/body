@@ -1,0 +1,19 @@
+{
+  mMiscUsage.clear();
+  long rawRealtime=SystemClock.elapsedRealtime() * 1000;
+  final long batteryRealtime=mStats.getBatteryRealtime(rawRealtime);
+  final long whichRealtime=mStats.computeBatteryRealtime(rawRealtime,mWhich) / 1000;
+  long time=mStats.computeBatteryUptime(SystemClock.uptimeMillis() * 1000,mWhich) / 1000;
+  if (time > 0) {
+    mMiscUsage.add(new MiscUsage(getString(R.string.battery_history_awake_label),R.string.battery_history_awake,time,whichRealtime));
+  }
+  time=mStats.getScreenOnTime(batteryRealtime,mWhich) / 1000;
+  if (time > 0) {
+    mMiscUsage.add(new MiscUsage(getString(R.string.battery_history_screen_on_label),R.string.battery_history_screen_on,time,whichRealtime));
+  }
+  time=mStats.getPhoneOnTime(batteryRealtime,mWhich) / 1000;
+  if (time > 0) {
+    mMiscUsage.add(new MiscUsage(getString(R.string.battery_history_phone_on_label),R.string.battery_history_phone_on,time,whichRealtime));
+  }
+  Collections.sort(mMiscUsage);
+}

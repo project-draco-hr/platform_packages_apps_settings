@@ -1,0 +1,6 @@
+{
+  if (device.getBondState() == BluetoothDevice.BOND_NOT_BONDED && !device.isVisible()) {
+    mDevices.remove(device);
+    dispatchDeviceDeleted(device);
+  }
+}

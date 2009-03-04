@@ -1,0 +1,14 @@
+{
+  if (wifiConfig != null) {
+    blockRefresh();
+    setBssid(wifiConfig.BSSID);
+    setNetworkId(wifiConfig.networkId);
+    setPriority(wifiConfig.priority);
+    setHiddenSsid(wifiConfig.hiddenSSID);
+    setSsid(wifiConfig.SSID);
+    setConfigured(true);
+    setDisabled(wifiConfig.status == WifiConfiguration.Status.DISABLED);
+    parseWifiConfigurationSecurity(wifiConfig);
+    unblockRefresh();
+  }
+}

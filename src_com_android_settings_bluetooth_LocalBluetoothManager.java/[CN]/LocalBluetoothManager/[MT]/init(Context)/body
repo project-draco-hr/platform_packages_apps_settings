@@ -1,0 +1,14 @@
+{
+  if (mInitialized)   return true;
+  mInitialized=true;
+  mContext=context.getApplicationContext();
+  mManager=(BluetoothDevice)context.getSystemService(Context.BLUETOOTH_SERVICE);
+  if (mManager == null) {
+    return false;
+  }
+  mLocalDeviceManager=new LocalBluetoothDeviceManager(this);
+  mEventRedirector=new BluetoothEventRedirector(this);
+  mEventRedirector.start();
+  mBluetoothA2dp=new BluetoothA2dp(context);
+  return true;
+}

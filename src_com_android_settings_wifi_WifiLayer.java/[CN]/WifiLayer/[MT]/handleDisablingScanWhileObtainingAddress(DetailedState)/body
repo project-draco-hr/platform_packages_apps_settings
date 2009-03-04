@@ -1,0 +1,10 @@
+{
+  if (detailedState == DetailedState.OBTAINING_IPADDR) {
+    mIsObtainingAddress=true;
+    removeFutureScans();
+  }
+ else {
+    mIsObtainingAddress=false;
+    queueContinuousScan();
+  }
+}

@@ -1,0 +1,40 @@
+{
+  super.onCreate(icicle);
+  Log.i(TAG,"onCreate");
+  setContentView(R.layout.battery_history);
+  mGraphLayout=(LinearLayout)findViewById(R.id.graphLayout);
+  mTextLayout=(LinearLayout)findViewById(R.id.textLayout);
+  mDetailsText=(TextView)findViewById(R.id.detailsText);
+  mMessageText=(TextView)findViewById(R.id.messageText);
+  mTypeSpinner=(Spinner)findViewById(R.id.typeSpinner);
+  mTypeSpinner.setOnItemSelectedListener(this);
+  mWhichSpinner=(Spinner)findViewById(R.id.whichSpinner);
+  mWhichSpinner.setOnItemSelectedListener(this);
+  mWhichSpinner.setEnabled(true);
+  mButtons=new GraphableButton[8];
+  mButtons[0]=(GraphableButton)findViewById(R.id.button0);
+  mButtons[1]=(GraphableButton)findViewById(R.id.button1);
+  mButtons[2]=(GraphableButton)findViewById(R.id.button2);
+  mButtons[3]=(GraphableButton)findViewById(R.id.button3);
+  mButtons[4]=(GraphableButton)findViewById(R.id.button4);
+  mButtons[5]=(GraphableButton)findViewById(R.id.button5);
+  mButtons[6]=(GraphableButton)findViewById(R.id.button6);
+  mButtons[7]=(GraphableButton)findViewById(R.id.button7);
+  for (int i=0; i < mButtons.length; i++) {
+    mButtons[i].setTag(i);
+    mButtons[i].setOnClickListener(this);
+  }
+  mBatteryInfo=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
+  mStats=(BatteryStats)getLastNonConfigurationInstance();
+  if (icicle != null) {
+    if (mStats == null) {
+      mStats=(BatteryStats)icicle.getParcelable("stats");
+    }
+    mType=icicle.getInt("type");
+    mWhich=icicle.getInt("which");
+  }
+  if (mStats == null) {
+    load();
+  }
+  displayGraph();
+}

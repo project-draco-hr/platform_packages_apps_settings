@@ -1,0 +1,10 @@
+{
+  ShortcutPreference pref=mShortcutToPreference.get(shortcut);
+  if (pref != null) {
+    return pref;
+  }
+ else {
+    Log.w(TAG,"Unknown shortcut '" + shortcut + "', creating preference anyway");
+    return createPreference(shortcut);
+  }
+}

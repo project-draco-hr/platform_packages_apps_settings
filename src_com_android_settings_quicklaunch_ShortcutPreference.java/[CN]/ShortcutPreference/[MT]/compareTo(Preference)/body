@@ -1,0 +1,7 @@
+{
+  if (!(another instanceof ShortcutPreference))   return super.compareTo(another);
+  char other=((ShortcutPreference)another).mShortcut;
+  if (Character.isDigit(mShortcut) && Character.isLetter(other))   return 1;
+ else   if (Character.isDigit(other) && Character.isLetter(mShortcut))   return -1;
+ else   return mShortcut - other;
+}

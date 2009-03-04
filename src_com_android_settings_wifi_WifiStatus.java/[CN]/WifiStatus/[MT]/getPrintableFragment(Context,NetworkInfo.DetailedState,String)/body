@@ -1,0 +1,33 @@
+{
+  if (sScanningFragment == null) {
+    fillStrings(context);
+  }
+  String fragment=null;
+switch (detailedState) {
+case AUTHENTICATING:
+    fragment=sAuthenticatingFragment;
+  break;
+case CONNECTED:
+fragment=sConnectedFragment;
+break;
+case CONNECTING:
+fragment=sConnectingFragment;
+break;
+case DISCONNECTED:
+fragment=sDisconnectedFragment;
+break;
+case DISCONNECTING:
+fragment=sDisconnectingFragment;
+break;
+case FAILED:
+fragment=sFailedFragment;
+break;
+case OBTAINING_IPADDR:
+fragment=sObtainingIpFragment;
+break;
+case SCANNING:
+fragment=sScanningFragment;
+break;
+}
+return String.format(fragment,apName);
+}

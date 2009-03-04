@@ -1,0 +1,15 @@
+{
+  if (state == ExtendedBluetoothState.DISABLED || state == ExtendedBluetoothState.ENABLED) {
+    mCheckBoxPreference.setChecked(state == ExtendedBluetoothState.ENABLED);
+    mCheckBoxPreference.setSummary(state == ExtendedBluetoothState.DISABLED ? mOriginalSummary : null);
+    mCheckBoxPreference.setEnabled(isEnabledByDependency());
+  }
+ else   if (state == ExtendedBluetoothState.ENABLING || state == ExtendedBluetoothState.DISABLING) {
+    mCheckBoxPreference.setSummary(state == ExtendedBluetoothState.ENABLING ? R.string.wifi_starting : R.string.wifi_stopping);
+  }
+ else   if (state == ExtendedBluetoothState.UNKNOWN) {
+    mCheckBoxPreference.setChecked(false);
+    mCheckBoxPreference.setSummary(R.string.wifi_error);
+    mCheckBoxPreference.setEnabled(true);
+  }
+}

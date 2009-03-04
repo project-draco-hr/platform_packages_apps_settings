@@ -1,0 +1,7 @@
+{
+  byte[] pinBytes=BluetoothDevice.convertPinToBytes(pin);
+  if (pinBytes == null) {
+    return;
+  }
+  mLocalManager.getBluetoothManager().setPin(mAddress,pinBytes);
+}

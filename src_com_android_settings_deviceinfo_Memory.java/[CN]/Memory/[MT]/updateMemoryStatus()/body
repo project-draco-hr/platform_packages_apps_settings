@@ -1,0 +1,37 @@
+{
+  String status=Environment.getExternalStorageState();
+  String readOnly="";
+  if (status.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+    status=Environment.MEDIA_MOUNTED;
+    readOnly=mRes.getString(R.string.read_only);
+  }
+  mSdFormat.setEnabled(false);
+  if (status.equals(Environment.MEDIA_MOUNTED)) {
+    try {
+      File path=Environment.getExternalStorageDirectory();
+      StatFs stat=new StatFs(path.getPath());
+      long blockSize=stat.getBlockSize();
+      long totalBlocks=stat.getBlockCount();
+      long availableBlocks=stat.getAvailableBlocks();
+      mSdSize.setSummary(formatSize(totalBlocks * blockSize));
+      mSdAvail.setSummary(formatSize(availableBlocks * blockSize) + readOnly);
+      mSdUnmount.setEnabled(true);
+    }
+ catch (    IllegalArgumentException e) {
+      status=Environment.MEDIA_REMOVED;
+    }
+  }
+ else {
+    mSdSize.setSummary(mRes.getString(R.string.sd_unavailable));
+    mSdAvail.setSummary(mRes.getString(R.string.sd_unavailable));
+    mSdUnmount.setEnabled(false);
+    if (status.equals(Environment.MEDIA_UNMOUNTED) || status.equals(Environment.MEDIA_NOFS) || status.equals(Environment.MEDIA_UNMOUNTABLE)) {
+      mSdFormat.setEnabled(true);
+    }
+  }
+  File path=Environment.getDataDirectory();
+  StatFs stat=new StatFs(path.getPath());
+  long blockSize=stat.getBlockSize();
+  long availableBlocks=stat.getAvailableBlocks();
+  findPreference("memory_internal_avail").setSummary(formatSize(availableBlocks * blockSize));
+}

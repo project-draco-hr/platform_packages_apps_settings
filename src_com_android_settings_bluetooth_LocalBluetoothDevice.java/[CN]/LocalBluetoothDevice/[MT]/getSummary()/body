@@ -1,0 +1,14 @@
+{
+  int oneOffSummary=getOneOffSummary();
+  if (oneOffSummary != 0) {
+    return oneOffSummary;
+  }
+  for (  Profile profile : mProfiles) {
+    LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+    int connectionStatus=profileManager.getConnectionStatus(mAddress);
+    if (SettingsBtStatus.isConnectionStatusConnected(connectionStatus) || connectionStatus == SettingsBtStatus.CONNECTION_STATUS_CONNECTING || connectionStatus == SettingsBtStatus.CONNECTION_STATUS_DISCONNECTING) {
+      return SettingsBtStatus.getConnectionStatusSummary(connectionStatus);
+    }
+  }
+  return SettingsBtStatus.getPairingStatusSummary(getBondState());
+}

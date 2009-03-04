@@ -1,0 +1,34 @@
+{
+  List<HashMap> myData=new ArrayList<HashMap>();
+  long date=Calendar.getInstance().getTimeInMillis();
+  try {
+    XmlResourceParser xrp=getResources().getXml(R.xml.timezones);
+    while (xrp.next() != XmlResourceParser.START_TAG)     ;
+    xrp.next();
+    while (xrp.getEventType() != XmlResourceParser.END_TAG) {
+      while (xrp.getEventType() != XmlResourceParser.START_TAG) {
+        if (xrp.getEventType() == XmlResourceParser.END_DOCUMENT) {
+          return myData;
+        }
+        xrp.next();
+      }
+      if (xrp.getName().equals(XMLTAG_TIMEZONE)) {
+        String id=xrp.getAttributeValue(0);
+        String displayName=xrp.nextText();
+        addItem(myData,id,displayName,date);
+      }
+      while (xrp.getEventType() != XmlResourceParser.END_TAG) {
+        xrp.next();
+      }
+      xrp.next();
+    }
+    xrp.close();
+  }
+ catch (  XmlPullParserException xppe) {
+    Log.e(TAG,"Ill-formatted timezones.xml file");
+  }
+catch (  java.io.IOException ioe) {
+    Log.e(TAG,"Unable to read timezones.xml file");
+  }
+  return myData;
+}

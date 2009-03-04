@@ -1,0 +1,9 @@
+{
+  CheckBoxPreference pref=new CheckBoxPreference(this);
+  pref.setKey(profile.toString());
+  pref.setTitle(profile.localizedString);
+  pref.setPersistent(false);
+  pref.setOnPreferenceChangeListener(this);
+  refreshProfilePreference(pref,profile);
+  return pref;
+}

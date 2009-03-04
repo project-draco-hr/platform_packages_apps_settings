@@ -1,0 +1,22 @@
+{
+  if (DEBUG_PKG_DELAY) {
+    try {
+      Thread.sleep(10 * 1000);
+    }
+ catch (    InterruptedException e) {
+    }
+  }
+  AppInfo appInfo=null;
+  Bundle data=new Bundle();
+  data.putString(ATTR_PKG_NAME,mAppInfo.packageName);
+  if (pSucceeded && pStats != null) {
+    if (localLOGV)     Log.i(TAG,"onGetStatsCompleted::" + pStats.packageName + ", ("+ pStats.cacheSize+ ","+ pStats.codeSize+ ", "+ pStats.dataSize);
+    data.putParcelable(ATTR_APP_PKG_STATS,pStats);
+  }
+ else {
+    Log.w(TAG,"Invalid package stats from PackageManager");
+  }
+  Message msg=mHandler.obtainMessage(mMsgId,data);
+  msg.setData(data);
+  mHandler.sendMessage(msg);
+}

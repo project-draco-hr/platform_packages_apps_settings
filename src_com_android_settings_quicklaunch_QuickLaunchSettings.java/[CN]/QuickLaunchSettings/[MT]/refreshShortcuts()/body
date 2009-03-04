@@ -1,0 +1,37 @@
+{
+  Cursor c=mBookmarksCursor;
+  if (c == null) {
+    return;
+  }
+  if (!c.requery()) {
+    Log.e(TAG,"Could not requery cursor when refreshing shortcuts.");
+    return;
+  }
+  SparseBooleanArray noLongerBookmarkedShortcuts=mBookmarkedShortcuts;
+  SparseBooleanArray newBookmarkedShortcuts=new SparseBooleanArray();
+  while (c.moveToNext()) {
+    char shortcut=Character.toLowerCase((char)c.getInt(COLUMN_SHORTCUT));
+    if (shortcut == 0)     continue;
+    ShortcutPreference pref=getOrCreatePreference(shortcut);
+    pref.setTitle(Bookmarks.getTitle(this,c));
+    pref.setSummary(getString(R.string.quick_launch_shortcut,String.valueOf(shortcut)));
+    pref.setHasBookmark(true);
+    newBookmarkedShortcuts.put(shortcut,true);
+    if (noLongerBookmarkedShortcuts != null) {
+      noLongerBookmarkedShortcuts.put(shortcut,false);
+    }
+  }
+  if (noLongerBookmarkedShortcuts != null) {
+    for (int i=noLongerBookmarkedShortcuts.size() - 1; i >= 0; i--) {
+      if (noLongerBookmarkedShortcuts.valueAt(i)) {
+        char shortcut=(char)noLongerBookmarkedShortcuts.keyAt(i);
+        ShortcutPreference pref=mShortcutToPreference.get(shortcut);
+        if (pref != null) {
+          pref.setHasBookmark(false);
+        }
+      }
+    }
+  }
+  mBookmarkedShortcuts=newBookmarkedShortcuts;
+  c.deactivate();
+}

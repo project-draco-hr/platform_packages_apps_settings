@@ -1,0 +1,15 @@
+{
+  if (!TextUtils.isEmpty(SystemProperties.get("ro.monkey"))) {
+    return false;
+  }
+  if (preference == mEnableAdb) {
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.ADB_ENABLED,mEnableAdb.isChecked() ? 1 : 0);
+  }
+ else   if (preference == mKeepScreenOn) {
+    Settings.System.putInt(getContentResolver(),Settings.System.STAY_ON_WHILE_PLUGGED_IN,mKeepScreenOn.isChecked() ? (BatteryManager.BATTERY_PLUGGED_AC | BatteryManager.BATTERY_PLUGGED_USB) : 0);
+  }
+ else   if (preference == mAllowMockLocation) {
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,mAllowMockLocation.isChecked() ? 1 : 0);
+  }
+  return false;
+}

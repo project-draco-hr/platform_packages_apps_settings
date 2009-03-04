@@ -1,0 +1,28 @@
+{
+  String hostname=mHostnameField.getText().toString().trim();
+  String portStr=mPortField.getText().toString().trim();
+  int port=-1;
+  int result=validate(hostname,portStr);
+  if (result > 0) {
+    showError(result);
+    return false;
+  }
+  if (portStr.length() > 0) {
+    try {
+      port=Integer.parseInt(portStr);
+    }
+ catch (    NumberFormatException ex) {
+      return false;
+    }
+  }
+  ContentResolver res=getContentResolver();
+  if (hostname.equals(Proxy.getDefaultHost()) && port == Proxy.getDefaultPort()) {
+    hostname=null;
+  }
+  if (!TextUtils.isEmpty(hostname)) {
+    hostname+=':' + portStr;
+  }
+  Settings.Secure.putString(res,Settings.Secure.HTTP_PROXY,hostname);
+  sendBroadcast(new Intent(Proxy.PROXY_CHANGE_ACTION));
+  return true;
+}

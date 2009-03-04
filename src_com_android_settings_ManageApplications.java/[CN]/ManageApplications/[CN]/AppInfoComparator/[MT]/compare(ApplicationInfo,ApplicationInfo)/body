@@ -1,0 +1,14 @@
+{
+  AppInfo ainfo=mAppPropMap.get(a.packageName);
+  AppInfo binfo=mAppPropMap.get(b.packageName);
+  long atotal=ainfo.getTotalSize();
+  long btotal=binfo.getTotalSize();
+  long ret=atotal - btotal;
+  if (ret < 0) {
+    return 1;
+  }
+  if (ret == 0) {
+    return 0;
+  }
+  return -1;
+}

@@ -1,0 +1,10 @@
+{
+  String status=getString(R.string.band_mode_set) + " [" + mTargetBand.toString()+ "] ";
+  if (ex != null) {
+    status=status + getString(R.string.band_mode_failed);
+  }
+ else {
+    status=status + getString(R.string.band_mode_succeeded);
+  }
+  mProgressPanel=new AlertDialog.Builder(this).setMessage(status).setPositiveButton(android.R.string.ok,null).show();
+}

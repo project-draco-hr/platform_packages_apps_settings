@@ -1,0 +1,26 @@
+{
+  ServiceState serviceState=mPhoneStateReceiver.getServiceState();
+  int state=serviceState.getState();
+  Resources r=getResources();
+  String display=r.getString(R.string.radioInfo_unknown);
+switch (state) {
+case ServiceState.STATE_IN_SERVICE:
+    display=r.getString(R.string.radioInfo_service_in);
+  break;
+case ServiceState.STATE_OUT_OF_SERVICE:
+case ServiceState.STATE_EMERGENCY_ONLY:
+display=r.getString(R.string.radioInfo_service_emergency);
+break;
+case ServiceState.STATE_POWER_OFF:
+display=r.getString(R.string.radioInfo_service_off);
+break;
+}
+gsmState.setText(display);
+if (serviceState.getRoaming()) {
+roamingState.setText(R.string.radioInfo_roaming_in);
+}
+ else {
+roamingState.setText(R.string.radioInfo_roaming_not);
+}
+operatorName.setText(serviceState.getOperatorAlphaLong());
+}

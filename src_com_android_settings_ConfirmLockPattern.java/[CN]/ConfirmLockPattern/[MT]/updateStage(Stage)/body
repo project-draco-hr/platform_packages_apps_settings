@@ -1,0 +1,41 @@
+{
+switch (stage) {
+case NeedToUnlock:
+    if (mHeaderText != null) {
+      mHeaderTextView.setText(mHeaderText);
+    }
+ else {
+      mHeaderTextView.setText(R.string.lockpattern_need_to_unlock);
+    }
+  if (mFooterText != null) {
+    mFooterTextView.setText(mFooterText);
+  }
+ else {
+    mFooterTextView.setText(R.string.lockpattern_need_to_unlock_footer);
+  }
+mLockPatternView.setEnabled(true);
+mLockPatternView.enableInput();
+break;
+case NeedToUnlockWrong:
+if (mHeaderWrongText != null) {
+mHeaderTextView.setText(mHeaderWrongText);
+}
+ else {
+mHeaderTextView.setText(R.string.lockpattern_need_to_unlock_wrong);
+}
+if (mFooterWrongText != null) {
+mFooterTextView.setText(mFooterWrongText);
+}
+ else {
+mFooterTextView.setText(R.string.lockpattern_need_to_unlock_wrong_footer);
+}
+mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Wrong);
+mLockPatternView.setEnabled(true);
+mLockPatternView.enableInput();
+break;
+case LockedOut:
+mLockPatternView.clearPattern();
+mLockPatternView.setEnabled(false);
+break;
+}
+}

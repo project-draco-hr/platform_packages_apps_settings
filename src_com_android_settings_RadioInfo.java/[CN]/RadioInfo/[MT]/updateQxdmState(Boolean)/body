@@ -1,0 +1,12 @@
+{
+  SharedPreferences sp=PreferenceManager.getDefaultSharedPreferences(this.getApplication());
+  mQxdmLogEnabled=sp.getBoolean("qxdmstatus",false);
+  if (newQxdmStatus != null) {
+    SharedPreferences.Editor editor=sp.edit();
+    editor.putBoolean("qxdmstatus",newQxdmStatus);
+    editor.commit();
+    mQxdmLogEnabled=newQxdmStatus;
+  }
+  String buttonText=mQxdmLogEnabled ? getString(R.string.turn_off_qxdm) : getString(R.string.turn_on_qxdm);
+  qxdmLogButton.setText(buttonText);
+}

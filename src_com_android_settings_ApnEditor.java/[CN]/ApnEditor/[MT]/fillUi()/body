@@ -1,0 +1,42 @@
+{
+  if (mFirstTime) {
+    mFirstTime=false;
+    mName.setText(mCursor.getString(NAME_INDEX));
+    mApn.setText(mCursor.getString(APN_INDEX));
+    mProxy.setText(mCursor.getString(PROXY_INDEX));
+    mPort.setText(mCursor.getString(PORT_INDEX));
+    mUser.setText(mCursor.getString(USER_INDEX));
+    mServer.setText(mCursor.getString(SERVER_INDEX));
+    mPassword.setText(mCursor.getString(PASSWORD_INDEX));
+    mMmsProxy.setText(mCursor.getString(MMSPROXY_INDEX));
+    mMmsPort.setText(mCursor.getString(MMSPORT_INDEX));
+    mMmsc.setText(mCursor.getString(MMSC_INDEX));
+    mMcc.setText(mCursor.getString(MCC_INDEX));
+    mMnc.setText(mCursor.getString(MNC_INDEX));
+    mApnType.setText(mCursor.getString(TYPE_INDEX));
+    if (mNewApn) {
+      String numeric=SystemProperties.get(TelephonyProperties.PROPERTY_SIM_OPERATOR_NUMERIC);
+      if (numeric != null && numeric.length() > 4) {
+        String mcc=numeric.substring(0,3);
+        String mnc=numeric.substring(3);
+        mMcc.setText(mcc);
+        mMnc.setText(mnc);
+        mCurMnc=mnc;
+        mCurMcc=mcc;
+      }
+    }
+  }
+  mName.setSummary(checkNull(mName.getText()));
+  mApn.setSummary(checkNull(mApn.getText()));
+  mProxy.setSummary(checkNull(mProxy.getText()));
+  mPort.setSummary(checkNull(mPort.getText()));
+  mUser.setSummary(checkNull(mUser.getText()));
+  mServer.setSummary(checkNull(mServer.getText()));
+  mPassword.setSummary(starify(mPassword.getText()));
+  mMmsProxy.setSummary(checkNull(mMmsProxy.getText()));
+  mMmsPort.setSummary(checkNull(mMmsPort.getText()));
+  mMmsc.setSummary(checkNull(mMmsc.getText()));
+  mMcc.setSummary(checkNull(mMcc.getText()));
+  mMnc.setSummary(checkNull(mMnc.getText()));
+  mApnType.setSummary(checkNull(mApnType.getText()));
+}

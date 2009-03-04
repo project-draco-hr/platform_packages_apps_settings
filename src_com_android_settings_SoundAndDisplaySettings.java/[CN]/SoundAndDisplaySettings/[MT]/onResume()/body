@@ -1,0 +1,6 @@
+{
+  super.onResume();
+  updateState(true);
+  IntentFilter filter=new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
+  registerReceiver(mReceiver,filter);
+}

@@ -1,0 +1,14 @@
+{
+  super(context);
+synchronized (sStaticVarsLock) {
+    if (STRING_ASSIGN_APPLICATION == null) {
+      STRING_ASSIGN_APPLICATION=context.getString(R.string.quick_launch_assign_application);
+      STRING_NO_SHORTCUT=context.getString(R.string.quick_launch_no_shortcut);
+      TypedValue outValue=new TypedValue();
+      context.getTheme().resolveAttribute(android.R.attr.disabledAlpha,outValue,true);
+      sDimAlpha=(int)(outValue.getFloat() * 255);
+    }
+  }
+  mShortcut=shortcut;
+  setWidgetLayoutResource(R.layout.preference_widget_shortcut);
+}

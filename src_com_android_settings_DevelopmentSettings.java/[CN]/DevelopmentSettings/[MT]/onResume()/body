@@ -1,0 +1,6 @@
+{
+  super.onResume();
+  mEnableAdb.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ADB_ENABLED,0) != 0);
+  mKeepScreenOn.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.STAY_ON_WHILE_PLUGGED_IN,0) != 0);
+  mAllowMockLocation.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,0) != 0);
+}

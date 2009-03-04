@@ -1,0 +1,11 @@
+{
+synchronized (INSTANCE_LOCK) {
+    if (INSTANCE == null) {
+      INSTANCE=new LocalBluetoothManager();
+    }
+    if (!INSTANCE.init(context)) {
+      return null;
+    }
+    return INSTANCE;
+  }
+}

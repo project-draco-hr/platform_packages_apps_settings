@@ -1,0 +1,47 @@
+{
+  if (preference == mSilent) {
+    final boolean silent=mSilent.isChecked();
+    mAudioManager.setRingerMode(silent ? AudioManager.RINGER_MODE_SILENT : AudioManager.RINGER_MODE_NORMAL);
+    updateState(false);
+  }
+ else   if (preference == mPlayMediaNotificationSounds) {
+    try {
+      mMountService.setPlayNotificationSounds(mPlayMediaNotificationSounds.isChecked());
+    }
+ catch (    RemoteException e) {
+    }
+  }
+ else   if (preference == mVibrate) {
+    final boolean vibrate=mVibrate.isChecked();
+    final boolean silent=mSilent.isChecked();
+    if (silent) {
+      mAudioManager.setRingerMode(vibrate ? AudioManager.RINGER_MODE_VIBRATE : AudioManager.RINGER_MODE_SILENT);
+    }
+ else {
+      mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER,vibrate ? AudioManager.VIBRATE_SETTING_ON : AudioManager.VIBRATE_SETTING_OFF);
+    }
+  }
+ else   if (preference == mDtmfTone) {
+    Settings.System.putInt(getContentResolver(),Settings.System.DTMF_TONE_WHEN_DIALING,mDtmfTone.isChecked() ? 1 : 0);
+  }
+ else   if (preference == mSoundEffects) {
+    if (mSoundEffects.isChecked()) {
+      mAudioManager.loadSoundEffects();
+    }
+ else {
+      mAudioManager.unloadSoundEffects();
+    }
+    Settings.System.putInt(getContentResolver(),Settings.System.SOUND_EFFECTS_ENABLED,mSoundEffects.isChecked() ? 1 : 0);
+  }
+ else   if (preference == mAnimations) {
+    for (int i=0; i < mAnimationScales.length; i++) {
+      mAnimationScales[i]=mAnimations.isChecked() ? 1 : 0;
+    }
+    try {
+      mWindowManager.setAnimationScales(mAnimationScales);
+    }
+ catch (    RemoteException e) {
+    }
+  }
+  return true;
+}

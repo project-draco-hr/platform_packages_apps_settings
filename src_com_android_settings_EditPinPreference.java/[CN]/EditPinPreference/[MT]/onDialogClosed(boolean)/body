@@ -1,0 +1,7 @@
+{
+  super.onDialogClosed(positiveResult);
+  mDialogOpen=false;
+  if (mPinListener != null) {
+    mPinListener.onPinEntered(this,positiveResult);
+  }
+}

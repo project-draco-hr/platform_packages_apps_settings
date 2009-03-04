@@ -1,0 +1,23 @@
+{
+  if (mManager.isDiscovering()) {
+    dispatchScanningStateChanged(true);
+  }
+ else {
+    if (!force) {
+      if (mLastScan + SCAN_EXPIRATION_MS > System.currentTimeMillis()) {
+        return;
+      }
+      List<String> sinks=mBluetoothA2dp.listConnectedSinks();
+      if (sinks != null) {
+        for (        String address : sinks) {
+          if (mBluetoothA2dp.getSinkState(address) == BluetoothA2dp.STATE_PLAYING) {
+            return;
+          }
+        }
+      }
+    }
+    if (mManager.startDiscovery(true)) {
+      mLastScan=System.currentTimeMillis();
+    }
+  }
+}

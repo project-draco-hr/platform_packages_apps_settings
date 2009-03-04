@@ -1,0 +1,8 @@
+{
+  String address=mDevice.getAddress();
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
+  int connectionStatus=profileManager.getConnectionStatus(address);
+  profilePref.setEnabled(!mDevice.isBusy());
+  profilePref.setSummary(getProfileSummary(profileManager,profile,address,connectionStatus,mOnlineMode));
+  profilePref.setChecked(profileManager.isPreferred(address));
+}

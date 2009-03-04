@@ -1,0 +1,4 @@
+{
+  String currentLocale=Locale.getDefault().toString();
+  return managedQuery(UserDictionary.Words.CONTENT_URI,QUERY_PROJECTION,QUERY_SELECTION,new String[]{currentLocale},"UPPER(" + UserDictionary.Words.WORD + ")");
+}

@@ -1,0 +1,44 @@
+{
+  mGpsUsage.clear();
+  mSensorUsage.clear();
+  long uSecTime=SystemClock.elapsedRealtime() * 1000;
+  final long uSecNow=mStats.computeBatteryRealtime(uSecTime,mWhich) / 1000;
+  SparseArray<? extends Uid> uidStats=mStats.getUidStats();
+  final int NU=uidStats.size();
+  for (int iu=0; iu < NU; iu++) {
+    Uid u=uidStats.valueAt(iu);
+    int uid=u.getUid();
+    Map<Integer,? extends BatteryStats.Uid.Sensor> sensorStats=u.getSensorStats();
+    long timeGps=0;
+    int countGps=0;
+    long timeOther=0;
+    int countOther=0;
+    if (sensorStats.size() > 0) {
+      for (      Map.Entry<Integer,? extends BatteryStats.Uid.Sensor> ent : sensorStats.entrySet()) {
+        Uid.Sensor se=ent.getValue();
+        int handle=se.getHandle();
+        Timer timer=se.getSensorTime();
+        if (timer != null) {
+          long totalTime=(timer.getTotalTime(uSecNow,mWhich) + 500) / 1000;
+          int count=timer.getCount(mWhich);
+          if (handle == BatteryStats.Uid.Sensor.GPS) {
+            timeGps+=totalTime;
+            countGps+=count;
+          }
+ else {
+            timeOther+=totalTime;
+            countOther+=count;
+          }
+        }
+      }
+    }
+    if (timeGps > 0) {
+      mGpsUsage.add(new SensorUsage(uid,timeGps,countGps,uSecNow));
+    }
+    if (timeOther > 0) {
+      mSensorUsage.add(new SensorUsage(uid,timeOther,countOther,uSecNow));
+    }
+  }
+  Collections.sort(mGpsUsage);
+  Collections.sort(mSensorUsage);
+}

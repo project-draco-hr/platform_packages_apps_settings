@@ -1,0 +1,18 @@
+{
+  super.onResume();
+  mStatus=(TextView)findViewById(R.id.status);
+  mLevel=(TextView)findViewById(R.id.level);
+  mScale=(TextView)findViewById(R.id.scale);
+  mHealth=(TextView)findViewById(R.id.health);
+  mTechnology=(TextView)findViewById(R.id.technology);
+  mVoltage=(TextView)findViewById(R.id.voltage);
+  mTemperature=(TextView)findViewById(R.id.temperature);
+  mUptime=(TextView)findViewById(R.id.uptime);
+  mAwakeBattery=(TextView)findViewById(R.id.awakeBattery);
+  mAwakePlugged=(TextView)findViewById(R.id.awakePlugged);
+  mScreenOn=(TextView)findViewById(R.id.screenOn);
+  mBatteryStats=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
+  mScreenStats=IPowerManager.Stub.asInterface(ServiceManager.getService(POWER_SERVICE));
+  mHandler.sendEmptyMessageDelayed(EVENT_TICK,1000);
+  registerReceiver(mIntentReceiver,mIntentFilter);
+}

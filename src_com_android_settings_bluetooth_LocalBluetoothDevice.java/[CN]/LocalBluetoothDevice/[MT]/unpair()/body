@@ -1,0 +1,11 @@
+{
+  BluetoothDevice manager=mLocalManager.getBluetoothManager();
+switch (getBondState()) {
+case BluetoothDevice.BOND_BONDED:
+    manager.removeBond(mAddress);
+  break;
+case BluetoothDevice.BOND_BONDING:
+manager.cancelBondProcess(mAddress);
+break;
+}
+}

@@ -1,0 +1,34 @@
+{
+  final AccessPointState ap=getCurrentAp();
+  NetworkInfo.DetailedState detailedState=info.getDetailedState();
+  if (LOGV) {
+    Log.v(TAG,"State change received " + info.toString() + ", or "+ detailedState+ " on "+ bssid+ " matched to "+ ap);
+  }
+  handleDisablingScanWhileObtainingAddress(detailedState);
+  refreshStatus(ap,detailedState);
+  boolean isDisconnected=info.getState().equals(State.DISCONNECTED);
+  if (ap != null && info.isConnectedOrConnecting()) {
+    setPrimaryAp(ap);
+    if (LOGV) {
+      Log.v(TAG," Updated " + ap + " to be primary");
+    }
+  }
+ else   if (isDisconnected) {
+    setPrimaryAp(null);
+    if (LOGV) {
+      Log.v(TAG," Cleared primary");
+    }
+  }
+ else   if (detailedState.equals(DetailedState.FAILED)) {
+    setPrimaryAp(null);
+    ap.setStatus(DetailedState.FAILED);
+    error(R.string.wifi_generic_connection_error);
+  }
+ else   if (LOGV) {
+    Log.v(TAG," Did not update any AP to primary, could have updated " + ap + " but we aren't connected or connecting");
+  }
+  if ((ap != null) && (info.isConnected() || (detailedState == DetailedState.OBTAINING_IPADDR))) {
+    ap.setSeen(true);
+  }
+  attemptReenableAllAps();
+}

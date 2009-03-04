@@ -1,0 +1,9 @@
+{
+  super.onRestoreInstanceState(state);
+  Bundle dialogBundle=state.getBundle(INSTANCE_KEY_DIALOG_BUNDLE);
+  if (dialogBundle != null) {
+    mDialog=new AccessPointDialog(this,mWifiLayer);
+    mDialog.onRestoreInstanceState(dialogBundle);
+    showDialog(mDialog);
+  }
+}

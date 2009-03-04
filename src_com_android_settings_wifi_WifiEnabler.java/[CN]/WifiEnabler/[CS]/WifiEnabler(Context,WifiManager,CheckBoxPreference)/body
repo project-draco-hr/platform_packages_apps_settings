@@ -1,0 +1,9 @@
+{
+  mContext=context;
+  mWifiCheckBoxPref=wifiCheckBoxPreference;
+  mWifiManager=wifiManager;
+  mOriginalSummary=wifiCheckBoxPreference.getSummary();
+  wifiCheckBoxPreference.setPersistent(false);
+  mWifiStateFilter=new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+  mWifiStateFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+}

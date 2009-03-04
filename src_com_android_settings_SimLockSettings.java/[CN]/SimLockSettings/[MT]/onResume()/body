@@ -1,0 +1,10 @@
+{
+  super.onResume();
+  mPinToggle.setChecked(mPhone.getSimCard().getSimLockEnabled());
+  if (mDialogState != OFF_MODE) {
+    showPinDialog();
+  }
+ else {
+    resetDialogState();
+  }
+}

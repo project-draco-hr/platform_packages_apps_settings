@@ -1,0 +1,10 @@
+{
+  final WifiInfo wifiInfo=mWifiManager.getConnectionInfo();
+  String ssid=wifiInfo.getSSID();
+  if (ssid != null) {
+    return findApLocked(wifiInfo.getNetworkId(),wifiInfo.getBSSID(),ssid,null);
+  }
+ else {
+    return null;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  if (view.getId() == R.id.icon) {
+    Drawable icon=((ResolveInfo)data).loadIcon(getPackageManager());
+    if (icon != null) {
+      ((ImageView)view).setImageDrawable(icon);
+    }
+    return true;
+  }
+ else {
+    return false;
+  }
+}

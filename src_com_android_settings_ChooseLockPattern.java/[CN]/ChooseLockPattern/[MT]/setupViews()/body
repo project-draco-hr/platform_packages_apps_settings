@@ -1,0 +1,12 @@
+{
+  setContentView(R.layout.choose_lock_pattern);
+  mHeaderText=(TextView)findViewById(R.id.headerText);
+  mLockPatternView=(LockPatternView)findViewById(R.id.lockPattern);
+  mLockPatternView.setOnPatternListener(mChooseNewLockPatternListener);
+  mLockPatternView.setTactileFeedbackEnabled(mLockPatternUtils.isTactileFeedbackEnabled());
+  mFooterText=(TextView)findViewById(R.id.footerText);
+  mFooterLeftButton=(TextView)findViewById(R.id.footerLeftButton);
+  mFooterRightButton=(TextView)findViewById(R.id.footerRightButton);
+  mFooterLeftButton.setOnClickListener(this);
+  mFooterRightButton.setOnClickListener(this);
+}

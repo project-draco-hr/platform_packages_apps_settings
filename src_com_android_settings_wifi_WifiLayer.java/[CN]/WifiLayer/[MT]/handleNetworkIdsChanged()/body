@@ -1,0 +1,14 @@
+{
+synchronized (this) {
+    final List<WifiConfiguration> configs=getConfiguredNetworks();
+    for (int i=configs.size() - 1; i >= 0; i--) {
+      final WifiConfiguration config=configs.get(i);
+      AccessPointState ap;
+      ap=findApLocked(AccessPointState.NETWORK_ID_ANY,config.BSSID,config.SSID,AccessPointState.getWifiConfigurationSecurity(config));
+      if (ap == null) {
+        continue;
+      }
+      ap.setNetworkId(config.networkId);
+    }
+  }
+}

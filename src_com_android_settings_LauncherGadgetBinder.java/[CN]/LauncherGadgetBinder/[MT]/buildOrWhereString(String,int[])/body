@@ -1,0 +1,10 @@
+{
+  StringBuilder selectWhere=new StringBuilder();
+  for (int i=values.length - 1; i >= 0; i--) {
+    selectWhere.append(column).append("=").append(values[i]);
+    if (i > 0) {
+      selectWhere.append(" OR ");
+    }
+  }
+  return selectWhere.toString();
+}

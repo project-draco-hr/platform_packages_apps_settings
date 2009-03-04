@@ -1,0 +1,12 @@
+{
+  if (V) {
+    Log.v(TAG,"Got mode changed: " + mode);
+  }
+  if (mode == BluetoothDevice.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+    mCheckBoxPreference.setChecked(true);
+    updateCountdownSummary();
+  }
+ else {
+    mCheckBoxPreference.setChecked(false);
+  }
+}

@@ -1,0 +1,7 @@
+{
+  if (!(menuInfo instanceof AdapterContextMenuInfo))   return;
+  AdapterContextMenuInfo adapterMenuInfo=(AdapterContextMenuInfo)menuInfo;
+  menu.setHeaderTitle(getWord(adapterMenuInfo.position));
+  menu.add(0,CONTEXT_MENU_EDIT,0,R.string.user_dict_settings_context_menu_edit_title);
+  menu.add(0,CONTEXT_MENU_DELETE,0,R.string.user_dict_settings_context_menu_delete_title);
+}

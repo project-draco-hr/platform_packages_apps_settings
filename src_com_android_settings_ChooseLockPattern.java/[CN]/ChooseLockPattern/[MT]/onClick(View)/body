@@ -1,0 +1,38 @@
+{
+  if (v == mFooterLeftButton) {
+    if (mUiStage.leftMode == LeftButtonMode.Retry) {
+      mChosenPattern=null;
+      mLockPatternView.clearPattern();
+      updateStage(Stage.Introduction);
+    }
+ else     if (mUiStage.leftMode == LeftButtonMode.Cancel) {
+      setResult(RESULT_FINISHED);
+      finish();
+    }
+ else {
+      throw new IllegalStateException("left footer button pressed, but stage of " + mUiStage + " doesn't make sense");
+    }
+  }
+ else   if (v == mFooterRightButton) {
+    if (mUiStage.rightMode == RightButtonMode.Continue) {
+      if (mUiStage != Stage.FirstChoiceValid) {
+        throw new IllegalStateException("expected ui stage " + Stage.FirstChoiceValid + " when button is "+ RightButtonMode.Continue);
+      }
+      updateStage(Stage.NeedToConfirm);
+    }
+ else     if (mUiStage.rightMode == RightButtonMode.Confirm) {
+      if (mUiStage != Stage.ChoiceConfirmed) {
+        throw new IllegalStateException("expected ui stage " + Stage.ChoiceConfirmed + " when button is "+ RightButtonMode.Confirm);
+      }
+      saveChosenPatternAndFinish();
+    }
+ else     if (mUiStage.rightMode == RightButtonMode.Ok) {
+      if (mUiStage != Stage.HelpScreen) {
+        throw new IllegalStateException("Help screen is only mode with ok button, but " + "stage is " + mUiStage);
+      }
+      mLockPatternView.clearPattern();
+      mLockPatternView.setDisplayMode(DisplayMode.Correct);
+      updateStage(Stage.Introduction);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  onScanningStarted();
+  if (++mScanRetryCount < SCAN_MAX_RETRY) {
+    removeFutureScans();
+    mHandler.sendEmptyMessageDelayed(MESSAGE_ATTEMPT_SCAN,SCAN_RETRY_DELAY_MS);
+  }
+ else {
+    error(R.string.error_scanning);
+    onScanningEnded();
+  }
+}

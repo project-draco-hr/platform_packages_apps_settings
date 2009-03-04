@@ -1,0 +1,28 @@
+{
+  MenuItem item=menu.findItem(MENU_ITEM_TOGGLE_DATA);
+  int state=mTelephonyManager.getDataState();
+  boolean visible=true;
+switch (state) {
+case TelephonyManager.DATA_CONNECTED:
+case TelephonyManager.DATA_SUSPENDED:
+    item.setTitle(R.string.radioInfo_menu_disableData);
+  break;
+case TelephonyManager.DATA_DISCONNECTED:
+item.setTitle(R.string.radioInfo_menu_enableData);
+break;
+default :
+visible=false;
+break;
+}
+item.setVisible(visible);
+item=menu.findItem(MENU_ITEM_TOGGLE_DATA_ON_BOOT);
+SharedPreferences sp=PreferenceManager.getDefaultSharedPreferences(this.getApplication());
+boolean value=sp.getBoolean(GSMPhone.DATA_DISABLED_ON_BOOT_KEY,false);
+if (value) {
+item.setTitle(R.string.radioInfo_menu_enableDataOnBoot);
+}
+ else {
+item.setTitle(R.string.radioInfo_menu_disableDataOnBoot);
+}
+return true;
+}

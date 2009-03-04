@@ -1,0 +1,94 @@
+{
+  super.onCreate(icicle);
+  finish();
+  final Intent intent=getIntent();
+  final Bundle extras=intent.getExtras();
+  int[] bindSources=null;
+  ArrayList<ComponentName> bindTargets=null;
+  Exception exception=null;
+  try {
+    bindSources=extras.getIntArray(EXTRA_BIND_SOURCES);
+    bindTargets=intent.getParcelableArrayListExtra(EXTRA_BIND_TARGETS);
+  }
+ catch (  ClassCastException ex) {
+    exception=ex;
+  }
+  if (exception != null || bindSources == null || bindTargets == null || bindSources.length != bindTargets.size()) {
+    Log.w(TAG,"Problem reading incoming bind request, or invalid request",exception);
+    return;
+  }
+  final String selectWhere=buildOrWhereString(LauncherProvider.ITEM_TYPE,bindSources);
+  final ContentResolver resolver=getContentResolver();
+  final GadgetManager gadgetManager=GadgetManager.getInstance(this);
+  boolean foundPhotoGadgets=false;
+  final ArrayList<Integer> photoGadgetIds=new ArrayList<Integer>();
+  final ArrayList<Bitmap> photoBitmaps=new ArrayList<Bitmap>();
+  Cursor c=null;
+  try {
+    c=resolver.query(LauncherProvider.CONTENT_URI,BIND_PROJECTION,selectWhere,null,null);
+    if (LOGD)     Log.d(TAG,"found bind cursor count=" + c.getCount());
+    final ContentValues values=new ContentValues();
+    while (c != null && c.moveToNext()) {
+      long favoriteId=c.getLong(INDEX_ID);
+      int itemType=c.getInt(INDEX_ITEM_TYPE);
+      int gadgetId=c.getInt(INDEX_GADGET_ID);
+      byte[] iconData=c.getBlob(INDEX_ICON);
+      ComponentName targetGadget=null;
+      for (int i=0; i < bindSources.length; i++) {
+        if (bindSources[i] == itemType) {
+          targetGadget=bindTargets.get(i);
+          break;
+        }
+      }
+      if (LOGD)       Log.d(TAG,"found matching targetGadget=" + targetGadget.toString() + " for favoriteId="+ favoriteId);
+      boolean bindSuccess=false;
+      try {
+        gadgetManager.bindGadgetId(gadgetId,targetGadget);
+        bindSuccess=true;
+      }
+ catch (      RuntimeException ex) {
+        Log.w(TAG,"Problem binding gadget",ex);
+      }
+      if (bindSuccess && iconData != null && itemType == LauncherProvider.ITEM_TYPE_WIDGET_PHOTO_FRAME) {
+        Bitmap bitmap=BitmapFactory.decodeByteArray(iconData,0,iconData.length);
+        photoGadgetIds.add(gadgetId);
+        photoBitmaps.add(bitmap);
+        foundPhotoGadgets=true;
+      }
+      if (LOGD)       Log.d(TAG,"after finished, success=" + bindSuccess);
+      Uri favoritesUri=ContentUris.withAppendedId(LauncherProvider.CONTENT_URI,favoriteId);
+      if (bindSuccess) {
+        values.clear();
+        values.put(LauncherProvider.ITEM_TYPE,LauncherProvider.ITEM_TYPE_GADGET);
+        values.putNull(LauncherProvider.ICON);
+        resolver.update(favoritesUri,values,null,null);
+      }
+ else {
+        resolver.delete(favoritesUri,null,null);
+      }
+    }
+  }
+ catch (  SQLException ex) {
+    Log.w(TAG,"Problem while binding gadgetIds for Launcher",ex);
+  }
+ finally {
+    if (c != null) {
+      c.close();
+    }
+  }
+  if (foundPhotoGadgets) {
+    final int N=photoGadgetIds.size();
+    final int[] photoGadgetIdsArray=new int[N];
+    for (int i=0; i < N; i++) {
+      photoGadgetIdsArray[i]=photoGadgetIds.get(i);
+    }
+    final Intent bindIntent=new Intent();
+    bindIntent.setComponent(BIND_PHOTO_GADGET);
+    final Bundle bindExtras=new Bundle();
+    bindExtras.putIntArray(GadgetManager.EXTRA_GADGET_IDS,photoGadgetIdsArray);
+    bindExtras.putParcelableArrayList(EXTRA_GADGET_BITMAPS,photoBitmaps);
+    bindIntent.putExtras(bindExtras);
+    startActivity(bindIntent);
+  }
+  if (LOGD)   Log.d(TAG,"completely finished with binding for Launcher");
+}

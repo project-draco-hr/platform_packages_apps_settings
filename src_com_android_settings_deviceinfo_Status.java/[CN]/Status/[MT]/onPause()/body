@@ -1,0 +1,7 @@
+{
+  super.onPause();
+  mPhoneStateReceiver.unregisterIntent();
+  mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
+  unregisterReceiver(mBatteryInfoReceiver);
+  mHandler.removeMessages(EVENT_UPDATE_STATS);
+}

@@ -1,0 +1,7 @@
+{
+  String allowedProviders=Settings.Secure.getString(getContentResolver(),Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+  if (allowedProviders == null) {
+    allowedProviders="";
+  }
+  return allowedProviders;
+}

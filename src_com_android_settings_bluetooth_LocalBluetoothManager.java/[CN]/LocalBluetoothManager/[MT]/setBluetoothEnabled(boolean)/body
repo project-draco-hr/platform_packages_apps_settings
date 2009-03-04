@@ -1,0 +1,12 @@
+{
+  boolean wasSetStateSuccessful=enabled ? mManager.enable() : mManager.disable();
+  if (wasSetStateSuccessful) {
+    setBluetoothStateInt(enabled ? ExtendedBluetoothState.ENABLING : ExtendedBluetoothState.DISABLING);
+  }
+ else {
+    if (V) {
+      Log.v(TAG,"setBluetoothEnabled call, manager didn't return success for enabled: " + enabled);
+    }
+    syncBluetoothState();
+  }
+}

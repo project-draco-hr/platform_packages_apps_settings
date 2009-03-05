@@ -9,11 +9,8 @@
     getPreferenceScreen().removePreference(getPreferenceScreen().findPreference("hardkeyboard_category"));
   }
  else {
-    ContentResolver resolver=getContentResolver();
-    for (int i=0; i < mSettingsUiKey.length; i++) {
-      CheckBoxPreference pref=(CheckBoxPreference)findPreference(mSettingsUiKey[i]);
-      pref.setChecked(System.getInt(resolver,mSettingsSystemId[i],mSettingsDefault[i]) > 0);
-    }
+    mHaveHardKeyboard=true;
   }
+  mCheckboxes=new ArrayList<CheckBoxPreference>();
   onCreateIMM();
 }

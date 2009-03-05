@@ -1,0 +1,19 @@
+{
+  final int count=mCheckboxes.size();
+  int nChecked=0;
+  int iChecked=-1;
+  for (int i=0; i < count; i++) {
+    if (mCheckboxes.get(i).isChecked()) {
+      iChecked=i;
+      nChecked++;
+    }
+  }
+  if (nChecked == 1) {
+    mCheckboxes.get(iChecked).setEnabled(false);
+  }
+ else {
+    for (int i=0; i < count; i++) {
+      mCheckboxes.get(i).setEnabled(true);
+    }
+  }
+}

@@ -8,15 +8,24 @@
     InputMethodInfo property=mInputMethodProperties.get(i);
     String prefKey=property.getId();
     CharSequence label=property.loadLabel(getPackageManager());
-    CheckBoxPreference chkbxPref=new CheckBoxPreference(this);
-    chkbxPref.setKey(prefKey);
-    chkbxPref.setTitle(label);
-    textCategory.addPreference(chkbxPref);
+    if (mHaveHardKeyboard || N > 1) {
+      CheckBoxPreference chkbxPref=new CheckBoxPreference(this);
+      chkbxPref.setKey(prefKey);
+      chkbxPref.setTitle(label);
+      textCategory.addPreference(chkbxPref);
+      mCheckboxes.add(chkbxPref);
+    }
     if (null != property.getSettingsActivity()) {
       PreferenceScreen prefScreen=new PreferenceScreen(this,null);
       prefScreen.setKey(property.getSettingsActivity());
-      CharSequence settingsLabel=getResources().getString(R.string.input_methods_settings_label_format,label);
-      prefScreen.setTitle(settingsLabel);
+      prefScreen.setTitle(label);
+      if (N == 1) {
+        prefScreen.setSummary(getString(R.string.onscreen_keyboard_settings_summary));
+      }
+ else {
+        CharSequence settingsLabel=getResources().getString(R.string.input_methods_settings_label_format,label);
+        prefScreen.setSummary(settingsLabel);
+      }
       textCategory.addPreference(prefScreen);
     }
   }

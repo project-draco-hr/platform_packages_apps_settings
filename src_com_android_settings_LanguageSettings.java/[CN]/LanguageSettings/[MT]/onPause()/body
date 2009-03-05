@@ -8,7 +8,7 @@
     final String id=mInputMethodProperties.get(i).getId();
     CheckBoxPreference pref=(CheckBoxPreference)findPreference(id);
     boolean hasIt=id.equals(mLastInputMethodId);
-    if (pref.isChecked()) {
+    if ((N == 1 && !mHaveHardKeyboard) || (pref != null && pref.isChecked())) {
       if (builder.length() > 0)       builder.append(':');
       builder.append(id);
       if (firstEnabled < 0) {

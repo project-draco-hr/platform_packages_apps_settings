@@ -13,7 +13,10 @@
   for (int i=0; i < N; ++i) {
     final String id=mInputMethodProperties.get(i).getId();
     CheckBoxPreference pref=(CheckBoxPreference)findPreference(mInputMethodProperties.get(i).getId());
-    pref.setChecked(enabled.contains(id));
+    if (pref != null) {
+      pref.setChecked(enabled.contains(id));
+    }
   }
+  updateCheckboxes();
   mLastTickedInputMethodId=null;
 }

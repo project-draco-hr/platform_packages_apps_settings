@@ -1,12 +1,12 @@
 {
-  List<GadgetProviderInfo> installed=mGadgetManager.getInstalledProviders();
+  List<AppWidgetProviderInfo> installed=mAppWidgetManager.getInstalledProviders();
   PackageManager pm=getPackageManager();
   Drawable defaultIcon=null;
   IconResizer resizer=new IconResizer();
   ArrayList<ListItem> result=new ArrayList();
   final int N=installed.size();
   for (int i=0; i < N; i++) {
-    GadgetProviderInfo info=installed.get(i);
+    AppWidgetProviderInfo info=installed.get(i);
     LauncherActivity.ListItem item=new LauncherActivity.ListItem();
     item.packageName=info.provider.getPackageName();
     item.className=info.provider.getClassName();

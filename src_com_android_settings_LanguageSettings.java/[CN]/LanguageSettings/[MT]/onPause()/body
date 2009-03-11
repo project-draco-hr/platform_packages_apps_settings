@@ -5,10 +5,12 @@
   int firstEnabled=-1;
   int N=mInputMethodProperties.size();
   for (int i=0; i < N; ++i) {
-    final String id=mInputMethodProperties.get(i).getId();
+    final InputMethodInfo property=mInputMethodProperties.get(i);
+    final String id=property.getId();
     CheckBoxPreference pref=(CheckBoxPreference)findPreference(id);
     boolean hasIt=id.equals(mLastInputMethodId);
-    if ((N == 1 && !mHaveHardKeyboard) || (pref != null && pref.isChecked())) {
+    boolean systemIme=isSystemIme(property);
+    if (((N == 1 || systemIme) && !mHaveHardKeyboard) || (pref != null && pref.isChecked())) {
       if (builder.length() > 0)       builder.append(':');
       builder.append(id);
       if (firstEnabled < 0) {

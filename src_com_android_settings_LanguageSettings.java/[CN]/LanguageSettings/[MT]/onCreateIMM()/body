@@ -8,7 +8,8 @@
     InputMethodInfo property=mInputMethodProperties.get(i);
     String prefKey=property.getId();
     CharSequence label=property.loadLabel(getPackageManager());
-    if (mHaveHardKeyboard || N > 1) {
+    boolean systemIME=isSystemIme(property);
+    if (mHaveHardKeyboard || (N > 1 && !systemIME)) {
       CheckBoxPreference chkbxPref=new CheckBoxPreference(this);
       chkbxPref.setKey(prefKey);
       chkbxPref.setTitle(label);

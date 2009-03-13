@@ -1,24 +1,21 @@
 {
-  if (sScanning == null) {
-    fillStrings(context);
-  }
 switch (detailedState) {
 case AUTHENTICATING:
-    return sAuthenticating;
+    return context.getString(R.string.status_authenticating);
 case CONNECTED:
-  return sConnected;
+  return context.getString(R.string.status_connected);
 case CONNECTING:
-return sConnecting;
+return context.getString(R.string.status_connecting);
 case DISCONNECTED:
-return sDisconnected;
+return context.getString(R.string.status_disconnected);
 case DISCONNECTING:
-return sDisconnecting;
+return context.getString(R.string.status_disconnecting);
 case FAILED:
-return sFailed;
+return context.getString(R.string.status_failed);
 case OBTAINING_IPADDR:
-return sObtainingIp;
+return context.getString(R.string.status_obtaining_ip);
 case SCANNING:
-return sScanning;
+return context.getString(R.string.status_scanning);
 default :
 return null;
 }

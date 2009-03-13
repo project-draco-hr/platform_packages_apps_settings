@@ -34,7 +34,10 @@
     Settings.System.putInt(getContentResolver(),Settings.System.SOUND_EFFECTS_ENABLED,mSoundEffects.isChecked() ? 1 : 0);
   }
  else   if (preference == mAnimations) {
-    for (int i=0; i < mAnimationScales.length; i++) {
+    if (mAnimationScales.length > 0) {
+      mAnimationScales[0]=1;
+    }
+    for (int i=1; i < mAnimationScales.length; i++) {
       mAnimationScales[i]=mAnimations.isChecked() ? 1 : 0;
     }
     try {

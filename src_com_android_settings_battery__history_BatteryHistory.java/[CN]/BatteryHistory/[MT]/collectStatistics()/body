@@ -1,0 +1,32 @@
+{
+  if (mType == CPU_USAGE) {
+    if (!mHaveCpuUsage) {
+      mHaveCpuUsage=true;
+      processCpuUsage();
+    }
+  }
+  if (mType == NETWORK_USAGE) {
+    if (!mHaveNetworkUsage) {
+      mHaveNetworkUsage=true;
+      processNetworkUsage();
+    }
+  }
+  if (mType == GPS_USAGE || mType == SENSOR_USAGE) {
+    if (!mHaveSensorUsage) {
+      mHaveSensorUsage=true;
+      processSensorUsage();
+    }
+  }
+  if (mType == WAKELOCK_USAGE) {
+    if (!mHaveWakelockUsage) {
+      mHaveWakelockUsage=true;
+      processWakelockUsage();
+    }
+  }
+  if (mType == MISC_USAGE) {
+    if (!mHaveMiscUsage) {
+      mHaveMiscUsage=true;
+      processMiscUsage();
+    }
+  }
+}

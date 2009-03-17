@@ -1,4 +1,8 @@
 {
+  if (position >= mAppLocalList.size()) {
+    Log.w(TAG,"Invalid view position:" + position + ", actual size is:"+ mAppLocalList.size());
+    return null;
+  }
   AppViewHolder holder;
   if (convertView == null) {
     convertView=mInflater.inflate(R.layout.manage_applications_item,null);
@@ -20,7 +24,9 @@
     if (mInfo.appIcon != null) {
       holder.appIcon.setImageDrawable(mInfo.appIcon);
     }
-    holder.appSize.setText(mInfo.appSize);
+    if (mInfo.appSize != null) {
+      holder.appSize.setText(mInfo.appSize);
+    }
   }
  else {
     Log.w(TAG,"No info for package:" + appInfo.packageName + " in property map");

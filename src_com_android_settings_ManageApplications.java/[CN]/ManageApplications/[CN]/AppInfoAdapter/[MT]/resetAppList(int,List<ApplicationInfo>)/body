@@ -10,6 +10,12 @@
       mAppPropMap.put(applicationInfo.packageName,rInfo);
     }
   }
-  sortList(mSortOrder);
+  if (mAppLocalList.size() > 0) {
+    sortList(mSortOrder);
+  }
+ else {
+    notifyDataSetChanged();
+  }
+  showEmptyViewIfListEmpty();
   return true;
 }

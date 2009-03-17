@@ -1,6 +1,6 @@
 {
-  if (isChecked() && mLockPatternUtils.savedPatternExists()) {
-    confirmPatternThenDisable();
+  if (mLockPatternUtils.savedPatternExists() && isChecked()) {
+    confirmPatternThenDisableAndClear();
   }
  else {
     super.onClick();

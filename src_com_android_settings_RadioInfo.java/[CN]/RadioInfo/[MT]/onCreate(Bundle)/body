@@ -4,7 +4,6 @@
   mTelephonyManager=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
   phone=PhoneFactory.getDefaultPhone();
   mImei=(TextView)findViewById(R.id.imei);
-  mImsi=(TextView)findViewById(R.id.imsi);
   number=(TextView)findViewById(R.id.number);
   callState=(TextView)findViewById(R.id.call);
   operatorName=(TextView)findViewById(R.id.operator);
@@ -26,6 +25,7 @@
   received=(TextView)findViewById(R.id.received);
   cipherState=(TextView)findViewById(R.id.ciphState);
   smsc=(EditText)findViewById(R.id.smsc);
+  dnsCheckState=(TextView)findViewById(R.id.dnsCheckState);
   mPingIpAddr=(TextView)findViewById(R.id.pingIpAddr);
   mPingHostname=(TextView)findViewById(R.id.pingHostname);
   mHttpClientTest=(TextView)findViewById(R.id.httpClientTest);
@@ -46,6 +46,8 @@
   updateSmscButton.setOnClickListener(mUpdateSmscButtonHandler);
   refreshSmscButton=(Button)findViewById(R.id.refresh_smsc);
   refreshSmscButton.setOnClickListener(mRefreshSmscButtonHandler);
+  dnsCheckToggleButton=(Button)findViewById(R.id.dns_check_toggle);
+  dnsCheckToggleButton.setOnClickListener(mDnsCheckButtonHandler);
   mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
   mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
   mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);

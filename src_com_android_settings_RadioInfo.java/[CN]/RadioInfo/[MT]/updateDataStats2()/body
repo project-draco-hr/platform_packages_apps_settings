@@ -1,10 +1,10 @@
 {
   Resources r=getResources();
   try {
-    int txPackets=netstat.getTxPackets();
-    int rxPackets=netstat.getRxPackets();
-    int txBytes=netstat.getTxBytes();
-    int rxBytes=netstat.getRxBytes();
+    long txPackets=netstat.getMobileTxPackets();
+    long rxPackets=netstat.getMobileRxPackets();
+    long txBytes=netstat.getMobileTxBytes();
+    long rxBytes=netstat.getMobileRxBytes();
     String packets=r.getString(R.string.radioInfo_display_packets);
     String bytes=r.getString(R.string.radioInfo_display_bytes);
     sent.setText(txPackets + " " + packets+ ", "+ txBytes+ " "+ bytes);

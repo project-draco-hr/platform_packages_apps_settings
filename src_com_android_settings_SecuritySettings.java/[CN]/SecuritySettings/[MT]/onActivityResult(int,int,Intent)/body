@@ -1,9 +1,8 @@
 {
   super.onActivityResult(requestCode,resultCode,data);
-  if (requestCode != CONFIRM_PATTERN_REQUEST_CODE) {
-    return;
-  }
-  if (resultCode == Activity.RESULT_OK) {
+  final boolean resultOk=resultCode == Activity.RESULT_OK;
+  if ((requestCode == CONFIRM_PATTERN_THEN_DISABLE_AND_CLEAR_REQUEST_CODE) && resultOk) {
     mLockPatternUtils.setLockPatternEnabled(false);
+    mLockPatternUtils.saveLockPattern(null);
   }
 }

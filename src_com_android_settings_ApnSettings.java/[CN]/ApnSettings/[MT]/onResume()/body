@@ -1,4 +1,9 @@
 {
   super.onResume();
-  fillList();
+  if (!mRestoreDefaultApnMode) {
+    fillList();
+  }
+ else {
+    showDialog(DIALOG_RESTORE_DEFAULTAPN);
+  }
 }

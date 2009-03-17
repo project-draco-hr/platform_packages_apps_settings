@@ -3,8 +3,10 @@
   ContentResolver resolver=getContentResolver();
   mAudioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
   mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
+  mMountService=IMountService.Stub.asInterface(ServiceManager.getService("mount"));
   addPreferencesFromResource(R.xml.sound_and_display_settings);
   mSilent=(CheckBoxPreference)findPreference(KEY_SILENT);
+  mPlayMediaNotificationSounds=(CheckBoxPreference)findPreference(KEY_PLAY_MEDIA_NOTIFICATION_SOUNDS);
   mVibrate=(CheckBoxPreference)findPreference(KEY_VIBRATE);
   mDtmfTone=(CheckBoxPreference)findPreference(KEY_DTMF_TONE);
   mDtmfTone.setPersistent(false);
@@ -14,6 +16,8 @@
   mSoundEffects.setChecked(Settings.System.getInt(resolver,Settings.System.SOUND_EFFECTS_ENABLED,0) != 0);
   mAnimations=(CheckBoxPreference)findPreference(KEY_ANIMATIONS);
   mAnimations.setPersistent(false);
+  mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
+  mAccelerometer.setPersistent(false);
   ListPreference screenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
   screenTimeoutPreference.setValue(String.valueOf(Settings.System.getInt(resolver,SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE)));
   screenTimeoutPreference.setOnPreferenceChangeListener(this);

@@ -13,6 +13,8 @@
   mMassStorage.setOnClickListener(mMassStorageListener);
   Button unmountButton=(Button)findViewById(R.id.sdcard_unmount);
   unmountButton.setOnClickListener(mUnmountButtonHandler);
+  Button formatButton=(Button)findViewById(R.id.sdcard_format);
+  formatButton.setOnClickListener(mFormatButtonHandler);
   mTotalSize=(TextView)findViewById(R.id.total);
   mUsedSize=(TextView)findViewById(R.id.used);
   mAvailableSize=(TextView)findViewById(R.id.available);
@@ -20,6 +22,8 @@
   intentFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
   intentFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
   intentFilter.addAction(Intent.ACTION_MEDIA_SHARED);
+  intentFilter.addAction(Intent.ACTION_MEDIA_CHECKING);
+  intentFilter.addAction(Intent.ACTION_MEDIA_NOFS);
   intentFilter.addAction(Intent.ACTION_MEDIA_BAD_REMOVAL);
   intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_STARTED);
   intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);

@@ -1,0 +1,94 @@
+{
+  super.onCreate(icicle);
+  finish();
+  final Intent intent=getIntent();
+  final Bundle extras=intent.getExtras();
+  int[] bindSources=null;
+  ArrayList<ComponentName> bindTargets=null;
+  Exception exception=null;
+  try {
+    bindSources=extras.getIntArray(EXTRA_BIND_SOURCES);
+    bindTargets=intent.getParcelableArrayListExtra(EXTRA_BIND_TARGETS);
+  }
+ catch (  ClassCastException ex) {
+    exception=ex;
+  }
+  if (exception != null || bindSources == null || bindTargets == null || bindSources.length != bindTargets.size()) {
+    Log.w(TAG,"Problem reading incoming bind request, or invalid request",exception);
+    return;
+  }
+  final String selectWhere=buildOrWhereString(LauncherProvider.ITEM_TYPE,bindSources);
+  final ContentResolver resolver=getContentResolver();
+  final AppWidgetManager appWidgetManager=AppWidgetManager.getInstance(this);
+  boolean foundPhotoAppWidgets=false;
+  final ArrayList<Integer> photoAppWidgetIds=new ArrayList<Integer>();
+  final ArrayList<Bitmap> photoBitmaps=new ArrayList<Bitmap>();
+  Cursor c=null;
+  try {
+    c=resolver.query(LauncherProvider.CONTENT_URI,BIND_PROJECTION,selectWhere,null,null);
+    if (LOGD)     Log.d(TAG,"found bind cursor count=" + c.getCount());
+    final ContentValues values=new ContentValues();
+    while (c != null && c.moveToNext()) {
+      long favoriteId=c.getLong(INDEX_ID);
+      int itemType=c.getInt(INDEX_ITEM_TYPE);
+      int appWidgetId=c.getInt(INDEX_APPWIDGET_ID);
+      byte[] iconData=c.getBlob(INDEX_ICON);
+      ComponentName targetAppWidget=null;
+      for (int i=0; i < bindSources.length; i++) {
+        if (bindSources[i] == itemType) {
+          targetAppWidget=bindTargets.get(i);
+          break;
+        }
+      }
+      if (LOGD)       Log.d(TAG,"found matching targetAppWidget=" + targetAppWidget.toString() + " for favoriteId="+ favoriteId);
+      boolean bindSuccess=false;
+      try {
+        appWidgetManager.bindAppWidgetId(appWidgetId,targetAppWidget);
+        bindSuccess=true;
+      }
+ catch (      RuntimeException ex) {
+        Log.w(TAG,"Problem binding widget",ex);
+      }
+      if (bindSuccess && iconData != null && itemType == LauncherProvider.ITEM_TYPE_WIDGET_PHOTO_FRAME) {
+        Bitmap bitmap=BitmapFactory.decodeByteArray(iconData,0,iconData.length);
+        photoAppWidgetIds.add(appWidgetId);
+        photoBitmaps.add(bitmap);
+        foundPhotoAppWidgets=true;
+      }
+      if (LOGD)       Log.d(TAG,"after finished, success=" + bindSuccess);
+      Uri favoritesUri=ContentUris.withAppendedId(LauncherProvider.CONTENT_URI,favoriteId);
+      if (bindSuccess) {
+        values.clear();
+        values.put(LauncherProvider.ITEM_TYPE,LauncherProvider.ITEM_TYPE_APPWIDGET);
+        values.putNull(LauncherProvider.ICON);
+        resolver.update(favoritesUri,values,null,null);
+      }
+ else {
+        resolver.delete(favoritesUri,null,null);
+      }
+    }
+  }
+ catch (  SQLException ex) {
+    Log.w(TAG,"Problem while binding appWidgetIds for Launcher",ex);
+  }
+ finally {
+    if (c != null) {
+      c.close();
+    }
+  }
+  if (foundPhotoAppWidgets) {
+    final int N=photoAppWidgetIds.size();
+    final int[] photoAppWidgetIdsArray=new int[N];
+    for (int i=0; i < N; i++) {
+      photoAppWidgetIdsArray[i]=photoAppWidgetIds.get(i);
+    }
+    final Intent bindIntent=new Intent();
+    bindIntent.setComponent(BIND_PHOTO_APPWIDGET);
+    final Bundle bindExtras=new Bundle();
+    bindExtras.putIntArray(AppWidgetManager.EXTRA_APPWIDGET_IDS,photoAppWidgetIdsArray);
+    bindExtras.putParcelableArrayList(EXTRA_APPWIDGET_BITMAPS,photoBitmaps);
+    bindIntent.putExtras(bindExtras);
+    startActivity(bindIntent);
+  }
+  if (LOGD)   Log.d(TAG,"completely finished with binding for Launcher");
+}

@@ -3,12 +3,12 @@
   if (enable) {
     int timeout=getDiscoverableTimeout();
     manager.setDiscoverableTimeout(timeout);
+    mCheckBoxPreference.setSummaryOn(mContext.getResources().getString(R.string.bluetooth_is_discoverable,timeout));
     long endTimestamp=System.currentTimeMillis() + timeout * 1000;
     persistDiscoverableEndTimestamp(endTimestamp);
-    manager.setMode(BluetoothDevice.MODE_DISCOVERABLE);
-    handleModeChanged(BluetoothDevice.MODE_DISCOVERABLE);
+    manager.setScanMode(BluetoothDevice.SCAN_MODE_CONNECTABLE_DISCOVERABLE);
   }
  else {
-    manager.setMode(BluetoothDevice.MODE_CONNECTABLE);
+    manager.setScanMode(BluetoothDevice.SCAN_MODE_CONNECTABLE);
   }
 }

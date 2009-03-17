@@ -1,18 +1,24 @@
 {
   if (iconMap == null) {
     Log.w(TAG,"Null iconMap when refreshing icon in List Adapter");
-    return;
+    return true;
   }
   boolean changed=false;
   for (  ApplicationInfo info : mAppLocalList) {
     AppInfo pInfo=iconMap.get(info.packageName);
     if (pInfo != null) {
       AppInfo aInfo=mAppPropMap.get(info.packageName);
-      aInfo.refreshIcon(pInfo);
+      if (aInfo != null) {
+        aInfo.refreshIcon(pInfo);
+      }
+ else {
+        return false;
+      }
       changed=true;
     }
   }
   if (changed) {
     notifyDataSetChanged();
   }
+  return true;
 }

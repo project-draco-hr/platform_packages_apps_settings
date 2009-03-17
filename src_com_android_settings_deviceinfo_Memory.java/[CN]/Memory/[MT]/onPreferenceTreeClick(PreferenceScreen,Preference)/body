@@ -3,5 +3,11 @@
     unmount();
     return true;
   }
+ else   if (preference == mSdFormat) {
+    Intent intent=new Intent(Intent.ACTION_VIEW);
+    intent.setClass(this,com.android.settings.MediaFormat.class);
+    startActivity(intent);
+    return true;
+  }
   return false;
 }

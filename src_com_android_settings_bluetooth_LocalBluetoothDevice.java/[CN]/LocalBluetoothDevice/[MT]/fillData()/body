@@ -1,9 +1,7 @@
 {
   BluetoothDevice manager=mLocalManager.getBluetoothManager();
   fetchName();
-  mBtClass=manager.getRemoteClass(mAddress);
-  LocalBluetoothProfileManager.fill(mBtClass,mProfiles);
-  mBondState=manager.getBondState(mAddress);
+  fetchBtClass();
   mVisible=false;
   dispatchAttributesChanged();
 }

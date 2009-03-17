@@ -1,0 +1,23 @@
+{
+  int oldWhich=mWhich;
+  if (parent.equals(mTypeSpinner)) {
+    mType=position;
+  }
+ else   if (parent.equals(mWhichSpinner)) {
+switch (position) {
+case UNPLUGGED:
+      mWhich=BatteryStats.STATS_UNPLUGGED;
+    break;
+case CURRENT:
+  mWhich=BatteryStats.STATS_CURRENT;
+break;
+case TOTAL:
+mWhich=BatteryStats.STATS_TOTAL;
+break;
+}
+}
+if (oldWhich != mWhich) {
+mHaveCpuUsage=mHaveNetworkUsage=mHaveSensorUsage=mHaveWakelockUsage=mHaveMiscUsage=false;
+}
+displayGraph();
+}

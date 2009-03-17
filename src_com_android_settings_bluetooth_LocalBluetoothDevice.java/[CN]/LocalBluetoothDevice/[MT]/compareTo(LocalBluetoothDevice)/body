@@ -2,7 +2,7 @@
   int comparison;
   comparison=(another.isConnected() ? 1 : 0) - (isConnected() ? 1 : 0);
   if (comparison != 0)   return comparison;
-  comparison=(another.mBondState == BluetoothDevice.BOND_BONDED ? 1 : 0) - (mBondState == BluetoothDevice.BOND_BONDED ? 1 : 0);
+  comparison=(another.getBondState() == BluetoothDevice.BOND_BONDED ? 1 : 0) - (getBondState() == BluetoothDevice.BOND_BONDED ? 1 : 0);
   if (comparison != 0)   return comparison;
   comparison=(another.mVisible ? 1 : 0) - (mVisible ? 1 : 0);
   if (comparison != 0)   return comparison;

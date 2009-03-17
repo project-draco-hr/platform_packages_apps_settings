@@ -8,7 +8,7 @@
       Uri packageURI=Uri.parse("package:" + packageName);
       Intent uninstallIntent=new Intent(Intent.ACTION_DELETE,packageURI);
       startActivity(uninstallIntent);
-      setIntentAndFinish(true,false);
+      setIntentAndFinish(true,true);
     }
   }
  else   if (v == mActivitiesButton) {
@@ -25,5 +25,9 @@
       mClearCacheObserver=new ClearCacheObserver();
     }
     mPm.deleteApplicationCacheFiles(packageName,mClearCacheObserver);
+  }
+ else   if (v == mForceStopButton) {
+    ActivityManager am=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+    am.restartPackage(packageName);
   }
 }

@@ -1,0 +1,7 @@
+{
+  super.onRestoreInstanceState(savedInstanceState);
+  mReceivedPairingCanceled=savedInstanceState.getBoolean(INSTANCE_KEY_PAIRING_CANCELED);
+  if (mReceivedPairingCanceled) {
+    onReceivedPairingCanceled();
+  }
+}

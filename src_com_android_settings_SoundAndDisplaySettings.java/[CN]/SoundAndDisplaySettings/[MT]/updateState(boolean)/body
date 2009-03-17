@@ -1,11 +1,23 @@
 {
-  final boolean silent=mAudioManager.getRingerMode() != AudioManager.RINGER_MODE_NORMAL;
-  final boolean phoneVibrate=mAudioManager.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER) == AudioManager.VIBRATE_SETTING_ON;
-  if (silent != mSilent.isChecked() || force) {
-    mSilent.setChecked(silent);
+  final int ringerMode=mAudioManager.getRingerMode();
+  final boolean silentOrVibrateMode=ringerMode != AudioManager.RINGER_MODE_NORMAL;
+  if (silentOrVibrateMode != mSilent.isChecked() || force) {
+    mSilent.setChecked(silentOrVibrateMode);
   }
-  if (phoneVibrate != mVibrate.isChecked() || force) {
-    mVibrate.setChecked(phoneVibrate);
+  try {
+    mPlayMediaNotificationSounds.setChecked(mMountService.getPlayNotificationSounds());
+  }
+ catch (  RemoteException e) {
+  }
+  boolean vibrateSetting;
+  if (silentOrVibrateMode) {
+    vibrateSetting=ringerMode == AudioManager.RINGER_MODE_VIBRATE;
+  }
+ else {
+    vibrateSetting=mAudioManager.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER) == AudioManager.VIBRATE_SETTING_ON;
+  }
+  if (vibrateSetting != mVibrate.isChecked() || force) {
+    mVibrate.setChecked(vibrateSetting);
   }
   boolean animations=true;
   try {
@@ -14,7 +26,7 @@
  catch (  RemoteException e) {
   }
   if (mAnimationScales != null) {
-    for (int i=0; i < mAnimationScales.length; i++) {
+    for (int i=1; i < mAnimationScales.length; i++) {
       if (mAnimationScales[i] == 0) {
         animations=false;
         break;
@@ -24,4 +36,5 @@
   if (animations != mAnimations.isChecked() || force) {
     mAnimations.setChecked(animations);
   }
+  mAccelerometer.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.ACCELEROMETER_ROTATION,0) != 0);
 }

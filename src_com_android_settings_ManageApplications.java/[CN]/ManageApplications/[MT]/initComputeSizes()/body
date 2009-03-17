@@ -1,0 +1,9 @@
+{
+  if (localLOGV)   Log.i(TAG,"Initiating compute sizes for first time");
+  if (mAppInfoAdapter.getCount() > 0) {
+    mObserver.invokeGetSizeInfo(mAppInfoAdapter.getApplicationInfo(0),COMPUTE_PKG_SIZE_DONE);
+  }
+ else {
+    mComputeSizes=true;
+  }
+}

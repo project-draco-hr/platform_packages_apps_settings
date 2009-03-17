@@ -1,0 +1,14 @@
+{
+  showDialog(DIALOG_RESTORE_DEFAULTAPN);
+  mRestoreDefaultApnMode=true;
+  if (mRestoreApnUiHandler == null) {
+    mRestoreApnUiHandler=new RestoreApnUiHandler();
+  }
+  if (mRestoreApnProcessHandler == null) {
+    HandlerThread restoreDefaultApnThread=new HandlerThread("Restore default APN Handler: Process Thread");
+    restoreDefaultApnThread.start();
+    mRestoreApnProcessHandler=new RestoreApnProcessHandler(restoreDefaultApnThread.getLooper(),mRestoreApnUiHandler);
+  }
+  mRestoreApnProcessHandler.sendEmptyMessage(EVENT_RESTORE_DEFAULTAPN_START);
+  return true;
+}

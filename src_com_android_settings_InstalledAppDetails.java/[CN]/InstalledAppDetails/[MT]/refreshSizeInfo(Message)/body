@@ -4,28 +4,38 @@
   long newTot=newPs.cacheSize + newPs.codeSize + newPs.dataSize;
   if (mSizeInfo == null) {
     mSizeInfo=newPs;
-    mTotalSize.setText(getSizeStr(newTot));
+    String str=getSizeStr(newTot);
+    mTotalSize.setText(str);
+    mAppSnippetSize.setText(str);
     mAppSize.setText(getSizeStr(newPs.codeSize));
-    mDataSize.setText(getSizeStr(newPs.dataSize + newPs.cacheSize));
+    mDataSize.setText(getSizeStr(newPs.dataSize));
+    mCacheSize.setText(getSizeStr(newPs.cacheSize));
   }
  else {
     long oldTot=mSizeInfo.cacheSize + mSizeInfo.codeSize + mSizeInfo.dataSize;
     if (newTot != oldTot) {
-      mTotalSize.setText(getSizeStr(newTot));
+      String str=getSizeStr(newTot);
+      mTotalSize.setText(str);
+      mAppSnippetSize.setText(str);
       changed=true;
     }
     if (newPs.codeSize != mSizeInfo.codeSize) {
       mAppSize.setText(getSizeStr(newPs.codeSize));
       changed=true;
     }
-    if ((newPs.dataSize != mSizeInfo.dataSize) || (newPs.cacheSize != mSizeInfo.cacheSize)) {
-      mDataSize.setText(getSizeStr(newPs.dataSize + newPs.cacheSize));
+    if (newPs.dataSize != mSizeInfo.dataSize) {
+      mDataSize.setText(getSizeStr(newPs.dataSize));
+      changed=true;
+    }
+    if (newPs.cacheSize != mSizeInfo.cacheSize) {
+      mCacheSize.setText(getSizeStr(newPs.cacheSize));
+      changed=true;
     }
     if (changed) {
       mSizeInfo=newPs;
     }
   }
-  long data=mSizeInfo.dataSize + mSizeInfo.cacheSize;
+  long data=mSizeInfo.dataSize;
   if (mAppButtonState != AppButtonStates.NONE) {
     mAppButton.setText(mAppButtonText);
     if ((mAppButtonState == AppButtonStates.CLEAR_DATA) && (data == 0)) {

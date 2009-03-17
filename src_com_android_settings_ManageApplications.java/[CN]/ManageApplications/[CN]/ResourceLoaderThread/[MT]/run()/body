@@ -1,9 +1,14 @@
 {
   Map<String,AppInfo> iconMap=new HashMap<String,AppInfo>();
-  for (  ApplicationInfo appInfo : mAppList) {
-    CharSequence appName=appInfo.loadLabel(mPm);
-    Drawable appIcon=appInfo.loadIcon(mPm);
-    iconMap.put(appInfo.packageName,new AppInfo(appInfo.packageName,appName,appIcon));
+  if (mAppList == null || mAppList.size() <= 0) {
+    Log.w(TAG,"Empty or null application list");
+  }
+ else {
+    for (    ApplicationInfo appInfo : mAppList) {
+      CharSequence appName=appInfo.loadLabel(mPm);
+      Drawable appIcon=appInfo.loadIcon(mPm);
+      iconMap.put(appInfo.packageName,new AppInfo(appInfo.packageName,appName,appIcon));
+    }
   }
   Message msg=mHandler.obtainMessage(REFRESH_ICONS);
   msg.obj=iconMap;

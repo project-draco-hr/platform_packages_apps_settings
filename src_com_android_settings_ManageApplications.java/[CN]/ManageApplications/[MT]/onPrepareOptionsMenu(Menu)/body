@@ -1,10 +1,8 @@
 {
-  if (mDoneIniting) {
+  if (mFirst) {
     menu.findItem(SORT_ORDER_ALPHA).setVisible(mSortOrder != SORT_ORDER_ALPHA);
     menu.findItem(SORT_ORDER_SIZE).setVisible(mSortOrder != SORT_ORDER_SIZE);
-    menu.findItem(FILTER_APPS_ALL).setVisible(mFilterApps != FILTER_APPS_ALL);
-    menu.findItem(FILTER_APPS_THIRD_PARTY).setVisible(mFilterApps != FILTER_APPS_THIRD_PARTY);
-    menu.findItem(FILTER_APPS_RUNNING).setVisible(mFilterApps != FILTER_APPS_RUNNING);
+    menu.findItem(FILTER_OPTIONS).setVisible(true);
     return true;
   }
   return false;

@@ -5,17 +5,17 @@
     buildSummary(sb,WifiStatus.getPrintable(mContext,status),true);
   }
  else   if (!seen) {
-    buildSummary(sb,SUMMARY_NOT_IN_RANGE,true);
+    buildSummary(sb,mContext.getString(R.string.summary_not_in_range),true);
     if (!primary && configured) {
-      buildSummary(sb,SUMMARY_REMEMBERED,true);
+      buildSummary(sb,mContext.getString(R.string.summary_remembered),true);
     }
   }
  else {
     if (configured && disabled) {
-      return SUMMARY_CONNECTION_FAILED;
+      return mContext.getString(R.string.summary_connection_failed);
     }
     if (!primary && configured) {
-      buildSummary(sb,SUMMARY_REMEMBERED,true);
+      buildSummary(sb,mContext.getString(R.string.summary_remembered),true);
     }
     String verboseSecurity=getVerboseSecurity();
     if (verboseSecurity != null) {

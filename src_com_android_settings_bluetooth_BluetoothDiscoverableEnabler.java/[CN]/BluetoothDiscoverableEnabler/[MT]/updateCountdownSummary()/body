@@ -1,6 +1,6 @@
 {
-  int mode=mLocalManager.getBluetoothManager().getMode();
-  if (mode != BluetoothDevice.MODE_DISCOVERABLE) {
+  int mode=mLocalManager.getBluetoothManager().getScanMode();
+  if (mode != BluetoothDevice.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
     return;
   }
   long currentTimestamp=System.currentTimeMillis();

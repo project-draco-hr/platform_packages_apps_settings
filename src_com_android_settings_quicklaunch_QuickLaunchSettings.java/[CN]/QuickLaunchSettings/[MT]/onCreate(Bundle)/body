@@ -1,7 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.quick_launch_settings);
-  mShortcutCategory=(PreferenceCategory)findPreference(KEY_SHORTCUT_CATEGORY);
+  mShortcutGroup=(PreferenceGroup)findPreference(KEY_SHORTCUT_CATEGORY);
   mShortcutToPreference=new SparseArray<ShortcutPreference>();
   mBookmarksObserver=new BookmarksObserver(mUiHandler);
   initShortcutPreferences();

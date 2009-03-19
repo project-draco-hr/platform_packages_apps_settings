@@ -1,0 +1,13 @@
+{
+  if (!device.ensurePaired())   return false;
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+  int status=profileManager.getConnectionStatus(device.mAddress);
+  if (!SettingsBtStatus.isConnectionStatusConnected(status)) {
+    if (profileManager.connect(device.mAddress) == BluetoothDevice.RESULT_SUCCESS) {
+      return true;
+    }
+    Log.i(TAG,"Failed to connect " + profile.toString() + " to "+ device.mName);
+  }
+  Log.i(TAG,"Not connected");
+  return false;
+}

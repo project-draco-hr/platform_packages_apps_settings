@@ -1,13 +1,18 @@
 {
   Intent intent=intentForPosition(position);
   int result;
-  try {
-    mAppWidgetManager.bindAppWidgetId(mAppWidgetId,intent.getComponent());
-    result=RESULT_OK;
+  if (intent.getExtras() != null) {
+    setResultData(RESULT_OK,intent);
   }
- catch (  IllegalArgumentException e) {
-    result=RESULT_CANCELED;
+ else {
+    try {
+      mAppWidgetManager.bindAppWidgetId(mAppWidgetId,intent.getComponent());
+      result=RESULT_OK;
+    }
+ catch (    IllegalArgumentException e) {
+      result=RESULT_CANCELED;
+    }
+    setResultData(result,null);
   }
-  setResultData(result);
   finish();
 }

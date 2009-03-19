@@ -1,0 +1,13 @@
+{
+  BluetoothJob job=workQueue.poll();
+  if (job == null) {
+    Log.w(TAG,"Yikes, onProfileStateChanged called but job queue is empty");
+  }
+ else   if (job.device.mAddress != mAddress) {
+    Log.w(TAG,"Yikes, onProfileStateChanged called but the address differ. this.mAddress=" + mAddress + " workQueue.head="+ job.toString());
+  }
+ else {
+    Log.d(TAG,"LocalBluetoothDevice.onProfileStateChanged() called. MAC addr matched");
+  }
+  processCommands();
+}

@@ -1,0 +1,28 @@
+{
+  final int N=items.size();
+  for (int i=0; i < N; i++) {
+    AppWidgetProviderInfo info=items.get(i);
+    LauncherActivity.ListItem item=new LauncherActivity.ListItem();
+    item.packageName=info.provider.getPackageName();
+    item.className=info.provider.getClassName();
+    if (extras != null) {
+      item.extras=extras.get(i);
+    }
+    item.label=info.label;
+    if (info.icon != 0) {
+      Drawable d=pm.getDrawable(item.packageName,info.icon,null);
+      if (d != null) {
+        item.icon=resizer.createIconThumbnail(d);
+      }
+ else {
+        Log.w(TAG,"Can't load icon drawable 0x" + Integer.toHexString(info.icon) + " for package: "+ item.packageName);
+      }
+    }
+    if (item.icon == null) {
+      if (mDefaultIcon == null) {
+      }
+      item.icon=mDefaultIcon;
+    }
+    result.add(item);
+  }
+}

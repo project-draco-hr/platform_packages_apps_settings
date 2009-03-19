@@ -1,0 +1,24 @@
+{
+  boolean successful=false;
+  if (job.timeSent == 0) {
+    job.timeSent=System.currentTimeMillis();
+switch (job.command) {
+case CONNECT:
+      successful=connectInt(job.device,job.profile);
+    break;
+case DISCONNECT:
+  successful=disconnectInt(job.device,job.profile);
+break;
+}
+if (successful) {
+Log.d(TAG,"Command sent successfully:" + job.toString());
+}
+ else {
+Log.d(TAG,"Framework rejected command immediately:" + job.toString());
+}
+}
+ else {
+Log.d(TAG,"Job already has a sent time. Skip. " + job.toString());
+}
+return successful;
+}

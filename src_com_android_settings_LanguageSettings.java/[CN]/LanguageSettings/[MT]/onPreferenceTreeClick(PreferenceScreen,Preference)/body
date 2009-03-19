@@ -3,10 +3,37 @@
     return false;
   }
   if (preference instanceof CheckBoxPreference) {
-    CheckBoxPreference chkPref=(CheckBoxPreference)preference;
-    String id=getInputMethodIdFromKey(chkPref.getKey());
+    final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
+    final String id=getInputMethodIdFromKey(chkPref.getKey());
     if (chkPref.isChecked()) {
-      mLastTickedInputMethodId=id;
+      InputMethodInfo selImi=null;
+      final int N=mInputMethodProperties.size();
+      for (int i=0; i < N; i++) {
+        InputMethodInfo imi=mInputMethodProperties.get(i);
+        if (id.equals(imi.getId())) {
+          selImi=imi;
+          if (isSystemIme(imi)) {
+            mLastTickedInputMethodId=id;
+            return super.onPreferenceTreeClick(preferenceScreen,preference);
+          }
+        }
+      }
+      chkPref.setChecked(false);
+      if (selImi == null) {
+        return super.onPreferenceTreeClick(preferenceScreen,preference);
+      }
+      AlertDialog d=(new AlertDialog.Builder(this)).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getString(R.string.ime_security_warning,selImi.getServiceInfo().applicationInfo.loadLabel(getPackageManager()))).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+        public void onClick(        DialogInterface dialog,        int which){
+          chkPref.setChecked(true);
+          mLastTickedInputMethodId=id;
+        }
+      }
+).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+        public void onClick(        DialogInterface dialog,        int which){
+        }
+      }
+).create();
+      d.show();
     }
  else     if (id.equals(mLastTickedInputMethodId)) {
       mLastTickedInputMethodId=null;

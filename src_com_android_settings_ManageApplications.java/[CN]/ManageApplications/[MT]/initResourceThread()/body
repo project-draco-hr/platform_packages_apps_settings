@@ -1,6 +1,7 @@
 {
   if (mResourceThread.isAlive()) {
     mResourceThread.interrupt();
+    mResourceThread=new ResourceLoaderThread();
   }
   mResourceThread.loadAllResources(mAppInfoAdapter.getAppList());
 }

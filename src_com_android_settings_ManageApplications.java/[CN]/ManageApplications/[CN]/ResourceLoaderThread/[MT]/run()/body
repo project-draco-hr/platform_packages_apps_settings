@@ -7,10 +7,11 @@
     for (    ApplicationInfo appInfo : mAppList) {
       CharSequence appName=appInfo.loadLabel(mPm);
       Drawable appIcon=appInfo.loadIcon(mPm);
-      iconMap.put(appInfo.packageName,new AppInfo(appInfo.packageName,appName,appIcon));
+      Message msg=mHandler.obtainMessage(REFRESH_APP_RESOURCE);
+      msg.obj=new AppInfo(appInfo.packageName,appName,appIcon);
+      mHandler.sendMessage(msg);
     }
   }
-  Message msg=mHandler.obtainMessage(REFRESH_ICONS);
-  msg.obj=iconMap;
-  mHandler.sendMessage(msg);
+  Message doneMsg=mHandler.obtainMessage(REFRESH_DONE);
+  mHandler.sendMessage(doneMsg);
 }

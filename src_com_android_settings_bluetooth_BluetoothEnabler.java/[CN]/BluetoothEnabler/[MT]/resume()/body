@@ -2,9 +2,9 @@
   if (mLocalManager == null) {
     return;
   }
-  ExtendedBluetoothState state=mLocalManager.getBluetoothState();
-  mCheckBoxPreference.setEnabled(state == ExtendedBluetoothState.ENABLED || state == ExtendedBluetoothState.DISABLED);
+  int state=mLocalManager.getBluetoothState();
+  mCheckBoxPreference.setEnabled(state == BluetoothDevice.BLUETOOTH_STATE_ON || state == BluetoothDevice.BLUETOOTH_STATE_OFF);
   handleStateChanged(state);
-  mContext.registerReceiver(mReceiver,new IntentFilter(LocalBluetoothManager.EXTENDED_BLUETOOTH_STATE_CHANGED_ACTION));
+  mContext.registerReceiver(mReceiver,new IntentFilter(BluetoothIntent.BLUETOOTH_STATE_CHANGED_ACTION));
   mCheckBoxPreference.setOnPreferenceChangeListener(this);
 }

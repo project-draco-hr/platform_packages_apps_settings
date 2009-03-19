@@ -1,17 +1,14 @@
 {
-  if (pkgName == null) {
-    Log.w(TAG,"Adding null pkg to List Adapter");
+  if ((pkgName == null) || (ps == null)) {
+    if (pkgName == null) {
+      Log.w(TAG,"Adding null pkg to List Adapter");
+    }
+ else {
+      Log.w(TAG,"Adding pkg : " + pkgName + " with invalid PackageStats");
+    }
     return;
   }
   boolean notInList=true;
-  int newIdx=getIndex(pkgName);
-  if (newIdx != -1) {
-    notInList=false;
-    if (mAppPropMap.get(pkgName) != null) {
-      Log.i(TAG,"Package:" + pkgName + " already added");
-      return;
-    }
-  }
   ApplicationInfo info=null;
   try {
     info=mPm.getApplicationInfo(pkgName,0);
@@ -24,9 +21,10 @@
     Log.i(TAG,"Null ApplicationInfo for package:" + pkgName);
     return;
   }
-  mAppPropMap.put(pkgName,new AppInfo(pkgName,newIdx,info.loadLabel(mPm),info.loadIcon(mPm),ps));
+  mAppList.add(info);
+  mAppPropMap.put(pkgName,new AppInfo(pkgName,-1,info.loadLabel(mPm),info.loadIcon(mPm),ps));
   if (notInList && (shouldBeInList(mFilterApps,info))) {
-    newIdx=Collections.binarySearch(mAppLocalList,info,getAppComparator(mSortOrder));
+    int newIdx=Collections.binarySearch(mAppLocalList,info,getAppComparator(mSortOrder));
     if (newIdx >= 0) {
       Log.i(TAG,"Strange. Package:" + pkgName + " is not new");
       return;

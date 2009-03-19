@@ -11,6 +11,7 @@
   requestWindowFeature(Window.FEATURE_PROGRESS);
   requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
   setContentView(R.layout.compute_sizes);
+  showLoadingMsg();
   mDefaultAppIcon=Resources.getSystem().getDrawable(com.android.internal.R.drawable.sym_def_app_icon);
   mInvalidSizeStr=getText(R.string.invalid_size_value);
   mComputingSizeStr=getText(R.string.computing_size);
@@ -26,5 +27,4 @@
   lv.setItemsCanFocus(true);
   lv.setOnItemClickListener(this);
   mListView=lv;
-  showLoadingMsg();
 }

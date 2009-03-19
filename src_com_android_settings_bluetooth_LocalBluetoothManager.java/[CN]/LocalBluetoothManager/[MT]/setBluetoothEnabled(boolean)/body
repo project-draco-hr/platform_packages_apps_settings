@@ -1,7 +1,7 @@
 {
   boolean wasSetStateSuccessful=enabled ? mManager.enable() : mManager.disable();
   if (wasSetStateSuccessful) {
-    setBluetoothStateInt(enabled ? ExtendedBluetoothState.ENABLING : ExtendedBluetoothState.DISABLING);
+    setBluetoothStateInt(enabled ? BluetoothDevice.BLUETOOTH_STATE_TURNING_ON : BluetoothDevice.BLUETOOTH_STATE_TURNING_OFF);
   }
  else {
     if (V) {

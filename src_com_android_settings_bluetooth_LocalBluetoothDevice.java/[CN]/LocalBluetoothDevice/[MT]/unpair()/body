@@ -1,4 +1,20 @@
 {
+synchronized (workQueue) {
+    boolean processNow=false;
+    Iterator<BluetoothJob> it=workQueue.iterator();
+    while (it.hasNext()) {
+      BluetoothJob job=it.next();
+      if (job.device.mAddress.equals(this.mAddress)) {
+        it.remove();
+        if (job.timeSent != 0) {
+          processNow=true;
+        }
+      }
+    }
+    if (processNow) {
+      processCommands();
+    }
+  }
   BluetoothDevice manager=mLocalManager.getBluetoothManager();
 switch (getBondState()) {
 case BluetoothDevice.BOND_BONDED:

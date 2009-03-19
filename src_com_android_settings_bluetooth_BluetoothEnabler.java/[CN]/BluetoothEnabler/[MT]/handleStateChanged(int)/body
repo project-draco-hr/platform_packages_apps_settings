@@ -1,0 +1,15 @@
+{
+  if (state == BluetoothDevice.BLUETOOTH_STATE_OFF || state == BluetoothDevice.BLUETOOTH_STATE_ON) {
+    mCheckBoxPreference.setChecked(state == BluetoothDevice.BLUETOOTH_STATE_ON);
+    mCheckBoxPreference.setSummary(state == BluetoothDevice.BLUETOOTH_STATE_OFF ? mOriginalSummary : null);
+    mCheckBoxPreference.setEnabled(isEnabledByDependency());
+  }
+ else   if (state == BluetoothDevice.BLUETOOTH_STATE_TURNING_ON || state == BluetoothDevice.BLUETOOTH_STATE_TURNING_OFF) {
+    mCheckBoxPreference.setSummary(state == BluetoothDevice.BLUETOOTH_STATE_TURNING_ON ? R.string.wifi_starting : R.string.wifi_stopping);
+  }
+ else {
+    mCheckBoxPreference.setChecked(false);
+    mCheckBoxPreference.setSummary(R.string.wifi_error);
+    mCheckBoxPreference.setEnabled(true);
+  }
+}

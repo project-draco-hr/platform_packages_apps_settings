@@ -1,0 +1,47 @@
+{
+  List<ApplicationInfo> retList=new ArrayList<ApplicationInfo>();
+  if (pAppList == null) {
+    return retList;
+  }
+  if (filterOption == FILTER_APPS_THIRD_PARTY) {
+    List<ApplicationInfo> appList=new ArrayList<ApplicationInfo>();
+    for (    ApplicationInfo appInfo : pAppList) {
+      boolean flag=false;
+      if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+        flag=true;
+      }
+ else       if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+        flag=true;
+      }
+      if (flag) {
+        appList.add(appInfo);
+      }
+    }
+    return appList;
+  }
+ else   if (filterOption == FILTER_APPS_RUNNING) {
+    List<ApplicationInfo> appList=new ArrayList<ApplicationInfo>();
+    List<ActivityManager.RunningAppProcessInfo> procList=getRunningAppProcessesList();
+    if ((procList == null) || (procList.size() == 0)) {
+      return appList;
+    }
+    HashMap<String,ActivityManager.RunningAppProcessInfo> runningMap=new HashMap<String,ActivityManager.RunningAppProcessInfo>();
+    for (    ActivityManager.RunningAppProcessInfo appProcInfo : procList) {
+      if ((appProcInfo != null) && (appProcInfo.pkgList != null)) {
+        int size=appProcInfo.pkgList.length;
+        for (int i=0; i < size; i++) {
+          runningMap.put(appProcInfo.pkgList[i],appProcInfo);
+        }
+      }
+    }
+    for (    ApplicationInfo appInfo : pAppList) {
+      if (runningMap.get(appInfo.packageName) != null) {
+        appList.add(appInfo);
+      }
+    }
+    return appList;
+  }
+ else {
+    return pAppList;
+  }
+}

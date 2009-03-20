@@ -1,0 +1,7 @@
+{
+  mSelectedKey=key;
+  ContentResolver resolver=getContentResolver();
+  ContentValues values=new ContentValues();
+  values.put(APN_ID,mSelectedKey);
+  resolver.update(PREFERAPN_URI,values,null,null);
+}

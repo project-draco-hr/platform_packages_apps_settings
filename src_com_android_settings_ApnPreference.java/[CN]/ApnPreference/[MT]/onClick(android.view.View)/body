@@ -1,0 +1,10 @@
+{
+  if ((v != null) && (R.id.text_layout == v.getId())) {
+    Context context=getContext();
+    if (context != null) {
+      int pos=Integer.parseInt(getKey());
+      Uri url=ContentUris.withAppendedId(Telephony.Carriers.CONTENT_URI,pos);
+      context.startActivity(new Intent(Intent.ACTION_EDIT,url));
+    }
+  }
+}

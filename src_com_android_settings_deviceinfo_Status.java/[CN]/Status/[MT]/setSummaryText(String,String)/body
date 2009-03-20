@@ -2,5 +2,7 @@
   if (TextUtils.isEmpty(text)) {
     text=sUnknown;
   }
-  findPreference(preference).setSummary(text);
+  if (findPreference(preference) != null) {
+    findPreference(preference).setSummary(text);
+  }
 }

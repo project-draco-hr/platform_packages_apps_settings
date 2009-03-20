@@ -1,5 +1,7 @@
 {
   super.onStop();
+  mResourceThread.setAbort();
+  mSizeComputor.setAbort();
   clearMessagesInHandler();
   unregisterReceiver(mReceiver);
   mAppPropCache=mAppInfoAdapter.mAppPropMap;

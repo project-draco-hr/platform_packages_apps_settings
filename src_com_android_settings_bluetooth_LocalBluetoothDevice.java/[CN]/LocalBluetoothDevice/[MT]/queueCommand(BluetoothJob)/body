@@ -1,25 +1,7 @@
 {
   Log.d(TAG,workQueue.toString());
 synchronized (workQueue) {
-    boolean processNow=false;
-    long now=System.currentTimeMillis();
-    Iterator<BluetoothJob> it=workQueue.iterator();
-    while (it.hasNext()) {
-      BluetoothJob existingJob=it.next();
-      if (job.command == BluetoothCommand.DISCONNECT) {
-        if (existingJob.timeSent == 0 && existingJob.command == BluetoothCommand.CONNECT && existingJob.device.mAddress.equals(job.device.mAddress) && existingJob.profile == job.profile) {
-          it.remove();
-          continue;
-        }
-      }
-      Log.d(TAG,"Age:" + (now - existingJob.timeSent));
-      if (existingJob.timeSent != 0 && (now - existingJob.timeSent) >= MAX_WAIT_TIME_FOR_FRAMEWORK) {
-        Log.w(TAG,"Timeout. Removing Job:" + existingJob.toString());
-        it.remove();
-        processNow=true;
-        continue;
-      }
-    }
+    boolean processNow=pruneQueue(job);
     Log.d(TAG,"Adding: " + job.toString());
     workQueue.add(job);
     if (workQueue.size() == 1 || processNow) {

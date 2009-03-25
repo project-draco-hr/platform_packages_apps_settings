@@ -2,11 +2,20 @@
   super.onCreate(icicle);
   Log.i(TAG,"onCreate");
   setContentView(R.layout.battery_history);
+  mStats=(BatteryStats)getLastNonConfigurationInstance();
+  if (icicle != null) {
+    if (mStats == null) {
+      mStats=(BatteryStats)icicle.getParcelable("stats");
+    }
+    mType=icicle.getInt("type");
+    mWhich=icicle.getInt("which");
+  }
   mGraphLayout=(LinearLayout)findViewById(R.id.graphLayout);
   mTextLayout=(LinearLayout)findViewById(R.id.textLayout);
   mDetailsText=(TextView)findViewById(R.id.detailsText);
   mMessageText=(TextView)findViewById(R.id.messageText);
   mTypeSpinner=(Spinner)findViewById(R.id.typeSpinner);
+  mTypeSpinner.setSelection(mType);
   mTypeSpinner.setOnItemSelectedListener(this);
   mWhichSpinner=(Spinner)findViewById(R.id.whichSpinner);
   mWhichSpinner.setOnItemSelectedListener(this);
@@ -25,14 +34,6 @@
     mButtons[i].setOnClickListener(this);
   }
   mBatteryInfo=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
-  mStats=(BatteryStats)getLastNonConfigurationInstance();
-  if (icicle != null) {
-    if (mStats == null) {
-      mStats=(BatteryStats)icicle.getParcelable("stats");
-    }
-    mType=icicle.getInt("type");
-    mWhich=icicle.getInt("which");
-  }
   if (mStats == null) {
     load();
   }

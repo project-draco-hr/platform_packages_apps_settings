@@ -1,0 +1,9 @@
+{
+  if (den == 0L) {
+    return "---%";
+  }
+  float perc=((float)num) / ((float)den) * 100;
+  mFormatBuilder.setLength(0);
+  mFormatter.format("%.1f%%",perc);
+  return mFormatBuilder.toString();
+}

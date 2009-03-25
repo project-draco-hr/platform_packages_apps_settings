@@ -1,0 +1,13 @@
+{
+  List<PickAdapter.Item> items=new ArrayList<PickAdapter.Item>();
+  putInstalledAppWidgets(items);
+  putCustomAppWidgets(items);
+  Collections.sort(items,new Comparator<PickAdapter.Item>(){
+    Collator mCollator=Collator.getInstance();
+    public int compare(    PickAdapter.Item lhs,    PickAdapter.Item rhs){
+      return mCollator.compare(lhs.label,rhs.label);
+    }
+  }
+);
+  return items;
+}

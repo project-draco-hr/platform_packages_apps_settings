@@ -1,7 +1,11 @@
 {
   if (localLOGV)   Log.i(TAG,"Initiating compute sizes for first time");
-  if (mAppInfoAdapter.getCount() > 0) {
-    mObserver.invokeGetSizeInfo(mAppInfoAdapter.getApplicationInfo(0),COMPUTE_PKG_SIZE_DONE);
+  if ((mSizeComputor != null) && (mSizeComputor.isAlive())) {
+    mSizeComputor.setAbort();
+  }
+  List<ApplicationInfo> appList=mAppInfoAdapter.getBaseAppList();
+  if ((appList != null) && (appList.size()) > 0) {
+    mSizeComputor=new TaskRunner(appList);
   }
  else {
     mComputeSizes=true;

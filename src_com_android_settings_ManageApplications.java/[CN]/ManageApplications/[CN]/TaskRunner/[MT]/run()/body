@@ -1,0 +1,28 @@
+{
+  long startTime;
+  if (DEBUG_SIZE || DEBUG_TIME) {
+    startTime=SystemClock.elapsedRealtime();
+  }
+  int size=mPkgList.size();
+  for (int i=0; i < size; i++) {
+    if (abort) {
+      break;
+    }
+    CountDownLatch count=new CountDownLatch(1);
+    String packageName=mPkgList.get(i).packageName;
+    long startPkgTime;
+    if (DEBUG_SIZE) {
+      startPkgTime=SystemClock.elapsedRealtime();
+    }
+    mSizeObserver.invokeGetSize(packageName,count);
+    try {
+      count.await();
+    }
+ catch (    InterruptedException e) {
+      Log.i(TAG,"Failed computing size for pkg : " + packageName);
+    }
+    if (DEBUG_SIZE)     Log.i(TAG,"Took " + (SystemClock.elapsedRealtime() - startPkgTime) + " ms to compute size for pkg : "+ packageName);
+  }
+  if (DEBUG_SIZE || DEBUG_TIME)   Log.i(TAG,"Took " + (SystemClock.elapsedRealtime() - startTime) + " ms to compute resources ");
+  mHandler.sendEmptyMessage(END_MSG);
+}

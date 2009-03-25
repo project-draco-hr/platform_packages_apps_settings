@@ -1,0 +1,10 @@
+{
+  PackageManager packageManager=getPackageManager();
+  List<ResolveInfo> list=packageManager.queryIntentActivities(baseIntent,0);
+  Collections.sort(list,new ResolveInfo.DisplayNameComparator(packageManager));
+  final int listSize=list.size();
+  for (int i=0; i < listSize; i++) {
+    ResolveInfo resolveInfo=list.get(i);
+    items.add(new PickAdapter.Item(this,packageManager,resolveInfo));
+  }
+}

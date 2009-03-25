@@ -1,0 +1,25 @@
+{
+  super.onCreate(savedInstanceState);
+  final Intent intent=getIntent();
+  Parcelable parcel=intent.getParcelableExtra(Intent.EXTRA_INTENT);
+  if (parcel instanceof Intent) {
+    mBaseIntent=(Intent)parcel;
+  }
+ else {
+    mBaseIntent=new Intent(Intent.ACTION_MAIN,null);
+    mBaseIntent.addCategory(Intent.CATEGORY_DEFAULT);
+  }
+  AlertController.AlertParams params=mAlertParams;
+  params.mOnClickListener=this;
+  params.mOnCancelListener=this;
+  if (intent.hasExtra(Intent.EXTRA_TITLE)) {
+    params.mTitle=intent.getStringExtra(Intent.EXTRA_TITLE);
+  }
+ else {
+    params.mTitle=getTitle();
+  }
+  List<PickAdapter.Item> items=getItems();
+  mAdapter=new PickAdapter(this,items);
+  params.mAdapter=mAdapter;
+  setupAlert();
+}

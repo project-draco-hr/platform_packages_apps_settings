@@ -1,0 +1,10 @@
+{
+  if (convertView == null) {
+    convertView=mInflater.inflate(mLayoutRes,parent,false);
+  }
+  Item item=(Item)getItem(position);
+  TextView textView=(TextView)convertView;
+  textView.setText(item.label);
+  textView.setCompoundDrawablesWithIntrinsicBounds(item.icon,null,null,null);
+  return convertView;
+}

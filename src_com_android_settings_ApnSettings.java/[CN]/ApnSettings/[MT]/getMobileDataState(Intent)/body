@@ -1,0 +1,9 @@
+{
+  String str=intent.getStringExtra(Phone.STATE_KEY);
+  if (str != null) {
+    return Enum.valueOf(Phone.DataState.class,str);
+  }
+ else {
+    return Phone.DataState.DISCONNECTED;
+  }
+}

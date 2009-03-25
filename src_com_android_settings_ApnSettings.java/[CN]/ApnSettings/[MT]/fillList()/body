@@ -1,19 +1,37 @@
 {
-  mCursor=managedQuery(Telephony.Carriers.CONTENT_URI,new String[]{"_id","name","apn"},null,Telephony.Carriers.DEFAULT_SORT_ORDER);
+  String where="numeric=\"" + android.os.SystemProperties.get(TelephonyProperties.PROPERTY_SIM_OPERATOR_NUMERIC,"") + "\"";
+  Cursor cursor=managedQuery(Telephony.Carriers.CONTENT_URI,new String[]{"_id","name","apn","type"},where,Telephony.Carriers.DEFAULT_SORT_ORDER);
   PreferenceGroup apnList=(PreferenceGroup)findPreference("apn_list");
   apnList.removeAll();
-  mCursor.moveToFirst();
-  while (!mCursor.isAfterLast()) {
-    String name=mCursor.getString(NAME_INDEX);
-    String apn=mCursor.getString(APN_INDEX);
-    if (name != null && apn != null && TextUtils.getTrimmedLength(name) > 0 && TextUtils.getTrimmedLength(apn) > 0) {
-      Preference pref=new Preference((Context)this);
-      pref.setKey(mCursor.getString(ID_INDEX));
-      pref.setTitle(name);
-      pref.setSummary(apn);
-      pref.setPersistent(false);
+  ArrayList<Preference> mmsApnList=new ArrayList<Preference>();
+  mSelectedKey=getSelectedApnKey();
+  cursor.moveToFirst();
+  while (!cursor.isAfterLast()) {
+    String name=cursor.getString(NAME_INDEX);
+    String apn=cursor.getString(APN_INDEX);
+    String key=cursor.getString(ID_INDEX);
+    String type=cursor.getString(TYPES_INDEX);
+    ApnPreference pref=new ApnPreference(this);
+    pref.setKey(key);
+    pref.setTitle(name);
+    pref.setSummary(apn);
+    pref.setPersistent(false);
+    pref.setOnPreferenceChangeListener(this);
+    boolean selectable=((type == null) || !type.equals("mms"));
+    pref.setSelectable(selectable);
+    if (selectable) {
+      if ((mSelectedKey != null) && mSelectedKey.equals(key)) {
+        pref.setChecked(true);
+      }
       apnList.addPreference(pref);
     }
-    mCursor.moveToNext();
+ else {
+      mmsApnList.add(pref);
+    }
+    cursor.moveToNext();
+  }
+  cursor.close();
+  for (  Preference preference : mmsApnList) {
+    apnList.addPreference(preference);
   }
 }

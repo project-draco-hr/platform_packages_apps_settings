@@ -5,15 +5,27 @@
   final long whichRealtime=mStats.computeBatteryRealtime(rawRealtime,mWhich) / 1000;
   long time=mStats.computeBatteryUptime(SystemClock.uptimeMillis() * 1000,mWhich) / 1000;
   if (time > 0) {
-    mMiscUsage.add(new MiscUsage(getString(R.string.battery_history_awake_label),R.string.battery_history_awake,time,whichRealtime));
+    mMiscUsage.add(new MiscUsage(getString(R.string.battery_history_awake_label) + " (" + formatRatio(time,whichRealtime)+ ")",R.string.battery_history_awake,time,whichRealtime));
   }
   time=mStats.getScreenOnTime(batteryRealtime,mWhich) / 1000;
   if (time > 0) {
-    mMiscUsage.add(new MiscUsage(getString(R.string.battery_history_screen_on_label),R.string.battery_history_screen_on,time,whichRealtime));
+    mMiscUsage.add(new MiscUsage(getString(R.string.battery_history_screen_on_label) + " (" + formatRatio(time,whichRealtime)+ ")",R.string.battery_history_screen_on,time,whichRealtime));
   }
   time=mStats.getPhoneOnTime(batteryRealtime,mWhich) / 1000;
   if (time > 0) {
-    mMiscUsage.add(new MiscUsage(getString(R.string.battery_history_phone_on_label),R.string.battery_history_phone_on,time,whichRealtime));
+    mMiscUsage.add(new MiscUsage(getString(R.string.battery_history_phone_on_label) + " (" + formatRatio(time,whichRealtime)+ ")",R.string.battery_history_phone_on,time,whichRealtime));
+  }
+  time=mStats.getWifiOnTime(batteryRealtime,mWhich) / 1000;
+  if (time > 0) {
+    mMiscUsage.add(new MiscUsage("Wifi On (" + formatRatio(time,whichRealtime) + ")","Time spent with Wifi on:",time,whichRealtime));
+  }
+  time=mStats.getWifiRunningTime(batteryRealtime,mWhich) / 1000;
+  if (time > 0) {
+    mMiscUsage.add(new MiscUsage("Wifi Running (" + formatRatio(time,whichRealtime) + ")","Time spent with Wifi running:",time,whichRealtime));
+  }
+  time=mStats.getBluetoothOnTime(batteryRealtime,mWhich) / 1000;
+  if (time > 0) {
+    mMiscUsage.add(new MiscUsage("Bluetooth On (" + formatRatio(time,whichRealtime) + ")","Time spent with Bluetooth on:",time,whichRealtime));
   }
   Collections.sort(mMiscUsage);
 }

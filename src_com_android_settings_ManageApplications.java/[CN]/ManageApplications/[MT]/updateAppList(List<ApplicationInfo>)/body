@@ -1,0 +1,35 @@
+{
+  if ((newList == null) || (mAppPropCache == null)) {
+    return false;
+  }
+  Set<String> existingList=new HashSet<String>();
+  boolean ret=false;
+  for (  ApplicationInfo info : newList) {
+    String pkgName=info.packageName;
+    AppInfo aInfo=mAppPropCache.get(pkgName);
+    if (aInfo != null) {
+      existingList.add(pkgName);
+    }
+ else {
+      if (localLOGV)       Log.i(TAG,"New pkg :" + pkgName + " installed when paused");
+      updatePackageList(Intent.ACTION_PACKAGE_ADDED,pkgName);
+      ret=true;
+    }
+  }
+  List<String> deletedList=null;
+  Set<String> staleList=mAppPropCache.keySet();
+  for (  String pkgName : staleList) {
+    if (!existingList.contains(pkgName)) {
+      if (localLOGV)       Log.i(TAG,"Pkg :" + pkgName + " deleted when paused");
+      if (deletedList == null) {
+        deletedList=new ArrayList<String>();
+        deletedList.add(pkgName);
+      }
+      ret=true;
+    }
+  }
+  if (deletedList != null) {
+    mAppInfoAdapter.removeFromList(deletedList);
+  }
+  return ret;
+}

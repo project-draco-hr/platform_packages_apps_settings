@@ -1,6 +1,10 @@
 {
-  if (mResourceThread.isAlive()) {
-    mResourceThread.interrupt();
+  if ((mResourceThread != null) && mResourceThread.isAlive()) {
+    mResourceThread.setAbort();
   }
-  mResourceThread.loadAllResources(mAppInfoAdapter.getAppList());
+  mResourceThread=new ResourceLoaderThread();
+  List<ApplicationInfo> appList=mAppInfoAdapter.getBaseAppList();
+  if ((appList != null) && (appList.size()) > 0) {
+    mResourceThread.loadAllResources(appList);
+  }
 }

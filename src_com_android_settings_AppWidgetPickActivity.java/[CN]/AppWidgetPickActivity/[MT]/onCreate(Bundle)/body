@@ -1,6 +1,13 @@
 {
+  mPackageManager=getPackageManager();
+  mAppWidgetManager=AppWidgetManager.getInstance(this);
   super.onCreate(icicle);
-  Bundle extras=getIntent().getExtras();
-  mAppWidgetId=extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
-  setResultData(RESULT_CANCELED);
+  setResultData(RESULT_CANCELED,null);
+  final Intent intent=getIntent();
+  if (intent.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_ID)) {
+    mAppWidgetId=intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,AppWidgetManager.INVALID_APPWIDGET_ID);
+  }
+ else {
+    finish();
+  }
 }

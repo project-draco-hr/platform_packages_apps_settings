@@ -1,0 +1,33 @@
+{
+  if (appList == null) {
+    appList=mAppList;
+  }
+ else {
+    mAppList=appList;
+  }
+  if (mAppPropCache != null) {
+    int sortOrder=mSortOrder;
+    mAppPropMap=mAppPropCache;
+    sortAppList(mAppList,sortOrder);
+  }
+ else {
+    mAppPropMap=new TreeMap<String,AppInfo>();
+  }
+  mAlphaComparator=null;
+  mSizeComparator=null;
+  mAppLocalList=getFilteredApps(appList,filterOption);
+  int imax=appList.size();
+  for (int i=0; i < imax; i++) {
+    ApplicationInfo info=appList.get(i);
+    AppInfo aInfo=mAppPropMap.get(info.packageName);
+    if (aInfo == null) {
+      aInfo=new AppInfo(info.packageName,i,info.packageName,mDefaultAppIcon,null);
+      if (localLOGV)       Log.i(TAG,"Creating entry pkg:" + info.packageName + " to map");
+    }
+ else {
+      aInfo.index=i;
+      if (localLOGV)       Log.i(TAG,"Adding pkg:" + info.packageName + " to map");
+    }
+    mAppPropMap.put(info.packageName,aInfo);
+  }
+}

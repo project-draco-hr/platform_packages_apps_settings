@@ -1,16 +1,41 @@
 {
-  Map<String,AppInfo> iconMap=new HashMap<String,AppInfo>();
-  if (mAppList == null || mAppList.size() <= 0) {
+  long start;
+  if (DEBUG_TIME) {
+    start=SystemClock.elapsedRealtime();
+  }
+  int imax;
+  if (mAppList == null || (imax=mAppList.size()) <= 0) {
     Log.w(TAG,"Empty or null application list");
   }
  else {
-    for (    ApplicationInfo appInfo : mAppList) {
+    for (int i=0; i < imax; i++) {
+      if (abort) {
+        return;
+      }
+      ApplicationInfo appInfo=mAppList.get(i);
       CharSequence appName=appInfo.loadLabel(mPm);
-      Drawable appIcon=appInfo.loadIcon(mPm);
-      iconMap.put(appInfo.packageName,new AppInfo(appInfo.packageName,appName,appIcon));
+      Message msg=mHandler.obtainMessage(REFRESH_APP_RESOURCE);
+      msg.obj=new AppInfo(appInfo.packageName,appName,null);
+      mHandler.sendMessage(msg);
     }
+    Message doneMsg=mHandler.obtainMessage(REFRESH_DONE);
+    mHandler.sendMessage(doneMsg);
+    if (DEBUG_TIME)     Log.i(TAG,"Took " + (SystemClock.elapsedRealtime() - start) + " ms to load app labels");
+    long startIcons;
+    if (DEBUG_TIME) {
+      startIcons=SystemClock.elapsedRealtime();
+    }
+    for (int i=(imax - 1); i >= 0; i--) {
+      if (abort) {
+        return;
+      }
+      ApplicationInfo appInfo=mAppList.get(i);
+      Drawable appIcon=appInfo.loadIcon(mPm);
+      Message msg=mHandler.obtainMessage(REFRESH_APP_RESOURCE);
+      msg.obj=new AppInfo(appInfo.packageName,null,appIcon);
+      mHandler.sendMessage(msg);
+    }
+    if (DEBUG_TIME)     Log.i(TAG,"Took " + (SystemClock.elapsedRealtime() - startIcons) + " ms to load app icons");
   }
-  Message msg=mHandler.obtainMessage(REFRESH_ICONS);
-  msg.obj=iconMap;
-  mHandler.sendMessage(msg);
+  if (DEBUG_TIME)   Log.i(TAG,"Took " + (SystemClock.elapsedRealtime() - start) + " ms to load app resources");
 }

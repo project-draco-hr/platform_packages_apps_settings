@@ -3,6 +3,7 @@
     Log.w(TAG,"Removing null pkg list from List Adapter");
     return;
   }
+  removePkgListBase(pkgNames);
   int imax=mAppLocalList.size();
   boolean found=false;
   ApplicationInfo info;
@@ -36,7 +37,7 @@
     info=mAppLocalList.get(idxArr[k]);
     mAppLocalList.remove(idxArr[k]);
     mAppPropMap.remove(info.packageName);
-    if (localLOGV)     Log.i(TAG,"Removed pkg:" + info.packageName + " list");
+    if (localLOGV)     Log.i(TAG,"Removed pkg:" + info.packageName + " from display list");
   }
   if (found) {
     adjustIndex();

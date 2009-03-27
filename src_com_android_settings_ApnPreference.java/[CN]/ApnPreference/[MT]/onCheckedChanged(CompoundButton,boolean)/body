@@ -1,0 +1,18 @@
+{
+  Log.i(TAG,"ID: " + getKey() + " :"+ isChecked);
+  if (mProtectFromCheckedChange) {
+    return;
+  }
+  if (isChecked) {
+    if (mCurrentChecked != null) {
+      mCurrentChecked.setChecked(false);
+    }
+    mCurrentChecked=buttonView;
+    mSelectedKey=getKey();
+    callChangeListener(mSelectedKey);
+  }
+ else {
+    mCurrentChecked=null;
+    mSelectedKey=null;
+  }
+}

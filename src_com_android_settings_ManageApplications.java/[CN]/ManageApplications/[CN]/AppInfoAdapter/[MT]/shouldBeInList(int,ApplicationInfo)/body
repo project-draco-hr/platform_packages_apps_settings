@@ -1,24 +1,22 @@
 {
-  boolean addToCurrList=false;
   if (filterOption == FILTER_APPS_RUNNING) {
     List<ApplicationInfo> runningList=getInstalledApps(FILTER_APPS_RUNNING);
     for (    ApplicationInfo running : runningList) {
       if (running.packageName.equalsIgnoreCase(info.packageName)) {
-        addToCurrList=true;
-        break;
+        return true;
       }
     }
   }
  else   if (filterOption == FILTER_APPS_THIRD_PARTY) {
     if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-      addToCurrList=true;
+      return true;
     }
  else     if ((info.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
-      addToCurrList=true;
+      return true;
     }
   }
  else {
     return true;
   }
-  return addToCurrList;
+  return false;
 }

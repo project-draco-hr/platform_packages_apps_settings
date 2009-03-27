@@ -5,6 +5,6 @@
   for (  Profile profile : mProfiles) {
     LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
     profileManager.setPreferred(mAddress,true);
-    connectInt(profile);
+    queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
   }
 }

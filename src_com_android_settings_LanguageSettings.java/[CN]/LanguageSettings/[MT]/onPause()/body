@@ -1,7 +1,6 @@
 {
   super.onPause();
   StringBuilder builder=new StringBuilder(256);
-  boolean haveLastInputMethod=false;
   int firstEnabled=-1;
   int N=mInputMethodProperties.size();
   for (int i=0; i < N; ++i) {
@@ -16,7 +15,6 @@
       if (firstEnabled < 0) {
         firstEnabled=i;
       }
-      if (hasIt)       haveLastInputMethod=true;
     }
  else     if (hasIt) {
       mLastInputMethodId=mLastTickedInputMethodId;
@@ -31,5 +29,5 @@
     }
   }
   Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_INPUT_METHODS,builder.toString());
-  Settings.Secure.putString(getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD,mLastInputMethodId);
+  Settings.Secure.putString(getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD,mLastInputMethodId != null ? mLastInputMethodId : "");
 }

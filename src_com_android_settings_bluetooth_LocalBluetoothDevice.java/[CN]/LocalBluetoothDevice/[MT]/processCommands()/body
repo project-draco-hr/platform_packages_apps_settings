@@ -1,0 +1,13 @@
+{
+  Log.d(TAG,"processCommands:" + workQueue.toString());
+  Iterator<BluetoothJob> it=workQueue.iterator();
+  while (it.hasNext()) {
+    BluetoothJob job=it.next();
+    if (processCommand(job)) {
+      return;
+    }
+ else {
+      it.remove();
+    }
+  }
+}

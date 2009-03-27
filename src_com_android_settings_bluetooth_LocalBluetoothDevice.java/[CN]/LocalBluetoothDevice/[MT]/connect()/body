@@ -7,7 +7,7 @@
     LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
     if (profileManager.isPreferred(mAddress)) {
       hasAtLeastOnePreferredProfile=true;
-      connectInt(profile);
+      queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
     }
   }
   if (!hasAtLeastOnePreferredProfile) {

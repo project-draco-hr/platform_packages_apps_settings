@@ -10,26 +10,26 @@
     return;
   }
 switch (mDialogState) {
-case SIM_LOCK_MODE:
-    tryChangeSimLockState();
+case ICC_LOCK_MODE:
+    tryChangeIccLockState();
   break;
-case SIM_OLD_MODE:
+case ICC_OLD_MODE:
 mOldPin=mPin;
-mDialogState=SIM_NEW_MODE;
+mDialogState=ICC_NEW_MODE;
 mError=null;
 mPin=null;
 showPinDialog();
 break;
-case SIM_NEW_MODE:
+case ICC_NEW_MODE:
 mNewPin=mPin;
-mDialogState=SIM_REENTER_MODE;
+mDialogState=ICC_REENTER_MODE;
 mPin=null;
 showPinDialog();
 break;
-case SIM_REENTER_MODE:
+case ICC_REENTER_MODE:
 if (!mPin.equals(mNewPin)) {
 mError=mRes.getString(R.string.sim_pins_dont_match);
-mDialogState=SIM_NEW_MODE;
+mDialogState=ICC_NEW_MODE;
 mPin=null;
 showPinDialog();
 }

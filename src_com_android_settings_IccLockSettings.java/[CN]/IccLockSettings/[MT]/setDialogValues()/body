@@ -2,19 +2,19 @@
   mPinDialog.setText(mPin);
   String message="";
 switch (mDialogState) {
-case SIM_LOCK_MODE:
+case ICC_LOCK_MODE:
     message=mRes.getString(R.string.sim_enter_pin);
   mPinDialog.setDialogTitle(mToState ? mRes.getString(R.string.sim_enable_sim_lock) : mRes.getString(R.string.sim_disable_sim_lock));
 break;
-case SIM_OLD_MODE:
+case ICC_OLD_MODE:
 message=mRes.getString(R.string.sim_enter_old);
 mPinDialog.setDialogTitle(mRes.getString(R.string.sim_change_pin));
 break;
-case SIM_NEW_MODE:
+case ICC_NEW_MODE:
 message=mRes.getString(R.string.sim_enter_new);
 mPinDialog.setDialogTitle(mRes.getString(R.string.sim_change_pin));
 break;
-case SIM_REENTER_MODE:
+case ICC_REENTER_MODE:
 message=mRes.getString(R.string.sim_reenter_new);
 mPinDialog.setDialogTitle(mRes.getString(R.string.sim_change_pin));
 break;

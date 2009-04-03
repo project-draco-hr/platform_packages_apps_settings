@@ -3,7 +3,6 @@
   addPreferencesFromResource(R.xml.security_settings);
   mLockPatternUtils=new LockPatternUtils(getContentResolver());
   createPreferenceHierarchy();
-  mLocationManager=(LocationManager)getSystemService(Context.LOCATION_SERVICE);
   mNetwork=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_NETWORK);
   mGps=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_GPS);
   updateToggles();

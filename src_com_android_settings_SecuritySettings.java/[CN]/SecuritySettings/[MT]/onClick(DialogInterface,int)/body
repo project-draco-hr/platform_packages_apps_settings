@@ -1,6 +1,6 @@
 {
   if (which == DialogInterface.BUTTON_POSITIVE) {
-    updateProviders();
+    Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.NETWORK_PROVIDER,true);
     mOkClicked=true;
   }
  else {

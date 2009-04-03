@@ -1,5 +1,4 @@
 {
-  String providers=getAllowedProviders();
-  mNetwork.setChecked(providers.contains(LocationManager.NETWORK_PROVIDER));
-  mGps.setChecked(providers.contains(LocationManager.GPS_PROVIDER));
+  mNetwork.setChecked(Settings.Secure.isLocationProviderEnabled(getContentResolver(),LocationManager.NETWORK_PROVIDER));
+  mGps.setChecked(Settings.Secure.isLocationProviderEnabled(getContentResolver(),LocationManager.GPS_PROVIDER));
 }

@@ -18,11 +18,11 @@
       new AlertDialog.Builder(this).setMessage(getResources().getString(R.string.location_warning_message)).setTitle(R.string.location_warning_title).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(R.string.agree,this).setNegativeButton(R.string.disagree,this).show().setOnDismissListener(this);
     }
  else {
-      updateProviders();
+      Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.NETWORK_PROVIDER,false);
     }
   }
  else   if (preference == mGps) {
-    updateProviders();
+    Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.GPS_PROVIDER,mGps.isChecked());
   }
   return false;
 }

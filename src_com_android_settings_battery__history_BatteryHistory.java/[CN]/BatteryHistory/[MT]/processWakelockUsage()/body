@@ -15,8 +15,8 @@
         Uid.Wakelock wl=ent.getValue();
         Timer timer=wl.getWakeTime(BatteryStats.WAKE_TYPE_PARTIAL);
         if (timer != null) {
-          time+=(timer.getTotalTime(uSecNow,mWhich) + 500) / 1000;
-          count+=timer.getCount(mWhich);
+          time+=(timer.getTotalTimeLocked(uSecNow,mWhich) + 500) / 1000;
+          count+=timer.getCountLocked(mWhich);
         }
       }
     }

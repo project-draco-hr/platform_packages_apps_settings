@@ -19,8 +19,8 @@
         int handle=se.getHandle();
         Timer timer=se.getSensorTime();
         if (timer != null) {
-          long totalTime=(timer.getTotalTime(uSecNow,mWhich) + 500) / 1000;
-          int count=timer.getCount(mWhich);
+          long totalTime=(timer.getTotalTimeLocked(uSecNow,mWhich) + 500) / 1000;
+          int count=timer.getCountLocked(mWhich);
           if (handle == BatteryStats.Uid.Sensor.GPS) {
             timeGps+=totalTime;
             countGps+=count;

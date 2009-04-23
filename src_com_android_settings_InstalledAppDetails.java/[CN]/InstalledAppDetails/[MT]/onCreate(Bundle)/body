@@ -8,7 +8,6 @@
   totalSizeStr=appSizeStr=dataSizeStr=mComputingStr;
   if (localLOGV)   Log.i(TAG,"Have to compute package sizes");
   mSizeObserver=new PkgSizeObserver();
-  mPm.getPackageSizeInfo(packageName,mSizeObserver);
   try {
     mAppInfo=mPm.getApplicationInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES);
   }

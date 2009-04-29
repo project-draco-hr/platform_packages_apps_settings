@@ -1,18 +1,20 @@
 {
-  Log.d(TAG,"onProfileStateChanged:" + workQueue.toString());
+  if (D) {
+    Log.d(TAG,"onProfileStateChanged:" + workQueue.toString());
+  }
   BluetoothJob job=workQueue.peek();
   if (job == null) {
-    Log.v(TAG,"Yikes, onProfileStateChanged called but job queue is empty. " + "(Okay for device initiated actions and BluetoothA2dpService initiated " + "Auto-connections)");
     return;
   }
  else   if (job.device.mAddress != mAddress) {
-    Log.v(TAG,"onProfileStateChanged called. The addresses differ. this.mAddress=" + mAddress + " workQueue.head="+ job.toString());
+    if (D) {
+      Log.d(TAG,"mAddresses:" + mAddress + " != head:"+ job.toString());
+    }
     if (!pruneQueue(null)) {
       return;
     }
   }
  else {
-    Log.d(TAG,"LocalBluetoothDevice.onProfileStateChanged() called. MAC addr matched");
     workQueue.poll();
   }
   processCommands();

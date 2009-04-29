@@ -1,11 +1,14 @@
 {
-  Log.d(TAG,workQueue.toString());
+  if (D) {
+    Log.d(TAG,workQueue.toString());
+  }
 synchronized (workQueue) {
     boolean processNow=pruneQueue(job);
-    Log.d(TAG,"Adding: " + job.toString());
+    if (D) {
+      Log.d(TAG,"Adding: " + job.toString());
+    }
     workQueue.add(job);
     if (workQueue.size() == 1 || processNow) {
-      Log.d(TAG,"workQueue.size() == 1 || TimeOut -> process command now");
       processCommands();
     }
   }

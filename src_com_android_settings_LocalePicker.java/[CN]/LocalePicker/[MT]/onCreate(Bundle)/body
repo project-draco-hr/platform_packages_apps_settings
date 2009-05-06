@@ -9,28 +9,20 @@
   for (int i=0; i < origSize; i++) {
     String s=locales[i];
     int len=s.length();
-    if (len == 2) {
-      Locale l=new Locale(s);
-      preprocess[finalSize++]=new Loc(toTitleCase(l.getDisplayLanguage()),l);
-    }
- else     if (len == 5) {
+    if (len == 5) {
       String language=s.substring(0,2);
       String country=s.substring(3,5);
       Locale l=new Locale(language,country);
       if (finalSize == 0) {
+        Log.v(TAG,"adding initial " + toTitleCase(l.getDisplayLanguage()));
         preprocess[finalSize++]=new Loc(toTitleCase(l.getDisplayLanguage()),l);
       }
  else {
         if (preprocess[finalSize - 1].locale.getLanguage().equals(language)) {
-          String prevCountry=preprocess[finalSize - 1].locale.getCountry();
-          if (prevCountry.length() == 0) {
-            preprocess[finalSize - 1].locale=l;
-            preprocess[finalSize - 1].label=toTitleCase(l.getDisplayLanguage());
-          }
- else {
-            preprocess[finalSize - 1].label=toTitleCase(preprocess[finalSize - 1].locale.getDisplayName());
-            preprocess[finalSize++]=new Loc(toTitleCase(l.getDisplayName()),l);
-          }
+          Log.v(TAG,"backing up and fixing " + preprocess[finalSize - 1].label + " to "+ preprocess[finalSize - 1].locale.getDisplayName());
+          preprocess[finalSize - 1].label=toTitleCase(preprocess[finalSize - 1].locale.getDisplayName());
+          Log.v(TAG,"  and adding " + toTitleCase(l.getDisplayName()));
+          preprocess[finalSize++]=new Loc(toTitleCase(l.getDisplayName()),l);
         }
  else {
           String displayName;
@@ -40,6 +32,7 @@
  else {
             displayName=toTitleCase(l.getDisplayLanguage());
           }
+          Log.v(TAG,"adding " + displayName);
           preprocess[finalSize++]=new Loc(displayName,l);
         }
       }

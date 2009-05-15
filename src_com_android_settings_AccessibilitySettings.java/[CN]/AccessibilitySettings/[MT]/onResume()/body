@@ -1,0 +1,39 @@
+{
+  super.onResume();
+  final HashSet<String> enabled=new HashSet<String>();
+  String settingValue=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+  if (settingValue != null) {
+    TextUtils.SimpleStringSplitter splitter=mStringColonSplitter;
+    splitter.setString(settingValue);
+    while (splitter.hasNext()) {
+      enabled.add(splitter.next());
+    }
+  }
+  Map<String,ServiceInfo> accessibilityServices=mAccessibilityServices;
+  for (  String key : accessibilityServices.keySet()) {
+    CheckBoxPreference preference=(CheckBoxPreference)findPreference(key);
+    if (preference != null) {
+      preference.setChecked(enabled.contains(key));
+    }
+  }
+  int serviceState=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
+  if (!accessibilityServices.isEmpty()) {
+    if (serviceState == 1) {
+      mToggleCheckBox.setChecked(true);
+      mToggleCheckBox.setSummaryOn(R.string.disable_accessibility_service_summary);
+    }
+ else {
+      mToggleCheckBox.setSummaryOff(R.string.enable_accessibility_service_summary);
+      setAccessibilityServicePreferencesState(false);
+    }
+    mToggleCheckBox.setEnabled(true);
+  }
+ else {
+    if (serviceState == 1) {
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
+      setAccessibilityServicePreferencesState(false);
+    }
+    mToggleCheckBox.setSummaryOff(R.string.no_accessibility_services_summary);
+    mToggleCheckBox.setEnabled(false);
+  }
+}

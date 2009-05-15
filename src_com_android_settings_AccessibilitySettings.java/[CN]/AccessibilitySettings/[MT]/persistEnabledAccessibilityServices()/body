@@ -1,0 +1,12 @@
+{
+  StringBuilder builder=new StringBuilder(256);
+  int firstEnabled=-1;
+  for (  String key : mAccessibilityServices.keySet()) {
+    CheckBoxPreference preference=(CheckBoxPreference)findPreference(key);
+    if (preference.isChecked()) {
+      builder.append(key);
+      builder.append(':');
+    }
+  }
+  Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,builder.toString());
+}

@@ -1,0 +1,19 @@
+{
+  AccessibilityManager accessibilityManager=(AccessibilityManager)getSystemService(Service.ACCESSIBILITY_SERVICE);
+  List<ServiceInfo> installedServices=accessibilityManager.getAccessibilityServiceList();
+  mAccessibilityServicesCategory=(PreferenceGroup)findPreference(ACCESSIBILITY_SERVICES_CATEGORY);
+  if (installedServices.isEmpty()) {
+    getPreferenceScreen().removePreference(mAccessibilityServicesCategory);
+    mAccessibilityServicesCategory=null;
+    return;
+  }
+  for (int i=0, count=installedServices.size(); i < count; ++i) {
+    ServiceInfo serviceInfo=installedServices.get(i);
+    String key=serviceInfo.packageName + "/" + serviceInfo.name;
+    mAccessibilityServices.put(key,serviceInfo);
+    CheckBoxPreference preference=new CheckBoxPreference(this);
+    preference.setKey(key);
+    preference.setTitle(serviceInfo.loadLabel(getPackageManager()));
+    mAccessibilityServicesCategory.addPreference(preference);
+  }
+}

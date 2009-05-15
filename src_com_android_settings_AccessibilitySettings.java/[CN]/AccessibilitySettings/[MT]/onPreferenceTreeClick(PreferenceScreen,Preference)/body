@@ -1,0 +1,11 @@
+{
+  final String key=preference.getKey();
+  if (TOGGLE_ACCESSIBILITY_SERVICE_CHECKBOX.equals(key)) {
+    boolean isChecked=((CheckBoxPreference)preference).isChecked();
+    handleEnableAccessibilityStateChange((CheckBoxPreference)preference);
+  }
+ else   if (preference instanceof CheckBoxPreference) {
+    handleEnableAccessibilityServiceStateChange((CheckBoxPreference)preference);
+  }
+  return super.onPreferenceTreeClick(preferenceScreen,preference);
+}

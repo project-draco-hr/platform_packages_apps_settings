@@ -1,0 +1,9 @@
+{
+  if (mAccessibilityServicesCategory == null) {
+    return;
+  }
+  int count=mAccessibilityServicesCategory.getPreferenceCount();
+  for (int i=0; i < count; i++) {
+    mAccessibilityServicesCategory.getPreference(i).setEnabled(isEnabled);
+  }
+}

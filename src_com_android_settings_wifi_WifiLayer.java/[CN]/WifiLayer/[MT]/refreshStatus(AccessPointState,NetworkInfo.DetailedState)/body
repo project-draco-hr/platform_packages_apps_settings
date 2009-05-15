@@ -4,7 +4,9 @@
     detailedState=WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState());
   }
   if (ap == null && WifiStatus.isLiveConnection(detailedState)) {
-    ap=findApLocked(wifiInfo.getNetworkId(),wifiInfo.getBSSID(),wifiInfo.getSSID(),null);
+synchronized (this) {
+      ap=findApLocked(wifiInfo.getNetworkId(),wifiInfo.getBSSID(),wifiInfo.getSSID(),null);
+    }
   }
   if (ap != null) {
     ap.blockRefresh();

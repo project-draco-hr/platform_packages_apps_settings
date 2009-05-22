@@ -1,0 +1,22 @@
+{
+  if (mStats == null) {
+    load();
+  }
+  mAppListGroup.removeAll();
+  mUsageList.clear();
+  processCpuUsage();
+  processMiscUsage();
+  mAppListGroup.setOrderingAsAdded(false);
+  Collections.sort(mUsageList);
+  for (  BatterySipper g : mUsageList) {
+    if (g.getSortValue() < MIN_POWER_THRESHOLD)     continue;
+    double percent=((g.getSortValue() / mTotalPower) * 100 / BATTERY_SIZE);
+    PowerGaugePreference pref=new PowerGaugePreference(this,g.getIcon());
+    double scaleByMax=(g.getSortValue() * 100) / mTotalPower;
+    pref.setSummary(g.getLabel() + "  ( " + (int)g.getSortValue()+ "mA, "+ String.format("%3.2f",scaleByMax)+ "% )");
+    pref.setOrder(Integer.MAX_VALUE - (int)g.getSortValue());
+    pref.setGaugeValue(mScaleByMax ? scaleByMax : percent);
+    mAppListGroup.addPreference(pref);
+    if (mAppListGroup.getPreferenceCount() > MAX_ITEMS_TO_LIST)     break;
+  }
+}

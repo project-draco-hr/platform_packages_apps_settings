@@ -1,0 +1,7 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.power_usage_summary);
+  mBatteryInfo=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
+  mAppListGroup=(PreferenceGroup)findPreference(PREF_APP_LIST);
+  mPowerProfile=new PowerProfile(this,"power_profile_default");
+}

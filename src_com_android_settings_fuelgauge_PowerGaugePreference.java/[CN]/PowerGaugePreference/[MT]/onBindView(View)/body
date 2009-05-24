@@ -1,0 +1,10 @@
+{
+  super.onBindView(view);
+  ImageView appIcon=(ImageView)view.findViewById(R.id.appIcon);
+  if (mIcon == null) {
+    mIcon=getContext().getResources().getDrawable(android.R.drawable.sym_def_app_icon);
+  }
+  appIcon.setImageDrawable(mIcon);
+  ImageView appGauge=(ImageView)view.findViewById(R.id.appGauge);
+  appGauge.setImageDrawable(mGauge);
+}

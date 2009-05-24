@@ -1,0 +1,43 @@
+{
+  final int which=mStatsType;
+  final double powerCpuNormal=mPowerProfile.getAveragePower(PowerProfile.POWER_CPU_NORMAL);
+  long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime(),which) * 1000;
+  SparseArray<? extends Uid> uidStats=mStats.getUidStats();
+  final int NU=uidStats.size();
+  if (DEBUG)   Log.i(TAG,"uidStats size = " + NU);
+  for (int iu=0; iu < NU; iu++) {
+    Uid u=uidStats.valueAt(iu);
+    double power=0;
+    Map<String,? extends BatteryStats.Uid.Proc> processStats=u.getProcessStats();
+    if (processStats.size() > 0) {
+      for (      Map.Entry<String,? extends BatteryStats.Uid.Proc> ent : processStats.entrySet()) {
+        Uid.Proc ps=ent.getValue();
+        long userTime=ps.getUserTime(which);
+        long systemTime=ps.getSystemTime(which);
+        power+=(userTime + systemTime) * 10 * powerCpuNormal;
+      }
+    }
+    power/=1000;
+    Map<Integer,? extends BatteryStats.Uid.Sensor> sensorStats=u.getSensorStats();
+    for (    Map.Entry<Integer,? extends BatteryStats.Uid.Sensor> sensorEntry : sensorStats.entrySet()) {
+      Uid.Sensor sensor=sensorEntry.getValue();
+      int sensorType=sensor.getHandle();
+      BatteryStats.Timer timer=sensor.getSensorTime();
+      long sensorTime=timer.getTotalTimeLocked(uSecTime,which);
+      double multiplier=0;
+switch (sensorType) {
+case Uid.Sensor.GPS:
+        multiplier=mPowerProfile.getAveragePower(PowerProfile.POWER_GPS_ON);
+      break;
+  }
+  power+=multiplier * sensorTime;
+}
+if (power != 0) {
+  BatterySipper app=new BatterySipper(null,0,u.getUid(),new double[]{power});
+  mUsageList.add(app);
+}
+if (power > mMaxPower) mMaxPower=power;
+mTotalPower+=power;
+if (DEBUG) Log.i(TAG,"Added power = " + power);
+}
+}

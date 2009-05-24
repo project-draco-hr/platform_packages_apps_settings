@@ -1,0 +1,8 @@
+{
+  double power=0;
+  final int BINS=BatteryStats.NUM_SIGNAL_STRENGTH_BINS;
+  for (int i=0; i < BINS; i++) {
+    power+=mStats.getPhoneSignalStrengthTime(i,uSecNow,which) / 1000 / 1000 * mPowerProfile.getAveragePower(PowerProfile.POWER_RADIO_ON) * ((BINS - i) / (double)BINS);
+  }
+  return power;
+}

@@ -1,4 +1,5 @@
 {
+  setEnterpriseFieldsVisible(false);
 switch (security) {
 case SECURITY_NONE:
 {
@@ -26,6 +27,12 @@ case SECURITY_WPA2_PERSONAL:
 setWepVisible(false);
 setGenericPasswordVisible(true);
 updatePasswordCaption(AccessPointState.WPA);
+break;
+}
+case SECURITY_WPA_EAP:
+case SECURITY_IEEE8021X:
+{
+setEnterpriseFieldsVisible(true);
 break;
 }
 }

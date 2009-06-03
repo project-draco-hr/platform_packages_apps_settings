@@ -11,7 +11,7 @@ synchronized (this) {
         if (scanResult == null) {
           continue;
         }
-        if (AccessPointState.isAdhoc(scanResult) || AccessPointState.isEnterprise(scanResult) || TextUtils.isEmpty(scanResult.SSID)) {
+        if (AccessPointState.isAdhoc(scanResult) || TextUtils.isEmpty(scanResult.SSID)) {
           continue;
         }
         final String ssid=AccessPointState.convertToQuotedString(scanResult.SSID);

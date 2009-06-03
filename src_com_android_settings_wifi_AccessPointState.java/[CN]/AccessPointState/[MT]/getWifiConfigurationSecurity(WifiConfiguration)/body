@@ -7,6 +7,12 @@
       return OPEN;
     }
   }
+ else   if (wifiConfig.allowedKeyManagement.get(KeyMgmt.WPA_EAP)) {
+    return WPA_EAP;
+  }
+ else   if (wifiConfig.allowedKeyManagement.get(KeyMgmt.IEEE8021X)) {
+    return IEEE8021X;
+  }
  else   if (wifiConfig.allowedProtocols.get(Protocol.RSN)) {
     return WPA2;
   }

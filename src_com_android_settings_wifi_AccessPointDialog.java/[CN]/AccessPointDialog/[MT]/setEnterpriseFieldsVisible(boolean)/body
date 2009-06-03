@@ -1,0 +1,14 @@
+{
+  int visibility=visible ? View.VISIBLE : View.GONE;
+  mEnterpriseView.setVisibility(visibility);
+  if (visible) {
+    setWepVisible(false);
+    setGenericPasswordVisible(false);
+  }
+  if (mMode != MODE_CONFIGURE) {
+    mSsidText.setVisibility(View.GONE);
+    mSsidEdit.setVisibility(View.GONE);
+    mSecurityText.setVisibility(View.GONE);
+    mSecuritySpinner.setVisibility(View.GONE);
+  }
+}

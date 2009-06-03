@@ -1,11 +1,13 @@
 {
   mValues=values;
   mLabel=label;
+  mDrainType=drainType;
   if (iconId > 0) {
     mIcon=getResources().getDrawable(iconId);
   }
   if (mValues != null)   mValue=mValues[0];
-  if ((label == null || iconId == 0) && uid > 0) {
-    getNameForUid(uid);
+  if ((label == null || iconId == 0) && uid != null) {
+    getNameForUid(uid.getUid());
   }
+  mUid=uid;
 }

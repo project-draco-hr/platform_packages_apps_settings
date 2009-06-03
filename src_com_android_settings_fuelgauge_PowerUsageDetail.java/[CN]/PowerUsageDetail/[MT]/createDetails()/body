@@ -1,0 +1,34 @@
+{
+  final Intent intent=getIntent();
+  mTitle=intent.getStringExtra(EXTRA_TITLE);
+  mPercentage=intent.getDoubleExtra(EXTRA_PERCENT,-1);
+  mUsageSince=intent.getIntExtra(EXTRA_USAGE_SINCE,USAGE_SINCE_UNPLUGGED);
+  mTypes=intent.getIntArrayExtra(EXTRA_DETAIL_TYPES);
+  mValues=intent.getDoubleArrayExtra(EXTRA_DETAIL_VALUES);
+  mTitleView=(TextView)findViewById(R.id.name);
+  mTitleView.setText(mTitle);
+  ((TextView)findViewById(R.id.battery_percentage)).setText(String.format("%3.2f%% of battery usage since last unplugged",mPercentage));
+  mDetailsParent=(ViewGroup)findViewById(R.id.details);
+  LayoutInflater inflater=getLayoutInflater();
+  if (mTypes != null && mValues != null) {
+    for (int i=0; i < mTypes.length; i++) {
+      if (mValues[i] <= 0)       continue;
+      final String label=getString(mTypes[i]);
+      String value=null;
+switch (mTypes[i]) {
+case R.string.usage_type_data_recv:
+case R.string.usage_type_data_send:
+        value=formatBytes(mValues[i]);
+      break;
+default :
+    value=formatTime(mValues[i]);
+}
+ViewGroup item=(ViewGroup)inflater.inflate(R.layout.power_usage_detail_item_text,null);
+mDetailsParent.addView(item);
+TextView labelView=(TextView)item.findViewById(R.id.label);
+TextView valueView=(TextView)item.findViewById(R.id.value);
+labelView.setText(label);
+valueView.setText(value);
+}
+}
+}

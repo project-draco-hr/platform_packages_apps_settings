@@ -7,13 +7,13 @@
     Log.i(TAG,"Uptime since last unplugged = " + (timeSinceUnplugged / 1000));
   }
   double phoneOnPower=getPhoneOnPower(uSecNow);
-  addEntry(getString(R.string.power_phone),android.R.drawable.ic_menu_call,phoneOnPower);
+  addEntry(getString(R.string.power_phone),DrainType.PHONE,android.R.drawable.ic_menu_call,phoneOnPower);
   double screenOnPower=getScreenOnPower(uSecNow);
-  addEntry(getString(R.string.power_screen),android.R.drawable.ic_menu_view,screenOnPower);
+  addEntry(getString(R.string.power_screen),DrainType.SCREEN,android.R.drawable.ic_menu_view,screenOnPower);
   double wifiPower=(mStats.getWifiOnTime(uSecNow,which) * 0 * mPowerProfile.getAveragePower(PowerProfile.POWER_WIFI_ON) + mStats.getWifiRunningTime(uSecNow,which) * mPowerProfile.getAveragePower(PowerProfile.POWER_WIFI_ON)) / 1000 / 1000;
-  addEntry(getString(R.string.power_wifi),R.drawable.ic_wifi_signal_4,wifiPower);
+  addEntry(getString(R.string.power_wifi),DrainType.WIFI,R.drawable.ic_wifi_signal_4,wifiPower);
   double idlePower=((timeSinceUnplugged - mStats.getScreenOnTime(uSecNow,mStatsType)) * mPowerProfile.getAveragePower(PowerProfile.POWER_CPU_IDLE)) / 1000 / 1000;
-  addEntry(getString(R.string.power_idle),android.R.drawable.ic_lock_power_off,idlePower);
+  addEntry(getString(R.string.power_idle),DrainType.IDLE,android.R.drawable.ic_lock_power_off,idlePower);
   double radioPower=getRadioPower(uSecNow,which);
-  addEntry(getString(R.string.power_cell),android.R.drawable.ic_menu_sort_by_size,radioPower);
+  addEntry(getString(R.string.power_cell),DrainType.CELL,android.R.drawable.ic_menu_sort_by_size,radioPower);
 }

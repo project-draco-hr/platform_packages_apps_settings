@@ -1,4 +1,5 @@
 {
+  SensorManager sensorManager=(SensorManager)getSystemService(Context.SENSOR_SERVICE);
   final int which=mStatsType;
   final double powerCpuNormal=mPowerProfile.getAveragePower(PowerProfile.POWER_CPU_NORMAL);
   long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime(),which) * 1000;
@@ -9,13 +10,26 @@
     Uid u=uidStats.valueAt(iu);
     double power=0;
     Map<String,? extends BatteryStats.Uid.Proc> processStats=u.getProcessStats();
+    long cpuTime=0;
+    long cpuFgTime=0;
+    long gpsTime=0;
     if (processStats.size() > 0) {
       for (      Map.Entry<String,? extends BatteryStats.Uid.Proc> ent : processStats.entrySet()) {
         Uid.Proc ps=ent.getValue();
         long userTime=ps.getUserTime(which);
         long systemTime=ps.getSystemTime(which);
-        power+=(userTime + systemTime) * 10 * powerCpuNormal;
+        long foregroundTime=ps.getForegroundTime(which);
+        cpuFgTime+=foregroundTime * 10;
+        if (DEBUG)         Log.i(TAG,"CPU Fg time for " + u.getUid() + " = "+ foregroundTime);
+        cpuTime=(userTime + systemTime) * 10;
+        power+=cpuTime * powerCpuNormal;
       }
+    }
+    if (cpuFgTime > cpuTime) {
+      if (DEBUG && cpuFgTime > cpuTime + 10000) {
+        Log.i(TAG,"WARNING! Cputime is more than 10 seconds behind Foreground time");
+      }
+      cpuTime=cpuFgTime;
     }
     power/=1000;
     Map<Integer,? extends BatteryStats.Uid.Sensor> sensorStats=u.getSensorStats();
@@ -23,18 +37,30 @@
       Uid.Sensor sensor=sensorEntry.getValue();
       int sensorType=sensor.getHandle();
       BatteryStats.Timer timer=sensor.getSensorTime();
-      long sensorTime=timer.getTotalTimeLocked(uSecTime,which);
+      long sensorTime=timer.getTotalTimeLocked(uSecTime,which) / 1000;
       double multiplier=0;
 switch (sensorType) {
 case Uid.Sensor.GPS:
         multiplier=mPowerProfile.getAveragePower(PowerProfile.POWER_GPS_ON);
-      break;
+      gpsTime=sensorTime;
+    break;
+default :
+  android.hardware.Sensor sensorData=sensorManager.getDefaultSensor(sensorType);
+if (sensorData != null) {
+  multiplier=sensorData.getPower();
+  if (DEBUG) {
+    Log.i(TAG,"Got sensor " + sensorData.getName() + " with power = "+ multiplier);
   }
-  power+=multiplier * sensorTime;
+}
+}
+power+=(multiplier * sensorTime) / 1000;
 }
 if (power != 0) {
-  BatterySipper app=new BatterySipper(null,0,u.getUid(),new double[]{power});
-  mUsageList.add(app);
+BatterySipper app=new BatterySipper(null,DrainType.APP,0,u,new double[]{power});
+app.mCpuTime=cpuTime;
+app.mGpsTime=gpsTime;
+app.mCpuFgTime=cpuFgTime;
+mUsageList.add(app);
 }
 if (power > mMaxPower) mMaxPower=power;
 mTotalPower+=power;

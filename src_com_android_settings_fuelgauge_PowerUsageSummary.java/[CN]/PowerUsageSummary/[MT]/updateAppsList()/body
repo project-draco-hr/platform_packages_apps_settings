@@ -2,18 +2,20 @@
   if (mStats == null) {
     load();
   }
+  mMaxPower=0;
+  mTotalPower=0;
   mAppListGroup.removeAll();
   mUsageList.clear();
-  processCpuUsage();
+  processAppUsage();
   processMiscUsage();
   mAppListGroup.setOrderingAsAdded(false);
   Collections.sort(mUsageList);
   for (  BatterySipper g : mUsageList) {
     if (g.getSortValue() < MIN_POWER_THRESHOLD)     continue;
-    double percent=((g.getSortValue() / mTotalPower) * 100 / BATTERY_SIZE);
-    PowerGaugePreference pref=new PowerGaugePreference(this,g.getIcon());
-    double scaleByMax=(g.getSortValue() * 100) / mTotalPower;
-    pref.setSummary(g.getLabel() + "  ( " + (int)g.getSortValue()+ "mA, "+ String.format("%3.2f",scaleByMax)+ "% )");
+    double percent=((g.getSortValue() / mTotalPower) * 100);
+    PowerGaugePreference pref=new PowerGaugePreference(this,g.getIcon(),g);
+    double scaleByMax=(g.getSortValue() * 100) / mMaxPower;
+    pref.setSummary(g.getLabel() + "  ( " + String.format("%3.2f",percent)+ "% )");
     pref.setOrder(Integer.MAX_VALUE - (int)g.getSortValue());
     pref.setGaugeValue(mScaleByMax ? scaleByMax : percent);
     mAppListGroup.addPreference(pref);

@@ -1,0 +1,12 @@
+{
+  ContentResolver resolver=getContentResolver();
+  mUseDefaultPref=(CheckBoxPreference)findPreference(KEY_TTS_USE_DEFAULT);
+  mUseDefaultPref.setChecked(Settings.System.getInt(resolver,TTS_USE_DEFAULTS,FALLBACK_TTS_USE_DEFAULTS) == 1 ? true : false);
+  mUseDefaultPref.setOnPreferenceChangeListener(this);
+  mDefaultRatePref=(ListPreference)findPreference(KEY_TTS_DEFAULT_RATE);
+  mDefaultRatePref.setValue(String.valueOf(Settings.System.getInt(resolver,TTS_DEFAULT_RATE,FALLBACK_TTS_DEFAULT_RATE)));
+  mDefaultRatePref.setOnPreferenceChangeListener(this);
+  mDefaultPitchPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_PITCH);
+  mDefaultPitchPref.setValue(String.valueOf(Settings.System.getInt(resolver,TTS_DEFAULT_PITCH,FALLBACK_TTS_DEFAULT_PITCH)));
+  mDefaultPitchPref.setOnPreferenceChangeListener(this);
+}

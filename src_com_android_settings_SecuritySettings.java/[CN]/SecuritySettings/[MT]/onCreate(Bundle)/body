@@ -6,4 +6,7 @@
   mNetwork=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_NETWORK);
   mGps=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_GPS);
   updateToggles();
+  Cursor settingsCursor=getContentResolver().query(Settings.Secure.CONTENT_URI,null,"(" + Settings.System.NAME + "=?)",new String[]{Settings.Secure.LOCATION_PROVIDERS_ALLOWED},null);
+  mContentQueryMap=new ContentQueryMap(settingsCursor,Settings.System.NAME,true,null);
+  mContentQueryMap.addObserver(new SettingsObserver());
 }

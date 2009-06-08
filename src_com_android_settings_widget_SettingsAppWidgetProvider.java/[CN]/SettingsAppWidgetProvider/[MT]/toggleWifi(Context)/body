@@ -1,0 +1,11 @@
+{
+  WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+  int wifiState=getWifiState(context);
+  if (wifiState == STATE_ENABLED) {
+    wifiManager.setWifiEnabled(false);
+  }
+ else   if (wifiState == STATE_DISABLED) {
+    wifiManager.setWifiEnabled(true);
+    mLocalBluetoothManager.setBluetoothEnabled(true);
+  }
+}

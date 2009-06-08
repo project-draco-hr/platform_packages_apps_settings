@@ -1,0 +1,42 @@
+{
+switch (getWifiState(context)) {
+case STATE_DISABLED:
+    views.setImageViewResource(R.id.btn_wifi,R.drawable.widget_btn_wifi_off);
+  break;
+case STATE_ENABLED:
+views.setImageViewResource(R.id.btn_wifi,R.drawable.widget_btn_wifi);
+break;
+case STATE_INTERMEDIATE:
+views.setImageViewResource(R.id.btn_wifi,R.drawable.widget_btn_wifi_gray);
+break;
+}
+if (getBrightness(context)) {
+views.setImageViewResource(R.id.btn_brightness,R.drawable.widget_btn_brightness);
+}
+ else {
+views.setImageViewResource(R.id.btn_brightness,R.drawable.widget_btn_brightness_off);
+}
+if (getBackgroundDataState(context)) {
+views.setImageViewResource(R.id.btn_sync,R.drawable.widget_btn_sync);
+}
+ else {
+views.setImageViewResource(R.id.btn_sync,R.drawable.widget_btn_sync_off);
+}
+if (getGpsState(context)) {
+views.setImageViewResource(R.id.btn_gps,R.drawable.widget_btn_gps);
+}
+ else {
+views.setImageViewResource(R.id.btn_gps,R.drawable.widget_btn_gps_off);
+}
+switch (getBluetoothState(context)) {
+case STATE_DISABLED:
+views.setImageViewResource(R.id.btn_bluetooth,R.drawable.widget_btn_bluetooth_off);
+break;
+case STATE_ENABLED:
+views.setImageViewResource(R.id.btn_bluetooth,R.drawable.widget_btn_bluetooth);
+break;
+case STATE_INTERMEDIATE:
+views.setImageViewResource(R.id.btn_bluetooth,R.drawable.widget_btn_bluetooth_gray);
+break;
+}
+}

@@ -1,0 +1,13 @@
+{
+  WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+  int wifiState=wifiManager.getWifiState();
+  if (wifiState == WifiManager.WIFI_STATE_DISABLED) {
+    return STATE_DISABLED;
+  }
+ else   if (wifiState == WifiManager.WIFI_STATE_ENABLED) {
+    return STATE_ENABLED;
+  }
+ else {
+    return STATE_INTERMEDIATE;
+  }
+}

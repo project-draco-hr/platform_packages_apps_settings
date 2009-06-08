@@ -1,0 +1,9 @@
+{
+  int state=getBluetoothState(context);
+  if (state == STATE_ENABLED) {
+    mLocalBluetoothManager.setBluetoothEnabled(false);
+  }
+ else   if (state == STATE_DISABLED) {
+    mLocalBluetoothManager.setBluetoothEnabled(true);
+  }
+}

@@ -1,0 +1,10 @@
+{
+  RemoteViews views=new RemoteViews(context.getPackageName(),R.layout.widget);
+  views.setOnClickPendingIntent(R.id.btn_wifi,getLaunchPendingIntent(context,appWidgetId,BUTTON_WIFI));
+  views.setOnClickPendingIntent(R.id.btn_brightness,getLaunchPendingIntent(context,appWidgetId,BUTTON_BRIGHTNESS));
+  views.setOnClickPendingIntent(R.id.btn_sync,getLaunchPendingIntent(context,appWidgetId,BUTTON_SYNC));
+  views.setOnClickPendingIntent(R.id.btn_gps,getLaunchPendingIntent(context,appWidgetId,BUTTON_GPS));
+  views.setOnClickPendingIntent(R.id.btn_bluetooth,getLaunchPendingIntent(context,appWidgetId,BUTTON_BLUETOOTH));
+  updateButtons(views,context);
+  return views;
+}

@@ -1,0 +1,8 @@
+{
+  Intent launchIntent=new Intent();
+  launchIntent.setClass(context,SettingsAppWidgetProvider.class);
+  launchIntent.addCategory(Intent.CATEGORY_ALTERNATIVE);
+  launchIntent.setData(Uri.parse("custom:" + buttonId));
+  PendingIntent pi=PendingIntent.getBroadcast(context,0,launchIntent,0);
+  return pi;
+}

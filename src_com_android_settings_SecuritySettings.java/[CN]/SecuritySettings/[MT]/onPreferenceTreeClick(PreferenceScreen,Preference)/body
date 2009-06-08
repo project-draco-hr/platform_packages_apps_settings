@@ -13,13 +13,7 @@
     Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,mShowPassword.isChecked() ? 1 : 0);
   }
  else   if (preference == mNetwork) {
-    if (mNetwork.isChecked()) {
-      mOkClicked=false;
-      new AlertDialog.Builder(this).setMessage(getResources().getString(R.string.location_warning_message)).setTitle(R.string.location_warning_title).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(R.string.agree,this).setNegativeButton(R.string.disagree,this).show().setOnDismissListener(this);
-    }
- else {
-      Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.NETWORK_PROVIDER,false);
-    }
+    Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.NETWORK_PROVIDER,mNetwork.isChecked());
   }
  else   if (preference == mGps) {
     Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.GPS_PROVIDER,mGps.isChecked());

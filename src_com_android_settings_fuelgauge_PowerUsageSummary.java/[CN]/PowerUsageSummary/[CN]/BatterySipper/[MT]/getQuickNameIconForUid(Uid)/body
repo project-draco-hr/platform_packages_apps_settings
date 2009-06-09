@@ -1,0 +1,21 @@
+{
+  final int uid=uidObj.getUid();
+  final String uidString=Integer.toString(uid);
+  if (mNameCache.containsKey(uidString)) {
+    name=mNameCache.get(uidString);
+    icon=mIconCache.get(uidString);
+    return;
+  }
+  PackageManager pm=getPackageManager();
+  final Drawable defaultActivityIcon=pm.getDefaultActivityIcon();
+  String[] packages=pm.getPackagesForUid(uid);
+  if (packages == null) {
+    name=Integer.toString(uid);
+  }
+ else {
+  }
+  icon=pm.getDefaultActivityIcon();
+synchronized (mRequestQueue) {
+    mRequestQueue.add(this);
+  }
+}

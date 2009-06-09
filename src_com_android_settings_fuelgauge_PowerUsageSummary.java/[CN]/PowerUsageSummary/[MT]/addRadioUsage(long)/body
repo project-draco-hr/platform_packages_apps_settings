@@ -1,0 +1,11 @@
+{
+  double power=0;
+  final int BINS=BatteryStats.NUM_SIGNAL_STRENGTH_BINS;
+  long signalTimeMs=0;
+  for (int i=0; i < BINS; i++) {
+    long strengthTimeMs=mStats.getPhoneSignalStrengthTime(i,uSecNow,mStatsType) / 1000;
+    power+=strengthTimeMs / 1000 * mPowerProfile.getAveragePower(PowerProfile.POWER_RADIO_ON,i);
+    signalTimeMs+=strengthTimeMs;
+  }
+  addEntry(getString(R.string.power_cell),DrainType.CELL,signalTimeMs,android.R.drawable.ic_menu_sort_by_size,power);
+}

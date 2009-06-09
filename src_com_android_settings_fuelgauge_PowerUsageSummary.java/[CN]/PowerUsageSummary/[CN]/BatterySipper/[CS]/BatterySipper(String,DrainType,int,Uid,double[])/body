@@ -1,13 +1,13 @@
 {
-  mValues=values;
-  mLabel=label;
-  mDrainType=drainType;
+  this.values=values;
+  name=label;
+  this.drainType=drainType;
   if (iconId > 0) {
-    mIcon=getResources().getDrawable(iconId);
+    icon=getResources().getDrawable(iconId);
   }
-  if (mValues != null)   mValue=mValues[0];
+  if (values != null)   value=values[0];
   if ((label == null || iconId == 0) && uid != null) {
-    getNameForUid(uid.getUid());
+    getQuickNameIconForUid(uid);
   }
-  mUid=uid;
+  uidObj=uid;
 }

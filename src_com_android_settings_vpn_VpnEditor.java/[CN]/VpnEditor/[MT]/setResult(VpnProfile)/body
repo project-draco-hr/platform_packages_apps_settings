@@ -1,0 +1,7 @@
+{
+  p.setName(mName.getText());
+  p.setId(Util.base64Encode(p.getName().getBytes()));
+  Intent intent=new Intent(this,VpnSettings.class);
+  intent.putExtra(VpnSettings.KEY_VPN_PROFILE,(Parcelable)p);
+  setResult(RESULT_OK,intent);
+}

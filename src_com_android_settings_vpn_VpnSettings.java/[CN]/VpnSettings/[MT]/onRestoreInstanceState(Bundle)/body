@@ -1,0 +1,7 @@
+{
+  String profileName=savedState.getString(STATE_ACTIVE_ACTOR);
+  if (Util.isNullOrEmpty(profileName))   return;
+  final VpnProfile p=mVpnPreferenceMap.get(profileName).mProfile;
+  mActiveActor=getActor(p);
+  mActiveActor.onRestoreState(savedState);
+}

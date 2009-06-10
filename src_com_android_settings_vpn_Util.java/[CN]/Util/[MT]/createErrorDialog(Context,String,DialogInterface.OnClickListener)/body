@@ -1,0 +1,10 @@
+{
+  AlertDialog.Builder b=new AlertDialog.Builder(c).setTitle(R.string.vpn_error_title).setMessage(message);
+  if (okListener != null) {
+    b.setPositiveButton(R.string.vpn_back_button,okListener);
+  }
+ else {
+    b.setPositiveButton(android.R.string.ok,null);
+  }
+  return b.create();
+}

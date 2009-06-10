@@ -1,0 +1,10 @@
+{
+  mUserkey=createListPreference(c,R.string.vpn_userkey_title,mProfile.getUserkey(),Keystore.getInstance().getAllUserkeyKeys(),new Preference.OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference pref,    Object newValue){
+      mProfile.setUserkey((String)newValue);
+      return onPreferenceChangeCommon(pref,newValue);
+    }
+  }
+);
+  return mUserkey;
+}

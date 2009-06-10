@@ -1,0 +1,14 @@
+{
+  dismissConnectDialog();
+switch (which) {
+case DialogInterface.BUTTON1:
+    if (validateInputs()) {
+      broadcastConnectivity(VpnState.CONNECTING);
+      connectInternal();
+    }
+  break;
+case DialogInterface.BUTTON2:
+broadcastConnectivity(VpnState.CANCELLED);
+break;
+}
+}

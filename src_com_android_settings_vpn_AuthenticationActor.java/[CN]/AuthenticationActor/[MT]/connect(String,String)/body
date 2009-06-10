@@ -1,0 +1,5 @@
+{
+  Context c=mContext;
+  mConnectDialog=new AlertDialog.Builder(c).setView(createConnectView(username,password)).setTitle(c.getString(R.string.vpn_connect_to) + " " + mProfile.getName()).setPositiveButton(c.getString(R.string.vpn_connect_button),this).setNegativeButton(c.getString(R.string.vpn_cancel_button),this).setOnCancelListener(this).create();
+  mConnectDialog.show();
+}

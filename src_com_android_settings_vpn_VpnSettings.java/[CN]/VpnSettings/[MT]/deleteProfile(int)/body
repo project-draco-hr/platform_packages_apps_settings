@@ -1,0 +1,7 @@
+{
+  if ((position < 0) || (position >= mVpnProfileList.size()))   return;
+  VpnProfile p=mVpnProfileList.remove(position);
+  VpnPreference pref=mVpnPreferenceMap.remove(p.getName());
+  mVpnListContainer.removePreference(pref);
+  removeProfileFromStorage(p);
+}

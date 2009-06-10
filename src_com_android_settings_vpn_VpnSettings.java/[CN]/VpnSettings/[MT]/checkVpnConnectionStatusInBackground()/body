@@ -1,0 +1,10 @@
+{
+  new Thread(new Runnable(){
+    public void run(){
+      for (      VpnProfile p : mVpnProfileList) {
+        getActor(p).checkStatus();
+      }
+    }
+  }
+).start();
+}

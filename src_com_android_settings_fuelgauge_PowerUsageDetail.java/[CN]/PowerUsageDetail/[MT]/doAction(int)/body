@@ -1,0 +1,22 @@
+{
+switch (action) {
+case ACTION_DISPLAY_SETTINGS:
+    startActivity(new Intent(Settings.ACTION_DISPLAY_SETTINGS));
+  break;
+case ACTION_WIFI_SETTINGS:
+startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+break;
+case ACTION_BLUETOOTH_SETTINGS:
+startActivity(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS));
+break;
+case ACTION_FORCE_STOP:
+killProcesses();
+break;
+case ACTION_UNINSTALL:
+Intent intent=new Intent(Intent.ACTION_VIEW);
+intent.setClass(this,InstalledAppDetails.class);
+intent.putExtra("com.android.settings.ApplicationPkgName",mPackages[0]);
+startActivity(intent);
+break;
+}
+}

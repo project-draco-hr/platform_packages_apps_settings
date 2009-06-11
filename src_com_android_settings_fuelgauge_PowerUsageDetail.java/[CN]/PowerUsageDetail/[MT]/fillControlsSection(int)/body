@@ -1,0 +1,50 @@
+{
+  String label1=null;
+  String label2=null;
+  mAction1=0;
+  mAction2=0;
+  PackageManager pm=getPackageManager();
+  String[] packages=pm.getPackagesForUid(mUid);
+  PackageInfo pi=null;
+  try {
+    pi=packages != null ? pm.getPackageInfo(packages[0],0) : null;
+  }
+ catch (  NameNotFoundException nnfe) {
+  }
+  ApplicationInfo ai=pi != null ? pi.applicationInfo : null;
+  boolean isSystem=ai != null ? (ai.flags & ApplicationInfo.FLAG_SYSTEM) != 0 : false;
+  if (uid == 0 || !isSystem) {
+switch (mDrainType) {
+case APP:
+      label1=getString(R.string.battery_action_stop);
+    label2=getString(R.string.battery_action_app_details);
+  mAction1=ACTION_FORCE_STOP;
+mAction2=ACTION_UNINSTALL;
+break;
+case SCREEN:
+break;
+case WIFI:
+label2=getString(R.string.battery_action_wifi);
+mAction2=ACTION_WIFI_SETTINGS;
+break;
+case BLUETOOTH:
+break;
+}
+}
+mButton1=(Button)findViewById(R.id.action_button1);
+mButton2=(Button)findViewById(R.id.action_button2);
+mButton1.setOnClickListener(this);
+mButton2.setOnClickListener(this);
+if (label1 == null) {
+mButton1.setVisibility(View.GONE);
+}
+ else {
+mButton1.setText(label1);
+}
+if (label2 == null) {
+findViewById(R.id.controls_section).setVisibility(View.GONE);
+}
+ else {
+mButton2.setText(label2);
+}
+}

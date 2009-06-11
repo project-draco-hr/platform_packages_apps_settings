@@ -1,0 +1,6 @@
+{
+  long onTimeMs=mStats.getWifiOnTime(uSecNow,mStatsType) / 1000;
+  long runningTimeMs=mStats.getWifiRunningTime(uSecNow,mStatsType) / 1000;
+  double wifiPower=(onTimeMs * 0 * mPowerProfile.getAveragePower(PowerProfile.POWER_WIFI_ON) + runningTimeMs * mPowerProfile.getAveragePower(PowerProfile.POWER_WIFI_ON)) / 1000;
+  addEntry(getString(R.string.power_wifi),DrainType.WIFI,runningTimeMs,R.drawable.ic_wifi_signal_4,wifiPower);
+}

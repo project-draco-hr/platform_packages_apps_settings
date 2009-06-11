@@ -1,5 +1,6 @@
 {
   int i;
+  Keystore ks=Keystore.getInstance();
   for (i=AccessPointState.IDENTITY; i < AccessPointState.MAX_ENTRPRISE_FIELD; i++) {
     String value;
     if (i <= AccessPointState.PRIVATE_KEY_PASSWD) {
@@ -7,20 +8,14 @@
     }
  else {
       Spinner spinner=mEnterpriseSpinnerFields[i - AccessPointState.CLIENT_CERT];
-      int index=spinner.getSelectedItemPosition();
-      if (index == (spinner.getCount() - 1)) {
-        value="";
+      if (i != AccessPointState.PRIVATE_KEY) {
+        value=ks.getCertificate(ks.getAllCertificateKeys()[spinner.getSelectedItemPosition()]);
       }
  else {
-        if (i != AccessPointState.PRIVATE_KEY) {
-          value=mKeystore.getCertificate(getAllCertificateKeys()[index]);
-        }
- else {
-          value=mKeystore.getUserkey(getAllUserkeyKeys()[index]);
-        }
+        value=ks.getUserkey(ks.getAllUserkeyKeys()[spinner.getSelectedItemPosition()]);
       }
     }
-    if (!TextUtils.isEmpty(value) || (i == AccessPointState.PRIVATE_KEY_PASSWD)) {
+    if (!TextUtils.isEmpty(value)) {
       mState.setEnterpriseField(i,value);
     }
   }

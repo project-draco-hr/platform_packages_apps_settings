@@ -18,18 +18,19 @@
   mPhase2Spinner.setOnItemSelectedListener(this);
   mPhase2Spinner.setPromptId(R.string.please_select_phase2);
   setSpinnerAdapter(mPhase2Spinner,R.array.wifi_phase2_entries);
+  Keystore ks=Keystore.getInstance();
   mClientCertSpinner=(Spinner)view.findViewById(R.id.client_certificate_spinner);
   mClientCertSpinner.setOnItemSelectedListener(this);
   mClientCertSpinner.setPromptId(R.string.please_select_client_certificate);
-  setSpinnerAdapter(mClientCertSpinner,getAllCertificateKeys());
+  setSpinnerAdapter(mClientCertSpinner,ks.getAllCertificateKeys());
   mCaCertSpinner=(Spinner)view.findViewById(R.id.ca_certificate_spinner);
   mCaCertSpinner.setOnItemSelectedListener(this);
   mCaCertSpinner.setPromptId(R.string.please_select_ca_certificate);
-  setSpinnerAdapter(mCaCertSpinner,getAllCertificateKeys());
+  setSpinnerAdapter(mCaCertSpinner,ks.getAllCertificateKeys());
   mPrivateKeySpinner=(Spinner)view.findViewById(R.id.private_key_spinner);
   mPrivateKeySpinner.setOnItemSelectedListener(this);
   mPrivateKeySpinner.setPromptId(R.string.please_select_private_key);
-  setSpinnerAdapter(mPrivateKeySpinner,getAllUserkeyKeys());
+  setSpinnerAdapter(mPrivateKeySpinner,ks.getAllUserkeyKeys());
   mEnterpriseTextFields=new EditText[]{mIdentityEdit,mAnonymousIdentityEdit,mPrivateKeyPasswdEdit};
   mEnterpriseSpinnerFields=new Spinner[]{mClientCertSpinner,mCaCertSpinner,mPrivateKeySpinner};
 }

@@ -1,12 +1,23 @@
 {
   ContentResolver resolver=getContentResolver();
   mUseDefaultPref=(CheckBoxPreference)findPreference(KEY_TTS_USE_DEFAULT);
-  mUseDefaultPref.setChecked(Settings.System.getInt(resolver,TTS_USE_DEFAULTS,FALLBACK_TTS_USE_DEFAULTS) == 1 ? true : false);
+  mUseDefaultPref.setChecked(Settings.Secure.getInt(resolver,TTS_USE_DEFAULTS,FALLBACK_TTS_USE_DEFAULTS) == 1 ? true : false);
   mUseDefaultPref.setOnPreferenceChangeListener(this);
   mDefaultRatePref=(ListPreference)findPreference(KEY_TTS_DEFAULT_RATE);
-  mDefaultRatePref.setValue(String.valueOf(Settings.System.getInt(resolver,TTS_DEFAULT_RATE,FALLBACK_TTS_DEFAULT_RATE)));
+  mDefaultRatePref.setValue(String.valueOf(Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE,FALLBACK_TTS_DEFAULT_RATE)));
   mDefaultRatePref.setOnPreferenceChangeListener(this);
   mDefaultPitchPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_PITCH);
-  mDefaultPitchPref.setValue(String.valueOf(Settings.System.getInt(resolver,TTS_DEFAULT_PITCH,FALLBACK_TTS_DEFAULT_PITCH)));
+  mDefaultPitchPref.setValue(String.valueOf(Settings.Secure.getInt(resolver,TTS_DEFAULT_PITCH,FALLBACK_TTS_DEFAULT_PITCH)));
   mDefaultPitchPref.setOnPreferenceChangeListener(this);
+  mDefaultLangPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
+  String defaultLang=String.valueOf(Settings.Secure.getString(resolver,TTS_DEFAULT_LANG));
+  if (defaultLang.compareTo("null") == 0) {
+    mDefaultLangPref.setValue(FALLBACK_TTS_DEFAULT_LANG);
+    Log.i(TAG,"TTS initDefaultSettings() default lang null ");
+  }
+ else {
+    mDefaultLangPref.setValue(defaultLang);
+    Log.i(TAG,"TTS initDefaultSettings() default lang is " + defaultLang);
+  }
+  mDefaultLangPref.setOnPreferenceChangeListener(this);
 }

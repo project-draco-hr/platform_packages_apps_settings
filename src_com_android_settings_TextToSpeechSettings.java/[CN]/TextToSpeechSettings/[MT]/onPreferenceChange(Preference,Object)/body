@@ -1,13 +1,13 @@
 {
   if (KEY_TTS_USE_DEFAULT.equals(preference.getKey())) {
     int value=(Boolean)objValue ? 1 : 0;
-    Settings.System.putInt(getContentResolver(),TTS_USE_DEFAULTS,value);
+    Settings.Secure.putInt(getContentResolver(),TTS_USE_DEFAULTS,value);
     Log.i(TAG,"TTS use default settings is " + objValue.toString());
   }
  else   if (KEY_TTS_DEFAULT_RATE.equals(preference.getKey())) {
     int value=Integer.parseInt((String)objValue);
     try {
-      Settings.System.putInt(getContentResolver(),TTS_DEFAULT_RATE,value);
+      Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_RATE,value);
       Log.i(TAG,"TTS default rate is " + value);
     }
  catch (    NumberFormatException e) {
@@ -17,12 +17,17 @@
  else   if (KEY_TTS_DEFAULT_PITCH.equals(preference.getKey())) {
     int value=Integer.parseInt((String)objValue);
     try {
-      Settings.System.putInt(getContentResolver(),TTS_DEFAULT_PITCH,value);
+      Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_PITCH,value);
       Log.i(TAG,"TTS default pitch is " + value);
     }
  catch (    NumberFormatException e) {
       Log.e(TAG,"could not persist default TTS pitch setting",e);
     }
+  }
+ else   if (KEY_TTS_DEFAULT_LANG.equals(preference.getKey())) {
+    String value=(String)objValue;
+    Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_LANG,value);
+    Log.i(TAG,"TTS default lang is " + value);
   }
   return true;
 }

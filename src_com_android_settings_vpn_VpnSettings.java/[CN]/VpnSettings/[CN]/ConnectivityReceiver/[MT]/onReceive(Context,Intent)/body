@@ -1,0 +1,17 @@
+{
+  String profileName=intent.getStringExtra(VpnManager.BROADCAST_PROFILE_NAME);
+  if (profileName == null)   return;
+  VpnState s=(VpnState)intent.getSerializableExtra(VpnManager.BROADCAST_CONNECTION_STATE);
+  if (s == null) {
+    Log.e(TAG,"received null connectivity state");
+    return;
+  }
+  VpnPreference pref=mVpnPreferenceMap.get(profileName);
+  if (pref != null) {
+    Log.d(TAG,"received connectivity: " + profileName + ": connected? "+ s);
+    changeState(pref.mProfile,s);
+  }
+ else {
+    Log.e(TAG,"received connectivity: " + profileName + ": connected? "+ s+ ", but profile does not exist;"+ " just ignore it");
+  }
+}

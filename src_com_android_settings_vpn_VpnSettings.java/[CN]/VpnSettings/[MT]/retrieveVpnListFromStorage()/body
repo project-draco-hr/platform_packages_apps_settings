@@ -1,0 +1,23 @@
+{
+  mVpnPreferenceMap=new LinkedHashMap<String,VpnPreference>();
+  mVpnProfileList=new ArrayList<VpnProfile>();
+  File root=new File(PROFILES_ROOT);
+  String[] dirs=root.list();
+  if (dirs == null)   return;
+  Arrays.sort(dirs);
+  for (  String dir : dirs) {
+    File f=new File(new File(root,dir),PROFILE_OBJ_FILE);
+    if (!f.exists())     continue;
+    try {
+      VpnProfile p=deserialize(f);
+      if (!checkIdConsistency(dir,p))       continue;
+      mVpnProfileList.add(p);
+      addPreferenceFor(p);
+    }
+ catch (    IOException e) {
+      Log.e(TAG,"retrieveVpnListFromStorage()",e);
+    }
+  }
+  disableProfilePreferencesIfOneActive();
+  checkVpnConnectionStatusInBackground();
+}

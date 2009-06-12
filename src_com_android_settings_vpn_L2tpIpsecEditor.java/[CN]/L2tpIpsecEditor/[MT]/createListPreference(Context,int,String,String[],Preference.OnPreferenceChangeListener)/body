@@ -1,0 +1,12 @@
+{
+  ListPreference pref=new ListPreference(c);
+  pref.setTitle(titleResId);
+  pref.setDialogTitle(titleResId);
+  pref.setPersistent(true);
+  pref.setEntries(keys);
+  pref.setEntryValues(keys);
+  pref.setValue(text);
+  pref.setSummary(checkNull(text,c));
+  pref.setOnPreferenceChangeListener(listener);
+  return pref;
+}

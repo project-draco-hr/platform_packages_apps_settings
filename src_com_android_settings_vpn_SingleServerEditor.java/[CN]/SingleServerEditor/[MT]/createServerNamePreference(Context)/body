@@ -1,0 +1,19 @@
+{
+  EditTextPreference serverName=mServerName=new EditTextPreference(c);
+  String title=c.getString(R.string.vpn_server_name_title);
+  serverName.setTitle(title);
+  serverName.setDialogTitle(title);
+  serverName.setSummary(checkNull(mProfile.getServerName(),c));
+  serverName.setText(mProfile.getServerName());
+  serverName.setPersistent(true);
+  serverName.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference pref,    Object newValue){
+      String v=((String)newValue).trim();
+      mProfile.setServerName(v);
+      pref.setSummary(checkNull(v,pref.getContext()));
+      return true;
+    }
+  }
+);
+  return mServerName;
+}

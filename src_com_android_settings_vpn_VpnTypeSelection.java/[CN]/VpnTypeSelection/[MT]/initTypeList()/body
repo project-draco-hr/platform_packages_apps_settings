@@ -1,0 +1,10 @@
+{
+  PreferenceScreen root=getPreferenceScreen();
+  for (  VpnType t : VpnManager.getSupportedVpnTypes()) {
+    String displayName=t.getDisplayName();
+    mTypeMap.put(displayName,t);
+    Preference pref=new Preference(this);
+    pref.setTitle(displayName);
+    root.addPreference(pref);
+  }
+}

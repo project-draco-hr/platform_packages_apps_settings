@@ -1,0 +1,16 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.vpn_settings);
+  mVpnListContainer=(PreferenceCategory)findPreference(PREF_VPN_LIST);
+  retrieveVpnListFromStorage();
+  mAddVpn=(PreferenceScreen)findPreference(PREF_ADD_VPN);
+  mAddVpn.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    public boolean onPreferenceClick(    Preference preference){
+      startVpnTypeSelection();
+      return true;
+    }
+  }
+);
+  registerForContextMenu(getListView());
+  mVpnManager.registerConnectivityReceiver(mConnectivityReceiver);
+}

@@ -3,7 +3,8 @@
   final int which=mStatsType;
   final double powerCpuNormal=mPowerProfile.getAveragePower(PowerProfile.POWER_CPU_NORMAL);
   final double averageCostPerByte=getAverageDataCost();
-  long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime(),which) * 1000;
+  long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime() * 1000,which);
+  updateStatsPeriod(uSecTime);
   SparseArray<? extends Uid> uidStats=mStats.getUidStats();
   final int NU=uidStats.size();
   for (int iu=0; iu < NU; iu++) {

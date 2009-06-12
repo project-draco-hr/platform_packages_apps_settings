@@ -16,16 +16,16 @@
   if (uid == 0 || !isSystem) {
 switch (mDrainType) {
 case APP:
-      label1=getString(R.string.battery_action_stop);
-    label2=getString(R.string.battery_action_app_details);
-  mAction1=ACTION_FORCE_STOP;
-mAction2=ACTION_UNINSTALL;
-break;
+      label2=getString(R.string.battery_action_app_details);
+    mAction2=ACTION_APP_DETAILS;
+  break;
 case SCREEN:
+label2=getString(R.string.battery_action_display);
+mAction2=ACTION_DISPLAY_SETTINGS;
 break;
 case WIFI:
 label2=getString(R.string.battery_action_wifi);
-mAction2=ACTION_WIFI_SETTINGS;
+mAction2=ACTION_WIRELESS_SETTINGS;
 break;
 case BLUETOOTH:
 break;

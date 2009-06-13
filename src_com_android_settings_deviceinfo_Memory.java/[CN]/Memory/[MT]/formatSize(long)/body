@@ -1,16 +1,3 @@
 {
-  String suffix=null;
-  if (size >= 1024) {
-    suffix=" KB";
-    size/=1024;
-    if (size >= 1024) {
-      suffix=" MB";
-      size/=1024;
-    }
-  }
-  DecimalFormat formatter=new DecimalFormat();
-  formatter.setGroupingSize(3);
-  String result=formatter.format(size);
-  if (suffix != null)   result=result + suffix;
-  return result;
+  return Formatter.formatFileSize(this,size);
 }

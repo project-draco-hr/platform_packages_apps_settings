@@ -15,16 +15,16 @@
     seconds-=minutes * SECONDS_PER_MINUTE;
   }
   if (days > 0) {
-    sb.append(getString(R.string.battery_history_days,days,hours,minutes,seconds));
+    sb.append(context.getString(R.string.battery_history_days,days,hours,minutes,seconds));
   }
  else   if (hours > 0) {
-    sb.append(getString(R.string.battery_history_hours,hours,minutes,seconds));
+    sb.append(context.getString(R.string.battery_history_hours,hours,minutes,seconds));
   }
  else   if (minutes > 0) {
-    sb.append(getString(R.string.battery_history_minutes,minutes,seconds));
+    sb.append(context.getString(R.string.battery_history_minutes,minutes,seconds));
   }
  else {
-    sb.append(getString(R.string.battery_history_seconds,seconds));
+    sb.append(context.getString(R.string.battery_history_seconds,seconds));
   }
   return sb.toString();
 }

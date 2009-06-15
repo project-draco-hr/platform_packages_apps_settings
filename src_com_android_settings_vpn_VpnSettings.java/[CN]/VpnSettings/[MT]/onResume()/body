@@ -1,0 +1,7 @@
+{
+  super.onResume();
+  if ((mVpnProfileList == null) || mVpnProfileList.isEmpty()) {
+    retrieveVpnListFromStorage();
+    checkVpnConnectionStatusInBackground();
+  }
+}

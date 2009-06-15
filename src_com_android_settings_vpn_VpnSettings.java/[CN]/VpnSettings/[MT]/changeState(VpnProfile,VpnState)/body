@@ -1,12 +1,11 @@
 {
   VpnState oldState=p.getState();
   if (oldState == state)   return;
-  Log.d(TAG,"changeState: " + p.getName() + ": "+ state);
   p.setState(state);
   mVpnPreferenceMap.get(p.getName()).setSummary(getProfileSummaryString(p));
 switch (state) {
 case CONNECTED:
-    mActiveActor=null;
+    mConnectingActor=null;
 case CONNECTING:
   mActiveProfile=p;
 disableProfilePreferencesIfOneActive();
@@ -22,7 +21,7 @@ break;
 case IDLE:
 assert(mActiveProfile != p);
 mActiveProfile=null;
-mActiveActor=null;
+mConnectingActor=null;
 enableProfilePreferences();
 if (oldState == VpnState.CONNECTING) mConnectingError=true;
 if (mConnectingError) showReconnectDialog(p);

@@ -1,5 +1,30 @@
 {
-  Context c=mContext;
-  mConnectDialog=new AlertDialog.Builder(c).setView(createConnectView(username,password)).setTitle(c.getString(R.string.vpn_connect_to) + " " + mProfile.getName()).setPositiveButton(c.getString(R.string.vpn_connect_button),this).setNegativeButton(c.getString(R.string.vpn_cancel_button),this).setOnCancelListener(this).create();
-  mConnectDialog.show();
+  mVpnManager.startVpnService();
+  ServiceConnection c=new ServiceConnection(){
+    public void onServiceConnected(    ComponentName className,    IBinder service){
+      boolean success=false;
+      try {
+        success=IVpnService.Stub.asInterface(service).connect(mProfile,username,password);
+      }
+ catch (      Throwable e) {
+        Log.e(TAG,"connect()",e);
+        checkStatus();
+      }
+ finally {
+        mContext.unbindService(this);
+        if (!success) {
+          Log.d(TAG,"~~~~~~ connect() failed!");
+          broadcastConnectivity(VpnState.IDLE);
+        }
+ else {
+          Log.d(TAG,"~~~~~~ connect() succeeded!");
+        }
+      }
+    }
+    public void onServiceDisconnected(    ComponentName className){
+      checkStatus();
+    }
+  }
+;
+  if (!bindService(c))   broadcastConnectivity(VpnState.IDLE);
 }

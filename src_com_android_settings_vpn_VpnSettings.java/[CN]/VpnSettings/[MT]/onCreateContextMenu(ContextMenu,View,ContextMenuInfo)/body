@@ -7,7 +7,7 @@
     boolean isIdle=(state == VpnState.IDLE);
     boolean isNotConnect=(isIdle || (state == VpnState.DISCONNECTING));
     menu.add(0,CONTEXT_MENU_CONNECT_ID,0,R.string.vpn_menu_connect).setEnabled(isIdle && (mActiveProfile == null));
-    menu.add(0,CONTEXT_MENU_DISCONNECT_ID,0,R.string.vpn_menu_disconnect).setEnabled(!isIdle);
+    menu.add(0,CONTEXT_MENU_DISCONNECT_ID,0,R.string.vpn_menu_disconnect).setEnabled(state == VpnState.CONNECTED);
     menu.add(0,CONTEXT_MENU_EDIT_ID,0,R.string.vpn_menu_edit).setEnabled(isNotConnect);
     menu.add(0,CONTEXT_MENU_DELETE_ID,0,R.string.vpn_menu_delete).setEnabled(isNotConnect);
   }

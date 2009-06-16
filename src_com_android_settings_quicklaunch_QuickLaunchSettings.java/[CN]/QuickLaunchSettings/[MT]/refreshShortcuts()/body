@@ -13,7 +13,20 @@
     char shortcut=Character.toLowerCase((char)c.getInt(COLUMN_SHORTCUT));
     if (shortcut == 0)     continue;
     ShortcutPreference pref=getOrCreatePreference(shortcut);
-    pref.setTitle(Bookmarks.getTitle(this,c));
+    CharSequence title=Bookmarks.getTitle(this,c);
+    int intentColumn=c.getColumnIndex(Bookmarks.INTENT);
+    String intentUri=c.getString(intentColumn);
+    PackageManager packageManager=getPackageManager();
+    try {
+      Intent intent=Intent.getIntent(intentUri);
+      ResolveInfo info=packageManager.resolveActivity(intent,0);
+      if (info != null) {
+        title=info.loadLabel(packageManager);
+      }
+    }
+ catch (    URISyntaxException e) {
+    }
+    pref.setTitle(title);
     pref.setSummary(getString(R.string.quick_launch_shortcut,String.valueOf(shortcut)));
     pref.setHasBookmark(true);
     newBookmarkedShortcuts.put(shortcut,true);

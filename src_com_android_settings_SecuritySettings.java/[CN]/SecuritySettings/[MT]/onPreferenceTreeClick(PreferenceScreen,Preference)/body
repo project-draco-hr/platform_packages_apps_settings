@@ -18,5 +18,13 @@
  else   if (preference == mGps) {
     Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.GPS_PROVIDER,mGps.isChecked());
   }
+ else   if (preference == mUseLocation) {
+    if (mUseLocation.isChecked()) {
+      showUseLocationDialog(false);
+    }
+ else {
+      updateUseLocation();
+    }
+  }
   return false;
 }

@@ -1,27 +1,32 @@
 {
   int i;
-  for (i=AccessPointState.IDENTITY; i < AccessPointState.MAX_ENTRPRISE_FIELD; i++) {
-    String value;
-    if (i <= AccessPointState.PRIVATE_KEY_PASSWD) {
-      value=mEnterpriseTextFields[i].getText().toString();
-    }
- else {
-      Spinner spinner=mEnterpriseSpinnerFields[i - AccessPointState.CLIENT_CERT];
-      int index=spinner.getSelectedItemPosition();
-      if (index == (spinner.getCount() - 1)) {
-        value="";
-      }
- else {
-        if (i != AccessPointState.PRIVATE_KEY) {
-          value=mKeystore.getCertificate(getAllCertificateKeys()[index]);
-        }
- else {
-          value=mKeystore.getUserkey(getAllUserkeyKeys()[index]);
-        }
-      }
-    }
+  String value;
+  for (i=AccessPointState.IDENTITY; i <= AccessPointState.PRIVATE_KEY_PASSWD; i++) {
+    value=mEnterpriseTextFields[i].getText().toString();
     if (!TextUtils.isEmpty(value) || (i == AccessPointState.PRIVATE_KEY_PASSWD)) {
       mState.setEnterpriseField(i,value);
+    }
+  }
+  Spinner spinner=mClientCertSpinner;
+  int index=spinner.getSelectedItemPosition();
+  if (index != (spinner.getCount() - 1)) {
+    String key=getAllUserCertificateKeys()[index];
+    value=mKeystore.getUserCertificate(key);
+    if (!TextUtils.isEmpty(value)) {
+      mState.setEnterpriseField(AccessPointState.CLIENT_CERT,value);
+    }
+    value=mKeystore.getUserPrivateKey(key);
+    if (!TextUtils.isEmpty(value)) {
+      mState.setEnterpriseField(AccessPointState.PRIVATE_KEY,value);
+    }
+  }
+  spinner=mCaCertSpinner;
+  index=spinner.getSelectedItemPosition();
+  if (index != (spinner.getCount() - 1)) {
+    String key=getAllCaCertificateKeys()[index];
+    value=mKeystore.getCaCertificate(key);
+    if (!TextUtils.isEmpty(value)) {
+      mState.setEnterpriseField(AccessPointState.CA_CERT,value);
     }
   }
 switch (securityType) {

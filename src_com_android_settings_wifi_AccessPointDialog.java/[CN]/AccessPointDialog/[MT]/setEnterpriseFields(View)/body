@@ -5,8 +5,6 @@
   mAnonymousIdentityEdit=(EditText)view.findViewById(R.id.anonymous_identity_edit);
   mClientCertText=(TextView)view.findViewById(R.id.client_certificate_text);
   mCaCertText=(TextView)view.findViewById(R.id.ca_certificate_text);
-  mPrivateKeyText=(TextView)view.findViewById(R.id.private_key_text);
-  mPrivateKeyPasswdText=(TextView)view.findViewById(R.id.private_key_passwd_text);
   mPrivateKeyPasswdEdit=(EditText)view.findViewById(R.id.private_key_passwd_edit);
   mEapText=(TextView)view.findViewById(R.id.eap_text);
   mEapSpinner=(Spinner)view.findViewById(R.id.eap_spinner);
@@ -21,15 +19,10 @@
   mClientCertSpinner=(Spinner)view.findViewById(R.id.client_certificate_spinner);
   mClientCertSpinner.setOnItemSelectedListener(this);
   mClientCertSpinner.setPromptId(R.string.please_select_client_certificate);
-  setSpinnerAdapter(mClientCertSpinner,getAllCertificateKeys());
+  setSpinnerAdapter(mClientCertSpinner,getAllUserCertificateKeys());
   mCaCertSpinner=(Spinner)view.findViewById(R.id.ca_certificate_spinner);
   mCaCertSpinner.setOnItemSelectedListener(this);
   mCaCertSpinner.setPromptId(R.string.please_select_ca_certificate);
-  setSpinnerAdapter(mCaCertSpinner,getAllCertificateKeys());
-  mPrivateKeySpinner=(Spinner)view.findViewById(R.id.private_key_spinner);
-  mPrivateKeySpinner.setOnItemSelectedListener(this);
-  mPrivateKeySpinner.setPromptId(R.string.please_select_private_key);
-  setSpinnerAdapter(mPrivateKeySpinner,getAllUserkeyKeys());
+  setSpinnerAdapter(mCaCertSpinner,getAllCaCertificateKeys());
   mEnterpriseTextFields=new EditText[]{mIdentityEdit,mAnonymousIdentityEdit,mPrivateKeyPasswdEdit};
-  mEnterpriseSpinnerFields=new Spinner[]{mClientCertSpinner,mCaCertSpinner,mPrivateKeySpinner};
 }

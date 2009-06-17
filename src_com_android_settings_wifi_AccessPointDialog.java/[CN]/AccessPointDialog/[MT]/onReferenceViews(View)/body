@@ -22,8 +22,7 @@
   if (mMode == MODE_CONFIGURE || (isEnterprise() && !mState.configured)) {
     setEnterpriseFields(view);
     mEapSpinner.setSelection(getSelectionIndex(R.array.wifi_eap_entries,mState.getEap()));
-    mClientCertSpinner.setSelection(getSelectionIndex(getAllCertificateKeys(),mState.getEnterpriseField(AccessPointState.CLIENT_CERT)));
-    mCaCertSpinner.setSelection(getSelectionIndex(getAllCertificateKeys(),mState.getEnterpriseField(AccessPointState.CA_CERT)));
-    mPrivateKeySpinner.setSelection(getSelectionIndex(getAllUserkeyKeys(),mState.getEnterpriseField(AccessPointState.PRIVATE_KEY)));
+    mClientCertSpinner.setSelection(getSelectionIndex(getAllUserCertificateKeys(),mState.getEnterpriseField(AccessPointState.CLIENT_CERT)));
+    mCaCertSpinner.setSelection(getSelectionIndex(getAllCaCertificateKeys(),mState.getEnterpriseField(AccessPointState.CA_CERT)));
   }
 }

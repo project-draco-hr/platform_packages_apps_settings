@@ -19,6 +19,7 @@
         packageLabels[i]=label.toString();
       }
       if (ai.icon != 0) {
+        defaultPackageName=packages[i];
         icon=ai.loadIcon(pm);
         break;
       }
@@ -39,6 +40,7 @@
           if (nm != null) {
             name=nm.toString();
             if (pi.applicationInfo.icon != 0) {
+              defaultPackageName=pkgName;
               icon=pi.applicationInfo.loadIcon(pm);
             }
             break;
@@ -50,7 +52,10 @@
     }
   }
   final String uidString=Integer.toString(uidObj.getUid());
-  mNameCache.put(uidString,name);
-  mIconCache.put(uidString,icon);
+  UidToDetail utd=new UidToDetail();
+  utd.name=name;
+  utd.icon=icon;
+  utd.packageName=defaultPackageName;
+  mUidCache.put(uidString,utd);
   mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NAME_ICON,this));
 }

@@ -1,0 +1,13 @@
+{
+  if (requestCode == VOICE_DATA_INTEGRITY_CHECK) {
+    if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+      Log.v(TAG,"Voice data check passed");
+      if (mTts == null) {
+        mTts=new TextToSpeech(this,this);
+      }
+    }
+ else {
+      Log.v(TAG,"Voice data check failed");
+    }
+  }
+}

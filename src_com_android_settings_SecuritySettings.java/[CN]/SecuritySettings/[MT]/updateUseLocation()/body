@@ -1,4 +1,4 @@
 {
   boolean use=mUseLocation.isChecked();
-  Settings.Gservices.putString(getContentResolver(),Settings.Gservices.USE_LOCATION_FOR_SERVICES,use ? "1" : "0");
+  Settings.Secure.putInt(getContentResolver(),Settings.Secure.USE_LOCATION_FOR_SERVICES,use ? 1 : 0);
 }

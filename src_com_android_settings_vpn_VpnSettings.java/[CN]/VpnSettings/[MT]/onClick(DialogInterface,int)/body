@@ -1,0 +1,20 @@
+{
+  dismissDialog(0);
+  if (which == CONNECT_BUTTON) {
+    Dialog d=(Dialog)dialog;
+    String error=mConnectingActor.validateInputs(d);
+    if (error == null) {
+      changeState(mConnectingActor.getProfile(),VpnState.CONNECTING);
+      mConnectingActor.connect(d);
+      return;
+    }
+ else {
+      new AlertDialog.Builder(this).setTitle(R.string.vpn_you_miss_a_field).setMessage(String.format(getString(R.string.vpn_please_fill_up),error)).setPositiveButton(R.string.vpn_back_button,new DialogInterface.OnClickListener(){
+        public void onClick(        DialogInterface dialog,        int which){
+          showDialog(0);
+        }
+      }
+).show();
+    }
+  }
+}

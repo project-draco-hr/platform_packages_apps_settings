@@ -1,24 +1,86 @@
 {
   ContentResolver resolver=getContentResolver();
+  int intVal=0;
   mUseDefaultPref=(CheckBoxPreference)findPreference(KEY_TTS_USE_DEFAULT);
-  mUseDefaultPref.setChecked(Settings.Secure.getInt(resolver,TTS_USE_DEFAULTS,TextToSpeech.Engine.FALLBACK_TTS_USE_DEFAULTS) == 1 ? true : false);
+  try {
+    intVal=Settings.Secure.getInt(resolver,TTS_USE_DEFAULTS);
+  }
+ catch (  SettingNotFoundException e) {
+    intVal=TextToSpeech.Engine.FALLBACK_TTS_USE_DEFAULTS;
+    Settings.Secure.putInt(resolver,TTS_USE_DEFAULTS,intVal);
+  }
+  mUseDefaultPref.setChecked(intVal == 1);
   mUseDefaultPref.setOnPreferenceChangeListener(this);
   mDefaultEng=FALLBACK_TTS_DEFAULT_SYNTH;
   mDefaultRatePref=(ListPreference)findPreference(KEY_TTS_DEFAULT_RATE);
-  mDefaultRatePref.setValue(String.valueOf(Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE,TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_RATE)));
+  try {
+    intVal=Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
+  }
+ catch (  SettingNotFoundException e) {
+    intVal=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_RATE;
+    Settings.Secure.putInt(resolver,TTS_DEFAULT_RATE,intVal);
+  }
+  mDefaultRatePref.setValue(String.valueOf(intVal));
   mDefaultRatePref.setOnPreferenceChangeListener(this);
   mDefaultPitchPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_PITCH);
-  mDefaultPitchPref.setValue(String.valueOf(Settings.Secure.getInt(resolver,TTS_DEFAULT_PITCH,TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_PITCH)));
+  try {
+    intVal=Settings.Secure.getInt(resolver,TTS_DEFAULT_PITCH);
+  }
+ catch (  SettingNotFoundException e) {
+    intVal=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_PITCH;
+    Settings.Secure.putInt(resolver,TTS_DEFAULT_PITCH,intVal);
+  }
+  mDefaultPitchPref.setValue(String.valueOf(intVal));
   mDefaultPitchPref.setOnPreferenceChangeListener(this);
-  mDefaultLangPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
-  String defaultLang=String.valueOf(Settings.Secure.getString(resolver,TTS_DEFAULT_LANG));
-  if (defaultLang.compareTo("null") == 0) {
-    mDefaultLangPref.setValue(TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_LANG);
-    Log.i(TAG,"TTS initDefaultSettings() default lang null ");
+  String language=null;
+  String country=null;
+  String variant=null;
+  mDefaultLocPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
+  language=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_LANG);
+  if (language != null) {
+    mDefaultLanguage=language;
   }
  else {
-    mDefaultLangPref.setValue(defaultLang);
-    Log.i(TAG,"TTS initDefaultSettings() default lang is " + defaultLang);
+    language=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_LANG;
+    country=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_COUNTRY;
+    variant=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_VARIANT;
+    Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_LANG,language);
+    Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_COUNTRY,country);
+    Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_VARIANT,variant);
   }
-  mDefaultLangPref.setOnPreferenceChangeListener(this);
+  if (country == null) {
+    country=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_COUNTRY);
+    if (country.compareTo("null") != 0) {
+      mDefaultCountry=country;
+    }
+ else {
+      country=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_COUNTRY;
+      variant=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_VARIANT;
+      Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_COUNTRY,country);
+      Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_VARIANT,variant);
+    }
+  }
+  if (variant == null) {
+    variant=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_VARIANT);
+    if (variant.compareTo("null") != 0) {
+      mDefaultLocVariant=variant;
+    }
+ else {
+      variant=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_VARIANT;
+      Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_VARIANT,variant);
+    }
+  }
+  String localeString=new String(language);
+  if (country.compareTo("") != 0) {
+    localeString+=LOCALE_DELIMITER + country;
+  }
+ else {
+    localeString+=LOCALE_DELIMITER + " ";
+  }
+  if (variant.compareTo("") != 0) {
+    localeString+=LOCALE_DELIMITER + variant;
+  }
+  Log.v(TAG,"In initDefaultSettings: localeString=" + localeString);
+  mDefaultLocPref.setValue(localeString);
+  mDefaultLocPref.setOnPreferenceChangeListener(this);
 }

@@ -8,6 +8,9 @@
     int value=Integer.parseInt((String)objValue);
     try {
       Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_RATE,value);
+      if (mTts != null) {
+        mTts.setSpeechRate(value);
+      }
       Log.i(TAG,"TTS default rate is " + value);
     }
  catch (    NumberFormatException e) {
@@ -25,9 +28,12 @@
     }
   }
  else   if (KEY_TTS_DEFAULT_LANG.equals(preference.getKey())) {
-    String value=(String)objValue;
-    Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_LANG,value);
-    Log.i(TAG,"TTS default lang is " + value);
+    ContentResolver resolver=getContentResolver();
+    parseLocaleInfo((String)objValue);
+    Settings.Secure.putString(resolver,TTS_DEFAULT_LANG,mDefaultLanguage);
+    Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,mDefaultCountry);
+    Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,mDefaultLocVariant);
+    Log.v(TAG,"TTS default lang/country/variant set to " + mDefaultLanguage + "/"+ mDefaultCountry+ "/"+ mDefaultLocVariant);
   }
   return true;
 }

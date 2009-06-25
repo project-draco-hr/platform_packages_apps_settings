@@ -1,20 +1,28 @@
 {
   final int uid=uidObj.getUid();
   final String uidString=Integer.toString(uid);
-  if (mNameCache.containsKey(uidString)) {
-    name=mNameCache.get(uidString);
-    icon=mIconCache.get(uidString);
+  if (mUidCache.containsKey(uidString)) {
+    UidToDetail utd=mUidCache.get(uidString);
+    defaultPackageName=utd.packageName;
+    name=utd.name;
+    icon=utd.icon;
     return;
   }
   PackageManager pm=getPackageManager();
   final Drawable defaultActivityIcon=pm.getDefaultActivityIcon();
   String[] packages=pm.getPackagesForUid(uid);
+  icon=pm.getDefaultActivityIcon();
   if (packages == null) {
-    name=Integer.toString(uid);
+    if (uid == 0) {
+      name=getResources().getString(R.string.process_kernel_label);
+    }
+ else     if (name.equals("mediaserver")) {
+      name=getResources().getString(R.string.process_mediaserver_label);
+    }
+    return;
   }
  else {
   }
-  icon=pm.getDefaultActivityIcon();
 synchronized (mRequestQueue) {
     mRequestQueue.add(this);
   }

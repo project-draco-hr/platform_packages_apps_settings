@@ -3,7 +3,10 @@
   BatterySipper sipper=pgp.getInfo();
   Intent intent=new Intent(this,PowerUsageDetail.class);
   intent.putExtra(PowerUsageDetail.EXTRA_TITLE,sipper.name);
-  intent.putExtra(PowerUsageDetail.EXTRA_PERCENT,sipper.getSortValue() * 100 / mTotalPower);
+  intent.putExtra(PowerUsageDetail.EXTRA_PERCENT,(int)Math.ceil(sipper.getSortValue() * 100 / mTotalPower));
+  intent.putExtra(PowerUsageDetail.EXTRA_GAUGE,(int)Math.ceil(sipper.getSortValue() * 100 / mMaxPower));
+  intent.putExtra(PowerUsageDetail.EXTRA_ICON_PACKAGE,sipper.defaultPackageName);
+  intent.putExtra(PowerUsageDetail.EXTRA_ICON_ID,sipper.iconId);
   if (sipper.uidObj != null) {
     intent.putExtra(PowerUsageDetail.EXTRA_UID,sipper.uidObj.getUid());
   }

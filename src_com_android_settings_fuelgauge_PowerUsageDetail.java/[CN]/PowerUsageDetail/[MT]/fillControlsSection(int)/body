@@ -4,7 +4,7 @@
   mAction1=0;
   mAction2=0;
   PackageManager pm=getPackageManager();
-  String[] packages=pm.getPackagesForUid(mUid);
+  String[] packages=pm.getPackagesForUid(uid);
   PackageInfo pi=null;
   try {
     pi=packages != null ? pm.getPackageInfo(packages[0],0) : null;
@@ -13,14 +13,16 @@
   }
   ApplicationInfo ai=pi != null ? pi.applicationInfo : null;
   boolean isSystem=ai != null ? (ai.flags & ApplicationInfo.FLAG_SYSTEM) != 0 : false;
-  if (uid == 0 || !isSystem) {
+  if (uid < 1000 || !isSystem) {
 switch (mDrainType) {
 case APP:
-      label2=getString(R.string.battery_action_app_details);
-    mAction2=ACTION_APP_DETAILS;
-  break;
+      if (packages != null) {
+        label2=getString(R.string.battery_action_app_details);
+        mAction2=ACTION_APP_DETAILS;
+      }
+    break;
 case SCREEN:
-label2=getString(R.string.battery_action_display);
+  label2=getString(R.string.battery_action_display);
 mAction2=ACTION_DISPLAY_SETTINGS;
 break;
 case WIFI:

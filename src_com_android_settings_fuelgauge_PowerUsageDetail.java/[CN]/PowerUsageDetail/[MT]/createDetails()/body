@@ -1,15 +1,44 @@
 {
   final Intent intent=getIntent();
   mTitle=intent.getStringExtra(EXTRA_TITLE);
-  mPercentage=intent.getDoubleExtra(EXTRA_PERCENT,-1);
+  final int percentage=intent.getIntExtra(EXTRA_PERCENT,1);
+  final int gaugeValue=intent.getIntExtra(EXTRA_GAUGE,1);
   mUsageSince=intent.getIntExtra(EXTRA_USAGE_SINCE,USAGE_SINCE_UNPLUGGED);
   mUid=intent.getIntExtra(EXTRA_UID,0);
   mDrainType=(DrainType)intent.getSerializableExtra(EXTRA_DRAIN_TYPE);
+  String iconPackage=intent.getStringExtra(EXTRA_ICON_PACKAGE);
+  int iconId=intent.getIntExtra(EXTRA_ICON_ID,0);
+  if (!TextUtils.isEmpty(iconPackage)) {
+    try {
+      final PackageManager pm=getPackageManager();
+      ApplicationInfo ai=pm.getPackageInfo(iconPackage,0).applicationInfo;
+      if (ai != null) {
+        mAppIcon=ai.loadIcon(pm);
+      }
+    }
+ catch (    NameNotFoundException nnfe) {
+    }
+  }
+ else   if (iconId != 0) {
+    mAppIcon=getResources().getDrawable(iconId);
+  }
+  if (mAppIcon == null) {
+    mAppIcon=getPackageManager().getDefaultActivityIcon();
+  }
+  String summary=getDescriptionForDrainType();
+  ((TextView)findViewById(R.id.summary)).setText(summary);
   mTypes=intent.getIntArrayExtra(EXTRA_DETAIL_TYPES);
   mValues=intent.getDoubleArrayExtra(EXTRA_DETAIL_VALUES);
   mTitleView=(TextView)findViewById(R.id.name);
   mTitleView.setText(mTitle);
-  ((TextView)findViewById(R.id.battery_percentage)).setText(String.format("%3.2f%% of battery usage since last unplugged",mPercentage));
+  ((TextView)findViewById(R.id.battery_percentage)).setText(String.format("%d%%",percentage));
+  ImageView gaugeImage=(ImageView)findViewById(R.id.gauge);
+  mGauge=new PercentageBar();
+  mGauge.percent=gaugeValue;
+  mGauge.bar=getResources().getDrawable(R.drawable.app_gauge);
+  gaugeImage.setImageDrawable(mGauge);
+  ImageView iconImage=(ImageView)findViewById(R.id.icon);
+  iconImage.setImageDrawable(mAppIcon);
   mDetailsParent=(ViewGroup)findViewById(R.id.details);
   LayoutInflater inflater=getLayoutInflater();
   if (mTypes != null && mValues != null) {

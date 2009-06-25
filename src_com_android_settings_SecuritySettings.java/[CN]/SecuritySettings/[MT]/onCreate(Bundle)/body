@@ -5,6 +5,7 @@
   createPreferenceHierarchy();
   mNetwork=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_NETWORK);
   mGps=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_GPS);
+  mAssistedGps=(CheckBoxPreference)getPreferenceScreen().findPreference(ASSISTED_GPS);
   mUseLocation=(CheckBoxPreference)getPreferenceScreen().findPreference(USE_LOCATION);
   try {
     if (mUseLocation != null && getPackageManager().getPackageInfo(GSETTINGS_PROVIDER,0) == null) {

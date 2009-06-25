@@ -16,7 +16,12 @@
     Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.NETWORK_PROVIDER,mNetwork.isChecked());
   }
  else   if (preference == mGps) {
-    Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.GPS_PROVIDER,mGps.isChecked());
+    boolean enabled=mGps.isChecked();
+    Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.GPS_PROVIDER,enabled);
+    mAssistedGps.setEnabled(enabled);
+  }
+ else   if (preference == mAssistedGps) {
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.ASSISTED_GPS_ENABLED,mAssistedGps.isChecked() ? 1 : 0);
   }
  else   if (preference == mUseLocation) {
     if (mUseLocation.isChecked()) {

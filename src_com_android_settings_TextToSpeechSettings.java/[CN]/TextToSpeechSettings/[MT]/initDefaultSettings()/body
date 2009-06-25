@@ -11,7 +11,12 @@
   }
   mUseDefaultPref.setChecked(intVal == 1);
   mUseDefaultPref.setOnPreferenceChangeListener(this);
-  mDefaultEng=FALLBACK_TTS_DEFAULT_SYNTH;
+  String engine=Settings.Secure.getString(resolver,TTS_DEFAULT_SYNTH);
+  if (engine == null) {
+    engine=FALLBACK_TTS_DEFAULT_SYNTH;
+    Settings.Secure.putString(resolver,TTS_DEFAULT_SYNTH,engine);
+  }
+  mDefaultEng=engine;
   mDefaultRatePref=(ListPreference)findPreference(KEY_TTS_DEFAULT_RATE);
   try {
     intVal=Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
@@ -22,21 +27,11 @@
   }
   mDefaultRatePref.setValue(String.valueOf(intVal));
   mDefaultRatePref.setOnPreferenceChangeListener(this);
-  mDefaultPitchPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_PITCH);
-  try {
-    intVal=Settings.Secure.getInt(resolver,TTS_DEFAULT_PITCH);
-  }
- catch (  SettingNotFoundException e) {
-    intVal=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_PITCH;
-    Settings.Secure.putInt(resolver,TTS_DEFAULT_PITCH,intVal);
-  }
-  mDefaultPitchPref.setValue(String.valueOf(intVal));
-  mDefaultPitchPref.setOnPreferenceChangeListener(this);
   String language=null;
   String country=null;
   String variant=null;
   mDefaultLocPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
-  language=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_LANG);
+  language=Settings.Secure.getString(resolver,TTS_DEFAULT_LANG);
   if (language != null) {
     mDefaultLanguage=language;
   }
@@ -44,9 +39,9 @@
     language=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_LANG;
     country=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_COUNTRY;
     variant=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_VARIANT;
-    Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_LANG,language);
-    Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_COUNTRY,country);
-    Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_VARIANT,variant);
+    Settings.Secure.putString(resolver,TTS_DEFAULT_LANG,language);
+    Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,country);
+    Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,variant);
   }
   if (country == null) {
     country=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_COUNTRY);
@@ -56,8 +51,8 @@
  else {
       country=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_COUNTRY;
       variant=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_VARIANT;
-      Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_COUNTRY,country);
-      Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_VARIANT,variant);
+      Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,country);
+      Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,variant);
     }
   }
   if (variant == null) {
@@ -67,7 +62,7 @@
     }
  else {
       variant=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_VARIANT;
-      Settings.Secure.putString(resolver,KEY_TTS_DEFAULT_VARIANT,variant);
+      Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,variant);
     }
   }
   String localeString=new String(language);

@@ -3,7 +3,13 @@
     return false;
   }
   if (preference == mEnableAdb) {
-    Settings.Secure.putInt(getContentResolver(),Settings.Secure.ADB_ENABLED,mEnableAdb.isChecked() ? 1 : 0);
+    if (mEnableAdb.isChecked()) {
+      mOkClicked=false;
+      new AlertDialog.Builder(this).setMessage(getResources().getString(R.string.adb_warning_message)).setTitle(R.string.adb_warning_title).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(android.R.string.yes,this).setNegativeButton(android.R.string.no,this).show().setOnDismissListener(this);
+    }
+ else {
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.ADB_ENABLED,0);
+    }
   }
  else   if (preference == mKeepScreenOn) {
     Settings.System.putInt(getContentResolver(),Settings.System.STAY_ON_WHILE_PLUGGED_IN,mKeepScreenOn.isChecked() ? (BatteryManager.BATTERY_PLUGGED_AC | BatteryManager.BATTERY_PLUGGED_USB) : 0);

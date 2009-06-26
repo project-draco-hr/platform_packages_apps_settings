@@ -1,6 +1,6 @@
 {
   mVpnPreferenceMap=new LinkedHashMap<String,VpnPreference>();
-  mVpnProfileList=new ArrayList<VpnProfile>();
+  mVpnProfileList=Collections.synchronizedList(new ArrayList<VpnProfile>());
   mVpnListContainer.removeAll();
   File root=new File(PROFILES_ROOT);
   String[] dirs=root.list();

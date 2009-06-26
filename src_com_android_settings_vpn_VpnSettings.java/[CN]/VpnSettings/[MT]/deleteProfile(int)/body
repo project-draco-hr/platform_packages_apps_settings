@@ -1,7 +1,16 @@
 {
   if ((position < 0) || (position >= mVpnProfileList.size()))   return;
-  VpnProfile p=mVpnProfileList.remove(position);
-  VpnPreference pref=mVpnPreferenceMap.remove(p.getName());
-  mVpnListContainer.removePreference(pref);
-  removeProfileFromStorage(p);
+  DialogInterface.OnClickListener onClickListener=new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      dialog.dismiss();
+      if (which == OK_BUTTON) {
+        VpnProfile p=mVpnProfileList.remove(position);
+        VpnPreference pref=mVpnPreferenceMap.remove(p.getName());
+        mVpnListContainer.removePreference(pref);
+        removeProfileFromStorage(p);
+      }
+    }
+  }
+;
+  new AlertDialog.Builder(this).setTitle(android.R.string.dialog_alert_title).setMessage(R.string.vpn_confirm_profile_deletion).setPositiveButton(android.R.string.ok,onClickListener).setNegativeButton(R.string.vpn_no_button,onClickListener).show();
 }

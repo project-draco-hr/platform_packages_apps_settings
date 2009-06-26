@@ -2,11 +2,11 @@
   TextView usernameView=(TextView)d.findViewById(R.id.username_value);
   TextView passwordView=(TextView)d.findViewById(R.id.password_value);
   CheckBox saveUsername=(CheckBox)d.findViewById(R.id.save_username);
-  if (saveUsername.isChecked()) {
-    mProfile.setSavedUsername(usernameView.getText().toString());
+  try {
+    setSavedUsername(saveUsername.isChecked() ? usernameView.getText().toString() : "");
   }
- else {
-    mProfile.setSavedUsername("");
+ catch (  IOException e) {
+    Log.e(TAG,"setSavedUsername()",e);
   }
   connect(usernameView.getText().toString(),passwordView.getText().toString());
   passwordView.setText("");

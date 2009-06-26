@@ -1,0 +1,12 @@
+{
+  final L2tpProfile profile=(L2tpProfile)getProfile();
+  mSecretString=createSecretPreference(c,R.string.vpn_l2tp_secret_string_title,R.string.vpn_l2tp_secret,profile.getSecretString(),new Preference.OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference pref,    Object newValue){
+      profile.setSecretString((String)newValue);
+      setSecretSummary(mSecretString,R.string.vpn_l2tp_secret,(String)newValue);
+      return true;
+    }
+  }
+);
+  return mSecretString;
+}

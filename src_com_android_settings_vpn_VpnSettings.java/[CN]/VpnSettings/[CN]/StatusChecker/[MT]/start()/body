@@ -1,0 +1,14 @@
+{
+  mThreadCv.close();
+  new Thread(new Runnable(){
+    public void run(){
+      while (true) {
+        VpnProfile p=next();
+        if (p == null)         break;
+        getActor(p).checkStatus();
+      }
+      mThreadCv.open();
+    }
+  }
+).start();
+}

@@ -1,18 +1,12 @@
 {
-  EditTextPreference pref=mDomainSuffices=new EditTextPreference(c);
-  pref.setTitle(R.string.vpn_dns_search_list_title);
-  pref.setDialogTitle(R.string.vpn_dns_search_list_title);
-  pref.setPersistent(true);
-  pref.setText(mProfile.getDomainSuffices());
-  pref.setSummary(mProfile.getDomainSuffices());
-  pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
+  mDomainSuffices=createEditTextPreference(c,R.string.vpn_dns_search_list_title,R.string.vpn_dns_search_list,mProfile.getDomainSuffices(),new Preference.OnPreferenceChangeListener(){
     public boolean onPreferenceChange(    Preference pref,    Object newValue){
       String v=((String)newValue).trim();
       mProfile.setDomainSuffices(v);
-      pref.setSummary(checkNull(v,pref.getContext()));
+      setSummary(pref,R.string.vpn_dns_search_list,v,false);
       return true;
     }
   }
 );
-  return pref;
+  return mDomainSuffices;
 }

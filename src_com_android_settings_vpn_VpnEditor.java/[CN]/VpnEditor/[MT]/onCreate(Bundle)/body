@@ -1,16 +1,8 @@
 {
   super.onCreate(savedInstanceState);
+  VpnProfile p=(VpnProfile)((savedInstanceState == null) ? getIntent().getParcelableExtra(VpnSettings.KEY_VPN_PROFILE) : savedInstanceState.getParcelable(KEY_PROFILE));
+  mProfileEditor=getEditor(p);
+  mAddingProfile=TextUtils.isEmpty(p.getName());
   addPreferencesFromResource(R.xml.vpn_edit);
-  mName=(EditTextPreference)findPreference("vpn_name");
-  mName.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
-    public boolean onPreferenceChange(    Preference pref,    Object newValue){
-      setName((String)newValue);
-      return true;
-    }
-  }
-);
-  if (savedInstanceState == null) {
-    VpnProfile p=getIntent().getParcelableExtra(VpnSettings.KEY_VPN_PROFILE);
-    initViewFor(p);
-  }
+  initViewFor(p);
 }

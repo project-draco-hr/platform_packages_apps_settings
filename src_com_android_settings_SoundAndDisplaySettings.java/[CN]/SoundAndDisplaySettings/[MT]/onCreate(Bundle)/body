@@ -1,10 +1,14 @@
 {
   super.onCreate(savedInstanceState);
   ContentResolver resolver=getContentResolver();
+  int activePhoneType=TelephonyManager.getDefault().getPhoneType();
   mAudioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
   mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
   mMountService=IMountService.Stub.asInterface(ServiceManager.getService("mount"));
   addPreferencesFromResource(R.xml.sound_and_display_settings);
+  if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
+    getPreferenceScreen().removePreference(findPreference(KEY_EMERGENCY_TONE));
+  }
   mSilent=(CheckBoxPreference)findPreference(KEY_SILENT);
   mPlayMediaNotificationSounds=(CheckBoxPreference)findPreference(KEY_PLAY_MEDIA_NOTIFICATION_SOUNDS);
   mVibrate=(CheckBoxPreference)findPreference(KEY_VIBRATE);
@@ -24,4 +28,9 @@
   ListPreference screenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
   screenTimeoutPreference.setValue(String.valueOf(Settings.System.getInt(resolver,SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE)));
   screenTimeoutPreference.setOnPreferenceChangeListener(this);
+  if (TelephonyManager.PHONE_TYPE_CDMA == activePhoneType) {
+    ListPreference emergencyTonePreference=(ListPreference)findPreference(KEY_EMERGENCY_TONE);
+    emergencyTonePreference.setValue(String.valueOf(Settings.System.getInt(resolver,Settings.System.EMERGENCY_TONE,FALLBACK_EMERGENCY_TONE_VALUE)));
+    emergencyTonePreference.setOnPreferenceChangeListener(this);
+  }
 }

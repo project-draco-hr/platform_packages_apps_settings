@@ -1,0 +1,9 @@
+{
+  Context c=subpanel.getContext();
+  subpanel.addPreference(createSecretPreference(c));
+  subpanel.addPreference(createSecretStringPreference(c));
+  mSecretString.setEnabled(mSecret.isChecked());
+  L2tpProfile profile=(L2tpProfile)getProfile();
+  mOriginalSecret=profile.getSecretString();
+  mOriginalSecretEnabled=profile.isSecretEnabled();
+}

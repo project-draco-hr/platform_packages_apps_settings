@@ -1,0 +1,20 @@
+{
+  final L2tpProfile profile=(L2tpProfile)getProfile();
+  CheckBoxPreference secret=mSecret=new CheckBoxPreference(c);
+  boolean enabled=profile.isSecretEnabled();
+  setSecretTitle(secret,R.string.vpn_l2tp_secret,enabled);
+  secret.setChecked(enabled);
+  setSecretSummary(secret,enabled);
+  secret.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference pref,    Object newValue){
+      boolean enabled=(Boolean)newValue;
+      profile.setSecretEnabled(enabled);
+      mSecretString.setEnabled(enabled);
+      setSecretTitle(mSecret,R.string.vpn_l2tp_secret,enabled);
+      setSecretSummary(mSecret,enabled);
+      return true;
+    }
+  }
+);
+  return secret;
+}

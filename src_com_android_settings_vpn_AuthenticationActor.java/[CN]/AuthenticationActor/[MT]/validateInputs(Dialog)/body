@@ -2,10 +2,10 @@
   TextView usernameView=(TextView)d.findViewById(R.id.username_value);
   TextView passwordView=(TextView)d.findViewById(R.id.password_value);
   Context c=mContext;
-  if (Util.isNullOrEmpty(usernameView.getText().toString())) {
+  if (TextUtils.isEmpty(usernameView.getText().toString())) {
     return c.getString(R.string.vpn_username);
   }
- else   if (Util.isNullOrEmpty(passwordView.getText().toString())) {
+ else   if (TextUtils.isEmpty(passwordView.getText().toString())) {
     return c.getString(R.string.vpn_password);
   }
  else {

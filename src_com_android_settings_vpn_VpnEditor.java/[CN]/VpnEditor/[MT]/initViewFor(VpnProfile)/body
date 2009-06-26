@@ -1,9 +1,4 @@
 {
-  VpnProfileEditor editor=getEditor(profile);
-  VpnType type=profile.getType();
-  PreferenceGroup subsettings=getPreferenceScreen();
   setTitle(profile);
-  setName(profile.getName());
-  editor.loadPreferencesTo(subsettings);
-  mProfileEditor=editor;
+  mProfileEditor.loadPreferencesTo(getPreferenceScreen());
 }

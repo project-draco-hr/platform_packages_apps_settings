@@ -1,15 +1,9 @@
 {
-  String errorMsg=null;
-  if (Util.isNullOrEmpty(mName.getText())) {
-    errorMsg=getString(R.string.vpn_error_name_empty);
-  }
- else {
-    errorMsg=mProfileEditor.validate(this);
-  }
+  String errorMsg=mProfileEditor.validate();
   if (errorMsg != null) {
     Util.showErrorMessage(this,errorMsg);
     return false;
   }
-  setResult(mProfileEditor.getProfile());
+  setResult(getProfile());
   return true;
 }

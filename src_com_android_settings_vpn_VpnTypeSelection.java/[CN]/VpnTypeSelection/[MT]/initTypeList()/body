@@ -2,9 +2,11 @@
   PreferenceScreen root=getPreferenceScreen();
   for (  VpnType t : VpnManager.getSupportedVpnTypes()) {
     String displayName=t.getDisplayName();
-    mTypeMap.put(displayName,t);
+    String message=String.format(getString(R.string.vpn_edit_title_add),displayName);
+    mTypeMap.put(message,t);
     Preference pref=new Preference(this);
-    pref.setTitle(displayName);
+    pref.setTitle(message);
+    pref.setSummary(t.getDescription());
     root.addPreference(pref);
   }
 }

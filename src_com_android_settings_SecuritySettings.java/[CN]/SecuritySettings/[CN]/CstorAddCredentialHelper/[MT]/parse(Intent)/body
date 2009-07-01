@@ -1,0 +1,18 @@
+{
+  mTypeName=intent.getStringExtra(KEY_CSTOR_TYPE_NAME);
+  mItemList=new ArrayList<byte[]>();
+  mNamespaceList=new ArrayList<String>();
+  for (int i=0; ; i++) {
+    byte[] blob=intent.getByteArrayExtra(KEY_CSTOR_ITEM + i);
+    if (blob == null)     break;
+    mItemList.add(blob);
+    mNamespaceList.add(intent.getStringExtra(KEY_CSTOR_NAMESPACE + i));
+  }
+  StringBuilder sb=new StringBuilder();
+  for (int i=0; ; i++) {
+    String s=intent.getStringExtra(KEY_CSTOR_DESCRIPTION + i);
+    if (s == null)     break;
+    sb.append(s).append("<br>");
+  }
+  mDescription=sb.toString();
+}

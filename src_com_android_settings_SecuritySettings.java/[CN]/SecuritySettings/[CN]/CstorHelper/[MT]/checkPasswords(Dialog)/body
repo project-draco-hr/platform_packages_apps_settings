@@ -1,0 +1,35 @@
+{
+  hideError();
+  String oldPasswd=getText(R.id.cstor_old_password);
+  String newPasswd=getText(R.id.cstor_new_password);
+  String confirmPasswd=getText(R.id.cstor_confirm_password);
+  if ((mDialogId == CSTOR_CHANGE_PASSWORD_DIALOG) && TextUtils.isEmpty(oldPasswd)) {
+    showError(R.string.cstor_password_empty_error);
+    return false;
+  }
+  if (TextUtils.isEmpty(newPasswd) && TextUtils.isEmpty(confirmPasswd)) {
+    showError(R.string.cstor_passwords_empty_error);
+    return false;
+  }
+  if (!verifyPassword(newPasswd)) {
+    return false;
+  }
+ else   if (!newPasswd.equals(confirmPasswd)) {
+    showError(R.string.cstor_passwords_error);
+    return false;
+  }
+  if (mDialogId == CSTOR_CHANGE_PASSWORD_DIALOG) {
+    int count=changeCstorPassword(oldPasswd,newPasswd);
+    if (count > 0) {
+      showResetWarning(count);
+      return false;
+    }
+ else {
+      return true;
+    }
+  }
+ else {
+    initCstor(newPasswd);
+    return true;
+  }
+}

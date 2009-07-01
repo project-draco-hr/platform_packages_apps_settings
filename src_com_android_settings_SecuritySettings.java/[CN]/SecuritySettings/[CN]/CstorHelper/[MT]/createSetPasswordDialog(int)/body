@@ -1,0 +1,18 @@
+{
+  mDialogId=id;
+  mView=View.inflate(SecuritySettings.this,R.layout.cstor_set_password_dialog_view,null);
+  hideError();
+switch (id) {
+case CSTOR_INIT_DIALOG:
+    mView.findViewById(R.id.cstor_old_password_block).setVisibility(View.GONE);
+  break;
+case CSTOR_CHANGE_PASSWORD_DIALOG:
+mView.findViewById(R.id.cstor_first_time_hint).setVisibility(View.GONE);
+break;
+default :
+throw new RuntimeException("Unknown dialog id: " + mDialogId);
+}
+Dialog d=new AlertDialog.Builder(SecuritySettings.this).setView(mView).setTitle(R.string.cstor_set_passwd_dialog_title).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).setCancelable(false).create();
+d.setOnDismissListener(this);
+return d;
+}

@@ -1,0 +1,15 @@
+{
+switch (id) {
+case CSTOR_INIT_DIALOG:
+case CSTOR_CHANGE_PASSWORD_DIALOG:
+    return mCstorHelper.createSetPasswordDialog(id);
+case CSTOR_UNLOCK_DIALOG:
+  return mCstorHelper.createUnlockDialog();
+case CSTOR_RESET_DIALOG:
+return mCstorHelper.createResetDialog();
+case CSTOR_NAME_CREDENTIAL_DIALOG:
+return mCstorHelper.createNameCredentialDialog();
+default :
+return null;
+}
+}

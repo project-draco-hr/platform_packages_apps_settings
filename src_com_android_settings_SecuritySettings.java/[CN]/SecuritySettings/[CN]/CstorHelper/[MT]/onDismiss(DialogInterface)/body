@@ -1,0 +1,24 @@
+{
+  if (!mConfirm) {
+    mConfirm=true;
+    showDialog(mDialogId);
+  }
+ else {
+    removeDialog(mDialogId);
+    if (mCstorAddCredentialHelper != null) {
+      if (!isCstorInitialized()) {
+        showDialog(CSTOR_INIT_DIALOG);
+      }
+ else       if (!isCstorUnlocked()) {
+        showDialog(CSTOR_UNLOCK_DIALOG);
+      }
+ else {
+        addCredential();
+        finish();
+      }
+    }
+ else     if (mSpecialIntent != null) {
+      finish();
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  final L2tpIpsecPskProfile profile=(L2tpIpsecPskProfile)getProfile();
+  mPresharedKey=createSecretPreference(c,R.string.vpn_ipsec_presharedkey_title,R.string.vpn_ipsec_presharedkey,profile.getPresharedKey(),new Preference.OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference pref,    Object newValue){
+      profile.setPresharedKey((String)newValue);
+      setSecretSummary(mPresharedKey,R.string.vpn_ipsec_presharedkey,(String)newValue);
+      return true;
+    }
+  }
+);
+  return mPresharedKey;
+}

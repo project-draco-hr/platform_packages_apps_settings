@@ -45,7 +45,7 @@
   }
   if (country == null) {
     country=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_COUNTRY);
-    if (country.compareTo("null") != 0) {
+    if (country != null) {
       mDefaultCountry=country;
     }
  else {
@@ -57,7 +57,7 @@
   }
   if (variant == null) {
     variant=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_VARIANT);
-    if (variant.compareTo("null") != 0) {
+    if (variant != null) {
       mDefaultLocVariant=variant;
     }
  else {

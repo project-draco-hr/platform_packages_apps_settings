@@ -1,4 +1,5 @@
 {
-  String message=String.format(getString(R.string.cstor_is_added),mCstorAddCredentialHelper.getName());
+  String formatString=mCstorAddCredentialHelper.saveToStorage() < 0 ? getString(R.string.cstor_add_error) : getString(R.string.cstor_is_added);
+  String message=String.format(formatString,mCstorAddCredentialHelper.getName());
   Toast.makeText(SecuritySettings.this,message,Toast.LENGTH_SHORT).show();
 }

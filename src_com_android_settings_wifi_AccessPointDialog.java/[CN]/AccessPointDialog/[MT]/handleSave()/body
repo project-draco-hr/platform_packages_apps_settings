@@ -4,51 +4,43 @@
   String password=mPasswordEdit.getText().toString();
   mState.setSsid(ssid);
   int securityType=getSecurityTypeFromSpinner();
-  if (!TextUtils.isEmpty(password)) {
+  if (!TextUtils.isEmpty(password) && (securityType != SECURITY_WEP)) {
+    mState.setPassword(password);
+  }
 switch (securityType) {
 case SECURITY_WPA_PERSONAL:
 {
-        mState.setSecurity(AccessPointState.WPA);
-        mState.setPassword(password);
-        break;
-      }
-case SECURITY_WPA2_PERSONAL:
-{
-      mState.setSecurity(AccessPointState.WPA2);
-      mState.setPassword(password);
+      mState.setSecurity(AccessPointState.WPA);
       break;
     }
-case SECURITY_AUTO:
+case SECURITY_WPA2_PERSONAL:
 {
-    mState.setPassword(password);
+    mState.setSecurity(AccessPointState.WPA2);
     break;
   }
-case SECURITY_WEP:
+case SECURITY_AUTO:
 {
-  mState.setSecurity(AccessPointState.WEP);
-  mState.setPassword(password,WEP_TYPE_VALUES[mWepTypeSpinner.getSelectedItemPosition()]);
   break;
 }
+case SECURITY_WEP:
+{
+mState.setSecurity(AccessPointState.WEP);
+mState.setPassword(password,WEP_TYPE_VALUES[mWepTypeSpinner.getSelectedItemPosition()]);
+break;
 }
-}
- else {
-switch (securityType) {
 case SECURITY_WPA_EAP:
 mState.setSecurity(AccessPointState.WPA_EAP);
 break;
 case SECURITY_IEEE8021X:
 mState.setSecurity(AccessPointState.IEEE8021X);
 break;
+case SECURITY_NONE:
 default :
 mState.setSecurity(AccessPointState.OPEN);
 break;
 }
-if (isEnterprise() && !mState.configured) {
+if (mState.isEnterprise() && !mState.configured) {
 updateEnterpriseFields(AccessPointState.WPA_EAP.equals(mState.security) ? SECURITY_WPA_EAP : SECURITY_IEEE8021X);
-}
-}
-if (securityType == SECURITY_NONE) {
-mState.setSecurity(AccessPointState.OPEN);
 }
 if (!mWifiLayer.saveNetwork(mState)) {
 return;

@@ -48,14 +48,17 @@
  else   if (security.equals(OPEN)) {
     config.allowedKeyManagement.set(KeyMgmt.NONE);
   }
- else   if (security.equals(WPA_EAP)) {
+ else   if (security.equals(WPA_EAP) || security.equals(IEEE8021X)) {
     config.allowedGroupCiphers.set(GroupCipher.TKIP);
     config.allowedGroupCiphers.set(GroupCipher.CCMP);
-    config.allowedKeyManagement.set(KeyMgmt.WPA_EAP);
-  }
- else   if (security.equals(IEEE8021X)) {
-    config.allowedGroupCiphers.set(GroupCipher.TKIP);
-    config.allowedGroupCiphers.set(GroupCipher.CCMP);
-    config.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
+    if (security.equals(WPA_EAP)) {
+      config.allowedKeyManagement.set(KeyMgmt.WPA_EAP);
+    }
+ else {
+      config.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
+    }
+    if (!TextUtils.isEmpty(mPassword)) {
+      config.password=convertToQuotedString(mPassword);
+    }
   }
 }

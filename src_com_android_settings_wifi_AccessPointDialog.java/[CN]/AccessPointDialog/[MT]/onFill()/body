@@ -19,7 +19,9 @@
     if (!TextUtils.isEmpty(ssid)) {
       mSsidEdit.setText(ssid);
     }
-    mPasswordEdit.setHint(R.string.wifi_password_unchanged);
+    if (mState.configured) {
+      mPasswordEdit.setHint(R.string.wifi_password_unchanged);
+    }
   }
   updatePasswordCaption(mState.security);
 }

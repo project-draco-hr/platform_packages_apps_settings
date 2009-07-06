@@ -1,5 +1,5 @@
 {
-  int index=mIndexOfEditedProfile;
+  final int index=mIndexOfEditedProfile;
   mIndexOfEditedProfile=-1;
   if ((resultCode == RESULT_CANCELED) || (data == null)) {
     Log.d(TAG,"no result returned by editor");
@@ -24,6 +24,16 @@
       }
 );
       return;
+    }
+    if (needKeystoreToSave(p)) {
+      Runnable action=new Runnable(){
+        public void run(){
+          mIndexOfEditedProfile=index;
+          onActivityResult(requestCode,resultCode,data);
+        }
+      }
+;
+      if (!unlockKeystore(p,action))       return;
     }
     try {
       if ((index < 0) || (index >= mVpnProfileList.size())) {

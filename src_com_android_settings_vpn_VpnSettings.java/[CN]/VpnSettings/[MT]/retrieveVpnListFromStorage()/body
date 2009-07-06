@@ -5,7 +5,6 @@
   File root=new File(PROFILES_ROOT);
   String[] dirs=root.list();
   if (dirs == null)   return;
-  Arrays.sort(dirs);
   for (  String dir : dirs) {
     File f=new File(new File(root,dir),PROFILE_OBJ_FILE);
     if (!f.exists())     continue;
@@ -14,11 +13,20 @@
       if (p == null)       continue;
       if (!checkIdConsistency(dir,p))       continue;
       mVpnProfileList.add(p);
-      addPreferenceFor(p);
     }
  catch (    IOException e) {
       Log.e(TAG,"retrieveVpnListFromStorage()",e);
     }
   }
+  Collections.sort(mVpnProfileList,new Comparator<VpnProfile>(){
+    public int compare(    VpnProfile p1,    VpnProfile p2){
+      return p1.getName().compareTo(p2.getName());
+    }
+    public boolean equals(    VpnProfile p){
+      return false;
+    }
+  }
+);
+  for (  VpnProfile p : mVpnProfileList)   addPreferenceFor(p);
   disableProfilePreferencesIfOneActive();
 }

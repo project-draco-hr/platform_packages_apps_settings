@@ -2,16 +2,8 @@
   VpnPreference pref=mVpnPreferenceMap.get(p.getName());
 switch (p.getState()) {
 case IDLE:
-    mConnectingActor=getActor(p);
-  if (mConnectingActor.isConnectDialogNeeded()) {
-    removeDialog(DIALOG_CONNECT);
-    showDialog(DIALOG_CONNECT);
-  }
- else {
-    changeState(p,VpnState.CONNECTING);
-    mConnectingActor.connect(null);
-  }
-break;
+    connect(p);
+  break;
 case CONNECTING:
 break;
 case CONNECTED:

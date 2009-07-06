@@ -1,0 +1,20 @@
+{
+  if (needKeystoreToConnect(p)) {
+    Runnable action=new Runnable(){
+      public void run(){
+        connect(p);
+      }
+    }
+;
+    if (!unlockKeystore(p,action))     return;
+  }
+  mConnectingActor=getActor(p);
+  if (mConnectingActor.isConnectDialogNeeded()) {
+    removeDialog(DIALOG_CONNECT);
+    showDialog(DIALOG_CONNECT);
+  }
+ else {
+    changeState(p,VpnState.CONNECTING);
+    mConnectingActor.connect(null);
+  }
+}

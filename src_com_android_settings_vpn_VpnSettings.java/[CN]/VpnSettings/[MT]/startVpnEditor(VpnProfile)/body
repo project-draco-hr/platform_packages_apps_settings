@@ -1,4 +1,13 @@
 {
+  if (needKeystoreToEdit(profile)) {
+    Runnable action=new Runnable(){
+      public void run(){
+        startVpnEditor(profile);
+      }
+    }
+;
+    if (!unlockKeystore(profile,action))     return;
+  }
   Intent intent=new Intent(this,VpnEditor.class);
   intent.putExtra(KEY_VPN_PROFILE,(Parcelable)profile);
   startActivityForResult(intent,REQUEST_ADD_OR_EDIT_PROFILE);

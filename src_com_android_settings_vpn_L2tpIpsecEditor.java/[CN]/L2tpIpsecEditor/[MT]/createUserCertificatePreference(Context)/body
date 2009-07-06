@@ -1,5 +1,5 @@
 {
-  mUserCertificate=createListPreference(c,R.string.vpn_user_certificate_title,mProfile.getUserCertificate(),Keystore.getInstance().getAllUserCertificateKeys(),new Preference.OnPreferenceChangeListener(){
+  mUserCertificate=createListPreference(c,R.string.vpn_user_certificate_title,mProfile.getUserCertificate(),CertTool.getInstance().getAllUserCertificateKeys(),new Preference.OnPreferenceChangeListener(){
     public boolean onPreferenceChange(    Preference pref,    Object newValue){
       mProfile.setUserCertificate((String)newValue);
       setSummary(pref,R.string.vpn_user_certificate,(String)newValue);

@@ -1,0 +1,11 @@
+{
+switch (p.getType()) {
+case L2TP_IPSEC:
+case L2TP_IPSEC_PSK:
+    return true;
+case L2TP:
+  return ((L2tpProfile)p).isSecretEnabled();
+default :
+return false;
+}
+}

@@ -1,4 +1,9 @@
 {
   super.onResume();
   mStatusChecker.onResume();
+  if ((mUnlockAction != null) && isKeystoreUnlocked()) {
+    Runnable action=mUnlockAction;
+    mUnlockAction=null;
+    runOnUiThread(action);
+  }
 }

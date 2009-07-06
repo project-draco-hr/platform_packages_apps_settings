@@ -2,6 +2,9 @@
   mDialogId=id;
   mView=View.inflate(SecuritySettings.this,R.layout.cstor_set_password_dialog_view,null);
   hideError();
+  if ((mSpecialIntent != null) || (mCstorAddCredentialHelper != null)) {
+    setText(R.id.cstor_first_time_hint,R.string.cstor_first_time_hint_from_action);
+  }
 switch (id) {
 case CSTOR_INIT_DIALOG:
     mView.findViewById(R.id.cstor_old_password_block).setVisibility(View.GONE);

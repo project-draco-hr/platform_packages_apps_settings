@@ -5,6 +5,8 @@
   if (pref.mProfile != oldProfile) {
     throw new RuntimeException("inconsistent state!");
   }
+  p.setId(oldProfile.getId());
+  processSecrets(p);
   if (Util.copyFiles(getProfileDir(oldProfile),getProfileDir(p))) {
     removeProfileFromStorage(oldProfile);
   }

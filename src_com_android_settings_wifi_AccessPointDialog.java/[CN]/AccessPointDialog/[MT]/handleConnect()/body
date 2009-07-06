@@ -2,13 +2,11 @@
   if (!replaceStateWithWifiLayerInstance()) {
     Log.w(TAG,"Assuming connecting to a new network.");
   }
-  if (isEnterprise()) {
+  if (mState.isEnterprise()) {
     if (!mState.configured) {
       updateEnterpriseFields(AccessPointState.WPA_EAP.equals(mState.security) ? SECURITY_WPA_EAP : SECURITY_IEEE8021X);
     }
   }
- else {
-    updatePasswordField();
-  }
+  updatePasswordField();
   mWifiLayer.connectToNetwork(mState);
 }

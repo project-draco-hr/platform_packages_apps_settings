@@ -19,7 +19,7 @@
  else   if (mMode == MODE_INFO) {
     mTable=(ViewGroup)view.findViewById(R.id.table);
   }
-  if (mMode == MODE_CONFIGURE || (isEnterprise() && !mState.configured)) {
+  if (mMode == MODE_CONFIGURE || (mState.isEnterprise() && !mState.configured)) {
     setEnterpriseFields(view);
     mEapSpinner.setSelection(getSelectionIndex(R.array.wifi_eap_entries,mState.getEap()));
     mClientCertSpinner.setSelection(getSelectionIndex(getAllUserCertificateKeys(),mState.getEnterpriseField(AccessPointState.CLIENT_CERT)));

@@ -10,12 +10,12 @@
   Spinner spinner=mClientCertSpinner;
   int index=spinner.getSelectedItemPosition();
   if (index != (spinner.getCount() - 1)) {
-    String key=getAllUserCertificateKeys()[index];
-    value=mKeystore.getUserCertificate(key);
+    String key=(String)spinner.getSelectedItem();
+    value=mCertTool.getUserCertificate(key);
     if (!TextUtils.isEmpty(value)) {
       mState.setEnterpriseField(AccessPointState.CLIENT_CERT,value);
     }
-    value=mKeystore.getUserPrivateKey(key);
+    value=mCertTool.getUserPrivateKey(key);
     if (!TextUtils.isEmpty(value)) {
       mState.setEnterpriseField(AccessPointState.PRIVATE_KEY,value);
     }
@@ -23,8 +23,8 @@
   spinner=mCaCertSpinner;
   index=spinner.getSelectedItemPosition();
   if (index != (spinner.getCount() - 1)) {
-    String key=getAllCaCertificateKeys()[index];
-    value=mKeystore.getCaCertificate(key);
+    String key=(String)spinner.getSelectedItem();
+    value=mCertTool.getCaCertificate(key);
     if (!TextUtils.isEmpty(value)) {
       mState.setEnterpriseField(AccessPointState.CA_CERT,value);
     }

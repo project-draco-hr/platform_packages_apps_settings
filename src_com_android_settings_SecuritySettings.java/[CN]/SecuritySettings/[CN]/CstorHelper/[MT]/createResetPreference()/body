@@ -1,0 +1,15 @@
+{
+  Preference pref=new Preference(SecuritySettings.this);
+  pref.setTitle(R.string.cstor_reset_title);
+  pref.setSummary(R.string.cstor_reset_summary);
+  pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
+    public boolean onPreferenceClick(    Preference pref){
+      showDialog(CSTOR_RESET_DIALOG);
+      return true;
+    }
+  }
+);
+  pref.setEnabled(isCstorInitialized());
+  mResetButton=pref;
+  return pref;
+}

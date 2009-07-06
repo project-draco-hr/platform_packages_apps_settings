@@ -1,0 +1,8 @@
+{
+  int ret=mKeystore.unlock(passwd);
+  if (ret == -1)   resetCstor();
+  if (ret == 0) {
+    Toast.makeText(SecuritySettings.this,R.string.cstor_is_enabled,Toast.LENGTH_SHORT).show();
+  }
+  return ret;
+}

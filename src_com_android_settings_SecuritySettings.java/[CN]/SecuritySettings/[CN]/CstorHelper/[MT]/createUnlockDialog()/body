@@ -1,0 +1,8 @@
+{
+  mDialogId=CSTOR_UNLOCK_DIALOG;
+  mView=View.inflate(SecuritySettings.this,R.layout.cstor_unlock_dialog_view,null);
+  hideError();
+  Dialog d=new AlertDialog.Builder(SecuritySettings.this).setView(mView).setTitle(R.string.cstor_access_dialog_title).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).setCancelable(false).create();
+  d.setOnDismissListener(this);
+  return d;
+}

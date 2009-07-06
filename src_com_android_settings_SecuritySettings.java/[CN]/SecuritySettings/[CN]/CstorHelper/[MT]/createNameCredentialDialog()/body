@@ -1,0 +1,11 @@
+{
+  mDialogId=CSTOR_NAME_CREDENTIAL_DIALOG;
+  mView=View.inflate(SecuritySettings.this,R.layout.cstor_name_credential_dialog_view,null);
+  hideError();
+  setText(R.id.cstor_credential_name_title,getString(R.string.cstor_credential_name));
+  setText(R.id.cstor_credential_info_title,getString(R.string.cstor_credential_info));
+  setText(R.id.cstor_credential_info,mCstorAddCredentialHelper.getDescription().toString());
+  Dialog d=new AlertDialog.Builder(SecuritySettings.this).setView(mView).setTitle(R.string.cstor_name_credential_dialog_title).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).setCancelable(false).create();
+  d.setOnDismissListener(this);
+  return d;
+}

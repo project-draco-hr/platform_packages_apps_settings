@@ -13,11 +13,11 @@
     String key=(String)spinner.getSelectedItem();
     value=mCertTool.getUserCertificate(key);
     if (!TextUtils.isEmpty(value)) {
-      mState.setEnterpriseField(AccessPointState.CLIENT_CERT,value);
+      mState.setEnterpriseField(AccessPointState.CLIENT_CERT,BLOB_HEADER + value);
     }
     value=mCertTool.getUserPrivateKey(key);
     if (!TextUtils.isEmpty(value)) {
-      mState.setEnterpriseField(AccessPointState.PRIVATE_KEY,value);
+      mState.setEnterpriseField(AccessPointState.PRIVATE_KEY,BLOB_HEADER + value);
     }
   }
   spinner=mCaCertSpinner;
@@ -26,7 +26,7 @@
     String key=(String)spinner.getSelectedItem();
     value=mCertTool.getCaCertificate(key);
     if (!TextUtils.isEmpty(value)) {
-      mState.setEnterpriseField(AccessPointState.CA_CERT,value);
+      mState.setEnterpriseField(AccessPointState.CA_CERT,BLOB_HEADER + value);
     }
   }
 switch (securityType) {

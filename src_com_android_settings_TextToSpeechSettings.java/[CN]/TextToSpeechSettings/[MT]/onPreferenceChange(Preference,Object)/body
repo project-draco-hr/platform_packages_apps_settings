@@ -9,7 +9,7 @@
     try {
       Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_RATE,value);
       if (mTts != null) {
-        mTts.setSpeechRate(value);
+        mTts.setSpeechRate((float)(value / 100.0f));
       }
       Log.i(TAG,"TTS default rate is " + value);
     }

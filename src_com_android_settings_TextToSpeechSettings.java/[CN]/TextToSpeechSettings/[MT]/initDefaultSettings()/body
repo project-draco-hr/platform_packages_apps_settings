@@ -32,50 +32,34 @@
   String variant=null;
   mDefaultLocPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
   language=Settings.Secure.getString(resolver,TTS_DEFAULT_LANG);
-  if (language != null) {
-    mDefaultLanguage=language;
-  }
- else {
-    language=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_LANG;
-    country=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_COUNTRY;
-    variant=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_VARIANT;
+  if (language == null) {
+    Locale currentLocale=Locale.getDefault();
+    language=currentLocale.getISO3Language();
+    country=currentLocale.getISO3Country();
+    variant=currentLocale.getVariant();
     Settings.Secure.putString(resolver,TTS_DEFAULT_LANG,language);
     Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,country);
     Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,variant);
   }
+  mDefaultLanguage=language;
   if (country == null) {
     country=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_COUNTRY);
-    if (country != null) {
-      mDefaultCountry=country;
-    }
- else {
+    if (country == null) {
       country=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_COUNTRY;
       variant=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_VARIANT;
       Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,country);
       Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,variant);
     }
   }
+  mDefaultCountry=country;
   if (variant == null) {
     variant=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_VARIANT);
-    if (variant != null) {
-      mDefaultLocVariant=variant;
-    }
- else {
+    if (variant == null) {
       variant=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_VARIANT;
       Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,variant);
     }
   }
-  String localeString=new String(language);
-  if (country.compareTo("") != 0) {
-    localeString+=LOCALE_DELIMITER + country;
-  }
- else {
-    localeString+=LOCALE_DELIMITER + " ";
-  }
-  if (variant.compareTo("") != 0) {
-    localeString+=LOCALE_DELIMITER + variant;
-  }
-  Log.v(TAG,"In initDefaultSettings: localeString=" + localeString);
-  mDefaultLocPref.setValue(localeString);
+  mDefaultLocVariant=variant;
+  setDefaultLocalePref(language,country,variant);
   mDefaultLocPref.setOnPreferenceChangeListener(this);
 }

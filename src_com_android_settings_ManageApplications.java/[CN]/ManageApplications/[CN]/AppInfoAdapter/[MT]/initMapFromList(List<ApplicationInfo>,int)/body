@@ -1,33 +1,27 @@
 {
-  if (appList == null) {
+  boolean notify=false;
+  List<ApplicationInfo> appList=null;
+  if (pAppList == null) {
     appList=mAppList;
   }
  else {
-    mAppList=appList;
+    mAppList=pAppList;
+    appList=pAppList;
+    notify=true;
   }
-  if (mAppPropCache != null) {
-    int sortOrder=mSortOrder;
-    mAppPropMap=mAppPropCache;
-    sortAppList(mAppList,sortOrder);
-  }
- else {
-    mAppPropMap=new TreeMap<String,AppInfo>();
-  }
-  mAlphaComparator=null;
-  mSizeComparator=null;
   mAppLocalList=getFilteredApps(appList,filterOption);
   int imax=appList.size();
   for (int i=0; i < imax; i++) {
     ApplicationInfo info=appList.get(i);
-    AppInfo aInfo=mAppPropMap.get(info.packageName);
+    AppInfo aInfo=mCache.getEntry(info.packageName);
     if (aInfo == null) {
-      aInfo=new AppInfo(info.packageName,i,info.packageName,mDefaultAppIcon,null);
+      aInfo=new AppInfo(info.packageName,i,info.packageName,-1,mComputingSizeStr);
       if (localLOGV)       Log.i(TAG,"Creating entry pkg:" + info.packageName + " to map");
+      mCache.addEntry(aInfo);
     }
- else {
-      aInfo.index=i;
-      if (localLOGV)       Log.i(TAG,"Adding pkg:" + info.packageName + " to map");
-    }
-    mAppPropMap.put(info.packageName,aInfo);
+  }
+  sortListInner(mSortOrder);
+  if (notify) {
+    notifyDataSetChanged();
   }
 }

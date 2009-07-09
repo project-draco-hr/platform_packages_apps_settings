@@ -1,46 +1,29 @@
 {
   if (pkgNames == null) {
-    Log.w(TAG,"Removing null pkg list from List Adapter");
     return;
   }
-  removePkgListBase(pkgNames);
-  int imax=mAppLocalList.size();
+  if (pkgNames.size() <= 0) {
+    return;
+  }
   boolean found=false;
-  ApplicationInfo info;
-  int i, k;
-  String pkgName;
-  int kmax=pkgNames.size();
-  if (kmax <= 0) {
-    Log.w(TAG,"Removing empty pkg list from List Adapter");
-    return;
-  }
-  int idxArr[]=new int[kmax];
-  for (k=0; k < kmax; k++) {
-    idxArr[k]=-1;
-  }
-  for (i=0; i < imax; i++) {
-    info=mAppLocalList.get(i);
-    for (k=0; k < kmax; k++) {
-      pkgName=pkgNames.get(k);
-      if (info.packageName.equalsIgnoreCase(pkgName)) {
-        idxArr[k]=i;
+  for (  String pkg : pkgNames) {
+    removePkgBase(pkg);
+    if (localLOGV)     Log.i(TAG,"Removing " + pkg + " from cache");
+    mCache.removeEntry(pkg);
+    int i=0;
+    for (    ApplicationInfo info : mAppLocalList) {
+      if (info.packageName.equalsIgnoreCase(pkg)) {
+        mAppLocalList.remove(i);
+        if (localLOGV)         Log.i(TAG,"Removing " + pkg + " from local list");
         found=true;
         break;
       }
+      i++;
     }
-  }
-  Arrays.sort(idxArr);
-  for (k=kmax - 1; k >= 0; k--) {
-    if (idxArr[k] == -1) {
-      break;
-    }
-    info=mAppLocalList.get(idxArr[k]);
-    mAppLocalList.remove(idxArr[k]);
-    mAppPropMap.remove(info.packageName);
-    if (localLOGV)     Log.i(TAG,"Removed pkg:" + info.packageName + " from display list");
   }
   if (found) {
     adjustIndex();
+    if (localLOGV)     Log.i(TAG,"adjusting index and notifying list view");
     notifyDataSetChanged();
   }
 }

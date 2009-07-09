@@ -1,0 +1,14 @@
+{
+  AppInfo ainfo=mCache.getEntry(a.packageName);
+  AppInfo binfo=mCache.getEntry(b.packageName);
+  long atotal=ainfo.size;
+  long btotal=binfo.size;
+  long ret=atotal - btotal;
+  if (ret < 0) {
+    return 1;
+  }
+  if (ret == 0) {
+    return 0;
+  }
+  return -1;
+}

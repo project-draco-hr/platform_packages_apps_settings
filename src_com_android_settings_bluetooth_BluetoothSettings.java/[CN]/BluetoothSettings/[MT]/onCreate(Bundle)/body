@@ -2,10 +2,25 @@
   super.onCreate(savedInstanceState);
   mLocalManager=LocalBluetoothManager.getInstance(this);
   if (mLocalManager == null)   finish();
-  addPreferencesFromResource(R.xml.bluetooth_settings);
-  mEnabler=new BluetoothEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_CHECKBOX));
-  mDiscoverableEnabler=new BluetoothDiscoverableEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_DISCOVERABLE));
-  mNamePreference=(BluetoothNamePreference)findPreference(KEY_BT_NAME);
+  mFilterType=BluetoothDevice.DEVICE_PICKER_FILTER_TYPE_ALL;
+  Intent intent=getIntent();
+  String action=intent.getAction();
+  if (action.equals(BluetoothIntent.DEVICE_PICKER_DEVICE_PICKER)) {
+    mScreenType=SCREEN_TYPE_DEVICEPICKER;
+    mNeedAuth=intent.getBooleanExtra(BluetoothIntent.DEVICE_PICKER_NEED_AUTH,false);
+    mFilterType=intent.getIntExtra(BluetoothIntent.DEVICE_PICKER_FILTER_TYPE,BluetoothDevice.DEVICE_PICKER_FILTER_TYPE_ALL);
+    mLaunchPackage=intent.getStringExtra(BluetoothIntent.DEVICE_PICKER_LAUNCH_PACKAGE);
+    mLaunchClass=intent.getStringExtra(BluetoothIntent.DEVICE_PICKER_LAUNCH_CLASS);
+    setTitle(getString(R.string.device_picker));
+    addPreferencesFromResource(R.xml.device_picker);
+  }
+ else {
+    addPreferencesFromResource(R.xml.bluetooth_settings);
+    mEnabler=new BluetoothEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_CHECKBOX));
+    mDiscoverableEnabler=new BluetoothDiscoverableEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_DISCOVERABLE));
+    mNamePreference=(BluetoothNamePreference)findPreference(KEY_BT_NAME);
+    mDeviceList=(ProgressCategory)findPreference(KEY_BT_DEVICE_LIST);
+  }
   mDeviceList=(ProgressCategory)findPreference(KEY_BT_DEVICE_LIST);
   registerForContextMenu(getListView());
 }

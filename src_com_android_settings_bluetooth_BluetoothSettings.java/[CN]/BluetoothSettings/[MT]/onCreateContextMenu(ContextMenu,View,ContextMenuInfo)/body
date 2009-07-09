@@ -1,4 +1,7 @@
 {
+  if (mScreenType != SCREEN_TYPE_SETTINGS) {
+    return;
+  }
   CachedBluetoothDevice cachedDevice=getDeviceFromMenuInfo(menuInfo);
   if (cachedDevice == null)   return;
   cachedDevice.onCreateContextMenu(menu);

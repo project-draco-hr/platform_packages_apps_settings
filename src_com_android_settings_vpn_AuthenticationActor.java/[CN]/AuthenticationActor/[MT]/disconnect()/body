@@ -10,7 +10,6 @@
       }
  finally {
         mContext.unbindService(this);
-        broadcastConnectivity(VpnState.IDLE);
       }
     }
     public void onServiceDisconnected(    ComponentName className){
@@ -18,5 +17,7 @@
     }
   }
 ;
-  bindService(c);
+  if (!bindService(c)) {
+    checkStatus();
+  }
 }

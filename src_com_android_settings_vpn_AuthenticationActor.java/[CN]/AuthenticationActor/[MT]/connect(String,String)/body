@@ -2,23 +2,21 @@
   mVpnManager.startVpnService();
   ServiceConnection c=new ServiceConnection(){
     public void onServiceConnected(    ComponentName className,    IBinder service){
-      boolean success=false;
       try {
-        success=IVpnService.Stub.asInterface(service).connect(mProfile,username,password);
-      }
- catch (      Throwable e) {
-        Log.e(TAG,"connect()",e);
-        checkStatus();
-      }
- finally {
-        mContext.unbindService(this);
+        boolean success=IVpnService.Stub.asInterface(service).connect(mProfile,username,password);
         if (!success) {
           Log.d(TAG,"~~~~~~ connect() failed!");
-          broadcastConnectivity(VpnState.IDLE);
         }
  else {
           Log.d(TAG,"~~~~~~ connect() succeeded!");
         }
+      }
+ catch (      Throwable e) {
+        Log.e(TAG,"connect()",e);
+        broadcastConnectivity(VpnState.IDLE,VpnManager.VPN_ERROR_CONNECTION_FAILED);
+      }
+ finally {
+        mContext.unbindService(this);
       }
     }
     public void onServiceDisconnected(    ComponentName className){
@@ -26,5 +24,7 @@
     }
   }
 ;
-  if (!bindService(c))   broadcastConnectivity(VpnState.IDLE);
+  if (!bindService(c)) {
+    broadcastConnectivity(VpnState.IDLE,VpnManager.VPN_ERROR_CONNECTION_FAILED);
+  }
 }

@@ -13,10 +13,10 @@
   registerForContextMenu(getListView());
   mVpnManager.registerConnectivityReceiver(mConnectivityReceiver);
   String profileName=(savedInstanceState == null) ? null : savedInstanceState.getString(STATE_ACTIVE_ACTOR);
-  mStateSaved=!TextUtils.isEmpty(profileName);
   retrieveVpnListFromStorage();
-  if (mStateSaved) {
-    mConnectingActor=getActor(mVpnPreferenceMap.get(profileName).mProfile);
+  if (!TextUtils.isEmpty(profileName)) {
+    mActiveProfile=mVpnPreferenceMap.get(profileName).mProfile;
+    mConnectingActor=getActor(mActiveProfile);
   }
  else {
     checkVpnConnectionStatusInBackground();

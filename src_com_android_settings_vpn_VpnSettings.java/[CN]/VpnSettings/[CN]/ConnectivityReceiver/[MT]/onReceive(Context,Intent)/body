@@ -6,9 +6,10 @@
     Log.e(TAG,"received null connectivity state");
     return;
   }
+  mConnectingErrorCode=intent.getIntExtra(VpnManager.BROADCAST_ERROR_CODE,NO_ERROR);
   VpnPreference pref=mVpnPreferenceMap.get(profileName);
   if (pref != null) {
-    Log.d(TAG,"received connectivity: " + profileName + ": connected? "+ s);
+    Log.d(TAG,"received connectivity: " + profileName + ": connected? "+ s+ "   err="+ mConnectingErrorCode);
     changeState(pref.mProfile,s);
   }
  else {

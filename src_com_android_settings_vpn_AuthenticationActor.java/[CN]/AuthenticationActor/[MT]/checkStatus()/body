@@ -4,8 +4,9 @@
       try {
         IVpnService.Stub.asInterface(service).checkStatus(mProfile);
       }
- catch (      Throwable e) {
+ catch (      RemoteException e) {
         Log.e(TAG,"checkStatus()",e);
+        broadcastConnectivity(VpnState.IDLE);
       }
  finally {
         notify();

@@ -9,8 +9,8 @@
     if (!unlockKeystore(p,action))     return;
   }
   mConnectingActor=getActor(p);
+  mActiveProfile=p;
   if (mConnectingActor.isConnectDialogNeeded()) {
-    removeDialog(DIALOG_CONNECT);
     showDialog(DIALOG_CONNECT);
   }
  else {

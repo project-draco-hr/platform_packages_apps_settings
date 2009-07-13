@@ -15,7 +15,7 @@ break;
 default :
 throw new RuntimeException("Unknown dialog id: " + mDialogId);
 }
-Dialog d=new AlertDialog.Builder(SecuritySettings.this).setView(mView).setTitle(R.string.cstor_set_passwd_dialog_title).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).setCancelable(false).create();
+Dialog d=new AlertDialog.Builder(SecuritySettings.this).setView(mView).setTitle(R.string.cstor_set_passwd_dialog_title).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).setOnCancelListener(this).create();
 d.setOnDismissListener(this);
 return d;
 }

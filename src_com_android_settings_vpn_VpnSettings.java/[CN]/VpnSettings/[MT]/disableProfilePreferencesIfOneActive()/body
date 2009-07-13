@@ -2,6 +2,7 @@
   if (mActiveProfile == null)   return;
   for (  VpnProfile p : mVpnProfileList) {
 switch (p.getState()) {
+case CONNECTING:
 case DISCONNECTING:
 case IDLE:
       mVpnPreferenceMap.get(p.getName()).setEnabled(false);

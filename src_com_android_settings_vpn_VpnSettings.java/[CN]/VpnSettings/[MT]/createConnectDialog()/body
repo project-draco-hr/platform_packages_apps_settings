@@ -1,9 +1,3 @@
 {
-  if (mConnectingActor == null) {
-    Log.e(TAG,"no connecting actor to create the dialog");
-    return null;
-  }
-  String name=(mConnectingActor == null) ? getString(R.string.vpn_default_profile_name) : mConnectingActor.getProfile().getName();
-  Dialog d=new AlertDialog.Builder(this).setView(mConnectingActor.createConnectView()).setTitle(String.format(getString(R.string.vpn_connect_to),name)).setPositiveButton(getString(R.string.vpn_connect_button),this).setNegativeButton(getString(android.R.string.cancel),this).create();
-  return d;
+  return new AlertDialog.Builder(this).setView(mConnectingActor.createConnectView()).setTitle(String.format(getString(R.string.vpn_connect_to),mConnectingActor.getProfile().getName())).setPositiveButton(getString(R.string.vpn_connect_button),this).setNegativeButton(getString(android.R.string.cancel),this).create();
 }

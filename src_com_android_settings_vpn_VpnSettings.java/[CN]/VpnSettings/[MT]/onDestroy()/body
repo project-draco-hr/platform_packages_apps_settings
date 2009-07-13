@@ -2,4 +2,7 @@
   super.onDestroy();
   unregisterForContextMenu(getListView());
   mVpnManager.unregisterConnectivityReceiver(mConnectivityReceiver);
+  if ((mShowingDialog != null) && mShowingDialog.isShowing()) {
+    mShowingDialog.dismiss();
+  }
 }

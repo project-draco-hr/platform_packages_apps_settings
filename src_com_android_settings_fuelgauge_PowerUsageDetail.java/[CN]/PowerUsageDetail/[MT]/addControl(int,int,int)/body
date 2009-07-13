@@ -1,0 +1,12 @@
+{
+  final Resources res=getResources();
+  LayoutInflater inflater=getLayoutInflater();
+  ViewGroup item=(ViewGroup)inflater.inflate(R.layout.power_usage_action_item,null);
+  mControlsParent.addView(item);
+  Button actionButton=(Button)item.findViewById(R.id.action_button);
+  TextView summaryView=(TextView)item.findViewById(R.id.summary);
+  actionButton.setText(res.getString(title));
+  summaryView.setText(res.getString(summary));
+  actionButton.setOnClickListener(this);
+  actionButton.setTag(new Integer(action));
+}

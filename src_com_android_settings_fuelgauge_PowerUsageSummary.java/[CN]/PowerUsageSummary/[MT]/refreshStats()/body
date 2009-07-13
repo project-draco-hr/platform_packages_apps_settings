@@ -10,19 +10,19 @@
   processMiscUsage();
   mAppListGroup.setOrderingAsAdded(false);
   Collections.sort(mUsageList);
-  for (  BatterySipper g : mUsageList) {
-    if (g.getSortValue() < MIN_POWER_THRESHOLD)     continue;
-    double percent=((g.getSortValue() / mTotalPower) * 100);
-    if (percent < 1)     continue;
-    PowerGaugePreference pref=new PowerGaugePreference(this,g.getIcon(),g);
-    double scaleByMax=(g.getSortValue() * 100) / mMaxPower;
-    g.percent=percent;
-    pref.setTitle(g.name);
-    pref.setPercent(percent);
-    pref.setOrder(Integer.MAX_VALUE - (int)g.getSortValue());
-    pref.setGaugeValue(mScaleByMax ? scaleByMax : percent);
-    if (g.uidObj != null) {
-      pref.setKey(Integer.toString(g.uidObj.getUid()));
+  for (  BatterySipper sipper : mUsageList) {
+    if (sipper.getSortValue() < MIN_POWER_THRESHOLD)     continue;
+    final double percentOfTotal=((sipper.getSortValue() / mTotalPower) * 100);
+    if (percentOfTotal < 1)     continue;
+    PowerGaugePreference pref=new PowerGaugePreference(this,sipper.getIcon(),sipper);
+    double percentOfMax=(sipper.getSortValue() * 100) / mMaxPower;
+    sipper.percent=percentOfTotal;
+    pref.setTitle(sipper.name);
+    pref.setPercent(percentOfTotal);
+    pref.setOrder(Integer.MAX_VALUE - (int)sipper.getSortValue());
+    pref.setGaugeValue(percentOfMax);
+    if (sipper.uidObj != null) {
+      pref.setKey(Integer.toString(sipper.uidObj.getUid()));
     }
     mAppListGroup.addPreference(pref);
     if (mAppListGroup.getPreferenceCount() > MAX_ITEMS_TO_LIST)     break;

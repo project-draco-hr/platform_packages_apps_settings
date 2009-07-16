@@ -22,6 +22,11 @@
     error(R.string.error_saving);
     return false;
   }
+  state.setNetworkId(AccessPointState.NETWORK_ID_ANY);
+  config=findConfiguredNetwork(state);
+  if (config != null) {
+    state.setNetworkId(config.networkId);
+  }
   ensureTrackingState(state);
   return true;
 }

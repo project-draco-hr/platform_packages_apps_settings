@@ -1,3 +1,8 @@
 {
-  mStatusChecker.check(mVpnProfileList);
+  new Thread(new Runnable(){
+    public void run(){
+      mStatusChecker.check(mVpnProfileList);
+    }
+  }
+).start();
 }

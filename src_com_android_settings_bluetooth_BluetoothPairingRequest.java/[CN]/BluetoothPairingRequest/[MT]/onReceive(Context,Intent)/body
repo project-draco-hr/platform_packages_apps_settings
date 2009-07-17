@@ -3,18 +3,24 @@
   if (action.equals(BluetoothIntent.PAIRING_REQUEST_ACTION)) {
     LocalBluetoothManager localManager=LocalBluetoothManager.getInstance(context);
     String address=intent.getStringExtra(BluetoothIntent.ADDRESS);
-    Intent pinIntent=new Intent();
-    pinIntent.setClass(context,BluetoothPinDialog.class);
-    pinIntent.putExtra(BluetoothIntent.ADDRESS,address);
-    pinIntent.setAction(BluetoothIntent.PAIRING_REQUEST_ACTION);
-    pinIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    int type=intent.getIntExtra(BluetoothIntent.PAIRING_VARIANT,BluetoothClass.ERROR);
+    Intent pairingIntent=new Intent();
+    pairingIntent.setClass(context,BluetoothPairingDialog.class);
+    pairingIntent.putExtra(BluetoothIntent.ADDRESS,address);
+    pairingIntent.putExtra(BluetoothIntent.PAIRING_VARIANT,type);
+    if (type == BluetoothDevice.PAIRING_VARIANT_CONFIRMATION) {
+      int passkey=intent.getIntExtra(BluetoothIntent.PASSKEY,BluetoothClass.ERROR);
+      pairingIntent.putExtra(BluetoothIntent.PASSKEY,passkey);
+    }
+    pairingIntent.setAction(BluetoothIntent.PAIRING_REQUEST_ACTION);
+    pairingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     if (localManager.getForegroundActivity() != null) {
-      context.startActivity(pinIntent);
+      context.startActivity(pairingIntent);
     }
  else {
       Resources res=context.getResources();
       Notification notification=new Notification(android.R.drawable.stat_sys_data_bluetooth,res.getString(R.string.bluetooth_notif_ticker),System.currentTimeMillis());
-      PendingIntent pending=PendingIntent.getActivity(context,0,pinIntent,PendingIntent.FLAG_ONE_SHOT);
+      PendingIntent pending=PendingIntent.getActivity(context,0,pairingIntent,PendingIntent.FLAG_ONE_SHOT);
       String name=intent.getStringExtra(BluetoothIntent.NAME);
       if (TextUtils.isEmpty(name)) {
         name=localManager.getLocalDeviceManager().getName(address);

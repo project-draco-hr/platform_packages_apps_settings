@@ -1,0 +1,16 @@
+{
+  if (mType == BluetoothDevice.PAIRING_VARIANT_PIN) {
+    byte[] pinBytes=BluetoothDevice.convertPinToBytes(value);
+    if (pinBytes == null) {
+      return;
+    }
+    mLocalManager.getBluetoothManager().setPin(mAddress,pinBytes);
+  }
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_PASSKEY) {
+    int passkey=Integer.getInteger(value);
+    mLocalManager.getBluetoothManager().setPasskey(mAddress,passkey);
+  }
+ else {
+    mLocalManager.getBluetoothManager().setPairingConfirmation(mAddress,true);
+  }
+}

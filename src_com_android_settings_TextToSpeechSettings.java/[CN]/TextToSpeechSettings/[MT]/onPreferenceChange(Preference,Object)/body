@@ -24,6 +24,9 @@
     Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,mDefaultCountry);
     Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,mDefaultLocVariant);
     Log.v(TAG,"TTS default lang/country/variant set to " + mDefaultLanguage + "/"+ mDefaultCountry+ "/"+ mDefaultLocVariant);
+    if (mTts != null) {
+      mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry));
+    }
   }
   return true;
 }

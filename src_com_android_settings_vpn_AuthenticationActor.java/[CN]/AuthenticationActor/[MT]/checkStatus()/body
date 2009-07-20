@@ -1,6 +1,9 @@
 {
+  final ConditionVariable cv=new ConditionVariable();
+  cv.close();
   ServiceConnection c=new ServiceConnection(){
     public synchronized void onServiceConnected(    ComponentName className,    IBinder service){
+      cv.open();
       try {
         IVpnService.Stub.asInterface(service).checkStatus(mProfile);
       }
@@ -9,15 +12,17 @@
         broadcastConnectivity(VpnState.IDLE);
       }
  finally {
-        notify();
+        mContext.unbindService(this);
       }
     }
     public void onServiceDisconnected(    ComponentName className){
+      cv.open();
+      broadcastConnectivity(VpnState.IDLE);
+      mContext.unbindService(this);
     }
   }
 ;
   if (bindService(c)) {
-    wait(c,ONE_SECOND);
-    mContext.unbindService(c);
+    if (!cv.block(1000))     broadcastConnectivity(VpnState.IDLE);
   }
 }

@@ -4,25 +4,56 @@
     startTime=SystemClock.elapsedRealtime();
   }
   int size=mPkgList.size();
-  for (int i=0; i < size; i++) {
-    if (abort) {
-      break;
-    }
-    CountDownLatch count=new CountDownLatch(1);
-    String packageName=mPkgList.get(i).packageName;
-    long startPkgTime;
-    if (DEBUG_SIZE) {
-      startPkgTime=SystemClock.elapsedRealtime();
-    }
-    mSizeObserver.invokeGetSize(packageName,count);
-    try {
-      count.await();
-    }
- catch (    InterruptedException e) {
-      Log.i(TAG,"Failed computing size for pkg : " + packageName);
-    }
-    if (DEBUG_SIZE)     Log.i(TAG,"Took " + (SystemClock.elapsedRealtime() - startPkgTime) + " ms to compute size for pkg : "+ packageName);
+  int numMsgs=size / MSG_PKG_SIZE;
+  if (size > (numMsgs * MSG_PKG_SIZE)) {
+    numMsgs++;
   }
-  if (DEBUG_SIZE || DEBUG_TIME)   Log.i(TAG,"Took " + (SystemClock.elapsedRealtime() - startTime) + " ms to compute resources ");
+  int endi=0;
+  for (int j=0; j < size; j+=MSG_PKG_SIZE) {
+    long sizes[];
+    String formatted[];
+    String packages[];
+    endi+=MSG_PKG_SIZE;
+    if (endi > size) {
+      endi=size;
+    }
+    sizes=new long[endi - j];
+    formatted=new String[endi - j];
+    packages=new String[endi - j];
+    for (int i=j; i < endi; i++) {
+      if (abort) {
+        break;
+      }
+      CountDownLatch count=new CountDownLatch(1);
+      String packageName=mPkgList.get(i).packageName;
+      mSizeObserver.invokeGetSize(packageName,count);
+      try {
+        count.await();
+      }
+ catch (      InterruptedException e) {
+        Log.i(TAG,"Failed computing size for pkg : " + packageName);
+      }
+      PackageStats pStats=mSizeObserver.stats;
+      boolean succeeded=mSizeObserver.succeeded;
+      long total;
+      if (succeeded && pStats != null) {
+        total=getTotalSize(pStats);
+      }
+ else {
+        total=SIZE_INVALID;
+      }
+      sizes[i - j]=total;
+      formatted[i - j]=getSizeStr(total).toString();
+      packages[i - j]=packageName;
+    }
+    Bundle data=new Bundle();
+    data.putStringArray(ATTR_PKGS,packages);
+    data.putLongArray(ATTR_STATS,sizes);
+    data.putStringArray(ATTR_SIZE_STRS,formatted);
+    Message msg=mHandler.obtainMessage(SEND_PKG_SIZES,data);
+    msg.setData(data);
+    mHandler.sendMessage(msg);
+  }
+  if (DEBUG_SIZE || DEBUG_TIME)   Log.i(TAG,"Took " + (SystemClock.elapsedRealtime() - startTime) + " ms to compute sizes of all packages ");
   mHandler.sendEmptyMessage(END_MSG);
 }

@@ -1,0 +1,66 @@
+{
+  File cacheFile=new File(getFilesDir(),mFileCacheName);
+  if (!cacheFile.exists()) {
+    return;
+  }
+  FileInputStream fis=null;
+  boolean err=false;
+  try {
+    fis=new FileInputStream(cacheFile);
+  }
+ catch (  FileNotFoundException e) {
+    Log.w(TAG,"Error opening file for read operation : " + cacheFile + " with exception "+ e);
+    return;
+  }
+  try {
+    byte[] byteBuff=new byte[FILE_BUFFER_SIZE];
+    byte[] lenBytes=new byte[2];
+    mAppPropCache.clear();
+    while (fis.available() > 0) {
+      fis.read(lenBytes,0,2);
+      int buffLen=(lenBytes[0] << 8) | lenBytes[1];
+      fis.read(byteBuff,0,buffLen);
+      String buffStr=new String(byteBuff);
+      if (DEBUG_CACHE) {
+        Log.i(TAG,"Read string of len= " + buffLen + " :: "+ buffStr+ " from file");
+      }
+      String substrs[]=buffStr.split(",");
+      if (substrs.length < 4) {
+        err=true;
+        break;
+      }
+      long size=-1;
+      int idx=-1;
+      try {
+        size=Long.parseLong(substrs[1]);
+      }
+ catch (      NumberFormatException e) {
+        err=true;
+        break;
+      }
+      if (DEBUG_CACHE) {
+        Log.i(TAG,"Creating entry(" + substrs[0] + ", "+ idx+ ","+ size+ ", "+ substrs[2]+ ")");
+      }
+      AppInfo aInfo=new AppInfo(substrs[0],idx,substrs[3],size,substrs[2]);
+      mAppPropCache.put(aInfo.pkgName,aInfo);
+    }
+  }
+ catch (  IOException e) {
+    Log.w(TAG,"Failed reading from file : " + cacheFile + " with exception : "+ e);
+    err=true;
+  }
+ finally {
+    if (fis != null) {
+      try {
+        fis.close();
+      }
+ catch (      IOException e) {
+        Log.w(TAG,"Failed to close file " + cacheFile + " with exception : "+ e);
+      }
+    }
+  }
+  if (err) {
+    Log.i(TAG,"Failed to load cache. Not using cache for now.");
+    mAppPropCache.clear();
+  }
+}

@@ -1,0 +1,18 @@
+{
+  if (map == null) {
+    return;
+  }
+  Set<String> keys=map.keySet();
+  boolean changed=false;
+  for (  String key : keys) {
+    CharSequence label=map.get(key);
+    AppInfo aInfo=mCache.getEntry(key);
+    if (aInfo != null) {
+      aInfo.refreshLabel(label);
+      changed=true;
+    }
+  }
+  if (changed) {
+    notifyDataSetChanged();
+  }
+}

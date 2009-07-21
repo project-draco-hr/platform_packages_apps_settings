@@ -1,0 +1,31 @@
+{
+  if (pkgName == null) {
+    return;
+  }
+  boolean notInList=true;
+  ApplicationInfo info=null;
+  try {
+    info=mPm.getApplicationInfo(pkgName,0);
+  }
+ catch (  NameNotFoundException e) {
+    Log.w(TAG,"Ignoring non-existent package:" + pkgName);
+    return;
+  }
+  if (info == null) {
+    Log.i(TAG,"Null ApplicationInfo for package:" + pkgName);
+    return;
+  }
+  mAppList.add(info);
+  mCache.addEntry(new AppInfo(pkgName,-1,info.loadLabel(mPm),info.loadIcon(mPm),size,formattedSize));
+  if (notInList && (shouldBeInList(mFilterApps,info))) {
+    int newIdx=Collections.binarySearch(mAppLocalList,info,getAppComparator(mSortOrder));
+    if (newIdx >= 0) {
+      Log.i(TAG,"Strange. Package:" + pkgName + " is not new");
+      return;
+    }
+    newIdx=-newIdx - 1;
+    mAppLocalList.add(newIdx,info);
+    adjustIndex();
+    notifyDataSetChanged();
+  }
+}

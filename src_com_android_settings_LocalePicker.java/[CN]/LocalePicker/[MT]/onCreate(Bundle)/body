@@ -1,6 +1,8 @@
 {
   super.onCreate(icicle);
   setContentView(getContentView());
+  mSpecialLocaleCodes=getResources().getStringArray(R.array.special_locale_codes);
+  mSpecialLocaleNames=getResources().getStringArray(R.array.special_locale_names);
   String[] locales=getAssets().getLocales();
   Arrays.sort(locales);
   final int origSize=locales.length;
@@ -19,10 +21,10 @@
       }
  else {
         if (preprocess[finalSize - 1].locale.getLanguage().equals(language)) {
-          Log.v(TAG,"backing up and fixing " + preprocess[finalSize - 1].label + " to "+ preprocess[finalSize - 1].locale.getDisplayName(l));
-          preprocess[finalSize - 1].label=toTitleCase(preprocess[finalSize - 1].locale.getDisplayName(l));
-          Log.v(TAG,"  and adding " + toTitleCase(l.getDisplayName(l)));
-          preprocess[finalSize++]=new Loc(toTitleCase(l.getDisplayName(l)),l);
+          Log.v(TAG,"backing up and fixing " + preprocess[finalSize - 1].label + " to "+ getDisplayName(preprocess[finalSize - 1].locale));
+          preprocess[finalSize - 1].label=toTitleCase(getDisplayName(preprocess[finalSize - 1].locale));
+          Log.v(TAG,"  and adding " + toTitleCase(getDisplayName(l)));
+          preprocess[finalSize++]=new Loc(toTitleCase(getDisplayName(l)),l);
         }
  else {
           String displayName;

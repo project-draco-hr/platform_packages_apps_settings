@@ -22,9 +22,6 @@
   mAnimations.setPersistent(false);
   mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
   mAccelerometer.setPersistent(false);
-  mCompatibilityMode=(CheckBoxPreference)findPreference(KEY_COMPATIBILITY_MODE);
-  mCompatibilityMode.setPersistent(false);
-  mCompatibilityMode.setChecked(Settings.System.getInt(resolver,Settings.System.COMPATIBILITY_MODE,1) != 0);
   ListPreference screenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
   screenTimeoutPreference.setValue(String.valueOf(Settings.System.getInt(resolver,SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE)));
   screenTimeoutPreference.setOnPreferenceChangeListener(this);

@@ -2,8 +2,9 @@
   EditTextPreference pref=new EditTextPreference(c);
   pref.setTitle(titleId);
   pref.setDialogTitle(titleId);
+  pref.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
   pref.getEditText().setTransformationMethod(new PasswordTransformationMethod());
-  pref.setText(value);
+  pref.setText(TextUtils.isEmpty(value) ? "" : SECRET_SET_INDICATOR);
   setSecretSummary(pref,fieldNameId,value);
   pref.setPersistent(true);
   pref.setOnPreferenceChangeListener(listener);

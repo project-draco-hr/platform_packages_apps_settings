@@ -1,5 +1,5 @@
 {
-  mDomainSuffices=createEditTextPreference(c,R.string.vpn_dns_search_list_title,R.string.vpn_dns_search_list,mProfile.getDomainSuffices(),new Preference.OnPreferenceChangeListener(){
+  EditTextPreference pref=mDomainSuffices=createEditTextPreference(c,R.string.vpn_dns_search_list_title,R.string.vpn_dns_search_list,mProfile.getDomainSuffices(),new Preference.OnPreferenceChangeListener(){
     public boolean onPreferenceChange(    Preference pref,    Object newValue){
       String v=((String)newValue).trim();
       mProfile.setDomainSuffices(v);
@@ -8,5 +8,6 @@
     }
   }
 );
-  return mDomainSuffices;
+  pref.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_URI);
+  return pref;
 }

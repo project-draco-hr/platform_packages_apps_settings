@@ -16,7 +16,9 @@
         showDialog(CSTOR_UNLOCK_DIALOG);
       }
  else {
-        addCredential();
+        String formatString=getString(R.string.cstor_is_added);
+        String message=String.format(formatString,mCstorAddCredentialHelper.getName());
+        Toast.makeText(SecuritySettings.this,message,Toast.LENGTH_SHORT).show();
         finish();
       }
     }

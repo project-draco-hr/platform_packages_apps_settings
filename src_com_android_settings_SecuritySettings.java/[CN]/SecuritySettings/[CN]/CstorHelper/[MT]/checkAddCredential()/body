@@ -20,5 +20,14 @@
     }
     mCstorAddCredentialHelper.setPassword(password);
   }
+  if (mCstorAddCredentialHelper.saveToStorage() < 0) {
+    if (mCstorAddCredentialHelper.isPkcs12Keystore()) {
+      showError(R.string.cstor_password_error);
+    }
+ else {
+      showError(R.string.cstor_storage_error);
+    }
+    return false;
+  }
   return true;
 }

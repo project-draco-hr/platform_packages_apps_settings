@@ -1,29 +1,35 @@
 {
   if (!mConfirm) {
     mConfirm=true;
-    showDialog(mDialogId);
+    showCstorDialog(mDialogId);
   }
  else {
-    removeDialog(mDialogId);
     if (mDialogId == CSTOR_UNLOCK_DIALOG) {
       mAccessCheckBox.setChecked(isCstorUnlocked());
     }
     if (mCstorAddCredentialHelper != null) {
       if (!isCstorInitialized()) {
-        showDialog(CSTOR_INIT_DIALOG);
+        showCstorDialog(CSTOR_INIT_DIALOG);
       }
  else       if (!isCstorUnlocked()) {
-        showDialog(CSTOR_UNLOCK_DIALOG);
+        showCstorDialog(CSTOR_UNLOCK_DIALOG);
       }
  else {
-        String formatString=getString(R.string.cstor_is_added);
-        String message=String.format(formatString,mCstorAddCredentialHelper.getName());
-        Toast.makeText(SecuritySettings.this,message,Toast.LENGTH_SHORT).show();
-        finish();
+        if (addCredential()) {
+          finish();
+        }
+ else {
+          if (mDialogId != CSTOR_NAME_CREDENTIAL_DIALOG) {
+            removeDialog(mDialogId);
+          }
+          showCstorDialog(CSTOR_NAME_CREDENTIAL_DIALOG);
+        }
       }
+      return;
     }
  else     if (mSpecialIntent != null) {
       finish();
     }
+    removeDialog(mDialogId);
   }
 }

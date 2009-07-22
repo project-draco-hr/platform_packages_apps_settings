@@ -4,5 +4,9 @@
     Log.w(TAG,"Position out of bounds in List Adapter");
     return -1;
   }
-  return mAppPropMap.get(mAppLocalList.get(position).packageName).index;
+  AppInfo aInfo=mCache.getEntry(mAppLocalList.get(position).packageName);
+  if (aInfo == null) {
+    return -1;
+  }
+  return aInfo.index;
 }

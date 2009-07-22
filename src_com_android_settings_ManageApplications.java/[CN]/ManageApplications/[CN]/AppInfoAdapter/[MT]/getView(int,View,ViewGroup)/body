@@ -16,7 +16,7 @@
     holder=(AppViewHolder)convertView.getTag();
   }
   ApplicationInfo appInfo=mAppLocalList.get(position);
-  AppInfo mInfo=mAppPropMap.get(appInfo.packageName);
+  AppInfo mInfo=mCache.getEntry(appInfo.packageName);
   if (mInfo != null) {
     if (mInfo.appName != null) {
       holder.appName.setText(mInfo.appName);

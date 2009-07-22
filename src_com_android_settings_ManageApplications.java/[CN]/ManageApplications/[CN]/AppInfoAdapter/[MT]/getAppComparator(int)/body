@@ -1,12 +1,6 @@
 {
   if (sortOrder == SORT_ORDER_ALPHA) {
-    if (mAlphaComparator == null) {
-      mAlphaComparator=new ApplicationInfo.DisplayNameComparator(mPm);
-    }
     return mAlphaComparator;
-  }
-  if (mSizeComparator == null) {
-    mSizeComparator=new AppInfoComparator(mAppPropMap);
   }
   return mSizeComparator;
 }

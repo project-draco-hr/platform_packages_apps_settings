@@ -1,0 +1,8 @@
+{
+  if (pAppInfo == null || pAppInfo.packageName == null) {
+    return;
+  }
+  if (localLOGV)   Log.i(TAG,"Invoking getPackageSizeInfo for package:" + pAppInfo.packageName);
+  mAppInfo=pAppInfo;
+  mPm.getPackageSizeInfo(pAppInfo.packageName,this);
+}

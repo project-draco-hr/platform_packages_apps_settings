@@ -1,0 +1,53 @@
+{
+  File cacheFile=new File(getFilesDir(),mFileCacheName);
+  FileOutputStream fos=null;
+  try {
+    long opStartTime=SystemClock.uptimeMillis();
+    fos=new FileOutputStream(cacheFile);
+    Set<String> keys=mAppPropCache.keySet();
+    byte[] lenBytes=new byte[2];
+    for (    String key : keys) {
+      AppInfo aInfo=mAppPropCache.get(key);
+      StringBuilder buff=new StringBuilder(aInfo.pkgName);
+      buff.append(",");
+      buff.append(aInfo.size);
+      buff.append(",");
+      buff.append(aInfo.appSize);
+      buff.append(",");
+      buff.append(aInfo.appName);
+      if (DEBUG_CACHE) {
+        Log.i(TAG,"Writing str : " + buff.toString() + " to file of length:"+ buff.toString().length());
+      }
+      try {
+        byte[] byteBuff=buff.toString().getBytes();
+        int len=byteBuff.length;
+        if (byteBuff.length >= FILE_BUFFER_SIZE) {
+          len=FILE_BUFFER_SIZE;
+        }
+        lenBytes[1]=(byte)(len & 0x00ff);
+        lenBytes[0]=(byte)((len & 0x00ff00) >> 8);
+        fos.write(lenBytes,0,2);
+        fos.write(byteBuff,0,len);
+      }
+ catch (      IOException e) {
+        Log.w(TAG,"Failed to write to file : " + cacheFile + " with exception : "+ e);
+      }
+    }
+    if (DEBUG_CACHE_TIME) {
+      Log.i(TAG,"Took " + (SystemClock.uptimeMillis() - opStartTime) + " ms to write and process from file");
+    }
+  }
+ catch (  FileNotFoundException e) {
+    Log.w(TAG,"Error opening file for write operation : " + cacheFile + " with exception : "+ e);
+  }
+ finally {
+    if (fos != null) {
+      try {
+        fos.close();
+      }
+ catch (      IOException e) {
+        Log.w(TAG,"Failed closing file : " + cacheFile + " with exception : "+ e);
+      }
+    }
+  }
+}

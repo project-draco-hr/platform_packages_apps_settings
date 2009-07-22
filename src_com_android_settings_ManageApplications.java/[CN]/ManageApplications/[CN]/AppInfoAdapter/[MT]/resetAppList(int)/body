@@ -1,13 +1,9 @@
 {
   mAppLocalList=getFilteredApps(mAppList,filterOption);
   for (  ApplicationInfo applicationInfo : mAppLocalList) {
-    AppInfo appInfo=mAppPropMap.get(applicationInfo.packageName);
+    AppInfo appInfo=mCache.getEntry(applicationInfo.packageName);
     if (appInfo == null) {
-      AppInfo rInfo=getFromCache(applicationInfo.packageName);
-      if (rInfo == null) {
-        return false;
-      }
-      mAppPropMap.put(applicationInfo.packageName,rInfo);
+      Log.i(TAG," Entry does not exist for pkg:  " + applicationInfo.packageName);
     }
   }
   if (mAppLocalList.size() > 0) {

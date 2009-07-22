@@ -1,12 +1,12 @@
 {
-  if ((newList == null) || (mAppPropCache == null)) {
+  if ((newList == null) || mCache.isEmpty()) {
     return false;
   }
   Set<String> existingList=new HashSet<String>();
   boolean ret=false;
   for (  ApplicationInfo info : newList) {
     String pkgName=info.packageName;
-    AppInfo aInfo=mAppPropCache.get(pkgName);
+    AppInfo aInfo=mCache.getEntry(pkgName);
     if (aInfo != null) {
       existingList.add(pkgName);
     }
@@ -17,7 +17,7 @@
     }
   }
   List<String> deletedList=null;
-  Set<String> staleList=mAppPropCache.keySet();
+  Set<String> staleList=mCache.getPkgList();
   for (  String pkgName : staleList) {
     if (!existingList.contains(pkgName)) {
       if (localLOGV)       Log.i(TAG,"Pkg :" + pkgName + " deleted when paused");

@@ -1,0 +1,23 @@
+{
+  String value=getSecretFromProfile();
+  mHadSecret=!TextUtils.isEmpty(value);
+  mFieldNameId=fieldNameId;
+  EditTextPreference pref=mPref=new EditTextPreference(c);
+  pref.setTitle(titleId);
+  pref.setDialogTitle(titleId);
+  pref.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+  pref.getEditText().setTransformationMethod(new PasswordTransformationMethod());
+  pref.setText("");
+  pref.getEditText().setHint(mHadSecret ? R.string.vpn_secret_unchanged : R.string.vpn_secret_not_set);
+  setSecretSummary(value);
+  pref.setPersistent(true);
+  saveSecretToProfile("");
+  pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference pref,    Object newValue){
+      saveSecretToProfile((String)newValue);
+      setSecretSummary((String)newValue);
+      return true;
+    }
+  }
+);
+}

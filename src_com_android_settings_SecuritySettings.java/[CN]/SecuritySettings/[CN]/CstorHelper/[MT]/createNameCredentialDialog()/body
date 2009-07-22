@@ -1,6 +1,8 @@
 {
-  mDialogId=CSTOR_NAME_CREDENTIAL_DIALOG;
   mView=View.inflate(SecuritySettings.this,R.layout.cstor_name_credential_dialog_view,null);
+  if (mCstorAddCredentialHelper != null) {
+    mCstorAddCredentialHelper.mView=mView;
+  }
   hideError();
   if (!mCstorAddCredentialHelper.isPkcs12Keystore()) {
     hide(R.id.cstor_credential_password_container);

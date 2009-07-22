@@ -1,6 +1,14 @@
 {
-  if (mCstorAddCredentialHelper != null) {
-    mCstorAddCredentialHelper=null;
-    finish();
-  }
+  if (mCstorAddCredentialHelper == null)   return;
+switch (mDialogId) {
+case CSTOR_INIT_DIALOG:
+case CSTOR_UNLOCK_DIALOG:
+    Toast.makeText(SecuritySettings.this,R.string.cstor_unable_to_save_cert,Toast.LENGTH_LONG).show();
+  break;
+case CSTOR_NAME_CREDENTIAL_DIALOG:
+Toast.makeText(SecuritySettings.this,R.string.cstor_cert_not_saved,Toast.LENGTH_LONG).show();
+break;
+}
+mCstorAddCredentialHelper=null;
+finish();
 }

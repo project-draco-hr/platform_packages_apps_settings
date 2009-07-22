@@ -3,10 +3,10 @@
   String action=intent.getAction();
   if (ACTION_ADD_CREDENTIAL.equals(action)) {
     mCstorAddCredentialHelper=new CstorAddCredentialHelper(intent);
-    showDialog(CSTOR_NAME_CREDENTIAL_DIALOG);
+    showCstorDialog(CSTOR_NAME_CREDENTIAL_DIALOG);
   }
  else   if (ACTION_UNLOCK_CREDENTIAL_STORAGE.equals(action)) {
     mSpecialIntent=intent;
-    showDialog(mCstorHelper.isCstorInitialized() ? CSTOR_UNLOCK_DIALOG : CSTOR_INIT_DIALOG);
+    showCstorDialog(mCstorHelper.isCstorInitialized() ? CSTOR_UNLOCK_DIALOG : CSTOR_INIT_DIALOG);
   }
 }

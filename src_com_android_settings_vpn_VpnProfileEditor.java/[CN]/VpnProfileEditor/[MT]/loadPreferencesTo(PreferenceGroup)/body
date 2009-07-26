@@ -1,0 +1,15 @@
+{
+  Context c=subpanel.getContext();
+  mName=(EditTextPreference)subpanel.findPreference(KEY_VPN_NAME);
+  mName.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference pref,    Object newValue){
+      setName((String)newValue);
+      return true;
+    }
+  }
+);
+  setName(getProfile().getName());
+  subpanel.addPreference(createServerNamePreference(c));
+  loadExtraPreferencesTo(subpanel);
+  subpanel.addPreference(createDomainSufficesPreference(c));
+}

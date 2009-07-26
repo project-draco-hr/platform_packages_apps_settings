@@ -12,8 +12,20 @@
   mPhone=PhoneFactory.getDefaultPhone();
   mSignalStrength=findPreference("signal_strength");
   mUptime=findPreference("up_time");
-  setSummaryText("imei",mPhone.getDeviceId());
-  setSummaryText("imei_sv",((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
+  if (mPhone.getPhoneName().equals("CDMA")) {
+    setSummaryText("meid_number",mPhone.getMeid());
+    setSummaryText("min_number",mPhone.getCdmaMin());
+    setSummaryText("prl_version",mPhone.getCdmaPrlVersion());
+    getPreferenceScreen().removePreference(findPreference("imei"));
+    getPreferenceScreen().removePreference(findPreference("imei_sv"));
+  }
+ else {
+    setSummaryText("imei",mPhone.getDeviceId());
+    setSummaryText("imei_sv",((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
+    getPreferenceScreen().removePreference(findPreference("prl_version"));
+    getPreferenceScreen().removePreference(findPreference("meid_number"));
+    getPreferenceScreen().removePreference(findPreference("min_number"));
+  }
   setSummaryText("number",mPhone.getLine1Number());
   mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
   mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);

@@ -1,5 +1,3 @@
 {
-  byte[] data=mOem.getSmscQueryData();
-  if (data == null)   return;
-  phone.invokeOemRilRequestRaw(data,mHandler.obtainMessage(EVENT_QUERY_SMSC_DONE));
+  phone.getSmscAddress(mHandler.obtainMessage(EVENT_QUERY_SMSC_DONE));
 }

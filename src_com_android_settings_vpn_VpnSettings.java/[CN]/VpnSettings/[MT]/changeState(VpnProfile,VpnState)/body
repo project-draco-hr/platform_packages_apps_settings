@@ -1,0 +1,30 @@
+{
+  VpnState oldState=p.getState();
+  if (oldState == state)   return;
+  p.setState(state);
+  mVpnPreferenceMap.get(p.getName()).setSummary(getProfileSummaryString(p));
+switch (state) {
+case CONNECTED:
+    mConnectingActor=null;
+case CONNECTING:
+  mActiveProfile=p;
+disableProfilePreferencesIfOneActive();
+break;
+case DISCONNECTING:
+if (oldState == VpnState.CONNECTING) {
+mConnectingError=true;
+}
+break;
+case CANCELLED:
+changeState(p,VpnState.IDLE);
+break;
+case IDLE:
+assert(mActiveProfile != p);
+mActiveProfile=null;
+mConnectingActor=null;
+enableProfilePreferences();
+if (oldState == VpnState.CONNECTING) mConnectingError=true;
+if (mConnectingError) showReconnectDialog(p);
+break;
+}
+}

@@ -1,0 +1,24 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.vpn_settings);
+  mVpnListContainer=(PreferenceCategory)findPreference(PREF_VPN_LIST);
+  mAddVpn=(PreferenceScreen)findPreference(PREF_ADD_VPN);
+  mAddVpn.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    public boolean onPreferenceClick(    Preference preference){
+      startVpnTypeSelection();
+      return true;
+    }
+  }
+);
+  registerForContextMenu(getListView());
+  mVpnManager.registerConnectivityReceiver(mConnectivityReceiver);
+  String profileName=(savedInstanceState == null) ? null : savedInstanceState.getString(STATE_ACTIVE_ACTOR);
+  mStateSaved=!TextUtils.isEmpty(profileName);
+  retrieveVpnListFromStorage();
+  if (mStateSaved) {
+    mConnectingActor=getActor(mVpnPreferenceMap.get(profileName).mProfile);
+  }
+ else {
+    checkVpnConnectionStatusInBackground();
+  }
+}

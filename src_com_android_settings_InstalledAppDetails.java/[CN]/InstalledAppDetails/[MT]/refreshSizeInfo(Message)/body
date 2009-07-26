@@ -6,7 +6,6 @@
     mSizeInfo=newPs;
     String str=getSizeStr(newTot);
     mTotalSize.setText(str);
-    mAppSnippetSize.setText(str);
     mAppSize.setText(getSizeStr(newPs.codeSize));
     mDataSize.setText(getSizeStr(newPs.dataSize));
     mCacheSize.setText(getSizeStr(newPs.cacheSize));
@@ -16,7 +15,6 @@
     if (newTot != oldTot) {
       String str=getSizeStr(newTot);
       mTotalSize.setText(str);
-      mAppSnippetSize.setText(str);
       changed=true;
     }
     if (newPs.codeSize != mSizeInfo.codeSize) {

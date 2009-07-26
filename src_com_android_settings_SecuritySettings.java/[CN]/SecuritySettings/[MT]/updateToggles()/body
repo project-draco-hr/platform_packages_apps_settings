@@ -1,5 +1,6 @@
 {
-  String providers=getAllowedProviders();
-  mNetwork.setChecked(providers.contains(LocationManager.NETWORK_PROVIDER));
-  mGps.setChecked(providers.contains(LocationManager.GPS_PROVIDER));
+  ContentResolver res=getContentResolver();
+  mNetwork.setChecked(Settings.Secure.isLocationProviderEnabled(res,LocationManager.NETWORK_PROVIDER));
+  mGps.setChecked(Settings.Secure.isLocationProviderEnabled(res,LocationManager.GPS_PROVIDER));
+  mUseLocation.setChecked(Settings.Secure.getInt(res,Settings.Secure.USE_LOCATION_FOR_SERVICES,2) == 1);
 }

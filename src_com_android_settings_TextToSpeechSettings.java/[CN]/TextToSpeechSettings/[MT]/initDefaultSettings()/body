@@ -1,0 +1,67 @@
+{
+  ContentResolver resolver=getContentResolver();
+  int intVal=0;
+  mUseDefaultPref=(CheckBoxPreference)findPreference(KEY_TTS_USE_DEFAULT);
+  try {
+    intVal=Settings.Secure.getInt(resolver,TTS_USE_DEFAULTS);
+  }
+ catch (  SettingNotFoundException e) {
+    intVal=TextToSpeech.Engine.FALLBACK_TTS_USE_DEFAULTS;
+    Settings.Secure.putInt(resolver,TTS_USE_DEFAULTS,intVal);
+  }
+  mUseDefaultPref.setChecked(intVal == 1);
+  mUseDefaultPref.setOnPreferenceChangeListener(this);
+  String engine=Settings.Secure.getString(resolver,TTS_DEFAULT_SYNTH);
+  if (engine == null) {
+    engine=FALLBACK_TTS_DEFAULT_SYNTH;
+    Settings.Secure.putString(resolver,TTS_DEFAULT_SYNTH,engine);
+  }
+  mDefaultEng=engine;
+  mDefaultRatePref=(ListPreference)findPreference(KEY_TTS_DEFAULT_RATE);
+  try {
+    intVal=Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
+  }
+ catch (  SettingNotFoundException e) {
+    intVal=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_RATE;
+    Settings.Secure.putInt(resolver,TTS_DEFAULT_RATE,intVal);
+  }
+  mDefaultRatePref.setValue(String.valueOf(intVal));
+  mDefaultRatePref.setOnPreferenceChangeListener(this);
+  String language=null;
+  String country=null;
+  String variant=null;
+  mDefaultLocPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
+  language=Settings.Secure.getString(resolver,TTS_DEFAULT_LANG);
+  if (language == null) {
+    Locale currentLocale=Locale.getDefault();
+    language=currentLocale.getISO3Language();
+    country=currentLocale.getISO3Country();
+    variant=currentLocale.getVariant();
+    Settings.Secure.putString(resolver,TTS_DEFAULT_LANG,language);
+    Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,country);
+    Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,variant);
+  }
+  mDefaultLanguage=language;
+  if (country == null) {
+    country=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_COUNTRY);
+    if (country == null) {
+      Locale currentLocale=Locale.getDefault();
+      country=currentLocale.getISO3Country();
+      variant=currentLocale.getVariant();
+      Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,country);
+      Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,variant);
+    }
+  }
+  mDefaultCountry=country;
+  if (variant == null) {
+    variant=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_VARIANT);
+    if (variant == null) {
+      Locale currentLocale=Locale.getDefault();
+      variant=currentLocale.getVariant();
+      Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,variant);
+    }
+  }
+  mDefaultLocVariant=variant;
+  setDefaultLocalePref(language,country,variant);
+  mDefaultLocPref.setOnPreferenceChangeListener(this);
+}

@@ -1,0 +1,8 @@
+{
+  ((ImageView)findViewById(R.id.app_icon)).setImageDrawable(mAppInfo.loadIcon(mPm));
+  CharSequence appName=mAppInfo.loadLabel(mPm);
+  if (appName == null) {
+    appName=getString(_UNKNOWN_APP);
+  }
+  ((TextView)findViewById(R.id.app_name)).setText(appName);
+}

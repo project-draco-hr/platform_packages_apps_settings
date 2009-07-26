@@ -1,0 +1,23 @@
+{
+switch (id) {
+case DLG_CLEAR_DATA:
+    return new AlertDialog.Builder(this).setTitle(getString(R.string.clear_data_dlg_title)).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getString(R.string.clear_data_dlg_text)).setPositiveButton(R.string.dlg_ok,this).setNegativeButton(R.string.dlg_cancel,this).create();
+case DLG_FACTORY_RESET:
+  return new AlertDialog.Builder(this).setTitle(getString(R.string.app_factory_reset_dlg_title)).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getString(R.string.app_factory_reset_dlg_text)).setPositiveButton(R.string.dlg_ok,this).setNegativeButton(R.string.dlg_cancel,this).create();
+case DLG_APP_NOT_FOUND:
+return new AlertDialog.Builder(this).setTitle(getString(R.string.app_not_found_dlg_title)).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getString(R.string.app_not_found_dlg_title)).setNeutralButton(getString(R.string.dlg_ok),new DialogInterface.OnClickListener(){
+  public void onClick(  DialogInterface dialog,  int which){
+    setIntentAndFinish(true,true);
+  }
+}
+).create();
+case DLG_CANNOT_CLEAR_DATA:
+return new AlertDialog.Builder(this).setTitle(getString(R.string.clear_failed_dlg_title)).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getString(R.string.clear_failed_dlg_text)).setNeutralButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+  setIntentAndFinish(false,false);
+}
+}
+).create();
+}
+return null;
+}

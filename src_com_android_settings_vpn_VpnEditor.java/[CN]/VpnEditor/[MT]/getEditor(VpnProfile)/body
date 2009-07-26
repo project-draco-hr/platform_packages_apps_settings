@@ -1,0 +1,12 @@
+{
+switch (p.getType()) {
+case L2TP_IPSEC:
+    return new L2tpIpsecEditor((L2tpIpsecProfile)p);
+case L2TP_IPSEC_PSK:
+  return new L2tpIpsecPskEditor((L2tpIpsecPskProfile)p);
+case L2TP:
+return new L2tpEditor((L2tpProfile)p);
+default :
+return new VpnProfileEditor(p);
+}
+}

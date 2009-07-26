@@ -13,9 +13,17 @@
     setLayout(R.layout.wifi_ap_configure);
     positiveButtonResId=R.string.wifi_save_config;
     mSaveButtonPos=POSITIVE_BUTTON;
+    setEnterpriseFieldsVisible(false);
   }
  else   if (mMode == MODE_INFO) {
-    setLayout(R.layout.wifi_ap_info);
+    if (mState.isEnterprise() && !mState.configured) {
+      setLayout(R.layout.wifi_ap_configure);
+      defaultPasswordVisibility=false;
+      setEnterpriseFieldsVisible(true);
+    }
+ else {
+      setLayout(R.layout.wifi_ap_info);
+    }
     if (mState.isConnectable()) {
       if (mCustomTitle == null) {
         super.setTitle(context.getString(R.string.connect_to_blank,ssid));

@@ -1,0 +1,23 @@
+{
+  super.onReceive(context,intent);
+  if (intent.hasCategory(Intent.CATEGORY_ALTERNATIVE)) {
+    Uri data=intent.getData();
+    int buttonId=Integer.parseInt(data.getSchemeSpecificPart());
+    if (buttonId == BUTTON_WIFI) {
+      toggleWifi(context);
+    }
+ else     if (buttonId == BUTTON_BRIGHTNESS) {
+      toggleBrightness(context);
+    }
+ else     if (buttonId == BUTTON_SYNC) {
+      toggleBackgroundData(context);
+    }
+ else     if (buttonId == BUTTON_GPS) {
+      toggleGps(context);
+    }
+ else     if (buttonId == BUTTON_BLUETOOTH) {
+      toggleBluetooth(context);
+    }
+  }
+  updateWidget(context);
+}

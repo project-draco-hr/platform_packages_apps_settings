@@ -1,0 +1,29 @@
+{
+  final int uid=uidObj.getUid();
+  final String uidString=Integer.toString(uid);
+  if (mUidCache.containsKey(uidString)) {
+    UidToDetail utd=mUidCache.get(uidString);
+    defaultPackageName=utd.packageName;
+    name=utd.name;
+    icon=utd.icon;
+    return;
+  }
+  PackageManager pm=getPackageManager();
+  final Drawable defaultActivityIcon=pm.getDefaultActivityIcon();
+  String[] packages=pm.getPackagesForUid(uid);
+  icon=pm.getDefaultActivityIcon();
+  if (packages == null) {
+    if (uid == 0) {
+      name=getResources().getString(R.string.process_kernel_label);
+    }
+ else     if ("mediaserver".equals(name)) {
+      name=getResources().getString(R.string.process_mediaserver_label);
+    }
+    return;
+  }
+ else {
+  }
+synchronized (mRequestQueue) {
+    mRequestQueue.add(this);
+  }
+}

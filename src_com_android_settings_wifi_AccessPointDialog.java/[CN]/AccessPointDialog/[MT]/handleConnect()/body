@@ -2,14 +2,11 @@
   if (!replaceStateWithWifiLayerInstance()) {
     Log.w(TAG,"Assuming connecting to a new network.");
   }
-  String password=getEnteredPassword();
-  boolean passwordIsEmpty=TextUtils.isEmpty(password);
-  if (passwordIsEmpty && (!mState.hasPassword() || mMode == MODE_RETRY_PASSWORD) && (mState.security != null)&& !mState.security.equals(AccessPointState.OPEN)) {
-    new AlertDialog.Builder(getContext()).setTitle(R.string.error_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(R.string.wifi_password_incorrect_error).setPositiveButton(android.R.string.ok,null).show();
-    return;
+  if (mState.isEnterprise()) {
+    if (!mState.configured) {
+      updateEnterpriseFields(AccessPointState.WPA_EAP.equals(mState.security) ? SECURITY_WPA_EAP : SECURITY_IEEE8021X);
+    }
   }
-  if (!passwordIsEmpty) {
-    mState.setPassword(password);
-  }
+  updatePasswordField();
   mWifiLayer.connectToNetwork(mState);
 }

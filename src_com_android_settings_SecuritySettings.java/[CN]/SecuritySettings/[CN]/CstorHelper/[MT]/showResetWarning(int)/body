@@ -1,0 +1,12 @@
+{
+  TextView v=showError(count <= 3 ? R.string.cstor_password_error_reset_warning : R.string.cstor_password_error);
+  if (count <= 3) {
+    if (count == 1) {
+      v.setText(R.string.cstor_password_error_reset_warning);
+    }
+ else {
+      String format=getString(R.string.cstor_password_error_reset_warning_plural);
+      v.setText(String.format(format,count));
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  final int index=mIndexOfEditedProfile;
+  mIndexOfEditedProfile=-1;
+  if ((resultCode == RESULT_CANCELED) || (data == null)) {
+    Log.d(TAG,"no result returned by editor");
+    return;
+  }
+  if (requestCode == REQUEST_SELECT_VPN_TYPE) {
+    String typeName=data.getStringExtra(KEY_VPN_TYPE);
+    startVpnEditor(createVpnProfile(typeName));
+  }
+ else   if (requestCode == REQUEST_ADD_OR_EDIT_PROFILE) {
+    VpnProfile p=data.getParcelableExtra(KEY_VPN_PROFILE);
+    if (p == null) {
+      Log.e(TAG,"null object returned by editor");
+      return;
+    }
+    if (checkDuplicateName(p,index)) {
+      final VpnProfile profile=p;
+      Util.showErrorMessage(this,String.format(getString(R.string.vpn_error_duplicate_name),p.getName()),new DialogInterface.OnClickListener(){
+        public void onClick(        DialogInterface dialog,        int w){
+          startVpnEditor(profile);
+        }
+      }
+);
+      return;
+    }
+    if (needKeystoreToSave(p)) {
+      Runnable action=new Runnable(){
+        public void run(){
+          mIndexOfEditedProfile=index;
+          onActivityResult(requestCode,resultCode,data);
+        }
+      }
+;
+      if (!unlockKeystore(p,action))       return;
+    }
+    try {
+      if ((index < 0) || (index >= mVpnProfileList.size())) {
+        addProfile(p);
+        Util.showShortToastMessage(this,String.format(getString(R.string.vpn_profile_added),p.getName()));
+      }
+ else {
+        replaceProfile(index,p);
+        Util.showShortToastMessage(this,String.format(getString(R.string.vpn_profile_replaced),p.getName()));
+      }
+    }
+ catch (    IOException e) {
+      final VpnProfile profile=p;
+      Util.showErrorMessage(this,e + ": " + e.getMessage(),new DialogInterface.OnClickListener(){
+        public void onClick(        DialogInterface dialog,        int w){
+          startVpnEditor(profile);
+        }
+      }
+);
+    }
+  }
+ else {
+    throw new RuntimeException("unknown request code: " + requestCode);
+  }
+}

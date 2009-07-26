@@ -1,0 +1,19 @@
+{
+switch (item.getItemId()) {
+case MENU_STATS_TYPE:
+    if (mStatsType == BatteryStats.STATS_TOTAL) {
+      mStatsType=BatteryStats.STATS_UNPLUGGED;
+    }
+ else {
+      mStatsType=BatteryStats.STATS_TOTAL;
+    }
+  refreshStats();
+return true;
+case MENU_STATS_REFRESH:
+mStats=null;
+refreshStats();
+return true;
+default :
+return false;
+}
+}

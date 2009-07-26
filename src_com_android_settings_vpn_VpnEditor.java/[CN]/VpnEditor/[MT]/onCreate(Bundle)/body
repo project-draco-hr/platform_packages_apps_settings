@@ -1,0 +1,8 @@
+{
+  super.onCreate(savedInstanceState);
+  VpnProfile p=(VpnProfile)((savedInstanceState == null) ? getIntent().getParcelableExtra(VpnSettings.KEY_VPN_PROFILE) : savedInstanceState.getParcelable(KEY_PROFILE));
+  mProfileEditor=getEditor(p);
+  mAddingProfile=TextUtils.isEmpty(p.getName());
+  addPreferencesFromResource(R.xml.vpn_edit);
+  initViewFor(p);
+}

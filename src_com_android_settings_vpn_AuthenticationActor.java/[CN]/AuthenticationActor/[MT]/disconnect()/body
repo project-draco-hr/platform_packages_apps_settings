@@ -1,0 +1,22 @@
+{
+  ServiceConnection c=new ServiceConnection(){
+    public void onServiceConnected(    ComponentName className,    IBinder service){
+      try {
+        IVpnService.Stub.asInterface(service).disconnect();
+      }
+ catch (      RemoteException e) {
+        Log.e(TAG,"disconnect()",e);
+        checkStatus();
+      }
+ finally {
+        mContext.unbindService(this);
+        broadcastConnectivity(VpnState.IDLE);
+      }
+    }
+    public void onServiceDisconnected(    ComponentName className){
+      checkStatus();
+    }
+  }
+;
+  bindService(c);
+}

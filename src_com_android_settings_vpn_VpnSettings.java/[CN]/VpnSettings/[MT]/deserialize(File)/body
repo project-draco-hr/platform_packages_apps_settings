@@ -1,0 +1,12 @@
+{
+  try {
+    ObjectInputStream ois=new ObjectInputStream(new FileInputStream(profileObjectFile));
+    VpnProfile p=(VpnProfile)ois.readObject();
+    ois.close();
+    return p;
+  }
+ catch (  ClassNotFoundException e) {
+    Log.d(TAG,"deserialize a profile",e);
+    return null;
+  }
+}

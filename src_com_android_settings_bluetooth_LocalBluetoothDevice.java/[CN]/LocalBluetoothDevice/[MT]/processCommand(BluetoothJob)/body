@@ -11,13 +11,15 @@ case DISCONNECT:
 break;
 }
 if (successful) {
+if (D) {
 Log.d(TAG,"Command sent successfully:" + job.toString());
 }
- else {
-Log.d(TAG,"Framework rejected command immediately:" + job.toString());
+}
+ else if (V) {
+Log.v(TAG,"Framework rejected command immediately:" + job.toString());
 }
 }
- else {
+ else if (D) {
 Log.d(TAG,"Job already has a sent time. Skip. " + job.toString());
 }
 return successful;

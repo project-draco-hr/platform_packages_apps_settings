@@ -1,0 +1,5 @@
+{
+  long btOnTimeMs=mStats.getBluetoothOnTime(uSecNow,mStatsType) / 1000;
+  double btPower=btOnTimeMs * mPowerProfile.getAveragePower(PowerProfile.POWER_BLUETOOTH_ON) / 1000;
+  addEntry(getString(R.string.power_bluetooth),DrainType.IDLE,btOnTimeMs,com.android.internal.R.drawable.ic_volume_bluetooth_in_call,btPower);
+}

@@ -1,18 +1,28 @@
 {
   mPasswordText=(TextView)view.findViewById(R.id.password_text);
   mPasswordEdit=(EditText)view.findViewById(R.id.password_edit);
+  mSsidText=(TextView)view.findViewById(R.id.ssid_text);
+  mSsidEdit=(EditText)view.findViewById(R.id.ssid_edit);
+  mSecurityText=(TextView)view.findViewById(R.id.security_text);
+  mSecuritySpinner=(Spinner)view.findViewById(R.id.security_spinner);
+  mWepTypeSpinner=(Spinner)view.findViewById(R.id.wep_type_spinner);
+  mEnterpriseView=mView.findViewById(R.id.enterprise_wrapper);
   mShowPasswordCheckBox=(CheckBox)view.findViewById(R.id.show_password_checkbox);
   if (mShowPasswordCheckBox != null) {
     mShowPasswordCheckBox.setOnClickListener(this);
   }
   if (mMode == MODE_CONFIGURE) {
-    mSsidEdit=(EditText)view.findViewById(R.id.ssid_edit);
-    mSecuritySpinner=(Spinner)view.findViewById(R.id.security_spinner);
     mSecuritySpinner.setOnItemSelectedListener(this);
-    setSecuritySpinnerAdapter();
-    mWepTypeSpinner=(Spinner)view.findViewById(R.id.wep_type_spinner);
+    mSecuritySpinner.setPromptId(R.string.security);
+    setSpinnerAdapter(mSecuritySpinner,mAutoSecurityAllowed ? R.array.wifi_security_entries : R.array.wifi_security_without_auto_entries);
   }
  else   if (mMode == MODE_INFO) {
     mTable=(ViewGroup)view.findViewById(R.id.table);
+  }
+  if (mMode == MODE_CONFIGURE || (mState.isEnterprise() && !mState.configured)) {
+    setEnterpriseFields(view);
+    mEapSpinner.setSelection(getSelectionIndex(R.array.wifi_eap_entries,mState.getEap()));
+    mClientCertSpinner.setSelection(getSelectionIndex(getAllUserCertificateKeys(),mState.getEnterpriseField(AccessPointState.CLIENT_CERT)));
+    mCaCertSpinner.setSelection(getSelectionIndex(getAllCaCertificateKeys(),mState.getEnterpriseField(AccessPointState.CA_CERT)));
   }
 }

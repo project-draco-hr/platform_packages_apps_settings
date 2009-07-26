@@ -21,15 +21,18 @@
   mChoosePattern=getPreferenceManager().createPreferenceScreen(this);
   mChoosePattern.setIntent(intent);
   inlinePrefCat.addPreference(mChoosePattern);
-  PreferenceScreen simLockPreferences=getPreferenceManager().createPreferenceScreen(this);
-  simLockPreferences.setTitle(R.string.sim_lock_settings_category);
-  intent=new Intent();
-  intent.setClassName("com.android.settings","com.android.settings.SimLockSettings");
-  simLockPreferences.setIntent(intent);
-  PreferenceCategory simLockCat=new PreferenceCategory(this);
-  simLockCat.setTitle(R.string.sim_lock_settings_title);
-  root.addPreference(simLockCat);
-  simLockCat.addPreference(simLockPreferences);
+  int activePhoneType=TelephonyManager.getDefault().getPhoneType();
+  if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
+    PreferenceScreen simLockPreferences=getPreferenceManager().createPreferenceScreen(this);
+    simLockPreferences.setTitle(R.string.sim_lock_settings_category);
+    intent=new Intent();
+    intent.setClassName("com.android.settings","com.android.settings.IccLockSettings");
+    simLockPreferences.setIntent(intent);
+    PreferenceCategory simLockCat=new PreferenceCategory(this);
+    simLockCat.setTitle(R.string.sim_lock_settings_title);
+    root.addPreference(simLockCat);
+    simLockCat.addPreference(simLockPreferences);
+  }
   PreferenceCategory passwordsCat=new PreferenceCategory(this);
   passwordsCat.setTitle(R.string.security_passwords_title);
   root.addPreference(passwordsCat);
@@ -39,5 +42,11 @@
   showPassword.setSummary(R.string.show_password_summary);
   showPassword.setPersistent(false);
   passwordsCat.addPreference(showPassword);
+  PreferenceCategory credStoreCat=new PreferenceCategory(this);
+  credStoreCat.setTitle(R.string.cstor_settings_category);
+  root.addPreference(credStoreCat);
+  credStoreCat.addPreference(mCstorHelper.createAccessCheckBox());
+  credStoreCat.addPreference(mCstorHelper.createSetPasswordPreference());
+  credStoreCat.addPreference(mCstorHelper.createResetPreference());
   return root;
 }

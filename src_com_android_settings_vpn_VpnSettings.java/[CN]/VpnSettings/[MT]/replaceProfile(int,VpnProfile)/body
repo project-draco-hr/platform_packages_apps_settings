@@ -1,0 +1,16 @@
+{
+  Map<String,VpnPreference> map=mVpnPreferenceMap;
+  VpnProfile oldProfile=mVpnProfileList.set(index,p);
+  VpnPreference pref=map.remove(oldProfile.getName());
+  if (pref.mProfile != oldProfile) {
+    throw new RuntimeException("inconsistent state!");
+  }
+  p.setId(oldProfile.getId());
+  processSecrets(p);
+  if (Util.copyFiles(getProfileDir(oldProfile),getProfileDir(p))) {
+    removeProfileFromStorage(oldProfile);
+  }
+  saveProfileToStorage(p);
+  pref.setProfile(p);
+  map.put(p.getName(),pref);
+}

@@ -1,0 +1,12 @@
+{
+  mServerName=createEditTextPreference(c,R.string.vpn_vpn_server_title,R.string.vpn_vpn_server,mProfile.getServerName(),new Preference.OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference pref,    Object newValue){
+      String v=((String)newValue).trim();
+      mProfile.setServerName(v);
+      setSummary(pref,R.string.vpn_vpn_server,v);
+      return true;
+    }
+  }
+);
+  return mServerName;
+}

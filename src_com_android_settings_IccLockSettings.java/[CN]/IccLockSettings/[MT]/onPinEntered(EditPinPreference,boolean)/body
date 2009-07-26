@@ -1,0 +1,42 @@
+{
+  if (!positiveResult) {
+    resetDialogState();
+    return;
+  }
+  mPin=preference.getText();
+  if (!reasonablePin(mPin)) {
+    mError=mRes.getString(R.string.sim_bad_pin);
+    showPinDialog();
+    return;
+  }
+switch (mDialogState) {
+case ICC_LOCK_MODE:
+    tryChangeIccLockState();
+  break;
+case ICC_OLD_MODE:
+mOldPin=mPin;
+mDialogState=ICC_NEW_MODE;
+mError=null;
+mPin=null;
+showPinDialog();
+break;
+case ICC_NEW_MODE:
+mNewPin=mPin;
+mDialogState=ICC_REENTER_MODE;
+mPin=null;
+showPinDialog();
+break;
+case ICC_REENTER_MODE:
+if (!mPin.equals(mNewPin)) {
+mError=mRes.getString(R.string.sim_pins_dont_match);
+mDialogState=ICC_NEW_MODE;
+mPin=null;
+showPinDialog();
+}
+ else {
+mError=null;
+tryChangePin();
+}
+break;
+}
+}

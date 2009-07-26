@@ -1,0 +1,15 @@
+{
+  final int which=mStatsType;
+  long uSecTime=SystemClock.elapsedRealtime() * 1000;
+  final long uSecNow=mStats.computeBatteryRealtime(uSecTime,which);
+  final long timeSinceUnplugged=uSecNow;
+  if (DEBUG) {
+    Log.i(TAG,"Uptime since last unplugged = " + (timeSinceUnplugged / 1000));
+  }
+  addPhoneUsage(uSecNow);
+  addScreenUsage(uSecNow);
+  addWiFiUsage(uSecNow);
+  addBluetoothUsage(uSecNow);
+  addIdleUsage(uSecNow);
+  addRadioUsage(uSecNow);
+}

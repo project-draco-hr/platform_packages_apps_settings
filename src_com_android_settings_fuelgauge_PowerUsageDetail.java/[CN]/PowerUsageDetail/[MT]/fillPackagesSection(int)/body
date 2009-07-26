@@ -1,0 +1,35 @@
+{
+  if (uid < 1) {
+    removePackagesSection();
+    return;
+  }
+  ViewGroup packagesParent=(ViewGroup)findViewById(R.id.packages_section);
+  if (packagesParent == null)   return;
+  LayoutInflater inflater=getLayoutInflater();
+  PackageManager pm=getPackageManager();
+  final Drawable defaultActivityIcon=pm.getDefaultActivityIcon();
+  mPackages=pm.getPackagesForUid(uid);
+  if (mPackages == null || mPackages.length < 2) {
+    removePackagesSection();
+    return;
+  }
+  for (int i=0; i < mPackages.length; i++) {
+    try {
+      ApplicationInfo ai=pm.getApplicationInfo(mPackages[i],0);
+      CharSequence label=ai.loadLabel(pm);
+      Drawable icon=defaultActivityIcon;
+      if (label != null) {
+        mPackages[i]=label.toString();
+      }
+      if (ai.icon != 0) {
+        icon=ai.loadIcon(pm);
+      }
+      ViewGroup item=(ViewGroup)inflater.inflate(R.layout.power_usage_package_item,null);
+      packagesParent.addView(item);
+      TextView labelView=(TextView)item.findViewById(R.id.label);
+      labelView.setText(mPackages[i]);
+    }
+ catch (    NameNotFoundException e) {
+    }
+  }
+}

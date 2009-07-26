@@ -1,0 +1,41 @@
+{
+  if (mStats == null) {
+    load();
+  }
+  mMaxPower=0;
+  mTotalPower=0;
+  mAppListGroup.removeAll();
+  mUsageList.clear();
+  processAppUsage();
+  processMiscUsage();
+  mAppListGroup.setOrderingAsAdded(false);
+  Collections.sort(mUsageList);
+  for (  BatterySipper g : mUsageList) {
+    if (g.getSortValue() < MIN_POWER_THRESHOLD)     continue;
+    double percent=((g.getSortValue() / mTotalPower) * 100);
+    if (percent < 1)     continue;
+    PowerGaugePreference pref=new PowerGaugePreference(this,g.getIcon(),g);
+    double scaleByMax=(g.getSortValue() * 100) / mMaxPower;
+    g.percent=percent;
+    pref.setTitle(g.name);
+    pref.setPercent(percent);
+    pref.setOrder(Integer.MAX_VALUE - (int)g.getSortValue());
+    pref.setGaugeValue(mScaleByMax ? scaleByMax : percent);
+    if (g.uidObj != null) {
+      pref.setKey(Integer.toString(g.uidObj.getUid()));
+    }
+    mAppListGroup.addPreference(pref);
+    if (mAppListGroup.getPreferenceCount() > MAX_ITEMS_TO_LIST)     break;
+  }
+  if (DEBUG)   setTitle("Battery total uAh = " + ((mTotalPower * 1000) / 3600));
+synchronized (mRequestQueue) {
+    if (!mRequestQueue.isEmpty()) {
+      if (mRequestThread == null) {
+        mRequestThread=new Thread(this,"BatteryUsage Icon Loader");
+        mRequestThread.setPriority(Thread.MIN_PRIORITY);
+        mRequestThread.start();
+      }
+      mRequestQueue.notify();
+    }
+  }
+}

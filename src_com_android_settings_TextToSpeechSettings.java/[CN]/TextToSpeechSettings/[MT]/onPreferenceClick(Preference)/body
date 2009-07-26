@@ -1,0 +1,14 @@
+{
+  if (preference == mPlayExample) {
+    if (mTts != null) {
+      mTts.speak(getResources().getString(R.string.tts_demo),TextToSpeech.TTS_QUEUE_FLUSH,null);
+    }
+    return true;
+  }
+  if (preference == mInstallData) {
+    installVoiceData();
+    finish();
+    return true;
+  }
+  return false;
+}

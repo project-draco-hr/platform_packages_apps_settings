@@ -4,7 +4,7 @@
   }
   AppInfo entry=mCache.getEntry(pkgName);
   if (entry == null) {
-    Log.w(TAG,"Entry for package:" + pkgName + "doesnt exist in map");
+    if (localLOGV)     Log.w(TAG,"Entry for package:" + pkgName + "doesnt exist in map");
     return;
   }
   if (entry.setSize(size,formattedSize)) {

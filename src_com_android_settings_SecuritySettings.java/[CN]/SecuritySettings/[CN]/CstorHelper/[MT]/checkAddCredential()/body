@@ -12,5 +12,22 @@
     }
   }
   mCstorAddCredentialHelper.setName(name);
+  if (mCstorAddCredentialHelper.isPkcs12Keystore()) {
+    String password=getText(R.id.cstor_credential_password);
+    if (TextUtils.isEmpty(password)) {
+      showError(R.string.cstor_password_empty_error);
+      return false;
+    }
+    mCstorAddCredentialHelper.setPassword(password);
+  }
+  if (mCstorAddCredentialHelper.saveToStorage() < 0) {
+    if (mCstorAddCredentialHelper.isPkcs12Keystore()) {
+      showError(R.string.cstor_password_error);
+    }
+ else {
+      showError(R.string.cstor_storage_error);
+    }
+    return false;
+  }
   return true;
 }

@@ -4,9 +4,12 @@ case ACTION_DISPLAY_SETTINGS:
     startActivity(new Intent(Settings.ACTION_DISPLAY_SETTINGS));
   break;
 case ACTION_WIFI_SETTINGS:
-startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
 break;
 case ACTION_BLUETOOTH_SETTINGS:
+startActivity(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS));
+break;
+case ACTION_WIRELESS_SETTINGS:
 startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
 break;
 case ACTION_APP_DETAILS:
@@ -14,6 +17,9 @@ Intent intent=new Intent(Intent.ACTION_VIEW);
 intent.setClass(this,InstalledAppDetails.class);
 intent.putExtra("com.android.settings.ApplicationPkgName",mPackages[0]);
 startActivity(intent);
+break;
+case ACTION_SECURITY_SETTINGS:
+startActivity(new Intent(Settings.ACTION_SECURITY_SETTINGS));
 break;
 }
 }

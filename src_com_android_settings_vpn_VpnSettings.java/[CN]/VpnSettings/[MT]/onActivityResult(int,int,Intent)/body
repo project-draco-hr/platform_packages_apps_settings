@@ -1,6 +1,4 @@
 {
-  final int index=mIndexOfEditedProfile;
-  mIndexOfEditedProfile=-1;
   if ((resultCode == RESULT_CANCELED) || (data == null)) {
     Log.d(TAG,"no result returned by editor");
     return;
@@ -15,6 +13,7 @@
       Log.e(TAG,"null object returned by editor");
       return;
     }
+    int index=getProfileIndexFromId(p.getId());
     if (checkDuplicateName(p,index)) {
       final VpnProfile profile=p;
       Util.showErrorMessage(this,String.format(getString(R.string.vpn_error_duplicate_name),p.getName()),new DialogInterface.OnClickListener(){
@@ -28,7 +27,6 @@
     if (needKeystoreToSave(p)) {
       Runnable action=new Runnable(){
         public void run(){
-          mIndexOfEditedProfile=index;
           onActivityResult(requestCode,resultCode,data);
         }
       }
@@ -36,7 +34,7 @@
       if (!unlockKeystore(p,action))       return;
     }
     try {
-      if ((index < 0) || (index >= mVpnProfileList.size())) {
+      if (index < 0) {
         addProfile(p);
         Util.showShortToastMessage(this,String.format(getString(R.string.vpn_profile_added),p.getName()));
       }

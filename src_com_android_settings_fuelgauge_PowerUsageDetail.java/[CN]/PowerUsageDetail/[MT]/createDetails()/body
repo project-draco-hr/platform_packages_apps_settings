@@ -6,6 +6,7 @@
   mUsageSince=intent.getIntExtra(EXTRA_USAGE_SINCE,USAGE_SINCE_UNPLUGGED);
   mUid=intent.getIntExtra(EXTRA_UID,0);
   mDrainType=(DrainType)intent.getSerializableExtra(EXTRA_DRAIN_TYPE);
+  mNoCoverage=intent.getDoubleExtra(EXTRA_NO_COVERAGE,0);
   String iconPackage=intent.getStringExtra(EXTRA_ICON_PACKAGE);
   int iconId=intent.getIntExtra(EXTRA_ICON_ID,0);
   if (!TextUtils.isEmpty(iconPackage)) {
@@ -40,28 +41,8 @@
   ImageView iconImage=(ImageView)findViewById(R.id.icon);
   iconImage.setImageDrawable(mAppIcon);
   mDetailsParent=(ViewGroup)findViewById(R.id.details);
-  LayoutInflater inflater=getLayoutInflater();
-  if (mTypes != null && mValues != null) {
-    for (int i=0; i < mTypes.length; i++) {
-      if (mValues[i] <= 0)       continue;
-      final String label=getString(mTypes[i]);
-      String value=null;
-switch (mTypes[i]) {
-case R.string.usage_type_data_recv:
-case R.string.usage_type_data_send:
-        value=Utils.formatBytes(this,mValues[i]);
-      break;
-default :
-    value=Utils.formatElapsedTime(this,mValues[i]);
-}
-ViewGroup item=(ViewGroup)inflater.inflate(R.layout.power_usage_detail_item_text,null);
-mDetailsParent.addView(item);
-TextView labelView=(TextView)item.findViewById(R.id.label);
-TextView valueView=(TextView)item.findViewById(R.id.value);
-labelView.setText(label);
-valueView.setText(value);
-}
-}
-fillPackagesSection(mUid);
-fillControlsSection(mUid);
+  mControlsParent=(ViewGroup)findViewById(R.id.controls);
+  fillDetailsSection();
+  fillPackagesSection(mUid);
+  fillControlsSection(mUid);
 }

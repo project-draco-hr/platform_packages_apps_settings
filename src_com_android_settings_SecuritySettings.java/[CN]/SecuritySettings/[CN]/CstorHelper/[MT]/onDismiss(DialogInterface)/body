@@ -5,6 +5,9 @@
   }
  else {
     removeDialog(mDialogId);
+    if (mDialogId == CSTOR_UNLOCK_DIALOG) {
+      mAccessCheckBox.setChecked(isCstorUnlocked());
+    }
     if (mCstorAddCredentialHelper != null) {
       if (!isCstorInitialized()) {
         showDialog(CSTOR_INIT_DIALOG);
@@ -13,7 +16,9 @@
         showDialog(CSTOR_UNLOCK_DIALOG);
       }
  else {
-        addCredential();
+        String formatString=getString(R.string.cstor_is_added);
+        String message=String.format(formatString,mCstorAddCredentialHelper.getName());
+        Toast.makeText(SecuritySettings.this,message,Toast.LENGTH_SHORT).show();
         finish();
       }
     }

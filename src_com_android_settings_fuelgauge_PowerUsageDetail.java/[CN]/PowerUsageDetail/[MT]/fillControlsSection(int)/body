@@ -1,8 +1,4 @@
 {
-  String label1=null;
-  String label2=null;
-  mAction1=0;
-  mAction2=0;
   PackageManager pm=getPackageManager();
   String[] packages=pm.getPackagesForUid(uid);
   PackageInfo pi=null;
@@ -13,40 +9,38 @@
   }
   ApplicationInfo ai=pi != null ? pi.applicationInfo : null;
   boolean isSystem=ai != null ? (ai.flags & ApplicationInfo.FLAG_SYSTEM) != 0 : false;
-  if (uid < 1000 || !isSystem) {
+  boolean removeHeader=true;
 switch (mDrainType) {
 case APP:
-      if (packages != null) {
-        label2=getString(R.string.battery_action_app_details);
-        mAction2=ACTION_APP_DETAILS;
-      }
-    break;
+    if (packages != null && !isSystem) {
+      addControl(R.string.battery_action_app_details,R.string.battery_sugg_apps_info,ACTION_APP_DETAILS);
+      removeHeader=false;
+    }
+  if (mUsesGps) {
+    addControl(R.string.security_settings_title,R.string.battery_sugg_apps_gps,ACTION_SECURITY_SETTINGS);
+    removeHeader=false;
+  }
+break;
 case SCREEN:
-  label2=getString(R.string.battery_action_display);
-mAction2=ACTION_DISPLAY_SETTINGS;
+addControl(R.string.sound_and_display_settings,R.string.battery_sugg_display,ACTION_DISPLAY_SETTINGS);
+removeHeader=false;
 break;
 case WIFI:
-label2=getString(R.string.battery_action_wifi);
-mAction2=ACTION_WIRELESS_SETTINGS;
+addControl(R.string.wifi_settings,R.string.battery_sugg_wifi,ACTION_WIFI_SETTINGS);
+removeHeader=false;
 break;
 case BLUETOOTH:
+addControl(R.string.bluetooth_settings,R.string.battery_sugg_bluetooth_basic,ACTION_BLUETOOTH_SETTINGS);
+removeHeader=false;
+break;
+case CELL:
+if (mNoCoverage > 10) {
+addControl(R.string.radio_controls_title,R.string.battery_sugg_radio,ACTION_WIRELESS_SETTINGS);
+removeHeader=false;
+}
 break;
 }
-}
-mButton1=(Button)findViewById(R.id.action_button1);
-mButton2=(Button)findViewById(R.id.action_button2);
-mButton1.setOnClickListener(this);
-mButton2.setOnClickListener(this);
-if (label1 == null) {
-mButton1.setVisibility(View.GONE);
-}
- else {
-mButton1.setText(label1);
-}
-if (label2 == null) {
-findViewById(R.id.controls_section).setVisibility(View.GONE);
-}
- else {
-mButton2.setText(label2);
+if (removeHeader) {
+mControlsParent.setVisibility(View.GONE);
 }
 }

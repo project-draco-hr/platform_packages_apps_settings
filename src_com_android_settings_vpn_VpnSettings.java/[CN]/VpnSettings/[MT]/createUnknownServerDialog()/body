@@ -1,0 +1,10 @@
+{
+  return createReconnectDialogBuilder().setMessage(R.string.vpn_unknown_server_dialog_msg).setPositiveButton(R.string.vpn_yes_button,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int w){
+      VpnProfile p=mConnectingActor.getProfile();
+      onIdle();
+      startVpnEditor(p);
+    }
+  }
+).create();
+}

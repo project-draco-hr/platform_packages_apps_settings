@@ -1,0 +1,29 @@
+{
+  LayoutInflater inflater=getLayoutInflater();
+  if (mTypes != null && mValues != null) {
+    for (int i=0; i < mTypes.length; i++) {
+      if (mValues[i] <= 0)       continue;
+      final String label=getString(mTypes[i]);
+      String value=null;
+switch (mTypes[i]) {
+case R.string.usage_type_data_recv:
+case R.string.usage_type_data_send:
+        value=Utils.formatBytes(this,mValues[i]);
+      break;
+case R.string.usage_type_no_coverage:
+    value=String.format("%d%%",(int)Math.floor(mValues[i]));
+  break;
+case R.string.usage_type_gps:
+mUsesGps=true;
+default :
+value=Utils.formatElapsedTime(this,mValues[i]);
+}
+ViewGroup item=(ViewGroup)inflater.inflate(R.layout.power_usage_detail_item_text,null);
+mDetailsParent.addView(item);
+TextView labelView=(TextView)item.findViewById(R.id.label);
+TextView valueView=(TextView)item.findViewById(R.id.value);
+labelView.setText(label);
+valueView.setText(value);
+}
+}
+}

@@ -1,12 +1,3 @@
 {
-  VpnPreference pref=new VpnPreference(this,p);
-  mVpnPreferenceMap.put(p.getName(),pref);
-  mVpnListContainer.addPreference(pref);
-  pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
-    public boolean onPreferenceClick(    Preference pref){
-      connectOrDisconnect(((VpnPreference)pref).mProfile);
-      return true;
-    }
-  }
-);
+  return addPreferenceFor(p,true);
 }

@@ -7,5 +7,8 @@
     power+=strengthTimeMs / 1000 * mPowerProfile.getAveragePower(PowerProfile.POWER_RADIO_ON,i);
     signalTimeMs+=strengthTimeMs;
   }
-  addEntry(getString(R.string.power_cell),DrainType.CELL,signalTimeMs,android.R.drawable.ic_menu_sort_by_size,power);
+  BatterySipper bs=addEntry(getString(R.string.power_cell),DrainType.CELL,signalTimeMs,android.R.drawable.ic_menu_sort_by_size,power);
+  if (signalTimeMs != 0) {
+    bs.noCoveragePercent=mStats.getPhoneSignalStrengthTime(0,uSecNow,mStatsType) / 1000 * 100.0 / signalTimeMs;
+  }
 }

@@ -6,25 +6,33 @@
 switch (state) {
 case CONNECTED:
     mConnectingActor=null;
-case CONNECTING:
   mActiveProfile=p;
 disableProfilePreferencesIfOneActive();
 break;
+case CONNECTING:
 case DISCONNECTING:
-if (oldState == VpnState.CONNECTING) {
-mConnectingError=true;
-}
+disableProfilePreferencesIfOneActive();
 break;
 case CANCELLED:
 changeState(p,VpnState.IDLE);
 break;
 case IDLE:
-assert(mActiveProfile != p);
-mActiveProfile=null;
-mConnectingActor=null;
-enableProfilePreferences();
-if (oldState == VpnState.CONNECTING) mConnectingError=true;
-if (mConnectingError) showReconnectDialog(p);
+assert(mActiveProfile == p);
+switch (mConnectingErrorCode) {
+case NO_ERROR:
+onIdle();
+break;
+case VpnManager.VPN_ERROR_AUTH:
+showDialog(DIALOG_AUTH_ERROR);
+break;
+case VpnManager.VPN_ERROR_UNKNOWN_SERVER:
+showDialog(DIALOG_UNKNOWN_SERVER);
+break;
+default :
+showDialog(DIALOG_RECONNECT);
+break;
+}
+mConnectingErrorCode=NO_ERROR;
 break;
 }
 }

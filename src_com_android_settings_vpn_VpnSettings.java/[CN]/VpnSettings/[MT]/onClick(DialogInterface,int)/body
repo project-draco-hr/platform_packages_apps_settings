@@ -1,20 +1,25 @@
 {
-  dismissDialog(DIALOG_CONNECT);
   if (which == CONNECT_BUTTON) {
     Dialog d=(Dialog)dialog;
     String error=mConnectingActor.validateInputs(d);
     if (error == null) {
       changeState(mConnectingActor.getProfile(),VpnState.CONNECTING);
       mConnectingActor.connect(d);
+      removeDialog(DIALOG_CONNECT);
       return;
     }
  else {
-      new AlertDialog.Builder(this).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(String.format(getString(R.string.vpn_error_miss_entering),error)).setPositiveButton(R.string.vpn_back_button,new DialogInterface.OnClickListener(){
+      dismissDialog(DIALOG_CONNECT);
+      mShowingDialog=new AlertDialog.Builder(this).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(String.format(getString(R.string.vpn_error_miss_entering),error)).setPositiveButton(R.string.vpn_back_button,new DialogInterface.OnClickListener(){
         public void onClick(        DialogInterface dialog,        int which){
           showDialog(DIALOG_CONNECT);
         }
       }
-).show();
+).create();
+      mShowingDialog.show();
     }
+  }
+ else {
+    removeDialog(DIALOG_CONNECT);
   }
 }

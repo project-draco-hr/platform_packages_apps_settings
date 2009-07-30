@@ -1,6 +1,8 @@
 {
   if (state.isEnterprise() && Keystore.getInstance().getState() != Keystore.UNLOCKED) {
     startActivity(new Intent(SecuritySettings.ACTION_UNLOCK_CREDENTIAL_STORAGE));
+    mResumeState=state;
+    mResumeMode=mode;
     return;
   }
   AccessPointDialog dialog=new AccessPointDialog(this,mWifiLayer);

@@ -1,7 +1,7 @@
 {
   PackageManager pm=getPackageManager();
   Intent intent=new Intent();
-  intent.setAction("android.intent.action.CHECK_TTS_DATA");
+  intent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
   List<ResolveInfo> resolveInfos=pm.queryIntentActivities(intent,0);
   for (int i=0; i < resolveInfos.size(); i++) {
     ActivityInfo currentActivityInfo=resolveInfos.get(i).activityInfo;

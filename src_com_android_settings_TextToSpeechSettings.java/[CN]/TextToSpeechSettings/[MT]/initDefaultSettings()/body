@@ -6,7 +6,7 @@
     intVal=Settings.Secure.getInt(resolver,TTS_USE_DEFAULTS);
   }
  catch (  SettingNotFoundException e) {
-    intVal=TextToSpeech.Engine.FALLBACK_TTS_USE_DEFAULTS;
+    intVal=TextToSpeech.Engine.USE_DEFAULTS;
     Settings.Secure.putInt(resolver,TTS_USE_DEFAULTS,intVal);
   }
   mUseDefaultPref.setChecked(intVal == 1);
@@ -22,7 +22,7 @@
     intVal=Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
   }
  catch (  SettingNotFoundException e) {
-    intVal=TextToSpeech.Engine.FALLBACK_TTS_DEFAULT_RATE;
+    intVal=TextToSpeech.Engine.DEFAULT_RATE;
     Settings.Secure.putInt(resolver,TTS_DEFAULT_RATE,intVal);
   }
   mDefaultRatePref.setValue(String.valueOf(intVal));

@@ -1,0 +1,19 @@
+{
+  final PptpProfile profile=(PptpProfile)getProfile();
+  CheckBoxPreference encryption=mEncryption=new CheckBoxPreference(c);
+  boolean enabled=profile.isEncryptionEnabled();
+  setSecretTitle(encryption,R.string.vpn_pptp_encryption_title,enabled);
+  encryption.setChecked(enabled);
+  setEncryptionSummary(encryption,enabled);
+  encryption.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference pref,    Object newValue){
+      boolean enabled=(Boolean)newValue;
+      profile.setEncryptionEnabled(enabled);
+      setSecretTitle(mEncryption,R.string.vpn_pptp_encryption_title,enabled);
+      setEncryptionSummary(mEncryption,enabled);
+      return true;
+    }
+  }
+);
+  return encryption;
+}

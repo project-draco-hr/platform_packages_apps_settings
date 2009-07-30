@@ -6,12 +6,11 @@
  catch (    InterruptedException e) {
     }
   }
-  AppInfo appInfo=null;
   Bundle data=new Bundle();
-  data.putString(ATTR_PKG_NAME,mAppInfo.packageName);
+  data.putString(ATTR_PKG_NAME,pkgName);
   data.putBoolean(ATTR_GET_SIZE_STATUS,pSucceeded);
   if (pSucceeded && pStats != null) {
-    if (localLOGV)     Log.i(TAG,"onGetStatsCompleted::" + pStats.packageName + ", ("+ pStats.cacheSize+ ","+ pStats.codeSize+ ", "+ pStats.dataSize);
+    if (localLOGV)     Log.i(TAG,"onGetStatsCompleted::" + pkgName + ", ("+ pStats.cacheSize+ ","+ pStats.codeSize+ ", "+ pStats.dataSize);
     long total=getTotalSize(pStats);
     data.putLong(ATTR_PKG_STATS,total);
     CharSequence sizeStr=getSizeStr(total);

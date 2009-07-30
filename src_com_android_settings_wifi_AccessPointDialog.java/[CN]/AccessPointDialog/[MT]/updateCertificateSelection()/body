@@ -1,0 +1,8 @@
+{
+  setSpinnerAdapter(mClientCertSpinner,getAllUserCertificateKeys());
+  setSpinnerAdapter(mCaCertSpinner,getAllCaCertificateKeys());
+  mPhase2Spinner.setSelection(getSelectionIndex(R.array.wifi_phase2_entries,mState.getPhase2()));
+  mEapSpinner.setSelection(getSelectionIndex(R.array.wifi_eap_entries,mState.getEap()));
+  mClientCertSpinner.setSelection(getSelectionIndex(getAllUserCertificateKeys(),mState.getEnterpriseField(AccessPointState.CLIENT_CERT)));
+  mCaCertSpinner.setSelection(getSelectionIndex(getAllCaCertificateKeys(),mState.getEnterpriseField(AccessPointState.CA_CERT)));
+}

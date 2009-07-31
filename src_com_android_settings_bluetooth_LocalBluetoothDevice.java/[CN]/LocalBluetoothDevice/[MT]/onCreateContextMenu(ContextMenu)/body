@@ -1,5 +1,7 @@
 {
-  if (isBusy())   return;
+  if (mLocalManager.getBluetoothState() != BluetoothDevice.BLUETOOTH_STATE_ON || isBusy()) {
+    return;
+  }
   int bondState=getBondState();
   boolean isConnected=isConnected();
   boolean hasProfiles=mProfiles.size() > 0;

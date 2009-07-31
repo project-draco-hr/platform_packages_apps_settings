@@ -1,5 +1,6 @@
 {
   super.onCreate(icicle);
+  Preference removablePref;
   mHandler=new MyHandler(this);
   mTelephonyManager=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
   addPreferencesFromResource(R.xml.device_info_status);
@@ -16,15 +17,30 @@
     setSummaryText("meid_number",mPhone.getMeid());
     setSummaryText("min_number",mPhone.getCdmaMin());
     setSummaryText("prl_version",mPhone.getCdmaPrlVersion());
-    getPreferenceScreen().removePreference(findPreference("imei"));
-    getPreferenceScreen().removePreference(findPreference("imei_sv"));
+    removablePref=findPreference("imei");
+    if (removablePref != null) {
+      getPreferenceScreen().removePreference(removablePref);
+    }
+    removablePref=findPreference("imei_sv");
+    if (removablePref != null) {
+      getPreferenceScreen().removePreference(removablePref);
+    }
   }
  else {
     setSummaryText("imei",mPhone.getDeviceId());
     setSummaryText("imei_sv",((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
-    getPreferenceScreen().removePreference(findPreference("prl_version"));
-    getPreferenceScreen().removePreference(findPreference("meid_number"));
-    getPreferenceScreen().removePreference(findPreference("min_number"));
+    removablePref=findPreference("prl_version");
+    if (removablePref != null) {
+      getPreferenceScreen().removePreference(removablePref);
+    }
+    removablePref=findPreference("meid_number");
+    if (removablePref != null) {
+      getPreferenceScreen().removePreference(removablePref);
+    }
+    removablePref=findPreference("min_number");
+    if (removablePref != null) {
+      getPreferenceScreen().removePreference(removablePref);
+    }
   }
   setSummaryText("number",mPhone.getLine1Number());
   mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);

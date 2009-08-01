@@ -2,7 +2,7 @@
   CheckBoxPreference pref=new CheckBoxPreference(SecuritySettings.this);
   pref.setTitle(R.string.cstor_access_title);
   pref.setSummary(R.string.cstor_access_summary);
-  pref.setChecked(isCstorUnlocked());
+  if (isInitialized)   pref.setChecked(isCstorUnlocked());
   pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
     public boolean onPreferenceChange(    Preference pref,    Object value){
       if (((Boolean)value)) {
@@ -15,7 +15,7 @@
     }
   }
 );
-  pref.setEnabled(isCstorInitialized());
+  pref.setEnabled(isInitialized);
   mAccessCheckBox=pref;
   return pref;
 }

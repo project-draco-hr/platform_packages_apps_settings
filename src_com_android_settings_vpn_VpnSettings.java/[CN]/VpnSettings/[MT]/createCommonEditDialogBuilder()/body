@@ -1,7 +1,7 @@
 {
   return createCommonDialogBuilder().setPositiveButton(R.string.vpn_yes_button,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int w){
-      VpnProfile p=mConnectingActor.getProfile();
+      VpnProfile p=mActiveProfile;
       onIdle();
       startVpnEditor(p);
     }

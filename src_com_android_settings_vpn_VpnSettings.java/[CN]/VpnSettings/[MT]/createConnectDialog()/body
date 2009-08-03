@@ -1,5 +1,5 @@
 {
-  return new AlertDialog.Builder(this).setView(mConnectingActor.createConnectView()).setTitle(String.format(getString(R.string.vpn_connect_to),mConnectingActor.getProfile().getName())).setPositiveButton(getString(R.string.vpn_connect_button),this).setNegativeButton(getString(android.R.string.cancel),this).setOnCancelListener(new DialogInterface.OnCancelListener(){
+  return new AlertDialog.Builder(this).setView(mConnectingActor.createConnectView()).setTitle(String.format(getString(R.string.vpn_connect_to),mActiveProfile.getName())).setPositiveButton(getString(R.string.vpn_connect_button),this).setNegativeButton(getString(android.R.string.cancel),this).setOnCancelListener(new DialogInterface.OnCancelListener(){
     public void onCancel(    DialogInterface dialog){
       removeDialog(DIALOG_CONNECT);
       onIdle();

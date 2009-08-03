@@ -3,7 +3,7 @@
     Dialog d=(Dialog)dialog;
     String error=mConnectingActor.validateInputs(d);
     if (error == null) {
-      changeState(mConnectingActor.getProfile(),VpnState.CONNECTING);
+      changeState(mActiveProfile,VpnState.CONNECTING);
       mConnectingActor.connect(d);
       removeDialog(DIALOG_CONNECT);
       return;

@@ -4,26 +4,26 @@ switch (p.getType()) {
 case L2TP_IPSEC_PSK:
     L2tpIpsecPskProfile pskProfile=(L2tpIpsecPskProfile)p;
   String presharedKey=pskProfile.getPresharedKey();
-if (!presharedKey.equals(SECRET_SET_INDICATOR)) {
-  String keyName=KEY_PREFIX_IPSEC_PSK + p.getId();
-  int ret=ks.put(NAMESPACE_VPN,keyName,presharedKey);
-  if (ret < 0) {
-    Log.e(TAG,"keystore write failed: key=" + keyName);
-  }
-  pskProfile.setPresharedKey(keyNameForDaemon(keyName));
+String keyName=KEY_PREFIX_IPSEC_PSK + p.getId();
+if (!TextUtils.isEmpty(presharedKey)) {
+int ret=ks.put(NAMESPACE_VPN,keyName,presharedKey);
+if (ret != 0) {
+  Log.e(TAG,"keystore write failed: key=" + keyName);
 }
+}
+pskProfile.setPresharedKey(keyNameForDaemon(keyName));
 case L2TP:
 L2tpProfile l2tpProfile=(L2tpProfile)p;
-String keyName=KEY_PREFIX_L2TP_SECRET + p.getId();
+keyName=KEY_PREFIX_L2TP_SECRET + p.getId();
 if (l2tpProfile.isSecretEnabled()) {
 String secret=l2tpProfile.getSecretString();
-if (!secret.equals(SECRET_SET_INDICATOR)) {
+if (!TextUtils.isEmpty(secret)) {
 int ret=ks.put(NAMESPACE_VPN,keyName,secret);
-if (ret < 0) {
+if (ret != 0) {
 Log.e(TAG,"keystore write failed: key=" + keyName);
 }
-l2tpProfile.setSecretString(keyNameForDaemon(keyName));
 }
+l2tpProfile.setSecretString(keyNameForDaemon(keyName));
 }
  else {
 ks.remove(NAMESPACE_VPN,keyName);

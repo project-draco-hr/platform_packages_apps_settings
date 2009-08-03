@@ -34,12 +34,9 @@ case SECURITY_IEEE8021X:
 {
 if (Keystore.getInstance().getState() != Keystore.UNLOCKED) {
 getContext().startActivity(new Intent(SecuritySettings.ACTION_UNLOCK_CREDENTIAL_STORAGE));
-mSecuritySpinner.setSelection(0);
 return;
 }
-setEnterpriseFieldsVisible(true);
-setGenericPasswordVisible(true);
-updatePasswordCaption(AccessPointState.WPA);
+enableEnterpriseFields();
 break;
 }
 }

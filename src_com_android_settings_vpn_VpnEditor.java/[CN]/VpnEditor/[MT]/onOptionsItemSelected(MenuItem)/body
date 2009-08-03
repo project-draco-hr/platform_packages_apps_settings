@@ -4,7 +4,12 @@ case MENU_SAVE:
     if (validateAndSetResult())     finish();
   return true;
 case MENU_CANCEL:
-showCancellationConfirmDialog();
+if (profileChanged()) {
+  showCancellationConfirmDialog();
+}
+ else {
+  finish();
+}
 return true;
 }
 return super.onOptionsItemSelected(item);

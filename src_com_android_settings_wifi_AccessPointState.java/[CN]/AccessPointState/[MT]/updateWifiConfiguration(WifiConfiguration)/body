@@ -4,6 +4,12 @@
   config.hiddenSSID=hiddenSsid;
   config.SSID=convertToQuotedString(ssid);
   config.eap=mEap;
+  if (!TextUtils.isEmpty(mPhase2)) {
+    config.phase2=convertToQuotedString("auth=" + mPhase2);
+  }
+ else {
+    config.phase2=null;
+  }
   if (!TextUtils.isEmpty(mEnterpriseFields[IDENTITY])) {
     config.identity=convertToQuotedString(mEnterpriseFields[IDENTITY]);
   }

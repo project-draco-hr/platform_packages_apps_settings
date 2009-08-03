@@ -10,6 +10,7 @@
   }
   mConnectingActor=getActor(p);
   mActiveProfile=p;
+  if (!checkSecrets(p))   return;
   if (mConnectingActor.isConnectDialogNeeded()) {
     showDialog(DIALOG_CONNECT);
   }

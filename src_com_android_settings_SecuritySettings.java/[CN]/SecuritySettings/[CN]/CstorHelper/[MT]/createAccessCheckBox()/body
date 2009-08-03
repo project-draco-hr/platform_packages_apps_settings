@@ -6,7 +6,7 @@
   pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
     public boolean onPreferenceChange(    Preference pref,    Object value){
       if (((Boolean)value)) {
-        showDialog(isCstorInitialized() ? CSTOR_UNLOCK_DIALOG : CSTOR_INIT_DIALOG);
+        showCstorDialog(isCstorInitialized() ? CSTOR_UNLOCK_DIALOG : CSTOR_INIT_DIALOG);
       }
  else {
         lockCstor();

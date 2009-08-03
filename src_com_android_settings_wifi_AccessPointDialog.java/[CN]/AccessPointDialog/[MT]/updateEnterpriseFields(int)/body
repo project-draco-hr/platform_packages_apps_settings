@@ -30,19 +30,20 @@
     }
   }
 switch (securityType) {
+case SECURITY_IEEE8021X:
 case SECURITY_WPA_EAP:
 {
-      mState.setSecurity(AccessPointState.WPA_EAP);
+      if (securityType == SECURITY_WPA_EAP) {
+        mState.setSecurity(AccessPointState.WPA_EAP);
+      }
+ else {
+        mState.setSecurity(AccessPointState.IEEE8021X);
+      }
       mState.setEap(mEapSpinner.getSelectedItemPosition());
+      mState.setPhase2((String)mPhase2Spinner.getSelectedItem());
       break;
     }
-case SECURITY_IEEE8021X:
-{
-    mState.setSecurity(AccessPointState.IEEE8021X);
-    mState.setEap(mEapSpinner.getSelectedItemPosition());
-    break;
-  }
 default :
-mState.setSecurity(AccessPointState.OPEN);
+  mState.setSecurity(AccessPointState.OPEN);
 }
 }

@@ -1,12 +1,14 @@
 {
-  final L2tpProfile profile=(L2tpProfile)getProfile();
-  mSecretString=createSecretPreference(c,R.string.vpn_l2tp_secret_string_title,R.string.vpn_l2tp_secret,profile.getSecretString(),new Preference.OnPreferenceChangeListener(){
-    public boolean onPreferenceChange(    Preference pref,    Object newValue){
-      profile.setSecretString((String)newValue);
-      setSecretSummary(mSecretString,R.string.vpn_l2tp_secret,(String)newValue);
-      return true;
+  SecretHandler sHandler=mSecretHandler=new SecretHandler(c,R.string.vpn_l2tp_secret_string_title,R.string.vpn_l2tp_secret){
+    @Override protected String getSecretFromProfile(){
+      return ((L2tpProfile)getProfile()).getSecretString();
+    }
+    @Override protected void saveSecretToProfile(    String secret){
+      ((L2tpProfile)getProfile()).setSecretString(secret);
     }
   }
-);
-  return mSecretString;
+;
+  Preference pref=sHandler.getPreference();
+  pref.setEnabled(mSecret.isChecked());
+  return pref;
 }

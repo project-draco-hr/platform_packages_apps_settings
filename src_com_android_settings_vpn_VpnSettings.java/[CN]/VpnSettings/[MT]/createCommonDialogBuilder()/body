@@ -1,0 +1,18 @@
+{
+  return new AlertDialog.Builder(this).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(R.string.vpn_yes_button,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int w){
+      connectOrDisconnect(mConnectingActor.getProfile());
+    }
+  }
+).setNegativeButton(R.string.vpn_no_button,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int w){
+      onIdle();
+    }
+  }
+).setOnCancelListener(new DialogInterface.OnCancelListener(){
+    public void onCancel(    DialogInterface dialog){
+      onIdle();
+    }
+  }
+);
+}

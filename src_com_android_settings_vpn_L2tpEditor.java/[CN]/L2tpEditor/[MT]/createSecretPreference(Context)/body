@@ -9,7 +9,7 @@
     public boolean onPreferenceChange(    Preference pref,    Object newValue){
       boolean enabled=(Boolean)newValue;
       profile.setSecretEnabled(enabled);
-      mSecretString.setEnabled(enabled);
+      mSecretHandler.getPreference().setEnabled(enabled);
       setSecretTitle(mSecret,R.string.vpn_l2tp_secret,enabled);
       setSecretSummary(mSecret,enabled);
       return true;

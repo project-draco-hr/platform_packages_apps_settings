@@ -2,4 +2,18 @@
   super.onResume();
   mWifiLayer.onResume();
   mWifiEnabler.resume();
+  if (mResumeState != null) {
+    if (Keystore.getInstance().getState() == Keystore.UNLOCKED) {
+      showAccessPointDialog(mResumeState,mResumeMode);
+    }
+    mResumeMode=-1;
+    mResumeState=null;
+  }
+ else {
+    if (mResumeMode == AccessPointDialog.MODE_CONFIGURE) {
+      if (Keystore.getInstance().getState() == Keystore.UNLOCKED) {
+        ((AccessPointDialog)mDialog).enableEnterpriseFields();
+      }
+    }
+  }
 }

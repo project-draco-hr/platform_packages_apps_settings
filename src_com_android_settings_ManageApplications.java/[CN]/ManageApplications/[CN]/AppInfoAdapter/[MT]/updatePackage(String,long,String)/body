@@ -1,0 +1,16 @@
+{
+  ApplicationInfo info=null;
+  try {
+    info=mPm.getApplicationInfo(pkgName,PackageManager.GET_UNINSTALLED_PACKAGES);
+  }
+ catch (  NameNotFoundException e) {
+    return;
+  }
+  AppInfo aInfo=mCache.getEntry(pkgName);
+  if (aInfo != null) {
+    aInfo.refreshLabel(info.loadLabel(mPm));
+    aInfo.refreshIcon(info.loadIcon(mPm));
+    aInfo.setSize(size,formattedSize);
+    notifyDataSetChanged();
+  }
+}

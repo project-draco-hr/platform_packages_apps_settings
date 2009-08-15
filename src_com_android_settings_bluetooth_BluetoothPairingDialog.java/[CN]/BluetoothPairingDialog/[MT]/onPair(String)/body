@@ -4,13 +4,13 @@
     if (pinBytes == null) {
       return;
     }
-    mLocalManager.getBluetoothManager().setPin(mAddress,pinBytes);
+    mDevice.setPin(pinBytes);
   }
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_PASSKEY) {
     int passkey=Integer.getInteger(value);
-    mLocalManager.getBluetoothManager().setPasskey(mAddress,passkey);
+    mDevice.setPasskey(passkey);
   }
  else {
-    mLocalManager.getBluetoothManager().setPairingConfirmation(mAddress,true);
+    mDevice.setPairingConfirmation(true);
   }
 }

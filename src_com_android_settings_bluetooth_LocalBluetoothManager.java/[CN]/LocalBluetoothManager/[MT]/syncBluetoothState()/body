@@ -1,7 +1,7 @@
 {
   int bluetoothState;
-  if (mManager != null) {
-    bluetoothState=mManager.isEnabled() ? BluetoothDevice.BLUETOOTH_STATE_ON : BluetoothDevice.BLUETOOTH_STATE_OFF;
+  if (mAdapter != null) {
+    bluetoothState=mAdapter.isEnabled() ? BluetoothAdapter.BLUETOOTH_STATE_ON : BluetoothAdapter.BLUETOOTH_STATE_OFF;
   }
  else {
     bluetoothState=BluetoothError.ERROR;

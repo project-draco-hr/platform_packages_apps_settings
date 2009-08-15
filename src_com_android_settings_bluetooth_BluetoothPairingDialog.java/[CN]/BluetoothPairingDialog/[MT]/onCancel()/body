@@ -1,8 +1,8 @@
 {
   if (mType == BluetoothDevice.PAIRING_VARIANT_CONFIRMATION) {
-    mLocalManager.getBluetoothManager().setPairingConfirmation(mAddress,false);
+    mDevice.setPairingConfirmation(false);
   }
  else {
-    mLocalManager.getBluetoothManager().cancelBondProcess(mAddress);
+    mDevice.cancelBondProcess();
   }
 }

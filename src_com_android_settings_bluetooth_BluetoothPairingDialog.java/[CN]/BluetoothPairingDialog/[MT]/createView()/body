@@ -1,6 +1,6 @@
 {
   View view=getLayoutInflater().inflate(R.layout.bluetooth_pin_entry,null);
-  String name=mLocalManager.getLocalDeviceManager().getName(mAddress);
+  String name=mLocalManager.getCachedDeviceManager().getName(mDevice);
   TextView messageView=(TextView)view.findViewById(R.id.message);
   mPairingView=(EditText)view.findViewById(R.id.text);
   mPairingView.addTextChangedListener(this);

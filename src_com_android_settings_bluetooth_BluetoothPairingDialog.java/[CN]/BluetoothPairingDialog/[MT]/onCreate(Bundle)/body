@@ -6,7 +6,7 @@
     finish();
   }
   mLocalManager=LocalBluetoothManager.getInstance(this);
-  mAddress=intent.getStringExtra(BluetoothIntent.ADDRESS);
+  mDevice=intent.getParcelableExtra(BluetoothIntent.DEVICE);
   mType=intent.getIntExtra(BluetoothIntent.PAIRING_VARIANT,BluetoothClass.ERROR);
   if (mType == BluetoothDevice.PAIRING_VARIANT_PIN) {
     createUserEntryDialog();

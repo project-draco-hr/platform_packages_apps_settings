@@ -1,7 +1,7 @@
 {
   mReceivedPairingCanceled=true;
   TextView messageView=(TextView)findViewById(R.id.message);
-  messageView.setText(getString(R.string.bluetooth_pairing_error_message,mLocalManager.getLocalDeviceManager().getName(mAddress)));
+  messageView.setText(getString(R.string.bluetooth_pairing_error_message,mDevice.getName()));
   mPairingView.setVisibility(View.GONE);
   mPairingView.clearFocus();
   mPairingView.removeTextChangedListener(this);

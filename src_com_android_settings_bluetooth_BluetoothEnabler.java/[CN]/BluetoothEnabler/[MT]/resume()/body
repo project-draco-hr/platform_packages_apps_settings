@@ -3,7 +3,7 @@
     return;
   }
   int state=mLocalManager.getBluetoothState();
-  mCheckBoxPreference.setEnabled(state == BluetoothDevice.BLUETOOTH_STATE_ON || state == BluetoothDevice.BLUETOOTH_STATE_OFF);
+  mCheckBoxPreference.setEnabled(state == BluetoothAdapter.BLUETOOTH_STATE_ON || state == BluetoothAdapter.BLUETOOTH_STATE_OFF);
   handleStateChanged(state);
   mContext.registerReceiver(mReceiver,new IntentFilter(BluetoothIntent.BLUETOOTH_STATE_CHANGED_ACTION));
   mCheckBoxPreference.setOnPreferenceChangeListener(this);

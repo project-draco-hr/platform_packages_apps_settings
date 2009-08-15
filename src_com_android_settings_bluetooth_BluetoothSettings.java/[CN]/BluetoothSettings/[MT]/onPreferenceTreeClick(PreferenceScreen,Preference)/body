@@ -5,7 +5,7 @@
   }
   if (preference instanceof BluetoothDevicePreference) {
     BluetoothDevicePreference btPreference=(BluetoothDevicePreference)preference;
-    btPreference.getDevice().onClicked();
+    btPreference.getCachedDevice().onClicked();
     return true;
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

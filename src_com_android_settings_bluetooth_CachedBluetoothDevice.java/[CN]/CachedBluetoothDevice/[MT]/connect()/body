@@ -1,0 +1,15 @@
+{
+  if (!ensurePaired())   return;
+  mIsConnectingErrorPossible=true;
+  boolean hasAtLeastOnePreferredProfile=false;
+  for (  Profile profile : mProfiles) {
+    LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+    if (profileManager.isPreferred(mDevice)) {
+      hasAtLeastOnePreferredProfile=true;
+      queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
+    }
+  }
+  if (!hasAtLeastOnePreferredProfile) {
+    connectAndPreferAllProfiles();
+  }
+}

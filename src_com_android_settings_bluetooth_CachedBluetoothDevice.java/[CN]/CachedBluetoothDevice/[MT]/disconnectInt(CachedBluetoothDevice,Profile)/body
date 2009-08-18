@@ -1,0 +1,10 @@
+{
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+  int status=profileManager.getConnectionStatus(cachedDevice.mDevice);
+  if (SettingsBtStatus.isConnectionStatusConnected(status)) {
+    if (profileManager.disconnect(cachedDevice.mDevice) == BluetoothAdapter.RESULT_SUCCESS) {
+      return true;
+    }
+  }
+  return false;
+}

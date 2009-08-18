@@ -1,0 +1,12 @@
+{
+  CachedBluetoothDevice cachedDevice=mCachedDeviceManager.findDevice(device);
+  if (cachedDevice == null)   return;
+  String name=cachedDevice.getName();
+  String message=mContext.getString(messageResId,name);
+  if (mForegroundActivity != null) {
+    mErrorDialog=new AlertDialog.Builder(mForegroundActivity).setIcon(android.R.drawable.ic_dialog_alert).setTitle(titleResId).setMessage(message).setPositiveButton(android.R.string.ok,null).show();
+  }
+ else {
+    Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
+  }
+}

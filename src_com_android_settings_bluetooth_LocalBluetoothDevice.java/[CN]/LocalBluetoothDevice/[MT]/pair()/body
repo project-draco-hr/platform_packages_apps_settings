@@ -1,9 +1,0 @@
-{
-  BluetoothDevice manager=mLocalManager.getBluetoothManager();
-  if (manager.isDiscovering()) {
-    manager.cancelDiscovery();
-  }
-  if (!mLocalManager.getBluetoothManager().createBond(mAddress)) {
-    mLocalManager.showError(mAddress,R.string.bluetooth_error_title,R.string.bluetooth_pairing_error_message);
-  }
-}

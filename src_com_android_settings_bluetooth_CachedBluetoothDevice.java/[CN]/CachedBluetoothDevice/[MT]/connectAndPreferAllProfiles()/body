@@ -1,0 +1,9 @@
+{
+  if (!ensurePaired())   return;
+  mIsConnectingErrorPossible=true;
+  for (  Profile profile : mProfiles) {
+    LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+    profileManager.setPreferred(mDevice,true);
+    queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
+  }
+}

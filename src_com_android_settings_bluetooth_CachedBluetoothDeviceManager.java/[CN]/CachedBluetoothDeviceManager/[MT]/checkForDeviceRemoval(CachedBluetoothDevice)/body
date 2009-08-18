@@ -1,0 +1,6 @@
+{
+  if (cachedDevice.getBondState() == BluetoothDevice.BOND_NOT_BONDED && !cachedDevice.isVisible()) {
+    mCachedDevices.remove(cachedDevice);
+    dispatchDeviceDeleted(cachedDevice);
+  }
+}

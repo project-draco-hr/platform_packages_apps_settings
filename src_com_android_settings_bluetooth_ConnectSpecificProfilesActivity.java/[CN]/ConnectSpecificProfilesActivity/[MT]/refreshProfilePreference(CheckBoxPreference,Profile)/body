@@ -1,8 +1,8 @@
 {
-  String address=mDevice.getAddress();
+  BluetoothDevice device=mCachedDevice.getDevice();
   LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
-  int connectionStatus=profileManager.getConnectionStatus(address);
-  profilePref.setEnabled(!mDevice.isBusy());
-  profilePref.setSummary(getProfileSummary(profileManager,profile,address,connectionStatus,mOnlineMode));
-  profilePref.setChecked(profileManager.isPreferred(address));
+  int connectionStatus=profileManager.getConnectionStatus(device);
+  profilePref.setEnabled(!mCachedDevice.isBusy());
+  profilePref.setSummary(getProfileSummary(profileManager,profile,device,connectionStatus,mOnlineMode));
+  profilePref.setChecked(profileManager.isPreferred(device));
 }

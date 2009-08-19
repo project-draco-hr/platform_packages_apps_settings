@@ -1,5 +1,13 @@
 {
-  if (FILE_CACHE) {
+  SharedPreferences settings=getSharedPreferences(PREFS_NAME,0);
+  boolean disable=settings.getBoolean(PREF_DISABLE_CACHE,true);
+  if (disable)   Log.w(TAG,"Cache has been disabled");
+  SharedPreferences.Editor editor=settings.edit();
+  editor.putBoolean(PREF_DISABLE_CACHE,true);
+  editor.commit();
+  if (FILE_CACHE && !disable) {
     readFromFile();
+    editor.putBoolean(PREF_DISABLE_CACHE,false);
+    editor.commit();
   }
 }

@@ -1,6 +1,14 @@
 {
+  SharedPreferences settings=getSharedPreferences(PREFS_NAME,0);
+  SharedPreferences.Editor editor=settings.edit();
+  editor.putBoolean(PREF_DISABLE_CACHE,true);
+  editor.commit();
   if (FILE_CACHE) {
-    writeToFile();
+    boolean writeStatus=writeToFile();
     mAppPropCache.clear();
+    if (writeStatus) {
+      editor.putBoolean(PREF_DISABLE_CACHE,false);
+      editor.commit();
+    }
   }
 }

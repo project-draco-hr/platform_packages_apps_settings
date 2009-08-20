@@ -1,5 +1,10 @@
 {
   mOnlineModePreference.setChecked(mOnlineMode);
   mOnlineModePreference.setEnabled(!mCachedDevice.isBusy());
+  List<Profile> profiles=mCachedDevice.getProfiles();
+  if ((profiles.size() == 1) && (profiles.get(0).name().equals("OPP"))) {
+    Log.w(TAG,"there is only one profile: Opp, disable the connect button.");
+    mOnlineModePreference.setEnabled(false);
+  }
   mOnlineModePreference.setSummary(mOnlineMode ? mCachedDevice.getSummary() : R.string.bluetooth_device_advanced_online_mode_summary);
 }

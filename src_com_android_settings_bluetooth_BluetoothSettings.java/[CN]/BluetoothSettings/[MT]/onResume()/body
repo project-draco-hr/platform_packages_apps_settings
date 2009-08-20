@@ -3,12 +3,17 @@
   mDevicePreferenceMap.clear();
   mDeviceList.removeAll();
   addDevices();
-  mEnabler.resume();
-  mDiscoverableEnabler.resume();
-  mNamePreference.resume();
+  if (mScreenType == SCREEN_TYPE_SETTINGS) {
+    mEnabler.resume();
+    mDiscoverableEnabler.resume();
+    mNamePreference.resume();
+  }
   mLocalManager.registerCallback(this);
   mDeviceList.setProgress(mLocalManager.getBluetoothAdapter().isDiscovering());
   mLocalManager.startScanning(false);
-  registerReceiver(mReceiver,new IntentFilter(BluetoothIntent.BLUETOOTH_STATE_CHANGED_ACTION));
+  IntentFilter intentFilter=new IntentFilter();
+  intentFilter.addAction(BluetoothIntent.BLUETOOTH_STATE_CHANGED_ACTION);
+  intentFilter.addAction(BluetoothIntent.BOND_STATE_CHANGED_ACTION);
+  registerReceiver(mReceiver,intentFilter);
   mLocalManager.setForegroundActivity(this);
 }

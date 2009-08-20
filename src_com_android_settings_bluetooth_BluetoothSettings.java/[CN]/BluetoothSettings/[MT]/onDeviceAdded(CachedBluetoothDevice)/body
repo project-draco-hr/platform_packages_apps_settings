@@ -2,5 +2,18 @@
   if (mDevicePreferenceMap.get(cachedDevice) != null) {
     throw new IllegalStateException("Got onDeviceAdded, but cachedDevice already exists");
   }
-  createDevicePreference(cachedDevice);
+  List<Profile> profiles=cachedDevice.getProfiles();
+  if (mFilterType == BluetoothDevice.DEVICE_PICKER_FILTER_TYPE_TRANSFER) {
+    if (profiles.contains(Profile.OPP)) {
+      createDevicePreference(cachedDevice);
+    }
+  }
+ else   if (mFilterType == BluetoothDevice.DEVICE_PICKER_FILTER_TYPE_AUDIO) {
+    if ((profiles.contains(Profile.A2DP)) || (profiles.contains(Profile.HEADSET))) {
+      createDevicePreference(cachedDevice);
+    }
+  }
+ else {
+    createDevicePreference(cachedDevice);
+  }
 }

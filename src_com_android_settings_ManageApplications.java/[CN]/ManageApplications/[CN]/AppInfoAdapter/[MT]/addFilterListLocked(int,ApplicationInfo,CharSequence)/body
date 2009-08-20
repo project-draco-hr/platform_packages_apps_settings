@@ -1,0 +1,10 @@
+{
+  mAppLocalList.add(newIdx,info);
+synchronized (mFilterLock) {
+    String label=info.packageName;
+    if (pLabel != null) {
+      label=pLabel.toString();
+    }
+    mFilterMap.put(info.packageName,label.toLowerCase());
+  }
+}

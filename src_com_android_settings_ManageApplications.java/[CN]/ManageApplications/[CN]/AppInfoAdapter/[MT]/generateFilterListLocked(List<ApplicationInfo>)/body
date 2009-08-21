@@ -1,0 +1,13 @@
+{
+  mAppLocalList=new ArrayList<ApplicationInfo>(list);
+synchronized (mFilterLock) {
+    for (    ApplicationInfo info : mAppLocalList) {
+      String label=info.packageName;
+      AppInfo aInfo=mCache.getEntry(info.packageName);
+      if ((aInfo != null) && (aInfo.appName != null)) {
+        label=aInfo.appName.toString();
+      }
+      mFilterMap.put(info.packageName,label.toLowerCase());
+    }
+  }
+}

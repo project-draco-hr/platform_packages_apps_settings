@@ -16,7 +16,8 @@
     return;
   }
   mAppList.add(info);
-  mCache.addEntry(new AppInfo(pkgName,-1,info.loadLabel(mPm),info.loadIcon(mPm),size,formattedSize));
+  CharSequence label=info.loadLabel(mPm);
+  mCache.addEntry(new AppInfo(pkgName,-1,label,info.loadIcon(mPm),size,formattedSize));
   if (notInList && (shouldBeInList(mFilterApps,info))) {
     int newIdx=Collections.binarySearch(mAppLocalList,info,getAppComparator(mSortOrder));
     if (newIdx >= 0) {
@@ -24,7 +25,7 @@
       return;
     }
     newIdx=-newIdx - 1;
-    mAppLocalList.add(newIdx,info);
+    addFilterListLocked(newIdx,info,label);
     adjustIndex();
     notifyDataSetChanged();
   }

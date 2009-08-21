@@ -10,15 +10,8 @@
     removePkgBase(pkg);
     if (localLOGV)     Log.i(TAG,"Removing " + pkg + " from cache");
     mCache.removeEntry(pkg);
-    int i=0;
-    for (    ApplicationInfo info : mAppLocalList) {
-      if (info.packageName.equalsIgnoreCase(pkg)) {
-        mAppLocalList.remove(i);
-        if (localLOGV)         Log.i(TAG,"Removing " + pkg + " from local list");
-        found=true;
-        break;
-      }
-      i++;
+    if (removeFilterListLocked(pkg)) {
+      found=true;
     }
   }
   if (found) {

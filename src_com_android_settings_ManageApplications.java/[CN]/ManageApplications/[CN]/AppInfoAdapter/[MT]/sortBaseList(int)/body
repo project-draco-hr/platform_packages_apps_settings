@@ -1,6 +1,6 @@
 {
   if (localLOGV)   Log.i(TAG,"Sorting base list based on sortOrder = " + sortOrder);
   sortAppList(mAppList,sortOrder);
-  mAppLocalList=getFilteredApps(mAppList,mFilterApps);
+  generateFilterListLocked(getFilteredApps(mAppList,mFilterApps,mCurrentFilterMap != null,mCurrentFilterMap));
   adjustIndex();
 }

@@ -2,12 +2,6 @@
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.settings);
   int activePhoneType=TelephonyManager.getDefault().getPhoneType();
-  if (TelephonyManager.PHONE_TYPE_CDMA == activePhoneType) {
-    findPreference("security_settings").setSummary(R.string.cdma_security_settings_summary);
-  }
- else {
-    findPreference("security_settings").setSummary(R.string.security_settings_summary);
-  }
   PreferenceGroup parent=(PreferenceGroup)findPreference(KEY_PARENT);
   Utils.updatePreferenceToSpecificActivityOrRemove(this,parent,KEY_SYNC_SETTINGS,0);
   Utils.updatePreferenceToSpecificActivityOrRemove(this,parent,KEY_SEARCH_SETTINGS,0);

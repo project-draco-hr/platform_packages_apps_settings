@@ -1,5 +1,9 @@
 {
   if (mNotificationSeekBarVolumizer != null) {
+    Dialog dialog=getDialog();
+    if (dialog != null && dialog.isShowing()) {
+      mNotificationSeekBarVolumizer.revertVolume();
+    }
     mNotificationSeekBarVolumizer.stop();
     mNotificationSeekBarVolumizer=null;
   }

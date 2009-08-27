@@ -8,14 +8,12 @@
 ;
     if (!unlockKeystore(p,action))     return;
   }
-  mConnectingActor=getActor(p);
-  mActiveProfile=p;
   if (!checkSecrets(p))   return;
+  changeState(p,VpnState.CONNECTING);
   if (mConnectingActor.isConnectDialogNeeded()) {
     showDialog(DIALOG_CONNECT);
   }
  else {
-    changeState(p,VpnState.CONNECTING);
     mConnectingActor.connect(null);
   }
 }

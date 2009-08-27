@@ -2,21 +2,14 @@
 switch (id) {
 case DIALOG_CONNECT:
     return createConnectDialog();
-case DIALOG_RECONNECT:
-  return createReconnectDialog();
-case DIALOG_AUTH_ERROR:
-return createAuthErrorDialog();
-case DIALOG_REMOTE_HUNG_UP_ERROR:
-return createRemoteHungUpErrorDialog();
-case DIALOG_CHALLENGE_ERROR:
-return createChallengeErrorDialog();
-case DIALOG_UNKNOWN_SERVER:
-return createUnknownServerDialog();
 case DIALOG_SECRET_NOT_SET:
-return createSecretNotSetDialog();
-case DIALOG_CONNECTION_LOST:
-return createConnectionLostDialog();
+  return createSecretNotSetDialog();
+case VpnManager.VPN_ERROR_CHALLENGE:
+case VpnManager.VPN_ERROR_UNKNOWN_SERVER:
+case VpnManager.VPN_ERROR_PPP_NEGOTIATION_FAILED:
+return createEditDialog(id);
 default :
-return super.onCreateDialog(id);
+Log.d(TAG,"create reconnect dialog for event " + id);
+return createReconnectDialog(id);
 }
 }

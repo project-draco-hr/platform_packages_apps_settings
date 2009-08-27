@@ -10,7 +10,9 @@ case CONNECTED:
 disableProfilePreferencesIfOneActive();
 break;
 case CONNECTING:
+mConnectingActor=getActor(p);
 case DISCONNECTING:
+mActiveProfile=p;
 disableProfilePreferencesIfOneActive();
 break;
 case CANCELLED:

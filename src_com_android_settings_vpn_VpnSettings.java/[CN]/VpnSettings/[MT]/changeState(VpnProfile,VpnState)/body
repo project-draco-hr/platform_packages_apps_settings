@@ -20,30 +20,13 @@ changeState(p,VpnState.IDLE);
 break;
 case IDLE:
 assert(mActiveProfile == p);
-switch (mConnectingErrorCode) {
-case NO_ERROR:
+if (mConnectingErrorCode == NO_ERROR) {
 onIdle();
-break;
-case VpnManager.VPN_ERROR_AUTH:
-showDialog(DIALOG_AUTH_ERROR);
-break;
-case VpnManager.VPN_ERROR_REMOTE_HUNG_UP:
-showDialog(DIALOG_REMOTE_HUNG_UP_ERROR);
-break;
-case VpnManager.VPN_ERROR_CHALLENGE:
-showDialog(DIALOG_CHALLENGE_ERROR);
-break;
-case VpnManager.VPN_ERROR_UNKNOWN_SERVER:
-showDialog(DIALOG_UNKNOWN_SERVER);
-break;
-case VpnManager.VPN_ERROR_CONNECTION_LOST:
-showDialog(DIALOG_CONNECTION_LOST);
-break;
-default :
-showDialog(DIALOG_RECONNECT);
-break;
 }
+ else {
+showDialog(mConnectingErrorCode);
 mConnectingErrorCode=NO_ERROR;
+}
 break;
 }
 }

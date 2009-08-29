@@ -5,5 +5,9 @@
     mDialogState=ICC_LOCK_MODE;
     showPinDialog();
   }
+ else   if (preference == mPinDialog) {
+    mDialogState=ICC_OLD_MODE;
+    return false;
+  }
   return true;
 }

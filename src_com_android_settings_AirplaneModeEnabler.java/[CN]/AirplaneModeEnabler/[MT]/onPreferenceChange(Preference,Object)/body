@@ -1,4 +1,8 @@
 {
-  setAirplaneModeOn((Boolean)newValue);
+  if (Boolean.parseBoolean(SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE))) {
+  }
+ else {
+    setAirplaneModeOn((Boolean)newValue);
+  }
   return true;
 }

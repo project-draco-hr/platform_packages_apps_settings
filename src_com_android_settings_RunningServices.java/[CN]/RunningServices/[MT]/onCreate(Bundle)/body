@@ -1,0 +1,11 @@
+{
+  super.onCreate(savedInstanceState);
+  mAm=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+  mState=(State)getLastNonConfigurationInstance();
+  if (mState == null) {
+    mState=new State();
+  }
+  mProcessBgColor=0xff505050;
+  getListView().setDivider(null);
+  getListView().setAdapter(new ServiceListAdapter(mState));
+}

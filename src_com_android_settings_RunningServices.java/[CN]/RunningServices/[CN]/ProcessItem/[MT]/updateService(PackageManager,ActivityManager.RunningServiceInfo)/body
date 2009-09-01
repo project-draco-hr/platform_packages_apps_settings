@@ -1,0 +1,36 @@
+{
+  boolean changed=false;
+  ServiceItem si=mServices.get(service.service);
+  if (si == null) {
+    changed=true;
+    si=new ServiceItem();
+    si.mRunningService=service;
+    try {
+      si.mServiceInfo=pm.getServiceInfo(service.service,0);
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+    }
+    if (si.mServiceInfo != null && (si.mServiceInfo.labelRes != 0 || si.mServiceInfo.nonLocalizedLabel != null)) {
+      si.mDisplayLabel=si.mServiceInfo.loadLabel(pm);
+      si.mLabel=si.mDisplayLabel.toString();
+    }
+ else {
+      si.mLabel=si.mRunningService.service.getClassName();
+      int tail=si.mLabel.lastIndexOf('.');
+      if (tail >= 0) {
+        si.mLabel=si.mLabel.substring(tail + 1,si.mLabel.length());
+      }
+      si.mDisplayLabel=si.mLabel;
+    }
+    si.mPackageInfo=si.mServiceInfo;
+    mServices.put(service.service,si);
+  }
+  si.mCurSeq=mCurSeq;
+  si.mRunningService=service;
+  long activeSince=service.restarting == 0 ? service.activeSince : -1;
+  if (si.mActiveSince != activeSince) {
+    si.mActiveSince=activeSince;
+    changed=true;
+  }
+  return changed;
+}

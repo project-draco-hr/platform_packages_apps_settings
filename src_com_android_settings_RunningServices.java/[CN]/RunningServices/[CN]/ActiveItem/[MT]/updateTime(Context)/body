@@ -1,0 +1,8 @@
+{
+  if (mItem.mActiveSince >= 0) {
+    mHolder.size.setText(DateUtils.formatElapsedTime(mBuilder,(SystemClock.uptimeMillis() - mFirstRunTime) / 1000));
+  }
+ else {
+    mHolder.size.setText(context.getResources().getText(R.string.service_restarting));
+  }
+}

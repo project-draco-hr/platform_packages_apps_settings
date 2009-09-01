@@ -1,0 +1,130 @@
+{
+  final PackageManager pm=context.getPackageManager();
+  mSequence++;
+  boolean changed=false;
+  List<ActivityManager.RunningServiceInfo> services=am.getRunningServices(MAX_SERVICES);
+  if (services == null) {
+    return false;
+  }
+  final int NS=services.size();
+  for (int i=0; i < NS; i++) {
+    ActivityManager.RunningServiceInfo si=services.get(i);
+    if (!si.started) {
+      continue;
+    }
+    if ((si.flags & ActivityManager.RunningServiceInfo.FLAG_PERSISTENT_PROCESS) != 0) {
+      continue;
+    }
+    HashMap<String,ProcessItem> procs=mProcesses.get(si.uid);
+    if (procs == null) {
+      procs=new HashMap<String,ProcessItem>();
+      mProcesses.put(si.uid,procs);
+    }
+    ProcessItem proc=procs.get(si.process);
+    if (proc == null) {
+      changed=true;
+      proc=new ProcessItem();
+      proc.mIsProcess=true;
+      proc.mName=si.process;
+      proc.mUid=si.uid;
+      try {
+        ApplicationInfo ai=pm.getApplicationInfo(si.process,0);
+        if (ai.uid == si.uid) {
+          proc.mDisplayLabel=ai.loadLabel(context.getPackageManager());
+          proc.mLabel=proc.mDisplayLabel.toString();
+          proc.mPackageInfo=ai;
+        }
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+      }
+      procs.put(si.process,proc);
+    }
+    if (proc.mCurSeq != mSequence) {
+      int pid=si.restarting == 0 ? si.pid : 0;
+      if (pid != proc.mPid) {
+        changed=true;
+        proc.mPid=pid;
+      }
+      proc.mSize=0;
+      if (proc.mPid != 0) {
+        Debug.MemoryInfo mi=new Debug.MemoryInfo();
+        try {
+          ActivityManagerNative.getDefault().getProcessMemoryInfo(proc.mPid,mi);
+          proc.mSize=(mi.dalvikPss + mi.nativePss + mi.otherPss) * 1024;
+          String sizeStr=Formatter.formatFileSize(context,proc.mSize);
+          if (!sizeStr.equals(proc.mSizeStr)) {
+            changed=true;
+            proc.mSizeStr=sizeStr;
+          }
+        }
+ catch (        RemoteException e) {
+        }
+      }
+      proc.mCurSeq=mSequence;
+    }
+    changed|=proc.updateService(context.getPackageManager(),si);
+    if (proc.mLabel == null) {
+      String[] pkgs=pm.getPackagesForUid(proc.mUid);
+      for (      String name : pkgs) {
+        try {
+          PackageInfo pi=pm.getPackageInfo(name,0);
+          if (pi.sharedUserLabel != 0) {
+            CharSequence nm=pm.getText(name,pi.sharedUserLabel,pi.applicationInfo);
+            if (nm != null) {
+              proc.mDisplayLabel=nm;
+              proc.mLabel=nm.toString();
+              proc.mPackageInfo=pi.applicationInfo;
+              break;
+            }
+          }
+        }
+ catch (        PackageManager.NameNotFoundException e) {
+        }
+      }
+      if (proc.mLabel == null) {
+        proc.mPackageInfo=proc.mServices.get(si.service).mServiceInfo.applicationInfo;
+        proc.mDisplayLabel=proc.mPackageInfo.loadLabel(pm);
+        proc.mLabel=proc.mDisplayLabel.toString();
+      }
+    }
+  }
+  for (int i=0; i < mProcesses.size(); i++) {
+    HashMap<String,ProcessItem> procs=mProcesses.valueAt(i);
+    Iterator<ProcessItem> pit=procs.values().iterator();
+    while (pit.hasNext()) {
+      ProcessItem pi=pit.next();
+      if (pi.mCurSeq != mSequence) {
+        changed=true;
+        pit.remove();
+        if (procs.size() == 0) {
+          mProcesses.remove(mProcesses.keyAt(i));
+        }
+        continue;
+      }
+      Iterator<ServiceItem> sit=pi.mServices.values().iterator();
+      while (sit.hasNext()) {
+        ServiceItem si=sit.next();
+        if (si.mCurSeq != mSequence) {
+          changed=true;
+          sit.remove();
+        }
+      }
+    }
+  }
+  if (changed) {
+    mItems.clear();
+    for (int i=0; i < mProcesses.size(); i++) {
+      for (      ProcessItem pi : mProcesses.valueAt(i).values()) {
+        pi.mNeedDivider=false;
+        mItems.add(pi);
+        boolean needDivider=false;
+        for (        ServiceItem si : pi.mServices.values()) {
+          si.mNeedDivider=needDivider;
+          needDivider=true;
+          mItems.add(si);
+        }
+      }
+    }
+  }
+  return changed;
+}

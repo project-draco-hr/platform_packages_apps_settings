@@ -1,0 +1,25 @@
+{
+  ViewHolder vh=(ViewHolder)view.getTag();
+  BaseItem item=mState.mItems.get(position);
+  vh.name.setText(item.mDisplayLabel);
+  vh.separator.setVisibility(item.mNeedDivider ? View.VISIBLE : View.INVISIBLE);
+  if (item.mIsProcess) {
+    view.setBackgroundColor(mProcessBgColor);
+    vh.icon.setImageDrawable(item.mPackageInfo.loadIcon(getPackageManager()));
+    vh.runTime.setText(item.mName);
+    vh.size.setText(item.mSizeStr);
+    mActiveItems.remove(view);
+  }
+ else {
+    view.setBackgroundDrawable(null);
+    vh.icon.setImageDrawable(null);
+    vh.runTime.setText("");
+    ActiveItem ai=new ActiveItem();
+    ai.mRootView=view;
+    ai.mItem=item;
+    ai.mHolder=vh;
+    ai.mFirstRunTime=item.mActiveSince;
+    ai.updateTime(RunningServices.this);
+    mActiveItems.put(view,ai);
+  }
+}

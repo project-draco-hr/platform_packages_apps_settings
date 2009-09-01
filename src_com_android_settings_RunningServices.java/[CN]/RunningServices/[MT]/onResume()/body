@@ -1,0 +1,10 @@
+{
+  super.onResume();
+  updateList();
+  mHandler.removeMessages(MSG_UPDATE_TIMES);
+  Message msg=mHandler.obtainMessage(MSG_UPDATE_TIMES);
+  mHandler.sendMessageDelayed(msg,TIME_UPDATE_DELAY);
+  mHandler.removeMessages(MSG_UPDATE_CONTENTS);
+  msg=mHandler.obtainMessage(MSG_UPDATE_CONTENTS);
+  mHandler.sendMessageDelayed(msg,CONTENTS_UPDATE_DELAY);
+}

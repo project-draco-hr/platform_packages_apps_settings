@@ -3,6 +3,7 @@
   if (force) {
     mUseLocation.setChecked(true);
   }
+  if (hasAgreedToUseLocation())   return;
   CharSequence msg=getResources().getText(R.string.use_location_warning_message);
   mUseLocationDialog=new AlertDialog.Builder(this).setMessage(msg).setTitle(R.string.use_location_title).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(R.string.agree,this).setNegativeButton(R.string.disagree,this).show();
   ((TextView)mUseLocationDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());

@@ -15,11 +15,12 @@
     createUserEntryDialog();
   }
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_CONFIRMATION) {
-    mConfirmationPasskey=intent.getIntExtra(BluetoothIntent.PASSKEY,BluetoothClass.ERROR);
-    if (mConfirmationPasskey == BluetoothClass.ERROR) {
+    int passkey=intent.getIntExtra(BluetoothIntent.PASSKEY,BluetoothClass.ERROR);
+    if (passkey == BluetoothClass.ERROR) {
       Log.e(TAG,"Invalid ConfirmationPasskey received, not showing any dialog");
       return;
     }
+    mConfirmationPasskey=String.format("%06d",passkey);
     createConfirmationDialog();
   }
  else {

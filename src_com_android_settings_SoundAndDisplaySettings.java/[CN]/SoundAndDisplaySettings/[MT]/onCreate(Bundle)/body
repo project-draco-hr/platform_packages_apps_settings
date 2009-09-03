@@ -18,8 +18,8 @@
   mSoundEffects=(CheckBoxPreference)findPreference(KEY_SOUND_EFFECTS);
   mSoundEffects.setPersistent(false);
   mSoundEffects.setChecked(Settings.System.getInt(resolver,Settings.System.SOUND_EFFECTS_ENABLED,0) != 0);
-  mAnimations=(CheckBoxPreference)findPreference(KEY_ANIMATIONS);
-  mAnimations.setPersistent(false);
+  mAnimations=(ListPreference)findPreference(KEY_ANIMATIONS);
+  mAnimations.setOnPreferenceChangeListener(this);
   mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
   mAccelerometer.setPersistent(false);
   ListPreference screenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);

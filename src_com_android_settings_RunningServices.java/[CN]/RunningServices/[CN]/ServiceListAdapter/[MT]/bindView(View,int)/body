@@ -6,19 +6,20 @@
   if (item.mIsProcess) {
     view.setBackgroundColor(mProcessBgColor);
     vh.icon.setImageDrawable(item.mPackageInfo.loadIcon(getPackageManager()));
-    vh.runTime.setText(item.mName);
+    vh.description.setText(item.mDescription);
     vh.size.setText(item.mSizeStr);
     mActiveItems.remove(view);
   }
  else {
     view.setBackgroundDrawable(null);
     vh.icon.setImageDrawable(null);
-    vh.runTime.setText("");
+    vh.description.setText("");
     ActiveItem ai=new ActiveItem();
     ai.mRootView=view;
     ai.mItem=item;
     ai.mHolder=vh;
     ai.mFirstRunTime=item.mActiveSince;
+    vh.description.setText(item.mDescription);
     ai.updateTime(RunningServices.this);
     mActiveItems.put(view,ai);
   }

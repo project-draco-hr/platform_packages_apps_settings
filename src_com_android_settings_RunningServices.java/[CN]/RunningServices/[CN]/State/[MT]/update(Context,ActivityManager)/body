@@ -9,7 +9,7 @@
   final int NS=services.size();
   for (int i=0; i < NS; i++) {
     ActivityManager.RunningServiceInfo si=services.get(i);
-    if (!si.started) {
+    if (!si.started && si.clientLabel == 0) {
       continue;
     }
     if ((si.flags & ActivityManager.RunningServiceInfo.FLAG_PERSISTENT_PROCESS) != 0) {
@@ -25,7 +25,7 @@
       changed=true;
       proc=new ProcessItem();
       proc.mIsProcess=true;
-      proc.mName=si.process;
+      proc.mDescription=si.process;
       proc.mUid=si.uid;
       try {
         ApplicationInfo ai=pm.getApplicationInfo(si.process,0);
@@ -62,7 +62,7 @@
       }
       proc.mCurSeq=mSequence;
     }
-    changed|=proc.updateService(context.getPackageManager(),si);
+    changed|=proc.updateService(context,si);
     if (proc.mLabel == null) {
       String[] pkgs=pm.getPackagesForUid(proc.mUid);
       for (      String name : pkgs) {

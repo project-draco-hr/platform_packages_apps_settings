@@ -22,19 +22,6 @@
     }
     Settings.System.putInt(getContentResolver(),Settings.System.SOUND_EFFECTS_ENABLED,mSoundEffects.isChecked() ? 1 : 0);
   }
- else   if (preference == mAnimations) {
-    if (mAnimationScales.length > 0) {
-      mAnimationScales[0]=1;
-    }
-    for (int i=1; i < mAnimationScales.length; i++) {
-      mAnimationScales[i]=mAnimations.isChecked() ? 1 : 0;
-    }
-    try {
-      mWindowManager.setAnimationScales(mAnimationScales);
-    }
- catch (    RemoteException e) {
-    }
-  }
  else   if (preference == mAccelerometer) {
     Settings.System.putInt(getContentResolver(),Settings.System.ACCELEROMETER_ROTATION,mAccelerometer.isChecked() ? 1 : 0);
   }

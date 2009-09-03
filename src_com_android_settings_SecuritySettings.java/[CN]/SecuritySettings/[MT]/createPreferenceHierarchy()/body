@@ -45,8 +45,9 @@
   PreferenceCategory credStoreCat=new PreferenceCategory(this);
   credStoreCat.setTitle(R.string.cstor_settings_category);
   root.addPreference(credStoreCat);
-  credStoreCat.addPreference(mCstorHelper.createAccessCheckBox());
+  int s=mCstorHelper.getCstorState();
+  credStoreCat.addPreference(mCstorHelper.createAccessCheckBox(s));
   credStoreCat.addPreference(mCstorHelper.createSetPasswordPreference());
-  credStoreCat.addPreference(mCstorHelper.createResetPreference());
+  credStoreCat.addPreference(mCstorHelper.createResetPreference(s));
   return root;
 }

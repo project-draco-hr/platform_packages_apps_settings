@@ -19,6 +19,10 @@
     while (fis.available() > 0) {
       fis.read(lenBytes,0,2);
       int buffLen=(lenBytes[0] << 8) | lenBytes[1];
+      if ((buffLen <= 0) || (buffLen > byteBuff.length)) {
+        err=true;
+        break;
+      }
       fis.read(byteBuff,0,buffLen);
       String buffStr=new String(byteBuff);
       if (DEBUG_CACHE) {
@@ -56,11 +60,12 @@
       }
  catch (      IOException e) {
         Log.w(TAG,"Failed to close file " + cacheFile + " with exception : "+ e);
+        err=true;
       }
     }
-  }
-  if (err) {
-    Log.i(TAG,"Failed to load cache. Not using cache for now.");
-    mAppPropCache.clear();
+    if (err) {
+      Log.i(TAG,"Failed to load cache. Not using cache for now.");
+      mAppPropCache.clear();
+    }
   }
 }

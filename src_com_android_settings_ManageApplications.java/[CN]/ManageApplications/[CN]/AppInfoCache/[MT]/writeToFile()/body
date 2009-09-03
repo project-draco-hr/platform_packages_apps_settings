@@ -31,14 +31,17 @@
       }
  catch (      IOException e) {
         Log.w(TAG,"Failed to write to file : " + cacheFile + " with exception : "+ e);
+        return false;
       }
     }
     if (DEBUG_CACHE_TIME) {
       Log.i(TAG,"Took " + (SystemClock.uptimeMillis() - opStartTime) + " ms to write and process from file");
     }
+    return true;
   }
  catch (  FileNotFoundException e) {
     Log.w(TAG,"Error opening file for write operation : " + cacheFile + " with exception : "+ e);
+    return false;
   }
  finally {
     if (fos != null) {
@@ -47,6 +50,7 @@
       }
  catch (      IOException e) {
         Log.w(TAG,"Failed closing file : " + cacheFile + " with exception : "+ e);
+        return false;
       }
     }
   }

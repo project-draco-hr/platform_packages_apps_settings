@@ -1,0 +1,7 @@
+{
+  Locale currentLocale=Locale.getDefault();
+  ContentResolver resolver=getContentResolver();
+  Settings.Secure.putString(resolver,TTS_DEFAULT_LANG,currentLocale.getISO3Language());
+  Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,currentLocale.getISO3Country());
+  Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,currentLocale.getVariant());
+}

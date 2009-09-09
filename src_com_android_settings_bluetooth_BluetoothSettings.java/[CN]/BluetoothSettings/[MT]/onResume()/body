@@ -12,7 +12,7 @@
   mDeviceList.setProgress(mLocalManager.getBluetoothAdapter().isDiscovering());
   mLocalManager.startScanning(false);
   IntentFilter intentFilter=new IntentFilter();
-  intentFilter.addAction(BluetoothIntent.BLUETOOTH_STATE_CHANGED_ACTION);
+  intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
   intentFilter.addAction(BluetoothIntent.BOND_STATE_CHANGED_ACTION);
   registerReceiver(mReceiver,intentFilter);
   mLocalManager.setForegroundActivity(this);

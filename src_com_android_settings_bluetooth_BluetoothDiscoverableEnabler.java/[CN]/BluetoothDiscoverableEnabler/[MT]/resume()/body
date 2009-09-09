@@ -2,7 +2,7 @@
   if (mLocalManager == null) {
     return;
   }
-  IntentFilter filter=new IntentFilter(BluetoothIntent.SCAN_MODE_CHANGED_ACTION);
+  IntentFilter filter=new IntentFilter(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
   mContext.registerReceiver(mReceiver,filter);
   mCheckBoxPreference.setOnPreferenceChangeListener(this);
   handleModeChanged(mLocalManager.getBluetoothAdapter().getScanMode());

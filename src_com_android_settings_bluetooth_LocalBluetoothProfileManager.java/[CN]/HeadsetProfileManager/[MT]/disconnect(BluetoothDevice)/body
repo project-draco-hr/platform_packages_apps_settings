@@ -1,8 +1,8 @@
 {
   if (mService.getCurrentHeadset().equals(device)) {
-    return mService.disconnectHeadset() ? BluetoothError.SUCCESS : BluetoothError.ERROR;
+    return mService.disconnectHeadset();
   }
  else {
-    return BluetoothError.SUCCESS;
+    return false;
   }
 }

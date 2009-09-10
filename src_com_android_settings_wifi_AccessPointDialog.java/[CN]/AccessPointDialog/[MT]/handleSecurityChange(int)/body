@@ -33,7 +33,7 @@ case SECURITY_WPA_EAP:
 case SECURITY_IEEE8021X:
 {
 if (Keystore.getInstance().getState() != Keystore.UNLOCKED) {
-getContext().startActivity(new Intent(SecuritySettings.ACTION_UNLOCK_CREDENTIAL_STORAGE));
+getContext().startActivity(new Intent(Keystore.ACTION_UNLOCK_CREDENTIAL_STORAGE));
 return;
 }
 enableEnterpriseFields();

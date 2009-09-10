@@ -2,8 +2,6 @@
   CheckBoxPreference pref=new CheckBoxPreference(SecuritySettings.this);
   pref.setTitle(R.string.cstor_access_title);
   pref.setSummary(R.string.cstor_access_summary);
-  pref.setEnabled(state != Keystore.UNINITIALIZED);
-  pref.setChecked(state == Keystore.UNLOCKED);
   pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
     public boolean onPreferenceChange(    Preference pref,    Object value){
       if (((Boolean)value)) {

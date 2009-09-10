@@ -2,15 +2,15 @@
   super.onCreate(savedInstanceState);
   mLocalManager=LocalBluetoothManager.getInstance(this);
   if (mLocalManager == null)   finish();
-  mFilterType=BluetoothDevice.DEVICE_PICKER_FILTER_TYPE_ALL;
+  mFilterType=BluetoothDevicePicker.FILTER_TYPE_ALL;
   Intent intent=getIntent();
   String action=intent.getAction();
-  if (action.equals(BluetoothIntent.DEVICE_PICKER_DEVICE_PICKER)) {
+  if (action.equals(BluetoothDevicePicker.ACTION_LAUNCH)) {
     mScreenType=SCREEN_TYPE_DEVICEPICKER;
-    mNeedAuth=intent.getBooleanExtra(BluetoothIntent.DEVICE_PICKER_NEED_AUTH,false);
-    mFilterType=intent.getIntExtra(BluetoothIntent.DEVICE_PICKER_FILTER_TYPE,BluetoothDevice.DEVICE_PICKER_FILTER_TYPE_ALL);
-    mLaunchPackage=intent.getStringExtra(BluetoothIntent.DEVICE_PICKER_LAUNCH_PACKAGE);
-    mLaunchClass=intent.getStringExtra(BluetoothIntent.DEVICE_PICKER_LAUNCH_CLASS);
+    mNeedAuth=intent.getBooleanExtra(BluetoothDevicePicker.EXTRA_NEED_AUTH,false);
+    mFilterType=intent.getIntExtra(BluetoothDevicePicker.EXTRA_FILTER_TYPE,BluetoothDevicePicker.FILTER_TYPE_ALL);
+    mLaunchPackage=intent.getStringExtra(BluetoothDevicePicker.EXTRA_LAUNCH_PACKAGE);
+    mLaunchClass=intent.getStringExtra(BluetoothDevicePicker.EXTRA_LAUNCH_CLASS);
     setTitle(getString(R.string.device_picker));
     addPreferencesFromResource(R.xml.device_picker);
   }

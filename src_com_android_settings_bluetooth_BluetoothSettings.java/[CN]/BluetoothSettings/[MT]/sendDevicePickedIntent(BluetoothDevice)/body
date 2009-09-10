@@ -1,8 +1,8 @@
 {
-  Intent intent=new Intent(BluetoothIntent.DEVICE_PICKER_DEVICE_SELECTED);
+  Intent intent=new Intent(BluetoothDevicePicker.ACTION_DEVICE_SELECTED);
   if (mLaunchPackage != null && mLaunchClass != null) {
     intent.setClassName(mLaunchPackage,mLaunchClass);
   }
-  intent.putExtra(BluetoothIntent.DEVICE,device);
+  intent.putExtra(BluetoothDevice.EXTRA_DEVICE,device);
   sendBroadcast(intent);
 }

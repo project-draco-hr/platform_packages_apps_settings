@@ -2,4 +2,12 @@
   if (mState.update(this,mAm)) {
     ((ServiceListAdapter)(getListView().getAdapter())).notifyDataSetChanged();
   }
+  if (mLastNumBackgroundProcesses != mState.mNumBackgroundProcesses) {
+    mLastNumBackgroundProcesses=mState.mNumBackgroundProcesses;
+    mBackgroundProcessText.setText(getResources().getString(R.string.service_background_processes,mLastNumBackgroundProcesses));
+  }
+  if (mLastNumForegroundProcesses != mState.mNumForegroundProcesses) {
+    mLastNumForegroundProcesses=mState.mNumForegroundProcesses;
+    mForegroundProcessText.setText(getResources().getString(R.string.service_foreground_processes,mLastNumForegroundProcesses));
+  }
 }

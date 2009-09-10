@@ -1,0 +1,59 @@
+{
+  if (mLabel != null) {
+    return;
+  }
+  try {
+    ApplicationInfo ai=pm.getApplicationInfo(mProcessName,0);
+    if (ai.uid == mUid) {
+      mDisplayLabel=ai.loadLabel(pm);
+      mLabel=mDisplayLabel.toString();
+      mPackageInfo=ai;
+      return;
+    }
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+  }
+  String[] pkgs=pm.getPackagesForUid(mUid);
+  if (pkgs.length == 1) {
+    try {
+      ApplicationInfo ai=pm.getApplicationInfo(pkgs[0],0);
+      mDisplayLabel=ai.loadLabel(pm);
+      mLabel=mDisplayLabel.toString();
+      mPackageInfo=ai;
+      return;
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+    }
+  }
+  for (  String name : pkgs) {
+    try {
+      PackageInfo pi=pm.getPackageInfo(name,0);
+      if (pi.sharedUserLabel != 0) {
+        CharSequence nm=pm.getText(name,pi.sharedUserLabel,pi.applicationInfo);
+        if (nm != null) {
+          mDisplayLabel=nm;
+          mLabel=nm.toString();
+          mPackageInfo=pi.applicationInfo;
+          return;
+        }
+      }
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+    }
+  }
+  if (mServices.size() > 0) {
+    mPackageInfo=mServices.values().iterator().next().mServiceInfo.applicationInfo;
+    mDisplayLabel=mPackageInfo.loadLabel(pm);
+    mLabel=mDisplayLabel.toString();
+    return;
+  }
+  try {
+    ApplicationInfo ai=pm.getApplicationInfo(pkgs[0],0);
+    mDisplayLabel=ai.loadLabel(pm);
+    mLabel=mDisplayLabel.toString();
+    mPackageInfo=ai;
+    return;
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+  }
+}

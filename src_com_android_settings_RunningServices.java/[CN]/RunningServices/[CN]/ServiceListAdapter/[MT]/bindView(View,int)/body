@@ -3,24 +3,24 @@
   BaseItem item=mState.mItems.get(position);
   vh.name.setText(item.mDisplayLabel);
   vh.separator.setVisibility(item.mNeedDivider ? View.VISIBLE : View.INVISIBLE);
+  ActiveItem ai=new ActiveItem();
+  ai.mRootView=view;
+  ai.mItem=item;
+  ai.mHolder=vh;
+  ai.mFirstRunTime=item.mActiveSince;
+  vh.description.setText(item.mDescription);
   if (item.mIsProcess) {
     view.setBackgroundColor(mProcessBgColor);
     vh.icon.setImageDrawable(item.mPackageInfo.loadIcon(getPackageManager()));
     vh.description.setText(item.mDescription);
-    vh.size.setText(item.mSizeStr);
-    mActiveItems.remove(view);
+    item.mCurSizeStr=null;
   }
  else {
     view.setBackgroundDrawable(null);
     vh.icon.setImageDrawable(null);
-    vh.description.setText("");
-    ActiveItem ai=new ActiveItem();
-    ai.mRootView=view;
-    ai.mItem=item;
-    ai.mHolder=vh;
-    ai.mFirstRunTime=item.mActiveSince;
     vh.description.setText(item.mDescription);
-    ai.updateTime(RunningServices.this);
-    mActiveItems.put(view,ai);
+    ai.mFirstRunTime=item.mActiveSince;
   }
+  ai.updateTime(RunningServices.this);
+  mActiveItems.put(view,ai);
 }

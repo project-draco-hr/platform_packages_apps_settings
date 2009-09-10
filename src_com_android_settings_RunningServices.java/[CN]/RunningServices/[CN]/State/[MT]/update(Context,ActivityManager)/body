@@ -3,10 +3,7 @@
   mSequence++;
   boolean changed=false;
   List<ActivityManager.RunningServiceInfo> services=am.getRunningServices(MAX_SERVICES);
-  if (services == null) {
-    return false;
-  }
-  final int NS=services.size();
+  final int NS=services != null ? services.size() : 0;
   for (int i=0; i < NS; i++) {
     ActivityManager.RunningServiceInfo si=services.get(i);
     if (!si.started && si.clientLabel == 0) {
@@ -23,68 +20,87 @@
     ProcessItem proc=procs.get(si.process);
     if (proc == null) {
       changed=true;
-      proc=new ProcessItem();
-      proc.mIsProcess=true;
-      proc.mDescription=si.process;
-      proc.mUid=si.uid;
-      try {
-        ApplicationInfo ai=pm.getApplicationInfo(si.process,0);
-        if (ai.uid == si.uid) {
-          proc.mDisplayLabel=ai.loadLabel(context.getPackageManager());
-          proc.mLabel=proc.mDisplayLabel.toString();
-          proc.mPackageInfo=ai;
-        }
-      }
- catch (      PackageManager.NameNotFoundException e) {
-      }
+      proc=new ProcessItem(si.uid,si.process);
       procs.put(si.process,proc);
     }
     if (proc.mCurSeq != mSequence) {
       int pid=si.restarting == 0 ? si.pid : 0;
       if (pid != proc.mPid) {
         changed=true;
-        proc.mPid=pid;
+        if (proc.mPid != pid) {
+          if (proc.mPid != 0) {
+            mActiveProcesses.remove(proc.mPid);
+          }
+          if (pid != 0) {
+            mActiveProcesses.put(pid,proc);
+          }
+          proc.mPid=pid;
+        }
       }
       proc.mSize=0;
-      if (proc.mPid != 0) {
-        Debug.MemoryInfo mi=new Debug.MemoryInfo();
-        try {
-          ActivityManagerNative.getDefault().getProcessMemoryInfo(proc.mPid,mi);
-          proc.mSize=(mi.dalvikPss + mi.nativePss + mi.otherPss) * 1024;
-          String sizeStr=Formatter.formatFileSize(context,proc.mSize);
-          if (!sizeStr.equals(proc.mSizeStr)) {
-            changed=true;
-            proc.mSizeStr=sizeStr;
-          }
-        }
- catch (        RemoteException e) {
-        }
-      }
+      proc.mDependentProcesses.clear();
       proc.mCurSeq=mSequence;
     }
     changed|=proc.updateService(context,si);
-    if (proc.mLabel == null) {
-      String[] pkgs=pm.getPackagesForUid(proc.mUid);
-      for (      String name : pkgs) {
-        try {
-          PackageInfo pi=pm.getPackageInfo(name,0);
-          if (pi.sharedUserLabel != 0) {
-            CharSequence nm=pm.getText(name,pi.sharedUserLabel,pi.applicationInfo);
-            if (nm != null) {
-              proc.mDisplayLabel=nm;
-              proc.mLabel=nm.toString();
-              proc.mPackageInfo=pi.applicationInfo;
-              break;
-            }
-          }
+  }
+  List<ActivityManager.RunningAppProcessInfo> processes=am.getRunningAppProcesses();
+  final int NP=processes != null ? processes.size() : 0;
+  for (int i=0; i < NP; i++) {
+    ActivityManager.RunningAppProcessInfo pi=processes.get(i);
+    ProcessItem proc=mActiveProcesses.get(pi.pid);
+    if (proc == null) {
+      proc=mRunningProcesses.get(pi.pid);
+      if (proc == null) {
+        proc=new ProcessItem(pi.uid,pi.processName);
+        proc.mPid=pi.pid;
+        mRunningProcesses.put(pi.pid,proc);
+      }
+      proc.mDependentProcesses.clear();
+      proc.mSize=0;
+    }
+    proc.mRunningSeq=mSequence;
+    proc.mRunningProcessInfo=pi;
+  }
+  int NRP=mRunningProcesses.size();
+  for (int i=0; i < NRP; i++) {
+    ProcessItem proc=mRunningProcesses.valueAt(i);
+    if (proc.mRunningSeq == mSequence) {
+      int clientPid=proc.mRunningProcessInfo.importanceReasonPid;
+      if (clientPid != 0) {
+        ProcessItem client=mActiveProcesses.get(clientPid);
+        if (client == null) {
+          client=mRunningProcesses.get(clientPid);
         }
- catch (        PackageManager.NameNotFoundException e) {
+        if (client != null) {
+          client.mDependentProcesses.put(proc.mPid,proc);
         }
       }
-      if (proc.mLabel == null) {
-        proc.mPackageInfo=proc.mServices.get(si.service).mServiceInfo.applicationInfo;
-        proc.mDisplayLabel=proc.mPackageInfo.loadLabel(pm);
-        proc.mLabel=proc.mDisplayLabel.toString();
+ else {
+        proc.mClient=null;
+      }
+    }
+ else {
+      mRunningProcesses.remove(mRunningProcesses.keyAt(i));
+    }
+  }
+  final int NAP=mActiveProcesses.size();
+  for (int i=0; i < NAP; i++) {
+    ProcessItem proc=mActiveProcesses.valueAt(i);
+    if (proc.mCurSeq == mSequence) {
+      changed|=proc.buildDependencyChain(context,pm,mSequence);
+    }
+  }
+  mNumBackgroundProcesses=0;
+  mNumForegroundProcesses=0;
+  NRP=mRunningProcesses.size();
+  for (int i=0; i < NRP; i++) {
+    ProcessItem proc=mRunningProcesses.valueAt(i);
+    if (proc.mCurSeq != mSequence) {
+      if (proc.mRunningProcessInfo.importance >= ActivityManager.RunningAppProcessInfo.IMPORTANCE_BACKGROUND) {
+        mNumBackgroundProcesses++;
+      }
+ else       if (proc.mRunningProcessInfo.importance <= ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE) {
+        mNumForegroundProcesses++;
       }
     }
   }
@@ -93,11 +109,21 @@
     Iterator<ProcessItem> pit=procs.values().iterator();
     while (pit.hasNext()) {
       ProcessItem pi=pit.next();
-      if (pi.mCurSeq != mSequence) {
+      if (pi.mCurSeq == mSequence) {
+        pi.ensureLabel(pm);
+        changed|=pi.updateSize(context);
+        if (pi.mPid == 0) {
+          pi.mDependentProcesses.clear();
+        }
+      }
+ else {
         changed=true;
         pit.remove();
         if (procs.size() == 0) {
           mProcesses.remove(mProcesses.keyAt(i));
+        }
+        if (pi.mPid != 0) {
+          mActiveProcesses.remove(pi.mPid);
         }
         continue;
       }
@@ -116,6 +142,7 @@
     for (int i=0; i < mProcesses.size(); i++) {
       for (      ProcessItem pi : mProcesses.valueAt(i).values()) {
         pi.mNeedDivider=false;
+        pi.addDependentProcesses(mItems);
         mItems.add(pi);
         boolean needDivider=false;
         for (        ServiceItem si : pi.mServices.values()) {

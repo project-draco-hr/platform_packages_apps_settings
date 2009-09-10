@@ -1,0 +1,22 @@
+{
+  boolean changed=false;
+  if (mPid != 0 && mSize == 0) {
+    final int NP=mDependentProcesses.size();
+    for (int i=0; i < NP; i++) {
+      ProcessItem proc=mDependentProcesses.valueAt(i);
+      changed|=proc.updateSize(context);
+    }
+    Debug.MemoryInfo mi=new Debug.MemoryInfo();
+    try {
+      ActivityManagerNative.getDefault().getProcessMemoryInfo(mPid,mi);
+      mSize=(mi.dalvikPss + mi.nativePss + mi.otherPss) * 1024;
+      String sizeStr=Formatter.formatFileSize(context,mSize);
+      if (!sizeStr.equals(mSizeStr)) {
+        mSizeStr=sizeStr;
+      }
+    }
+ catch (    RemoteException e) {
+    }
+  }
+  return changed;
+}

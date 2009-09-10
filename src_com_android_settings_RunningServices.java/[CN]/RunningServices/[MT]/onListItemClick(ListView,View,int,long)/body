@@ -7,9 +7,16 @@
       PendingIntent pi=mAm.getRunningServiceControlPanel(si.mRunningService.service);
       if (pi != null) {
         try {
-          pi.send();
+          this.startActivity(pi,null,Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET,Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         }
  catch (        PendingIntent.CanceledException e) {
+          Log.w(TAG,e);
+        }
+catch (        IllegalArgumentException e) {
+          Log.w(TAG,e);
+        }
+catch (        ActivityNotFoundException e) {
+          Log.w(TAG,e);
         }
       }
     }

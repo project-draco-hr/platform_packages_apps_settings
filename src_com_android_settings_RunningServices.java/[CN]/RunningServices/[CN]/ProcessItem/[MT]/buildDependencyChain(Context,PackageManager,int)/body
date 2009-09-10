@@ -1,0 +1,20 @@
+{
+  final int NP=mDependentProcesses.size();
+  boolean changed=false;
+  for (int i=0; i < NP; i++) {
+    ProcessItem proc=mDependentProcesses.valueAt(i);
+    if (proc.mClient != this) {
+      changed=true;
+      proc.mClient=this;
+    }
+    proc.mCurSeq=curSeq;
+    proc.ensureLabel(pm);
+    changed|=proc.updateSize(context);
+    changed|=proc.buildDependencyChain(context,pm,curSeq);
+  }
+  if (mLastNumDependentProcesses != mDependentProcesses.size()) {
+    changed=true;
+    mLastNumDependentProcesses=mDependentProcesses.size();
+  }
+  return changed;
+}

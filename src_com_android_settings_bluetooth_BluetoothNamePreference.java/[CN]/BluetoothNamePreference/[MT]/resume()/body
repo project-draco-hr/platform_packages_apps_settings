@@ -1,7 +1,7 @@
 {
   IntentFilter filter=new IntentFilter();
   filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-  filter.addAction(BluetoothIntent.NAME_CHANGED_ACTION);
+  filter.addAction(BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED);
   getContext().registerReceiver(mReceiver,filter);
   EditText et=getEditText();
   if (et != null) {

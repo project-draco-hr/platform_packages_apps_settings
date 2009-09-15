@@ -10,4 +10,18 @@
     mOldBrightness=MAXIMUM_BACKLIGHT;
   }
   mSeekBar.setProgress(mOldBrightness - MINIMUM_BACKLIGHT);
+  mCheckBox=(CheckBox)view.findViewById(R.id.automatic_mode);
+  if (mAutomaticAvailable) {
+    mCheckBox.setOnCheckedChangeListener(this);
+    try {
+      mOldAutomatic=Settings.System.getInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS_MODE);
+    }
+ catch (    SettingNotFoundException snfe) {
+      mOldAutomatic=0;
+    }
+    mCheckBox.setChecked(mOldAutomatic != 0);
+  }
+ else {
+    mCheckBox.setVisibility(View.GONE);
+  }
 }

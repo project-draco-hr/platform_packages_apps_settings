@@ -6,9 +6,9 @@
     mSeekBar.setVisibility(View.VISIBLE);
   }
   try {
-    IHardwareService hardware=IHardwareService.Stub.asInterface(ServiceManager.getService("hardware"));
-    if (hardware != null) {
-      hardware.setAutoBrightness(automatic != 0);
+    IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
+    if (power != null) {
+      power.setAutoBrightness(automatic != 0);
     }
   }
  catch (  RemoteException doe) {

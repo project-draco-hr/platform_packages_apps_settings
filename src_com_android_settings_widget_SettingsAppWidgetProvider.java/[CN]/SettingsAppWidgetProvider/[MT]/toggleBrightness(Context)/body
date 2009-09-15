@@ -1,7 +1,7 @@
 {
   try {
-    IHardwareService hardware=IHardwareService.Stub.asInterface(ServiceManager.getService("hardware"));
-    if (hardware != null) {
+    IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
+    if (power != null) {
       ContentResolver cr=context.getContentResolver();
       int brightness=Settings.System.getInt(cr,Settings.System.SCREEN_BRIGHTNESS);
       if (brightness < DEFAULT_BACKLIGHT) {
@@ -13,7 +13,7 @@
  else {
         brightness=MINIMUM_BACKLIGHT;
       }
-      hardware.setBacklights(brightness);
+      power.setBacklightBrightness(brightness);
       Settings.System.putInt(cr,Settings.System.SCREEN_BRIGHTNESS,brightness);
       brightness=Settings.System.getInt(cr,Settings.System.SCREEN_BRIGHTNESS);
     }

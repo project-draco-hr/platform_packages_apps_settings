@@ -14,17 +14,30 @@
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_PASSKEY) {
     createUserEntryDialog();
   }
- else   if (mType == BluetoothDevice.PAIRING_VARIANT_CONFIRMATION) {
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_PASSKEY_CONFIRMATION) {
     int passkey=intent.getIntExtra(BluetoothDevice.EXTRA_PASSKEY,BluetoothDevice.ERROR);
     if (passkey == BluetoothDevice.ERROR) {
       Log.e(TAG,"Invalid ConfirmationPasskey received, not showing any dialog");
       return;
     }
-    mConfirmationPasskey=String.format("%06d",passkey);
+    mPasskey=String.format("%06d",passkey);
     createConfirmationDialog();
+  }
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_CONSENT) {
+    createConsentDialog();
+  }
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY) {
+    int passkey=intent.getIntExtra(BluetoothDevice.EXTRA_PASSKEY,BluetoothDevice.ERROR);
+    if (passkey == BluetoothDevice.ERROR) {
+      Log.e(TAG,"Invalid ConfirmationPasskey received, not showing any dialog");
+      return;
+    }
+    mPasskey=String.format("%06d",passkey);
+    createDisplayPasskeyDialog();
   }
  else {
     Log.e(TAG,"Incorrect pairing type received, not showing any dialog");
   }
   registerReceiver(mReceiver,new IntentFilter(BluetoothDevice.ACTION_PAIRING_CANCEL));
+  registerReceiver(mReceiver,new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED));
 }

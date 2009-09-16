@@ -1,0 +1,18 @@
+{
+  ConnectivityManager connManager=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+  boolean backgroundData=getBackgroundDataState(context);
+  boolean sync=ContentResolver.getMasterSyncAutomatically();
+  if (!backgroundData && !sync) {
+    connManager.setBackgroundDataSetting(true);
+    ContentResolver.setMasterSyncAutomatically(true);
+  }
+  if (!backgroundData && sync) {
+    connManager.setBackgroundDataSetting(true);
+  }
+  if (backgroundData && !sync) {
+    ContentResolver.setMasterSyncAutomatically(true);
+  }
+  if (backgroundData && sync) {
+    ContentResolver.setMasterSyncAutomatically(false);
+  }
+}

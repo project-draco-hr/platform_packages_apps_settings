@@ -4,7 +4,9 @@
   }
   Set<String> existingList=new HashSet<String>();
   boolean ret=false;
-  for (  ApplicationInfo info : newList) {
+  int N=newList.size();
+  for (int i=(N - 1); i >= 0; i--) {
+    ApplicationInfo info=newList.get(i);
     String pkgName=info.packageName;
     AppInfo aInfo=mCache.getEntry(pkgName);
     if (aInfo != null) {
@@ -13,6 +15,7 @@
  else {
       if (localLOGV)       Log.i(TAG,"New pkg :" + pkgName + " installed when paused");
       updatePackageList(Intent.ACTION_PACKAGE_ADDED,pkgName);
+      newList.remove(i);
       ret=true;
     }
   }
@@ -29,6 +32,7 @@
     }
   }
   if (deletedList != null) {
+    if (localLOGV)     Log.i(TAG,"Deleting right away");
     mAppInfoAdapter.removeFromList(deletedList);
   }
   return ret;

@@ -3,48 +3,5 @@
   config.priority=priority;
   config.hiddenSSID=hiddenSsid;
   config.SSID=convertToQuotedString(ssid);
-  config.eap=mEap;
-  if (!TextUtils.isEmpty(mPhase2)) {
-    config.phase2=convertToQuotedString("auth=" + mPhase2);
-  }
- else {
-    config.phase2=null;
-  }
-  if (!TextUtils.isEmpty(mEnterpriseFields[IDENTITY])) {
-    config.identity=convertToQuotedString(mEnterpriseFields[IDENTITY]);
-  }
- else {
-    config.identity=null;
-  }
-  if (!TextUtils.isEmpty(mEnterpriseFields[ANONYMOUS_IDENTITY])) {
-    config.anonymousIdentity=convertToQuotedString(mEnterpriseFields[ANONYMOUS_IDENTITY]);
-  }
- else {
-    config.anonymousIdentity=null;
-  }
-  if (!TextUtils.isEmpty(mEnterpriseFields[CLIENT_CERT])) {
-    config.clientCert=convertToQuotedString(mEnterpriseFields[CLIENT_CERT]);
-  }
- else {
-    config.clientCert=null;
-  }
-  if (!TextUtils.isEmpty(mEnterpriseFields[CA_CERT])) {
-    config.caCert=convertToQuotedString(mEnterpriseFields[CA_CERT]);
-  }
- else {
-    config.caCert=null;
-  }
-  if (!TextUtils.isEmpty(mEnterpriseFields[PRIVATE_KEY])) {
-    config.privateKey=convertToQuotedString(mEnterpriseFields[PRIVATE_KEY]);
-  }
- else {
-    config.privateKey=null;
-  }
-  if (!TextUtils.isEmpty(mEnterpriseFields[PRIVATE_KEY_PASSWD])) {
-    config.privateKeyPasswd=convertToQuotedString(mEnterpriseFields[PRIVATE_KEY_PASSWD]);
-  }
- else {
-    config.privateKeyPasswd=null;
-  }
   setupSecurity(config);
 }

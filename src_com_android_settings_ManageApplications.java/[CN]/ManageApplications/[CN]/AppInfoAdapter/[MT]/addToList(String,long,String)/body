@@ -2,7 +2,6 @@
   if (pkgName == null) {
     return;
   }
-  boolean notInList=true;
   ApplicationInfo info=null;
   try {
     info=mPm.getApplicationInfo(pkgName,0);
@@ -18,15 +17,7 @@
   mAppList.add(info);
   CharSequence label=info.loadLabel(mPm);
   mCache.addEntry(new AppInfo(pkgName,-1,label,info.loadIcon(mPm),size,formattedSize));
-  if (notInList && (shouldBeInList(mFilterApps,info))) {
-    int newIdx=Collections.binarySearch(mAppLocalList,info,getAppComparator(mSortOrder));
-    if (newIdx >= 0) {
-      Log.i(TAG,"Strange. Package:" + pkgName + " is not new");
-      return;
-    }
-    newIdx=-newIdx - 1;
-    addFilterListLocked(newIdx,info,label);
-    adjustIndex();
+  if (addLocalEntry(info,label)) {
     notifyDataSetChanged();
   }
 }

@@ -1,0 +1,16 @@
+{
+  if (automatic != 0) {
+    mSeekBar.setVisibility(View.GONE);
+  }
+ else {
+    mSeekBar.setVisibility(View.VISIBLE);
+  }
+  try {
+    IHardwareService hardware=IHardwareService.Stub.asInterface(ServiceManager.getService("hardware"));
+    if (hardware != null) {
+      hardware.setAutoBrightness(automatic != 0);
+    }
+  }
+ catch (  RemoteException doe) {
+  }
+}

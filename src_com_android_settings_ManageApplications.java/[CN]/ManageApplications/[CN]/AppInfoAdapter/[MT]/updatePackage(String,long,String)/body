@@ -8,9 +8,11 @@
   }
   AppInfo aInfo=mCache.getEntry(pkgName);
   if (aInfo != null) {
-    aInfo.refreshLabel(info.loadLabel(mPm));
+    CharSequence label=info.loadLabel(mPm);
+    aInfo.refreshLabel(label);
     aInfo.refreshIcon(info.loadIcon(mPm));
     aInfo.setSize(size,formattedSize);
+    addLocalEntry(info,label);
     notifyDataSetChanged();
   }
 }

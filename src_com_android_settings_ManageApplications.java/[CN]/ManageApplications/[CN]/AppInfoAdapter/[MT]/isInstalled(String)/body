@@ -1,0 +1,12 @@
+{
+  if (pkgName == null) {
+    if (localLOGV)     Log.w(TAG,"Null pkg name when checking if installed");
+    return false;
+  }
+  for (  ApplicationInfo info : mAppList) {
+    if (info.packageName.equalsIgnoreCase(pkgName)) {
+      return true;
+    }
+  }
+  return false;
+}

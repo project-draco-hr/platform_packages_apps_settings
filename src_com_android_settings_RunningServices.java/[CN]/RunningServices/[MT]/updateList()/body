@@ -2,12 +2,16 @@
   if (mState.update(this,mAm)) {
     ((ServiceListAdapter)(getListView().getAdapter())).notifyDataSetChanged();
   }
-  if (mLastNumBackgroundProcesses != mState.mNumBackgroundProcesses) {
+  if (mLastNumBackgroundProcesses != mState.mNumBackgroundProcesses || mLastBackgroundProcessMemory != mState.mBackgroundProcessMemory) {
     mLastNumBackgroundProcesses=mState.mNumBackgroundProcesses;
-    mBackgroundProcessText.setText(getResources().getString(R.string.service_background_processes,mLastNumBackgroundProcesses));
+    mLastBackgroundProcessMemory=mState.mBackgroundProcessMemory;
+    String sizeStr=Formatter.formatFileSize(this,mLastBackgroundProcessMemory);
+    mBackgroundProcessText.setText(getResources().getString(R.string.service_background_processes,mLastNumBackgroundProcesses,sizeStr));
   }
-  if (mLastNumForegroundProcesses != mState.mNumForegroundProcesses) {
+  if (mLastNumForegroundProcesses != mState.mNumForegroundProcesses || mLastForegroundProcessMemory != mState.mForegroundProcessMemory) {
     mLastNumForegroundProcesses=mState.mNumForegroundProcesses;
-    mForegroundProcessText.setText(getResources().getString(R.string.service_foreground_processes,mLastNumForegroundProcesses));
+    mLastForegroundProcessMemory=mState.mForegroundProcessMemory;
+    String sizeStr=Formatter.formatFileSize(this,mLastForegroundProcessMemory);
+    mForegroundProcessText.setText(getResources().getString(R.string.service_foreground_processes,mLastNumForegroundProcesses,sizeStr));
   }
 }

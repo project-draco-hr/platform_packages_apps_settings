@@ -1,8 +1,8 @@
 {
   try {
-    IHardwareService hardware=IHardwareService.Stub.asInterface(ServiceManager.getService("hardware"));
-    if (hardware != null) {
-      hardware.setBacklights(brightness);
+    IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
+    if (power != null) {
+      power.setBacklightBrightness(brightness);
     }
   }
  catch (  RemoteException doe) {

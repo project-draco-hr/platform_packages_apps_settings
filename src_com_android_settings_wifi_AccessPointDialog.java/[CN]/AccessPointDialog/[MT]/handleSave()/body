@@ -8,31 +8,23 @@
     mState.setPassword(password);
   }
 switch (securityType) {
-case SECURITY_WPA_PERSONAL:
+case SECURITY_PSK:
 {
-      mState.setSecurity(AccessPointState.WPA);
+      mState.setSecurity(AccessPointState.PSK);
       break;
     }
-case SECURITY_WPA2_PERSONAL:
-{
-    mState.setSecurity(AccessPointState.WPA2);
-    break;
-  }
 case SECURITY_AUTO:
 {
-  break;
-}
+    break;
+  }
 case SECURITY_WEP:
 {
-mState.setSecurity(AccessPointState.WEP);
-mState.setPassword(password,WEP_TYPE_VALUES[mWepTypeSpinner.getSelectedItemPosition()]);
-break;
+  mState.setSecurity(AccessPointState.WEP);
+  mState.setPassword(password,WEP_TYPE_VALUES[mWepTypeSpinner.getSelectedItemPosition()]);
+  break;
 }
-case SECURITY_WPA_EAP:
-mState.setSecurity(AccessPointState.WPA_EAP);
-break;
-case SECURITY_IEEE8021X:
-mState.setSecurity(AccessPointState.IEEE8021X);
+case SECURITY_EAP:
+mState.setSecurity(AccessPointState.EAP);
 break;
 case SECURITY_NONE:
 default :
@@ -40,7 +32,7 @@ mState.setSecurity(AccessPointState.OPEN);
 break;
 }
 if (mState.isEnterprise() && !mState.configured) {
-updateEnterpriseFields(AccessPointState.WPA_EAP.equals(mState.security) ? SECURITY_WPA_EAP : SECURITY_IEEE8021X);
+updateEnterpriseFields();
 }
 if (!mWifiLayer.saveNetwork(mState)) {
 return;

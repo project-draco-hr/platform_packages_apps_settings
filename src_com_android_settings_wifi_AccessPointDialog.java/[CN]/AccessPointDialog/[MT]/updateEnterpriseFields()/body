@@ -1,9 +1,9 @@
 {
   int i;
   String value;
-  for (i=AccessPointState.IDENTITY; i <= AccessPointState.PRIVATE_KEY_PASSWD; i++) {
+  for (i=AccessPointState.IDENTITY; i <= AccessPointState.ANONYMOUS_IDENTITY; i++) {
     value=mEnterpriseTextFields[i].getText().toString();
-    if (!TextUtils.isEmpty(value) || (i == AccessPointState.PRIVATE_KEY_PASSWD)) {
+    if (!TextUtils.isEmpty(value)) {
       mState.setEnterpriseField(i,value);
     }
   }
@@ -29,21 +29,7 @@
       mState.setEnterpriseField(AccessPointState.CA_CERT,BLOB_HEADER + value);
     }
   }
-switch (securityType) {
-case SECURITY_IEEE8021X:
-case SECURITY_WPA_EAP:
-{
-      if (securityType == SECURITY_WPA_EAP) {
-        mState.setSecurity(AccessPointState.WPA_EAP);
-      }
- else {
-        mState.setSecurity(AccessPointState.IEEE8021X);
-      }
-      mState.setEap(mEapSpinner.getSelectedItemPosition());
-      mState.setPhase2((String)mPhase2Spinner.getSelectedItem());
-      break;
-    }
-default :
-  mState.setSecurity(AccessPointState.OPEN);
-}
+  mState.setSecurity(AccessPointState.EAP);
+  mState.setEap(mEapSpinner.getSelectedItemPosition());
+  mState.setPhase2((String)mPhase2Spinner.getSelectedItem());
 }

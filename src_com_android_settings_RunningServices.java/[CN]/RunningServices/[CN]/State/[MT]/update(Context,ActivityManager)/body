@@ -20,7 +20,7 @@
     ProcessItem proc=procs.get(si.process);
     if (proc == null) {
       changed=true;
-      proc=new ProcessItem(si.uid,si.process);
+      proc=new ProcessItem(context,si.uid,si.process);
       procs.put(si.process,proc);
     }
     if (proc.mCurSeq != mSequence) {
@@ -50,7 +50,7 @@
     if (proc == null) {
       proc=mRunningProcesses.get(pi.pid);
       if (proc == null) {
-        proc=new ProcessItem(pi.uid,pi.processName);
+        proc=new ProcessItem(context,pi.uid,pi.processName);
         proc.mPid=pi.pid;
         mRunningProcesses.put(pi.pid,proc);
       }

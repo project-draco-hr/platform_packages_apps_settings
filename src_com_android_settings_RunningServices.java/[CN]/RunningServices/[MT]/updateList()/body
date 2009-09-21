@@ -5,13 +5,13 @@
   if (mLastNumBackgroundProcesses != mState.mNumBackgroundProcesses || mLastBackgroundProcessMemory != mState.mBackgroundProcessMemory) {
     mLastNumBackgroundProcesses=mState.mNumBackgroundProcesses;
     mLastBackgroundProcessMemory=mState.mBackgroundProcessMemory;
-    String sizeStr=Formatter.formatFileSize(this,mLastBackgroundProcessMemory);
+    String sizeStr=Formatter.formatShortFileSize(this,mLastBackgroundProcessMemory);
     mBackgroundProcessText.setText(getResources().getString(R.string.service_background_processes,mLastNumBackgroundProcesses,sizeStr));
   }
   if (mLastNumForegroundProcesses != mState.mNumForegroundProcesses || mLastForegroundProcessMemory != mState.mForegroundProcessMemory) {
     mLastNumForegroundProcesses=mState.mNumForegroundProcesses;
     mLastForegroundProcessMemory=mState.mForegroundProcessMemory;
-    String sizeStr=Formatter.formatFileSize(this,mLastForegroundProcessMemory);
+    String sizeStr=Formatter.formatShortFileSize(this,mLastForegroundProcessMemory);
     mForegroundProcessText.setText(getResources().getString(R.string.service_foreground_processes,mLastNumForegroundProcesses,sizeStr));
   }
 }

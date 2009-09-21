@@ -1,0 +1,15 @@
+{
+switch (p.getType()) {
+case L2TP_IPSEC_PSK:
+    L2tpIpsecPskProfile pskProfile=(L2tpIpsecPskProfile)p;
+  String presharedKey=pskProfile.getPresharedKey();
+if (!TextUtils.isEmpty(presharedKey)) return true;
+case L2TP:
+L2tpProfile l2tpProfile=(L2tpProfile)p;
+if (l2tpProfile.isSecretEnabled() && !TextUtils.isEmpty(l2tpProfile.getSecretString())) {
+return true;
+}
+default :
+return false;
+}
+}

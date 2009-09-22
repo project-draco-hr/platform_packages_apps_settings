@@ -1,0 +1,19 @@
+{
+  if (preference == mUseLocation) {
+    if (mUseLocation.isChecked()) {
+      showUseLocationDialog(false);
+    }
+ else {
+      updateUseLocation();
+    }
+  }
+ else   if (preference == mBackup) {
+    if (!mBackup.isChecked()) {
+      showEraseBackupDialog();
+    }
+ else {
+      setBackupEnabled(true);
+    }
+  }
+  return false;
+}

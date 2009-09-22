@@ -1,35 +1,15 @@
 {
-  if (!mConfirm) {
-    mConfirm=true;
+  if (mRetry) {
     showCstorDialog(mDialogId);
   }
  else {
-    if (mDialogId == CSTOR_UNLOCK_DIALOG) {
-      mAccessCheckBox.setChecked(isCstorUnlocked());
-    }
-    if (mCstorAddCredentialHelper != null) {
-      if (!isCstorInitialized()) {
-        showCstorDialog(CSTOR_INIT_DIALOG);
-      }
- else       if (!isCstorUnlocked()) {
-        showCstorDialog(CSTOR_UNLOCK_DIALOG);
-      }
- else {
-        if (addCredential()) {
-          finish();
-        }
- else {
-          if (mDialogId != CSTOR_NAME_CREDENTIAL_DIALOG) {
-            removeDialog(mDialogId);
-          }
-          showCstorDialog(CSTOR_NAME_CREDENTIAL_DIALOG);
-        }
-      }
-      return;
-    }
- else     if (mSpecialIntent != null) {
-      finish();
-    }
     removeDialog(mDialogId);
+    if (mExternalIntent != null) {
+      if (Credentials.SYSTEM_INSTALL_ACTION.equals(mExternalIntent.getAction())) {
+      }
+ else {
+        finish();
+      }
+    }
   }
 }

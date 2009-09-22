@@ -1,0 +1,27 @@
+{
+  if (error == KeyStore.NO_ERROR) {
+    updatePreferences(KeyStore.NO_ERROR);
+    return false;
+  }
+  if (error == KeyStore.UNINITIALIZED) {
+    updatePreferences(KeyStore.UNINITIALIZED);
+    return false;
+  }
+  if (error < KeyStore.WRONG_PASSWORD) {
+    return false;
+  }
+  int count=error - KeyStore.WRONG_PASSWORD + 1;
+  if (count > 3) {
+    showError(R.string.cstor_password_error);
+    return true;
+  }
+  TextView v=showError(R.string.cstor_password_error_reset_warning);
+  if (count == 1) {
+    v.setText(R.string.cstor_password_error_reset_warning);
+  }
+ else {
+    String format=getString(R.string.cstor_password_error_reset_warning_plural);
+    v.setText(String.format(format,count));
+  }
+  return true;
+}

@@ -5,31 +5,24 @@
   String confirmPasswd=getText(R.id.cstor_confirm_password);
   if ((mDialogId == CSTOR_CHANGE_PASSWORD_DIALOG) && TextUtils.isEmpty(oldPasswd)) {
     showError(R.string.cstor_password_empty_error);
-    return false;
   }
-  if (TextUtils.isEmpty(newPasswd) && TextUtils.isEmpty(confirmPasswd)) {
+ else   if (TextUtils.isEmpty(newPasswd) || TextUtils.isEmpty(confirmPasswd)) {
     showError(R.string.cstor_passwords_empty_error);
-    return false;
   }
-  if (!verifyPassword(newPasswd)) {
-    return false;
+ else   if (newPasswd.length() < CSTOR_MIN_PASSWORD_LENGTH) {
+    showError(R.string.cstor_password_verification_error);
   }
  else   if (!newPasswd.equals(confirmPasswd)) {
     showError(R.string.cstor_passwords_error);
-    return false;
   }
-  if (mDialogId == CSTOR_CHANGE_PASSWORD_DIALOG) {
-    int count=changeCstorPassword(oldPasswd,newPasswd);
-    if (count > 0) {
-      showResetWarning(count);
-      return false;
+ else {
+    if (mDialogId == CSTOR_CHANGE_PASSWORD_DIALOG) {
+      return !checkError(changeCstorPassword(oldPasswd,newPasswd));
     }
  else {
+      initCstor(newPasswd);
       return true;
     }
   }
- else {
-    initCstor(newPasswd);
-    return true;
-  }
+  return false;
 }

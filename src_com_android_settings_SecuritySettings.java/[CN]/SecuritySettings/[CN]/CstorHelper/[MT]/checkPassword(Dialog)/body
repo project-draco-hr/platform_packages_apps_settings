@@ -1,0 +1,9 @@
+{
+  hideError();
+  String passwd=getText(R.id.cstor_password);
+  if (TextUtils.isEmpty(passwd)) {
+    showError(R.string.cstor_password_empty_error);
+    return false;
+  }
+  return !checkError(unlockCstor(passwd));
+}

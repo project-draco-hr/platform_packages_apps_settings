@@ -24,14 +24,14 @@
 );
       return;
     }
-    if (needKeystoreToSave(p)) {
+    if (needKeyStoreToSave(p)) {
       Runnable action=new Runnable(){
         public void run(){
           onActivityResult(requestCode,resultCode,data);
         }
       }
 ;
-      if (!unlockKeystore(p,action))       return;
+      if (!unlockKeyStore(p,action))       return;
     }
     try {
       if (index < 0) {

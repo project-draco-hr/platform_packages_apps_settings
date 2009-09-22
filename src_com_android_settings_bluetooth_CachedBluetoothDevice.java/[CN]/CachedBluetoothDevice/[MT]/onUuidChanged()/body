@@ -1,0 +1,8 @@
+{
+  updateProfiles();
+  if (DEBUG)   Log.e(TAG,"onUuidChanged: Time since last connect w/ no uuid " + (SystemClock.elapsedRealtime() - mConnectAttemptedWithoutUuid));
+  if (mProfiles.size() > 0 && (mConnectAttemptedWithoutUuid + MAX_UUID_DELAY_FOR_AUTO_CONNECT) > SystemClock.elapsedRealtime()) {
+    connect();
+  }
+  dispatchAttributesChanged();
+}

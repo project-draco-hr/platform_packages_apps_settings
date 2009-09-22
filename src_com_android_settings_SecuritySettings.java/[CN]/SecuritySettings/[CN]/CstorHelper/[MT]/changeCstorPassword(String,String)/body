@@ -1,5 +1,4 @@
 {
-  int ret=mKeystore.changePassword(oldPasswd,newPasswd);
-  if (ret == -1)   resetCstor();
-  return ret;
+  mKeyStore.password(oldPasswd,newPasswd);
+  return mKeyStore.getLastError();
 }

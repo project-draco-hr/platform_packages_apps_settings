@@ -1,12 +1,12 @@
 {
-  if (needKeystoreToConnect(p)) {
+  if (needKeyStoreToConnect(p)) {
     Runnable action=new Runnable(){
       public void run(){
         connect(p);
       }
     }
 ;
-    if (!unlockKeystore(p,action))     return;
+    if (!unlockKeyStore(p,action))     return;
   }
   if (!checkSecrets(p))   return;
   changeState(p,VpnState.CONNECTING);

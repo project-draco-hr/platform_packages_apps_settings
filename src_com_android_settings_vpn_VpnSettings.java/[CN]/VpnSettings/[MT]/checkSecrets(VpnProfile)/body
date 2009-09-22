@@ -1,31 +1,23 @@
 {
-  Keystore ks=Keystore.getInstance();
-  HashSet<String> secretSet=new HashSet<String>();
   boolean secretMissing=false;
   if (p instanceof L2tpIpsecProfile) {
     L2tpIpsecProfile certProfile=(L2tpIpsecProfile)p;
-    CertTool certTool=CertTool.getInstance();
-    Collections.addAll(secretSet,certTool.getAllCaCertificateKeys());
     String cert=certProfile.getCaCertificate();
-    if (TextUtils.isEmpty(cert) || !secretSet.contains(cert)) {
+    if (TextUtils.isEmpty(cert) || !mKeyStore.contains(Credentials.CA_CERTIFICATE + cert)) {
       certProfile.setCaCertificate(null);
       secretMissing=true;
     }
-    secretSet.clear();
-    Collections.addAll(secretSet,certTool.getAllUserCertificateKeys());
     cert=certProfile.getUserCertificate();
-    if (TextUtils.isEmpty(cert) || !secretSet.contains(cert)) {
+    if (TextUtils.isEmpty(cert) || !mKeyStore.contains(Credentials.USER_CERTIFICATE + cert)) {
       certProfile.setUserCertificate(null);
       secretMissing=true;
     }
   }
-  secretSet.clear();
-  Collections.addAll(secretSet,ks.listKeys(NAMESPACE_VPN));
   if (p instanceof L2tpIpsecPskProfile) {
     L2tpIpsecPskProfile pskProfile=(L2tpIpsecPskProfile)p;
     String presharedKey=pskProfile.getPresharedKey();
-    String keyName=KEY_PREFIX_IPSEC_PSK + p.getId();
-    if (TextUtils.isEmpty(presharedKey) || !secretSet.contains(keyName)) {
+    String key=KEY_PREFIX_IPSEC_PSK + p.getId();
+    if (TextUtils.isEmpty(presharedKey) || !mKeyStore.contains(key)) {
       pskProfile.setPresharedKey(null);
       secretMissing=true;
     }
@@ -34,8 +26,8 @@
     L2tpProfile l2tpProfile=(L2tpProfile)p;
     if (l2tpProfile.isSecretEnabled()) {
       String secret=l2tpProfile.getSecretString();
-      String keyName=KEY_PREFIX_L2TP_SECRET + p.getId();
-      if (TextUtils.isEmpty(secret) || !secretSet.contains(keyName)) {
+      String key=KEY_PREFIX_L2TP_SECRET + p.getId();
+      if (TextUtils.isEmpty(secret) || !mKeyStore.contains(key)) {
         l2tpProfile.setSecretString(null);
         secretMissing=true;
       }

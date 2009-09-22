@@ -30,8 +30,8 @@ break;
 }
 case SECURITY_EAP:
 {
-if (Keystore.getInstance().getState() != Keystore.UNLOCKED) {
-getContext().startActivity(new Intent(Keystore.ACTION_UNLOCK_CREDENTIAL_STORAGE));
+if (mKeyStore.test() != KeyStore.NO_ERROR) {
+Credentials.getInstance().unlock(getContext());
 return;
 }
 enableEnterpriseFields();

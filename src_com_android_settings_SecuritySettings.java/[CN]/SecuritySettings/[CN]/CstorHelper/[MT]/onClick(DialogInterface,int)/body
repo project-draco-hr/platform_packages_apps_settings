@@ -1,21 +1,15 @@
 {
-  if (which == DialogInterface.BUTTON_NEGATIVE) {
-    onCancel(dialog);
-    return;
-  }
+  if (which == DialogInterface.BUTTON_NEGATIVE)   return;
 switch (mDialogId) {
 case CSTOR_INIT_DIALOG:
 case CSTOR_CHANGE_PASSWORD_DIALOG:
-    mConfirm=checkPasswords((Dialog)dialog);
+    mRetry=!checkPasswords((Dialog)dialog);
   break;
 case CSTOR_UNLOCK_DIALOG:
-mConfirm=checkUnlockPassword((Dialog)dialog);
+mRetry=!checkPassword((Dialog)dialog);
 break;
 case CSTOR_RESET_DIALOG:
 resetCstor();
-break;
-case CSTOR_NAME_CREDENTIAL_DIALOG:
-mConfirm=checkAddCredential();
 break;
 }
 }

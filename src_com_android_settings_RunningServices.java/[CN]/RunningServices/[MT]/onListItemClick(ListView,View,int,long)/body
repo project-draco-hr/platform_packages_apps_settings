@@ -24,7 +24,8 @@ catch (        ActivityNotFoundException e) {
       mCurSelected=bi;
       AlertDialog.Builder builder=new AlertDialog.Builder(this);
       builder.setTitle(R.string.confirm_stop_service);
-      builder.setMessage(R.string.confirm_stop_service_msg);
+      String msg=getResources().getString(R.string.confirm_stop_service_msg,si.mPackageInfo.loadLabel(getPackageManager()));
+      builder.setMessage(msg);
       builder.setPositiveButton(R.string.confirm_stop_stop,this);
       builder.setNegativeButton(R.string.confirm_stop_cancel,null);
       builder.setCancelable(true);

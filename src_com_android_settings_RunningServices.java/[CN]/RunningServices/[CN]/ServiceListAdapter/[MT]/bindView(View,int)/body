@@ -11,13 +11,15 @@
   vh.description.setText(item.mDescription);
   if (item.mIsProcess) {
     view.setBackgroundColor(mProcessBgColor);
-    vh.icon.setImageDrawable(item.mPackageInfo.loadIcon(getPackageManager()));
+    vh.icon.setImageDrawable(null);
+    vh.icon.setVisibility(View.GONE);
     vh.description.setText(item.mDescription);
     item.mCurSizeStr=null;
   }
  else {
     view.setBackgroundDrawable(null);
-    vh.icon.setImageDrawable(null);
+    vh.icon.setImageDrawable(item.mPackageInfo.loadIcon(getPackageManager()));
+    vh.icon.setVisibility(View.VISIBLE);
     vh.description.setText(item.mDescription);
     ai.mFirstRunTime=item.mActiveSince;
   }

@@ -1,5 +1,11 @@
 {
   if (!ensurePaired())   return;
+  if (mProfiles.size() == 0) {
+    if (!updateProfiles()) {
+      mConnectAttemptedWithoutUuid=SystemClock.elapsedRealtime();
+      return;
+    }
+  }
   mIsConnectingErrorPossible=true;
   boolean hasAtLeastOnePreferredProfile=false;
   for (  Profile profile : mProfiles) {

@@ -25,13 +25,5 @@
  else   if (preference == mAssistedGps) {
     Settings.Secure.putInt(getContentResolver(),Settings.Secure.ASSISTED_GPS_ENABLED,mAssistedGps.isChecked() ? 1 : 0);
   }
- else   if (preference == mUseLocation) {
-    if (mUseLocation.isChecked()) {
-      showUseLocationDialog(false);
-    }
- else {
-      updateUseLocation();
-    }
-  }
   return false;
 }

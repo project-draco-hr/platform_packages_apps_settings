@@ -6,21 +6,9 @@
   mNetwork=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_NETWORK);
   mGps=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_GPS);
   mAssistedGps=(CheckBoxPreference)getPreferenceScreen().findPreference(ASSISTED_GPS);
-  mUseLocation=(CheckBoxPreference)getPreferenceScreen().findPreference(USE_LOCATION);
-  try {
-    if (mUseLocation != null && getPackageManager().getPackageInfo(GSETTINGS_PROVIDER,0) == null) {
-      ((PreferenceGroup)findPreference(LOCATION_CATEGORY)).removePreference(mUseLocation);
-    }
-  }
- catch (  NameNotFoundException nnfe) {
-  }
   updateToggles();
   Cursor settingsCursor=getContentResolver().query(Settings.Secure.CONTENT_URI,null,"(" + Settings.System.NAME + "=?)",new String[]{Settings.Secure.LOCATION_PROVIDERS_ALLOWED},null);
   mContentQueryMap=new ContentQueryMap(settingsCursor,Settings.System.NAME,true,null);
   mContentQueryMap.addObserver(new SettingsObserver());
-  boolean doneUseLocation=savedInstanceState == null ? false : savedInstanceState.getBoolean(KEY_DONE_USE_LOCATION,true);
-  if (!doneUseLocation && (getIntent().getBooleanExtra("SHOW_USE_LOCATION",false) || savedInstanceState != null)) {
-    showUseLocationDialog(true);
-  }
   mCstorHelper.handleIntent(getIntent());
 }

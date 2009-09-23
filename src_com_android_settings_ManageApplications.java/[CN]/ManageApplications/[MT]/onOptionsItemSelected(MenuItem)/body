@@ -4,8 +4,9 @@
     sendMessageToHandler(REORDER_LIST,menuId);
   }
  else   if (menuId == FILTER_OPTIONS) {
+    int selection=mFilterApps - MENU_OPTIONS_BASE;
     if (mAlertDlg == null) {
-      mAlertDlg=new AlertDialog.Builder(this).setTitle(R.string.filter_dlg_title).setNeutralButton(R.string.cancel,this).setSingleChoiceItems(new CharSequence[]{getText(R.string.filter_apps_all),getText(R.string.filter_apps_running),getText(R.string.filter_apps_third_party)},-1,this).create();
+      mAlertDlg=new AlertDialog.Builder(this).setTitle(R.string.filter_dlg_title).setNeutralButton(R.string.cancel,this).setSingleChoiceItems(new CharSequence[]{getText(R.string.filter_apps_all),getText(R.string.filter_apps_running),getText(R.string.filter_apps_third_party)},selection,this).create();
     }
     mAlertDlg.show();
   }

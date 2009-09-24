@@ -1,0 +1,13 @@
+{
+synchronized (sProfileMap) {
+    if (sProfileMap.size() == 0) {
+      LocalBluetoothProfileManager profileManager;
+      profileManager=new A2dpProfileManager(localManager);
+      sProfileMap.put(Profile.A2DP,profileManager);
+      profileManager=new HeadsetProfileManager(localManager);
+      sProfileMap.put(Profile.HEADSET,profileManager);
+      profileManager=new OppProfileManager(localManager);
+      sProfileMap.put(Profile.OPP,profileManager);
+    }
+  }
+}

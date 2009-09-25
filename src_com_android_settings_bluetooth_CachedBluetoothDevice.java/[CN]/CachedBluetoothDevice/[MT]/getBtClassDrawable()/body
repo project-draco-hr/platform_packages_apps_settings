@@ -5,13 +5,21 @@ case BluetoothClass.Device.Major.COMPUTER:
 case BluetoothClass.Device.Major.PHONE:
   return R.drawable.ic_bt_cellphone;
 }
+if (mProfiles.size() > 0) {
 if (mProfiles.contains(Profile.A2DP)) {
-return R.drawable.ic_bt_headphones_a2dp;
+  return R.drawable.ic_bt_headphones_a2dp;
 }
  else if (mProfiles.contains(Profile.HEADSET)) {
-return R.drawable.ic_bt_headset_hfp;
+  return R.drawable.ic_bt_headset_hfp;
+}
 }
  else {
-return 0;
+if (mBtClass.doesClassMatch(BluetoothClass.PROFILE_A2DP)) {
+  return R.drawable.ic_bt_headphones_a2dp;
 }
+if (mBtClass.doesClassMatch(BluetoothClass.PROFILE_HEADSET)) {
+  return R.drawable.ic_bt_headset_hfp;
+}
+}
+return 0;
 }

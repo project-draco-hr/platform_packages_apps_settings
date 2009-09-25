@@ -6,6 +6,7 @@ synchronized (INSTANCE_LOCK) {
     if (!INSTANCE.init(context)) {
       return null;
     }
+    LocalBluetoothProfileManager.init(INSTANCE);
     return INSTANCE;
   }
 }

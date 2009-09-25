@@ -1,21 +1,9 @@
 {
-  LocalBluetoothProfileManager profileManager;
 synchronized (sProfileMap) {
-    profileManager=sProfileMap.get(profile);
+    LocalBluetoothProfileManager profileManager=sProfileMap.get(profile);
     if (profileManager == null) {
-switch (profile) {
-case A2DP:
-        profileManager=new A2dpProfileManager(localManager);
-      break;
-case HEADSET:
-    profileManager=new HeadsetProfileManager(localManager);
-  break;
-case OPP:
-profileManager=new OppProfileManager(localManager);
-break;
-}
-sProfileMap.put(profile,profileManager);
-}
-}
-return profileManager;
+      Log.e(TAG,"profileManager can't be found for " + profile.toString());
+    }
+    return profileManager;
+  }
 }

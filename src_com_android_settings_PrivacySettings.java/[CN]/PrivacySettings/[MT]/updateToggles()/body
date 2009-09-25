@@ -1,0 +1,5 @@
+{
+  ContentResolver res=getContentResolver();
+  mUseLocation.setChecked(Settings.Secure.getInt(res,Settings.Secure.USE_LOCATION_FOR_SERVICES,2) == 1);
+  mBackup.setChecked(Settings.Secure.getInt(res,Settings.Secure.BACKUP_ENABLED,0) == 1);
+}

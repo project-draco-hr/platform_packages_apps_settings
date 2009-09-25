@@ -1,0 +1,20 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.privacy_settings);
+  mUseLocation=(CheckBoxPreference)getPreferenceScreen().findPreference(USE_LOCATION);
+  mBackup=(CheckBoxPreference)getPreferenceScreen().findPreference(BACKUP_SETTINGS);
+  try {
+    if (mUseLocation != null) {
+      getPackageManager().getPackageInfo(GSETTINGS_PROVIDER,0);
+    }
+  }
+ catch (  NameNotFoundException nnfe) {
+    getPreferenceScreen().removePreference(findPreference(LOCATION_CATEGORY));
+    getPreferenceScreen().removePreference(findPreference(SETTINGS_CATEGORY));
+  }
+  updateToggles();
+  boolean doneUseLocation=savedInstanceState == null ? false : savedInstanceState.getBoolean(KEY_DONE_USE_LOCATION,true);
+  if (!doneUseLocation && (getIntent().getBooleanExtra("SHOW_USE_LOCATION",false) || savedInstanceState != null)) {
+    showUseLocationDialog(true);
+  }
+}

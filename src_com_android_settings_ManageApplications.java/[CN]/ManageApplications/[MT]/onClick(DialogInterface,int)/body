@@ -1,18 +1,16 @@
 {
   int newOption;
 switch (which) {
-case 0:
-    newOption=FILTER_APPS_ALL;
+case FILTER_APPS_ALL:
+    break;
+case FILTER_APPS_RUNNING:
   break;
-case 1:
-newOption=FILTER_APPS_RUNNING;
-break;
-case 2:
-newOption=FILTER_APPS_THIRD_PARTY;
+case FILTER_APPS_THIRD_PARTY:
 break;
 default :
 return;
 }
+newOption=which;
 mAlertDlg.dismiss();
 sendMessageToHandler(REORDER_LIST,newOption);
 }

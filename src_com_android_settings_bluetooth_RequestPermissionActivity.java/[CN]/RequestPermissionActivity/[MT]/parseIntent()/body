@@ -1,0 +1,28 @@
+{
+  Intent intent=getIntent();
+  if (intent != null && intent.getAction().equals(BluetoothAdapter.ACTION_REQUEST_ENABLE)) {
+    mEnableOnly=true;
+  }
+ else   if (intent != null && intent.getAction().equals(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE)) {
+    mTimeout=intent.getIntExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,BluetoothDiscoverableEnabler.DEFAULT_DISCOVERABLE_TIMEOUT);
+    Log.e(TAG,"Timeout = " + mTimeout);
+    if (mTimeout > MAX_DISCOVERABLE_TIMEOUT) {
+      mTimeout=MAX_DISCOVERABLE_TIMEOUT;
+    }
+ else     if (mTimeout <= 0) {
+      mTimeout=BluetoothDiscoverableEnabler.DEFAULT_DISCOVERABLE_TIMEOUT;
+    }
+  }
+ else {
+    Log.e(TAG,"Error: this activity may be started only with intent " + BluetoothAdapter.ACTION_REQUEST_ENABLE + " or "+ BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+    setResult(RESULT_ERROR);
+    return true;
+  }
+  mLocalManager=LocalBluetoothManager.getInstance(this);
+  if (mLocalManager == null) {
+    Log.e(TAG,"Error: there's a problem starting bluetooth");
+    setResult(RESULT_ERROR);
+    return true;
+  }
+  return false;
+}

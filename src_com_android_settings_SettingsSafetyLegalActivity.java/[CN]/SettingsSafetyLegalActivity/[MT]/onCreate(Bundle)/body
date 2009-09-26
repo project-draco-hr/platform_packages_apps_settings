@@ -1,0 +1,27 @@
+{
+  super.onCreate(savedInstanceState);
+  String userSafetylegalUrl=SystemProperties.get(PROPERTY_LSAFETYLEGAL_URL);
+  final Configuration configuration=getResources().getConfiguration();
+  final String language=configuration.locale.getLanguage();
+  final String country=configuration.locale.getCountry();
+  String loc=String.format("locale=%s-%s",language,country);
+  userSafetylegalUrl=String.format("%s&%s",userSafetylegalUrl,loc);
+  if (!isDataNetworkConnected()) {
+    showErrorAndFinish(userSafetylegalUrl);
+    return;
+  }
+  WebView webView=new WebView(this);
+  webView.getSettings().setJavaScriptEnabled(true);
+  webView.loadUrl(userSafetylegalUrl);
+  webView.setWebViewClient(new WebViewClient(){
+    @Override public void onPageFinished(    WebView view,    String url){
+      mAlert.setTitle(getString(R.string.settings_safetylegal_activity_title));
+    }
+  }
+);
+  final AlertController.AlertParams p=mAlertParams;
+  p.mTitle=getString(R.string.settings_safetylegal_activity_loading);
+  p.mView=webView;
+  p.mForceInverseBackground=true;
+  setupAlert();
+}

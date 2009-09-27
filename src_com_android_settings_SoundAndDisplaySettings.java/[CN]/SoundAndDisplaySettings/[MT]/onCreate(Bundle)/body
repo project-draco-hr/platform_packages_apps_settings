@@ -18,6 +18,9 @@
   mSoundEffects=(CheckBoxPreference)findPreference(KEY_SOUND_EFFECTS);
   mSoundEffects.setPersistent(false);
   mSoundEffects.setChecked(Settings.System.getInt(resolver,Settings.System.SOUND_EFFECTS_ENABLED,0) != 0);
+  mHapticFeedback=(CheckBoxPreference)findPreference(KEY_HAPTIC_FEEDBACK);
+  mHapticFeedback.setPersistent(false);
+  mHapticFeedback.setChecked(Settings.System.getInt(resolver,Settings.System.HAPTIC_FEEDBACK_ENABLED,0) != 0);
   mAnimations=(ListPreference)findPreference(KEY_ANIMATIONS);
   mAnimations.setOnPreferenceChangeListener(this);
   mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);

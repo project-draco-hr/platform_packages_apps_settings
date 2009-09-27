@@ -2,7 +2,9 @@
   if (state == BluetoothAdapter.STATE_OFF || state == BluetoothAdapter.STATE_ON) {
     mCheckBoxPreference.setChecked(state == BluetoothAdapter.STATE_ON);
     mCheckBoxPreference.setSummary(state == BluetoothAdapter.STATE_OFF ? mOriginalSummary : null);
-    mCheckBoxPreference.setEnabled(isEnabledByDependency());
+    if (isEnabledByDependency()) {
+      mCheckBoxPreference.setEnabled(true);
+    }
   }
  else   if (state == BluetoothAdapter.STATE_TURNING_ON || state == BluetoothAdapter.STATE_TURNING_OFF) {
     mCheckBoxPreference.setSummary(state == BluetoothAdapter.STATE_TURNING_ON ? R.string.wifi_starting : R.string.wifi_stopping);

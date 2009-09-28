@@ -23,7 +23,6 @@
   mComputingSizeStr=getText(R.string.computing_size);
   mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   mReceiver=new PackageIntentReceiver();
-  mEmptyView=(TextView)findViewById(R.id.empty_view);
   mObserver=new PkgSizeObserver();
   List<ApplicationInfo> appList=getInstalledApps(mSortOrder);
   mAppInfoAdapter=new AppInfoAdapter(this,appList);

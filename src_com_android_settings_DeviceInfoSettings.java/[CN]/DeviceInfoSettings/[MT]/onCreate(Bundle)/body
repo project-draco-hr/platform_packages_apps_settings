@@ -6,6 +6,7 @@
   setStringSummary("device_model",Build.MODEL);
   setStringSummary("build_number",Build.DISPLAY);
   findPreference("kernel_version").setSummary(getFormattedKernelVersion());
+  removePreferenceIfPropertyMissing(getPreferenceScreen(),"safetylegal",PROPERTY_URL_SAFETYLEGAL);
   PreferenceGroup parentPreference=(PreferenceGroup)findPreference(KEY_CONTAINER);
   Utils.updatePreferenceToSpecificActivityOrRemove(this,parentPreference,KEY_TERMS,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
   Utils.updatePreferenceToSpecificActivityOrRemove(this,parentPreference,KEY_LICENSE,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);

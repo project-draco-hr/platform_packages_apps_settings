@@ -10,9 +10,9 @@
     }
  else     if (mScreenType == SCREEN_TYPE_DEVICEPICKER) {
       CachedBluetoothDevice device=btPreference.getCachedDevice();
+      mSelectedDevice=device.getDevice();
       if ((device.getBondState() == BluetoothDevice.BOND_BONDED) || (mNeedAuth == false)) {
-        BluetoothDevice btAddress=btPreference.getCachedDevice().getDevice();
-        sendDevicePickedIntent(btAddress);
+        sendDevicePickedIntent(mSelectedDevice);
         finish();
       }
  else {

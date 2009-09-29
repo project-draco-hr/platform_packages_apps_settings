@@ -1,0 +1,19 @@
+{
+  if (requestCode != REQUEST_CODE_START_BT) {
+    Log.e(TAG,"Unexpected onActivityResult " + requestCode + " "+ resultCode);
+    setResult(RESULT_ERROR);
+    finish();
+    return;
+  }
+  if (resultCode != RESULT_BT_STARTING_OR_STARTED) {
+    setResult(resultCode);
+    finish();
+  }
+  mUserConfirmed=true;
+  if (mLocalManager.getBluetoothState() == BluetoothAdapter.STATE_ON) {
+    proceedAndFinish(false);
+  }
+ else {
+    createDialog();
+  }
+}

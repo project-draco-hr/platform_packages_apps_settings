@@ -1,0 +1,17 @@
+{
+  int returnCode;
+  if (mEnableOnly) {
+    returnCode=0;
+  }
+ else   if (mLocalManager.getBluetoothAdapter().setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,mTimeout)) {
+    persistDiscoverableEndTimestamp(System.currentTimeMillis() + mTimeout * 1000);
+    returnCode=mTimeout;
+  }
+ else {
+    returnCode=RESULT_ERROR;
+  }
+  setResult(returnCode);
+  if (!buttonPressed) {
+    finish();
+  }
+}

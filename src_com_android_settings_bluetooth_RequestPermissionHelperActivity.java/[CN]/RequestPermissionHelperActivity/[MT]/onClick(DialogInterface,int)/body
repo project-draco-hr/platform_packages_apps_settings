@@ -1,0 +1,30 @@
+{
+  int returnCode;
+switch (which) {
+case DialogInterface.BUTTON_POSITIVE:
+    int btState=0;
+  try {
+    int retryCount=30;
+    do {
+      btState=mLocalManager.getBluetoothState();
+      Thread.sleep(100);
+    }
+ while (btState == BluetoothAdapter.STATE_TURNING_OFF && --retryCount > 0);
+  }
+ catch (  InterruptedException e) {
+  }
+if (btState == BluetoothAdapter.STATE_TURNING_ON || btState == BluetoothAdapter.STATE_ON || mLocalManager.getBluetoothAdapter().enable()) {
+  returnCode=RequestPermissionActivity.RESULT_BT_STARTING_OR_STARTED;
+}
+ else {
+  returnCode=RequestPermissionActivity.RESULT_ERROR;
+}
+break;
+case DialogInterface.BUTTON_NEGATIVE:
+returnCode=RequestPermissionActivity.RESULT_USER_DENIED;
+break;
+default :
+return;
+}
+setResult(returnCode);
+}

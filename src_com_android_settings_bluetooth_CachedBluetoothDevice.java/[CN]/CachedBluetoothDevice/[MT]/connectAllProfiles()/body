@@ -3,7 +3,7 @@
   mIsConnectingErrorPossible=true;
   for (  Profile profile : mProfiles) {
     LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
-    profileManager.setPreferred(mDevice,true);
+    profileManager.setPreferred(mDevice,false);
     queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
   }
 }

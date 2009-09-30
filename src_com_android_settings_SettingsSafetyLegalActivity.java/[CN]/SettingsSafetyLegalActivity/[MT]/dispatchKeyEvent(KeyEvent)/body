@@ -1,0 +1,9 @@
+{
+  if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+    if (mWebView.canGoBack()) {
+      mWebView.goBack();
+      return true;
+    }
+  }
+  return super.dispatchKeyEvent(event);
+}

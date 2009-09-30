@@ -6,7 +6,7 @@
     }
     return;
   }
-  cachedDevice.refresh();
+  cachedDevice.onBondingStateChanged(bondState);
   if (bondState == BluetoothDevice.BOND_BONDED) {
     cachedDevice.connect();
   }

@@ -10,5 +10,5 @@
   int chooseStringRes=mLockPatternUtils.savedPatternExists() ? R.string.lockpattern_settings_change_lock_pattern : R.string.lockpattern_settings_choose_lock_pattern;
   mChoosePattern.setTitle(chooseStringRes);
   mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0);
-  mCstorHelper.resume();
+  mCredentialStorage.resume();
 }

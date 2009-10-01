@@ -8,10 +8,12 @@
   mIsConnectingErrorPossible=true;
   int preferredProfiles=0;
   for (  Profile profile : mProfiles) {
-    LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
-    if (profileManager.isPreferred(mDevice)) {
-      ++preferredProfiles;
-      queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
+    if (isConnectableProfile(profile)) {
+      LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+      if (profileManager.isPreferred(mDevice)) {
+        ++preferredProfiles;
+        queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
+      }
     }
   }
   if (DEBUG)   Log.d(TAG,"Preferred profiles = " + preferredProfiles);

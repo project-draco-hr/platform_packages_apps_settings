@@ -2,11 +2,17 @@
   if (mState.update(this,mAm)) {
     ((ServiceListAdapter)(getListView().getAdapter())).notifyDataSetChanged();
   }
-  if (mLastNumBackgroundProcesses != mState.mNumBackgroundProcesses || mLastBackgroundProcessMemory != mState.mBackgroundProcessMemory) {
+  long availMem=readAvailMem() - SECONDARY_SERVER_MEM;
+  if (availMem < 0) {
+    availMem=0;
+  }
+  if (mLastNumBackgroundProcesses != mState.mNumBackgroundProcesses || mLastBackgroundProcessMemory != mState.mBackgroundProcessMemory || mLastAvailMemory != availMem) {
     mLastNumBackgroundProcesses=mState.mNumBackgroundProcesses;
     mLastBackgroundProcessMemory=mState.mBackgroundProcessMemory;
+    mLastAvailMemory=availMem;
+    String availStr=availMem != 0 ? Formatter.formatShortFileSize(this,availMem) : "0";
     String sizeStr=Formatter.formatShortFileSize(this,mLastBackgroundProcessMemory);
-    mBackgroundProcessText.setText(getResources().getString(R.string.service_background_processes,mLastNumBackgroundProcesses,sizeStr));
+    mBackgroundProcessText.setText(getResources().getString(R.string.service_background_processes,mLastNumBackgroundProcesses,availStr,sizeStr));
   }
   if (mLastNumForegroundProcesses != mState.mNumForegroundProcesses || mLastForegroundProcessMemory != mState.mForegroundProcessMemory) {
     mLastNumForegroundProcesses=mState.mNumForegroundProcesses;

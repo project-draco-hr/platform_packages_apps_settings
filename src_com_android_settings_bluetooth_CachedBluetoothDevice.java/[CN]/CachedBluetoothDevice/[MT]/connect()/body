@@ -1,21 +1,5 @@
 {
   if (!ensurePaired())   return;
-  if (mProfiles.size() == 0) {
-    if (!updateProfiles()) {
-      mConnectAttemptedWithoutUuid=SystemClock.elapsedRealtime();
-      return;
-    }
-  }
-  mIsConnectingErrorPossible=true;
-  boolean hasAtLeastOnePreferredProfile=false;
-  for (  Profile profile : mProfiles) {
-    LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
-    if (profileManager.isPreferred(mDevice)) {
-      hasAtLeastOnePreferredProfile=true;
-      queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
-    }
-  }
-  if (!hasAtLeastOnePreferredProfile) {
-    connectAndPreferAllProfiles();
-  }
+  mConnectAttempted=SystemClock.elapsedRealtime();
+  connectWithoutResettingTimer();
 }

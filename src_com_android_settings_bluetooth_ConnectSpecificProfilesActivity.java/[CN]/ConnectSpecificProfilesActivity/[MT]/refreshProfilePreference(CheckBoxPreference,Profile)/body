@@ -2,13 +2,7 @@
   BluetoothDevice device=mCachedDevice.getDevice();
   LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
   int connectionStatus=profileManager.getConnectionStatus(device);
-  if (profileManager.getClass().getName().equals(CLASS_NAME_OPP_PROFILE_MANAGER)) {
-    Log.w(TAG,"this is Opp profile");
-    profilePref.setEnabled(false);
-  }
- else {
-    profilePref.setEnabled(!mCachedDevice.isBusy());
-  }
+  profilePref.setEnabled(!mCachedDevice.isBusy());
   profilePref.setSummary(getProfileSummary(profileManager,profile,device,connectionStatus,mOnlineMode));
   profilePref.setChecked(profileManager.isPreferred(device));
 }

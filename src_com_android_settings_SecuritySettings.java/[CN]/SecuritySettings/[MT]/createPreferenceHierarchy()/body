@@ -42,9 +42,9 @@
   showPassword.setSummary(R.string.show_password_summary);
   showPassword.setPersistent(false);
   passwordsCat.addPreference(showPassword);
-  PreferenceCategory credStoreCat=new PreferenceCategory(this);
-  credStoreCat.setTitle(R.string.cstor_settings_category);
-  root.addPreference(credStoreCat);
-  mCstorHelper.createPreferences(credStoreCat);
+  PreferenceCategory credentialsCat=new PreferenceCategory(this);
+  credentialsCat.setTitle(R.string.credentials_category);
+  root.addPreference(credentialsCat);
+  mCredentialStorage.createPreferences(credentialsCat);
   return root;
 }

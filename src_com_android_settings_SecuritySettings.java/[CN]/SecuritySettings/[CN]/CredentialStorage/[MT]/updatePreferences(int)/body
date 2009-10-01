@@ -2,8 +2,10 @@
   mAccessCheckBox.setEnabled(state != KeyStore.UNINITIALIZED);
   mAccessCheckBox.setChecked(state == KeyStore.NO_ERROR);
   mResetButton.setEnabled(state != KeyStore.UNINITIALIZED);
-  if (mState == state)   return;
-  if (state == KeyStore.NO_ERROR) {
+  if (mState == state) {
+    return;
+  }
+ else   if (state == KeyStore.NO_ERROR) {
     Toast.makeText(SecuritySettings.this,R.string.credentials_enabled,Toast.LENGTH_SHORT).show();
   }
  else   if (state == KeyStore.UNINITIALIZED) {

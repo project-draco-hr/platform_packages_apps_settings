@@ -1,9 +1,9 @@
 {
   View view=View.inflate(SecuritySettings.this,R.layout.credentials_unlock_dialog,null);
-  if (mExternalIntent != null) {
+  if (mExternal) {
     view.findViewById(R.id.hint).setVisibility(View.VISIBLE);
   }
   Dialog dialog=new AlertDialog.Builder(SecuritySettings.this).setView(view).setTitle(R.string.credentials_unlock).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
   dialog.setOnDismissListener(this);
-  return dialog;
+  dialog.show();
 }

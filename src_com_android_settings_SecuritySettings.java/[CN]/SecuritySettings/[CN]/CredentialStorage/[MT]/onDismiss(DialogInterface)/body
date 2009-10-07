@@ -1,0 +1,15 @@
+{
+  if (mSubmit && !isFinishing()) {
+    mSubmit=false;
+    if (!checkPassword((Dialog)dialog)) {
+      showDialog(mDialogId);
+      return;
+    }
+  }
+  removeDialog(mDialogId);
+  updatePreferences(mState);
+  if (mExternalIntent != null) {
+    mExternalIntent=null;
+    finish();
+  }
+}

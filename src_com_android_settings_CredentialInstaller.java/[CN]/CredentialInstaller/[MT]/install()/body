@@ -6,7 +6,7 @@
     byte[] data=bundle.getByteArray(key);
     if (data == null)     continue;
     boolean success=mKeyStore.put(key.getBytes(),data);
-    Log.v(TAG,"install " + key + ": "+ data.length+ "  success? "+ success);
+    Log.d(TAG,"install " + key + ": "+ data.length+ "  success? "+ success);
     if (!success)     return;
   }
   setResult(RESULT_OK);

@@ -1,13 +1,3 @@
 {
-switch (id) {
-case CSTOR_INIT_DIALOG:
-case CSTOR_CHANGE_PASSWORD_DIALOG:
-    return mCstorHelper.createSetPasswordDialog(id);
-case CSTOR_UNLOCK_DIALOG:
-  return mCstorHelper.createUnlockDialog();
-case CSTOR_RESET_DIALOG:
-return mCstorHelper.createResetDialog();
-default :
-return null;
-}
+  return mCredentialStorage.createDialog(id);
 }

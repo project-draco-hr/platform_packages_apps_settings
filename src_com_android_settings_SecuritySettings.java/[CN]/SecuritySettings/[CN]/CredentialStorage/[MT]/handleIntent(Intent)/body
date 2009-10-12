@@ -1,0 +1,8 @@
+{
+  if (intent != null) {
+    if (Credentials.UNLOCK_ACTION.equals(intent.getAction())) {
+      mExternalIntent=intent;
+      showDialog((mState == KeyStore.UNINITIALIZED) ? PASSWORD_DIALOG : UNLOCK_DIALOG);
+    }
+  }
+}

@@ -1,4 +1,17 @@
 {
   mState=mKeyStore.test();
   updatePreferences(mState);
+  Intent intent=getIntent();
+  if (!mExternal && intent != null && Credentials.UNLOCK_ACTION.equals(intent.getAction())) {
+    mExternal=true;
+    if (mState == KeyStore.UNINITIALIZED) {
+      showPasswordDialog();
+    }
+ else     if (mState == KeyStore.LOCKED) {
+      showUnlockDialog();
+    }
+ else {
+      finish();
+    }
+  }
 }

@@ -2,7 +2,7 @@
   if (mInitialized)   return true;
   mInitialized=true;
   mContext=context.getApplicationContext();
-  mAdapter=(BluetoothAdapter)context.getSystemService(Context.BLUETOOTH_SERVICE);
+  mAdapter=BluetoothAdapter.getDefaultAdapter();
   if (mAdapter == null) {
     return false;
   }

@@ -1,11 +1,13 @@
 {
   if (preference == mAccessCheckBox) {
-    if ((Boolean)value) {
+    boolean checked=(Boolean)value;
+    if (checked) {
       showDialog((mState == KeyStore.UNINITIALIZED) ? PASSWORD_DIALOG : UNLOCK_DIALOG);
     }
  else {
       lock();
     }
+    mAccessCheckBox.setChecked(!checked);
     return true;
   }
   return false;

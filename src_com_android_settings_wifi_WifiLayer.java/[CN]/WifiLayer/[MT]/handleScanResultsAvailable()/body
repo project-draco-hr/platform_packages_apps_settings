@@ -14,7 +14,7 @@ synchronized (this) {
         if (AccessPointState.isAdhoc(scanResult) || TextUtils.isEmpty(scanResult.SSID)) {
           continue;
         }
-        final String ssid=AccessPointState.convertToQuotedString(scanResult.SSID);
+        final String ssid=scanResult.SSID;
         String security=AccessPointState.getScanResultSecurity(scanResult);
         AccessPointState ap=findApLocked(newScanList,AccessPointState.NETWORK_ID_ANY,AccessPointState.BSSID_ANY,ssid,security);
         if (ap != null) {

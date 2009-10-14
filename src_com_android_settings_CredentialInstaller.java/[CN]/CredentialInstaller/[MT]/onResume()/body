@@ -1,15 +1,13 @@
 {
   super.onResume();
   if (!"com.android.certinstaller".equals(getCallingPackage()))   finish();
-  if (!isKeyStoreLocked()) {
+  if (isKeyStoreUnlocked()) {
     install();
-    finish();
   }
  else   if (!mUnlocking) {
     mUnlocking=true;
     Credentials.getInstance().unlock(this);
+    return;
   }
- else {
-    finish();
-  }
+  finish();
 }

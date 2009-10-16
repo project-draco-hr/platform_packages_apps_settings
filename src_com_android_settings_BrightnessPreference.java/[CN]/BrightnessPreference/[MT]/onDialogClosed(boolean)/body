@@ -2,9 +2,6 @@
   super.onDialogClosed(positiveResult);
   if (positiveResult) {
     Settings.System.putInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS,mSeekBar.getProgress() + MINIMUM_BACKLIGHT);
-    if (mAutomaticAvailable) {
-      Settings.System.putInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS_MODE,mCheckBox.isChecked() ? 1 : 0);
-    }
   }
  else {
     if (mAutomaticAvailable) {

@@ -23,7 +23,6 @@
   sentSinceReceived=(TextView)findViewById(R.id.sentSinceReceived);
   sent=(TextView)findViewById(R.id.sent);
   received=(TextView)findViewById(R.id.received);
-  cipherState=(TextView)findViewById(R.id.ciphState);
   smsc=(EditText)findViewById(R.id.smsc);
   dnsCheckState=(TextView)findViewById(R.id.dnsCheckState);
   mPingIpAddr=(TextView)findViewById(R.id.pingIpAddr);
@@ -36,10 +35,6 @@
   preferredNetworkType.setOnItemSelectedListener(mPreferredNetworkHandler);
   radioPowerButton=(Button)findViewById(R.id.radio_power);
   radioPowerButton.setOnClickListener(mPowerButtonHandler);
-  qxdmLogButton=(Button)findViewById(R.id.qxdm_log);
-  qxdmLogButton.setOnClickListener(mQxdmButtonHandler);
-  cipherToggleButton=(Button)findViewById(R.id.ciph_toggle);
-  cipherToggleButton.setOnClickListener(mCipherButtonHandler);
   pingTestButton=(Button)findViewById(R.id.ping_test);
   pingTestButton.setOnClickListener(mPingButtonHandler);
   updateSmscButton=(Button)findViewById(R.id.update_smsc);
@@ -48,12 +43,18 @@
   refreshSmscButton.setOnClickListener(mRefreshSmscButtonHandler);
   dnsCheckToggleButton=(Button)findViewById(R.id.dns_check_toggle);
   dnsCheckToggleButton.setOnClickListener(mDnsCheckButtonHandler);
+  oemInfoButton=(Button)findViewById(R.id.oem_info);
+  oemInfoButton.setOnClickListener(mOemInfoButtonHandler);
+  PackageManager pm=getPackageManager();
+  Intent oemInfoIntent=new Intent("com.android.settings.OEM_RADIO_INFO");
+  List<ResolveInfo> oemInfoIntentList=pm.queryIntentActivities(oemInfoIntent,0);
+  if (oemInfoIntentList.size() == 0) {
+    oemInfoButton.setEnabled(false);
+  }
   mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
   mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
   mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
   mPhoneStateReceiver.notifyPhoneCallState(EVENT_PHONE_STATE_CHANGED);
-  updateQxdmState(null);
-  mOem=new OemCommands();
   phone.getPreferredNetworkType(mHandler.obtainMessage(EVENT_QUERY_PREFERRED_TYPE_DONE));
   phone.getNeighboringCids(mHandler.obtainMessage(EVENT_QUERY_NEIGHBORING_CIDS_DONE));
   netstat=INetStatService.Stub.asInterface(ServiceManager.getService("netstat"));

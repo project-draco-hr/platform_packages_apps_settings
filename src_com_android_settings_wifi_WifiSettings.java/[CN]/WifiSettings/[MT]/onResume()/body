@@ -1,7 +1,9 @@
 {
   super.onResume();
   mWifiLayer.onResume();
-  mWifiEnabler.resume();
+  if (mWifiEnabler != null) {
+    mWifiEnabler.resume();
+  }
   if (mResumeState != null) {
     if (mKeyStore.test() == KeyStore.NO_ERROR) {
       showAccessPointDialog(mResumeState,mResumeMode);

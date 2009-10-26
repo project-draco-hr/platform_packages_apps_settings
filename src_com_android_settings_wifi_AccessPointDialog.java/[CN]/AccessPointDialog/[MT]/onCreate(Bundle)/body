@@ -2,4 +2,9 @@
   onLayout();
   onFill();
   super.onCreate(savedInstanceState);
+  if (mMode == MODE_CONFIGURE) {
+    Button saveButton=getButton(mSaveButtonPos);
+    saveButton.setEnabled(false);
+    saveButton.setFocusable(false);
+  }
 }

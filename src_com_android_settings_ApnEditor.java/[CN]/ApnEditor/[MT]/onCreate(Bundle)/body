@@ -15,6 +15,8 @@
   mMcc=(EditTextPreference)findPreference("apn_mcc");
   mMnc=(EditTextPreference)findPreference("apn_mnc");
   mApnType=(EditTextPreference)findPreference("apn_type");
+  mAuthType=(ListPreference)findPreference("auth_type");
+  mAuthType.setOnPreferenceChangeListener(this);
   mRes=getResources();
   final Intent intent=getIntent();
   final String action=intent.getAction();

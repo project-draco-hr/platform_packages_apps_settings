@@ -3,7 +3,7 @@
   final PreferenceScreen preferenceScreen=getPreferenceScreen();
   mApCategory=(ProgressCategory)preferenceScreen.findPreference(KEY_ACCESS_POINTS);
   mApCategory.setOrderingAsAdded(false);
-  if (!getIntent().getBooleanExtra("only_access_points",false)) {
+  if (!getIntent().getBooleanExtra(KEY_ONLY_ACCESS_POINTS,false)) {
     mWifiEnabled=(CheckBoxPreference)preferenceScreen.findPreference(KEY_WIFI_ENABLED);
     mWifiEnabler=new WifiEnabler(this,(WifiManager)getSystemService(WIFI_SERVICE),mWifiEnabled);
     mOpenNetworkNotificationsEnabled=(CheckBoxPreference)preferenceScreen.findPreference(KEY_OPEN_NETWORK_NOTIFICATIONS_ENABLED);

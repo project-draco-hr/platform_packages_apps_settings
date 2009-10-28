@@ -25,6 +25,10 @@
         mCurMcc=mcc;
       }
     }
+    int authVal=mCursor.getInt(AUTH_TYPE_INDEX);
+    if (authVal != -1) {
+      mAuthType.setValueIndex(authVal);
+    }
   }
   mName.setSummary(checkNull(mName.getText()));
   mApn.setSummary(checkNull(mApn.getText()));
@@ -39,4 +43,14 @@
   mMcc.setSummary(checkNull(mMcc.getText()));
   mMnc.setSummary(checkNull(mMnc.getText()));
   mApnType.setSummary(checkNull(mApnType.getText()));
+  String authVal=mAuthType.getValue();
+  if (authVal != null) {
+    int authValIndex=Integer.parseInt(authVal);
+    mAuthType.setValueIndex(authValIndex);
+    String[] values=mRes.getStringArray(R.array.apn_auth_entries);
+    mAuthType.setSummary(values[authValIndex]);
+  }
+ else {
+    mAuthType.setSummary(sNotSet);
+  }
 }

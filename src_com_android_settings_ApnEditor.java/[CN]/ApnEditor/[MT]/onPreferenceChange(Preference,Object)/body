@@ -1,0 +1,15 @@
+{
+  String key=preference.getKey();
+  if (KEY_AUTH_TYPE.equals(key)) {
+    try {
+      int index=Integer.parseInt((String)newValue);
+      mAuthType.setValueIndex(index);
+      String[] values=mRes.getStringArray(R.array.apn_auth_entries);
+      mAuthType.setSummary(values[index]);
+    }
+ catch (    NumberFormatException e) {
+      return false;
+    }
+  }
+  return true;
+}

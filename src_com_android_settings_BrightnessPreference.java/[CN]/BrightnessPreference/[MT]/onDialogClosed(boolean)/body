@@ -7,6 +7,8 @@
     if (mAutomaticAvailable) {
       setMode(mOldAutomatic);
     }
-    setBrightness(mOldBrightness);
+    if (!mAutomaticAvailable || mOldAutomatic == 0) {
+      setBrightness(mOldBrightness);
+    }
   }
 }

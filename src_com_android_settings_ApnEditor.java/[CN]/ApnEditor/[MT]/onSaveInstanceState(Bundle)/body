@@ -1,5 +1,6 @@
 {
   super.onSaveInstanceState(icicle);
-  validateAndSave(true);
-  icicle.putInt(SAVED_POS,mCursor.getInt(ID_INDEX));
+  if (validateAndSave(true)) {
+    icicle.putInt(SAVED_POS,mCursor.getInt(ID_INDEX));
+  }
 }

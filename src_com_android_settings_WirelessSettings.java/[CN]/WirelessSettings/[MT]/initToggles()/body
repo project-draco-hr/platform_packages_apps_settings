@@ -4,6 +4,11 @@
   Preference btPreference=findPreference(KEY_TOGGLE_BLUETOOTH);
   Preference wifiSettings=findPreference(KEY_WIFI_SETTINGS);
   Preference vpnSettings=findPreference(KEY_VPN_SETTINGS);
+  IBinder b=ServiceManager.getService(BluetoothAdapter.BLUETOOTH_SERVICE);
+  if (b == null) {
+    Preference btSettings=findPreference(KEY_BT_SETTINGS);
+    btSettings.setEnabled(false);
+  }
   mWifiEnabler=new WifiEnabler(this,(WifiManager)getSystemService(WIFI_SERVICE),(CheckBoxPreference)wifiPreference);
   mAirplaneModeEnabler=new AirplaneModeEnabler(this,(CheckBoxPreference)airplanePreference);
   mBtEnabler=new BluetoothEnabler(this,(CheckBoxPreference)btPreference);

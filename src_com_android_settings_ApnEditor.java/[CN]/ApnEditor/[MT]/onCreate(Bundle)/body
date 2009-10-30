@@ -25,7 +25,7 @@
     mUri=intent.getData();
   }
  else   if (action.equals(Intent.ACTION_INSERT)) {
-    if (mFirstTime) {
+    if (mFirstTime || icicle.getInt(SAVED_POS) == 0) {
       mUri=getContentResolver().insert(intent.getData(),new ContentValues());
     }
  else {

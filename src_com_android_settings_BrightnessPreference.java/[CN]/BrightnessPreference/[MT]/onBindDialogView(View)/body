@@ -1,7 +1,6 @@
 {
   super.onBindDialogView(view);
   mSeekBar=getSeekBar(view);
-  mSeekBar.setOnSeekBarChangeListener(this);
   mSeekBar.setMax(MAXIMUM_BACKLIGHT - MINIMUM_BACKLIGHT);
   try {
     mOldBrightness=Settings.System.getInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS);
@@ -24,4 +23,5 @@
  else {
     mCheckBox.setVisibility(View.GONE);
   }
+  mSeekBar.setOnSeekBarChangeListener(this);
 }

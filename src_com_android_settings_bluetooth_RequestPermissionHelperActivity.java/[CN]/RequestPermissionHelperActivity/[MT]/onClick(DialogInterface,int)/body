@@ -17,11 +17,11 @@ if (btState == BluetoothAdapter.STATE_TURNING_ON || btState == BluetoothAdapter.
   returnCode=RequestPermissionActivity.RESULT_BT_STARTING_OR_STARTED;
 }
  else {
-  returnCode=RequestPermissionActivity.RESULT_ERROR;
+  returnCode=Activity.RESULT_CANCELED;
 }
 break;
 case DialogInterface.BUTTON_NEGATIVE:
-returnCode=RequestPermissionActivity.RESULT_USER_DENIED;
+returnCode=Activity.RESULT_CANCELED;
 break;
 default :
 return;

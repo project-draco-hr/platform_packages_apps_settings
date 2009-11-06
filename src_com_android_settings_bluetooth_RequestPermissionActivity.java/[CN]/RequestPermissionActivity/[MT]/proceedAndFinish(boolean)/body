@@ -1,14 +1,17 @@
 {
   int returnCode;
   if (mEnableOnly) {
-    returnCode=0;
+    returnCode=Activity.RESULT_OK;
   }
  else   if (mLocalManager.getBluetoothAdapter().setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,mTimeout)) {
     persistDiscoverableEndTimestamp(System.currentTimeMillis() + mTimeout * 1000);
     returnCode=mTimeout;
+    if (returnCode < Activity.RESULT_FIRST_USER) {
+      returnCode=Activity.RESULT_FIRST_USER;
+    }
   }
  else {
-    returnCode=RESULT_ERROR;
+    returnCode=Activity.RESULT_CANCELED;
   }
   setResult(returnCode);
   if (!buttonPressed) {

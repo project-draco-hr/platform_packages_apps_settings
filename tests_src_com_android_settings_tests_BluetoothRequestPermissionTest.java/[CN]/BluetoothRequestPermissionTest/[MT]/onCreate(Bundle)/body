@@ -1,0 +1,13 @@
+{
+  super.onCreate(icicle);
+  setContentView(R.layout.bluetooth_request_permission_test);
+  Button enable=(Button)findViewById(R.id.enable);
+  enable.setOnClickListener(new BtOnClickListener(true));
+  Button discover=(Button)findViewById(R.id.discover);
+  discover.setOnClickListener(new BtOnClickListener(false));
+  mMsgAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
+  ListView listView=(ListView)findViewById(R.id.msg_container);
+  listView.setAdapter(mMsgAdapter);
+  registerReceiver(mReceiver,new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+  addMsg("Initialized");
+}

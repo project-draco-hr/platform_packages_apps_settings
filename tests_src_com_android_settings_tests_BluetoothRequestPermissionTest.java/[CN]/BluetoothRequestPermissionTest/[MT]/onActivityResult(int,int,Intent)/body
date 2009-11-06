@@ -1,0 +1,15 @@
+{
+  if (requestCode != 1) {
+    Log.e(TAG,"Unexpected onActivityResult " + requestCode + " "+ resultCode);
+    return;
+  }
+  if (resultCode == Activity.RESULT_CANCELED) {
+    addMsg("Result = RESULT_CANCELED");
+  }
+ else   if (resultCode == Activity.RESULT_OK) {
+    addMsg("Result = RESULT_OK (not expected for discovery)");
+  }
+ else {
+    addMsg("Result = " + resultCode);
+  }
+}

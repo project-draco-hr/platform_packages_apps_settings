@@ -8,13 +8,13 @@
     mTimeout=intent.getIntExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,BluetoothDiscoverableEnabler.DEFAULT_DISCOVERABLE_TIMEOUT);
   }
  else {
-    setResult(RequestPermissionActivity.RESULT_ERROR);
+    setResult(Activity.RESULT_CANCELED);
     return true;
   }
   mLocalManager=LocalBluetoothManager.getInstance(this);
   if (mLocalManager == null) {
     Log.e(TAG,"Error: there's a problem starting bluetooth");
-    setResult(RequestPermissionActivity.RESULT_ERROR);
+    setResult(Activity.RESULT_CANCELED);
     return true;
   }
   return false;

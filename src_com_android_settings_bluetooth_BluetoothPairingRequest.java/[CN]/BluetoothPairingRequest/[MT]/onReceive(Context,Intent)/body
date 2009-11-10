@@ -14,7 +14,8 @@
     }
     pairingIntent.setAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
     pairingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    if (localManager.getForegroundActivity() != null) {
+    String deviceAddress=device != null ? device.getAddress() : null;
+    if (localManager.shouldShowDialogInForeground(deviceAddress)) {
       context.startActivity(pairingIntent);
     }
  else {

@@ -1,0 +1,19 @@
+{
+  if (mForegroundActivity != null)   return true;
+  long currentTimeMillis=System.currentTimeMillis();
+  SharedPreferences sharedPreferences=getSharedPreferences();
+  long lastDiscoverableEndTime=sharedPreferences.getLong(BluetoothDiscoverableEnabler.SHARED_PREFERENCES_KEY_DISCOVERABLE_END_TIMESTAMP,0);
+  if ((lastDiscoverableEndTime + GRACE_PERIOD_TO_SHOW_DIALOGS_IN_FOREGROUND) > currentTimeMillis) {
+    return true;
+  }
+  if (deviceAddress != null) {
+    String lastSelectedDevice=sharedPreferences.getString(SHARED_PREFERENCES_KEY_LAST_SELECTED_DEVICE,null);
+    if (deviceAddress.equals(lastSelectedDevice)) {
+      long lastDeviceSelectedTime=sharedPreferences.getLong(SHARED_PREFERENCES_KEY_LAST_SELECTED_DEVICE_TIME,0);
+      if ((lastDeviceSelectedTime + GRACE_PERIOD_TO_SHOW_DIALOGS_IN_FOREGROUND) > currentTimeMillis) {
+        return true;
+      }
+    }
+  }
+  return false;
+}

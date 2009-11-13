@@ -1,6 +1,16 @@
 {
   IntentFilter filter=new IntentFilter();
-  filter.addAction(BluetoothIntent.BLUETOOTH_STATE_CHANGED_ACTION);
-  filter.addAction(BluetoothIntent.NAME_CHANGED_ACTION);
+  filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+  filter.addAction(BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED);
   getContext().registerReceiver(mReceiver,filter);
+  EditText et=getEditText();
+  et.setFilters(new InputFilter[]{new LengthFilter(BLUETOOTH_NAME_MAX_LENGTH)});
+  if (et != null) {
+    et.addTextChangedListener(this);
+    Dialog d=getDialog();
+    if (d instanceof AlertDialog) {
+      Button b=((AlertDialog)d).getButton(AlertDialog.BUTTON_POSITIVE);
+      b.setEnabled(et.getText().length() > 0);
+    }
+  }
 }

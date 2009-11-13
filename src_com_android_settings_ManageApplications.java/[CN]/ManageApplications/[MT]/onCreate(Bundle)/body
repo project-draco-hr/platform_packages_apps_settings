@@ -9,6 +9,7 @@
   String action=intent.getAction();
   if (action.equals(Intent.ACTION_MANAGE_PACKAGE_STORAGE)) {
     mSortOrder=SORT_ORDER_SIZE;
+    mFilterApps=FILTER_APPS_ALL;
     mSizesFirst=true;
   }
   mPm=getPackageManager();
@@ -22,7 +23,6 @@
   mComputingSizeStr=getText(R.string.computing_size);
   mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   mReceiver=new PackageIntentReceiver();
-  mEmptyView=(TextView)findViewById(R.id.empty_view);
   mObserver=new PkgSizeObserver();
   List<ApplicationInfo> appList=getInstalledApps(mSortOrder);
   mAppInfoAdapter=new AppInfoAdapter(this,appList);
@@ -31,6 +31,7 @@
   lv.setSaveEnabled(true);
   lv.setItemsCanFocus(true);
   lv.setOnItemClickListener(this);
+  lv.setTextFilterEnabled(true);
   mListView=lv;
   if (DEBUG_TIME) {
     Log.i(TAG,"Total time in Activity.create:: " + (SystemClock.elapsedRealtime() - sCreate) + " ms");

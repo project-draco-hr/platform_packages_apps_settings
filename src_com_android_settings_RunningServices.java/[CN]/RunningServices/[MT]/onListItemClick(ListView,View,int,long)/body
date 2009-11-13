@@ -1,0 +1,38 @@
+{
+  BaseItem bi=(BaseItem)l.getAdapter().getItem(position);
+  if (!bi.mIsProcess) {
+    ServiceItem si=(ServiceItem)bi;
+    if (si.mRunningService.clientLabel != 0) {
+      mCurSelected=null;
+      PendingIntent pi=mAm.getRunningServiceControlPanel(si.mRunningService.service);
+      if (pi != null) {
+        try {
+          this.startIntentSender(pi.getIntentSender(),null,Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET,Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET,0);
+        }
+ catch (        IntentSender.SendIntentException e) {
+          Log.w(TAG,e);
+        }
+catch (        IllegalArgumentException e) {
+          Log.w(TAG,e);
+        }
+catch (        ActivityNotFoundException e) {
+          Log.w(TAG,e);
+        }
+      }
+    }
+ else {
+      mCurSelected=bi;
+      AlertDialog.Builder builder=new AlertDialog.Builder(this);
+      builder.setTitle(R.string.confirm_stop_service);
+      String msg=getResources().getString(R.string.confirm_stop_service_msg,si.mPackageInfo.loadLabel(getPackageManager()));
+      builder.setMessage(msg);
+      builder.setPositiveButton(R.string.confirm_stop_stop,this);
+      builder.setNegativeButton(R.string.confirm_stop_cancel,null);
+      builder.setCancelable(true);
+      mCurDialog=builder.show();
+    }
+  }
+ else {
+    mCurSelected=null;
+  }
+}

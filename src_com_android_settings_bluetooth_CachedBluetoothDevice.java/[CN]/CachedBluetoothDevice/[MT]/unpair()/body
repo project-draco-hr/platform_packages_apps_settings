@@ -1,0 +1,26 @@
+{
+synchronized (workQueue) {
+    boolean processNow=false;
+    Iterator<BluetoothJob> it=workQueue.iterator();
+    while (it.hasNext()) {
+      BluetoothJob job=it.next();
+      if (job.cachedDevice.mDevice.equals(this.mDevice)) {
+        it.remove();
+        if (job.timeSent != 0) {
+          processNow=true;
+        }
+      }
+    }
+    if (processNow) {
+      processCommands();
+    }
+  }
+switch (getBondState()) {
+case BluetoothDevice.BOND_BONDED:
+    mDevice.removeBond();
+  break;
+case BluetoothDevice.BOND_BONDING:
+mDevice.cancelBondProcess();
+break;
+}
+}

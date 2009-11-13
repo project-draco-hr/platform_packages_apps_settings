@@ -1,7 +1,7 @@
 {
   try {
-    IHardwareService hardware=IHardwareService.Stub.asInterface(ServiceManager.getService("hardware"));
-    if (hardware != null) {
+    IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
+    if (power != null) {
       int brightness=Settings.System.getInt(context.getContentResolver(),Settings.System.SCREEN_BRIGHTNESS);
       return brightness > 100;
     }

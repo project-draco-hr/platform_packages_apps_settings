@@ -3,48 +3,42 @@
   config.priority=priority;
   config.hiddenSSID=hiddenSsid;
   config.SSID=convertToQuotedString(ssid);
-  config.eap=mEap;
+  config.eap.setValue(mEap);
   if (!TextUtils.isEmpty(mPhase2)) {
-    config.phase2=convertToQuotedString("auth=" + mPhase2);
+    config.phase2.setValue(convertToQuotedString("auth=" + mPhase2));
   }
  else {
-    config.phase2=null;
+    config.phase2.setValue(null);
   }
   if (!TextUtils.isEmpty(mEnterpriseFields[IDENTITY])) {
-    config.identity=convertToQuotedString(mEnterpriseFields[IDENTITY]);
+    config.identity.setValue(convertToQuotedString(mEnterpriseFields[IDENTITY]));
   }
  else {
-    config.identity=null;
+    config.identity.setValue(null);
   }
   if (!TextUtils.isEmpty(mEnterpriseFields[ANONYMOUS_IDENTITY])) {
-    config.anonymousIdentity=convertToQuotedString(mEnterpriseFields[ANONYMOUS_IDENTITY]);
+    config.anonymous_identity.setValue(convertToQuotedString(mEnterpriseFields[ANONYMOUS_IDENTITY]));
   }
  else {
-    config.anonymousIdentity=null;
+    config.anonymous_identity.setValue(null);
   }
   if (!TextUtils.isEmpty(mEnterpriseFields[CLIENT_CERT])) {
-    config.clientCert=convertToQuotedString(mEnterpriseFields[CLIENT_CERT]);
+    config.client_cert.setValue(convertToQuotedString(mEnterpriseFields[CLIENT_CERT]));
   }
  else {
-    config.clientCert=null;
+    config.client_cert.setValue(null);
   }
   if (!TextUtils.isEmpty(mEnterpriseFields[CA_CERT])) {
-    config.caCert=convertToQuotedString(mEnterpriseFields[CA_CERT]);
+    config.ca_cert.setValue(convertToQuotedString(mEnterpriseFields[CA_CERT]));
   }
  else {
-    config.caCert=null;
+    config.ca_cert.setValue(null);
   }
   if (!TextUtils.isEmpty(mEnterpriseFields[PRIVATE_KEY])) {
-    config.privateKey=convertToQuotedString(mEnterpriseFields[PRIVATE_KEY]);
+    config.private_key.setValue(convertToQuotedString(mEnterpriseFields[PRIVATE_KEY]));
   }
  else {
-    config.privateKey=null;
-  }
-  if (!TextUtils.isEmpty(mEnterpriseFields[PRIVATE_KEY_PASSWD])) {
-    config.privateKeyPasswd=convertToQuotedString(mEnterpriseFields[PRIVATE_KEY_PASSWD]);
-  }
- else {
-    config.privateKeyPasswd=null;
+    config.private_key.setValue(null);
   }
   setupSecurity(config);
 }

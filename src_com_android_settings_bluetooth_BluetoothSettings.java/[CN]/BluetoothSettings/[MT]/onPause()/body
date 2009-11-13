@@ -3,7 +3,9 @@
   mLocalManager.setForegroundActivity(null);
   unregisterReceiver(mReceiver);
   mLocalManager.unregisterCallback(this);
-  mNamePreference.pause();
-  mDiscoverableEnabler.pause();
-  mEnabler.pause();
+  if (mScreenType == SCREEN_TYPE_SETTINGS) {
+    mNamePreference.pause();
+    mDiscoverableEnabler.pause();
+    mEnabler.pause();
+  }
 }

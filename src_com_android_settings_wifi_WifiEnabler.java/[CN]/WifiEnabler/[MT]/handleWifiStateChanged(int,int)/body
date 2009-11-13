@@ -5,7 +5,7 @@
   if (wifiState == WIFI_STATE_DISABLED || wifiState == WIFI_STATE_ENABLED) {
     mWifiCheckBoxPref.setChecked(wifiState == WIFI_STATE_ENABLED);
     mWifiCheckBoxPref.setSummary(wifiState == WIFI_STATE_DISABLED ? mOriginalSummary : null);
-    mWifiCheckBoxPref.setEnabled(isEnabledByDependency());
+    mWifiCheckBoxPref.setEnabled(isWifiAllowed(mContext));
   }
  else   if (wifiState == WIFI_STATE_DISABLING || wifiState == WIFI_STATE_ENABLING) {
     mWifiCheckBoxPref.setSummary(wifiState == WIFI_STATE_ENABLING ? R.string.wifi_starting : R.string.wifi_stopping);

@@ -1,0 +1,16 @@
+{
+  boolean deviceAdded=false;
+  CachedBluetoothDevice cachedDevice=findDevice(device);
+  if (cachedDevice == null) {
+    cachedDevice=new CachedBluetoothDevice(mLocalManager.getContext(),device);
+    mCachedDevices.add(cachedDevice);
+    deviceAdded=true;
+  }
+  cachedDevice.setRssi(rssi);
+  cachedDevice.setBtClass(btClass);
+  cachedDevice.setName(name);
+  cachedDevice.setVisible(true);
+  if (deviceAdded) {
+    dispatchDeviceAdded(cachedDevice);
+  }
+}

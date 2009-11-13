@@ -1,0 +1,20 @@
+{
+  Context context=mLocalManager.getForegroundActivity();
+  if (context == null) {
+    disconnect();
+    return;
+  }
+  Resources res=context.getResources();
+  String name=getName();
+  if (TextUtils.isEmpty(name)) {
+    name=res.getString(R.string.bluetooth_device);
+  }
+  String message=res.getString(R.string.bluetooth_disconnect_blank,name);
+  DialogInterface.OnClickListener disconnectListener=new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      disconnect();
+    }
+  }
+;
+  new AlertDialog.Builder(context).setTitle(getName()).setMessage(message).setPositiveButton(android.R.string.ok,disconnectListener).setNegativeButton(android.R.string.cancel,null).show();
+}

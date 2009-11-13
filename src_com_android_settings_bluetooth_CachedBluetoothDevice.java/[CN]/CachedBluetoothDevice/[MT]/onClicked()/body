@@ -1,0 +1,12 @@
+{
+  int bondState=getBondState();
+  if (isConnected()) {
+    askDisconnect();
+  }
+ else   if (bondState == BluetoothDevice.BOND_BONDED) {
+    connect();
+  }
+ else   if (bondState == BluetoothDevice.BOND_NONE) {
+    pair();
+  }
+}

@@ -2,7 +2,6 @@
   if (pkgName == null) {
     return;
   }
-  boolean notInList=true;
   ApplicationInfo info=null;
   try {
     info=mPm.getApplicationInfo(pkgName,0);
@@ -16,16 +15,9 @@
     return;
   }
   mAppList.add(info);
-  mCache.addEntry(new AppInfo(pkgName,-1,info.loadLabel(mPm),info.loadIcon(mPm),size,formattedSize));
-  if (notInList && (shouldBeInList(mFilterApps,info))) {
-    int newIdx=Collections.binarySearch(mAppLocalList,info,getAppComparator(mSortOrder));
-    if (newIdx >= 0) {
-      Log.i(TAG,"Strange. Package:" + pkgName + " is not new");
-      return;
-    }
-    newIdx=-newIdx - 1;
-    mAppLocalList.add(newIdx,info);
-    adjustIndex();
+  CharSequence label=info.loadLabel(mPm);
+  mCache.addEntry(new AppInfo(pkgName,-1,label,info.loadIcon(mPm),size,formattedSize));
+  if (addLocalEntry(info,label)) {
     notifyDataSetChanged();
   }
 }

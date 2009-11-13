@@ -1,7 +1,7 @@
 {
-  boolean wasSetStateSuccessful=enabled ? mManager.enable() : mManager.disable();
+  boolean wasSetStateSuccessful=enabled ? mAdapter.enable() : mAdapter.disable();
   if (wasSetStateSuccessful) {
-    setBluetoothStateInt(enabled ? BluetoothDevice.BLUETOOTH_STATE_TURNING_ON : BluetoothDevice.BLUETOOTH_STATE_TURNING_OFF);
+    setBluetoothStateInt(enabled ? BluetoothAdapter.STATE_TURNING_ON : BluetoothAdapter.STATE_TURNING_OFF);
   }
  else {
     if (V) {

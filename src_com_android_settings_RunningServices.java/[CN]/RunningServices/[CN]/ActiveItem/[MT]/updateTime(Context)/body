@@ -1,0 +1,17 @@
+{
+  if (mItem.mIsProcess) {
+    String size=mItem.mSizeStr != null ? mItem.mSizeStr : "";
+    if (!size.equals(mItem.mCurSizeStr)) {
+      mItem.mCurSizeStr=size;
+      mHolder.size.setText(size);
+    }
+  }
+ else {
+    if (mItem.mActiveSince >= 0) {
+      mHolder.size.setText(DateUtils.formatElapsedTime(mBuilder,(SystemClock.uptimeMillis() - mFirstRunTime) / 1000));
+    }
+ else {
+      mHolder.size.setText(context.getResources().getText(R.string.service_restarting));
+    }
+  }
+}

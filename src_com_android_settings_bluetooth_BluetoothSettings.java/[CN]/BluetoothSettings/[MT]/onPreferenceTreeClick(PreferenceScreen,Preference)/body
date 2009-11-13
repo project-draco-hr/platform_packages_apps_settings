@@ -5,7 +5,21 @@
   }
   if (preference instanceof BluetoothDevicePreference) {
     BluetoothDevicePreference btPreference=(BluetoothDevicePreference)preference;
-    btPreference.getDevice().onClicked();
+    if (mScreenType == SCREEN_TYPE_SETTINGS) {
+      btPreference.getCachedDevice().onClicked();
+    }
+ else     if (mScreenType == SCREEN_TYPE_DEVICEPICKER) {
+      CachedBluetoothDevice device=btPreference.getCachedDevice();
+      mSelectedDevice=device.getDevice();
+      mLocalManager.persistSelectedDeviceInPicker(mSelectedDevice.getAddress());
+      if ((device.getBondState() == BluetoothDevice.BOND_BONDED) || (mNeedAuth == false)) {
+        sendDevicePickedIntent(mSelectedDevice);
+        finish();
+      }
+ else {
+        btPreference.getCachedDevice().onClicked();
+      }
+    }
     return true;
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

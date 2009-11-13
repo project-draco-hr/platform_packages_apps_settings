@@ -2,6 +2,8 @@
   if (status == TextToSpeech.SUCCESS) {
     Log.v(TAG,"TTS engine for settings screen initialized.");
     mEnableDemo=true;
+    mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry));
+    mTts.setSpeechRate((float)(mDefaultRate / 100.0f));
   }
  else {
     Log.v(TAG,"TTS engine for settings screen failed to initialize successfully.");

@@ -1,8 +1,10 @@
 {
-  if (mPasswordText != null && security != null && security.equals(AccessPointState.WEP)) {
-    mPasswordText.setText(R.string.please_type_hex_key);
-  }
+  if (mPasswordText != null) {
+    if (security != null && security.equals(AccessPointState.WEP)) {
+      mPasswordText.setText(R.string.please_type_hex_key);
+    }
  else {
-    mPasswordText.setText(R.string.please_type_passphrase);
+      mPasswordText.setText(R.string.please_type_passphrase);
+    }
   }
 }

@@ -22,22 +22,31 @@
   int silentModeStreams=Settings.System.getInt(getContentResolver(),Settings.System.MODE_RINGER_STREAMS_AFFECTED,0);
   boolean isAlarmInclSilentMode=(silentModeStreams & (1 << AudioManager.STREAM_ALARM)) != 0;
   mSilent.setSummary(isAlarmInclSilentMode ? R.string.silent_mode_incl_alarm_summary : R.string.silent_mode_summary);
-  boolean animations=true;
+  int animations=0;
   try {
     mAnimationScales=mWindowManager.getAnimationScales();
   }
  catch (  RemoteException e) {
   }
   if (mAnimationScales != null) {
-    for (int i=1; i < mAnimationScales.length; i++) {
-      if (mAnimationScales[i] == 0) {
-        animations=false;
-        break;
-      }
+    if (mAnimationScales.length >= 1) {
+      animations=((int)(mAnimationScales[0] + .5f)) % 10;
+    }
+    if (mAnimationScales.length >= 2) {
+      animations+=(((int)(mAnimationScales[1] + .5f)) & 0x7) * 10;
     }
   }
-  if (animations != mAnimations.isChecked() || force) {
-    mAnimations.setChecked(animations);
+  int idx=0;
+  int best=0;
+  CharSequence[] aents=mAnimations.getEntryValues();
+  for (int i=0; i < aents.length; i++) {
+    int val=Integer.parseInt(aents[i].toString());
+    if (val <= animations && val > best) {
+      best=val;
+      idx=i;
+    }
   }
+  mAnimations.setValueIndex(idx);
+  updateAnimationsSummary(mAnimations.getValue());
   mAccelerometer.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.ACCELEROMETER_ROTATION,0) != 0);
 }

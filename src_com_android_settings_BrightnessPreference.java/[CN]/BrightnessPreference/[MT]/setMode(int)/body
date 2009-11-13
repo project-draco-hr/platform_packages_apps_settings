@@ -1,0 +1,9 @@
+{
+  if (mode == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
+    mSeekBar.setVisibility(View.GONE);
+  }
+ else {
+    mSeekBar.setVisibility(View.VISIBLE);
+  }
+  Settings.System.putInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS_MODE,mode);
+}

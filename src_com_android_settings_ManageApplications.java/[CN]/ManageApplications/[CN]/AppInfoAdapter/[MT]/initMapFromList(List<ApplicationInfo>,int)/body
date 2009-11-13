@@ -5,11 +5,11 @@
     appList=mAppList;
   }
  else {
-    mAppList=pAppList;
+    mAppList=new ArrayList<ApplicationInfo>(pAppList);
     appList=pAppList;
     notify=true;
   }
-  mAppLocalList=getFilteredApps(appList,filterOption);
+  generateFilterListLocked(getFilteredApps(appList,filterOption,mCurrentFilterMap != null,mCurrentFilterMap));
   int imax=appList.size();
   for (int i=0; i < imax; i++) {
     ApplicationInfo info=appList.get(i);

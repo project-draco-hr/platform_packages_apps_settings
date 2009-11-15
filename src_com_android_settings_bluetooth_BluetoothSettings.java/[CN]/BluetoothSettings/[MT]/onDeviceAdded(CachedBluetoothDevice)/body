@@ -1,0 +1,8 @@
+{
+  if (mDevicePreferenceMap.get(cachedDevice) != null) {
+    throw new IllegalStateException("Got onDeviceAdded, but cachedDevice already exists");
+  }
+  if (addDevicePreference(cachedDevice)) {
+    createDevicePreference(cachedDevice);
+  }
+}

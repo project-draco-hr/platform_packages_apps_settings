@@ -3,6 +3,11 @@
   PreferenceCategory inlinePrefCat=new PreferenceCategory(this);
   inlinePrefCat.setTitle(R.string.lock_settings_title);
   root.addPreference(inlinePrefCat);
+  Intent intent=new Intent();
+  intent.setClassName("com.android.settings","com.android.settings.ChooseLockPatternTutorial");
+  mChoosePattern=getPreferenceManager().createPreferenceScreen(this);
+  mChoosePattern.setIntent(intent);
+  inlinePrefCat.addPreference(mChoosePattern);
   mLockEnabled=new LockEnabledPref(this);
   mLockEnabled.setTitle(R.string.lockpattern_settings_enable_title);
   mLockEnabled.setSummary(R.string.lockpattern_settings_enable_summary);
@@ -16,11 +21,6 @@
   mTactileFeedback.setKey(KEY_TACTILE_FEEDBACK_ENABLED);
   mTactileFeedback.setTitle(R.string.lockpattern_settings_enable_tactile_feedback_title);
   inlinePrefCat.addPreference(mTactileFeedback);
-  Intent intent=new Intent();
-  intent.setClassName("com.android.settings","com.android.settings.ChooseLockPatternTutorial");
-  mChoosePattern=getPreferenceManager().createPreferenceScreen(this);
-  mChoosePattern.setIntent(intent);
-  inlinePrefCat.addPreference(mChoosePattern);
   int activePhoneType=TelephonyManager.getDefault().getPhoneType();
   if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
     PreferenceScreen simLockPreferences=getPreferenceManager().createPreferenceScreen(this);
@@ -42,12 +42,9 @@
   showPassword.setSummary(R.string.show_password_summary);
   showPassword.setPersistent(false);
   passwordsCat.addPreference(showPassword);
-  PreferenceCategory credStoreCat=new PreferenceCategory(this);
-  credStoreCat.setTitle(R.string.cstor_settings_category);
-  root.addPreference(credStoreCat);
-  int s=mCstorHelper.getCstorState();
-  credStoreCat.addPreference(mCstorHelper.createAccessCheckBox(s));
-  credStoreCat.addPreference(mCstorHelper.createSetPasswordPreference());
-  credStoreCat.addPreference(mCstorHelper.createResetPreference(s));
+  PreferenceCategory credentialsCat=new PreferenceCategory(this);
+  credentialsCat.setTitle(R.string.credentials_category);
+  root.addPreference(credentialsCat);
+  mCredentialStorage.createPreferences(credentialsCat);
   return root;
 }

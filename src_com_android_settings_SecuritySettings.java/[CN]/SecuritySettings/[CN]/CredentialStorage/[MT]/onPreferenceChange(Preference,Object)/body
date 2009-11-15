@@ -1,0 +1,12 @@
+{
+  if (preference == mAccessCheckBox) {
+    if ((Boolean)value) {
+      showDialog((mState == KeyStore.UNINITIALIZED) ? PASSWORD_DIALOG : UNLOCK_DIALOG);
+    }
+ else {
+      lock();
+    }
+    return true;
+  }
+  return false;
+}

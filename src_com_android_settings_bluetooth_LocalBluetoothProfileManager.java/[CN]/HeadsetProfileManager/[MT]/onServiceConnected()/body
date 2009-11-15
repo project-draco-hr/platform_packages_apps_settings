@@ -1,9 +1,9 @@
 {
   mUiHandler.post(new Runnable(){
     public void run(){
-      String address=mService.getHeadsetAddress();
-      if (TextUtils.isEmpty(address))       return;
-      mLocalManager.getLocalDeviceManager().onProfileStateChanged(address,Profile.HEADSET,BluetoothHeadset.STATE_CONNECTED);
+      BluetoothDevice device=mService.getCurrentHeadset();
+      if (device == null)       return;
+      mLocalManager.getCachedDeviceManager().onProfileStateChanged(device,Profile.HEADSET,BluetoothHeadset.STATE_CONNECTED);
     }
   }
 );

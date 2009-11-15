@@ -24,8 +24,12 @@
     Log.w(TAG,"Could not go to the first row in the Cursor when saving data.");
     return false;
   }
+  if (force && mNewApn && name.length() < 1 && apn.length() < 1) {
+    getContentResolver().delete(mUri,null,null);
+    return false;
+  }
   ContentValues values=new ContentValues();
-  values.put(Telephony.Carriers.NAME,name);
+  values.put(Telephony.Carriers.NAME,name.length() < 1 ? getResources().getString(R.string.untitled_apn) : name);
   values.put(Telephony.Carriers.APN,apn);
   values.put(Telephony.Carriers.PROXY,checkNotSet(mProxy.getText()));
   values.put(Telephony.Carriers.PORT,checkNotSet(mPort.getText()));
@@ -35,6 +39,10 @@
   values.put(Telephony.Carriers.SERVER,checkNotSet(mServer.getText()));
   values.put(Telephony.Carriers.PASSWORD,checkNotSet(mPassword.getText()));
   values.put(Telephony.Carriers.MMSC,checkNotSet(mMmsc.getText()));
+  String authVal=mAuthType.getValue();
+  if (authVal != null) {
+    values.put(Telephony.Carriers.AUTH_TYPE,Integer.parseInt(authVal));
+  }
   values.put(Telephony.Carriers.TYPE,checkNotSet(mApnType.getText()));
   values.put(Telephony.Carriers.MCC,mcc);
   values.put(Telephony.Carriers.MNC,mnc);

@@ -1,6 +1,6 @@
 {
   mState=state;
-  if (state == BluetoothDevice.BLUETOOTH_STATE_ON || state == BluetoothDevice.BLUETOOTH_STATE_OFF) {
-    mLocalDeviceManager.onBluetoothStateChanged(state == BluetoothDevice.BLUETOOTH_STATE_ON);
+  if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
+    mCachedDeviceManager.onBluetoothStateChanged(state == BluetoothAdapter.STATE_ON);
   }
 }

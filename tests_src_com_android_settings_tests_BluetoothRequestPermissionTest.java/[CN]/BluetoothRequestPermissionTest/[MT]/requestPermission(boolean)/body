@@ -1,0 +1,13 @@
+{
+  Intent i=new Intent();
+  if (enableOnly) {
+    addMsg("Starting activity to enable bt");
+    i.setAction(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+  }
+ else {
+    addMsg("Starting activity to enable bt + discovery");
+    i.setAction(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+    i.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,20);
+  }
+  startActivityForResult(i,1);
+}

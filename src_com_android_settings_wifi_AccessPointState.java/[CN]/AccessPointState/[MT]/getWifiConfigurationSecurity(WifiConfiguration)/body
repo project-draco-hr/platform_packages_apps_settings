@@ -1,26 +1,12 @@
 {
-  if (wifiConfig.allowedKeyManagement.get(KeyMgmt.NONE)) {
-    if (!wifiConfig.allowedGroupCiphers.get(GroupCipher.CCMP) && (wifiConfig.allowedGroupCiphers.get(GroupCipher.WEP40) || wifiConfig.allowedGroupCiphers.get(GroupCipher.WEP104))) {
-      return WEP;
-    }
- else {
-      return OPEN;
-    }
+  if (!TextUtils.isEmpty(wifiConfig.eap.value())) {
+    return EAP;
   }
- else   if (wifiConfig.allowedKeyManagement.get(KeyMgmt.WPA_EAP)) {
-    return WPA_EAP;
+ else   if (!TextUtils.isEmpty(wifiConfig.preSharedKey)) {
+    return PSK;
   }
- else   if (wifiConfig.allowedKeyManagement.get(KeyMgmt.IEEE8021X)) {
-    return IEEE8021X;
+ else   if (!TextUtils.isEmpty(wifiConfig.wepKeys[0])) {
+    return WEP;
   }
- else   if (wifiConfig.allowedProtocols.get(Protocol.RSN)) {
-    return WPA2;
-  }
- else   if (wifiConfig.allowedProtocols.get(Protocol.WPA)) {
-    return WPA;
-  }
- else {
-    Log.w(TAG,"Unknown security type from WifiConfiguration, falling back on open.");
-    return OPEN;
-  }
+  return OPEN;
 }

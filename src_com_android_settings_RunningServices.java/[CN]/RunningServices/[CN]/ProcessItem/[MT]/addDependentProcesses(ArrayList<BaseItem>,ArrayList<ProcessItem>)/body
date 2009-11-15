@@ -1,0 +1,11 @@
+{
+  final int NP=mDependentProcesses.size();
+  for (int i=0; i < NP; i++) {
+    ProcessItem proc=mDependentProcesses.valueAt(i);
+    proc.addDependentProcesses(dest,destProc);
+    dest.add(proc);
+    if (proc.mPid > 0) {
+      destProc.add(proc);
+    }
+  }
+}

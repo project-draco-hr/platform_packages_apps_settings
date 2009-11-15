@@ -1,6 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.settings);
+  int activePhoneType=TelephonyManager.getDefault().getPhoneType();
   PreferenceGroup parent=(PreferenceGroup)findPreference(KEY_PARENT);
   Utils.updatePreferenceToSpecificActivityOrRemove(this,parent,KEY_SYNC_SETTINGS,0);
   Utils.updatePreferenceToSpecificActivityOrRemove(this,parent,KEY_SEARCH_SETTINGS,0);

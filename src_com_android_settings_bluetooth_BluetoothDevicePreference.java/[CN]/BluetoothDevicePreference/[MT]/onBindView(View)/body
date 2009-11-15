@@ -1,7 +1,9 @@
 {
+  if (null != findPreferenceInHierarchy("bt_checkbox")) {
+    setDependency("bt_checkbox");
+  }
   super.onBindView(view);
-  setDependency("bt_checkbox");
   ImageView btClass=(ImageView)view.findViewById(R.id.btClass);
-  btClass.setImageResource(mLocalDevice.getBtClassDrawable());
+  btClass.setImageResource(mCachedDevice.getBtClassDrawable());
   btClass.setAlpha(isEnabled() ? 255 : sDimAlpha);
 }

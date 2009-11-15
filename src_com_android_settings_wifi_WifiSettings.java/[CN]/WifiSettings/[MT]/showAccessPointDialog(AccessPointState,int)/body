@@ -1,6 +1,6 @@
 {
-  if (state.isEnterprise() && Keystore.getInstance().getState() != Keystore.UNLOCKED) {
-    startActivity(new Intent(SecuritySettings.ACTION_UNLOCK_CREDENTIAL_STORAGE));
+  if (state.isEnterprise() && mKeyStore.test() != KeyStore.NO_ERROR) {
+    Credentials.getInstance().unlock(this);
     mResumeState=state;
     mResumeMode=mode;
     return;

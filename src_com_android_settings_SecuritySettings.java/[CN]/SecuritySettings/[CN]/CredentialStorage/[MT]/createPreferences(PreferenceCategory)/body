@@ -1,0 +1,22 @@
+{
+  mAccessCheckBox=new CheckBoxPreference(SecuritySettings.this);
+  mAccessCheckBox.setTitle(R.string.credentials_access);
+  mAccessCheckBox.setSummary(R.string.credentials_access_summary);
+  mAccessCheckBox.setOnPreferenceChangeListener(this);
+  category.addPreference(mAccessCheckBox);
+  mInstallButton=new Preference(SecuritySettings.this);
+  mInstallButton.setTitle(R.string.credentials_install_certificates);
+  mInstallButton.setSummary(R.string.credentials_install_certificates_summary);
+  mInstallButton.setOnPreferenceClickListener(this);
+  category.addPreference(mInstallButton);
+  mPasswordButton=new Preference(SecuritySettings.this);
+  mPasswordButton.setTitle(R.string.credentials_set_password);
+  mPasswordButton.setSummary(R.string.credentials_set_password_summary);
+  mPasswordButton.setOnPreferenceClickListener(this);
+  category.addPreference(mPasswordButton);
+  mResetButton=new Preference(SecuritySettings.this);
+  mResetButton.setTitle(R.string.credentials_reset);
+  mResetButton.setSummary(R.string.credentials_reset_summary);
+  mResetButton.setOnPreferenceClickListener(this);
+  category.addPreference(mResetButton);
+}

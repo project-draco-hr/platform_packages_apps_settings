@@ -1,0 +1,10 @@
+{
+  if (SystemProperties.get(property).equals("")) {
+    try {
+      preferenceGroup.removePreference(findPreference(preference));
+    }
+ catch (    RuntimeException e) {
+      Log.d(TAG,"Property '" + property + "' missing and no '"+ preference+ "' preference");
+    }
+  }
+}

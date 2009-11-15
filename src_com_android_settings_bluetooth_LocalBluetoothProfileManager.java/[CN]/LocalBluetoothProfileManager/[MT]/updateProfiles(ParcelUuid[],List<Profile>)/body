@@ -1,0 +1,15 @@
+{
+  profiles.clear();
+  if (uuids == null) {
+    return;
+  }
+  if (BluetoothUuid.containsAnyUuid(uuids,HEADSET_PROFILE_UUIDS)) {
+    profiles.add(Profile.HEADSET);
+  }
+  if (BluetoothUuid.containsAnyUuid(uuids,A2DP_PROFILE_UUIDS)) {
+    profiles.add(Profile.A2DP);
+  }
+  if (BluetoothUuid.containsAnyUuid(uuids,OPP_PROFILE_UUIDS)) {
+    profiles.add(Profile.OPP);
+  }
+}

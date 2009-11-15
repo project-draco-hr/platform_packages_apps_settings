@@ -1,12 +1,12 @@
 {
   if (mOnlineMode) {
     if (checked) {
-      mDevice.connect(profile);
+      mCachedDevice.connect(profile);
     }
  else {
-      mDevice.disconnect(profile);
+      mCachedDevice.disconnect(profile);
     }
   }
   LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
-  profileManager.setPreferred(mDevice.getAddress(),checked);
+  profileManager.setPreferred(mCachedDevice.getDevice(),checked);
 }

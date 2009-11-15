@@ -1,0 +1,17 @@
+{
+  int msgId;
+switch (id) {
+case VpnManager.VPN_ERROR_CHALLENGE:
+    msgId=R.string.vpn_challenge_error_dialog_msg;
+  break;
+case VpnManager.VPN_ERROR_UNKNOWN_SERVER:
+msgId=R.string.vpn_unknown_server_dialog_msg;
+break;
+case VpnManager.VPN_ERROR_PPP_NEGOTIATION_FAILED:
+msgId=R.string.vpn_ppp_negotiation_failed_dialog_msg;
+break;
+default :
+return null;
+}
+return createCommonEditDialogBuilder().setMessage(msgId).create();
+}

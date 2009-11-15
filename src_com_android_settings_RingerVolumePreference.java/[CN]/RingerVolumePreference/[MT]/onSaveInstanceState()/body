@@ -1,0 +1,11 @@
+{
+  final Parcelable superState=super.onSaveInstanceState();
+  if (isPersistent()) {
+    return superState;
+  }
+  final SavedState myState=new SavedState(superState);
+  if (mNotificationSeekBarVolumizer != null) {
+    mNotificationSeekBarVolumizer.onSaveInstanceState(myState.getVolumeStore());
+  }
+  return myState;
+}

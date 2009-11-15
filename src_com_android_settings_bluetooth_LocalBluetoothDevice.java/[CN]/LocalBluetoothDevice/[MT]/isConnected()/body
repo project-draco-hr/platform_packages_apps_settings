@@ -1,9 +1,0 @@
-{
-  for (  Profile profile : mProfiles) {
-    int status=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile).getConnectionStatus(mAddress);
-    if (SettingsBtStatus.isConnectionStatusConnected(status)) {
-      return true;
-    }
-  }
-  return false;
-}

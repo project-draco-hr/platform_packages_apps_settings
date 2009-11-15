@@ -1,0 +1,15 @@
+{
+  if (preference == mInstallButton) {
+    Credentials.getInstance().installFromSdCard(SecuritySettings.this);
+  }
+ else   if (preference == mPasswordButton) {
+    showDialog(PASSWORD_DIALOG);
+  }
+ else   if (preference == mResetButton) {
+    showDialog(RESET_DIALOG);
+  }
+ else {
+    return false;
+  }
+  return true;
+}

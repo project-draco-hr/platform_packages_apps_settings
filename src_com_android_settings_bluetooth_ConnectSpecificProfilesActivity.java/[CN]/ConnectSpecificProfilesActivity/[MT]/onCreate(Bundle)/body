@@ -1,26 +1,26 @@
 {
   super.onCreate(savedInstanceState);
-  String address;
+  BluetoothDevice device;
   if (savedInstanceState != null) {
-    address=savedInstanceState.getString(EXTRA_ADDRESS);
+    device=savedInstanceState.getParcelable(EXTRA_DEVICE);
   }
  else {
     Intent intent=getIntent();
-    address=intent.getStringExtra(EXTRA_ADDRESS);
+    device=intent.getParcelableExtra(EXTRA_DEVICE);
   }
-  if (TextUtils.isEmpty(address)) {
-    Log.w(TAG,"Activity started without address");
+  if (device == null) {
+    Log.w(TAG,"Activity started without a remote blueototh device");
     finish();
   }
   mManager=LocalBluetoothManager.getInstance(this);
-  mDevice=mManager.getLocalDeviceManager().findDevice(address);
-  if (mDevice == null) {
+  mCachedDevice=mManager.getCachedDeviceManager().findDevice(device);
+  if (mCachedDevice == null) {
     Log.w(TAG,"Device not found, cannot connect to it");
     finish();
   }
   addPreferencesFromResource(R.xml.bluetooth_device_advanced);
   mProfileContainer=(PreferenceGroup)findPreference(KEY_PROFILE_CONTAINER);
-  findPreference(KEY_TITLE).setTitle(getString(R.string.bluetooth_device_advanced_title,mDevice.getName()));
+  findPreference(KEY_TITLE).setTitle(getString(R.string.bluetooth_device_advanced_title,mCachedDevice.getName()));
   mOnlineModePreference=(CheckBoxPreference)findPreference(KEY_ONLINE_MODE);
   mOnlineModePreference.setOnPreferenceChangeListener(this);
   addPreferencesForProfiles();

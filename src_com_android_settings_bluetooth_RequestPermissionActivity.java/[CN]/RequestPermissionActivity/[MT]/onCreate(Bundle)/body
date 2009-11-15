@@ -1,0 +1,35 @@
+{
+  super.onCreate(savedInstanceState);
+  if (parseIntent()) {
+    finish();
+    return;
+  }
+  int btState=mLocalManager.getBluetoothState();
+switch (btState) {
+case BluetoothAdapter.STATE_OFF:
+case BluetoothAdapter.STATE_TURNING_OFF:
+case BluetoothAdapter.STATE_TURNING_ON:
+    registerReceiver(mReceiver,new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+  Intent i=new Intent();
+i.setClass(this,RequestPermissionHelperActivity.class);
+if (mEnableOnly) {
+i.setAction(RequestPermissionHelperActivity.ACTION_INTERNAL_REQUEST_BT_ON);
+}
+ else {
+i.setAction(RequestPermissionHelperActivity.ACTION_INTERNAL_REQUEST_BT_ON_AND_DISCOVERABLE);
+i.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,mTimeout);
+}
+startActivityForResult(i,REQUEST_CODE_START_BT);
+mNeededToEnableBluetooth=true;
+break;
+case BluetoothAdapter.STATE_ON:
+if (mEnableOnly) {
+proceedAndFinish(false);
+return;
+}
+ else {
+createDialog();
+break;
+}
+}
+}

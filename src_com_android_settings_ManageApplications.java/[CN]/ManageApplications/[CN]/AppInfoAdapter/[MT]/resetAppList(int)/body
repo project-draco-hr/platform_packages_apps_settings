@@ -1,5 +1,5 @@
 {
-  mAppLocalList=getFilteredApps(mAppList,filterOption);
+  generateFilterListLocked(getFilteredApps(mAppList,filterOption,mCurrentFilterMap != null,mCurrentFilterMap));
   for (  ApplicationInfo applicationInfo : mAppLocalList) {
     AppInfo appInfo=mCache.getEntry(applicationInfo.packageName);
     if (appInfo == null) {
@@ -12,6 +12,5 @@
  else {
     notifyDataSetChanged();
   }
-  showEmptyViewIfListEmpty();
   return true;
 }

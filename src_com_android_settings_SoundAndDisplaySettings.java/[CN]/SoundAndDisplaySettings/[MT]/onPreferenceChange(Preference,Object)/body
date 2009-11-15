@@ -1,4 +1,24 @@
 {
+  if (KEY_ANIMATIONS.equals(preference.getKey())) {
+    try {
+      int value=Integer.parseInt((String)objValue);
+      if (mAnimationScales.length >= 1) {
+        mAnimationScales[0]=value % 10;
+      }
+      if (mAnimationScales.length >= 2) {
+        mAnimationScales[1]=(value / 10) % 10;
+      }
+      try {
+        mWindowManager.setAnimationScales(mAnimationScales);
+      }
+ catch (      RemoteException e) {
+      }
+      updateAnimationsSummary(objValue);
+    }
+ catch (    NumberFormatException e) {
+      Log.e(TAG,"could not persist animation setting",e);
+    }
+  }
   if (KEY_SCREEN_TIMEOUT.equals(preference.getKey())) {
     int value=Integer.parseInt((String)objValue);
     try {

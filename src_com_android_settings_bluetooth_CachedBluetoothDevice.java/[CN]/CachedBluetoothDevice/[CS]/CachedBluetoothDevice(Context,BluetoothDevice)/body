@@ -1,0 +1,8 @@
+{
+  mLocalManager=LocalBluetoothManager.getInstance(context);
+  if (mLocalManager == null) {
+    throw new IllegalStateException("Cannot use CachedBluetoothDevice without Bluetooth hardware");
+  }
+  mDevice=device;
+  fillData();
+}

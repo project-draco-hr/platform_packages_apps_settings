@@ -1,0 +1,26 @@
+{
+  int i;
+  String value;
+  for (i=AccessPointState.IDENTITY; i <= AccessPointState.ANONYMOUS_IDENTITY; i++) {
+    value=mEnterpriseTextFields[i].getText().toString();
+    if (!TextUtils.isEmpty(value)) {
+      mState.setEnterpriseField(i,value);
+    }
+  }
+  Spinner spinner=mClientCertSpinner;
+  int index=spinner.getSelectedItemPosition();
+  if (index != (spinner.getCount() - 1)) {
+    String key=(String)spinner.getSelectedItem();
+    mState.setEnterpriseField(AccessPointState.CLIENT_CERT,KEYSTORE_HEADER + Credentials.USER_CERTIFICATE + key);
+    mState.setEnterpriseField(AccessPointState.PRIVATE_KEY,KEYSTORE_HEADER + Credentials.USER_PRIVATE_KEY + key);
+  }
+  spinner=mCaCertSpinner;
+  index=spinner.getSelectedItemPosition();
+  if (index != (spinner.getCount() - 1)) {
+    String key=(String)spinner.getSelectedItem();
+    mState.setEnterpriseField(AccessPointState.CA_CERT,KEYSTORE_HEADER + Credentials.CA_CERTIFICATE + key);
+  }
+  mState.setSecurity(AccessPointState.EAP);
+  mState.setEap(mEapSpinner.getSelectedItemPosition());
+  mState.setPhase2((String)mPhase2Spinner.getSelectedItem());
+}

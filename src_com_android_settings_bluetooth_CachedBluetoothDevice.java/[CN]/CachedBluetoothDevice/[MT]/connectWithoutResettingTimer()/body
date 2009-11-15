@@ -1,0 +1,23 @@
+{
+  if (mProfiles.size() == 0) {
+    if (!updateProfiles()) {
+      if (DEBUG)       Log.d(TAG,"No profiles. Maybe we will connect later");
+      return;
+    }
+  }
+  mIsConnectingErrorPossible=true;
+  int preferredProfiles=0;
+  for (  Profile profile : mProfiles) {
+    if (isConnectableProfile(profile)) {
+      LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+      if (profileManager.isPreferred(mDevice)) {
+        ++preferredProfiles;
+        queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
+      }
+    }
+  }
+  if (DEBUG)   Log.d(TAG,"Preferred profiles = " + preferredProfiles);
+  if (preferredProfiles == 0) {
+    connectAllProfiles();
+  }
+}

@@ -5,7 +5,9 @@
   if (preference == mEnableAdb) {
     if (mEnableAdb.isChecked()) {
       mOkClicked=false;
-      new AlertDialog.Builder(this).setMessage(getResources().getString(R.string.adb_warning_message)).setTitle(R.string.adb_warning_title).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(android.R.string.yes,this).setNegativeButton(android.R.string.no,this).show().setOnDismissListener(this);
+      if (mOkDialog != null)       dismissDialog();
+      mOkDialog=new AlertDialog.Builder(this).setMessage(getResources().getString(R.string.adb_warning_message)).setTitle(R.string.adb_warning_title).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(android.R.string.yes,this).setNegativeButton(android.R.string.no,this).show();
+      mOkDialog.setOnDismissListener(this);
     }
  else {
       Settings.Secure.putInt(getContentResolver(),Settings.Secure.ADB_ENABLED,0);

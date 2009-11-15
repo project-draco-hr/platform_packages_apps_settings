@@ -1,0 +1,24 @@
+{
+  if (mType == BluetoothDevice.PAIRING_VARIANT_PIN) {
+    byte[] pinBytes=BluetoothDevice.convertPinToBytes(value);
+    if (pinBytes == null) {
+      return;
+    }
+    mDevice.setPin(pinBytes);
+  }
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_PASSKEY) {
+    int passkey=Integer.parseInt(value);
+    mDevice.setPasskey(passkey);
+  }
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_PASSKEY_CONFIRMATION) {
+    mDevice.setPairingConfirmation(true);
+  }
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_CONSENT) {
+    mDevice.setPairingConfirmation(true);
+  }
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY) {
+  }
+ else {
+    Log.e(TAG,"Incorrect pairing type received");
+  }
+}

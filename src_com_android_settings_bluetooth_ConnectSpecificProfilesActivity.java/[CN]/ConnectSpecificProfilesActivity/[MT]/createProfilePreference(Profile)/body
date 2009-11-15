@@ -4,6 +4,8 @@
   pref.setTitle(profile.localizedString);
   pref.setPersistent(false);
   pref.setOnPreferenceChangeListener(this);
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
+  pref.setEnabled(!mCachedDevice.isBusy());
   refreshProfilePreference(pref,profile);
   return pref;
 }

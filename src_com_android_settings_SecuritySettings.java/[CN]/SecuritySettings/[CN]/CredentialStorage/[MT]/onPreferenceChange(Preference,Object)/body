@@ -10,20 +10,8 @@
   }
  else   if (preference == mEncryptedFSEnabled) {
     Boolean bval=(Boolean)value;
-    SystemProperties.set(PROPERTY_EFS_ENABLED,bval.booleanValue() ? "1" : "0");
-    if (mIsEFSActive != bval.booleanValue()) {
-      SystemProperties.set(PROPERTY_EFS_TRANSITION,"1");
-    }
- else {
-      SystemProperties.set(PROPERTY_EFS_TRANSITION,"0");
-    }
-    updatePreferences(mState);
-    if (bval.booleanValue()) {
-      Toast.makeText(SecuritySettings.this,R.string.encrypted_fs_enabled,Toast.LENGTH_SHORT).show();
-    }
- else {
-      Toast.makeText(SecuritySettings.this,R.string.encrypted_fs_disabled,Toast.LENGTH_SHORT).show();
-    }
+    mWillEnableEncryptedFS=bval.booleanValue();
+    showSwitchEncryptedFSDialog();
   }
-  return false;
+  return true;
 }

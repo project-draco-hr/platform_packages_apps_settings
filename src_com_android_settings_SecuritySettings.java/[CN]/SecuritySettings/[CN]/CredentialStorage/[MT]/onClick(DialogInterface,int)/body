@@ -1,6 +1,37 @@
 {
-  mSubmit=(button == DialogInterface.BUTTON_POSITIVE);
-  if (button == DialogInterface.BUTTON_NEUTRAL) {
-    reset();
+  if (mShowingDialog != DLG_ENABLE_EFS) {
+    mSubmit=(button == DialogInterface.BUTTON_POSITIVE);
+    if (button == DialogInterface.BUTTON_NEUTRAL) {
+      reset();
+    }
+  }
+ else {
+    if (button == DialogInterface.BUTTON_POSITIVE) {
+      ICheckinService service=ICheckinService.Stub.asInterface(ServiceManager.getService("checkin"));
+      if (service != null) {
+        try {
+          if (mWillEnableEncryptedFS) {
+            service.masterClearAndToggleEFS(true);
+          }
+ else {
+            service.masterClearAndToggleEFS(false);
+          }
+        }
+ catch (        android.os.RemoteException e) {
+          Log.w("SecuritySettings","Unable to invoke ICheckinService.masterClearAndToggleEFS()");
+        }
+      }
+ else {
+        Log.w("SecuritySettings","Unable to locate ICheckinService");
+      }
+      updatePreferences(mState);
+    }
+ else     if (button == DialogInterface.BUTTON_NEGATIVE) {
+      Toast.makeText(SecuritySettings.this,R.string.encrypted_fs_cancel_confirm,Toast.LENGTH_SHORT).show();
+      updatePreferences(mState);
+    }
+ else {
+      return;
+    }
   }
 }

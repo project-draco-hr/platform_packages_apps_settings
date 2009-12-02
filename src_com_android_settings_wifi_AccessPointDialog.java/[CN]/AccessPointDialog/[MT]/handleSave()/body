@@ -34,6 +34,7 @@ break;
 if (mState.isEnterprise() && !mState.configured) {
 updateEnterpriseFields();
 }
+mWifiLayer.getWifiLayerApInstance(mState).setConfigured(true);
 if (!mWifiLayer.saveNetwork(mState)) {
 return;
 }

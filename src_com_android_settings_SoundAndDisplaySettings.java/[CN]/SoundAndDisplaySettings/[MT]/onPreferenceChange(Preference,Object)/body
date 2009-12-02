@@ -1,5 +1,6 @@
 {
-  if (KEY_ANIMATIONS.equals(preference.getKey())) {
+  final String key=preference.getKey();
+  if (KEY_ANIMATIONS.equals(key)) {
     try {
       int value=Integer.parseInt((String)objValue);
       if (mAnimationScales.length >= 1) {
@@ -19,7 +20,7 @@
       Log.e(TAG,"could not persist animation setting",e);
     }
   }
-  if (KEY_SCREEN_TIMEOUT.equals(preference.getKey())) {
+  if (KEY_SCREEN_TIMEOUT.equals(key)) {
     int value=Integer.parseInt((String)objValue);
     try {
       Settings.System.putInt(getContentResolver(),SCREEN_OFF_TIMEOUT,value);
@@ -28,7 +29,7 @@
       Log.e(TAG,"could not persist screen timeout setting",e);
     }
   }
- else   if (KEY_EMERGENCY_TONE.equals(preference.getKey())) {
+ else   if (KEY_EMERGENCY_TONE.equals(key)) {
     int value=Integer.parseInt((String)objValue);
     try {
       Settings.System.putInt(getContentResolver(),Settings.System.EMERGENCY_TONE,value);

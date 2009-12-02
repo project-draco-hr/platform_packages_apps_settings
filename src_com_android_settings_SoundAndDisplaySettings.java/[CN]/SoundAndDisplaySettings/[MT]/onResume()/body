@@ -2,5 +2,11 @@
   super.onResume();
   updateState(true);
   IntentFilter filter=new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
+  if (mHasDockSettings) {
+    if (mDockSettings != null) {
+      mSoundSettings.removePreference(mDockSettings);
+    }
+    filter.addAction(Intent.ACTION_DOCK_EVENT);
+  }
   registerReceiver(mReceiver,filter);
 }

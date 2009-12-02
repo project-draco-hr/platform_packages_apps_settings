@@ -33,10 +33,10 @@
     emergencyTonePreference.setValue(String.valueOf(Settings.System.getInt(resolver,Settings.System.EMERGENCY_TONE,FALLBACK_EMERGENCY_TONE_VALUE)));
     emergencyTonePreference.setOnPreferenceChangeListener(this);
   }
-  PreferenceGroup soundSettings=(PreferenceGroup)findPreference(KEY_SOUND_SETTINGS);
-  mNotificationPulse=(CheckBoxPreference)soundSettings.findPreference(KEY_NOTIFICATION_PULSE);
-  if (mNotificationPulse != null && soundSettings != null && getResources().getBoolean(R.bool.has_intrusive_led) == false) {
-    soundSettings.removePreference(mNotificationPulse);
+  mSoundSettings=(PreferenceGroup)findPreference(KEY_SOUND_SETTINGS);
+  mNotificationPulse=(CheckBoxPreference)mSoundSettings.findPreference(KEY_NOTIFICATION_PULSE);
+  if (mNotificationPulse != null && getResources().getBoolean(R.bool.has_intrusive_led) == false) {
+    mSoundSettings.removePreference(mNotificationPulse);
   }
  else {
     try {
@@ -47,4 +47,5 @@
       Log.e(TAG,Settings.System.NOTIFICATION_LIGHT_PULSE + " not found");
     }
   }
+  initDockSettings();
 }

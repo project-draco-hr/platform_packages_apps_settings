@@ -1,0 +1,11 @@
+{
+  if (!AirplaneModeEnabler.isAirplaneModeOn(context)) {
+    return true;
+  }
+  String radios=Settings.System.getString(context.getContentResolver(),Settings.System.AIRPLANE_MODE_RADIOS);
+  if (radios == null || !radios.contains(Settings.System.RADIO_BLUETOOTH)) {
+    return true;
+  }
+  radios=Settings.System.getString(context.getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
+  return (radios != null && radios.contains(Settings.System.RADIO_BLUETOOTH));
+}

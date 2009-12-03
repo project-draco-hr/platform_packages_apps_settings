@@ -12,6 +12,7 @@
       LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
       if (profileManager.isPreferred(mDevice)) {
         ++preferredProfiles;
+        disconnectConnected(profile);
         queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
       }
     }

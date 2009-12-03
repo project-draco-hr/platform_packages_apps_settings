@@ -1,0 +1,31 @@
+{
+  super.onCreate(savedInstanceState);
+  mWifiManager=(WifiManager)getSystemService(WIFI_SERVICE);
+  mWifiStateFilter=new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+  mWifiStateFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+  mWifiStateFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+  mWifiStateFilter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
+  mWifiStateFilter.addAction(WifiManager.RSSI_CHANGED_ACTION);
+  mWifiStateFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+  registerReceiver(mWifiStateReceiver,mWifiStateFilter);
+  setContentView(R.layout.wifi_status_test);
+  updateButton=(Button)findViewById(R.id.update);
+  updateButton.setOnClickListener(updateButtonHandler);
+  mWifiState=(TextView)findViewById(R.id.wifi_state);
+  mNetworkState=(TextView)findViewById(R.id.network_state);
+  mSupplicantState=(TextView)findViewById(R.id.supplicant_state);
+  mRSSI=(TextView)findViewById(R.id.rssi);
+  mBSSID=(TextView)findViewById(R.id.bssid);
+  mSSID=(TextView)findViewById(R.id.ssid);
+  mHiddenSSID=(TextView)findViewById(R.id.hidden_ssid);
+  mIPAddr=(TextView)findViewById(R.id.ipaddr);
+  mMACAddr=(TextView)findViewById(R.id.macaddr);
+  mNetworkId=(TextView)findViewById(R.id.networkid);
+  mLinkSpeed=(TextView)findViewById(R.id.link_speed);
+  mScanList=(TextView)findViewById(R.id.scan_list);
+  mPingIpAddr=(TextView)findViewById(R.id.pingIpAddr);
+  mPingHostname=(TextView)findViewById(R.id.pingHostname);
+  mHttpClientTest=(TextView)findViewById(R.id.httpClientTest);
+  pingTestButton=(Button)findViewById(R.id.ping_test);
+  pingTestButton.setOnClickListener(mPingButtonHandler);
+}

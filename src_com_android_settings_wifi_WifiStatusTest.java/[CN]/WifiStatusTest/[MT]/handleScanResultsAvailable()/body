@@ -1,0 +1,17 @@
+{
+  List<ScanResult> list=mWifiManager.getScanResults();
+  StringBuffer scanList=new StringBuffer();
+  if (list != null) {
+    for (int i=list.size() - 1; i >= 0; i--) {
+      final ScanResult scanResult=list.get(i);
+      if (scanResult == null) {
+        continue;
+      }
+      if (TextUtils.isEmpty(scanResult.SSID)) {
+        continue;
+      }
+      scanList.append(scanResult.SSID + " ");
+    }
+  }
+  mScanList.setText(scanList);
+}

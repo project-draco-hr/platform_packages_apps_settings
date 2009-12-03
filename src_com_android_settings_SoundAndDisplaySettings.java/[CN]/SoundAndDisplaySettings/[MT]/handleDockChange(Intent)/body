@@ -1,0 +1,11 @@
+{
+  if (mHasDockSettings && mDockSettings != null) {
+    int dockState=intent.getIntExtra(Intent.EXTRA_DOCK_STATE,0);
+    if (dockState != Intent.EXTRA_DOCK_STATE_UNDOCKED) {
+      mSoundSettings.addPreference(mDockSettings);
+    }
+ else {
+      mSoundSettings.removePreference(mDockSettings);
+    }
+  }
+}

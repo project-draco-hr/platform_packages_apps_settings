@@ -1,4 +1,6 @@
 {
-  mService.setSinkPriority(device,BluetoothA2dp.PRIORITY_ON);
+  if (mService.getSinkPriority(device) > BluetoothA2dp.PRIORITY_ON) {
+    mService.setSinkPriority(device,BluetoothA2dp.PRIORITY_ON);
+  }
   return mService.disconnectSink(device);
 }

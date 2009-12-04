@@ -1,0 +1,27 @@
+{
+  if (which == DialogInterface.BUTTON_POSITIVE) {
+switch (mLocalManager.getBluetoothState()) {
+case BluetoothAdapter.STATE_OFF:
+case BluetoothAdapter.STATE_TURNING_OFF:
+      mLocalManager.getBluetoothAdapter().enable();
+    break;
+case BluetoothAdapter.STATE_TURNING_ON:
+  break;
+case BluetoothAdapter.STATE_ON:
+break;
+}
+for (int i=0; i < mProfileManagers.length; i++) {
+mProfileManagers[i].setPreferred(mDevice,mCheckedItems[i]);
+if (DEBUG) Log.d(TAG,mProfileManagers[i].toString() + " = " + mCheckedItems[i]);
+boolean isConnected=mProfileManagers[i].isConnected(mDevice);
+if (mCheckedItems[i] && !isConnected) {
+if (DEBUG) Log.d(TAG,"Connecting ");
+mCachedDevice.connect(mProfiles[i]);
+}
+ else if (isConnected) {
+if (DEBUG) Log.d(TAG,"Disconnecting");
+mProfileManagers[i].disconnect(mDevice);
+}
+}
+}
+}

@@ -1,0 +1,9 @@
+{
+  Set<BluetoothDevice> devices=null;
+  BluetoothDevice device=mService.getCurrentHeadset();
+  if (device != null) {
+    devices=new HashSet<BluetoothDevice>();
+    devices.add(device);
+  }
+  return devices;
+}

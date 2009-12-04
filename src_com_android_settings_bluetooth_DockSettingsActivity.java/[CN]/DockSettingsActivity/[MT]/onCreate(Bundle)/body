@@ -1,0 +1,15 @@
+{
+  super.onCreate(savedInstanceState);
+  if (!parseIntent(getIntent())) {
+    finish();
+    return;
+  }
+  if (mState == Intent.EXTRA_DOCK_STATE_UNDOCKED) {
+    handleUndocked(this,mLocalManager,mDevice);
+    dismiss();
+    return;
+  }
+  getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+  createDialog();
+  getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+}

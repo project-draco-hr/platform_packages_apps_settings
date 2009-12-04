@@ -1,0 +1,35 @@
+{
+  if (intent == null)   return;
+  if (DBG) {
+    Log.e(TAG,"Action:" + intent.getAction() + " State:"+ intent.getIntExtra(Intent.EXTRA_DOCK_STATE,Intent.EXTRA_DOCK_STATE_UNDOCKED));
+  }
+  if (Intent.ACTION_DOCK_EVENT.equals(intent.getAction())) {
+    BluetoothDevice device=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+    if (device == null) {
+      if (DBG)       Log.e(TAG,"Device is missing");
+      return;
+    }
+    LocalBluetoothManager localManager=LocalBluetoothManager.getInstance(context);
+    int state=intent.getIntExtra(Intent.EXTRA_DOCK_STATE,Intent.EXTRA_DOCK_STATE_UNDOCKED);
+switch (state) {
+case Intent.EXTRA_DOCK_STATE_UNDOCKED:
+      DockSettingsActivity.handleUndocked(context,localManager,device);
+    break;
+case Intent.EXTRA_DOCK_STATE_CAR:
+case Intent.EXTRA_DOCK_STATE_DESK:
+  if (DockSettingsActivity.getAutoConnectSetting(localManager)) {
+    DockSettingsActivity.handleDocked(context,localManager,device,state);
+  }
+ else {
+    Intent i=new Intent(intent);
+    i.setClass(context,DockSettingsActivity.class);
+    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    context.startActivity(i);
+  }
+break;
+default :
+Log.e(TAG,"Unknown state");
+break;
+}
+}
+}

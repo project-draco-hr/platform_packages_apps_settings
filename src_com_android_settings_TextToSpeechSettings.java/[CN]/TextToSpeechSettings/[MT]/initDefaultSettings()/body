@@ -11,6 +11,9 @@
   }
   mUseDefaultPref.setChecked(useDefault == 1);
   mUseDefaultPref.setOnPreferenceChangeListener(this);
+  mDefaultSynthPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_SYNTH);
+  loadEngines();
+  mDefaultSynthPref.setOnPreferenceChangeListener(this);
   String engine=Settings.Secure.getString(resolver,TTS_DEFAULT_SYNTH);
   if (engine == null) {
     engine=FALLBACK_TTS_DEFAULT_SYNTH;

@@ -1,0 +1,15 @@
+{
+  ListPreference enginesPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_SYNTH);
+  Intent intent=new Intent("android.intent.action.START_TTS_ENGINE");
+  ResolveInfo[] enginesArray=new ResolveInfo[0];
+  PackageManager pm=getPackageManager();
+  enginesArray=pm.queryIntentActivities(intent,0).toArray(enginesArray);
+  CharSequence entries[]=new CharSequence[enginesArray.length];
+  CharSequence values[]=new CharSequence[enginesArray.length];
+  for (int i=0; i < enginesArray.length; i++) {
+    entries[i]=enginesArray[i].loadLabel(pm);
+    values[i]=enginesArray[i].activityInfo.packageName;
+  }
+  enginesPref.setEntries(entries);
+  enginesPref.setEntryValues(values);
+}

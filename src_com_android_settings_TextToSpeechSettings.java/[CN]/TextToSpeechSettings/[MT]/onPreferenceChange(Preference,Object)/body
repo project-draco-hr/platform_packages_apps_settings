@@ -31,5 +31,13 @@
     Log.v("Settings"," selected is " + newIndex);
     mDemoStringIndex=newIndex > -1 ? newIndex : 0;
   }
+ else   if (KEY_TTS_DEFAULT_SYNTH.equals(preference.getKey())) {
+    mDefaultEng=objValue.toString();
+    Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_SYNTH,mDefaultEng);
+    if (mTts != null) {
+      mTts.setEngineByPackageName(mDefaultEng);
+    }
+    Log.v("Settings","The default synth is: " + objValue.toString());
+  }
   return true;
 }

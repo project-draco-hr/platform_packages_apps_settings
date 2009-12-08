@@ -1,4 +1,6 @@
 {
-  DockEventReceiver.finishStartingService(mContext,mStartIdAssociatedWithDialog);
+  if (mPendingDevice == null) {
+    DockEventReceiver.finishStartingService(mContext,mStartIdAssociatedWithDialog);
+  }
   mContext.stopForeground(true);
 }

@@ -1,0 +1,9 @@
+{
+  if (mDialog != null) {
+    mDialog.dismiss();
+    mDialog=null;
+  }
+  mDevice=null;
+  CachedBluetoothDevice cachedBluetoothDevice=getCachedBluetoothDevice(context,localManager,device);
+  cachedBluetoothDevice.disconnect();
+}

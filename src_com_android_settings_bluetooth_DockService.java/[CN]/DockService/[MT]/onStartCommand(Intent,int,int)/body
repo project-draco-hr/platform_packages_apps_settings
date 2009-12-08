@@ -1,0 +1,17 @@
+{
+  if (DEBUG)   Log.d(TAG,"onStartCommand startId:" + startId + " flags: "+ flags);
+  if (intent == null) {
+    if (DEBUG)     Log.d(TAG,"START_NOT_STICKY - intent is null.");
+    DockEventReceiver.finishStartingService(this,startId);
+    return START_NOT_STICKY;
+  }
+  Message msg=parseIntent(intent);
+  if (msg == null) {
+    if (DEBUG)     Log.d(TAG,"START_NOT_STICKY - Bad intent.");
+    DockEventReceiver.finishStartingService(this,startId);
+    return START_NOT_STICKY;
+  }
+  msg.arg2=startId;
+  processMessage(msg);
+  return START_STICKY;
+}

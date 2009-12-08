@@ -4,5 +4,9 @@
     mDialog.dismiss();
     mDialog=null;
   }
+  if (mRegistered) {
+    unregisterReceiver(mReceiver);
+    mRegistered=false;
+  }
   mServiceLooper.quit();
 }

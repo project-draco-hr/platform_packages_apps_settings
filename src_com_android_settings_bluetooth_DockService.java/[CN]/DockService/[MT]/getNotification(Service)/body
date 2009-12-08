@@ -1,0 +1,10 @@
+{
+  CharSequence title=service.getString(R.string.dock_settings_title);
+  Notification n=new Notification(R.drawable.ic_bt_headphones_a2dp,title,System.currentTimeMillis());
+  CharSequence contentText=service.getString(R.string.dock_settings_summary);
+  Intent notificationIntent=new Intent(service,DockEventReceiver.class);
+  notificationIntent.setAction(DockEventReceiver.ACTION_DOCK_SHOW_UI);
+  PendingIntent pendingIntent=PendingIntent.getActivity(service,0,notificationIntent,0);
+  n.setLatestEventInfo(service,title,contentText,pendingIntent);
+  return n;
+}

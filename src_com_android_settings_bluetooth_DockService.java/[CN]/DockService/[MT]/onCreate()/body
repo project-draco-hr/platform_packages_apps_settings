@@ -1,0 +1,9 @@
+{
+  if (DEBUG)   Log.d(TAG,"onCreate");
+  mBtManager=LocalBluetoothManager.getInstance(this);
+  mContext=this;
+  HandlerThread thread=new HandlerThread("DockService");
+  thread.start();
+  mServiceLooper=thread.getLooper();
+  mServiceHandler=new ServiceHandler(mServiceLooper);
+}

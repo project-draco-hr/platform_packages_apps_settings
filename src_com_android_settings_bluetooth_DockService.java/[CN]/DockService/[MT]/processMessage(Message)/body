@@ -1,0 +1,43 @@
+{
+  int msgType=msg.what;
+  int state=msg.arg1;
+  int startId=msg.arg2;
+  BluetoothDevice device=(BluetoothDevice)msg.obj;
+  if (DEBUG)   Log.d(TAG,"processMessage: " + msgType + " state: "+ state+ " device = "+ (msg.obj == null ? "null" : device.toString()));
+switch (msgType) {
+case MSG_TYPE_SHOW_UI:
+    mDevice=device;
+  createDialog(mContext,mDevice,state,startId);
+break;
+case MSG_TYPE_DOCKED:
+if (DEBUG) {
+Log.d(TAG,"1 Has undock perm msg = " + mServiceHandler.hasMessages(MSG_TYPE_UNDOCKED_PERMANENT,mDevice));
+Log.d(TAG,"2 Has undock perm msg = " + mServiceHandler.hasMessages(MSG_TYPE_UNDOCKED_PERMANENT,device));
+}
+mServiceHandler.removeMessages(MSG_TYPE_UNDOCKED_PERMANENT);
+if (!device.equals(mDevice)) {
+if (mDevice != null) {
+handleUndocked(mContext,mBtManager,mDevice);
+}
+mDevice=device;
+if (getAutoConnectSetting(mBtManager,device.getAddress())) {
+initBtSettings(mContext,device,state,false);
+applyBtSettings();
+}
+ else {
+createDialog(mContext,mDevice,state,startId);
+}
+}
+break;
+case MSG_TYPE_UNDOCKED_PERMANENT:
+handleUndocked(mContext,mBtManager,device);
+break;
+case MSG_TYPE_UNDOCKED_TEMPORARY:
+Message newMsg=mServiceHandler.obtainMessage(MSG_TYPE_UNDOCKED_PERMANENT,state,0,device);
+mServiceHandler.sendMessageDelayed(newMsg,UNDOCKED_GRACE_PERIOD);
+break;
+}
+if (mDialog == null) {
+DockEventReceiver.finishStartingService(DockService.this,msg.arg1);
+}
+}

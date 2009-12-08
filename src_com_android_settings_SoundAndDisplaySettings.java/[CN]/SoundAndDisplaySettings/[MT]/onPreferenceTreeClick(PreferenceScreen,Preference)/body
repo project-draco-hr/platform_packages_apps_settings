@@ -34,8 +34,9 @@
   }
  else   if (preference == mDockSettings) {
     Intent i=new Intent(mDockIntent);
-    i.setClass(this,DockSettingsActivity.class);
-    startActivity(i);
+    i.setAction(DockEventReceiver.ACTION_DOCK_SHOW_UI);
+    i.setClass(this,DockEventReceiver.class);
+    sendBroadcast(i);
   }
   return true;
 }

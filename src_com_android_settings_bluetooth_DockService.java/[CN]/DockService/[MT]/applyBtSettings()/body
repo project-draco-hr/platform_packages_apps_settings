@@ -1,0 +1,23 @@
+{
+  if (mProfiles == null)   return;
+  for (int i=0; i < mProfiles.length; i++) {
+    LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mBtManager,mProfiles[i]);
+    boolean isConnected=profileManager.isConnected(mDevice);
+    CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(mContext,mBtManager,mDevice);
+    if (DEBUG)     Log.d(TAG,mProfiles[i].toString() + " = " + mCheckedItems[i]);
+    if (mCheckedItems[i] && !isConnected) {
+      if (DEBUG)       Log.d(TAG,"Connecting ");
+      cachedDevice.connect(mProfiles[i]);
+    }
+ else     if (!mCheckedItems[i] && isConnected) {
+      if (DEBUG)       Log.d(TAG,"Disconnecting");
+      cachedDevice.disconnect(mProfiles[i]);
+    }
+    profileManager.setPreferred(mDevice,mCheckedItems[i]);
+    if (DEBUG) {
+      if (mCheckedItems[i] != LocalBluetoothProfileManager.getProfileManager(mBtManager,Profile.HEADSET).isPreferred(mDevice)) {
+        Log.e(TAG,"Can't save prefered value");
+      }
+    }
+  }
+}

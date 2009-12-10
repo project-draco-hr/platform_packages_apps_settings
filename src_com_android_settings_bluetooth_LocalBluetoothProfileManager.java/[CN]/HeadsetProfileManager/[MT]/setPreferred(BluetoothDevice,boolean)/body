@@ -1,3 +1,10 @@
 {
-  mService.setPriority(device,preferred ? BluetoothHeadset.PRIORITY_AUTO_CONNECT : BluetoothHeadset.PRIORITY_OFF);
+  if (preferred) {
+    if (mService.getPriority(device) < BluetoothHeadset.PRIORITY_ON) {
+      mService.setPriority(device,BluetoothHeadset.PRIORITY_ON);
+    }
+  }
+ else {
+    mService.setPriority(device,BluetoothHeadset.PRIORITY_OFF);
+  }
 }

@@ -1,5 +1,5 @@
 {
-  Set<BluetoothDevice> sinks=mService.getConnectedSinks();
+  Set<BluetoothDevice> sinks=mService.getNonDisconnectedSinks();
   if (sinks != null) {
     for (    BluetoothDevice sink : sinks) {
       mService.disconnectSink(sink);

@@ -1,0 +1,25 @@
+{
+  String wifiStateString;
+switch (wifiState) {
+case WifiManager.WIFI_STATE_DISABLING:
+    wifiStateString=getString(R.string.wifi_state_disabling);
+  break;
+case WifiManager.WIFI_STATE_DISABLED:
+wifiStateString=getString(R.string.wifi_state_disabled);
+break;
+case WifiManager.WIFI_STATE_ENABLING:
+wifiStateString=getString(R.string.wifi_state_enabling);
+break;
+case WifiManager.WIFI_STATE_ENABLED:
+wifiStateString=getString(R.string.wifi_state_enabled);
+break;
+case WifiManager.WIFI_STATE_UNKNOWN:
+wifiStateString=getString(R.string.wifi_state_unknown);
+break;
+default :
+wifiStateString="BAD";
+Log.e(TAG,"wifi state is bad");
+break;
+}
+mWifiState.setText(wifiStateString);
+}

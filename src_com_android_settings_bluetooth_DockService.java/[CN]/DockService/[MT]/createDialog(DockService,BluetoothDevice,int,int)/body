@@ -7,7 +7,7 @@ default :
   return false;
 }
 startForeground(0,new Notification());
-boolean firstTime=!hasAutoConnectSetting(mBtManager,device.getAddress());
+boolean firstTime=!mBtManager.hasDockAutoConnectSetting(device.getAddress());
 CharSequence[] items=initBtSettings(service,device,state,firstTime);
 final AlertDialog.Builder ab=new AlertDialog.Builder(service);
 ab.setTitle(service.getString(R.string.bluetooth_dock_settings_title));
@@ -16,14 +16,14 @@ LayoutInflater inflater=(LayoutInflater)service.getSystemService(Context.LAYOUT_
 float pixelScaleFactor=service.getResources().getDisplayMetrics().density;
 View view=inflater.inflate(R.layout.remember_dock_setting,null);
 CheckBox rememberCheckbox=(CheckBox)view.findViewById(R.id.remember);
-boolean checked=firstTime || getAutoConnectSetting(mBtManager,device.getAddress());
+boolean checked=firstTime || mBtManager.getDockAutoConnectSetting(device.getAddress());
 rememberCheckbox.setChecked(checked);
 rememberCheckbox.setOnCheckedChangeListener(this);
 int viewSpacingLeft=(int)(14 * pixelScaleFactor);
 int viewSpacingRight=(int)(14 * pixelScaleFactor);
 ab.setView(view,viewSpacingLeft,0,viewSpacingRight,0);
 if (DEBUG) {
-Log.d(TAG,"Auto connect = " + getAutoConnectSetting(mBtManager,device.getAddress()));
+Log.d(TAG,"Auto connect = " + mBtManager.getDockAutoConnectSetting(device.getAddress()));
 }
 ab.setPositiveButton(service.getString(android.R.string.ok),service);
 mStartIdAssociatedWithDialog=startId;

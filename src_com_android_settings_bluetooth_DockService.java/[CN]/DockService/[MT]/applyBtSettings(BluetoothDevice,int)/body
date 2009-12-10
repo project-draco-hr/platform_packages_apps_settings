@@ -1,0 +1,49 @@
+{
+  if (device == null || mProfiles == null || mCheckedItems == null)   return;
+synchronized (mBtSynchroObject) {
+    for (    boolean enable : mCheckedItems) {
+      if (enable) {
+        int btState=mBtManager.getBluetoothState();
+switch (btState) {
+case BluetoothAdapter.STATE_OFF:
+case BluetoothAdapter.STATE_TURNING_OFF:
+case BluetoothAdapter.STATE_TURNING_ON:
+          if (mPendingDevice != null && mPendingDevice.equals(mDevice)) {
+            return;
+          }
+        if (!mRegistered) {
+          registerReceiver(mReceiver,new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+        }
+      mPendingDevice=device;
+    mRegistered=true;
+  mPendingStartId=startId;
+if (btState != BluetoothAdapter.STATE_TURNING_ON) {
+  mBtManager.getBluetoothAdapter().enable();
+}
+return;
+}
+}
+}
+}
+mPendingDevice=null;
+for (int i=0; i < mProfiles.length; i++) {
+LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mBtManager,mProfiles[i]);
+boolean isConnected=profileManager.isConnected(device);
+CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(mContext,mBtManager,device);
+if (DEBUG) Log.d(TAG,mProfiles[i].toString() + " = " + mCheckedItems[i]);
+if (mCheckedItems[i] && !isConnected) {
+if (DEBUG) Log.d(TAG,"applyBtSettings - Connecting");
+cachedDevice.connect(mProfiles[i]);
+}
+ else if (!mCheckedItems[i] && isConnected) {
+if (DEBUG) Log.d(TAG,"applyBtSettings - Disconnecting");
+cachedDevice.disconnect(mProfiles[i]);
+}
+profileManager.setPreferred(device,mCheckedItems[i]);
+if (DEBUG) {
+if (mCheckedItems[i] != profileManager.isPreferred(device)) {
+Log.e(TAG,"Can't save prefered value");
+}
+}
+}
+}

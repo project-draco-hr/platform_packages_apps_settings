@@ -3,16 +3,6 @@
     if (!hasAutoConnectSetting(mBtManager,mDevice.getAddress())) {
       saveAutoConnectSetting(mBtManager,mDevice.getAddress(),true);
     }
-switch (mBtManager.getBluetoothState()) {
-case BluetoothAdapter.STATE_OFF:
-case BluetoothAdapter.STATE_TURNING_OFF:
-      mBtManager.getBluetoothAdapter().enable();
-    break;
-case BluetoothAdapter.STATE_TURNING_ON:
-  break;
-case BluetoothAdapter.STATE_ON:
-break;
-}
-applyBtSettings();
-}
+    applyBtSettings(mDevice,mStartIdAssociatedWithDialog);
+  }
 }

@@ -1,7 +1,7 @@
 {
   if (which == DialogInterface.BUTTON_POSITIVE) {
-    if (!hasAutoConnectSetting(mBtManager,mDevice.getAddress())) {
-      saveAutoConnectSetting(mBtManager,mDevice.getAddress(),true);
+    if (!mBtManager.hasDockAutoConnectSetting(mDevice.getAddress())) {
+      mBtManager.saveDockAutoConnectSetting(mDevice.getAddress(),true);
     }
     applyBtSettings(mDevice,mStartIdAssociatedWithDialog);
   }

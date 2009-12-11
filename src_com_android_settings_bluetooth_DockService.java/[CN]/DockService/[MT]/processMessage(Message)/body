@@ -24,7 +24,7 @@ if (mDevice != null) {
 handleUndocked(mContext,mBtManager,mDevice);
 }
 mDevice=device;
-if (getAutoConnectSetting(mBtManager,device.getAddress())) {
+if (mBtManager.getDockAutoConnectSetting(device.getAddress())) {
 initBtSettings(mContext,device,state,false);
 applyBtSettings(mDevice,startId);
 }

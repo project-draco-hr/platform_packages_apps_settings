@@ -1,4 +1,6 @@
 {
   if (DEBUG)   Log.d(TAG,"onCheckedChanged: Remember Settings = " + isChecked);
-  mBtManager.saveDockAutoConnectSetting(mDevice.getAddress(),isChecked);
+  if (mDevice != null) {
+    mBtManager.saveDockAutoConnectSetting(mDevice.getAddress(),isChecked);
+  }
 }

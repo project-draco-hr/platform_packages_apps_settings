@@ -1,0 +1,13 @@
+{
+  super.onCreate(savedInstanceState);
+  mLockPatternUtils=new LockPatternUtils(getContentResolver());
+  mRequestedMode=getIntent().getIntExtra("password_mode",mRequestedMode);
+  mPasswordMinLength=getIntent().getIntExtra("password_min_length",mPasswordMinLength);
+  mPasswordMaxLength=getIntent().getIntExtra("password_max_length",mPasswordMaxLength);
+  initViews();
+  mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);
+  if (savedInstanceState == null) {
+    updateStage(Stage.Introduction);
+    mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST);
+  }
+}

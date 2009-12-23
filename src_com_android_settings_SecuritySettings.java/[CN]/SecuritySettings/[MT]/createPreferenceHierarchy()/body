@@ -1,33 +1,22 @@
 {
   PreferenceScreen root=this.getPreferenceScreen();
-  PreferenceCategory inlinePrefCat=new PreferenceCategory(this);
-  inlinePrefCat.setTitle(R.string.lock_settings_title);
-  root.addPreference(inlinePrefCat);
-  Intent intent=new Intent();
-  intent.setClassName("com.android.settings","com.android.settings.ChooseLockPatternTutorial");
-  mChoosePattern=getPreferenceManager().createPreferenceScreen(this);
-  mChoosePattern.setIntent(intent);
-  inlinePrefCat.addPreference(mChoosePattern);
-  mLockEnabled=new LockEnabledPref(this);
-  mLockEnabled.setTitle(R.string.lockpattern_settings_enable_title);
-  mLockEnabled.setSummary(R.string.lockpattern_settings_enable_summary);
-  mLockEnabled.setKey(KEY_LOCK_ENABLED);
-  inlinePrefCat.addPreference(mLockEnabled);
-  mVisiblePattern=new CheckBoxPreference(this);
-  mVisiblePattern.setKey(KEY_VISIBLE_PATTERN);
-  mVisiblePattern.setTitle(R.string.lockpattern_settings_enable_visible_pattern_title);
-  inlinePrefCat.addPreference(mVisiblePattern);
-  mTactileFeedback=new CheckBoxPreference(this);
-  mTactileFeedback.setKey(KEY_TACTILE_FEEDBACK_ENABLED);
-  mTactileFeedback.setTitle(R.string.lockpattern_settings_enable_tactile_feedback_title);
-  inlinePrefCat.addPreference(mTactileFeedback);
+  PreferenceManager pm=getPreferenceManager();
+  mUnlockMethod=(ListPreference)pm.findPreference(KEY_UNLOCK_METHOD);
+  mUnlockMethod.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      String value=(String)newValue;
+      handleUpdateUnlockMethod(value);
+      return false;
+    }
+  }
+);
+  mVisiblePattern=(CheckBoxPreference)pm.findPreference(KEY_VISIBLE_PATTERN);
+  mTactileFeedback=(CheckBoxPreference)pm.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
   int activePhoneType=TelephonyManager.getDefault().getPhoneType();
   if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
     PreferenceScreen simLockPreferences=getPreferenceManager().createPreferenceScreen(this);
     simLockPreferences.setTitle(R.string.sim_lock_settings_category);
-    intent=new Intent();
-    intent.setClassName("com.android.settings","com.android.settings.IccLockSettings");
-    simLockPreferences.setIntent(intent);
+    simLockPreferences.setIntent(new Intent().setClassName(PACKAGE,ICC_LOCK_SETTINGS));
     PreferenceCategory simLockCat=new PreferenceCategory(this);
     simLockCat.setTitle(R.string.sim_lock_settings_title);
     root.addPreference(simLockCat);

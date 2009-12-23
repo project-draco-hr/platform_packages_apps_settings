@@ -1,0 +1,17 @@
+{
+  int mode=mLockPatternUtils.getPasswordMode();
+  if (LockPatternUtils.MODE_PIN == mode || LockPatternUtils.MODE_PASSWORD == mode) {
+    setContentView(R.layout.confirm_lock_pin);
+    for (int i=0; i < digitIds.length; i++) {
+      Button button=(Button)findViewById(digitIds[i]);
+      button.setOnClickListener(this);
+      button.setText(Integer.toString(i));
+    }
+    findViewById(R.id.ok).setOnClickListener(this);
+    findViewById(R.id.cancel).setOnClickListener(this);
+  }
+  findViewById(R.id.backspace).setOnClickListener(this);
+  mPasswordTextView=(TextView)findViewById(R.id.pinDisplay);
+  mHeaderText=(TextView)findViewById(R.id.headerText);
+  mHeaderText.setText(R.string.lockpassword_confirm_your_password_header);
+}

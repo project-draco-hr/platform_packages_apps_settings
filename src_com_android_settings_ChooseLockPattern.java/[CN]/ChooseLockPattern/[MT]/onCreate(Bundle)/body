@@ -1,14 +1,14 @@
 {
   super.onCreate(savedInstanceState);
-  mLockPatternUtils=new LockPatternUtils(getContentResolver());
+  mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);
   requestWindowFeature(Window.FEATURE_NO_TITLE);
   setupViews();
   final LinearLayoutWithDefaultTouchRecepient topLayout=(LinearLayoutWithDefaultTouchRecepient)findViewById(R.id.topLayout);
   topLayout.setDefaultTouchRecepient(mLockPatternView);
   if (savedInstanceState == null) {
-    updateStage(Stage.Introduction);
-    if (mLockPatternUtils.savedPatternExists()) {
-      confirmPattern();
+    updateStage(Stage.NeedToConfirm);
+    if (!mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST)) {
+      updateStage(Stage.Introduction);
     }
   }
  else {

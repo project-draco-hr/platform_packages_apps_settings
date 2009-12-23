@@ -1,8 +1,10 @@
 {
   super.onActivityResult(requestCode,resultCode,data);
   final boolean resultOk=resultCode == Activity.RESULT_OK;
-  if ((requestCode == CONFIRM_PATTERN_THEN_DISABLE_AND_CLEAR_REQUEST_CODE) && resultOk) {
-    mLockPatternUtils.setLockPatternEnabled(false);
-    mLockPatternUtils.saveLockPattern(null);
+  LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
+  if ((requestCode == CONFIRM_EXISTING_REQUEST) && resultOk) {
+    lockPatternUtils.saveLockPassword(null);
+    lockPatternUtils.setLockPatternEnabled(false);
+    lockPatternUtils.saveLockPattern(null);
   }
 }

@@ -1,0 +1,13 @@
+{
+  boolean launched=false;
+switch (mLockPatternUtils.getPasswordMode()) {
+case LockPatternUtils.MODE_PATTERN:
+    launched=confirmPattern(request);
+  break;
+case LockPatternUtils.MODE_PIN:
+case LockPatternUtils.MODE_PASSWORD:
+launched=confirmPassword(request);
+break;
+}
+return launched;
+}

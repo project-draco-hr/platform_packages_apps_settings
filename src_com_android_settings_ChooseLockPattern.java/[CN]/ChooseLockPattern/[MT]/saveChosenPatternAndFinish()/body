@@ -1,10 +1,11 @@
 {
-  final boolean lockVirgin=!mLockPatternUtils.isPatternEverChosen();
-  mLockPatternUtils.saveLockPattern(mChosenPattern);
-  mLockPatternUtils.setLockPatternEnabled(true);
+  LockPatternUtils utils=mChooseLockSettingsHelper.utils();
+  final boolean lockVirgin=!utils.isPatternEverChosen();
+  utils.saveLockPattern(mChosenPattern);
+  utils.setLockPatternEnabled(true);
   if (lockVirgin) {
-    mLockPatternUtils.setVisiblePatternEnabled(true);
-    mLockPatternUtils.setTactileFeedbackEnabled(false);
+    utils.setVisiblePatternEnabled(true);
+    utils.setTactileFeedbackEnabled(false);
   }
   setResult(RESULT_FINISHED);
   finish();

@@ -1,13 +1,14 @@
 {
   final String key=preference.getKey();
+  final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (KEY_LOCK_ENABLED.equals(key)) {
-    mLockPatternUtils.setLockPatternEnabled(isToggled(preference));
+    lockPatternUtils.setLockPatternEnabled(isToggled(preference));
   }
  else   if (KEY_VISIBLE_PATTERN.equals(key)) {
-    mLockPatternUtils.setVisiblePatternEnabled(isToggled(preference));
+    lockPatternUtils.setVisiblePatternEnabled(isToggled(preference));
   }
  else   if (KEY_TACTILE_FEEDBACK_ENABLED.equals(key)) {
-    mLockPatternUtils.setTactileFeedbackEnabled(isToggled(preference));
+    lockPatternUtils.setTactileFeedbackEnabled(isToggled(preference));
   }
  else   if (preference == mShowPassword) {
     Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,mShowPassword.isChecked() ? 1 : 0);

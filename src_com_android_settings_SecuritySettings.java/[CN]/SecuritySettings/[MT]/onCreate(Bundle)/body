@@ -1,7 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.security_settings);
-  mLockPatternUtils=new LockPatternUtils(getContentResolver());
+  mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);
   createPreferenceHierarchy();
   mNetwork=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_NETWORK);
   mGps=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_GPS);

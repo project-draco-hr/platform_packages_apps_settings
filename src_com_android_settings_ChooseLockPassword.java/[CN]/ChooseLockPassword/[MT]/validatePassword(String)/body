@@ -1,0 +1,24 @@
+{
+  if (pin.length() < mPasswordMinLength) {
+    return getString(R.string.pin_password_too_short,mPasswordMinLength);
+  }
+  if (pin.length() > mPasswordMaxLength) {
+    return getString(R.string.pin_password_too_long,mPasswordMaxLength);
+  }
+  if (LockPatternUtils.MODE_PIN == mRequestedMode) {
+    Pattern p=Pattern.compile("[0-9]+");
+    Matcher m=p.matcher(pin);
+    if (!m.find()) {
+      return getString(R.string.pin_password_contains_non_digits);
+    }
+  }
+ else   if (LockPatternUtils.MODE_PASSWORD == mRequestedMode) {
+    for (int i=0; i < pin.length(); i++) {
+      char c=pin.charAt(i);
+      if (c <= 32 || c > 127) {
+        return getString(R.string.pin_password_illegal_character);
+      }
+    }
+  }
+  return null;
+}

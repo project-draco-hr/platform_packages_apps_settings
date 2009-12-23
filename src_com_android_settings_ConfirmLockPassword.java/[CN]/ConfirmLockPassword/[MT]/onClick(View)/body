@@ -1,0 +1,37 @@
+{
+switch (v.getId()) {
+case R.id.ok:
+{
+      final String pin=mPasswordTextView.getText().toString();
+      if (mLockPatternUtils.checkPassword(pin)) {
+        setResult(RESULT_OK);
+        finish();
+      }
+ else {
+        showError(R.string.lockpattern_need_to_unlock_wrong);
+      }
+    }
+  break;
+case R.id.backspace:
+{
+  final Editable digits=mPasswordTextView.getEditableText();
+  final int len=digits.length();
+  if (len > 0) {
+    digits.delete(len - 1,len);
+  }
+}
+break;
+case R.id.cancel:
+setResult(RESULT_CANCELED);
+finish();
+break;
+default :
+for (int i=0; i < digitIds.length; i++) {
+if (v.getId() == digitIds[i]) {
+mPasswordTextView.append(Integer.toString(i));
+return;
+}
+}
+break;
+}
+}

@@ -1,0 +1,23 @@
+{
+  final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
+  if ("none".equals(value)) {
+    mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST);
+  }
+ else   if ("password".equals(value) || "pin".equals(value)) {
+    final int minLength=4;
+    final int maxLength=16;
+    final int mode="password".equals(value) ? LockPatternUtils.MODE_PASSWORD : LockPatternUtils.MODE_PIN;
+    Intent intent=new Intent().setClassName(PACKAGE,CHOOSE_LOCK_PIN);
+    intent.putExtra(LockPatternUtils.PASSWORD_TYPE_KEY,mode);
+    intent.putExtra(ChooseLockPassword.PASSWORD_MIN_KEY,minLength);
+    intent.putExtra(ChooseLockPassword.PASSWORD_MAX_KEY,maxLength);
+    startActivityForResult(intent,UPDATE_PASSWORD_REQUEST);
+  }
+ else   if ("pattern".equals(value)) {
+    boolean showTutorial=!lockPatternUtils.isPatternEverChosen();
+    Intent intent=new Intent();
+    intent.setClassName(PACKAGE,showTutorial ? LOCK_PATTERN_TUTORIAL : CHOOSE_LOCK_PATTERN);
+    intent.putExtra("key_lock_method",value);
+    startActivityForResult(intent,UPDATE_PASSWORD_REQUEST);
+  }
+}

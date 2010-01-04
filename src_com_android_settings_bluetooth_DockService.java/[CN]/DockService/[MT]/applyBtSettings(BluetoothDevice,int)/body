@@ -30,12 +30,11 @@ boolean callConnect=false;
 CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(mContext,mBtManager,device);
 for (int i=0; i < mProfiles.length; i++) {
 LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mBtManager,mProfiles[i]);
-boolean isConnected=profileManager.isConnected(device);
 if (DEBUG) Log.d(TAG,mProfiles[i].toString() + " = " + mCheckedItems[i]);
-if (mCheckedItems[i] && !isConnected) {
+if (mCheckedItems[i]) {
 callConnect=true;
 }
- else if (!mCheckedItems[i] && isConnected) {
+ else if (!mCheckedItems[i]) {
 if (DEBUG) Log.d(TAG,"applyBtSettings - Disconnecting");
 cachedDevice.disconnect(mProfiles[i]);
 }

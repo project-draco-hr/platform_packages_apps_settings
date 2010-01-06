@@ -1,0 +1,16 @@
+{
+  int newOption;
+  if (TAB_DOWNLOADED.equalsIgnoreCase(tabId)) {
+    newOption=FILTER_APPS_THIRD_PARTY;
+  }
+ else   if (TAB_RUNNING.equalsIgnoreCase(tabId)) {
+    newOption=FILTER_APPS_RUNNING;
+  }
+ else   if (TAB_ALL.equalsIgnoreCase(tabId)) {
+    newOption=FILTER_APPS_ALL;
+  }
+ else {
+    return;
+  }
+  sendMessageToHandler(REORDER_LIST,newOption);
+}

@@ -15,7 +15,9 @@
       long availableBlocks=stat.getAvailableBlocks();
       mSdSize.setSummary(formatSize(totalBlocks * blockSize));
       mSdAvail.setSummary(formatSize(availableBlocks * blockSize) + readOnly);
-      mSdUnmount.setEnabled(true);
+      mSdMountToggle.setEnabled(true);
+      mSdMountToggle.setTitle(mRes.getString(R.string.sd_eject));
+      mSdMountToggle.setSummary(mRes.getString(R.string.sd_eject_summary));
     }
  catch (    IllegalArgumentException e) {
       status=Environment.MEDIA_REMOVED;
@@ -24,9 +26,16 @@
  else {
     mSdSize.setSummary(mRes.getString(R.string.sd_unavailable));
     mSdAvail.setSummary(mRes.getString(R.string.sd_unavailable));
-    mSdUnmount.setEnabled(false);
     if (status.equals(Environment.MEDIA_UNMOUNTED) || status.equals(Environment.MEDIA_NOFS) || status.equals(Environment.MEDIA_UNMOUNTABLE)) {
       mSdFormat.setEnabled(true);
+      mSdMountToggle.setEnabled(true);
+      mSdMountToggle.setTitle(mRes.getString(R.string.sd_mount));
+      mSdMountToggle.setSummary(mRes.getString(R.string.sd_mount_summary));
+    }
+ else {
+      mSdMountToggle.setEnabled(false);
+      mSdMountToggle.setTitle(mRes.getString(R.string.sd_mount));
+      mSdMountToggle.setSummary(mRes.getString(R.string.sd_insert_summary));
     }
   }
   File path=Environment.getDataDirectory();

@@ -1,6 +1,12 @@
 {
-  if (preference == mSdUnmount) {
-    unmount();
+  if (preference == mSdMountToggle) {
+    String status=Environment.getExternalStorageState();
+    if (status.equals(Environment.MEDIA_MOUNTED)) {
+      unmount();
+    }
+ else {
+      mount();
+    }
     return true;
   }
  else   if (preference == mSdFormat) {

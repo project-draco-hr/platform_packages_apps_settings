@@ -1,5 +1,9 @@
 {
   super.onCreate(savedInstanceState);
+  if (Utils.isMonkeyRunning()) {
+    finish();
+    return;
+  }
   addPreferencesFromResource(R.xml.sim_lock_settings);
   mPinDialog=(EditPinPreference)findPreference(PIN_DIALOG);
   mPinToggle=(CheckBoxPreference)findPreference(PIN_TOGGLE);

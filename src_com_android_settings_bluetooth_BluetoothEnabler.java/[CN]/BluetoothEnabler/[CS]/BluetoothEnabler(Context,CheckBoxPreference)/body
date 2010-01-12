@@ -1,10 +1,11 @@
 {
   mContext=context;
-  mCheckBoxPreference=checkBoxPreference;
-  mOriginalSummary=checkBoxPreference.getSummary();
-  checkBoxPreference.setPersistent(false);
+  mCheckBox=checkBox;
+  mOriginalSummary=checkBox.getSummary();
+  checkBox.setPersistent(false);
   mLocalManager=LocalBluetoothManager.getInstance(context);
   if (mLocalManager == null) {
-    checkBoxPreference.setEnabled(false);
+    checkBox.setEnabled(false);
   }
+  mIntentFilter=new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
 }

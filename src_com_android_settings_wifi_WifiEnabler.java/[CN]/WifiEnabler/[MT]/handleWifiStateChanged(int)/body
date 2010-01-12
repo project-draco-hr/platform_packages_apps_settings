@@ -1,19 +1,19 @@
 {
 switch (state) {
-case BluetoothAdapter.STATE_TURNING_ON:
+case WifiManager.WIFI_STATE_ENABLING:
     mCheckBox.setSummary(R.string.wifi_starting);
   mCheckBox.setEnabled(false);
 break;
-case BluetoothAdapter.STATE_ON:
+case WifiManager.WIFI_STATE_ENABLED:
 mCheckBox.setChecked(true);
 mCheckBox.setSummary(null);
 mCheckBox.setEnabled(true);
 break;
-case BluetoothAdapter.STATE_TURNING_OFF:
+case WifiManager.WIFI_STATE_DISABLING:
 mCheckBox.setSummary(R.string.wifi_stopping);
 mCheckBox.setEnabled(false);
 break;
-case BluetoothAdapter.STATE_OFF:
+case WifiManager.WIFI_STATE_DISABLED:
 mCheckBox.setChecked(false);
 mCheckBox.setSummary(mOriginalSummary);
 mCheckBox.setEnabled(true);

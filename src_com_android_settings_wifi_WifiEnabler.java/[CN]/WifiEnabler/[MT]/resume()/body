@@ -1,6 +1,4 @@
 {
-  int state=mWifiManager.getWifiState();
-  mWifiCheckBoxPref.setEnabled(state == WIFI_STATE_ENABLED || state == WIFI_STATE_DISABLED || state == WIFI_STATE_UNKNOWN);
-  mContext.registerReceiver(mWifiStateReceiver,mWifiStateFilter);
-  mWifiCheckBoxPref.setOnPreferenceChangeListener(this);
+  mContext.registerReceiver(mReceiver,mIntentFilter);
+  mCheckBox.setOnPreferenceChangeListener(this);
 }

@@ -1,0 +1,14 @@
+{
+synchronized (mStartingServiceSync) {
+    if (mStartingService == null) {
+      PowerManager pm=(PowerManager)context.getSystemService(Context.POWER_SERVICE);
+      mStartingService=pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"StartingDockService");
+      mStartingService.setReferenceCounted(false);
+    }
+    mStartingService.acquire();
+    if (context.startService(intent) == null) {
+      Log.e(TAG,"Can't start DockService");
+      mStartingService.release();
+    }
+  }
+}

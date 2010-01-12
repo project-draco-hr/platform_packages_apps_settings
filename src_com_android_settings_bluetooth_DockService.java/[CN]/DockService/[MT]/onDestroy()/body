@@ -1,0 +1,12 @@
+{
+  if (DEBUG)   Log.d(TAG,"onDestroy");
+  if (mDialog != null) {
+    mDialog.dismiss();
+    mDialog=null;
+  }
+  if (mRegistered) {
+    unregisterReceiver(mReceiver);
+    mRegistered=false;
+  }
+  mServiceLooper.quit();
+}

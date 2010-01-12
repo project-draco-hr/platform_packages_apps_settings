@@ -1,17 +1,21 @@
 {
   int width=mIconWidth;
   int height=mIconHeight;
-  if (icon == null) {
-    return null;
-  }
-  final int iconWidth=icon.getIntrinsicWidth();
-  final int iconHeight=icon.getIntrinsicHeight();
   if (icon instanceof PaintDrawable) {
     PaintDrawable painter=(PaintDrawable)icon;
     painter.setIntrinsicWidth(width);
     painter.setIntrinsicHeight(height);
   }
-  if (width > 0 && height > 0) {
+ else   if (icon instanceof BitmapDrawable) {
+    BitmapDrawable bitmapDrawable=(BitmapDrawable)icon;
+    Bitmap bitmap=bitmapDrawable.getBitmap();
+    if (bitmap.getDensity() == Bitmap.DENSITY_NONE) {
+      bitmapDrawable.setTargetDensity(mMetrics);
+    }
+  }
+  int iconWidth=icon.getIntrinsicWidth();
+  int iconHeight=icon.getIntrinsicHeight();
+  if (iconWidth > 0 && iconHeight > 0) {
     if (width < iconWidth || height < iconHeight) {
       final float ratio=(float)iconWidth / iconHeight;
       if (iconWidth > iconHeight) {
@@ -31,6 +35,7 @@
       icon.draw(canvas);
       icon.setBounds(mOldBounds);
       icon=new BitmapDrawable(thumb);
+      ((BitmapDrawable)icon).setTargetDensity(mMetrics);
     }
  else     if (iconWidth < width && iconHeight < height) {
       final Bitmap.Config c=Bitmap.Config.ARGB_8888;
@@ -44,6 +49,7 @@
       icon.draw(canvas);
       icon.setBounds(mOldBounds);
       icon=new BitmapDrawable(thumb);
+      ((BitmapDrawable)icon).setTargetDensity(mMetrics);
     }
   }
   return icon;

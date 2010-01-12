@@ -1,8 +1,8 @@
 {
-  if (D) {
-    Log.d(TAG,workQueue.toString());
-  }
 synchronized (workQueue) {
+    if (D) {
+      Log.d(TAG,workQueue.toString());
+    }
     boolean processNow=pruneQueue(job);
     if (D) {
       Log.d(TAG,"Adding: " + job.toString());

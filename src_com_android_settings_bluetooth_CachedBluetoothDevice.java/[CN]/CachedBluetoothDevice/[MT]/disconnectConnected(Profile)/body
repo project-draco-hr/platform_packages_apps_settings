@@ -1,0 +1,12 @@
+{
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+  CachedBluetoothDeviceManager cachedDeviceManager=mLocalManager.getCachedDeviceManager();
+  Set<BluetoothDevice> devices=profileManager.getConnectedDevices();
+  if (devices == null)   return;
+  for (  BluetoothDevice device : devices) {
+    CachedBluetoothDevice cachedDevice=cachedDeviceManager.findDevice(device);
+    if (cachedDevice != null) {
+      queueCommand(new BluetoothJob(BluetoothCommand.DISCONNECT,cachedDevice,profile));
+    }
+  }
+}

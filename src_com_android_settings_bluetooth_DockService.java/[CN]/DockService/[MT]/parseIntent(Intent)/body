@@ -1,0 +1,29 @@
+{
+  BluetoothDevice device=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+  int state=intent.getIntExtra(Intent.EXTRA_DOCK_STATE,-1234);
+  if (DEBUG) {
+    Log.d(TAG,"Action: " + intent.getAction() + " State:"+ state+ " Device: "+ (device == null ? "null" : device.getName()));
+  }
+  if (device == null) {
+    Log.w(TAG,"device is null");
+    return null;
+  }
+  int msgType;
+switch (state) {
+case Intent.EXTRA_DOCK_STATE_UNDOCKED:
+    msgType=MSG_TYPE_UNDOCKED_TEMPORARY;
+  break;
+case Intent.EXTRA_DOCK_STATE_DESK:
+case Intent.EXTRA_DOCK_STATE_CAR:
+if (DockEventReceiver.ACTION_DOCK_SHOW_UI.equals(intent.getAction())) {
+  msgType=MSG_TYPE_SHOW_UI;
+}
+ else {
+  msgType=MSG_TYPE_DOCKED;
+}
+break;
+default :
+return null;
+}
+return mServiceHandler.obtainMessage(msgType,state,0,device);
+}

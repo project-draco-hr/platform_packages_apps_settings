@@ -1,0 +1,10 @@
+{
+synchronized (mStartingServiceSync) {
+    if (mStartingService != null) {
+      if (DEBUG)       Log.d(TAG,"stopSelf id = " + startId);
+      if (service.stopSelfResult(startId)) {
+        mStartingService.release();
+      }
+    }
+  }
+}

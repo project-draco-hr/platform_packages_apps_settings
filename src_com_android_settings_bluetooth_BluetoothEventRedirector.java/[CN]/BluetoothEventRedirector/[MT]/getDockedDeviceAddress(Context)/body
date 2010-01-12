@@ -1,0 +1,13 @@
+{
+  Intent i=context.registerReceiver(null,new IntentFilter(Intent.ACTION_DOCK_EVENT));
+  if (i != null) {
+    int state=i.getIntExtra(Intent.EXTRA_DOCK_STATE,Intent.EXTRA_DOCK_STATE_UNDOCKED);
+    if (state != Intent.EXTRA_DOCK_STATE_UNDOCKED) {
+      BluetoothDevice device=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+      if (device != null) {
+        return device.getAddress();
+      }
+    }
+  }
+  return null;
+}

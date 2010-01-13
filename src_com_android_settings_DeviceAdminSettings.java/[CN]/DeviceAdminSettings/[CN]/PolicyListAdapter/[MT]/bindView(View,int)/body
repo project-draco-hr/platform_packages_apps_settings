@@ -1,0 +1,6 @@
+{
+  ViewHolder vh=(ViewHolder)view.getTag();
+  DeviceAdminInfo item=mAvailablePolicies.get(position);
+  vh.icon.setImageDrawable(item.loadIcon(getPackageManager()));
+  vh.name.setText(item.loadLabel(getPackageManager()));
+}

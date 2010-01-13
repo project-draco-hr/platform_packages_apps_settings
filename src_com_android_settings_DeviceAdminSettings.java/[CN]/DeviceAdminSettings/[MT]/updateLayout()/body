@@ -1,0 +1,28 @@
+{
+  if (mCurrentAdmin != null) {
+    mActiveLayout.setVisibility(View.VISIBLE);
+    mSelectLayout.setVisibility(View.GONE);
+    mActiveIcon.setImageDrawable(mCurrentAdmin.loadIcon(getPackageManager()));
+    mActiveName.setText(mCurrentAdmin.loadLabel(getPackageManager()));
+  }
+ else {
+    mActiveLayout.setVisibility(View.GONE);
+    mSelectLayout.setVisibility(View.VISIBLE);
+    mAvailablePolicies.clear();
+    List<ResolveInfo> avail=getPackageManager().queryBroadcastReceivers(new Intent(DeviceAdmin.ACTION_DEVICE_ADMIN_ENABLED),PackageManager.GET_META_DATA);
+    for (int i=0; i < avail.size(); i++) {
+      ResolveInfo ri=avail.get(i);
+      try {
+        DeviceAdminInfo dpi=new DeviceAdminInfo(this,ri);
+        mAvailablePolicies.add(dpi);
+      }
+ catch (      XmlPullParserException e) {
+        Log.w(TAG,"Skipping " + ri.activityInfo,e);
+      }
+catch (      IOException e) {
+        Log.w(TAG,"Skipping " + ri.activityInfo,e);
+      }
+    }
+    getListView().setAdapter(new PolicyListAdapter());
+  }
+}

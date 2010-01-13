@@ -1,0 +1,49 @@
+{
+  super.onCreate(icicle);
+  mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  mCurrentAdmin=mDPM.getActiveAdminInfo();
+  setContentView(R.layout.device_admin_settings);
+  mActiveLayout=findViewById(R.id.active_layout);
+  mActiveIcon=(ImageView)findViewById(R.id.active_icon);
+  mActiveName=(TextView)findViewById(R.id.active_name);
+  mActiveDescription=(TextView)findViewById(R.id.active_description);
+  findViewById(R.id.remove_button).setOnClickListener(new View.OnClickListener(){
+    public void onClick(    View v){
+      if (mCurrentAdmin != null) {
+        mDPM.removeActiveAdmin(mCurrentAdmin.getComponent());
+        finish();
+      }
+    }
+  }
+);
+  mSelectLayout=findViewById(R.id.select_layout);
+  getListView().setDivider(null);
+  updateLayout();
+  if (DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN.equals(getIntent().getAction())) {
+    ComponentName cn=(ComponentName)getIntent().getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
+    if (cn == null) {
+      Log.w(TAG,"No component specified in " + getIntent().getAction());
+      finish();
+      return;
+    }
+    if (cn.equals(mCurrentAdmin)) {
+      setResult(Activity.RESULT_OK);
+      finish();
+      return;
+    }
+    if (mCurrentAdmin != null) {
+      Log.w(TAG,"Admin already set, can't do " + getIntent().getAction());
+      finish();
+      return;
+    }
+    try {
+      mDPM.setActiveAdmin(cn);
+      setResult(Activity.RESULT_OK);
+    }
+ catch (    RuntimeException e) {
+      Log.w(TAG,"Unable to set admin " + cn,e);
+      setResult(Activity.RESULT_CANCELED);
+    }
+    finish();
+  }
+}

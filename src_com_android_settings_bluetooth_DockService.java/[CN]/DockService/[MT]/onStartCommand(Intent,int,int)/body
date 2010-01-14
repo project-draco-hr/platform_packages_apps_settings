@@ -5,6 +5,11 @@
     DockEventReceiver.finishStartingService(this,startId);
     return START_NOT_STICKY;
   }
+  if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
+    handleBtStateChange(intent);
+    DockEventReceiver.finishStartingService(this,startId);
+    return START_NOT_STICKY;
+  }
   Message msg=parseIntent(intent);
   if (msg == null) {
     if (DEBUG)     Log.d(TAG,"START_NOT_STICKY - Bad intent.");

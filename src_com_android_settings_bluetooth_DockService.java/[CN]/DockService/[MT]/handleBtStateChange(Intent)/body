@@ -1,0 +1,30 @@
+{
+  int btState=intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothAdapter.ERROR);
+  if (btState == BluetoothAdapter.STATE_ON) {
+synchronized (mBtSynchroObject) {
+      if (mPendingDevice != null) {
+        if (mPendingDevice.equals(mDevice)) {
+          if (DEBUG)           Log.d(TAG,"applying settings");
+          applyBtSettings(mPendingDevice,mPendingStartId);
+        }
+ else         if (DEBUG) {
+          Log.d(TAG,"mPendingDevice  (" + mPendingDevice + ") != mDevice ("+ mDevice+ ")");
+        }
+        mPendingDevice=null;
+        DockEventReceiver.finishStartingService(mContext,mPendingStartId);
+      }
+ else {
+        Intent i=registerReceiver(null,new IntentFilter(Intent.ACTION_DOCK_EVENT));
+        if (i != null) {
+          int state=i.getIntExtra(Intent.EXTRA_DOCK_STATE,Intent.EXTRA_DOCK_STATE_UNDOCKED);
+          if (state != Intent.EXTRA_DOCK_STATE_UNDOCKED) {
+            BluetoothDevice device=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            if (device != null) {
+              connectIfEnabled(device);
+            }
+          }
+        }
+      }
+    }
+  }
+}

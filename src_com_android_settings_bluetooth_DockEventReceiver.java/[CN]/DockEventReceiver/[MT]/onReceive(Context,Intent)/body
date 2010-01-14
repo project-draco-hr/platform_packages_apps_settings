@@ -23,4 +23,12 @@ if (DEBUG) Log.e(TAG,"Unknown state");
 break;
 }
 }
+ else if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
+int btState=intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothAdapter.ERROR);
+if (btState == BluetoothAdapter.STATE_ON) {
+Intent i=new Intent(intent);
+i.setClass(context,DockService.class);
+beginStartingService(context,i);
+}
+}
 }

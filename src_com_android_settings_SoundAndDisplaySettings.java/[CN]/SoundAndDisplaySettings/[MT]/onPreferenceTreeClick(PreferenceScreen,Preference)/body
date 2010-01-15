@@ -32,11 +32,5 @@
     boolean value=mNotificationPulse.isChecked();
     Settings.System.putInt(getContentResolver(),Settings.System.NOTIFICATION_LIGHT_PULSE,value ? 1 : 0);
   }
- else   if (preference == mDockSettings) {
-    Intent i=new Intent(mDockIntent);
-    i.setAction(DockEventReceiver.ACTION_DOCK_SHOW_UI);
-    i.setClass(this,DockEventReceiver.class);
-    sendBroadcast(i);
-  }
   return true;
 }

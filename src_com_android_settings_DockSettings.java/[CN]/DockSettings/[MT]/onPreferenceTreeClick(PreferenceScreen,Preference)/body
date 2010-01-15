@@ -1,0 +1,15 @@
+{
+  if (preference == mAudioSettings) {
+    int dockState=mDockIntent.getIntExtra(Intent.EXTRA_DOCK_STATE,0);
+    if (dockState == Intent.EXTRA_DOCK_STATE_UNDOCKED) {
+      showDialog(DIALOG_NOT_DOCKED);
+    }
+ else {
+      Intent i=new Intent(mDockIntent);
+      i.setAction(DockEventReceiver.ACTION_DOCK_SHOW_UI);
+      i.setClass(this,DockEventReceiver.class);
+      sendBroadcast(i);
+    }
+  }
+  return true;
+}

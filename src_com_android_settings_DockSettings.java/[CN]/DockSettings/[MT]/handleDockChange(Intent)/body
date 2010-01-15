@@ -1,0 +1,25 @@
+{
+  if (mAudioSettings != null) {
+    int dockState=intent.getIntExtra(Intent.EXTRA_DOCK_STATE,0);
+    mDockIntent=intent;
+    int resId=R.string.dock_audio_summary_unknown;
+switch (dockState) {
+case Intent.EXTRA_DOCK_STATE_CAR:
+      resId=R.string.dock_audio_summary_car;
+    break;
+case Intent.EXTRA_DOCK_STATE_DESK:
+  resId=R.string.dock_audio_summary_desk;
+break;
+case Intent.EXTRA_DOCK_STATE_UNDOCKED:
+resId=R.string.dock_audio_summary_none;
+}
+mAudioSettings.setSummary(resId);
+if (dockState != Intent.EXTRA_DOCK_STATE_UNDOCKED) {
+try {
+dismissDialog(DIALOG_NOT_DOCKED);
+}
+ catch (IllegalArgumentException iae) {
+}
+}
+}
+}

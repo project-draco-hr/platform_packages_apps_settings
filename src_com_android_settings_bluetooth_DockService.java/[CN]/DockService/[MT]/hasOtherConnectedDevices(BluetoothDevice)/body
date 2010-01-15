@@ -1,0 +1,17 @@
+{
+  List<CachedBluetoothDevice> cachedDevices=mBtManager.getCachedDeviceManager().getCachedDevicesCopy();
+  Set<BluetoothDevice> btDevices=mBtManager.getBluetoothAdapter().getBondedDevices();
+  if (btDevices == null || cachedDevices == null || btDevices.size() == 0) {
+    return false;
+  }
+  if (DEBUG)   Log.d(TAG,"btDevices = " + btDevices.size());
+  if (DEBUG)   Log.d(TAG,"cachedDevices = " + cachedDevices.size());
+  for (  CachedBluetoothDevice device : cachedDevices) {
+    BluetoothDevice btDevice=device.getDevice();
+    if (!btDevice.equals(dock) && btDevices.contains(btDevice) && device.isConnected()) {
+      if (DEBUG)       Log.d(TAG,"connected device = " + device.getName());
+      return true;
+    }
+  }
+  return false;
+}

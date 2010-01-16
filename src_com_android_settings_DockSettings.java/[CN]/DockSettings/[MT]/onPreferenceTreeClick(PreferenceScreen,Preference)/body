@@ -1,6 +1,6 @@
 {
   if (preference == mAudioSettings) {
-    int dockState=mDockIntent.getIntExtra(Intent.EXTRA_DOCK_STATE,0);
+    int dockState=mDockIntent != null ? mDockIntent.getIntExtra(Intent.EXTRA_DOCK_STATE,0) : Intent.EXTRA_DOCK_STATE_UNDOCKED;
     if (dockState == Intent.EXTRA_DOCK_STATE_UNDOCKED) {
       showDialog(DIALOG_NOT_DOCKED);
     }

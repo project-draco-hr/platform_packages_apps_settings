@@ -11,16 +11,12 @@ case BluetoothAdapter.STATE_TURNING_ON:
           if (mPendingDevice != null && mPendingDevice.equals(mDevice)) {
             return;
           }
-        if (!mRegistered) {
-          registerReceiver(mReceiver,new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
-        }
-      mPendingDevice=device;
-    mRegistered=true;
-  mPendingStartId=startId;
-if (btState != BluetoothAdapter.STATE_TURNING_ON) {
-  mBtManager.getBluetoothAdapter().enable();
-}
-return;
+        mPendingDevice=device;
+      mPendingStartId=startId;
+    if (btState != BluetoothAdapter.STATE_TURNING_ON) {
+      mBtManager.getBluetoothAdapter().enable();
+    }
+  return;
 }
 }
 }

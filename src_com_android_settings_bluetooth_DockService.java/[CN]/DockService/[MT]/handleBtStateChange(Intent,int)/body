@@ -1,7 +1,8 @@
 {
   int btState=intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothAdapter.ERROR);
-  if (btState == BluetoothAdapter.STATE_ON) {
-synchronized (mBtSynchroObject) {
+synchronized (this) {
+    if (DEBUG)     Log.d(TAG,"BtState = " + btState + " mPendingDevice = "+ mPendingDevice);
+    if (btState == BluetoothAdapter.STATE_ON) {
       if (mPendingDevice != null) {
         if (mPendingDevice.equals(mDevice)) {
           if (DEBUG)           Log.d(TAG,"applying settings");
@@ -24,6 +25,25 @@ synchronized (mBtSynchroObject) {
             }
           }
         }
+      }
+      if (mPendingTurnOnStartId != INVALID_STARTID) {
+        DockEventReceiver.finishStartingService(this,mPendingTurnOnStartId);
+        mPendingTurnOnStartId=INVALID_STARTID;
+      }
+      DockEventReceiver.finishStartingService(this,startId);
+    }
+ else     if (btState == BluetoothAdapter.STATE_TURNING_OFF) {
+      removeDisableBtSetting();
+      DockEventReceiver.finishStartingService(this,startId);
+    }
+ else     if (btState == BluetoothAdapter.STATE_OFF) {
+      if (DEBUG)       Log.d(TAG,"Bluetooth = OFF mPendingDevice = " + mPendingDevice);
+      if (mPendingDevice != null) {
+        mBtManager.getBluetoothAdapter().enable();
+        mPendingTurnOnStartId=startId;
+      }
+ else {
+        DockEventReceiver.finishStartingService(this,startId);
       }
     }
   }

@@ -6,8 +6,7 @@
     return START_NOT_STICKY;
   }
   if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
-    handleBtStateChange(intent);
-    DockEventReceiver.finishStartingService(this,startId);
+    handleBtStateChange(intent,startId);
     return START_NOT_STICKY;
   }
   Message msg=parseIntent(intent);

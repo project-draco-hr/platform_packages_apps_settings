@@ -16,7 +16,7 @@ case BluetoothAdapter.STATE_TURNING_ON:
         mPendingDevice=device;
       mPendingStartId=startId;
     if (btState != BluetoothAdapter.STATE_TURNING_ON) {
-      setDisableBtSetting(true);
+      setSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED,true);
     }
   return;
 }

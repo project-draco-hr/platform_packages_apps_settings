@@ -15,6 +15,9 @@ synchronized (this) {
         DockEventReceiver.finishStartingService(mContext,mPendingStartId);
       }
  else {
+        if (DEBUG) {
+          Log.d(TAG,"A DISABLE_BT_WHEN_UNDOCKED = " + getSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED));
+        }
         Intent i=registerReceiver(null,new IntentFilter(Intent.ACTION_DOCK_EVENT));
         if (i != null) {
           int state=i.getIntExtra(Intent.EXTRA_DOCK_STATE,Intent.EXTRA_DOCK_STATE_UNDOCKED);
@@ -23,6 +26,11 @@ synchronized (this) {
             if (device != null) {
               connectIfEnabled(device);
             }
+          }
+ else           if (getSetting(SHARED_PREFERENCES_KEY_DISABLE_BT) && mBtManager.getBluetoothAdapter().disable()) {
+            mPendingTurnOffStartId=startId;
+            removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT);
+            return;
           }
         }
       }
@@ -33,11 +41,16 @@ synchronized (this) {
       DockEventReceiver.finishStartingService(this,startId);
     }
  else     if (btState == BluetoothAdapter.STATE_TURNING_OFF) {
-      removeDisableBtSetting();
+      removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED);
       DockEventReceiver.finishStartingService(this,startId);
     }
  else     if (btState == BluetoothAdapter.STATE_OFF) {
       if (DEBUG)       Log.d(TAG,"Bluetooth = OFF mPendingDevice = " + mPendingDevice);
+      if (mPendingTurnOffStartId != INVALID_STARTID) {
+        DockEventReceiver.finishStartingService(this,mPendingTurnOffStartId);
+        removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT);
+        mPendingTurnOffStartId=INVALID_STARTID;
+      }
       if (mPendingDevice != null) {
         mBtManager.getBluetoothAdapter().enable();
         mPendingTurnOnStartId=startId;

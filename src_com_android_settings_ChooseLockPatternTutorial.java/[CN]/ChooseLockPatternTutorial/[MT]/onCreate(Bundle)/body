@@ -1,6 +1,6 @@
 {
   super.onCreate(savedInstanceState);
-  LockPatternUtils lockPatternUtils=new LockPatternUtils(getContentResolver());
+  LockPatternUtils lockPatternUtils=new LockPatternUtils(this);
   if (savedInstanceState == null && lockPatternUtils.isPatternEverChosen()) {
     Intent intent=new Intent();
     intent.setClassName("com.android.settings","com.android.settings.ChooseLockPattern");

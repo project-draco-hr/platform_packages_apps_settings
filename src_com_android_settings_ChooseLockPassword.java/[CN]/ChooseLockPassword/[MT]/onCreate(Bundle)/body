@@ -1,15 +1,17 @@
 {
   super.onCreate(savedInstanceState);
   mLockPatternUtils=new LockPatternUtils(this);
-  if (mLockPatternUtils.isDevicePolicyActive()) {
-    mRequestedMode=mLockPatternUtils.getRequestedPasswordMode();
-    mPasswordMinLength=mLockPatternUtils.getRequestedMinimumPasswordLength();
+  mRequestedMode=getIntent().getIntExtra("password_mode",mRequestedMode);
+  mPasswordMinLength=getIntent().getIntExtra("password_min_length",mPasswordMinLength);
+  mPasswordMaxLength=getIntent().getIntExtra("password_max_length",mPasswordMaxLength);
+  int minMode=mLockPatternUtils.getRequestedPasswordMode();
+  if (mRequestedMode < minMode) {
+    mRequestedMode=minMode;
   }
- else {
-    mRequestedMode=getIntent().getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,mRequestedMode);
-    mPasswordMinLength=getIntent().getIntExtra(PASSWORD_MIN_KEY,mPasswordMinLength);
+  int minLength=mLockPatternUtils.getRequestedMinimumPasswordLength();
+  if (mPasswordMinLength < minLength) {
+    mPasswordMinLength=minLength;
   }
-  mPasswordMaxLength=getIntent().getIntExtra(PASSWORD_MAX_KEY,mPasswordMaxLength);
   initViews();
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);
   if (savedInstanceState == null) {

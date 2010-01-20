@@ -1,6 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.security_settings);
+  mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);
   createPreferenceHierarchy();
   mNetwork=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_NETWORK);

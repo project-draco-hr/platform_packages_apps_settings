@@ -3,8 +3,6 @@
   final boolean resultOk=resultCode == Activity.RESULT_OK;
   LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if ((requestCode == CONFIRM_EXISTING_REQUEST) && resultOk) {
-    lockPatternUtils.saveLockPassword(null);
-    lockPatternUtils.setLockPatternEnabled(false);
-    lockPatternUtils.saveLockPattern(null);
+    lockPatternUtils.clearLock();
   }
 }

@@ -1,0 +1,34 @@
+{
+  super.onCreate(savedInstanceState);
+  mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);
+  final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
+  int mode=getIntent().getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,-1);
+  if (mode == -1) {
+    mode=lockPatternUtils.getPasswordMode();
+  }
+  int minMode=mDPM.getPasswordMode();
+  if (mode < minMode) {
+    mode=minMode;
+  }
+  if (mode >= DevicePolicyManager.PASSWORD_MODE_NUMERIC) {
+    int minLength=mDPM.getMinimumPasswordLength();
+    if (minLength < 4) {
+      minLength=4;
+    }
+    final int maxLength=16;
+    Intent intent=new Intent().setClass(this,ChooseLockPassword.class);
+    intent.putExtra(LockPatternUtils.PASSWORD_TYPE_KEY,mode);
+    intent.putExtra(ChooseLockPassword.PASSWORD_MIN_KEY,minLength);
+    intent.putExtra(ChooseLockPassword.PASSWORD_MAX_KEY,maxLength);
+    startActivity(intent);
+  }
+ else {
+    boolean showTutorial=!lockPatternUtils.isPatternEverChosen();
+    Intent intent=new Intent();
+    intent.setClass(this,showTutorial ? ChooseLockPatternTutorial.class : ChooseLockPattern.class);
+    intent.putExtra("key_lock_method","pattern");
+    startActivity(intent);
+  }
+  finish();
+}

@@ -18,7 +18,7 @@ case R.id.ok:
         if (mFirstPin.equals(pin)) {
           mLockPatternUtils.setLockPatternEnabled(false);
           mLockPatternUtils.saveLockPattern(null);
-          mLockPatternUtils.saveLockPassword(pin);
+          mLockPatternUtils.saveLockPassword(pin,mRequestedMode);
           finish();
         }
  else {

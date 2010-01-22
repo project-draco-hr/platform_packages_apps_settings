@@ -1,9 +1,11 @@
 {
   if (device == null || mProfiles == null || mCheckedItems == null)   return;
-synchronized (mBtSynchroObject) {
+synchronized (this) {
     for (    boolean enable : mCheckedItems) {
       if (enable) {
         int btState=mBtManager.getBluetoothState();
+        if (DEBUG)         Log.d(TAG,"BtState = " + btState);
+        mBtManager.getBluetoothAdapter().enable();
 switch (btState) {
 case BluetoothAdapter.STATE_OFF:
 case BluetoothAdapter.STATE_TURNING_OFF:
@@ -14,7 +16,7 @@ case BluetoothAdapter.STATE_TURNING_ON:
         mPendingDevice=device;
       mPendingStartId=startId;
     if (btState != BluetoothAdapter.STATE_TURNING_ON) {
-      mBtManager.getBluetoothAdapter().enable();
+      setDisableBtSetting(true);
     }
   return;
 }

@@ -24,6 +24,7 @@ Log.d(TAG,"2 Has undock perm msg = " + mServiceHandler.hasMessages(MSG_TYPE_UNDO
 }
 mServiceHandler.removeMessages(MSG_TYPE_UNDOCKED_PERMANENT);
 mServiceHandler.removeMessages(MSG_TYPE_DISABLE_BT);
+removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT);
 if (!device.equals(mDevice)) {
 if (mDevice != null) {
 handleUndocked(mContext,mBtManager,mDevice);
@@ -40,8 +41,10 @@ createDialog(mContext,mDevice,state,startId);
 break;
 case MSG_TYPE_UNDOCKED_PERMANENT:
 handleUndocked(mContext,mBtManager,device);
-if (DEBUG) Log.d(TAG,"getDisableBtSetting = " + getDisableBtSetting());
-if (getDisableBtSetting()) {
+if (DEBUG) {
+Log.d(TAG,"DISABLE_BT_WHEN_UNDOCKED = " + getSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED));
+}
+if (getSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED)) {
 if (!hasOtherConnectedDevices(device)) {
 if (DEBUG) Log.d(TAG,"QUEUED BT DISABLE");
 Message newMsg=mServiceHandler.obtainMessage(MSG_TYPE_DISABLE_BT,0,startId,null);
@@ -49,7 +52,7 @@ mServiceHandler.sendMessageDelayed(newMsg,DISABLE_BT_GRACE_PERIOD);
 deferFinishCall=true;
 }
  else {
-removeDisableBtSetting();
+removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED);
 }
 }
 break;
@@ -59,8 +62,15 @@ mServiceHandler.sendMessageDelayed(newMsg,UNDOCKED_GRACE_PERIOD);
 break;
 case MSG_TYPE_DISABLE_BT:
 if (DEBUG) Log.d(TAG,"BT DISABLE");
-mBtManager.getBluetoothAdapter().disable();
-removeDisableBtSetting();
+if (mBtManager.getBluetoothAdapter().disable()) {
+removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED);
+}
+ else {
+setSetting(SHARED_PREFERENCES_KEY_DISABLE_BT,true);
+mPendingTurnOffStartId=startId;
+deferFinishCall=true;
+if (DEBUG) Log.d(TAG,"disable failed. try again later " + startId);
+}
 break;
 }
 if (mDialog == null && mPendingDevice == null && msgType != MSG_TYPE_UNDOCKED_TEMPORARY && !deferFinishCall) {

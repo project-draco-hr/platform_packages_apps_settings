@@ -12,4 +12,15 @@
       updateWidgetState();
     }
   }
+ else   if (requestCode == GET_SAMPLE_TEXT) {
+    if (resultCode == TextToSpeech.LANG_AVAILABLE) {
+      if (mTts != null) {
+        String sample=data.getExtras().getString("sampleText");
+        mTts.speak(sample,TextToSpeech.QUEUE_FLUSH,null);
+      }
+    }
+ else {
+      Log.e(TAG,"Did not have a sample string for the requested language");
+    }
+  }
 }

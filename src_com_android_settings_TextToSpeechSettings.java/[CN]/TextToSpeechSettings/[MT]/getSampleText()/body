@@ -1,0 +1,16 @@
+{
+  PackageManager pm=getPackageManager();
+  Intent intent=new Intent();
+  intent.setAction("android.speech.tts.engine.GET_SAMPLE_TEXT");
+  intent.putExtra("language",mDefaultLanguage);
+  intent.putExtra("country",mDefaultCountry);
+  intent.putExtra("variant",mDefaultLocVariant);
+  List<ResolveInfo> resolveInfos=pm.queryIntentActivities(intent,0);
+  for (int i=0; i < resolveInfos.size(); i++) {
+    ActivityInfo currentActivityInfo=resolveInfos.get(i).activityInfo;
+    if (mDefaultEng.equals(currentActivityInfo.packageName)) {
+      intent.setClassName(mDefaultEng,currentActivityInfo.name);
+      this.startActivityForResult(intent,GET_SAMPLE_TEXT);
+    }
+  }
+}

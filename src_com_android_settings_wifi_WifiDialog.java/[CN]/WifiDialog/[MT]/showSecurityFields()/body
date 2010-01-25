@@ -1,0 +1,37 @@
+{
+  if (mSecurity == AccessPoint.SECURITY_NONE) {
+    mView.findViewById(R.id.fields).setVisibility(View.GONE);
+    return;
+  }
+  mView.findViewById(R.id.fields).setVisibility(View.VISIBLE);
+  if (mPassword == null) {
+    mPassword=(TextView)mView.findViewById(R.id.password);
+    mPassword.addTextChangedListener(this);
+    ((CheckBox)mView.findViewById(R.id.show_password)).setOnClickListener(this);
+    if (mAccessPoint != null && mAccessPoint.networkId != -1) {
+      mPassword.setHint(R.string.wifi_unchanged);
+    }
+  }
+  if (mSecurity != AccessPoint.SECURITY_EAP) {
+    mView.findViewById(R.id.eap).setVisibility(View.GONE);
+    return;
+  }
+  mView.findViewById(R.id.eap).setVisibility(View.VISIBLE);
+  if (mEapMethod == null) {
+    mEapMethod=(Spinner)mView.findViewById(R.id.method);
+    mEapCaCert=(Spinner)mView.findViewById(R.id.ca_cert);
+    mEapUserCert=(Spinner)mView.findViewById(R.id.user_cert);
+    mEapIdentity=(TextView)mView.findViewById(R.id.identity);
+    mEapAnonymous=(TextView)mView.findViewById(R.id.anonymous);
+    loadCertificates(mEapCaCert,Credentials.CA_CERTIFICATE);
+    loadCertificates(mEapUserCert,Credentials.USER_PRIVATE_KEY);
+    if (mAccessPoint != null && mAccessPoint.networkId != -1) {
+      WifiConfiguration config=mAccessPoint.getConfig();
+      setSelection(mEapMethod,config.eap.value());
+      setCertificate(mEapCaCert,Credentials.CA_CERTIFICATE,config.ca_cert.value());
+      setCertificate(mEapUserCert,Credentials.USER_PRIVATE_KEY,config.private_key.value());
+      mEapIdentity.setText(config.identity.value());
+      mEapAnonymous.setText(config.anonymous_identity.value());
+    }
+  }
+}

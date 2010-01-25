@@ -1,0 +1,32 @@
+{
+  if (button == WifiDialog.BUTTON_FORGET && mSelected != null) {
+    forget(mSelected.networkId);
+  }
+ else   if (button == WifiDialog.BUTTON_SUBMIT) {
+    WifiConfiguration config=mDialog.getConfig();
+    if (config == null) {
+      if (mSelected != null && !requireKeyStore(mSelected.getConfig())) {
+        connect(mSelected.networkId);
+      }
+    }
+ else     if (config.networkId != -1) {
+      if (mSelected != null) {
+        mWifiManager.updateNetwork(config);
+        saveNetworks();
+      }
+    }
+ else {
+      int networkId=mWifiManager.addNetwork(config);
+      if (networkId != -1) {
+        mWifiManager.enableNetwork(networkId,false);
+        config.networkId=networkId;
+        if (mDialog.edit || requireKeyStore(config)) {
+          saveNetworks();
+        }
+ else {
+          connect(networkId);
+        }
+      }
+    }
+  }
+}

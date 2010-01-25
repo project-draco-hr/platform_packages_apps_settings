@@ -1,0 +1,57 @@
+{
+  mView=getLayoutInflater().inflate(R.layout.wifi_dialog,null);
+  setView(mView);
+  setInverseBackgroundForced(true);
+  Context context=getContext();
+  Resources resources=context.getResources();
+  if (mAccessPoint == null) {
+    setTitle(R.string.wifi_add_network);
+    mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
+    mSsid=(TextView)mView.findViewById(R.id.ssid);
+    mSsid.addTextChangedListener(this);
+    ((Spinner)mView.findViewById(R.id.security)).setOnItemSelectedListener(this);
+    setButton(BUTTON_SUBMIT,context.getString(R.string.wifi_save),mListener);
+  }
+ else {
+    setTitle(mAccessPoint.ssid);
+    ViewGroup group=(ViewGroup)mView.findViewById(R.id.info);
+    DetailedState state=mAccessPoint.getState();
+    if (state != null) {
+      addRow(group,R.string.wifi_status,Summary.get(getContext(),state));
+    }
+    String[] type=resources.getStringArray(R.array.wifi_security);
+    addRow(group,R.string.wifi_security,type[mAccessPoint.security]);
+    int level=mAccessPoint.getLevel();
+    if (level != -1) {
+      String[] signal=resources.getStringArray(R.array.wifi_signal);
+      addRow(group,R.string.wifi_signal,signal[level]);
+    }
+    WifiInfo info=mAccessPoint.getInfo();
+    if (info != null) {
+      addRow(group,R.string.wifi_speed,info.getLinkSpeed() + WifiInfo.LINK_SPEED_UNITS);
+      int address=info.getIpAddress();
+      if (address != 0) {
+        addRow(group,R.string.wifi_ip_address,Formatter.formatIpAddress(address));
+      }
+    }
+    if (mAccessPoint.networkId == -1 || edit) {
+      showSecurityFields();
+    }
+    if (edit) {
+      setButton(BUTTON_SUBMIT,context.getString(R.string.wifi_save),mListener);
+    }
+ else {
+      if (state == null && level != -1) {
+        setButton(BUTTON_SUBMIT,context.getString(R.string.wifi_connect),mListener);
+      }
+      if (mAccessPoint.networkId != -1) {
+        setButton(BUTTON_FORGET,context.getString(R.string.wifi_forget),mListener);
+      }
+    }
+  }
+  setButton(DialogInterface.BUTTON_NEGATIVE,context.getString(R.string.wifi_cancel),mListener);
+  super.onCreate(savedInstanceState);
+  if (getButton(BUTTON_SUBMIT) != null) {
+    validate();
+  }
+}

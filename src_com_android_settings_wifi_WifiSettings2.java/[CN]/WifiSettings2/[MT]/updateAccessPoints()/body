@@ -1,0 +1,42 @@
+{
+  List<AccessPoint> accessPoints=new ArrayList<AccessPoint>();
+  List<WifiConfiguration> configs=mWifiManager.getConfiguredNetworks();
+  if (configs != null) {
+    mLastPriority=0;
+    for (    WifiConfiguration config : configs) {
+      if (config.priority > mLastPriority) {
+        mLastPriority=config.priority;
+      }
+      if (config.status == Status.CURRENT) {
+        config.status=Status.ENABLED;
+      }
+ else       if (mResetNetworks && config.status == Status.DISABLED) {
+        config.status=Status.CURRENT;
+      }
+      AccessPoint accessPoint=new AccessPoint(this,config);
+      accessPoint.update(mLastInfo,mLastState);
+      accessPoints.add(accessPoint);
+    }
+  }
+  List<ScanResult> results=mWifiManager.getScanResults();
+  if (results != null) {
+    for (    ScanResult result : results) {
+      if (result.SSID == null || result.SSID.length() == 0 || result.capabilities.contains("[IBSS]")) {
+        continue;
+      }
+      boolean found=false;
+      for (      AccessPoint accessPoint : accessPoints) {
+        if (accessPoint.update(result)) {
+          found=true;
+        }
+      }
+      if (!found) {
+        accessPoints.add(new AccessPoint(this,result));
+      }
+    }
+  }
+  mAccessPoints.removeAll();
+  for (  AccessPoint accessPoint : accessPoints) {
+    mAccessPoints.addPreference(accessPoint);
+  }
+}

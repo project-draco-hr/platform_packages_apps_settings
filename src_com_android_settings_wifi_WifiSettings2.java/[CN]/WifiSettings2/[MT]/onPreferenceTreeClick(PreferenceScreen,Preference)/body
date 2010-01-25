@@ -1,0 +1,17 @@
+{
+  if (preference instanceof AccessPoint) {
+    mSelected=(AccessPoint)preference;
+    showDialog(mSelected,false);
+  }
+ else   if (preference == mAddNetwork) {
+    mSelected=null;
+    showDialog(null,true);
+  }
+ else   if (preference == mNotifyOpenNetworks) {
+    Secure.putInt(getContentResolver(),Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,mNotifyOpenNetworks.isChecked() ? 1 : 0);
+  }
+ else {
+    return super.onPreferenceTreeClick(screen,preference);
+  }
+  return true;
+}

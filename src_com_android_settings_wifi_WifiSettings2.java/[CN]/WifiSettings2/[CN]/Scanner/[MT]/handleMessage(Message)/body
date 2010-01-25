@@ -1,0 +1,11 @@
+{
+  if (mWifiManager.startScanActive()) {
+    mRetry=0;
+  }
+ else   if (++mRetry >= 3) {
+    mRetry=0;
+    Toast.makeText(WifiSettings2.this,R.string.wifi_fail_to_scan,Toast.LENGTH_LONG).show();
+  }
+  mAccessPoints.setProgress(mRetry != 0);
+  sendEmptyMessageDelayed(0,6000);
+}

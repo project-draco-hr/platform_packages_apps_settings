@@ -1,0 +1,19 @@
+{
+  boolean reorder=false;
+  if (info != null && networkId != -1 && networkId == info.getNetworkId()) {
+    reorder=(mInfo == null);
+    mRssi=info.getRssi();
+    mInfo=info;
+    mState=state;
+    refresh();
+  }
+ else   if (mInfo != null) {
+    reorder=true;
+    mInfo=null;
+    mState=null;
+    refresh();
+  }
+  if (reorder) {
+    notifyHierarchyChanged();
+  }
+}

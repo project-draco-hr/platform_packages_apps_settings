@@ -1,0 +1,13 @@
+{
+  setTitle(ssid);
+  mSignal=(ImageView)view.findViewById(R.id.signal);
+  if (mRssi == Integer.MAX_VALUE) {
+    mSignal.setImageDrawable(null);
+  }
+ else {
+    mSignal.setImageResource(R.drawable.wifi_signal);
+    mSignal.setImageState((security != SECURITY_NONE) ? STATE_SECURED : STATE_NONE,true);
+  }
+  refresh();
+  super.onBindView(view);
+}

@@ -1,0 +1,32 @@
+{
+  if (mSelected == null) {
+    return super.onContextItemSelected(item);
+  }
+switch (item.getItemId()) {
+case MENU_ID_CONNECT:
+    if (mSelected.networkId != -1) {
+      if (!requireKeyStore(mSelected.getConfig())) {
+        connect(mSelected.networkId);
+      }
+    }
+ else     if (mSelected.security == AccessPoint.SECURITY_NONE) {
+      WifiConfiguration config=new WifiConfiguration();
+      config.SSID=mSelected.ssid;
+      config.allowedKeyManagement.set(KeyMgmt.NONE);
+      int networkId=mWifiManager.addNetwork(config);
+      mWifiManager.enableNetwork(networkId,false);
+      connect(networkId);
+    }
+ else {
+      showDialog(mSelected,false);
+    }
+  return true;
+case MENU_ID_FORGET:
+forget(mSelected.networkId);
+return true;
+case MENU_ID_MODIFY:
+showDialog(mSelected,true);
+return true;
+}
+return super.onContextItemSelected(item);
+}

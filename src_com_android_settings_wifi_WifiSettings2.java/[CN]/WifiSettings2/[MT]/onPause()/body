@@ -1,0 +1,15 @@
+{
+  super.onPause();
+  unregisterReceiver(mReceiver);
+  if (mWifiEnabler != null) {
+    mWifiEnabler.pause();
+  }
+  mScanner.pause();
+  if (mDialog != null) {
+    mDialog.dismiss();
+    mDialog=null;
+  }
+  if (mResetNetworks) {
+    enableNetworks();
+  }
+}

@@ -1,0 +1,18 @@
+{
+  if (info instanceof AdapterContextMenuInfo) {
+    Preference preference=(Preference)getListView().getItemAtPosition(((AdapterContextMenuInfo)info).position);
+    if (preference instanceof AccessPoint) {
+      mSelected=(AccessPoint)preference;
+      menu.setHeaderTitle(mSelected.ssid);
+      if (mSelected.getLevel() != -1 && mSelected.getState() == null) {
+        menu.add(Menu.NONE,MENU_ID_CONNECT,0,R.string.wifi_menu_connect);
+      }
+      if (mSelected.networkId != -1) {
+        menu.add(Menu.NONE,MENU_ID_FORGET,0,R.string.wifi_menu_forget);
+        if (mSelected.security != AccessPoint.SECURITY_NONE) {
+          menu.add(Menu.NONE,MENU_ID_MODIFY,0,R.string.wifi_menu_modify);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  if (mSignal == null) {
+    return;
+  }
+  Context context=getContext();
+  mSignal.setImageLevel(getLevel());
+  if (mState != null) {
+    setSummary(Summary.get(context,mState));
+  }
+ else {
+    String status=null;
+    if (mRssi == Integer.MAX_VALUE) {
+      status=context.getString(R.string.wifi_not_in_range);
+    }
+ else     if (mConfig != null) {
+      status=context.getString((mConfig.status == WifiConfiguration.Status.DISABLED) ? R.string.wifi_disabled : R.string.wifi_remembered);
+    }
+    if (security == SECURITY_NONE) {
+      setSummary(status);
+    }
+ else {
+      String format=context.getString((status == null) ? R.string.wifi_secured : R.string.wifi_secured_with_status);
+      String[] type=context.getResources().getStringArray(R.array.wifi_security);
+      setSummary(String.format(format,type[security],status));
+    }
+  }
+}

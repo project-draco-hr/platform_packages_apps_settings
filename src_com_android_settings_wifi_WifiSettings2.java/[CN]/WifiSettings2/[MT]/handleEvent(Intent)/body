@@ -1,0 +1,24 @@
+{
+  String action=intent.getAction();
+  if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
+    updateWifiState(intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,WifiManager.WIFI_STATE_UNKNOWN));
+  }
+ else   if (WifiManager.SCAN_RESULTS_AVAILABLE_ACTION.equals(action)) {
+    updateAccessPoints();
+  }
+ else   if (WifiManager.NETWORK_IDS_CHANGED_ACTION.equals(action)) {
+    if (mSelected != null && mSelected.networkId != -1) {
+      mSelected=null;
+    }
+    updateAccessPoints();
+  }
+ else   if (WifiManager.SUPPLICANT_STATE_CHANGED_ACTION.equals(action)) {
+    updateConnectionState(WifiInfo.getDetailedStateOf((SupplicantState)intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE)));
+  }
+ else   if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(action)) {
+    updateConnectionState(((NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO)).getDetailedState());
+  }
+ else   if (WifiManager.RSSI_CHANGED_ACTION.equals(action)) {
+    updateConnectionState(null);
+  }
+}

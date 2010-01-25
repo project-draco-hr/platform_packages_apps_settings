@@ -1,0 +1,11 @@
+{
+switch (item.getItemId()) {
+case MENU_ID_SCAN:
+    mScanner.resume();
+  return true;
+case MENU_ID_ADVANCED:
+startActivity(new Intent(this,AdvancedSettings.class));
+return true;
+}
+return super.onOptionsItemSelected(item);
+}

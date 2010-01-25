@@ -4,8 +4,12 @@
     return superState;
   }
   final SavedState myState=new SavedState(superState);
-  if (mNotificationSeekBarVolumizer != null) {
-    mNotificationSeekBarVolumizer.onSaveInstanceState(myState.getVolumeStore());
+  VolumeStore[] volumeStore=myState.getVolumeStore(SEEKBAR_ID.length);
+  for (int i=0; i < SEEKBAR_ID.length; i++) {
+    SeekBarVolumizer vol=mSeekBarVolumizer[i];
+    if (vol != null) {
+      vol.onSaveInstanceState(volumeStore[i]);
+    }
   }
   return myState;
 }

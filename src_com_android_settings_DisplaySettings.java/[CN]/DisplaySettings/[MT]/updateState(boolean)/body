@@ -1,0 +1,29 @@
+{
+  int animations=0;
+  try {
+    mAnimationScales=mWindowManager.getAnimationScales();
+  }
+ catch (  RemoteException e) {
+  }
+  if (mAnimationScales != null) {
+    if (mAnimationScales.length >= 1) {
+      animations=((int)(mAnimationScales[0] + .5f)) % 10;
+    }
+    if (mAnimationScales.length >= 2) {
+      animations+=(((int)(mAnimationScales[1] + .5f)) & 0x7) * 10;
+    }
+  }
+  int idx=0;
+  int best=0;
+  CharSequence[] aents=mAnimations.getEntryValues();
+  for (int i=0; i < aents.length; i++) {
+    int val=Integer.parseInt(aents[i].toString());
+    if (val <= animations && val > best) {
+      best=val;
+      idx=i;
+    }
+  }
+  mAnimations.setValueIndex(idx);
+  updateAnimationsSummary(mAnimations.getValue());
+  mAccelerometer.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.ACCELEROMETER_ROTATION,0) != 0);
+}

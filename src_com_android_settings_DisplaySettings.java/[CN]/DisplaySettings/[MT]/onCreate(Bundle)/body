@@ -1,0 +1,13 @@
+{
+  super.onCreate(savedInstanceState);
+  ContentResolver resolver=getContentResolver();
+  mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
+  addPreferencesFromResource(R.xml.display_settings);
+  mAnimations=(ListPreference)findPreference(KEY_ANIMATIONS);
+  mAnimations.setOnPreferenceChangeListener(this);
+  mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
+  mAccelerometer.setPersistent(false);
+  ListPreference screenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
+  screenTimeoutPreference.setValue(String.valueOf(Settings.System.getInt(resolver,SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE)));
+  screenTimeoutPreference.setOnPreferenceChangeListener(this);
+}

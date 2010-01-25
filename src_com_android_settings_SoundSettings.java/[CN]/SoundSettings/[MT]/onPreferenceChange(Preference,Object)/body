@@ -1,0 +1,13 @@
+{
+  final String key=preference.getKey();
+  if (KEY_EMERGENCY_TONE.equals(key)) {
+    int value=Integer.parseInt((String)objValue);
+    try {
+      Settings.System.putInt(getContentResolver(),Settings.System.EMERGENCY_TONE,value);
+    }
+ catch (    NumberFormatException e) {
+      Log.e(TAG,"could not persist emergency tone setting",e);
+    }
+  }
+  return true;
+}

@@ -1,7 +1,9 @@
 {
   super.onDialogClosed(positiveResult);
-  if (!positiveResult && mNotificationSeekBarVolumizer != null) {
-    mNotificationSeekBarVolumizer.revertVolume();
+  if (!positiveResult) {
+    for (    SeekBarVolumizer vol : mSeekBarVolumizer) {
+      if (vol != null)       vol.revertVolume();
+    }
   }
   cleanup();
 }

@@ -3,12 +3,7 @@
   addPreferencesFromResource(R.xml.privacy_settings);
   mUseLocation=(CheckBoxPreference)getPreferenceScreen().findPreference(USE_LOCATION);
   mBackup=(CheckBoxPreference)getPreferenceScreen().findPreference(BACKUP_SETTINGS);
-  try {
-    if (mUseLocation != null) {
-      getPackageManager().getPackageInfo(GSETTINGS_PROVIDER,0);
-    }
-  }
- catch (  NameNotFoundException nnfe) {
+  if (getPackageManager().resolveContentProvider(GSETTINGS_PROVIDER,0) == null) {
     getPreferenceScreen().removePreference(findPreference(LOCATION_CATEGORY));
     getPreferenceScreen().removePreference(findPreference(SETTINGS_CATEGORY));
   }

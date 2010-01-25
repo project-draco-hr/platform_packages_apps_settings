@@ -1,0 +1,15 @@
+{
+  PreferenceGroup parent=(PreferenceGroup)findPreference(KEY_PARENT);
+  Preference preference=parent.findPreference(preferenceKey);
+  if (preference == null) {
+    return;
+  }
+  Intent intent=preference.getIntent();
+  if (intent != null) {
+    PackageManager pm=getPackageManager();
+    if (!pm.queryIntentActivities(intent,0).isEmpty()) {
+      return;
+    }
+  }
+  parent.removePreference(preference);
+}

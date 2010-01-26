@@ -1,0 +1,9 @@
+{
+  super.onResume();
+  mEnableTetherNotice.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.TETHER_NOTIFY,0) != 0);
+  IntentFilter filter=new IntentFilter(ConnectivityManager.ACTION_TETHER_STATE_CHANGED);
+  mTetherChangeReceiver=new TetherChangeReceiver();
+  registerReceiver(mTetherChangeReceiver,filter);
+  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  updateState(cm.getTetherableIfaces().length > 0,cm.getTetheredIfaces().length > 0);
+}

@@ -1,0 +1,14 @@
+{
+  if (isTethered) {
+    mUsbTether.setSummary(R.string.usb_tethering_active_subtext);
+    mUsbTether.setEnabled(true);
+  }
+ else   if (isAvailable) {
+    mUsbTether.setSummary(R.string.usb_tethering_available_subtext);
+    mUsbTether.setEnabled(true);
+  }
+ else {
+    mUsbTether.setSummary(R.string.usb_tethering_unavailable_subtext);
+    mUsbTether.setEnabled(false);
+  }
+}

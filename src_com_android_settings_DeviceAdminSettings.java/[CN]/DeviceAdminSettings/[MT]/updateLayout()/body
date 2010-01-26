@@ -4,6 +4,11 @@
     mSelectLayout.setVisibility(View.GONE);
     mActiveIcon.setImageDrawable(mCurrentAdmin.loadIcon(getPackageManager()));
     mActiveName.setText(mCurrentAdmin.loadLabel(getPackageManager()));
+    try {
+      mActiveDescription.setText(mCurrentAdmin.loadDescription(getPackageManager()));
+    }
+ catch (    Resources.NotFoundException e) {
+    }
   }
  else {
     mActiveLayout.setVisibility(View.GONE);

@@ -1,0 +1,15 @@
+{
+  mActiveIcon.setImageDrawable(mDeviceAdmin.loadIcon(getPackageManager()));
+  mActiveName.setText(mDeviceAdmin.loadLabel(getPackageManager()));
+  try {
+    mActiveDescription.setText(mDeviceAdmin.loadDescription(getPackageManager()));
+  }
+ catch (  Resources.NotFoundException e) {
+  }
+  mActiveWarning.setText(getString(R.string.device_admin_warning,mDeviceAdmin.getActivityInfo().applicationInfo.loadLabel(getPackageManager())));
+  ArrayList<DeviceAdminInfo.PolicyInfo> policies=mDeviceAdmin.getUsedPolicies();
+  for (int i=0; i < policies.size(); i++) {
+    DeviceAdminInfo.PolicyInfo pi=policies.get(i);
+    mAdminPolicies.addView(AppSecurityPermissions.getPermissionItemView(this,getText(pi.label),getText(pi.description),true));
+  }
+}

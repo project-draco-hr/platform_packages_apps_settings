@@ -1,0 +1,59 @@
+{
+  super.onCreate(icicle);
+  mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  DeviceAdminInfo activeAdmin=mDPM.getActiveAdminInfo();
+  ComponentName cn=(ComponentName)getIntent().getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
+  if (cn == null) {
+    Log.w(TAG,"No component specified in " + getIntent().getAction());
+    finish();
+    return;
+  }
+  if (cn.equals(activeAdmin)) {
+    setResult(Activity.RESULT_OK);
+    finish();
+    return;
+  }
+  if (activeAdmin != null) {
+    Log.w(TAG,"Admin already set, can't do " + getIntent().getAction());
+    finish();
+    return;
+  }
+  ActivityInfo ai;
+  try {
+    ai=getPackageManager().getReceiverInfo(cn,PackageManager.GET_META_DATA);
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    Log.w(TAG,"Unable to retrieve device policy " + cn,e);
+    finish();
+    return;
+  }
+  ResolveInfo ri=new ResolveInfo();
+  ri.activityInfo=ai;
+  try {
+    mDeviceAdmin=new DeviceAdminInfo(this,ri);
+  }
+ catch (  XmlPullParserException e) {
+    Log.w(TAG,"Unable to retrieve device policy " + cn,e);
+    finish();
+    return;
+  }
+catch (  IOException e) {
+    Log.w(TAG,"Unable to retrieve device policy " + cn,e);
+    finish();
+    return;
+  }
+  setContentView(R.layout.device_admin_add);
+  mActiveIcon=(ImageView)findViewById(R.id.active_icon);
+  mActiveName=(TextView)findViewById(R.id.active_name);
+  mActiveDescription=(TextView)findViewById(R.id.active_description);
+  mActiveWarning=(TextView)findViewById(R.id.active_warning);
+  mAdminPolicies=(ViewGroup)findViewById(R.id.admin_policies);
+  findViewById(R.id.add_button).setOnClickListener(new View.OnClickListener(){
+    public void onClick(    View v){
+      mDPM.setActiveAdmin(mDeviceAdmin.getComponent());
+      setResult(Activity.RESULT_OK);
+      finish();
+    }
+  }
+);
+}

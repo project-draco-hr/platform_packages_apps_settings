@@ -28,7 +28,7 @@ Log.d(TAG,"Auto connect = " + mBtManager.getDockAutoConnectSetting(device.getAdd
 ab.setPositiveButton(service.getString(android.R.string.ok),service);
 mStartIdAssociatedWithDialog=startId;
 mDialog=ab.create();
-mDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+mDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
 mDialog.setOnDismissListener(service);
 mDialog.show();
 return true;

@@ -7,5 +7,8 @@
     Preference preference=findPreference(mPreferenceKeys[i]);
     preference.setOnPreferenceChangeListener(this);
   }
-  initNumChannelsPreference();
+  Preference chanPref=findPreference(KEY_NUM_CHANNELS);
+  if (chanPref != null) {
+    getPreferenceScreen().removePreference(chanPref);
+  }
 }

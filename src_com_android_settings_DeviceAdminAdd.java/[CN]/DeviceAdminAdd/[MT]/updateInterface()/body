@@ -3,8 +3,17 @@
   mActiveName.setText(mDeviceAdmin.loadLabel(getPackageManager()));
   try {
     mActiveDescription.setText(mDeviceAdmin.loadDescription(getPackageManager()));
+    mActiveDescription.setVisibility(View.VISIBLE);
   }
  catch (  Resources.NotFoundException e) {
+    mActiveDescription.setVisibility(View.GONE);
+  }
+  if (mAddMsgText != null) {
+    mAddMsg.setText(mAddMsgText);
+    mAddMsg.setVisibility(View.VISIBLE);
+  }
+ else {
+    mAddMsg.setVisibility(View.GONE);
   }
   mActiveWarning.setText(getString(R.string.device_admin_warning,mDeviceAdmin.getActivityInfo().applicationInfo.loadLabel(getPackageManager())));
   ArrayList<DeviceAdminInfo.PolicyInfo> policies=mDeviceAdmin.getUsedPolicies();

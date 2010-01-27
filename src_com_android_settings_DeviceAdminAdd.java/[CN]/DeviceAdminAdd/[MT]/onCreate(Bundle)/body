@@ -42,10 +42,12 @@ catch (  IOException e) {
     finish();
     return;
   }
+  mAddMsgText=getIntent().getCharSequenceExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION);
   setContentView(R.layout.device_admin_add);
   mActiveIcon=(ImageView)findViewById(R.id.active_icon);
   mActiveName=(TextView)findViewById(R.id.active_name);
   mActiveDescription=(TextView)findViewById(R.id.active_description);
+  mAddMsg=(TextView)findViewById(R.id.add_msg);
   mActiveWarning=(TextView)findViewById(R.id.active_warning);
   mAdminPolicies=(ViewGroup)findViewById(R.id.admin_policies);
   findViewById(R.id.add_button).setOnClickListener(new View.OnClickListener(){

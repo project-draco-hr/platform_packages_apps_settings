@@ -1,6 +1,9 @@
 {
   super.onResume();
   updateUi();
+  if (DEBUGGABLE == 1) {
+    initNumChannelsPreference();
+  }
   initSleepPolicyPreference();
   refreshMacAddress();
 }

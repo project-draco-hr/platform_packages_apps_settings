@@ -1,6 +1,12 @@
 {
   ViewHolder vh=(ViewHolder)view.getTag();
-  DeviceAdminInfo item=mAvailablePolicies.get(position);
+  DeviceAdminInfo item=mAvailableAdmins.get(position);
   vh.icon.setImageDrawable(item.loadIcon(getPackageManager()));
   vh.name.setText(item.loadLabel(getPackageManager()));
+  vh.checkbox.setChecked(mActiveAdmins.contains(item.getComponent()));
+  try {
+    vh.description.setText(item.loadDescription(getPackageManager()));
+  }
+ catch (  Resources.NotFoundException e) {
+  }
 }

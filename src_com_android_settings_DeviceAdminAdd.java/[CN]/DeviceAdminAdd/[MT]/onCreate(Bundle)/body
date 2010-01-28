@@ -1,22 +1,19 @@
 {
   super.onCreate(icicle);
+  mHandler=new Handler(getMainLooper());
   mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-  DeviceAdminInfo activeAdmin=mDPM.getActiveAdminInfo();
   ComponentName cn=(ComponentName)getIntent().getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
   if (cn == null) {
     Log.w(TAG,"No component specified in " + getIntent().getAction());
     finish();
     return;
   }
-  if (cn.equals(activeAdmin)) {
-    setResult(Activity.RESULT_OK);
-    finish();
-    return;
-  }
-  if (activeAdmin != null) {
-    Log.w(TAG,"Admin already set, can't do " + getIntent().getAction());
-    finish();
-    return;
+  if (DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN.equals(getIntent().getAction())) {
+    if (mDPM.isAdminActive(cn)) {
+      setResult(Activity.RESULT_OK);
+      finish();
+      return;
+    }
   }
   ActivityInfo ai;
   try {
@@ -44,17 +41,36 @@ catch (  IOException e) {
   }
   mAddMsgText=getIntent().getCharSequenceExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION);
   setContentView(R.layout.device_admin_add);
-  mActiveIcon=(ImageView)findViewById(R.id.active_icon);
-  mActiveName=(TextView)findViewById(R.id.active_name);
-  mActiveDescription=(TextView)findViewById(R.id.active_description);
+  mTitle=(TextView)findViewById(R.id.title);
+  mAdminIcon=(ImageView)findViewById(R.id.admin_icon);
+  mAdminName=(TextView)findViewById(R.id.admin_name);
+  mAdminDescription=(TextView)findViewById(R.id.admin_description);
   mAddMsg=(TextView)findViewById(R.id.add_msg);
-  mActiveWarning=(TextView)findViewById(R.id.active_warning);
+  mAdminWarning=(TextView)findViewById(R.id.admin_warning);
   mAdminPolicies=(ViewGroup)findViewById(R.id.admin_policies);
-  findViewById(R.id.add_button).setOnClickListener(new View.OnClickListener(){
+  mActionButton=(Button)findViewById(R.id.action_button);
+  mActionButton.setOnClickListener(new View.OnClickListener(){
     public void onClick(    View v){
-      mDPM.setActiveAdmin(mDeviceAdmin.getComponent());
-      setResult(Activity.RESULT_OK);
-      finish();
+      if (mAdding) {
+        mDPM.setActiveAdmin(mDeviceAdmin.getComponent());
+        setResult(Activity.RESULT_OK);
+        finish();
+      }
+      mDPM.getRemoveWarning(mDeviceAdmin.getComponent(),new RemoteCallback(mHandler){
+        @Override protected void onResult(        Bundle bundle){
+          CharSequence msg=bundle != null ? bundle.getCharSequence(DeviceAdmin.EXTRA_DISABLE_WARNING) : null;
+          if (msg == null) {
+            mDPM.removeActiveAdmin(mDeviceAdmin.getComponent());
+            finish();
+          }
+ else {
+            Bundle args=new Bundle();
+            args.putCharSequence(DeviceAdmin.EXTRA_DISABLE_WARNING,msg);
+            showDialog(DIALOG_WARNING,args);
+          }
+        }
+      }
+);
     }
   }
 );

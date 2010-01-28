@@ -3,11 +3,11 @@ switch (id) {
 case DIALOG_WARNING:
 {
       CharSequence msg=args.getCharSequence(DeviceAdmin.EXTRA_DISABLE_WARNING);
-      AlertDialog.Builder builder=new AlertDialog.Builder(DeviceAdminSettings.this);
+      AlertDialog.Builder builder=new AlertDialog.Builder(DeviceAdminAdd.this);
       builder.setMessage(msg);
       builder.setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
         public void onClick(        DialogInterface dialog,        int which){
-          mDPM.removeActiveAdmin(mCurrentAdmin.getComponent());
+          mDPM.removeActiveAdmin(mDeviceAdmin.getComponent());
           finish();
         }
       }

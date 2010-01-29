@@ -1,8 +1,9 @@
 {
   try {
-    mMassStorage.setChecked(mMountService.getMassStorageEnabled());
+    String path=Environment.getExternalStorageDirectory().getPath();
+    mMassStorage.setChecked(mMountService.getVolumeShared(Environment.getExternalStorageDirectory().getPath(),"ums"));
   }
- catch (  RemoteException ex) {
+ catch (  Exception ex) {
   }
   String status=Environment.getExternalStorageState();
   boolean readOnly=false;

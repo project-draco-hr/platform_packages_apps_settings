@@ -3,13 +3,6 @@
     setRingerMode(mSilent.isChecked(),mVibrate.isChecked());
     if (preference == mSilent)     updateState(false);
   }
- else   if (preference == mPlayMediaNotificationSounds) {
-    try {
-      mMountService.setPlayNotificationSounds(mPlayMediaNotificationSounds.isChecked());
-    }
- catch (    RemoteException e) {
-    }
-  }
  else   if (preference == mDtmfTone) {
     Settings.System.putInt(getContentResolver(),Settings.System.DTMF_TONE_WHEN_DIALING,mDtmfTone.isChecked() ? 1 : 0);
   }

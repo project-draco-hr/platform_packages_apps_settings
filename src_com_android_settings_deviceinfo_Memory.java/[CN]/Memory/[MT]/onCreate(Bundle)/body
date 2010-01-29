@@ -1,5 +1,9 @@
 {
   super.onCreate(icicle);
+  if (mStorageManager == null) {
+    mStorageManager=(StorageManager)getSystemService(Context.STORAGE_SERVICE);
+    mStorageManager.registerListener(mStorageListener);
+  }
   addPreferencesFromResource(R.xml.device_info_memory);
   mRes=getResources();
   mSdSize=findPreference(MEMORY_SD_SIZE);

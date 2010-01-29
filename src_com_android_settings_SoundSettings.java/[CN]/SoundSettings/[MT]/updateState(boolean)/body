@@ -4,11 +4,6 @@
   if (silentOrVibrateMode != mSilent.isChecked() || force) {
     mSilent.setChecked(silentOrVibrateMode);
   }
-  try {
-    mPlayMediaNotificationSounds.setChecked(mMountService.getPlayNotificationSounds());
-  }
- catch (  RemoteException e) {
-  }
   boolean vibrateSetting;
   if (silentOrVibrateMode) {
     vibrateSetting=ringerMode == AudioManager.RINGER_MODE_VIBRATE;

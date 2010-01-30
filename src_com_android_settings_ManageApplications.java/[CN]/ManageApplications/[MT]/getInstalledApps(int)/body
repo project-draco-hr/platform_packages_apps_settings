@@ -3,7 +3,16 @@
   if (installedAppList == null) {
     return new ArrayList<ApplicationInfo>();
   }
-  if (filterOption == FILTER_APPS_THIRD_PARTY) {
+  if (filterOption == FILTER_APPS_SDCARD) {
+    List<ApplicationInfo> appList=new ArrayList<ApplicationInfo>();
+    for (    ApplicationInfo appInfo : installedAppList) {
+      if ((appInfo.flags & ApplicationInfo.FLAG_ON_SDCARD) != 0) {
+        appList.add(appInfo);
+      }
+    }
+    return appList;
+  }
+ else   if (filterOption == FILTER_APPS_THIRD_PARTY) {
     List<ApplicationInfo> appList=new ArrayList<ApplicationInfo>();
     for (    ApplicationInfo appInfo : installedAppList) {
       boolean flag=false;

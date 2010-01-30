@@ -15,6 +15,11 @@
       return true;
     }
   }
+ else   if (filterOption == FILTER_APPS_SDCARD) {
+    if ((info.flags & ApplicationInfo.FLAG_ON_SDCARD) != 0) {
+      return true;
+    }
+  }
  else {
     return true;
   }

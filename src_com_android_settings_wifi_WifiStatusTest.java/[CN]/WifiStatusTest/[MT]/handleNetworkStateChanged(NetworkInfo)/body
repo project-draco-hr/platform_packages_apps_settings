@@ -1,6 +1,6 @@
 {
   if (mWifiManager.isWifiEnabled()) {
-    String summary=WifiStatus.getStatus(this,mWifiManager.getConnectionInfo().getSSID(),networkInfo.getDetailedState());
+    String summary=Summary.get(this,mWifiManager.getConnectionInfo().getSSID(),networkInfo.getDetailedState());
     mNetworkState.setText(summary);
   }
 }

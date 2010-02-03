@@ -2,10 +2,10 @@
   super.onCreate(savedInstanceState);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   if (getIntent().getBooleanExtra("only_access_points",false)) {
-    addPreferencesFromResource(R.xml.wifi_access_points2);
+    addPreferencesFromResource(R.xml.wifi_access_points);
   }
  else {
-    addPreferencesFromResource(R.xml.wifi_settings2);
+    addPreferencesFromResource(R.xml.wifi_settings);
     mWifiEnabler=new WifiEnabler(this,mWifiManager,(CheckBoxPreference)findPreference("enable_wifi"));
     mNotifyOpenNetworks=(CheckBoxPreference)findPreference("notify_open_networks");
     mNotifyOpenNetworks.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,0) == 1);

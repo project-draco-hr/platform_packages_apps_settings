@@ -6,8 +6,10 @@
     }
  catch (    RemoteException e) {
       mBackup.setChecked(!enable);
+      mAutoRestore.setEnabled(!enable);
       return;
     }
   }
   mBackup.setChecked(enable);
+  mAutoRestore.setEnabled(enable);
 }

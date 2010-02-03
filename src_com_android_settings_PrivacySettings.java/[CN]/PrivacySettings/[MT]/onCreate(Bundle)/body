@@ -1,11 +1,13 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.privacy_settings);
-  mUseLocation=(CheckBoxPreference)getPreferenceScreen().findPreference(USE_LOCATION);
-  mBackup=(CheckBoxPreference)getPreferenceScreen().findPreference(BACKUP_SETTINGS);
+  final PreferenceScreen screen=getPreferenceScreen();
+  mUseLocation=(CheckBoxPreference)screen.findPreference(USE_LOCATION);
+  mBackup=(CheckBoxPreference)screen.findPreference(BACKUP_SETTINGS);
+  mAutoRestore=(CheckBoxPreference)screen.findPreference(AUTO_RESTORE);
   if (getPackageManager().resolveContentProvider(GSETTINGS_PROVIDER,0) == null) {
-    getPreferenceScreen().removePreference(findPreference(LOCATION_CATEGORY));
-    getPreferenceScreen().removePreference(findPreference(SETTINGS_CATEGORY));
+    screen.removePreference(findPreference(LOCATION_CATEGORY));
+    screen.removePreference(findPreference(BACKUP_CATEGORY));
   }
   updateToggles();
   boolean doneUseLocation=savedInstanceState == null ? false : savedInstanceState.getBoolean(KEY_DONE_USE_LOCATION,true);

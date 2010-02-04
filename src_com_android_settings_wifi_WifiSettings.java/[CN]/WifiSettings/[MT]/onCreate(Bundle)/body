@@ -6,7 +6,7 @@
   }
  else {
     addPreferencesFromResource(R.xml.wifi_settings);
-    mWifiEnabler=new WifiEnabler(this,mWifiManager,(CheckBoxPreference)findPreference("enable_wifi"));
+    mWifiEnabler=new WifiEnabler(this,(CheckBoxPreference)findPreference("enable_wifi"));
     mNotifyOpenNetworks=(CheckBoxPreference)findPreference("notify_open_networks");
     mNotifyOpenNetworks.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,0) == 1);
   }

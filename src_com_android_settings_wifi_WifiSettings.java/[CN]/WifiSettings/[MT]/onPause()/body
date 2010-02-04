@@ -1,9 +1,9 @@
 {
   super.onPause();
-  unregisterReceiver(mReceiver);
   if (mWifiEnabler != null) {
     mWifiEnabler.pause();
   }
+  unregisterReceiver(mReceiver);
   mScanner.pause();
   if (mDialog != null) {
     mDialog.dismiss();

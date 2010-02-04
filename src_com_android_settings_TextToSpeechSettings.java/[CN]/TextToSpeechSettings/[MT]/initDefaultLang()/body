@@ -12,5 +12,7 @@
   mDefaultCountry=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_COUNTRY);
   mDefaultLocVariant=Settings.Secure.getString(resolver,KEY_TTS_DEFAULT_VARIANT);
   mDemoStringIndex=mDefaultLocPref.findIndexOfValue(mDefaultLanguage + LOCALE_DELIMITER + mDefaultCountry);
-  mDefaultLocPref.setValueIndex(mDemoStringIndex);
+  if (mDemoStringIndex > -1) {
+    mDefaultLocPref.setValueIndex(mDemoStringIndex);
+  }
 }

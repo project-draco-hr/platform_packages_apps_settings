@@ -3,7 +3,6 @@
   ContentResolver resolver=getContentResolver();
   int activePhoneType=TelephonyManager.getDefault().getPhoneType();
   mAudioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
-  mMountService=IMountService.Stub.asInterface(ServiceManager.getService("mount"));
   addPreferencesFromResource(R.xml.sound_settings);
   if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
     getPreferenceScreen().removePreference(findPreference(KEY_EMERGENCY_TONE));

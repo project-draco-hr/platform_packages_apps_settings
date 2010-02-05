@@ -1,6 +1,7 @@
 {
   super.onCreate(icicle);
   setContentView(R.layout.sdcard_settings_screen);
+  mStorageManager=(StorageManager)getSystemService(Context.STORAGE_SERVICE);
   mMountService=IMountService.Stub.asInterface(ServiceManager.getService("mount"));
   mRemovedLayout=findViewById(R.id.removed);
   mMountedLayout=findViewById(R.id.mounted);

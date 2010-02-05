@@ -1,7 +1,6 @@
 {
   try {
-    String path=Environment.getExternalStorageDirectory().getPath();
-    mMassStorage.setChecked(mMountService.getVolumeShared(Environment.getExternalStorageDirectory().getPath(),"ums"));
+    mMassStorage.setChecked(mStorageManager.isUsbMassStorageEnabled());
   }
  catch (  Exception ex) {
   }

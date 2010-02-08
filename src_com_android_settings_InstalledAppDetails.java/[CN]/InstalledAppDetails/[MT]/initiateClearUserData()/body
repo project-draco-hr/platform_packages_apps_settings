@@ -1,7 +1,7 @@
 {
-  mAppButton.setEnabled(false);
+  mClearDataButton.setEnabled(false);
   String packageName=mAppInfo.packageName;
-  Log.i(TAG,"Clearing user data for system package");
+  Log.i(TAG,"Clearing user data for package : " + packageName);
   if (mClearDataObserver == null) {
     mClearDataObserver=new ClearUserDataObserver();
   }
@@ -12,6 +12,6 @@
     showDialogInner(DLG_CANNOT_CLEAR_DATA);
   }
  else {
-    mAppButton.setText(R.string.recompute_size);
+    mClearDataButton.setText(R.string.recompute_size);
   }
 }

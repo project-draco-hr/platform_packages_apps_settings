@@ -1,0 +1,36 @@
+{
+  mUpdatedSysApp=(mAppInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
+  boolean enabled=true;
+  if (mUpdatedSysApp) {
+    mUninstallButton.setText(R.string.app_factory_reset);
+  }
+ else   if ((mAppInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+    mUninstallButton.setText(R.string.uninstall_text);
+  }
+ else {
+    enabled=false;
+  }
+  mUninstallButton.setEnabled(enabled);
+  if (enabled) {
+    mUninstallButton.setOnClickListener(this);
+  }
+  ActivityManager am=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+  List<RunningAppProcessInfo> rList=am.getRunningAppProcesses();
+  boolean running=false;
+  if (rList != null) {
+    for (    RunningAppProcessInfo info : rList) {
+      if (info.pkgList != null) {
+        for (        String rpkg : info.pkgList) {
+          if (rpkg.equals(mAppInfo.packageName)) {
+            running=true;
+            break;
+          }
+        }
+      }
+    }
+  }
+  mForceStopButton.setEnabled(running);
+  if (running) {
+    mForceStopButton.setOnClickListener(this);
+  }
+}

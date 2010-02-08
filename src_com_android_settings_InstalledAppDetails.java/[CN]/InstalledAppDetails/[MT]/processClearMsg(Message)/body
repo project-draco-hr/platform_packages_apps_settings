@@ -1,12 +1,12 @@
 {
   int result=msg.arg1;
   String packageName=mAppInfo.packageName;
+  mClearDataButton.setText(R.string.clear_user_data_text);
   if (result == OP_SUCCESSFUL) {
-    Log.i(TAG,"Cleared user data for system package:" + packageName);
+    Log.i(TAG,"Cleared user data for package : " + packageName);
     mPm.getPackageSizeInfo(packageName,mSizeObserver);
   }
  else {
-    mAppButton.setText(R.string.clear_user_data_text);
-    mAppButton.setEnabled(true);
+    mClearDataButton.setEnabled(true);
   }
 }

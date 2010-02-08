@@ -1,13 +1,10 @@
 {
   String packageName=mAppInfo.packageName;
-  if (v == mAppButton) {
-    if (mAppButtonState == AppButtonStates.CLEAR_DATA) {
-      showDialogInner(DLG_CLEAR_DATA);
-    }
- else     if (mAppButtonState == AppButtonStates.FACTORY_RESET) {
+  if (v == mUninstallButton) {
+    if (mUpdatedSysApp) {
       showDialogInner(DLG_FACTORY_RESET);
     }
- else     if (mAppButtonState == AppButtonStates.UNINSTALL) {
+ else {
       uninstallPkg(packageName);
     }
   }
@@ -15,10 +12,15 @@
     mPm.clearPackagePreferredActivities(packageName);
     mActivitiesButton.setEnabled(false);
   }
- else   if (v == mManageSpaceButton) {
-    Intent intent=new Intent(Intent.ACTION_DEFAULT);
-    intent.setClassName(mAppInfo.packageName,mAppInfo.manageSpaceActivityName);
-    startActivityForResult(intent,-1);
+ else   if (v == mClearDataButton) {
+    if (mAppInfo.manageSpaceActivityName != null) {
+      Intent intent=new Intent(Intent.ACTION_DEFAULT);
+      intent.setClassName(mAppInfo.packageName,mAppInfo.manageSpaceActivityName);
+      startActivityForResult(intent,-1);
+    }
+ else {
+      showDialogInner(DLG_CLEAR_DATA);
+    }
   }
  else   if (v == mClearCacheButton) {
     if (mClearCacheObserver == null) {
@@ -27,7 +29,6 @@
     mPm.deleteApplicationCacheFiles(packageName,mClearCacheObserver);
   }
  else   if (v == mForceStopButton) {
-    ActivityManager am=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
-    am.forceStopPackage(packageName);
+    forceStopPackage(mAppInfo.packageName);
   }
 }

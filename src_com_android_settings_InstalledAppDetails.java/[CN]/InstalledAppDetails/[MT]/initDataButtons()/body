@@ -1,0 +1,28 @@
+{
+  if (mAppInfo.manageSpaceActivityName != null) {
+    mClearDataButton.setText(R.string.manage_space_text);
+  }
+ else {
+    mClearDataButton.setText(R.string.clear_user_data_text);
+  }
+  mClearDataButton.setOnClickListener(this);
+  String pkgName=mAppInfo.packageName;
+  boolean dataOnly=false;
+  ApplicationInfo info1=null;
+  ApplicationInfo info2=null;
+  try {
+    info1=mPm.getApplicationInfo(pkgName,0);
+  }
+ catch (  NameNotFoundException e) {
+  }
+  dataOnly=(info1 == null) && (mAppInfo != null);
+  if (dataOnly) {
+    mMoveAppButton.setText(R.string.move_app);
+  }
+ else   if ((mAppInfo.flags & ApplicationInfo.FLAG_ON_SDCARD) != 0) {
+    mMoveAppButton.setText(R.string.move_app_to_internal);
+  }
+ else {
+    mMoveAppButton.setText(R.string.move_app_to_sdcard);
+  }
+}

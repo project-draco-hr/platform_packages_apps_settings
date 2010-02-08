@@ -33,16 +33,9 @@
       mSizeInfo=newPs;
     }
   }
-  long data=mSizeInfo.dataSize;
-  if (mAppButtonState != AppButtonStates.NONE) {
-    mAppButton.setText(mAppButtonText);
-    if ((mAppButtonState == AppButtonStates.CLEAR_DATA) && (data == 0)) {
-      mAppButton.setEnabled(false);
-    }
- else {
-      mAppButton.setEnabled(true);
-      mAppButton.setOnClickListener(this);
-    }
+  if (newPs.dataSize == 0) {
+    mClearDataButton.setEnabled(false);
   }
+  long data=mSizeInfo.dataSize;
   refreshCacheInfo(newPs.cacheSize);
 }

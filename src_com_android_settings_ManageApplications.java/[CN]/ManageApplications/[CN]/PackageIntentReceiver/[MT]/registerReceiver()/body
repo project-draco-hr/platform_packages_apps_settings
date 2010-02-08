@@ -5,7 +5,7 @@
   filter.addDataScheme("package");
   ManageApplications.this.registerReceiver(this,filter);
   IntentFilter sdFilter=new IntentFilter();
-  sdFilter.addAction(Intent.ACTION_MEDIA_RESOURCES_AVAILABLE);
-  sdFilter.addAction(Intent.ACTION_MEDIA_RESOURCES_UNAVAILABLE);
+  sdFilter.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE);
+  sdFilter.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE);
   ManageApplications.this.registerReceiver(this,sdFilter);
 }

@@ -1,6 +1,5 @@
 {
   ContentResolver res=getContentResolver();
-  mUseLocation.setChecked(Settings.Secure.getInt(res,Settings.Secure.USE_LOCATION_FOR_SERVICES,2) == 1);
   final boolean backupEnabled=Settings.Secure.getInt(res,Settings.Secure.BACKUP_ENABLED,0) == 1;
   mBackup.setChecked(backupEnabled);
   mAutoRestore.setChecked(Settings.Secure.getInt(res,Settings.Secure.BACKUP_AUTO_RESTORE,0) == 1);

@@ -1,22 +1,14 @@
 {
   if (which == DialogInterface.BUTTON_POSITIVE) {
-    mOkClicked=true;
-    if (mDialogType == DIALOG_USE_LOCATION) {
-      setAgreedToUseLocation(true);
-    }
- else     if (mDialogType == DIALOG_ERASE_BACKUP) {
+    if (mDialogType == DIALOG_ERASE_BACKUP) {
       setBackupEnabled(false);
     }
   }
  else {
-    if (mDialogType == DIALOG_USE_LOCATION) {
-      mUseLocation.setChecked(false);
-    }
- else     if (mDialogType == DIALOG_ERASE_BACKUP) {
+    if (mDialogType == DIALOG_ERASE_BACKUP) {
       mBackup.setChecked(true);
       mAutoRestore.setEnabled(true);
     }
   }
-  updateUseLocation();
   mDialogType=0;
 }

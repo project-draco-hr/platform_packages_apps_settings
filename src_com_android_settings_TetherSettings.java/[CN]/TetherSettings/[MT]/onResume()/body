@@ -6,4 +6,5 @@
   mTetherChangeReceiver=new TetherChangeReceiver();
   Intent intent=registerReceiver(mTetherChangeReceiver,filter);
   if (intent != null)   mTetherChangeReceiver.onReceive(this,intent);
+  mWifiApEnabler.resume();
 }

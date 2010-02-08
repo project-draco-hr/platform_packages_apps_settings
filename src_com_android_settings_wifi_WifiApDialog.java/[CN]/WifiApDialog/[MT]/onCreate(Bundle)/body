@@ -1,0 +1,32 @@
+{
+  Spinner mSecurity=((Spinner)mView.findViewById(R.id.security));
+  mView=getLayoutInflater().inflate(R.layout.wifi_ap_dialog,null);
+  setView(mView);
+  setInverseBackgroundForced(true);
+  Context context=getContext();
+  setTitle(R.string.wifi_ap_configure_network);
+  mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
+  mSsid=(TextView)mView.findViewById(R.id.ssid);
+  mPassword=(EditText)mView.findViewById(R.id.password);
+  setButton(BUTTON_SUBMIT,context.getString(R.string.wifi_save),mListener);
+  setButton(DialogInterface.BUTTON_NEGATIVE,context.getString(R.string.wifi_cancel),mListener);
+  if (mWifiConfig != null) {
+    mSsid.setText(mWifiConfig.SSID);
+switch (mSecurityType) {
+case AccessPoint.SECURITY_WEP:
+      mPassword.setText(mWifiConfig.wepKeys[0]);
+    break;
+case AccessPoint.SECURITY_PSK:
+  mPassword.setText(mWifiConfig.preSharedKey);
+break;
+}
+mSecurity.setSelection(mSecurityType);
+}
+mSsid.addTextChangedListener(this);
+mPassword.addTextChangedListener(this);
+((CheckBox)mView.findViewById(R.id.show_password)).setOnClickListener(this);
+mSecurity.setOnItemSelectedListener(this);
+super.onCreate(savedInstanceState);
+showSecurityFields();
+validate();
+}

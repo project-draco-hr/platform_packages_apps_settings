@@ -1,0 +1,13 @@
+{
+  boolean enable=(Boolean)value;
+  if (enable && mWifiManager.isWifiEnabled()) {
+    AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
+    builder.setMessage(R.string.wifi_ap_tether_message).setCancelable(false).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this);
+    mAlertDialog=builder.create();
+    mAlertDialog.show();
+  }
+ else {
+    setUpAccessPoint(enable);
+  }
+  return false;
+}

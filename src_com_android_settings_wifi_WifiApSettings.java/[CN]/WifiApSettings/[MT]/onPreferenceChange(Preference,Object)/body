@@ -1,0 +1,9 @@
+{
+  String key=preference.getKey();
+  if (key == null)   return true;
+  if (key.equals(WIFI_AP_CHANNEL)) {
+    int chosenChannel=Integer.parseInt((String)newValue);
+    if (newValue != null)     mChannel.setSummary(newValue.toString());
+  }
+  return true;
+}

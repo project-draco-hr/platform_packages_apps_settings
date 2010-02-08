@@ -1,0 +1,10 @@
+{
+  super.onCreate(savedInstanceState);
+  mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
+  addPreferencesFromResource(R.xml.wifi_ap_settings);
+  mCreateNetwork=findPreference(WIFI_AP_SSID_AND_SECURITY);
+  mChannel=(ListPreference)findPreference(WIFI_AP_CHANNEL);
+  mEnableWifiAp=(CheckBoxPreference)findPreference(ENABLE_WIFI_AP);
+  mWifiApEnabler=new WifiApEnabler(this,mEnableWifiAp);
+  initChannels();
+}

@@ -2,10 +2,17 @@
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.tether_prefs);
   mUsbTether=(PreferenceScreen)findPreference(USB_TETHER_SETTINGS);
+  mEnableWifiAp=(CheckBoxPreference)findPreference(ENABLE_WIFI_AP);
+  mWifiApSettings=(PreferenceScreen)findPreference(WIFI_AP_SETTINGS);
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   mUsbRegexs=cm.getTetherableUsbRegexs();
   if (mUsbRegexs.length == 0) {
     getPreferenceScreen().removePreference(mUsbTether);
   }
   mWifiRegexs=cm.getTetherableWifiRegexs();
+  if (mWifiRegexs.length == 0) {
+    getPreferenceScreen().removePreference(mEnableWifiAp);
+    getPreferenceScreen().removePreference(mWifiApSettings);
+  }
+  mWifiApEnabler=new WifiApEnabler(this,mEnableWifiAp);
 }

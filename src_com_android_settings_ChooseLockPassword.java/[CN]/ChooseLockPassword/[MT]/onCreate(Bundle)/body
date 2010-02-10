@@ -1,7 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   mLockPatternUtils=new LockPatternUtils(this);
-  mRequestedMode=getIntent().getIntExtra("password_mode",mRequestedMode);
+  mRequestedMode=getIntent().getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,mRequestedMode);
   mPasswordMinLength=getIntent().getIntExtra("password_min_length",mPasswordMinLength);
   mPasswordMaxLength=getIntent().getIntExtra("password_max_length",mPasswordMaxLength);
   int minMode=mLockPatternUtils.getRequestedPasswordMode();

@@ -3,6 +3,22 @@
   addPreferencesFromResource(R.xml.application_settings);
   mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
   mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
+  mInstallLocation=(ListPreference)findPreference(KEY_APP_INSTALL_LOCATION);
+  boolean userSetInstLocation=(Settings.System.getInt(getContentResolver(),Settings.System.SET_INSTALL_LOCATION,0) != 0);
+  if (!userSetInstLocation) {
+    getPreferenceScreen().removePreference(mInstallLocation);
+  }
+ else {
+    mInstallLocation.setValue(getAppInstallLocation());
+    mInstallLocation.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        String value=(String)newValue;
+        handleUpdateAppInstallLocation(value);
+        return false;
+      }
+    }
+);
+  }
   if (getResources().getConfiguration().keyboard == Configuration.KEYBOARD_NOKEYS) {
     Preference quickLaunchSetting=findPreference(KEY_QUICK_LAUNCH);
     getPreferenceScreen().removePreference(quickLaunchSetting);

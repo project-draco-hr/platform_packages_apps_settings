@@ -1,0 +1,15 @@
+{
+  int selectedLocation=Settings.System.getInt(getContentResolver(),Settings.System.DEFAULT_INSTALL_LOCATION,APP_INSTALL_AUTO);
+  if (selectedLocation == APP_INSTALL_DEVICE) {
+    return APP_INSTALL_DEVICE_ID;
+  }
+ else   if (selectedLocation == APP_INSTALL_SDCARD) {
+    return APP_INSTALL_SDCARD_ID;
+  }
+ else   if (selectedLocation == APP_INSTALL_AUTO) {
+    return APP_INSTALL_AUTO_ID;
+  }
+ else {
+    return APP_INSTALL_AUTO_ID;
+  }
+}

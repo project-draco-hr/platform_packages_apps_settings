@@ -1,24 +1,33 @@
 {
   if (pin.length() < mPasswordMinLength) {
-    return getString(R.string.pin_password_too_short,mPasswordMinLength);
+    return getString(mIsAlphaMode ? R.string.lockpassword_password_too_short : R.string.lockpassword_pin_too_short,mPasswordMinLength);
   }
   if (pin.length() > mPasswordMaxLength) {
-    return getString(R.string.pin_password_too_long,mPasswordMaxLength);
+    return getString(mIsAlphaMode ? R.string.lockpassword_password_too_long : R.string.lockpassword_pin_too_long,mPasswordMaxLength);
   }
-  if (LockPatternUtils.MODE_PIN == mRequestedMode) {
-    Pattern p=Pattern.compile("[0-9]+");
-    Matcher m=p.matcher(pin);
-    if (!m.find()) {
-      return getString(R.string.pin_password_contains_non_digits);
+  boolean hasAlpha=false;
+  boolean hasDigit=false;
+  boolean hasSymbol=false;
+  for (int i=0; i < pin.length(); i++) {
+    char c=pin.charAt(i);
+    if (c <= 32 || c > 127) {
+      return getString(R.string.lockpassword_illegal_character);
+    }
+    if (c >= '0' && c <= '9') {
+      hasDigit=true;
+    }
+ else     if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+      hasAlpha=true;
+    }
+ else {
+      hasSymbol=true;
     }
   }
- else   if (LockPatternUtils.MODE_PASSWORD == mRequestedMode) {
-    for (int i=0; i < pin.length(); i++) {
-      char c=pin.charAt(i);
-      if (c <= 32 || c > 127) {
-        return getString(R.string.pin_password_illegal_character);
-      }
-    }
+  if (LockPatternUtils.MODE_PIN == mRequestedMode && (hasAlpha | hasSymbol)) {
+    return getString(R.string.lockpassword_pin_contains_non_digits);
+  }
+ else   if (LockPatternUtils.MODE_PASSWORD == mRequestedMode && !hasAlpha) {
+    return getString(R.string.lockpassword_password_requires_alpha);
   }
   return null;
 }

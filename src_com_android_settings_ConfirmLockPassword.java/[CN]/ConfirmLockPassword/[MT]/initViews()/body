@@ -5,10 +5,11 @@
   findViewById(R.id.cancel_button).setOnClickListener(this);
   findViewById(R.id.next_button).setOnClickListener(this);
   mPasswordEntry=(TextView)findViewById(R.id.password_entry);
+  mPasswordEntry.setOnEditorActionListener(this);
   mKeyboardView=(PasswordEntryKeyboardView)findViewById(R.id.keyboard);
   mHeaderText=(TextView)findViewById(R.id.headerText);
-  mHeaderText.setText(R.string.lockpassword_confirm_your_password_header);
   final boolean isAlpha=LockPatternUtils.MODE_PASSWORD == mLockPatternUtils.getPasswordMode();
+  mHeaderText.setText(isAlpha ? R.string.lockpassword_confirm_your_password_header : R.string.lockpassword_confirm_your_pin_header);
   mKeyboardHelper=new PasswordEntryKeyboardHelper(this,mKeyboardView,mPasswordEntry);
   mKeyboardHelper.setKeyboardMode(isAlpha ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
   mKeyboardView.requestFocus();

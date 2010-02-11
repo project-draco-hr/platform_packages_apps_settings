@@ -1,0 +1,10 @@
+{
+  final String pin=mPasswordEntry.getText().toString();
+  if (mLockPatternUtils.checkPassword(pin)) {
+    setResult(RESULT_OK);
+    finish();
+  }
+ else {
+    showError(R.string.lockpattern_need_to_unlock_wrong);
+  }
+}

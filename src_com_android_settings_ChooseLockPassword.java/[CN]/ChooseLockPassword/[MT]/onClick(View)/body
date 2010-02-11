@@ -1,35 +1,7 @@
 {
 switch (v.getId()) {
 case R.id.next_button:
-{
-      final String pin=mPasswordEntry.getText().toString();
-      if (TextUtils.isEmpty(pin)) {
-        break;
-      }
-      String errorMsg=null;
-      if (mUiStage == Stage.Introduction) {
-        errorMsg=validatePassword(pin);
-        if (errorMsg == null) {
-          mFirstPin=pin;
-          updateStage(Stage.NeedToConfirm);
-        }
-      }
- else       if (mUiStage == Stage.NeedToConfirm) {
-        if (mFirstPin.equals(pin)) {
-          mLockPatternUtils.setLockPatternEnabled(false);
-          mLockPatternUtils.saveLockPattern(null);
-          mLockPatternUtils.saveLockPassword(pin,mRequestedMode);
-          finish();
-        }
- else {
-          int msg=R.string.lockpassword_confirm_passwords_dont_match;
-          errorMsg=getString(msg);
-        }
-      }
-      if (errorMsg != null) {
-        showError(errorMsg,Stage.Introduction);
-      }
-    }
+    handleNext();
   break;
 case R.id.cancel_button:
 finish();

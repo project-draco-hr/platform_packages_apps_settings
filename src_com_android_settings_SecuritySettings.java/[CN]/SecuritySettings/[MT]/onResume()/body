@@ -2,10 +2,14 @@
   super.onResume();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   boolean patternExists=lockPatternUtils.savedPatternExists();
-  mVisiblePattern.setEnabled(patternExists);
-  mTactileFeedback.setEnabled(patternExists);
-  mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled());
-  mTactileFeedback.setChecked(lockPatternUtils.isTactileFeedbackEnabled());
+  if (mVisiblePattern != null) {
+    mVisiblePattern.setEnabled(patternExists);
+    mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled());
+  }
+  if (mTactileFeedback != null) {
+    mTactileFeedback.setEnabled(patternExists);
+    mTactileFeedback.setChecked(lockPatternUtils.isTactileFeedbackEnabled());
+  }
   mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0);
   mCredentialStorage.resume();
 }

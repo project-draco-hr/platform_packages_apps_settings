@@ -1,4 +1,19 @@
 {
+  if (value == null) {
+    int mode=mLockPatternUtils.getPasswordMode();
+    if (LockPatternUtils.MODE_PATTERN == mode) {
+      value="pattern";
+    }
+ else     if (LockPatternUtils.MODE_PASSWORD == mode) {
+      value="password";
+    }
+ else     if (LockPatternUtils.MODE_PIN == mode) {
+      value="pin";
+    }
+ else {
+      throw new IllegalStateException("Unknown password mode: " + value);
+    }
+  }
   if ("none".equals(value)) {
     if (mDPM.getPasswordQuality(null) == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
       mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST);

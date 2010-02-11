@@ -1,15 +1,31 @@
 {
   PreferenceScreen root=this.getPreferenceScreen();
+  if (root != null) {
+    root.removeAll();
+  }
+  addPreferencesFromResource(R.xml.security_settings);
+  root=this.getPreferenceScreen();
+  mNetwork=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_NETWORK);
+  mGps=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_GPS);
+  mAssistedGps=(CheckBoxPreference)getPreferenceScreen().findPreference(ASSISTED_GPS);
   PreferenceManager pm=getPreferenceManager();
-  mUnlockMethod=(ListPreference)pm.findPreference(KEY_UNLOCK_METHOD);
-  mUnlockMethod.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
-    public boolean onPreferenceChange(    Preference preference,    Object newValue){
-      String value=(String)newValue;
-      handleUpdateUnlockMethod(value);
-      return false;
+  if (!mLockPatternUtils.isSecure()) {
+    addPreferencesFromResource(R.xml.security_settings_chooser);
+  }
+ else {
+    final int currentMode=mLockPatternUtils.getPasswordMode();
+    if (currentMode == LockPatternUtils.MODE_PATTERN) {
+      addPreferencesFromResource(R.xml.security_settings_pattern);
+    }
+ else     if (currentMode == LockPatternUtils.MODE_PIN) {
+      addPreferencesFromResource(R.xml.security_settings_pin);
+    }
+ else     if (currentMode == LockPatternUtils.MODE_PASSWORD) {
+      addPreferencesFromResource(R.xml.security_settings_password);
     }
   }
-);
+  mDisableUnlock=(PreferenceScreen)pm.findPreference(KEY_UNLOCK_METHOD_DISABLE);
+  mChangeCurrent=(PreferenceScreen)pm.findPreference(KEY_UNLOCK_METHOD_CHANGE_CURRENT);
   mVisiblePattern=(CheckBoxPreference)pm.findPreference(KEY_VISIBLE_PATTERN);
   mTactileFeedback=(CheckBoxPreference)pm.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
   int activePhoneType=TelephonyManager.getDefault().getPhoneType();

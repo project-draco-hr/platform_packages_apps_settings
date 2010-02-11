@@ -1,0 +1,32 @@
+{
+  final String pin=mPasswordEntry.getText().toString();
+  if (TextUtils.isEmpty(pin)) {
+    return;
+  }
+  String errorMsg=null;
+  if (mUiStage == Stage.Introduction) {
+    errorMsg=validatePassword(pin);
+    if (errorMsg == null) {
+      mFirstPin=pin;
+      updateStage(Stage.NeedToConfirm);
+      mPasswordEntry.setText("");
+    }
+  }
+ else   if (mUiStage == Stage.NeedToConfirm) {
+    if (mFirstPin.equals(pin)) {
+      mLockPatternUtils.clearLock();
+      mLockPatternUtils.saveLockPassword(pin,mRequestedMode);
+      finish();
+    }
+ else {
+      updateStage(Stage.ConfirmWrong);
+      CharSequence tmp=mPasswordEntry.getText();
+      if (tmp != null) {
+        Selection.setSelection((Spannable)tmp,0,tmp.length());
+      }
+    }
+  }
+  if (errorMsg != null) {
+    showError(errorMsg,mUiStage);
+  }
+}

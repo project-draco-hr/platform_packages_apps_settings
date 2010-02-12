@@ -25,7 +25,7 @@
     Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,mDefaultLocVariant);
     Log.v(TAG,"TTS default lang/country/variant set to " + mDefaultLanguage + "/"+ mDefaultCountry+ "/"+ mDefaultLocVariant);
     if (mTts != null) {
-      mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry));
+      mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry,mDefaultLocVariant));
     }
     int newIndex=mDefaultLocPref.findIndexOfValue((String)objValue);
     Log.v("Settings"," selected is " + newIndex);
@@ -36,6 +36,10 @@
     Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_SYNTH,mDefaultEng);
     if (mTts != null) {
       mTts.setEngineByPackageName(mDefaultEng);
+      mEnableDemo=false;
+      mVoicesMissing=false;
+      updateWidgetState();
+      checkVoiceData();
     }
     Log.v("Settings","The default synth is: " + objValue.toString());
   }

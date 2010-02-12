@@ -1,6 +1,11 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.voice_input_output_settings);
-  removePreferenceIfNecessary(KEY_VOICE_SEARCH_SETTINGS);
-  removePreferenceIfNecessary(KEY_KEYBOARD_SETTINGS);
+  mParent=(PreferenceGroup)findPreference(KEY_PARENT);
+  mVoiceInputCategory=(PreferenceCategory)mParent.findPreference(KEY_VOICE_INPUT_CATEGORY);
+  mRecognizerPref=(ListPreference)mParent.findPreference(KEY_RECOGNIZER);
+  mRecognizerPref.setOnPreferenceChangeListener(this);
+  mSettingsPref=(PreferenceScreen)mParent.findPreference(KEY_RECOGNIZER_SETTINGS);
+  mAvailableRecognizersMap=new HashMap<String,ResolveInfo>();
+  populateOrRemoveRecognizerPreference();
 }

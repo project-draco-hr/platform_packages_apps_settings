@@ -1,0 +1,15 @@
+{
+  List<ResolveInfo> availableRecognitionServices=getPackageManager().queryIntentServices(new Intent(RecognitionService.SERVICE_INTERFACE),PackageManager.GET_META_DATA);
+  int numAvailable=availableRecognitionServices.size();
+  if (numAvailable == 0) {
+    removePreference(mVoiceInputCategory);
+    removePreference(mRecognizerPref);
+    removePreference(mSettingsPref);
+  }
+ else   if (numAvailable == 1) {
+    removePreference(mRecognizerPref);
+  }
+ else {
+    populateRecognizerPreference(availableRecognitionServices);
+  }
+}

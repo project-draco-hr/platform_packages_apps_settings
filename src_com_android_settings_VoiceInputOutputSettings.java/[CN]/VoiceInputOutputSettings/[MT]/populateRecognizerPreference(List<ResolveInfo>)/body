@@ -1,0 +1,18 @@
+{
+  int size=recognizers.size();
+  CharSequence[] entries=new CharSequence[size];
+  CharSequence[] values=new CharSequence[size];
+  String currentSetting=Settings.Secure.getString(getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE);
+  for (int i=0; i < size; i++) {
+    ResolveInfo resolveInfo=recognizers.get(i);
+    String recognizerComponent=new ComponentName(resolveInfo.serviceInfo.packageName,resolveInfo.serviceInfo.name).flattenToString();
+    mAvailableRecognizersMap.put(recognizerComponent,resolveInfo);
+    entries[i]=resolveInfo.loadLabel(getPackageManager());
+    values[i]=recognizerComponent;
+  }
+  mRecognizerPref.setEntries(entries);
+  mRecognizerPref.setEntryValues(values);
+  mRecognizerPref.setDefaultValue(currentSetting);
+  mRecognizerPref.setValue(currentSetting);
+  updateSettingsLink(currentSetting);
+}

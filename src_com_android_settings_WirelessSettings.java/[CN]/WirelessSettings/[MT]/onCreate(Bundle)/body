@@ -21,4 +21,8 @@
   if (ServiceManager.getService(BluetoothAdapter.BLUETOOTH_SERVICE) == null) {
     findPreference(KEY_BT_SETTINGS).setEnabled(false);
   }
+  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  if (!cm.isTetheringSupported()) {
+    getPreferenceScreen().removePreference(findPreference(KEY_TETHER_SETTINGS));
+  }
 }

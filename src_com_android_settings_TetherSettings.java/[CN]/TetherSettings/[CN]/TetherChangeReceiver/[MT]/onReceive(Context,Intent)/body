@@ -1,3 +1,5 @@
 {
-  updateState(intent.getIntExtra(ConnectivityManager.EXTRA_AVAILABLE_TETHER_COUNT,0) > 0,intent.getIntExtra(ConnectivityManager.EXTRA_ACTIVE_TETHER_COUNT,0) > 0);
+  ArrayList<String> available=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_AVAILABLE_TETHER);
+  ArrayList<String> active=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ACTIVE_TETHER);
+  updateState(available,active);
 }

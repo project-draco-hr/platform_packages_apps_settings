@@ -2,7 +2,10 @@
   if (status == TextToSpeech.SUCCESS) {
     Log.v(TAG,"TTS engine for settings screen initialized.");
     mEnableDemo=true;
-    mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry));
+    if (mDefaultLanguage == null) {
+      mDefaultLanguage=Locale.getDefault().getISO3Language();
+    }
+    mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry,mDefaultLocVariant));
     mTts.setSpeechRate((float)(mDefaultRate / 100.0f));
   }
  else {

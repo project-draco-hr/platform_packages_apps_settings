@@ -8,6 +8,11 @@
   }
  else   if (numAvailable == 1) {
     removePreference(mRecognizerPref);
+    ResolveInfo resolveInfo=availableRecognitionServices.get(0);
+    String recognizerComponent=new ComponentName(resolveInfo.serviceInfo.packageName,resolveInfo.serviceInfo.name).flattenToString();
+    mAvailableRecognizersMap.put(recognizerComponent,resolveInfo);
+    String currentSetting=Settings.Secure.getString(getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE);
+    updateSettingsLink(currentSetting);
   }
  else {
     populateRecognizerPreference(availableRecognitionServices);

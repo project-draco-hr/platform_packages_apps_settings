@@ -38,5 +38,6 @@ catch (  IOException e) {
     Intent i=new Intent(Intent.ACTION_MAIN);
     i.setComponent(new ComponentName(si.packageName,settingsActivity));
     mSettingsPref.setIntent(i);
+    mRecognizerPref.setSummary(currentRecognizer.loadLabel(getPackageManager()));
   }
 }

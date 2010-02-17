@@ -59,14 +59,14 @@ catch (  IOException e) {
  else {
         mDPM.getRemoveWarning(mDeviceAdmin.getComponent(),new RemoteCallback(mHandler){
           @Override protected void onResult(          Bundle bundle){
-            CharSequence msg=bundle != null ? bundle.getCharSequence(DeviceAdmin.EXTRA_DISABLE_WARNING) : null;
+            CharSequence msg=bundle != null ? bundle.getCharSequence(DeviceAdminReceiver.EXTRA_DISABLE_WARNING) : null;
             if (msg == null) {
               mDPM.removeActiveAdmin(mDeviceAdmin.getComponent());
               finish();
             }
  else {
               Bundle args=new Bundle();
-              args.putCharSequence(DeviceAdmin.EXTRA_DISABLE_WARNING,msg);
+              args.putCharSequence(DeviceAdminReceiver.EXTRA_DISABLE_WARNING,msg);
               showDialog(DIALOG_WARNING,args);
             }
           }

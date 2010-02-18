@@ -18,6 +18,9 @@
   mHapticFeedback=(CheckBoxPreference)findPreference(KEY_HAPTIC_FEEDBACK);
   mHapticFeedback.setPersistent(false);
   mHapticFeedback.setChecked(Settings.System.getInt(resolver,Settings.System.HAPTIC_FEEDBACK_ENABLED,0) != 0);
+  mLockSounds=(CheckBoxPreference)findPreference(KEY_LOCK_SOUNDS);
+  mLockSounds.setPersistent(false);
+  mLockSounds.setChecked(Settings.System.getInt(resolver,Settings.System.LOCKSCREEN_SOUNDS_ENABLED,1) != 0);
   if (TelephonyManager.PHONE_TYPE_CDMA == activePhoneType) {
     ListPreference emergencyTonePreference=(ListPreference)findPreference(KEY_EMERGENCY_TONE);
     emergencyTonePreference.setValue(String.valueOf(Settings.System.getInt(resolver,Settings.System.EMERGENCY_TONE,FALLBACK_EMERGENCY_TONE_VALUE)));

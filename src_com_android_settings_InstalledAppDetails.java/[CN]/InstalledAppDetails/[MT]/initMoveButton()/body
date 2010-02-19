@@ -1,0 +1,30 @@
+{
+  String pkgName=mAppInfo.packageName;
+  boolean dataOnly=false;
+  ApplicationInfo info1=null;
+  try {
+    info1=mPm.getApplicationInfo(pkgName,0);
+  }
+ catch (  NameNotFoundException e) {
+  }
+  dataOnly=(info1 == null) && (mAppInfo != null);
+  boolean moveDisable=true;
+  if (dataOnly) {
+    mMoveAppButton.setText(R.string.move_app);
+  }
+ else   if ((mAppInfo.flags & ApplicationInfo.FLAG_ON_SDCARD) != 0) {
+    mMoveAppButton.setText(R.string.move_app_to_internal);
+    moveDisable=false;
+  }
+ else {
+    moveDisable=(mAppInfo.flags & ApplicationInfo.FLAG_FORWARD_LOCK) != 0 || (mAppInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+    mMoveAppButton.setText(R.string.move_app_to_sdcard);
+  }
+  if (moveDisable) {
+    mMoveAppButton.setEnabled(false);
+  }
+ else {
+    mMoveAppButton.setOnClickListener(this);
+    mMoveAppButton.setEnabled(true);
+  }
+}

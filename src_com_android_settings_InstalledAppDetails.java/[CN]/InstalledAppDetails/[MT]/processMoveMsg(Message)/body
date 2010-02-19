@@ -1,0 +1,15 @@
+{
+  int result=msg.arg1;
+  String packageName=mAppInfo.packageName;
+  if (result == PackageManager.MOVE_SUCCEEDED) {
+    Log.i(TAG,"Moved resources for " + packageName);
+    try {
+      mAppInfo=mPm.getApplicationInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES);
+      initMoveButton();
+    }
+ catch (    NameNotFoundException e) {
+    }
+  }
+ else {
+  }
+}

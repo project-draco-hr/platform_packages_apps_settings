@@ -1,0 +1,10 @@
+{
+  if (mPackages == null || mUid < Process.FIRST_APPLICATION_UID) {
+    mForceStopButton.setEnabled(false);
+    return;
+  }
+  Intent intent=new Intent(Intent.ACTION_QUERY_PACKAGE_RESTART,Uri.fromParts("package",mPackages[0],null));
+  intent.putExtra(Intent.EXTRA_PACKAGES,mPackages);
+  intent.putExtra(Intent.EXTRA_UID,mUid);
+  sendOrderedBroadcast(intent,null,mCheckKillProcessesReceiver,null,Activity.RESULT_CANCELED,null,null);
+}

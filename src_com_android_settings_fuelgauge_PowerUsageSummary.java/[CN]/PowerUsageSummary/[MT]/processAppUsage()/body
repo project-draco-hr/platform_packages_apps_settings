@@ -9,6 +9,7 @@
   }
   final double averageCostPerByte=getAverageDataCost();
   long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime() * 1000,which);
+  mStatsPeriod=uSecTime;
   updateStatsPeriod(uSecTime);
   SparseArray<? extends Uid> uidStats=mStats.getUidStats();
   final int NU=uidStats.size();

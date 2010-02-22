@@ -33,6 +33,10 @@
   mTitleView=(TextView)findViewById(R.id.name);
   mTitleView.setText(mTitle);
   ((TextView)findViewById(R.id.battery_percentage)).setText(String.format("%d%%",percentage));
+  mTwoButtonsPanel=(ViewGroup)findViewById(R.id.two_buttons_panel);
+  mForceStopButton=(Button)findViewById(R.id.left_button);
+  mReportButton=(Button)findViewById(R.id.right_button);
+  mForceStopButton.setEnabled(false);
   ImageView gaugeImage=(ImageView)findViewById(R.id.gauge);
   mGauge=new PercentageBar();
   mGauge.percent=gaugeValue;
@@ -45,4 +49,30 @@
   fillDetailsSection();
   fillPackagesSection(mUid);
   fillControlsSection(mUid);
+  if (mUid >= Process.FIRST_APPLICATION_UID) {
+    mForceStopButton.setText(R.string.force_stop);
+    mForceStopButton.setTag(ACTION_FORCE_STOP);
+    mForceStopButton.setOnClickListener(this);
+    mReportButton.setText(com.android.internal.R.string.report);
+    mReportButton.setTag(ACTION_REPORT);
+    mReportButton.setOnClickListener(this);
+    int enabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.SEND_ACTION_APP_ERROR,0);
+    if (enabled != 0) {
+      if (mPackages != null && mPackages.length > 0) {
+        try {
+          mApp=getPackageManager().getApplicationInfo(mPackages[0],0);
+          mInstaller=ApplicationErrorReport.getErrorReportReceiver(this,mPackages[0],mApp.flags);
+        }
+ catch (        NameNotFoundException e) {
+        }
+      }
+      mReportButton.setEnabled(mInstaller != null);
+    }
+ else {
+      mTwoButtonsPanel.setVisibility(View.GONE);
+    }
+  }
+ else {
+    mTwoButtonsPanel.setVisibility(View.GONE);
+  }
 }

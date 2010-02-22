@@ -15,11 +15,17 @@ break;
 case ACTION_APP_DETAILS:
 Intent intent=new Intent(Intent.ACTION_VIEW);
 intent.setClass(this,InstalledAppDetails.class);
-intent.putExtra("com.android.settings.ApplicationPkgName",mPackages[0]);
+intent.putExtra(ManageApplications.APP_PKG_NAME,mPackages[0]);
 startActivity(intent);
 break;
 case ACTION_SECURITY_SETTINGS:
 startActivity(new Intent(Settings.ACTION_SECURITY_SETTINGS));
+break;
+case ACTION_FORCE_STOP:
+killProcesses();
+break;
+case ACTION_REPORT:
+reportBatteryUse();
 break;
 }
 }

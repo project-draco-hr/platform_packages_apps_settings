@@ -9,6 +9,7 @@
   setContentView(R.layout.running_services);
   getListView().setDivider(null);
   getListView().setAdapter(new ServiceListAdapter(mState));
+  mColorBar=(LinearColorBar)findViewById(R.id.color_bar);
   mBackgroundProcessText=(TextView)findViewById(R.id.backgroundText);
   mForegroundProcessText=(TextView)findViewById(R.id.foregroundText);
   SECONDARY_SERVER_MEM=Integer.valueOf(SystemProperties.get("ro.SECONDARY_SERVER_MEM")) * PAGE_SIZE;

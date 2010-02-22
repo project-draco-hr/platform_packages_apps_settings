@@ -144,6 +144,7 @@
   mAllProcessItems.addAll(mProcessItems);
   mNumBackgroundProcesses=0;
   mNumForegroundProcesses=0;
+  mNumServiceProcesses=0;
   NRP=mRunningProcesses.size();
   for (int i=0; i < NRP; i++) {
     ProcessItem proc=mRunningProcesses.valueAt(i);
@@ -156,11 +157,18 @@
         mNumForegroundProcesses++;
         mAllProcessItems.add(proc);
       }
+ else {
+        Log.i(TAG,"Unknown non-service process: " + proc.mProcessName + " #"+ proc.mPid);
+      }
+    }
+ else {
+      mNumServiceProcesses++;
     }
   }
   try {
     mBackgroundProcessMemory=0;
     mForegroundProcessMemory=0;
+    mServiceProcessMemory=0;
     final int numProc=mAllProcessItems.size();
     int[] pids=new int[numProc];
     for (int i=0; i < numProc; i++) {
@@ -171,9 +179,9 @@
       ProcessItem proc=mAllProcessItems.get(i);
       changed|=proc.updateSize(context,mem[i],mSequence);
       if (proc.mCurSeq == mSequence) {
-        continue;
+        mServiceProcessMemory+=proc.mSize;
       }
-      if (proc.mRunningProcessInfo.importance >= ActivityManager.RunningAppProcessInfo.IMPORTANCE_BACKGROUND) {
+ else       if (proc.mRunningProcessInfo.importance >= ActivityManager.RunningAppProcessInfo.IMPORTANCE_BACKGROUND) {
         mBackgroundProcessMemory+=proc.mSize;
       }
  else       if (proc.mRunningProcessInfo.importance <= ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE) {

@@ -14,23 +14,4 @@
   if (enabled) {
     mUninstallButton.setOnClickListener(this);
   }
-  ActivityManager am=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
-  List<RunningAppProcessInfo> rList=am.getRunningAppProcesses();
-  boolean running=false;
-  if (rList != null) {
-    for (    RunningAppProcessInfo info : rList) {
-      if (info.pkgList != null) {
-        for (        String rpkg : info.pkgList) {
-          if (rpkg.equals(mAppInfo.packageName)) {
-            running=true;
-            break;
-          }
-        }
-      }
-    }
-  }
-  mForceStopButton.setEnabled(running);
-  if (running) {
-    mForceStopButton.setOnClickListener(this);
-  }
 }

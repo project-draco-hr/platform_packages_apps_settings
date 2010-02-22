@@ -20,4 +20,8 @@
     String sizeStr=Formatter.formatShortFileSize(this,mLastForegroundProcessMemory);
     mForegroundProcessText.setText(getResources().getString(R.string.service_foreground_processes,mLastNumForegroundProcesses,sizeStr));
   }
+  mLastNumServiceProcesses=mState.mNumServiceProcesses;
+  mLastServiceProcessMemory=mState.mServiceProcessMemory;
+  float totalMem=mLastBackgroundProcessMemory + mLastForegroundProcessMemory + mLastServiceProcessMemory;
+  mColorBar.setRatios(mLastForegroundProcessMemory / totalMem,mLastServiceProcessMemory / totalMem,mLastForegroundProcessMemory / totalMem);
 }

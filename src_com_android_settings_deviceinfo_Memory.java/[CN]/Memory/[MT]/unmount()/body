@@ -1,14 +1,22 @@
 {
+  String extStoragePath=Environment.getExternalStorageDirectory().toString();
   IMountService mountService=getMountService();
+  int stUsers[]=null;
   try {
-    if (mountService != null) {
-      mountService.unmountVolume(Environment.getExternalStorageDirectory().toString(),false);
+    stUsers=mountService.getStorageUsers(extStoragePath);
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Is MountService running?");
+    showDialogInner(DLG_ERROR_UNMOUNT);
+  }
+  if (stUsers != null && stUsers.length > 0) {
+    if (localLOGV)     Log.i(TAG,"Do have storage users accessing " + extStoragePath);
+    for (    int pid : stUsers) {
+      if (localLOGV)       Log.i(TAG,pid + " accessing file on sdcard");
     }
+    showDialogInner(DLG_CONFIRM_UNMOUNT);
+  }
  else {
-      Log.e(TAG,"Mount service is null, can't unmount");
-    }
+    doUnmount(true);
   }
- catch (  RemoteException ex) {
-  }
-  updateMemoryStatus();
 }

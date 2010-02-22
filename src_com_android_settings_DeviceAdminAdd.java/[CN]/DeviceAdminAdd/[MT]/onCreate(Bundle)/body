@@ -52,8 +52,16 @@ catch (  IOException e) {
   mActionButton.setOnClickListener(new View.OnClickListener(){
     public void onClick(    View v){
       if (mAdding) {
-        mDPM.setActiveAdmin(mDeviceAdmin.getComponent());
-        setResult(Activity.RESULT_OK);
+        try {
+          mDPM.setActiveAdmin(mDeviceAdmin.getComponent());
+          setResult(Activity.RESULT_OK);
+        }
+ catch (        RuntimeException e) {
+          Log.w(TAG,"Exception trying to activate admin " + mDeviceAdmin.getComponent(),e);
+          if (mDPM.isAdminActive(mDeviceAdmin.getComponent())) {
+            setResult(Activity.RESULT_OK);
+          }
+        }
         finish();
       }
  else {

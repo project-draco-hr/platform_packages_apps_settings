@@ -2,9 +2,10 @@
   int state=getBluetoothState(context);
   if (state == STATE_ENABLED) {
     mLocalBluetoothManager.setBluetoothEnabled(false);
+    Toast.makeText(context,R.string.gadget_toggle_bluetooth,Toast.LENGTH_SHORT).show();
   }
  else   if (state == STATE_DISABLED) {
     mLocalBluetoothManager.setBluetoothEnabled(true);
+    Toast.makeText(context,R.string.gadget_toggle_bluetooth,Toast.LENGTH_SHORT).show();
   }
-  Toast.makeText(context,R.string.gadget_toggle_bluetooth,Toast.LENGTH_SHORT).show();
 }

@@ -21,15 +21,11 @@
     if (serviceState == 1) {
       mToggleCheckBox.setChecked(true);
     }
- else {
-      setAccessibilityServicePreferencesState(false);
-    }
     mToggleCheckBox.setEnabled(true);
   }
  else {
     if (serviceState == 1) {
       Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
-      setAccessibilityServicePreferencesState(false);
     }
     mToggleCheckBox.setEnabled(false);
     displayNoAppsAlert();

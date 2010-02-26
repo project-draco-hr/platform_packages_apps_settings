@@ -1,6 +1,6 @@
 {
   super.onSampleStarting(volumizer);
   for (  SeekBarVolumizer vol : mSeekBarVolumizer) {
-    if (vol != volumizer)     vol.stopSample();
+    if (vol != null && vol != volumizer)     vol.stopSample();
   }
 }

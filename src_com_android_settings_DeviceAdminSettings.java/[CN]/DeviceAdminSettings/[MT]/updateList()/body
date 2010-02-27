@@ -13,7 +13,9 @@
     ResolveInfo ri=avail.get(i);
     try {
       DeviceAdminInfo dpi=new DeviceAdminInfo(this,ri);
-      mAvailableAdmins.add(dpi);
+      if (dpi.isVisible() || mActiveAdmins.contains(dpi.getComponent())) {
+        mAvailableAdmins.add(dpi);
+      }
     }
  catch (    XmlPullParserException e) {
       Log.w(TAG,"Skipping " + ri.activityInfo,e);

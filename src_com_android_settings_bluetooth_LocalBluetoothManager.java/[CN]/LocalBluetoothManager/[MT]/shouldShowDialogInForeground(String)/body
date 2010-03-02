@@ -6,6 +6,12 @@
   if ((lastDiscoverableEndTime + GRACE_PERIOD_TO_SHOW_DIALOGS_IN_FOREGROUND) > currentTimeMillis) {
     return true;
   }
+  if (mAdapter != null && mAdapter.isDiscovering()) {
+    return true;
+  }
+ else   if ((sharedPreferences.getLong(SHARED_PREFERENCES_KEY_DISCOVERING_TIMESTAMP,0) + GRACE_PERIOD_TO_SHOW_DIALOGS_IN_FOREGROUND) > currentTimeMillis) {
+    return true;
+  }
   if (deviceAddress != null) {
     String lastSelectedDevice=sharedPreferences.getString(SHARED_PREFERENCES_KEY_LAST_SELECTED_DEVICE,null);
     if (deviceAddress.equals(lastSelectedDevice)) {

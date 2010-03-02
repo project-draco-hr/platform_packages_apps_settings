@@ -47,10 +47,10 @@
     Log.i(TAG,"Took " + (SystemClock.elapsedRealtime() - sStart) + " ms to init cache");
   }
   final TabHost tabHost=getTabHost();
-  tabHost.addTab(tabHost.newTabSpec(TAB_DOWNLOADED).setIndicator(getString(R.string.filter_apps_third_party)).setContent(this));
-  tabHost.addTab(tabHost.newTabSpec(TAB_RUNNING).setIndicator(getString(R.string.filter_apps_running)).setContent(this));
-  tabHost.addTab(tabHost.newTabSpec(TAB_ALL).setIndicator(getString(R.string.filter_apps_all)).setContent(this));
-  tabHost.addTab(tabHost.newTabSpec(TAB_SDCARD).setIndicator(getString(R.string.filter_apps_onsdcard)).setContent(this));
+  tabHost.addTab(tabHost.newTabSpec(TAB_DOWNLOADED).setIndicator(getString(R.string.filter_apps_third_party),getResources().getDrawable(R.drawable.ic_tab_download)).setContent(this));
+  tabHost.addTab(tabHost.newTabSpec(TAB_RUNNING).setIndicator(getString(R.string.filter_apps_running),getResources().getDrawable(R.drawable.ic_tab_running)).setContent(this));
+  tabHost.addTab(tabHost.newTabSpec(TAB_ALL).setIndicator(getString(R.string.filter_apps_all),getResources().getDrawable(R.drawable.ic_tab_all)).setContent(this));
+  tabHost.addTab(tabHost.newTabSpec(TAB_SDCARD).setIndicator(getString(R.string.filter_apps_onsdcard),getResources().getDrawable(R.drawable.ic_tab_sdcard)).setContent(this));
   tabHost.setCurrentTabByTag(defaultTabTag);
   tabHost.setOnTabChangedListener(this);
 }

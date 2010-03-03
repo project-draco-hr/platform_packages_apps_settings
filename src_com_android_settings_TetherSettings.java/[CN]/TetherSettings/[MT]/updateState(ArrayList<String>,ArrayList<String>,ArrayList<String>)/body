@@ -1,9 +1,11 @@
 {
   boolean usbTethered=false;
   boolean usbAvailable=false;
+  boolean usbErrored=false;
   boolean wifiTethered=false;
   boolean wifiAvailable=false;
   boolean massStorageActive=Environment.MEDIA_SHARED.equals(Environment.getExternalStorageState());
+  boolean wifiErrored=false;
   for (  String s : available) {
     for (    String regex : mUsbRegexs) {
       if (s.matches(regex))       usbAvailable=true;
@@ -20,6 +22,14 @@
       if (s.matches(regex))       wifiTethered=true;
     }
   }
+  for (  String s : errored) {
+    for (    String regex : mUsbRegexs) {
+      if (s.matches(regex))       usbErrored=true;
+    }
+    for (    String regex : mWifiRegexs) {
+      if (s.matches(regex))       wifiErrored=true;
+    }
+  }
   if (usbTethered) {
     mUsbTether.setSummary(R.string.usb_tethering_active_subtext);
     mUsbTether.setEnabled(true);
@@ -31,6 +41,10 @@
  else   if (usbAvailable) {
     mUsbTether.setSummary(R.string.usb_tethering_available_subtext);
     mUsbTether.setEnabled(true);
+  }
+ else   if (usbErrored) {
+    mUsbTether.setSummary(R.string.usb_tethering_errored_subtext);
+    mUsbTether.setEnabled(false);
   }
  else {
     mUsbTether.setSummary(R.string.usb_tethering_unavailable_subtext);

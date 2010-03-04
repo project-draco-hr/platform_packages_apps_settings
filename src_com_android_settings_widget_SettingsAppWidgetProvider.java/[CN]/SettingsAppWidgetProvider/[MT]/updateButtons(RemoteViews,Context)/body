@@ -13,7 +13,11 @@ views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_o
 views.setImageViewResource(R.id.ind_wifi,R.drawable.appwidget_settings_ind_mid_l);
 break;
 }
-if (getBrightness(context)) {
+if (getBrightnessMode(context)) {
+views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_auto);
+views.setImageViewResource(R.id.ind_brightness,R.drawable.appwidget_settings_ind_on_r);
+}
+ else if (getBrightness(context)) {
 views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_on);
 views.setImageViewResource(R.id.ind_brightness,R.drawable.appwidget_settings_ind_on_r);
 }

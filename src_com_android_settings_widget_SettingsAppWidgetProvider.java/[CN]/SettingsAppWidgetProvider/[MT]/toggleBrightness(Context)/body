@@ -4,20 +4,29 @@
     if (power != null) {
       ContentResolver cr=context.getContentResolver();
       int brightness=Settings.System.getInt(cr,Settings.System.SCREEN_BRIGHTNESS);
-      if (brightness < DEFAULT_BACKLIGHT) {
+      int brightnessMode=Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
+      if (context.getResources().getBoolean(com.android.internal.R.bool.config_automatic_brightness_available)) {
+        brightnessMode=Settings.System.getInt(cr,Settings.System.SCREEN_BRIGHTNESS_MODE);
+      }
+      if (brightnessMode == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
+        brightness=MINIMUM_BACKLIGHT;
+        brightnessMode=Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
+      }
+ else       if (brightness < DEFAULT_BACKLIGHT) {
         brightness=DEFAULT_BACKLIGHT;
       }
  else       if (brightness < MAXIMUM_BACKLIGHT) {
         brightness=MAXIMUM_BACKLIGHT;
       }
  else {
-        brightness=MINIMUM_BACKLIGHT;
+        brightnessMode=Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
       }
-      power.setBacklightBrightness(brightness);
-      Settings.System.putInt(cr,Settings.System.SCREEN_BRIGHTNESS,brightness);
       if (context.getResources().getBoolean(com.android.internal.R.bool.config_automatic_brightness_available)) {
-        Settings.System.putInt(context.getContentResolver(),Settings.System.SCREEN_BRIGHTNESS_MODE,Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+        Settings.System.putInt(context.getContentResolver(),Settings.System.SCREEN_BRIGHTNESS_MODE,brightnessMode);
+      }
+      if (brightnessMode == Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL) {
         power.setBacklightBrightness(brightness);
+        Settings.System.putInt(cr,Settings.System.SCREEN_BRIGHTNESS,brightness);
       }
     }
   }

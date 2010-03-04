@@ -1,0 +1,13 @@
+{
+  try {
+    IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
+    if (power != null) {
+      int brightnessMode=Settings.System.getInt(context.getContentResolver(),Settings.System.SCREEN_BRIGHTNESS_MODE);
+      return brightnessMode == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
+    }
+  }
+ catch (  Exception e) {
+    Log.d(TAG,"getBrightnessMode: " + e);
+  }
+  return false;
+}

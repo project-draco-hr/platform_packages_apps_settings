@@ -2,5 +2,5 @@
   ArrayList<String> available=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_AVAILABLE_TETHER);
   ArrayList<String> active=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ACTIVE_TETHER);
   ArrayList<String> errored=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ERRORED_TETHER);
-  updateState(available,active,errored);
+  updateState(available.toArray(),active.toArray(),errored.toArray());
 }

@@ -8,6 +8,7 @@
     if (parser == null) {
       throw new XmlPullParserException("No " + RecognitionService.SERVICE_META_DATA + " meta-data for "+ si.packageName);
     }
+    Resources res=getPackageManager().getResourcesForApplication(si.applicationInfo);
     AttributeSet attrs=Xml.asAttributeSet(parser);
     int type;
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && type != XmlPullParser.START_TAG) {
@@ -16,7 +17,7 @@
     if (!"recognition-service".equals(nodeName)) {
       throw new XmlPullParserException("Meta-data does not start with recognition-service tag");
     }
-    TypedArray array=getResources().obtainAttributes(attrs,com.android.internal.R.styleable.RecognitionService);
+    TypedArray array=res.obtainAttributes(attrs,com.android.internal.R.styleable.RecognitionService);
     settingsActivity=array.getString(com.android.internal.R.styleable.RecognitionService_settingsActivity);
     array.recycle();
   }
@@ -24,6 +25,9 @@
     Log.e(TAG,"error parsing recognition service meta-data",e);
   }
 catch (  IOException e) {
+    Log.e(TAG,"error parsing recognition service meta-data",e);
+  }
+catch (  NameNotFoundException e) {
     Log.e(TAG,"error parsing recognition service meta-data",e);
   }
  finally {

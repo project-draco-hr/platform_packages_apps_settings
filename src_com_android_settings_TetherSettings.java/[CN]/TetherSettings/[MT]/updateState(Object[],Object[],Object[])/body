@@ -46,15 +46,15 @@
       if (s.matches(regex))       wifiErrored=true;
     }
   }
-  if (usbTethered || wifiTethered) {
-  }
   if (usbTethered) {
     mUsbTether.setSummary(R.string.usb_tethering_active_subtext);
     mUsbTether.setEnabled(true);
+    mUsbTether.setChecked(true);
   }
  else   if (massStorageActive) {
     mUsbTether.setSummary(R.string.usb_tethering_storage_active_subtext);
     mUsbTether.setEnabled(false);
+    mUsbTether.setChecked(false);
   }
  else   if (usbAvailable) {
     if (usbError == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
@@ -64,13 +64,16 @@
       mUsbTether.setSummary(R.string.usb_tethering_errored_subtext);
     }
     mUsbTether.setEnabled(true);
+    mUsbTether.setChecked(false);
   }
  else   if (usbErrored) {
     mUsbTether.setSummary(R.string.usb_tethering_errored_subtext);
     mUsbTether.setEnabled(false);
+    mUsbTether.setChecked(false);
   }
  else {
     mUsbTether.setSummary(R.string.usb_tethering_unavailable_subtext);
     mUsbTether.setEnabled(false);
+    mUsbTether.setChecked(false);
   }
 }

@@ -9,6 +9,7 @@
   }
   mSilent=(CheckBoxPreference)findPreference(KEY_SILENT);
   mPhoneVibrate=(ListPreference)findPreference(KEY_VIBRATE);
+  mPhoneVibrate.setOnPreferenceChangeListener(this);
   mVibrateInSilent=(CheckBoxPreference)findPreference(KEY_VIBRATE_IN_SILENT);
   mDtmfTone=(CheckBoxPreference)findPreference(KEY_DTMF_TONE);
   mDtmfTone.setPersistent(false);

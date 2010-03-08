@@ -9,5 +9,16 @@
       Log.e(TAG,"could not persist emergency tone setting",e);
     }
   }
-  return true;
+ else   if (preference == mPhoneVibrate) {
+    int vibeSetting=new Integer(objValue.toString()).intValue();
+switch (vibeSetting) {
+case AudioManager.VIBRATE_SETTING_ON:
+case AudioManager.VIBRATE_SETTING_OFF:
+case AudioManager.VIBRATE_SETTING_ONLY_SILENT:
+      mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER,vibeSetting);
+    updateState(false);
+  break;
+}
+}
+return true;
 }

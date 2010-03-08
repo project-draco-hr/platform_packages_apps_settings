@@ -9,46 +9,35 @@
     }
     updateState(false);
   }
- else   if (preference == mPhoneVibrate) {
-    int vibeSetting=new Integer(mPhoneVibrate.getValue()).intValue();
-switch (vibeSetting) {
-case AudioManager.VIBRATE_SETTING_ON:
-case AudioManager.VIBRATE_SETTING_OFF:
-case AudioManager.VIBRATE_SETTING_ONLY_SILENT:
-      mAudioManager.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER,vibeSetting);
-    updateState(false);
-  break;
-}
-}
- else if (preference == mVibrateInSilent) {
-boolean vibeInSilent=mVibrateInSilent.isChecked();
-Settings.System.putInt(getContentResolver(),Settings.System.VIBRATE_IN_SILENT,vibeInSilent ? 1 : 0);
-int ringerMode=mAudioManager.getRingerMode();
-if (ringerMode != AudioManager.RINGER_MODE_NORMAL) {
-mAudioManager.setRingerMode(vibeInSilent ? AudioManager.RINGER_MODE_VIBRATE : AudioManager.RINGER_MODE_SILENT);
-}
-}
- else if (preference == mDtmfTone) {
-Settings.System.putInt(getContentResolver(),Settings.System.DTMF_TONE_WHEN_DIALING,mDtmfTone.isChecked() ? 1 : 0);
-}
- else if (preference == mSoundEffects) {
-if (mSoundEffects.isChecked()) {
-mAudioManager.loadSoundEffects();
-}
+ else   if (preference == mVibrateInSilent) {
+    boolean vibeInSilent=mVibrateInSilent.isChecked();
+    Settings.System.putInt(getContentResolver(),Settings.System.VIBRATE_IN_SILENT,vibeInSilent ? 1 : 0);
+    int ringerMode=mAudioManager.getRingerMode();
+    if (ringerMode != AudioManager.RINGER_MODE_NORMAL) {
+      mAudioManager.setRingerMode(vibeInSilent ? AudioManager.RINGER_MODE_VIBRATE : AudioManager.RINGER_MODE_SILENT);
+    }
+  }
+ else   if (preference == mDtmfTone) {
+    Settings.System.putInt(getContentResolver(),Settings.System.DTMF_TONE_WHEN_DIALING,mDtmfTone.isChecked() ? 1 : 0);
+  }
+ else   if (preference == mSoundEffects) {
+    if (mSoundEffects.isChecked()) {
+      mAudioManager.loadSoundEffects();
+    }
  else {
-mAudioManager.unloadSoundEffects();
-}
-Settings.System.putInt(getContentResolver(),Settings.System.SOUND_EFFECTS_ENABLED,mSoundEffects.isChecked() ? 1 : 0);
-}
- else if (preference == mHapticFeedback) {
-Settings.System.putInt(getContentResolver(),Settings.System.HAPTIC_FEEDBACK_ENABLED,mHapticFeedback.isChecked() ? 1 : 0);
-}
- else if (preference == mLockSounds) {
-Settings.System.putInt(getContentResolver(),Settings.System.LOCKSCREEN_SOUNDS_ENABLED,mLockSounds.isChecked() ? 1 : 0);
-}
- else if (preference == mNotificationPulse) {
-boolean value=mNotificationPulse.isChecked();
-Settings.System.putInt(getContentResolver(),Settings.System.NOTIFICATION_LIGHT_PULSE,value ? 1 : 0);
-}
-return true;
+      mAudioManager.unloadSoundEffects();
+    }
+    Settings.System.putInt(getContentResolver(),Settings.System.SOUND_EFFECTS_ENABLED,mSoundEffects.isChecked() ? 1 : 0);
+  }
+ else   if (preference == mHapticFeedback) {
+    Settings.System.putInt(getContentResolver(),Settings.System.HAPTIC_FEEDBACK_ENABLED,mHapticFeedback.isChecked() ? 1 : 0);
+  }
+ else   if (preference == mLockSounds) {
+    Settings.System.putInt(getContentResolver(),Settings.System.LOCKSCREEN_SOUNDS_ENABLED,mLockSounds.isChecked() ? 1 : 0);
+  }
+ else   if (preference == mNotificationPulse) {
+    boolean value=mNotificationPulse.isChecked();
+    Settings.System.putInt(getContentResolver(),Settings.System.NOTIFICATION_LIGHT_PULSE,value ? 1 : 0);
+  }
+  return true;
 }

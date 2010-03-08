@@ -1,4 +1,5 @@
 {
   mCursor.moveToPosition(position);
+  if (mCursor.isAfterLast())   return null;
   return mCursor.getString(mCursor.getColumnIndexOrThrow(UserDictionary.Words.WORD));
 }

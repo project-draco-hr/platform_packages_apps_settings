@@ -3,6 +3,7 @@
   if (!(menuInfo instanceof AdapterContextMenuInfo))   return false;
   AdapterContextMenuInfo adapterMenuInfo=(AdapterContextMenuInfo)menuInfo;
   String word=getWord(adapterMenuInfo.position);
+  if (word == null)   return true;
 switch (item.getItemId()) {
 case CONTEXT_MENU_DELETE:
     deleteWord(word);

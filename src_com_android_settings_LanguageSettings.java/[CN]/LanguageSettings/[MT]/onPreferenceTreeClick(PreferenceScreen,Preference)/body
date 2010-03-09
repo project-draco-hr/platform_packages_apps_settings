@@ -44,6 +44,11 @@
       PreferenceScreen pref=(PreferenceScreen)preference;
       String activityName=pref.getKey();
       String packageName=activityName.substring(0,activityName.lastIndexOf("."));
+      int slash=activityName.indexOf("/");
+      if (slash > 0) {
+        packageName=activityName.substring(0,slash);
+        activityName=activityName.substring(slash + 1);
+      }
       if (activityName.length() > 0) {
         Intent i=new Intent(Intent.ACTION_MAIN);
         i.setClassName(packageName,activityName);

@@ -4,7 +4,6 @@
   if (silentOrVibrateMode != mSilent.isChecked() || force) {
     mSilent.setChecked(silentOrVibrateMode);
   }
-  mVibrateInSilent.setEnabled(silentOrVibrateMode);
   mVibrateInSilent.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.VIBRATE_IN_SILENT,1) == 1);
   String phoneVibrateSetting=String.valueOf(mAudioManager.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER));
   if (!phoneVibrateSetting.equals(mPhoneVibrate.getValue()) || force) {

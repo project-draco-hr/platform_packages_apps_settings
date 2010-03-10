@@ -6,10 +6,14 @@
     try {
       mAppInfo=mPm.getApplicationInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES);
       initMoveButton();
+      mPm.getPackageSizeInfo(mAppInfo.packageName,mSizeObserver);
     }
  catch (    NameNotFoundException e) {
     }
   }
  else {
+    initMoveButton();
+    mMoveErrorCode=result;
+    showDialogInner(DLG_MOVE_FAILED);
   }
 }

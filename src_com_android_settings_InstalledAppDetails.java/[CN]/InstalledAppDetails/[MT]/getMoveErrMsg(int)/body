@@ -1,0 +1,15 @@
+{
+switch (errCode) {
+case PackageManager.MOVE_FAILED_INSUFFICIENT_STORAGE:
+    return getString(R.string.insufficient_storage);
+case PackageManager.MOVE_FAILED_DOESNT_EXIST:
+  return getString(R.string.does_not_exist);
+case PackageManager.MOVE_FAILED_FORWARD_LOCKED:
+return getString(R.string.app_forward_locked);
+case PackageManager.MOVE_FAILED_INVALID_LOCATION:
+return getString(R.string.invalid_location);
+case PackageManager.MOVE_FAILED_SYSTEM_PACKAGE:
+return getString(R.string.system_package);
+}
+return null;
+}

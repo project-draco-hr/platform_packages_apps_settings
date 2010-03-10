@@ -6,7 +6,7 @@
   if (filterOption == FILTER_APPS_SDCARD) {
     List<ApplicationInfo> appList=new ArrayList<ApplicationInfo>();
     for (    ApplicationInfo appInfo : installedAppList) {
-      if ((appInfo.flags & ApplicationInfo.FLAG_ON_SDCARD) != 0) {
+      if ((appInfo.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0) {
         appList.add(appInfo);
       }
     }

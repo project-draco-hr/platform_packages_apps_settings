@@ -4,6 +4,10 @@
     boolean isChecked=((CheckBoxPreference)preference).isChecked();
     handleEnableAccessibilityStateChange((CheckBoxPreference)preference);
   }
+ else   if (POWER_BUTTON_ENDS_CALL_CHECKBOX.equals(key)) {
+    boolean isChecked=((CheckBoxPreference)preference).isChecked();
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,(isChecked ? Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP : Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_SCREEN_OFF));
+  }
  else   if (preference instanceof CheckBoxPreference) {
     handleEnableAccessibilityServiceStateChange((CheckBoxPreference)preference);
   }

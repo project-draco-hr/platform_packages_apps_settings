@@ -1,12 +1,14 @@
 {
   if (preference.isChecked()) {
     Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,1);
+    setAccessibilityServicePreferencesState(true);
   }
  else {
     final CheckBoxPreference checkBoxPreference=preference;
     AlertDialog dialog=(new AlertDialog.Builder(this)).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getString(R.string.accessibility_service_disable_warning)).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
       public void onClick(      DialogInterface dialog,      int which){
         Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
+        setAccessibilityServicePreferencesState(false);
       }
     }
 ).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){

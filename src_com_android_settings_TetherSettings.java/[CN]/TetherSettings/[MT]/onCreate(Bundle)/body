@@ -6,6 +6,7 @@
   mUsbTether=(CheckBoxPreference)findPreference(USB_TETHER_SETTINGS);
   mTetherHelp=(PreferenceScreen)findPreference(TETHERING_HELP);
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   mUsbRegexs=cm.getTetherableUsbRegexs();
   if (mUsbRegexs.length == 0) {
     getPreferenceScreen().removePreference(mUsbTether);

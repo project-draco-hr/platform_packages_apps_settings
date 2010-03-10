@@ -76,4 +76,12 @@
     mUsbTether.setEnabled(false);
     mUsbTether.setChecked(false);
   }
+  if (wifiTethered) {
+    WifiConfiguration mWifiConfig=mWifiManager.getWifiApConfiguration();
+    String s=getString(com.android.internal.R.string.wifi_tether_configure_ssid_default);
+    mEnableWifiAp.setSummary(String.format(getString(R.string.wifi_tether_enabled_subtext),(mWifiConfig == null) ? s : mWifiConfig.SSID));
+  }
+  if (wifiErrored) {
+    mEnableWifiAp.setSummary(R.string.wifi_error);
+  }
 }

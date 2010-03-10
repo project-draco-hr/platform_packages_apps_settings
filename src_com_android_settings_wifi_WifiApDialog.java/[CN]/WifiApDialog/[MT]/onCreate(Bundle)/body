@@ -13,14 +13,18 @@
   if (mWifiConfig != null) {
     mSsid.setText(mWifiConfig.SSID);
 switch (mSecurityType) {
-case AccessPoint.SECURITY_WEP:
-      mPassword.setText(mWifiConfig.wepKeys[0]);
+case AccessPoint.SECURITY_NONE:
+      mSecurity.setSelection(OPEN_INDEX);
     break;
 case AccessPoint.SECURITY_PSK:
-  mPassword.setText(mWifiConfig.preSharedKey);
+  String str=mWifiConfig.preSharedKey;
+if (!str.matches("[0-9A-Fa-f]{64}")) {
+  str=str.substring(1,str.length() - 1);
+}
+mPassword.setText(str);
+mSecurity.setSelection(WPA_INDEX);
 break;
 }
-mSecurity.setSelection(mSecurityType);
 }
 mSsid.addTextChangedListener(this);
 mPassword.addTextChangedListener(this);

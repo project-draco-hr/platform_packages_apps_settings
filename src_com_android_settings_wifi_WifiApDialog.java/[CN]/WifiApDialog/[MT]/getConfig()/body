@@ -5,20 +5,6 @@ switch (mSecurityType) {
 case AccessPoint.SECURITY_NONE:
     config.allowedKeyManagement.set(KeyMgmt.NONE);
   return config;
-case AccessPoint.SECURITY_WEP:
-config.allowedKeyManagement.set(KeyMgmt.NONE);
-config.allowedAuthAlgorithms.set(AuthAlgorithm.SHARED);
-if (mPassword.length() != 0) {
-int length=mPassword.length();
-String password=mPassword.getText().toString();
-if ((length == 10 || length == 26 || length == 58) && password.matches("[0-9A-Fa-f]*")) {
-config.wepKeys[0]=password;
-}
- else {
-config.wepKeys[0]='"' + password + '"';
-}
-}
-return config;
 case AccessPoint.SECURITY_PSK:
 config.allowedKeyManagement.set(KeyMgmt.WPA_PSK);
 config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);

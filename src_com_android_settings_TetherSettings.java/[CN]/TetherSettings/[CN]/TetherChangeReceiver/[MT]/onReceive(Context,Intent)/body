@@ -1,6 +1,11 @@
 {
-  ArrayList<String> available=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_AVAILABLE_TETHER);
-  ArrayList<String> active=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ACTIVE_TETHER);
-  ArrayList<String> errored=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ERRORED_TETHER);
-  updateState(available.toArray(),active.toArray(),errored.toArray());
+  if (intent.getAction().equals(ConnectivityManager.ACTION_TETHER_STATE_CHANGED)) {
+    ArrayList<String> available=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_AVAILABLE_TETHER);
+    ArrayList<String> active=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ACTIVE_TETHER);
+    ArrayList<String> errored=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ERRORED_TETHER);
+    updateState(available.toArray(),active.toArray(),errored.toArray());
+  }
+ else   if (intent.getAction().equals(Intent.ACTION_MEDIA_SHARED) || intent.getAction().equals(Intent.ACTION_MEDIA_UNSHARED)) {
+    updateState();
+  }
 }

@@ -51,11 +51,6 @@
     mUsbTether.setEnabled(true);
     mUsbTether.setChecked(true);
   }
- else   if (massStorageActive) {
-    mUsbTether.setSummary(R.string.usb_tethering_storage_active_subtext);
-    mUsbTether.setEnabled(false);
-    mUsbTether.setChecked(false);
-  }
  else   if (usbAvailable) {
     if (usbError == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
       mUsbTether.setSummary(R.string.usb_tethering_available_subtext);
@@ -68,6 +63,11 @@
   }
  else   if (usbErrored) {
     mUsbTether.setSummary(R.string.usb_tethering_errored_subtext);
+    mUsbTether.setEnabled(false);
+    mUsbTether.setChecked(false);
+  }
+ else   if (massStorageActive) {
+    mUsbTether.setSummary(R.string.usb_tethering_storage_active_subtext);
     mUsbTether.setEnabled(false);
     mUsbTether.setChecked(false);
   }

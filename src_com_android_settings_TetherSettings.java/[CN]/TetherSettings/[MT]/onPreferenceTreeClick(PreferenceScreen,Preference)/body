@@ -30,5 +30,16 @@
       mUsbTether.setSummary("");
     }
   }
+ else   if (preference == mTetherHelp) {
+    Locale locale=Locale.getDefault();
+    String url=HELP_URL.replace("%y",locale.getLanguage().toLowerCase());
+    url=url.replace("%z",locale.getCountry().toLowerCase());
+    WebView view=new WebView(this);
+    view.loadUrl(url);
+    AlertDialog.Builder builder=new AlertDialog.Builder(this);
+    builder.setCancelable(true);
+    builder.setView(view);
+    builder.show();
+  }
   return false;
 }

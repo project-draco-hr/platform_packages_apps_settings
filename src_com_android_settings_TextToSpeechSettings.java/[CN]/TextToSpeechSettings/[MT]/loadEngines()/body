@@ -4,12 +4,23 @@
   ResolveInfo[] enginesArray=new ResolveInfo[0];
   PackageManager pm=getPackageManager();
   enginesArray=pm.queryIntentActivities(intent,0).toArray(enginesArray);
-  CharSequence entries[]=new CharSequence[enginesArray.length];
-  CharSequence values[]=new CharSequence[enginesArray.length];
+  ArrayList<CharSequence> entries=new ArrayList<CharSequence>();
+  ArrayList<CharSequence> values=new ArrayList<CharSequence>();
   for (int i=0; i < enginesArray.length; i++) {
-    entries[i]=enginesArray[i].loadLabel(pm);
-    values[i]=enginesArray[i].activityInfo.packageName;
+    if (enginesArray[i].activityInfo.packageName.equals(SYSTEM_TTS)) {
+      entries.add(enginesArray[i].loadLabel(pm));
+      values.add(enginesArray[i].activityInfo.packageName);
+    }
+ else {
+      CheckBoxPreference pref=(CheckBoxPreference)findPreference(KEY_PLUGIN_ENABLED_PREFIX + enginesArray[i].activityInfo.packageName);
+      if ((pref != null) && pref.isChecked()) {
+        entries.add(enginesArray[i].loadLabel(pm));
+        values.add(enginesArray[i].activityInfo.packageName);
+      }
+    }
   }
-  enginesPref.setEntries(entries);
-  enginesPref.setEntryValues(values);
+  CharSequence entriesArray[]=new CharSequence[entries.size()];
+  CharSequence valuesArray[]=new CharSequence[values.size()];
+  enginesPref.setEntries(entries.toArray(entriesArray));
+  enginesPref.setEntryValues(values.toArray(valuesArray));
 }

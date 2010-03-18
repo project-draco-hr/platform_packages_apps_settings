@@ -42,7 +42,12 @@
       getPreferenceScreen().removePreference(removablePref);
     }
   }
-  setSummaryText("number",PhoneNumberUtils.formatNumber(mPhone.getLine1Number()));
+  String rawNumber=mPhone.getLine1Number();
+  String formattedNumber=null;
+  if (!TextUtils.isEmpty(rawNumber)) {
+    formattedNumber=PhoneNumberUtils.formatNumber(rawNumber);
+  }
+  setSummaryText("number",formattedNumber);
   mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
   mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
   mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);

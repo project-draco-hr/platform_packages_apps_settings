@@ -1,0 +1,24 @@
+{
+  boolean wifiTethered=false;
+  boolean wifiErrored=false;
+  for (  Object o : tethered) {
+    String s=(String)o;
+    for (    String regex : mWifiRegexs) {
+      if (s.matches(regex))       wifiTethered=true;
+    }
+  }
+  for (  Object o : errored) {
+    String s=(String)o;
+    for (    String regex : mWifiRegexs) {
+      if (s.matches(regex))       wifiErrored=true;
+    }
+  }
+  if (wifiTethered) {
+    WifiConfiguration mWifiConfig=mWifiManager.getWifiApConfiguration();
+    String s=mContext.getString(com.android.internal.R.string.wifi_tether_configure_ssid_default);
+    mCheckBox.setSummary(String.format(mContext.getString(R.string.wifi_tether_enabled_subtext),(mWifiConfig == null) ? s : mWifiConfig.SSID));
+  }
+ else   if (wifiErrored) {
+    mCheckBox.setSummary(R.string.wifi_error);
+  }
+}

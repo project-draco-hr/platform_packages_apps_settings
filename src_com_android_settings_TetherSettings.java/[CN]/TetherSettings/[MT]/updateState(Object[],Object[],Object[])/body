@@ -4,11 +4,7 @@
   boolean usbAvailable=false;
   int usbError=ConnectivityManager.TETHER_ERROR_NO_ERROR;
   boolean usbErrored=false;
-  boolean wifiTethered=false;
-  boolean wifiAvailable=false;
-  int wifiError=ConnectivityManager.TETHER_ERROR_NO_ERROR;
   boolean massStorageActive=Environment.MEDIA_SHARED.equals(Environment.getExternalStorageState());
-  boolean wifiErrored=false;
   for (  Object o : available) {
     String s=(String)o;
     for (    String regex : mUsbRegexs) {
@@ -19,31 +15,17 @@
         }
       }
     }
-    for (    String regex : mWifiRegexs) {
-      if (s.matches(regex)) {
-        wifiAvailable=true;
-        if (wifiError == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
-          wifiError=cm.getLastTetherError(s);
-        }
-      }
-    }
   }
   for (  Object o : tethered) {
     String s=(String)o;
     for (    String regex : mUsbRegexs) {
       if (s.matches(regex))       usbTethered=true;
     }
-    for (    String regex : mWifiRegexs) {
-      if (s.matches(regex))       wifiTethered=true;
-    }
   }
   for (  Object o : errored) {
     String s=(String)o;
     for (    String regex : mUsbRegexs) {
       if (s.matches(regex))       usbErrored=true;
-    }
-    for (    String regex : mWifiRegexs) {
-      if (s.matches(regex))       wifiErrored=true;
     }
   }
   if (usbTethered) {
@@ -75,13 +57,5 @@
     mUsbTether.setSummary(R.string.usb_tethering_unavailable_subtext);
     mUsbTether.setEnabled(false);
     mUsbTether.setChecked(false);
-  }
-  if (wifiTethered) {
-    WifiConfiguration mWifiConfig=mWifiManager.getWifiApConfiguration();
-    String s=getString(com.android.internal.R.string.wifi_tether_configure_ssid_default);
-    mEnableWifiAp.setSummary(String.format(getString(R.string.wifi_tether_enabled_subtext),(mWifiConfig == null) ? s : mWifiConfig.SSID));
-  }
-  if (wifiErrored) {
-    mEnableWifiAp.setSummary(R.string.wifi_error);
   }
 }

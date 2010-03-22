@@ -28,4 +28,10 @@
   CharSequence valuesArray[]=new CharSequence[values.size()];
   enginesPref.setEntries(entries.toArray(entriesArray));
   enginesPref.setEntryValues(values.toArray(valuesArray));
+  String selectedEngine=Settings.Secure.getString(getContentResolver(),TTS_DEFAULT_SYNTH);
+  int selectedEngineIndex=enginesPref.findIndexOfValue(selectedEngine);
+  if (selectedEngineIndex == -1) {
+    selectedEngineIndex=enginesPref.findIndexOfValue(SYSTEM_TTS);
+  }
+  enginesPref.setValueIndex(selectedEngineIndex);
 }

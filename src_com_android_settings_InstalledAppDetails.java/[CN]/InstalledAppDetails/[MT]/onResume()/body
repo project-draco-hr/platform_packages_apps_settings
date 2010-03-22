@@ -1,8 +1,8 @@
 {
   super.onResume();
-  PackageInfo pkgInfo;
+  initAppInfo(mAppInfo.packageName);
+  PackageInfo pkgInfo=null;
   try {
-    mAppInfo=mPm.getApplicationInfo(mAppInfo.packageName,PackageManager.GET_UNINSTALLED_PACKAGES);
     pkgInfo=mPm.getPackageInfo(mAppInfo.packageName,PackageManager.GET_UNINSTALLED_PACKAGES);
   }
  catch (  NameNotFoundException e) {
@@ -11,5 +11,9 @@
     return;
   }
   checkForceStop();
-  refreshAppAttributes(pkgInfo);
+  setAppLabelAndIcon(pkgInfo);
+  refreshButtons();
+  if (mAppInfo != null && mAppInfo.packageName != null) {
+    mPm.getPackageSizeInfo(mAppInfo.packageName,mSizeObserver);
+  }
 }

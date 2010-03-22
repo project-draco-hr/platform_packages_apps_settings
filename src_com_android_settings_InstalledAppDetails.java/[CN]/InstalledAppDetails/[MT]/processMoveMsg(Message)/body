@@ -1,18 +1,13 @@
 {
   int result=msg.arg1;
   String packageName=mAppInfo.packageName;
+  mMoveInProgress=false;
+  refreshButtons();
   if (result == PackageManager.MOVE_SUCCEEDED) {
     Log.i(TAG,"Moved resources for " + packageName);
-    try {
-      mAppInfo=mPm.getApplicationInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES);
-      initMoveButton();
-      mPm.getPackageSizeInfo(mAppInfo.packageName,mSizeObserver);
-    }
- catch (    NameNotFoundException e) {
-    }
+    mPm.getPackageSizeInfo(mAppInfo.packageName,mSizeObserver);
   }
  else {
-    initMoveButton();
     mMoveErrorCode=result;
     showDialogInner(DLG_MOVE_FAILED);
   }

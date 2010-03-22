@@ -1,0 +1,13 @@
+{
+  if (!mMoveInProgress) {
+    initAppInfo(mAppInfo.packageName);
+    initUninstallButtons();
+    initDataButtons();
+    initMoveButton();
+  }
+ else {
+    mMoveAppButton.setText(R.string.moving);
+    mMoveAppButton.setEnabled(false);
+    mUninstallButton.setEnabled(false);
+  }
+}

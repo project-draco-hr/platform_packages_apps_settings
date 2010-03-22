@@ -1,0 +1,14 @@
+{
+switch (wifiState) {
+case WifiManager.WIFI_STATE_DISABLED:
+    return STATE_DISABLED;
+case WifiManager.WIFI_STATE_ENABLED:
+  return STATE_ENABLED;
+case WifiManager.WIFI_STATE_DISABLING:
+return STATE_TURNING_OFF;
+case WifiManager.WIFI_STATE_ENABLING:
+return STATE_TURNING_ON;
+default :
+return STATE_UNKNOWN;
+}
+}

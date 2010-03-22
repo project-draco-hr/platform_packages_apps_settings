@@ -1,10 +1,16 @@
 {
   super.onReceive(context,intent);
-  if (intent.hasCategory(Intent.CATEGORY_ALTERNATIVE)) {
+  if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())) {
+    sWifiState.onActualStateChange(context,intent);
+  }
+ else   if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
+    sBluetoothState.onActualStateChange(context,intent);
+  }
+ else   if (intent.hasCategory(Intent.CATEGORY_ALTERNATIVE)) {
     Uri data=intent.getData();
     int buttonId=Integer.parseInt(data.getSchemeSpecificPart());
     if (buttonId == BUTTON_WIFI) {
-      toggleWifi(context);
+      sWifiState.toggleState(context);
     }
  else     if (buttonId == BUTTON_BRIGHTNESS) {
       toggleBrightness(context);
@@ -16,7 +22,7 @@
       toggleGps(context);
     }
  else     if (buttonId == BUTTON_BLUETOOTH) {
-      toggleBluetooth(context);
+      sBluetoothState.toggleState(context);
     }
   }
   updateWidget(context);

@@ -1,0 +1,34 @@
+{
+  boolean wasInTransition=mInTransition;
+switch (newState) {
+case STATE_DISABLED:
+    mInTransition=false;
+  mActualState=false;
+break;
+case STATE_ENABLED:
+mInTransition=false;
+mActualState=true;
+break;
+case STATE_TURNING_ON:
+mInTransition=true;
+mActualState=false;
+break;
+case STATE_TURNING_OFF:
+mInTransition=true;
+mActualState=true;
+break;
+}
+if (wasInTransition && !mInTransition) {
+if (mDeferredStateChangeRequestNeeded) {
+Log.v(TAG,"processing deferred state change");
+if (mActualState != null && mIntendedState != null && mIntendedState.equals(mActualState)) {
+Log.v(TAG,"... but intended state matches, so no changes.");
+}
+ else if (mIntendedState != null) {
+mInTransition=true;
+requestStateChange(context,mIntendedState,false);
+}
+mDeferredStateChangeRequestNeeded=false;
+}
+}
+}

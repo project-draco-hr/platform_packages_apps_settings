@@ -1,0 +1,7 @@
+{
+  if (!BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
+    return;
+  }
+  int bluetoothState=intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,-1);
+  setCurrentState(context,bluetoothStateToFiveState(bluetoothState));
+}

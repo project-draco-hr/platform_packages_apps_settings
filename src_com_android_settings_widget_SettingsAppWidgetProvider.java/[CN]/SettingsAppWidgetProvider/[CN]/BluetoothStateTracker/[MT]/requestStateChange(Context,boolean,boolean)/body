@@ -1,0 +1,10 @@
+{
+  if (sLocalBluetoothManager == null) {
+    Log.d(TAG,"No LocalBluetoothManager");
+    return;
+  }
+  if (withToast) {
+    Toast.makeText(context,R.string.gadget_toggle_bluetooth,Toast.LENGTH_SHORT).show();
+  }
+  sLocalBluetoothManager.setBluetoothEnabled(desiredState);
+}

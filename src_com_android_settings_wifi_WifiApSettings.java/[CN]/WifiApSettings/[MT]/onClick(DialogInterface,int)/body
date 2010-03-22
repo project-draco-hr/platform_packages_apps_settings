@@ -3,5 +3,6 @@
   if (button == DialogInterface.BUTTON_POSITIVE && mWifiConfig != null) {
     mWifiManager.setWifiApEnabled(mWifiConfig,true);
     mCreateNetwork.setSummary(String.format(getString(CONFIG_SUBTEXT),mWifiConfig.SSID,mWifiConfig.allowedKeyManagement.get(KeyMgmt.WPA_PSK) ? mSecurityType[WPA_INDEX] : mSecurityType[OPEN_INDEX]));
+    mWifiApEnabler.updateConfigSummary(mWifiConfig);
   }
 }

@@ -14,9 +14,8 @@
     }
   }
   if (wifiTethered) {
-    WifiConfiguration mWifiConfig=mWifiManager.getWifiApConfiguration();
-    String s=mContext.getString(com.android.internal.R.string.wifi_tether_configure_ssid_default);
-    mCheckBox.setSummary(String.format(mContext.getString(R.string.wifi_tether_enabled_subtext),(mWifiConfig == null) ? s : mWifiConfig.SSID));
+    WifiConfiguration wifiConfig=mWifiManager.getWifiApConfiguration();
+    updateConfigSummary(wifiConfig);
   }
  else   if (wifiErrored) {
     mCheckBox.setSummary(R.string.wifi_error);

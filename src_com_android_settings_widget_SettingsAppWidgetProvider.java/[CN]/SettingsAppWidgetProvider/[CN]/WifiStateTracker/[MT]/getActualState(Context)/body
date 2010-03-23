@@ -1,0 +1,7 @@
+{
+  WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+  if (wifiManager != null) {
+    return wifiStateToFiveState(wifiManager.getWifiState());
+  }
+  return STATE_UNKNOWN;
+}

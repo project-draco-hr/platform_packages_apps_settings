@@ -1,0 +1,26 @@
+{
+  int currentState=getTriState(context);
+  boolean newState=false;
+switch (currentState) {
+case STATE_ENABLED:
+    newState=false;
+  break;
+case STATE_DISABLED:
+newState=true;
+break;
+case STATE_INTERMEDIATE:
+if (mIntendedState != null) {
+newState=!mIntendedState;
+}
+break;
+}
+mIntendedState=newState;
+if (mInTransition) {
+mDeferredStateChangeRequestNeeded=true;
+}
+ else {
+mInTransition=true;
+boolean showToast=newState;
+requestStateChange(context,newState,showToast);
+}
+}

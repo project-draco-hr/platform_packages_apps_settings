@@ -1,0 +1,7 @@
+{
+  if (!WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())) {
+    return;
+  }
+  int wifiState=intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,-1);
+  setCurrentState(context,wifiStateToFiveState(wifiState));
+}

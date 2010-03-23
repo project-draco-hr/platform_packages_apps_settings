@@ -1,5 +1,5 @@
 {
-switch (getWifiState(context)) {
+switch (sWifiState.getTriState(context)) {
 case STATE_DISABLED:
     views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_off);
   views.setImageViewResource(R.id.ind_wifi,R.drawable.appwidget_settings_ind_off_l);
@@ -9,8 +9,14 @@ views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_o
 views.setImageViewResource(R.id.ind_wifi,R.drawable.appwidget_settings_ind_on_l);
 break;
 case STATE_INTERMEDIATE:
-views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_off);
+if (sWifiState.isTurningOn()) {
+views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_on);
 views.setImageViewResource(R.id.ind_wifi,R.drawable.appwidget_settings_ind_mid_l);
+}
+ else {
+views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_off);
+views.setImageViewResource(R.id.ind_wifi,R.drawable.appwidget_settings_ind_off_l);
+}
 break;
 }
 if (getBrightnessMode(context)) {
@@ -41,7 +47,7 @@ views.setImageViewResource(R.id.ind_gps,R.drawable.appwidget_settings_ind_on_c);
 views.setImageViewResource(R.id.img_gps,R.drawable.ic_appwidget_settings_gps_off);
 views.setImageViewResource(R.id.ind_gps,R.drawable.appwidget_settings_ind_off_c);
 }
-switch (getBluetoothState(context)) {
+switch (sBluetoothState.getTriState(context)) {
 case STATE_DISABLED:
 views.setImageViewResource(R.id.img_bluetooth,R.drawable.ic_appwidget_settings_bluetooth_off);
 views.setImageViewResource(R.id.ind_bluetooth,R.drawable.appwidget_settings_ind_off_c);
@@ -51,8 +57,14 @@ views.setImageViewResource(R.id.img_bluetooth,R.drawable.ic_appwidget_settings_b
 views.setImageViewResource(R.id.ind_bluetooth,R.drawable.appwidget_settings_ind_on_c);
 break;
 case STATE_INTERMEDIATE:
-views.setImageViewResource(R.id.img_bluetooth,R.drawable.ic_appwidget_settings_bluetooth_off);
+if (sBluetoothState.isTurningOn()) {
+views.setImageViewResource(R.id.img_bluetooth,R.drawable.ic_appwidget_settings_bluetooth_on);
 views.setImageViewResource(R.id.ind_bluetooth,R.drawable.appwidget_settings_ind_mid_c);
+}
+ else {
+views.setImageViewResource(R.id.img_bluetooth,R.drawable.ic_appwidget_settings_bluetooth_off);
+views.setImageViewResource(R.id.ind_bluetooth,R.drawable.appwidget_settings_ind_off_c);
+}
 break;
 }
 }

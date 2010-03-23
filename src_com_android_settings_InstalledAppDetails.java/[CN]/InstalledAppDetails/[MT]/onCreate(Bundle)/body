@@ -8,14 +8,7 @@
   totalSizeStr=appSizeStr=dataSizeStr=mComputingStr;
   if (localLOGV)   Log.i(TAG,"Have to compute package sizes");
   mSizeObserver=new PkgSizeObserver();
-  try {
-    mAppInfo=mPm.getApplicationInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES);
-  }
- catch (  NameNotFoundException e) {
-    Log.e(TAG,"Exception when retrieving package:" + packageName,e);
-    showDialogInner(DLG_APP_NOT_FOUND);
-    return;
-  }
+  initAppInfo(packageName);
   setContentView(R.layout.installed_app_details);
   mTotalSize=(TextView)findViewById(R.id.total_size_text);
   mTotalSize.setText(totalSizeStr);
@@ -28,7 +21,6 @@
   mForceStopButton.setText(R.string.force_stop);
   mUninstallButton=(Button)btnPanel.findViewById(R.id.right_button);
   mForceStopButton.setEnabled(false);
-  initControlButtons();
   View data_buttons_panel=findViewById(R.id.data_buttons_panel);
   mClearDataButton=(Button)data_buttons_panel.findViewById(R.id.left_button);
   mMoveAppButton=(Button)data_buttons_panel.findViewById(R.id.right_button);

@@ -36,8 +36,8 @@
       mPackageMoveObserver=new PackageMoveObserver();
     }
     int moveFlags=(mAppInfo.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0 ? PackageManager.MOVE_INTERNAL : PackageManager.MOVE_EXTERNAL_MEDIA;
-    mMoveAppButton.setText(R.string.moving);
-    mMoveAppButton.setEnabled(false);
+    mMoveInProgress=true;
+    refreshButtons();
     mPm.movePackage(mAppInfo.packageName,mPackageMoveObserver,moveFlags);
   }
 }

@@ -1,4 +1,6 @@
 {
-  mState=state;
-  mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+synchronized (state.mLock) {
+    mState=state;
+    mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  }
 }

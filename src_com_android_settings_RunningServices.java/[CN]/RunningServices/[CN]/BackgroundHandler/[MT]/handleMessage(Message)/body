@@ -1,0 +1,12 @@
+{
+switch (msg.what) {
+case MSG_UPDATE_CONTENTS:
+    Message cmd=mHandler.obtainMessage(MSG_REFRESH_UI);
+  cmd.arg1=mState.update(RunningServices.this,mAm) ? 1 : 0;
+mHandler.sendMessage(cmd);
+removeMessages(MSG_UPDATE_CONTENTS);
+msg=obtainMessage(MSG_UPDATE_CONTENTS);
+sendMessageDelayed(msg,CONTENTS_UPDATE_DELAY);
+break;
+}
+}

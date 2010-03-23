@@ -1,3 +1,5 @@
 {
-  return mState.mItems.get(position);
+synchronized (mState.mLock) {
+    return mState.mItems.get(position);
+  }
 }

@@ -121,13 +121,13 @@
     }
   }
   if (changed) {
-    mItems.clear();
+    ArrayList<BaseItem> newItems=new ArrayList<BaseItem>();
     mProcessItems.clear();
     for (int i=0; i < mProcesses.size(); i++) {
       for (      ProcessItem pi : mProcesses.valueAt(i).values()) {
         pi.mNeedDivider=false;
-        pi.addDependentProcesses(mItems,mProcessItems);
-        mItems.add(pi);
+        pi.addDependentProcesses(newItems,mProcessItems);
+        newItems.add(pi);
         if (pi.mPid > 0) {
           mProcessItems.add(pi);
         }
@@ -135,26 +135,29 @@
         for (        ServiceItem si : pi.mServices.values()) {
           si.mNeedDivider=needDivider;
           needDivider=true;
-          mItems.add(si);
+          newItems.add(si);
         }
       }
+    }
+synchronized (mLock) {
+      mItems=newItems;
     }
   }
   mAllProcessItems.clear();
   mAllProcessItems.addAll(mProcessItems);
-  mNumBackgroundProcesses=0;
-  mNumForegroundProcesses=0;
-  mNumServiceProcesses=0;
+  int numBackgroundProcesses=0;
+  int numForegroundProcesses=0;
+  int numServiceProcesses=0;
   NRP=mRunningProcesses.size();
   for (int i=0; i < NRP; i++) {
     ProcessItem proc=mRunningProcesses.valueAt(i);
     if (proc.mCurSeq != mSequence) {
       if (proc.mRunningProcessInfo.importance >= ActivityManager.RunningAppProcessInfo.IMPORTANCE_BACKGROUND) {
-        mNumBackgroundProcesses++;
+        numBackgroundProcesses++;
         mAllProcessItems.add(proc);
       }
  else       if (proc.mRunningProcessInfo.importance <= ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE) {
-        mNumForegroundProcesses++;
+        numForegroundProcesses++;
         mAllProcessItems.add(proc);
       }
  else {
@@ -162,13 +165,13 @@
       }
     }
  else {
-      mNumServiceProcesses++;
+      numServiceProcesses++;
     }
   }
+  long backgroundProcessMemory=0;
+  long foregroundProcessMemory=0;
+  long serviceProcessMemory=0;
   try {
-    mBackgroundProcessMemory=0;
-    mForegroundProcessMemory=0;
-    mServiceProcessMemory=0;
     final int numProc=mAllProcessItems.size();
     int[] pids=new int[numProc];
     for (int i=0; i < numProc; i++) {
@@ -179,17 +182,25 @@
       ProcessItem proc=mAllProcessItems.get(i);
       changed|=proc.updateSize(context,mem[i],mSequence);
       if (proc.mCurSeq == mSequence) {
-        mServiceProcessMemory+=proc.mSize;
+        serviceProcessMemory+=proc.mSize;
       }
  else       if (proc.mRunningProcessInfo.importance >= ActivityManager.RunningAppProcessInfo.IMPORTANCE_BACKGROUND) {
-        mBackgroundProcessMemory+=proc.mSize;
+        backgroundProcessMemory+=proc.mSize;
       }
  else       if (proc.mRunningProcessInfo.importance <= ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE) {
-        mForegroundProcessMemory+=proc.mSize;
+        foregroundProcessMemory+=proc.mSize;
       }
     }
   }
  catch (  RemoteException e) {
+  }
+synchronized (mLock) {
+    mNumBackgroundProcesses=numBackgroundProcesses;
+    mNumForegroundProcesses=numForegroundProcesses;
+    mNumServiceProcesses=numServiceProcesses;
+    mBackgroundProcessMemory=backgroundProcessMemory;
+    mForegroundProcessMemory=foregroundProcessMemory;
+    mServiceProcessMemory=serviceProcessMemory;
   }
   return changed;
 }

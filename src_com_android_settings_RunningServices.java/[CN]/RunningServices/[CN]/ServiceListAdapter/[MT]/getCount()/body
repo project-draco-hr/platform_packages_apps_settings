@@ -1,3 +1,5 @@
 {
-  return mState.mItems.size();
+synchronized (mState.mLock) {
+    return mState.mItems.size();
+  }
 }

@@ -50,7 +50,7 @@ config.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
 config.eap.setValue((String)mEapMethod.getSelectedItem());
 config.ca_cert.setValue((mEapCaCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.CA_CERTIFICATE + (String)mEapCaCert.getSelectedItem());
 config.client_cert.setValue((mEapUserCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_CERTIFICATE + (String)mEapUserCert.getSelectedItem());
-config.private_key.setValue((mEapUserCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.PRIVATE_KEY + (String)mEapUserCert.getSelectedItem());
+config.private_key.setValue((mEapUserCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_PRIVATE_KEY + (String)mEapUserCert.getSelectedItem());
 config.identity.setValue((mEapIdentity.length() == 0) ? "" : mEapIdentity.getText().toString());
 config.anonymous_identity.setValue((mEapAnonymous.length() == 0) ? "" : mEapAnonymous.getText().toString());
 if (mPassword.length() != 0) {

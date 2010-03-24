@@ -1,4 +1,8 @@
 {
+  int wifiState=mWifiManager.getWifiState();
+  if ((Boolean)enable && ((wifiState == WifiManager.WIFI_STATE_ENABLING) || (wifiState == WifiManager.WIFI_STATE_ENABLED))) {
+    mWifiManager.setWifiEnabled(false);
+  }
   if (mWifiManager.setWifiApEnabled(null,(Boolean)enable)) {
     mCheckBox.setEnabled(false);
   }

@@ -1,6 +1,7 @@
 {
   super.onPause();
   StringBuilder builder=new StringBuilder(256);
+  StringBuilder disabledSysImes=new StringBuilder(256);
   int firstEnabled=-1;
   int N=mInputMethodProperties.size();
   for (int i=0; i < N; ++i) {
@@ -19,6 +20,10 @@
  else     if (hasIt) {
       mLastInputMethodId=mLastTickedInputMethodId;
     }
+    if (pref != null && !pref.isChecked() && systemIme && mHaveHardKeyboard) {
+      if (disabledSysImes.length() > 0)       disabledSysImes.append(":");
+      disabledSysImes.append(id);
+    }
   }
   if (null == mLastInputMethodId || "".equals(mLastInputMethodId)) {
     if (firstEnabled >= 0) {
@@ -29,5 +34,6 @@
     }
   }
   Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_INPUT_METHODS,builder.toString());
+  Settings.Secure.putString(getContentResolver(),Settings.Secure.DISABLED_SYSTEM_INPUT_METHODS,disabledSysImes.toString());
   Settings.Secure.putString(getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD,mLastInputMethodId != null ? mLastInputMethodId : "");
 }

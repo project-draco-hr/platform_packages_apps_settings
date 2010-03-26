@@ -9,7 +9,7 @@
   mPasswordEntry=(TextView)findViewById(R.id.password_entry);
   mPasswordEntry.setOnEditorActionListener(this);
   mPasswordEntry.addTextChangedListener(this);
-  mIsAlphaMode=LockPatternUtils.MODE_PASSWORD == mRequestedMode;
+  mIsAlphaMode=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == mRequestedQuality || DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == mRequestedQuality;
   mKeyboardHelper=new PasswordEntryKeyboardHelper(this,mKeyboardView,mPasswordEntry);
   mKeyboardHelper.setKeyboardMode(mIsAlphaMode ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
   mHeaderText=(TextView)findViewById(R.id.headerText);

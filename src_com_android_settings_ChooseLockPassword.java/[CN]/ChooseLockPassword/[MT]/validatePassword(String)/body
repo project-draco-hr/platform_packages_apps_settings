@@ -1,15 +1,15 @@
 {
-  if (pin.length() < mPasswordMinLength) {
+  if (password.length() < mPasswordMinLength) {
     return getString(mIsAlphaMode ? R.string.lockpassword_password_too_short : R.string.lockpassword_pin_too_short,mPasswordMinLength);
   }
-  if (pin.length() > mPasswordMaxLength) {
+  if (password.length() > mPasswordMaxLength) {
     return getString(mIsAlphaMode ? R.string.lockpassword_password_too_long : R.string.lockpassword_pin_too_long,mPasswordMaxLength);
   }
   boolean hasAlpha=false;
   boolean hasDigit=false;
   boolean hasSymbol=false;
-  for (int i=0; i < pin.length(); i++) {
-    char c=pin.charAt(i);
+  for (int i=0; i < password.length(); i++) {
+    char c=password.charAt(i);
     if (c <= 32 || c > 127) {
       return getString(R.string.lockpassword_illegal_character);
     }
@@ -23,11 +23,22 @@
       hasSymbol=true;
     }
   }
-  if (LockPatternUtils.MODE_PIN == mRequestedMode && (hasAlpha | hasSymbol)) {
+  if (DevicePolicyManager.PASSWORD_QUALITY_NUMERIC == mRequestedQuality && (hasAlpha | hasSymbol)) {
     return getString(R.string.lockpassword_pin_contains_non_digits);
   }
- else   if (LockPatternUtils.MODE_PASSWORD == mRequestedMode && !hasAlpha) {
-    return getString(R.string.lockpassword_password_requires_alpha);
+ else {
+    final boolean alphabetic=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == mRequestedQuality;
+    final boolean alphanumeric=DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == mRequestedQuality;
+    final boolean symbolic=false;
+    if ((alphabetic || alphanumeric) && !hasAlpha) {
+      return getString(R.string.lockpassword_password_requires_alpha);
+    }
+    if (alphanumeric && !hasDigit) {
+      return getString(R.string.lockpassword_password_requires_digit);
+    }
+    if (symbolic && !hasSymbol) {
+      return getString(R.string.lockpassword_password_requires_symbol);
+    }
   }
   return null;
 }

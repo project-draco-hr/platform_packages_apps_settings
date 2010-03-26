@@ -13,56 +13,58 @@
     addPreferencesFromResource(R.xml.security_settings_chooser);
   }
  else {
-    final int currentMode=mLockPatternUtils.getPasswordMode();
-    if (currentMode == LockPatternUtils.MODE_PATTERN) {
+switch (mLockPatternUtils.getKeyguardStoredPasswordQuality()) {
+case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
       addPreferencesFromResource(R.xml.security_settings_pattern);
-    }
- else     if (currentMode == LockPatternUtils.MODE_PIN) {
-      addPreferencesFromResource(R.xml.security_settings_pin);
-    }
- else     if (currentMode == LockPatternUtils.MODE_PASSWORD) {
-      addPreferencesFromResource(R.xml.security_settings_password);
-    }
-  }
-  mDisableUnlock=(PreferenceScreen)pm.findPreference(KEY_UNLOCK_METHOD_DISABLE);
-  mChangeCurrent=(PreferenceScreen)pm.findPreference(KEY_UNLOCK_METHOD_CHANGE_CURRENT);
-  mVisiblePattern=(CheckBoxPreference)pm.findPreference(KEY_VISIBLE_PATTERN);
-  mTactileFeedback=(CheckBoxPreference)pm.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
-  int activePhoneType=TelephonyManager.getDefault().getPhoneType();
-  if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
-    PreferenceScreen simLockPreferences=getPreferenceManager().createPreferenceScreen(this);
-    simLockPreferences.setTitle(R.string.sim_lock_settings_category);
-    simLockPreferences.setIntent(new Intent().setClassName(PACKAGE,ICC_LOCK_SETTINGS));
-    PreferenceCategory simLockCat=new PreferenceCategory(this);
-    simLockCat.setTitle(R.string.sim_lock_settings_title);
-    root.addPreference(simLockCat);
-    simLockCat.addPreference(simLockPreferences);
-  }
-  PreferenceCategory passwordsCat=new PreferenceCategory(this);
-  passwordsCat.setTitle(R.string.security_passwords_title);
-  root.addPreference(passwordsCat);
-  CheckBoxPreference showPassword=mShowPassword=new CheckBoxPreference(this);
-  showPassword.setKey("show_password");
-  showPassword.setTitle(R.string.show_password);
-  showPassword.setSummary(R.string.show_password_summary);
-  showPassword.setPersistent(false);
-  passwordsCat.addPreference(showPassword);
-  PreferenceCategory devicePoliciesCat=new PreferenceCategory(this);
-  devicePoliciesCat.setTitle(R.string.device_admin_title);
-  root.addPreference(devicePoliciesCat);
-  Preference deviceAdminButton=new Preference(this);
-  deviceAdminButton.setTitle(R.string.manage_device_admin);
-  deviceAdminButton.setSummary(R.string.manage_device_admin_summary);
-  Intent deviceAdminIntent=new Intent();
-  deviceAdminIntent.setClass(this,DeviceAdminSettings.class);
-  deviceAdminButton.setIntent(deviceAdminIntent);
-  devicePoliciesCat.addPreference(deviceAdminButton);
-  PreferenceCategory credentialsCat=new PreferenceCategory(this);
-  credentialsCat.setTitle(R.string.credentials_category);
-  root.addPreference(credentialsCat);
-  mCredentialStorage.createPreferences(credentialsCat,CredentialStorage.TYPE_KEYSTORE);
-  PreferenceCategory encryptedfsCat=new PreferenceCategory(this);
-  encryptedfsCat.setTitle(R.string.encrypted_fs_category);
-  mCredentialStorage.createPreferences(encryptedfsCat,CredentialStorage.TYPE_ENCRYPTEDFS);
-  return root;
+    break;
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+  addPreferencesFromResource(R.xml.security_settings_pin);
+break;
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
+addPreferencesFromResource(R.xml.security_settings_password);
+break;
+}
+}
+mDisableUnlock=(PreferenceScreen)pm.findPreference(KEY_UNLOCK_METHOD_DISABLE);
+mChangeCurrent=(PreferenceScreen)pm.findPreference(KEY_UNLOCK_METHOD_CHANGE_CURRENT);
+mVisiblePattern=(CheckBoxPreference)pm.findPreference(KEY_VISIBLE_PATTERN);
+mTactileFeedback=(CheckBoxPreference)pm.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
+int activePhoneType=TelephonyManager.getDefault().getPhoneType();
+if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
+PreferenceScreen simLockPreferences=getPreferenceManager().createPreferenceScreen(this);
+simLockPreferences.setTitle(R.string.sim_lock_settings_category);
+simLockPreferences.setIntent(new Intent().setClassName(PACKAGE,ICC_LOCK_SETTINGS));
+PreferenceCategory simLockCat=new PreferenceCategory(this);
+simLockCat.setTitle(R.string.sim_lock_settings_title);
+root.addPreference(simLockCat);
+simLockCat.addPreference(simLockPreferences);
+}
+PreferenceCategory passwordsCat=new PreferenceCategory(this);
+passwordsCat.setTitle(R.string.security_passwords_title);
+root.addPreference(passwordsCat);
+CheckBoxPreference showPassword=mShowPassword=new CheckBoxPreference(this);
+showPassword.setKey("show_password");
+showPassword.setTitle(R.string.show_password);
+showPassword.setSummary(R.string.show_password_summary);
+showPassword.setPersistent(false);
+passwordsCat.addPreference(showPassword);
+PreferenceCategory devicePoliciesCat=new PreferenceCategory(this);
+devicePoliciesCat.setTitle(R.string.device_admin_title);
+root.addPreference(devicePoliciesCat);
+Preference deviceAdminButton=new Preference(this);
+deviceAdminButton.setTitle(R.string.manage_device_admin);
+deviceAdminButton.setSummary(R.string.manage_device_admin_summary);
+Intent deviceAdminIntent=new Intent();
+deviceAdminIntent.setClass(this,DeviceAdminSettings.class);
+deviceAdminButton.setIntent(deviceAdminIntent);
+devicePoliciesCat.addPreference(deviceAdminButton);
+PreferenceCategory credentialsCat=new PreferenceCategory(this);
+credentialsCat.setTitle(R.string.credentials_category);
+root.addPreference(credentialsCat);
+mCredentialStorage.createPreferences(credentialsCat,CredentialStorage.TYPE_KEYSTORE);
+PreferenceCategory encryptedfsCat=new PreferenceCategory(this);
+encryptedfsCat.setTitle(R.string.encrypted_fs_category);
+mCredentialStorage.createPreferences(encryptedfsCat,CredentialStorage.TYPE_ENCRYPTEDFS);
+return root;
 }

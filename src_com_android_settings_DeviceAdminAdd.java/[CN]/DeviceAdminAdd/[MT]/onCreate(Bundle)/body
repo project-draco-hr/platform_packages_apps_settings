@@ -2,6 +2,11 @@
   super.onCreate(icicle);
   mHandler=new Handler(getMainLooper());
   mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_NEW_TASK) != 0) {
+    Log.w(TAG,"Can now start ADD_DEVICE_ADMIN as a new task");
+    finish();
+    return;
+  }
   ComponentName cn=(ComponentName)getIntent().getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
   if (cn == null) {
     Log.w(TAG,"No component specified in " + getIntent().getAction());

@@ -6,14 +6,13 @@
     updatePackageList(actionStr,pkgName);
   }
  else   if (Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE.equals(actionStr) || Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE.equals(actionStr)) {
-    boolean available=Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE.equals(actionStr);
     String pkgList[]=intent.getStringArrayExtra(Intent.EXTRA_CHANGED_PACKAGE_LIST);
     if (pkgList == null || pkgList.length == 0) {
       return;
     }
-    String msg=available ? Intent.ACTION_PACKAGE_ADDED : Intent.ACTION_PACKAGE_REMOVED;
     for (    String pkgName : pkgList) {
-      updatePackageList(msg,pkgName);
+      updatePackageList(Intent.ACTION_PACKAGE_REMOVED,pkgName);
+      updatePackageList(Intent.ACTION_PACKAGE_ADDED,pkgName);
     }
   }
 }

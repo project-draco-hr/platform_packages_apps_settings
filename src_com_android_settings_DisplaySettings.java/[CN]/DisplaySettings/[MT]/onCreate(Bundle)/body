@@ -10,4 +10,5 @@
   ListPreference screenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
   screenTimeoutPreference.setValue(String.valueOf(Settings.System.getInt(resolver,SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE)));
   screenTimeoutPreference.setOnPreferenceChangeListener(this);
+  disableUnusableTimeouts(screenTimeoutPreference);
 }

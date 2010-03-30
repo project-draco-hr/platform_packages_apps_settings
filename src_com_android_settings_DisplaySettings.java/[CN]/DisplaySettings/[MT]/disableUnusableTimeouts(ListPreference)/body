@@ -1,0 +1,24 @@
+{
+  DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  long maxTimeout=dpm != null ? dpm.getMaximumTimeToLock(null) : 0;
+  if (maxTimeout == 0) {
+    return;
+  }
+  final CharSequence[] entries=screenTimeoutPreference.getEntries();
+  final CharSequence[] values=screenTimeoutPreference.getEntryValues();
+  ArrayList<CharSequence> revisedEntries=new ArrayList<CharSequence>();
+  ArrayList<CharSequence> revisedValues=new ArrayList<CharSequence>();
+  for (int i=0; i < values.length; i++) {
+    long timeout=Long.valueOf(values[i].toString());
+    if (timeout <= maxTimeout) {
+      revisedEntries.add(entries[i]);
+      revisedValues.add(values[i]);
+    }
+  }
+  if (revisedEntries.size() != entries.length || revisedValues.size() != values.length) {
+    screenTimeoutPreference.setEntries(revisedEntries.toArray(new CharSequence[revisedEntries.size()]));
+    screenTimeoutPreference.setEntryValues(revisedValues.toArray(new CharSequence[revisedValues.size()]));
+    screenTimeoutPreference.setValue(String.valueOf(maxTimeout));
+  }
+  screenTimeoutPreference.setEnabled(revisedEntries.size() > 0);
+}

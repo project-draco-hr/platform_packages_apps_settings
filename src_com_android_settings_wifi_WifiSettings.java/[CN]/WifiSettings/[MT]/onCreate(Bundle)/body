@@ -1,6 +1,14 @@
 {
   super.onCreate(savedInstanceState);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
+  mEnableNextOnConnection=getIntent().getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
+  if (mEnableNextOnConnection && hasNextButton()) {
+    ConnectivityManager connectivity=(ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (connectivity != null) {
+      NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+      getNextButton().setEnabled(info.isConnected());
+    }
+  }
   if (getIntent().getBooleanExtra("only_access_points",false)) {
     addPreferencesFromResource(R.xml.wifi_access_points);
   }

@@ -121,22 +121,42 @@
     }
   }
   if (changed) {
-    ArrayList<BaseItem> newItems=new ArrayList<BaseItem>();
-    mProcessItems.clear();
+    ArrayList<ProcessItem> sortedProcesses=new ArrayList<ProcessItem>();
     for (int i=0; i < mProcesses.size(); i++) {
       for (      ProcessItem pi : mProcesses.valueAt(i).values()) {
-        pi.mNeedDivider=false;
-        pi.addDependentProcesses(newItems,mProcessItems);
-        newItems.add(pi);
-        if (pi.mPid > 0) {
-          mProcessItems.add(pi);
-        }
-        boolean needDivider=false;
+        pi.mIsSystem=false;
+        pi.mIsStarted=true;
+        pi.mActiveSince=Long.MAX_VALUE;
         for (        ServiceItem si : pi.mServices.values()) {
-          si.mNeedDivider=needDivider;
-          needDivider=true;
-          newItems.add(si);
+          if (si.mServiceInfo != null && (si.mServiceInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+            pi.mIsSystem=true;
+          }
+          if (si.mRunningService != null && si.mRunningService.clientLabel != 0) {
+            pi.mIsStarted=false;
+            if (pi.mActiveSince > si.mRunningService.activeSince) {
+              pi.mActiveSince=si.mRunningService.activeSince;
+            }
+          }
         }
+        sortedProcesses.add(pi);
+      }
+    }
+    Collections.sort(sortedProcesses,mServiceProcessComparator);
+    ArrayList<BaseItem> newItems=new ArrayList<BaseItem>();
+    mProcessItems.clear();
+    for (int i=0; i < sortedProcesses.size(); i++) {
+      ProcessItem pi=sortedProcesses.get(i);
+      pi.mNeedDivider=false;
+      pi.addDependentProcesses(newItems,mProcessItems);
+      newItems.add(pi);
+      if (pi.mPid > 0) {
+        mProcessItems.add(pi);
+      }
+      boolean needDivider=false;
+      for (      ServiceItem si : pi.mServices.values()) {
+        si.mNeedDivider=needDivider;
+        needDivider=true;
+        newItems.add(si);
       }
     }
 synchronized (mLock) {

@@ -1,6 +1,8 @@
 {
   if (dataChanged) {
-    ((ServiceListAdapter)(getListView().getAdapter())).notifyDataSetChanged();
+    ServiceListAdapter adapter=(ServiceListAdapter)(getListView().getAdapter());
+    adapter.refreshItems();
+    adapter.notifyDataSetChanged();
   }
   long availMem=readAvailMem() - SECONDARY_SERVER_MEM;
   if (availMem < 0) {

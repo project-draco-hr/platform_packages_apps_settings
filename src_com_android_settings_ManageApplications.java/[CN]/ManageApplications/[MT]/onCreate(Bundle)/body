@@ -26,7 +26,7 @@
   mRootView=mInflater.inflate(R.layout.compute_sizes,null);
   mReceiver=new PackageIntentReceiver();
   mObserver=new PkgSizeObserver();
-  List<ApplicationInfo> appList=getInstalledApps(mSortOrder);
+  List<ApplicationInfo> appList=getInstalledApps(FILTER_APPS_ALL);
   mAppInfoAdapter=new AppInfoAdapter(this,appList);
   ListView lv=(ListView)mRootView.findViewById(android.R.id.list);
   lv.setOnItemClickListener(this);

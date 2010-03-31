@@ -1,10 +1,10 @@
 {
 synchronized (mState.mLock) {
     ViewHolder vh=(ViewHolder)view.getTag();
-    if (position >= mState.mItems.size()) {
+    if (position >= mItems.size()) {
       return;
     }
-    BaseItem item=mState.mItems.get(position);
+    BaseItem item=mItems.get(position);
     vh.name.setText(item.mDisplayLabel);
     vh.separator.setVisibility(item.mNeedDivider ? View.VISIBLE : View.INVISIBLE);
     ActiveItem ai=new ActiveItem();

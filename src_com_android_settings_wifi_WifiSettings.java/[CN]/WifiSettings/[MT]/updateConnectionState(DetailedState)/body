@@ -13,6 +13,7 @@
     ((AccessPoint)mAccessPoints.getPreference(i)).update(mLastInfo,mLastState);
   }
   if (mResetNetworks && (state == DetailedState.CONNECTED || state == DetailedState.DISCONNECTED || state == DetailedState.FAILED)) {
+    updateAccessPoints();
     enableNetworks();
   }
 }

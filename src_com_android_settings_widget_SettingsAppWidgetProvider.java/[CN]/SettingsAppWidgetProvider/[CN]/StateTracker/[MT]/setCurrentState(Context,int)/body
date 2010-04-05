@@ -1,5 +1,5 @@
 {
-  boolean wasInTransition=mInTransition;
+  final boolean wasInTransition=mInTransition;
 switch (newState) {
 case STATE_DISABLED:
     mInTransition=false;
@@ -26,7 +26,7 @@ Log.v(TAG,"... but intended state matches, so no changes.");
 }
  else if (mIntendedState != null) {
 mInTransition=true;
-requestStateChange(context,mIntendedState,false);
+requestStateChange(context,mIntendedState);
 }
 mDeferredStateChangeRequestNeeded=false;
 }

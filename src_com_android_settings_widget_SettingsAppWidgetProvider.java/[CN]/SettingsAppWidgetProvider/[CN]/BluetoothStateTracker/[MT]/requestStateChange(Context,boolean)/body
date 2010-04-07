@@ -1,0 +1,13 @@
+{
+  if (sLocalBluetoothManager == null) {
+    Log.d(TAG,"No LocalBluetoothManager");
+    return;
+  }
+  new AsyncTask<Void,Void,Void>(){
+    @Override protected Void doInBackground(    Void... args){
+      sLocalBluetoothManager.setBluetoothEnabled(desiredState);
+      return null;
+    }
+  }
+.execute();
+}

@@ -31,25 +31,7 @@
     }
   }
  else   if (preference == mTetherHelp) {
-    Locale locale=Locale.getDefault();
-    String url=HELP_URL.replace("%y",locale.getLanguage().toLowerCase());
-    url=url.replace("%z",locale.getCountry().toLowerCase());
-    if ((mUsbRegexs.length != 0) && (mWifiRegexs.length == 0)) {
-      url=url.replace("%x",USB_HELP_MODIFIER);
-    }
- else     if ((mWifiRegexs.length != 0) && (mUsbRegexs.length == 0)) {
-      url=url.replace("%x",WIFI_HELP_MODIFIER);
-    }
- else {
-      url=url.replace("%x","");
-    }
-    WebView view=new WebView(this);
-    view.loadUrl(url);
-    AlertDialog.Builder builder=new AlertDialog.Builder(this);
-    builder.setCancelable(true);
-    builder.setTitle(R.string.tethering_help_button_text);
-    builder.setView(view);
-    builder.show();
+    showDialog(DIALOG_TETHER_HELP);
   }
   return false;
 }

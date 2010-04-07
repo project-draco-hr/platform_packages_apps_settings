@@ -42,9 +42,9 @@ break;
 case MSG_TYPE_UNDOCKED_PERMANENT:
 handleUndocked(mContext,mBtManager,device);
 if (DEBUG) {
-Log.d(TAG,"DISABLE_BT_WHEN_UNDOCKED = " + getSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED));
+Log.d(TAG,"DISABLE_BT_WHEN_UNDOCKED = " + getSettingBool(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED));
 }
-if (getSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED)) {
+if (getSettingBool(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED)) {
 if (!hasOtherConnectedDevices(device)) {
 if (DEBUG) Log.d(TAG,"QUEUED BT DISABLE");
 Message newMsg=mServiceHandler.obtainMessage(MSG_TYPE_DISABLE_BT,0,startId,null);
@@ -66,7 +66,7 @@ if (mBtManager.getBluetoothAdapter().disable()) {
 removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED);
 }
  else {
-setSetting(SHARED_PREFERENCES_KEY_DISABLE_BT,true);
+setSettingBool(SHARED_PREFERENCES_KEY_DISABLE_BT,true);
 mPendingTurnOffStartId=startId;
 deferFinishCall=true;
 if (DEBUG) Log.d(TAG,"disable failed. try again later " + startId);

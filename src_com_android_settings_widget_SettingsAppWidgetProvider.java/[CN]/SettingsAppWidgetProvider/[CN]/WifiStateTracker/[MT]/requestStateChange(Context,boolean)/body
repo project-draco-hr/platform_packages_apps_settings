@@ -1,0 +1,18 @@
+{
+  final WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+  if (wifiManager == null) {
+    Log.d(TAG,"No wifiManager.");
+    return;
+  }
+  new AsyncTask<Void,Void,Void>(){
+    @Override protected Void doInBackground(    Void... args){
+      int wifiApState=wifiManager.getWifiApState();
+      if (desiredState && ((wifiApState == WifiManager.WIFI_AP_STATE_ENABLING) || (wifiApState == WifiManager.WIFI_AP_STATE_ENABLED))) {
+        wifiManager.setWifiApEnabled(null,false);
+      }
+      wifiManager.setWifiEnabled(desiredState);
+      return null;
+    }
+  }
+.execute();
+}

@@ -16,7 +16,7 @@ synchronized (this) {
       }
  else {
         if (DEBUG) {
-          Log.d(TAG,"A DISABLE_BT_WHEN_UNDOCKED = " + getSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED));
+          Log.d(TAG,"A DISABLE_BT_WHEN_UNDOCKED = " + getSettingBool(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED));
         }
         Intent i=registerReceiver(null,new IntentFilter(Intent.ACTION_DOCK_EVENT));
         if (i != null) {
@@ -27,7 +27,7 @@ synchronized (this) {
               connectIfEnabled(device);
             }
           }
- else           if (getSetting(SHARED_PREFERENCES_KEY_DISABLE_BT) && mBtManager.getBluetoothAdapter().disable()) {
+ else           if (getSettingBool(SHARED_PREFERENCES_KEY_DISABLE_BT) && mBtManager.getBluetoothAdapter().disable()) {
             mPendingTurnOffStartId=startId;
             removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT);
             return;

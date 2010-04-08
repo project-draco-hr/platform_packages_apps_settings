@@ -19,11 +19,29 @@
     moveDisable=false;
   }
  else {
-    moveDisable=(mAppInfo.flags & ApplicationInfo.FLAG_FORWARD_LOCK) != 0 || (mAppInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
     mMoveAppButton.setText(R.string.move_app_to_sdcard);
-  }
-  if (pkgInfo != null && pkgInfo.installLocation == PackageInfo.INSTALL_LOCATION_INTERNAL_ONLY) {
-    moveDisable=true;
+    if ((mAppInfo.flags & ApplicationInfo.FLAG_FORWARD_LOCK) != 0 || (mAppInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+      moveDisable=true;
+    }
+ else     if (pkgInfo != null) {
+      if (pkgInfo.installLocation == PackageInfo.INSTALL_LOCATION_INTERNAL_ONLY) {
+        moveDisable=true;
+      }
+ else       if (pkgInfo.installLocation == PackageInfo.INSTALL_LOCATION_UNSPECIFIED) {
+        IPackageManager ipm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
+        int loc;
+        try {
+          loc=ipm.getInstallLocation();
+        }
+ catch (        RemoteException e) {
+          Log.e(TAG,"Is Pakage Manager running?");
+          return;
+        }
+        if (loc == PackageHelper.APP_INSTALL_EXTERNAL) {
+          moveDisable=false;
+        }
+      }
+    }
   }
   if (moveDisable) {
     mMoveAppButton.setEnabled(false);

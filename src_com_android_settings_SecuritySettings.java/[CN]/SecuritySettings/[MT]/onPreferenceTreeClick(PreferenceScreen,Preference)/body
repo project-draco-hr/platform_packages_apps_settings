@@ -1,20 +1,9 @@
 {
   final String key=preference.getKey();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
-  if (KEY_UNLOCK_SET_PATTERN.equals(key)) {
-    handleUpdateUnlockMethod("pattern");
-  }
- else   if (KEY_UNLOCK_SET_PIN.equals(key)) {
-    handleUpdateUnlockMethod("pin");
-  }
- else   if (KEY_UNLOCK_SET_PASSWORD.equals(key)) {
-    handleUpdateUnlockMethod("password");
-  }
- else   if (KEY_UNLOCK_METHOD_DISABLE.equals(key)) {
-    handleUpdateUnlockMethod("none");
-  }
- else   if (KEY_UNLOCK_METHOD_CHANGE_CURRENT.equals(key)) {
-    handleUpdateUnlockMethod(null);
+  if (KEY_UNLOCK_SET_OR_CHANGE.equals(key)) {
+    Intent intent=new Intent(this,ChooseLockGeneric.class);
+    startActivityForResult(intent,SET_OR_CHANGE_LOCK_METHOD_REQUEST);
   }
  else   if (KEY_LOCK_ENABLED.equals(key)) {
     lockPatternUtils.setLockPatternEnabled(isToggled(preference));

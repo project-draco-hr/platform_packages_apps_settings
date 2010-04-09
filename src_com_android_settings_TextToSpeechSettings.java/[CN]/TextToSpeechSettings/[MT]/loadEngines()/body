@@ -1,5 +1,5 @@
 {
-  ListPreference enginesPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_SYNTH);
+  mDefaultSynthPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_SYNTH);
   Intent intent=new Intent("android.intent.action.START_TTS_ENGINE");
   ResolveInfo[] enginesArray=new ResolveInfo[0];
   PackageManager pm=getPackageManager();
@@ -26,12 +26,12 @@
   Settings.Secure.putString(resolver,TTS_ENABLED_PLUGINS,enabledEngines);
   CharSequence entriesArray[]=new CharSequence[entries.size()];
   CharSequence valuesArray[]=new CharSequence[values.size()];
-  enginesPref.setEntries(entries.toArray(entriesArray));
-  enginesPref.setEntryValues(values.toArray(valuesArray));
+  mDefaultSynthPref.setEntries(entries.toArray(entriesArray));
+  mDefaultSynthPref.setEntryValues(values.toArray(valuesArray));
   String selectedEngine=Settings.Secure.getString(getContentResolver(),TTS_DEFAULT_SYNTH);
-  int selectedEngineIndex=enginesPref.findIndexOfValue(selectedEngine);
+  int selectedEngineIndex=mDefaultSynthPref.findIndexOfValue(selectedEngine);
   if (selectedEngineIndex == -1) {
-    selectedEngineIndex=enginesPref.findIndexOfValue(SYSTEM_TTS);
+    selectedEngineIndex=mDefaultSynthPref.findIndexOfValue(SYSTEM_TTS);
   }
-  enginesPref.setValueIndex(selectedEngineIndex);
+  mDefaultSynthPref.setValueIndex(selectedEngineIndex);
 }

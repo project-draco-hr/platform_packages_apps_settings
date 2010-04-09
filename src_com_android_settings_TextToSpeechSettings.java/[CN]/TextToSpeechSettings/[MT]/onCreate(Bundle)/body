@@ -6,5 +6,9 @@
   setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
   mEnableDemo=false;
   mTtsStarted=false;
+  Locale currentLocale=Locale.getDefault();
+  mDefaultLanguage=currentLocale.getISO3Language();
+  mDefaultCountry=currentLocale.getISO3Country();
+  mDefaultLocVariant=currentLocale.getVariant();
   mTts=new TextToSpeech(this,this);
 }

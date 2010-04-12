@@ -6,6 +6,8 @@
  else   if (v == mNextButton) {
     stopAnimation(mAnimation);
     Intent intent=new Intent(this,ChooseLockPattern.class);
-    startActivityForResult(intent,REQUESTCODE_CHOOSE);
+    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+    startActivity(intent);
+    finish();
   }
 }

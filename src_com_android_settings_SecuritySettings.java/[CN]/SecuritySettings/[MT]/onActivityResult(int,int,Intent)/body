@@ -1,9 +1,4 @@
 {
   super.onActivityResult(requestCode,resultCode,data);
-  final boolean resultOk=resultCode == Activity.RESULT_OK;
-  LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
-  if ((requestCode == CONFIRM_EXISTING_REQUEST) && resultOk) {
-    lockPatternUtils.clearLock();
-  }
   createPreferenceHierarchy();
 }

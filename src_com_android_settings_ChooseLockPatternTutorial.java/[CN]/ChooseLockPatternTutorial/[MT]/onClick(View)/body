@@ -4,6 +4,9 @@
     finish();
   }
  else   if (v == mNextButton) {
-    startActivityForResult(new Intent(this,ChooseLockPatternExample.class),REQUESTCODE_EXAMPLE);
+    Intent intent=new Intent(this,ChooseLockPatternExample.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+    startActivity(intent);
+    finish();
   }
 }

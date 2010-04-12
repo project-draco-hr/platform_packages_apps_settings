@@ -1,0 +1,20 @@
+{
+  final String key=preference.getKey();
+  boolean handled=true;
+  if (KEY_UNLOCK_SET_NONE.equals(key)) {
+    updateUnlockMethodAndFinish(DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
+  }
+ else   if (KEY_UNLOCK_SET_PATTERN.equals(key)) {
+    updateUnlockMethodAndFinish(DevicePolicyManager.PASSWORD_QUALITY_SOMETHING);
+  }
+ else   if (KEY_UNLOCK_SET_PIN.equals(key)) {
+    updateUnlockMethodAndFinish(DevicePolicyManager.PASSWORD_QUALITY_NUMERIC);
+  }
+ else   if (KEY_UNLOCK_SET_PASSWORD.equals(key)) {
+    updateUnlockMethodAndFinish(DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC);
+  }
+ else {
+    handled=false;
+  }
+  return handled;
+}

@@ -1,0 +1,28 @@
+{
+  final Preference picker=getPreferenceScreen().findPreference("security_picker_category");
+  final PreferenceCategory cat=(PreferenceCategory)picker;
+  final int preferenceCount=cat.getPreferenceCount();
+  for (int i=0; i < preferenceCount; i++) {
+    Preference pref=cat.getPreference(i);
+    if (pref instanceof PreferenceScreen) {
+      final String key=((PreferenceScreen)pref).getKey();
+      boolean enabled=true;
+      if (KEY_UNLOCK_SET_NONE.equals(key)) {
+        enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
+      }
+ else       if (KEY_UNLOCK_SET_PATTERN.equals(key)) {
+        enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_SOMETHING;
+      }
+ else       if (KEY_UNLOCK_SET_PIN.equals(key)) {
+        enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC;
+      }
+ else       if (KEY_UNLOCK_SET_PASSWORD.equals(key)) {
+        enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC;
+      }
+      if (!enabled) {
+        pref.setSummary(R.string.unlock_set_unlock_disabled_summary);
+        pref.setEnabled(false);
+      }
+    }
+  }
+}

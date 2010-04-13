@@ -5,9 +5,16 @@
   setupViews();
   final LinearLayoutWithDefaultTouchRecepient topLayout=(LinearLayoutWithDefaultTouchRecepient)findViewById(R.id.topLayout);
   topLayout.setDefaultTouchRecepient(mLockPatternView);
+  final boolean confirmCredentials=getIntent().getBooleanExtra("confirm_credentials",true);
   if (savedInstanceState == null) {
-    updateStage(Stage.NeedToConfirm);
-    if (!mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST)) {
+    if (confirmCredentials) {
+      updateStage(Stage.NeedToConfirm);
+      boolean launchedConfirmationActivity=mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST);
+      if (!launchedConfirmationActivity) {
+        updateStage(Stage.Introduction);
+      }
+    }
+ else {
       updateStage(Stage.Introduction);
     }
   }

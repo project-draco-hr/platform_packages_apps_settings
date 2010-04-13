@@ -2,33 +2,17 @@
   super.onCreate(savedInstanceState);
   mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);
-  final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
-  int quality=getIntent().getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,-1);
-  if (quality == -1) {
-    quality=lockPatternUtils.getKeyguardStoredPasswordQuality();
+  if (savedInstanceState != null) {
+    mPasswordConfirmed=savedInstanceState.getBoolean(PASSWORD_CONFIRMED);
   }
-  int minQuality=mDPM.getPasswordQuality(null);
-  if (quality < minQuality) {
-    quality=minQuality;
-  }
-  if (quality >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
-    int minLength=mDPM.getPasswordMinimumLength(null);
-    if (minLength < 4) {
-      minLength=4;
+  if (!mPasswordConfirmed) {
+    ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this);
+    if (!helper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST)) {
+      mPasswordConfirmed=true;
+      updatePreferencesOrFinish();
     }
-    final int maxLength=mDPM.getPasswordMaximumLength(quality);
-    Intent intent=new Intent().setClass(this,ChooseLockPassword.class);
-    intent.putExtra(LockPatternUtils.PASSWORD_TYPE_KEY,quality);
-    intent.putExtra(ChooseLockPassword.PASSWORD_MIN_KEY,minLength);
-    intent.putExtra(ChooseLockPassword.PASSWORD_MAX_KEY,maxLength);
-    startActivity(intent);
   }
  else {
-    boolean showTutorial=!lockPatternUtils.isPatternEverChosen();
-    Intent intent=new Intent();
-    intent.setClass(this,showTutorial ? ChooseLockPatternTutorial.class : ChooseLockPattern.class);
-    intent.putExtra("key_lock_method","pattern");
-    startActivity(intent);
+    updatePreferencesOrFinish();
   }
-  finish();
 }

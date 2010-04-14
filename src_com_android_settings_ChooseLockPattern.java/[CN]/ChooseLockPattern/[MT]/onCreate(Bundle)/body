@@ -9,7 +9,7 @@
   if (savedInstanceState == null) {
     if (confirmCredentials) {
       updateStage(Stage.NeedToConfirm);
-      boolean launchedConfirmationActivity=mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST);
+      boolean launchedConfirmationActivity=mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,null,null);
       if (!launchedConfirmationActivity) {
         updateStage(Stage.Introduction);
       }

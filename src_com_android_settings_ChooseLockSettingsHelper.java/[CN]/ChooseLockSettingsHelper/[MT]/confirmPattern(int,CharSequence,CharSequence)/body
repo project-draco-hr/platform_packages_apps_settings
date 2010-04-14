@@ -3,6 +3,8 @@
     return false;
   }
   final Intent intent=new Intent();
+  intent.putExtra(ConfirmLockPattern.HEADER_TEXT,message);
+  intent.putExtra(ConfirmLockPattern.FOOTER_TEXT,details);
   intent.setClassName("com.android.settings","com.android.settings.ConfirmLockPattern");
   mActivity.startActivityForResult(intent,request);
   return true;

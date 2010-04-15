@@ -1,4 +1,16 @@
 {
-  String language=Settings.Secure.getString(getContentResolver(),TTS_DEFAULT_LANG);
-  return (language != null);
+  ContentResolver resolver=getContentResolver();
+  String language=Settings.Secure.getString(resolver,TTS_DEFAULT_LANG);
+  if ((language == null) || (language.length() < 1)) {
+    return false;
+  }
+  String country=Settings.Secure.getString(resolver,TTS_DEFAULT_COUNTRY);
+  if (country == null) {
+    return false;
+  }
+  String variant=Settings.Secure.getString(resolver,TTS_DEFAULT_VARIANT);
+  if (variant == null) {
+    return false;
+  }
+  return true;
 }

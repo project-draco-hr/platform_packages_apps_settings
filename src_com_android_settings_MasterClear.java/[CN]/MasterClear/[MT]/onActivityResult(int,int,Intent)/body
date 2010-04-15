@@ -6,6 +6,9 @@
   if (resultCode == Activity.RESULT_OK) {
     establishFinalConfirmationState();
   }
+ else   if (resultCode == Activity.RESULT_CANCELED) {
+    finish();
+  }
  else {
     establishInitialState();
   }

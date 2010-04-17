@@ -1,5 +1,8 @@
 {
-  if (!mWifiManager.isWifiEnabled())   return;
+  if (!mWifiManager.isWifiEnabled()) {
+    mScanner.pause();
+    return;
+  }
   if (state == DetailedState.OBTAINING_IPADDR) {
     mScanner.pause();
   }

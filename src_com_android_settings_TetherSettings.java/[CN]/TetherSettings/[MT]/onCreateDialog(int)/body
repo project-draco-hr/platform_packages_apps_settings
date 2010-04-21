@@ -1,8 +1,28 @@
 {
   if (id == DIALOG_TETHER_HELP) {
     Locale locale=Locale.getDefault();
+    AssetManager am=getAssets();
+    String path=HELP_PATH.replace("%y",locale.getLanguage().toLowerCase());
+    path=path.replace("%z","_" + locale.getCountry().toLowerCase());
+    boolean useCountry=true;
+    InputStream is=null;
+    try {
+      is=am.open(path);
+    }
+ catch (    Exception e) {
+      useCountry=false;
+    }
+ finally {
+      if (is != null) {
+        try {
+          is.close();
+        }
+ catch (        Exception e) {
+        }
+      }
+    }
     String url=HELP_URL.replace("%y",locale.getLanguage().toLowerCase());
-    url=url.replace("%z",locale.getCountry().toLowerCase());
+    url=url.replace("%z",(useCountry ? "_" + locale.getCountry().toLowerCase() : ""));
     if ((mUsbRegexs.length != 0) && (mWifiRegexs.length == 0)) {
       url=url.replace("%x",USB_HELP_MODIFIER);
     }

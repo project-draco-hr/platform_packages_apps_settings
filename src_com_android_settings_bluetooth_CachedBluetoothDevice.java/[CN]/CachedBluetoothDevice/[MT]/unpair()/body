@@ -1,26 +1,10 @@
 {
-synchronized (workQueue) {
-    boolean processNow=false;
-    Iterator<BluetoothJob> it=workQueue.iterator();
-    while (it.hasNext()) {
-      BluetoothJob job=it.next();
-      if (job.cachedDevice.mDevice.equals(this.mDevice)) {
-        it.remove();
-        if (job.timeSent != 0) {
-          processNow=true;
-        }
-      }
-    }
-    if (processNow) {
-      processCommands();
-    }
+  disconnect();
+  int state=getBondState();
+  if (state == BluetoothDevice.BOND_BONDING) {
+    mDevice.cancelBondProcess();
   }
-switch (getBondState()) {
-case BluetoothDevice.BOND_BONDED:
-    mDevice.removeBond();
-  break;
-case BluetoothDevice.BOND_BONDING:
-mDevice.cancelBondProcess();
-break;
-}
+  if (state != BluetoothDevice.BOND_NONE) {
+    queueCommand(new BluetoothJob(BluetoothCommand.REMOVE_BOND,this,null));
+  }
 }

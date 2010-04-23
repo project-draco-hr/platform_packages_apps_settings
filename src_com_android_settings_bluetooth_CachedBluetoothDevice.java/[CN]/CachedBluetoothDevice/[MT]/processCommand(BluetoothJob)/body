@@ -9,6 +9,12 @@ case CONNECT:
 case DISCONNECT:
   successful=disconnectInt(job.cachedDevice,job.profile);
 break;
+case REMOVE_BOND:
+BluetoothDevice dev=job.cachedDevice.getDevice();
+if (dev != null) {
+successful=dev.removeBond();
+}
+break;
 }
 if (successful) {
 if (D) {

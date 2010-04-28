@@ -13,8 +13,9 @@
  else {
     returnCode=Activity.RESULT_CANCELED;
   }
-  setResult(returnCode);
-  if (!buttonPressed) {
-    finish();
+  if (mDialog != null) {
+    mDialog.dismiss();
   }
+  setResult(returnCode);
+  finish();
 }

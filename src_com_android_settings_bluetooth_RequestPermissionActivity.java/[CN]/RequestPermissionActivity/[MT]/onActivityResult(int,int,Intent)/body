@@ -8,10 +8,11 @@
   if (resultCode != RESULT_BT_STARTING_OR_STARTED) {
     setResult(resultCode);
     finish();
+    return;
   }
   mUserConfirmed=true;
   if (mLocalManager.getBluetoothState() == BluetoothAdapter.STATE_ON) {
-    proceedAndFinish(false);
+    proceedAndFinish();
   }
  else {
     createDialog();

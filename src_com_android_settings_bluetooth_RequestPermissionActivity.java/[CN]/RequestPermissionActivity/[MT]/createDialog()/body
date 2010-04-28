@@ -1,19 +1,16 @@
 {
-  final AlertController.AlertParams p=mAlertParams;
-  p.mIconId=android.R.drawable.ic_dialog_info;
-  p.mTitle=getString(R.string.bluetooth_permission_request);
-  View view=getLayoutInflater().inflate(R.layout.bluetooth_discoverable,null);
-  p.mView=view;
-  TextView tv=(TextView)view.findViewById(R.id.message);
+  AlertDialog.Builder builder=new AlertDialog.Builder(this);
+  builder.setIcon(android.R.drawable.ic_dialog_info);
+  builder.setTitle(getString(R.string.bluetooth_permission_request));
   if (mNeededToEnableBluetooth) {
-    tv.setText(getString(R.string.bluetooth_turning_on));
+    builder.setMessage(getString(R.string.bluetooth_turning_on));
+    builder.setCancelable(false);
   }
  else {
-    tv.setText(getString(R.string.bluetooth_ask_enablement_and_discovery,mTimeout));
-    p.mPositiveButtonText=getString(R.string.yes);
-    p.mPositiveButtonListener=this;
-    p.mNegativeButtonText=getString(R.string.no);
-    p.mNegativeButtonListener=this;
+    builder.setMessage(getString(R.string.bluetooth_ask_enablement_and_discovery,mTimeout));
+    builder.setPositiveButton(getString(R.string.yes),this);
+    builder.setNegativeButton(getString(R.string.no),this);
   }
-  setupAlert();
+  mDialog=builder.create();
+  mDialog.show();
 }

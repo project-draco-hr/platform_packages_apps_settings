@@ -1,6 +1,23 @@
 {
   if (bondState == BluetoothDevice.BOND_NONE) {
     mProfiles.clear();
+    BluetoothJob job=workQueue.peek();
+    if (job == null) {
+      return;
+    }
+    if (job.command == BluetoothCommand.REMOVE_BOND && job.cachedDevice.mDevice.equals(mDevice)) {
+      workQueue.poll();
+    }
+ else {
+      if (D) {
+        Log.d(TAG,"job.command = " + job.command);
+        Log.d(TAG,"mDevice:" + mDevice + " != head:"+ job.toString());
+      }
+      if (!pruneQueue(null)) {
+        return;
+      }
+    }
+    processCommands();
   }
   refresh();
 }

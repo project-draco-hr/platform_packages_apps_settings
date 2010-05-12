@@ -1,0 +1,20 @@
+{
+  String errorMsg=null;
+  String name=checkNotSet(mName.getText());
+  String apn=checkNotSet(mApn.getText());
+  String mcc=checkNotSet(mMcc.getText());
+  String mnc=checkNotSet(mMnc.getText());
+  if (name.length() < 1) {
+    errorMsg=mRes.getString(R.string.error_name_empty);
+  }
+ else   if (apn.length() < 1) {
+    errorMsg=mRes.getString(R.string.error_apn_empty);
+  }
+ else   if (mcc.length() != 3) {
+    errorMsg=mRes.getString(R.string.error_mcc_not3);
+  }
+ else   if ((mnc.length() & 0xFFFE) != 2) {
+    errorMsg=mRes.getString(R.string.error_mnc_not23);
+  }
+  return errorMsg;
+}

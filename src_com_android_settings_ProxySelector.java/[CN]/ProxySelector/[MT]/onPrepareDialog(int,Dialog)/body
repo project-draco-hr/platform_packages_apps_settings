@@ -1,0 +1,9 @@
+{
+  super.onPrepareDialog(id,dialog);
+  if (id == ERROR_DIALOG_ID) {
+    String hostname=mHostnameField.getText().toString().trim();
+    String portStr=mPortField.getText().toString().trim();
+    String msg=getString(validate(hostname,portStr));
+    ((AlertDialog)dialog).setMessage(msg);
+  }
+}

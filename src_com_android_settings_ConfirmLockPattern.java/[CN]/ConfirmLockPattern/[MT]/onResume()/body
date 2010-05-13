@@ -4,4 +4,8 @@
   if (deadline != 0) {
     handleAttemptLockout(deadline);
   }
+ else   if (!mLockPatternView.isEnabled()) {
+    mNumWrongConfirmAttempts=0;
+    updateStage(Stage.NeedToUnlock);
+  }
 }

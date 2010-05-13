@@ -40,5 +40,8 @@
       return getString(R.string.lockpassword_password_requires_symbol);
     }
   }
+  if (mLockPatternUtils.checkPasswordHistory(password)) {
+    return getString(mIsAlphaMode ? R.string.lockpassword_password_recently_used : R.string.lockpassword_pin_recently_used);
+  }
   return null;
 }

@@ -1,5 +1,7 @@
 {
   if (DEBUG)   Log.d(TAG,"onDestroy");
+  mRunnable=null;
+  LocalBluetoothProfileManager.removeServiceListener(this);
   if (mDialog != null) {
     mDialog.dismiss();
     mDialog=null;

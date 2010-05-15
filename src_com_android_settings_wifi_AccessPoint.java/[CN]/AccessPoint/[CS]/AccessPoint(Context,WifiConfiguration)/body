@@ -1,7 +1,7 @@
 {
   super(context);
   setWidgetLayoutResource(R.layout.preference_widget_wifi_signal);
-  ssid=(config.SSID == null ? "" : config.SSID);
+  ssid=(config.SSID == null ? "" : removeDoubleQuotes(config.SSID));
   security=getSecurity(config);
   networkId=config.networkId;
   mConfig=config;

@@ -1,6 +1,6 @@
 {
   WifiConfiguration config=new WifiConfiguration();
-  config.SSID=mSsid.getText().toString();
+  config.SSID=AccessPoint.convertToQuotedString(mSsid.getText().toString());
 switch (mSecurityType) {
 case AccessPoint.SECURITY_NONE:
     config.allowedKeyManagement.set(KeyMgmt.NONE);

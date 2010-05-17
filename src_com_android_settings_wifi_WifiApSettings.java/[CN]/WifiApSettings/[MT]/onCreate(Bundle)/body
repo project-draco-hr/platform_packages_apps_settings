@@ -12,6 +12,6 @@
     mCreateNetwork.setSummary(String.format(getString(CONFIG_SUBTEXT),s,mSecurityType[OPEN_INDEX]));
   }
  else {
-    mCreateNetwork.setSummary(String.format(getString(CONFIG_SUBTEXT),AccessPoint.removeDoubleQuotes(mWifiConfig.SSID),mWifiConfig.allowedKeyManagement.get(KeyMgmt.WPA_PSK) ? mSecurityType[WPA_INDEX] : mSecurityType[OPEN_INDEX]));
+    mCreateNetwork.setSummary(String.format(getString(CONFIG_SUBTEXT),mWifiConfig.SSID,mWifiConfig.allowedKeyManagement.get(KeyMgmt.WPA_PSK) ? mSecurityType[WPA_INDEX] : mSecurityType[OPEN_INDEX]));
   }
 }

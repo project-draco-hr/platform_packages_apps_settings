@@ -11,7 +11,7 @@
   setButton(BUTTON_SUBMIT,context.getString(R.string.wifi_save),mListener);
   setButton(DialogInterface.BUTTON_NEGATIVE,context.getString(R.string.wifi_cancel),mListener);
   if (mWifiConfig != null) {
-    mSsid.setText(AccessPoint.removeDoubleQuotes(mWifiConfig.SSID));
+    mSsid.setText(mWifiConfig.SSID);
 switch (mSecurityType) {
 case AccessPoint.SECURITY_NONE:
       mSecurity.setSelection(OPEN_INDEX);

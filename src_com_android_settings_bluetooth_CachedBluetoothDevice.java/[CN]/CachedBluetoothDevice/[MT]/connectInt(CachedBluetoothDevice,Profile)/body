@@ -4,6 +4,9 @@
   int status=profileManager.getConnectionStatus(cachedDevice.mDevice);
   if (!SettingsBtStatus.isConnectionStatusConnected(status)) {
     if (profileManager.connect(cachedDevice.mDevice)) {
+      if (D) {
+        Log.d(TAG,"Command sent successfully:CONNECT " + describe(profile));
+      }
       return true;
     }
     Log.i(TAG,"Failed to connect " + profile.toString() + " to "+ cachedDevice.mName);

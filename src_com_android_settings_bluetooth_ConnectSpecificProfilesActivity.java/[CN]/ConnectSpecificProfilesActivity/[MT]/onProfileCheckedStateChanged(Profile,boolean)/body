@@ -1,4 +1,6 @@
 {
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
+  profileManager.setPreferred(mCachedDevice.getDevice(),checked);
   if (mOnlineMode) {
     if (checked) {
       mCachedDevice.connect(profile);
@@ -7,6 +9,4 @@
       mCachedDevice.disconnect(profile);
     }
   }
-  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
-  profileManager.setPreferred(mCachedDevice.getDevice(),checked);
 }

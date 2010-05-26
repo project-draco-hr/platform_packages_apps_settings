@@ -1,6 +1,6 @@
 {
   WifiConfiguration config=new WifiConfiguration();
-  config.SSID=mSsid.getText().toString().replaceAll("\"","");
+  config.SSID=mSsid.getText().toString();
 switch (mSecurityType) {
 case AccessPoint.SECURITY_NONE:
     config.allowedKeyManagement.set(KeyMgmt.NONE);
@@ -10,12 +10,7 @@ config.allowedKeyManagement.set(KeyMgmt.WPA_PSK);
 config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
 if (mPassword.length() != 0) {
 String password=mPassword.getText().toString();
-if (password.matches("[0-9A-Fa-f]{64}")) {
 config.preSharedKey=password;
-}
- else {
-config.preSharedKey='"' + password + '"';
-}
 }
 return config;
 }

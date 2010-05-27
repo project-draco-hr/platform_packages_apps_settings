@@ -5,39 +5,59 @@
   if (password.length() > mPasswordMaxLength) {
     return getString(mIsAlphaMode ? R.string.lockpassword_password_too_long : R.string.lockpassword_pin_too_long,mPasswordMaxLength);
   }
-  boolean hasAlpha=false;
-  boolean hasDigit=false;
-  boolean hasSymbol=false;
+  int letters=0;
+  int numbers=0;
+  int lowercase=0;
+  int symbols=0;
+  int uppercase=0;
   for (int i=0; i < password.length(); i++) {
     char c=password.charAt(i);
     if (c <= 32 || c > 127) {
       return getString(R.string.lockpassword_illegal_character);
     }
     if (c >= '0' && c <= '9') {
-      hasDigit=true;
+      numbers++;
     }
- else     if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
-      hasAlpha=true;
+ else     if (c >= 'A' && c <= 'Z') {
+      letters++;
+      uppercase++;
+    }
+ else     if (c >= 'a' && c <= 'z') {
+      letters++;
+      lowercase++;
     }
  else {
-      hasSymbol=true;
+      symbols++;
     }
   }
-  if (DevicePolicyManager.PASSWORD_QUALITY_NUMERIC == mRequestedQuality && (hasAlpha | hasSymbol)) {
+  if (DevicePolicyManager.PASSWORD_QUALITY_NUMERIC == mRequestedQuality && (letters > 0 || symbols > 0)) {
     return getString(R.string.lockpassword_pin_contains_non_digits);
+  }
+ else   if (DevicePolicyManager.PASSWORD_QUALITY_COMPLEX == mRequestedQuality) {
+    if (letters < mPasswordMinLetters) {
+      return String.format(getResources().getQuantityString(R.plurals.lockpassword_password_requires_letters,mPasswordMinLetters),mPasswordMinLetters);
+    }
+ else     if (numbers < mPasswordMinNumeric) {
+      return String.format(getResources().getQuantityString(R.plurals.lockpassword_password_requires_numeric,mPasswordMinNumeric),mPasswordMinNumeric);
+    }
+ else     if (lowercase < mPasswordMinLowerCase) {
+      return String.format(getResources().getQuantityString(R.plurals.lockpassword_password_requires_lowercase,mPasswordMinLowerCase),mPasswordMinLowerCase);
+    }
+ else     if (uppercase < mPasswordMinUpperCase) {
+      return String.format(getResources().getQuantityString(R.plurals.lockpassword_password_requires_uppercase,mPasswordMinUpperCase),mPasswordMinUpperCase);
+    }
+ else     if (symbols < mPasswordMinSymbols) {
+      return String.format(getResources().getQuantityString(R.plurals.lockpassword_password_requires_symbols,mPasswordMinSymbols),mPasswordMinSymbols);
+    }
   }
  else {
     final boolean alphabetic=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == mRequestedQuality;
     final boolean alphanumeric=DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == mRequestedQuality;
-    final boolean symbolic=false;
-    if ((alphabetic || alphanumeric) && !hasAlpha) {
+    if ((alphabetic || alphanumeric) && letters == 0) {
       return getString(R.string.lockpassword_password_requires_alpha);
     }
-    if (alphanumeric && !hasDigit) {
+    if (alphanumeric && numbers == 0) {
       return getString(R.string.lockpassword_password_requires_digit);
-    }
-    if (symbolic && !hasSymbol) {
-      return getString(R.string.lockpassword_password_requires_symbol);
     }
   }
   if (mLockPatternUtils.checkPasswordHistory(password)) {

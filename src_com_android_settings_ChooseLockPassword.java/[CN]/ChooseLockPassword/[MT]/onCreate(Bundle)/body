@@ -1,18 +1,15 @@
 {
   super.onCreate(savedInstanceState);
   mLockPatternUtils=new LockPatternUtils(this);
-  mRequestedQuality=getIntent().getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,mRequestedQuality);
-  mPasswordMinLength=getIntent().getIntExtra(PASSWORD_MIN_KEY,mPasswordMinLength);
+  mRequestedQuality=Math.max(getIntent().getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,mRequestedQuality),mLockPatternUtils.getRequestedPasswordQuality());
+  mPasswordMinLength=Math.max(getIntent().getIntExtra(PASSWORD_MIN_KEY,mPasswordMinLength),mLockPatternUtils.getRequestedMinimumPasswordLength());
   mPasswordMaxLength=getIntent().getIntExtra(PASSWORD_MAX_KEY,mPasswordMaxLength);
+  mPasswordMinLetters=Math.max(getIntent().getIntExtra(PASSWORD_MIN_LETTERS_KEY,mPasswordMinLetters),mLockPatternUtils.getRequestedPasswordMinimumLetters());
+  mPasswordMinUpperCase=Math.max(getIntent().getIntExtra(PASSWORD_MIN_UPPERCASE_KEY,mPasswordMinUpperCase),mLockPatternUtils.getRequestedPasswordMinimumUpperCase());
+  mPasswordMinLowerCase=Math.max(getIntent().getIntExtra(PASSWORD_MIN_LOWERCASE_KEY,mPasswordMinLowerCase),mLockPatternUtils.getRequestedPasswordMinimumLowerCase());
+  mPasswordMinNumeric=Math.max(getIntent().getIntExtra(PASSWORD_MIN_NUMERIC_KEY,mPasswordMinNumeric),mLockPatternUtils.getRequestedPasswordMinimumNumeric());
+  mPasswordMinSymbols=Math.max(getIntent().getIntExtra(PASSWORD_MIN_SYMBOLS_KEY,mPasswordMinSymbols),mLockPatternUtils.getRequestedPasswordMinimumSymbols());
   final boolean confirmCredentials=getIntent().getBooleanExtra("confirm_credentials",true);
-  int minMode=mLockPatternUtils.getRequestedPasswordQuality();
-  if (mRequestedQuality < minMode) {
-    mRequestedQuality=minMode;
-  }
-  int minLength=mLockPatternUtils.getRequestedMinimumPasswordLength();
-  if (mPasswordMinLength < minLength) {
-    mPasswordMinLength=minLength;
-  }
   initViews();
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);
   if (savedInstanceState == null) {

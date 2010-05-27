@@ -2,13 +2,16 @@
   int result=msg.arg1;
   String packageName=mAppInfo.packageName;
   mMoveInProgress=false;
-  refreshButtons();
   if (result == PackageManager.MOVE_SUCCEEDED) {
     Log.i(TAG,"Moved resources for " + packageName);
-    mPm.getPackageSizeInfo(mAppInfo.packageName,mSizeObserver);
+    mPm.getPackageSizeInfo(packageName,mSizeObserver);
   }
  else {
     mMoveErrorCode=result;
     showDialogInner(DLG_MOVE_FAILED);
   }
+  if (!initAppInfo(packageName)) {
+    return;
+  }
+  refreshButtons();
 }

@@ -1,6 +1,12 @@
 {
   super.onResume();
-  initAppInfo(mAppInfo.packageName);
+  if (mAppInfo == null) {
+    setIntentAndFinish(true,true);
+    return;
+  }
+  if (!initAppInfo(mAppInfo.packageName)) {
+    return;
+  }
   PackageInfo pkgInfo=null;
   try {
     pkgInfo=mPm.getPackageInfo(mAppInfo.packageName,PackageManager.GET_UNINSTALLED_PACKAGES);

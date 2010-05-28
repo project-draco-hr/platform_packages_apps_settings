@@ -3,12 +3,14 @@
   mPm=getPackageManager();
   Intent intent=getIntent();
   final String packageName=intent.getStringExtra(ManageApplications.APP_PKG_NAME);
-  mComputingStr=getText(R.string.computing_size);
+  if (!initAppInfo(packageName)) {
+    return;
+  }
   CharSequence totalSizeStr, appSizeStr, dataSizeStr;
+  mComputingStr=getText(R.string.computing_size);
   totalSizeStr=appSizeStr=dataSizeStr=mComputingStr;
   if (localLOGV)   Log.i(TAG,"Have to compute package sizes");
   mSizeObserver=new PkgSizeObserver();
-  initAppInfo(packageName);
   setContentView(R.layout.installed_app_details);
   mTotalSize=(TextView)findViewById(R.id.total_size_text);
   mTotalSize.setText(totalSizeStr);

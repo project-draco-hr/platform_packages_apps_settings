@@ -1,4 +1,5 @@
 {
+  profileReady=true;
   mUiHandler.post(new Runnable(){
     public void run(){
       BluetoothDevice device=mService.getCurrentHeadset();
@@ -7,4 +8,10 @@
     }
   }
 );
+  if (mServiceListeners.size() > 0) {
+    Iterator<ServiceListener> it=mServiceListeners.iterator();
+    while (it.hasNext()) {
+      it.next().onServiceConnected();
+    }
+  }
 }

@@ -1,0 +1,7 @@
+{
+  LocalBluetoothProfileManager profileManager=sProfileMap.get(Profile.HEADSET);
+  if (profileManager == null) {
+    return sProfileMap.size() > 0;
+  }
+  return profileManager.isProfileReady();
+}

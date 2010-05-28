@@ -1,0 +1,9 @@
+{
+  if (mBtManager.getDockAutoConnectSetting(device.getAddress())) {
+    initBtSettings(mContext,device,state,false);
+    applyBtSettings(mDevice,startId);
+  }
+ else {
+    createDialog(mContext,device,state,startId);
+  }
+}

@@ -1,7 +1,7 @@
 {
   int msgType=msg.what;
-  int state=msg.arg1;
-  int startId=msg.arg2;
+  final int state=msg.arg1;
+  final int startId=msg.arg2;
   boolean deferFinishCall=false;
   BluetoothDevice device=null;
   if (msg.obj != null) {
@@ -30,12 +30,20 @@ if (mDevice != null) {
 handleUndocked(mContext,mBtManager,mDevice);
 }
 mDevice=device;
-if (mBtManager.getDockAutoConnectSetting(device.getAddress())) {
-initBtSettings(mContext,device,state,false);
-applyBtSettings(mDevice,startId);
+LocalBluetoothProfileManager.addServiceListener(this);
+if (LocalBluetoothProfileManager.isManagerReady()) {
+handleDocked(device,state,startId);
+LocalBluetoothProfileManager.removeServiceListener(this);
 }
  else {
-createDialog(mContext,mDevice,state,startId);
+final BluetoothDevice d=device;
+mRunnable=new Runnable(){
+public void run(){
+handleDocked(d,state,startId);
+}
+}
+;
+deferFinishCall=true;
 }
 }
 break;

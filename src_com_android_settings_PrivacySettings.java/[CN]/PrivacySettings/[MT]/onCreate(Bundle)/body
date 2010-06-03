@@ -2,7 +2,7 @@
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.privacy_settings);
   final PreferenceScreen screen=getPreferenceScreen();
-  mBackup=(CheckBoxPreference)screen.findPreference(BACKUP_SETTINGS);
+  mBackup=(CheckBoxPreference)screen.findPreference(BACKUP_DATA);
   mAutoRestore=(CheckBoxPreference)screen.findPreference(AUTO_RESTORE);
   if (getPackageManager().resolveContentProvider(GSETTINGS_PROVIDER,0) == null) {
     screen.removePreference(findPreference(BACKUP_CATEGORY));

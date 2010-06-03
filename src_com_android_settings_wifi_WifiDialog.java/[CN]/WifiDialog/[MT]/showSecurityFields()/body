@@ -19,6 +19,7 @@
   mView.findViewById(R.id.eap).setVisibility(View.VISIBLE);
   if (mEapMethod == null) {
     mEapMethod=(Spinner)mView.findViewById(R.id.method);
+    mPhase2=(Spinner)mView.findViewById(R.id.phase2);
     mEapCaCert=(Spinner)mView.findViewById(R.id.ca_cert);
     mEapUserCert=(Spinner)mView.findViewById(R.id.user_cert);
     mEapIdentity=(TextView)mView.findViewById(R.id.identity);
@@ -28,6 +29,7 @@
     if (mAccessPoint != null && mAccessPoint.networkId != -1) {
       WifiConfiguration config=mAccessPoint.getConfig();
       setSelection(mEapMethod,config.eap.value());
+      setSelection(mPhase2,config.phase2.value());
       setCertificate(mEapCaCert,Credentials.CA_CERTIFICATE,config.ca_cert.value());
       setCertificate(mEapUserCert,Credentials.USER_PRIVATE_KEY,config.private_key.value());
       mEapIdentity.setText(config.identity.value());

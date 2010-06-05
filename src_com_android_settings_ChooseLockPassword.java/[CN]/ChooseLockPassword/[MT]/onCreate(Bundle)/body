@@ -9,6 +9,7 @@
   mPasswordMinLowerCase=Math.max(getIntent().getIntExtra(PASSWORD_MIN_LOWERCASE_KEY,mPasswordMinLowerCase),mLockPatternUtils.getRequestedPasswordMinimumLowerCase());
   mPasswordMinNumeric=Math.max(getIntent().getIntExtra(PASSWORD_MIN_NUMERIC_KEY,mPasswordMinNumeric),mLockPatternUtils.getRequestedPasswordMinimumNumeric());
   mPasswordMinSymbols=Math.max(getIntent().getIntExtra(PASSWORD_MIN_SYMBOLS_KEY,mPasswordMinSymbols),mLockPatternUtils.getRequestedPasswordMinimumSymbols());
+  mPasswordMinNonLetter=Math.max(getIntent().getIntExtra(PASSWORD_MIN_NONLETTER_KEY,mPasswordMinNonLetter),mLockPatternUtils.getRequestedPasswordMinimumNonLetter());
   final boolean confirmCredentials=getIntent().getBooleanExtra("confirm_credentials",true);
   initViews();
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);

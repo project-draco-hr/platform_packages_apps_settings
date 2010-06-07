@@ -1,0 +1,26 @@
+{
+  if (mCurView == which) {
+    return;
+  }
+  mCurView=which;
+  if (which == VIEW_LIST) {
+    if (mResumedRunning) {
+      mRunningProcessesView.doPause();
+      mResumedRunning=false;
+    }
+    mRunningProcessesView.setVisibility(View.GONE);
+    mListView.setVisibility(View.VISIBLE);
+  }
+ else   if (which == VIEW_RUNNING) {
+    if (!mCreatedRunning) {
+      mRunningProcessesView.doCreate(null,mNonConfigInstance);
+      mCreatedRunning=true;
+    }
+    if (mActivityResumed && !mResumedRunning) {
+      mRunningProcessesView.doResume();
+      mResumedRunning=true;
+    }
+    mRunningProcessesView.setVisibility(View.VISIBLE);
+    mListView.setVisibility(View.GONE);
+  }
+}

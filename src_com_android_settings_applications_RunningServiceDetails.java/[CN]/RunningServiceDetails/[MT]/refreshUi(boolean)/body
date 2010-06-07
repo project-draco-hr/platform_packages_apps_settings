@@ -1,0 +1,20 @@
+{
+  if (findMergedItem()) {
+    dataChanged=true;
+  }
+  if (dataChanged) {
+    if (mMergedItem != null) {
+      mSnippetActiveItem=mSnippetViewHolder.bind(mState,mMergedItem,mBuilder);
+    }
+ else     if (mSnippetActiveItem != null) {
+      mSnippetActiveItem.mHolder.size.setText("");
+      mSnippetActiveItem.mHolder.uptime.setText("");
+      mSnippetActiveItem.mHolder.description.setText(R.string.no_services);
+    }
+ else {
+      finish();
+      return;
+    }
+    addDetailViews();
+  }
+}

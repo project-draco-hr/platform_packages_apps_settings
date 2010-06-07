@@ -1,0 +1,33 @@
+{
+synchronized (mState.mLock) {
+    ViewHolder vh=(ViewHolder)view.getTag();
+    if (position >= mItems.size()) {
+      return;
+    }
+    RunningState.BaseItem item=mItems.get(position);
+    vh.name.setText(item.mDisplayLabel);
+    vh.separator.setVisibility(item.mNeedDivider ? View.VISIBLE : View.INVISIBLE);
+    ActiveItem ai=new ActiveItem();
+    ai.mRootView=view;
+    ai.mItem=item;
+    ai.mHolder=vh;
+    ai.mFirstRunTime=item.mActiveSince;
+    vh.description.setText(item.mDescription);
+    if (item.mIsProcess) {
+      view.setBackgroundColor(mProcessBgColor);
+      vh.icon.setImageDrawable(null);
+      vh.icon.setVisibility(View.GONE);
+      vh.description.setText(item.mDescription);
+      item.mCurSizeStr=null;
+    }
+ else {
+      view.setBackgroundDrawable(null);
+      vh.icon.setImageDrawable(item.mPackageInfo.loadIcon(getContext().getPackageManager()));
+      vh.icon.setVisibility(View.VISIBLE);
+      vh.description.setText(item.mDescription);
+      ai.mFirstRunTime=item.mActiveSince;
+    }
+    ai.updateTime(getContext());
+    mActiveItems.put(view,ai);
+  }
+}

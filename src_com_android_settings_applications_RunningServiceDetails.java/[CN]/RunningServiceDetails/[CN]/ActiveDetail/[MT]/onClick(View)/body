@@ -1,0 +1,28 @@
+{
+  if (mManageIntent != null) {
+    try {
+      startIntentSender(mManageIntent.getIntentSender(),null,Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET,Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET,0);
+    }
+ catch (    IntentSender.SendIntentException e) {
+      Log.w(TAG,e);
+    }
+catch (    IllegalArgumentException e) {
+      Log.w(TAG,e);
+    }
+catch (    ActivityNotFoundException e) {
+      Log.w(TAG,e);
+    }
+  }
+ else {
+    RunningState.ServiceItem si=(RunningState.ServiceItem)mActiveItem.mItem;
+    stopService(new Intent().setComponent(si.mRunningService.service));
+    if (mMergedItem == null || mMergedItem.mServices.size() <= 1) {
+      finish();
+    }
+ else {
+      if (mBackgroundHandler != null) {
+        mBackgroundHandler.sendEmptyMessage(MSG_UPDATE_CONTENTS);
+      }
+    }
+  }
+}

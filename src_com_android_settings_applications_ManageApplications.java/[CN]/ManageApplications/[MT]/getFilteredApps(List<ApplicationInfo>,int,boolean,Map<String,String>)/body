@@ -1,0 +1,45 @@
+{
+  List<ApplicationInfo> retList=new ArrayList<ApplicationInfo>();
+  if (pAppList == null) {
+    return retList;
+  }
+  if (filterOption == FILTER_APPS_SDCARD) {
+    for (    ApplicationInfo appInfo : pAppList) {
+      boolean flag=false;
+      if ((appInfo.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0) {
+        flag=true;
+      }
+      if (flag) {
+        if (matchFilter(filter,filterMap,appInfo.packageName)) {
+          retList.add(appInfo);
+        }
+      }
+    }
+    return retList;
+  }
+ else   if (filterOption == FILTER_APPS_THIRD_PARTY) {
+    for (    ApplicationInfo appInfo : pAppList) {
+      boolean flag=false;
+      if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+        flag=true;
+      }
+ else       if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+        flag=true;
+      }
+      if (flag) {
+        if (matchFilter(filter,filterMap,appInfo.packageName)) {
+          retList.add(appInfo);
+        }
+      }
+    }
+    return retList;
+  }
+ else {
+    for (    ApplicationInfo appInfo : pAppList) {
+      if (matchFilter(filter,filterMap,appInfo.packageName)) {
+        retList.add(appInfo);
+      }
+    }
+    return retList;
+  }
+}

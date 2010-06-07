@@ -13,9 +13,8 @@ case ACTION_WIRELESS_SETTINGS:
 startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
 break;
 case ACTION_APP_DETAILS:
-Intent intent=new Intent(Intent.ACTION_VIEW);
+Intent intent=new Intent(Intent.ACTION_VIEW,Uri.fromParts("package",mPackages[0],null));
 intent.setClass(this,InstalledAppDetails.class);
-intent.putExtra(ManageApplications.APP_PKG_NAME,mPackages[0]);
 startActivity(intent);
 break;
 case ACTION_SECURITY_SETTINGS:

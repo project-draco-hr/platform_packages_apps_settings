@@ -1,0 +1,16 @@
+{
+synchronized (state.mLock) {
+    name.setText(item.mDisplayLabel);
+    ActiveItem ai=new ActiveItem();
+    ai.mRootView=rootView;
+    ai.mItem=item;
+    ai.mHolder=this;
+    ai.mFirstRunTime=item.mActiveSince;
+    description.setText(item.mDescription);
+    item.mCurSizeStr=null;
+    icon.setImageDrawable(item.mPackageInfo.loadIcon(rootView.getContext().getPackageManager()));
+    icon.setVisibility(View.VISIBLE);
+    ai.updateTime(rootView.getContext(),builder);
+    return ai;
+  }
+}

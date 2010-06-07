@@ -1,0 +1,20 @@
+{
+  mAm=(ActivityManager)getContext().getSystemService(Context.ACTIVITY_SERVICE);
+  mState=(RunningState)nonConfigurationInstace;
+  if (mState == null) {
+    mState=new RunningState();
+  }
+  LayoutInflater inflater=(LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  inflater.inflate(R.layout.running_processes_view,this);
+  mListView=(ListView)findViewById(android.R.id.list);
+  View emptyView=findViewById(com.android.internal.R.id.empty);
+  if (emptyView != null) {
+    mListView.setEmptyView(emptyView);
+  }
+  mListView.setOnItemClickListener(this);
+  mListView.setAdapter(new ServiceListAdapter(mState));
+  mColorBar=(LinearColorBar)findViewById(R.id.color_bar);
+  mBackgroundProcessText=(TextView)findViewById(R.id.backgroundText);
+  mForegroundProcessText=(TextView)findViewById(R.id.foregroundText);
+  SECONDARY_SERVER_MEM=Integer.valueOf(SystemProperties.get("ro.SECONDARY_SERVER_MEM")) * PAGE_SIZE;
+}

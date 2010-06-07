@@ -6,7 +6,7 @@
   for (  BluetoothDevice device : devices) {
     CachedBluetoothDevice cachedDevice=cachedDeviceManager.findDevice(device);
     if (cachedDevice != null) {
-      queueCommand(new BluetoothJob(BluetoothCommand.DISCONNECT,cachedDevice,profile));
+      disconnectInt(cachedDevice,profile);
     }
   }
 }

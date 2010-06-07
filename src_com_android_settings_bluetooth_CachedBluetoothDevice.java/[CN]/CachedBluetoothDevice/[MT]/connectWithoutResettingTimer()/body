@@ -13,7 +13,7 @@
       if (profileManager.isPreferred(mDevice)) {
         ++preferredProfiles;
         disconnectConnected(profile);
-        queueCommand(new BluetoothJob(BluetoothCommand.CONNECT,this,profile));
+        connectInt(this,profile);
       }
     }
   }

@@ -3,7 +3,13 @@
   int status=profileManager.getConnectionStatus(cachedDevice.mDevice);
   if (SettingsBtStatus.isConnectionStatusConnected(status)) {
     if (profileManager.disconnect(cachedDevice.mDevice)) {
+      if (D) {
+        Log.d(TAG,"Command sent successfully:DISCONNECT " + describe(profile));
+      }
       return true;
+    }
+    if (V) {
+      Log.v(TAG,"Framework rejected command immediately:DISCONNECT " + describe(profile));
     }
   }
   return false;

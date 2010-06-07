@@ -1,0 +1,12 @@
+{
+  mSize=mProcess.mSize;
+  for (int i=0; i < mOtherProcesses.size(); i++) {
+    mSize+=mOtherProcesses.get(i).mSize;
+  }
+  String sizeStr=Formatter.formatShortFileSize(context,mSize);
+  if (!sizeStr.equals(mSizeStr)) {
+    mSizeStr=sizeStr;
+    return false;
+  }
+  return false;
+}

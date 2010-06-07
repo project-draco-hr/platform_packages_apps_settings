@@ -1,0 +1,14 @@
+{
+  if (item != null && (item.labelRes != 0 || item.nonLocalizedLabel != null)) {
+    CharSequence label=item.loadLabel(pm);
+    if (label != null) {
+      return label;
+    }
+  }
+  String label=className;
+  int tail=label.lastIndexOf('.');
+  if (tail >= 0) {
+    label=label.substring(tail + 1,label.length());
+  }
+  return label;
+}

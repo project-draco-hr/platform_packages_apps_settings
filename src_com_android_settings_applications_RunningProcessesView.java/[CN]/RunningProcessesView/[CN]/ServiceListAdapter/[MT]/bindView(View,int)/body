@@ -1,0 +1,11 @@
+{
+synchronized (mState.mLock) {
+    if (position >= mItems.size()) {
+      return;
+    }
+    ViewHolder vh=(ViewHolder)view.getTag();
+    RunningState.MergedItem item=mItems.get(position);
+    ActiveItem ai=vh.bind(mState,item,mBuilder);
+    mActiveItems.put(view,ai);
+  }
+}

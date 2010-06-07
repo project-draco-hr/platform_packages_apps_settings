@@ -1,0 +1,18 @@
+{
+  RunningState.MergedItem item=null;
+  ArrayList<RunningState.MergedItem> newItems=mState.getCurrentMergedItems();
+  if (newItems != null) {
+    for (int i=0; i < newItems.size(); i++) {
+      RunningState.MergedItem mi=newItems.get(i);
+      if (mi.mProcess.mUid == mUid && mi.mProcess.mProcessName.equals(mProcessName)) {
+        item=mi;
+        break;
+      }
+    }
+  }
+  if (mMergedItem != item) {
+    mMergedItem=item;
+    return true;
+  }
+  return false;
+}

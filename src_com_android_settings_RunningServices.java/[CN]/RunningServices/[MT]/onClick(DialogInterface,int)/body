@@ -1,8 +1,0 @@
-{
-  if (mCurSelected != null) {
-    stopService(new Intent().setComponent(((ServiceItem)mCurSelected).mRunningService.service));
-    if (mBackgroundHandler != null) {
-      mBackgroundHandler.sendEmptyMessage(MSG_UPDATE_CONTENTS);
-    }
-  }
-}

@@ -1,0 +1,30 @@
+{
+  if (dataChanged) {
+    ServiceListAdapter adapter=(ServiceListAdapter)(mListView.getAdapter());
+    adapter.refreshItems();
+    adapter.notifyDataSetChanged();
+  }
+  long availMem=readAvailMem() - SECONDARY_SERVER_MEM;
+  if (availMem < 0) {
+    availMem=0;
+  }
+synchronized (mState.mLock) {
+    if (mLastNumBackgroundProcesses != mState.mNumBackgroundProcesses || mLastBackgroundProcessMemory != mState.mBackgroundProcessMemory || mLastAvailMemory != availMem) {
+      mLastNumBackgroundProcesses=mState.mNumBackgroundProcesses;
+      mLastBackgroundProcessMemory=mState.mBackgroundProcessMemory;
+      mLastAvailMemory=availMem;
+      String sizeStr=Formatter.formatShortFileSize(getContext(),mLastAvailMemory + mLastBackgroundProcessMemory);
+      mBackgroundProcessText.setText(getResources().getString(R.string.service_background_processes,sizeStr));
+    }
+    if (mLastNumForegroundProcesses != mState.mNumForegroundProcesses || mLastForegroundProcessMemory != mState.mForegroundProcessMemory) {
+      mLastNumForegroundProcesses=mState.mNumForegroundProcesses;
+      mLastForegroundProcessMemory=mState.mForegroundProcessMemory;
+      String sizeStr=Formatter.formatShortFileSize(getContext(),mLastForegroundProcessMemory);
+      mForegroundProcessText.setText(getResources().getString(R.string.service_foreground_processes,sizeStr));
+    }
+    mLastNumServiceProcesses=mState.mNumServiceProcesses;
+    mLastServiceProcessMemory=mState.mServiceProcessMemory;
+    float totalMem=availMem + mLastBackgroundProcessMemory + mLastForegroundProcessMemory+ mLastServiceProcessMemory;
+    mColorBar.setRatios(mLastForegroundProcessMemory / totalMem,mLastServiceProcessMemory / totalMem,(availMem + mLastBackgroundProcessMemory) / totalMem);
+  }
+}

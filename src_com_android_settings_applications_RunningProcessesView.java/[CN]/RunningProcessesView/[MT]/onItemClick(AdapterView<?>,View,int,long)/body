@@ -1,0 +1,10 @@
+{
+  ListView l=(ListView)parent;
+  RunningState.MergedItem mi=(RunningState.MergedItem)l.getAdapter().getItem(position);
+  mCurSelected=mi;
+  Intent intent=new Intent();
+  intent.putExtra(RunningServiceDetails.KEY_UID,mi.mProcess.mUid);
+  intent.putExtra(RunningServiceDetails.KEY_PROCESS,mi.mProcess.mProcessName);
+  intent.setClass(getContext(),RunningServiceDetails.class);
+  getContext().startActivity(intent);
+}

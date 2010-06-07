@@ -3,7 +3,7 @@
     if (mService.getPriority(device) > BluetoothHeadset.PRIORITY_ON) {
       mService.setPriority(device,BluetoothHeadset.PRIORITY_ON);
     }
-    return mService.disconnectHeadset();
+    return mService.disconnectHeadset(device);
   }
  else {
     return false;

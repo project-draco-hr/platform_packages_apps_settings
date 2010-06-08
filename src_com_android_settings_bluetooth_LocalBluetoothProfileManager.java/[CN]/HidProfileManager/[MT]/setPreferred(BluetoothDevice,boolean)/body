@@ -1,0 +1,10 @@
+{
+  if (preferred) {
+    if (mService.getInputDevicePriority(device) < BluetoothInputDevice.PRIORITY_ON) {
+      mService.setInputDevicePriority(device,BluetoothInputDevice.PRIORITY_ON);
+    }
+  }
+ else {
+    mService.setInputDevicePriority(device,BluetoothInputDevice.PRIORITY_OFF);
+  }
+}

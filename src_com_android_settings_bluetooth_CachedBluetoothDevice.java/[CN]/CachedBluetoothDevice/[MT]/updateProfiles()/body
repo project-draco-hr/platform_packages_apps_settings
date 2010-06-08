@@ -19,6 +19,10 @@
         Log.v(TAG,"opp classbits != uuid");
         printUuids=true;
       }
+      if (bluetoothClass.doesClassMatch(BluetoothClass.PROFILE_HID) != mProfiles.contains(Profile.HID)) {
+        Log.v(TAG,"hid classbits != uuid");
+        printUuids=true;
+      }
     }
     if (printUuids) {
       if (bluetoothClass != null)       Log.v(TAG,"Class: " + bluetoothClass.toString());

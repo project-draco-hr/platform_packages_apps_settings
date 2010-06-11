@@ -83,7 +83,7 @@ if (sensorData != null) {
 power+=(multiplier * sensorTime) / 1000;
 }
 if (power != 0) {
-BatterySipper app=new BatterySipper(packageWithHighestDrain,DrainType.APP,0,u,new double[]{power});
+BatterySipper app=new BatterySipper(this,mRequestQueue,mHandler,packageWithHighestDrain,DrainType.APP,0,u,new double[]{power});
 app.cpuTime=cpuTime;
 app.gpsTime=gpsTime;
 app.cpuFgTime=cpuFgTime;

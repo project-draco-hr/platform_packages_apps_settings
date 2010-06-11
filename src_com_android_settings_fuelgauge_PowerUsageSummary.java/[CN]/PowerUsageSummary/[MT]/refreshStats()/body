@@ -9,6 +9,9 @@
   processAppUsage();
   processMiscUsage();
   mAppListGroup.setOrderingAsAdded(false);
+  BatteryHistoryPreference hist=new BatteryHistoryPreference(this,mStats);
+  hist.setOrder(-1);
+  mAppListGroup.addPreference(hist);
   Collections.sort(mUsageList);
   for (  BatterySipper sipper : mUsageList) {
     if (sipper.getSortValue() < MIN_POWER_THRESHOLD)     continue;
@@ -25,7 +28,7 @@
       pref.setKey(Integer.toString(sipper.uidObj.getUid()));
     }
     mAppListGroup.addPreference(pref);
-    if (mAppListGroup.getPreferenceCount() > MAX_ITEMS_TO_LIST)     break;
+    if (mAppListGroup.getPreferenceCount() > (MAX_ITEMS_TO_LIST + 1))     break;
   }
   if (DEBUG)   setTitle("Battery total uAh = " + ((mTotalPower * 1000) / 3600));
 synchronized (mRequestQueue) {

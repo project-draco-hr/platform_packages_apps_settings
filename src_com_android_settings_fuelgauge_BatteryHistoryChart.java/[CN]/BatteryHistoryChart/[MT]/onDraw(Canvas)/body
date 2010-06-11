@@ -1,0 +1,25 @@
+{
+  super.onDraw(canvas);
+  final int width=getWidth();
+  final int height=getHeight();
+  final long timeStart=mHistStart;
+  final long timeChange=mHistEnd - mHistStart;
+  final int batLow=mBatLow;
+  final int batChange=mBatHigh - mBatLow;
+  BatteryStats.BatteryHistoryRecord rec=mStats.getHistory();
+  int lastX=-1, lastY=-1;
+  int pos=0;
+  final int N=mNumHist;
+  while (rec != null && pos < N) {
+    int x=(int)(((rec.time - timeStart) * width) / timeChange);
+    int y=height - 1 - ((rec.batteryLevel - batLow) * height) / batChange;
+    if (lastX >= 0) {
+      canvas.drawLine(lastX,lastY,x,y,mBatteryPaint);
+    }
+    lastX=x;
+    lastY=y;
+    rec=rec.next;
+    pos++;
+  }
+  canvas.drawText(mDurationString,(width / 2) - (mDurationStringWidth / 2),(height / 2) - ((mTextDescent - mTextAscent) / 2) - mTextAscent,mTextPaint);
+}

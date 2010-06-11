@@ -1,0 +1,87 @@
+{
+  super(context,attrs);
+  mBatteryPaint.setARGB(255,255,128,128);
+  mTextPaint.density=getResources().getDisplayMetrics().density;
+  mTextPaint.setCompatibilityScaling(getResources().getCompatibilityInfo().applicationScale);
+  TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.BatteryHistoryChart,0,0);
+  ColorStateList textColor=null;
+  int textSize=15;
+  int typefaceIndex=-1;
+  int styleIndex=-1;
+  TypedArray appearance=null;
+  int ap=a.getResourceId(R.styleable.BatteryHistoryChart_android_textAppearance,-1);
+  if (ap != -1) {
+    appearance=context.obtainStyledAttributes(ap,com.android.internal.R.styleable.TextAppearance);
+  }
+  if (appearance != null) {
+    int n=appearance.getIndexCount();
+    for (int i=0; i < n; i++) {
+      int attr=appearance.getIndex(i);
+switch (attr) {
+case com.android.internal.R.styleable.TextAppearance_textColor:
+        textColor=appearance.getColorStateList(attr);
+      break;
+case com.android.internal.R.styleable.TextAppearance_textSize:
+    textSize=appearance.getDimensionPixelSize(attr,textSize);
+  break;
+case com.android.internal.R.styleable.TextAppearance_typeface:
+typefaceIndex=appearance.getInt(attr,-1);
+break;
+case com.android.internal.R.styleable.TextAppearance_textStyle:
+styleIndex=appearance.getInt(attr,-1);
+break;
+}
+}
+appearance.recycle();
+}
+int shadowcolor=0;
+float dx=0, dy=0, r=0;
+int n=a.getIndexCount();
+for (int i=0; i < n; i++) {
+int attr=a.getIndex(i);
+switch (attr) {
+case R.styleable.BatteryHistoryChart_android_shadowColor:
+shadowcolor=a.getInt(attr,0);
+break;
+case R.styleable.BatteryHistoryChart_android_shadowDx:
+dx=a.getFloat(attr,0);
+break;
+case R.styleable.BatteryHistoryChart_android_shadowDy:
+dy=a.getFloat(attr,0);
+break;
+case R.styleable.BatteryHistoryChart_android_shadowRadius:
+r=a.getFloat(attr,0);
+break;
+case R.styleable.BatteryHistoryChart_android_textColor:
+textColor=a.getColorStateList(attr);
+break;
+case R.styleable.BatteryHistoryChart_android_textSize:
+textSize=a.getDimensionPixelSize(attr,textSize);
+break;
+case R.styleable.BatteryHistoryChart_android_typeface:
+typefaceIndex=a.getInt(attr,typefaceIndex);
+break;
+case R.styleable.BatteryHistoryChart_android_textStyle:
+styleIndex=a.getInt(attr,styleIndex);
+break;
+}
+}
+mTextPaint.setColor(textColor.getDefaultColor());
+mTextPaint.setTextSize(textSize);
+Typeface tf=null;
+switch (typefaceIndex) {
+case SANS:
+tf=Typeface.SANS_SERIF;
+break;
+case SERIF:
+tf=Typeface.SERIF;
+break;
+case MONOSPACE:
+tf=Typeface.MONOSPACE;
+break;
+}
+setTypeface(tf,styleIndex);
+if (shadowcolor != 0) {
+mTextPaint.setShadowLayer(r,dx,dy,shadowcolor);
+}
+}

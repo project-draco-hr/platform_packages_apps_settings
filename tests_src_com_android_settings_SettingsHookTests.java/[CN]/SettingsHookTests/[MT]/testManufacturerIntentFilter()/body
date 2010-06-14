@@ -1,0 +1,13 @@
+{
+  boolean result=false;
+  Context context=mSettings.getApplicationContext();
+  PackageManager pm=context.getPackageManager();
+  Intent intent=new Intent(INTENT_MANUFACTURER_HOOK);
+  List<ResolveInfo> list=pm.queryIntentActivities(intent,0);
+  for (  ResolveInfo resolveInfo : list) {
+    if (resolveInfo.activityInfo.packageName.equals(PACKAGE_NAME)) {
+      result=true;
+    }
+  }
+  assertTrue("Intent-filer not found",result);
+}

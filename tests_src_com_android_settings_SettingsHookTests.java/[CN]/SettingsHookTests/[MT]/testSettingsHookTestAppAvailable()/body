@@ -1,0 +1,6 @@
+{
+  Context context=mSettings.getApplicationContext();
+  PackageManager pm=context.getPackageManager();
+  ApplicationInfo applicationInfo=pm.getApplicationInfo(PACKAGE_NAME,0);
+  assertTrue((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
+}

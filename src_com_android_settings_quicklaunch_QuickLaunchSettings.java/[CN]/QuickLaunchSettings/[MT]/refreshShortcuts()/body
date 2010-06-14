@@ -18,7 +18,7 @@
     String intentUri=c.getString(intentColumn);
     PackageManager packageManager=getPackageManager();
     try {
-      Intent intent=Intent.getIntent(intentUri);
+      Intent intent=Intent.parseUri(intentUri,0);
       ResolveInfo info=packageManager.resolveActivity(intent,0);
       if (info != null) {
         title=info.loadLabel(packageManager);

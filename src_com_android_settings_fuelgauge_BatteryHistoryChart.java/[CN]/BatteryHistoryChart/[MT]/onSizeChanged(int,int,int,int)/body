@@ -1,3 +1,73 @@
 {
   super.onSizeChanged(w,h,oldw,oldh);
+  mBatLevelPath.reset();
+  mBatLevelX=new int[w + 5];
+  mBatLevelY=new int[w + 5];
+  mBatLevelValue=new byte[w + 5];
+  mNumBatLevel=0;
+  final long timeStart=mHistStart;
+  final long timeChange=mHistEnd - mHistStart;
+  final int batLow=mBatLow;
+  final int batChange=mBatHigh - mBatLow;
+  BatteryStats.HistoryItem rec=mStats.getHistory();
+  int x=0, y=0, lastX=-1, lastY=-1, lastBatX=-1, lastBatY=-1;
+  byte lastBatValue=0;
+  int i=0, num=0;
+  boolean first=true;
+  final int N=mNumHist;
+  while (rec != null && i < N) {
+    if (rec.cmd == BatteryStats.HistoryItem.CMD_UPDATE) {
+      x=(int)(((rec.time - timeStart) * w) / timeChange);
+      y=h - 1 - ((rec.batteryLevel - batLow) * (h - 3)) / batChange;
+      if (first) {
+        first=false;
+        mBatLevelPath.moveTo(x,y);
+        mBatLevelX[mNumBatLevel]=x;
+        mBatLevelY[mNumBatLevel]=y;
+        mBatLevelValue[mNumBatLevel]=lastBatValue=rec.batteryLevel;
+        mNumBatLevel++;
+        lastX=lastBatX=x;
+        lastY=lastBatY=y;
+      }
+ else {
+        if (lastX != x) {
+          if (lastY == y) {
+            lastBatX=x;
+            lastBatY=y;
+          }
+ else {
+            if (lastBatX >= 0) {
+              mBatLevelPath.lineTo(lastBatX,lastBatY);
+              mBatLevelX[mNumBatLevel]=lastBatX;
+              mBatLevelY[mNumBatLevel]=lastBatY;
+              mBatLevelValue[mNumBatLevel]=lastBatValue;
+              mNumBatLevel++;
+              num++;
+            }
+            mBatLevelPath.lineTo(x,y);
+            mBatLevelX[mNumBatLevel]=x;
+            mBatLevelY[mNumBatLevel]=y;
+            mBatLevelValue[mNumBatLevel]=lastBatValue=rec.batteryLevel;
+            mNumBatLevel++;
+            num++;
+            lastX=x;
+            lastY=y;
+            lastBatX=-1;
+          }
+        }
+      }
+    }
+    rec=rec.next;
+    i++;
+  }
+  if (num == 0 || lastBatX >= 0) {
+    mBatLevelPath.lineTo(w,y);
+    mBatLevelX[mNumBatLevel]=w;
+    mBatLevelY[mNumBatLevel]=y;
+    mBatLevelValue[mNumBatLevel]=lastBatValue;
+    mNumBatLevel++;
+  }
+  mBatLevelPath.lineTo(w,h);
+  mBatLevelPath.lineTo(0,h);
+  mBatLevelPath.close();
 }

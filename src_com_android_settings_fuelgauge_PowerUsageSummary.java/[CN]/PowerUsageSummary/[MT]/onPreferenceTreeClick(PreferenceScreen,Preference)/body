@@ -1,4 +1,7 @@
 {
+  if (!(preference instanceof PowerGaugePreference)) {
+    return false;
+  }
   PowerGaugePreference pgp=(PowerGaugePreference)preference;
   BatterySipper sipper=pgp.getInfo();
   Intent intent=new Intent(this,PowerUsageDetail.class);

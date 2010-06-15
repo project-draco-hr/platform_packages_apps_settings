@@ -1,26 +1,28 @@
 {
   mStats=stats;
-  long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime() * 1000,BatteryStats.STATS_UNPLUGGED);
+  long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime() * 1000,BatteryStats.STATS_SINCE_CHARGED);
   mStatsPeriod=uSecTime;
   String durationString=Utils.formatElapsedTime(getContext(),mStatsPeriod / 1000);
   mDurationString=getContext().getString(R.string.battery_stats_on_battery,durationString);
-  BatteryStats.BatteryHistoryRecord rec=stats.getHistory();
+  BatteryStats.HistoryItem rec=stats.getHistory();
   if (rec != null) {
     mHistStart=rec.time;
     mBatLow=mBatHigh=rec.batteryLevel;
   }
   int pos=0;
-  int lastUnplugged=0;
+  int lastInteresting=0;
+  byte lastLevel=-1;
   mBatLow=0;
   mBatHigh=100;
   while (rec != null) {
     pos++;
-    if ((rec.states & BatteryHistoryRecord.STATE_BATTERY_PLUGGED_FLAG) == 0) {
-      lastUnplugged=pos;
+    if (rec.cmd == HistoryItem.CMD_UPDATE && (rec.batteryLevel != lastLevel || pos == 1)) {
+      lastLevel=rec.batteryLevel;
+      lastInteresting=pos;
       mHistEnd=rec.time;
     }
     rec=rec.next;
   }
-  mNumHist=lastUnplugged;
+  mNumHist=lastInteresting;
   if (mHistEnd <= mHistStart)   mHistEnd=mHistStart + 1;
 }

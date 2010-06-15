@@ -1,11 +1,11 @@
 {
 switch (item.getItemId()) {
 case MENU_STATS_TYPE:
-    if (mStatsType == BatteryStats.STATS_TOTAL) {
-      mStatsType=BatteryStats.STATS_UNPLUGGED;
+    if (mStatsType == BatteryStats.STATS_SINCE_CHARGED) {
+      mStatsType=BatteryStats.STATS_SINCE_UNPLUGGED;
     }
  else {
-      mStatsType=BatteryStats.STATS_TOTAL;
+      mStatsType=BatteryStats.STATS_SINCE_CHARGED;
     }
   refreshStats();
 return true;

@@ -1,6 +1,15 @@
 {
   super(context,attrs);
-  mBatteryPaint.setARGB(255,255,128,128);
+  mBatteryBackgroundPaint.setARGB(255,128,128,128);
+  mBatteryBackgroundPaint.setStyle(Paint.Style.FILL);
+  mBatteryGoodPaint.setARGB(128,0,255,0);
+  int lineWidth=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2,getResources().getDisplayMetrics());
+  if (lineWidth <= 0)   lineWidth=1;
+  mBatteryGoodPaint.setStrokeWidth(lineWidth);
+  mBatteryWarnPaint.setARGB(128,255,255,0);
+  mBatteryWarnPaint.setStrokeWidth(lineWidth);
+  mBatteryCriticalPaint.setARGB(192,255,0,0);
+  mBatteryCriticalPaint.setStrokeWidth(lineWidth);
   mTextPaint.density=getResources().getDisplayMetrics().density;
   mTextPaint.setCompatibilityScaling(getResources().getCompatibilityInfo().applicationScale);
   TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.BatteryHistoryChart,0,0);

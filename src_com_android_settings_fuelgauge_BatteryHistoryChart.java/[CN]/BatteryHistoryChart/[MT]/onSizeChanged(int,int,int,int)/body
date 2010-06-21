@@ -9,7 +9,7 @@
   final long timeChange=mHistEnd - mHistStart;
   final int batLow=mBatLow;
   final int batChange=mBatHigh - mBatLow;
-  BatteryStats.HistoryItem rec=mStats.getHistory();
+  BatteryStats.HistoryItem rec=mHistFirst;
   int x=0, y=0, lastX=-1, lastY=-1, lastBatX=-1, lastBatY=-1;
   byte lastBatValue=0;
   int i=0, num=0;
@@ -36,14 +36,6 @@
             lastBatY=y;
           }
  else {
-            if (lastBatX >= 0) {
-              mBatLevelPath.lineTo(lastBatX,lastBatY);
-              mBatLevelX[mNumBatLevel]=lastBatX;
-              mBatLevelY[mNumBatLevel]=lastBatY;
-              mBatLevelValue[mNumBatLevel]=lastBatValue;
-              mNumBatLevel++;
-              num++;
-            }
             mBatLevelPath.lineTo(x,y);
             mBatLevelX[mNumBatLevel]=x;
             mBatLevelY[mNumBatLevel]=y;

@@ -4,18 +4,19 @@
   final int height=getHeight();
   canvas.drawPath(mBatLevelPath,mBatteryBackgroundPaint);
   canvas.drawText(mDurationString,(width / 2) - (mDurationStringWidth / 2),(height / 2) - ((mTextDescent - mTextAscent) / 2) - mTextAscent,mTextPaint);
-  int lastX=mBatLevelX[0];
-  int lastY=mBatLevelY[0];
-  for (int i=1; i < mNumBatLevel; i++) {
-    int x=mBatLevelX[i];
-    int y=mBatLevelY[i];
-    Paint paint;
-    byte value=mBatLevelValue[i];
-    if (value <= BATTERY_CRITICAL)     paint=mBatteryCriticalPaint;
- else     if (value <= BATTERY_WARN)     paint=mBatteryWarnPaint;
- else     paint=mBatteryGoodPaint;
-    canvas.drawLine(lastX,lastY,x,y,paint);
-    lastX=x;
-    lastY=y;
+  if (!mBatGoodPath.isEmpty()) {
+    canvas.drawPath(mBatGoodPath,mBatteryGoodPaint);
+  }
+  if (!mBatWarnPath.isEmpty()) {
+    canvas.drawPath(mBatWarnPath,mBatteryWarnPaint);
+  }
+  if (!mBatCriticalPath.isEmpty()) {
+    canvas.drawPath(mBatCriticalPath,mBatteryCriticalPaint);
+  }
+  if (!mChargingPath.isEmpty()) {
+    canvas.drawPath(mChargingPath,mChargingPaint);
+  }
+  if (!mScreenOnPath.isEmpty()) {
+    canvas.drawPath(mScreenOnPath,mScreenOnPaint);
   }
 }

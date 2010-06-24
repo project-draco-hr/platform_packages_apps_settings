@@ -12,10 +12,10 @@
     if ((si.flags & ActivityManager.RunningServiceInfo.FLAG_PERSISTENT_PROCESS) != 0) {
       continue;
     }
-    HashMap<String,ProcessItem> procs=mProcesses.get(si.uid);
+    HashMap<String,ProcessItem> procs=mServiceProcessesByName.get(si.uid);
     if (procs == null) {
       procs=new HashMap<String,ProcessItem>();
-      mProcesses.put(si.uid,procs);
+      mServiceProcessesByName.put(si.uid,procs);
     }
     ProcessItem proc=procs.get(si.process);
     if (proc == null) {
@@ -29,10 +29,10 @@
         changed=true;
         if (proc.mPid != pid) {
           if (proc.mPid != 0) {
-            mActiveProcesses.remove(proc.mPid);
+            mServiceProcessesByPid.remove(proc.mPid);
           }
           if (pid != 0) {
-            mActiveProcesses.put(pid,proc);
+            mServiceProcessesByPid.put(pid,proc);
           }
           proc.mPid=pid;
         }
@@ -46,15 +46,24 @@
   final int NP=processes != null ? processes.size() : 0;
   for (int i=0; i < NP; i++) {
     ActivityManager.RunningAppProcessInfo pi=processes.get(i);
-    ProcessItem proc=mActiveProcesses.get(pi.pid);
+    ProcessItem proc=mServiceProcessesByPid.get(pi.pid);
     if (proc == null) {
       proc=mRunningProcesses.get(pi.pid);
       if (proc == null) {
+        changed=true;
         proc=new ProcessItem(context,pi.uid,pi.processName);
         proc.mPid=pi.pid;
         mRunningProcesses.put(pi.pid,proc);
       }
       proc.mDependentProcesses.clear();
+    }
+    if ((pi.flags & ActivityManager.RunningAppProcessInfo.FLAG_HEAVY_WEIGHT) != 0) {
+      if (!mHeavyProcesses.contains(proc)) {
+        changed=true;
+        mHeavyProcesses.add(proc);
+      }
+      proc.mCurSeq=mSequence;
+      proc.ensureLabel(pm);
     }
     proc.mRunningSeq=mSequence;
     proc.mRunningProcessInfo=pi;
@@ -65,7 +74,7 @@
     if (proc.mRunningSeq == mSequence) {
       int clientPid=proc.mRunningProcessInfo.importanceReasonPid;
       if (clientPid != 0) {
-        ProcessItem client=mActiveProcesses.get(clientPid);
+        ProcessItem client=mServiceProcessesByPid.get(clientPid);
         if (client == null) {
           client=mRunningProcesses.get(clientPid);
         }
@@ -78,18 +87,29 @@
       }
     }
  else {
+      changed=true;
       mRunningProcesses.remove(mRunningProcesses.keyAt(i));
     }
   }
-  final int NAP=mActiveProcesses.size();
+  int NHP=mHeavyProcesses.size();
+  for (int i=0; i < NHP; i++) {
+    ProcessItem proc=mHeavyProcesses.get(i);
+    if (mRunningProcesses.get(proc.mPid) == null) {
+      changed=true;
+      mHeavyProcesses.remove(i);
+      i--;
+      NHP--;
+    }
+  }
+  final int NAP=mServiceProcessesByPid.size();
   for (int i=0; i < NAP; i++) {
-    ProcessItem proc=mActiveProcesses.valueAt(i);
+    ProcessItem proc=mServiceProcessesByPid.valueAt(i);
     if (proc.mCurSeq == mSequence) {
       changed|=proc.buildDependencyChain(context,pm,mSequence);
     }
   }
-  for (int i=0; i < mProcesses.size(); i++) {
-    HashMap<String,ProcessItem> procs=mProcesses.valueAt(i);
+  for (int i=0; i < mServiceProcessesByName.size(); i++) {
+    HashMap<String,ProcessItem> procs=mServiceProcessesByName.valueAt(i);
     Iterator<ProcessItem> pit=procs.values().iterator();
     while (pit.hasNext()) {
       ProcessItem pi=pit.next();
@@ -103,10 +123,10 @@
         changed=true;
         pit.remove();
         if (procs.size() == 0) {
-          mProcesses.remove(mProcesses.keyAt(i));
+          mServiceProcessesByName.remove(mServiceProcessesByName.keyAt(i));
         }
         if (pi.mPid != 0) {
-          mActiveProcesses.remove(pi.mPid);
+          mServiceProcessesByPid.remove(pi.mPid);
         }
         continue;
       }
@@ -122,8 +142,8 @@
   }
   if (changed) {
     ArrayList<ProcessItem> sortedProcesses=new ArrayList<ProcessItem>();
-    for (int i=0; i < mProcesses.size(); i++) {
-      for (      ProcessItem pi : mProcesses.valueAt(i).values()) {
+    for (int i=0; i < mServiceProcessesByName.size(); i++) {
+      for (      ProcessItem pi : mServiceProcessesByName.valueAt(i).values()) {
         pi.mIsSystem=false;
         pi.mIsStarted=true;
         pi.mActiveSince=Long.MAX_VALUE;
@@ -185,6 +205,19 @@
       }
       mergedItem.update(context);
       newMergedItems.add(mergedItem);
+    }
+    NHP=mHeavyProcesses.size();
+    for (int i=0; i < NHP; i++) {
+      ProcessItem proc=mHeavyProcesses.get(i);
+      if (proc.mClient == null && proc.mServices.size() <= 0) {
+        if (proc.mMergedItem == null) {
+          proc.mMergedItem=new MergedItem();
+          proc.mMergedItem.mProcess=proc;
+        }
+        proc.mMergedItem.update(context);
+        newMergedItems.add(0,proc.mMergedItem);
+        mProcessItems.add(proc);
+      }
     }
 synchronized (mLock) {
       mItems=newItems;

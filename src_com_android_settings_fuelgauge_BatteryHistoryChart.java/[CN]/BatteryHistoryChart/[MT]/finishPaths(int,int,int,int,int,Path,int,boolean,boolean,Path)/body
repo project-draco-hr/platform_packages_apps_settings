@@ -1,6 +1,6 @@
 {
   if (curLevelPath != null) {
-    if (lastBatX >= 0) {
+    if (lastX >= 0 && lastX < w) {
       if (lastPath != null) {
         lastPath.lineTo(w,y);
       }
@@ -10,10 +10,10 @@
     curLevelPath.lineTo(startX,levelh);
     curLevelPath.close();
   }
-  if (lastCharging) {
+  if (lastCharging && lastX < w) {
     mChargingPath.lineTo(w,h - mChargingOffset);
   }
-  if (lastScreenOn) {
+  if (lastScreenOn && lastX < w) {
     mScreenOnPath.lineTo(w,h - mScreenOnOffset);
   }
 }

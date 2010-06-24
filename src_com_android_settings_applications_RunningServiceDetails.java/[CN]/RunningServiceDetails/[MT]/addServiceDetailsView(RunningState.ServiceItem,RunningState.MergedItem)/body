@@ -1,0 +1,41 @@
+{
+  if (mNumServices == 0) {
+    mServicesHeader=(TextView)mInflater.inflate(R.layout.separator_label,mAllDetails,false);
+    mServicesHeader.setText(R.string.runningservicedetails_services_title);
+    mAllDetails.addView(mServicesHeader);
+  }
+  mNumServices++;
+  RunningState.BaseItem bi=si != null ? si : mi;
+  ActiveDetail detail=new ActiveDetail();
+  View root=mInflater.inflate(R.layout.running_service_details_service,mAllDetails,false);
+  mAllDetails.addView(root);
+  detail.mRootView=root;
+  detail.mViewHolder=new RunningProcessesView.ViewHolder(root);
+  detail.mActiveItem=detail.mViewHolder.bind(mState,bi,mBuilder);
+  if (si != null && si.mRunningService.clientLabel != 0) {
+    detail.mManageIntent=mAm.getRunningServiceControlPanel(si.mRunningService.service);
+  }
+  TextView description=(TextView)root.findViewById(R.id.comp_description);
+  if (si != null && si.mServiceInfo.descriptionRes != 0) {
+    description.setText(getPackageManager().getText(si.mServiceInfo.packageName,si.mServiceInfo.descriptionRes,si.mServiceInfo.applicationInfo));
+  }
+ else {
+    if (detail.mManageIntent != null) {
+      try {
+        Resources clientr=getPackageManager().getResourcesForApplication(si.mRunningService.clientPackage);
+        String label=clientr.getString(si.mRunningService.clientLabel);
+        description.setText(getString(R.string.service_manage_description,label));
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+      }
+    }
+ else {
+      description.setText(getText(si != null ? R.string.service_stop_description : R.string.heavy_weight_stop_description));
+    }
+  }
+  View button=root.findViewById(R.id.right_button);
+  button.setOnClickListener(detail);
+  ((TextView)button).setText(getText(detail.mManageIntent != null ? R.string.service_manage : R.string.service_stop));
+  root.findViewById(R.id.left_button).setVisibility(View.INVISIBLE);
+  mActiveDetails.add(detail);
+}

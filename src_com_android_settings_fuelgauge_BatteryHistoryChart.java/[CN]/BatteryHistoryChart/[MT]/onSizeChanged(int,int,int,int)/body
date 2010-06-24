@@ -12,7 +12,7 @@
   final int batChange=mBatHigh - mBatLow;
   final int levelh=h - mLevelOffset;
   BatteryStats.HistoryItem rec=mHistFirst;
-  int x=0, y=0, startX=0, lastX=-1, lastY=-1, lastBatX=-1;
+  int x=0, y=0, startX=0, lastX=-1, lastY=-1;
   int i=0;
   Path curLevelPath=null;
   Path lastLinePath=null;
@@ -23,10 +23,7 @@
       x=(int)(((rec.time - timeStart) * w) / timeChange);
       y=levelh - ((rec.batteryLevel - batLow) * (levelh - 1)) / batChange;
       if (lastX != x) {
-        if (lastY == y) {
-          lastBatX=x;
-        }
- else {
+        if (lastY != y) {
           Path path;
           byte value=rec.batteryLevel;
           if (value <= BATTERY_CRITICAL)           path=mBatCriticalPath;
@@ -52,7 +49,6 @@
           }
           lastX=x;
           lastY=y;
-          lastBatX=-1;
           final boolean charging=(rec.states & HistoryItem.STATE_BATTERY_PLUGGED_FLAG) != 0;
           if (charging != lastCharging) {
             if (charging) {
@@ -77,8 +73,8 @@
       }
     }
  else     if (curLevelPath != null) {
-      finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastBatX,lastCharging,lastScreenOn,lastLinePath);
-      lastX=lastY=lastBatX=-1;
+      finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastLinePath);
+      lastX=lastY=-1;
       curLevelPath=null;
       lastLinePath=null;
       lastCharging=lastScreenOn=false;
@@ -86,5 +82,5 @@
     rec=rec.next;
     i++;
   }
-  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastBatX,lastCharging,lastScreenOn,lastLinePath);
+  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastLinePath);
 }

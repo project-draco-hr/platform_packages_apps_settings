@@ -1,0 +1,57 @@
+{
+  if (mNumProcesses == 0) {
+    mProcessesHeader=(TextView)mInflater.inflate(R.layout.separator_label,mAllDetails,false);
+    mProcessesHeader.setText(R.string.runningservicedetails_processes_title);
+    mAllDetails.addView(mProcessesHeader);
+  }
+  mNumProcesses++;
+  ActiveDetail detail=new ActiveDetail();
+  View root=mInflater.inflate(R.layout.running_service_details_process,mAllDetails,false);
+  mAllDetails.addView(root);
+  detail.mRootView=root;
+  detail.mViewHolder=new RunningProcessesView.ViewHolder(root);
+  detail.mActiveItem=detail.mViewHolder.bind(mState,pi,mBuilder);
+  TextView description=(TextView)root.findViewById(R.id.comp_description);
+  if (isMain) {
+    description.setText(R.string.main_running_process_description);
+  }
+ else {
+    int textid=0;
+    CharSequence label=null;
+    ActivityManager.RunningAppProcessInfo rpi=pi.mRunningProcessInfo;
+    final ComponentName comp=rpi.importanceReasonComponent;
+switch (rpi.importanceReasonCode) {
+case ActivityManager.RunningAppProcessInfo.REASON_PROVIDER_IN_USE:
+      textid=R.string.process_provider_in_use_description;
+    List<ProviderInfo> providers=null;
+  if (comp != null) {
+    providers=getPackageManager().queryContentProviders(comp.getPackageName(),rpi.uid,0);
+  }
+if (providers != null) {
+  for (int j=0; j < providers.size(); j++) {
+    ProviderInfo prov=providers.get(j);
+    if (comp.getClassName().equals(prov.name)) {
+      label=RunningState.makeLabel(getPackageManager(),prov.name,prov);
+      break;
+    }
+  }
+}
+break;
+case ActivityManager.RunningAppProcessInfo.REASON_SERVICE_IN_USE:
+textid=R.string.process_service_in_use_description;
+if (rpi.importanceReasonComponent != null) {
+try {
+ServiceInfo serv=getPackageManager().getServiceInfo(rpi.importanceReasonComponent,0);
+label=RunningState.makeLabel(getPackageManager(),serv.name,serv);
+}
+ catch (NameNotFoundException e) {
+}
+}
+break;
+}
+if (textid != 0 && label != null) {
+description.setText(getString(textid,label));
+}
+}
+mActiveDetails.add(detail);
+}

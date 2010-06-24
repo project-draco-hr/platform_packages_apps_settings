@@ -2,9 +2,14 @@
   if (button == DialogInterface.BUTTON_POSITIVE) {
     mWifiConfig=mDialog.getConfig();
     if (mWifiConfig != null) {
-      mWifiManager.setWifiApEnabled(mWifiConfig,true);
+      if (mWifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_ENABLED) {
+        mWifiManager.setWifiApEnabled(mWifiConfig,true);
+        mWifiApEnabler.updateConfigSummary(mWifiConfig);
+      }
+ else {
+        mWifiManager.setWifiApConfiguration(mWifiConfig);
+      }
       mCreateNetwork.setSummary(String.format(getString(CONFIG_SUBTEXT),mWifiConfig.SSID,mWifiConfig.allowedKeyManagement.get(KeyMgmt.WPA_PSK) ? mSecurityType[WPA_INDEX] : mSecurityType[OPEN_INDEX]));
-      mWifiApEnabler.updateConfigSummary(mWifiConfig);
     }
   }
 }

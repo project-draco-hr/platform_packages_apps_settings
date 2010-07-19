@@ -16,5 +16,15 @@
     }
   }
 ;
-  new AlertDialog.Builder(context).setTitle(getName()).setMessage(message).setPositiveButton(android.R.string.ok,disconnectListener).setNegativeButton(android.R.string.cancel,null).show();
+  if (mDialog == null) {
+    mDialog=new AlertDialog.Builder(context).setPositiveButton(android.R.string.ok,disconnectListener).setNegativeButton(android.R.string.cancel,null).create();
+  }
+ else {
+    if (mDialog.isShowing()) {
+      mDialog.dismiss();
+    }
+  }
+  mDialog.setTitle(getName());
+  mDialog.setMessage(message);
+  mDialog.show();
 }

@@ -1,0 +1,9 @@
+{
+  if (id == ERROR_DIALOG_ID) {
+    String hostname=mHostnameField.getText().toString().trim();
+    String portStr=mPortField.getText().toString().trim();
+    String msg=getString(validate(hostname,portStr));
+    return new AlertDialog.Builder(this).setTitle(R.string.proxy_error).setPositiveButton(R.string.proxy_error_dismiss,null).setMessage(msg).create();
+  }
+  return super.onCreateDialog(id);
+}

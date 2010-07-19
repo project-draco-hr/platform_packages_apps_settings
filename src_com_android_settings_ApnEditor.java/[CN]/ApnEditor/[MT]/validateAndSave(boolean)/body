@@ -3,21 +3,8 @@
   String apn=checkNotSet(mApn.getText());
   String mcc=checkNotSet(mMcc.getText());
   String mnc=checkNotSet(mMnc.getText());
-  String errorMsg=null;
-  if (name.length() < 1) {
-    errorMsg=mRes.getString(R.string.error_name_empty);
-  }
- else   if (apn.length() < 1) {
-    errorMsg=mRes.getString(R.string.error_apn_empty);
-  }
- else   if (mcc.length() != 3) {
-    errorMsg=mRes.getString(R.string.error_mcc_not3);
-  }
- else   if ((mnc.length() & 0xFFFE) != 2) {
-    errorMsg=mRes.getString(R.string.error_mnc_not23);
-  }
-  if (errorMsg != null && !force) {
-    showErrorMessage(errorMsg);
+  if (getErrorMsg() != null && !force) {
+    showDialog(ERROR_DIALOG_ID);
     return false;
   }
   if (!mCursor.moveToFirst()) {

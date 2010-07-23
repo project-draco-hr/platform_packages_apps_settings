@@ -1,27 +1,66 @@
 {
   super.onSizeChanged(w,h,oldw,oldh);
+  int textHeight=mTextDescent - mTextAscent;
+  mThinLineWidth=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2,getResources().getDisplayMetrics());
+  if (h > (textHeight * 6)) {
+    mLargeMode=true;
+    mLineWidth=textHeight / 2;
+    mLevelTop=textHeight + mLineWidth;
+  }
+ else {
+    mLargeMode=false;
+    mLineWidth=mThinLineWidth;
+    mLevelTop=0;
+  }
+  if (mLineWidth <= 0)   mLineWidth=1;
+  mTextPaint.setStrokeWidth(mThinLineWidth);
+  mBatteryGoodPaint.setStrokeWidth(mThinLineWidth);
+  mBatteryWarnPaint.setStrokeWidth(mThinLineWidth);
+  mBatteryCriticalPaint.setStrokeWidth(mThinLineWidth);
+  mChargingPaint.setStrokeWidth(mLineWidth);
+  mScreenOnPaint.setStrokeWidth(mLineWidth);
+  mGpsOnPaint.setStrokeWidth(mLineWidth);
+  if (mLargeMode) {
+    int barOffset=textHeight + mLineWidth;
+    mScreenOnOffset=mLineWidth;
+    mGpsOnOffset=mScreenOnOffset + barOffset;
+    mPhoneSignalOffset=mGpsOnOffset + barOffset;
+    mChargingOffset=mPhoneSignalOffset + barOffset;
+    mLevelOffset=mChargingOffset + barOffset + mLineWidth;
+    mPhoneSignalTicks=new int[w + 2];
+  }
+ else {
+    mScreenOnOffset=mGpsOnOffset=mLineWidth;
+    mChargingOffset=mLineWidth * 2;
+    mPhoneSignalOffset=0;
+    mLevelOffset=mLineWidth * 3;
+    mPhoneSignalTicks=null;
+  }
   mBatLevelPath.reset();
   mBatGoodPath.reset();
   mBatWarnPath.reset();
   mBatCriticalPath.reset();
   mScreenOnPath.reset();
+  mGpsOnPath.reset();
   mChargingPath.reset();
   final long timeStart=mHistStart;
   final long timeChange=mHistEnd - mHistStart;
   final int batLow=mBatLow;
   final int batChange=mBatHigh - mBatLow;
-  final int levelh=h - mLevelOffset;
+  final int levelh=h - mLevelOffset - mLevelTop;
+  mLevelBottom=mLevelTop + levelh;
   BatteryStats.HistoryItem rec=mHistFirst;
   int x=0, y=0, startX=0, lastX=-1, lastY=-1;
   int i=0;
   Path curLevelPath=null;
   Path lastLinePath=null;
-  boolean lastCharging=false, lastScreenOn=false;
+  boolean lastCharging=false, lastScreenOn=false, lastGpsOn=false;
+  int lastPhoneSignalBin=0;
   final int N=mNumHist;
   while (rec != null && i < N) {
     if (rec.cmd == BatteryStats.HistoryItem.CMD_UPDATE) {
       x=(int)(((rec.time - timeStart) * w) / timeChange);
-      y=levelh - ((rec.batteryLevel - batLow) * (levelh - 1)) / batChange;
+      y=mLevelTop + levelh - ((rec.batteryLevel - batLow) * (levelh - 1)) / batChange;
       if (lastX != x) {
         if (lastY != y) {
           Path path;
@@ -49,38 +88,66 @@
           }
           lastX=x;
           lastY=y;
-          final boolean charging=(rec.states & HistoryItem.STATE_BATTERY_PLUGGED_FLAG) != 0;
-          if (charging != lastCharging) {
-            if (charging) {
-              mChargingPath.moveTo(x,h - mChargingOffset);
-            }
- else {
-              mChargingPath.lineTo(x,h - mChargingOffset);
-            }
-            lastCharging=charging;
+        }
+        final boolean charging=(rec.states & HistoryItem.STATE_BATTERY_PLUGGED_FLAG) != 0;
+        if (charging != lastCharging) {
+          if (charging) {
+            mChargingPath.moveTo(x,h - mChargingOffset);
           }
-          final boolean screenOn=(rec.states & HistoryItem.STATE_SCREEN_ON_FLAG) != 0;
-          if (screenOn != lastScreenOn) {
-            if (screenOn) {
-              mScreenOnPath.moveTo(x,h - mScreenOnOffset);
-            }
  else {
-              mScreenOnPath.lineTo(x,h - mScreenOnOffset);
-            }
-            lastScreenOn=screenOn;
+            mChargingPath.lineTo(x,h - mChargingOffset);
+          }
+          lastCharging=charging;
+        }
+        final boolean screenOn=(rec.states & HistoryItem.STATE_SCREEN_ON_FLAG) != 0;
+        if (screenOn != lastScreenOn) {
+          if (screenOn) {
+            mScreenOnPath.moveTo(x,h - mScreenOnOffset);
+          }
+ else {
+            mScreenOnPath.lineTo(x,h - mScreenOnOffset);
+          }
+          lastScreenOn=screenOn;
+        }
+        final boolean gpsOn=(rec.states & HistoryItem.STATE_GPS_ON_FLAG) != 0;
+        if (gpsOn != lastGpsOn) {
+          if (gpsOn) {
+            mGpsOnPath.moveTo(x,h - mGpsOnOffset);
+          }
+ else {
+            mGpsOnPath.lineTo(x,h - mGpsOnOffset);
+          }
+          lastGpsOn=gpsOn;
+        }
+        if (mLargeMode) {
+          int bin;
+          if (((rec.states & HistoryItem.STATE_PHONE_STATE_MASK) >> HistoryItem.STATE_PHONE_STATE_SHIFT) == ServiceState.STATE_POWER_OFF) {
+            bin=0;
+          }
+ else           if ((rec.states & HistoryItem.STATE_PHONE_SCANNING_FLAG) != 0) {
+            bin=1;
+          }
+ else {
+            bin=(rec.states & HistoryItem.STATE_SIGNAL_STRENGTH_MASK) >> HistoryItem.STATE_SIGNAL_STRENGTH_SHIFT;
+            bin+=2;
+          }
+          if (bin != lastPhoneSignalBin) {
+            addPhoneSignalTick(x,bin);
+            lastPhoneSignalBin=bin;
           }
         }
       }
     }
  else     if (curLevelPath != null) {
-      finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastLinePath);
+      finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastPhoneSignalBin,lastLinePath);
       lastX=lastY=-1;
       curLevelPath=null;
       lastLinePath=null;
-      lastCharging=lastScreenOn=false;
+      lastCharging=lastScreenOn=lastGpsOn=false;
+      lastPhoneSignalBin=0;
     }
     rec=rec.next;
     i++;
   }
-  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastLinePath);
+  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastPhoneSignalBin,lastLinePath);
 }

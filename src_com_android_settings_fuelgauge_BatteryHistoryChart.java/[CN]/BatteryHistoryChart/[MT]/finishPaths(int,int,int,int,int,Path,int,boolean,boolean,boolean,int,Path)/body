@@ -6,14 +6,20 @@
       }
       curLevelPath.lineTo(w,y);
     }
-    curLevelPath.lineTo(w,levelh);
-    curLevelPath.lineTo(startX,levelh);
+    curLevelPath.lineTo(w,mLevelTop + levelh);
+    curLevelPath.lineTo(startX,mLevelTop + levelh);
     curLevelPath.close();
   }
-  if (lastCharging && lastX < w) {
+  if (lastCharging) {
     mChargingPath.lineTo(w,h - mChargingOffset);
   }
-  if (lastScreenOn && lastX < w) {
+  if (lastScreenOn) {
     mScreenOnPath.lineTo(w,h - mScreenOnOffset);
+  }
+  if (lastGpsOn) {
+    mGpsOnPath.lineTo(w,h - mGpsOnOffset);
+  }
+  if (lastPhoneSignal != 0) {
+    addPhoneSignalTick(w,0);
   }
 }

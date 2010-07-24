@@ -5,7 +5,12 @@
       showDialogInner(DLG_FACTORY_RESET);
     }
  else {
-      uninstallPkg(packageName);
+      if ((mAppInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+        new DisableChanger(this,mAppInfo,mAppInfo.enabled ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED : PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).execute((Object)null);
+      }
+ else {
+        uninstallPkg(packageName);
+      }
     }
   }
  else   if (v == mActivitiesButton) {
@@ -29,7 +34,7 @@
     mPm.deleteApplicationCacheFiles(packageName,mClearCacheObserver);
   }
  else   if (v == mForceStopButton) {
-    forceStopPackage(mAppInfo.packageName);
+    showDialogInner(DLG_FORCE_STOP);
   }
  else   if (v == mMoveAppButton) {
     if (mPackageMoveObserver == null) {

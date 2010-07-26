@@ -1,5 +1,5 @@
 {
-  List<ApplicationInfo> installedAppList=mPm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
+  List<ApplicationInfo> installedAppList=mPm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
   if (installedAppList == null) {
     return new ArrayList<ApplicationInfo>();
   }

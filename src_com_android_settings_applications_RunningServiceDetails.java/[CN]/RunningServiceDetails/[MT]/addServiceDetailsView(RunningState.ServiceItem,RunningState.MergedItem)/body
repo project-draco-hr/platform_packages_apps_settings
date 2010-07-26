@@ -10,6 +10,7 @@
   View root=mInflater.inflate(R.layout.running_service_details_service,mAllDetails,false);
   mAllDetails.addView(root);
   detail.mRootView=root;
+  detail.mServiceItem=si;
   detail.mViewHolder=new RunningProcessesView.ViewHolder(root);
   detail.mActiveItem=detail.mViewHolder.bind(mState,bi,mBuilder);
   if (si != null && si.mRunningService.clientLabel != 0) {
@@ -33,9 +34,19 @@
       description.setText(getText(si != null ? R.string.service_stop_description : R.string.heavy_weight_stop_description));
     }
   }
-  View button=root.findViewById(R.id.right_button);
-  button.setOnClickListener(detail);
-  ((TextView)button).setText(getText(detail.mManageIntent != null ? R.string.service_manage : R.string.service_stop));
-  root.findViewById(R.id.left_button).setVisibility(View.INVISIBLE);
+  detail.mStopButton=(Button)root.findViewById(R.id.left_button);
+  detail.mStopButton.setOnClickListener(detail);
+  detail.mStopButton.setText(getText(detail.mManageIntent != null ? R.string.service_manage : R.string.service_stop));
+  detail.mReportButton=(Button)root.findViewById(R.id.right_button);
+  detail.mReportButton.setOnClickListener(detail);
+  detail.mReportButton.setText(com.android.internal.R.string.report);
+  int enabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.SEND_ACTION_APP_ERROR,0);
+  if (enabled != 0) {
+    detail.mInstaller=ApplicationErrorReport.getErrorReportReceiver(this,si.mServiceInfo.packageName,si.mServiceInfo.applicationInfo.flags);
+    detail.mReportButton.setEnabled(detail.mInstaller != null);
+  }
+ else {
+    detail.mReportButton.setEnabled(false);
+  }
   mActiveDetails.add(detail);
 }

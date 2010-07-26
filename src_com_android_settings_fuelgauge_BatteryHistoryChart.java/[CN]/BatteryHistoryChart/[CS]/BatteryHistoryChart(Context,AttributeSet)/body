@@ -3,25 +3,22 @@
   mBatteryBackgroundPaint.setARGB(255,128,128,128);
   mBatteryBackgroundPaint.setStyle(Paint.Style.FILL);
   mBatteryGoodPaint.setARGB(128,0,255,0);
-  int lineWidth=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2,getResources().getDisplayMetrics());
-  if (lineWidth <= 0)   lineWidth=1;
-  mBatteryGoodPaint.setStrokeWidth(lineWidth);
   mBatteryGoodPaint.setStyle(Paint.Style.STROKE);
   mBatteryWarnPaint.setARGB(128,255,255,0);
-  mBatteryWarnPaint.setStrokeWidth(lineWidth);
   mBatteryWarnPaint.setStyle(Paint.Style.STROKE);
   mBatteryCriticalPaint.setARGB(192,255,0,0);
-  mBatteryCriticalPaint.setStrokeWidth(lineWidth);
   mBatteryCriticalPaint.setStyle(Paint.Style.STROKE);
   mChargingPaint.setARGB(255,0,128,0);
-  mChargingPaint.setStrokeWidth(lineWidth);
   mChargingPaint.setStyle(Paint.Style.STROKE);
   mScreenOnPaint.setARGB(255,0,0,255);
-  mScreenOnPaint.setStrokeWidth(lineWidth);
   mScreenOnPaint.setStyle(Paint.Style.STROKE);
-  mScreenOnOffset=lineWidth;
-  mChargingOffset=lineWidth * 2;
-  mLevelOffset=lineWidth * 3;
+  mGpsOnPaint.setARGB(255,0,0,255);
+  mGpsOnPaint.setStyle(Paint.Style.STROKE);
+  for (int i=0; i < NUM_PHONE_SIGNALS; i++) {
+    mPhoneSignalPaints[i]=new Paint();
+    mPhoneSignalPaints[i].setColor(mPhoneSignalColors[i]);
+    mPhoneSignalPaints[i].setStyle(Paint.Style.FILL);
+  }
   mTextPaint.density=getResources().getDisplayMetrics().density;
   mTextPaint.setCompatibilityScaling(getResources().getCompatibilityInfo().applicationScale);
   TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.BatteryHistoryChart,0,0);

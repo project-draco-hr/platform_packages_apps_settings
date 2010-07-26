@@ -3,7 +3,13 @@
   final int width=getWidth();
   final int height=getHeight();
   canvas.drawPath(mBatLevelPath,mBatteryBackgroundPaint);
-  canvas.drawText(mDurationString,(width / 2) - (mDurationStringWidth / 2),(height / 2) - ((mTextDescent - mTextAscent) / 2) - mTextAscent,mTextPaint);
+  if (mLargeMode) {
+    canvas.drawText(mDurationString,0,-mTextAscent + (mLineWidth / 2),mTextPaint);
+    canvas.drawText(mTotalDurationString,(width / 2) - (mTotalDurationStringWidth / 2),mLevelBottom - mTextAscent + mThinLineWidth,mTextPaint);
+  }
+ else {
+    canvas.drawText(mDurationString,(width / 2) - (mDurationStringWidth / 2),(height / 2) - ((mTextDescent - mTextAscent) / 2) - mTextAscent,mTextPaint);
+  }
   if (!mBatGoodPath.isEmpty()) {
     canvas.drawPath(mBatGoodPath,mBatteryGoodPaint);
   }
@@ -13,10 +19,38 @@
   if (!mBatCriticalPath.isEmpty()) {
     canvas.drawPath(mBatCriticalPath,mBatteryCriticalPaint);
   }
-  if (!mChargingPath.isEmpty()) {
-    canvas.drawPath(mChargingPath,mChargingPaint);
+  int lastBin=0, lastX=0;
+  int top=height - mPhoneSignalOffset - (mLineWidth / 2);
+  int bottom=top + mLineWidth;
+  for (int i=0; i < mNumPhoneSignalTicks; i++) {
+    int tick=mPhoneSignalTicks[i];
+    int x=tick & PHONE_SIGNAL_X_MASK;
+    int bin=(tick & PHONE_SIGNAL_BIN_MASK) >> PHONE_SIGNAL_BIN_SHIFT;
+    if (lastBin != 0) {
+      canvas.drawRect(lastX,top,x,bottom,mPhoneSignalPaints[bin]);
+    }
+    lastBin=bin;
+    lastX=x;
   }
   if (!mScreenOnPath.isEmpty()) {
     canvas.drawPath(mScreenOnPath,mScreenOnPaint);
+  }
+  if (!mChargingPath.isEmpty()) {
+    canvas.drawPath(mChargingPath,mChargingPaint);
+  }
+  if (!mGpsOnPath.isEmpty()) {
+    canvas.drawPath(mGpsOnPath,mGpsOnPaint);
+  }
+  if (mLargeMode) {
+    canvas.drawText(mPhoneSignalLabel,0,height - mPhoneSignalOffset - mTextDescent,mTextPaint);
+    canvas.drawText(mGpsOnLabel,0,height - mGpsOnOffset - mTextDescent,mTextPaint);
+    canvas.drawText(mChargingLabel,0,height - mChargingOffset - mTextDescent,mTextPaint);
+    canvas.drawText(mScreenOnLabel,0,height - mScreenOnOffset - mTextDescent,mTextPaint);
+    canvas.drawLine(0,mLevelBottom + (mThinLineWidth / 2),width,mLevelBottom + (mThinLineWidth / 2),mTextPaint);
+    canvas.drawLine(0,mLevelTop,0,mLevelBottom + (mThinLineWidth / 2),mTextPaint);
+    for (int i=0; i < 10; i++) {
+      int y=mLevelTop + ((mLevelBottom - mLevelTop) * i) / 10;
+      canvas.drawLine(0,y,mThinLineWidth * 2,y,mTextPaint);
+    }
   }
 }

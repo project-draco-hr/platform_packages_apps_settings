@@ -1,4 +1,13 @@
 {
+  if (preference instanceof BatteryHistoryPreference) {
+    Parcel hist=Parcel.obtain();
+    mStats.writeToParcelWithoutUids(hist,0);
+    byte[] histData=hist.marshall();
+    Intent intent=new Intent(this,BatteryHistoryDetail.class);
+    intent.putExtra(BatteryHistoryDetail.EXTRA_STATS,histData);
+    startActivity(intent);
+    return super.onPreferenceTreeClick(preferenceScreen,preference);
+  }
   if (!(preference instanceof PowerGaugePreference)) {
     return false;
   }

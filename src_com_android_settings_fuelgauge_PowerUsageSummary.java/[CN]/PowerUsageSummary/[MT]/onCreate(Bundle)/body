@@ -1,5 +1,6 @@
 {
   super.onCreate(icicle);
+  mStats=(BatteryStatsImpl)getLastNonConfigurationInstance();
   addPreferencesFromResource(R.xml.power_usage_summary);
   mBatteryInfo=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
   mAppListGroup=(PreferenceGroup)findPreference("app_list");

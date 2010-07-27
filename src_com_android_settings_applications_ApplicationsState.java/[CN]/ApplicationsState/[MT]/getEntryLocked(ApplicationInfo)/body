@@ -1,0 +1,14 @@
+{
+  AppEntry entry=mEntriesMap.get(info.packageName);
+  if (DEBUG)   Log.i(TAG,"Looking up entry of pkg " + info.packageName + ": "+ entry);
+  if (entry == null) {
+    if (DEBUG)     Log.i(TAG,"Creating AppEntry for " + info.packageName);
+    entry=new AppEntry(mContext,info,mCurId++);
+    mEntriesMap.put(info.packageName,entry);
+    mAppEntries.add(entry);
+  }
+ else   if (entry.info != info) {
+    entry.info=info;
+  }
+  return entry;
+}

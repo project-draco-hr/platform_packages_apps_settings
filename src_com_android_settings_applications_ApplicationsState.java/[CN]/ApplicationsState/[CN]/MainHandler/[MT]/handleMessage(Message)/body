@@ -1,0 +1,39 @@
+{
+switch (msg.what) {
+case MSG_PACKAGE_LIST_CHANGED:
+{
+      if (mCurCallbacks != null) {
+        mCurCallbacks.onPackageListChanged();
+      }
+    }
+  break;
+case MSG_PACKAGE_ICON_CHANGED:
+{
+  if (mCurCallbacks != null) {
+    mCurCallbacks.onPackageIconChanged();
+  }
+}
+break;
+case MSG_PACKAGE_SIZE_CHANGED:
+{
+if (mCurCallbacks != null) {
+mCurCallbacks.onPackageSizeChanged((String)msg.obj);
+}
+}
+break;
+case MSG_ALL_SIZES_COMPUTED:
+{
+if (mCurCallbacks != null) {
+mCurCallbacks.onAllSizesComputed();
+}
+}
+break;
+case MSG_RUNNING_STATE_CHANGED:
+{
+if (mCurCallbacks != null) {
+mCurCallbacks.onRunningStateChanged(msg.arg1 != 0);
+}
+}
+break;
+}
+}

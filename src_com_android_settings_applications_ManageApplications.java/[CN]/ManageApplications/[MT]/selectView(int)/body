@@ -1,15 +1,16 @@
 {
-  if (mCurView == which) {
-    return;
-  }
-  mCurView=which;
   if (which == VIEW_LIST) {
     if (mResumedRunning) {
       mRunningProcessesView.doPause();
       mResumedRunning=false;
     }
-    mRunningProcessesView.setVisibility(View.GONE);
-    mListView.setVisibility(View.VISIBLE);
+    if (mCurView != which) {
+      mRunningProcessesView.setVisibility(View.GONE);
+      mListView.setVisibility(View.VISIBLE);
+    }
+    if (mActivityResumed) {
+      mApplicationsAdapter.resume(mFilterApps,mSortOrder);
+    }
   }
  else   if (which == VIEW_RUNNING) {
     if (!mCreatedRunning) {
@@ -20,7 +21,11 @@
       mRunningProcessesView.doResume();
       mResumedRunning=true;
     }
-    mRunningProcessesView.setVisibility(View.VISIBLE);
-    mListView.setVisibility(View.GONE);
+    mApplicationsAdapter.pause();
+    if (mCurView != which) {
+      mRunningProcessesView.setVisibility(View.VISIBLE);
+      mListView.setVisibility(View.GONE);
+    }
   }
+  mCurView=which;
 }

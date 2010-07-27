@@ -1,13 +1,5 @@
 {
   if (requestCode == INSTALLED_APP_DETAILS && mCurrentPkgName != null) {
-    try {
-      ApplicationInfo info=mPm.getApplicationInfo(mCurrentPkgName,PackageManager.GET_UNINSTALLED_PACKAGES);
-    }
- catch (    NameNotFoundException e) {
-      Bundle rData=new Bundle();
-      rData.putString(ATTR_PKG_NAME,mCurrentPkgName);
-      sendMessageToHandler(REMOVE_PKG,rData);
-      mCurrentPkgName=null;
-    }
+    mApplicationsState.requestSize(mCurrentPkgName);
   }
 }

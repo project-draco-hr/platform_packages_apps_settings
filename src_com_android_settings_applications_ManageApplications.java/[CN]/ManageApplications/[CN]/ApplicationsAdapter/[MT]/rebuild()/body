@@ -1,0 +1,27 @@
+{
+  if (DEBUG)   Log.i(TAG,"Rebuilding app list...");
+  ApplicationsState.AppFilter filterObj;
+  Comparator<AppEntry> comparatorObj;
+switch (mLastFilterMode) {
+case FILTER_APPS_THIRD_PARTY:
+    filterObj=ApplicationsState.THIRD_PARTY_FILTER;
+  break;
+case FILTER_APPS_SDCARD:
+filterObj=ApplicationsState.ON_SD_CARD_FILTER;
+break;
+default :
+filterObj=null;
+break;
+}
+switch (mLastSortMode) {
+case SORT_ORDER_SIZE:
+comparatorObj=ApplicationsState.SIZE_COMPARATOR;
+break;
+default :
+comparatorObj=ApplicationsState.ALPHA_COMPARATOR;
+break;
+}
+mBaseEntries=mState.rebuild(filterObj,comparatorObj);
+mEntries=applyPrefixFilter(mCurFilterPrefix,mBaseEntries);
+notifyDataSetChanged();
+}

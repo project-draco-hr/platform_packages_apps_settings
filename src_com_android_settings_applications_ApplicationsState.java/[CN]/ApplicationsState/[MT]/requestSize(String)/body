@@ -1,0 +1,8 @@
+{
+synchronized (mEntriesMap) {
+    AppEntry entry=mEntriesMap.get(packageName);
+    if (entry != null) {
+      mPm.getPackageSizeInfo(packageName,mBackgroundHandler.mStatsObserver);
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+switch (msg.what) {
+case MSG_LOAD_ENTRIES:
+{
+      int numDone=0;
+synchronized (mEntriesMap) {
+        for (int i=0; i < mApplications.size() && numDone < 6; i++) {
+          if (!mRunning) {
+            mRunning=true;
+            Message m=mMainHandler.obtainMessage(MainHandler.MSG_RUNNING_STATE_CHANGED,1);
+            mMainHandler.sendMessage(m);
+          }
+          ApplicationInfo info=mApplications.get(i);
+          if (mEntriesMap.get(info.packageName) == null) {
+            numDone++;
+            getEntryLocked(info);
+          }
+        }
+      }
+      if (numDone >= 6) {
+        sendEmptyMessage(MSG_LOAD_ENTRIES);
+      }
+ else {
+        sendEmptyMessage(MSG_LOAD_ICONS);
+      }
+    }
+  break;
+case MSG_LOAD_ICONS:
+{
+  int numDone=0;
+synchronized (mEntriesMap) {
+    for (int i=0; i < mAppEntries.size() && numDone < 2; i++) {
+      AppEntry entry=mAppEntries.get(i);
+      if (entry.icon == null) {
+        if (!mRunning) {
+          mRunning=true;
+          Message m=mMainHandler.obtainMessage(MainHandler.MSG_RUNNING_STATE_CHANGED,1);
+          mMainHandler.sendMessage(m);
+        }
+        numDone++;
+synchronized (entry) {
+          entry.icon=entry.info.loadIcon(mPm);
+        }
+      }
+    }
+  }
+  if (numDone > 0) {
+    if (!mMainHandler.hasMessages(MainHandler.MSG_PACKAGE_ICON_CHANGED)) {
+      mMainHandler.sendEmptyMessage(MainHandler.MSG_PACKAGE_ICON_CHANGED);
+    }
+  }
+  if (numDone >= 2) {
+    sendEmptyMessage(MSG_LOAD_ICONS);
+  }
+ else {
+    sendEmptyMessage(MSG_LOAD_SIZES);
+  }
+}
+break;
+case MSG_LOAD_SIZES:
+{
+synchronized (mEntriesMap) {
+if (mCurComputingSizePkg != null) {
+  return;
+}
+long now=SystemClock.uptimeMillis();
+for (int i=0; i < mAppEntries.size(); i++) {
+  AppEntry entry=mAppEntries.get(i);
+  if (entry.size == SIZE_UNKNOWN || entry.sizeStale) {
+    if (entry.sizeLoadStart == 0 || (entry.sizeLoadStart < (now - 20 * 1000))) {
+      if (!mRunning) {
+        mRunning=true;
+        Message m=mMainHandler.obtainMessage(MainHandler.MSG_RUNNING_STATE_CHANGED,1);
+        mMainHandler.sendMessage(m);
+      }
+      entry.sizeLoadStart=now;
+      mCurComputingSizePkg=entry.info.packageName;
+      mPm.getPackageSizeInfo(mCurComputingSizePkg,mStatsObserver);
+    }
+    return;
+  }
+}
+if (!mMainHandler.hasMessages(MainHandler.MSG_ALL_SIZES_COMPUTED)) {
+  mMainHandler.sendEmptyMessage(MainHandler.MSG_ALL_SIZES_COMPUTED);
+  mRunning=false;
+  Message m=mMainHandler.obtainMessage(MainHandler.MSG_RUNNING_STATE_CHANGED,0);
+  mMainHandler.sendMessage(m);
+}
+}
+}
+break;
+}
+}

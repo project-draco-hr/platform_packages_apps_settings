@@ -1,0 +1,10 @@
+{
+  if (entry.icon != null) {
+    return;
+  }
+synchronized (mEntriesMap) {
+    if (entry.icon == null) {
+      entry.icon=entry.info.loadIcon(mPm);
+    }
+  }
+}

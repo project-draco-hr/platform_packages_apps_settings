@@ -1,0 +1,21 @@
+{
+synchronized (mEntriesMap) {
+    mCurCallbacks=callbacks;
+    mResumed=true;
+    if (mPackageIntentReceiver == null) {
+      mPackageIntentReceiver=new PackageIntentReceiver();
+      mPackageIntentReceiver.registerReceiver();
+    }
+    mApplications=mPm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
+    if (mApplications == null) {
+      mApplications=new ArrayList<ApplicationInfo>();
+    }
+    for (int i=0; i < mAppEntries.size(); i++) {
+      mAppEntries.get(i).sizeStale=true;
+    }
+    mCurComputingSizePkg=null;
+    if (!mBackgroundHandler.hasMessages(BackgroundHandler.MSG_LOAD_ENTRIES)) {
+      mBackgroundHandler.sendEmptyMessage(BackgroundHandler.MSG_LOAD_ENTRIES);
+    }
+  }
+}

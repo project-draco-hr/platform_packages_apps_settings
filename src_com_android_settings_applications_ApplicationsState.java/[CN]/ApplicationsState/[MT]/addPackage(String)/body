@@ -1,0 +1,24 @@
+{
+  try {
+synchronized (mEntriesMap) {
+      if (DEBUG)       Log.i(TAG,"Adding package " + pkgName);
+      if (!mResumed) {
+        return;
+      }
+      if (indexOfApplicationInfoLocked(pkgName) >= 0) {
+        if (DEBUG)         Log.i(TAG,"Package already exists!");
+        return;
+      }
+      ApplicationInfo info=mPm.getApplicationInfo(pkgName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
+      mApplications.add(info);
+      if (!mBackgroundHandler.hasMessages(BackgroundHandler.MSG_LOAD_ENTRIES)) {
+        mBackgroundHandler.sendEmptyMessage(BackgroundHandler.MSG_LOAD_ENTRIES);
+      }
+      if (!mMainHandler.hasMessages(MainHandler.MSG_PACKAGE_LIST_CHANGED)) {
+        mMainHandler.sendEmptyMessage(MainHandler.MSG_PACKAGE_LIST_CHANGED);
+      }
+    }
+  }
+ catch (  NameNotFoundException e) {
+  }
+}

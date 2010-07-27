@@ -1,0 +1,13 @@
+{
+  if (DEBUG)   Log.i(TAG,"Resume!  mResumed=" + mResumed);
+  if (!mResumed) {
+    mResumed=true;
+    mState.resume(this);
+    mLastFilterMode=filter;
+    mLastSortMode=sort;
+    rebuild();
+  }
+ else {
+    rebuild(filter,sort);
+  }
+}

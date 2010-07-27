@@ -1,7 +1,8 @@
 {
   int menuId=item.getItemId();
   if ((menuId == SORT_ORDER_ALPHA) || (menuId == SORT_ORDER_SIZE)) {
-    sendMessageToHandler(REORDER_LIST,menuId);
+    mSortOrder=menuId;
+    mApplicationsAdapter.rebuild(mFilterApps,mSortOrder);
   }
   return true;
 }

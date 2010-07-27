@@ -1,0 +1,18 @@
+{
+synchronized (mEntriesMap) {
+    int idx=indexOfApplicationInfoLocked(pkgName);
+    if (DEBUG)     Log.i(TAG,"removePackage: " + pkgName + " @ "+ idx);
+    if (idx >= 0) {
+      AppEntry entry=mEntriesMap.get(pkgName);
+      if (DEBUG)       Log.i(TAG,"removePackage: " + entry);
+      if (entry != null) {
+        mEntriesMap.remove(pkgName);
+        mAppEntries.remove(entry);
+      }
+      mApplications.remove(idx);
+      if (!mMainHandler.hasMessages(MainHandler.MSG_PACKAGE_LIST_CHANGED)) {
+        mMainHandler.sendEmptyMessage(MainHandler.MSG_PACKAGE_LIST_CHANGED);
+      }
+    }
+  }
+}

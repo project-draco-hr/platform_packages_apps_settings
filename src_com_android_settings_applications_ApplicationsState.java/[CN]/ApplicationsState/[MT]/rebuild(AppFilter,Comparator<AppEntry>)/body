@@ -1,0 +1,16 @@
+{
+  ArrayList<AppEntry> filteredApps=new ArrayList<AppEntry>();
+synchronized (mEntriesMap) {
+    if (DEBUG)     Log.i(TAG,"Rebuilding...");
+    for (int i=0; i < mApplications.size(); i++) {
+      ApplicationInfo info=mApplications.get(i);
+      if (filter == null || filter.filterApp(info)) {
+        AppEntry entry=getEntryLocked(info);
+        if (DEBUG)         Log.i(TAG,"Using " + info.packageName + ": "+ entry);
+        filteredApps.add(entry);
+      }
+    }
+  }
+  Collections.sort(filteredApps,comparator);
+  return filteredApps;
+}

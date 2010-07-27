@@ -1,0 +1,14 @@
+{
+  for (int i=0; i < mActive.size(); i++) {
+    AppViewHolder holder=(AppViewHolder)mActive.get(i).getTag();
+    if (holder.entry.info.packageName.equals(packageName)) {
+synchronized (holder.entry) {
+        holder.updateSizeText(ManageApplications.this);
+      }
+      if (holder.entry.info.packageName.equals(mCurrentPkgName) && mLastSortMode == SORT_ORDER_SIZE) {
+        rebuild();
+      }
+      return;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  AppViewHolder holder;
+  if (convertView == null) {
+    convertView=mInflater.inflate(R.layout.manage_applications_item,null);
+    holder=new AppViewHolder();
+    holder.appName=(TextView)convertView.findViewById(R.id.app_name);
+    holder.appIcon=(ImageView)convertView.findViewById(R.id.app_icon);
+    holder.appSize=(TextView)convertView.findViewById(R.id.app_size);
+    holder.disabled=(TextView)convertView.findViewById(R.id.app_disabled);
+    convertView.setTag(holder);
+  }
+ else {
+    holder=(AppViewHolder)convertView.getTag();
+  }
+  ApplicationsState.AppEntry entry=mEntries.get(position);
+synchronized (entry) {
+    holder.entry=entry;
+    if (entry.label != null) {
+      holder.appName.setText(entry.label);
+      holder.appName.setTextColor(getResources().getColorStateList(entry.info.enabled ? android.R.color.primary_text_dark : android.R.color.secondary_text_dark));
+    }
+    mState.ensureIcon(entry);
+    if (entry.icon != null) {
+      holder.appIcon.setImageDrawable(entry.icon);
+    }
+    holder.updateSizeText(ManageApplications.this);
+    holder.disabled.setVisibility(entry.info.enabled ? View.GONE : View.VISIBLE);
+  }
+  mActive.remove(convertView);
+  mActive.add(convertView);
+  return convertView;
+}

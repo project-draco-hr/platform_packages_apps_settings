@@ -79,9 +79,7 @@ catch (    ActivityNotFoundException e) {
       finish();
     }
  else {
-      if (mBackgroundHandler != null) {
-        mBackgroundHandler.sendEmptyMessage(MSG_UPDATE_CONTENTS);
-      }
+      mState.updateNow();
     }
   }
  else {

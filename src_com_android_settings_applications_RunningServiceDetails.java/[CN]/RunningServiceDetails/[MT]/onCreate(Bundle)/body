@@ -4,10 +4,7 @@
   mProcessName=getIntent().getStringExtra(KEY_PROCESS);
   mAm=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
   mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-  mState=(RunningState)getLastNonConfigurationInstance();
-  if (mState == null) {
-    mState=new RunningState();
-  }
+  mState=RunningState.getInstance(this);
   setContentView(R.layout.running_service_details);
   mAllDetails=(ViewGroup)findViewById(R.id.all_details);
   mSnippet=(ViewGroup)findViewById(R.id.snippet);

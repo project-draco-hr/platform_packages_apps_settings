@@ -1,0 +1,11 @@
+{
+  Iterator<ActiveItem> it=mActiveItems.values().iterator();
+  while (it.hasNext()) {
+    ActiveItem ai=it.next();
+    if (ai.mRootView.getWindowToken() == null) {
+      it.remove();
+      continue;
+    }
+    ai.updateTime(getContext(),mBuilder);
+  }
+}

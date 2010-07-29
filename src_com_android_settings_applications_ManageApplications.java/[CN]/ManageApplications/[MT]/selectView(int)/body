@@ -6,7 +6,7 @@
     }
     if (mCurView != which) {
       mRunningProcessesView.setVisibility(View.GONE);
-      mListView.setVisibility(View.VISIBLE);
+      mListContainer.setVisibility(View.VISIBLE);
     }
     if (mActivityResumed) {
       mApplicationsAdapter.resume(mFilterApps,mSortOrder);
@@ -24,7 +24,7 @@
     mApplicationsAdapter.pause();
     if (mCurView != which) {
       mRunningProcessesView.setVisibility(View.VISIBLE);
-      mListView.setVisibility(View.GONE);
+      mListContainer.setVisibility(View.GONE);
     }
   }
   mCurView=which;

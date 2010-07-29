@@ -8,7 +8,7 @@
   if (intent.getComponent().getClassName().equals("com.android.settings.RunningServices")) {
     defaultTabTag=TAB_RUNNING;
   }
-  if (action.equals(Intent.ACTION_MANAGE_PACKAGE_STORAGE)) {
+ else   if (intent.getComponent().getClassName().equals("com.android.settings.applications.StorageUse") || action.equals(Intent.ACTION_MANAGE_PACKAGE_STORAGE)) {
     mSortOrder=SORT_ORDER_SIZE;
     mFilterApps=FILTER_APPS_ALL;
     defaultTabTag=TAB_ALL;
@@ -25,8 +25,13 @@
   mInvalidSizeStr=getText(R.string.invalid_size_value);
   mComputingSizeStr=getText(R.string.computing_size);
   mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-  mRootView=mInflater.inflate(R.layout.compute_sizes,null);
-  ListView lv=(ListView)mRootView.findViewById(android.R.id.list);
+  mRootView=mInflater.inflate(R.layout.manage_applications,null);
+  mListContainer=mRootView.findViewById(R.id.list_container);
+  ListView lv=(ListView)mListContainer.findViewById(android.R.id.list);
+  View emptyView=mListContainer.findViewById(com.android.internal.R.id.empty);
+  if (emptyView != null) {
+    lv.setEmptyView(emptyView);
+  }
   lv.setOnItemClickListener(this);
   lv.setSaveEnabled(true);
   lv.setItemsCanFocus(true);

@@ -1,0 +1,11 @@
+{
+synchronized (mLock) {
+    while (!mHaveData) {
+      try {
+        mLock.wait(0);
+      }
+ catch (      InterruptedException e) {
+      }
+    }
+  }
+}

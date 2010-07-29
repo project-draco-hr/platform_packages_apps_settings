@@ -1,0 +1,9 @@
+{
+  mApplicationContext=context.getApplicationContext();
+  mAm=(ActivityManager)mApplicationContext.getSystemService(Context.ACTIVITY_SERVICE);
+  mPm=mApplicationContext.getPackageManager();
+  mResumed=false;
+  mBackgroundThread=new HandlerThread("RunningState:Background");
+  mBackgroundThread.start();
+  mBackgroundHandler=new BackgroundHandler(mBackgroundThread.getLooper());
+}

@@ -1,9 +1,6 @@
 {
   mAm=(ActivityManager)getContext().getSystemService(Context.ACTIVITY_SERVICE);
-  mState=(RunningState)nonConfigurationInstace;
-  if (mState == null) {
-    mState=new RunningState();
-  }
+  mState=RunningState.getInstance(getContext());
   LayoutInflater inflater=(LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   inflater.inflate(R.layout.running_processes_view,this);
   mListView=(ListView)findViewById(android.R.id.list);

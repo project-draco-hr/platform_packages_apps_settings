@@ -1,6 +1,6 @@
 {
-  Intent intent=new Intent(Intent.ACTION_QUERY_PACKAGE_RESTART,Uri.fromParts("package",mAppInfo.packageName,null));
-  intent.putExtra(Intent.EXTRA_PACKAGES,new String[]{mAppInfo.packageName});
-  intent.putExtra(Intent.EXTRA_UID,mAppInfo.uid);
+  Intent intent=new Intent(Intent.ACTION_QUERY_PACKAGE_RESTART,Uri.fromParts("package",mAppEntry.info.packageName,null));
+  intent.putExtra(Intent.EXTRA_PACKAGES,new String[]{mAppEntry.info.packageName});
+  intent.putExtra(Intent.EXTRA_UID,mAppEntry.info.uid);
   sendOrderedBroadcast(intent,null,mCheckKillProcessesReceiver,null,Activity.RESULT_CANCELED,null,null);
 }

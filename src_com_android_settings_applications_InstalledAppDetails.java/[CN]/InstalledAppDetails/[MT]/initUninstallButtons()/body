@@ -1,23 +1,22 @@
 {
-  mUpdatedSysApp=(mAppInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
+  mUpdatedSysApp=(mAppEntry.info.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
   boolean enabled=true;
   if (mUpdatedSysApp) {
     mUninstallButton.setText(R.string.app_factory_reset);
   }
  else {
-    if ((mAppInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+    if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
       enabled=false;
       try {
-        PackageInfo pi=mPm.getPackageInfo(mAppInfo.packageName,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES);
         PackageInfo sys=mPm.getPackageInfo("android",PackageManager.GET_SIGNATURES);
         Intent intent=new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setPackage(mAppInfo.packageName);
+        intent.setPackage(mAppEntry.info.packageName);
         List<ResolveInfo> homes=mPm.queryIntentActivities(intent,0);
-        if ((homes != null && homes.size() > 0) || sys.signatures[0].equals(pi.signatures[0])) {
+        if ((homes != null && homes.size() > 0) || (mPackageInfo != null && sys.signatures[0].equals(mPackageInfo.signatures[0]))) {
           mUninstallButton.setText(R.string.disable_text);
         }
- else         if (mAppInfo.enabled) {
+ else         if (mAppEntry.info.enabled) {
           mUninstallButton.setText(R.string.disable_text);
           enabled=true;
         }

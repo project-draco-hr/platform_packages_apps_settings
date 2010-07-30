@@ -1,0 +1,15 @@
+{
+synchronized (mEntriesMap) {
+    AppEntry entry=mEntriesMap.get(packageName);
+    if (entry == null) {
+      for (int i=0; i < mApplications.size(); i++) {
+        ApplicationInfo info=mApplications.get(i);
+        if (packageName.equals(info.packageName)) {
+          entry=getEntryLocked(info);
+          break;
+        }
+      }
+    }
+    return entry;
+  }
+}

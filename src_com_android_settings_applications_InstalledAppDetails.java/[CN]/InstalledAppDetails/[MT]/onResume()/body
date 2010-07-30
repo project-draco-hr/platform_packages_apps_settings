@@ -1,25 +1,7 @@
 {
   super.onResume();
-  if (mAppInfo == null) {
+  mState.resume(this);
+  if (!refreshUi()) {
     setIntentAndFinish(true,true);
-    return;
-  }
-  if (!initAppInfo(mAppInfo.packageName)) {
-    return;
-  }
-  PackageInfo pkgInfo=null;
-  try {
-    pkgInfo=mPm.getPackageInfo(mAppInfo.packageName,PackageManager.GET_UNINSTALLED_PACKAGES);
-  }
- catch (  NameNotFoundException e) {
-    Log.e(TAG,"Exception when retrieving package:" + mAppInfo.packageName,e);
-    showDialogInner(DLG_APP_NOT_FOUND);
-    return;
-  }
-  checkForceStop();
-  setAppLabelAndIcon(pkgInfo);
-  refreshButtons();
-  if (mAppInfo != null && mAppInfo.packageName != null) {
-    mPm.getPackageSizeInfo(mAppInfo.packageName,mSizeObserver);
   }
 }

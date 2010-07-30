@@ -1,0 +1,48 @@
+{
+  if (mMoveInProgress) {
+    return true;
+  }
+  Intent intent=getIntent();
+  final String packageName=intent.getData().getSchemeSpecificPart();
+  mAppEntry=mState.getEntry(packageName);
+  if (mAppEntry == null) {
+    return false;
+  }
+  try {
+    mPackageInfo=mPm.getPackageInfo(mAppEntry.info.packageName,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES);
+  }
+ catch (  NameNotFoundException e) {
+    Log.e(TAG,"Exception when retrieving package:" + mAppEntry.info.packageName,e);
+    return false;
+  }
+  List<ComponentName> prefActList=new ArrayList<ComponentName>();
+  List<IntentFilter> intentList=new ArrayList<IntentFilter>();
+  mPm.getPreferredActivities(intentList,prefActList,packageName);
+  if (localLOGV)   Log.i(TAG,"Have " + prefActList.size() + " number of activities in prefered list");
+  TextView autoLaunchView=(TextView)findViewById(R.id.auto_launch);
+  if (prefActList.size() <= 0) {
+    autoLaunchView.setText(R.string.auto_launch_disable_text);
+    mActivitiesButton.setEnabled(false);
+  }
+ else {
+    autoLaunchView.setText(R.string.auto_launch_enable_text);
+    mActivitiesButton.setEnabled(true);
+    mActivitiesButton.setOnClickListener(this);
+  }
+  LinearLayout permsView=(LinearLayout)findViewById(R.id.permissions_section);
+  AppSecurityPermissions asp=new AppSecurityPermissions(this,packageName);
+  if (asp.getPermissionCount() > 0) {
+    permsView.setVisibility(View.VISIBLE);
+    LinearLayout securityList=(LinearLayout)permsView.findViewById(R.id.security_settings_list);
+    securityList.removeAllViews();
+    securityList.addView(asp.getPermissionsView());
+  }
+ else {
+    permsView.setVisibility(View.GONE);
+  }
+  checkForceStop();
+  setAppLabelAndIcon(mPackageInfo);
+  refreshButtons();
+  refreshSizeInfo();
+  return true;
+}

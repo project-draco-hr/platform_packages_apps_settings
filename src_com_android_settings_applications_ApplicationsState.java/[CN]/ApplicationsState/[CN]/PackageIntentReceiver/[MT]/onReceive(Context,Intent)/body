@@ -21,9 +21,10 @@
     if (pkgList == null || pkgList.length == 0) {
       return;
     }
+    boolean avail=Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE.equals(actionStr);
     for (    String pkgName : pkgList) {
-      removePackage(pkgName);
-      addPackage(pkgName);
+      if (avail)       addPackage(pkgName);
+ else       removePackage(pkgName);
     }
   }
 }

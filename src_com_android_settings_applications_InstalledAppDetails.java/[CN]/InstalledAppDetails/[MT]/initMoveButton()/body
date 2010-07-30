@@ -1,30 +1,21 @@
 {
-  String pkgName=mAppInfo.packageName;
   boolean dataOnly=false;
-  ApplicationInfo info1=null;
-  PackageInfo pkgInfo=null;
-  try {
-    info1=mPm.getApplicationInfo(pkgName,0);
-    pkgInfo=mPm.getPackageInfo(mAppInfo.packageName,PackageManager.GET_UNINSTALLED_PACKAGES);
-  }
- catch (  NameNotFoundException e) {
-  }
-  dataOnly=(info1 == null) && (mAppInfo != null);
+  dataOnly=(mPackageInfo == null) && (mAppEntry != null);
   boolean moveDisable=true;
   if (dataOnly) {
     mMoveAppButton.setText(R.string.move_app);
   }
- else   if ((mAppInfo.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0) {
+ else   if ((mAppEntry.info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0) {
     mMoveAppButton.setText(R.string.move_app_to_internal);
     moveDisable=false;
   }
  else {
     mMoveAppButton.setText(R.string.move_app_to_sdcard);
-    if ((mAppInfo.flags & ApplicationInfo.FLAG_FORWARD_LOCK) == 0 && (mAppInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && pkgInfo != null) {
-      if (pkgInfo.installLocation == PackageInfo.INSTALL_LOCATION_PREFER_EXTERNAL || pkgInfo.installLocation == PackageInfo.INSTALL_LOCATION_AUTO) {
+    if ((mAppEntry.info.flags & ApplicationInfo.FLAG_FORWARD_LOCK) == 0 && (mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && mPackageInfo != null) {
+      if (mPackageInfo.installLocation == PackageInfo.INSTALL_LOCATION_PREFER_EXTERNAL || mPackageInfo.installLocation == PackageInfo.INSTALL_LOCATION_AUTO) {
         moveDisable=false;
       }
- else       if (pkgInfo.installLocation == PackageInfo.INSTALL_LOCATION_UNSPECIFIED) {
+ else       if (mPackageInfo.installLocation == PackageInfo.INSTALL_LOCATION_UNSPECIFIED) {
         IPackageManager ipm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
         int loc;
         try {

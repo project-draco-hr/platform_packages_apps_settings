@@ -1,0 +1,46 @@
+{
+  if (mAppEntry.size == ApplicationsState.SIZE_INVALID || mAppEntry.size == ApplicationsState.SIZE_UNKNOWN) {
+    mLastCodeSize=mLastDataSize=mLastCacheSize=mLastTotalSize=-1;
+    if (!mHaveSizes) {
+      mAppSize.setText(mComputingStr);
+      mDataSize.setText(mComputingStr);
+      mCacheSize.setText(mComputingStr);
+      mTotalSize.setText(mComputingStr);
+    }
+    mClearDataButton.setEnabled(false);
+    mClearCacheButton.setEnabled(false);
+  }
+ else {
+    mHaveSizes=true;
+    if (mLastCodeSize != mAppEntry.codeSize) {
+      mLastCodeSize=mAppEntry.codeSize;
+      mAppSize.setText(getSizeStr(mAppEntry.codeSize));
+    }
+    if (mLastDataSize != mAppEntry.dataSize) {
+      mLastDataSize=mAppEntry.dataSize;
+      mDataSize.setText(getSizeStr(mAppEntry.dataSize));
+    }
+    if (mLastCacheSize != mAppEntry.cacheSize) {
+      mLastCacheSize=mAppEntry.cacheSize;
+      mCacheSize.setText(getSizeStr(mAppEntry.cacheSize));
+    }
+    if (mLastTotalSize != mAppEntry.size) {
+      mLastTotalSize=mAppEntry.size;
+      mTotalSize.setText(getSizeStr(mAppEntry.size));
+    }
+    if (mAppEntry.dataSize <= 0) {
+      mClearDataButton.setEnabled(false);
+    }
+ else {
+      mClearDataButton.setEnabled(true);
+      mClearDataButton.setOnClickListener(this);
+    }
+    if (mAppEntry.cacheSize <= 0) {
+      mClearCacheButton.setEnabled(false);
+    }
+ else {
+      mClearCacheButton.setEnabled(true);
+      mClearCacheButton.setOnClickListener(this);
+    }
+  }
+}

@@ -1,9 +1,10 @@
 {
   View appSnippet=findViewById(R.id.app_snippet);
   ImageView icon=(ImageView)appSnippet.findViewById(R.id.app_icon);
-  icon.setImageDrawable(mAppInfo.loadIcon(mPm));
+  mState.ensureIcon(mAppEntry);
+  icon.setImageDrawable(mAppEntry.icon);
   TextView label=(TextView)appSnippet.findViewById(R.id.app_name);
-  label.setText(mAppInfo.loadLabel(mPm));
+  label.setText(mAppEntry.label);
   mAppVersion=(TextView)appSnippet.findViewById(R.id.app_size);
   if (pkgInfo != null && pkgInfo.versionName != null) {
     mAppVersion.setVisibility(View.VISIBLE);

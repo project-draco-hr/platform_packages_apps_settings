@@ -1,12 +1,12 @@
 {
-  String packageName=mAppInfo.packageName;
+  String packageName=mAppEntry.info.packageName;
   if (v == mUninstallButton) {
     if (mUpdatedSysApp) {
       showDialogInner(DLG_FACTORY_RESET);
     }
  else {
-      if ((mAppInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-        new DisableChanger(this,mAppInfo,mAppInfo.enabled ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED : PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).execute((Object)null);
+      if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+        new DisableChanger(this,mAppEntry.info,mAppEntry.info.enabled ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED : PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).execute((Object)null);
       }
  else {
         uninstallPkg(packageName);
@@ -18,9 +18,9 @@
     mActivitiesButton.setEnabled(false);
   }
  else   if (v == mClearDataButton) {
-    if (mAppInfo.manageSpaceActivityName != null) {
+    if (mAppEntry.info.manageSpaceActivityName != null) {
       Intent intent=new Intent(Intent.ACTION_DEFAULT);
-      intent.setClassName(mAppInfo.packageName,mAppInfo.manageSpaceActivityName);
+      intent.setClassName(mAppEntry.info.packageName,mAppEntry.info.manageSpaceActivityName);
       startActivityForResult(intent,-1);
     }
  else {
@@ -40,9 +40,9 @@
     if (mPackageMoveObserver == null) {
       mPackageMoveObserver=new PackageMoveObserver();
     }
-    int moveFlags=(mAppInfo.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0 ? PackageManager.MOVE_INTERNAL : PackageManager.MOVE_EXTERNAL_MEDIA;
+    int moveFlags=(mAppEntry.info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0 ? PackageManager.MOVE_INTERNAL : PackageManager.MOVE_EXTERNAL_MEDIA;
     mMoveInProgress=true;
     refreshButtons();
-    mPm.movePackage(mAppInfo.packageName,mPackageMoveObserver,moveFlags);
+    mPm.movePackage(mAppEntry.info.packageName,mPackageMoveObserver,moveFlags);
   }
 }

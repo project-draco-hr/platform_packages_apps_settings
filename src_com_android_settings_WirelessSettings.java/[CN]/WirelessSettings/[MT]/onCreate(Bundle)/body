@@ -21,6 +21,9 @@
   if (ServiceManager.getService(BluetoothAdapter.BLUETOOTH_SERVICE) == null) {
     findPreference(KEY_BT_SETTINGS).setEnabled(false);
   }
+  Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
+  DevicePolicyManager mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  mGlobalProxy.setEnabled(mDPM.getGlobalProxyAdmin() == null);
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   if (!cm.isTetheringSupported()) {
     getPreferenceScreen().removePreference(findPreference(KEY_TETHER_SETTINGS));

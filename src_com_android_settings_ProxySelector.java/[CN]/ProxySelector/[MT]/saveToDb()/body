@@ -1,8 +1,9 @@
 {
   String hostname=mHostnameField.getText().toString().trim();
   String portStr=mPortField.getText().toString().trim();
+  String exclList=mExclusionListField.getText().toString().trim();
   int port=-1;
-  int result=validate(hostname,portStr);
+  int result=validate(hostname,portStr,exclList);
   if (result > 0) {
     showDialog(ERROR_DIALOG_ID);
     return false;
@@ -23,6 +24,7 @@
     hostname+=':' + portStr;
   }
   Settings.Secure.putString(res,Settings.Secure.HTTP_PROXY,hostname);
+  Settings.Secure.putString(res,Settings.Secure.HTTP_PROXY_EXCLUSION_LIST,exclList);
   sendBroadcast(new Intent(Proxy.PROXY_CHANGE_ACTION));
   return true;
 }

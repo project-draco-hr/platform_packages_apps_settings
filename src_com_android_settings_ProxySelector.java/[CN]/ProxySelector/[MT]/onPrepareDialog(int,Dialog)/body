@@ -3,7 +3,8 @@
   if (id == ERROR_DIALOG_ID) {
     String hostname=mHostnameField.getText().toString().trim();
     String portStr=mPortField.getText().toString().trim();
-    String msg=getString(validate(hostname,portStr));
+    String exclList=mExclusionListField.getText().toString().trim();
+    String msg=getString(validate(hostname,portStr,exclList));
     ((AlertDialog)dialog).setMessage(msg);
   }
 }

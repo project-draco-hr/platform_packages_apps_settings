@@ -4,10 +4,18 @@
   mPortField=(EditText)findViewById(R.id.port);
   mPortField.setOnClickListener(mOKHandler);
   mPortField.setOnFocusChangeListener(mOnFocusChangeHandler);
+  mExclusionListField=(EditText)findViewById(R.id.exclusionlist);
+  mExclusionListField.setOnFocusChangeListener(mOnFocusChangeHandler);
   mOKButton=(Button)findViewById(R.id.action);
   mOKButton.setOnClickListener(mOKHandler);
-  Button b=(Button)findViewById(R.id.clear);
-  b.setOnClickListener(mClearHandler);
-  b=(Button)findViewById(R.id.defaultView);
-  b.setOnClickListener(mDefaultHandler);
+  Button clearButton=(Button)findViewById(R.id.clear);
+  clearButton.setOnClickListener(mClearHandler);
+  Button defButton=(Button)findViewById(R.id.defaultView);
+  defButton.setOnClickListener(mDefaultHandler);
+  mHostnameField.setEnabled(mUserSetGlobalProxy);
+  mPortField.setEnabled(mUserSetGlobalProxy);
+  mExclusionListField.setEnabled(mUserSetGlobalProxy);
+  mOKButton.setEnabled(mUserSetGlobalProxy);
+  clearButton.setEnabled(mUserSetGlobalProxy);
+  defButton.setEnabled(mUserSetGlobalProxy);
 }

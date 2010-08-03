@@ -1,13 +1,16 @@
 {
   String hostname=null;
   int port=-1;
+  String exclList=null;
   if (useDefault) {
     hostname=Proxy.getDefaultHost();
     port=Proxy.getDefaultPort();
   }
  else {
+    ContentResolver res=getContentResolver();
     hostname=Proxy.getHost(this);
     port=Proxy.getPort(this);
+    exclList=Settings.Secure.getString(res,Settings.Secure.HTTP_PROXY_EXCLUSION_LIST);
   }
   if (hostname == null) {
     hostname="";
@@ -15,6 +18,7 @@
   mHostnameField.setText(hostname);
   String portStr=port == -1 ? "" : Integer.toString(port);
   mPortField.setText(portStr);
+  mExclusionListField.setText(exclList);
   Intent intent=getIntent();
   String buttonLabel=intent.getStringExtra("button-label");
   if (!TextUtils.isEmpty(buttonLabel)) {

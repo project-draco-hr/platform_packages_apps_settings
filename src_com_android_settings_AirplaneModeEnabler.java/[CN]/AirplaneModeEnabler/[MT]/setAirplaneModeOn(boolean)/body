@@ -1,7 +1,7 @@
 {
-  mCheckBoxPref.setEnabled(false);
   mCheckBoxPref.setSummary(enabling ? R.string.airplane_mode_turning_on : R.string.airplane_mode_turning_off);
   Settings.System.putInt(mContext.getContentResolver(),Settings.System.AIRPLANE_MODE_ON,enabling ? 1 : 0);
+  mCheckBoxPref.setChecked(enabling);
   Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
   intent.putExtra("state",enabling);
   mContext.sendBroadcast(intent);

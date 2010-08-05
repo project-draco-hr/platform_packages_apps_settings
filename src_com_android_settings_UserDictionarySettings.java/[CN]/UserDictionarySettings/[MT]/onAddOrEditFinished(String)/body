@@ -4,6 +4,8 @@
   }
   deleteWord(word);
   UserDictionary.Words.addWord(this,word.toString(),250,UserDictionary.Words.LOCALE_TYPE_ALL);
-  mCursor.requery();
+  if (!mCursor.requery()) {
+    throw new IllegalStateException("can't requery on already-closed cursor.");
+  }
   mAddedWordAlready=true;
 }

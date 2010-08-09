@@ -5,7 +5,8 @@
   }
   registerReceiver(mReceiver,mFilter);
   if (mKeyStoreNetworkId != -1 && KeyStore.getInstance().test() == KeyStore.NO_ERROR) {
-    connect(mKeyStoreNetworkId);
+    mWifiManager.connectNetwork(mKeyStoreNetworkId);
   }
   mKeyStoreNetworkId=-1;
+  updateAccessPoints();
 }

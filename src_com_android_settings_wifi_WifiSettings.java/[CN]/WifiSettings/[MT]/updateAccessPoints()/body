@@ -2,17 +2,7 @@
   List<AccessPoint> accessPoints=new ArrayList<AccessPoint>();
   List<WifiConfiguration> configs=mWifiManager.getConfiguredNetworks();
   if (configs != null) {
-    mLastPriority=0;
     for (    WifiConfiguration config : configs) {
-      if (config.priority > mLastPriority) {
-        mLastPriority=config.priority;
-      }
-      if (config.status == Status.CURRENT) {
-        config.status=Status.ENABLED;
-      }
- else       if (mResetNetworks && config.status == Status.DISABLED) {
-        config.status=Status.CURRENT;
-      }
       AccessPoint accessPoint=new AccessPoint(this,config);
       accessPoint.update(mLastInfo,mLastState);
       accessPoints.add(accessPoint);

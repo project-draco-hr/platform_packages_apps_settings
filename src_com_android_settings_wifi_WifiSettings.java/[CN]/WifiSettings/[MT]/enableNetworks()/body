@@ -1,9 +1,0 @@
-{
-  for (int i=mAccessPoints.getPreferenceCount() - 1; i >= 0; --i) {
-    WifiConfiguration config=((AccessPoint)mAccessPoints.getPreference(i)).getConfig();
-    if (config != null && config.status != Status.ENABLED) {
-      mWifiManager.enableNetwork(config.networkId,false);
-    }
-  }
-  mResetNetworks=false;
-}

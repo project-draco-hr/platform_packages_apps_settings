@@ -1,0 +1,9 @@
+{
+  final int connectionStatus=getConnectionStatus(device);
+  if (SettingsBtStatus.isConnectionStatusConnected(connectionStatus)) {
+    return R.string.bluetooth_pan_profile_summary_connected;
+  }
+ else {
+    return SettingsBtStatus.getConnectionStatusSummary(connectionStatus);
+  }
+}

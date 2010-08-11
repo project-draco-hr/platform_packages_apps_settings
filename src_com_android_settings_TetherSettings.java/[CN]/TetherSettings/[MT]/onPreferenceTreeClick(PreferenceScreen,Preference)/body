@@ -30,6 +30,40 @@
       mUsbTether.setSummary("");
     }
   }
+ else   if (preference == mBluetoothTether) {
+    boolean bluetoothTetherState=mBluetoothTether.isChecked();
+    if (bluetoothTetherState) {
+      BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+      if (adapter.getState() == BluetoothAdapter.STATE_OFF) {
+        adapter.enable();
+        mBluetoothTether.setSummary(R.string.bluetooth_turning_on);
+        mBluetoothTether.setEnabled(false);
+        mBluetoothSettings.setEnabled(false);
+      }
+ else {
+        mBluetoothSettings.setEnabled(true);
+      }
+      mBluetoothPan.setBluetoothTethering(true,BluetoothPan.NAP_ROLE,BluetoothPan.NAP_BRIDGE);
+      mBluetoothTether.setSummary(R.string.bluetooth_tethering_available_subtext);
+    }
+ else {
+      boolean errored=false;
+      ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+      String[] tethered=cm.getTetheredIfaces();
+      String bluetoothIface=findIface(tethered,mBluetoothRegexs);
+      if (bluetoothIface != null && cm.untether(bluetoothIface) != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
+        errored=true;
+      }
+      mBluetoothPan.setBluetoothTethering(false,BluetoothPan.NAP_ROLE,BluetoothPan.NAP_BRIDGE);
+      mBluetoothSettings.setEnabled(false);
+      if (errored) {
+        mBluetoothTether.setSummary(R.string.bluetooth_tethering_errored_subtext);
+      }
+ else {
+        mBluetoothTether.setSummary(R.string.bluetooth_tethering_off_subtext);
+      }
+    }
+  }
  else   if (preference == mTetherHelp) {
     showDialog(DIALOG_TETHER_HELP);
   }

@@ -10,6 +10,8 @@ synchronized (sProfileMap) {
       sProfileMap.put(Profile.OPP,profileManager);
       profileManager=new HidProfileManager(localManager);
       sProfileMap.put(Profile.HID,profileManager);
+      profileManager=new PanProfileManager(localManager);
+      sProfileMap.put(Profile.PAN,profileManager);
     }
   }
 }

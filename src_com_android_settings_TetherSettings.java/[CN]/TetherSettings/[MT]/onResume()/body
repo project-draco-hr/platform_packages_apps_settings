@@ -1,12 +1,15 @@
 {
   super.onResume();
-  IntentFilter filter=new IntentFilter(ConnectivityManager.ACTION_TETHER_STATE_CHANGED);
   mTetherChangeReceiver=new TetherChangeReceiver();
+  IntentFilter filter=new IntentFilter(ConnectivityManager.ACTION_TETHER_STATE_CHANGED);
   Intent intent=registerReceiver(mTetherChangeReceiver,filter);
   filter=new IntentFilter();
   filter.addAction(Intent.ACTION_MEDIA_SHARED);
   filter.addAction(Intent.ACTION_MEDIA_UNSHARED);
   filter.addDataScheme("file");
+  registerReceiver(mTetherChangeReceiver,filter);
+  filter=new IntentFilter();
+  filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
   registerReceiver(mTetherChangeReceiver,filter);
   if (intent != null)   mTetherChangeReceiver.onReceive(this,intent);
   mWifiApEnabler.resume();

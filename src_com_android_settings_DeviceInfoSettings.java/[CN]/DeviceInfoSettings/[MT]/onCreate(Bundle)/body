@@ -2,6 +2,7 @@
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.device_info_settings);
   setStringSummary("firmware_version",Build.VERSION.RELEASE);
+  findPreference("firmware_version").setEnabled(true);
   setValueSummary("baseband_version","gsm.version.baseband");
   setStringSummary("device_model",Build.MODEL);
   setStringSummary("build_number",Build.DISPLAY);

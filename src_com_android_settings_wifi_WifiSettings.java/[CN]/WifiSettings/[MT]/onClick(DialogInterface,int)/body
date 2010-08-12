@@ -1,31 +1,25 @@
 {
   if (button == WifiDialog.BUTTON_FORGET && mSelected != null) {
-    forget(mSelected.networkId);
+    mWifiManager.forgetNetwork(mSelected.networkId);
   }
  else   if (button == WifiDialog.BUTTON_SUBMIT && mDialog != null) {
     WifiConfiguration config=mDialog.getConfig();
     if (config == null) {
       if (mSelected != null && !requireKeyStore(mSelected.getConfig())) {
-        connect(mSelected.networkId);
+        mWifiManager.connectNetwork(mSelected.networkId);
       }
     }
  else     if (config.networkId != -1) {
       if (mSelected != null) {
-        mWifiManager.updateNetwork(config);
-        saveNetworks();
+        mWifiManager.saveNetwork(config);
       }
     }
  else {
-      int networkId=mWifiManager.addNetwork(config);
-      if (networkId != -1) {
-        mWifiManager.enableNetwork(networkId,false);
-        config.networkId=networkId;
-        if (mDialog.edit || requireKeyStore(config)) {
-          saveNetworks();
-        }
+      if (mDialog.edit || requireKeyStore(config)) {
+        mWifiManager.saveNetwork(config);
+      }
  else {
-          connect(networkId);
-        }
+        mWifiManager.connectNetwork(config);
       }
     }
   }

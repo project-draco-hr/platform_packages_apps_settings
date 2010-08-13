@@ -21,6 +21,7 @@
     Map<String,? extends BatteryStats.Uid.Proc> processStats=u.getProcessStats();
     long cpuTime=0;
     long cpuFgTime=0;
+    long wakelockTime=0;
     long gpsTime=0;
     if (processStats.size() > 0) {
       for (      Map.Entry<String,? extends BatteryStats.Uid.Proc> ent : processStats.entrySet()) {
@@ -58,6 +59,19 @@
       cpuTime=cpuFgTime;
     }
     power/=1000;
+    Map<String,? extends BatteryStats.Uid.Wakelock> wakelockStats=u.getWakelockStats();
+    for (    Map.Entry<String,? extends BatteryStats.Uid.Wakelock> wakelockEntry : wakelockStats.entrySet()) {
+      Uid.Wakelock wakelock=wakelockEntry.getValue();
+      BatteryStats.Timer timer=wakelock.getWakeTime(BatteryStats.WAKE_TYPE_FULL);
+      if (timer != null) {
+        wakelockTime+=timer.getTotalTimeLocked(uSecTime,which);
+      }
+      timer=wakelock.getWakeTime(BatteryStats.WAKE_TYPE_PARTIAL);
+      if (timer != null) {
+        wakelockTime+=timer.getTotalTimeLocked(uSecTime,which);
+      }
+    }
+    wakelockTime/=1000;
     power+=(u.getTcpBytesReceived(mStatsType) + u.getTcpBytesSent(mStatsType)) * averageCostPerByte;
     Map<Integer,? extends BatteryStats.Uid.Sensor> sensorStats=u.getSensorStats();
     for (    Map.Entry<Integer,? extends BatteryStats.Uid.Sensor> sensorEntry : sensorStats.entrySet()) {
@@ -87,6 +101,7 @@ BatterySipper app=new BatterySipper(this,mRequestQueue,mHandler,packageWithHighe
 app.cpuTime=cpuTime;
 app.gpsTime=gpsTime;
 app.cpuFgTime=cpuFgTime;
+app.wakeLockTime=wakelockTime;
 mUsageList.add(app);
 }
 if (power > mMaxPower) mMaxPower=power;

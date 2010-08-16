@@ -14,8 +14,8 @@
     }
   }
   if (uptimeView != null) {
-    if (mItem.mActiveSince >= 0) {
-      uptimeView.setText(DateUtils.formatElapsedTime(builder,(SystemClock.uptimeMillis() - mFirstRunTime) / 1000));
+    if (mFirstRunTime >= 0) {
+      uptimeView.setText(DateUtils.formatElapsedTime(builder,(SystemClock.elapsedRealtime() - mFirstRunTime) / 1000));
     }
  else {
       boolean isService=false;

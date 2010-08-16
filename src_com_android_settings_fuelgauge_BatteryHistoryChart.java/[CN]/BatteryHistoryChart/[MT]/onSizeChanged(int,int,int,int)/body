@@ -20,17 +20,21 @@
   mChargingPaint.setStrokeWidth(mLineWidth);
   mScreenOnPaint.setStrokeWidth(mLineWidth);
   mGpsOnPaint.setStrokeWidth(mLineWidth);
+  mWifiRunningPaint.setStrokeWidth(mLineWidth);
+  mWakeLockPaint.setStrokeWidth(mLineWidth);
   if (mLargeMode) {
     int barOffset=textHeight + mLineWidth;
-    mScreenOnOffset=mLineWidth;
-    mGpsOnOffset=mScreenOnOffset + barOffset;
-    mPhoneSignalOffset=mGpsOnOffset + barOffset;
-    mChargingOffset=mPhoneSignalOffset + barOffset;
-    mLevelOffset=mChargingOffset + barOffset + mLineWidth;
+    mChargingOffset=mLineWidth;
+    mScreenOnOffset=mChargingOffset + barOffset;
+    mWakeLockOffset=mScreenOnOffset + barOffset;
+    mWifiRunningOffset=mWakeLockOffset + barOffset;
+    mGpsOnOffset=mHaveWifi ? (mWifiRunningOffset + barOffset) : mWakeLockOffset;
+    mPhoneSignalOffset=mHaveGps ? (mGpsOnOffset + barOffset) : mWifiRunningOffset;
+    mLevelOffset=mPhoneSignalOffset + barOffset + mLineWidth;
     mPhoneSignalTicks=new int[w + 2];
   }
  else {
-    mScreenOnOffset=mGpsOnOffset=mLineWidth;
+    mScreenOnOffset=mGpsOnOffset=mWifiRunningOffset=mWakeLockOffset=mLineWidth;
     mChargingOffset=mLineWidth * 2;
     mPhoneSignalOffset=0;
     mLevelOffset=mLineWidth * 3;
@@ -42,6 +46,8 @@
   mBatCriticalPath.reset();
   mScreenOnPath.reset();
   mGpsOnPath.reset();
+  mWifiRunningPath.reset();
+  mWakeLockPath.reset();
   mChargingPath.reset();
   final long timeStart=mHistStart;
   final long timeChange=mHistEnd - mHistStart;
@@ -55,6 +61,7 @@
   Path curLevelPath=null;
   Path lastLinePath=null;
   boolean lastCharging=false, lastScreenOn=false, lastGpsOn=false;
+  boolean lastWifiRunning=false, lastWakeLock=false;
   int lastPhoneSignalBin=0;
   final int N=mNumHist;
   while (rec != null && i < N) {
@@ -119,6 +126,26 @@
           }
           lastGpsOn=gpsOn;
         }
+        final boolean wifiRunning=(rec.states & HistoryItem.STATE_WIFI_RUNNING_FLAG) != 0;
+        if (wifiRunning != lastWifiRunning) {
+          if (wifiRunning) {
+            mWifiRunningPath.moveTo(x,h - mWifiRunningOffset);
+          }
+ else {
+            mWifiRunningPath.lineTo(x,h - mWifiRunningOffset);
+          }
+          lastWifiRunning=wifiRunning;
+        }
+        final boolean wakeLock=(rec.states & HistoryItem.STATE_WAKE_LOCK_FLAG) != 0;
+        if (wakeLock != lastWakeLock) {
+          if (wakeLock) {
+            mWakeLockPath.moveTo(x,h - mWakeLockOffset);
+          }
+ else {
+            mWakeLockPath.lineTo(x,h - mWakeLockOffset);
+          }
+          lastWakeLock=wakeLock;
+        }
         if (mLargeMode) {
           int bin;
           if (((rec.states & HistoryItem.STATE_PHONE_STATE_MASK) >> HistoryItem.STATE_PHONE_STATE_SHIFT) == ServiceState.STATE_POWER_OFF) {
@@ -139,15 +166,15 @@
       }
     }
  else     if (curLevelPath != null) {
-      finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastPhoneSignalBin,lastLinePath);
+      finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastWakeLock,lastPhoneSignalBin,lastLinePath);
       lastX=lastY=-1;
       curLevelPath=null;
       lastLinePath=null;
-      lastCharging=lastScreenOn=lastGpsOn=false;
+      lastCharging=lastScreenOn=lastGpsOn=lastWakeLock=false;
       lastPhoneSignalBin=0;
     }
     rec=rec.next;
     i++;
   }
-  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastPhoneSignalBin,lastLinePath);
+  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastWakeLock,lastPhoneSignalBin,lastLinePath);
 }

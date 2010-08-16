@@ -38,12 +38,28 @@
   if (!mChargingPath.isEmpty()) {
     canvas.drawPath(mChargingPath,mChargingPaint);
   }
-  if (!mGpsOnPath.isEmpty()) {
-    canvas.drawPath(mGpsOnPath,mGpsOnPaint);
+  if (mHaveGps) {
+    if (!mGpsOnPath.isEmpty()) {
+      canvas.drawPath(mGpsOnPath,mGpsOnPaint);
+    }
+  }
+  if (mHaveWifi) {
+    if (!mWifiRunningPath.isEmpty()) {
+      canvas.drawPath(mWifiRunningPath,mWifiRunningPaint);
+    }
+  }
+  if (!mWakeLockPath.isEmpty()) {
+    canvas.drawPath(mWakeLockPath,mWakeLockPaint);
   }
   if (mLargeMode) {
     canvas.drawText(mPhoneSignalLabel,0,height - mPhoneSignalOffset - mTextDescent,mTextPaint);
-    canvas.drawText(mGpsOnLabel,0,height - mGpsOnOffset - mTextDescent,mTextPaint);
+    if (mHaveGps) {
+      canvas.drawText(mGpsOnLabel,0,height - mGpsOnOffset - mTextDescent,mTextPaint);
+    }
+    if (mHaveWifi) {
+      canvas.drawText(mWifiRunningLabel,0,height - mWifiRunningOffset - mTextDescent,mTextPaint);
+    }
+    canvas.drawText(mWakeLockLabel,0,height - mWakeLockOffset - mTextDescent,mTextPaint);
     canvas.drawText(mChargingLabel,0,height - mChargingOffset - mTextDescent,mTextPaint);
     canvas.drawText(mScreenOnLabel,0,height - mScreenOnOffset - mTextDescent,mTextPaint);
     canvas.drawLine(0,mLevelBottom + (mThinLineWidth / 2),width,mLevelBottom + (mThinLineWidth / 2),mTextPaint);

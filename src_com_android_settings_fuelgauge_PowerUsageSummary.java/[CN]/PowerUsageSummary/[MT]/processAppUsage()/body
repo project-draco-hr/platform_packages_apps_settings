@@ -62,11 +62,7 @@
     Map<String,? extends BatteryStats.Uid.Wakelock> wakelockStats=u.getWakelockStats();
     for (    Map.Entry<String,? extends BatteryStats.Uid.Wakelock> wakelockEntry : wakelockStats.entrySet()) {
       Uid.Wakelock wakelock=wakelockEntry.getValue();
-      BatteryStats.Timer timer=wakelock.getWakeTime(BatteryStats.WAKE_TYPE_FULL);
-      if (timer != null) {
-        wakelockTime+=timer.getTotalTimeLocked(uSecTime,which);
-      }
-      timer=wakelock.getWakeTime(BatteryStats.WAKE_TYPE_PARTIAL);
+      BatteryStats.Timer timer=wakelock.getWakeTime(BatteryStats.WAKE_TYPE_PARTIAL);
       if (timer != null) {
         wakelockTime+=timer.getTotalTimeLocked(uSecTime,which);
       }

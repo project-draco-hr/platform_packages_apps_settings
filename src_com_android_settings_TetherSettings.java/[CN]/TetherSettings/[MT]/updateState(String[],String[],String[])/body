@@ -5,8 +5,7 @@
   int usbError=ConnectivityManager.TETHER_ERROR_NO_ERROR;
   boolean usbErrored=false;
   boolean massStorageActive=Environment.MEDIA_SHARED.equals(Environment.getExternalStorageState());
-  for (  Object o : available) {
-    String s=(String)o;
+  for (  String s : available) {
     for (    String regex : mUsbRegexs) {
       if (s.matches(regex)) {
         usbAvailable=true;
@@ -16,14 +15,12 @@
       }
     }
   }
-  for (  Object o : tethered) {
-    String s=(String)o;
+  for (  String s : tethered) {
     for (    String regex : mUsbRegexs) {
       if (s.matches(regex))       usbTethered=true;
     }
   }
-  for (  Object o : errored) {
-    String s=(String)o;
+  for (  String s : errored) {
     for (    String regex : mUsbRegexs) {
       if (s.matches(regex))       usbErrored=true;
     }

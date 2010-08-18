@@ -23,7 +23,7 @@
         return super.onPreferenceTreeClick(preferenceScreen,preference);
       }
       if (mDialog == null) {
-        mDialog=(new AlertDialog.Builder(this)).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+        mDialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
           public void onClick(          DialogInterface dialog,          int which){
             chkPref.setChecked(true);
             mLastTickedInputMethodId=id;
@@ -40,7 +40,7 @@
           mDialog.dismiss();
         }
       }
-      mDialog.setMessage(getString(R.string.ime_security_warning,selImi.getServiceInfo().applicationInfo.loadLabel(getPackageManager())));
+      mDialog.setMessage(getResources().getString(R.string.ime_security_warning,selImi.getServiceInfo().applicationInfo.loadLabel(getPackageManager())));
       mDialog.show();
     }
  else     if (id.equals(mLastTickedInputMethodId)) {

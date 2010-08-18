@@ -1,0 +1,11 @@
+{
+  final String fragmentClass=preference.getFragment();
+  if (fragmentClass != null) {
+    boolean showed=((Settings)getActivity()).showFragment(preference);
+    if (showed) {
+      highlight(preference);
+    }
+    return showed;
+  }
+  return false;
+}

@@ -1,5 +1,5 @@
 {
-  if (mSubmit && !isFinishing()) {
+  if (mSubmit) {
     mSubmit=false;
     if (!checkPassword((Dialog)dialog)) {
       ((Dialog)dialog).show();
@@ -8,6 +8,5 @@
   }
   updatePreferences(mState);
   if (mExternal) {
-    finish();
   }
 }

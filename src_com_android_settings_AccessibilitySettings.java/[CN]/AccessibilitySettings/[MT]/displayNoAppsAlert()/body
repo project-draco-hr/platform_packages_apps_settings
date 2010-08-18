@@ -1,12 +1,12 @@
 {
   try {
-    PackageManager pm=getPackageManager();
+    PackageManager pm=getActivity().getPackageManager();
     ApplicationInfo info=pm.getApplicationInfo("com.android.vending",0);
   }
  catch (  NameNotFoundException e) {
     return;
   }
-  AlertDialog.Builder noAppsAlert=new AlertDialog.Builder(this);
+  AlertDialog.Builder noAppsAlert=new AlertDialog.Builder(getActivity());
   noAppsAlert.setTitle(R.string.accessibility_service_no_apps_title);
   noAppsAlert.setMessage(R.string.accessibility_service_no_apps_message);
   noAppsAlert.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
@@ -15,7 +15,7 @@
       Uri marketUri=Uri.parse(screenreaderMarketLink);
       Intent marketIntent=new Intent(Intent.ACTION_VIEW,marketUri);
       startActivity(marketIntent);
-      finish();
+      getFragmentManager().popBackStack();
     }
   }
 );

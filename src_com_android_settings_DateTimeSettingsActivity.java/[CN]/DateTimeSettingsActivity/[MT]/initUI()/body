@@ -1,0 +1,33 @@
+{
+  boolean autoEnabled=getAutoState();
+  mDummyDate=Calendar.getInstance();
+  mDummyDate.set(mDummyDate.get(Calendar.YEAR),11,31,13,0,0);
+  mAutoPref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME);
+  mAutoPref.setChecked(autoEnabled);
+  mTimePref=findPreference("time");
+  mTime24Pref=findPreference("24 hour");
+  mTimeZone=findPreference("timezone");
+  mDatePref=findPreference("date");
+  mDateFormat=(ListPreference)findPreference(KEY_DATE_FORMAT);
+  String[] dateFormats=getResources().getStringArray(R.array.date_format_values);
+  String[] formattedDates=new String[dateFormats.length];
+  String currentFormat=getDateFormat();
+  if (currentFormat == null) {
+    currentFormat="";
+  }
+  for (int i=0; i < formattedDates.length; i++) {
+    String formatted=DateFormat.getDateFormatForSetting(this,dateFormats[i]).format(mDummyDate.getTime());
+    if (dateFormats[i].length() == 0) {
+      formattedDates[i]=getResources().getString(R.string.normal_date_format,formatted);
+    }
+ else {
+      formattedDates[i]=formatted;
+    }
+  }
+  mDateFormat.setEntries(formattedDates);
+  mDateFormat.setEntryValues(R.array.date_format_values);
+  mDateFormat.setValue(currentFormat);
+  mTimePref.setEnabled(!autoEnabled);
+  mDatePref.setEnabled(!autoEnabled);
+  mTimeZone.setEnabled(!autoEnabled);
+}

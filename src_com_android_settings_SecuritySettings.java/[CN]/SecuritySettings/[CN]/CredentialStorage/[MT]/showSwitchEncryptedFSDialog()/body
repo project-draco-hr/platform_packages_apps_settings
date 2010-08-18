@@ -1,5 +1,5 @@
 {
-  AlertDialog.Builder builder=new AlertDialog.Builder(SecuritySettings.this).setCancelable(false).setTitle(R.string.encrypted_fs_alert_dialog_title);
+  AlertDialog.Builder builder=new AlertDialog.Builder(SecuritySettings.this.getActivity()).setCancelable(false).setTitle(R.string.encrypted_fs_alert_dialog_title);
   mShowingDialog=DLG_ENABLE_EFS;
   if (mWillEnableEncryptedFS) {
     builder.setMessage(R.string.encrypted_fs_enable_dialog).setPositiveButton(R.string.encrypted_fs_enable_button,this).setNegativeButton(R.string.encrypted_fs_cancel_button,this).create().show();

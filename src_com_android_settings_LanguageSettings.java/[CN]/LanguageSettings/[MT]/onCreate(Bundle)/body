@@ -1,7 +1,7 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.language_settings);
-  if (getAssets().getLocales().length == 1) {
+  if (getActivity().getAssets().getLocales().length == 1) {
     getPreferenceScreen().removePreference(findPreference("language_category"));
   }
  else {

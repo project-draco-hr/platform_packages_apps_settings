@@ -11,9 +11,9 @@
     ServiceInfo serviceInfo=installedServices.get(i);
     String key=serviceInfo.packageName + "/" + serviceInfo.name;
     mAccessibilityServices.put(key,serviceInfo);
-    CheckBoxPreference preference=new CheckBoxPreference(this);
+    CheckBoxPreference preference=new CheckBoxPreference(getActivity());
     preference.setKey(key);
-    preference.setTitle(serviceInfo.loadLabel(getPackageManager()));
+    preference.setTitle(serviceInfo.loadLabel(getActivity().getPackageManager()));
     mAccessibilityServicesCategory.addPreference(preference);
   }
 }

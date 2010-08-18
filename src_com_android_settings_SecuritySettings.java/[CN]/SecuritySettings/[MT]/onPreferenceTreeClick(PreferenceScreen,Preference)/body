@@ -2,7 +2,7 @@
   final String key=preference.getKey();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (KEY_UNLOCK_SET_OR_CHANGE.equals(key)) {
-    Intent intent=new Intent(this,ChooseLockGeneric.class);
+    Intent intent=new Intent(getActivity(),ChooseLockGeneric.class);
     startActivityForResult(intent,SET_OR_CHANGE_LOCK_METHOD_REQUEST);
   }
  else   if (KEY_LOCK_ENABLED.equals(key)) {

@@ -1,5 +1,5 @@
 {
-  final DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  final DevicePolicyManager dpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   final long maxTimeout=dpm != null ? dpm.getMaximumTimeToLock(null) : 0;
   if (maxTimeout == 0) {
     return;

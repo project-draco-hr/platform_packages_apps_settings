@@ -1,7 +1,7 @@
 {
   mState=mKeyStore.test();
   updatePreferences(mState);
-  Intent intent=getIntent();
+  Intent intent=getActivity().getIntent();
   if (!mExternal && intent != null && Credentials.UNLOCK_ACTION.equals(intent.getAction())) {
     mExternal=true;
     if (mState == KeyStore.UNINITIALIZED) {
@@ -11,7 +11,7 @@
       showUnlockDialog();
     }
  else {
-      finish();
+      SecuritySettings.this.getFragmentManager().popBackStack();
     }
   }
 }

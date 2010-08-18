@@ -1,5 +1,5 @@
 {
   super.onPause();
-  unregisterReceiver(mIntentReceiver);
+  getActivity().unregisterReceiver(mIntentReceiver);
   getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 }

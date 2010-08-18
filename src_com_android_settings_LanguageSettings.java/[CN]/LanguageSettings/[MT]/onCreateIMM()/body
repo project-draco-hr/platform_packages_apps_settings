@@ -7,17 +7,17 @@
   for (int i=0; i < N; ++i) {
     InputMethodInfo property=mInputMethodProperties.get(i);
     String prefKey=property.getId();
-    CharSequence label=property.loadLabel(getPackageManager());
+    CharSequence label=property.loadLabel(getActivity().getPackageManager());
     boolean systemIME=isSystemIme(property);
     if (mHaveHardKeyboard || (N > 1 && !systemIME)) {
-      CheckBoxPreference chkbxPref=new CheckBoxPreference(this);
+      CheckBoxPreference chkbxPref=new CheckBoxPreference(getActivity());
       chkbxPref.setKey(prefKey);
       chkbxPref.setTitle(label);
       textCategory.addPreference(chkbxPref);
       mCheckboxes.add(chkbxPref);
     }
     if (null != property.getSettingsActivity()) {
-      PreferenceScreen prefScreen=new PreferenceScreen(this,null);
+      PreferenceScreen prefScreen=new PreferenceScreen(getActivity(),null);
       String settingsActivity=property.getSettingsActivity();
       if (settingsActivity.lastIndexOf("/") < 0) {
         settingsActivity=property.getPackageName() + "/" + settingsActivity;
@@ -25,7 +25,7 @@
       prefScreen.setKey(settingsActivity);
       prefScreen.setTitle(label);
       if (N == 1) {
-        prefScreen.setSummary(getString(R.string.onscreen_keyboard_settings_summary));
+        prefScreen.setSummary(getResources().getString(R.string.onscreen_keyboard_settings_summary));
       }
  else {
         CharSequence settingsLabel=getResources().getString(R.string.input_methods_settings_label_format,label);

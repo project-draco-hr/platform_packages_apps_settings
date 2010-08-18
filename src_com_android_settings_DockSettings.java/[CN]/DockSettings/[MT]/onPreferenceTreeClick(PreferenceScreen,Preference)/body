@@ -7,8 +7,8 @@
  else {
       Intent i=new Intent(mDockIntent);
       i.setAction(DockEventReceiver.ACTION_DOCK_SHOW_UI);
-      i.setClass(this,DockEventReceiver.class);
-      sendBroadcast(i);
+      i.setClass(getActivity(),DockEventReceiver.class);
+      getActivity().sendBroadcast(i);
     }
   }
  else   if (preference == mDockSounds) {

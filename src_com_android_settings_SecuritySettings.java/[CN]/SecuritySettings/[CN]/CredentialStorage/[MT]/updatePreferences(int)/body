@@ -8,13 +8,13 @@
     return;
   }
  else   if (state == KeyStore.NO_ERROR) {
-    Toast.makeText(SecuritySettings.this,R.string.credentials_enabled,Toast.LENGTH_SHORT).show();
+    Toast.makeText(SecuritySettings.this.getActivity(),R.string.credentials_enabled,Toast.LENGTH_SHORT).show();
   }
  else   if (state == KeyStore.UNINITIALIZED) {
-    Toast.makeText(SecuritySettings.this,R.string.credentials_erased,Toast.LENGTH_SHORT).show();
+    Toast.makeText(SecuritySettings.this.getActivity(),R.string.credentials_erased,Toast.LENGTH_SHORT).show();
   }
  else   if (state == KeyStore.LOCKED) {
-    Toast.makeText(SecuritySettings.this,R.string.credentials_disabled,Toast.LENGTH_SHORT).show();
+    Toast.makeText(SecuritySettings.this.getActivity(),R.string.credentials_disabled,Toast.LENGTH_SHORT).show();
   }
   mState=state;
 }

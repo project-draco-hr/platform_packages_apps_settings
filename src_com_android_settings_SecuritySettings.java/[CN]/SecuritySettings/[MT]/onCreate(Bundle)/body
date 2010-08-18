@@ -1,8 +1,8 @@
 {
   super.onCreate(savedInstanceState);
-  mLockPatternUtils=new LockPatternUtils(this);
+  mLockPatternUtils=new LockPatternUtils(getActivity());
   mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-  mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this);
+  mChooseLockSettingsHelper=new ChooseLockSettingsHelper(getActivity());
   createPreferenceHierarchy();
   updateToggles();
   Cursor settingsCursor=getContentResolver().query(Settings.Secure.CONTENT_URI,null,"(" + Settings.System.NAME + "=?)",new String[]{Settings.Secure.LOCATION_PROVIDERS_ALLOWED},null);

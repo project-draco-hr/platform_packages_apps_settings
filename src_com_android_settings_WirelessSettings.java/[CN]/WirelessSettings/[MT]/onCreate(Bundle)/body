@@ -1,14 +1,15 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.wireless_settings);
+  final Activity activity=getActivity();
   CheckBoxPreference airplane=(CheckBoxPreference)findPreference(KEY_TOGGLE_AIRPLANE);
   CheckBoxPreference wifi=(CheckBoxPreference)findPreference(KEY_TOGGLE_WIFI);
   CheckBoxPreference bt=(CheckBoxPreference)findPreference(KEY_TOGGLE_BLUETOOTH);
-  mAirplaneModeEnabler=new AirplaneModeEnabler(this,airplane);
+  mAirplaneModeEnabler=new AirplaneModeEnabler(activity,airplane);
   mAirplaneModePreference=(CheckBoxPreference)findPreference(KEY_TOGGLE_AIRPLANE);
-  mWifiEnabler=new WifiEnabler(this,wifi);
-  mBtEnabler=new BluetoothEnabler(this,bt);
-  String toggleable=Settings.System.getString(getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
+  mWifiEnabler=new WifiEnabler(activity,wifi);
+  mBtEnabler=new BluetoothEnabler(activity,bt);
+  String toggleable=Settings.System.getString(activity.getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   if (toggleable == null || !toggleable.contains(Settings.System.RADIO_WIFI)) {
     wifi.setDependency(KEY_TOGGLE_AIRPLANE);
     findPreference(KEY_WIFI_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
@@ -22,9 +23,9 @@
     findPreference(KEY_BT_SETTINGS).setEnabled(false);
   }
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
-  DevicePolicyManager mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  DevicePolicyManager mDPM=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
   mGlobalProxy.setEnabled(mDPM.getGlobalProxyAdmin() == null);
-  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  ConnectivityManager cm=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
   if (!cm.isTetheringSupported()) {
     getPreferenceScreen().removePreference(findPreference(KEY_TETHER_SETTINGS));
   }

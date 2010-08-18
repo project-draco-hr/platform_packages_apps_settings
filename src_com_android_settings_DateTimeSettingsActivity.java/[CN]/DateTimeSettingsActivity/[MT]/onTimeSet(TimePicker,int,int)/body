@@ -1,0 +1,10 @@
+{
+  Calendar c=Calendar.getInstance();
+  c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+  c.set(Calendar.MINUTE,minute);
+  long when=c.getTimeInMillis();
+  if (when / 1000 < Integer.MAX_VALUE) {
+    SystemClock.setCurrentTimeMillis(when);
+  }
+  updateTimeAndDateDisplay();
+}

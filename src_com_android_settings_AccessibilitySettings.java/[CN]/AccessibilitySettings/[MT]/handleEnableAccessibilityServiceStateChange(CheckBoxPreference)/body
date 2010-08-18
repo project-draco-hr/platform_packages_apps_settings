@@ -1,7 +1,7 @@
 {
   if (preference.isChecked()) {
     final CheckBoxPreference checkBoxPreference=preference;
-    AlertDialog dialog=(new AlertDialog.Builder(this)).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getString(R.string.accessibility_service_security_warning,mAccessibilityServices.get(preference.getKey()).applicationInfo.loadLabel(getPackageManager()))).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    AlertDialog dialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getResources().getString(R.string.accessibility_service_security_warning,mAccessibilityServices.get(preference.getKey()).applicationInfo.loadLabel(getActivity().getPackageManager()))).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
       public void onClick(      DialogInterface dialog,      int which){
         checkBoxPreference.setChecked(true);
         persistEnabledAccessibilityServices();

@@ -16,7 +16,7 @@
     currentFormat="";
   }
   for (int i=0; i < formattedDates.length; i++) {
-    String formatted=DateFormat.getDateFormatForSetting(this,dateFormats[i]).format(mDummyDate.getTime());
+    String formatted=DateFormat.getDateFormatForSetting(getActivity(),dateFormats[i]).format(mDummyDate.getTime());
     if (dateFormats[i].length() == 0) {
       formattedDates[i]=getResources().getString(R.string.normal_date_format,formatted);
     }

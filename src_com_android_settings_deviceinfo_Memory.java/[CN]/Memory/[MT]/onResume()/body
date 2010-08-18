@@ -3,6 +3,6 @@
   IntentFilter intentFilter=new IntentFilter(Intent.ACTION_MEDIA_SCANNER_STARTED);
   intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
   intentFilter.addDataScheme("file");
-  registerReceiver(mReceiver,intentFilter);
+  getActivity().registerReceiver(mReceiver,intentFilter);
   updateMemoryStatus();
 }

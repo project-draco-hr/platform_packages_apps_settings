@@ -18,6 +18,16 @@ if (bluetoothClass.doesClassMatch(BluetoothClass.PROFILE_A2DP)) return true;
 if (bluetoothClass.doesClassMatch(BluetoothClass.PROFILE_HEADSET)) return true;
 }
 break;
+case BluetoothDevicePicker.FILTER_TYPE_PANU:
+if (uuids != null) {
+if (BluetoothUuid.containsAnyUuid(uuids,LocalBluetoothProfileManager.PANU_PROFILE_UUIDS)) return true;
+}
+break;
+case BluetoothDevicePicker.FILTER_TYPE_NAP:
+if (uuids != null) {
+if (BluetoothUuid.containsAnyUuid(uuids,LocalBluetoothProfileManager.NAP_PROFILE_UUIDS)) return true;
+}
+break;
 default :
 return true;
 }

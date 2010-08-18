@@ -1,0 +1,58 @@
+{
+  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  boolean usbTethered=false;
+  boolean usbAvailable=false;
+  int usbError=ConnectivityManager.TETHER_ERROR_NO_ERROR;
+  boolean usbErrored=false;
+  boolean massStorageActive=Environment.MEDIA_SHARED.equals(Environment.getExternalStorageState());
+  for (  String s : available) {
+    for (    String regex : mUsbRegexs) {
+      if (s.matches(regex)) {
+        usbAvailable=true;
+        if (usbError == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
+          usbError=cm.getLastTetherError(s);
+        }
+      }
+    }
+  }
+  for (  String s : tethered) {
+    for (    String regex : mUsbRegexs) {
+      if (s.matches(regex))       usbTethered=true;
+    }
+  }
+  for (  String s : errored) {
+    for (    String regex : mUsbRegexs) {
+      if (s.matches(regex))       usbErrored=true;
+    }
+  }
+  if (usbTethered) {
+    mUsbTether.setSummary(R.string.usb_tethering_active_subtext);
+    mUsbTether.setEnabled(true);
+    mUsbTether.setChecked(true);
+  }
+ else   if (usbAvailable) {
+    if (usbError == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
+      mUsbTether.setSummary(R.string.usb_tethering_available_subtext);
+    }
+ else {
+      mUsbTether.setSummary(R.string.usb_tethering_errored_subtext);
+    }
+    mUsbTether.setEnabled(true);
+    mUsbTether.setChecked(false);
+  }
+ else   if (usbErrored) {
+    mUsbTether.setSummary(R.string.usb_tethering_errored_subtext);
+    mUsbTether.setEnabled(false);
+    mUsbTether.setChecked(false);
+  }
+ else   if (massStorageActive) {
+    mUsbTether.setSummary(R.string.usb_tethering_storage_active_subtext);
+    mUsbTether.setEnabled(false);
+    mUsbTether.setChecked(false);
+  }
+ else {
+    mUsbTether.setSummary(R.string.usb_tethering_unavailable_subtext);
+    mUsbTether.setEnabled(false);
+    mUsbTether.setChecked(false);
+  }
+}

@@ -1,5 +1,11 @@
 {
-  BluetoothDevicePreference preference=new BluetoothDevicePreference(this,cachedDevice);
+  BluetoothDevicePreference preference;
+  if (mScreenType == SCREEN_TYPE_TETHERING) {
+    preference=new BluetoothDevicePreference(this,cachedDevice,CachedBluetoothDevice.PAN_PROFILE);
+  }
+ else {
+    preference=new BluetoothDevicePreference(this,cachedDevice,CachedBluetoothDevice.OTHER_PROFILES);
+  }
   mDeviceList.addPreference(preference);
   mDevicePreferenceMap.put(cachedDevice,preference);
 }

@@ -1,5 +1,5 @@
 {
   mOnlineModePreference.setChecked(mOnlineMode);
   mOnlineModePreference.setEnabled(!mCachedDevice.isBusy());
-  mOnlineModePreference.setSummary(mOnlineMode ? mCachedDevice.getSummary() : R.string.bluetooth_device_advanced_online_mode_summary);
+  mOnlineModePreference.setSummary(mOnlineMode ? mCachedDevice.getSummary(CachedBluetoothDevice.OTHER_PROFILES) : R.string.bluetooth_device_advanced_online_mode_summary);
 }

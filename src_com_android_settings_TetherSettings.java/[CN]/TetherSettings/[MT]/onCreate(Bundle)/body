@@ -1,24 +1,61 @@
 {
   super.onCreate(icicle);
+  mBluetoothPan=new BluetoothPan(this);
   addPreferencesFromResource(R.xml.tether_prefs);
   mEnableWifiAp=(CheckBoxPreference)findPreference(ENABLE_WIFI_AP);
   mWifiApSettings=(PreferenceScreen)findPreference(WIFI_AP_SETTINGS);
   mUsbTether=(CheckBoxPreference)findPreference(USB_TETHER_SETTINGS);
+  mBluetoothTether=(CheckBoxPreference)findPreference(ENABLE_BLUETOOTH_TETHERING);
+  mBluetoothSettings=(PreferenceScreen)findPreference(BLUETOOTH_TETHER_SETTINGS);
   mTetherHelp=(PreferenceScreen)findPreference(TETHERING_HELP);
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   mUsbRegexs=cm.getTetherableUsbRegexs();
-  if (mUsbRegexs.length == 0 || Utils.isMonkeyRunning()) {
-    getPreferenceScreen().removePreference(mUsbTether);
-    setTitle(R.string.tether_settings_title_wifi);
-  }
   mWifiRegexs=cm.getTetherableWifiRegexs();
-  if (mWifiRegexs.length == 0) {
+  mBluetoothRegexs=cm.getTetherableBluetoothRegexs();
+  boolean usbAvailable=mUsbRegexs.length != 0;
+  boolean wifiAvailable=mWifiRegexs.length != 0;
+  boolean bluetoothAvailable=mBluetoothRegexs.length != 0;
+  if (!usbAvailable || Utils.isMonkeyRunning()) {
+    getPreferenceScreen().removePreference(mUsbTether);
+  }
+  if (!wifiAvailable) {
     getPreferenceScreen().removePreference(mEnableWifiAp);
     getPreferenceScreen().removePreference(mWifiApSettings);
+  }
+  if (!bluetoothAvailable) {
+    getPreferenceScreen().removePreference(mBluetoothTether);
+    getPreferenceScreen().removePreference(mBluetoothSettings);
+  }
+ else {
+    if (mBluetoothPan.isTetheringOn()) {
+      mBluetoothTether.setChecked(true);
+      mBluetoothSettings.setEnabled(true);
+    }
+ else {
+      mBluetoothTether.setChecked(false);
+      mBluetoothSettings.setEnabled(false);
+    }
+  }
+  if (wifiAvailable && usbAvailable && bluetoothAvailable) {
+    setTitle(R.string.tether_settings_title_all);
+  }
+ else   if (wifiAvailable && usbAvailable) {
+    setTitle(R.string.tether_settings_title_all);
+  }
+ else   if (wifiAvailable && bluetoothAvailable) {
+    setTitle(R.string.tether_settings_title_all);
+  }
+ else   if (wifiAvailable) {
+    setTitle(R.string.tether_settings_title_wifi);
+  }
+ else   if (usbAvailable && bluetoothAvailable) {
+    setTitle(R.string.tether_settings_title_usb_bluetooth);
+  }
+ else   if (usbAvailable) {
     setTitle(R.string.tether_settings_title_usb);
   }
- else   if (mUsbRegexs.length != 0) {
-    setTitle(R.string.tether_settings_title_both);
+ else {
+    setTitle(R.string.tether_settings_title_bluetooth);
   }
   mWifiApEnabler=new WifiApEnabler(this,mEnableWifiAp);
   mView=new WebView(this);

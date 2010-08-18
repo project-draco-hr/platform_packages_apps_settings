@@ -21,6 +21,18 @@
         btPreference.getCachedDevice().onClicked();
       }
     }
+ else     if (mScreenType == SCREEN_TYPE_TETHERING) {
+      CachedBluetoothDevice device=btPreference.getCachedDevice();
+      mSelectedDevice=device.getDevice();
+      mLocalManager.stopScanning();
+      mLocalManager.persistSelectedDeviceInPicker(mSelectedDevice.getAddress());
+      if ((device.getBondState() == BluetoothDevice.BOND_BONDED)) {
+        onPanDevicePicked();
+      }
+ else {
+        btPreference.getCachedDevice().onClicked();
+      }
+    }
     return true;
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

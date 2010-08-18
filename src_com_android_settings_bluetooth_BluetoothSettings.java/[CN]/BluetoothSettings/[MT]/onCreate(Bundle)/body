@@ -14,6 +14,12 @@
     setTitle(getString(R.string.device_picker));
     addPreferencesFromResource(R.xml.device_picker);
   }
+ else   if (action.equals(ACTION_LAUNCH_TETHER_PICKER)) {
+    mScreenType=SCREEN_TYPE_TETHERING;
+    mFilterType=BluetoothDevicePicker.FILTER_TYPE_PANU;
+    setTitle(getString(R.string.device_picker));
+    addPreferencesFromResource(R.xml.device_picker);
+  }
  else {
     addPreferencesFromResource(R.xml.bluetooth_settings);
     mEnabler=new BluetoothEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_CHECKBOX));

@@ -1,0 +1,25 @@
+{
+  final LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,Profile.PAN);
+  int status=profileManager.getConnectionStatus(mSelectedDevice);
+  if (SettingsBtStatus.isConnectionStatusConnected(status)) {
+    String name=mSelectedDevice.getName();
+    if (TextUtils.isEmpty(name)) {
+      name=getString(R.string.bluetooth_device);
+    }
+    String message=getString(R.string.bluetooth_untether_blank,name);
+    DialogInterface.OnClickListener disconnectListener=new DialogInterface.OnClickListener(){
+      public void onClick(      DialogInterface dialog,      int which){
+        profileManager.disconnect(mSelectedDevice);
+      }
+    }
+;
+    new AlertDialog.Builder(this).setTitle(name).setMessage(message).setPositiveButton(android.R.string.ok,disconnectListener).setNegativeButton(android.R.string.cancel,null).create().show();
+  }
+ else   if (status == SettingsBtStatus.CONNECTION_STATUS_DISCONNECTED) {
+    if (profileManager.getConnectedDevices().size() >= BluetoothPan.MAX_CONNECTIONS) {
+      new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(R.string.bluetooth_error_title).setMessage(getString(R.string.bluetooth_tethering_overflow_error,BluetoothPan.MAX_CONNECTIONS)).setNegativeButton(android.R.string.ok,null).create().show();
+      return;
+    }
+    profileManager.connect(mSelectedDevice);
+  }
+}

@@ -1,10 +1,10 @@
 {
   if (preferred) {
-    if (mService.getSinkPriority(device) < BluetoothA2dp.PRIORITY_ON) {
-      mService.setSinkPriority(device,BluetoothA2dp.PRIORITY_ON);
+    if (mService.getPriority(device) < BluetoothProfile.PRIORITY_ON) {
+      mService.setPriority(device,BluetoothProfile.PRIORITY_ON);
     }
   }
  else {
-    mService.setSinkPriority(device,BluetoothA2dp.PRIORITY_OFF);
+    mService.setPriority(device,BluetoothProfile.PRIORITY_OFF);
   }
 }

@@ -1,4 +1,5 @@
 {
   super(localManager);
-  mService=new BluetoothA2dp(localManager.getContext());
+  BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+  adapter.getProfileProxy(localManager.getContext(),this,BluetoothProfile.A2DP);
 }

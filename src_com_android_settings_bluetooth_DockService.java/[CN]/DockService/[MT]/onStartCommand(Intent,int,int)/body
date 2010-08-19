@@ -9,7 +9,7 @@
     handleBtStateChange(intent,startId);
     return START_NOT_STICKY;
   }
-  if (BluetoothHeadset.ACTION_STATE_CHANGED.equals(intent.getAction())) {
+  if (BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED.equals(intent.getAction())) {
     BluetoothDevice disconnectedDevice=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
     int retryCount=getSettingInt(SHARED_PREFERENCES_KEY_CONNECT_RETRY_COUNT,0);
     if (retryCount < MAX_CONNECT_RETRY) {
@@ -18,7 +18,7 @@
     }
     return START_NOT_STICKY;
   }
- else   if (BluetoothA2dp.ACTION_SINK_STATE_CHANGED.equals(intent.getAction())) {
+ else   if (BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED.equals(intent.getAction())) {
     BluetoothDevice disconnectedDevice=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
     int retryCount=getSettingInt(SHARED_PREFERENCES_KEY_CONNECT_RETRY_COUNT,0);
     if (retryCount < MAX_CONNECT_RETRY) {

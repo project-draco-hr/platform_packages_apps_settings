@@ -1,0 +1,19 @@
+{
+  mService=(BluetoothHeadset)proxy;
+  profileReady=true;
+  mUiHandler.post(new Runnable(){
+    public void run(){
+      Set<BluetoothDevice> deviceSet=mService.getConnectedDevices();
+      if (deviceSet.size() == 0)       return;
+      BluetoothDevice[] devices=deviceSet.toArray(new BluetoothDevice[deviceSet.size()]);
+      mLocalManager.getCachedDeviceManager().onProfileStateChanged(devices[0],Profile.HEADSET,BluetoothProfile.STATE_CONNECTED);
+    }
+  }
+);
+  if (mServiceListeners.size() > 0) {
+    Iterator<ServiceListener> it=mServiceListeners.iterator();
+    while (it.hasNext()) {
+      it.next().onServiceConnected();
+    }
+  }
+}

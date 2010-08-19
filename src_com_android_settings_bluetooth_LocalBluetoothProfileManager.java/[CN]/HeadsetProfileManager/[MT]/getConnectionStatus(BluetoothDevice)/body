@@ -1,4 +1,5 @@
 {
-  BluetoothDevice currentDevice=mService.getCurrentHeadset();
-  return currentDevice != null && currentDevice.equals(device) ? convertState(mService.getState(device)) : SettingsBtStatus.CONNECTION_STATUS_DISCONNECTED;
+  Set<BluetoothDevice> deviceSet=getConnectedDevices();
+  BluetoothDevice[] devices=deviceSet.toArray(new BluetoothDevice[deviceSet.size()]);
+  return devices.length > 0 && devices[0].equals(device) ? convertState(mService.getConnectionState(device)) : SettingsBtStatus.CONNECTION_STATUS_DISCONNECTED;
 }

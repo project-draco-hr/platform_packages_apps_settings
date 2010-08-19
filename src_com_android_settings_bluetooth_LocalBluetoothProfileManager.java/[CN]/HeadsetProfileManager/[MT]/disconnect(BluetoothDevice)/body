@@ -1,9 +1,11 @@
 {
-  if (mService.getCurrentHeadset().equals(device)) {
-    if (mService.getPriority(device) > BluetoothHeadset.PRIORITY_ON) {
-      mService.setPriority(device,BluetoothHeadset.PRIORITY_ON);
+  Set<BluetoothDevice> deviceSet=getConnectedDevices();
+  BluetoothDevice[] devices=deviceSet.toArray(new BluetoothDevice[deviceSet.size()]);
+  if (devices.length != 0 && devices[0].equals(device)) {
+    if (mService.getPriority(device) > BluetoothProfile.PRIORITY_ON) {
+      mService.setPriority(device,BluetoothProfile.PRIORITY_ON);
     }
-    return mService.disconnectHeadset(device);
+    return mService.disconnect(device);
   }
  else {
     return false;

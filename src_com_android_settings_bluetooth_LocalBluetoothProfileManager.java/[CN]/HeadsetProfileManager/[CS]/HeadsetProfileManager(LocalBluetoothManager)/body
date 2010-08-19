@@ -1,4 +1,5 @@
 {
   super(localManager);
-  mService=new BluetoothHeadset(localManager.getContext(),this);
+  BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+  adapter.getProfileProxy(localManager.getContext(),this,BluetoothProfile.HEADSET);
 }

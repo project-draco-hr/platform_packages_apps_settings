@@ -1,6 +1,8 @@
 {
   super.onPause();
   mLocalManager.setForegroundActivity(null);
+  mDevicePreferenceMap.clear();
+  mDeviceList.removeAll();
   unregisterReceiver(mReceiver);
   mLocalManager.unregisterCallback(this);
   if (mScreenType == SCREEN_TYPE_SETTINGS) {

@@ -5,4 +5,10 @@
   int visibility=mProgress ? View.VISIBLE : View.INVISIBLE;
   textView.setVisibility(visibility);
   progressBar.setVisibility(visibility);
+  if (oldView != null) {
+    oldView.findViewById(R.id.scanning_progress).setVisibility(View.GONE);
+    oldView.findViewById(R.id.scanning_text).setVisibility(View.GONE);
+    oldView.setVisibility(View.GONE);
+  }
+  oldView=view;
 }

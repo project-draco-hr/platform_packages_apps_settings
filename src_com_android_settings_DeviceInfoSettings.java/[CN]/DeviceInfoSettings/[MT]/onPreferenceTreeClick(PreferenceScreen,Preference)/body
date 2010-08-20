@@ -1,11 +1,15 @@
 {
   if (preference.getKey().equals("firmware_version")) {
-    Intent intent=new Intent(Intent.ACTION_MAIN);
-    intent.setClassName("android",com.android.internal.app.PlatLogoActivity.class.getName());
-    try {
-      startActivity(intent);
-    }
- catch (    Exception e) {
+    System.arraycopy(mHits,1,mHits,0,mHits.length - 1);
+    mHits[mHits.length - 1]=SystemClock.uptimeMillis();
+    if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
+      Intent intent=new Intent(Intent.ACTION_MAIN);
+      intent.setClassName("android",com.android.internal.app.PlatLogoActivity.class.getName());
+      try {
+        startActivity(intent);
+      }
+ catch (      Exception e) {
+      }
     }
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

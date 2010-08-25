@@ -3,7 +3,7 @@
   List<WifiConfiguration> configs=mWifiManager.getConfiguredNetworks();
   if (configs != null) {
     for (    WifiConfiguration config : configs) {
-      AccessPoint accessPoint=new AccessPoint(this,config);
+      AccessPoint accessPoint=new AccessPoint(getActivity(),config);
       accessPoint.update(mLastInfo,mLastState);
       accessPoints.add(accessPoint);
     }
@@ -21,7 +21,7 @@
         }
       }
       if (!found) {
-        accessPoints.add(new AccessPoint(this,result));
+        accessPoints.add(new AccessPoint(getActivity(),result));
       }
     }
   }

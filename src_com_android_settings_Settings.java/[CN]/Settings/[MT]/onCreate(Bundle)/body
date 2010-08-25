@@ -27,9 +27,11 @@
         mMainPane.setVisibility(View.GONE);
       }
     }
-    Fragment topLevel=getFragmentManager().findFragmentById(R.id.top_level);
-    if (topLevel != null) {
-      ((TopLevelSettings)topLevel).selectFirst();
+ else {
+      Fragment topLevel=getFragmentManager().findFragmentById(R.id.top_level);
+      if (topLevel != null) {
+        ((TopLevelSettings)topLevel).selectFirst();
+      }
     }
   }
 }

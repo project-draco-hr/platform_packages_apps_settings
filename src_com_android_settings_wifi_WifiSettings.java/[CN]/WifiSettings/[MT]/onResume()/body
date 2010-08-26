@@ -3,7 +3,7 @@
   if (mWifiEnabler != null) {
     mWifiEnabler.resume();
   }
-  registerReceiver(mReceiver,mFilter);
+  getActivity().registerReceiver(mReceiver,mFilter);
   if (mKeyStoreNetworkId != -1 && KeyStore.getInstance().test() == KeyStore.NO_ERROR) {
     mWifiManager.connectNetwork(mKeyStoreNetworkId);
   }

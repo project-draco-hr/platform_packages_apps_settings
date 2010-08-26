@@ -3,7 +3,7 @@
   if (mWifiEnabler != null) {
     mWifiEnabler.pause();
   }
-  unregisterReceiver(mReceiver);
+  getActivity().unregisterReceiver(mReceiver);
   mScanner.pause();
   if (mDialog != null) {
     mDialog.dismiss();

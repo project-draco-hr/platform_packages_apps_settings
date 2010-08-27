@@ -1,0 +1,63 @@
+{
+  if (mAccessPoint != null && mAccessPoint.networkId != -1 && !mEdit) {
+    return null;
+  }
+  WifiConfiguration config=new WifiConfiguration();
+  if (mAccessPoint == null) {
+    config.SSID=AccessPoint.convertToQuotedString(mSsid.getText().toString());
+    config.hiddenSSID=true;
+  }
+ else   if (mAccessPoint.networkId == -1) {
+    config.SSID=AccessPoint.convertToQuotedString(mAccessPoint.ssid);
+  }
+ else {
+    config.networkId=mAccessPoint.networkId;
+  }
+switch (mSecurityType) {
+case AccessPoint.SECURITY_NONE:
+    config.allowedKeyManagement.set(KeyMgmt.NONE);
+  return config;
+case AccessPoint.SECURITY_WEP:
+config.allowedKeyManagement.set(KeyMgmt.NONE);
+config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
+config.allowedAuthAlgorithms.set(AuthAlgorithm.SHARED);
+if (mPasswordView.length() != 0) {
+int length=mPasswordView.length();
+String password=mPasswordView.getText().toString();
+if ((length == 10 || length == 26 || length == 58) && password.matches("[0-9A-Fa-f]*")) {
+config.wepKeys[0]=password;
+}
+ else {
+config.wepKeys[0]='"' + password + '"';
+}
+}
+return config;
+case AccessPoint.SECURITY_PSK:
+config.allowedKeyManagement.set(KeyMgmt.WPA_PSK);
+if (mPasswordView.length() != 0) {
+String password=mPasswordView.getText().toString();
+if (password.matches("[0-9A-Fa-f]{64}")) {
+config.preSharedKey=password;
+}
+ else {
+config.preSharedKey='"' + password + '"';
+}
+}
+return config;
+case AccessPoint.SECURITY_EAP:
+config.allowedKeyManagement.set(KeyMgmt.WPA_EAP);
+config.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
+config.eap.setValue((String)mEapMethod.getSelectedItem());
+config.phase2.setValue((mPhase2.getSelectedItemPosition() == 0) ? "" : "auth=" + mPhase2.getSelectedItem());
+config.ca_cert.setValue((mEapCaCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.CA_CERTIFICATE + (String)mEapCaCert.getSelectedItem());
+config.client_cert.setValue((mEapUserCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_CERTIFICATE + (String)mEapUserCert.getSelectedItem());
+config.private_key.setValue((mEapUserCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_PRIVATE_KEY + (String)mEapUserCert.getSelectedItem());
+config.identity.setValue((mEapIdentity.length() == 0) ? "" : mEapIdentity.getText().toString());
+config.anonymous_identity.setValue((mEapAnonymous.length() == 0) ? "" : mEapAnonymous.getText().toString());
+if (mPasswordView.length() != 0) {
+config.password.setValue(mPasswordView.getText().toString());
+}
+return config;
+}
+return null;
+}

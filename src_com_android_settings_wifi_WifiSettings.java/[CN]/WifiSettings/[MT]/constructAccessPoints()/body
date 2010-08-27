@@ -1,0 +1,29 @@
+{
+  Collection<AccessPoint> accessPoints=new TreeSet<AccessPoint>(new AccessPoint.Comparater());
+  final List<WifiConfiguration> configs=mWifiManager.getConfiguredNetworks();
+  if (configs != null) {
+    for (    WifiConfiguration config : configs) {
+      AccessPoint accessPoint=new AccessPoint(getActivity(),config);
+      accessPoint.update(mLastInfo,mLastState);
+      accessPoints.add(accessPoint);
+    }
+  }
+  final List<ScanResult> results=mWifiManager.getScanResults();
+  if (results != null) {
+    for (    ScanResult result : results) {
+      if (result.SSID == null || result.SSID.length() == 0 || result.capabilities.contains("[IBSS]")) {
+        continue;
+      }
+      boolean found=false;
+      for (      AccessPoint accessPoint : accessPoints) {
+        if (accessPoint.update(result)) {
+          found=true;
+        }
+      }
+      if (!found) {
+        accessPoints.add(new AccessPoint(getActivity(),result));
+      }
+    }
+  }
+  return accessPoints;
+}

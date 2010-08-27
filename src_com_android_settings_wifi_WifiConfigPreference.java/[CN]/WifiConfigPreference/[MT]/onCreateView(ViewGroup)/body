@@ -1,0 +1,8 @@
+{
+  if (mView != null) {
+    return mView;
+  }
+  mView=mInflater.inflate(getLayoutResource(),parent,false);
+  mController=new WifiConfigController(this,mView,mAccessPoint,mEdit,mListener);
+  return mView;
+}

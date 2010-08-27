@@ -1,0 +1,16 @@
+{
+  if (accessPoint1.mInfo != accessPoint2.mInfo) {
+    return (accessPoint1.mInfo != null) ? -1 : 1;
+  }
+  if ((accessPoint1.mRssi ^ accessPoint2.mRssi) < 0) {
+    return (accessPoint1.mRssi != Integer.MAX_VALUE) ? -1 : 1;
+  }
+  if ((accessPoint1.networkId ^ accessPoint2.networkId) < 0) {
+    return (accessPoint1.networkId != -1) ? -1 : 1;
+  }
+  int difference=WifiManager.compareSignalLevel(accessPoint2.mRssi,accessPoint1.mRssi);
+  if (difference != 0) {
+    return difference;
+  }
+  return accessPoint1.ssid.compareToIgnoreCase(accessPoint2.ssid);
+}

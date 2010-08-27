@@ -1,0 +1,8 @@
+{
+  if ((mSsid != null && mSsid.length() == 0) || ((mAccessPoint == null || mAccessPoint.networkId == -1) && ((mSecurityType == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mSecurityType == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8)))) {
+    mConfigUi.getSubmitButton().setEnabled(false);
+  }
+ else {
+    mConfigUi.getSubmitButton().setEnabled(true);
+  }
+}

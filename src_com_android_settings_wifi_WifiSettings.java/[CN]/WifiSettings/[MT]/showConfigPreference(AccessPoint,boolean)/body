@@ -1,0 +1,9 @@
+{
+  if (mConfigPreference != null) {
+    mAccessPoints.removePreference(mConfigPreference);
+  }
+  mConfigPreference=new WifiConfigPreference(this,this,accessPoint,edit);
+  toggleButtonsVisibility(false);
+  updateAccessPoints();
+  mScanner.pause();
+}

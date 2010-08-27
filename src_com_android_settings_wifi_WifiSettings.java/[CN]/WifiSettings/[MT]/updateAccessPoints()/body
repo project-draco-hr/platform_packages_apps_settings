@@ -1,32 +1,23 @@
 {
-  List<AccessPoint> accessPoints=new ArrayList<AccessPoint>();
-  List<WifiConfiguration> configs=mWifiManager.getConfiguredNetworks();
-  if (configs != null) {
-    for (    WifiConfiguration config : configs) {
-      AccessPoint accessPoint=new AccessPoint(getActivity(),config);
-      accessPoint.update(mLastInfo,mLastState);
-      accessPoints.add(accessPoint);
+synchronized (this) {
+    if (mRefrainListUpdate) {
+      return;
     }
   }
-  List<ScanResult> results=mWifiManager.getScanResults();
-  if (results != null) {
-    for (    ScanResult result : results) {
-      if (result.SSID == null || result.SSID.length() == 0 || result.capabilities.contains("[IBSS]")) {
-        continue;
-      }
-      boolean found=false;
-      for (      AccessPoint accessPoint : accessPoints) {
-        if (accessPoint.update(result)) {
-          found=true;
-        }
-      }
-      if (!found) {
-        accessPoints.add(new AccessPoint(getActivity(),result));
-      }
+  if (mConfigPreference != null) {
+    mAccessPoints.removeAll();
+    final AccessPoint parent=mConfigPreference.getAccessPoint();
+    if (parent != null) {
+      parent.setSelectable(false);
+      mAccessPoints.addPreference(parent);
     }
+    mAccessPoints.addPreference(mConfigPreference);
   }
-  mAccessPoints.removeAll();
-  for (  AccessPoint accessPoint : accessPoints) {
-    mAccessPoints.addPreference(accessPoint);
+ else {
+    final Collection<AccessPoint> accessPoints=constructAccessPoints();
+    mAccessPoints.removeAll();
+    for (    AccessPoint accessPoint : accessPoints) {
+      mAccessPoints.addPreference(accessPoint);
+    }
   }
 }

@@ -2,15 +2,21 @@
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   final Activity activity=getActivity();
   final Intent intent=activity.getIntent();
+  mInXlSetupWizard=intent.getBooleanExtra(IN_XL_SETUP_WIZARD,false);
   mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
-  if (mEnableNextOnConnection && hasNextButton()) {
-    ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-    if (connectivity != null) {
-      NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-      getNextButton().setEnabled(info.isConnected());
+  if (mEnableNextOnConnection) {
+    if (mEnableNextOnConnection && hasNextButton()) {
+      final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+      if (connectivity != null) {
+        NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        changeNextButtonState(info.isConnected());
+      }
     }
   }
-  if (intent.getBooleanExtra("only_access_points",false)) {
+  if (mInXlSetupWizard) {
+    addPreferencesFromResource(R.xml.wifi_access_points_for_wifi_setup_xl);
+  }
+ else   if (intent.getBooleanExtra("only_access_points",false)) {
     addPreferencesFromResource(R.xml.wifi_access_points);
   }
  else {
@@ -20,8 +26,9 @@
     mNotifyOpenNetworks.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,0) == 1);
   }
   super.onActivityCreated(savedInstanceState);
-  mAccessPoints=(ProgressCategory)findPreference("access_points");
-  mAccessPoints.setOrderingAsAdded(false);
+  final ProgressCategoryBase preference=(ProgressCategoryBase)findPreference("access_points");
+  mAccessPoints=preference;
+  mAccessPoints.setOrderingAsAdded(true);
   mAddNetwork=findPreference("add_network");
   registerForContextMenu(getListView());
   setHasOptionsMenu(true);

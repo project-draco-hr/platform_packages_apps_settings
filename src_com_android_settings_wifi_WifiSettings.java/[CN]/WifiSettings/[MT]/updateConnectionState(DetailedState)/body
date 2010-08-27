@@ -14,6 +14,13 @@
     mLastState=state;
   }
   for (int i=mAccessPoints.getPreferenceCount() - 1; i >= 0; --i) {
-    ((AccessPoint)mAccessPoints.getPreference(i)).update(mLastInfo,mLastState);
+    Preference preference=mAccessPoints.getPreference(i);
+    if (preference instanceof AccessPoint) {
+      ((AccessPoint)preference).update(mLastInfo,mLastState);
+    }
+  }
+  final Activity activity=getActivity();
+  if (activity instanceof WifiSettingsForSetupWizardXL) {
+    ((WifiSettingsForSetupWizardXL)activity).updateConnectionState(mLastState);
   }
 }

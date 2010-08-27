@@ -1,5 +1,5 @@
 {
-  if (WifiDialog.requireKeyStore(config) && KeyStore.getInstance().test() != KeyStore.NO_ERROR) {
+  if (WifiConfigController.requireKeyStore(config) && KeyStore.getInstance().test() != KeyStore.NO_ERROR) {
     mKeyStoreNetworkId=config.networkId;
     Credentials.getInstance().unlock(getActivity());
     return true;

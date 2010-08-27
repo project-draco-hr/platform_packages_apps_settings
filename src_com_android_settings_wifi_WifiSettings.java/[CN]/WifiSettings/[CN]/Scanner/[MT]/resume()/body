@@ -1,4 +1,7 @@
 {
+synchronized (WifiSettings.this) {
+    mRefrainListUpdate=false;
+  }
   if (!hasMessages(0)) {
     sendEmptyMessage(0);
   }

@@ -1,0 +1,23 @@
+{
+  final WifiConfigUiBase uiBase=(mDialog != null ? mDialog : mConfigPreference);
+  final WifiConfiguration config=uiBase.getController().getConfig();
+  if (config == null) {
+    if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig())) {
+      mWifiManager.connectNetwork(mSelectedAccessPoint.networkId);
+    }
+  }
+ else   if (config.networkId != -1) {
+    if (mSelectedAccessPoint != null) {
+      mWifiManager.saveNetwork(config);
+    }
+  }
+ else {
+    if (uiBase.isEdit() || requireKeyStore(config)) {
+      mWifiManager.saveNetwork(config);
+    }
+ else {
+      mWifiManager.connectNetwork(config);
+    }
+  }
+  detachConfigPreference();
+}

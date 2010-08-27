@@ -1,0 +1,11 @@
+{
+  if (mWifiManager.isWifiEnabled()) {
+    mScanner.resume();
+  }
+  mConfigPreference=null;
+  mAccessPoints.removeAll();
+  final Activity activity=getActivity();
+  if (activity instanceof WifiSettingsForSetupWizardXL) {
+    ((WifiSettingsForSetupWizardXL)activity).onRefreshAccessPoints();
+  }
+}

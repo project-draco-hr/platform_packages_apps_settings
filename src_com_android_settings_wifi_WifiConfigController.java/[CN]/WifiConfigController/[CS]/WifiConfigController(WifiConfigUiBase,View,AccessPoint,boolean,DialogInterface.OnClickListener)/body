@@ -1,0 +1,58 @@
+{
+  mConfigUi=parent;
+  mView=view;
+  mAccessPoint=accessPoint;
+  mSecurityType=(accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.security;
+  mEdit=edit;
+  final Context context=mConfigUi.getContext();
+  final Resources resources=context.getResources();
+  if (mAccessPoint == null) {
+    mConfigUi.setTitle(R.string.wifi_add_network);
+    mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
+    mSsid=(TextView)mView.findViewById(R.id.ssid);
+    mSsid.addTextChangedListener(this);
+    ((Spinner)mView.findViewById(R.id.security)).setOnItemSelectedListener(this);
+    mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
+  }
+ else {
+    mConfigUi.setTitle(mAccessPoint.ssid);
+    ViewGroup group=(ViewGroup)mView.findViewById(R.id.info);
+    DetailedState state=mAccessPoint.getState();
+    if (state != null) {
+      addRow(group,R.string.wifi_status,Summary.get(mConfigUi.getContext(),state));
+    }
+    String[] type=resources.getStringArray(R.array.wifi_security);
+    addRow(group,R.string.wifi_security,type[mAccessPoint.security]);
+    int level=mAccessPoint.getLevel();
+    if (level != -1) {
+      String[] signal=resources.getStringArray(R.array.wifi_signal);
+      addRow(group,R.string.wifi_signal,signal[level]);
+    }
+    WifiInfo info=mAccessPoint.getInfo();
+    if (info != null) {
+      addRow(group,R.string.wifi_speed,info.getLinkSpeed() + WifiInfo.LINK_SPEED_UNITS);
+      int address=info.getIpAddress();
+      if (address != 0) {
+        addRow(group,R.string.wifi_ip_address,Formatter.formatIpAddress(address));
+      }
+    }
+    if (mAccessPoint.networkId == -1 || mEdit) {
+      showSecurityFields();
+    }
+    if (mEdit) {
+      mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
+    }
+ else {
+      if (state == null && level != -1) {
+        mConfigUi.setSubmitButton(context.getString(R.string.wifi_connect));
+      }
+      if (mAccessPoint.networkId != -1) {
+        mConfigUi.setForgetButton(context.getString(R.string.wifi_forget));
+      }
+    }
+  }
+  mConfigUi.setCancelButton(context.getString(R.string.wifi_cancel));
+  if (mConfigUi.getSubmitButton() != null) {
+    enableSubmitIfAppropriate();
+  }
+}

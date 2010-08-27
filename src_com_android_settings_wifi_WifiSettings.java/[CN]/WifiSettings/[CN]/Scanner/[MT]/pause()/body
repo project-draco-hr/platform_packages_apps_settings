@@ -1,5 +1,8 @@
 {
   mRetry=0;
   mAccessPoints.setProgress(false);
+synchronized (WifiSettings.this) {
+    mRefrainListUpdate=true;
+  }
   removeMessages(0);
 }

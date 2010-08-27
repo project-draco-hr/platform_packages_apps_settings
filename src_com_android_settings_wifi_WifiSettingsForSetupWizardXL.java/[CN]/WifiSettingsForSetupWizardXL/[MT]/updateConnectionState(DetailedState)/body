@@ -1,0 +1,27 @@
+{
+  final DetailedState state=stateMap.get(originalState);
+  final String message;
+  mProgressBar.setIndeterminate(false);
+switch (state) {
+case CONNECTING:
+{
+      message=Summary.get(this,state);
+      mProgressBar.setProgress(1);
+      mStatusText.setText(R.string.wifi_setup_status_connecting);
+      break;
+    }
+case CONNECTED:
+{
+    message=Summary.get(this,state);
+    mProgressBar.setProgress(2);
+    mStatusText.setText(R.string.wifi_setup_status_connected);
+    break;
+  }
+default :
+message=getString(R.string.wifi_setup_not_connected);
+mProgressBar.setProgress(0);
+mStatusText.setText(R.string.wifi_setup_status_select_network);
+break;
+}
+mProgressText.setText(message);
+}

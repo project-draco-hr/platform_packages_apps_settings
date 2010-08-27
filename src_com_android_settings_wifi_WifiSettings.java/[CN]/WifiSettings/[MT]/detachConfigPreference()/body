@@ -1,0 +1,11 @@
+{
+  if (mConfigPreference != null) {
+    if (mWifiManager.isWifiEnabled()) {
+      mScanner.resume();
+    }
+    mAccessPoints.removePreference(mConfigPreference);
+    mConfigPreference=null;
+    updateAccessPoints();
+    toggleButtonsVisibility(true);
+  }
+}

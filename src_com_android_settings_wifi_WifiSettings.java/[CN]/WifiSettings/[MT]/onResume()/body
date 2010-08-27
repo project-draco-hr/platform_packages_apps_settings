@@ -8,5 +8,35 @@
     mWifiManager.connectNetwork(mKeyStoreNetworkId);
   }
   mKeyStoreNetworkId=-1;
-  updateAccessPoints();
+  if (mInXlSetupWizard) {
+    final int wifiState=mWifiManager.getWifiState();
+switch (wifiState) {
+case WifiManager.WIFI_STATE_ENABLED:
+{
+        updateAccessPoints();
+        break;
+      }
+case WifiManager.WIFI_STATE_DISABLED:
+case WifiManager.WIFI_STATE_DISABLING:
+case WifiManager.WIFI_STATE_UNKNOWN:
+{
+      mWifiManager.setWifiEnabled(true);
+    }
+default :
+{
+    mAccessPoints.removeAll();
+    Preference preference=new Preference(getActivity());
+    preference.setLayoutResource(R.layout.preference_widget_shortcut);
+    preference.setSelectable(false);
+    preference.setTitle("Connecting");
+    preference.setSummary("COONNECTING");
+    mAccessPoints.addPreference(preference);
+    break;
+  }
+}
+}
+ else {
+Log.d("@@@","updateAccessPoints");
+updateAccessPoints();
+}
 }

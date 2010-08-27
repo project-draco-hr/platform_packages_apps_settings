@@ -1,10 +1,17 @@
 {
   super.onReceive(context,intent);
-  if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())) {
+  String action=intent.getAction();
+  if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
     sWifiState.onActualStateChange(context,intent);
   }
- else   if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(intent.getAction())) {
+ else   if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
     sBluetoothState.onActualStateChange(context,intent);
+  }
+ else   if (LocationManager.PROVIDERS_CHANGED_ACTION.equals(action)) {
+    sGpsState.onActualStateChange(context,intent);
+  }
+ else   if (Intent.ACTION_CLOSE_SYSTEM_DIALOGS.equals(action)) {
+    sSyncState.onActualStateChange(context,intent);
   }
  else   if (intent.hasCategory(Intent.CATEGORY_ALTERNATIVE)) {
     Uri data=intent.getData();
@@ -16,10 +23,10 @@
       toggleBrightness(context);
     }
  else     if (buttonId == BUTTON_SYNC) {
-      toggleSync(context);
+      sSyncState.toggleState(context);
     }
  else     if (buttonId == BUTTON_GPS) {
-      toggleGps(context);
+      sGpsState.toggleState(context);
     }
  else     if (buttonId == BUTTON_BLUETOOTH) {
       sBluetoothState.toggleState(context);

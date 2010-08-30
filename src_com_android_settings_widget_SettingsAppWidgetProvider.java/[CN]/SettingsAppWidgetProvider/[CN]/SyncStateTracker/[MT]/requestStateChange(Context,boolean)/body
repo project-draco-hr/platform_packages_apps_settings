@@ -1,0 +1,27 @@
+{
+  final ConnectivityManager connManager=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+  final boolean backgroundData=getBackgroundDataState(context);
+  final boolean sync=ContentResolver.getMasterSyncAutomatically();
+  new AsyncTask<Void,Void,Boolean>(){
+    @Override protected Boolean doInBackground(    Void... args){
+      if (desiredState) {
+        if (!backgroundData) {
+          connManager.setBackgroundDataSetting(true);
+        }
+        if (!sync) {
+          ContentResolver.setMasterSyncAutomatically(true);
+        }
+        return true;
+      }
+      if (sync) {
+        ContentResolver.setMasterSyncAutomatically(false);
+      }
+      return false;
+    }
+    @Override protected void onPostExecute(    Boolean result){
+      setCurrentState(context,result ? STATE_ENABLED : STATE_DISABLED);
+      updateWidget(context);
+    }
+  }
+.execute();
+}

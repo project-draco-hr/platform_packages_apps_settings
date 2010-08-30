@@ -1,70 +1,18 @@
 {
-switch (sWifiState.getTriState(context)) {
-case STATE_DISABLED:
-    views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_off);
-  views.setImageViewResource(R.id.ind_wifi,R.drawable.appwidget_settings_ind_off_l);
-break;
-case STATE_ENABLED:
-views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_on);
-views.setImageViewResource(R.id.ind_wifi,R.drawable.appwidget_settings_ind_on_l);
-break;
-case STATE_INTERMEDIATE:
-if (sWifiState.isTurningOn()) {
-views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_on);
-views.setImageViewResource(R.id.ind_wifi,R.drawable.appwidget_settings_ind_mid_l);
-}
+  sWifiState.setImageViewResources(context,views);
+  sBluetoothState.setImageViewResources(context,views);
+  sGpsState.setImageViewResources(context,views);
+  sSyncState.setImageViewResources(context,views);
+  if (getBrightnessMode(context)) {
+    views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_auto);
+    views.setImageViewResource(R.id.ind_brightness,R.drawable.appwidget_settings_ind_on_r);
+  }
+ else   if (getBrightness(context)) {
+    views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_on);
+    views.setImageViewResource(R.id.ind_brightness,R.drawable.appwidget_settings_ind_on_r);
+  }
  else {
-views.setImageViewResource(R.id.img_wifi,R.drawable.ic_appwidget_settings_wifi_off);
-views.setImageViewResource(R.id.ind_wifi,R.drawable.appwidget_settings_ind_off_l);
-}
-break;
-}
-if (getBrightnessMode(context)) {
-views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_auto);
-views.setImageViewResource(R.id.ind_brightness,R.drawable.appwidget_settings_ind_on_r);
-}
- else if (getBrightness(context)) {
-views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_on);
-views.setImageViewResource(R.id.ind_brightness,R.drawable.appwidget_settings_ind_on_r);
-}
- else {
-views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_off);
-views.setImageViewResource(R.id.ind_brightness,R.drawable.appwidget_settings_ind_off_r);
-}
-if (getSync(context)) {
-views.setImageViewResource(R.id.img_sync,R.drawable.ic_appwidget_settings_sync_on);
-views.setImageViewResource(R.id.ind_sync,R.drawable.appwidget_settings_ind_on_c);
-}
- else {
-views.setImageViewResource(R.id.img_sync,R.drawable.ic_appwidget_settings_sync_off);
-views.setImageViewResource(R.id.ind_sync,R.drawable.appwidget_settings_ind_off_c);
-}
-if (getGpsState(context)) {
-views.setImageViewResource(R.id.img_gps,R.drawable.ic_appwidget_settings_gps_on);
-views.setImageViewResource(R.id.ind_gps,R.drawable.appwidget_settings_ind_on_c);
-}
- else {
-views.setImageViewResource(R.id.img_gps,R.drawable.ic_appwidget_settings_gps_off);
-views.setImageViewResource(R.id.ind_gps,R.drawable.appwidget_settings_ind_off_c);
-}
-switch (sBluetoothState.getTriState(context)) {
-case STATE_DISABLED:
-views.setImageViewResource(R.id.img_bluetooth,R.drawable.ic_appwidget_settings_bluetooth_off);
-views.setImageViewResource(R.id.ind_bluetooth,R.drawable.appwidget_settings_ind_off_c);
-break;
-case STATE_ENABLED:
-views.setImageViewResource(R.id.img_bluetooth,R.drawable.ic_appwidget_settings_bluetooth_on);
-views.setImageViewResource(R.id.ind_bluetooth,R.drawable.appwidget_settings_ind_on_c);
-break;
-case STATE_INTERMEDIATE:
-if (sBluetoothState.isTurningOn()) {
-views.setImageViewResource(R.id.img_bluetooth,R.drawable.ic_appwidget_settings_bluetooth_on);
-views.setImageViewResource(R.id.ind_bluetooth,R.drawable.appwidget_settings_ind_mid_c);
-}
- else {
-views.setImageViewResource(R.id.img_bluetooth,R.drawable.ic_appwidget_settings_bluetooth_off);
-views.setImageViewResource(R.id.ind_bluetooth,R.drawable.appwidget_settings_ind_off_c);
-}
-break;
-}
+    views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_off);
+    views.setImageViewResource(R.id.ind_brightness,R.drawable.appwidget_settings_ind_off_r);
+  }
 }

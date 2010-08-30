@@ -1,0 +1,14 @@
+{
+  final ContentResolver resolver=context.getContentResolver();
+  new AsyncTask<Void,Void,Boolean>(){
+    @Override protected Boolean doInBackground(    Void... args){
+      Settings.Secure.setLocationProviderEnabled(resolver,LocationManager.GPS_PROVIDER,desiredState);
+      return desiredState;
+    }
+    @Override protected void onPostExecute(    Boolean result){
+      setCurrentState(context,result ? STATE_ENABLED : STATE_DISABLED);
+      updateWidget(context);
+    }
+  }
+.execute();
+}

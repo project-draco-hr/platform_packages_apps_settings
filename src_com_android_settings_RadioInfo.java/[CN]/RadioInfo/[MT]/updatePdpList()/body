@@ -10,8 +10,8 @@
         GsmDataConnection pdp=(GsmDataConnection)dc;
         sb.append("\n    to ").append(pdp.getApn().toString());
       }
-      sb.append("\nNetworkProperties: ");
-      sb.append(phone.getNetworkProperties(phone.getActiveApnTypes()[0]).toString());
+      sb.append("\nLinkProperties: ");
+      sb.append(phone.getLinkProperties(phone.getActiveApnTypes()[0]).toString());
     }
  else     if (dc.isInactive()) {
       sb.append("    disconnected with last try at ").append(DateUtils.timeString(dc.getLastFailTime())).append("\n    fail because ").append(dc.getLastFailCause().toString());

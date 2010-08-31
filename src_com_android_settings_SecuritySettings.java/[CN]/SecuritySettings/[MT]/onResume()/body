@@ -1,5 +1,6 @@
 {
   super.onResume();
+  createPreferenceHierarchy();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (mVisiblePattern != null) {
     mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled());

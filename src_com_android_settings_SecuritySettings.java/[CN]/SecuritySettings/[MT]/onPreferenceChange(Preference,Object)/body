@@ -1,0 +1,12 @@
+{
+  if (preference == mLockAfter) {
+    int lockAfter=Integer.parseInt((String)value);
+    try {
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_LOCK_AFTER_TIMEOUT,lockAfter);
+    }
+ catch (    NumberFormatException e) {
+      Log.e("SecuritySettings","could not persist lockAfter timeout setting",e);
+    }
+  }
+  return true;
+}

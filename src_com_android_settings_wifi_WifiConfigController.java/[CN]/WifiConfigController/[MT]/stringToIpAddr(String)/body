@@ -1,0 +1,16 @@
+{
+  try {
+    String[] parts=addrString.split("\\.");
+    if (parts.length != 4) {
+      throw new UnknownHostException(addrString);
+    }
+    int a=Integer.parseInt(parts[0]);
+    int b=Integer.parseInt(parts[1]) << 8;
+    int c=Integer.parseInt(parts[2]) << 16;
+    int d=Integer.parseInt(parts[3]) << 24;
+    return a | b | c| d;
+  }
+ catch (  NumberFormatException e) {
+    throw new UnknownHostException(addrString);
+  }
+}

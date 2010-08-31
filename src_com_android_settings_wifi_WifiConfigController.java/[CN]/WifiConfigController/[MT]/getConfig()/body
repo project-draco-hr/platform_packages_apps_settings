@@ -4,7 +4,7 @@
   }
   WifiConfiguration config=new WifiConfiguration();
   if (mAccessPoint == null) {
-    config.SSID=AccessPoint.convertToQuotedString(mSsid.getText().toString());
+    config.SSID=AccessPoint.convertToQuotedString(mSsidView.getText().toString());
     config.hiddenSSID=true;
   }
  else   if (mAccessPoint.networkId == -1) {
@@ -13,10 +13,10 @@
  else {
     config.networkId=mAccessPoint.networkId;
   }
-switch (mSecurityType) {
+switch (mAccessPointSecurity) {
 case AccessPoint.SECURITY_NONE:
     config.allowedKeyManagement.set(KeyMgmt.NONE);
-  return config;
+  break;
 case AccessPoint.SECURITY_WEP:
 config.allowedKeyManagement.set(KeyMgmt.NONE);
 config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
@@ -31,7 +31,7 @@ config.wepKeys[0]=password;
 config.wepKeys[0]='"' + password + '"';
 }
 }
-return config;
+break;
 case AccessPoint.SECURITY_PSK:
 config.allowedKeyManagement.set(KeyMgmt.WPA_PSK);
 if (mPasswordView.length() != 0) {
@@ -43,21 +43,39 @@ config.preSharedKey=password;
 config.preSharedKey='"' + password + '"';
 }
 }
-return config;
+break;
 case AccessPoint.SECURITY_EAP:
 config.allowedKeyManagement.set(KeyMgmt.WPA_EAP);
 config.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
-config.eap.setValue((String)mEapMethod.getSelectedItem());
-config.phase2.setValue((mPhase2.getSelectedItemPosition() == 0) ? "" : "auth=" + mPhase2.getSelectedItem());
-config.ca_cert.setValue((mEapCaCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.CA_CERTIFICATE + (String)mEapCaCert.getSelectedItem());
-config.client_cert.setValue((mEapUserCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_CERTIFICATE + (String)mEapUserCert.getSelectedItem());
-config.private_key.setValue((mEapUserCert.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_PRIVATE_KEY + (String)mEapUserCert.getSelectedItem());
-config.identity.setValue((mEapIdentity.length() == 0) ? "" : mEapIdentity.getText().toString());
-config.anonymous_identity.setValue((mEapAnonymous.length() == 0) ? "" : mEapAnonymous.getText().toString());
+config.eap.setValue((String)mEapMethodSpinner.getSelectedItem());
+config.phase2.setValue((mPhase2Spinner.getSelectedItemPosition() == 0) ? "" : "auth=" + mPhase2Spinner.getSelectedItem());
+config.ca_cert.setValue((mEapCaCertSpinner.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.CA_CERTIFICATE + (String)mEapCaCertSpinner.getSelectedItem());
+config.client_cert.setValue((mEapUserCertSpinner.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_CERTIFICATE + (String)mEapUserCertSpinner.getSelectedItem());
+config.private_key.setValue((mEapUserCertSpinner.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_PRIVATE_KEY + (String)mEapUserCertSpinner.getSelectedItem());
+config.identity.setValue((mEapIdentityView.length() == 0) ? "" : mEapIdentityView.getText().toString());
+config.anonymous_identity.setValue((mEapAnonymousView.length() == 0) ? "" : mEapAnonymousView.getText().toString());
 if (mPasswordView.length() != 0) {
 config.password.setValue(mPasswordView.getText().toString());
 }
-return config;
-}
+break;
+default :
 return null;
+}
+config.ipAssignment=mIpSettingsSpinner.getSelectedItem().toString().equals(STATIC_IP) ? IpAssignment.STATIC : IpAssignment.DHCP;
+if (config.ipAssignment == IpAssignment.STATIC) {
+try {
+config.ipConfig.ipAddress=stringToIpAddr(mIpAddressView.getText().toString());
+config.ipConfig.gateway=stringToIpAddr(mGatewayView.getText().toString());
+config.ipConfig.netmask=stringToIpAddr(mNetmaskView.getText().toString());
+config.ipConfig.dns1=stringToIpAddr(mDns1View.getText().toString());
+if (mDns2View.getText() != null && mDns2View.getText().length() > 0) {
+config.ipConfig.dns2=stringToIpAddr(mDns2View.getText().toString());
+}
+}
+ catch (UnknownHostException e) {
+Toast.makeText(mConfigUi.getContext(),R.string.wifi_ip_settings_invalid_ip,Toast.LENGTH_LONG).show();
+return null;
+}
+}
+return config;
 }

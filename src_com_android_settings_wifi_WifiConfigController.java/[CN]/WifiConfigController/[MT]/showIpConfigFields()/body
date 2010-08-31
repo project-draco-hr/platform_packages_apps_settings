@@ -1,0 +1,33 @@
+{
+  WifiConfiguration config=null;
+  mView.findViewById(R.id.ipfields).setVisibility(View.VISIBLE);
+  if (mIpSettingsSpinner == null) {
+    mIpSettingsSpinner=(Spinner)mView.findViewById(R.id.ipsettings);
+  }
+  if (mAccessPoint != null && mAccessPoint.networkId != -1) {
+    config=mAccessPoint.getConfig();
+  }
+  if (mIpSettingsSpinner.getSelectedItem().equals(STATIC_IP)) {
+    mView.findViewById(R.id.staticip).setVisibility(View.VISIBLE);
+    if (mIpAddressView == null) {
+      mIpAddressView=(TextView)mView.findViewById(R.id.ipaddress);
+      mGatewayView=(TextView)mView.findViewById(R.id.gateway);
+      mNetmaskView=(TextView)mView.findViewById(R.id.netmask);
+      mDns1View=(TextView)mView.findViewById(R.id.dns1);
+      mDns2View=(TextView)mView.findViewById(R.id.dns2);
+    }
+    if (config != null) {
+      DhcpInfo ipConfig=config.ipConfig;
+      if (ipConfig != null && ipConfig.ipAddress != 0) {
+        mIpAddressView.setText(intToIpString(ipConfig.ipAddress));
+        mGatewayView.setText(intToIpString(ipConfig.gateway));
+        mNetmaskView.setText(intToIpString(ipConfig.netmask));
+        mDns1View.setText(intToIpString(ipConfig.dns1));
+        mDns2View.setText(intToIpString(ipConfig.dns2));
+      }
+    }
+  }
+ else {
+    mView.findViewById(R.id.staticip).setVisibility(View.GONE);
+  }
+}

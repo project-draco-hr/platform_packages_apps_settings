@@ -2,16 +2,17 @@
   mConfigUi=parent;
   mView=view;
   mAccessPoint=accessPoint;
-  mSecurityType=(accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.security;
+  mAccessPointSecurity=(accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.security;
   mEdit=edit;
   final Context context=mConfigUi.getContext();
   final Resources resources=context.getResources();
   if (mAccessPoint == null) {
     mConfigUi.setTitle(R.string.wifi_add_network);
     mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
-    mSsid=(TextView)mView.findViewById(R.id.ssid);
-    mSsid.addTextChangedListener(this);
-    ((Spinner)mView.findViewById(R.id.security)).setOnItemSelectedListener(this);
+    mSsidView=(TextView)mView.findViewById(R.id.ssid);
+    mSsidView.addTextChangedListener(this);
+    mSecuritySpinner=((Spinner)mView.findViewById(R.id.security));
+    mSecuritySpinner.setOnItemSelectedListener(this);
     mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
   }
  else {
@@ -38,6 +39,7 @@
     }
     if (mAccessPoint.networkId == -1 || mEdit) {
       showSecurityFields();
+      showIpConfigFields();
     }
     if (mEdit) {
       mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
@@ -46,11 +48,22 @@
       if (state == null && level != -1) {
         mConfigUi.setSubmitButton(context.getString(R.string.wifi_connect));
       }
+ else {
+        mView.findViewById(R.id.ipfields).setVisibility(View.GONE);
+      }
       if (mAccessPoint.networkId != -1) {
         mConfigUi.setForgetButton(context.getString(R.string.wifi_forget));
       }
     }
   }
+  mIpSettingsSpinner=((Spinner)mView.findViewById(R.id.ipsettings));
+  if (mAccessPoint != null && mAccessPoint.networkId != -1) {
+    WifiConfiguration config=mAccessPoint.getConfig();
+    if (config.ipAssignment == IpAssignment.STATIC) {
+      setSelection(mIpSettingsSpinner,STATIC_IP);
+    }
+  }
+  mIpSettingsSpinner.setOnItemSelectedListener(this);
   mConfigUi.setCancelButton(context.getString(R.string.wifi_cancel));
   if (mConfigUi.getSubmitButton() != null) {
     enableSubmitIfAppropriate();

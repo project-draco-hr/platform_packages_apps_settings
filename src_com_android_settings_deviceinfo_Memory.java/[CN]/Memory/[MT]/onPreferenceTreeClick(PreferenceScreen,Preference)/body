@@ -15,5 +15,9 @@
     startActivity(intent);
     return true;
   }
+ else   if (preference == mPtpModeToggle) {
+    Settings.System.putInt(getContentResolver(),Settings.System.USE_PTP_INTERFACE,mPtpModeToggle.isChecked() ? 1 : 0);
+    return true;
+  }
   return false;
 }

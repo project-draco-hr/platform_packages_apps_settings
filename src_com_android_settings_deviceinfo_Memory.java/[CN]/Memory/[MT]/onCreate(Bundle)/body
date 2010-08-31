@@ -10,4 +10,11 @@
   mSdAvail=findPreference(MEMORY_SD_AVAIL);
   mSdMountToggle=findPreference(MEMORY_SD_MOUNT_TOGGLE);
   mSdFormat=findPreference(MEMORY_SD_FORMAT);
+  mPtpModeToggle=(CheckBoxPreference)findPreference(PTP_MODE_TOGGLE);
+  if (Usb.isFunctionSupported(Usb.USB_FUNCTION_MTP)) {
+    mPtpModeToggle.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.USE_PTP_INTERFACE,0) != 0);
+  }
+ else {
+    getPreferenceScreen().removePreference(mPtpModeToggle);
+  }
 }

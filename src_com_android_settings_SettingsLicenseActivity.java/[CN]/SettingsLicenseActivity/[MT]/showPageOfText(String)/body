@@ -1,0 +1,22 @@
+{
+  AlertDialog.Builder builder=new AlertDialog.Builder(SettingsLicenseActivity.this);
+  builder.setCancelable(true).setView(mWebView).setTitle(R.string.settings_license_activity_title);
+  mTextDlg=builder.create();
+  mTextDlg.setOnDismissListener(new OnDismissListener(){
+    public void onDismiss(    DialogInterface dlgi){
+      SettingsLicenseActivity.this.finish();
+    }
+  }
+);
+  mWebView.loadDataWithBaseURL(null,text,"text/html","utf-8",null);
+  mWebView.setWebViewClient(new WebViewClient(){
+    @Override public void onPageFinished(    WebView view,    String url){
+      mSpinnerDlg.dismiss();
+      mSpinnerDlg=null;
+      mTextDlg.show();
+      mTextDlg=null;
+    }
+  }
+);
+  mWebView=null;
+}

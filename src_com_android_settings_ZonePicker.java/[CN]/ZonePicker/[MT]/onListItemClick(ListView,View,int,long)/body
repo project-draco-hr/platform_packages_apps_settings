@@ -1,10 +1,9 @@
 {
-  String filter=(String)mFilterAdapter.getItem(position);
-  if (filter.equals("All")) {
-    filter=null;
+  Map map=(Map)l.getItemAtPosition(position);
+  final Activity activity=getActivity();
+  AlarmManager alarm=(AlarmManager)activity.getSystemService(Context.ALARM_SERVICE);
+  alarm.setTimeZone((String)map.get(KEY_ID));
+  if (mListener != null) {
+    mListener.onZoneSelected();
   }
-  Intent zoneList=new Intent();
-  zoneList.setClass(this,ZoneList.class);
-  zoneList.putExtra("filter",filter);
-  startActivityForResult(zoneList,0);
 }

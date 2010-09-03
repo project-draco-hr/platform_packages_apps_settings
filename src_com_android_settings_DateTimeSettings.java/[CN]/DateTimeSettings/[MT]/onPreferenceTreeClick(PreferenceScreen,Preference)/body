@@ -11,10 +11,5 @@
     updateTimeAndDateDisplay();
     timeUpdated();
   }
- else   if (preference == mTimeZone) {
-    Intent intent=new Intent();
-    intent.setClass(getActivity(),ZoneList.class);
-    startActivityForResult(intent,0);
-  }
-  return false;
+  return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

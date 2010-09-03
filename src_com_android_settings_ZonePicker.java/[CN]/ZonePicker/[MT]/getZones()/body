@@ -2,7 +2,7 @@
   List<HashMap> myData=new ArrayList<HashMap>();
   long date=Calendar.getInstance().getTimeInMillis();
   try {
-    XmlResourceParser xrp=getResources().getXml(R.xml.timezones);
+    XmlResourceParser xrp=getActivity().getResources().getXml(R.xml.timezones);
     while (xrp.next() != XmlResourceParser.START_TAG)     continue;
     xrp.next();
     while (xrp.getEventType() != XmlResourceParser.END_TAG) {

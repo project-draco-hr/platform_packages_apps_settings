@@ -1,7 +1,12 @@
 {
   requestWindowFeature(Window.FEATURE_NO_TITLE);
-  super.onCreate(icicle);
+  super.onCreate(savedInstanceState);
   setContentView(R.layout.date_time_settings_setupwizard);
-  mNextButton=findViewById(R.id.next_button);
-  mNextButton.setOnClickListener(this);
+  mXLargeScreenSize=(getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE;
+  if (mXLargeScreenSize) {
+    initUiForXl();
+  }
+ else {
+    findViewById(R.id.next_button).setOnClickListener(this);
+  }
 }

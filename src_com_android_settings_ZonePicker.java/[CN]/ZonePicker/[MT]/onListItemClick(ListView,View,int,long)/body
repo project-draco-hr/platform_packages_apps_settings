@@ -2,8 +2,13 @@
   Map map=(Map)l.getItemAtPosition(position);
   final Activity activity=getActivity();
   AlarmManager alarm=(AlarmManager)activity.getSystemService(Context.ALARM_SERVICE);
-  alarm.setTimeZone((String)map.get(KEY_ID));
+  String tzId=(String)map.get(KEY_ID);
+  alarm.setTimeZone(tzId);
+  final TimeZone tz=TimeZone.getTimeZone(tzId);
   if (mListener != null) {
-    mListener.onZoneSelected();
+    mListener.onZoneSelected(tz);
+  }
+ else {
+    getActivity().onBackPressed();
   }
 }

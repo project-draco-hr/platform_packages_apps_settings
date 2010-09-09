@@ -1,0 +1,9 @@
+{
+  findViewById(R.id.current_time_zone).setVisibility(View.VISIBLE);
+  findViewById(R.id.zone_picker).setVisibility(View.GONE);
+  final Calendar now=Calendar.getInstance(tz);
+  mTimeZone.setText(DateTimeSettings.getTimeZoneText(tz));
+  mDatePicker.updateDate(now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
+  mTimePicker.setCurrentHour(now.get(Calendar.HOUR));
+  mTimePicker.setCurrentMinute(now.get(Calendar.MINUTE));
+}

@@ -1,9 +1,9 @@
 {
   java.text.DateFormat shortDateFormat=DateFormat.getDateFormat(getActivity());
-  Date now=Calendar.getInstance().getTime();
+  final Calendar now=Calendar.getInstance();
   Date dummyDate=mDummyDate.getTime();
-  mTimePref.setSummary(DateFormat.getTimeFormat(getActivity()).format(now));
-  mTimeZone.setSummary(getTimeZoneText());
-  mDatePref.setSummary(shortDateFormat.format(now));
+  mTimePref.setSummary(DateFormat.getTimeFormat(getActivity()).format(now.getTime()));
+  mTimeZone.setSummary(getTimeZoneText(now.getTimeZone()));
+  mDatePref.setSummary(shortDateFormat.format(now.getTime()));
   mDateFormat.setSummary(shortDateFormat.format(dummyDate));
 }

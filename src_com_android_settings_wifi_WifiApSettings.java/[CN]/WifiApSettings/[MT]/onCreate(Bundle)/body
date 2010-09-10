@@ -1,17 +1,4 @@
 {
   super.onCreate(savedInstanceState);
-  mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-  mWifiConfig=mWifiManager.getWifiApConfiguration();
-  mSecurityType=getResources().getStringArray(R.array.wifi_ap_security);
   addPreferencesFromResource(R.xml.wifi_ap_settings);
-  mCreateNetwork=findPreference(WIFI_AP_SSID_AND_SECURITY);
-  mEnableWifiAp=(CheckBoxPreference)findPreference(ENABLE_WIFI_AP);
-  mWifiApEnabler=new WifiApEnabler(this,mEnableWifiAp);
-  if (mWifiConfig == null) {
-    String s=getString(com.android.internal.R.string.wifi_tether_configure_ssid_default);
-    mCreateNetwork.setSummary(String.format(getString(CONFIG_SUBTEXT),s,mSecurityType[OPEN_INDEX]));
-  }
- else {
-    mCreateNetwork.setSummary(String.format(getString(CONFIG_SUBTEXT),mWifiConfig.SSID,mWifiConfig.allowedKeyManagement.get(KeyMgmt.WPA_PSK) ? mSecurityType[WPA_INDEX] : mSecurityType[OPEN_INDEX]));
-  }
 }

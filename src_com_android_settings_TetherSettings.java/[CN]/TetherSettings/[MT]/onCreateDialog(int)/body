@@ -1,7 +1,7 @@
 {
   if (id == DIALOG_TETHER_HELP) {
     Locale locale=Locale.getDefault();
-    AssetManager am=getAssets();
+    final AssetManager am=getActivity().getAssets();
     String path=HELP_PATH.replace("%y",locale.getLanguage().toLowerCase());
     path=path.replace("%z","_" + locale.getCountry().toLowerCase());
     boolean useCountry=true;
@@ -33,7 +33,7 @@
       url=url.replace("%x","");
     }
     mView.loadUrl(url);
-    return new AlertDialog.Builder(this).setCancelable(true).setTitle(R.string.tethering_help_button_text).setView(mView).create();
+    return new AlertDialog.Builder(getActivity()).setCancelable(true).setTitle(R.string.tethering_help_button_text).setView(mView).create();
   }
   return null;
 }

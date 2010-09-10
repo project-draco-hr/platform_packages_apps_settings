@@ -64,8 +64,12 @@
       }
     }
   }
+ else   if (preference == mBluetoothSettings) {
+    preference.getExtras().putString(BluetoothSettings.ACTION,BluetoothSettings.ACTION_LAUNCH_TETHER_PICKER);
+  }
  else   if (preference == mTetherHelp) {
     showDialog(DIALOG_TETHER_HELP);
+    return true;
   }
-  return super.onPreferenceTreeClick(preferenceScreen,preference);
+  return super.onPreferenceTreeClick(screen,preference);
 }

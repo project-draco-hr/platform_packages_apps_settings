@@ -3,7 +3,7 @@
   mLocalManager.setForegroundActivity(null);
   mDevicePreferenceMap.clear();
   mDeviceList.removeAll();
-  unregisterReceiver(mReceiver);
+  getActivity().unregisterReceiver(mReceiver);
   mLocalManager.unregisterCallback(this);
   if (mScreenType == SCREEN_TYPE_SETTINGS) {
     mNamePreference.pause();

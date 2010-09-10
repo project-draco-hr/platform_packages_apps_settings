@@ -14,6 +14,6 @@
   IntentFilter intentFilter=new IntentFilter();
   intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
   intentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-  registerReceiver(mReceiver,intentFilter);
-  mLocalManager.setForegroundActivity(this);
+  getActivity().registerReceiver(mReceiver,intentFilter);
+  mLocalManager.setForegroundActivity(getActivity());
 }

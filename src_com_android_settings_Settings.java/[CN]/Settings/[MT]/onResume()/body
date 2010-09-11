@@ -1,4 +1,4 @@
 {
   super.onResume();
-  findPreference(KEY_CALL_SETTINGS).setEnabled(!AirplaneModeEnabler.isAirplaneModeOn(this));
+  findPreference(KEY_CALL_SETTINGS).setEnabled(!AirplaneModeEnabler.isAirplaneModeOn(this) || SipManager.isVoipSupported(this));
 }

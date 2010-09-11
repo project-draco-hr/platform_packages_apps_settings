@@ -33,7 +33,7 @@
     mToggleCheckBox.setEnabled(false);
     displayNoAppsAlert();
   }
-  if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER)) {
+  if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER) && Utils.isVoiceCapable(getActivity())) {
     int incallPowerBehavior=Settings.Secure.getInt(getContentResolver(),Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT);
     boolean powerButtonCheckboxEnabled=(incallPowerBehavior == Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP);
     mPowerButtonEndsCallCheckBox.setChecked(powerButtonCheckboxEnabled);

@@ -1,0 +1,8 @@
+{
+  final boolean voiceCapable=getContext().getResources().getBoolean(com.android.internal.R.bool.config_voice_capable);
+  if (!voiceCapable) {
+    for (    int id : NEED_VOICE_CAPABILITY_ID) {
+      parent.findViewById(id).setVisibility(View.GONE);
+    }
+  }
+}

@@ -9,4 +9,5 @@
   mNotificationsUseRingVolumeCheckbox.setOnCheckedChangeListener(this);
   mNotificationsUseRingVolumeCheckbox.setChecked(Settings.System.getInt(getContext().getContentResolver(),Settings.System.NOTIFICATIONS_USE_RING_VOLUME,1) == 1);
   setNotificationVolumeVisibility(!mNotificationsUseRingVolumeCheckbox.isChecked());
+  disableSettingsThatNeedVoice(view);
 }

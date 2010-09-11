@@ -41,4 +41,12 @@
       Log.e(TAG,Settings.System.NOTIFICATION_LIGHT_PULSE + " not found");
     }
   }
+  if (!Utils.isVoiceCapable(getActivity())) {
+    for (    String prefKey : NEED_VOICE_CAPABILITY) {
+      Preference pref=findPreference(prefKey);
+      if (pref != null) {
+        getPreferenceScreen().removePreference(pref);
+      }
+    }
+  }
 }

@@ -1,5 +1,5 @@
 {
-  if ((resultCode == RESULT_CANCELED) || (data == null)) {
+  if ((resultCode == Activity.RESULT_CANCELED) || (data == null)) {
     Log.d(TAG,"no result returned by editor");
     return;
   }
@@ -13,10 +13,11 @@
       Log.e(TAG,"null object returned by editor");
       return;
     }
+    final Activity activity=getActivity();
     int index=getProfileIndexFromId(p.getId());
     if (checkDuplicateName(p,index)) {
       final VpnProfile profile=p;
-      Util.showErrorMessage(this,String.format(getString(R.string.vpn_error_duplicate_name),p.getName()),new DialogInterface.OnClickListener(){
+      Util.showErrorMessage(activity,String.format(activity.getString(R.string.vpn_error_duplicate_name),p.getName()),new DialogInterface.OnClickListener(){
         public void onClick(        DialogInterface dialog,        int w){
           startVpnEditor(profile);
         }
@@ -36,16 +37,16 @@
     try {
       if (index < 0) {
         addProfile(p);
-        Util.showShortToastMessage(this,String.format(getString(R.string.vpn_profile_added),p.getName()));
+        Util.showShortToastMessage(activity,String.format(activity.getString(R.string.vpn_profile_added),p.getName()));
       }
  else {
         replaceProfile(index,p);
-        Util.showShortToastMessage(this,String.format(getString(R.string.vpn_profile_replaced),p.getName()));
+        Util.showShortToastMessage(activity,String.format(activity.getString(R.string.vpn_profile_replaced),p.getName()));
       }
     }
  catch (    IOException e) {
       final VpnProfile profile=p;
-      Util.showErrorMessage(this,e + ": " + e.getMessage(),new DialogInterface.OnClickListener(){
+      Util.showErrorMessage(activity,e + ": " + e.getMessage(),new DialogInterface.OnClickListener(){
         public void onClick(        DialogInterface dialog,        int w){
           startVpnEditor(profile);
         }

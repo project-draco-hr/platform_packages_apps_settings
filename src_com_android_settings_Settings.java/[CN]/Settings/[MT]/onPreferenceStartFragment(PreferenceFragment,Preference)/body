@@ -1,9 +1,4 @@
 {
   if (DBG)   Log.d(TAG,"onPreferenceStartFragment");
-  Fragment f=Fragment.instantiate(this,pref.getFragment(),pref.getExtras());
-  if (f instanceof SettingsPreferenceFragment) {
-    ((SettingsPreferenceFragment)f).setOnStateListener(this);
-  }
-  getFragmentManager().openTransaction().replace(R.id.prefs,f).addToBackStack(BACK_STACK_PREFS).commit();
-  return true;
+  return startFragment(caller,pref.getFragment(),-1,pref.getExtras());
 }

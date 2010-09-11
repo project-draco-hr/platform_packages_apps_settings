@@ -2,7 +2,9 @@
   if (DBG)   Log.d(TAG,"showFragment");
   Fragment f=Fragment.instantiate(this,fragmentClass,extras);
   if (f instanceof SettingsPreferenceFragment) {
-    ((SettingsPreferenceFragment)f).setOnStateListener(this);
+    SettingsPreferenceFragment spf=(SettingsPreferenceFragment)f;
+    spf.setOnStateListener(this);
+    spf.setFragmentStarter(this);
   }
   mBreadCrumbs.clear();
   getFragmentManager().popBackStack(BACK_STACK_PREFS,POP_BACK_STACK_INCLUSIVE);

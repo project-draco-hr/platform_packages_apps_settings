@@ -15,13 +15,13 @@
           changeState(p,VpnState.IDLE);
         }
       }
-      VpnSettings.this.unbindService(this);
+      getActivity().unbindService(this);
       showPreferences();
     }
     public void onServiceDisconnected(    ComponentName className){
       cv.open();
       setDefaultState(list);
-      VpnSettings.this.unbindService(this);
+      getActivity().unbindService(this);
       showPreferences();
     }
   }

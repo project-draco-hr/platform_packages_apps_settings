@@ -1,5 +1,5 @@
 {
-  Intent intent=new Intent(this,VpnEditor.class);
-  intent.putExtra(KEY_VPN_PROFILE,(Parcelable)profile);
-  startActivityForResult(intent,REQUEST_ADD_OR_EDIT_PROFILE);
+  Bundle args=new Bundle();
+  args.putParcelable(KEY_VPN_PROFILE,profile);
+  startFragment(this,VpnEditor.class.getCanonicalName(),REQUEST_ADD_OR_EDIT_PROFILE,args);
 }

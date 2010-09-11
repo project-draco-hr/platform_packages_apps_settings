@@ -1,14 +1,14 @@
 {
 switch (item.getItemId()) {
 case MENU_SAVE:
-    if (validateAndSetResult())     finish();
+    if (validateAndSetResult())     finishFragment();
   return true;
 case MENU_CANCEL:
 if (profileChanged()) {
   showDialog(CONFIRM_DIALOG_ID);
 }
  else {
-  finish();
+  finishFragment();
 }
 return true;
 }

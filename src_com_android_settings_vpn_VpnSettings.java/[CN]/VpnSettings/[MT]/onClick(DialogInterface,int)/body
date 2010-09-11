@@ -8,8 +8,9 @@
       return;
     }
  else {
-      dismissDialog(DIALOG_CONNECT);
-      mShowingDialog=new AlertDialog.Builder(this).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(String.format(getString(R.string.vpn_error_miss_entering),error)).setPositiveButton(R.string.vpn_back_button,new DialogInterface.OnClickListener(){
+      removeDialog(DIALOG_CONNECT);
+      final Activity activity=getActivity();
+      mShowingDialog=new AlertDialog.Builder(activity).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(String.format(activity.getString(R.string.vpn_error_miss_entering),error)).setPositiveButton(R.string.vpn_back_button,new DialogInterface.OnClickListener(){
         public void onClick(        DialogInterface dialog,        int which){
           showDialog(DIALOG_CONNECT);
         }

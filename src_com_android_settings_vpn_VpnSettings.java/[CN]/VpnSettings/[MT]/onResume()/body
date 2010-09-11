@@ -3,6 +3,6 @@
   if ((mUnlockAction != null) && isKeyStoreUnlocked()) {
     Runnable action=mUnlockAction;
     mUnlockAction=null;
-    runOnUiThread(action);
+    getActivity().runOnUiThread(action);
   }
 }

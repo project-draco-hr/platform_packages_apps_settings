@@ -1,0 +1,21 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  VpnProfile p;
+  if (savedInstanceState != null) {
+    p=(VpnProfile)savedInstanceState.getParcelable(KEY_PROFILE);
+  }
+ else {
+    p=(VpnProfile)getArguments().getParcelable(VpnSettings.KEY_VPN_PROFILE);
+    if (p == null) {
+      p=getActivity().getIntent().getParcelableExtra(VpnSettings.KEY_VPN_PROFILE);
+    }
+  }
+  mProfileEditor=getEditor(p);
+  mAddingProfile=TextUtils.isEmpty(p.getName());
+  initViewFor(p);
+  Parcel parcel=Parcel.obtain();
+  p.writeToParcel(parcel,0);
+  mOriginalProfileData=parcel.marshall();
+  registerForContextMenu(getListView());
+  setHasOptionsMenu(true);
+}

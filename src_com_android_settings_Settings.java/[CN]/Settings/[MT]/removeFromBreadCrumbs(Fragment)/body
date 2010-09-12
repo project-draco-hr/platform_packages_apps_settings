@@ -1,6 +1,4 @@
 {
-  if (mTrail.size() > 0) {
-    mTrail.remove(mTrail.size() - 1);
-  }
-  updateTitle();
+  mBreadCrumbs.pop(((PreferenceFragment)fragment).getPreferenceScreen().getTitle());
+  mBreadCrumbs.update();
 }

@@ -1,7 +1,8 @@
 {
   super.onActivityCreated(savedInstanceState);
-  if (mOnStateListener != null) {
+  if (mOnStateListener != null && !mReportedCreation) {
     mOnStateListener.onCreated(this);
+    mReportedCreation=true;
   }
   setupButtonBar();
 }

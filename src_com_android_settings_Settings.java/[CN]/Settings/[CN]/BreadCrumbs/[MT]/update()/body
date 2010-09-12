@@ -1,0 +1,20 @@
+{
+  initNavViews();
+  if (mLevelUpTitle == null)   return;
+  final int titleCount=mTitles.size();
+  if (titleCount > 1) {
+    mLevelUpTitle.setText(mTitles.get(titleCount - 2));
+    mLevelUpTitle.setVisibility(VISIBLE);
+    mDivider.setVisibility(VISIBLE);
+  }
+ else {
+    mLevelUpTitle.setVisibility(GONE);
+    mDivider.setVisibility(GONE);
+  }
+  if (titleCount > 0) {
+    mCurrentLevelTitle.setText(mTitles.get(titleCount - 1));
+  }
+ else {
+    mCurrentLevelTitle.setText("");
+  }
+}

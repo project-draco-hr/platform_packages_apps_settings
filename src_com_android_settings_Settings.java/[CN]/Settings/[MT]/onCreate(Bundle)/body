@@ -8,6 +8,7 @@
   final Intent intent=getIntent();
   String initialFragment=intent.getStringExtra(EXTRA_SHOW_FRAGMENT);
   Bundle initialArguments=intent.getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
+  createActionBar();
   if (mSinglePane) {
     if (initialFragment != null) {
       showFragment(initialFragment,initialArguments);

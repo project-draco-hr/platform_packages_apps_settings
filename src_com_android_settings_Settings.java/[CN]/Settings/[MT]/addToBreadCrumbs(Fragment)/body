@@ -1,8 +1,7 @@
 {
   final CharSequence title=((PreferenceFragment)fragment).getPreferenceScreen().getTitle();
-  if (mSinglePane)   mTrail.clear();
-  if (mTrail.size() == 0 || !TextUtils.equals(title,mTrail.get(mTrail.size() - 1))) {
-    mTrail.add(title);
-    updateTitle();
+  if (mSinglePane) {
+    mBreadCrumbs.clear();
   }
+  mBreadCrumbs.push(title);
 }

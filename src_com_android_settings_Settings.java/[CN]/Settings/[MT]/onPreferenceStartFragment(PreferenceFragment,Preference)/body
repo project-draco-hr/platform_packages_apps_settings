@@ -1,4 +1,5 @@
 {
+  if (DBG)   Log.d(TAG,"onPreferenceStartFragment");
   Fragment f=Fragment.instantiate(this,pref.getFragment(),pref.getExtras());
   if (f instanceof SettingsPreferenceFragment) {
     ((SettingsPreferenceFragment)f).setOnStateListener(this);

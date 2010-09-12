@@ -3,8 +3,8 @@
     String hostname=mHostnameField.getText().toString().trim();
     String portStr=mPortField.getText().toString().trim();
     String exclList=mExclusionListField.getText().toString().trim();
-    String msg=getString(validate(hostname,portStr,exclList));
-    return new AlertDialog.Builder(this).setTitle(R.string.proxy_error).setPositiveButton(R.string.proxy_error_dismiss,null).setMessage(msg).create();
+    String msg=getActivity().getString(validate(hostname,portStr,exclList));
+    return new AlertDialog.Builder(getActivity()).setTitle(R.string.proxy_error).setPositiveButton(R.string.proxy_error_dismiss,null).setMessage(msg).create();
   }
-  return super.onCreateDialog(id);
+  return null;
 }

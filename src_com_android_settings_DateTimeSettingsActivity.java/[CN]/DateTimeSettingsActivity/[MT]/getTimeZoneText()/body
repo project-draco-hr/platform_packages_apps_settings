@@ -1,7 +1,0 @@
-{
-  TimeZone tz=java.util.Calendar.getInstance().getTimeZone();
-  boolean daylight=tz.inDaylightTime(new Date());
-  StringBuilder sb=new StringBuilder();
-  sb.append(formatOffset(tz.getRawOffset() + (daylight ? tz.getDSTSavings() : 0))).append(", ").append(tz.getDisplayName(daylight,TimeZone.LONG));
-  return sb.toString();
-}

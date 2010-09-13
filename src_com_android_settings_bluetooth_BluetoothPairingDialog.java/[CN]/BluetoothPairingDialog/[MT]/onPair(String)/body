@@ -18,6 +18,9 @@
   }
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY) {
   }
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_OOB_CONSENT) {
+    mDevice.setRemoteOutOfBandData();
+  }
  else {
     Log.e(TAG,"Incorrect pairing type received");
   }

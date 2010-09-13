@@ -1,7 +1,8 @@
 {
   super.onResume();
-  if (!mAddedWordAlready && getIntent().getAction().equals("com.android.settings.USER_DICTIONARY_INSERT")) {
-    String word=getIntent().getStringExtra(EXTRA_WORD);
+  final Intent intent=getActivity().getIntent();
+  if (!mAddedWordAlready && intent.getAction().equals("com.android.settings.USER_DICTIONARY_INSERT")) {
+    final String word=intent.getStringExtra(EXTRA_WORD);
     mAutoReturn=true;
     if (word != null) {
       showAddOrEditDialog(word);

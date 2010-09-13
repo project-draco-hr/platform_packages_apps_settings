@@ -35,6 +35,9 @@
     mPasskey=String.format("%06d",passkey);
     createDisplayPasskeyDialog();
   }
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_OOB_CONSENT) {
+    createConsentDialog();
+  }
  else {
     Log.e(TAG,"Incorrect pairing type received, not showing any dialog");
   }

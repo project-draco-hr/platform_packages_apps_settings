@@ -1,16 +1,18 @@
 {
-  View content=getLayoutInflater().inflate(R.layout.dialog_edittext,null);
+  final Activity activity=getActivity();
+  final View content=activity.getLayoutInflater().inflate(R.layout.dialog_edittext,null);
   final EditText editText=(EditText)content.findViewById(R.id.edittext);
+  editText.setText(mDialogEditingWord);
   editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-  AlertDialog dialog=new AlertDialog.Builder(this).setTitle(mDialogEditingWord != null ? R.string.user_dict_settings_edit_dialog_title : R.string.user_dict_settings_add_dialog_title).setView(content).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+  AlertDialog dialog=new AlertDialog.Builder(activity).setTitle(mDialogEditingWord != null ? R.string.user_dict_settings_edit_dialog_title : R.string.user_dict_settings_add_dialog_title).setView(content).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
       onAddOrEditFinished(editText.getText().toString());
-      if (mAutoReturn)       finish();
+      if (mAutoReturn)       activity.onBackPressed();
     }
   }
 ).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
-      if (mAutoReturn)       finish();
+      if (mAutoReturn)       activity.onBackPressed();
     }
   }
 ).create();

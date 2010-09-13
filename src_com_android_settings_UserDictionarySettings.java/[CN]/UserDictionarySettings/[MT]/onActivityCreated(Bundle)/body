@@ -1,0 +1,16 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  mCursor=createCursor();
+  TextView emptyView=(TextView)mView.findViewById(R.id.empty);
+  emptyView.setText(R.string.user_dict_settings_empty_text);
+  final ListView listView=getListView();
+  listView.setAdapter(createAdapter());
+  listView.setFastScrollEnabled(true);
+  listView.setEmptyView(emptyView);
+  registerForContextMenu(listView);
+  setHasOptionsMenu(true);
+  if (savedInstanceState != null) {
+    mDialogEditingWord=savedInstanceState.getString(INSTANCE_KEY_DIALOG_EDITING_WORD);
+    mAddedWordAlready=savedInstanceState.getBoolean(INSTANCE_KEY_ADDED_WORD,false);
+  }
+}

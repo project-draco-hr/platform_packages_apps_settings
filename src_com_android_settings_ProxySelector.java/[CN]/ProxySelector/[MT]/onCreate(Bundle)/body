@@ -1,13 +1,3 @@
 {
   super.onCreate(icicle);
-  if (android.util.Config.LOGV)   Log.v(LOGTAG,"[ProxySelector] onStart");
-  mInflater=LayoutInflater.from(this);
-  if (mInitialView == null) {
-    mInitialView=mInflater.inflate(R.layout.proxy,null);
-  }
-  mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-  mUserSetGlobalProxy=(mDPM.getGlobalProxyAdmin() == null);
-  setContentView(mInitialView);
-  initView();
-  populateFields(false);
 }

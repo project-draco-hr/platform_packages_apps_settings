@@ -16,7 +16,7 @@
       return false;
     }
   }
-  ContentResolver res=getContentResolver();
+  ContentResolver res=getActivity().getContentResolver();
   if (hostname.equals(Proxy.getDefaultHost()) && port == Proxy.getDefaultPort()) {
     hostname=null;
   }
@@ -25,6 +25,6 @@
   }
   Settings.Secure.putString(res,Settings.Secure.HTTP_PROXY,hostname);
   Settings.Secure.putString(res,Settings.Secure.HTTP_PROXY_EXCLUSION_LIST,exclList);
-  sendBroadcast(new Intent(Proxy.PROXY_CHANGE_ACTION));
+  getActivity().sendBroadcast(new Intent(Proxy.PROXY_CHANGE_ACTION));
   return true;
 }

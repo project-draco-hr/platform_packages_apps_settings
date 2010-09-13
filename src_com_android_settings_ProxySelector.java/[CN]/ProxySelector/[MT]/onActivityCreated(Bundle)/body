@@ -1,0 +1,11 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  final DevicePolicyManager dpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+  final boolean userSetGlobalProxy=(dpm.getGlobalProxyAdmin() == null);
+  mHostnameField.setEnabled(userSetGlobalProxy);
+  mPortField.setEnabled(userSetGlobalProxy);
+  mExclusionListField.setEnabled(userSetGlobalProxy);
+  mOKButton.setEnabled(userSetGlobalProxy);
+  mClearButton.setEnabled(userSetGlobalProxy);
+  mDefaultButton.setEnabled(userSetGlobalProxy);
+}

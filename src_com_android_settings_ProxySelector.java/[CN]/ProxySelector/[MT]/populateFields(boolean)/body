@@ -1,4 +1,5 @@
 {
+  final Activity activity=getActivity();
   String hostname=null;
   int port=-1;
   String exclList=null;
@@ -7,9 +8,9 @@
     port=Proxy.getDefaultPort();
   }
  else {
-    ContentResolver res=getContentResolver();
-    hostname=Proxy.getHost(this);
-    port=Proxy.getPort(this);
+    ContentResolver res=getActivity().getContentResolver();
+    hostname=Proxy.getHost(activity);
+    port=Proxy.getPort(activity);
     exclList=Settings.Secure.getString(res,Settings.Secure.HTTP_PROXY_EXCLUSION_LIST);
   }
   if (hostname == null) {
@@ -19,13 +20,13 @@
   String portStr=port == -1 ? "" : Integer.toString(port);
   mPortField.setText(portStr);
   mExclusionListField.setText(exclList);
-  Intent intent=getIntent();
+  final Intent intent=activity.getIntent();
   String buttonLabel=intent.getStringExtra("button-label");
   if (!TextUtils.isEmpty(buttonLabel)) {
     mOKButton.setText(buttonLabel);
   }
   String title=intent.getStringExtra("title");
   if (!TextUtils.isEmpty(title)) {
-    setTitle(title);
+    activity.setTitle(title);
   }
 }

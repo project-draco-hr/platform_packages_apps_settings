@@ -4,13 +4,13 @@
   if (key.equals(KEY_NUM_CHANNELS)) {
     try {
       int numChannels=Integer.parseInt((String)newValue);
-      WifiManager wifiManager=(WifiManager)getSystemService(WIFI_SERVICE);
+      WifiManager wifiManager=(WifiManager)getSystemService(Activity.WIFI_SERVICE);
       if (!wifiManager.setNumAllowedChannels(numChannels,true)) {
-        Toast.makeText(this,R.string.wifi_setting_num_channels_error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),R.string.wifi_setting_num_channels_error,Toast.LENGTH_SHORT).show();
       }
     }
  catch (    NumberFormatException e) {
-      Toast.makeText(this,R.string.wifi_setting_num_channels_error,Toast.LENGTH_SHORT).show();
+      Toast.makeText(getActivity(),R.string.wifi_setting_num_channels_error,Toast.LENGTH_SHORT).show();
       return false;
     }
   }
@@ -19,7 +19,7 @@
       Settings.System.putInt(getContentResolver(),Settings.System.WIFI_SLEEP_POLICY,Integer.parseInt(((String)newValue)));
     }
  catch (    NumberFormatException e) {
-      Toast.makeText(this,R.string.wifi_setting_sleep_policy_error,Toast.LENGTH_SHORT).show();
+      Toast.makeText(getActivity(),R.string.wifi_setting_sleep_policy_error,Toast.LENGTH_SHORT).show();
       return false;
     }
   }

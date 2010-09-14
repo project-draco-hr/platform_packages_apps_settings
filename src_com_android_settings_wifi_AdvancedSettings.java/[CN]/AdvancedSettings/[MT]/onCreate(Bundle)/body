@@ -1,14 +1,4 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.wifi_advanced_settings);
-  DEBUGGABLE=SystemProperties.getInt("ro.debuggable",0);
-  if (DEBUGGABLE == 1) {
-    initNumChannelsPreference();
-  }
- else {
-    Preference chanPref=findPreference(KEY_NUM_CHANNELS);
-    if (chanPref != null) {
-      getPreferenceScreen().removePreference(chanPref);
-    }
-  }
 }

@@ -2,6 +2,5 @@
   SharedPreferences sharedPref=getSharedPreferences(SHARED_PREFERENCES_NAME,Context.MODE_PRIVATE);
   SharedPreferences.Editor editor=sharedPref.edit();
   editor.remove(key);
-  editor.commit();
-  return;
+  editor.apply();
 }

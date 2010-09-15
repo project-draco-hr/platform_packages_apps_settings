@@ -1,10 +1,15 @@
 {
+  final boolean autoEnabled=isChecked;
   Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,isChecked ? 1 : 0);
   if (isChecked) {
     findViewById(R.id.current_time_zone).setVisibility(View.VISIBLE);
     findViewById(R.id.zone_picker).setVisibility(View.GONE);
   }
-  mTimeZone.setEnabled(!isChecked);
-  mTimePicker.setEnabled(!isChecked);
-  mDatePicker.setEnabled(!isChecked);
+  mTimeZone.setEnabled(!autoEnabled);
+  mTimePicker.setEnabled(!autoEnabled);
+  mDatePicker.setEnabled(!autoEnabled);
+  if (autoEnabled) {
+    mTimePicker.clearFocus();
+    mDatePicker.clearFocus();
+  }
 }

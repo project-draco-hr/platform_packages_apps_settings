@@ -9,7 +9,10 @@
   mTimePicker.setEnabled(!autoEnabled);
   mDatePicker.setEnabled(!autoEnabled);
   if (autoEnabled) {
-    mTimePicker.clearFocus();
-    mDatePicker.clearFocus();
+    final View focusedView=getCurrentFocus();
+    if (focusedView != null) {
+      mInputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(),0);
+      focusedView.clearFocus();
+    }
   }
 }

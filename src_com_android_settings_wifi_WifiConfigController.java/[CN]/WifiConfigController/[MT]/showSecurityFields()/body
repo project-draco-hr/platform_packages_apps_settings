@@ -1,5 +1,5 @@
 {
-  if (mSecurityType == AccessPoint.SECURITY_NONE) {
+  if (mAccessPointSecurity == AccessPoint.SECURITY_NONE) {
     mView.findViewById(R.id.fields).setVisibility(View.GONE);
     return;
   }
@@ -12,28 +12,28 @@
       mPasswordView.setHint(R.string.wifi_unchanged);
     }
   }
-  if (mSecurityType != AccessPoint.SECURITY_EAP) {
+  if (mAccessPointSecurity != AccessPoint.SECURITY_EAP) {
     mView.findViewById(R.id.eap).setVisibility(View.GONE);
     return;
   }
   mView.findViewById(R.id.eap).setVisibility(View.VISIBLE);
-  if (mEapMethod == null) {
-    mEapMethod=(Spinner)mView.findViewById(R.id.method);
-    mPhase2=(Spinner)mView.findViewById(R.id.phase2);
-    mEapCaCert=(Spinner)mView.findViewById(R.id.ca_cert);
-    mEapUserCert=(Spinner)mView.findViewById(R.id.user_cert);
-    mEapIdentity=(TextView)mView.findViewById(R.id.identity);
-    mEapAnonymous=(TextView)mView.findViewById(R.id.anonymous);
-    loadCertificates(mEapCaCert,Credentials.CA_CERTIFICATE);
-    loadCertificates(mEapUserCert,Credentials.USER_PRIVATE_KEY);
+  if (mEapMethodSpinner == null) {
+    mEapMethodSpinner=(Spinner)mView.findViewById(R.id.method);
+    mPhase2Spinner=(Spinner)mView.findViewById(R.id.phase2);
+    mEapCaCertSpinner=(Spinner)mView.findViewById(R.id.ca_cert);
+    mEapUserCertSpinner=(Spinner)mView.findViewById(R.id.user_cert);
+    mEapIdentityView=(TextView)mView.findViewById(R.id.identity);
+    mEapAnonymousView=(TextView)mView.findViewById(R.id.anonymous);
+    loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE);
+    loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY);
     if (mAccessPoint != null && mAccessPoint.networkId != -1) {
       WifiConfiguration config=mAccessPoint.getConfig();
-      setSelection(mEapMethod,config.eap.value());
-      setSelection(mPhase2,config.phase2.value());
-      setCertificate(mEapCaCert,Credentials.CA_CERTIFICATE,config.ca_cert.value());
-      setCertificate(mEapUserCert,Credentials.USER_PRIVATE_KEY,config.private_key.value());
-      mEapIdentity.setText(config.identity.value());
-      mEapAnonymous.setText(config.anonymous_identity.value());
+      setSelection(mEapMethodSpinner,config.eap.value());
+      setSelection(mPhase2Spinner,config.phase2.value());
+      setCertificate(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,config.ca_cert.value());
+      setCertificate(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY,config.private_key.value());
+      mEapIdentityView.setText(config.identity.value());
+      mEapAnonymousView.setText(config.anonymous_identity.value());
     }
   }
 }

@@ -23,28 +23,5 @@
       return false;
     }
   }
- else   if (key.equals(KEY_USE_STATIC_IP)) {
-    boolean value=((Boolean)newValue).booleanValue();
-    try {
-      Settings.System.putInt(getContentResolver(),Settings.System.WIFI_USE_STATIC_IP,value ? 1 : 0);
-    }
- catch (    NumberFormatException e) {
-      return false;
-    }
-  }
- else {
-    String value=(String)newValue;
-    if (!isIpAddress(value)) {
-      Toast.makeText(this,R.string.wifi_ip_settings_invalid_ip,Toast.LENGTH_LONG).show();
-      return false;
-    }
-    preference.setSummary(value);
-    for (int i=0; i < mSettingNames.length; i++) {
-      if (key.equals(mPreferenceKeys[i])) {
-        Settings.System.putString(getContentResolver(),mSettingNames[i],value);
-        break;
-      }
-    }
-  }
   return true;
 }

@@ -1,0 +1,18 @@
+{
+  int res;
+switch (status) {
+case SYNC_ENABLED:
+    res=R.drawable.ic_sync_green;
+  break;
+case SYNC_DISABLED:
+res=R.drawable.ic_sync_grey;
+break;
+case SYNC_ERROR:
+res=R.drawable.ic_sync_red;
+break;
+default :
+res=R.drawable.ic_sync_red;
+Log.e(TAG,"Unknown sync status: " + status);
+}
+return res;
+}

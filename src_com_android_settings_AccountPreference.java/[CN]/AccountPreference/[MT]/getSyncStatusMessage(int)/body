@@ -1,0 +1,18 @@
+{
+  int res;
+switch (status) {
+case SYNC_ENABLED:
+    res=R.string.sync_enabled;
+  break;
+case SYNC_DISABLED:
+res=R.string.sync_disabled;
+break;
+case SYNC_ERROR:
+res=R.string.sync_error;
+break;
+default :
+res=R.string.sync_error;
+Log.e(TAG,"Unknown sync status: " + status);
+}
+return res;
+}

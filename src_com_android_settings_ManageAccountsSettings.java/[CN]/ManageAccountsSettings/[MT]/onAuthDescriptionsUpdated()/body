@@ -1,0 +1,7 @@
+{
+  for (int i=0; i < mManageAccountsCategory.getPreferenceCount(); i++) {
+    AccountPreference pref=(AccountPreference)mManageAccountsCategory.getPreference(i);
+    pref.setProviderIcon(getDrawableForType(pref.getAccount().type));
+    pref.setSummary(getLabelForType(pref.getAccount().type));
+  }
+}

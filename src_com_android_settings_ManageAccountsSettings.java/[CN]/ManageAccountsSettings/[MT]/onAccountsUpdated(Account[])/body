@@ -1,0 +1,23 @@
+{
+  mManageAccountsCategory.removeAll();
+  for (int i=0, n=accounts.length; i < n; i++) {
+    final Account account=accounts[i];
+    final ArrayList<String> auths=getAuthoritiesForAccountType(account.type);
+    boolean showAccount=true;
+    if (mAuthorities != null && auths != null) {
+      showAccount=false;
+      for (      String requestedAuthority : mAuthorities) {
+        if (auths.contains(requestedAuthority)) {
+          showAccount=true;
+          break;
+        }
+      }
+    }
+    if (showAccount) {
+      final Drawable icon=getDrawableForType(account.type);
+      final AccountPreference preference=new AccountPreference(getActivity(),account,icon,auths);
+      mManageAccountsCategory.addPreference(preference);
+    }
+  }
+  onSyncStateUpdated();
+}

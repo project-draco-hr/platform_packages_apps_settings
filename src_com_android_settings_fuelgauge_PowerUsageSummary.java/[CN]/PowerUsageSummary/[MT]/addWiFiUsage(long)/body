@@ -1,6 +1,21 @@
 {
   long onTimeMs=mStats.getWifiOnTime(uSecNow,mStatsType) / 1000;
-  long runningTimeMs=mStats.getWifiRunningTime(uSecNow,mStatsType) / 1000;
+  long runningTimeMs=mStats.getGlobalWifiRunningTime(uSecNow,mStatsType) / 1000;
+  if (DEBUG)   Log.i(TAG,"WIFI runningTime=" + runningTimeMs + " app runningTime="+ mAppWifiRunning);
+  runningTimeMs-=mAppWifiRunning;
+  if (runningTimeMs < 0)   runningTimeMs=0;
   double wifiPower=(onTimeMs * 0 * mPowerProfile.getAveragePower(PowerProfile.POWER_WIFI_ON) + runningTimeMs * mPowerProfile.getAveragePower(PowerProfile.POWER_WIFI_ON)) / 1000;
-  addEntry(getString(R.string.power_wifi),DrainType.WIFI,runningTimeMs,R.drawable.ic_settings_wifi,wifiPower);
+  if (DEBUG)   Log.i(TAG,"WIFI power=" + wifiPower + " from procs="+ mWifiPower);
+  BatterySipper bs=addEntry(getString(R.string.power_wifi),DrainType.WIFI,runningTimeMs,R.drawable.ic_settings_wifi,wifiPower + mWifiPower);
+  for (int i=0; i < mWifiSippers.size(); i++) {
+    BatterySipper wbs=mWifiSippers.get(i);
+    if (DEBUG)     Log.i(TAG,"WIFI adding sipper " + wbs + ": cpu="+ wbs.cpuTime);
+    bs.cpuTime+=wbs.cpuTime;
+    bs.gpsTime+=wbs.gpsTime;
+    bs.wifiRunningTime+=wbs.wifiRunningTime;
+    bs.cpuFgTime+=wbs.cpuFgTime;
+    bs.wakeLockTime+=wbs.wakeLockTime;
+    bs.tcpBytesReceived+=wbs.tcpBytesReceived;
+    bs.tcpBytesSent+=wbs.tcpBytesSent;
+  }
 }

@@ -16,7 +16,7 @@
     }
     if (available.size() > 0) {
       if (mTts == null) {
-        mTts=new TextToSpeech(this,this);
+        mTts=new TextToSpeech(getActivity(),this);
       }
       ListPreference ttsLanguagePref=(ListPreference)findPreference("tts_default_lang");
       CharSequence[] entries=new CharSequence[available.size()];
@@ -85,7 +85,7 @@
   }
  else   if (requestCode == GET_SAMPLE_TEXT) {
     if (resultCode == TextToSpeech.LANG_AVAILABLE) {
-      String sample=getString(R.string.tts_demo);
+      String sample=getActivity().getString(R.string.tts_demo);
       if ((data != null) && (data.getStringExtra("sampleText") != null)) {
         sample=data.getStringExtra("sampleText");
       }

@@ -8,14 +8,14 @@
     String prefKey="";
     final String pluginPackageName=enginesArray[i].activityInfo.packageName;
     if (!enginesArray[i].activityInfo.packageName.equals(SYSTEM_TTS)) {
-      CheckBoxPreference chkbxPref=new CheckBoxPreference(this);
+      CheckBoxPreference chkbxPref=new CheckBoxPreference(context);
       prefKey=KEY_PLUGIN_ENABLED_PREFIX + pluginPackageName;
       chkbxPref.setKey(prefKey);
       chkbxPref.setTitle(enginesArray[i].loadLabel(pm));
       enginesCategory.addPreference(chkbxPref);
     }
     if (pluginHasSettings(pluginPackageName)) {
-      Preference pref=new Preference(this);
+      Preference pref=new Preference(context);
       prefKey=KEY_PLUGIN_SETTINGS_PREFIX + pluginPackageName;
       pref.setKey(prefKey);
       pref.setTitle(enginesArray[i].loadLabel(pm));

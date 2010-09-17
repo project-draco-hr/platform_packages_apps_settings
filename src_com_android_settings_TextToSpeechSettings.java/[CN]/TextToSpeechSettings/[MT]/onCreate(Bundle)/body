@@ -1,14 +1,14 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.tts_settings);
-  addEngineSpecificSettings();
-  mDemoStrings=getResources().getStringArray(R.array.tts_demo_strings);
-  setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+  final Activity activity=getActivity();
+  addEngineSpecificSettings(activity);
+  activity.setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
   mEnableDemo=false;
   mTtsStarted=false;
   Locale currentLocale=Locale.getDefault();
   mDefaultLanguage=currentLocale.getISO3Language();
   mDefaultCountry=currentLocale.getISO3Country();
   mDefaultLocVariant=currentLocale.getVariant();
-  mTts=new TextToSpeech(this,this);
+  mTts=new TextToSpeech(activity,this);
 }

@@ -1,9 +1,10 @@
 {
-  boolean autoEnabled=getAutoState();
+  boolean autoTimeEnabled=getAutoState(Settings.System.AUTO_TIME);
+  boolean autoTimeZoneEnabled=getAutoState(Settings.System.AUTO_TIME_ZONE);
   mDummyDate=Calendar.getInstance();
   mDummyDate.set(mDummyDate.get(Calendar.YEAR),11,31,13,0,0);
-  mAutoPref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME);
-  mAutoPref.setChecked(autoEnabled);
+  mAutoTimePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME);
+  mAutoTimePref.setChecked(autoTimeEnabled);
   mTimePref=findPreference("time");
   mTime24Pref=findPreference("24 hour");
   mTimeZone=findPreference("timezone");
@@ -27,7 +28,7 @@
   mDateFormat.setEntries(formattedDates);
   mDateFormat.setEntryValues(R.array.date_format_values);
   mDateFormat.setValue(currentFormat);
-  mTimePref.setEnabled(!autoEnabled);
-  mDatePref.setEnabled(!autoEnabled);
-  mTimeZone.setEnabled(!autoEnabled);
+  mTimePref.setEnabled(!autoTimeEnabled);
+  mDatePref.setEnabled(!autoTimeEnabled);
+  mTimeZone.setEnabled(!autoTimeZoneEnabled);
 }

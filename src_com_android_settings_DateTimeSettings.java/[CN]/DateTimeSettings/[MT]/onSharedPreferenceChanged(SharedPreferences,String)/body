@@ -9,6 +9,10 @@
     Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,autoEnabled ? 1 : 0);
     mTimePref.setEnabled(!autoEnabled);
     mDatePref.setEnabled(!autoEnabled);
-    mTimeZone.setEnabled(!autoEnabled);
+  }
+ else   if (key.equals(KEY_AUTO_TIME_ZONE)) {
+    boolean autoZoneEnabled=preferences.getBoolean(key,true);
+    Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME_ZONE,autoZoneEnabled ? 1 : 0);
+    mTimeZone.setEnabled(!autoZoneEnabled);
   }
 }

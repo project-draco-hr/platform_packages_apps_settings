@@ -1,9 +1,9 @@
 {
-  WifiManager wifiManager=(WifiManager)getSystemService(WIFI_SERVICE);
+  WifiManager wifiManager=(WifiManager)getSystemService(Activity.WIFI_SERVICE);
   WifiInfo wifiInfo=wifiManager.getConnectionInfo();
   Preference wifiMacAddressPref=findPreference(KEY_MAC_ADDRESS);
   String macAddress=wifiInfo == null ? null : wifiInfo.getMacAddress();
-  wifiMacAddressPref.setSummary(!TextUtils.isEmpty(macAddress) ? macAddress : getString(R.string.status_unavailable));
+  wifiMacAddressPref.setSummary(!TextUtils.isEmpty(macAddress) ? macAddress : getActivity().getString(R.string.status_unavailable));
   Preference wifiIpAddressPref=findPreference(KEY_CURRENT_IP_ADDRESS);
   String ipAddress=null;
   if (wifiInfo != null) {
@@ -13,5 +13,5 @@
       ipAddress=String.format("%d.%d.%d.%d",addr & 0xFF,(addr >> 8) & 0xFF,(addr >> 16) & 0xFF,(addr >> 24) & 0xFF);
     }
   }
-  wifiIpAddressPref.setSummary(ipAddress == null ? getString(R.string.status_unavailable) : ipAddress);
+  wifiIpAddressPref.setSummary(ipAddress == null ? getActivity().getString(R.string.status_unavailable) : ipAddress);
 }

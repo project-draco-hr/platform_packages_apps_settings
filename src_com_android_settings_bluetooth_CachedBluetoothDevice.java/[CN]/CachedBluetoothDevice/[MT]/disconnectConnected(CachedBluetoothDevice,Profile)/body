@@ -3,9 +3,9 @@
   CachedBluetoothDeviceManager cachedDeviceManager=mLocalManager.getCachedDeviceManager();
   Set<BluetoothDevice> devices=profileManager.getConnectedDevices();
   if (devices == null)   return;
-  for (  BluetoothDevice device : devices) {
-    CachedBluetoothDevice cachedDevice=cachedDeviceManager.findDevice(device);
-    if (cachedDevice != null) {
+  for (  BluetoothDevice btDevice : devices) {
+    CachedBluetoothDevice cachedDevice=cachedDeviceManager.findDevice(btDevice);
+    if (cachedDevice != null && !cachedDevice.equals(device)) {
       disconnectInt(cachedDevice,profile);
     }
   }

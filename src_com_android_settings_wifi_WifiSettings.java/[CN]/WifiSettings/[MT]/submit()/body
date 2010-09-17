@@ -1,23 +1,35 @@
 {
   final WifiConfigUiBase uiBase=(mDialog != null ? mDialog : mConfigPreference);
-  final WifiConfiguration config=uiBase.getController().getConfig();
-  if (config == null) {
-    if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig())) {
-      mWifiManager.connectNetwork(mSelectedAccessPoint.networkId);
-    }
-  }
- else   if (config.networkId != -1) {
-    if (mSelectedAccessPoint != null) {
-      mWifiManager.saveNetwork(config);
-    }
-  }
+  final WifiConfigController configController=uiBase.getController();
+switch (configController.chosenNetworkSetupMethod()) {
+case WifiConfigController.WPS_PBC:
+    mWifiManager.startWpsPbc(mSelectedAccessPoint.bssid);
+  break;
+case WifiConfigController.WPS_PIN:
+int apPin=configController.getWpsPin();
+mWifiManager.startWpsPin(mSelectedAccessPoint.bssid,apPin);
+break;
+case WifiConfigController.MANUAL:
+final WifiConfiguration config=configController.getConfig();
+if (config == null) {
+if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig())) {
+mWifiManager.connectNetwork(mSelectedAccessPoint.networkId);
+}
+}
+ else if (config.networkId != INVALID_NETWORK_ID) {
+if (mSelectedAccessPoint != null) {
+mWifiManager.saveNetwork(config);
+}
+}
  else {
-    if (uiBase.isEdit() || requireKeyStore(config)) {
-      mWifiManager.saveNetwork(config);
-    }
+if (uiBase.isEdit() || requireKeyStore(config)) {
+mWifiManager.saveNetwork(config);
+}
  else {
-      mWifiManager.connectNetwork(config);
-    }
-  }
-  detachConfigPreference();
+mWifiManager.connectNetwork(config);
+}
+}
+break;
+}
+detachConfigPreference();
 }

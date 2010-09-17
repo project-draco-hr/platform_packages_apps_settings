@@ -5,7 +5,7 @@
 switch (item.getItemId()) {
 case MENU_ID_CONNECT:
 {
-      if (mSelectedAccessPoint.networkId != -1) {
+      if (mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
         if (!requireKeyStore(mSelectedAccessPoint.getConfig())) {
           mWifiManager.connectNetwork(mSelectedAccessPoint.networkId);
         }

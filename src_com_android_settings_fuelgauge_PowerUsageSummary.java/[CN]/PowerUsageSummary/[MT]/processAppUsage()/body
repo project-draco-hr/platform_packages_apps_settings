@@ -68,7 +68,12 @@
       }
     }
     wakelockTime/=1000;
-    power+=(u.getTcpBytesReceived(mStatsType) + u.getTcpBytesSent(mStatsType)) * averageCostPerByte;
+    long tcpBytesReceived=u.getTcpBytesReceived(mStatsType);
+    long tcpBytesSent=u.getTcpBytesSent(mStatsType);
+    power+=(tcpBytesReceived + tcpBytesSent) * averageCostPerByte;
+    long wifiRunningTimeMs=u.getWifiRunningTime(uSecTime,which) / 1000;
+    mAppWifiRunning+=wifiRunningTimeMs;
+    power+=(wifiRunningTimeMs * mPowerProfile.getAveragePower(PowerProfile.POWER_WIFI_ON)) / 1000;
     Map<Integer,? extends BatteryStats.Uid.Sensor> sensorStats=u.getSensorStats();
     for (    Map.Entry<Integer,? extends BatteryStats.Uid.Sensor> sensorEntry : sensorStats.entrySet()) {
       Uid.Sensor sensor=sensorEntry.getValue();
@@ -92,16 +97,30 @@ if (sensorData != null) {
 }
 power+=(multiplier * sensorTime) / 1000;
 }
+if (DEBUG) Log.i(TAG,"UID " + u.getUid() + ": power="+ power);
 if (power != 0) {
 BatterySipper app=new BatterySipper(this,mRequestQueue,mHandler,packageWithHighestDrain,DrainType.APP,0,u,new double[]{power});
 app.cpuTime=cpuTime;
 app.gpsTime=gpsTime;
+app.wifiRunningTime=wifiRunningTimeMs;
 app.cpuFgTime=cpuFgTime;
 app.wakeLockTime=wakelockTime;
+app.tcpBytesReceived=tcpBytesReceived;
+app.tcpBytesSent=tcpBytesSent;
+if (u.getUid() == Process.WIFI_UID) {
+mWifiSippers.add(app);
+}
+ else {
 mUsageList.add(app);
 }
+}
+if (u.getUid() == Process.WIFI_UID) {
+mWifiPower+=power;
+}
+ else {
 if (power > mMaxPower) mMaxPower=power;
 mTotalPower+=power;
+}
 if (DEBUG) Log.i(TAG,"Added power = " + power);
 }
 }

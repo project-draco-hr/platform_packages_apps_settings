@@ -1,17 +1,24 @@
 {
 switch (msg.what) {
-case MSG_PACKAGE_LIST_CHANGED:
+case MSG_REBUILD_COMPLETE:
 {
       if (mCurCallbacks != null) {
-        mCurCallbacks.onPackageListChanged();
+        mCurCallbacks.onRebuildComplete((ArrayList<AppEntry>)msg.obj);
       }
     }
   break;
-case MSG_PACKAGE_ICON_CHANGED:
+case MSG_PACKAGE_LIST_CHANGED:
 {
   if (mCurCallbacks != null) {
-    mCurCallbacks.onPackageIconChanged();
+    mCurCallbacks.onPackageListChanged();
   }
+}
+break;
+case MSG_PACKAGE_ICON_CHANGED:
+{
+if (mCurCallbacks != null) {
+mCurCallbacks.onPackageIconChanged();
+}
 }
 break;
 case MSG_PACKAGE_SIZE_CHANGED:

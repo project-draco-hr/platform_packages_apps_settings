@@ -10,29 +10,30 @@
   mWifiRunningLabel=getContext().getString(R.string.battery_stats_wifi_running_label);
   mWakeLockLabel=getContext().getString(R.string.battery_stats_wake_lock_label);
   mPhoneSignalLabel=getContext().getString(R.string.battery_stats_phone_signal_label);
-  BatteryStats.HistoryItem rec=stats.getHistory();
-  mHistFirst=null;
   int pos=0;
   int lastInteresting=0;
   byte lastLevel=-1;
   mBatLow=0;
   mBatHigh=100;
   int aggrStates=0;
-  while (rec != null) {
-    pos++;
-    if (rec.cmd == HistoryItem.CMD_UPDATE) {
-      if (mHistFirst == null) {
-        mHistFirst=rec;
-        mHistStart=rec.time;
+  boolean first=true;
+  if (stats.startIteratingHistoryLocked()) {
+    final HistoryItem rec=new HistoryItem();
+    while (stats.getNextHistoryLocked(rec)) {
+      pos++;
+      if (rec.cmd == HistoryItem.CMD_UPDATE) {
+        if (first) {
+          first=false;
+          mHistStart=rec.time;
+        }
+        if (rec.batteryLevel != lastLevel || pos == 1) {
+          lastLevel=rec.batteryLevel;
+          lastInteresting=pos;
+          mHistEnd=rec.time;
+        }
+        aggrStates|=rec.states;
       }
-      if (rec.batteryLevel != lastLevel || pos == 1) {
-        lastLevel=rec.batteryLevel;
-        lastInteresting=pos;
-        mHistEnd=rec.time;
-      }
-      aggrStates|=rec.states;
     }
-    rec=rec.next;
   }
   mNumHist=lastInteresting;
   mHaveGps=(aggrStates & HistoryItem.STATE_GPS_ON_FLAG) != 0;

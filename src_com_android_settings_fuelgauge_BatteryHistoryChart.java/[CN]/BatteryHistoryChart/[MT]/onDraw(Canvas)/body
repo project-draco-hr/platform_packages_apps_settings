@@ -19,19 +19,8 @@
   if (!mBatCriticalPath.isEmpty()) {
     canvas.drawPath(mBatCriticalPath,mBatteryCriticalPaint);
   }
-  int lastBin=0, lastX=0;
   int top=height - mPhoneSignalOffset - (mLineWidth / 2);
-  int bottom=top + mLineWidth;
-  for (int i=0; i < mNumPhoneSignalTicks; i++) {
-    int tick=mPhoneSignalTicks[i];
-    int x=tick & PHONE_SIGNAL_X_MASK;
-    int bin=(tick & PHONE_SIGNAL_BIN_MASK) >> PHONE_SIGNAL_BIN_SHIFT;
-    if (lastBin != 0) {
-      canvas.drawRect(lastX,top,x,bottom,mPhoneSignalPaints[lastBin]);
-    }
-    lastBin=bin;
-    lastX=x;
-  }
+  mPhoneSignalChart.draw(canvas,top,mLineWidth);
   if (!mScreenOnPath.isEmpty()) {
     canvas.drawPath(mScreenOnPath,mScreenOnPaint);
   }

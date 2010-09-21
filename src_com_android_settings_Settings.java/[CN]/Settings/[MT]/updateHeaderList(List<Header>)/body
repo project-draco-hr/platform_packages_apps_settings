@@ -1,0 +1,17 @@
+{
+  int i=0;
+  while (i < target.size()) {
+    Header header=target.get(i);
+    long id=header.id;
+    if (id == R.id.dock_settings) {
+      if (!needsDockSettings())       target.remove(header);
+    }
+ else     if (id == R.id.operator_settings || id == R.id.manufacturer_settings) {
+      Utils.updateHeaderToSpecificActivityFromMetaDataOrRemove(this,target,header);
+    }
+ else     if (id == R.id.call_settings) {
+      if (!Utils.isVoiceCapable(this))       target.remove(header);
+    }
+    if (target.get(i) == header)     i++;
+  }
+}

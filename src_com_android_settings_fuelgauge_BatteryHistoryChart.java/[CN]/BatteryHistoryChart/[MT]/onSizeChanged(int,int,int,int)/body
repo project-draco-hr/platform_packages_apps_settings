@@ -6,11 +6,19 @@
     mLargeMode=true;
     mLineWidth=textHeight / 2;
     mLevelTop=textHeight + mLineWidth;
+    mScreenOnPaint.setARGB(255,32,64,255);
+    mGpsOnPaint.setARGB(255,32,64,255);
+    mWifiRunningPaint.setARGB(255,32,64,255);
+    mWakeLockPaint.setARGB(255,32,64,255);
   }
  else {
     mLargeMode=false;
     mLineWidth=mThinLineWidth;
     mLevelTop=0;
+    mScreenOnPaint.setARGB(255,0,0,255);
+    mGpsOnPaint.setARGB(255,0,0,255);
+    mWifiRunningPaint.setARGB(255,0,0,255);
+    mWakeLockPaint.setARGB(255,0,0,255);
   }
   if (mLineWidth <= 0)   mLineWidth=1;
   mTextPaint.setStrokeWidth(mThinLineWidth);
@@ -31,14 +39,14 @@
     mGpsOnOffset=mWifiRunningOffset + (mHaveWifi ? barOffset : 0);
     mPhoneSignalOffset=mGpsOnOffset + (mHaveGps ? barOffset : 0);
     mLevelOffset=mPhoneSignalOffset + barOffset + mLineWidth;
-    mPhoneSignalTicks=new int[w + 2];
+    mPhoneSignalChart.init(w);
   }
  else {
     mScreenOnOffset=mGpsOnOffset=mWifiRunningOffset=mWakeLockOffset=mLineWidth;
     mChargingOffset=mLineWidth * 2;
     mPhoneSignalOffset=0;
     mLevelOffset=mLineWidth * 3;
-    mPhoneSignalTicks=null;
+    mPhoneSignalChart.init(0);
   }
   mBatLevelPath.reset();
   mBatGoodPath.reset();
@@ -55,128 +63,124 @@
   final int batChange=mBatHigh - mBatLow;
   final int levelh=h - mLevelOffset - mLevelTop;
   mLevelBottom=mLevelTop + levelh;
-  BatteryStats.HistoryItem rec=mHistFirst;
   int x=0, y=0, startX=0, lastX=-1, lastY=-1;
   int i=0;
   Path curLevelPath=null;
   Path lastLinePath=null;
   boolean lastCharging=false, lastScreenOn=false, lastGpsOn=false;
   boolean lastWifiRunning=false, lastWakeLock=false;
-  int lastPhoneSignalBin=0;
   final int N=mNumHist;
-  while (rec != null && i < N) {
-    if (rec.cmd == BatteryStats.HistoryItem.CMD_UPDATE) {
-      x=(int)(((rec.time - timeStart) * w) / timeChange);
-      y=mLevelTop + levelh - ((rec.batteryLevel - batLow) * (levelh - 1)) / batChange;
-      if (lastX != x) {
-        if (lastY != y) {
-          Path path;
-          byte value=rec.batteryLevel;
-          if (value <= BATTERY_CRITICAL)           path=mBatCriticalPath;
- else           if (value <= BATTERY_WARN)           path=mBatWarnPath;
- else           path=mBatGoodPath;
-          if (path != lastLinePath) {
-            if (lastLinePath != null) {
-              lastLinePath.lineTo(x,y);
+  if (mStats.startIteratingHistoryLocked()) {
+    final HistoryItem rec=new HistoryItem();
+    while (mStats.getNextHistoryLocked(rec) && i < N) {
+      if (rec.cmd == BatteryStats.HistoryItem.CMD_UPDATE) {
+        x=(int)(((rec.time - timeStart) * w) / timeChange);
+        y=mLevelTop + levelh - ((rec.batteryLevel - batLow) * (levelh - 1)) / batChange;
+        if (lastX != x) {
+          if (lastY != y) {
+            Path path;
+            byte value=rec.batteryLevel;
+            if (value <= BATTERY_CRITICAL)             path=mBatCriticalPath;
+ else             if (value <= BATTERY_WARN)             path=mBatWarnPath;
+ else             path=mBatGoodPath;
+            if (path != lastLinePath) {
+              if (lastLinePath != null) {
+                lastLinePath.lineTo(x,y);
+              }
+              path.moveTo(x,y);
+              lastLinePath=path;
             }
-            path.moveTo(x,y);
-            lastLinePath=path;
-          }
  else {
-            path.lineTo(x,y);
-          }
-          if (curLevelPath == null) {
-            curLevelPath=mBatLevelPath;
-            curLevelPath.moveTo(x,y);
-            startX=x;
-          }
+              path.lineTo(x,y);
+            }
+            if (curLevelPath == null) {
+              curLevelPath=mBatLevelPath;
+              curLevelPath.moveTo(x,y);
+              startX=x;
+            }
  else {
-            curLevelPath.lineTo(x,y);
+              curLevelPath.lineTo(x,y);
+            }
+            lastX=x;
+            lastY=y;
           }
-          lastX=x;
-          lastY=y;
-        }
-        final boolean charging=(rec.states & HistoryItem.STATE_BATTERY_PLUGGED_FLAG) != 0;
-        if (charging != lastCharging) {
-          if (charging) {
-            mChargingPath.moveTo(x,h - mChargingOffset);
-          }
+          final boolean charging=(rec.states & HistoryItem.STATE_BATTERY_PLUGGED_FLAG) != 0;
+          if (charging != lastCharging) {
+            if (charging) {
+              mChargingPath.moveTo(x,h - mChargingOffset);
+            }
  else {
-            mChargingPath.lineTo(x,h - mChargingOffset);
+              mChargingPath.lineTo(x,h - mChargingOffset);
+            }
+            lastCharging=charging;
           }
-          lastCharging=charging;
-        }
-        final boolean screenOn=(rec.states & HistoryItem.STATE_SCREEN_ON_FLAG) != 0;
-        if (screenOn != lastScreenOn) {
-          if (screenOn) {
-            mScreenOnPath.moveTo(x,h - mScreenOnOffset);
-          }
+          final boolean screenOn=(rec.states & HistoryItem.STATE_SCREEN_ON_FLAG) != 0;
+          if (screenOn != lastScreenOn) {
+            if (screenOn) {
+              mScreenOnPath.moveTo(x,h - mScreenOnOffset);
+            }
  else {
-            mScreenOnPath.lineTo(x,h - mScreenOnOffset);
+              mScreenOnPath.lineTo(x,h - mScreenOnOffset);
+            }
+            lastScreenOn=screenOn;
           }
-          lastScreenOn=screenOn;
-        }
-        final boolean gpsOn=(rec.states & HistoryItem.STATE_GPS_ON_FLAG) != 0;
-        if (gpsOn != lastGpsOn) {
-          if (gpsOn) {
-            mGpsOnPath.moveTo(x,h - mGpsOnOffset);
-          }
+          final boolean gpsOn=(rec.states & HistoryItem.STATE_GPS_ON_FLAG) != 0;
+          if (gpsOn != lastGpsOn) {
+            if (gpsOn) {
+              mGpsOnPath.moveTo(x,h - mGpsOnOffset);
+            }
  else {
-            mGpsOnPath.lineTo(x,h - mGpsOnOffset);
+              mGpsOnPath.lineTo(x,h - mGpsOnOffset);
+            }
+            lastGpsOn=gpsOn;
           }
-          lastGpsOn=gpsOn;
-        }
-        final boolean wifiRunning=(rec.states & HistoryItem.STATE_WIFI_RUNNING_FLAG) != 0;
-        if (wifiRunning != lastWifiRunning) {
-          if (wifiRunning) {
-            mWifiRunningPath.moveTo(x,h - mWifiRunningOffset);
-          }
+          final boolean wifiRunning=(rec.states & HistoryItem.STATE_WIFI_RUNNING_FLAG) != 0;
+          if (wifiRunning != lastWifiRunning) {
+            if (wifiRunning) {
+              mWifiRunningPath.moveTo(x,h - mWifiRunningOffset);
+            }
  else {
-            mWifiRunningPath.lineTo(x,h - mWifiRunningOffset);
+              mWifiRunningPath.lineTo(x,h - mWifiRunningOffset);
+            }
+            lastWifiRunning=wifiRunning;
           }
-          lastWifiRunning=wifiRunning;
-        }
-        final boolean wakeLock=(rec.states & HistoryItem.STATE_WAKE_LOCK_FLAG) != 0;
-        if (wakeLock != lastWakeLock) {
-          if (wakeLock) {
-            mWakeLockPath.moveTo(x,h - mWakeLockOffset);
-          }
+          final boolean wakeLock=(rec.states & HistoryItem.STATE_WAKE_LOCK_FLAG) != 0;
+          if (wakeLock != lastWakeLock) {
+            if (wakeLock) {
+              mWakeLockPath.moveTo(x,h - mWakeLockOffset);
+            }
  else {
-            mWakeLockPath.lineTo(x,h - mWakeLockOffset);
+              mWakeLockPath.lineTo(x,h - mWakeLockOffset);
+            }
+            lastWakeLock=wakeLock;
           }
-          lastWakeLock=wakeLock;
-        }
-        if (mLargeMode) {
-          int bin;
-          if (((rec.states & HistoryItem.STATE_PHONE_STATE_MASK) >> HistoryItem.STATE_PHONE_STATE_SHIFT) == ServiceState.STATE_POWER_OFF) {
-            bin=0;
-          }
- else           if ((rec.states & HistoryItem.STATE_PHONE_SCANNING_FLAG) != 0) {
-            bin=1;
-          }
+          if (mLargeMode) {
+            int bin;
+            if (((rec.states & HistoryItem.STATE_PHONE_STATE_MASK) >> HistoryItem.STATE_PHONE_STATE_SHIFT) == ServiceState.STATE_POWER_OFF) {
+              bin=0;
+            }
+ else             if ((rec.states & HistoryItem.STATE_PHONE_SCANNING_FLAG) != 0) {
+              bin=1;
+            }
  else {
-            bin=(rec.states & HistoryItem.STATE_SIGNAL_STRENGTH_MASK) >> HistoryItem.STATE_SIGNAL_STRENGTH_SHIFT;
-            bin+=2;
-          }
-          if (bin != lastPhoneSignalBin) {
-            addPhoneSignalTick(x,bin);
-            lastPhoneSignalBin=bin;
+              bin=(rec.states & HistoryItem.STATE_SIGNAL_STRENGTH_MASK) >> HistoryItem.STATE_SIGNAL_STRENGTH_SHIFT;
+              bin+=2;
+            }
+            mPhoneSignalChart.addTick(x,bin);
           }
         }
       }
-    }
- else     if (rec.cmd != BatteryStats.HistoryItem.CMD_OVERFLOW) {
-      if (curLevelPath != null) {
-        finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastWakeLock,lastPhoneSignalBin,lastLinePath);
-        lastX=lastY=-1;
-        curLevelPath=null;
-        lastLinePath=null;
-        lastCharging=lastScreenOn=lastGpsOn=lastWakeLock=false;
-        lastPhoneSignalBin=0;
+ else       if (rec.cmd != BatteryStats.HistoryItem.CMD_OVERFLOW) {
+        if (curLevelPath != null) {
+          finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastWakeLock,lastLinePath);
+          lastX=lastY=-1;
+          curLevelPath=null;
+          lastLinePath=null;
+          lastCharging=lastScreenOn=lastGpsOn=lastWakeLock=false;
+        }
       }
+      i++;
     }
-    rec=rec.next;
-    i++;
   }
-  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastWakeLock,lastPhoneSignalBin,lastLinePath);
+  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastWakeLock,lastLinePath);
 }

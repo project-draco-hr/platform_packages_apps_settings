@@ -45,7 +45,11 @@
         }
         cpuTime+=tmpCpuTime;
         power+=processPower;
-        if (highestDrain < processPower) {
+        if (packageWithHighestDrain == null || packageWithHighestDrain.startsWith("*")) {
+          highestDrain=processPower;
+          packageWithHighestDrain=ent.getKey();
+        }
+ else         if (highestDrain < processPower && !ent.getKey().startsWith("*")) {
           highestDrain=processPower;
           packageWithHighestDrain=ent.getKey();
         }
@@ -110,12 +114,18 @@ app.tcpBytesSent=tcpBytesSent;
 if (u.getUid() == Process.WIFI_UID) {
 mWifiSippers.add(app);
 }
+ else if (u.getUid() == Process.BLUETOOTH_GID) {
+mBluetoothSippers.add(app);
+}
  else {
 mUsageList.add(app);
 }
 }
 if (u.getUid() == Process.WIFI_UID) {
 mWifiPower+=power;
+}
+ else if (u.getUid() == Process.BLUETOOTH_GID) {
+mBluetoothPower+=power;
 }
  else {
 if (power > mMaxPower) mMaxPower=power;

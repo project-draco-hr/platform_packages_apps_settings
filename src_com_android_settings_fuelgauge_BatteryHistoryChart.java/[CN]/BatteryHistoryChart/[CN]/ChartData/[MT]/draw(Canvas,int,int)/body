@@ -1,0 +1,14 @@
+{
+  int lastBin=0, lastX=0;
+  int bottom=top + height;
+  for (int i=0; i < mNumTicks; i++) {
+    int tick=mTicks[i];
+    int x=tick & CHART_DATA_X_MASK;
+    int bin=(tick & CHART_DATA_BIN_MASK) >> CHART_DATA_BIN_SHIFT;
+    if (lastBin != 0) {
+      canvas.drawRect(lastX,top,x,bottom,mPaints[lastBin]);
+    }
+    lastBin=bin;
+    lastX=x;
+  }
+}

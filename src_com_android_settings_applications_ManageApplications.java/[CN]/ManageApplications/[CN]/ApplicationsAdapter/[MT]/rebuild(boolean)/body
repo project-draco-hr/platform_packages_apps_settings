@@ -21,7 +21,25 @@ default :
 comparatorObj=ApplicationsState.ALPHA_COMPARATOR;
 break;
 }
-mBaseEntries=mState.rebuild(filterObj,comparatorObj);
+ArrayList<ApplicationsState.AppEntry> entries=mState.rebuild(filterObj,comparatorObj);
+if (entries == null && !eraseold) {
+return;
+}
+mBaseEntries=entries;
+if (mBaseEntries != null) {
 mEntries=applyPrefixFilter(mCurFilterPrefix,mBaseEntries);
+}
+ else {
+mEntries=null;
+}
 notifyDataSetChanged();
+if (entries == null) {
+mWaitingForData=true;
+mListContainer.setVisibility(View.INVISIBLE);
+mLoadingContainer.setVisibility(View.VISIBLE);
+}
+ else {
+mListContainer.setVisibility(View.VISIBLE);
+mLoadingContainer.setVisibility(View.GONE);
+}
 }

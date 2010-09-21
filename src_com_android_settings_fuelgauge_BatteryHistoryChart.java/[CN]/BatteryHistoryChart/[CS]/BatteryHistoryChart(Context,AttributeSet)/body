@@ -10,19 +10,11 @@
   mBatteryCriticalPaint.setStyle(Paint.Style.STROKE);
   mChargingPaint.setARGB(255,0,128,0);
   mChargingPaint.setStyle(Paint.Style.STROKE);
-  mScreenOnPaint.setARGB(255,0,0,255);
   mScreenOnPaint.setStyle(Paint.Style.STROKE);
-  mGpsOnPaint.setARGB(255,0,0,255);
   mGpsOnPaint.setStyle(Paint.Style.STROKE);
-  mWifiRunningPaint.setARGB(255,0,0,255);
   mWifiRunningPaint.setStyle(Paint.Style.STROKE);
-  mWakeLockPaint.setARGB(255,0,0,255);
   mWakeLockPaint.setStyle(Paint.Style.STROKE);
-  for (int i=0; i < NUM_PHONE_SIGNALS; i++) {
-    mPhoneSignalPaints[i]=new Paint();
-    mPhoneSignalPaints[i].setColor(mPhoneSignalColors[i]);
-    mPhoneSignalPaints[i].setStyle(Paint.Style.FILL);
-  }
+  mPhoneSignalChart.setColors(new int[]{0x00000000,0xffa00000,0xffa0a000,0xff808020,0xff808040,0xff808060,0xff008000});
   mTextPaint.density=getResources().getDisplayMetrics().density;
   mTextPaint.setCompatibilityScaling(getResources().getCompatibilityInfo().applicationScale);
   TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.BatteryHistoryChart,0,0);

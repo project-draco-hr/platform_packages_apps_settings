@@ -1,0 +1,6 @@
+{
+  super.onStop();
+  getActivity().unregisterReceiver(mTetherChangeReceiver);
+  mTetherChangeReceiver=null;
+  mWifiApEnabler.pause();
+}

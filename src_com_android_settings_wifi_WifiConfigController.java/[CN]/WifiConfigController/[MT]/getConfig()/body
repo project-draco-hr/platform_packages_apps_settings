@@ -61,7 +61,7 @@ break;
 default :
 return null;
 }
-config.ipAssignment=(mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP) ? IpAssignment.STATIC : IpAssignment.DHCP;
+config.ipAssignment=(mIpSettingsSpinner != null && mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP) ? IpAssignment.STATIC : IpAssignment.DHCP;
 if (config.ipAssignment == IpAssignment.STATIC) {
 try {
 config.ipConfig.ipAddress=stringToIpAddr(mIpAddressView.getText().toString());
@@ -74,7 +74,22 @@ config.ipConfig.dns2=stringToIpAddr(mDns2View.getText().toString());
 }
  catch (UnknownHostException e) {
 Toast.makeText(mConfigUi.getContext(),R.string.wifi_ip_settings_invalid_ip,Toast.LENGTH_LONG).show();
-return null;
+config.ipAssignment=IpAssignment.UNASSIGNED;
+}
+}
+config.proxySettings=(mProxySettingsSpinner != null && mProxySettingsSpinner.getSelectedItemPosition() == PROXY_STATIC) ? ProxySettings.STATIC : ProxySettings.NONE;
+if (config.proxySettings == ProxySettings.STATIC) {
+String host=mProxyHostView.getText().toString();
+String port=mProxyPortView.getText().toString();
+String exclusionList=mProxyExclusionListView.getText().toString();
+int result=ProxySelector.validate(host,port,exclusionList);
+if (result == 0) {
+config.proxyProperties.setSocketAddress(InetSocketAddress.createUnresolved(host,Integer.parseInt(port)));
+config.proxyProperties.setExclusionList(exclusionList);
+}
+ else {
+Toast.makeText(mConfigUi.getContext(),result,Toast.LENGTH_LONG).show();
+config.proxySettings=ProxySettings.UNASSIGNED;
 }
 }
 return config;

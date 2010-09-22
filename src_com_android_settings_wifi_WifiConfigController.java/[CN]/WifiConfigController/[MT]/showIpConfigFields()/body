@@ -1,10 +1,6 @@
 {
   WifiConfiguration config=null;
   mView.findViewById(R.id.ip_fields).setVisibility(View.VISIBLE);
-  if (mIpSettingsSpinner == null) {
-    mIpSettingsSpinner=(Spinner)mView.findViewById(R.id.ip_settings);
-    mIpSettingsSpinner.setOnItemSelectedListener(this);
-  }
   if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
     config=mAccessPoint.getConfig();
   }
@@ -24,7 +20,7 @@
         mGatewayView.setText(intToIpString(ipConfig.gateway));
         mNetmaskView.setText(intToIpString(ipConfig.netmask));
         mDns1View.setText(intToIpString(ipConfig.dns1));
-        mDns2View.setText(intToIpString(ipConfig.dns2));
+        if (ipConfig.dns2 != 0)         mDns2View.setText(intToIpString(ipConfig.dns2));
       }
     }
   }

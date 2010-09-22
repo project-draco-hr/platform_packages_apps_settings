@@ -17,6 +17,10 @@
   }
  else {
     mConfigUi.setTitle(mAccessPoint.ssid);
+    mIpSettingsSpinner=(Spinner)mView.findViewById(R.id.ip_settings);
+    mIpSettingsSpinner.setOnItemSelectedListener(this);
+    mProxySettingsSpinner=(Spinner)mView.findViewById(R.id.proxy_settings);
+    mProxySettingsSpinner.setOnItemSelectedListener(this);
     ViewGroup group=(ViewGroup)mView.findViewById(R.id.info);
     DetailedState state=mAccessPoint.getState();
     if (state != null) {
@@ -37,12 +41,28 @@
         addRow(group,R.string.wifi_ip_address,Formatter.formatIpAddress(address));
       }
     }
+    if (mAccessPoint.networkId != INVALID_NETWORK_ID) {
+      WifiConfiguration config=mAccessPoint.getConfig();
+      if (config.ipAssignment == IpAssignment.STATIC) {
+        mIpSettingsSpinner.setSelection(STATIC_IP);
+      }
+ else {
+        mIpSettingsSpinner.setSelection(DHCP);
+      }
+      if (config.proxySettings == ProxySettings.STATIC) {
+        mProxySettingsSpinner.setSelection(PROXY_STATIC);
+      }
+ else {
+        mProxySettingsSpinner.setSelection(PROXY_NONE);
+      }
+    }
     if (mAccessPoint.networkId == INVALID_NETWORK_ID && mAccessPoint.wpsAvailable) {
       showNetworkSetupFields();
     }
     if (mAccessPoint.networkId == INVALID_NETWORK_ID || mEdit) {
       showSecurityFields();
       showIpConfigFields();
+      showProxyFields();
     }
     if (mEdit) {
       mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
@@ -57,12 +77,6 @@
       if (mAccessPoint.networkId != INVALID_NETWORK_ID) {
         mConfigUi.setForgetButton(context.getString(R.string.wifi_forget));
       }
-    }
-  }
-  if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
-    WifiConfiguration config=mAccessPoint.getConfig();
-    if (config.ipAssignment == IpAssignment.STATIC) {
-      mIpSettingsSpinner.setSelection(STATIC_IP);
     }
   }
   mConfigUi.setCancelButton(context.getString(R.string.wifi_cancel));

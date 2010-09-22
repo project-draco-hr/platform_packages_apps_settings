@@ -1,0 +1,29 @@
+{
+  WifiConfiguration config=null;
+  mView.findViewById(R.id.proxy_settings_fields).setVisibility(View.VISIBLE);
+  if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
+    config=mAccessPoint.getConfig();
+  }
+  if (mProxySettingsSpinner.getSelectedItemPosition() == PROXY_STATIC) {
+    mView.findViewById(R.id.proxy_fields).setVisibility(View.VISIBLE);
+    if (mProxyHostView == null) {
+      mProxyHostView=(TextView)mView.findViewById(R.id.proxy_hostname);
+      mProxyPortView=(TextView)mView.findViewById(R.id.proxy_port);
+      mProxyExclusionListView=(TextView)mView.findViewById(R.id.proxy_exclusionlist);
+    }
+    if (config != null) {
+      ProxyProperties proxyProperties=config.proxyProperties;
+      if (proxyProperties != null) {
+        InetSocketAddress sockAddr=proxyProperties.getSocketAddress();
+        if (sockAddr != null) {
+          mProxyHostView.setText(sockAddr.getHostName());
+          mProxyPortView.setText(Integer.toString(sockAddr.getPort()));
+          mProxyExclusionListView.setText(proxyProperties.getExclusionList());
+        }
+      }
+    }
+  }
+ else {
+    mView.findViewById(R.id.proxy_fields).setVisibility(View.GONE);
+  }
+}

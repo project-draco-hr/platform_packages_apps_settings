@@ -61,7 +61,7 @@ break;
 default :
 return null;
 }
-config.ipAssignment=mIpSettingsSpinner.getSelectedItem().toString().equals(STATIC_IP) ? IpAssignment.STATIC : IpAssignment.DHCP;
+config.ipAssignment=(mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP) ? IpAssignment.STATIC : IpAssignment.DHCP;
 if (config.ipAssignment == IpAssignment.STATIC) {
 try {
 config.ipConfig.ipAddress=stringToIpAddr(mIpAddressView.getText().toString());

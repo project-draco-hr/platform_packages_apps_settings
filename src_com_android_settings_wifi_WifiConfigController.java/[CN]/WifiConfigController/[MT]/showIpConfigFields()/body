@@ -8,7 +8,7 @@
   if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
     config=mAccessPoint.getConfig();
   }
-  if (mIpSettingsSpinner.getSelectedItem().equals(STATIC_IP)) {
+  if (mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP) {
     mView.findViewById(R.id.staticip).setVisibility(View.VISIBLE);
     if (mIpAddressView == null) {
       mIpAddressView=(TextView)mView.findViewById(R.id.ipaddress);

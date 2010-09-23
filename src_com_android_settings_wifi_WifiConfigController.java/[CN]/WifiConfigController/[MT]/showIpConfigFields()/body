@@ -1,10 +1,11 @@
 {
   WifiConfiguration config=null;
-  mView.findViewById(R.id.ipfields).setVisibility(View.VISIBLE);
+  mView.findViewById(R.id.ip_fields).setVisibility(View.VISIBLE);
   if (mIpSettingsSpinner == null) {
-    mIpSettingsSpinner=(Spinner)mView.findViewById(R.id.ipsettings);
+    mIpSettingsSpinner=(Spinner)mView.findViewById(R.id.ip_settings);
+    mIpSettingsSpinner.setOnItemSelectedListener(this);
   }
-  if (mAccessPoint != null && mAccessPoint.networkId != -1) {
+  if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
     config=mAccessPoint.getConfig();
   }
   if (mIpSettingsSpinner.getSelectedItem().equals(STATIC_IP)) {

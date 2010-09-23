@@ -19,7 +19,13 @@
       setSummary(status);
     }
  else {
-      String format=context.getString((status == null) ? R.string.wifi_secured : R.string.wifi_secured_with_status);
+      String format;
+      if (wpsAvailable && mConfig == null) {
+        format=context.getString(R.string.wifi_secured_with_wps);
+      }
+ else {
+        format=context.getString((status == null) ? R.string.wifi_secured : R.string.wifi_secured_with_status);
+      }
       String[] type=context.getResources().getStringArray(R.array.wifi_security);
       setSummary(String.format(format,type[security],status));
     }

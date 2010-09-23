@@ -1,14 +1,14 @@
 {
   if (mAccessPointSecurity == AccessPoint.SECURITY_NONE) {
-    mView.findViewById(R.id.fields).setVisibility(View.GONE);
+    mView.findViewById(R.id.security_fields).setVisibility(View.GONE);
     return;
   }
-  mView.findViewById(R.id.fields).setVisibility(View.VISIBLE);
+  mView.findViewById(R.id.security_fields).setVisibility(View.VISIBLE);
   if (mPasswordView == null) {
     mPasswordView=(TextView)mView.findViewById(R.id.password);
     mPasswordView.addTextChangedListener(this);
     ((CheckBox)mView.findViewById(R.id.show_password)).setOnClickListener(this);
-    if (mAccessPoint != null && mAccessPoint.networkId != -1) {
+    if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
       mPasswordView.setHint(R.string.wifi_unchanged);
     }
   }
@@ -26,7 +26,7 @@
     mEapAnonymousView=(TextView)mView.findViewById(R.id.anonymous);
     loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE);
     loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY);
-    if (mAccessPoint != null && mAccessPoint.networkId != -1) {
+    if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
       WifiConfiguration config=mAccessPoint.getConfig();
       setSelection(mEapMethodSpinner,config.eap.value());
       setSelection(mPhase2Spinner,config.phase2.value());

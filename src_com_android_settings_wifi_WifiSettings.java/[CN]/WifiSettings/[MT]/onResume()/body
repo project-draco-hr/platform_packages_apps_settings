@@ -4,10 +4,10 @@
     mWifiEnabler.resume();
   }
   getActivity().registerReceiver(mReceiver,mFilter);
-  if (mKeyStoreNetworkId != -1 && KeyStore.getInstance().test() == KeyStore.NO_ERROR) {
+  if (mKeyStoreNetworkId != INVALID_NETWORK_ID && KeyStore.getInstance().test() == KeyStore.NO_ERROR) {
     mWifiManager.connectNetwork(mKeyStoreNetworkId);
   }
-  mKeyStoreNetworkId=-1;
+  mKeyStoreNetworkId=INVALID_NETWORK_ID;
   if (mInXlSetupWizard) {
     final int wifiState=mWifiManager.getWifiState();
 switch (wifiState) {

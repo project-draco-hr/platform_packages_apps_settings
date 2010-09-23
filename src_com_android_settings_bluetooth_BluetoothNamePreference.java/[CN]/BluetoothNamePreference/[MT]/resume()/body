@@ -4,8 +4,8 @@
   filter.addAction(BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED);
   getContext().registerReceiver(mReceiver,filter);
   EditText et=getEditText();
-  et.setFilters(new InputFilter[]{new LengthFilter(BLUETOOTH_NAME_MAX_LENGTH)});
   if (et != null) {
+    et.setFilters(new InputFilter[]{new Utf8ByteLengthFilter(BLUETOOTH_NAME_MAX_LENGTH_BYTES)});
     et.addTextChangedListener(this);
     Dialog d=getDialog();
     if (d instanceof AlertDialog) {

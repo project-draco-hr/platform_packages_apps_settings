@@ -16,7 +16,8 @@
   for (int i=mAccessPoints.getPreferenceCount() - 1; i >= 0; --i) {
     Preference preference=mAccessPoints.getPreference(i);
     if (preference instanceof AccessPoint) {
-      ((AccessPoint)preference).update(mLastInfo,mLastState);
+      final AccessPoint accessPoint=(AccessPoint)preference;
+      accessPoint.update(mLastInfo,mLastState);
     }
   }
   final Activity activity=getActivity();

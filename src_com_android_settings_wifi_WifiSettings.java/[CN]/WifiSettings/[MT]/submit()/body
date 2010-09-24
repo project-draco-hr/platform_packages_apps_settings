@@ -31,5 +31,9 @@ mWifiManager.connectNetwork(config);
 }
 break;
 }
+if (mInXlSetupWizard && mConfigPreference != null) {
+mConnectingAccessPoint=mSelectedAccessPoint;
+mConnectingAccessPoint.setSelectable(false);
+}
 detachConfigPreference();
 }

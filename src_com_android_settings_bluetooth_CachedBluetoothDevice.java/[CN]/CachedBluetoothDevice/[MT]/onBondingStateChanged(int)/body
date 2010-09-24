@@ -1,6 +1,16 @@
 {
   if (bondState == BluetoothDevice.BOND_NONE) {
     mProfiles.clear();
+    mConnectAfterPairing=false;
   }
   refresh();
+  if (bondState == BluetoothDevice.BOND_BONDED) {
+    if (mDevice.isBluetoothDock()) {
+      onBondingDockConnect();
+    }
+ else     if (mConnectAfterPairing) {
+      connect();
+    }
+    mConnectAfterPairing=false;
+  }
 }

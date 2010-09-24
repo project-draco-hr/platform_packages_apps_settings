@@ -5,5 +5,7 @@
   }
   if (!mDevice.createBond()) {
     mLocalManager.showError(mDevice,R.string.bluetooth_error_title,R.string.bluetooth_pairing_error_message);
+    return;
   }
+  mConnectAfterPairing=true;
 }

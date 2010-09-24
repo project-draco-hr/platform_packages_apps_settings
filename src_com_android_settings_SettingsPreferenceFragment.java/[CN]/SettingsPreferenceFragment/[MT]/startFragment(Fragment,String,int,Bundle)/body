@@ -1,9 +1,13 @@
 {
-  if (mFragmentStarter != null) {
-    return mFragmentStarter.startFragment(caller,fragmentClass,requestCode,extras);
+  if (getActivity() instanceof PreferenceActivity) {
+    PreferenceActivity preferenceActivity=(PreferenceActivity)getActivity();
+    Fragment f=Fragment.instantiate(getActivity(),fragmentClass,extras);
+    caller.setTargetFragment(f,requestCode);
+    preferenceActivity.switchToHeader(fragmentClass,extras);
+    return true;
   }
  else {
-    Log.w(TAG,"FragmentStarter is not set.");
+    Log.w(TAG,"Parent isn't PreferenceActivity, thus there's no way to launch the " + "given Fragment (name: " + fragmentClass + ", requestCode: "+ requestCode+ ")");
     return false;
   }
 }

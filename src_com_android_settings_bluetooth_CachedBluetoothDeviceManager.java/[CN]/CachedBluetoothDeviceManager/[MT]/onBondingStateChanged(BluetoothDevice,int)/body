@@ -12,12 +12,4 @@
     }
   }
   cachedDevice.onBondingStateChanged(bondState);
-  if (bondState == BluetoothDevice.BOND_BONDED) {
-    if (!device.isBluetoothDock()) {
-      cachedDevice.connect();
-    }
- else {
-      cachedDevice.onBondingDockConnect();
-    }
-  }
 }

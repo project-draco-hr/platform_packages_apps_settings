@@ -14,8 +14,9 @@
     }
     pairingIntent.setAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
     pairingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    PowerManager powerManager=(PowerManager)context.getSystemService(Context.POWER_SERVICE);
     String deviceAddress=device != null ? device.getAddress() : null;
-    if (localManager.shouldShowDialogInForeground(deviceAddress)) {
+    if (powerManager.isScreenOn() && localManager.shouldShowDialogInForeground(deviceAddress)) {
       context.startActivity(pairingIntent);
     }
  else {
@@ -28,6 +29,7 @@
       }
       notification.setLatestEventInfo(context,res.getString(R.string.bluetooth_notif_title),res.getString(R.string.bluetooth_notif_message) + name,pending);
       notification.flags|=Notification.FLAG_AUTO_CANCEL;
+      notification.defaults|=Notification.DEFAULT_SOUND;
       NotificationManager manager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
       manager.notify(NOTIFICATION_ID,notification);
     }

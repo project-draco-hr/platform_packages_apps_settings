@@ -1,0 +1,9 @@
+{
+  String fragmentClass=getStartingFragmentClass(super.getIntent());
+  if (fragmentClass != null) {
+    Header header=new Header();
+    header.fragment=fragmentClass;
+    return header;
+  }
+  return super.onGetInitialHeader();
+}

@@ -1,23 +1,24 @@
 {
   int buttonId=getButtonId();
   int indicatorId=getIndicatorId();
+  int pos=getPosition();
 switch (getTriState(context)) {
 case STATE_DISABLED:
     views.setImageViewResource(buttonId,getButtonImageId(false));
-  views.setImageViewResource(indicatorId,R.drawable.appwidget_settings_ind_off_l);
+  views.setImageViewResource(indicatorId,IND_DRAWABLE_OFF[pos]);
 break;
 case STATE_ENABLED:
 views.setImageViewResource(buttonId,getButtonImageId(true));
-views.setImageViewResource(indicatorId,R.drawable.appwidget_settings_ind_on_l);
+views.setImageViewResource(indicatorId,IND_DRAWABLE_ON[pos]);
 break;
 case STATE_INTERMEDIATE:
 if (isTurningOn()) {
 views.setImageViewResource(buttonId,getButtonImageId(true));
-views.setImageViewResource(indicatorId,R.drawable.appwidget_settings_ind_mid_l);
+views.setImageViewResource(indicatorId,IND_DRAWABLE_MID[pos]);
 }
  else {
 views.setImageViewResource(buttonId,getButtonImageId(false));
-views.setImageViewResource(indicatorId,R.drawable.appwidget_settings_ind_off_l);
+views.setImageViewResource(indicatorId,IND_DRAWABLE_OFF[pos]);
 }
 break;
 }

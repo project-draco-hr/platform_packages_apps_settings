@@ -22,4 +22,10 @@
   ((ZonePicker)getFragmentManager().findFragmentById(R.id.zone_picker_fragment)).setZoneSelectionListener(this);
   ((Button)findViewById(R.id.next_button)).setOnClickListener(this);
   ((Button)findViewById(R.id.skip_button)).setOnClickListener(this);
+  if (mStatusBarManager != null) {
+    mStatusBarManager.disable(StatusBarManager.DISABLE_EXPAND | StatusBarManager.DISABLE_NOTIFICATION_ICONS | StatusBarManager.DISABLE_NOTIFICATION_ALERTS| StatusBarManager.DISABLE_SYSTEM_INFO| StatusBarManager.DISABLE_NAVIGATION);
+  }
+ else {
+    Log.e(TAG,"StatusBarManager isn't available.");
+  }
 }

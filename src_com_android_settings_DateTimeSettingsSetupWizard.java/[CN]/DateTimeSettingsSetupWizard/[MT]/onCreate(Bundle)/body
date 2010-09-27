@@ -2,6 +2,7 @@
   requestWindowFeature(Window.FEATURE_NO_TITLE);
   super.onCreate(savedInstanceState);
   setContentView(R.layout.date_time_settings_setupwizard);
+  mStatusBarManager=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);
   mXLargeScreenSize=(getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE;
   if (mXLargeScreenSize) {
     initUiForXl();

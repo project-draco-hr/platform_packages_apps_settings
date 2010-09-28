@@ -13,6 +13,9 @@
     mFilterApps=FILTER_APPS_ALL;
     defaultTabTag=TAB_ALL;
   }
+ else   if (action.equals(Settings.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS)) {
+    defaultTabTag=TAB_ALL;
+  }
   if (savedInstanceState != null) {
     mSortOrder=savedInstanceState.getInt("sortOrder",mSortOrder);
     mFilterApps=savedInstanceState.getInt("filterApps",mFilterApps);

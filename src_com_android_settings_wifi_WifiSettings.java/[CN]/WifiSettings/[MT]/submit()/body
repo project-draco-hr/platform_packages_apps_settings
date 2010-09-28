@@ -1,6 +1,7 @@
 {
   final WifiConfigUiBase uiBase=(mDialog != null ? mDialog : mConfigPreference);
   final WifiConfigController configController=uiBase.getController();
+  boolean successful=true;
 switch (configController.chosenNetworkSetupMethod()) {
 case WifiConfigController.WPS_PBC:
     mWifiManager.startWpsPbc(mSelectedAccessPoint.bssid);
@@ -12,8 +13,11 @@ break;
 case WifiConfigController.MANUAL:
 final WifiConfiguration config=configController.getConfig();
 if (config == null) {
-if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig())) {
+if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig()) && mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
 mWifiManager.connectNetwork(mSelectedAccessPoint.networkId);
+}
+ else {
+successful=false;
 }
 }
  else if (config.networkId != INVALID_NETWORK_ID) {
@@ -31,7 +35,7 @@ mWifiManager.connectNetwork(config);
 }
 break;
 }
-if (mInXlSetupWizard && mConfigPreference != null) {
+if (mInXlSetupWizard && successful && mConfigPreference != null) {
 mConnectingAccessPoint=mSelectedAccessPoint;
 mConnectingAccessPoint.setSelectable(false);
 }

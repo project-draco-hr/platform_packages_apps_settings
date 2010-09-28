@@ -5,8 +5,7 @@
   mConfigPreference=null;
   mConnectingAccessPoint=null;
   mAccessPoints.removeAll();
-  final Activity activity=getActivity();
-  if (activity instanceof WifiSettingsForSetupWizardXL) {
-    ((WifiSettingsForSetupWizardXL)activity).onRefreshAccessPoints();
+  if (mInXlSetupWizard) {
+    ((WifiSettingsForSetupWizardXL)getActivity()).onRefreshAccessPoints();
   }
 }

@@ -3,6 +3,7 @@
   requestWindowFeature(Window.FEATURE_NO_TITLE);
   setContentView(R.layout.wifi_settings_for_setup_wizard_xl);
   mWifiSettings=(WifiSettings)getFragmentManager().findFragmentById(R.id.wifi_setup_fragment);
+  mInputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
   setup();
   getIntent().putExtra(WifiSettings.IN_XL_SETUP_WIZARD,true);
   mStatusBarManager=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);

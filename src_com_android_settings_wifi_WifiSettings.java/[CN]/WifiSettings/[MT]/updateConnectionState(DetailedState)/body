@@ -22,6 +22,9 @@
   }
   final Activity activity=getActivity();
   if (activity instanceof WifiSettingsForSetupWizardXL) {
+    if (mLastState == DetailedState.FAILED) {
+      refreshAccessPoints();
+    }
     ((WifiSettingsForSetupWizardXL)activity).updateConnectionState(mLastState);
   }
 }

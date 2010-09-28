@@ -30,6 +30,14 @@ case CONNECTED:
   finish();
   break;
 }
+case FAILED:
+{
+mProgressBar.setIndeterminate(false);
+mProgressBar.setProgress(0);
+mStatusText.setText(R.string.wifi_setup_status_select_network);
+mProgressText.setText(Summary.get(this,state));
+break;
+}
 default :
 if (mWifiSettings.getAccessPointsCount() == 0 && mIgnoringWifiNotificationCount > 0) {
 mIgnoringWifiNotificationCount--;

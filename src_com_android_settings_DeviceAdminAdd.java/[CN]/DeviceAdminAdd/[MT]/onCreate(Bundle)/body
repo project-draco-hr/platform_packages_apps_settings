@@ -51,6 +51,13 @@ catch (  IOException e) {
   mAdminName=(TextView)findViewById(R.id.admin_name);
   mAdminDescription=(TextView)findViewById(R.id.admin_description);
   mAddMsg=(TextView)findViewById(R.id.add_msg);
+  mAddMsg.setOnClickListener(new View.OnClickListener(){
+    public void onClick(    View v){
+      toggleMessageEllipsis(v);
+    }
+  }
+);
+  toggleMessageEllipsis(mAddMsg);
   mAdminWarning=(TextView)findViewById(R.id.admin_warning);
   mAdminPolicies=(ViewGroup)findViewById(R.id.admin_policies);
   mCancelButton=(Button)findViewById(R.id.cancel_button);

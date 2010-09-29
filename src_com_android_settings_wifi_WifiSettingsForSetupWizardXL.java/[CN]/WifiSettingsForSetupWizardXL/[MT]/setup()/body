@@ -1,10 +1,11 @@
 {
   mProgressText=(TextView)findViewById(R.id.scanning_progress_text);
-  mProgressText.setText(Summary.get(this,DetailedState.SCANNING));
   mProgressBar=(ProgressBar)findViewById(R.id.scanning_progress_bar);
   mProgressBar.setMax(2);
-  mProgressBar.setIndeterminate(true);
   mStatusText=(TextView)findViewById(R.id.wifi_setup_status);
+  mProgressText.setText(Summary.get(this,DetailedState.SCANNING));
+  mProgressBar.setIndeterminate(true);
+  mStatusText.setText(R.string.wifi_setup_status_scanning);
   ((Button)findViewById(R.id.wifi_setup_refresh_list)).setOnClickListener(this);
   ((Button)findViewById(R.id.wifi_setup_add_network)).setOnClickListener(this);
   ((Button)findViewById(R.id.wifi_setup_skip_or_next)).setOnClickListener(this);

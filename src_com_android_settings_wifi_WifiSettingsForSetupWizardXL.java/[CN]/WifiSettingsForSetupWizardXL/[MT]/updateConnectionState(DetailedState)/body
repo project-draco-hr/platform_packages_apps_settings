@@ -24,10 +24,16 @@ case CONNECTED:
 {
   mProgressBar.setIndeterminate(false);
   mProgressBar.setProgress(2);
-  mStatusText.setText(R.string.wifi_setup_status_connected);
   mProgressText.setText(Summary.get(this,state));
-  setResult(Activity.RESULT_OK);
-  finish();
+  mStatusText.setText(R.string.wifi_setup_status_proceed_to_next);
+  if (mIgnoringWifiNotificationCount > 0) {
+    mIgnoringWifiNotificationCount=0;
+  }
+ else {
+    mProgressText.setText(Summary.get(this,state));
+    setResult(Activity.RESULT_OK);
+    finish();
+  }
   break;
 }
 case FAILED:
@@ -43,7 +49,6 @@ if (mWifiSettings.getAccessPointsCount() == 0 && mIgnoringWifiNotificationCount 
 mIgnoringWifiNotificationCount--;
 mProgressBar.setIndeterminate(true);
 mProgressText.setText(Summary.get(this,DetailedState.SCANNING));
-return;
 }
  else {
 mProgressBar.setIndeterminate(false);

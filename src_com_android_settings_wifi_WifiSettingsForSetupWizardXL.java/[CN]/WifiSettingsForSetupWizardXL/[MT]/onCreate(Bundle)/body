@@ -7,10 +7,4 @@
   setup();
   getIntent().putExtra(WifiSettings.IN_XL_SETUP_WIZARD,true);
   mStatusBarManager=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);
-  if (mStatusBarManager != null) {
-    mStatusBarManager.disable(StatusBarManager.DISABLE_EXPAND | StatusBarManager.DISABLE_NOTIFICATION_ICONS | StatusBarManager.DISABLE_NOTIFICATION_ALERTS| StatusBarManager.DISABLE_SYSTEM_INFO| StatusBarManager.DISABLE_NAVIGATION);
-  }
- else {
-    Log.e(TAG,"StatusBarManager isn't available.");
-  }
 }

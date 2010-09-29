@@ -1,0 +1,9 @@
+{
+  super.onResume();
+  if (mStatusBarManager != null) {
+    mStatusBarManager.disable(StatusBarManager.DISABLE_EXPAND | StatusBarManager.DISABLE_NOTIFICATION_ICONS | StatusBarManager.DISABLE_NOTIFICATION_ALERTS| StatusBarManager.DISABLE_SYSTEM_INFO| StatusBarManager.DISABLE_NAVIGATION);
+  }
+ else {
+    Log.e(TAG,"StatusBarManager isn't available.");
+  }
+}

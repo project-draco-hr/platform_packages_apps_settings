@@ -1,0 +1,8 @@
+{
+  mContext=context;
+  mCheckbox=checkBoxPreference;
+  mNfcManager=(NfcManager)context.getSystemService(Context.NFC_SERVICE);
+  if (mNfcManager == null) {
+    mCheckbox.setEnabled(false);
+  }
+}

@@ -1,0 +1,21 @@
+{
+  if (mNfcState) {
+    try {
+      mNfcManager.enable();
+    }
+ catch (    NfcException e) {
+      Log.w(TAG,"NFC enabling failed: " + e.getMessage());
+      mNfcState=false;
+    }
+  }
+ else {
+    try {
+      mNfcManager.disable();
+    }
+ catch (    NfcException e) {
+      Log.w(TAG,"NFC disabling failed: " + e.getMessage());
+      mNfcState=true;
+    }
+  }
+  updateUi();
+}

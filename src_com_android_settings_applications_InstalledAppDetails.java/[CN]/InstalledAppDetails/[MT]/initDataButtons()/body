@@ -1,9 +1,16 @@
 {
-  if (mAppEntry.info.manageSpaceActivityName != null) {
-    mClearDataButton.setText(R.string.manage_space_text);
+  if ((mAppEntry.info.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_ALLOW_CLEAR_USER_DATA)) == ApplicationInfo.FLAG_SYSTEM) {
+    mClearDataButton.setText(R.string.clear_user_data_text);
+    mClearDataButton.setEnabled(false);
+    mCanClearData=false;
   }
  else {
-    mClearDataButton.setText(R.string.clear_user_data_text);
+    if (mAppEntry.info.manageSpaceActivityName != null) {
+      mClearDataButton.setText(R.string.manage_space_text);
+    }
+ else {
+      mClearDataButton.setText(R.string.clear_user_data_text);
+    }
+    mClearDataButton.setOnClickListener(this);
   }
-  mClearDataButton.setOnClickListener(this);
 }

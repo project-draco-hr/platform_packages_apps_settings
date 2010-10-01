@@ -9,7 +9,6 @@ case R.id.current_time_zone:
 case R.id.next_button:
 {
     if (mXLargeScreenSize) {
-      Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME_ZONE,mAutoTimeZoneButton.isChecked() ? 1 : 0);
       Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,mAutoDateTimeButton.isChecked() ? 1 : 0);
       DateTimeSettings.setDate(mDatePicker.getYear(),mDatePicker.getMonth(),mDatePicker.getDayOfMonth());
       DateTimeSettings.setTime(mTimePicker.getCurrentHour(),mTimePicker.getCurrentMinute());

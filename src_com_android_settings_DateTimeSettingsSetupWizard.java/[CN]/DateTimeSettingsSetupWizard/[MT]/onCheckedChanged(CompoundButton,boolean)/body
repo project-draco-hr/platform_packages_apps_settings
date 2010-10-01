@@ -1,16 +1,6 @@
 {
   final boolean autoEnabled=isChecked;
-  if (buttonView == mAutoTimeZoneButton) {
-    if (!mXLargeScreenSize) {
-      Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME_ZONE,isChecked ? 1 : 0);
-    }
-    mTimeZone.setEnabled(!autoEnabled);
-    if (isChecked) {
-      findViewById(R.id.current_time_zone).setVisibility(View.VISIBLE);
-      findViewById(R.id.zone_picker).setVisibility(View.GONE);
-    }
-  }
- else   if (buttonView == mAutoDateTimeButton) {
+  if (buttonView == mAutoDateTimeButton) {
     if (!mXLargeScreenSize) {
       Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,isChecked ? 1 : 0);
     }

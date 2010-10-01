@@ -1,15 +1,16 @@
 {
-  final boolean autoTimeZoneEnabled=isAutoTimeZoneEnabled();
-  mAutoTimeZoneButton=(CompoundButton)findViewById(R.id.time_zone_auto);
-  mAutoTimeZoneButton.setChecked(autoTimeZoneEnabled);
-  mAutoTimeZoneButton.setOnCheckedChangeListener(this);
-  mAutoTimeZoneButton.setText(autoTimeZoneEnabled ? R.string.zone_auto_summaryOn : R.string.zone_auto_summaryOff);
   final TimeZone tz=TimeZone.getDefault();
   mTimeZone=(Button)findViewById(R.id.current_time_zone);
   mTimeZone.setText(DateTimeSettings.getTimeZoneText(tz));
   mTimeZone.setOnClickListener(this);
-  mTimeZone.setEnabled(!autoTimeZoneEnabled);
-  final boolean autoDateTimeEnabled=isAutoDateTimeEnabled();
+  final boolean autoDateTimeEnabled;
+  final Intent intent=getIntent();
+  if (intent.hasExtra(EXTRA_INITIAL_AUTO_DATETIME_VALUE)) {
+    autoDateTimeEnabled=intent.getBooleanExtra(EXTRA_INITIAL_AUTO_DATETIME_VALUE,false);
+  }
+ else {
+    autoDateTimeEnabled=isAutoDateTimeEnabled();
+  }
   mAutoDateTimeButton=(CompoundButton)findViewById(R.id.date_time_auto);
   mAutoDateTimeButton.setChecked(autoDateTimeEnabled);
   mAutoDateTimeButton.setText(autoDateTimeEnabled ? R.string.date_time_auto_summaryOn : R.string.date_time_auto_summaryOff);
@@ -22,10 +23,4 @@
   ((ZonePicker)getFragmentManager().findFragmentById(R.id.zone_picker_fragment)).setZoneSelectionListener(this);
   ((Button)findViewById(R.id.next_button)).setOnClickListener(this);
   ((Button)findViewById(R.id.skip_button)).setOnClickListener(this);
-  if (mStatusBarManager != null) {
-    mStatusBarManager.disable(StatusBarManager.DISABLE_EXPAND | StatusBarManager.DISABLE_NOTIFICATION_ICONS | StatusBarManager.DISABLE_NOTIFICATION_ALERTS| StatusBarManager.DISABLE_SYSTEM_INFO| StatusBarManager.DISABLE_NAVIGATION);
-  }
- else {
-    Log.e(TAG,"StatusBarManager isn't available.");
-  }
 }

@@ -1,18 +1,7 @@
 {
   if (preference.isChecked()) {
-    final CheckBoxPreference checkBoxPreference=preference;
-    AlertDialog dialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getActivity().getString(R.string.accessibility_script_injection_security_warning)).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-      public void onClick(      DialogInterface dialog,      int which){
-        Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,1);
-      }
-    }
-).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-      public void onClick(      DialogInterface dialog,      int which){
-        checkBoxPreference.setChecked(false);
-      }
-    }
-).create();
-    dialog.show();
+    preference.setChecked(false);
+    showDialog(DIALOG_ID_ENABLE_SCRIPT_INJECTION);
   }
  else {
     Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,0);

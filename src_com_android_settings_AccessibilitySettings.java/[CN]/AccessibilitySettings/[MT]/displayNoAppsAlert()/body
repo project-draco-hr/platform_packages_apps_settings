@@ -2,27 +2,9 @@
   try {
     PackageManager pm=getActivity().getPackageManager();
     ApplicationInfo info=pm.getApplicationInfo("com.android.vending",0);
+    showDialog(DIALOG_ID_NO_ACCESSIBILITY_SERVICES);
   }
  catch (  NameNotFoundException e) {
     return;
   }
-  AlertDialog.Builder noAppsAlert=new AlertDialog.Builder(getActivity());
-  noAppsAlert.setTitle(R.string.accessibility_service_no_apps_title);
-  noAppsAlert.setMessage(R.string.accessibility_service_no_apps_message);
-  noAppsAlert.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int which){
-      String screenreaderMarketLink=SystemProperties.get("ro.screenreader.market",DEFAULT_SCREENREADER_MARKET_LINK);
-      Uri marketUri=Uri.parse(screenreaderMarketLink);
-      Intent marketIntent=new Intent(Intent.ACTION_VIEW,marketUri);
-      startActivity(marketIntent);
-      getFragmentManager().popBackStack();
-    }
-  }
-);
-  noAppsAlert.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int which){
-    }
-  }
-);
-  noAppsAlert.show();
 }

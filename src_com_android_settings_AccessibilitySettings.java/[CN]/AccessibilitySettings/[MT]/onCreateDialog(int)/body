@@ -1,0 +1,42 @@
+{
+switch (dialogId) {
+case DIALOG_ID_DISABLE_ACCESSIBILITY:
+    return (new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getResources().getString(R.string.accessibility_service_disable_warning)).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+      public void onClick(      DialogInterface dialog,      int which){
+        Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
+        mToggleAccessibilityCheckBox.setChecked(false);
+        setAccessibilityServicePreferencesState(false);
+      }
+    }
+).setNegativeButton(android.R.string.cancel,null).create();
+case DIALOG_ID_ENABLE_SCRIPT_INJECTION:
+  return new AlertDialog.Builder(getActivity()).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getActivity().getString(R.string.accessibility_script_injection_security_warning)).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,1);
+      mToggleScriptInjectionCheckBox.setChecked(true);
+    }
+  }
+).setNegativeButton(android.R.string.cancel,null).create();
+case DIALOG_ID_ENABLE_ACCESSIBILITY_SERVICE:
+return new AlertDialog.Builder(getActivity()).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getResources().getString(R.string.accessibility_service_security_warning,mAccessibilityServices.get(mToggleAccessibilityServiceCheckBox.getKey()).applicationInfo.loadLabel(getActivity().getPackageManager()))).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+  public void onClick(  DialogInterface dialog,  int which){
+    mToggleAccessibilityServiceCheckBox.setChecked(true);
+    persistEnabledAccessibilityServices();
+  }
+}
+).setNegativeButton(android.R.string.cancel,null).create();
+case DIALOG_ID_NO_ACCESSIBILITY_SERVICES:
+return new AlertDialog.Builder(getActivity()).setTitle(R.string.accessibility_service_no_apps_title).setMessage(R.string.accessibility_service_no_apps_message).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+  dialog.dismiss();
+  String screenreaderMarketLink=SystemProperties.get("ro.screenreader.market",DEFAULT_SCREENREADER_MARKET_LINK);
+  Uri marketUri=Uri.parse(screenreaderMarketLink);
+  Intent marketIntent=new Intent(Intent.ACTION_VIEW,marketUri);
+  startActivity(marketIntent);
+}
+}
+).setNegativeButton(android.R.string.cancel,null).create();
+default :
+return null;
+}
+}

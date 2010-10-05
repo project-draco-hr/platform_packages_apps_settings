@@ -1,44 +1,11 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.accessibility_settings);
-  mToggleCheckBox=(CheckBoxPreference)findPreference(TOGGLE_ACCESSIBILITY_SERVICE_CHECKBOX);
+  mAccessibilityServicesCategory=(PreferenceGroup)findPreference(ACCESSIBILITY_SERVICES_CATEGORY);
+  mToggleAccessibilityCheckBox=(CheckBoxPreference)findPreference(TOGGLE_ACCESSIBILITY_SERVICE_CHECKBOX);
   mToggleScriptInjectionCheckBox=(CheckBoxPreference)findPreference(TOGGLE_ACCESSIBILITY_SCRIPT_INJECTION_CHECKBOX);
   mPowerButtonCategory=(PreferenceCategory)findPreference(POWER_BUTTON_CATEGORY);
   mPowerButtonEndsCallCheckBox=(CheckBoxPreference)findPreference(POWER_BUTTON_ENDS_CALL_CHECKBOX);
-  addAccessibilitServicePreferences();
-  final HashSet<String> enabled=new HashSet<String>();
-  String settingValue=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-  if (settingValue != null) {
-    TextUtils.SimpleStringSplitter splitter=mStringColonSplitter;
-    splitter.setString(settingValue);
-    while (splitter.hasNext()) {
-      enabled.add(splitter.next());
-    }
-  }
-  Map<String,ServiceInfo> accessibilityServices=mAccessibilityServices;
-  for (  String key : accessibilityServices.keySet()) {
-    CheckBoxPreference preference=(CheckBoxPreference)findPreference(key);
-    if (preference != null) {
-      preference.setChecked(enabled.contains(key));
-    }
-  }
-  int serviceState=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
-  if (!accessibilityServices.isEmpty()) {
-    if (serviceState == 1) {
-      mToggleCheckBox.setChecked(true);
-    }
- else {
-      setAccessibilityServicePreferencesState(false);
-    }
-    mToggleCheckBox.setEnabled(true);
-  }
- else {
-    if (serviceState == 1) {
-      Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
-    }
-    mToggleCheckBox.setEnabled(false);
-    displayNoAppsAlert();
-  }
   boolean scriptInjectionEnabled=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,0) == 1);
   mToggleScriptInjectionCheckBox.setChecked(scriptInjectionEnabled);
   mToggleScriptInjectionCheckBox.setEnabled(true);

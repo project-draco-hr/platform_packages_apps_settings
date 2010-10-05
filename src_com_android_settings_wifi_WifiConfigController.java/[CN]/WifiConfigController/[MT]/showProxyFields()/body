@@ -12,7 +12,7 @@
       mProxyExclusionListView=(TextView)mView.findViewById(R.id.proxy_exclusionlist);
     }
     if (config != null) {
-      ProxyProperties proxyProperties=config.proxyProperties;
+      ProxyProperties proxyProperties=config.linkProperties.getHttpProxy();
       if (proxyProperties != null) {
         InetSocketAddress sockAddr=proxyProperties.getSocketAddress();
         if (sockAddr != null) {

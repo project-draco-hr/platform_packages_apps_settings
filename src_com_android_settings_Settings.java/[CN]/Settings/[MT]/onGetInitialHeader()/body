@@ -3,6 +3,7 @@
   if (fragmentClass != null) {
     Header header=new Header();
     header.fragment=fragmentClass;
+    header.fragmentArguments=getIntent().getExtras();
     return header;
   }
   return super.onGetInitialHeader();

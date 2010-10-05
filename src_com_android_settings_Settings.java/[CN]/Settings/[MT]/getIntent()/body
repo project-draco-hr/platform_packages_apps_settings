@@ -1,0 +1,10 @@
+{
+  String startingFragment=getStartingFragmentClass(super.getIntent());
+  if (startingFragment != null && !onIsMultiPane()) {
+    Intent modIntent=new Intent(super.getIntent());
+    modIntent.putExtra(EXTRA_SHOW_FRAGMENT,startingFragment);
+    modIntent.putExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS,super.getIntent().getExtras());
+    return modIntent;
+  }
+  return super.getIntent();
+}

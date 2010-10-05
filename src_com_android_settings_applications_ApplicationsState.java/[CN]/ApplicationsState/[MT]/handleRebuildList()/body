@@ -12,6 +12,9 @@ synchronized (mRebuildSync) {
     mRebuildComparator=null;
   }
   Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND);
+  if (filter != null) {
+    filter.init();
+  }
   List<ApplicationInfo> apps;
 synchronized (mEntriesMap) {
     apps=new ArrayList<ApplicationInfo>(mApplications);

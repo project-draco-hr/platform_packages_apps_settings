@@ -26,6 +26,7 @@ case CONNECTED:
   mProgressBar.setProgress(2);
   mProgressText.setText(Summary.get(this,state));
   mStatusText.setText(R.string.wifi_setup_status_proceed_to_next);
+  enableButtons();
   if (mIgnoringWifiNotificationCount > 0) {
     mIgnoringWifiNotificationCount=0;
   }
@@ -42,6 +43,7 @@ mProgressBar.setIndeterminate(false);
 mProgressBar.setProgress(0);
 mStatusText.setText(R.string.wifi_setup_status_select_network);
 mProgressText.setText(Summary.get(this,state));
+enableButtons();
 break;
 }
 default :
@@ -55,6 +57,7 @@ mProgressBar.setIndeterminate(false);
 mProgressBar.setProgress(0);
 mStatusText.setText(R.string.wifi_setup_status_select_network);
 mProgressText.setText(getString(R.string.wifi_setup_not_connected));
+enableButtons();
 }
 break;
 }

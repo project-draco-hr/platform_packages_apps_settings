@@ -72,15 +72,8 @@ catch (    ActivityNotFoundException e) {
       Log.w(TAG,e);
     }
   }
- else   if (mActiveItem.mItem instanceof RunningState.ServiceItem) {
-    RunningState.ServiceItem si=(RunningState.ServiceItem)mActiveItem.mItem;
-    stopService(new Intent().setComponent(si.mRunningService.service));
-    if (mMergedItem == null || mMergedItem.mServices.size() <= 1) {
-      finish();
-    }
- else {
-      mState.updateNow();
-    }
+ else   if (mServiceItem != null) {
+    stopActiveService(false);
   }
  else {
     mAm.forceStopPackage(mActiveItem.mItem.mPackageInfo.packageName);

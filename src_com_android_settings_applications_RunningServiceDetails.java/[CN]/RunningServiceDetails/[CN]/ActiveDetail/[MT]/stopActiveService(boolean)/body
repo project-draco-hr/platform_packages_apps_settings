@@ -1,0 +1,19 @@
+{
+  RunningState.ServiceItem si=mServiceItem;
+  if (!confirmed) {
+    if ((si.mServiceInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+      Bundle args=new Bundle();
+      args.putParcelable("comp",si.mRunningService.service);
+      removeDialog(DIALOG_CONFIRM_STOP);
+      showDialog(DIALOG_CONFIRM_STOP,args);
+      return;
+    }
+  }
+  stopService(new Intent().setComponent(si.mRunningService.service));
+  if (mMergedItem == null || mMergedItem.mServices.size() <= 1) {
+    finish();
+  }
+ else {
+    mState.updateNow();
+  }
+}

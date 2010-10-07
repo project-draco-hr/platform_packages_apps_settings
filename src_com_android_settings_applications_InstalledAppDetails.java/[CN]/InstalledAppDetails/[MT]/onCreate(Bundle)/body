@@ -2,6 +2,7 @@
   super.onCreate(icicle);
   mState=ApplicationsState.getInstance(getApplication());
   mPm=getPackageManager();
+  mCanBeOnSdCardChecker=new CanBeOnSdCardChecker();
   setContentView(R.layout.installed_app_details);
   mComputingStr=getText(R.string.computing_size);
   mTotalSize=(TextView)findViewById(R.id.total_size_text);

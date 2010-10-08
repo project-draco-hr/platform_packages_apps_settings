@@ -9,18 +9,28 @@
     if (mIpAddressView == null) {
       mIpAddressView=(TextView)mView.findViewById(R.id.ipaddress);
       mGatewayView=(TextView)mView.findViewById(R.id.gateway);
-      mNetmaskView=(TextView)mView.findViewById(R.id.netmask);
+      mNetworkPrefixLengthView=(TextView)mView.findViewById(R.id.network_prefix_length);
       mDns1View=(TextView)mView.findViewById(R.id.dns1);
       mDns2View=(TextView)mView.findViewById(R.id.dns2);
     }
     if (config != null) {
-      DhcpInfo ipConfig=config.ipConfig;
-      if (ipConfig != null && ipConfig.ipAddress != 0) {
-        mIpAddressView.setText(intToIpString(ipConfig.ipAddress));
-        mGatewayView.setText(intToIpString(ipConfig.gateway));
-        mNetmaskView.setText(intToIpString(ipConfig.netmask));
-        mDns1View.setText(intToIpString(ipConfig.dns1));
-        if (ipConfig.dns2 != 0)         mDns2View.setText(intToIpString(ipConfig.dns2));
+      LinkProperties linkProperties=config.linkProperties;
+      Iterator<LinkAddress> iterator=linkProperties.getLinkAddresses().iterator();
+      if (iterator.hasNext()) {
+        LinkAddress linkAddress=iterator.next();
+        mIpAddressView.setText(linkAddress.getAddress().getHostAddress());
+        mNetworkPrefixLengthView.setText(Integer.toString(linkAddress.getNetworkPrefixLength()));
+      }
+      InetAddress gateway=linkProperties.getGateway();
+      if (gateway != null) {
+        mGatewayView.setText(linkProperties.getGateway().getHostAddress());
+      }
+      Iterator<InetAddress> dnsIterator=linkProperties.getDnses().iterator();
+      if (dnsIterator.hasNext()) {
+        mDns1View.setText(dnsIterator.next().getHostAddress());
+      }
+      if (dnsIterator.hasNext()) {
+        mDns2View.setText(dnsIterator.next().getHostAddress());
       }
     }
   }

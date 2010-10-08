@@ -1,7 +1,6 @@
 {
   InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
   mInputMethodProperties=imm.getInputMethodList();
-  mLastInputMethodId=Settings.Secure.getString(getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD);
   PreferenceGroup keyboardSettingsCategory=(PreferenceGroup)findPreference(KEY_KEYBOARD_SETTINGS_CATEGORY);
   int N=(mInputMethodProperties == null ? 0 : mInputMethodProperties.size());
   for (int i=0; i < N; ++i) {

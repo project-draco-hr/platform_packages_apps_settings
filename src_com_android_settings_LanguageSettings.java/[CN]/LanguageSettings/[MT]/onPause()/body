@@ -1,14 +1,15 @@
 {
   super.onPause();
-  StringBuilder builder=new StringBuilder(256);
-  StringBuilder disabledSysImes=new StringBuilder(256);
+  final String lastInputMethodId=Settings.Secure.getString(getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD);
+  StringBuilder builder=new StringBuilder();
+  StringBuilder disabledSysImes=new StringBuilder();
   int firstEnabled=-1;
   int N=mInputMethodProperties.size();
   for (int i=0; i < N; ++i) {
     final InputMethodInfo property=mInputMethodProperties.get(i);
     final String id=property.getId();
     CheckBoxPreference pref=(CheckBoxPreference)findPreference(id);
-    boolean hasIt=id.equals(mLastInputMethodId);
+    boolean hasIt=id.equals(lastInputMethodId);
     boolean systemIme=isSystemIme(property);
     if (((N == 1 || systemIme) && !mHaveHardKeyboard) || (pref != null && pref.isChecked())) {
       if (builder.length() > 0)       builder.append(':');
@@ -18,22 +19,22 @@
       }
     }
  else     if (hasIt) {
-      mLastInputMethodId=mLastTickedInputMethodId;
+      lastInputMethodId=mLastTickedInputMethodId;
     }
     if (pref != null && !pref.isChecked() && systemIme && mHaveHardKeyboard) {
       if (disabledSysImes.length() > 0)       disabledSysImes.append(":");
       disabledSysImes.append(id);
     }
   }
-  if (null == mLastInputMethodId || "".equals(mLastInputMethodId)) {
+  if (null == lastInputMethodId || "".equals(lastInputMethodId)) {
     if (firstEnabled >= 0) {
-      mLastInputMethodId=mInputMethodProperties.get(firstEnabled).getId();
+      lastInputMethodId=mInputMethodProperties.get(firstEnabled).getId();
     }
  else {
-      mLastInputMethodId=null;
+      lastInputMethodId=null;
     }
   }
   Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_INPUT_METHODS,builder.toString());
   Settings.Secure.putString(getContentResolver(),Settings.Secure.DISABLED_SYSTEM_INPUT_METHODS,disabledSysImes.toString());
-  Settings.Secure.putString(getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD,mLastInputMethodId != null ? mLastInputMethodId : "");
+  Settings.Secure.putString(getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD,lastInputMethodId != null ? lastInputMethodId : "");
 }

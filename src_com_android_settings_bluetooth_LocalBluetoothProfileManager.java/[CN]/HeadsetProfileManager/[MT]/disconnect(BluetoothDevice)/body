@@ -1,4 +1,10 @@
 {
+  if (!isManagerReady()) {
+    Log.w(TAG,"HeadsetProfileManager delaying disconnect, " + "manager not ready");
+    mDelayedConnectDevice=null;
+    mDelayedDisconnectDevice=device;
+    return true;
+  }
   BluetoothDevice currDevice=mService.getCurrentHeadset();
   if (currDevice != null && currDevice.equals(device)) {
     if (mService.getPriority(device) > BluetoothHeadset.PRIORITY_ON) {

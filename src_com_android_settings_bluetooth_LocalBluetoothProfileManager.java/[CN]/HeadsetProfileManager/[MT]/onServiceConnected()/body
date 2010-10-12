@@ -1,13 +1,36 @@
 {
   profileReady=true;
-  mUiHandler.post(new Runnable(){
+  mUiHandler.postDelayed(new Runnable(){
     public void run(){
       BluetoothDevice device=mService.getCurrentHeadset();
-      if (device == null)       return;
-      mLocalManager.getCachedDeviceManager().onProfileStateChanged(device,Profile.HEADSET,BluetoothHeadset.STATE_CONNECTED);
+      if (mDelayedConnectDevice != null) {
+        Log.i(TAG,"service ready: connecting...");
+        BluetoothDevice newDevice=mDelayedConnectDevice;
+        mDelayedConnectDevice=null;
+        if (!newDevice.equals(device)) {
+          if (device != null) {
+            Log.i(TAG,"disconnecting old headset");
+            mService.disconnectHeadset(device);
+          }
+          Log.i(TAG,"connecting to pending headset");
+          mService.connectHeadset(newDevice);
+        }
+      }
+ else       if (mDelayedDisconnectDevice != null) {
+        Log.i(TAG,"service ready: disconnecting...");
+        if (mDelayedDisconnectDevice.equals(device)) {
+          Log.i(TAG,"disconnecting headset");
+          mService.disconnectHeadset(device);
+        }
+        mDelayedDisconnectDevice=null;
+      }
+ else {
+        if (device == null)         return;
+        mLocalManager.getCachedDeviceManager().onProfileStateChanged(device,Profile.HEADSET,BluetoothHeadset.STATE_CONNECTED);
+      }
     }
   }
-);
+,2000);
   if (mServiceListeners.size() > 0) {
     Iterator<ServiceListener> it=mServiceListeners.iterator();
     while (it.hasNext()) {

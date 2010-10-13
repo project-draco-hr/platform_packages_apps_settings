@@ -2,7 +2,7 @@
   String hostname=mHostnameField.getText().toString().trim();
   String portStr=mPortField.getText().toString().trim();
   String exclList=mExclusionListField.getText().toString().trim();
-  int port=-1;
+  int port=0;
   int result=validate(hostname,portStr,exclList);
   if (result > 0) {
     showDialog(ERROR_DIALOG_ID);
@@ -16,15 +16,8 @@
       return false;
     }
   }
-  ContentResolver res=getActivity().getContentResolver();
-  if (hostname.equals(Proxy.getDefaultHost()) && port == Proxy.getDefaultPort()) {
-    hostname=null;
-  }
-  if (!TextUtils.isEmpty(hostname)) {
-    hostname+=':' + portStr;
-  }
-  Settings.Secure.putString(res,Settings.Secure.HTTP_PROXY,hostname);
-  Settings.Secure.putString(res,Settings.Secure.HTTP_PROXY_EXCLUSION_LIST,exclList);
-  getActivity().sendBroadcast(new Intent(Proxy.PROXY_CHANGE_ACTION));
+  ProxyProperties p=new ProxyProperties(hostname,port,exclList);
+  ConnectivityManager cm=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+  cm.setGlobalProxy(p);
   return true;
 }

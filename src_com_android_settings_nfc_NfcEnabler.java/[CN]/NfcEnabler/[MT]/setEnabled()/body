@@ -1,19 +1,13 @@
 {
   if (mNfcState) {
-    try {
-      mNfcManager.enable();
-    }
- catch (    NfcException e) {
-      Log.w(TAG,"NFC enabling failed: " + e.getMessage());
+    if (!mNfcAdapter.enableTagDiscovery()) {
+      Log.w(TAG,"NFC enabling failed");
       mNfcState=false;
     }
   }
  else {
-    try {
-      mNfcManager.disable();
-    }
- catch (    NfcException e) {
-      Log.w(TAG,"NFC disabling failed: " + e.getMessage());
+    if (!mNfcAdapter.disableTagDiscovery()) {
+      Log.w(TAG,"NFC disabling failed");
       mNfcState=true;
     }
   }

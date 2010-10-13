@@ -1,5 +1,6 @@
 {
-  if (mService.getCurrentHeadset().equals(device)) {
+  BluetoothDevice currDevice=mService.getCurrentHeadset();
+  if (currDevice != null && currDevice.equals(device)) {
     if (mService.getPriority(device) > BluetoothHeadset.PRIORITY_ON) {
       mService.setPriority(device,BluetoothHeadset.PRIORITY_ON);
     }

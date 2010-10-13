@@ -6,7 +6,8 @@
   }
   mFilterType=BluetoothDevicePicker.FILTER_TYPE_ALL;
   final Intent intent=activity.getIntent();
-  String action=getArguments().getString(ACTION);
+  Bundle args=getArguments();
+  String action=args != null ? args.getString(ACTION) : null;
   if (TextUtils.isEmpty(action)) {
     action=intent.getAction();
   }

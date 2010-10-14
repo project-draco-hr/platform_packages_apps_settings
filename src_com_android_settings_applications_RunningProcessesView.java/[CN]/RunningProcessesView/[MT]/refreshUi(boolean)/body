@@ -29,6 +29,6 @@ synchronized (mState.mLock) {
       mForegroundProcessText.setText(getResources().getString(R.string.service_foreground_processes,sizeStr));
     }
     float totalMem=availMem + mLastBackgroundProcessMemory + mLastForegroundProcessMemory+ mLastServiceProcessMemory;
-    mColorBar.setRatios(mLastForegroundProcessMemory / totalMem,mLastServiceProcessMemory / totalMem,(availMem + mLastBackgroundProcessMemory) / totalMem);
+    mColorBar.setRatios(mLastForegroundProcessMemory / totalMem,mLastServiceProcessMemory / totalMem,mLastBackgroundProcessMemory / totalMem);
   }
 }

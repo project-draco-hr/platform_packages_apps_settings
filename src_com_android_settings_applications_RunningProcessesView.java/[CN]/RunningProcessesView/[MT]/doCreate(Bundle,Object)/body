@@ -10,9 +10,22 @@
   }
   mListView.setOnItemClickListener(this);
   mListView.setRecyclerListener(this);
-  mListView.setAdapter(new ServiceListAdapter(mState));
+  mAdapter=new ServiceListAdapter(mState);
+  mListView.setAdapter(mAdapter);
   mColorBar=(LinearColorBar)findViewById(R.id.color_bar);
   mBackgroundProcessText=(TextView)findViewById(R.id.backgroundText);
+  mBackgroundProcessText.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      mAdapter.setShowBackground(true);
+    }
+  }
+);
   mForegroundProcessText=(TextView)findViewById(R.id.foregroundText);
+  mForegroundProcessText.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      mAdapter.setShowBackground(false);
+    }
+  }
+);
   SECONDARY_SERVER_MEM=Integer.valueOf(SystemProperties.get("ro.SECONDARY_SERVER_MEM")) * PAGE_SIZE;
 }

@@ -2,6 +2,7 @@
   super.onCreate(savedInstanceState);
   mUid=getIntent().getIntExtra(KEY_UID,0);
   mProcessName=getIntent().getStringExtra(KEY_PROCESS);
+  mShowBackground=getIntent().getBooleanExtra(KEY_BACKGROUND,false);
   mAm=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
   mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   mState=RunningState.getInstance(this);

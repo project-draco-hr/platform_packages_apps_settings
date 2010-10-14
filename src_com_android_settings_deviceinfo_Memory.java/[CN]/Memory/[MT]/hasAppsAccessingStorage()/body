@@ -1,7 +1,6 @@
 {
   String extStoragePath=Environment.getExternalStorageDirectory().toString();
   IMountService mountService=getMountService();
-  boolean showPidDialog=false;
   int stUsers[]=mountService.getStorageUsers(extStoragePath);
   if (stUsers != null && stUsers.length > 0) {
     return true;

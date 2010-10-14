@@ -1,4 +1,6 @@
 {
   super.onPause();
-  establishInitialState();
+  if (!isFinishing()) {
+    establishInitialState();
+  }
 }

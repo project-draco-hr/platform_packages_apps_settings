@@ -1,0 +1,69 @@
+{
+  if (mCurView == VIEW_RUNNING) {
+    return;
+  }
+  long freeStorage=0;
+  long appStorage=0;
+  long totalStorage=0;
+  CharSequence newLabel=null;
+  if (mFilterApps == FILTER_APPS_SDCARD) {
+    if (mLastShowedInternalStorage) {
+      mLastShowedInternalStorage=false;
+    }
+    newLabel=this.getText(R.string.sd_card_storage);
+    mSDCardFileStats.restat(Environment.getExternalStorageDirectory().toString());
+    try {
+      totalStorage=(long)mSDCardFileStats.getBlockCount() * mSDCardFileStats.getBlockSize();
+      freeStorage=(long)mSDCardFileStats.getAvailableBlocks() * mSDCardFileStats.getBlockSize();
+    }
+ catch (    IllegalArgumentException e) {
+    }
+  }
+ else {
+    if (!mLastShowedInternalStorage) {
+      mLastShowedInternalStorage=true;
+    }
+    newLabel=this.getText(R.string.internal_storage);
+    mDataFileStats.restat("/data");
+    try {
+      totalStorage=(long)mDataFileStats.getBlockCount() * mDataFileStats.getBlockSize();
+      freeStorage=(long)mDataFileStats.getAvailableBlocks() * mDataFileStats.getBlockSize();
+    }
+ catch (    IllegalArgumentException e) {
+    }
+    final int N=mApplicationsAdapter.getCount();
+    for (int i=0; i < N; i++) {
+      ApplicationsState.AppEntry ae=mApplicationsAdapter.getAppEntry(i);
+      appStorage+=ae.codeSize + ae.dataSize;
+      freeStorage+=ae.cacheSize;
+    }
+  }
+  if (newLabel != null) {
+    mStorageChartLabel.setText(newLabel);
+  }
+  if (totalStorage > 0) {
+    mColorBar.setRatios((totalStorage - freeStorage - appStorage) / (float)totalStorage,appStorage / (float)totalStorage,freeStorage / (float)totalStorage);
+    long usedStorage=totalStorage - freeStorage;
+    if (mLastUsedStorage != usedStorage) {
+      mLastUsedStorage=usedStorage;
+      String sizeStr=Formatter.formatShortFileSize(this,usedStorage);
+      mUsedStorageText.setText(getResources().getString(R.string.service_foreground_processes,sizeStr));
+    }
+    if (mLastFreeStorage != freeStorage) {
+      mLastFreeStorage=freeStorage;
+      String sizeStr=Formatter.formatShortFileSize(this,freeStorage);
+      mFreeStorageText.setText(getResources().getString(R.string.service_background_processes,sizeStr));
+    }
+  }
+ else {
+    mColorBar.setRatios(0,0,0);
+    if (mLastUsedStorage != -1) {
+      mLastUsedStorage=-1;
+      mUsedStorageText.setText("");
+    }
+    if (mLastFreeStorage != -1) {
+      mLastFreeStorage=-1;
+      mFreeStorageText.setText("");
+    }
+  }
+}

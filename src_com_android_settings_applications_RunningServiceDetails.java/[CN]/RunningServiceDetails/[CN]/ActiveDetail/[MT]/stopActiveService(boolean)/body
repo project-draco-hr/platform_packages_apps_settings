@@ -10,7 +10,12 @@
     }
   }
   stopService(new Intent().setComponent(si.mRunningService.service));
-  if (mMergedItem == null || mMergedItem.mServices.size() <= 1) {
+  if (mMergedItem == null) {
+    mState.updateNow();
+    finish();
+  }
+ else   if (!mShowBackground && mMergedItem.mServices.size() <= 1) {
+    mState.updateNow();
     finish();
   }
  else {

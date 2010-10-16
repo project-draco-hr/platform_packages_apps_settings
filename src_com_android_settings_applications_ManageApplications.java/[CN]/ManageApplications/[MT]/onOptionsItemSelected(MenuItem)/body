@@ -2,7 +2,15 @@
   int menuId=item.getItemId();
   if ((menuId == SORT_ORDER_ALPHA) || (menuId == SORT_ORDER_SIZE)) {
     mSortOrder=menuId;
-    mApplicationsAdapter.rebuild(mFilterApps,mSortOrder);
+    if (mCurView != VIEW_RUNNING) {
+      mApplicationsAdapter.rebuild(mFilterApps,mSortOrder);
+    }
+  }
+ else   if (menuId == SHOW_RUNNING_SERVICES) {
+    mRunningProcessesView.mAdapter.setShowBackground(false);
+  }
+ else   if (menuId == SHOW_BACKGROUND_PROCESSES) {
+    mRunningProcessesView.mAdapter.setShowBackground(true);
   }
   return true;
 }

@@ -33,8 +33,11 @@ if (mCheckedItems[i]) {
 callConnect=true;
 }
  else if (!mCheckedItems[i]) {
+int status=profileManager.getConnectionStatus(cachedDevice.getDevice());
+if (SettingsBtStatus.isConnectionStatusConnected(status)) {
 if (DEBUG) Log.d(TAG,"applyBtSettings - Disconnecting");
 cachedDevice.disconnect(mProfiles[i]);
+}
 }
 profileManager.setPreferred(device,mCheckedItems[i]);
 if (DEBUG) {

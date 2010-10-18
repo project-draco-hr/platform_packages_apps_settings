@@ -1,0 +1,63 @@
+{
+  super.onDraw(canvas);
+  int width=getWidth();
+  int left=0;
+  int right=left + (int)(width * mRedRatio);
+  int right2=right + (int)(width * mYellowRatio);
+  int right3=right2 + (int)(width * mGreenRatio);
+  int indicatorLeft, indicatorRight;
+  if (mShowingGreen) {
+    indicatorLeft=right2;
+    indicatorRight=right3;
+  }
+ else {
+    indicatorLeft=right;
+    indicatorRight=right2;
+  }
+  if (mLastInterestingLeft != indicatorLeft || mLastInterestingRight != indicatorRight) {
+    mColorPath.reset();
+    mEdgePath.reset();
+    if (indicatorLeft < indicatorRight) {
+      mColorPath.moveTo(indicatorLeft,mRect.top);
+      mColorPath.lineTo(-1,0);
+      mColorPath.lineTo(width,0);
+      mColorPath.lineTo(indicatorRight,mRect.top);
+      mColorPath.close();
+      float lineOffset=mLineWidth + .5f;
+      mEdgePath.moveTo(indicatorLeft + lineOffset,mRect.top);
+      mEdgePath.lineTo(-1 + lineOffset,0);
+      mEdgePath.moveTo(indicatorRight - lineOffset,mRect.top);
+      mEdgePath.lineTo(width - lineOffset,0);
+    }
+    mLastInterestingLeft=indicatorLeft;
+    mLastInterestingRight=indicatorRight;
+  }
+  if (!mColorPath.isEmpty()) {
+    canvas.drawPath(mEdgePath,mEdgeGradientPaint);
+    canvas.drawPath(mColorPath,mColorGradientPaint);
+  }
+  if (left < right) {
+    mRect.left=left;
+    mRect.right=right;
+    mPaint.setColor(LEFT_COLOR);
+    canvas.drawRect(mRect,mPaint);
+    width-=(right - left);
+    left=right;
+  }
+  right=right2;
+  if (left < right) {
+    mRect.left=left;
+    mRect.right=right;
+    mPaint.setColor(MIDDLE_COLOR);
+    canvas.drawRect(mRect,mPaint);
+    width-=(right - left);
+    left=right;
+  }
+  right=left + width;
+  if (left < right) {
+    mRect.left=left;
+    mRect.right=right;
+    mPaint.setColor(RIGHT_COLOR);
+    canvas.drawRect(mRect,mPaint);
+  }
+}

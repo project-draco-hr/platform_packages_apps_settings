@@ -1,6 +1,6 @@
 {
   RunningState.MergedItem item=null;
-  ArrayList<RunningState.MergedItem> newItems=mState.getCurrentMergedItems();
+  ArrayList<RunningState.MergedItem> newItems=mShowBackground ? mState.getCurrentBackgroundItems() : mState.getCurrentMergedItems();
   if (newItems != null) {
     for (int i=0; i < newItems.size(); i++) {
       RunningState.MergedItem mi=newItems.get(i);

@@ -21,7 +21,10 @@
     description.setText(getPackageManager().getText(si.mServiceInfo.packageName,si.mServiceInfo.descriptionRes,si.mServiceInfo.applicationInfo));
   }
  else {
-    if (detail.mManageIntent != null) {
+    if (mi.mBackground) {
+      description.setText(R.string.background_process_stop_description);
+    }
+ else     if (detail.mManageIntent != null) {
       try {
         Resources clientr=getPackageManager().getResourcesForApplication(si.mRunningService.clientPackage);
         String label=clientr.getString(si.mRunningService.clientLabel);
@@ -41,7 +44,7 @@
   detail.mReportButton.setOnClickListener(detail);
   detail.mReportButton.setText(com.android.internal.R.string.report);
   int enabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.SEND_ACTION_APP_ERROR,0);
-  if (enabled != 0) {
+  if (enabled != 0 && si != null) {
     detail.mInstaller=ApplicationErrorReport.getErrorReportReceiver(this,si.mServiceInfo.packageName,si.mServiceInfo.applicationInfo.flags);
     detail.mReportButton.setEnabled(detail.mInstaller != null);
   }

@@ -23,6 +23,8 @@
     if (tmp != null)     defaultTabTag=tmp;
   }
   mNonConfigInstance=getLastNonConfigurationInstance();
+  mDataFileStats=new StatFs("/data");
+  mSDCardFileStats=new StatFs(Environment.getExternalStorageDirectory().toString());
   requestWindowFeature(Window.FEATURE_RIGHT_ICON);
   requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
   mInvalidSizeStr=getText(R.string.invalid_size_value);
@@ -44,6 +46,10 @@
   mListView=lv;
   lv.setRecyclerListener(mApplicationsAdapter);
   mListView.setAdapter(mApplicationsAdapter);
+  mColorBar=(LinearColorBar)mListContainer.findViewById(R.id.storage_color_bar);
+  mStorageChartLabel=(TextView)mListContainer.findViewById(R.id.storageChartLabel);
+  mUsedStorageText=(TextView)mListContainer.findViewById(R.id.usedStorageText);
+  mFreeStorageText=(TextView)mListContainer.findViewById(R.id.freeStorageText);
   mRunningProcessesView=(RunningProcessesView)mRootView.findViewById(R.id.running_processes);
   final TabHost tabHost=getTabHost();
   tabHost.addTab(tabHost.newTabSpec(TAB_DOWNLOADED).setIndicator(getString(R.string.filter_apps_third_party),getResources().getDrawable(R.drawable.ic_tab_download)).setContent(this));

@@ -75,6 +75,10 @@ catch (    ActivityNotFoundException e) {
  else   if (mServiceItem != null) {
     stopActiveService(false);
   }
+ else   if (mActiveItem.mItem.mBackground) {
+    mAm.killBackgroundProcesses(mActiveItem.mItem.mPackageInfo.packageName);
+    finish();
+  }
  else {
     mAm.forceStopPackage(mActiveItem.mItem.mPackageInfo.packageName);
     finish();

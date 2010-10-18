@@ -1,0 +1,13 @@
+{
+  int off=getPaddingTop() - getPaddingBottom();
+  if (off < 0)   off=0;
+  mRect.top=off;
+  mRect.bottom=getHeight();
+  if (mShowingGreen) {
+    mColorGradientPaint.setShader(new LinearGradient(0,0,0,off - 2,RIGHT_COLOR & 0xffffff,RIGHT_COLOR,Shader.TileMode.CLAMP));
+  }
+ else {
+    mColorGradientPaint.setShader(new LinearGradient(0,0,0,off - 2,MIDDLE_COLOR & 0xffffff,MIDDLE_COLOR,Shader.TileMode.CLAMP));
+  }
+  mEdgeGradientPaint.setShader(new LinearGradient(0,0,0,off / 2,0x00a0a0a0,0xffa0a0a0,Shader.TileMode.CLAMP));
+}

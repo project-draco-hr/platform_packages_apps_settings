@@ -5,8 +5,13 @@
     status=Environment.MEDIA_MOUNTED;
     readOnly=mRes.getString(R.string.read_only);
   }
-  mSdFormat.setEnabled(false);
   if (status.equals(Environment.MEDIA_MOUNTED)) {
+    if (!Environment.isExternalStorageRemovable()) {
+      if (mSdMountToggleAdded) {
+        mSdMountPreferenceGroup.removePreference(mSdMountToggle);
+        mSdMountToggleAdded=false;
+      }
+    }
     try {
       File path=Environment.getExternalStorageDirectory();
       StatFs stat=new StatFs(path.getPath());
@@ -26,8 +31,15 @@
  else {
     mSdSize.setSummary(mRes.getString(R.string.sd_unavailable));
     mSdAvail.setSummary(mRes.getString(R.string.sd_unavailable));
+    if (!Environment.isExternalStorageRemovable()) {
+      if (status.equals(Environment.MEDIA_UNMOUNTED)) {
+        if (!mSdMountToggleAdded) {
+          mSdMountPreferenceGroup.addPreference(mSdMountToggle);
+          mSdMountToggleAdded=true;
+        }
+      }
+    }
     if (status.equals(Environment.MEDIA_UNMOUNTED) || status.equals(Environment.MEDIA_NOFS) || status.equals(Environment.MEDIA_UNMOUNTABLE)) {
-      mSdFormat.setEnabled(true);
       mSdMountToggle.setEnabled(true);
       mSdMountToggle.setTitle(mRes.getString(R.string.sd_mount));
       mSdMountToggle.setSummary(mRes.getString(R.string.sd_mount_summary));

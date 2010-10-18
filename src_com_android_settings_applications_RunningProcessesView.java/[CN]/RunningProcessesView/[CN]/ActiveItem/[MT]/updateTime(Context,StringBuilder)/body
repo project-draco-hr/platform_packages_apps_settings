@@ -9,11 +9,18 @@
       mItem.mCurSizeStr=size;
       mHolder.size.setText(size);
     }
-    if (mItem instanceof RunningState.MergedItem) {
+    if (mItem.mBackground) {
+      if (!mSetBackground) {
+        mSetBackground=true;
+        mHolder.uptime.setText("");
+      }
+    }
+ else     if (mItem instanceof RunningState.MergedItem) {
       uptimeView=mHolder.uptime;
     }
   }
   if (uptimeView != null) {
+    mSetBackground=false;
     if (mFirstRunTime >= 0) {
       uptimeView.setText(DateUtils.formatElapsedTime(builder,(SystemClock.elapsedRealtime() - mFirstRunTime) / 1000));
     }

@@ -1,5 +1,31 @@
 {
-  mNfcState=(Boolean)value;
-  setEnabled();
+  final boolean desiredState=(Boolean)value;
+  mCheckbox.setEnabled(false);
+  new Thread("toggleNFC"){
+    public void run(){
+      Log.d(TAG,"Setting NFC enabled state to: " + desiredState);
+      boolean success=false;
+      if (desiredState) {
+        success=mNfcAdapter.enableTagDiscovery();
+      }
+ else {
+        success=mNfcAdapter.disableTagDiscovery();
+      }
+      if (success) {
+        Log.d(TAG,"Successfully changed NFC enabled state to " + desiredState);
+      }
+ else {
+        Log.w(TAG,"Error setting NFC enabled state to " + desiredState);
+        mHandler.post(new Runnable(){
+          public void run(){
+            mCheckbox.setEnabled(true);
+            mCheckbox.setSummary(R.string.nfc_toggle_error);
+          }
+        }
+);
+      }
+    }
+  }
+.start();
   return false;
 }

@@ -35,8 +35,8 @@
     for (int i=0; i < N; i++) {
       ApplicationsState.AppEntry ae=mApplicationsAdapter.getAppEntry(i);
       appStorage+=ae.codeSize + ae.dataSize;
-      freeStorage+=ae.cacheSize;
     }
+    freeStorage+=mApplicationsState.sumCacheSizes();
   }
   if (newLabel != null) {
     mStorageChartLabel.setText(newLabel);

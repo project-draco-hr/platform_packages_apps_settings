@@ -26,6 +26,7 @@ synchronized (mEntriesMap) {
     if (filter == null || filter.filterApp(info)) {
 synchronized (mEntriesMap) {
         AppEntry entry=getEntryLocked(info);
+        entry.ensureLabel(mContext);
         if (DEBUG)         Log.i(TAG,"Using " + info.packageName + ": "+ entry);
         filteredApps.add(entry);
       }

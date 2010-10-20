@@ -1,0 +1,20 @@
+{
+  if (this.icon == null) {
+    if (this.apkFile.exists()) {
+      this.icon=this.info.loadIcon(pm);
+      return true;
+    }
+ else {
+      this.mounted=false;
+      this.icon=context.getResources().getDrawable(com.android.internal.R.drawable.sym_app_on_sd_unavailable_icon);
+    }
+  }
+ else   if (!this.mounted) {
+    if (this.apkFile.exists()) {
+      this.mounted=true;
+      this.icon=this.info.loadIcon(pm);
+      return true;
+    }
+  }
+  return false;
+}

@@ -3,8 +3,6 @@
     return;
   }
 synchronized (entry) {
-    if (entry.icon == null) {
-      entry.icon=entry.info.loadIcon(mPm);
-    }
+    entry.ensureIconLocked(mContext,mPm);
   }
 }

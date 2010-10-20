@@ -11,6 +11,7 @@
     newOption=FILTER_APPS_SDCARD;
   }
  else   if (TAB_RUNNING.equalsIgnoreCase(tabId)) {
+    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),0);
     selectView(VIEW_RUNNING);
     return;
   }

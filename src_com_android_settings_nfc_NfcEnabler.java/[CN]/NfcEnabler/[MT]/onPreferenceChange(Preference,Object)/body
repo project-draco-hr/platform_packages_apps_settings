@@ -6,10 +6,10 @@
       Log.d(TAG,"Setting NFC enabled state to: " + desiredState);
       boolean success=false;
       if (desiredState) {
-        success=mNfcAdapter.enableTagDiscovery();
+        success=mNfcAdapter.enable();
       }
  else {
-        success=mNfcAdapter.disableTagDiscovery();
+        success=mNfcAdapter.disable();
       }
       if (success) {
         Log.d(TAG,"Successfully changed NFC enabled state to " + desiredState);

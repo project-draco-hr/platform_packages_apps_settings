@@ -8,5 +8,10 @@
       Log.e("SecuritySettings","could not persist lockAfter timeout setting",e);
     }
   }
+ else   if (preference == mUseLocation) {
+    boolean newValue=value == null ? false : (Boolean)value;
+    GoogleLocationSettingHelper.setUseLocationForServices(getActivity(),newValue);
+    return false;
+  }
   return true;
 }

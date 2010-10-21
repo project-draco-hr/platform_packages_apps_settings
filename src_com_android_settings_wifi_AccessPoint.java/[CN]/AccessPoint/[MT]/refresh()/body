@@ -16,7 +16,12 @@
       status=context.getString((mConfig.status == WifiConfiguration.Status.DISABLED) ? R.string.wifi_disabled : R.string.wifi_remembered);
     }
     if (security == SECURITY_NONE) {
-      setSummary(status);
+      if (wpsAvailable && mConfig == null) {
+        setSummary(context.getString(R.string.wifi_open_with_wps));
+      }
+ else {
+        setSummary(status);
+      }
     }
  else {
       String format;

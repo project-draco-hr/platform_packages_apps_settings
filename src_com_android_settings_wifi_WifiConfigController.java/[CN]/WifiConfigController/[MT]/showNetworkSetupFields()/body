@@ -5,13 +5,13 @@
     mNetworkSetupSpinner.setOnItemSelectedListener(this);
   }
   int pos=mNetworkSetupSpinner.getSelectedItemPosition();
-  if (pos == WPS_PIN) {
+  if (pos == WPS_PIN_FROM_ACCESS_POINT) {
     mView.findViewById(R.id.wps_fields).setVisibility(View.VISIBLE);
   }
  else {
     mView.findViewById(R.id.wps_fields).setVisibility(View.GONE);
   }
-  if ((pos == WPS_PIN) || (pos == WPS_PBC)) {
+  if ((pos == WPS_PIN_FROM_ACCESS_POINT) || (pos == WPS_PIN_FROM_DEVICE) || (pos == WPS_PBC)) {
     mView.findViewById(R.id.security_fields).setVisibility(View.GONE);
   }
  else {

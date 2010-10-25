@@ -8,6 +8,9 @@ case R.id.wifi_setup_add_network:
 mWifiSettings.onAddNetworkPressed();
 break;
 case R.id.wifi_setup_skip_or_next:
+if (TextUtils.equals(getString(R.string.wifi_setup_skip),((Button)view).getText())) {
+mWifiSettings.disableWifi();
+}
 setResult(Activity.RESULT_OK);
 finish();
 break;

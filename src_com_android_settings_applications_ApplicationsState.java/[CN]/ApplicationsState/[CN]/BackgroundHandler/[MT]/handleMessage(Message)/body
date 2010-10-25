@@ -36,15 +36,16 @@ int numDone=0;
 synchronized (mEntriesMap) {
 for (int i=0; i < mAppEntries.size() && numDone < 2; i++) {
   AppEntry entry=mAppEntries.get(i);
-  if (entry.icon == null) {
-    if (!mRunning) {
-      mRunning=true;
-      Message m=mMainHandler.obtainMessage(MainHandler.MSG_RUNNING_STATE_CHANGED,1);
-      mMainHandler.sendMessage(m);
-    }
-    numDone++;
+  if (entry.icon == null || !entry.mounted) {
 synchronized (entry) {
-      entry.icon=entry.info.loadIcon(mPm);
+      if (entry.ensureIconLocked(mContext,mPm)) {
+        if (!mRunning) {
+          mRunning=true;
+          Message m=mMainHandler.obtainMessage(MainHandler.MSG_RUNNING_STATE_CHANGED,1);
+          mMainHandler.sendMessage(m);
+        }
+        numDone++;
+      }
     }
   }
 }

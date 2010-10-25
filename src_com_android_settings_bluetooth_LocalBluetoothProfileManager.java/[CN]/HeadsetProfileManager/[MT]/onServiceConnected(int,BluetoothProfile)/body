@@ -3,10 +3,9 @@
   profileReady=true;
   mUiHandler.post(new Runnable(){
     public void run(){
-      Set<BluetoothDevice> deviceSet=mService.getConnectedDevices();
-      if (deviceSet.size() == 0)       return;
-      BluetoothDevice[] devices=deviceSet.toArray(new BluetoothDevice[deviceSet.size()]);
-      mLocalManager.getCachedDeviceManager().onProfileStateChanged(devices[0],Profile.HEADSET,BluetoothProfile.STATE_CONNECTED);
+      List<BluetoothDevice> deviceList=mService.getConnectedDevices();
+      if (deviceList.size() == 0)       return;
+      mLocalManager.getCachedDeviceManager().onProfileStateChanged(deviceList.get(0),Profile.HEADSET,BluetoothProfile.STATE_CONNECTED);
     }
   }
 );

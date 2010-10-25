@@ -4,6 +4,6 @@
   }
   mContext.registerReceiver(mReceiver,mIntentFilter);
   mCheckbox.setOnPreferenceChangeListener(this);
-  mNfcState=Settings.System.getInt(mContext.getContentResolver(),Settings.System.NFC_ON,0) != 0;
+  mNfcState=mNfcAdapter.isEnabled();
   mCheckbox.setChecked(mNfcState);
 }

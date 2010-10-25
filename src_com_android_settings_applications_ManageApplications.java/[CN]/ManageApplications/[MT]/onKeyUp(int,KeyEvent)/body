@@ -1,0 +1,9 @@
+{
+  if (keyCode == KeyEvent.KEYCODE_SEARCH && event.isTracking()) {
+    if (mCurView != VIEW_RUNNING) {
+      ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInputUnchecked(0,null);
+    }
+    return true;
+  }
+  return super.onKeyUp(keyCode,event);
+}

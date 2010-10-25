@@ -8,6 +8,19 @@
   mNetwork=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_NETWORK);
   mGps=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_GPS);
   mAssistedGps=(CheckBoxPreference)getPreferenceScreen().findPreference(ASSISTED_GPS);
+  if (GoogleLocationSettingHelper.isAvailable(getActivity())) {
+    PreferenceGroup locationCat=(PreferenceGroup)root.findPreference(LOCATION_CATEGORY);
+    CheckBoxPreference useLocation=new CheckBoxPreference(getActivity());
+    useLocation.setKey(USE_LOCATION);
+    useLocation.setTitle(R.string.use_location_title);
+    useLocation.setSummaryOn(R.string.use_location_summary_enabled);
+    useLocation.setSummaryOff(R.string.use_location_summary_disabled);
+    useLocation.setChecked(GoogleLocationSettingHelper.getUseLocationForServices(getActivity()) == GoogleLocationSettingHelper.USE_LOCATION_FOR_SERVICES_ON);
+    useLocation.setPersistent(false);
+    useLocation.setOnPreferenceChangeListener(this);
+    locationCat.addPreference(useLocation);
+    mUseLocation=useLocation;
+  }
   PreferenceManager pm=getPreferenceManager();
   if (!mLockPatternUtils.isSecure()) {
     addPreferencesFromResource(R.xml.security_settings_chooser);

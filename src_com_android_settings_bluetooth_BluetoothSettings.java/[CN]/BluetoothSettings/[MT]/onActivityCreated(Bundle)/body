@@ -11,6 +11,7 @@
   if (TextUtils.isEmpty(action)) {
     action=intent.getAction();
   }
+  if (getPreferenceScreen() != null)   getPreferenceScreen().removeAll();
   if (action.equals(BluetoothDevicePicker.ACTION_LAUNCH)) {
     mScreenType=SCREEN_TYPE_DEVICEPICKER;
     mNeedAuth=intent.getBooleanExtra(BluetoothDevicePicker.EXTRA_NEED_AUTH,false);
@@ -26,14 +27,17 @@
     activity.setTitle(activity.getString(R.string.device_picker));
     addPreferencesFromResource(R.xml.device_picker);
   }
+ else   if (action.equals(ACTION_LAUNCH_SCAN_MODE)) {
+    mScreenType=SCREEN_TYPE_SCAN;
+    addPreferencesFromResource(R.xml.device_picker);
+  }
  else {
     addPreferencesFromResource(R.xml.bluetooth_settings);
     mEnabler=new BluetoothEnabler(activity,(CheckBoxPreference)findPreference(KEY_BT_CHECKBOX));
     mDiscoverableEnabler=new BluetoothDiscoverableEnabler(activity,(CheckBoxPreference)findPreference(KEY_BT_DISCOVERABLE));
     mNamePreference=(BluetoothNamePreference)findPreference(KEY_BT_NAME);
-    mDeviceList=(ProgressCategory)findPreference(KEY_BT_DEVICE_LIST);
   }
-  mDeviceList=(ProgressCategory)findPreference(KEY_BT_DEVICE_LIST);
+  mDeviceList=(PreferenceCategory)findPreference(KEY_BT_DEVICE_LIST);
   registerForContextMenu(getListView());
   super.onActivityCreated(savedInstanceState);
 }

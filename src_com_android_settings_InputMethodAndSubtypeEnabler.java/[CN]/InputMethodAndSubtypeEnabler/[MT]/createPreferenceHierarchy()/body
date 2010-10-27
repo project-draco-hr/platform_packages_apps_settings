@@ -1,0 +1,45 @@
+{
+  PreferenceScreen root=getPreferenceManager().createPreferenceScreen(getActivity());
+  int N=(mInputMethodProperties == null ? 0 : mInputMethodProperties.size());
+  for (int i=0; i < N; ++i) {
+    PreferenceCategory keyboardSettingsCategory=new PreferenceCategory(getActivity());
+    root.addPreference(keyboardSettingsCategory);
+    InputMethodInfo property=mInputMethodProperties.get(i);
+    String prefKey=property.getId();
+    PackageManager pm=getPackageManager();
+    CharSequence label=property.loadLabel(pm);
+    boolean systemIME=isSystemIme(property);
+    keyboardSettingsCategory.setTitle(label);
+    if (mHaveHardKeyboard || (N > 1 && !systemIME)) {
+      CheckBoxPreference chkbxPref=new CheckBoxPreference(getActivity());
+      chkbxPref.setKey(prefKey);
+      chkbxPref.setTitle(label);
+      keyboardSettingsCategory.addPreference(chkbxPref);
+    }
+    ArrayList<InputMethodSubtype> subtypes=property.getSubtypes();
+    if (subtypes.size() > 0) {
+      PreferenceCategory subtypesCategory=new PreferenceCategory(getActivity());
+      subtypesCategory.setTitle(getResources().getString(R.string.input_methods_and_subtype_enabler_title_format,label));
+      root.addPreference(subtypesCategory);
+      for (      InputMethodSubtype subtype : subtypes) {
+        CharSequence subtypeLabel;
+        int nameResId=subtype.getNameResId();
+        if (nameResId != 0) {
+          subtypeLabel=pm.getText(property.getPackageName(),nameResId,property.getServiceInfo().applicationInfo);
+        }
+ else {
+          int modeResId=subtype.getModeResId();
+          CharSequence language=subtype.getLocale();
+          CharSequence mode=modeResId == 0 ? null : pm.getText(property.getPackageName(),modeResId,property.getServiceInfo().applicationInfo);
+          subtypeLabel=(mode == null ? "" : mode) + "," + (language == null ? "" : language);
+        }
+        CheckBoxPreference chkbxPref=new CheckBoxPreference(getActivity());
+        chkbxPref.setKey(prefKey + subtype.hashCode());
+        chkbxPref.setTitle(subtypeLabel);
+        chkbxPref.setSummary(label);
+        subtypesCategory.addPreference(chkbxPref);
+      }
+    }
+  }
+  return root;
+}

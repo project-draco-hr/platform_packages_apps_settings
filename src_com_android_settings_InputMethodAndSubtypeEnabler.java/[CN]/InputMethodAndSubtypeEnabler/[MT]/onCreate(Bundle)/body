@@ -1,0 +1,7 @@
+{
+  super.onCreate(icicle);
+  Configuration config=getResources().getConfiguration();
+  mHaveHardKeyboard=(config.keyboard == Configuration.KEYBOARD_QWERTY);
+  onCreateIMM();
+  setPreferenceScreen(createPreferenceHierarchy());
+}

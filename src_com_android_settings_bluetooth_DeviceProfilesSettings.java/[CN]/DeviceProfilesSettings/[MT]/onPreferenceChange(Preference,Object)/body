@@ -1,0 +1,12 @@
+{
+  if (preference == mAllowIncomingPref) {
+    setIncomingFileTransfersAllowed(mAllowIncomingPref.isChecked());
+  }
+ else   if (preference == mDeviceNamePref) {
+    mCachedDevice.setName(mDeviceNamePref.getText());
+  }
+ else {
+    return false;
+  }
+  return true;
+}

@@ -1,0 +1,9 @@
+{
+  super.onBindView(view);
+  ImageView btProfile=(ImageView)view.findViewById(R.id.profileIcon);
+  btProfile.setImageDrawable(mProfileDrawable);
+  mProfileExpandView=(ImageView)view.findViewById(R.id.profileExpand);
+  mProfileExpandView.setOnClickListener(this);
+  mProfileExpandView.setTag(mProfile);
+  mProfileExpandView.setImageResource(mExpanded ? R.drawable.ic_preferences_expanded : R.drawable.ic_preferences_collapsed);
+}

@@ -1,0 +1,12 @@
+{
+  for (  Profile profile : mCachedDevice.getConnectableProfiles()) {
+    Preference profilePref=findPreference(profile.toString());
+    if (profilePref == null) {
+      profilePref=createProfilePreference(profile);
+      mProfileContainer.addPreference(profilePref);
+    }
+ else {
+      refreshProfilePreference(profilePref,profile);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  ArrayList<Drawable> drawables=new ArrayList<Drawable>();
+  for (  Profile profile : mProfiles) {
+    LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
+    int iconResource=profileManager.getDrawableResource();
+    if (iconResource != 0) {
+      drawables.add(mContext.getResources().getDrawable(iconResource));
+    }
+  }
+  return drawables;
+}

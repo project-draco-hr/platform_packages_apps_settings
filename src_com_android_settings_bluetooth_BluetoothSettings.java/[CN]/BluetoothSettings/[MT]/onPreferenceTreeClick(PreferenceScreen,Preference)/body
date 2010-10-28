@@ -5,7 +5,7 @@
   }
   if (preference instanceof BluetoothDevicePreference) {
     BluetoothDevicePreference btPreference=(BluetoothDevicePreference)preference;
-    if (mScreenType == SCREEN_TYPE_SETTINGS) {
+    if (mScreenType == SCREEN_TYPE_SETTINGS || mScreenType == SCREEN_TYPE_SCAN) {
       btPreference.getCachedDevice().onClicked();
     }
  else     if (mScreenType == SCREEN_TYPE_DEVICEPICKER) {

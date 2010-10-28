@@ -6,6 +6,9 @@
  else {
     preference=new BluetoothDevicePreference(getActivity(),cachedDevice,CachedBluetoothDevice.OTHER_PROFILES);
   }
+  if (mScreenType == SCREEN_TYPE_SETTINGS) {
+    preference.setOnSettingsClickListener(this);
+  }
   mDeviceList.addPreference(preference);
   mDevicePreferenceMap.put(cachedDevice,preference);
 }

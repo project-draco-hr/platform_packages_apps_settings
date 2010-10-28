@@ -1,0 +1,23 @@
+{
+  if (v.getTag() instanceof Profile) {
+    Profile prof=(Profile)v.getTag();
+    CheckBoxPreference autoConnectPref=mAutoConnectPrefs.get(prof.toString());
+    if (autoConnectPref == null) {
+      autoConnectPref=new CheckBoxPreference(getActivity());
+      autoConnectPref.setKey(prof.toString() + AUTO_CONNECT_KEY_SUFFIX);
+      autoConnectPref.setTitle(getCheckBoxTitle(prof));
+      autoConnectPref.setOrder(getProfilePreferenceIndex(prof) + 1);
+      autoConnectPref.setChecked(getAutoConnect(prof));
+      mAutoConnectPrefs.put(prof.name(),autoConnectPref);
+    }
+    BluetoothProfilePreference profilePref=(BluetoothProfilePreference)findPreference(prof.toString());
+    if (profilePref != null) {
+      if (profilePref.isExpanded()) {
+        mProfileContainer.addPreference(autoConnectPref);
+      }
+ else {
+        mProfileContainer.removePreference(autoConnectPref);
+      }
+    }
+  }
+}

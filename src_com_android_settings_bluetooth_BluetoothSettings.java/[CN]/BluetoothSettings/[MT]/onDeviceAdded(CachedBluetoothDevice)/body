@@ -2,7 +2,9 @@
   if (mDevicePreferenceMap.get(cachedDevice) != null) {
     throw new IllegalStateException("Got onDeviceAdded, but cachedDevice already exists");
   }
-  if (addDevicePreference(cachedDevice)) {
-    createDevicePreference(cachedDevice);
+  if (mScreenType != SCREEN_TYPE_SETTINGS || cachedDevice.getBondState() == BluetoothDevice.BOND_BONDED) {
+    if (addDevicePreference(cachedDevice)) {
+      createDevicePreference(cachedDevice);
+    }
   }
 }

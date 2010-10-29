@@ -7,7 +7,7 @@
   mNotificationVolumeTitle=(TextView)view.findViewById(R.id.notification_volume_title);
   mNotificationsUseRingVolumeCheckbox=(CheckBox)view.findViewById(R.id.same_notification_volume);
   mNotificationsUseRingVolumeCheckbox.setOnCheckedChangeListener(this);
-  mNotificationsUseRingVolumeCheckbox.setChecked(Settings.System.getInt(getContext().getContentResolver(),Settings.System.NOTIFICATIONS_USE_RING_VOLUME,1) == 1);
+  mNotificationsUseRingVolumeCheckbox.setChecked(Utils.isVoiceCapable(getContext()) && Settings.System.getInt(getContext().getContentResolver(),Settings.System.NOTIFICATIONS_USE_RING_VOLUME,1) == 1);
   setNotificationVolumeVisibility(!mNotificationsUseRingVolumeCheckbox.isChecked());
   disableSettingsThatNeedVoice(view);
 }

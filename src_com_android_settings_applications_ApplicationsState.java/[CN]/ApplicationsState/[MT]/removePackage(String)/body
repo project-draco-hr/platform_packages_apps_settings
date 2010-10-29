@@ -1,5 +1,6 @@
 {
 synchronized (mEntriesMap) {
+    if (DEBUG_LOCKING)     Log.v(TAG,"removePackage acquired lock");
     int idx=indexOfApplicationInfoLocked(pkgName);
     if (DEBUG)     Log.i(TAG,"removePackage: " + pkgName + " @ "+ idx);
     if (idx >= 0) {
@@ -14,5 +15,6 @@ synchronized (mEntriesMap) {
         mMainHandler.sendEmptyMessage(MainHandler.MSG_PACKAGE_LIST_CHANGED);
       }
     }
+    if (DEBUG_LOCKING)     Log.v(TAG,"removePackage releasing lock");
   }
 }

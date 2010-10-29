@@ -1,4 +1,5 @@
 {
+  if (DEBUG_LOCKING)   Log.v(TAG,"resume about to acquire lock...");
 synchronized (mEntriesMap) {
     mCurCallbacks=callbacks;
     mResumed=true;
@@ -24,5 +25,6 @@ synchronized (mEntriesMap) {
     if (!mBackgroundHandler.hasMessages(BackgroundHandler.MSG_LOAD_ENTRIES)) {
       mBackgroundHandler.sendEmptyMessage(BackgroundHandler.MSG_LOAD_ENTRIES);
     }
+    if (DEBUG_LOCKING)     Log.v(TAG,"...resume releasing lock");
   }
 }

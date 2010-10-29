@@ -25,10 +25,12 @@ synchronized (mEntriesMap) {
     ApplicationInfo info=apps.get(i);
     if (filter == null || filter.filterApp(info)) {
 synchronized (mEntriesMap) {
+        if (DEBUG_LOCKING)         Log.v(TAG,"rebuild acquired lock");
         AppEntry entry=getEntryLocked(info);
         entry.ensureLabel(mContext);
         if (DEBUG)         Log.i(TAG,"Using " + info.packageName + ": "+ entry);
         filteredApps.add(entry);
+        if (DEBUG_LOCKING)         Log.v(TAG,"rebuild releasing lock");
       }
     }
   }

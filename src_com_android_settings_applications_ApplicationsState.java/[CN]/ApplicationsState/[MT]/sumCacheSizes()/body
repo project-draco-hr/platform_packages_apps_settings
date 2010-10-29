@@ -1,9 +1,12 @@
 {
   long sum=0;
+  if (DEBUG_LOCKING)   Log.v(TAG,"sumCacheSizes about to acquire lock...");
 synchronized (mEntriesMap) {
+    if (DEBUG_LOCKING)     Log.v(TAG,"-> sumCacheSizes now has lock");
     for (int i=mAppEntries.size() - 1; i >= 0; i--) {
       sum+=mAppEntries.get(i).cacheSize;
     }
+    if (DEBUG_LOCKING)     Log.v(TAG,"...sumCacheSizes releasing lock");
   }
   return sum;
 }

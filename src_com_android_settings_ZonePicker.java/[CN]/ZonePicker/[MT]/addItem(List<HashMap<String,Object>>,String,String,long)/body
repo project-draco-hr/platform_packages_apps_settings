@@ -1,11 +1,11 @@
 {
-  HashMap map=new HashMap();
+  final HashMap<String,Object> map=new HashMap<String,Object>();
   map.put(KEY_ID,id);
   map.put(KEY_DISPLAYNAME,displayName);
-  TimeZone tz=TimeZone.getTimeZone(id);
-  int offset=tz.getOffset(date);
-  int p=Math.abs(offset);
-  StringBuilder name=new StringBuilder();
+  final TimeZone tz=TimeZone.getTimeZone(id);
+  final int offset=tz.getOffset(date);
+  final int p=Math.abs(offset);
+  final StringBuilder name=new StringBuilder();
   name.append("GMT");
   if (offset < 0) {
     name.append('-');
@@ -23,8 +23,5 @@
   name.append(min);
   map.put(KEY_GMT,name.toString());
   map.put(KEY_OFFSET,offset);
-  if (id.equals(TimeZone.getDefault().getID())) {
-    mDefault=myData.size();
-  }
   myData.add(map);
 }

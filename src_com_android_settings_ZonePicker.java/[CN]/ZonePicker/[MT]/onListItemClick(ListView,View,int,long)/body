@@ -1,8 +1,8 @@
 {
-  Map map=(Map)l.getItemAtPosition(position);
+  final Map<?,?> map=(Map<?,?>)listView.getItemAtPosition(position);
+  final String tzId=(String)map.get(KEY_ID);
   final Activity activity=getActivity();
-  AlarmManager alarm=(AlarmManager)activity.getSystemService(Context.ALARM_SERVICE);
-  String tzId=(String)map.get(KEY_ID);
+  final AlarmManager alarm=(AlarmManager)activity.getSystemService(Context.ALARM_SERVICE);
   alarm.setTimeZone(tzId);
   final TimeZone tz=TimeZone.getTimeZone(tzId);
   if (mListener != null) {

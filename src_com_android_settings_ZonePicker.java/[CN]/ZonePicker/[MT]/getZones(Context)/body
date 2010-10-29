@@ -1,8 +1,8 @@
 {
-  List<HashMap> myData=new ArrayList<HashMap>();
-  long date=Calendar.getInstance().getTimeInMillis();
+  final List<HashMap<String,Object>> myData=new ArrayList<HashMap<String,Object>>();
+  final long date=Calendar.getInstance().getTimeInMillis();
   try {
-    XmlResourceParser xrp=getActivity().getResources().getXml(R.xml.timezones);
+    XmlResourceParser xrp=context.getResources().getXml(R.xml.timezones);
     while (xrp.next() != XmlResourceParser.START_TAG)     continue;
     xrp.next();
     while (xrp.getEventType() != XmlResourceParser.END_TAG) {

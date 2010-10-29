@@ -1,17 +1,8 @@
 {
   super.onActivityCreated(savedInstanseState);
-  final String[] from=new String[]{KEY_DISPLAYNAME,KEY_GMT};
-  final int[] to=new int[]{android.R.id.text1,android.R.id.text2};
-  MyComparator comparator=new MyComparator(KEY_OFFSET);
-  Activity activity=getActivity();
-  List<HashMap> timezoneSortedList=getZones();
-  Collections.sort(timezoneSortedList,comparator);
-  mTimezoneSortedAdapter=new SimpleAdapter(activity,(List)timezoneSortedList,android.R.layout.simple_list_item_2,from,to);
-  List<HashMap> alphabeticalList=new ArrayList<HashMap>(timezoneSortedList);
-  comparator.setSortingKey(KEY_DISPLAYNAME);
-  Collections.sort(alphabeticalList,comparator);
-  mAlphabeticalAdapter=new SimpleAdapter(getActivity(),(List)alphabeticalList,android.R.layout.simple_list_item_2,from,to);
+  final Activity activity=getActivity();
+  mTimezoneSortedAdapter=constructTimezoneAdapter(activity,false);
+  mAlphabeticalAdapter=constructTimezoneAdapter(activity,true);
   setSorting(true);
-  setSelection(mDefault);
   setHasOptionsMenu(true);
 }

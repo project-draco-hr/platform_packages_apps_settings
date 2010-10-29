@@ -1,4 +1,9 @@
 {
-  setListAdapter(timezone ? mTimezoneSortedAdapter : mAlphabeticalAdapter);
-  mSortedByTimezone=timezone;
+  final SimpleAdapter adapter=sortByTimezone ? mTimezoneSortedAdapter : mAlphabeticalAdapter;
+  setListAdapter(adapter);
+  mSortedByTimezone=sortByTimezone;
+  final int defaultIndex=getTimeZoneIndex(adapter,TimeZone.getDefault());
+  if (defaultIndex >= 0) {
+    setSelection(defaultIndex);
+  }
 }

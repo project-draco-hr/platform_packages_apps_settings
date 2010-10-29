@@ -1,0 +1,35 @@
+{
+  mInflater=inflater;
+  mRootView=inflater.inflate(R.layout.manage_applications,null);
+  mLoadingContainer=mRootView.findViewById(R.id.loading_container);
+  mListContainer=mRootView.findViewById(R.id.list_container);
+  ListView lv=(ListView)mListContainer.findViewById(android.R.id.list);
+  View emptyView=mListContainer.findViewById(com.android.internal.R.id.empty);
+  if (emptyView != null) {
+    lv.setEmptyView(emptyView);
+  }
+  lv.setOnItemClickListener(this);
+  lv.setSaveEnabled(true);
+  lv.setItemsCanFocus(true);
+  lv.setOnItemClickListener(this);
+  lv.setTextFilterEnabled(true);
+  mListView=lv;
+  lv.setRecyclerListener(mApplicationsAdapter);
+  mListView.setAdapter(mApplicationsAdapter);
+  mColorBar=(LinearColorBar)mListContainer.findViewById(R.id.storage_color_bar);
+  mStorageChartLabel=(TextView)mListContainer.findViewById(R.id.storageChartLabel);
+  mUsedStorageText=(TextView)mListContainer.findViewById(R.id.usedStorageText);
+  mFreeStorageText=(TextView)mListContainer.findViewById(R.id.freeStorageText);
+  mRunningProcessesView=(RunningProcessesView)mRootView.findViewById(R.id.running_processes);
+  View tabRoot=mInflater.inflate(com.android.internal.R.layout.tab_content,null);
+  mTabHost=(TabHost)tabRoot.findViewById(com.android.internal.R.id.tabhost);
+  mTabHost.setup();
+  final TabHost tabHost=mTabHost;
+  tabHost.addTab(tabHost.newTabSpec(TAB_DOWNLOADED).setIndicator(getActivity().getString(R.string.filter_apps_third_party),getActivity().getResources().getDrawable(R.drawable.ic_tab_download)).setContent(this));
+  tabHost.addTab(tabHost.newTabSpec(TAB_ALL).setIndicator(getActivity().getString(R.string.filter_apps_all),getActivity().getResources().getDrawable(R.drawable.ic_tab_all)).setContent(this));
+  tabHost.addTab(tabHost.newTabSpec(TAB_SDCARD).setIndicator(getActivity().getString(R.string.filter_apps_onsdcard),getActivity().getResources().getDrawable(R.drawable.ic_tab_sdcard)).setContent(this));
+  tabHost.addTab(tabHost.newTabSpec(TAB_RUNNING).setIndicator(getActivity().getString(R.string.filter_apps_running),getActivity().getResources().getDrawable(R.drawable.ic_tab_running)).setContent(this));
+  tabHost.setCurrentTabByTag(mDefaultTab);
+  tabHost.setOnTabChangedListener(this);
+  return tabRoot;
+}

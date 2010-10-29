@@ -1,5 +1,5 @@
 {
-  String tabId=getTabHost().getCurrentTabTag();
+  String tabId=mTabHost.getCurrentTabTag();
   int newOption;
   if (TAB_DOWNLOADED.equalsIgnoreCase(tabId)) {
     newOption=FILTER_APPS_THIRD_PARTY;
@@ -11,7 +11,7 @@
     newOption=FILTER_APPS_SDCARD;
   }
  else   if (TAB_RUNNING.equalsIgnoreCase(tabId)) {
-    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),0);
+    ((InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(),0);
     selectView(VIEW_RUNNING);
     return;
   }

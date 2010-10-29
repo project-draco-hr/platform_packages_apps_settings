@@ -2,8 +2,11 @@
   if (localLOGV)   Log.i(TAG,"appChanged=" + appChanged);
   Intent intent=new Intent();
   intent.putExtra(ManageApplications.APP_CHG,appChanged);
-  setResult(ManageApplications.RESULT_OK,intent);
+  Fragment target=getTargetFragment();
+  if (target != null) {
+    target.onActivityResult(getTargetRequestCode(),Activity.RESULT_OK,intent);
+  }
   if (finish) {
-    finish();
+    getActivity().onBackPressed();
   }
 }

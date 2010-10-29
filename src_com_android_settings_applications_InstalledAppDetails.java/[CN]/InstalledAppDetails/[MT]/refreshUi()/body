@@ -2,8 +2,13 @@
   if (mMoveInProgress) {
     return true;
   }
-  Intent intent=getIntent();
-  final String packageName=intent.getData().getSchemeSpecificPart();
+  String packageName=getArguments().getString(ARG_PACKAGE_NAME);
+  if (packageName == null) {
+    Intent intent=(Intent)getArguments().getParcelable("intent");
+    if (intent != null) {
+      packageName=intent.getData().getSchemeSpecificPart();
+    }
+  }
   mAppEntry=mState.getEntry(packageName);
   if (mAppEntry == null) {
     return false;
@@ -19,7 +24,7 @@
   List<IntentFilter> intentList=new ArrayList<IntentFilter>();
   mPm.getPreferredActivities(intentList,prefActList,packageName);
   if (localLOGV)   Log.i(TAG,"Have " + prefActList.size() + " number of activities in prefered list");
-  TextView autoLaunchView=(TextView)findViewById(R.id.auto_launch);
+  TextView autoLaunchView=(TextView)mRootView.findViewById(R.id.auto_launch);
   if (prefActList.size() <= 0) {
     autoLaunchView.setText(R.string.auto_launch_disable_text);
     mActivitiesButton.setEnabled(false);
@@ -29,8 +34,8 @@
     mActivitiesButton.setEnabled(true);
     mActivitiesButton.setOnClickListener(this);
   }
-  LinearLayout permsView=(LinearLayout)findViewById(R.id.permissions_section);
-  AppSecurityPermissions asp=new AppSecurityPermissions(this,packageName);
+  LinearLayout permsView=(LinearLayout)mRootView.findViewById(R.id.permissions_section);
+  AppSecurityPermissions asp=new AppSecurityPermissions(getActivity(),packageName);
   if (asp.getPermissionCount() > 0) {
     permsView.setVisibility(View.VISIBLE);
     LinearLayout securityList=(LinearLayout)permsView.findViewById(R.id.security_settings_list);

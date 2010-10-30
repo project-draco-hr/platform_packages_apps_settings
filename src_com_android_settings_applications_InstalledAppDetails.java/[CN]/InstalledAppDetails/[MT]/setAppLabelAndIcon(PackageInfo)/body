@@ -1,5 +1,5 @@
 {
-  View appSnippet=findViewById(R.id.app_snippet);
+  View appSnippet=mRootView.findViewById(R.id.app_snippet);
   ImageView icon=(ImageView)appSnippet.findViewById(R.id.app_icon);
   mState.ensureIcon(mAppEntry);
   icon.setImageDrawable(mAppEntry.icon);
@@ -8,7 +8,7 @@
   mAppVersion=(TextView)appSnippet.findViewById(R.id.app_size);
   if (pkgInfo != null && pkgInfo.versionName != null) {
     mAppVersion.setVisibility(View.VISIBLE);
-    mAppVersion.setText(getString(R.string.version_text,String.valueOf(pkgInfo.versionName)));
+    mAppVersion.setText(getActivity().getString(R.string.version_text,String.valueOf(pkgInfo.versionName)));
   }
  else {
     mAppVersion.setVisibility(View.INVISIBLE);

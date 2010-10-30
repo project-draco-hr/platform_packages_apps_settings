@@ -1,8 +1,9 @@
 {
   super.onCreate(savedInstanceState);
-  mApplicationsState=ApplicationsState.getInstance(getApplication());
+  setHasOptionsMenu(true);
+  mApplicationsState=ApplicationsState.getInstance(getActivity().getApplication());
   mApplicationsAdapter=new ApplicationsAdapter(mApplicationsState);
-  Intent intent=getIntent();
+  Intent intent=getActivity().getIntent();
   String action=intent.getAction();
   String defaultTabTag=TAB_DOWNLOADED;
   if (intent.getComponent().getClassName().equals("com.android.settings.RunningServices")) {
@@ -22,40 +23,9 @@
     String tmp=savedInstanceState.getString("defaultTabTag");
     if (tmp != null)     defaultTabTag=tmp;
   }
-  mNonConfigInstance=getLastNonConfigurationInstance();
+  mDefaultTab=defaultTabTag;
   mDataFileStats=new StatFs("/data");
   mSDCardFileStats=new StatFs(Environment.getExternalStorageDirectory().toString());
-  requestWindowFeature(Window.FEATURE_RIGHT_ICON);
-  requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-  mInvalidSizeStr=getText(R.string.invalid_size_value);
-  mComputingSizeStr=getText(R.string.computing_size);
-  mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-  mRootView=mInflater.inflate(R.layout.manage_applications,null);
-  mLoadingContainer=mRootView.findViewById(R.id.loading_container);
-  mListContainer=mRootView.findViewById(R.id.list_container);
-  ListView lv=(ListView)mListContainer.findViewById(android.R.id.list);
-  View emptyView=mListContainer.findViewById(com.android.internal.R.id.empty);
-  if (emptyView != null) {
-    lv.setEmptyView(emptyView);
-  }
-  lv.setOnItemClickListener(this);
-  lv.setSaveEnabled(true);
-  lv.setItemsCanFocus(true);
-  lv.setOnItemClickListener(this);
-  lv.setTextFilterEnabled(true);
-  mListView=lv;
-  lv.setRecyclerListener(mApplicationsAdapter);
-  mListView.setAdapter(mApplicationsAdapter);
-  mColorBar=(LinearColorBar)mListContainer.findViewById(R.id.storage_color_bar);
-  mStorageChartLabel=(TextView)mListContainer.findViewById(R.id.storageChartLabel);
-  mUsedStorageText=(TextView)mListContainer.findViewById(R.id.usedStorageText);
-  mFreeStorageText=(TextView)mListContainer.findViewById(R.id.freeStorageText);
-  mRunningProcessesView=(RunningProcessesView)mRootView.findViewById(R.id.running_processes);
-  final TabHost tabHost=getTabHost();
-  tabHost.addTab(tabHost.newTabSpec(TAB_DOWNLOADED).setIndicator(getString(R.string.filter_apps_third_party),getResources().getDrawable(R.drawable.ic_tab_download)).setContent(this));
-  tabHost.addTab(tabHost.newTabSpec(TAB_ALL).setIndicator(getString(R.string.filter_apps_all),getResources().getDrawable(R.drawable.ic_tab_all)).setContent(this));
-  tabHost.addTab(tabHost.newTabSpec(TAB_SDCARD).setIndicator(getString(R.string.filter_apps_onsdcard),getResources().getDrawable(R.drawable.ic_tab_sdcard)).setContent(this));
-  tabHost.addTab(tabHost.newTabSpec(TAB_RUNNING).setIndicator(getString(R.string.filter_apps_running),getResources().getDrawable(R.drawable.ic_tab_running)).setContent(this));
-  tabHost.setCurrentTabByTag(defaultTabTag);
-  tabHost.setOnTabChangedListener(this);
+  mInvalidSizeStr=getActivity().getText(R.string.invalid_size_value);
+  mComputingSizeStr=getActivity().getText(R.string.computing_size);
 }

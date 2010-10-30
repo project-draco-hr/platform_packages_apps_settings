@@ -2,5 +2,7 @@
   super.onSaveInstanceState(outState);
   outState.putInt("sortOrder",mSortOrder);
   outState.putInt("filterApps",mFilterApps);
-  outState.putString("defautTabTag",getTabHost().getCurrentTabTag());
+  if (mTabHost != null) {
+    outState.putString("defautTabTag",mTabHost.getCurrentTabTag());
+  }
 }

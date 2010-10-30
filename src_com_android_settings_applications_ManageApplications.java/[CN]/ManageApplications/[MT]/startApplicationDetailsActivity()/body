@@ -1,4 +1,16 @@
 {
   Intent intent=new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.fromParts("package",mCurrentPkgName,null));
-  startActivityForResult(intent,INSTALLED_APP_DETAILS);
+  Bundle args=new Bundle();
+  args.putString(InstalledAppDetails.ARG_PACKAGE_NAME,mCurrentPkgName);
+  PreferenceActivity pa=(PreferenceActivity)getActivity();
+  if (pa.isMultiPane()) {
+    Fragment frag=new InstalledAppDetails();
+    frag.setTargetFragment(this,INSTALLED_APP_DETAILS);
+    frag.setArguments(args);
+    frag.setTargetFragment(this,INSTALLED_APP_DETAILS);
+    pa.startPreferenceFragment(frag,true);
+  }
+ else {
+    pa.startWithFragment(InstalledAppDetails.class.getName(),args);
+  }
 }

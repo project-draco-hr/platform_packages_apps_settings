@@ -1,5 +1,5 @@
 {
-  String tabId=mTabHost.getCurrentTabTag();
+  String tabId=mDefaultTab=mTabHost.getCurrentTabTag();
   int newOption;
   if (TAB_DOWNLOADED.equalsIgnoreCase(tabId)) {
     newOption=FILTER_APPS_THIRD_PARTY;
@@ -21,4 +21,5 @@
   mFilterApps=newOption;
   selectView(VIEW_LIST);
   updateStorageUsage();
+  updateOptionsMenu();
 }

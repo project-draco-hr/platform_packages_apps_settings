@@ -20,7 +20,7 @@
     }
     boolean haveData=true;
     if (mActivityResumed && !mResumedRunning) {
-      haveData=mRunningProcessesView.doResume(mRunningProcessesAvail);
+      haveData=mRunningProcessesView.doResume(this,mRunningProcessesAvail);
       mResumedRunning=true;
     }
     mApplicationsAdapter.pause();

@@ -1,15 +1,3 @@
 {
-  if (mCurView == VIEW_RUNNING) {
-    boolean showingBackground=mRunningProcessesView.mAdapter.getShowBackground();
-    menu.findItem(SORT_ORDER_ALPHA).setVisible(false);
-    menu.findItem(SORT_ORDER_SIZE).setVisible(false);
-    menu.findItem(SHOW_RUNNING_SERVICES).setVisible(showingBackground);
-    menu.findItem(SHOW_BACKGROUND_PROCESSES).setVisible(!showingBackground);
-  }
- else {
-    menu.findItem(SORT_ORDER_ALPHA).setVisible(mSortOrder != SORT_ORDER_ALPHA);
-    menu.findItem(SORT_ORDER_SIZE).setVisible(mSortOrder != SORT_ORDER_SIZE);
-    menu.findItem(SHOW_RUNNING_SERVICES).setVisible(false);
-    menu.findItem(SHOW_BACKGROUND_PROCESSES).setVisible(false);
-  }
+  updateOptionsMenu();
 }

@@ -1,16 +1,9 @@
 {
   super.onCreate(savedInstanceState);
-  mUid=getIntent().getIntExtra(KEY_UID,0);
-  mProcessName=getIntent().getStringExtra(KEY_PROCESS);
-  mShowBackground=getIntent().getBooleanExtra(KEY_BACKGROUND,false);
-  mAm=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
-  mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-  mState=RunningState.getInstance(this);
-  setContentView(R.layout.running_service_details);
-  mAllDetails=(ViewGroup)findViewById(R.id.all_details);
-  mSnippet=(ViewGroup)findViewById(R.id.snippet);
-  mSnippet.setBackgroundResource(com.android.internal.R.drawable.title_bar_medium);
-  mSnippet.setPadding(0,mSnippet.getPaddingTop(),0,mSnippet.getPaddingBottom());
-  mSnippetViewHolder=new RunningProcessesView.ViewHolder(mSnippet);
-  ensureData();
+  mUid=getArguments().getInt(KEY_UID,0);
+  mProcessName=getArguments().getString(KEY_PROCESS);
+  mShowBackground=getArguments().getBoolean(KEY_BACKGROUND,false);
+  mAm=(ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+  mInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  mState=RunningState.getInstance(getActivity());
 }

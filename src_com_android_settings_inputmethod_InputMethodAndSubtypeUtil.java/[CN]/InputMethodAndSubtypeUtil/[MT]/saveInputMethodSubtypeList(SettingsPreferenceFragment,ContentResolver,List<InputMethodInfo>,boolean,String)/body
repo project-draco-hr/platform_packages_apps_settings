@@ -1,5 +1,5 @@
 {
-  String lastInputMethodId=Settings.Secure.getString(context.getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD);
+  String lastInputMethodId=Settings.Secure.getString(resolver,Settings.Secure.DEFAULT_INPUT_METHOD);
   StringBuilder builder=new StringBuilder();
   StringBuilder disabledSysImes=new StringBuilder();
   int firstEnabled=-1;
@@ -33,7 +33,7 @@
       lastInputMethodId=null;
     }
   }
-  Settings.Secure.putString(context.getContentResolver(),Settings.Secure.ENABLED_INPUT_METHODS,builder.toString());
-  Settings.Secure.putString(context.getContentResolver(),Settings.Secure.DISABLED_SYSTEM_INPUT_METHODS,disabledSysImes.toString());
-  Settings.Secure.putString(context.getContentResolver(),Settings.Secure.DEFAULT_INPUT_METHOD,lastInputMethodId != null ? lastInputMethodId : "");
+  Settings.Secure.putString(resolver,Settings.Secure.ENABLED_INPUT_METHODS,builder.toString());
+  Settings.Secure.putString(resolver,Settings.Secure.DISABLED_SYSTEM_INPUT_METHODS,disabledSysImes.toString());
+  Settings.Secure.putString(resolver,Settings.Secure.DEFAULT_INPUT_METHOD,lastInputMethodId != null ? lastInputMethodId : "");
 }

@@ -1,6 +1,6 @@
 {
   final HashSet<String> enabled=new HashSet<String>();
-  String enabledStr=Settings.Secure.getString(context.getContentResolver(),Settings.Secure.ENABLED_INPUT_METHODS);
+  String enabledStr=Settings.Secure.getString(resolver,Settings.Secure.ENABLED_INPUT_METHODS);
   if (enabledStr != null) {
     final TextUtils.SimpleStringSplitter splitter=sStringColonSplitter;
     splitter.setString(enabledStr);

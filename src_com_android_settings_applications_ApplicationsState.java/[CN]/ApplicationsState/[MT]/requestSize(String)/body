@@ -1,8 +1,10 @@
 {
+  if (DEBUG_LOCKING)   Log.v(TAG,"requestSize about to acquire lock...");
 synchronized (mEntriesMap) {
     AppEntry entry=mEntriesMap.get(packageName);
     if (entry != null) {
       mPm.getPackageSizeInfo(packageName,mBackgroundHandler.mStatsObserver);
     }
+    if (DEBUG_LOCKING)     Log.v(TAG,"...requestSize releasing lock");
   }
 }

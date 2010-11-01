@@ -1,12 +1,15 @@
 {
   try {
 synchronized (mEntriesMap) {
+      if (DEBUG_LOCKING)       Log.v(TAG,"addPackage acquired lock");
       if (DEBUG)       Log.i(TAG,"Adding package " + pkgName);
       if (!mResumed) {
+        if (DEBUG_LOCKING)         Log.v(TAG,"addPackage release lock: not resumed");
         return;
       }
       if (indexOfApplicationInfoLocked(pkgName) >= 0) {
         if (DEBUG)         Log.i(TAG,"Package already exists!");
+        if (DEBUG_LOCKING)         Log.v(TAG,"addPackage release lock: already exists");
         return;
       }
       ApplicationInfo info=mPm.getApplicationInfo(pkgName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
@@ -17,6 +20,7 @@ synchronized (mEntriesMap) {
       if (!mMainHandler.hasMessages(MainHandler.MSG_PACKAGE_LIST_CHANGED)) {
         mMainHandler.sendEmptyMessage(MainHandler.MSG_PACKAGE_LIST_CHANGED);
       }
+      if (DEBUG_LOCKING)       Log.v(TAG,"addPackage releasing lock");
     }
   }
  catch (  NameNotFoundException e) {

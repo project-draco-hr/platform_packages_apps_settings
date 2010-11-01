@@ -10,7 +10,7 @@
     if (mLastShowedInternalStorage) {
       mLastShowedInternalStorage=false;
     }
-    newLabel=this.getText(R.string.sd_card_storage);
+    newLabel=getActivity().getText(R.string.sd_card_storage);
     mSDCardFileStats.restat(Environment.getExternalStorageDirectory().toString());
     try {
       totalStorage=(long)mSDCardFileStats.getBlockCount() * mSDCardFileStats.getBlockSize();
@@ -23,7 +23,7 @@
     if (!mLastShowedInternalStorage) {
       mLastShowedInternalStorage=true;
     }
-    newLabel=this.getText(R.string.internal_storage);
+    newLabel=getActivity().getText(R.string.internal_storage);
     mDataFileStats.restat("/data");
     try {
       totalStorage=(long)mDataFileStats.getBlockCount() * mDataFileStats.getBlockSize();
@@ -46,13 +46,13 @@
     long usedStorage=totalStorage - freeStorage;
     if (mLastUsedStorage != usedStorage) {
       mLastUsedStorage=usedStorage;
-      String sizeStr=Formatter.formatShortFileSize(this,usedStorage);
-      mUsedStorageText.setText(getResources().getString(R.string.service_foreground_processes,sizeStr));
+      String sizeStr=Formatter.formatShortFileSize(getActivity(),usedStorage);
+      mUsedStorageText.setText(getActivity().getResources().getString(R.string.service_foreground_processes,sizeStr));
     }
     if (mLastFreeStorage != freeStorage) {
       mLastFreeStorage=freeStorage;
-      String sizeStr=Formatter.formatShortFileSize(this,freeStorage);
-      mFreeStorageText.setText(getResources().getString(R.string.service_background_processes,sizeStr));
+      String sizeStr=Formatter.formatShortFileSize(getActivity(),freeStorage);
+      mFreeStorageText.setText(getActivity().getResources().getString(R.string.service_background_processes,sizeStr));
     }
   }
  else {

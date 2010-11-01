@@ -3,6 +3,14 @@
   if (startingFragment != null && !onIsMultiPane()) {
     Intent modIntent=new Intent(super.getIntent());
     modIntent.putExtra(EXTRA_SHOW_FRAGMENT,startingFragment);
+    Bundle args=super.getIntent().getExtras();
+    if (args != null) {
+      args=new Bundle(args);
+    }
+ else {
+      args=new Bundle();
+    }
+    args.putParcelable("intent",super.getIntent());
     modIntent.putExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS,super.getIntent().getExtras());
     return modIntent;
   }

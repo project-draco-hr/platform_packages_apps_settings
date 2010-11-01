@@ -1,0 +1,13 @@
+{
+  super.onResume();
+  InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,getContentResolver(),mInputMethodProperties);
+  mLastTickedInputMethodId=null;
+  if (mLanguagePref != null) {
+    Configuration conf=getResources().getConfiguration();
+    String locale=conf.locale.getDisplayName(conf.locale);
+    if (locale != null && locale.length() > 1) {
+      locale=Character.toUpperCase(locale.charAt(0)) + locale.substring(1);
+      mLanguagePref.setSummary(locale);
+    }
+  }
+}

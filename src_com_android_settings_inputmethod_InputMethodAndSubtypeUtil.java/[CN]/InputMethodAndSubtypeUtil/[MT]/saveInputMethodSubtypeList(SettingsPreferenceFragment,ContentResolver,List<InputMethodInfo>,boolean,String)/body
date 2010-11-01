@@ -1,0 +1,39 @@
+{
+  String lastInputMethodId=Settings.Secure.getString(resolver,Settings.Secure.DEFAULT_INPUT_METHOD);
+  StringBuilder builder=new StringBuilder();
+  StringBuilder disabledSysImes=new StringBuilder();
+  int firstEnabled=-1;
+  int N=inputMethodProperties.size();
+  for (int i=0; i < N; ++i) {
+    final InputMethodInfo property=inputMethodProperties.get(i);
+    final String id=property.getId();
+    CheckBoxPreference pref=(CheckBoxPreference)context.findPreference(id);
+    boolean currentInputMethod=id.equals(lastInputMethodId);
+    boolean systemIme=isSystemIme(property);
+    if (((N == 1 || systemIme) && !hasHardKeyboard) || (pref != null && pref.isChecked())) {
+      if (builder.length() > 0)       builder.append(':');
+      builder.append(id);
+      if (firstEnabled < 0) {
+        firstEnabled=i;
+      }
+    }
+ else     if (currentInputMethod) {
+      lastInputMethodId=lastTickedInputMethodId;
+    }
+    if (pref != null && !pref.isChecked() && systemIme && hasHardKeyboard) {
+      if (disabledSysImes.length() > 0)       disabledSysImes.append(":");
+      disabledSysImes.append(id);
+    }
+  }
+  if (TextUtils.isEmpty(lastInputMethodId)) {
+    if (firstEnabled >= 0) {
+      lastInputMethodId=inputMethodProperties.get(firstEnabled).getId();
+    }
+ else {
+      lastInputMethodId=null;
+    }
+  }
+  Settings.Secure.putString(resolver,Settings.Secure.ENABLED_INPUT_METHODS,builder.toString());
+  Settings.Secure.putString(resolver,Settings.Secure.DISABLED_SYSTEM_INPUT_METHODS,disabledSysImes.toString());
+  Settings.Secure.putString(resolver,Settings.Secure.DEFAULT_INPUT_METHOD,lastInputMethodId != null ? lastInputMethodId : "");
+}

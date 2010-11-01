@@ -2,7 +2,7 @@
   String packageName=mAppEntry.info.packageName;
   if (v == mUninstallButton) {
     if (mUpdatedSysApp) {
-      showDialogInner(DLG_FACTORY_RESET);
+      showDialogInner(DLG_FACTORY_RESET,0);
     }
  else {
       if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
@@ -24,7 +24,7 @@
       startActivityForResult(intent,-1);
     }
  else {
-      showDialogInner(DLG_CLEAR_DATA);
+      showDialogInner(DLG_CLEAR_DATA,0);
     }
   }
  else   if (v == mClearCacheButton) {
@@ -34,7 +34,7 @@
     mPm.deleteApplicationCacheFiles(packageName,mClearCacheObserver);
   }
  else   if (v == mForceStopButton) {
-    showDialogInner(DLG_FORCE_STOP);
+    showDialogInner(DLG_FORCE_STOP,0);
   }
  else   if (v == mMoveAppButton) {
     if (mPackageMoveObserver == null) {

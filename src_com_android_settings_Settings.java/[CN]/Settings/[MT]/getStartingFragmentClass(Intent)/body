@@ -1,5 +1,8 @@
 {
-  final String intentClass=intent.getComponent().getClassName();
+  String intentClass=intent.getComponent().getClassName();
   if (intentClass.equals(getClass().getName()))   return null;
+  if ("com.android.settings.ManageApplications".equals(intentClass)) {
+    intentClass=com.android.settings.applications.ManageApplications.class.getName();
+  }
   return intentClass;
 }

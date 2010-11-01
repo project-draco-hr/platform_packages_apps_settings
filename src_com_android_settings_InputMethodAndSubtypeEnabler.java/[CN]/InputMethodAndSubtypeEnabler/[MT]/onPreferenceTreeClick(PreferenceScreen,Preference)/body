@@ -9,8 +9,8 @@
         InputMethodInfo imi=mInputMethodProperties.get(i);
         if (id.equals(imi.getId())) {
           selImi=imi;
-          if (isSystemIme(imi)) {
-            setSubtypesPreferenceEnabled(id,true);
+          if (InputMethodAndSubtypeUtil.isSystemIme(imi)) {
+            InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodProperties,id,true);
             mLastTickedInputMethodId=id;
             return super.onPreferenceTreeClick(preferenceScreen,preference);
           }
@@ -25,7 +25,7 @@
         mDialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
           public void onClick(          DialogInterface dialog,          int which){
             chkPref.setChecked(true);
-            setSubtypesPreferenceEnabled(id,true);
+            InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(InputMethodAndSubtypeEnabler.this,mInputMethodProperties,id,true);
             mLastTickedInputMethodId=id;
           }
         }
@@ -47,7 +47,7 @@
       if (id.equals(mLastTickedInputMethodId)) {
         mLastTickedInputMethodId=null;
       }
-      setSubtypesPreferenceEnabled(id,false);
+      InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodProperties,id,false);
     }
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

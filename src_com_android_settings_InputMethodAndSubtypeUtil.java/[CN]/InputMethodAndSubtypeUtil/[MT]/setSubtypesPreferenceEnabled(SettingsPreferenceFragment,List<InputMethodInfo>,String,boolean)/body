@@ -1,8 +1,8 @@
 {
-  PreferenceScreen preferenceScreen=getPreferenceScreen();
-  final int N=mInputMethodProperties.size();
+  PreferenceScreen preferenceScreen=context.getPreferenceScreen();
+  final int N=inputMethodProperties.size();
   for (int i=0; i < N; i++) {
-    InputMethodInfo imi=mInputMethodProperties.get(i);
+    InputMethodInfo imi=inputMethodProperties.get(i);
     if (id.equals(imi.getId())) {
       for (      InputMethodSubtype subtype : imi.getSubtypes()) {
         preferenceScreen.findPreference(id + subtype.hashCode()).setEnabled(enabled);

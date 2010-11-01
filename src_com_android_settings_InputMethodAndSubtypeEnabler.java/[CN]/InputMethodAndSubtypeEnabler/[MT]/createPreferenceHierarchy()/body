@@ -8,7 +8,7 @@
     String prefKey=property.getId();
     PackageManager pm=getPackageManager();
     CharSequence label=property.loadLabel(pm);
-    boolean systemIME=isSystemIme(property);
+    boolean systemIME=InputMethodAndSubtypeUtil.isSystemIme(property);
     keyboardSettingsCategory.setTitle(label);
     if (mHaveHardKeyboard || (N > 1 && !systemIME)) {
       CheckBoxPreference chkbxPref=new CheckBoxPreference(getActivity());

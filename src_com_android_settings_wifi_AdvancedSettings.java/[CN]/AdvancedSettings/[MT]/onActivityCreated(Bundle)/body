@@ -1,13 +1,3 @@
 {
   super.onActivityCreated(savedInstanceState);
-  DEBUGGABLE=SystemProperties.getInt("ro.debuggable",0);
-  if (DEBUGGABLE == 1) {
-    initNumChannelsPreference();
-  }
- else {
-    Preference chanPref=findPreference(KEY_NUM_CHANNELS);
-    if (chanPref != null) {
-      getPreferenceScreen().removePreference(chanPref);
-    }
-  }
 }

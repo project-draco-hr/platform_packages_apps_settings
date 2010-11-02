@@ -2,6 +2,11 @@
   if (!mLockPatternUtils.isLockPasswordEnabled())   return false;
   final Intent intent=new Intent();
   intent.setClassName("com.android.settings","com.android.settings.ConfirmLockPassword");
-  mActivity.startActivityForResult(intent,request);
+  if (mFragment != null) {
+    mFragment.startActivityForResult(intent,request);
+  }
+ else {
+    mActivity.startActivityForResult(intent,request);
+  }
   return true;
 }

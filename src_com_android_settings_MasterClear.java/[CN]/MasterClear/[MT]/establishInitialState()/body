@@ -1,16 +1,12 @@
 {
-  if (mInitialView == null) {
-    mInitialView=mInflater.inflate(R.layout.master_clear_primary,null);
-    mInitiateButton=(Button)mInitialView.findViewById(R.id.initiate_master_clear);
-    mInitiateButton.setOnClickListener(mInitiateListener);
-    mExternalStorageContainer=mInitialView.findViewById(R.id.erase_external_container);
-    mExternalStorage=(CheckBox)mInitialView.findViewById(R.id.erase_external);
-    mExternalStorageContainer.setOnClickListener(new View.OnClickListener(){
-      @Override public void onClick(      View v){
-        mExternalStorage.toggle();
-      }
+  mInitiateButton=(Button)mContentView.findViewById(R.id.initiate_master_clear);
+  mInitiateButton.setOnClickListener(mInitiateListener);
+  mExternalStorageContainer=mContentView.findViewById(R.id.erase_external_container);
+  mExternalStorage=(CheckBox)mContentView.findViewById(R.id.erase_external);
+  mExternalStorageContainer.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      mExternalStorage.toggle();
     }
-);
   }
-  setContentView(mInitialView);
+);
 }

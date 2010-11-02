@@ -1,21 +1,13 @@
 {
-  final HashSet<String> enabled=new HashSet<String>();
-  String enabledStr=Settings.Secure.getString(resolver,Settings.Secure.ENABLED_INPUT_METHODS);
-  if (enabledStr != null) {
-    final TextUtils.SimpleStringSplitter splitter=sStringColonSplitter;
-    splitter.setString(enabledStr);
-    while (splitter.hasNext()) {
-      enabled.add(splitter.next());
-    }
-  }
-  int N=inputMethodProperties.size();
-  for (int i=0; i < N; ++i) {
-    final String id=inputMethodProperties.get(i).getId();
-    CheckBoxPreference pref=(CheckBoxPreference)context.findPreference(inputMethodProperties.get(i).getId());
+  HashMap<String,HashSet<String>> enabledSubtypes=getEnabledInputMethodsAndSubtypeList(resolver);
+  for (  InputMethodInfo property : inputMethodProperties) {
+    final String id=property.getId();
+    CheckBoxPreference pref=(CheckBoxPreference)context.findPreference(id);
     if (pref != null) {
-      boolean isEnabled=enabled.contains(id);
+      boolean isEnabled=enabledSubtypes.containsKey(id);
       pref.setChecked(isEnabled);
       setSubtypesPreferenceEnabled(context,inputMethodProperties,id,isEnabled);
+      updateSubtypesPreferenceChecked(context,inputMethodProperties,enabledSubtypes);
     }
   }
 }

@@ -15,7 +15,7 @@
       info.durationMillis=-1;
     }
     ComponentName comp=new ComponentName(mServiceItem.mServiceInfo.packageName,mServiceItem.mServiceInfo.name);
-    File filename=getFileStreamPath("service_dump.txt");
+    File filename=getActivity().getFileStreamPath("service_dump.txt");
     FileOutputStream output=null;
     try {
       output=new FileOutputStream(filename);
@@ -60,7 +60,7 @@
   }
   if (mManageIntent != null) {
     try {
-      startIntentSender(mManageIntent.getIntentSender(),null,Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET,Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET,0);
+      getActivity().startIntentSender(mManageIntent.getIntentSender(),null,Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET,Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET,0);
     }
  catch (    IntentSender.SendIntentException e) {
       Log.w(TAG,e);

@@ -6,18 +6,18 @@
     if (mEnableAdb.isChecked()) {
       mOkClicked=false;
       if (mOkDialog != null)       dismissDialog();
-      mOkDialog=new AlertDialog.Builder(this).setMessage(getResources().getString(R.string.adb_warning_message)).setTitle(R.string.adb_warning_title).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(android.R.string.yes,this).setNegativeButton(android.R.string.no,this).show();
+      mOkDialog=new AlertDialog.Builder(getActivity()).setMessage(getActivity().getResources().getString(R.string.adb_warning_message)).setTitle(R.string.adb_warning_title).setIcon(android.R.drawable.ic_dialog_alert).setPositiveButton(android.R.string.yes,this).setNegativeButton(android.R.string.no,this).show();
       mOkDialog.setOnDismissListener(this);
     }
  else {
-      Settings.Secure.putInt(getContentResolver(),Settings.Secure.ADB_ENABLED,0);
+      Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ADB_ENABLED,0);
     }
   }
  else   if (preference == mKeepScreenOn) {
-    Settings.System.putInt(getContentResolver(),Settings.System.STAY_ON_WHILE_PLUGGED_IN,mKeepScreenOn.isChecked() ? (BatteryManager.BATTERY_PLUGGED_AC | BatteryManager.BATTERY_PLUGGED_USB) : 0);
+    Settings.System.putInt(getActivity().getContentResolver(),Settings.System.STAY_ON_WHILE_PLUGGED_IN,mKeepScreenOn.isChecked() ? (BatteryManager.BATTERY_PLUGGED_AC | BatteryManager.BATTERY_PLUGGED_USB) : 0);
   }
  else   if (preference == mAllowMockLocation) {
-    Settings.Secure.putInt(getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,mAllowMockLocation.isChecked() ? 1 : 0);
+    Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,mAllowMockLocation.isChecked() ? 1 : 0);
   }
   return false;
 }

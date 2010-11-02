@@ -1,0 +1,8 @@
+{
+  try {
+    return Settings.Secure.getInt(resolver,Settings.Secure.SELECTED_INPUT_METHOD_SUBTYPE) != NOT_A_SUBTYPE_ID;
+  }
+ catch (  SettingNotFoundException e) {
+    return false;
+  }
+}

@@ -18,7 +18,7 @@
   }
   TextView description=(TextView)root.findViewById(R.id.comp_description);
   if (si != null && si.mServiceInfo.descriptionRes != 0) {
-    description.setText(getPackageManager().getText(si.mServiceInfo.packageName,si.mServiceInfo.descriptionRes,si.mServiceInfo.applicationInfo));
+    description.setText(getActivity().getPackageManager().getText(si.mServiceInfo.packageName,si.mServiceInfo.descriptionRes,si.mServiceInfo.applicationInfo));
   }
  else {
     if (mi.mBackground) {
@@ -26,26 +26,26 @@
     }
  else     if (detail.mManageIntent != null) {
       try {
-        Resources clientr=getPackageManager().getResourcesForApplication(si.mRunningService.clientPackage);
+        Resources clientr=getActivity().getPackageManager().getResourcesForApplication(si.mRunningService.clientPackage);
         String label=clientr.getString(si.mRunningService.clientLabel);
-        description.setText(getString(R.string.service_manage_description,label));
+        description.setText(getActivity().getString(R.string.service_manage_description,label));
       }
  catch (      PackageManager.NameNotFoundException e) {
       }
     }
  else {
-      description.setText(getText(si != null ? R.string.service_stop_description : R.string.heavy_weight_stop_description));
+      description.setText(getActivity().getText(si != null ? R.string.service_stop_description : R.string.heavy_weight_stop_description));
     }
   }
   detail.mStopButton=(Button)root.findViewById(R.id.left_button);
   detail.mStopButton.setOnClickListener(detail);
-  detail.mStopButton.setText(getText(detail.mManageIntent != null ? R.string.service_manage : R.string.service_stop));
+  detail.mStopButton.setText(getActivity().getText(detail.mManageIntent != null ? R.string.service_manage : R.string.service_stop));
   detail.mReportButton=(Button)root.findViewById(R.id.right_button);
   detail.mReportButton.setOnClickListener(detail);
   detail.mReportButton.setText(com.android.internal.R.string.report);
-  int enabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.SEND_ACTION_APP_ERROR,0);
+  int enabled=Settings.Secure.getInt(getActivity().getContentResolver(),Settings.Secure.SEND_ACTION_APP_ERROR,0);
   if (enabled != 0 && si != null) {
-    detail.mInstaller=ApplicationErrorReport.getErrorReportReceiver(this,si.mServiceInfo.packageName,si.mServiceInfo.applicationInfo.flags);
+    detail.mInstaller=ApplicationErrorReport.getErrorReportReceiver(getActivity(),si.mServiceInfo.packageName,si.mServiceInfo.applicationInfo.flags);
     detail.mReportButton.setEnabled(detail.mInstaller != null);
   }
  else {

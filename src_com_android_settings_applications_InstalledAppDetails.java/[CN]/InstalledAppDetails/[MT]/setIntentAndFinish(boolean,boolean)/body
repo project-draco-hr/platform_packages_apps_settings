@@ -2,11 +2,6 @@
   if (localLOGV)   Log.i(TAG,"appChanged=" + appChanged);
   Intent intent=new Intent();
   intent.putExtra(ManageApplications.APP_CHG,appChanged);
-  Fragment target=getTargetFragment();
-  if (target != null) {
-    target.onActivityResult(getTargetRequestCode(),Activity.RESULT_OK,intent);
-  }
-  if (finish) {
-    getActivity().onBackPressed();
-  }
+  PreferenceActivity pa=(PreferenceActivity)getActivity();
+  pa.finishPreferencePanel(this,Activity.RESULT_OK,intent);
 }

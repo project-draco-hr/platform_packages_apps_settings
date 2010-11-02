@@ -21,13 +21,16 @@
   mUsedStorageText=(TextView)mListContainer.findViewById(R.id.usedStorageText);
   mFreeStorageText=(TextView)mListContainer.findViewById(R.id.freeStorageText);
   mRunningProcessesView=(RunningProcessesView)mRootView.findViewById(R.id.running_processes);
+  mCreatedRunning=mResumedRunning=false;
   View tabRoot=mInflater.inflate(com.android.internal.R.layout.tab_content,null);
   mTabHost=(TabHost)tabRoot.findViewById(com.android.internal.R.id.tabhost);
   mTabHost.setup();
   final TabHost tabHost=mTabHost;
   tabHost.addTab(tabHost.newTabSpec(TAB_DOWNLOADED).setIndicator(getActivity().getString(R.string.filter_apps_third_party),getActivity().getResources().getDrawable(R.drawable.ic_tab_download)).setContent(this));
   tabHost.addTab(tabHost.newTabSpec(TAB_ALL).setIndicator(getActivity().getString(R.string.filter_apps_all),getActivity().getResources().getDrawable(R.drawable.ic_tab_all)).setContent(this));
-  tabHost.addTab(tabHost.newTabSpec(TAB_SDCARD).setIndicator(getActivity().getString(R.string.filter_apps_onsdcard),getActivity().getResources().getDrawable(R.drawable.ic_tab_sdcard)).setContent(this));
+  if (!Environment.isExternalStorageEmulated()) {
+    tabHost.addTab(tabHost.newTabSpec(TAB_SDCARD).setIndicator(getActivity().getString(R.string.filter_apps_onsdcard),getActivity().getResources().getDrawable(R.drawable.ic_tab_sdcard)).setContent(this));
+  }
   tabHost.addTab(tabHost.newTabSpec(TAB_RUNNING).setIndicator(getActivity().getString(R.string.filter_apps_running),getActivity().getResources().getDrawable(R.drawable.ic_tab_running)).setContent(this));
   tabHost.setCurrentTabByTag(mDefaultTab);
   tabHost.setOnTabChangedListener(this);

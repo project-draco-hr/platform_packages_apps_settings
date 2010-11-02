@@ -1,4 +1,8 @@
 {
+  if (Environment.isExternalStorageEmulated()) {
+    mMoveAppButton.setVisibility(View.INVISIBLE);
+    return;
+  }
   boolean dataOnly=false;
   dataOnly=(mPackageInfo == null) && (mAppEntry != null);
   boolean moveDisable=true;

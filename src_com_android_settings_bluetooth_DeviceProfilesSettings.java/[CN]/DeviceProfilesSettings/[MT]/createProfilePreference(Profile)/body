@@ -6,7 +6,6 @@
   pref.setPersistent(false);
   pref.setOrder(getProfilePreferenceIndex(profile));
   pref.setOnExpandClickListener(this);
-  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
   pref.setEnabled(!mCachedDevice.isBusy());
   refreshProfilePreference(pref,profile);
   return pref;

@@ -1,3 +1,8 @@
 {
-  return describe(this,profile);
+  StringBuilder sb=new StringBuilder();
+  sb.append("Address:").append(mDevice);
+  if (profile != null) {
+    sb.append(" Profile:").append(profile.name());
+  }
+  return sb.toString();
 }

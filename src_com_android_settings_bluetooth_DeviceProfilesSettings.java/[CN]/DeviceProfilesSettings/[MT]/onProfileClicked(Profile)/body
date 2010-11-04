@@ -1,0 +1,12 @@
+{
+  BluetoothDevice device=mCachedDevice.getDevice();
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
+  int status=profileManager.getConnectionStatus(device);
+  boolean isConnected=SettingsBtStatus.isConnectionStatusConnected(status);
+  if (isConnected) {
+    mCachedDevice.askDisconnect(profile);
+  }
+ else {
+    mCachedDevice.connect(profile);
+  }
+}

@@ -6,6 +6,11 @@
   intent.putExtra(ConfirmLockPattern.HEADER_TEXT,message);
   intent.putExtra(ConfirmLockPattern.FOOTER_TEXT,details);
   intent.setClassName("com.android.settings","com.android.settings.ConfirmLockPattern");
-  mActivity.startActivityForResult(intent,request);
+  if (mFragment != null) {
+    mFragment.startActivityForResult(intent,request);
+  }
+ else {
+    mActivity.startActivityForResult(intent,request);
+  }
   return true;
 }

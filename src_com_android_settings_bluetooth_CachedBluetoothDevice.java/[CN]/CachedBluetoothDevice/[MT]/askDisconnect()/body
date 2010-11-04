@@ -16,15 +16,5 @@
     }
   }
 ;
-  if (mDialog == null) {
-    mDialog=new AlertDialog.Builder(context).setPositiveButton(android.R.string.ok,disconnectListener).setNegativeButton(android.R.string.cancel,null).create();
-  }
- else {
-    if (mDialog.isShowing()) {
-      mDialog.dismiss();
-    }
-  }
-  mDialog.setTitle(getName());
-  mDialog.setMessage(message);
-  mDialog.show();
+  showDisconnectDialog(context,disconnectListener,message);
 }

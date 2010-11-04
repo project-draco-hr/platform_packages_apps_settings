@@ -6,7 +6,7 @@
   for (  BluetoothDevice btDevice : devices) {
     CachedBluetoothDevice cachedDevice=cachedDeviceManager.findDevice(btDevice);
     if (cachedDevice != null && !cachedDevice.equals(device)) {
-      disconnectInt(cachedDevice,profile);
+      cachedDevice.disconnect(profile);
     }
   }
 }

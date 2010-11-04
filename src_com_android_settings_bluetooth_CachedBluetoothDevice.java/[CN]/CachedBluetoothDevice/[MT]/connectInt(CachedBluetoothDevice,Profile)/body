@@ -1,7 +1,6 @@
 {
   if (!cachedDevice.ensurePaired())   return false;
   LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
-  int status=profileManager.getConnectionStatus(cachedDevice.mDevice);
   if (profileManager.connect(cachedDevice.mDevice)) {
     if (D) {
       Log.d(TAG,"Command sent successfully:CONNECT " + describe(profile));

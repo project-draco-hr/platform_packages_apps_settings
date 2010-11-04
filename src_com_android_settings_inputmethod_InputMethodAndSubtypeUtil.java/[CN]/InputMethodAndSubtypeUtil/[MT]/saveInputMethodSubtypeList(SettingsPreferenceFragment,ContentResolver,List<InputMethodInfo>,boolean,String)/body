@@ -1,10 +1,12 @@
 {
   String currentInputMethodId=Settings.Secure.getString(resolver,Settings.Secure.DEFAULT_INPUT_METHOD);
+  final int selectedInputMethodSubtype=getInputMethodSubtypeSelected(resolver);
   StringBuilder builder=new StringBuilder();
   StringBuilder disabledSysImes=new StringBuilder();
   InputMethodInfo firstEnabledIMI=null;
   int firstSubtypeHashCode=NOT_A_SUBTYPE_ID;
   final boolean onlyOneIME=inputMethodProperties.size() == 1;
+  boolean existsSelectedIME=false;
   for (  InputMethodInfo property : inputMethodProperties) {
     final String id=property.getId();
     CheckBoxPreference pref=(CheckBoxPreference)context.findPreference(id);
@@ -20,8 +22,13 @@
         CheckBoxPreference subtypePref=(CheckBoxPreference)context.findPreference(id + subtype.hashCode());
         if (subtypePref != null && subtypePref.isChecked()) {
           builder.append(INPUT_METHOD_SUBTYPE_SEPARATER).append(subtype.hashCode());
-          if (firstSubtypeHashCode == NOT_A_SUBTYPE_ID) {
-            firstSubtypeHashCode=subtype.hashCode();
+          if (isCurrentInputMethod) {
+            if (selectedInputMethodSubtype == subtype.hashCode()) {
+              existsSelectedIME=true;
+            }
+ else             if (firstSubtypeHashCode == NOT_A_SUBTYPE_ID) {
+              firstSubtypeHashCode=subtype.hashCode();
+            }
           }
         }
       }
@@ -47,7 +54,7 @@
     Log.d(TAG,"--- Save disable system inputmethod settings. :" + disabledSysImes.toString());
     Log.d(TAG,"--- Save default inputmethod settings. :" + currentInputMethodId);
   }
-  if (firstSubtypeHashCode == NOT_A_SUBTYPE_ID || !isInputMethodSubtypeSelected(resolver)) {
+  if (!existsSelectedIME || !isInputMethodSubtypeSelected(resolver)) {
     if (DEBUG) {
       Log.d(TAG,"--- Set inputmethod subtype because it's not defined." + firstSubtypeHashCode);
     }

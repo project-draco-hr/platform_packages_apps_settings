@@ -14,10 +14,8 @@ case SCANNING:
     }
 case CONNECTING:
 {
-    mProgressBar.setIndeterminate(false);
-    mProgressBar.setProgress(1);
-    mStatusText.setText(R.string.wifi_setup_status_connecting);
-    mProgressText.setText(Summary.get(this,state));
+    mShowingConnectingMessageManually=false;
+    showConnectingStatus();
     break;
   }
 case CONNECTED:
@@ -50,7 +48,12 @@ mIgnoringWifiNotificationCount--;
 mProgressBar.setIndeterminate(true);
 mProgressText.setText(Summary.get(this,DetailedState.SCANNING));
 }
+ else if (mShowingConnectingMessageManually && mIgnoringWifiNotificationCount > 0) {
+mIgnoringWifiNotificationCount--;
+showConnectingStatus();
+}
  else {
+mShowingConnectingMessageManually=false;
 mProgressBar.setIndeterminate(false);
 mProgressBar.setProgress(0);
 mStatusText.setText(R.string.wifi_setup_status_select_network);

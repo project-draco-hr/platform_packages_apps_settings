@@ -1,4 +1,5 @@
 {
+  if (mFragmentClass != null)   return mFragmentClass;
   String intentClass=intent.getComponent().getClassName();
   if (intentClass.equals(getClass().getName()))   return null;
   if ("com.android.settings.ManageApplications".equals(intentClass) || "com.android.settings.RunningServices".equals(intentClass) || "com.android.settings.applications.StorageUse".equals(intentClass)) {

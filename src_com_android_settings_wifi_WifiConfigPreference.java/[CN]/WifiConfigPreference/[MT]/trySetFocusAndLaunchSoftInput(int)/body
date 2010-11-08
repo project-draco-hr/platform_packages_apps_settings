@@ -1,0 +1,11 @@
+{
+  final View viewToBeFocused=mView.findViewById(id);
+  if (viewToBeFocused != null && viewToBeFocused.getVisibility() == View.VISIBLE) {
+    viewToBeFocused.requestFocus();
+    if (viewToBeFocused instanceof EditText) {
+      Log.d(TAG,"Focused View is EditText. We try showing the software keyboard");
+      final InputMethodManager inputMethodManager=(InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+      inputMethodManager.showSoftInput(viewToBeFocused,0);
+    }
+  }
+}

@@ -24,7 +24,8 @@ case CONNECTED:
   mProgressBar.setProgress(2);
   mProgressText.setText(Summary.get(this,state));
   mStatusText.setText(R.string.wifi_setup_status_proceed_to_next);
-  enableButtons();
+  ((Button)findViewById(R.id.wifi_setup_refresh_list)).setEnabled(true);
+  ((Button)findViewById(R.id.wifi_setup_skip_or_next)).setEnabled(true);
   if (mIgnoringWifiNotificationCount > 0) {
     mIgnoringWifiNotificationCount=0;
   }
@@ -56,7 +57,6 @@ showConnectingStatus();
 mShowingConnectingMessageManually=false;
 mProgressBar.setIndeterminate(false);
 mProgressBar.setProgress(0);
-mStatusText.setText(R.string.wifi_setup_status_select_network);
 mProgressText.setText(getString(R.string.wifi_setup_not_connected));
 enableButtons();
 }

@@ -28,9 +28,8 @@
           subtypeLabel=pm.getText(property.getPackageName(),nameResId,property.getServiceInfo().applicationInfo);
         }
  else {
-          int modeResId=subtype.getModeResId();
+          String mode=subtype.getMode();
           CharSequence language=subtype.getLocale();
-          CharSequence mode=modeResId == 0 ? null : pm.getText(property.getPackageName(),modeResId,property.getServiceInfo().applicationInfo);
           subtypeLabel=(mode == null ? "" : mode) + "," + (language == null ? "" : language);
         }
         CheckBoxPreference chkbxPref=new CheckBoxPreference(getActivity());

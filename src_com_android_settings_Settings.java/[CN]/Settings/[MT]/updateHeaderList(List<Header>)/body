@@ -2,7 +2,7 @@
   int i=0;
   while (i < target.size()) {
     Header header=target.get(i);
-    long id=header.id;
+    int id=(int)header.id;
     if (id == R.id.dock_settings) {
       if (!needsDockSettings())       target.remove(header);
     }
@@ -12,6 +12,9 @@
  else     if (id == R.id.call_settings) {
       if (!Utils.isVoiceCapable(this))       target.remove(header);
     }
-    if (target.get(i) == header)     i++;
+    if (target.get(i) == header) {
+      mHeaderIndexMap.put(id,i);
+      i++;
+    }
   }
 }

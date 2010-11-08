@@ -10,8 +10,6 @@
   mAutoSyncCheckbox=(CheckBoxPreference)findPreference(AUTO_SYNC_CHECKBOX_KEY);
   mManageAccountsCategory=(PreferenceCategory)findPreference(MANAGE_ACCOUNTS_CATEGORY_KEY);
   mAuthorities=activity.getIntent().getStringArrayExtra(AUTHORITIES_FILTER_KEY);
-  mAddAccountButton=(Button)view.findViewById(R.id.add_account_button);
-  mAddAccountButton.setOnClickListener(this);
   AccountManager.get(activity).addOnAccountsUpdatedListener(this,null,true);
   updateAuthDescriptions(activity);
 }

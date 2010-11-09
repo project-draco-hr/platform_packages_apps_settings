@@ -1,12 +1,6 @@
 {
-  mWifiManager.disconnect();
   if (mWifiManager.isWifiEnabled()) {
     mScanner.resume();
   }
-  mConfigPreference=null;
-  mConnectingAccessPoint=null;
   mAccessPoints.removeAll();
-  if (mInXlSetupWizard) {
-    ((WifiSettingsForSetupWizardXL)getActivity()).onRefreshAccessPoints();
-  }
 }

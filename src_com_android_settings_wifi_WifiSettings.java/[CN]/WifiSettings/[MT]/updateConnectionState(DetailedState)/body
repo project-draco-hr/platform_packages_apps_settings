@@ -20,11 +20,7 @@
       accessPoint.update(mLastInfo,mLastState);
     }
   }
-  final Activity activity=getActivity();
-  if (activity instanceof WifiSettingsForSetupWizardXL) {
-    if (mLastState == DetailedState.FAILED) {
-      refreshAccessPoints();
-    }
-    ((WifiSettingsForSetupWizardXL)activity).updateConnectionState(mLastState);
+  if (mInXlSetupWizard) {
+    ((WifiSettingsForSetupWizardXL)getActivity()).updateConnectionState(mLastState);
   }
 }

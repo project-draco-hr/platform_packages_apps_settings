@@ -1,14 +1,7 @@
 {
-synchronized (this) {
-    mRefrainListUpdate=false;
-  }
   mEdit=edit;
   if (mInXlSetupWizard) {
-    final Activity activity=getActivity();
-    activity.findViewById(R.id.wifi_setup_connect).setVisibility(View.VISIBLE);
-    activity.findViewById(R.id.wifi_setup_cancel).setVisibility(View.VISIBLE);
-    activity.findViewById(R.id.wifi_setup_detail).setVisibility(View.VISIBLE);
-    showConfigPreference(accessPoint,edit);
+    ((WifiSettingsForSetupWizardXL)getActivity()).showConfigUi(accessPoint,edit);
   }
  else {
     showDialog(accessPoint,edit);

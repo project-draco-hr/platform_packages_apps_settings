@@ -1,38 +1,12 @@
 {
-synchronized (this) {
-    if (mRefrainListUpdate) {
-      return;
-    }
-  }
   mAccessPoints.removeAll();
-  if (mConnectingAccessPoint != null) {
-    mAccessPoints.addPreference(mConnectingAccessPoint);
-  }
- else   if (mConfigPreference != null) {
-    final AccessPoint parent=mConfigPreference.getAccessPoint();
-    if (parent != null) {
-      parent.setSelectable(false);
-      mAccessPoints.addPreference(parent);
-    }
-    mAccessPoints.addPreference(mConfigPreference);
+  final Collection<AccessPoint> accessPoints=constructAccessPoints();
+  if (mInXlSetupWizard) {
+    ((WifiSettingsForSetupWizardXL)getActivity()).onAccessPointsUpdated(mAccessPoints,accessPoints);
   }
  else {
-    final Collection<AccessPoint> accessPoints=constructAccessPoints();
-    if (mInXlSetupWizard) {
-      int count=MAX_MENU_COUNT_IN_XL;
-      for (      AccessPoint accessPoint : accessPoints) {
-        accessPoint.setLayoutResource(R.layout.custom_preference);
-        mAccessPoints.addPreference(accessPoint);
-        count--;
-        if (count <= 0) {
-          break;
-        }
-      }
-    }
- else {
-      for (      AccessPoint accessPoint : accessPoints) {
-        mAccessPoints.addPreference(accessPoint);
-      }
+    for (    AccessPoint accessPoint : accessPoints) {
+      mAccessPoints.addPreference(accessPoint);
     }
   }
 }

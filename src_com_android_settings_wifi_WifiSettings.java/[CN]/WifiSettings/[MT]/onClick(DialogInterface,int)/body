@@ -1,12 +1,18 @@
 {
-  if (button == WifiDialog.BUTTON_FORGET && mSelectedAccessPoint != null) {
-    forget();
+  if (mInXlSetupWizard) {
+    if (button == WifiDialog.BUTTON_FORGET && mSelectedAccessPoint != null) {
+      ((WifiSettingsForSetupWizardXL)getActivity()).onForgetButtonPressed();
+    }
+ else     if (button == WifiDialog.BUTTON_SUBMIT) {
+      ((WifiSettingsForSetupWizardXL)getActivity()).onConnectButtonPressed();
+    }
   }
- else   if (button == WifiDialog.BUTTON_SUBMIT) {
-    submit();
-    final Activity activity=getActivity();
-    if (activity instanceof WifiSettingsForSetupWizardXL) {
-      ((WifiSettingsForSetupWizardXL)activity).onConnectButtonPressed();
+ else {
+    if (button == WifiDialog.BUTTON_FORGET && mSelectedAccessPoint != null) {
+      forget();
+    }
+ else     if (button == WifiDialog.BUTTON_SUBMIT) {
+      submit(mDialog.getController());
     }
   }
 }

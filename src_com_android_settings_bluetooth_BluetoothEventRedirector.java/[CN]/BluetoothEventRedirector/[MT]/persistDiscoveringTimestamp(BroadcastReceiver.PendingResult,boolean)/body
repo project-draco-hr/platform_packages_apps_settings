@@ -1,0 +1,17 @@
+{
+  mSerialExecutor.submit(new Runnable(){
+    public void run(){
+      SharedPreferences.Editor editor=mManager.getSharedPreferences().edit();
+      editor.putLong(LocalBluetoothManager.SHARED_PREFERENCES_KEY_DISCOVERING_TIMESTAMP,System.currentTimeMillis());
+      editor.apply();
+      mHandler.post(new Runnable(){
+        public void run(){
+          mManager.onScanningStateChanged(newState);
+          pr.finish();
+        }
+      }
+);
+    }
+  }
+);
+}

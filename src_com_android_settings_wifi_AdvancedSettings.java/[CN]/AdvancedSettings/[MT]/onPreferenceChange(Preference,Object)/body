@@ -10,5 +10,14 @@
       return false;
     }
   }
+ else   if (key.equals(KEY_FREQUENCY_BAND)) {
+    try {
+      mWifiManager.setFrequencyBand(Integer.parseInt(((String)newValue)),true);
+    }
+ catch (    NumberFormatException e) {
+      Toast.makeText(getActivity(),R.string.wifi_setting_frequency_band_error,Toast.LENGTH_SHORT).show();
+      return false;
+    }
+  }
   return true;
 }

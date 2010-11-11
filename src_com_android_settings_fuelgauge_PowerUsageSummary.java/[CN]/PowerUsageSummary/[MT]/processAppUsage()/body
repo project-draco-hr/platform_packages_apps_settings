@@ -72,6 +72,7 @@
       }
     }
     wakelockTime/=1000;
+    power+=(wakelockTime * mPowerProfile.getAveragePower(PowerProfile.POWER_CPU_AWAKE)) / 1000;
     long tcpBytesReceived=u.getTcpBytesReceived(mStatsType);
     long tcpBytesSent=u.getTcpBytesSent(mStatsType);
     power+=(tcpBytesReceived + tcpBytesSent) * averageCostPerByte;

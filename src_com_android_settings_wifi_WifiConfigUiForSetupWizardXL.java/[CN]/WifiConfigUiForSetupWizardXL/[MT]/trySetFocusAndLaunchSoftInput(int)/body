@@ -1,7 +1,7 @@
 {
   final View viewToBeFocused=mView.findViewById(id);
   if (viewToBeFocused != null && viewToBeFocused.getVisibility() == View.VISIBLE) {
-    viewToBeFocused.requestFocus();
+    Log.d(TAG,"requestFocus() returned " + viewToBeFocused.requestFocus());
     if (viewToBeFocused instanceof EditText) {
       Log.d(TAG,"Focused View is EditText. We try showing the software keyboard");
       final InputMethodManager inputMethodManager=(InputMethodManager)mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);

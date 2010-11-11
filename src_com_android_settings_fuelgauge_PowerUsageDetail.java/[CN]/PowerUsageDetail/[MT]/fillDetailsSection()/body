@@ -1,5 +1,5 @@
 {
-  LayoutInflater inflater=getLayoutInflater();
+  LayoutInflater inflater=getActivity().getLayoutInflater();
   if (mTypes != null && mValues != null) {
     for (int i=0; i < mTypes.length; i++) {
       if (mValues[i] <= 0)       continue;
@@ -8,7 +8,7 @@
 switch (mTypes[i]) {
 case R.string.usage_type_data_recv:
 case R.string.usage_type_data_send:
-        value=Utils.formatBytes(this,mValues[i]);
+        value=Utils.formatBytes(getActivity(),mValues[i]);
       break;
 case R.string.usage_type_no_coverage:
     value=String.format("%d%%",(int)Math.floor(mValues[i]));
@@ -16,7 +16,7 @@ case R.string.usage_type_no_coverage:
 case R.string.usage_type_gps:
 mUsesGps=true;
 default :
-value=Utils.formatElapsedTime(this,mValues[i]);
+value=Utils.formatElapsedTime(getActivity(),mValues[i]);
 }
 ViewGroup item=(ViewGroup)inflater.inflate(R.layout.power_usage_detail_item_text,null);
 mDetailsParent.addView(item);

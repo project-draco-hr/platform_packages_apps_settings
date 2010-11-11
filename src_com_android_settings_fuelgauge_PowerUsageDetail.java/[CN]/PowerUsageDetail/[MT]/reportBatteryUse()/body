@@ -7,12 +7,12 @@
   report.processName=mPackages[0];
   report.time=System.currentTimeMillis();
   report.systemApp=(mApp.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
-  final Intent intent=getIntent();
+  final Bundle args=getArguments();
   ApplicationErrorReport.BatteryInfo batteryInfo=new ApplicationErrorReport.BatteryInfo();
-  batteryInfo.usagePercent=intent.getIntExtra(EXTRA_PERCENT,1);
-  batteryInfo.durationMicros=intent.getLongExtra(EXTRA_USAGE_DURATION,0);
-  batteryInfo.usageDetails=intent.getStringExtra(EXTRA_REPORT_DETAILS);
-  batteryInfo.checkinDetails=intent.getStringExtra(EXTRA_REPORT_CHECKIN_DETAILS);
+  batteryInfo.usagePercent=args.getInt(EXTRA_PERCENT,1);
+  batteryInfo.durationMicros=args.getLong(EXTRA_USAGE_DURATION,0);
+  batteryInfo.usageDetails=args.getString(EXTRA_REPORT_DETAILS);
+  batteryInfo.checkinDetails=args.getString(EXTRA_REPORT_CHECKIN_DETAILS);
   report.batteryInfo=batteryInfo;
   Intent result=new Intent(Intent.ACTION_APP_ERROR);
   result.setComponent(mInstaller);

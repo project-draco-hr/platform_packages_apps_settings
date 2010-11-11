@@ -3,10 +3,10 @@
     removePackagesSection();
     return;
   }
-  ViewGroup packagesParent=(ViewGroup)findViewById(R.id.packages_section);
+  ViewGroup packagesParent=(ViewGroup)mRootView.findViewById(R.id.packages_section);
   if (packagesParent == null)   return;
-  LayoutInflater inflater=getLayoutInflater();
-  PackageManager pm=getPackageManager();
+  LayoutInflater inflater=getActivity().getLayoutInflater();
+  PackageManager pm=getActivity().getPackageManager();
   mPackages=pm.getPackagesForUid(uid);
   if (mPackages == null || mPackages.length < 2) {
     removePackagesSection();

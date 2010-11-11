@@ -1,5 +1,5 @@
 {
-  SensorManager sensorManager=(SensorManager)getSystemService(Context.SENSOR_SERVICE);
+  SensorManager sensorManager=(SensorManager)getActivity().getSystemService(Context.SENSOR_SERVICE);
   final int which=mStatsType;
   final int speedSteps=mPowerProfile.getNumSpeedSteps();
   final double[] powerCpuNormal=new double[speedSteps];
@@ -10,7 +10,6 @@
   final double averageCostPerByte=getAverageDataCost();
   long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime() * 1000,which);
   mStatsPeriod=uSecTime;
-  updateStatsPeriod(uSecTime);
   SparseArray<? extends Uid> uidStats=mStats.getUidStats();
   final int NU=uidStats.size();
   for (int iu=0; iu < NU; iu++) {
@@ -104,7 +103,7 @@ power+=(multiplier * sensorTime) / 1000;
 }
 if (DEBUG) Log.i(TAG,"UID " + u.getUid() + ": power="+ power);
 if (power != 0) {
-BatterySipper app=new BatterySipper(this,mRequestQueue,mHandler,packageWithHighestDrain,DrainType.APP,0,u,new double[]{power});
+BatterySipper app=new BatterySipper(getActivity(),mRequestQueue,mHandler,packageWithHighestDrain,DrainType.APP,0,u,new double[]{power});
 app.cpuTime=cpuTime;
 app.gpsTime=gpsTime;
 app.wifiRunningTime=wifiRunningTimeMs;

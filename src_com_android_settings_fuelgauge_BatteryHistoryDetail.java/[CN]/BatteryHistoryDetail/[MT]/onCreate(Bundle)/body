@@ -1,11 +1,8 @@
 {
   super.onCreate(icicle);
-  byte[] data=getIntent().getByteArrayExtra(EXTRA_STATS);
+  byte[] data=getArguments().getByteArray(EXTRA_STATS);
   Parcel parcel=Parcel.obtain();
   parcel.unmarshall(data,0,data.length);
   parcel.setDataPosition(0);
-  setContentView(R.layout.preference_batteryhistory);
   mStats=com.android.internal.os.BatteryStatsImpl.CREATOR.createFromParcel(parcel);
-  BatteryHistoryChart chart=(BatteryHistoryChart)findViewById(R.id.battery_history_chart);
-  chart.setStats(mStats);
 }

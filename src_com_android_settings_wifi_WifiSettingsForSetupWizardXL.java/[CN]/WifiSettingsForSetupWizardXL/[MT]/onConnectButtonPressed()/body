@@ -1,7 +1,17 @@
 {
+  mAfterTryConnect=true;
+  mWifiSettings.submit(mWifiConfig.getController());
   showConnectingStatus();
-  ((Button)findViewById(R.id.wifi_setup_add_network)).setEnabled(false);
-  ((Button)findViewById(R.id.wifi_setup_refresh_list)).setEnabled(false);
+  mBackButton.setVisibility(View.VISIBLE);
+  findViewById(R.id.wps_fields).setVisibility(View.GONE);
+  findViewById(R.id.security_fields).setVisibility(View.GONE);
+  findViewById(R.id.type).setVisibility(View.GONE);
+  mSkipOrNextButton.setVisibility(View.VISIBLE);
+  mSkipOrNextButton.setEnabled(false);
+  mConnectButton.setVisibility(View.GONE);
+  mAddNetworkButton.setVisibility(View.GONE);
+  mRefreshButton.setVisibility(View.GONE);
+  mDetailButton.setVisibility(View.GONE);
   mShowingConnectingMessageManually=true;
-  mIgnoringWifiNotificationCount=2;
+  mIgnoringWifiNotificationCount=1;
 }

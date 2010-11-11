@@ -6,11 +6,18 @@
   mProgressText.setText(Summary.get(this,DetailedState.SCANNING));
   mProgressBar.setIndeterminate(true);
   mStatusText.setText(R.string.wifi_setup_status_scanning);
-  ((Button)findViewById(R.id.wifi_setup_refresh_list)).setOnClickListener(this);
-  ((Button)findViewById(R.id.wifi_setup_add_network)).setOnClickListener(this);
-  ((Button)findViewById(R.id.wifi_setup_skip_or_next)).setOnClickListener(this);
-  ((Button)findViewById(R.id.wifi_setup_connect)).setOnClickListener(this);
-  ((Button)findViewById(R.id.wifi_setup_forget)).setOnClickListener(this);
-  ((Button)findViewById(R.id.wifi_setup_cancel)).setOnClickListener(this);
-  ((Button)findViewById(R.id.wifi_setup_detail)).setOnClickListener(this);
+  mAddNetworkButton=(Button)findViewById(R.id.wifi_setup_add_network);
+  mAddNetworkButton.setOnClickListener(this);
+  mRefreshButton=(Button)findViewById(R.id.wifi_setup_refresh_list);
+  mRefreshButton.setOnClickListener(this);
+  mSkipOrNextButton=(Button)findViewById(R.id.wifi_setup_skip_or_next);
+  mSkipOrNextButton.setOnClickListener(this);
+  mConnectButton=(Button)findViewById(R.id.wifi_setup_connect);
+  mConnectButton.setOnClickListener(this);
+  mForgetButton=(Button)findViewById(R.id.wifi_setup_forget);
+  mForgetButton.setOnClickListener(this);
+  mBackButton=(Button)findViewById(R.id.wifi_setup_cancel);
+  mBackButton.setOnClickListener(this);
+  mDetailButton=(Button)findViewById(R.id.wifi_setup_detail);
+  mDetailButton.setOnClickListener(this);
 }

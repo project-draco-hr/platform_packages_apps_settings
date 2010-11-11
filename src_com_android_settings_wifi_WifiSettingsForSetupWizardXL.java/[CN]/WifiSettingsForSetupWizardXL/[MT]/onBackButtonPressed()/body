@@ -1,0 +1,24 @@
+{
+  if (mAfterTryConnect) {
+    mAfterTryConnect=false;
+    restoreFirstButtonVisibilityState();
+    mShowingConnectingMessageManually=false;
+    mAddNetworkButton.setEnabled(false);
+    mRefreshButton.setEnabled(false);
+    mSkipOrNextButton.setEnabled(true);
+    refreshAccessPoints(true);
+  }
+ else {
+    mWifiSettings.resumeWifiScan();
+    mStatusText.setText(R.string.wifi_setup_status_select_network);
+    restoreFirstButtonVisibilityState();
+    mAddNetworkButton.setEnabled(true);
+    mRefreshButton.setEnabled(true);
+    mSkipOrNextButton.setEnabled(true);
+  }
+  findViewById(R.id.wifi_setup).setVisibility(View.VISIBLE);
+  final ViewGroup parent=(ViewGroup)findViewById(R.id.wifi_config_ui);
+  parent.removeAllViews();
+  parent.setVisibility(View.GONE);
+  mWifiConfig=null;
+}

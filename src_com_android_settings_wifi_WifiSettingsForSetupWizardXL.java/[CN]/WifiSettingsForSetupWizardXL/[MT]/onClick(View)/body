@@ -1,33 +1,28 @@
 {
-  final int id=view.getId();
-switch (id) {
-case R.id.wifi_setup_refresh_list:
-    mWifiSettings.refreshAccessPoints();
-  break;
-case R.id.wifi_setup_add_network:
-mWifiSettings.onAddNetworkPressed();
-break;
-case R.id.wifi_setup_skip_or_next:
-if (TextUtils.equals(getString(R.string.wifi_setup_skip),((Button)view).getText())) {
-mWifiSettings.disableWifi();
-}
-setResult(Activity.RESULT_OK);
-finish();
-break;
-case R.id.wifi_setup_connect:
-mWifiSettings.submit();
-onConnectButtonPressed();
-break;
-case R.id.wifi_setup_forget:
-mWifiSettings.forget();
-break;
-case R.id.wifi_setup_cancel:
-mStatusText.setText(R.string.wifi_setup_status_select_network);
-mWifiSettings.detachConfigPreference();
-break;
-case R.id.wifi_setup_detail:
-mWifiSettings.showDialogForSelectedPreference();
-break;
-}
-hideSoftwareKeyboard();
+  if (view == mAddNetworkButton) {
+    onAddNetworkButtonPressed();
+  }
+ else   if (view == mRefreshButton) {
+    refreshAccessPoints(true);
+  }
+ else   if (view == mSkipOrNextButton) {
+    if (TextUtils.equals(getString(R.string.wifi_setup_skip),((Button)view).getText())) {
+      mWifiManager.setWifiEnabled(false);
+    }
+    setResult(Activity.RESULT_OK);
+    finish();
+  }
+ else   if (view == mConnectButton) {
+    onConnectButtonPressed();
+  }
+ else   if (view == mForgetButton) {
+    onForgetButtonPressed();
+  }
+ else   if (view == mBackButton) {
+    onBackButtonPressed();
+  }
+ else   if (view == mDetailButton) {
+    mWifiSettings.showDialogForSelectedPreference();
+  }
+  hideSoftwareKeyboard();
 }

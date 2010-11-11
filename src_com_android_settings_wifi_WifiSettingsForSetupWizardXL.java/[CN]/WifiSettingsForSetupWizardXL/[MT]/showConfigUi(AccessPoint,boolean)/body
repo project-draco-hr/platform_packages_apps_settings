@@ -1,0 +1,25 @@
+{
+  mWifiSettings.pauseWifiScan();
+  findViewById(R.id.wifi_setup).setVisibility(View.GONE);
+  final ViewGroup parent=(ViewGroup)findViewById(R.id.wifi_config_ui);
+  parent.setVisibility(View.VISIBLE);
+  parent.removeAllViews();
+  mWifiConfig=new WifiConfigUiForSetupWizardXL(this,parent,selectedAccessPoint,edit);
+  final View view=mWifiConfig.getView();
+  if (selectedAccessPoint != null) {
+    view.findViewById(R.id.wifi_general_info).setVisibility(View.VISIBLE);
+    ((TextView)view.findViewById(R.id.title)).setText(selectedAccessPoint.getTitle());
+    ((TextView)view.findViewById(R.id.summary)).setText(selectedAccessPoint.getSummary());
+  }
+ else {
+    view.findViewById(R.id.wifi_general_info).setVisibility(View.GONE);
+  }
+  parent.addView(view);
+  mStatusText.setText(R.string.wifi_setup_status_edit_network);
+  mAddNetworkButton.setVisibility(View.GONE);
+  mRefreshButton.setVisibility(View.GONE);
+  mSkipOrNextButton.setVisibility(View.GONE);
+  mConnectButton.setVisibility(View.VISIBLE);
+  mConnectButton.setVisibility(View.VISIBLE);
+  mBackButton.setVisibility(View.VISIBLE);
+}

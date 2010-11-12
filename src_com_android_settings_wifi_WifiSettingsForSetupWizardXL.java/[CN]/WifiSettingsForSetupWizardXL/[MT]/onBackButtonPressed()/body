@@ -1,11 +1,12 @@
 {
-  if (mAfterTryConnect) {
-    mAfterTryConnect=false;
+  if (mAfterConnectAction) {
+    if (DEBUG)     Log.d(TAG,"Back button pressed after connect action.");
+    mAfterConnectAction=false;
     restoreFirstButtonVisibilityState();
-    mShowingConnectingMessageManually=false;
     mAddNetworkButton.setEnabled(false);
     mRefreshButton.setEnabled(false);
     mSkipOrNextButton.setEnabled(true);
+    changeNextButtonState(false);
     refreshAccessPoints(true);
   }
  else {

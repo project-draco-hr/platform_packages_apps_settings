@@ -17,12 +17,12 @@ case SCANNING:
     }
 case CONNECTING:
 {
-    mShowingConnectingMessageManually=false;
     showConnectingStatus();
     break;
   }
 case CONNECTED:
 {
+  mAfterConnectAction=true;
   mProgressBar.setIndeterminate(false);
   mProgressBar.setProgress(2);
   mProgressText.setText(Summary.get(this,state));
@@ -32,52 +32,12 @@ case CONNECTED:
   mBackButton.setVisibility(View.VISIBLE);
   mSkipOrNextButton.setVisibility(View.VISIBLE);
   mSkipOrNextButton.setEnabled(true);
-  if (mIgnoringWifiNotificationCount > 0) {
-    mIgnoringWifiNotificationCount=0;
-    mAfterTryConnect=true;
-  }
- else {
-    mProgressText.setText(Summary.get(this,state));
-  }
+  mHandler.removeCallbacks(mSkipButtonEnabler);
+  mProgressText.setText(Summary.get(this,state));
   break;
 }
-case FAILED:
-{
-mProgressBar.setIndeterminate(false);
-mProgressBar.setProgress(0);
-mStatusText.setText(R.string.wifi_setup_status_select_network);
-mProgressText.setText(Summary.get(this,state));
-restoreFirstButtonVisibilityState();
-mAddNetworkButton.setEnabled(true);
-mRefreshButton.setEnabled(true);
-mSkipOrNextButton.setEnabled(true);
-break;
-}
 default :
-if (mWifiSettings.getAccessPointsCount() == 0 && mIgnoringWifiNotificationCount > 0) {
-Log.d(TAG,"Currently not connected, but we show \"Scanning\" for a moment");
-mIgnoringWifiNotificationCount--;
-mProgressBar.setIndeterminate(true);
-mProgressText.setText(Summary.get(this,DetailedState.SCANNING));
-}
- else if (mShowingConnectingMessageManually && mIgnoringWifiNotificationCount > 0) {
-Log.i(TAG,"Currently not connected, but we show \"connecting\" for a moment.");
-mIgnoringWifiNotificationCount--;
-showConnectingStatus();
-}
- else {
-if (mAfterTryConnect) {
-Log.i(TAG,String.format("State %s has been notified after trying to connect a network. ",state.toString()));
-}
-mShowingConnectingMessageManually=false;
-mProgressBar.setIndeterminate(false);
-mProgressBar.setProgress(0);
-mStatusText.setText(R.string.wifi_setup_not_connected);
-mProgressText.setText(getString(R.string.wifi_setup_not_connected));
-mAddNetworkButton.setEnabled(true);
-mRefreshButton.setEnabled(true);
-mSkipOrNextButton.setEnabled(true);
-}
+showDisconnectedStatus(Summary.get(this,state));
 break;
 }
 }

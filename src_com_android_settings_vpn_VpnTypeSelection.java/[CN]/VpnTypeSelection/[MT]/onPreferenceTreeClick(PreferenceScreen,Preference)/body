@@ -1,5 +1,4 @@
 {
-  setResult(mTypeMap.get(pref.getTitle().toString()));
-  finishFragment();
+  ((PreferenceActivity)getActivity()).finishPreferencePanel(this,Activity.RESULT_OK,getResultIntent(mTypeMap.get(pref.getTitle().toString())));
   return true;
 }

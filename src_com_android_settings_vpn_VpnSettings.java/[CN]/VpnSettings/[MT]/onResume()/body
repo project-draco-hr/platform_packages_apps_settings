@@ -1,5 +1,6 @@
 {
   super.onResume();
+  if (DEBUG)   Log.d(TAG,"onResume");
   if ((mUnlockAction != null) && isKeyStoreUnlocked()) {
     Runnable action=mUnlockAction;
     mUnlockAction=null;

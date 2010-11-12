@@ -1,17 +1,17 @@
 {
-  final Intent intent=getIntent();
-  mTitle=intent.getStringExtra(EXTRA_TITLE);
-  final int percentage=intent.getIntExtra(EXTRA_PERCENT,1);
-  final int gaugeValue=intent.getIntExtra(EXTRA_GAUGE,1);
-  mUsageSince=intent.getIntExtra(EXTRA_USAGE_SINCE,USAGE_SINCE_UNPLUGGED);
-  mUid=intent.getIntExtra(EXTRA_UID,0);
-  mDrainType=(DrainType)intent.getSerializableExtra(EXTRA_DRAIN_TYPE);
-  mNoCoverage=intent.getDoubleExtra(EXTRA_NO_COVERAGE,0);
-  String iconPackage=intent.getStringExtra(EXTRA_ICON_PACKAGE);
-  int iconId=intent.getIntExtra(EXTRA_ICON_ID,0);
+  final Bundle args=getArguments();
+  mTitle=args.getString(EXTRA_TITLE);
+  final int percentage=args.getInt(EXTRA_PERCENT,1);
+  final int gaugeValue=args.getInt(EXTRA_GAUGE,1);
+  mUsageSince=args.getInt(EXTRA_USAGE_SINCE,USAGE_SINCE_UNPLUGGED);
+  mUid=args.getInt(EXTRA_UID,0);
+  mDrainType=(DrainType)args.getSerializable(EXTRA_DRAIN_TYPE);
+  mNoCoverage=args.getDouble(EXTRA_NO_COVERAGE,0);
+  String iconPackage=args.getString(EXTRA_ICON_PACKAGE);
+  int iconId=args.getInt(EXTRA_ICON_ID,0);
   if (!TextUtils.isEmpty(iconPackage)) {
     try {
-      final PackageManager pm=getPackageManager();
+      final PackageManager pm=getActivity().getPackageManager();
       ApplicationInfo ai=pm.getPackageInfo(iconPackage,0).applicationInfo;
       if (ai != null) {
         mAppIcon=ai.loadIcon(pm);
@@ -21,31 +21,31 @@
     }
   }
  else   if (iconId != 0) {
-    mAppIcon=getResources().getDrawable(iconId);
+    mAppIcon=getActivity().getResources().getDrawable(iconId);
   }
   if (mAppIcon == null) {
-    mAppIcon=getPackageManager().getDefaultActivityIcon();
+    mAppIcon=getActivity().getPackageManager().getDefaultActivityIcon();
   }
   String summary=getDescriptionForDrainType();
-  ((TextView)findViewById(R.id.summary)).setText(summary);
-  mTypes=intent.getIntArrayExtra(EXTRA_DETAIL_TYPES);
-  mValues=intent.getDoubleArrayExtra(EXTRA_DETAIL_VALUES);
-  mTitleView=(TextView)findViewById(R.id.name);
+  ((TextView)mRootView.findViewById(R.id.summary)).setText(summary);
+  mTypes=args.getIntArray(EXTRA_DETAIL_TYPES);
+  mValues=args.getDoubleArray(EXTRA_DETAIL_VALUES);
+  mTitleView=(TextView)mRootView.findViewById(R.id.name);
   mTitleView.setText(mTitle);
-  ((TextView)findViewById(R.id.battery_percentage)).setText(String.format("%d%%",percentage));
-  mTwoButtonsPanel=(ViewGroup)findViewById(R.id.two_buttons_panel);
-  mForceStopButton=(Button)findViewById(R.id.left_button);
-  mReportButton=(Button)findViewById(R.id.right_button);
+  ((TextView)mRootView.findViewById(R.id.battery_percentage)).setText(String.format("%d%%",percentage));
+  mTwoButtonsPanel=(ViewGroup)mRootView.findViewById(R.id.two_buttons_panel);
+  mForceStopButton=(Button)mRootView.findViewById(R.id.left_button);
+  mReportButton=(Button)mRootView.findViewById(R.id.right_button);
   mForceStopButton.setEnabled(false);
-  ImageView gaugeImage=(ImageView)findViewById(R.id.gauge);
+  ImageView gaugeImage=(ImageView)mRootView.findViewById(R.id.gauge);
   mGauge=new PercentageBar();
   mGauge.percent=gaugeValue;
   mGauge.bar=getResources().getDrawable(R.drawable.app_gauge);
   gaugeImage.setImageDrawable(mGauge);
-  ImageView iconImage=(ImageView)findViewById(R.id.icon);
+  ImageView iconImage=(ImageView)mRootView.findViewById(R.id.icon);
   iconImage.setImageDrawable(mAppIcon);
-  mDetailsParent=(ViewGroup)findViewById(R.id.details);
-  mControlsParent=(ViewGroup)findViewById(R.id.controls);
+  mDetailsParent=(ViewGroup)mRootView.findViewById(R.id.details);
+  mControlsParent=(ViewGroup)mRootView.findViewById(R.id.controls);
   fillDetailsSection();
   fillPackagesSection(mUid);
   fillControlsSection(mUid);
@@ -56,12 +56,12 @@
     mReportButton.setText(com.android.internal.R.string.report);
     mReportButton.setTag(ACTION_REPORT);
     mReportButton.setOnClickListener(this);
-    int enabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.SEND_ACTION_APP_ERROR,0);
+    int enabled=Settings.Secure.getInt(getActivity().getContentResolver(),Settings.Secure.SEND_ACTION_APP_ERROR,0);
     if (enabled != 0) {
       if (mPackages != null && mPackages.length > 0) {
         try {
-          mApp=getPackageManager().getApplicationInfo(mPackages[0],0);
-          mInstaller=ApplicationErrorReport.getErrorReportReceiver(this,mPackages[0],mApp.flags);
+          mApp=getActivity().getPackageManager().getApplicationInfo(mPackages[0],0);
+          mInstaller=ApplicationErrorReport.getErrorReportReceiver(getActivity(),mPackages[0],mApp.flags);
         }
  catch (        NameNotFoundException e) {
         }

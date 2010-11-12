@@ -1,4 +1,5 @@
 {
+  StrictMode.ThreadPolicy savedPolicy=StrictMode.allowThreadDiskReads();
   try {
     long memFree=0;
     long memCached=0;
@@ -24,6 +25,9 @@
  catch (  java.io.FileNotFoundException e) {
   }
 catch (  java.io.IOException e) {
+  }
+ finally {
+    StrictMode.setThreadPolicy(savedPolicy);
   }
   return 0;
 }

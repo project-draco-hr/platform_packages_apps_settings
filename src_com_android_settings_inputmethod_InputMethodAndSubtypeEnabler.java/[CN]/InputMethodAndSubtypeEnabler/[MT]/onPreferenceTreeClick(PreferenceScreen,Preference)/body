@@ -11,7 +11,6 @@
           selImi=imi;
           if (InputMethodAndSubtypeUtil.isSystemIme(imi)) {
             InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodProperties,id,true);
-            mLastTickedInputMethodId=id;
             return super.onPreferenceTreeClick(preferenceScreen,preference);
           }
           break;
@@ -26,7 +25,6 @@
           public void onClick(          DialogInterface dialog,          int which){
             chkPref.setChecked(true);
             InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(InputMethodAndSubtypeEnabler.this,mInputMethodProperties,id,true);
-            mLastTickedInputMethodId=id;
           }
         }
 ).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
@@ -44,9 +42,6 @@
       mDialog.show();
     }
  else {
-      if (id.equals(mLastTickedInputMethodId)) {
-        mLastTickedInputMethodId=null;
-      }
       InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodProperties,id,false);
     }
   }

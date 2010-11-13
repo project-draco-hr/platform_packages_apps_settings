@@ -8,13 +8,21 @@
   mInflater=(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   mView=mInflater.inflate(R.layout.wifi_config_ui_for_setup_wizard,parent,true);
   mController=new WifiConfigController(this,mView,mAccessPoint,edit);
-  final View viewToBeFocused=mView.findViewById(R.id.password);
-  if (viewToBeFocused != null && viewToBeFocused.getVisibility() == View.VISIBLE && viewToBeFocused instanceof EditText) {
-    viewToBeFocused.setOnFocusChangeListener(this);
-    final boolean requestFocusResult=viewToBeFocused.requestFocus();
-    Log.i(TAG,String.format("Focus request  %s.",(requestFocusResult ? "successful" : "failed")));
-    if (!requestFocusResult) {
-      viewToBeFocused.setOnFocusChangeListener(null);
+  if (mView.findViewById(R.id.security_fields).getVisibility() == View.VISIBLE) {
+    final View viewToBeFocused=mView.findViewById(R.id.password);
+    if (viewToBeFocused == null) {
+      Log.w(TAG,"password field to be focused not found.");
+    }
+ else     if (!(viewToBeFocused instanceof EditText)) {
+      Log.w(TAG,"password field is not EditText");
+    }
+ else {
+      viewToBeFocused.setOnFocusChangeListener(this);
+      final boolean requestFocusResult=viewToBeFocused.requestFocus();
+      Log.i(TAG,String.format("Focus request  %s.",(requestFocusResult ? "successful" : "failed")));
+      if (!requestFocusResult) {
+        viewToBeFocused.setOnFocusChangeListener(null);
+      }
     }
   }
 }

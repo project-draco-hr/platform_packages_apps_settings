@@ -1,9 +1,7 @@
 {
   if (getActivity() instanceof PreferenceActivity) {
     PreferenceActivity preferenceActivity=(PreferenceActivity)getActivity();
-    Fragment f=Fragment.instantiate(getActivity(),fragmentClass,extras);
-    caller.setTargetFragment(f,requestCode);
-    preferenceActivity.switchToHeader(fragmentClass,extras);
+    preferenceActivity.startPreferencePanel(fragmentClass,extras,0,null,caller,requestCode);
     return true;
   }
  else {

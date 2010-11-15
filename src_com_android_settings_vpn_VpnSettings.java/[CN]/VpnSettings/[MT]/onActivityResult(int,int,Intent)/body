@@ -1,11 +1,17 @@
 {
+  if (DEBUG)   Log.d(TAG,"onActivityResult , result = " + resultCode + ", data = "+ data);
   if ((resultCode == Activity.RESULT_CANCELED) || (data == null)) {
     Log.d(TAG,"no result returned by editor");
     return;
   }
   if (requestCode == REQUEST_SELECT_VPN_TYPE) {
-    String typeName=data.getStringExtra(KEY_VPN_TYPE);
-    startVpnEditor(createVpnProfile(typeName));
+    final String typeName=data.getStringExtra(KEY_VPN_TYPE);
+    mHandler.post(new Runnable(){
+      public void run(){
+        startVpnEditor(createVpnProfile(typeName),true);
+      }
+    }
+);
   }
  else   if (requestCode == REQUEST_ADD_OR_EDIT_PROFILE) {
     VpnProfile p=data.getParcelableExtra(KEY_VPN_PROFILE);
@@ -19,7 +25,7 @@
       final VpnProfile profile=p;
       Util.showErrorMessage(activity,String.format(activity.getString(R.string.vpn_error_duplicate_name),p.getName()),new DialogInterface.OnClickListener(){
         public void onClick(        DialogInterface dialog,        int w){
-          startVpnEditor(profile);
+          startVpnEditor(profile,false);
         }
       }
 );
@@ -48,7 +54,7 @@
       final VpnProfile profile=p;
       Util.showErrorMessage(activity,e + ": " + e.getMessage(),new DialogInterface.OnClickListener(){
         public void onClick(        DialogInterface dialog,        int w){
-          startVpnEditor(profile);
+          startVpnEditor(profile,false);
         }
       }
 );

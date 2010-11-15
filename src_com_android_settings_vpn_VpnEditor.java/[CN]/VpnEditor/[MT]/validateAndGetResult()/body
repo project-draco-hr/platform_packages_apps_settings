@@ -2,8 +2,10 @@
   String errorMsg=mProfileEditor.validate();
   if (errorMsg != null) {
     Util.showErrorMessage(getActivity(),errorMsg);
-    return false;
+    return null;
   }
-  if (profileChanged())   setResult(getProfile());
-  return true;
+  if (profileChanged()) {
+    return getResult(getProfile());
+  }
+  return null;
 }

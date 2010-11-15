@@ -3,7 +3,6 @@
   final int selectedInputMethodSubtype=getInputMethodSubtypeSelected(resolver);
   StringBuilder builder=new StringBuilder();
   StringBuilder disabledSysImes=new StringBuilder();
-  InputMethodInfo firstEnabledIMI=null;
   int firstSubtypeHashCode=NOT_A_SUBTYPE_ID;
   final boolean onlyOneIME=inputMethodProperties.size() == 1;
   boolean existsSelectedIME=false;
@@ -15,9 +14,6 @@
     if (((onlyOneIME || systemIme) && !hasHardKeyboard) || (pref != null && pref.isChecked())) {
       if (builder.length() > 0)       builder.append(INPUT_METHOD_SEPARATER);
       builder.append(id);
-      if (firstEnabledIMI == null) {
-        firstEnabledIMI=property;
-      }
       for (      InputMethodSubtype subtype : property.getSubtypes()) {
         CheckBoxPreference subtypePref=(CheckBoxPreference)context.findPreference(id + subtype.hashCode());
         if (subtypePref != null && subtypePref.isChecked()) {
@@ -34,19 +30,13 @@
       }
     }
  else     if (isCurrentInputMethod) {
-      currentInputMethodId=lastTickedInputMethodId;
+      if (DEBUG) {
+        Log.d(TAG,"Current IME was uninstalled or disabled.");
+      }
     }
     if (pref != null && !pref.isChecked() && systemIme && hasHardKeyboard) {
       if (disabledSysImes.length() > 0)       disabledSysImes.append(INPUT_METHOD_SEPARATER);
       disabledSysImes.append(id);
-    }
-  }
-  if (TextUtils.isEmpty(currentInputMethodId)) {
-    if (firstEnabledIMI != null) {
-      currentInputMethodId=firstEnabledIMI.getId();
-    }
- else {
-      currentInputMethodId=null;
     }
   }
   if (DEBUG) {

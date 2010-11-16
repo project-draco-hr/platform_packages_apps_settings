@@ -11,12 +11,16 @@
   mUsageList.clear();
   mWifiSippers.clear();
   mBluetoothSippers.clear();
-  processAppUsage();
-  processMiscUsage();
   mAppListGroup.setOrderingAsAdded(false);
   BatteryHistoryPreference hist=new BatteryHistoryPreference(getActivity(),mStats);
   hist.setOrder(-1);
   mAppListGroup.addPreference(hist);
+  if (mPowerProfile.getAveragePower(PowerProfile.POWER_SCREEN_FULL) < 10) {
+    addNotAvailableMessage();
+    return;
+  }
+  processAppUsage();
+  processMiscUsage();
   Collections.sort(mUsageList);
   for (  BatterySipper sipper : mUsageList) {
     if (sipper.getSortValue() < MIN_POWER_THRESHOLD)     continue;

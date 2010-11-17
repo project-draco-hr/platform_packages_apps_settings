@@ -43,6 +43,12 @@ break;
 mLockAfter=setupLockAfterPreference(pm);
 mVisiblePattern=(CheckBoxPreference)pm.findPreference(KEY_VISIBLE_PATTERN);
 mTactileFeedback=(CheckBoxPreference)pm.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
+if (!((Vibrator)getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator()) {
+PreferenceGroup securityCategory=(PreferenceGroup)pm.findPreference(KEY_SECURITY_CATEGORY);
+if (securityCategory != null && mTactileFeedback != null) {
+securityCategory.removePreference(mTactileFeedback);
+}
+}
 int activePhoneType=TelephonyManager.getDefault().getPhoneType();
 if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
 PreferenceScreen simLockPreferences=getPreferenceManager().createPreferenceScreen(getActivity());

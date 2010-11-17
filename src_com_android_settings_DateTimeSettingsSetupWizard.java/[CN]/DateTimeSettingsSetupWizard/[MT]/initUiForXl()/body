@@ -1,8 +1,10 @@
 {
   final TimeZone tz=TimeZone.getDefault();
-  mTimeZone=(Button)findViewById(R.id.current_time_zone);
-  mTimeZone.setText(DateTimeSettings.getTimeZoneText(tz));
-  mTimeZone.setOnClickListener(this);
+  mSelectedTimeZone=tz;
+  mTimeZoneButton=(Button)findViewById(R.id.time_zone_button);
+  mTimeZoneButton.setText(tz.getDisplayName());
+  mTimeZoneButton.setOnClickListener(this);
+  mTimeZoneAdapter=ZonePicker.constructTimezoneAdapter(this,false);
   final boolean autoDateTimeEnabled;
   final Intent intent=getIntent();
   if (intent.hasExtra(EXTRA_INITIAL_AUTO_DATETIME_VALUE)) {
@@ -20,7 +22,6 @@
   mDatePicker=(DatePicker)findViewById(R.id.date_picker);
   mDatePicker.setEnabled(!autoDateTimeEnabled);
   mInputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-  ((ZonePicker)getFragmentManager().findFragmentById(R.id.zone_picker_fragment)).setZoneSelectionListener(this);
   ((Button)findViewById(R.id.next_button)).setOnClickListener(this);
   ((Button)findViewById(R.id.skip_button)).setOnClickListener(this);
 }

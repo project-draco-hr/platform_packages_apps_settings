@@ -20,4 +20,6 @@
   mBackButton.setOnClickListener(this);
   mDetailButton=(Button)findViewById(R.id.wifi_setup_detail);
   mDetailButton.setOnClickListener(this);
+  showScanningStatus();
+  mHandler.postDelayed(mSkipButtonEnabler,DELAYED_SKIP_ENABLE_TIME);
 }

@@ -1,12 +1,15 @@
 {
   hideSoftwareKeyboard();
   if (view == mAddNetworkButton) {
+    if (DEBUG)     Log.d(TAG,"AddNetwork button pressed");
     onAddNetworkButtonPressed();
   }
  else   if (view == mRefreshButton) {
+    if (DEBUG)     Log.d(TAG,"Refresh button pressed");
     refreshAccessPoints(true);
   }
  else   if (view == mSkipOrNextButton) {
+    if (DEBUG)     Log.d(TAG,"Skip/Next button pressed");
     if (TextUtils.equals(getString(R.string.wifi_setup_skip),((Button)view).getText())) {
       mWifiManager.setWifiEnabled(false);
     }
@@ -14,15 +17,19 @@
     finish();
   }
  else   if (view == mConnectButton) {
+    if (DEBUG)     Log.d(TAG,"Connect button pressed");
     onConnectButtonPressed();
   }
  else   if (view == mForgetButton) {
+    if (DEBUG)     Log.d(TAG,"Forget button pressed");
     onForgetButtonPressed();
   }
  else   if (view == mBackButton) {
+    if (DEBUG)     Log.d(TAG,"Back button pressed");
     onBackButtonPressed();
   }
  else   if (view == mDetailButton) {
+    if (DEBUG)     Log.d(TAG,"Detail button pressed");
     mWifiSettings.showDialogForSelectedPreference();
   }
 }

@@ -1,17 +1,14 @@
 {
   final Activity activity=getActivity();
-  String hostname=null;
+  String hostname="";
   int port=-1;
-  String exclList=null;
-  if (useDefault) {
-    hostname=Proxy.getDefaultHost();
-    port=Proxy.getDefaultPort();
-  }
- else {
-    ContentResolver res=getActivity().getContentResolver();
-    hostname=Proxy.getHost(activity);
-    port=Proxy.getPort(activity);
-    exclList=Settings.Secure.getString(res,Settings.Secure.HTTP_PROXY_EXCLUSION_LIST);
+  String exclList="";
+  ConnectivityManager cm=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+  ProxyProperties proxy=cm.getGlobalProxy();
+  if (proxy != null) {
+    hostname=proxy.getHost();
+    port=proxy.getPort();
+    exclList=proxy.getExclusionList();
   }
   if (hostname == null) {
     hostname="";

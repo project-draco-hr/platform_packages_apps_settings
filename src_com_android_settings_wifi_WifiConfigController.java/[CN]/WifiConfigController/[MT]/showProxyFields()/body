@@ -14,12 +14,9 @@
     if (config != null) {
       ProxyProperties proxyProperties=config.linkProperties.getHttpProxy();
       if (proxyProperties != null) {
-        InetSocketAddress sockAddr=proxyProperties.getSocketAddress();
-        if (sockAddr != null) {
-          mProxyHostView.setText(sockAddr.getHostName());
-          mProxyPortView.setText(Integer.toString(sockAddr.getPort()));
-          mProxyExclusionListView.setText(proxyProperties.getExclusionList());
-        }
+        mProxyHostView.setText(proxyProperties.getHost());
+        mProxyPortView.setText(Integer.toString(proxyProperties.getPort()));
+        mProxyExclusionListView.setText(proxyProperties.getExclusionList());
       }
     }
   }

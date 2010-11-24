@@ -2,11 +2,11 @@
 synchronized (LocalBluetoothManager.class) {
     if (sInstance == null) {
       sInstance=new LocalBluetoothManager();
+      if (!sInstance.init(context)) {
+        return null;
+      }
+      LocalBluetoothProfileManager.init(sInstance);
     }
-    if (!sInstance.init(context)) {
-      return null;
-    }
-    LocalBluetoothProfileManager.init(sInstance);
     return sInstance;
   }
 }

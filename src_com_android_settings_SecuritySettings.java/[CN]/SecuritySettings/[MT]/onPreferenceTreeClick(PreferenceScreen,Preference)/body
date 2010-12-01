@@ -30,5 +30,8 @@
  else   if (preference == mAssistedGps) {
     Settings.Secure.putInt(getContentResolver(),Settings.Secure.ASSISTED_GPS_ENABLED,mAssistedGps.isChecked() ? 1 : 0);
   }
-  return false;
+ else {
+    return super.onPreferenceTreeClick(preferenceScreen,preference);
+  }
+  return true;
 }

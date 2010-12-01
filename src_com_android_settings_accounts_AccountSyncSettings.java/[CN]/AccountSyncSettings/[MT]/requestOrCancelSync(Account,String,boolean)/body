@@ -1,0 +1,10 @@
+{
+  if (flag) {
+    Bundle extras=new Bundle();
+    extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL,true);
+    ContentResolver.requestSync(account,authority,extras);
+  }
+ else {
+    ContentResolver.cancelSync(account,authority);
+  }
+}

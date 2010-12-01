@@ -1,0 +1,10 @@
+{
+  if (preference instanceof ProviderPreference) {
+    ProviderPreference pref=(ProviderPreference)preference;
+    if (Log.isLoggable(TAG,Log.VERBOSE)) {
+      Log.v(TAG,"Attempting to add account of type " + pref.getAccountType());
+    }
+    finishWithAccountType(pref.getAccountType());
+  }
+  return true;
+}

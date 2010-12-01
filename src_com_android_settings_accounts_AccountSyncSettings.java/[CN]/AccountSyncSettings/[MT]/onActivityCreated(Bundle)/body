@@ -1,0 +1,12 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  final Activity activity=getActivity();
+  mDateFormat=DateFormat.getDateFormat(activity);
+  mTimeFormat=DateFormat.getTimeFormat(activity);
+  mAccount=(Account)getArguments().getParcelable(ACCOUNT_KEY);
+  if (mAccount != null) {
+    if (Log.isLoggable(TAG,Log.VERBOSE))     Log.v(TAG,"Got account: " + mAccount);
+    mUserId.setText(mAccount.name);
+    mProviderId.setText(mAccount.type);
+  }
+}

@@ -1,0 +1,25 @@
+{
+  if (preference instanceof SyncStateCheckBoxPreference) {
+    SyncStateCheckBoxPreference syncPref=(SyncStateCheckBoxPreference)preference;
+    String authority=syncPref.getAuthority();
+    Account account=syncPref.getAccount();
+    boolean syncAutomatically=ContentResolver.getSyncAutomatically(account,authority);
+    if (syncPref.isOneTimeSyncMode()) {
+      requestOrCancelSync(account,authority,true);
+    }
+ else {
+      boolean syncOn=syncPref.isChecked();
+      boolean oldSyncState=syncAutomatically;
+      if (syncOn != oldSyncState) {
+        ContentResolver.setSyncAutomatically(account,authority,syncOn);
+        if (!ContentResolver.getMasterSyncAutomatically() || !syncOn) {
+          requestOrCancelSync(account,authority,syncOn);
+        }
+      }
+    }
+    return true;
+  }
+ else {
+    return super.onPreferenceTreeClick(preferences,preference);
+  }
+}

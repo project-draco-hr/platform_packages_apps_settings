@@ -1,0 +1,14 @@
+{
+switch (item.getItemId()) {
+case MENU_SYNC_NOW_ID:
+    startSyncForEnabledProviders();
+  return true;
+case MENU_SYNC_CANCEL_ID:
+cancelSyncForEnabledProviders();
+return true;
+case MENU_REMOVE_ACCOUNT_ID:
+showDialog(REALLY_REMOVE_DIALOG);
+return true;
+}
+return super.onOptionsItemSelected(item);
+}

@@ -1,0 +1,12 @@
+{
+switch (requestCode) {
+case CHOOSE_ACCOUNT_REQUEST:
+    if (resultCode == RESULT_CANCELED) {
+      setResult(resultCode);
+      finish();
+      return;
+    }
+  addAccount(data.getStringExtra(EXTRA_SELECTED_ACCOUNT));
+break;
+}
+}

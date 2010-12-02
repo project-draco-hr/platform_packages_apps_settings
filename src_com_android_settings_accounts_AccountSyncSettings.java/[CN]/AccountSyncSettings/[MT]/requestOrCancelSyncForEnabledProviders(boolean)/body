@@ -1,0 +1,19 @@
+{
+  int count=getPreferenceScreen().getPreferenceCount();
+  for (int i=0; i < count; i++) {
+    Preference pref=getPreferenceScreen().getPreference(i);
+    if (!(pref instanceof SyncStateCheckBoxPreference)) {
+      continue;
+    }
+    SyncStateCheckBoxPreference syncPref=(SyncStateCheckBoxPreference)pref;
+    if (!syncPref.isChecked()) {
+      continue;
+    }
+    requestOrCancelSync(syncPref.getAccount(),syncPref.getAuthority(),startSync);
+  }
+  if (mAccount != null) {
+    for (    String authority : mInvisibleAdapters) {
+      requestOrCancelSync(mAccount,authority,startSync);
+    }
+  }
+}

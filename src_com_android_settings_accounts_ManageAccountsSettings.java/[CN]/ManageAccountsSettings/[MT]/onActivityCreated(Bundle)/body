@@ -1,0 +1,13 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  final Activity activity=getActivity();
+  final View view=getView();
+  mErrorInfoView=(TextView)view.findViewById(R.id.sync_settings_error_info);
+  mErrorInfoView.setVisibility(View.GONE);
+  mErrorInfoView.setCompoundDrawablesWithIntrinsicBounds(activity.getResources().getDrawable(R.drawable.ic_list_syncerror),null,null,null);
+  mBackgroundDataCheckBox=(CheckBoxPreference)findPreference(BACKGROUND_DATA_CHECKBOX_KEY);
+  mAutoSyncCheckbox=(CheckBoxPreference)findPreference(AUTO_SYNC_CHECKBOX_KEY);
+  mManageAccountsCategory=(PreferenceCategory)findPreference(MANAGE_ACCOUNTS_CATEGORY_KEY);
+  mAuthorities=activity.getIntent().getStringArrayExtra(AUTHORITIES_FILTER_KEY);
+  updateAuthDescriptions();
+}

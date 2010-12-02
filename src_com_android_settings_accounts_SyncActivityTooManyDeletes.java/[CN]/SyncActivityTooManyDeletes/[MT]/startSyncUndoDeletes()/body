@@ -1,0 +1,8 @@
+{
+  Bundle extras=new Bundle();
+  extras.putBoolean(ContentResolver.SYNC_EXTRAS_DISCARD_LOCAL_DELETIONS,true);
+  extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL,true);
+  extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED,true);
+  extras.putBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD,true);
+  ContentResolver.requestSync(mAccount,mAuthority,extras);
+}

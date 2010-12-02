@@ -22,24 +22,31 @@
     mUseLocation=useLocation;
   }
   PreferenceManager pm=getPreferenceManager();
+  int resid=0;
   if (!mLockPatternUtils.isSecure()) {
-    addPreferencesFromResource(R.xml.security_settings_chooser);
+    if (mLockPatternUtils.isLockScreenDisabled()) {
+      resid=R.xml.security_settings_lockscreen;
+    }
+ else {
+      resid=R.xml.security_settings_chooser;
+    }
   }
  else {
 switch (mLockPatternUtils.getKeyguardStoredPasswordQuality()) {
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
-      addPreferencesFromResource(R.xml.security_settings_pattern);
+      resid=R.xml.security_settings_pattern;
     break;
 case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
-  addPreferencesFromResource(R.xml.security_settings_pin);
+  resid=R.xml.security_settings_pin;
 break;
 case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
 case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
 case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
-addPreferencesFromResource(R.xml.security_settings_password);
+resid=R.xml.security_settings_password;
 break;
 }
 }
+addPreferencesFromResource(resid);
 mLockAfter=setupLockAfterPreference(pm);
 mVisiblePattern=(CheckBoxPreference)pm.findPreference(KEY_VISIBLE_PATTERN);
 mTactileFeedback=(CheckBoxPreference)pm.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);

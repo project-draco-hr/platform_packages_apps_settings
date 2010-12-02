@@ -1,0 +1,5 @@
+{
+  super.onResume();
+  mStatusChangeListenerHandle=ContentResolver.addStatusChangeListener(ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE | ContentResolver.SYNC_OBSERVER_TYPE_STATUS | ContentResolver.SYNC_OBSERVER_TYPE_SETTINGS,mSyncStatusObserver);
+  onSyncStateUpdated();
+}

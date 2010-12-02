@@ -1,0 +1,42 @@
+{
+  super.onBindView(view);
+  ImageView syncActiveView=(ImageView)view.findViewById(R.id.sync_active);
+  View syncPendingView=view.findViewById(R.id.sync_pending);
+  View syncFailedView=view.findViewById(R.id.sync_failed);
+  syncActiveView.setVisibility(mIsActive ? View.VISIBLE : View.GONE);
+  final AnimationDrawable anim=(AnimationDrawable)syncActiveView.getDrawable();
+  boolean showError;
+  boolean showPending;
+  if (mIsActive) {
+    syncActiveView.post(new Runnable(){
+      public void run(){
+        anim.start();
+      }
+    }
+);
+    showPending=false;
+    showError=false;
+  }
+ else {
+    anim.stop();
+    if (mIsPending) {
+      showPending=true;
+      showError=false;
+    }
+ else {
+      showPending=false;
+      showError=mFailed;
+    }
+  }
+  syncFailedView.setVisibility(showError ? View.VISIBLE : View.GONE);
+  syncPendingView.setVisibility((showPending && !mIsActive) ? View.VISIBLE : View.GONE);
+  View checkBox=view.findViewById(android.R.id.checkbox);
+  if (mOneTimeSyncMode) {
+    checkBox.setVisibility(View.GONE);
+    TextView summary=(TextView)view.findViewById(android.R.id.summary);
+    summary.setText(getContext().getString(R.string.sync_one_time_sync,getSummary()));
+  }
+ else {
+    checkBox.setVisibility(View.VISIBLE);
+  }
+}

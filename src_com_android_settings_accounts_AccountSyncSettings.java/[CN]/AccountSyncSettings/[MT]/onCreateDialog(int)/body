@@ -1,0 +1,40 @@
+{
+  Dialog dialog=null;
+  if (id == REALLY_REMOVE_DIALOG) {
+    dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.really_remove_account_title).setMessage(R.string.really_remove_account_message).setNegativeButton(android.R.string.cancel,null).setPositiveButton(R.string.remove_account_label,new DialogInterface.OnClickListener(){
+      public void onClick(      DialogInterface dialog,      int which){
+        AccountManager.get(AccountSyncSettings.this.getActivity()).removeAccount(mAccount,new AccountManagerCallback<Boolean>(){
+          public void run(          AccountManagerFuture<Boolean> future){
+            boolean failed=true;
+            try {
+              if (future.getResult() == true) {
+                failed=false;
+              }
+            }
+ catch (            OperationCanceledException e) {
+            }
+catch (            IOException e) {
+            }
+catch (            AuthenticatorException e) {
+            }
+            if (failed) {
+              showDialog(FAILED_REMOVAL_DIALOG);
+            }
+ else {
+              finish();
+            }
+          }
+        }
+,null);
+      }
+    }
+).create();
+  }
+ else   if (id == FAILED_REMOVAL_DIALOG) {
+    dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.really_remove_account_title).setPositiveButton(android.R.string.ok,null).setMessage(R.string.remove_account_failed).create();
+  }
+ else   if (id == CANT_DO_ONETIME_SYNC_DIALOG) {
+    dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.cant_sync_dialog_title).setMessage(R.string.cant_sync_dialog_message).setPositiveButton(android.R.string.ok,null).create();
+  }
+  return dialog;
+}

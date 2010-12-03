@@ -1,0 +1,15 @@
+{
+  final float totalSize=mInternalTotalSize;
+  final long mediaSize=mInternalMediaSize;
+  final long appsSize=mInternalAppsSize;
+  mInternalUsageChart.clear();
+  mInternalUsageChart.addEntry(mediaSize / totalSize,mInternalMediaColor);
+  mInternalUsageChart.addEntry(appsSize / totalSize,mInternalAppsColor);
+  final long remaining=mInternalUsedSize - (mediaSize + appsSize);
+  if (remaining > 0) {
+    mInternalUsageChart.addEntry(remaining / totalSize,mInternalUsedColor);
+  }
+  mInternalUsageChart.commit();
+  mInternalMediaUsage.setSummary(formatSize(mediaSize));
+  mInternalAppsUsage.setSummary(formatSize(appsSize));
+}

@@ -4,5 +4,7 @@
   intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
   intentFilter.addDataScheme("file");
   getActivity().registerReceiver(mReceiver,intentFilter);
-  updateMemoryStatus();
+  if (!mMeasured) {
+    mMeasurementHandler.sendEmptyMessage(MemoryMeasurementHandler.MSG_MEASURE_ALL);
+  }
 }

@@ -1,0 +1,18 @@
+{
+switch (msg.what) {
+case MSG_MEASURE_ALL:
+{
+      updateExternalStorage();
+      updateApproximateInternalStorage();
+      Intent service=new Intent().setComponent(DEFAULT_CONTAINER_COMPONENT);
+      getActivity().bindService(service,mDefContainerConn,Context.BIND_AUTO_CREATE);
+      mUpdateHandler.sendEmptyMessage(MSG_UI_UPDATE_APPROXIMATE);
+      break;
+    }
+case MSG_CONNECTED:
+{
+    IMediaContainerService imcs=(IMediaContainerService)msg.obj;
+    updateExactInternalStorage(imcs);
+  }
+}
+}

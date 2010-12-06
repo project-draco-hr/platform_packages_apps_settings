@@ -1,4 +1,7 @@
 {
+  if (Environment.isExternalStorageEmulated()) {
+    return;
+  }
   String status=Environment.getExternalStorageState();
   String readOnly="";
   if (status.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
@@ -50,9 +53,4 @@
       mSdMountToggle.setSummary(mRes.getString(R.string.sd_insert_summary));
     }
   }
-  File path=Environment.getDataDirectory();
-  StatFs stat=new StatFs(path.getPath());
-  long blockSize=stat.getBlockSize();
-  long availableBlocks=stat.getAvailableBlocks();
-  findPreference("memory_internal_avail").setSummary(formatSize(availableBlocks * blockSize));
 }

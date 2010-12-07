@@ -1,4 +1,5 @@
 {
   super.onPause();
   getActivity().unregisterReceiver(mReceiver);
+  mMeasurementHandler.removeMessages(MemoryMeasurementHandler.MSG_MEASURE_ALL);
 }

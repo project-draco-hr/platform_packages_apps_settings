@@ -1,0 +1,24 @@
+{
+  super.onDraw(canvas);
+  final int width=getWidth();
+  final int height=getHeight();
+  canvas.drawPaint(mBackgroundPaint);
+  int lastX=0;
+  if (mEntries != null) {
+    for (    final Entry e : mEntries) {
+      final int entryWidth;
+      if (e.percentage == 0f) {
+        entryWidth=0;
+      }
+ else {
+        entryWidth=Math.max(1,(int)(width * e.percentage));
+      }
+      final int nextX=lastX + entryWidth;
+      if (nextX >= width) {
+        break;
+      }
+      canvas.drawRect(lastX,0,nextX,height,e.paint);
+      lastX=nextX;
+    }
+  }
+}

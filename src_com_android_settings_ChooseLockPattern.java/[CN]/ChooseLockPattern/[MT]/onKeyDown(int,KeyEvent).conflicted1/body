@@ -1,0 +1,13 @@
+{
+  if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+    if (mUiStage == Stage.HelpScreen) {
+      updateStage(Stage.Introduction);
+      return true;
+    }
+  }
+  if (keyCode == KeyEvent.KEYCODE_MENU && mUiStage == Stage.Introduction) {
+    updateStage(Stage.HelpScreen);
+    return true;
+  }
+  return false;
+}

@@ -1,0 +1,35 @@
+{
+  View view=inflater.inflate(R.layout.choose_lock_pattern,null);
+  mHeaderText=(TextView)view.findViewById(R.id.headerText);
+  mLockPatternView=(LockPatternView)view.findViewById(R.id.lockPattern);
+  mLockPatternView.setOnPatternListener(mChooseNewLockPatternListener);
+  mLockPatternView.setTactileFeedbackEnabled(mChooseLockSettingsHelper.utils().isTactileFeedbackEnabled());
+  mFooterText=(TextView)view.findViewById(R.id.footerText);
+  mFooterLeftButton=(TextView)view.findViewById(R.id.footerLeftButton);
+  mFooterRightButton=(TextView)view.findViewById(R.id.footerRightButton);
+  mFooterLeftButton.setOnClickListener(this);
+  mFooterRightButton.setOnClickListener(this);
+  final LinearLayoutWithDefaultTouchRecepient topLayout=(LinearLayoutWithDefaultTouchRecepient)view.findViewById(R.id.topLayout);
+  topLayout.setDefaultTouchRecepient(mLockPatternView);
+  final boolean confirmCredentials=getActivity().getIntent().getBooleanExtra("confirm_credentials",true);
+  if (savedInstanceState == null) {
+    if (confirmCredentials) {
+      updateStage(Stage.NeedToConfirm);
+      boolean launchedConfirmationActivity=mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,null,null);
+      if (!launchedConfirmationActivity) {
+        updateStage(Stage.Introduction);
+      }
+    }
+ else {
+      updateStage(Stage.Introduction);
+    }
+  }
+ else {
+    final String patternString=savedInstanceState.getString(KEY_PATTERN_CHOICE);
+    if (patternString != null) {
+      mChosenPattern=LockPatternUtils.stringToPattern(patternString);
+    }
+    updateStage(Stage.values()[savedInstanceState.getInt(KEY_UI_STAGE)]);
+  }
+  return view;
+}

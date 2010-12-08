@@ -1,0 +1,11 @@
+{
+  super.onCreate(savedInstanceState);
+  LockPatternUtils lockPatternUtils=new LockPatternUtils(getActivity());
+  if (savedInstanceState == null && lockPatternUtils.isPatternEverChosen()) {
+    Intent intent=new Intent(getActivity(),ChooseLockPattern.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+    intent.putExtra("confirm_credentials",false);
+    startActivity(intent);
+    getActivity().finish();
+  }
+}

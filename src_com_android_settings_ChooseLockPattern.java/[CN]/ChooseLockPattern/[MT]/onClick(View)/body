@@ -6,8 +6,8 @@
       updateStage(Stage.Introduction);
     }
  else     if (mUiStage.leftMode == LeftButtonMode.Cancel) {
-      setResult(RESULT_FINISHED);
-      finish();
+      getActivity().setResult(RESULT_FINISHED);
+      getActivity().finish();
     }
  else {
       throw new IllegalStateException("left footer button pressed, but stage of " + mUiStage + " doesn't make sense");

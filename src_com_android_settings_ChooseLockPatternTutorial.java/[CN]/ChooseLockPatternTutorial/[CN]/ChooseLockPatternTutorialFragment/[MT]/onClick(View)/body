@@ -1,0 +1,12 @@
+{
+  if (v == mSkipButton) {
+    getActivity().setResult(ChooseLockPattern.RESULT_FINISHED);
+    getActivity().finish();
+  }
+ else   if (v == mNextButton) {
+    Intent intent=new Intent(getActivity(),ChooseLockPatternExample.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+    startActivity(intent);
+    getActivity().finish();
+  }
+}

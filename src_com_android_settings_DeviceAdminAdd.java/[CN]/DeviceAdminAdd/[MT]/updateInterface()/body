@@ -15,7 +15,7 @@
  else {
     mAddMsg.setVisibility(View.GONE);
   }
-  if (mDPM.isAdminActive(mDeviceAdmin.getComponent())) {
+  if (!mRefreshing && mDPM.isAdminActive(mDeviceAdmin.getComponent())) {
     if (mActivePolicies.size() == 0) {
       ArrayList<DeviceAdminInfo.PolicyInfo> policies=mDeviceAdmin.getUsedPolicies();
       for (int i=0; i < policies.size(); i++) {

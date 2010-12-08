@@ -5,12 +5,12 @@
   }
   if (preference instanceof BluetoothDevicePreference) {
     BluetoothDevicePreference btPreference=(BluetoothDevicePreference)preference;
+    CachedBluetoothDevice device=btPreference.getCachedDevice();
+    mSelectedDevice=device.getDevice();
     if (mScreenType == SCREEN_TYPE_SETTINGS || mScreenType == SCREEN_TYPE_SCAN) {
       btPreference.getCachedDevice().onClicked();
     }
  else     if (mScreenType == SCREEN_TYPE_DEVICEPICKER) {
-      CachedBluetoothDevice device=btPreference.getCachedDevice();
-      mSelectedDevice=device.getDevice();
       mLocalManager.stopScanning();
       mLocalManager.persistSelectedDeviceInPicker(mSelectedDevice.getAddress());
       if ((device.getBondState() == BluetoothDevice.BOND_BONDED) || (mNeedAuth == false)) {
@@ -22,8 +22,6 @@
       }
     }
  else     if (mScreenType == SCREEN_TYPE_TETHERING) {
-      CachedBluetoothDevice device=btPreference.getCachedDevice();
-      mSelectedDevice=device.getDevice();
       mLocalManager.stopScanning();
       mLocalManager.persistSelectedDeviceInPicker(mSelectedDevice.getAddress());
       if ((device.getBondState() == BluetoothDevice.BOND_BONDED)) {

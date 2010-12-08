@@ -5,11 +5,12 @@
   super.onBindView(view);
   ImageView btClass=(ImageView)view.findViewById(android.R.id.icon);
   btClass.setImageResource(mCachedDevice.getBtClassDrawable());
-  btClass.setAlpha(isEnabled() ? 255 : sDimAlpha);
+  btClass.setAlpha(!mIsBusy ? 255 : sDimAlpha);
   mDeviceSettings=(ImageView)view.findViewById(R.id.deviceDetails);
   if (mOnSettingsClickListener != null) {
     mDeviceSettings.setOnClickListener(this);
     mDeviceSettings.setTag(mCachedDevice);
+    mDeviceSettings.setAlpha(!mIsBusy ? 255 : sDimAlpha);
   }
  else {
     mDeviceSettings.setVisibility(View.GONE);
@@ -20,9 +21,13 @@
   }
   LayoutInflater inflater=(LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   ViewGroup profilesGroup=(ViewGroup)view.findViewById(R.id.profileIcons);
-  for (  Drawable icon : mCachedDevice.getProfileIcons()) {
+  Map<Profile,Drawable> profileIcons=mCachedDevice.getProfileIcons();
+  for (  Profile profile : profileIcons.keySet()) {
+    Drawable icon=profileIcons.get(profile);
     inflater.inflate(R.layout.profile_icon_small,profilesGroup,true);
     ImageView imageView=(ImageView)profilesGroup.getChildAt(profilesGroup.getChildCount() - 1);
     imageView.setImageDrawable(icon);
+    boolean profileEnabled=mCachedDevice.isConnectedProfile(profile);
+    imageView.setAlpha(profileEnabled ? 255 : sDimAlpha);
   }
 }

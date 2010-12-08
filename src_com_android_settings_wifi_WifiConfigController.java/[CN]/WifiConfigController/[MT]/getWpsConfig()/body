@@ -1,0 +1,25 @@
+{
+  WpsConfiguration config=new WpsConfiguration();
+switch (mNetworkSetupSpinner.getSelectedItemPosition()) {
+case WPS_PBC:
+    config.setup=Setup.PBC;
+  break;
+case WPS_PIN_FROM_ACCESS_POINT:
+config.setup=Setup.PIN_FROM_ACCESS_POINT;
+break;
+case WPS_PIN_FROM_DEVICE:
+config.setup=Setup.PIN_FROM_DEVICE;
+break;
+default :
+config.setup=Setup.INVALID;
+Log.e(TAG,"WPS not selected type");
+return config;
+}
+config.pin=((TextView)mView.findViewById(R.id.wps_pin)).getText().toString();
+config.BSSID=(mAccessPoint != null) ? mAccessPoint.bssid : null;
+validateAndFetchIpAndProxyFields();
+config.proxySettings=mProxySettings;
+config.ipAssignment=mIpAssignment;
+config.linkProperties=new LinkProperties(mLinkProperties);
+return config;
+}

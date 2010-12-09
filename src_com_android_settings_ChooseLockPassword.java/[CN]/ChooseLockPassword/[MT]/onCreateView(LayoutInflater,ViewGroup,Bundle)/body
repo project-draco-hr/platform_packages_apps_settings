@@ -1,0 +1,33 @@
+{
+  View view=inflater.inflate(R.layout.choose_lock_password,null);
+  mCancelButton=(Button)view.findViewById(R.id.cancel_button);
+  mCancelButton.setOnClickListener(this);
+  mNextButton=(Button)view.findViewById(R.id.next_button);
+  mNextButton.setOnClickListener(this);
+  mIsAlphaMode=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == mRequestedQuality || DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == mRequestedQuality || DevicePolicyManager.PASSWORD_QUALITY_COMPLEX == mRequestedQuality;
+  mKeyboardView=(PasswordEntryKeyboardView)view.findViewById(R.id.keyboard);
+  mPasswordEntry=(TextView)view.findViewById(R.id.password_entry);
+  mPasswordEntry.setOnEditorActionListener(this);
+  mPasswordEntry.addTextChangedListener(this);
+  mKeyboardHelper=new PasswordEntryKeyboardHelper(getActivity(),mKeyboardView,mPasswordEntry);
+  mKeyboardHelper.setKeyboardMode(mIsAlphaMode ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
+  mHeaderText=(TextView)view.findViewById(R.id.headerText);
+  mKeyboardView.requestFocus();
+  Intent intent=getActivity().getIntent();
+  final boolean confirmCredentials=intent.getBooleanExtra("confirm_credentials",true);
+  if (savedInstanceState == null) {
+    updateStage(Stage.Introduction);
+    if (confirmCredentials) {
+      mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,null,null);
+    }
+  }
+ else {
+    mFirstPin=savedInstanceState.getString(KEY_FIRST_PIN);
+    final String state=savedInstanceState.getString(KEY_UI_STAGE);
+    if (state != null) {
+      mUiStage=Stage.valueOf(state);
+      updateStage(mUiStage);
+    }
+  }
+  return view;
+}

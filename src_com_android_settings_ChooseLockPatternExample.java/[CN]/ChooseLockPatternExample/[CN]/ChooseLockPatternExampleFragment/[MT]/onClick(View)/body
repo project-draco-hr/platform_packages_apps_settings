@@ -1,0 +1,14 @@
+{
+  if (v == mSkipButton) {
+    getActivity().setResult(ChooseLockPattern.RESULT_FINISHED);
+    getActivity().finish();
+  }
+ else   if (v == mNextButton) {
+    stopAnimation(mAnimation);
+    Intent intent=new Intent(getActivity(),ChooseLockPattern.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+    intent.putExtra("confirm_credentials",false);
+    startActivity(intent);
+    getActivity().finish();
+  }
+}

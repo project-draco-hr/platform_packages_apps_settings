@@ -1,0 +1,12 @@
+{
+  super.onActivityResult(requestCode,resultCode,data);
+switch (requestCode) {
+case CONFIRM_EXISTING_REQUEST:
+    if (resultCode != Activity.RESULT_OK) {
+      getActivity().setResult(RESULT_FINISHED);
+      getActivity().finish();
+    }
+  updateStage(Stage.Introduction);
+break;
+}
+}

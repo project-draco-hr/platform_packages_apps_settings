@@ -1,7 +1,26 @@
 {
   ContentResolver res=getContentResolver();
-  final boolean backupEnabled=Settings.Secure.getInt(res,Settings.Secure.BACKUP_ENABLED,0) == 1;
+  boolean backupEnabled=false;
+  Intent configIntent=null;
+  String configSummary=null;
+  try {
+    backupEnabled=mBackupManager.isBackupEnabled();
+    String transport=mBackupManager.getCurrentTransport();
+    configIntent=mBackupManager.getConfigurationIntent(transport);
+    configSummary=mBackupManager.getDestinationString(transport);
+  }
+ catch (  RemoteException e) {
+    mBackup.setEnabled(false);
+  }
   mBackup.setChecked(backupEnabled);
   mAutoRestore.setChecked(Settings.Secure.getInt(res,Settings.Secure.BACKUP_AUTO_RESTORE,1) == 1);
   mAutoRestore.setEnabled(backupEnabled);
+  mConfigure.setEnabled(configIntent != null);
+  mConfigure.setIntent(configIntent);
+  if (configSummary != null) {
+    mConfigure.setSummary(configSummary);
+  }
+ else {
+    mConfigure.setSummary(R.string.backup_configure_transport_default_summary);
+  }
 }

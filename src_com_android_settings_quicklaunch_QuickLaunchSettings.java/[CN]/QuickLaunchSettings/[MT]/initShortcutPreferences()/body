@@ -1,6 +1,6 @@
 {
   SparseBooleanArray shortcutSeen=new SparseBooleanArray();
-  KeyCharacterMap keyMap=KeyCharacterMap.load(KeyCharacterMap.BUILT_IN_KEYBOARD);
+  KeyCharacterMap keyMap=KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
   for (int keyCode=KeyEvent.getMaxKeyCode() - 1; keyCode >= 0; keyCode--) {
     char shortcut=(char)Character.toLowerCase(keyMap.getDisplayLabel(keyCode));
     if (shortcut == 0 || shortcutSeen.get(shortcut,false))     continue;

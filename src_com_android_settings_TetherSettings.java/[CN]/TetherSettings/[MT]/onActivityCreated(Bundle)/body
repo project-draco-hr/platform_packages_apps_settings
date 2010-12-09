@@ -36,27 +36,6 @@
       mBluetoothSettings.setEnabled(false);
     }
   }
-  if (wifiAvailable && usbAvailable && bluetoothAvailable) {
-    activity.setTitle(R.string.tether_settings_title_all);
-  }
- else   if (wifiAvailable && usbAvailable) {
-    activity.setTitle(R.string.tether_settings_title_all);
-  }
- else   if (wifiAvailable && bluetoothAvailable) {
-    activity.setTitle(R.string.tether_settings_title_all);
-  }
- else   if (wifiAvailable) {
-    activity.setTitle(R.string.tether_settings_title_wifi);
-  }
- else   if (usbAvailable && bluetoothAvailable) {
-    activity.setTitle(R.string.tether_settings_title_usb_bluetooth);
-  }
- else   if (usbAvailable) {
-    activity.setTitle(R.string.tether_settings_title_usb);
-  }
- else {
-    activity.setTitle(R.string.tether_settings_title_bluetooth);
-  }
   mWifiApEnabler=new WifiApEnabler(activity,mEnableWifiAp);
   mView=new WebView(activity);
 }

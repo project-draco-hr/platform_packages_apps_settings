@@ -1,5 +1,8 @@
 {
   getMetaData();
   super.onCreate(savedInstanceState);
-  highlightHeader();
+  if (!onIsHidingHeaders() && onIsMultiPane()) {
+    highlightHeader();
+    setTitle(R.string.settings_label);
+  }
 }

@@ -1,17 +1,15 @@
 {
-  List<ResolveInfo> availableRecognitionServices=getPackageManager().queryIntentServices(new Intent(RecognitionService.SERVICE_INTERFACE),PackageManager.GET_META_DATA);
+  List<ResolveInfo> availableRecognitionServices=mFragment.getPackageManager().queryIntentServices(new Intent(RecognitionService.SERVICE_INTERFACE),PackageManager.GET_META_DATA);
   int numAvailable=availableRecognitionServices.size();
   if (numAvailable == 0) {
-    removePreference(mVoiceInputCategory);
-    removePreference(mRecognizerPref);
-    removePreference(mSettingsPref);
+    mFragment.getPreferenceScreen().removePreference(mVoiceInputCategory);
   }
  else   if (numAvailable == 1) {
-    removePreference(mRecognizerPref);
+    mVoiceInputCategory.removePreference(mRecognizerPref);
     ResolveInfo resolveInfo=availableRecognitionServices.get(0);
     String recognizerComponent=new ComponentName(resolveInfo.serviceInfo.packageName,resolveInfo.serviceInfo.name).flattenToShortString();
     mAvailableRecognizersMap.put(recognizerComponent,resolveInfo);
-    String currentSetting=Settings.Secure.getString(getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE);
+    String currentSetting=Settings.Secure.getString(mFragment.getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE);
     updateSettingsLink(currentSetting);
   }
  else {

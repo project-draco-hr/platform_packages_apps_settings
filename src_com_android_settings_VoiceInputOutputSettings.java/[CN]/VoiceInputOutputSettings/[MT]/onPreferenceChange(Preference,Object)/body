@@ -1,7 +1,7 @@
 {
   if (preference == mRecognizerPref) {
     String setting=(String)newValue;
-    Settings.Secure.putString(getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE,setting);
+    Settings.Secure.putString(mFragment.getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE,setting);
     updateSettingsLink(setting);
   }
   return true;

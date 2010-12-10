@@ -4,11 +4,11 @@
   XmlResourceParser parser=null;
   String settingsActivity=null;
   try {
-    parser=si.loadXmlMetaData(getPackageManager(),RecognitionService.SERVICE_META_DATA);
+    parser=si.loadXmlMetaData(mFragment.getPackageManager(),RecognitionService.SERVICE_META_DATA);
     if (parser == null) {
       throw new XmlPullParserException("No " + RecognitionService.SERVICE_META_DATA + " meta-data for "+ si.packageName);
     }
-    Resources res=getPackageManager().getResourcesForApplication(si.applicationInfo);
+    Resources res=mFragment.getPackageManager().getResourcesForApplication(si.applicationInfo);
     AttributeSet attrs=Xml.asAttributeSet(parser);
     int type;
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && type != XmlPullParser.START_TAG) {
@@ -36,12 +36,12 @@ catch (  NameNotFoundException e) {
   if (settingsActivity == null) {
     Log.w(TAG,"no recognizer settings available for " + si.packageName);
     mSettingsPref.setIntent(null);
-    mParent.removePreference(mSettingsPref);
+    mVoiceInputCategory.removePreference(mSettingsPref);
   }
  else {
     Intent i=new Intent(Intent.ACTION_MAIN);
     i.setComponent(new ComponentName(si.packageName,settingsActivity));
     mSettingsPref.setIntent(i);
-    mRecognizerPref.setSummary(currentRecognizer.loadLabel(getPackageManager()));
+    mRecognizerPref.setSummary(currentRecognizer.loadLabel(mFragment.getPackageManager()));
   }
 }

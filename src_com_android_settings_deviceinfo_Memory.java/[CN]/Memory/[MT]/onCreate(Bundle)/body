@@ -17,7 +17,7 @@
     mSdMountPreferenceGroup.removePreference(mSdMountToggle);
   }
   mPtpModeToggle=(CheckBoxPreference)findPreference(PTP_MODE_TOGGLE);
-  if (Usb.isFunctionSupported(Usb.USB_FUNCTION_MTP)) {
+  if (UsbManager.isFunctionSupported(UsbManager.USB_FUNCTION_MTP)) {
     mPtpModeToggle.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.USE_PTP_INTERFACE,0) != 0);
   }
  else {

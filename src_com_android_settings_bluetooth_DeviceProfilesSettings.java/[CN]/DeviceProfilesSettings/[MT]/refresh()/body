@@ -1,3 +1,8 @@
 {
+  String deviceName=mCachedDevice.getName();
+  findPreference(KEY_TITLE).setTitle(getResources().getString(R.string.bluetooth_device_advanced_title,deviceName));
+  mDeviceNamePref=(EditTextPreference)findPreference(KEY_RENAME_DEVICE);
+  mDeviceNamePref.setSummary(deviceName);
+  mDeviceNamePref.setText(deviceName);
   refreshProfiles();
 }

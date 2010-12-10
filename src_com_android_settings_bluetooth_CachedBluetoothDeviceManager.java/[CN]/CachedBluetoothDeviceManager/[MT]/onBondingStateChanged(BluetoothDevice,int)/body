@@ -7,9 +7,10 @@
     }
     cachedDevice=findDevice(device);
     if (cachedDevice == null) {
-      Log.e(TAG,"Got bonding state changed for " + device + "but device not added in cache");
+      Log.e(TAG,"Got bonding state changed for " + device + ", but device not added in cache.");
       return;
     }
   }
+  dispatchDeviceBondStateChanged(cachedDevice,bondState);
   cachedDevice.onBondingStateChanged(bondState);
 }

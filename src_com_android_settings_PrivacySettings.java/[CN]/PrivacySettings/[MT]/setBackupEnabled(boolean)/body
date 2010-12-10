@@ -1,8 +1,7 @@
 {
-  IBackupManager bm=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
-  if (bm != null) {
+  if (mBackupManager != null) {
     try {
-      bm.setBackupEnabled(enable);
+      mBackupManager.setBackupEnabled(enable);
     }
  catch (    RemoteException e) {
       mBackup.setChecked(!enable);

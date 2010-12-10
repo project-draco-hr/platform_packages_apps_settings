@@ -5,10 +5,11 @@
     if (autoConnectPref == null) {
       autoConnectPref=new CheckBoxPreference(getActivity());
       autoConnectPref.setLayoutResource(com.android.internal.R.layout.preference_child);
-      autoConnectPref.setKey(prof.toString() + AUTO_CONNECT_KEY_SUFFIX);
+      autoConnectPref.setKey(prof.toString());
       autoConnectPref.setTitle(getCheckBoxTitle(prof));
       autoConnectPref.setOrder(getProfilePreferenceIndex(prof) + 1);
       autoConnectPref.setChecked(getAutoConnect(prof));
+      autoConnectPref.setOnPreferenceChangeListener(this);
       mAutoConnectPrefs.put(prof.name(),autoConnectPref);
     }
     BluetoothProfilePreference profilePref=(BluetoothProfilePreference)findPreference(prof.toString());

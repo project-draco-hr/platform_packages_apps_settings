@@ -23,7 +23,7 @@
   if (ServiceManager.getService(BluetoothAdapter.BLUETOOTH_SERVICE) == null) {
     getPreferenceScreen().removePreference(bt);
   }
-  if (NfcAdapter.getDefaultAdapter() == null) {
+  if (NfcAdapter.getDefaultAdapter(this) == null) {
     getPreferenceScreen().removePreference(nfc);
   }
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);

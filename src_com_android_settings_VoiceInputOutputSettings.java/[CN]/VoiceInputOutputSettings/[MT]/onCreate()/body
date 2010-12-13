@@ -1,0 +1,9 @@
+{
+  mParent=(PreferenceGroup)mFragment.getPreferenceScreen();
+  mVoiceInputCategory=(PreferenceCategory)mParent.findPreference(KEY_VOICE_INPUT_CATEGORY);
+  mRecognizerPref=(ListPreference)mVoiceInputCategory.findPreference(KEY_RECOGNIZER);
+  mRecognizerPref.setOnPreferenceChangeListener(this);
+  mSettingsPref=(PreferenceScreen)mVoiceInputCategory.findPreference(KEY_RECOGNIZER_SETTINGS);
+  mAvailableRecognizersMap=new HashMap<String,ResolveInfo>();
+  populateOrRemoveRecognizerPreference();
+}

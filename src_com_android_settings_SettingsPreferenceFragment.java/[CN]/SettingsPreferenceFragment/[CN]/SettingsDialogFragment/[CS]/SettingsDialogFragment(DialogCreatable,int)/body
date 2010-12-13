@@ -1,4 +1,7 @@
 {
   mDialogId=dialogId;
-  mFragment=fragment;
+  if (!(fragment instanceof Fragment)) {
+    throw new IllegalArgumentException("fragment argument must be an instance of " + Fragment.class.getName());
+  }
+  mParentFragment=(Fragment)fragment;
 }

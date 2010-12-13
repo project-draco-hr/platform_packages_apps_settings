@@ -1,5 +1,4 @@
 {
-  super.onResume();
   addAccessibilitServicePreferences();
   final HashSet<String> enabled=new HashSet<String>();
   String settingValue=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
@@ -21,6 +20,9 @@
   if (!accessibilityServices.isEmpty()) {
     if (serviceState == 1) {
       mToggleAccessibilityCheckBox.setChecked(true);
+      if (savedInstanceState != null) {
+        restoreInstanceStrate(savedInstanceState);
+      }
     }
  else {
       setAccessibilityServicePreferencesState(false);
@@ -32,6 +34,7 @@
       Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
     }
     mToggleAccessibilityCheckBox.setEnabled(false);
-    displayNoAppsAlert();
+    showDialog(DIALOG_ID_NO_ACCESSIBILITY_SERVICES);
   }
+  super.onActivityCreated(savedInstanceState);
 }

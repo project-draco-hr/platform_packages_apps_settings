@@ -3,10 +3,12 @@
   if (uuids == null) {
     return;
   }
-  if (BluetoothUuid.containsAnyUuid(uuids,HEADSET_PROFILE_UUIDS) && sProfileMap.containsKey(Profile.HEADSET)) {
-    profiles.add(Profile.HEADSET);
+  if (sProfileMap.containsKey(Profile.HEADSET)) {
+    if ((BluetoothUuid.isUuidPresent(localUuids,BluetoothUuid.HSP_AG) && BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.HSP)) || (BluetoothUuid.isUuidPresent(localUuids,BluetoothUuid.Handsfree_AG) && BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.Handsfree))) {
+      profiles.add(Profile.HEADSET);
+    }
   }
-  if (BluetoothUuid.containsAnyUuid(uuids,A2DP_PROFILE_UUIDS) && sProfileMap.containsKey(Profile.A2DP)) {
+  if (BluetoothUuid.containsAnyUuid(uuids,A2DP_SINK_PROFILE_UUIDS) && sProfileMap.containsKey(Profile.A2DP)) {
     profiles.add(Profile.A2DP);
   }
   if (BluetoothUuid.containsAnyUuid(uuids,OPP_PROFILE_UUIDS) && sProfileMap.containsKey(Profile.OPP)) {

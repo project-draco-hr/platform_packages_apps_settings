@@ -1,0 +1,19 @@
+{
+  HashMap<String,HashSet<String>> enabledSubtypes=getEnabledInputMethodsAndSubtypeList(resolver);
+  for (  InputMethodInfo imi : inputMethodInfos) {
+    final String imiId=imi.getId();
+    Preference pref=context.findPreference(imiId);
+    if (pref != null && pref instanceof CheckBoxPreference) {
+      CheckBoxPreference checkBoxPreference=(CheckBoxPreference)pref;
+      boolean isEnabled=enabledSubtypes.containsKey(imiId);
+      checkBoxPreference.setChecked(isEnabled);
+      if (inputMethodPrefsMap != null) {
+        for (        Preference childPref : inputMethodPrefsMap.get(imiId)) {
+          childPref.setEnabled(isEnabled);
+        }
+      }
+      setSubtypesPreferenceEnabled(context,inputMethodInfos,imiId,isEnabled);
+      updateSubtypesPreferenceChecked(context,inputMethodInfos,enabledSubtypes);
+    }
+  }
+}

@@ -2,67 +2,12 @@
   if (Utils.isMonkeyRunning()) {
     return false;
   }
-  if (preference instanceof CheckBoxPreference) {
-    final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
-    final String id=getInputMethodIdFromKey(chkPref.getKey());
-    if (chkPref.isChecked()) {
-      InputMethodInfo selImi=null;
-      final int N=mInputMethodProperties.size();
-      for (int i=0; i < N; i++) {
-        InputMethodInfo imi=mInputMethodProperties.get(i);
-        if (id.equals(imi.getId())) {
-          selImi=imi;
-          if (isSystemIme(imi)) {
-            return super.onPreferenceTreeClick(preferenceScreen,preference);
-          }
-        }
-      }
-      chkPref.setChecked(false);
-      if (selImi == null) {
-        return super.onPreferenceTreeClick(preferenceScreen,preference);
-      }
-      if (mDialog == null) {
-        mDialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-          public void onClick(          DialogInterface dialog,          int which){
-            chkPref.setChecked(true);
-          }
-        }
-).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-          public void onClick(          DialogInterface dialog,          int which){
-          }
-        }
-).create();
-      }
- else {
-        if (mDialog.isShowing()) {
-          mDialog.dismiss();
-        }
-      }
-      mDialog.setMessage(getResources().getString(R.string.ime_security_warning,selImi.getServiceInfo().applicationInfo.loadLabel(getPackageManager())));
-      mDialog.show();
-    }
-  }
- else   if (preference instanceof PreferenceScreen) {
+  if (preference instanceof PreferenceScreen) {
     if (preference.getFragment() != null) {
     }
- else     if (KEY_INPUT_METHOD.equals(preference.getKey())) {
+ else     if (KEY_CURRENT_INPUT_METHOD.equals(preference.getKey())) {
       final InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
       imm.showInputMethodPicker();
-    }
- else     if (preference.getIntent() == null) {
-      PreferenceScreen pref=(PreferenceScreen)preference;
-      String activityName=pref.getKey();
-      String packageName=activityName.substring(0,activityName.lastIndexOf("."));
-      int slash=activityName.indexOf("/");
-      if (slash > 0) {
-        packageName=activityName.substring(0,slash);
-        activityName=activityName.substring(slash + 1);
-      }
-      if (activityName.length() > 0) {
-        Intent i=new Intent(Intent.ACTION_MAIN);
-        i.setClassName(packageName,activityName);
-        startActivity(i);
-      }
     }
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

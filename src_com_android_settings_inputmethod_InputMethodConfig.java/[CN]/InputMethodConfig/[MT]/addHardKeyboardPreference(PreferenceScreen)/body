@@ -1,0 +1,10 @@
+{
+  PreferenceCategory keyboardSettingsCategory=new PreferenceCategory(getActivity());
+  keyboardSettingsCategory.setTitle(R.string.builtin_keyboard_settings_title);
+  root.addPreference(keyboardSettingsCategory);
+  PreferenceScreen prefScreen=new PreferenceScreen(getActivity(),null);
+  prefScreen.setKey(KEY_PHYSICALKEYBOARD_CATEGORY);
+  prefScreen.setTitle(R.string.builtin_keyboard_settings_title);
+  prefScreen.setSummary(R.string.builtin_keyboard_settings_summary);
+  prefScreen.setFragment(PHYSICALKEYBOARD_SETTINGS_FRAGMENT);
+}

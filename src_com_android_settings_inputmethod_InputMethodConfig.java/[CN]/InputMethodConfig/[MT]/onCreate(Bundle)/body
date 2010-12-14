@@ -2,7 +2,7 @@
   super.onCreate(icicle);
   Configuration config=getResources().getConfiguration();
   mHaveHardKeyboard=(config.keyboard == Configuration.KEYBOARD_QWERTY);
-  mInputMethodId=getActivity().getIntent().getStringExtra(EXTRA_INPUT_METHOD_ID);
-  onCreateIMM();
+  InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+  mInputMethodProperties=imm.getInputMethodList();
   setPreferenceScreen(createPreferenceHierarchy());
 }

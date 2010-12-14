@@ -1,6 +1,5 @@
 {
   super.onResume();
-  InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,getContentResolver(),mInputMethodProperties);
   if (mLanguagePref != null) {
     Configuration conf=getResources().getConfiguration();
     String locale=conf.locale.getDisplayName(conf.locale);
@@ -9,4 +8,5 @@
       mLanguagePref.setSummary(locale);
     }
   }
+  mShowInputMethodSelectorPref.setOnPreferenceChangeListener(this);
 }

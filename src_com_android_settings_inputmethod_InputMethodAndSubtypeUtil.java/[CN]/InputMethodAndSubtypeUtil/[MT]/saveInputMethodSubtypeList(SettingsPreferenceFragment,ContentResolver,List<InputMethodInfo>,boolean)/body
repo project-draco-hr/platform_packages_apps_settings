@@ -1,56 +1,78 @@
 {
   String currentInputMethodId=Settings.Secure.getString(resolver,Settings.Secure.DEFAULT_INPUT_METHOD);
   final int selectedInputMethodSubtype=getInputMethodSubtypeSelected(resolver);
-  StringBuilder builder=new StringBuilder();
-  StringBuilder disabledSysImes=new StringBuilder();
-  int firstSubtypeHashCode=NOT_A_SUBTYPE_ID;
-  final boolean onlyOneIME=inputMethodProperties.size() == 1;
-  boolean existsSelectedIME=false;
-  for (  InputMethodInfo property : inputMethodProperties) {
-    final String id=property.getId();
-    CheckBoxPreference pref=(CheckBoxPreference)context.findPreference(id);
-    boolean isCurrentInputMethod=id.equals(currentInputMethodId);
-    boolean systemIme=isSystemIme(property);
-    if (((onlyOneIME || systemIme) && !hasHardKeyboard) || (pref != null && pref.isChecked())) {
-      if (builder.length() > 0)       builder.append(INPUT_METHOD_SEPARATER);
-      builder.append(id);
-      for (      InputMethodSubtype subtype : property.getSubtypes()) {
-        CheckBoxPreference subtypePref=(CheckBoxPreference)context.findPreference(id + subtype.hashCode());
-        if (subtypePref != null && subtypePref.isChecked()) {
-          builder.append(INPUT_METHOD_SUBTYPE_SEPARATER).append(subtype.hashCode());
+  HashMap<String,HashSet<String>> enabledIMEAndSubtypesMap=getEnabledInputMethodsAndSubtypeList(resolver);
+  HashSet<String> disabledSystemIMEs=getDisabledSystemIMEs(resolver);
+  final boolean onlyOneIME=inputMethodInfos.size() == 1;
+  boolean existsSelectedSubtype=false;
+  for (  InputMethodInfo imi : inputMethodInfos) {
+    final String imiId=imi.getId();
+    Preference pref=context.findPreference(imiId);
+    if (pref == null)     continue;
+    final boolean isImeChecked=(pref instanceof CheckBoxPreference) ? ((CheckBoxPreference)pref).isChecked() : enabledIMEAndSubtypesMap.containsKey(imiId);
+    boolean isCurrentInputMethod=imiId.equals(currentInputMethodId);
+    boolean systemIme=isSystemIme(imi);
+    if (((onlyOneIME || systemIme) && !hasHardKeyboard) || isImeChecked) {
+      if (!enabledIMEAndSubtypesMap.containsKey(imiId)) {
+        enabledIMEAndSubtypesMap.put(imiId,new HashSet<String>());
+      }
+      HashSet<String> subtypesSet=enabledIMEAndSubtypesMap.get(imiId);
+      for (      InputMethodSubtype subtype : imi.getSubtypes()) {
+        final String subtypeHashCodeStr=String.valueOf(subtype.hashCode());
+        CheckBoxPreference subtypePref=(CheckBoxPreference)context.findPreference(imiId + subtypeHashCodeStr);
+        if (subtypePref == null)         continue;
+        if (subtypePref.isChecked()) {
+          subtypesSet.add(subtypeHashCodeStr);
           if (isCurrentInputMethod) {
             if (selectedInputMethodSubtype == subtype.hashCode()) {
-              existsSelectedIME=true;
-            }
- else             if (firstSubtypeHashCode == NOT_A_SUBTYPE_ID) {
-              firstSubtypeHashCode=subtype.hashCode();
+              existsSelectedSubtype=true;
             }
           }
         }
+ else {
+          subtypesSet.remove(subtypeHashCodeStr);
+        }
       }
     }
- else     if (isCurrentInputMethod) {
-      if (DEBUG) {
-        Log.d(TAG,"Current IME was uninstalled or disabled.");
+ else {
+      enabledIMEAndSubtypesMap.remove(imiId);
+      if (isCurrentInputMethod) {
+        if (DEBUG) {
+          Log.d(TAG,"Current IME was uninstalled or disabled.");
+        }
       }
     }
-    if (pref != null && !pref.isChecked() && systemIme && hasHardKeyboard) {
-      if (disabledSysImes.length() > 0)       disabledSysImes.append(INPUT_METHOD_SEPARATER);
-      disabledSysImes.append(id);
+    if (systemIme && hasHardKeyboard) {
+      if (disabledSystemIMEs.contains(imiId)) {
+        if (isImeChecked) {
+          disabledSystemIMEs.remove(imiId);
+        }
+      }
+ else {
+        if (!isImeChecked) {
+          disabledSystemIMEs.add(imiId);
+        }
+      }
     }
   }
+  StringBuilder builder=new StringBuilder();
+  buildInputMethodsAndSubtypesString(builder,enabledIMEAndSubtypesMap);
+  StringBuilder disabledSysImesBuilder=new StringBuilder();
+  buildDisabledSystemInputMethods(disabledSysImesBuilder,disabledSystemIMEs);
   if (DEBUG) {
     Log.d(TAG,"--- Save enabled inputmethod settings. :" + builder.toString());
-    Log.d(TAG,"--- Save disable system inputmethod settings. :" + disabledSysImes.toString());
+    Log.d(TAG,"--- Save disable system inputmethod settings. :" + disabledSysImesBuilder.toString());
     Log.d(TAG,"--- Save default inputmethod settings. :" + currentInputMethodId);
   }
-  if (!existsSelectedIME || !isInputMethodSubtypeSelected(resolver)) {
+  if (!existsSelectedSubtype || !isInputMethodSubtypeSelected(resolver)) {
     if (DEBUG) {
-      Log.d(TAG,"--- Set inputmethod subtype because it's not defined." + firstSubtypeHashCode);
+      Log.d(TAG,"--- Reset inputmethod subtype because it's not defined.");
     }
-    putSelectedInputMethodSubtype(resolver,firstSubtypeHashCode);
+    putSelectedInputMethodSubtype(resolver,NOT_A_SUBTYPE_ID);
   }
   Settings.Secure.putString(resolver,Settings.Secure.ENABLED_INPUT_METHODS,builder.toString());
-  Settings.Secure.putString(resolver,Settings.Secure.DISABLED_SYSTEM_INPUT_METHODS,disabledSysImes.toString());
+  if (disabledSysImesBuilder.length() > 0) {
+    Settings.Secure.putString(resolver,Settings.Secure.DISABLED_SYSTEM_INPUT_METHODS,disabledSysImesBuilder.toString());
+  }
   Settings.Secure.putString(resolver,Settings.Secure.DEFAULT_INPUT_METHOD,currentInputMethodId != null ? currentInputMethodId : "");
 }

@@ -38,10 +38,6 @@
         adapter.enable();
         mBluetoothTether.setSummary(R.string.bluetooth_turning_on);
         mBluetoothTether.setEnabled(false);
-        mBluetoothSettings.setEnabled(false);
-      }
- else {
-        mBluetoothSettings.setEnabled(true);
       }
       mBluetoothPan.setBluetoothTethering(true);
       mBluetoothTether.setSummary(R.string.bluetooth_tethering_available_subtext);
@@ -55,7 +51,6 @@
         errored=true;
       }
       mBluetoothPan.setBluetoothTethering(false);
-      mBluetoothSettings.setEnabled(false);
       if (errored) {
         mBluetoothTether.setSummary(R.string.bluetooth_tethering_errored_subtext);
       }
@@ -63,9 +58,6 @@
         mBluetoothTether.setSummary(R.string.bluetooth_tethering_off_subtext);
       }
     }
-  }
- else   if (preference == mBluetoothSettings) {
-    preference.getExtras().putString(BluetoothSettings.ACTION,BluetoothSettings.ACTION_LAUNCH_TETHER_PICKER);
   }
  else   if (preference == mTetherHelp) {
     showDialog(DIALOG_TETHER_HELP);

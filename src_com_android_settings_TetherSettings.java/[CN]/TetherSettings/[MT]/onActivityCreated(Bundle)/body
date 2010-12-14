@@ -6,7 +6,6 @@
   mWifiApSettings=(PreferenceScreen)findPreference(WIFI_AP_SETTINGS);
   mUsbTether=(CheckBoxPreference)findPreference(USB_TETHER_SETTINGS);
   mBluetoothTether=(CheckBoxPreference)findPreference(ENABLE_BLUETOOTH_TETHERING);
-  mBluetoothSettings=(PreferenceScreen)findPreference(BLUETOOTH_TETHER_SETTINGS);
   mTetherHelp=(PreferenceScreen)findPreference(TETHERING_HELP);
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   mUsbRegexs=cm.getTetherableUsbRegexs();
@@ -24,16 +23,13 @@
   }
   if (!bluetoothAvailable) {
     getPreferenceScreen().removePreference(mBluetoothTether);
-    getPreferenceScreen().removePreference(mBluetoothSettings);
   }
  else {
     if (mBluetoothPan.isTetheringOn()) {
       mBluetoothTether.setChecked(true);
-      mBluetoothSettings.setEnabled(true);
     }
  else {
       mBluetoothTether.setChecked(false);
-      mBluetoothSettings.setEnabled(false);
     }
   }
   mWifiApEnabler=new WifiApEnabler(activity,mEnableWifiAp);

@@ -23,8 +23,19 @@
   mInternalMediaColor=mRes.getColor(R.color.memory_media_usage);
   mInternalAppsColor=mRes.getColor(R.color.memory_apps_usage);
   mInternalUsedColor=mRes.getColor(R.color.memory_used);
+  float[] radius=new float[]{5f,5f,5f,5f,5f,5f,5f,5f};
+  RoundRectShape shape1=new RoundRectShape(radius,null,null);
+  ShapeDrawable mediaShape=new ShapeDrawable(shape1);
+  mediaShape.setIntrinsicWidth(32);
+  mediaShape.setIntrinsicHeight(32);
+  mediaShape.getPaint().setColor(mInternalMediaColor);
+  mInternalMediaUsage.setIcon(mediaShape);
+  ShapeDrawable appsShape=new ShapeDrawable(shape1);
+  appsShape.setIntrinsicWidth(32);
+  appsShape.setIntrinsicHeight(32);
+  appsShape.getPaint().setColor(mInternalAppsColor);
+  mInternalAppsUsage.setIcon(appsShape);
   mInternalUsageChart=(UsageBarPreference)findPreference(MEMORY_INTERNAL_CHART);
-  final HandlerThread t=new HandlerThread("MeasurementHandler");
-  t.start();
-  mMeasurementHandler=new MemoryMeasurementHandler(t.getLooper());
+  mMeasurement=MemoryMeasurement.getInstance(getActivity());
+  mMeasurement.setReceiver(this);
 }

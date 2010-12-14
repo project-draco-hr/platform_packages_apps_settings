@@ -1,0 +1,8 @@
+{
+  mInternalSize.setSummary(formatSize(totalSize));
+  mInternalAvail.setSummary(formatSize(availSize));
+  final long usedSize=totalSize - availSize;
+  mInternalUsageChart.clear();
+  mInternalUsageChart.addEntry(usedSize / (float)totalSize,mInternalUsedColor);
+  mInternalUsageChart.commit();
+}

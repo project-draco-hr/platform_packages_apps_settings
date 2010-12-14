@@ -1,0 +1,12 @@
+{
+  MeasurementReceiver receiver=(mReceiver != null) ? mReceiver.get() : null;
+  if (receiver == null) {
+    return;
+  }
+  Bundle bundle=new Bundle();
+  bundle.putLong(TOTAL_SIZE,mInternalTotalSize);
+  bundle.putLong(AVAIL_SIZE,mInternalAvailSize);
+  bundle.putLong(APPS_USED,mInternalAppsSize);
+  bundle.putLong(MEDIA_USED,mInternalMediaSize);
+  receiver.updateExactInternal(bundle);
+}

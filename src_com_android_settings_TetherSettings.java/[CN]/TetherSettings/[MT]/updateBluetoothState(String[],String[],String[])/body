@@ -28,19 +28,16 @@
   int btState=adapter.getState();
   if (btState == BluetoothAdapter.STATE_TURNING_OFF) {
     mBluetoothTether.setEnabled(false);
-    mBluetoothSettings.setEnabled(false);
     mBluetoothTether.setSummary(R.string.wifi_stopping);
   }
  else   if (btState == BluetoothAdapter.STATE_TURNING_ON) {
     mBluetoothTether.setEnabled(false);
-    mBluetoothSettings.setEnabled(false);
     mBluetoothTether.setSummary(R.string.bluetooth_turning_on);
   }
  else   if (mBluetoothPan.isTetheringOn()) {
     mBluetoothTether.setChecked(true);
     if (btState == BluetoothAdapter.STATE_ON) {
       mBluetoothTether.setEnabled(true);
-      mBluetoothSettings.setEnabled(true);
       if (bluetoothTethered) {
         mBluetoothTether.setSummary(R.string.bluetooth_tethering_connected_subtext);
       }
@@ -55,7 +52,6 @@
  else {
     mBluetoothTether.setEnabled(true);
     mBluetoothTether.setChecked(false);
-    mBluetoothSettings.setEnabled(false);
     mBluetoothTether.setSummary(R.string.bluetooth_tethering_off_subtext);
   }
 }

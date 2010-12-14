@@ -21,15 +21,8 @@
         btPreference.getCachedDevice().onClicked();
       }
     }
- else     if (mScreenType == SCREEN_TYPE_TETHERING) {
-      mLocalManager.stopScanning();
-      mLocalManager.persistSelectedDeviceInPicker(mSelectedDevice.getAddress());
-      if ((device.getBondState() == BluetoothDevice.BOND_BONDED)) {
-        onPanDevicePicked();
-      }
  else {
-        btPreference.getCachedDevice().onClicked();
-      }
+      Log.e(TAG,"onPreferenceTreeClick has invalid mScreenType: " + mScreenType);
     }
     return true;
   }

@@ -24,7 +24,7 @@
   if (ServiceManager.getService(BluetoothAdapter.BLUETOOTH_SERVICE) == null) {
     getPreferenceScreen().removePreference(bt);
   }
-  if (NfcAdapter.getDefaultAdapter() == null) {
+  if (NfcAdapter.getDefaultAdapter(activity) == null) {
     getPreferenceScreen().removePreference(nfc);
   }
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);

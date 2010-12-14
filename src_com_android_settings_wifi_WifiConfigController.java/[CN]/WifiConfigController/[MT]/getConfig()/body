@@ -61,40 +61,9 @@ break;
 default :
 return null;
 }
-config.ipAssignment=(mIpSettingsSpinner != null && mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP) ? IpAssignment.STATIC : IpAssignment.DHCP;
-if (config.ipAssignment == IpAssignment.STATIC) {
-LinkProperties linkProperties=new LinkProperties();
-int result=validateIpConfigFields(linkProperties);
-if (result == 0) {
-config.linkProperties=linkProperties;
-}
- else {
-Toast.makeText(mConfigUi.getContext(),result,Toast.LENGTH_LONG).show();
-config.ipAssignment=IpAssignment.UNASSIGNED;
-}
-}
-config.proxySettings=(mProxySettingsSpinner != null && mProxySettingsSpinner.getSelectedItemPosition() == PROXY_STATIC) ? ProxySettings.STATIC : ProxySettings.NONE;
-if (config.proxySettings == ProxySettings.STATIC) {
-String host=mProxyHostView.getText().toString();
-String portStr=mProxyPortView.getText().toString();
-String exclusionList=mProxyExclusionListView.getText().toString();
-int port=0;
-int result=0;
-try {
-port=Integer.parseInt(portStr);
-result=ProxySelector.validate(host,portStr,exclusionList);
-}
- catch (NumberFormatException e) {
-result=R.string.proxy_error_invalid_port;
-}
-if (result == 0) {
-ProxyProperties proxyProperties=new ProxyProperties(host,port,exclusionList);
-config.linkProperties.setHttpProxy(proxyProperties);
-}
- else {
-Toast.makeText(mConfigUi.getContext(),result,Toast.LENGTH_LONG).show();
-config.proxySettings=ProxySettings.UNASSIGNED;
-}
-}
+validateAndFetchIpAndProxyFields();
+config.proxySettings=mProxySettings;
+config.ipAssignment=mIpAssignment;
+config.linkProperties=new LinkProperties(mLinkProperties);
 return config;
 }

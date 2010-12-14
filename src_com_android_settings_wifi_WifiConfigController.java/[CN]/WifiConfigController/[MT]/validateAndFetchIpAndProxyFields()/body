@@ -1,0 +1,35 @@
+{
+  mLinkProperties.clear();
+  mIpAssignment=(mIpSettingsSpinner != null && mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP) ? IpAssignment.STATIC : IpAssignment.DHCP;
+  if (mIpAssignment == IpAssignment.STATIC) {
+    int result=validateIpConfigFields(mLinkProperties);
+    if (result != 0) {
+      mLinkProperties.clear();
+      Toast.makeText(mConfigUi.getContext(),result,Toast.LENGTH_LONG).show();
+      mIpAssignment=IpAssignment.UNASSIGNED;
+    }
+  }
+  mProxySettings=(mProxySettingsSpinner != null && mProxySettingsSpinner.getSelectedItemPosition() == PROXY_STATIC) ? ProxySettings.STATIC : ProxySettings.NONE;
+  if (mProxySettings == ProxySettings.STATIC) {
+    String host=mProxyHostView.getText().toString();
+    String portStr=mProxyPortView.getText().toString();
+    String exclusionList=mProxyExclusionListView.getText().toString();
+    int port=0;
+    int result=0;
+    try {
+      port=Integer.parseInt(portStr);
+      result=ProxySelector.validate(host,portStr,exclusionList);
+    }
+ catch (    NumberFormatException e) {
+      result=R.string.proxy_error_invalid_port;
+    }
+    if (result == 0) {
+      ProxyProperties proxyProperties=new ProxyProperties(host,port,exclusionList);
+      mLinkProperties.setHttpProxy(proxyProperties);
+    }
+ else {
+      Toast.makeText(mConfigUi.getContext(),result,Toast.LENGTH_LONG).show();
+      mProxySettings=ProxySettings.UNASSIGNED;
+    }
+  }
+}

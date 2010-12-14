@@ -1,0 +1,8 @@
+{
+  super.onDestroy();
+  if (mVpnListContainer != null) {
+    for (int i=0; i < mVpnListContainer.getPreferenceCount(); i++) {
+      mVpnListContainer.getPreference(i).setOnPreferenceClickListener(null);
+    }
+  }
+}

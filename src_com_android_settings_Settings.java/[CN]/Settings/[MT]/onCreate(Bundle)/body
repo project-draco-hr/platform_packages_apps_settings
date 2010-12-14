@@ -1,8 +1,25 @@
 {
   getMetaData();
+  mInLocalHeaderSwitch=true;
   super.onCreate(savedInstanceState);
+  mInLocalHeaderSwitch=false;
   if (!onIsHidingHeaders() && onIsMultiPane()) {
     highlightHeader();
     setTitle(R.string.settings_label);
+  }
+  if (savedInstanceState != null) {
+    mCurrentHeader=savedInstanceState.getParcelable(SAVE_KEY_CURRENT_HEADER);
+    mParentHeader=savedInstanceState.getParcelable(SAVE_KEY_PARENT_HEADER);
+  }
+  if (savedInstanceState != null && mCurrentHeader != null) {
+    showBreadCrumbs(mCurrentHeader.title,null);
+  }
+  if (mParentHeader != null) {
+    setParentTitle(mParentHeader.title,null,new OnClickListener(){
+      public void onClick(      View v){
+        switchToParent(mParentHeader.fragment);
+      }
+    }
+);
   }
 }

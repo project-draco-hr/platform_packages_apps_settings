@@ -1,4 +1,5 @@
 {
+  if (getActivity() == null)   return;
   final ConnectivityManager connManager=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
   final boolean backgroundDataSetting=connManager.getBackgroundDataSetting();
   mBackgroundDataCheckBox.setChecked(backgroundDataSetting);

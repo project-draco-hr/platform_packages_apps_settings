@@ -14,7 +14,12 @@
  else {
     view.findViewById(R.id.wifi_general_info).setVisibility(View.GONE);
   }
-  mStatusText.setText(R.string.wifi_setup_status_edit_network);
+  if (selectedAccessPoint.security == AccessPoint.SECURITY_NONE) {
+    mStatusText.setText(R.string.wifi_setup_status_unsecured_network);
+  }
+ else {
+    mStatusText.setText(R.string.wifi_setup_status_edit_network);
+  }
   mAddNetworkButton.setVisibility(View.GONE);
   mRefreshButton.setVisibility(View.GONE);
   mSkipOrNextButton.setVisibility(View.GONE);

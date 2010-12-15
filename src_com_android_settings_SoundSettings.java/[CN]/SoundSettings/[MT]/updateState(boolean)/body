@@ -1,4 +1,5 @@
 {
+  if (getActivity() == null)   return;
   final int ringerMode=mAudioManager.getRingerMode();
   final boolean silentOrVibrateMode=ringerMode != AudioManager.RINGER_MODE_NORMAL;
   if (silentOrVibrateMode != mSilent.isChecked() || force) {

@@ -12,5 +12,7 @@
   mKeyboardHelper=new PasswordEntryKeyboardHelper(getActivity(),mKeyboardView,mPasswordEntry);
   mKeyboardHelper.setKeyboardMode(isAlpha ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
   mKeyboardView.requestFocus();
+  int currentType=mPasswordEntry.getInputType();
+  mPasswordEntry.setInputType(isAlpha ? currentType : (currentType | InputType.TYPE_CLASS_NUMBER));
   return view;
 }

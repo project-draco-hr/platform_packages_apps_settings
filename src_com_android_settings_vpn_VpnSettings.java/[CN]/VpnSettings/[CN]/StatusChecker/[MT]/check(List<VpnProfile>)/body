@@ -15,12 +15,14 @@
           changeState(p,VpnState.IDLE);
         }
       }
+      if (getActivity() == null)       return;
       getActivity().unbindService(this);
       showPreferences();
     }
     public void onServiceDisconnected(    ComponentName className){
       cv.open();
       setDefaultState(list);
+      if (getActivity() == null)       return;
       getActivity().unbindService(this);
       showPreferences();
     }

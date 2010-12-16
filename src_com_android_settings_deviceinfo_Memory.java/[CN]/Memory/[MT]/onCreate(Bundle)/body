@@ -16,13 +16,6 @@
     mSdMountPreferenceGroup.removePreference(mSdAvail);
     mSdMountPreferenceGroup.removePreference(mSdMountToggle);
   }
-  mPtpModeToggle=(CheckBoxPreference)findPreference(PTP_MODE_TOGGLE);
-  if (UsbManager.isFunctionSupported(UsbManager.USB_FUNCTION_MTP)) {
-    mPtpModeToggle.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.USE_PTP_INTERFACE,0) != 0);
-  }
- else {
-    getPreferenceScreen().removePreference(mPtpModeToggle);
-  }
   mInternalSize=findPreference(MEMORY_INTERNAL_SIZE);
   mInternalAvail=findPreference(MEMORY_INTERNAL_AVAIL);
   mInternalMediaUsage=findPreference(MEMORY_INTERNAL_MEDIA);

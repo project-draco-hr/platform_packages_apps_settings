@@ -13,6 +13,8 @@
   mKeyboardHelper.setKeyboardMode(mIsAlphaMode ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
   mHeaderText=(TextView)view.findViewById(R.id.headerText);
   mKeyboardView.requestFocus();
+  int currentType=mPasswordEntry.getInputType();
+  mPasswordEntry.setInputType(mIsAlphaMode ? currentType : (currentType | InputType.TYPE_CLASS_NUMBER));
   Intent intent=getActivity().getIntent();
   final boolean confirmCredentials=intent.getBooleanExtra("confirm_credentials",true);
   if (savedInstanceState == null) {

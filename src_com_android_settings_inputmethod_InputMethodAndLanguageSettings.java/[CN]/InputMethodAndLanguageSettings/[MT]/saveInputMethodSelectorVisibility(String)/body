@@ -1,0 +1,9 @@
+{
+  try {
+    int intValue=Integer.valueOf(value);
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.INPUT_METHOD_SELECTOR_VISIBILITY,intValue);
+    updateInputMethodSelectorSummary(intValue);
+  }
+ catch (  NumberFormatException e) {
+  }
+}

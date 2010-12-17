@@ -5,7 +5,7 @@
   mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
   mBackup=(CheckBoxPreference)screen.findPreference(BACKUP_DATA);
   mAutoRestore=(CheckBoxPreference)screen.findPreference(AUTO_RESTORE);
-  mConfigure=(PreferenceScreen)screen.findPreference(CONFIGURE_TRANSPORT);
+  mConfigure=(PreferenceScreen)screen.findPreference(CONFIGURE_ACCOUNT);
   if (getActivity().getPackageManager().resolveContentProvider(GSETTINGS_PROVIDER,0) == null) {
     screen.removePreference(findPreference(BACKUP_CATEGORY));
   }

@@ -1,0 +1,25 @@
+{
+  if (preference instanceof CheckBoxPreference) {
+    final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
+    final String imiId=chkPref.getKey();
+    if (chkPref.isChecked()) {
+      InputMethodInfo selImi=getInputMethodInfoFromImiId(imiId);
+      if (selImi != null) {
+        if (InputMethodAndSubtypeUtil.isSystemIme(selImi)) {
+          return super.onPreferenceTreeClick(preferenceScreen,preference);
+        }
+      }
+ else {
+        return super.onPreferenceTreeClick(preferenceScreen,preference);
+      }
+      chkPref.setChecked(false);
+      showSecurityWarnDialog(selImi,chkPref,imiId);
+    }
+ else {
+      for (      Preference pref : mInputMethodPrefsMap.get(imiId)) {
+        pref.setEnabled(false);
+      }
+    }
+  }
+  return super.onPreferenceTreeClick(preferenceScreen,preference);
+}

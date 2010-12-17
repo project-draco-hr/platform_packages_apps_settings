@@ -1,0 +1,11 @@
+{
+  PreferenceScreen root=getPreferenceManager().createPreferenceScreen(getActivity());
+  if (mHaveHardKeyboard) {
+    addHardKeyboardPreference(root);
+  }
+  final int N=(mInputMethodProperties == null ? 0 : mInputMethodProperties.size());
+  for (int i=0; i < N; ++i) {
+    addInputMethodPreference(root,mInputMethodProperties.get(i),N);
+  }
+  return root;
+}

@@ -3,6 +3,11 @@
     mView.findViewById(R.id.security_fields).setVisibility(View.GONE);
     return;
   }
+ else   if (mAccessPointSecurity == AccessPoint.SECURITY_EAP && mInXlSetupWizard) {
+    mView.findViewById(R.id.eap_not_supported).setVisibility(View.VISIBLE);
+    mView.findViewById(R.id.security_fields).setVisibility(View.GONE);
+    return;
+  }
   mView.findViewById(R.id.security_fields).setVisibility(View.VISIBLE);
   if (mPasswordView == null) {
     mPasswordView=(TextView)mView.findViewById(R.id.password);

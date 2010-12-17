@@ -3,7 +3,12 @@
   ImageView btProfile=(ImageView)view.findViewById(android.R.id.icon);
   btProfile.setImageDrawable(mProfileDrawable);
   mProfileExpandView=(ImageView)view.findViewById(R.id.profileExpand);
-  mProfileExpandView.setOnClickListener(this);
-  mProfileExpandView.setTag(mProfile);
-  mProfileExpandView.setImageResource(mExpanded ? R.drawable.ic_preferences_expanded : R.drawable.ic_preferences_collapsed);
+  if (mProfile == Profile.PAN) {
+    mProfileExpandView.setVisibility(View.GONE);
+  }
+ else {
+    mProfileExpandView.setOnClickListener(this);
+    mProfileExpandView.setTag(mProfile);
+    mProfileExpandView.setImageResource(mExpanded ? R.drawable.ic_preferences_expanded : R.drawable.ic_preferences_collapsed);
+  }
 }

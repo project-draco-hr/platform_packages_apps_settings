@@ -8,7 +8,7 @@
   mIsConnectingErrorPossible=true;
   int preferredProfiles=0;
   for (  Profile profile : mProfiles) {
-    if (isConnectableProfile(profile)) {
+    if (connectAllProfiles ? profile.isConnectable() : profile.isAutoConnectable()) {
       LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
       if (profileManager.isPreferred(mDevice)) {
         ++preferredProfiles;
@@ -19,6 +19,6 @@
   }
   if (DEBUG)   Log.d(TAG,"Preferred profiles = " + preferredProfiles);
   if (preferredProfiles == 0) {
-    connectAllProfiles();
+    connectAllAutoConnectableProfiles();
   }
 }

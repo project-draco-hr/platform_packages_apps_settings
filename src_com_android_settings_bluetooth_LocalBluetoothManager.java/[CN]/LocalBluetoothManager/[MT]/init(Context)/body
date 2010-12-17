@@ -5,8 +5,7 @@
     return false;
   }
   mCachedDeviceManager=new CachedBluetoothDeviceManager(this);
-  mEventRedirector=new BluetoothEventRedirector(this);
-  mEventRedirector.start();
+  new BluetoothEventRedirector(this).registerReceiver();
   mAdapter.getProfileProxy(mContext,mProfileListener,BluetoothProfile.A2DP);
   return true;
 }

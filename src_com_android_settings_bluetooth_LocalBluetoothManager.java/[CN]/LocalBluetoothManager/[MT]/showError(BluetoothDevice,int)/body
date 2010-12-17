@@ -12,7 +12,7 @@
   }
   String message=mContext.getString(messageResId,name);
   if (mForegroundActivity != null) {
-    mErrorDialog=new AlertDialog.Builder(mForegroundActivity).setIcon(android.R.drawable.ic_dialog_alert).setTitle(titleResId).setMessage(message).setPositiveButton(android.R.string.ok,null).show();
+    mErrorDialog=new AlertDialog.Builder(mForegroundActivity).setIcon(android.R.drawable.ic_dialog_alert).setTitle(R.string.bluetooth_error_title).setMessage(message).setPositiveButton(android.R.string.ok,null).show();
   }
  else {
     Toast.makeText(mContext,message,Toast.LENGTH_LONG).show();

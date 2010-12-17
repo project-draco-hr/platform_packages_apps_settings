@@ -6,6 +6,11 @@
   pref.setPersistent(false);
   pref.setOrder(getProfilePreferenceIndex(profile));
   pref.setOnExpandClickListener(this);
+  LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mManager,profile);
+  int iconResource=profileManager.getDrawableResource();
+  if (iconResource != 0) {
+    pref.setProfileDrawable(mManager.getContext().getResources().getDrawable(iconResource));
+  }
   pref.setEnabled(!mCachedDevice.isBusy());
   refreshProfilePreference(pref,profile);
   return pref;

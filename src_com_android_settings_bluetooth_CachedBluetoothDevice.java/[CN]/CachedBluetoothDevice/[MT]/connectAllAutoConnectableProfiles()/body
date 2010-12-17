@@ -2,7 +2,7 @@
   if (!ensurePaired())   return;
   mIsConnectingErrorPossible=true;
   for (  Profile profile : mProfiles) {
-    if (isConnectableProfile(profile)) {
+    if (profile.isAutoConnectable()) {
       LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
       profileManager.setPreferred(mDevice,true);
       disconnectConnected(this,profile);

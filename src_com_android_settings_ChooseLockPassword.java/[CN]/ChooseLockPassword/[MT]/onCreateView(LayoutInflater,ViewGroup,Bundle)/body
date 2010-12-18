@@ -9,7 +9,8 @@
   mPasswordEntry=(TextView)view.findViewById(R.id.password_entry);
   mPasswordEntry.setOnEditorActionListener(this);
   mPasswordEntry.addTextChangedListener(this);
-  mKeyboardHelper=new PasswordEntryKeyboardHelper(getActivity(),mKeyboardView,mPasswordEntry);
+  final Activity activity=getActivity();
+  mKeyboardHelper=new PasswordEntryKeyboardHelper(activity,mKeyboardView,mPasswordEntry);
   mKeyboardHelper.setKeyboardMode(mIsAlphaMode ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
   mHeaderText=(TextView)view.findViewById(R.id.headerText);
   mKeyboardView.requestFocus();
@@ -30,6 +31,12 @@
       mUiStage=Stage.valueOf(state);
       updateStage(mUiStage);
     }
+  }
+  if (activity instanceof PreferenceActivity) {
+    final PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
+    int id=mIsAlphaMode ? R.string.lockpassword_confirm_your_password_header : R.string.lockpassword_confirm_your_pin_header;
+    CharSequence title=getText(id);
+    preferenceActivity.showBreadCrumbs(title,title);
   }
   return view;
 }

@@ -1,0 +1,12 @@
+{
+  final File dataPath=Environment.getDataDirectory();
+  final StatFs stat=new StatFs(dataPath.getPath());
+  final long blockSize=stat.getBlockSize();
+  final long totalBlocks=stat.getBlockCount();
+  final long availableBlocks=stat.getAvailableBlocks();
+  final long totalSize=totalBlocks * blockSize;
+  final long availSize=availableBlocks * blockSize;
+  mInternalTotalSize=totalSize;
+  mInternalAvailSize=availSize;
+  sendInternalApproximateUpdate();
+}

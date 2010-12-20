@@ -1,9 +1,11 @@
 {
   super.onDraw(canvas);
-  final int width=getWidth();
-  final int height=getHeight();
-  canvas.drawPaint(mBackgroundPaint);
-  int lastX=0;
+  final int left=getPaddingLeft();
+  final int right=getWidth() - getPaddingRight();
+  final int top=getPaddingTop();
+  final int bottom=getHeight() - getPaddingBottom();
+  final int width=right - left;
+  int lastX=left;
   if (mEntries != null) {
     for (    final Entry e : mEntries) {
       final int entryWidth;
@@ -11,14 +13,15 @@
         entryWidth=0;
       }
  else {
-        entryWidth=Math.max(1,(int)(width * e.percentage));
+        entryWidth=Math.max(mMinTickWidth,(int)(width * e.percentage));
       }
       final int nextX=lastX + entryWidth;
-      if (nextX >= width) {
+      if (nextX >= right) {
         break;
       }
-      canvas.drawRect(lastX,0,nextX,height,e.paint);
+      canvas.drawRect(lastX,top,nextX,bottom,e.paint);
       lastX=nextX;
     }
   }
+  canvas.drawRect(lastX,top,lastX + width,bottom,mEmptyPaint);
 }

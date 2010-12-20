@@ -1,5 +1,9 @@
 {
   super(context,attrs);
-  mBackgroundPaint.setARGB(255,64,64,64);
-  mBackgroundPaint.setStyle(Paint.Style.FILL);
+  TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.PercentageBarChart);
+  mMinTickWidth=a.getDimensionPixelSize(R.styleable.PercentageBarChart_minTickWidth,1);
+  int emptyColor=a.getColor(R.styleable.PercentageBarChart_emptyColor,Color.BLACK);
+  a.recycle();
+  mEmptyPaint.setColor(emptyColor);
+  mEmptyPaint.setStyle(Paint.Style.FILL);
 }

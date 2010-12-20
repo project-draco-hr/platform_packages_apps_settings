@@ -1,0 +1,48 @@
+{
+  String status=Environment.getExternalStorageState();
+  String readOnly="";
+  if (status.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+    status=Environment.MEDIA_MOUNTED;
+    readOnly=mRes.getString(R.string.read_only);
+  }
+  if (status.equals(Environment.MEDIA_MOUNTED)) {
+    if (!Environment.isExternalStorageRemovable()) {
+      if (mSdMountToggleAdded) {
+        mSdMountPreferenceGroup.removePreference(mSdMountToggle);
+        mSdMountToggleAdded=false;
+      }
+    }
+    try {
+      mSdSize.setSummary(formatSize(totalSize));
+      mSdAvail.setSummary(formatSize(availSize) + readOnly);
+      mSdMountToggle.setEnabled(true);
+      mSdMountToggle.setTitle(mRes.getString(R.string.sd_eject));
+      mSdMountToggle.setSummary(mRes.getString(R.string.sd_eject_summary));
+    }
+ catch (    IllegalArgumentException e) {
+      status=Environment.MEDIA_REMOVED;
+    }
+  }
+ else {
+    mSdSize.setSummary(mRes.getString(R.string.sd_unavailable));
+    mSdAvail.setSummary(mRes.getString(R.string.sd_unavailable));
+    if (!Environment.isExternalStorageRemovable()) {
+      if (status.equals(Environment.MEDIA_UNMOUNTED)) {
+        if (!mSdMountToggleAdded) {
+          mSdMountPreferenceGroup.addPreference(mSdMountToggle);
+          mSdMountToggleAdded=true;
+        }
+      }
+    }
+    if (status.equals(Environment.MEDIA_UNMOUNTED) || status.equals(Environment.MEDIA_NOFS) || status.equals(Environment.MEDIA_UNMOUNTABLE)) {
+      mSdMountToggle.setEnabled(true);
+      mSdMountToggle.setTitle(mRes.getString(R.string.sd_mount));
+      mSdMountToggle.setSummary(mRes.getString(R.string.sd_mount_summary));
+    }
+ else {
+      mSdMountToggle.setEnabled(false);
+      mSdMountToggle.setTitle(mRes.getString(R.string.sd_mount));
+      mSdMountToggle.setSummary(mRes.getString(R.string.sd_insert_summary));
+    }
+  }
+}

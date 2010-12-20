@@ -1,0 +1,29 @@
+{
+  Context context=mContext != null ? mContext.get() : null;
+  if (context == null) {
+    return;
+  }
+  PackageManager pm=context.getPackageManager();
+  if (pm == null) {
+    return;
+  }
+  long mediaSize;
+  try {
+    mediaSize=imcs.calculateDirectorySize("/data/media");
+  }
+ catch (  Exception e) {
+    Log.i(TAG,"Could not read memory from default container service");
+    return;
+  }
+  mInternalMediaSize=mediaSize;
+  final List<ApplicationInfo> apps=pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
+  if (apps != null) {
+synchronized (mPendingApps) {
+      for (int i=0; i < apps.size(); i++) {
+        final ApplicationInfo info=apps.get(i);
+        queuePackageMeasurementLocked(info.packageName);
+      }
+      requestQueuedMeasurementsLocked(pm);
+    }
+  }
+}

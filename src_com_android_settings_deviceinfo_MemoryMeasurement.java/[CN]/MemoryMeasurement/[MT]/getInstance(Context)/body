@@ -1,0 +1,10 @@
+{
+  if (sInstance == null) {
+synchronized (MemoryMeasurement.class) {
+      if (sInstance == null) {
+        sInstance=new MemoryMeasurement(context.getApplicationContext());
+      }
+    }
+  }
+  return sInstance;
+}

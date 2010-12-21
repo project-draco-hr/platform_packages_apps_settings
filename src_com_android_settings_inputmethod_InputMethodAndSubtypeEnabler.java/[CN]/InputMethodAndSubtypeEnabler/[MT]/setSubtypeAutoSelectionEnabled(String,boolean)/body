@@ -1,0 +1,16 @@
+{
+  mSubtypeAutoSelectionCBMap.get(imiId).setChecked(autoSelectionEnabled);
+  final List<Preference> subtypePrefs=mInputMethodAndSubtypePrefsMap.get(imiId);
+  for (  Preference subtypePref : subtypePrefs) {
+    if (subtypePref instanceof CheckBoxPreference) {
+      subtypePref.setEnabled(!autoSelectionEnabled);
+      if (autoSelectionEnabled) {
+        ((CheckBoxPreference)subtypePref).setChecked(false);
+      }
+    }
+  }
+  if (autoSelectionEnabled) {
+    InputMethodAndSubtypeUtil.saveInputMethodSubtypeList(this,getContentResolver(),mInputMethodProperties,mHaveHardKeyboard);
+    setCheckedImplicitlyEnabledSubtypes(imiId);
+  }
+}

@@ -1,6 +1,12 @@
 {
   if (preference instanceof CheckBoxPreference) {
     final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
+    for (    String imiId : mSubtypeAutoSelectionCBMap.keySet()) {
+      if (mSubtypeAutoSelectionCBMap.get(imiId) == chkPref) {
+        setSubtypeAutoSelectionEnabled(imiId,chkPref.isChecked());
+        return super.onPreferenceTreeClick(preferenceScreen,preference);
+      }
+    }
     final String id=chkPref.getKey();
     if (chkPref.isChecked()) {
       InputMethodInfo selImi=null;

@@ -1,0 +1,18 @@
+{
+  final InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+  final PackageManager pm=getPackageManager();
+  for (  InputMethodInfo imi : mActiveInputMethodsPrefMap.keySet()) {
+    Preference pref=mActiveInputMethodsPrefMap.get(imi);
+    List<InputMethodSubtype> subtypes=imm.getEnabledInputMethodSubtypeList(imi,true);
+    StringBuilder summary=new StringBuilder();
+    boolean subtypeAdded=false;
+    for (    InputMethodSubtype subtype : subtypes) {
+      if (subtypeAdded) {
+        summary.append(", ");
+      }
+      summary.append(pm.getText(imi.getPackageName(),subtype.getNameResId(),imi.getServiceInfo().applicationInfo));
+      subtypeAdded=true;
+    }
+    pref.setSummary(summary.toString());
+  }
+}

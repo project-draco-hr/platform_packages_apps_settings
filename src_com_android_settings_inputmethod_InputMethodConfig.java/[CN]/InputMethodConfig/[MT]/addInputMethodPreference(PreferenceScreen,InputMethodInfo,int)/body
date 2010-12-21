@@ -23,6 +23,7 @@
     intent.putExtra(InputMethodAndSubtypeEnabler.EXTRA_INPUT_METHOD_ID,imiId);
     prefScreen.setIntent(intent);
     keyboardSettingsCategory.addPreference(prefScreen);
+    mActiveInputMethodsPrefMap.put(imi,prefScreen);
     mInputMethodPrefsMap.get(imiId).add(prefScreen);
   }
   String settingsActivity=imi.getSettingsActivity();

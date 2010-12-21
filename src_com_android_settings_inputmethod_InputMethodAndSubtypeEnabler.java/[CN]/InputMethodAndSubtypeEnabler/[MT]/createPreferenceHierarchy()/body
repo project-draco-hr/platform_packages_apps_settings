@@ -4,7 +4,7 @@
   for (int i=0; i < N; ++i) {
     final InputMethodInfo imi=mInputMethodProperties.get(i);
     if (imi.getSubtypes().size() <= 1)     continue;
-    String imiId=imi.getId();
+    final String imiId=imi.getId();
     if (!TextUtils.isEmpty(mInputMethodId) && !mInputMethodId.equals(imiId)) {
       continue;
     }
@@ -12,8 +12,15 @@
     root.addPreference(keyboardSettingsCategory);
     PackageManager pm=getPackageManager();
     CharSequence label=imi.loadLabel(pm);
-    keyboardSettingsCategory.setTitle(getResources().getString(R.string.input_methods_and_subtype_enabler_title_format,label));
+    keyboardSettingsCategory.setTitle(label);
     keyboardSettingsCategory.setKey(imiId);
+    CheckBoxPreference autoCB=new CheckBoxPreference(getActivity());
+    autoCB.setTitle(R.string.use_system_language_to_select_input_method_subtypes);
+    mSubtypeAutoSelectionCBMap.put(imiId,autoCB);
+    keyboardSettingsCategory.addPreference(autoCB);
+    PreferenceCategory activeInputMethodsCategory=new PreferenceCategory(getActivity());
+    activeInputMethodsCategory.setTitle(R.string.active_input_method_subtypes);
+    root.addPreference(activeInputMethodsCategory);
     ArrayList<InputMethodSubtype> subtypes=imi.getSubtypes();
     ArrayList<Preference> subtypePreferences=new ArrayList<Preference>();
     if (subtypes.size() > 0) {
@@ -31,10 +38,10 @@
         CheckBoxPreference chkbxPref=new CheckBoxPreference(getActivity());
         chkbxPref.setKey(imiId + subtype.hashCode());
         chkbxPref.setTitle(subtypeLabel);
-        keyboardSettingsCategory.addPreference(chkbxPref);
+        activeInputMethodsCategory.addPreference(chkbxPref);
         subtypePreferences.add(chkbxPref);
       }
-      mInputMethodPrefsMap.put(imiId,subtypePreferences);
+      mInputMethodAndSubtypePrefsMap.put(imiId,subtypePreferences);
     }
   }
   return root;

@@ -3,7 +3,6 @@
   final Activity activity=getActivity();
   final Intent intent=activity.getIntent();
   mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
-  mInXlSetupWizard=intent.getBooleanExtra(IN_XL_SETUP_WIZARD,false);
   if (mEnableNextOnConnection) {
     if (mEnableNextOnConnection && hasNextButton()) {
       final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);

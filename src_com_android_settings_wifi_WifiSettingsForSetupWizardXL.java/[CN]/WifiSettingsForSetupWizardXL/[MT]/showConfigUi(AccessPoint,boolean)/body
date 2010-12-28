@@ -19,14 +19,14 @@
   }
  else   if (selectedAccessPoint != null && selectedAccessPoint.security == AccessPoint.SECURITY_EAP) {
     mStatusText.setText(R.string.wifi_setup_status_eap_not_supported);
+    mConnectButton.setVisibility(View.GONE);
   }
  else {
-    mStatusText.setText(R.string.wifi_setup_status_edit_network);
+    mStatusText.setVisibility(View.GONE);
+    mConnectButton.setVisibility(View.VISIBLE);
   }
   mAddNetworkButton.setVisibility(View.GONE);
   mRefreshButton.setVisibility(View.GONE);
   mSkipOrNextButton.setVisibility(View.GONE);
-  mConnectButton.setVisibility(View.VISIBLE);
-  mConnectButton.setVisibility(View.VISIBLE);
   mBackButton.setVisibility(View.VISIBLE);
 }

@@ -1,10 +1,3 @@
 {
-  final String[] from=new String[]{KEY_DISPLAYNAME,KEY_GMT};
-  final int[] to=new int[]{android.R.id.text1,android.R.id.text2};
-  final String sortKey=(sortedByName ? KEY_DISPLAYNAME : KEY_OFFSET);
-  final MyComparator comparator=new MyComparator(sortKey);
-  final List<HashMap<String,Object>> sortedList=getZones(context);
-  Collections.sort(sortedList,comparator);
-  final SimpleAdapter adapter=new SimpleAdapter(context,sortedList,android.R.layout.simple_list_item_2,from,to);
-  return adapter;
+  return constructTimezoneAdapter(context,sortedByName,android.R.layout.simple_list_item_2);
 }

@@ -1,0 +1,15 @@
+{
+  int protocolIndex=mProtocol.findIndexOfValue(raw);
+  if (protocolIndex == -1) {
+    return null;
+  }
+ else {
+    String[] values=mRes.getStringArray(R.array.apn_protocol_entries);
+    try {
+      return values[protocolIndex];
+    }
+ catch (    ArrayIndexOutOfBoundsException e) {
+      return null;
+    }
+  }
+}

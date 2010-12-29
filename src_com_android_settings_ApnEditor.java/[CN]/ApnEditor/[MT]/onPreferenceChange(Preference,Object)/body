@@ -10,6 +10,15 @@
  catch (    NumberFormatException e) {
       return false;
     }
+    return true;
+  }
+  if (KEY_PROTOCOL.equals(key)) {
+    String protocol=protocolDescription((String)newValue);
+    if (protocol == null) {
+      return false;
+    }
+    mProtocol.setSummary(protocol);
+    mProtocol.setValue((String)newValue);
   }
   return true;
 }

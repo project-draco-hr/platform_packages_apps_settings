@@ -1,0 +1,10 @@
+{
+  if (mRestoredOldState)   return;
+  if (mAutomaticAvailable) {
+    setMode(mOldAutomatic);
+  }
+  if (!mAutomaticAvailable || mOldAutomatic == 0) {
+    setBrightness(mOldBrightness);
+  }
+  mRestoredOldState=true;
+}

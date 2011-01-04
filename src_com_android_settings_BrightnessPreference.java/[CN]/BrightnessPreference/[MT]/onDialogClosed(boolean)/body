@@ -4,11 +4,6 @@
     Settings.System.putInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS,mSeekBar.getProgress() + MINIMUM_BACKLIGHT);
   }
  else {
-    if (mAutomaticAvailable) {
-      setMode(mOldAutomatic);
-    }
-    if (!mAutomaticAvailable || mOldAutomatic == 0) {
-      setBrightness(mOldBrightness);
-    }
+    restoreOldState();
   }
 }

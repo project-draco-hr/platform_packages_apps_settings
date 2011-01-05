@@ -4,6 +4,7 @@
   intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
   intentFilter.addDataScheme("file");
   getActivity().registerReceiver(mReceiver,intentFilter);
+  mMeasurement.invalidate();
   if (!Environment.isExternalStorageEmulated()) {
     mMeasurement.measureExternal();
   }

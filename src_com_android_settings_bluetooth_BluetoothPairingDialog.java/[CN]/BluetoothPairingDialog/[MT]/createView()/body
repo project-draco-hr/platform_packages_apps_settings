@@ -15,15 +15,15 @@
   }
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_PASSKEY_CONFIRMATION) {
     mPairingView.setVisibility(View.GONE);
-    messageView.setText(getString(R.string.bluetooth_confirm_passkey_msg,name,mPasskey));
+    messageView.setText(getString(R.string.bluetooth_confirm_passkey_msg,name,mPairingKey));
   }
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_CONSENT) {
     mPairingView.setVisibility(View.GONE);
     messageView.setText(getString(R.string.bluetooth_incoming_pairing_msg,name));
   }
- else   if (mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY) {
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY || mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PIN) {
     mPairingView.setVisibility(View.GONE);
-    messageView.setText(getString(R.string.bluetooth_display_passkey_msg,name,mPasskey));
+    messageView.setText(getString(R.string.bluetooth_display_passkey_pin_msg,name,mPairingKey));
   }
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_OOB_CONSENT) {
     mPairingView.setVisibility(View.GONE);

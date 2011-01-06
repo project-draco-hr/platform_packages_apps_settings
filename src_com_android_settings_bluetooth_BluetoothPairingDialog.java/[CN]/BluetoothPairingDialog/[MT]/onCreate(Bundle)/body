@@ -15,25 +15,30 @@
     createUserEntryDialog();
   }
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_PASSKEY_CONFIRMATION) {
-    int passkey=intent.getIntExtra(BluetoothDevice.EXTRA_PASSKEY,BluetoothDevice.ERROR);
+    int passkey=intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_KEY,BluetoothDevice.ERROR);
     if (passkey == BluetoothDevice.ERROR) {
       Log.e(TAG,"Invalid ConfirmationPasskey received, not showing any dialog");
       return;
     }
-    mPasskey=String.format("%06d",passkey);
+    mPairingKey=String.format("%06d",passkey);
     createConfirmationDialog();
   }
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_CONSENT) {
     createConsentDialog();
   }
- else   if (mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY) {
-    int passkey=intent.getIntExtra(BluetoothDevice.EXTRA_PASSKEY,BluetoothDevice.ERROR);
-    if (passkey == BluetoothDevice.ERROR) {
-      Log.e(TAG,"Invalid ConfirmationPasskey received, not showing any dialog");
+ else   if (mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY || mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PIN) {
+    int pairingKey=intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_KEY,BluetoothDevice.ERROR);
+    if (pairingKey == BluetoothDevice.ERROR) {
+      Log.e(TAG,"Invalid Confirmation Passkey or PIN received, not showing any dialog");
       return;
     }
-    mPasskey=String.format("%06d",passkey);
-    createDisplayPasskeyDialog();
+    if (mType == BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY) {
+      mPairingKey=String.format("%06d",pairingKey);
+    }
+ else {
+      mPairingKey=String.format("%04d",pairingKey);
+    }
+    createDisplayPasskeyOrPinDialog();
   }
  else   if (mType == BluetoothDevice.PAIRING_VARIANT_OOB_CONSENT) {
     createConsentDialog();

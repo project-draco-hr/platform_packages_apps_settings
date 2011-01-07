@@ -1,0 +1,12 @@
+{
+  TextView view=(TextView)dialog.findViewById(R.id.error);
+  if (view != null) {
+    if (formatArgs == null || formatArgs.length == 0) {
+      view.setText(stringId);
+    }
+ else {
+      view.setText(dialog.getContext().getString(stringId,formatArgs));
+    }
+    view.setVisibility(View.VISIBLE);
+  }
+}

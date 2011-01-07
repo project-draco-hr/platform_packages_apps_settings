@@ -22,6 +22,7 @@
     mUseLocation=useLocation;
   }
   PreferenceManager pm=getPreferenceManager();
+  addPreferencesFromResource(R.xml.security_settings_encryption);
   int resid=0;
   if (!mLockPatternUtils.isSecure()) {
     if (mLockPatternUtils.isLockScreenDisabled()) {

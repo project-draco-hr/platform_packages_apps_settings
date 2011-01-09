@@ -1,0 +1,17 @@
+{
+  final View viewToBeFocused=mView.findViewById(editViewId);
+  if (viewToBeFocused == null) {
+    Log.w(TAG,"password field to be focused not found.");
+  }
+ else   if (!(viewToBeFocused instanceof EditText)) {
+    Log.w(TAG,"password field is not EditText");
+  }
+ else {
+    viewToBeFocused.setOnFocusChangeListener(this);
+    final boolean requestFocusResult=viewToBeFocused.requestFocus();
+    Log.i(TAG,String.format("Focus request  %s.",(requestFocusResult ? "successful" : "failed")));
+    if (!requestFocusResult) {
+      viewToBeFocused.setOnFocusChangeListener(null);
+    }
+  }
+}

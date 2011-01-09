@@ -7,8 +7,10 @@
   mAnimations.setOnPreferenceChangeListener(this);
   mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
   mAccelerometer.setPersistent(false);
-  ListPreference screenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
-  screenTimeoutPreference.setValue(String.valueOf(Settings.System.getInt(resolver,SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE)));
-  screenTimeoutPreference.setOnPreferenceChangeListener(this);
-  disableUnusableTimeouts(screenTimeoutPreference);
+  mScreenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
+  final long currentTimeout=Settings.System.getLong(resolver,SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE);
+  mScreenTimeoutPreference.setValue(String.valueOf(currentTimeout));
+  mScreenTimeoutPreference.setOnPreferenceChangeListener(this);
+  disableUnusableTimeouts(mScreenTimeoutPreference);
+  updateTimeoutPreferenceDescription(resolver,currentTimeout);
 }

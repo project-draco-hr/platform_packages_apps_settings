@@ -15,12 +15,8 @@
   mBackup.setChecked(backupEnabled);
   mAutoRestore.setChecked(Settings.Secure.getInt(res,Settings.Secure.BACKUP_AUTO_RESTORE,1) == 1);
   mAutoRestore.setEnabled(backupEnabled);
-  mConfigure.setEnabled(configIntent != null);
+  final boolean configureEnabled=(configIntent != null) && backupEnabled;
+  mConfigure.setEnabled(configureEnabled);
   mConfigure.setIntent(configIntent);
-  if (configSummary != null) {
-    mConfigure.setSummary(configSummary);
-  }
- else {
-    mConfigure.setSummary(R.string.backup_configure_account_default_summary);
-  }
+  setConfigureSummary(configSummary);
 }

@@ -5,7 +5,6 @@
     if (profile.isAutoConnectable()) {
       LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile);
       profileManager.setPreferred(mDevice,true);
-      disconnectConnected(this,profile);
       connectInt(this,profile);
     }
   }

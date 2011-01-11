@@ -49,6 +49,7 @@ break;
 }
 addPreferencesFromResource(resid);
 mLockAfter=setupLockAfterPreference(pm);
+updateLockAfterPreferenceSummary();
 mVisiblePattern=(CheckBoxPreference)pm.findPreference(KEY_VISIBLE_PATTERN);
 mTactileFeedback=(CheckBoxPreference)pm.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
 if (!((Vibrator)getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator()) {

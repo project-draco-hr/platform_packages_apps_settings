@@ -7,6 +7,7 @@
  catch (    NumberFormatException e) {
       Log.e("SecuritySettings","could not persist lockAfter timeout setting",e);
     }
+    updateLockAfterPreferenceSummary();
   }
  else   if (preference == mUseLocation) {
     boolean newValue=value == null ? false : (Boolean)value;

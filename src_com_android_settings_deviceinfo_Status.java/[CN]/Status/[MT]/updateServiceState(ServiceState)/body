@@ -13,12 +13,12 @@ case ServiceState.STATE_POWER_OFF:
 display=mRes.getString(R.string.radioInfo_service_off);
 break;
 }
-setSummaryText("service_state",display);
+setSummaryText(KEY_SERVICE_STATE,display);
 if (serviceState.getRoaming()) {
-setSummaryText("roaming_state",mRes.getString(R.string.radioInfo_roaming_in));
+setSummaryText(KEY_ROAMING_STATE,mRes.getString(R.string.radioInfo_roaming_in));
 }
  else {
-setSummaryText("roaming_state",mRes.getString(R.string.radioInfo_roaming_not));
+setSummaryText(KEY_ROAMING_STATE,mRes.getString(R.string.radioInfo_roaming_not));
 }
-setSummaryText("operator_name",serviceState.getOperatorAlphaLong());
+setSummaryText(KEY_OPERATOR_NAME,serviceState.getOperatorAlphaLong());
 }

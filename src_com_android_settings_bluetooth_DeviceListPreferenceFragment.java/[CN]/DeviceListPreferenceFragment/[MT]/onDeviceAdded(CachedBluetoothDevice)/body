@@ -1,0 +1,9 @@
+{
+  if (mDevicePreferenceMap.get(cachedDevice) != null) {
+    Log.e(TAG,"Got onDeviceAdded, but cachedDevice already exists");
+    return;
+  }
+  if (addDevicePreference(cachedDevice)) {
+    createDevicePreference(cachedDevice);
+  }
+}

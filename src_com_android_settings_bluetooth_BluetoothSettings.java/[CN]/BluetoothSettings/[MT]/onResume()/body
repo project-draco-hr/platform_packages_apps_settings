@@ -1,23 +1,7 @@
 {
   super.onResume();
-  mDevicePreferenceMap.clear();
-  mDeviceList.removeAll();
-  if (mScreenType != SCREEN_TYPE_SCAN) {
-    addDevices();
-  }
-  if (mScreenType == SCREEN_TYPE_SETTINGS) {
-    mEnabler.resume();
-    mDiscoverableEnabler.resume();
-    mNamePreference.resume();
-  }
-  mLocalManager.registerCallback(this);
-  updateProgressUi(mLocalManager.getBluetoothAdapter().isDiscovering());
-  if (mScreenType != SCREEN_TYPE_SETTINGS) {
-    mLocalManager.startScanning(true);
-  }
-  IntentFilter intentFilter=new IntentFilter();
-  intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-  intentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-  getActivity().registerReceiver(mReceiver,intentFilter);
-  mLocalManager.setForegroundActivity(getActivity());
+  addDevices();
+  mEnabler.resume();
+  mDiscoverableEnabler.resume();
+  mNamePreference.resume();
 }

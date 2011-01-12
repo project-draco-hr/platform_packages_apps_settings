@@ -3,9 +3,22 @@
   mWifiSettings.submit(mWifiConfig.getController());
   showConnectingStatus();
   mBackButton.setVisibility(View.VISIBLE);
-  findViewById(R.id.wps_fields).setVisibility(View.GONE);
-  findViewById(R.id.security_fields).setVisibility(View.GONE);
-  findViewById(R.id.type).setVisibility(View.GONE);
+  final View wpsFieldView=findViewById(R.id.wps_fields);
+  if (wpsFieldView != null) {
+    mPreviousWpsFieldsVisibility=wpsFieldView.getVisibility();
+    wpsFieldView.setVisibility(View.GONE);
+  }
+  final View securityFieldsView=findViewById(R.id.security_fields);
+  if (securityFieldsView != null) {
+    mPreviousSecurityFieldsVisibility=securityFieldsView.getVisibility();
+    securityFieldsView.setVisibility(View.GONE);
+  }
+  final View typeView=findViewById(R.id.type);
+  if (typeView != null) {
+    mPreviousTypeVisibility=typeView.getVisibility();
+    typeView.setVisibility(View.GONE);
+  }
+  mHandler.removeCallbacks(mSkipButtonEnabler);
   mSkipOrNextButton.setVisibility(View.VISIBLE);
   mSkipOrNextButton.setEnabled(false);
   mConnectButton.setVisibility(View.GONE);

@@ -1,0 +1,31 @@
+{
+  mAfterConnectAction=false;
+  mStatusText.setText(R.string.wifi_setup_status_edit_network);
+  mSkipOrNextButton.setVisibility(View.GONE);
+  mConnectButton.setVisibility(View.VISIBLE);
+  mConnectButton.setEnabled(true);
+  final View wpsFieldView=findViewById(R.id.wps_fields);
+  if (wpsFieldView != null) {
+    wpsFieldView.setVisibility(mPreviousWpsFieldsVisibility);
+  }
+  final View securityFieldsView=findViewById(R.id.security_fields);
+  if (securityFieldsView != null) {
+    securityFieldsView.setVisibility(mPreviousSecurityFieldsVisibility);
+    if (mPreviousSecurityFieldsVisibility == View.VISIBLE && mWifiConfig != null) {
+      final View passwordView=findViewById(R.id.password);
+      if (passwordView != null) {
+        if (passwordView.isFocused()) {
+          final InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+          inputMethodManager.showSoftInput(passwordView,0);
+        }
+ else {
+          mWifiConfig.requestFocusAndShowKeyboard(R.id.password);
+        }
+      }
+    }
+  }
+  final View typeView=findViewById(R.id.type);
+  if (typeView != null) {
+    typeView.setVisibility(mPreviousTypeVisibility);
+  }
+}

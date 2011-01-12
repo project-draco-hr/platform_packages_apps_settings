@@ -1,4 +1,7 @@
 {
+  if (selectedAccessPoint != null && (selectedAccessPoint.security == AccessPoint.SECURITY_WEP || selectedAccessPoint.security == AccessPoint.SECURITY_PSK)) {
+    edit=true;
+  }
   mWifiSettings.pauseWifiScan();
   findViewById(R.id.wifi_setup).setVisibility(View.GONE);
   final ViewGroup parent=(ViewGroup)findViewById(R.id.wifi_config_ui);
@@ -22,9 +25,10 @@
     mConnectButton.setVisibility(View.GONE);
   }
  else {
-    mStatusText.setVisibility(View.GONE);
+    mStatusText.setText(R.string.wifi_setup_status_edit_network);
     mConnectButton.setVisibility(View.VISIBLE);
   }
+  mConnectButton.setText(R.string.wifi_connect);
   mAddNetworkButton.setVisibility(View.GONE);
   mRefreshButton.setVisibility(View.GONE);
   mSkipOrNextButton.setVisibility(View.GONE);

@@ -17,12 +17,12 @@ mWifiManager.connectNetwork(mSelectedAccessPoint.networkId);
 }
  else if (config.networkId != INVALID_NETWORK_ID) {
 if (mSelectedAccessPoint != null) {
-mWifiManager.saveNetwork(config);
+saveNetwork(config);
 }
 }
  else {
 if (configController.isEdit() || requireKeyStore(config)) {
-mWifiManager.saveNetwork(config);
+saveNetwork(config);
 }
  else {
 mWifiManager.connectNetwork(config);

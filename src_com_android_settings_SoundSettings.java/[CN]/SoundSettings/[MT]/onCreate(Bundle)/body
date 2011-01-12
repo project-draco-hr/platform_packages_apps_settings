@@ -8,6 +8,10 @@
     getPreferenceScreen().removePreference(findPreference(KEY_EMERGENCY_TONE));
   }
   mSilent=(CheckBoxPreference)findPreference(KEY_SILENT);
+  if (!getResources().getBoolean(R.bool.has_silent_mode)) {
+    getPreferenceScreen().removePreference(mSilent);
+    findPreference(KEY_RING_VOLUME).setDependency(null);
+  }
   mVibrate=(ListPreference)findPreference(KEY_VIBRATE);
   mVibrate.setOnPreferenceChangeListener(this);
   mDtmfTone=(CheckBoxPreference)findPreference(KEY_DTMF_TONE);

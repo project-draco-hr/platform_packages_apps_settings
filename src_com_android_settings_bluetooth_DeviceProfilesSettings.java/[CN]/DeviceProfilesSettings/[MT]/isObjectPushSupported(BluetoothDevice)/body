@@ -1,0 +1,5 @@
+{
+  ParcelUuid[] uuids=device.getUuids();
+  BluetoothClass bluetoothClass=device.getBluetoothClass();
+  return (uuids != null && BluetoothUuid.containsAnyUuid(uuids,LocalBluetoothProfileManager.OPP_PROFILE_UUIDS)) || (bluetoothClass != null && bluetoothClass.doesClassMatch(BluetoothClass.PROFILE_OPP));
+}

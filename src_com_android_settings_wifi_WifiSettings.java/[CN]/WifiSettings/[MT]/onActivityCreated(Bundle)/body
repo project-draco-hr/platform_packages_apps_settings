@@ -5,7 +5,7 @@
   mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
   if (getPreferenceScreen() == null || getPreferenceScreen().getPreferenceCount() < 2) {
     if (mEnableNextOnConnection) {
-      if (mEnableNextOnConnection && hasNextButton()) {
+      if (hasNextButton()) {
         final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
           NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);

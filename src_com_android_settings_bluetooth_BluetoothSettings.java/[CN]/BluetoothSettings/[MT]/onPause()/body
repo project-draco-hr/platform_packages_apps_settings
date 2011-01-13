@@ -1,13 +1,6 @@
 {
   super.onPause();
-  mLocalManager.setForegroundActivity(null);
-  mDevicePreferenceMap.clear();
-  mDeviceList.removeAll();
-  getActivity().unregisterReceiver(mReceiver);
-  mLocalManager.unregisterCallback(this);
-  if (mScreenType == SCREEN_TYPE_SETTINGS) {
-    mNamePreference.pause();
-    mDiscoverableEnabler.pause();
-    mEnabler.pause();
-  }
+  mNamePreference.pause();
+  mDiscoverableEnabler.pause();
+  mEnabler.pause();
 }

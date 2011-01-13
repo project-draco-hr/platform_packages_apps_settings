@@ -1,0 +1,14 @@
+{
+  if (KEY_BT_SCAN.equals(preference.getKey())) {
+    mLocalManager.startScanning(true);
+    return true;
+  }
+  if (preference instanceof BluetoothDevicePreference) {
+    BluetoothDevicePreference btPreference=(BluetoothDevicePreference)preference;
+    CachedBluetoothDevice device=btPreference.getCachedDevice();
+    mSelectedDevice=device.getDevice();
+    onDevicePreferenceClick(btPreference);
+    return true;
+  }
+  return super.onPreferenceTreeClick(preferenceScreen,preference);
+}

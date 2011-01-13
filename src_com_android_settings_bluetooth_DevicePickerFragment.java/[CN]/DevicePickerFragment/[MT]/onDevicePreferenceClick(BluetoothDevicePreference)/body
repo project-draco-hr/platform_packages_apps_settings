@@ -1,0 +1,11 @@
+{
+  mLocalManager.stopScanning();
+  mLocalManager.persistSelectedDeviceInPicker(mSelectedDevice.getAddress());
+  if ((btPreference.getCachedDevice().getBondState() == BluetoothDevice.BOND_BONDED) || !mNeedAuth) {
+    sendDevicePickedIntent(mSelectedDevice);
+    finish();
+  }
+ else {
+    super.onDevicePreferenceClick(btPreference);
+  }
+}

@@ -1,7 +1,12 @@
 {
-  if (mDevicePreferenceMap.get(cachedDevice) == null && mScreenType == SCREEN_TYPE_SETTINGS && bondState == BluetoothDevice.BOND_BONDED) {
-    if (addDevicePreference(cachedDevice)) {
-      createDevicePreference(cachedDevice);
+  if (bondState == BluetoothDevice.BOND_BONDED) {
+    if (mDevicePreferenceMap.get(cachedDevice) == null) {
+      if (addDevicePreference(cachedDevice)) {
+        createDevicePreference(cachedDevice);
+      }
     }
+  }
+ else   if (bondState == BluetoothDevice.BOND_NONE) {
+    onDeviceDeleted(cachedDevice);
   }
 }

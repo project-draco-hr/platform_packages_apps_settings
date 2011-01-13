@@ -1,0 +1,17 @@
+{
+  if (actionId == EditorInfo.IME_NULL) {
+    String password=v.getText().toString();
+    v.setText(null);
+    IMountService service=getMountService();
+    try {
+      service.decryptStorage(password);
+      TextView tv=(TextView)findViewById(R.id.status);
+      tv.setText(R.string.try_again);
+    }
+ catch (    Exception e) {
+      Log.e("CryptKeeper","Error while decrypting...",e);
+    }
+    return true;
+  }
+  return false;
+}

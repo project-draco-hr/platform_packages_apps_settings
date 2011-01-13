@@ -7,11 +7,16 @@
     Log.w(TAG,"password field is not EditText");
   }
  else {
-    viewToBeFocused.setOnFocusChangeListener(this);
-    final boolean requestFocusResult=viewToBeFocused.requestFocus();
-    Log.i(TAG,String.format("Focus request  %s.",(requestFocusResult ? "successful" : "failed")));
-    if (!requestFocusResult) {
-      viewToBeFocused.setOnFocusChangeListener(null);
+    if (viewToBeFocused.isFocused()) {
+      mInputMethodManager.showSoftInput(viewToBeFocused,0);
+    }
+ else {
+      viewToBeFocused.setOnFocusChangeListener(this);
+      final boolean requestFocusResult=viewToBeFocused.requestFocus();
+      Log.i(TAG,String.format("Focus request  %s.",(requestFocusResult ? "successful" : "failed")));
+      if (!requestFocusResult) {
+        viewToBeFocused.setOnFocusChangeListener(null);
+      }
     }
   }
 }

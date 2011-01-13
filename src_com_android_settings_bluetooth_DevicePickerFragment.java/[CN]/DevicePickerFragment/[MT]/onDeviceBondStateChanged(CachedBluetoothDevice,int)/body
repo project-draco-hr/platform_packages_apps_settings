@@ -1,0 +1,9 @@
+{
+  if (bondState == BluetoothDevice.BOND_BONDED) {
+    BluetoothDevice device=cachedDevice.getDevice();
+    if (device.equals(mSelectedDevice)) {
+      sendDevicePickedIntent(device);
+      finish();
+    }
+  }
+}

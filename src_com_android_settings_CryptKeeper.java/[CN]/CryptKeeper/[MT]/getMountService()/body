@@ -1,0 +1,7 @@
+{
+  IBinder service=ServiceManager.getService("mount");
+  if (service != null) {
+    return IMountService.Stub.asInterface(service);
+  }
+  return null;
+}

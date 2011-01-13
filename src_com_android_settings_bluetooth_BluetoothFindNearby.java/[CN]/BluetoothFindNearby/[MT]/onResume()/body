@@ -1,0 +1,11 @@
+{
+  super.onResume();
+  if (mSelectedDevice != null) {
+    CachedBluetoothDevice device=mLocalManager.getCachedDeviceManager().findDevice(mSelectedDevice);
+    if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+      finish();
+      return;
+    }
+  }
+  mLocalManager.startScanning(true);
+}

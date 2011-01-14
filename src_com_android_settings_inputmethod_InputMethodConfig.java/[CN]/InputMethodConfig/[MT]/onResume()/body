@@ -1,5 +1,12 @@
 {
   super.onResume();
-  InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,getContentResolver(),mInputMethodProperties,mInputMethodPrefsMap);
+  ContentResolver resolver=getContentResolver();
+  if (mHaveHardKeyboard) {
+    for (int i=0; i < sHardKeyboardKeys.length; ++i) {
+      CheckBoxPreference chkPref=(CheckBoxPreference)mHardKeyboardCategory.findPreference(sHardKeyboardKeys[i]);
+      chkPref.setChecked(System.getInt(resolver,sSystemSettingNames[i],1) > 0);
+    }
+  }
+  InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,resolver,mInputMethodProperties,mInputMethodPrefsMap);
   updateActiveInputMethodsSummary();
 }

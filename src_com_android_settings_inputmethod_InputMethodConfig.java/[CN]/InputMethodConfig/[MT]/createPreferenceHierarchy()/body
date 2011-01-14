@@ -1,7 +1,11 @@
 {
-  PreferenceScreen root=getPreferenceManager().createPreferenceScreen(getActivity());
+  addPreferencesFromResource(R.xml.hard_keyboard_settings);
+  PreferenceScreen root=getPreferenceScreen();
   if (mHaveHardKeyboard) {
-    addHardKeyboardPreference(root);
+    mHardKeyboardCategory=(PreferenceCategory)findPreference("hard_keyboard");
+  }
+ else {
+    root.removeAll();
   }
   final int N=(mInputMethodProperties == null ? 0 : mInputMethodProperties.size());
   for (int i=0; i < N; ++i) {

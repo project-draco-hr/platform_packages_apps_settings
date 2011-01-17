@@ -8,7 +8,6 @@ case SCANNING:
 {
       if (mWifiSettings.getAccessPointsCount() == 0) {
         mProgressBar.setIndeterminate(true);
-        mProgressText.setText(Summary.get(this,DetailedState.SCANNING));
       }
  else {
         mProgressBar.setIndeterminate(false);
@@ -22,11 +21,10 @@ case CONNECTING:
   }
 case CONNECTED:
 {
+  hideSoftwareKeyboard();
   mAfterConnectAction=true;
   mProgressBar.setIndeterminate(false);
   mProgressBar.setProgress(2);
-  mProgressText.setText(Summary.get(this,state));
-  mStatusText.setText(R.string.wifi_setup_status_proceed_to_next);
   mConnectButton.setVisibility(View.GONE);
   mAddNetworkButton.setVisibility(View.GONE);
   mRefreshButton.setVisibility(View.GONE);
@@ -34,7 +32,6 @@ case CONNECTED:
   mSkipOrNextButton.setVisibility(View.VISIBLE);
   mSkipOrNextButton.setEnabled(true);
   mHandler.removeCallbacks(mSkipButtonEnabler);
-  mProgressText.setText(Summary.get(this,state));
   break;
 }
 default :

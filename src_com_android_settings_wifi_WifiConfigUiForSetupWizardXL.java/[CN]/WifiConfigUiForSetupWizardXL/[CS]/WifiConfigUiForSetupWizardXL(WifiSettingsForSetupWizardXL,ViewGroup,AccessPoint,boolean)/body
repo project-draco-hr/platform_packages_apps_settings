@@ -1,14 +1,17 @@
 {
   mActivity=activity;
   mConnectButton=(Button)activity.findViewById(R.id.wifi_setup_connect);
-  mForgetButton=(Button)activity.findViewById(R.id.wifi_setup_forget);
   mCancelButton=(Button)activity.findViewById(R.id.wifi_setup_cancel);
   mAccessPoint=accessPoint;
   mEdit=edit;
   mInflater=(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   mView=mInflater.inflate(R.layout.wifi_config_ui_for_setup_wizard,parent,true);
   mController=new WifiConfigController(this,mView,mAccessPoint,edit);
+  mInputMethodManager=(InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
   if (mView.findViewById(R.id.security_fields).getVisibility() == View.VISIBLE) {
     requestFocusAndShowKeyboard(R.id.password);
+  }
+ else   if (mView.findViewById(R.id.type).getVisibility() == View.VISIBLE) {
+    requestFocusAndShowKeyboard(R.id.ssid);
   }
 }

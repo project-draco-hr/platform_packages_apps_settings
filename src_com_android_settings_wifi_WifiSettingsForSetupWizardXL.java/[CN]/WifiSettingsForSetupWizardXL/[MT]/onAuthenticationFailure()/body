@@ -1,9 +1,15 @@
 {
   mAfterConnectAction=false;
-  mStatusText.setText(R.string.wifi_setup_status_edit_network);
   mSkipOrNextButton.setVisibility(View.GONE);
   mConnectButton.setVisibility(View.VISIBLE);
   mConnectButton.setEnabled(true);
+  if (!TextUtils.isEmpty(mEditingTitle)) {
+    mTitleView.setText(mEditingTitle);
+  }
+ else {
+    Log.w(TAG,"Title during editing/adding a network was empty.");
+    showTitleForNetworkEditing();
+  }
   final View wpsFieldView=findViewById(R.id.wps_fields);
   if (wpsFieldView != null) {
     wpsFieldView.setVisibility(mPreviousWpsFieldsVisibility);
@@ -15,17 +21,23 @@
       final View passwordView=findViewById(R.id.password);
       if (passwordView != null) {
         if (passwordView.isFocused()) {
-          final InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-          inputMethodManager.showSoftInput(passwordView,0);
+          setPaddingVisibility(View.GONE);
         }
- else {
-          mWifiConfig.requestFocusAndShowKeyboard(R.id.password);
-        }
+        mWifiConfig.requestFocusAndShowKeyboard(R.id.password);
       }
     }
   }
   final View typeView=findViewById(R.id.type);
   if (typeView != null) {
     typeView.setVisibility(mPreviousTypeVisibility);
+    if (mPreviousTypeVisibility == View.VISIBLE && mWifiConfig != null) {
+      final View ssidView=findViewById(R.id.ssid);
+      if (ssidView != null) {
+        if (ssidView.isFocused()) {
+          setPaddingVisibility(View.GONE);
+        }
+        mWifiConfig.requestFocusAndShowKeyboard(R.id.ssid);
+      }
+    }
   }
 }

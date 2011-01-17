@@ -18,10 +18,11 @@
   mInternalMediaSize=mediaSize;
   final List<ApplicationInfo> apps=pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
   if (apps != null) {
-synchronized (mPendingApps) {
+    mStatsObserver=new StatsObserver();
+synchronized (mStatsObserver.mAppsList) {
       for (int i=0; i < apps.size(); i++) {
         final ApplicationInfo info=apps.get(i);
-        queuePackageMeasurementLocked(info.packageName);
+        mStatsObserver.queuePackageMeasurementLocked(info.packageName);
       }
       requestQueuedMeasurementsLocked(pm);
     }

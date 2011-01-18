@@ -1,5 +1,6 @@
 {
   super.onActivityCreated(savedInstanceState);
+  mVpnManager=new VpnManager(getActivity());
   VpnProfile p;
   if (savedInstanceState != null) {
     p=(VpnProfile)savedInstanceState.getParcelable(KEY_PROFILE);

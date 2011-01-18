@@ -90,9 +90,6 @@ devicePoliciesCat.addPreference(deviceAdminButton);
 PreferenceCategory credentialsCat=new PreferenceCategory(getActivity());
 credentialsCat.setTitle(R.string.credentials_category);
 root.addPreference(credentialsCat);
-mCredentialStorage.createPreferences(credentialsCat,CredentialStorage.TYPE_KEYSTORE);
-PreferenceCategory encryptedfsCat=new PreferenceCategory(getActivity());
-encryptedfsCat.setTitle(R.string.encrypted_fs_category);
-mCredentialStorage.createPreferences(encryptedfsCat,CredentialStorage.TYPE_ENCRYPTEDFS);
+mCredentialStorage.createPreferences(credentialsCat);
 return root;
 }

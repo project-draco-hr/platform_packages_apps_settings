@@ -1,9 +1,7 @@
 {
+  mAccessCheckBox.setEnabled(state != KeyStore.UNINITIALIZED);
   mAccessCheckBox.setChecked(state == KeyStore.NO_ERROR);
-  boolean encFSEnabled=SystemProperties.getBoolean(PROPERTY_EFS_ENABLED,false);
-  mResetButton.setEnabled((!encFSEnabled) && (state != KeyStore.UNINITIALIZED));
-  mAccessCheckBox.setEnabled((state != KeyStore.UNINITIALIZED) && (!encFSEnabled));
-  mEncryptedFSEnabled.setChecked(encFSEnabled);
+  mResetButton.setEnabled(state != KeyStore.UNINITIALIZED);
   if (mState == state) {
     return;
   }

@@ -1,23 +1,6 @@
 {
-  if (mShowingDialog != DLG_ENABLE_EFS) {
-    mSubmit=(button == DialogInterface.BUTTON_POSITIVE);
-    if (button == DialogInterface.BUTTON_NEUTRAL) {
-      reset();
-    }
-  }
- else {
-    if (button == DialogInterface.BUTTON_POSITIVE) {
-      Intent intent=new Intent("android.intent.action.MASTER_CLEAR");
-      intent.putExtra("enableEFS",mWillEnableEncryptedFS);
-      getActivity().sendBroadcast(intent);
-      updatePreferences(mState);
-    }
- else     if (button == DialogInterface.BUTTON_NEGATIVE) {
-      Toast.makeText(SecuritySettings.this.getActivity(),R.string.encrypted_fs_cancel_confirm,Toast.LENGTH_SHORT).show();
-      updatePreferences(mState);
-    }
- else {
-      return;
-    }
+  mSubmit=(button == DialogInterface.BUTTON_POSITIVE);
+  if (button == DialogInterface.BUTTON_NEUTRAL) {
+    reset();
   }
 }

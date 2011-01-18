@@ -23,6 +23,7 @@
   }
  else   if (selectedAccessPoint != null && selectedAccessPoint.security == AccessPoint.SECURITY_EAP) {
     mConnectButton.setVisibility(View.GONE);
+    showEditingTitle();
     mSkipOrNextButton.setVisibility(View.GONE);
     mAddNetworkButton.setVisibility(View.GONE);
     mRefreshButton.setVisibility(View.GONE);
@@ -31,6 +32,7 @@
  else {
     mConnectButton.setVisibility(View.VISIBLE);
     mConnectButton.setText(R.string.wifi_connect);
+    showEditingTitle();
     mSkipOrNextButton.setVisibility(View.GONE);
     mAddNetworkButton.setVisibility(View.GONE);
     mRefreshButton.setVisibility(View.GONE);

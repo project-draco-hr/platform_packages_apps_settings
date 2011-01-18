@@ -1,0 +1,6 @@
+{
+  if (TextUtils.isEmpty(mNetworkName) && mWifiConfig != null) {
+    mNetworkName=mWifiConfig.getController().getConfig().SSID;
+  }
+  mTitleView.setText(getString(R.string.wifi_setup_title_connected_network,mNetworkName));
+}

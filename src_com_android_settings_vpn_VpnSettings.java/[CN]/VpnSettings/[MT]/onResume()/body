@@ -1,9 +1,11 @@
 {
   super.onResume();
   if (DEBUG)   Log.d(TAG,"onResume");
+  mVpnManager.registerConnectivityReceiver(mConnectivityReceiver);
   if ((mUnlockAction != null) && isKeyStoreUnlocked()) {
     Runnable action=mUnlockAction;
     mUnlockAction=null;
     getActivity().runOnUiThread(action);
   }
+  checkVpnConnectionStatusInBackground();
 }

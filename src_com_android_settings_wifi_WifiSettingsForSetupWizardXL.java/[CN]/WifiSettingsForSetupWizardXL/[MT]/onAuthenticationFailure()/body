@@ -10,6 +10,9 @@
     Log.w(TAG,"Title during editing/adding a network was empty.");
     showEditingTitle();
   }
+  final ViewGroup parent=(ViewGroup)findViewById(R.id.wifi_config_ui);
+  parent.setVisibility(View.VISIBLE);
+  mConnectingStatusLayout.setVisibility(View.GONE);
   final View wpsFieldView=findViewById(R.id.wps_fields);
   if (wpsFieldView != null) {
     wpsFieldView.setVisibility(mPreviousWpsFieldsVisibility);

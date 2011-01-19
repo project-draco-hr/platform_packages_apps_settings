@@ -5,6 +5,8 @@ case BluetoothClass.Device.Major.COMPUTER:
       return R.drawable.ic_bt_laptop;
 case BluetoothClass.Device.Major.PHONE:
     return R.drawable.ic_bt_cellphone;
+case BluetoothClass.Device.Major.PERIPHERAL:
+  return getHidClassDrawable();
 }
 }
  else {
@@ -12,18 +14,18 @@ Log.w(TAG,"mBtClass is null");
 }
 if (mProfiles.size() > 0) {
 if (mProfiles.contains(Profile.A2DP)) {
-  return R.drawable.ic_bt_headphones_a2dp;
+return R.drawable.ic_bt_headphones_a2dp;
 }
  else if (mProfiles.contains(Profile.HEADSET)) {
-  return R.drawable.ic_bt_headset_hfp;
+return R.drawable.ic_bt_headset_hfp;
 }
 }
  else if (mBtClass != null) {
 if (mBtClass.doesClassMatch(BluetoothClass.PROFILE_A2DP)) {
-  return R.drawable.ic_bt_headphones_a2dp;
+return R.drawable.ic_bt_headphones_a2dp;
 }
 if (mBtClass.doesClassMatch(BluetoothClass.PROFILE_HEADSET)) {
-  return R.drawable.ic_bt_headset_hfp;
+return R.drawable.ic_bt_headset_hfp;
 }
 }
 return 0;

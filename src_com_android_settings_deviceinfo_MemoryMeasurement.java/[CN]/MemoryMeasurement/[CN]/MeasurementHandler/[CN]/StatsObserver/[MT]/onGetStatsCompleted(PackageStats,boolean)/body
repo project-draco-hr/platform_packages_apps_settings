@@ -3,7 +3,7 @@
     return;
   }
   if (succeeded) {
-    mAppsSizeForThisStatsObserver+=stats.codeSize + stats.dataSize;
+    mAppsSizeForThisStatsObserver+=stats.codeSize + stats.dataSize + stats.externalCacheSize+ stats.externalDataSize+ stats.externalMediaSize+ stats.externalObbSize;
   }
 synchronized (mAppsList) {
     mAppsList.remove(stats.packageName);

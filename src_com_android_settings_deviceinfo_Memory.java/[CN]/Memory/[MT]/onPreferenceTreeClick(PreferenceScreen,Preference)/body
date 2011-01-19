@@ -15,5 +15,11 @@
     startActivity(intent);
     return true;
   }
+ else   if (preference == mInternalAppsUsage) {
+    Intent intent=new Intent(Intent.ACTION_MANAGE_PACKAGE_STORAGE);
+    intent.setClass(getActivity(),com.android.settings.Settings.ManageApplicationsActivity.class);
+    startActivity(intent);
+    return true;
+  }
   return false;
 }

@@ -17,10 +17,15 @@
         enabledIMEAndSubtypesMap.put(imiId,new HashSet<String>());
       }
       HashSet<String> subtypesSet=enabledIMEAndSubtypesMap.get(imiId);
+      boolean subtypeCleared=false;
       for (      InputMethodSubtype subtype : imi.getSubtypes()) {
         final String subtypeHashCodeStr=String.valueOf(subtype.hashCode());
         CheckBoxPreference subtypePref=(CheckBoxPreference)context.findPreference(imiId + subtypeHashCodeStr);
         if (subtypePref == null)         continue;
+        if (!subtypeCleared) {
+          subtypesSet.clear();
+          subtypeCleared=true;
+        }
         if (subtypePref.isChecked()) {
           subtypesSet.add(subtypeHashCodeStr);
           if (isCurrentInputMethod) {

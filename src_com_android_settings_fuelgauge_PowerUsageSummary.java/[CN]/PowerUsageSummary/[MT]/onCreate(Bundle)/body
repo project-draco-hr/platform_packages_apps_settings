@@ -1,8 +1,11 @@
 {
   super.onCreate(icicle);
-  mStats=sStatsXfer;
+  if (icicle != null) {
+    mStats=sStatsXfer;
+  }
   addPreferencesFromResource(R.xml.power_usage_summary);
   mBatteryInfo=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
   mAppListGroup=(PreferenceGroup)findPreference("app_list");
   mPowerProfile=new PowerProfile(getActivity());
+  setHasOptionsMenu(true);
 }

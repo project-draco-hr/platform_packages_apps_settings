@@ -1,30 +1,3 @@
 {
-  mVpnManager.startVpnService();
-  ServiceConnection c=new ServiceConnection(){
-    public void onServiceConnected(    ComponentName className,    IBinder service){
-      try {
-        boolean success=IVpnService.Stub.asInterface(service).connect(mProfile,username,password);
-        if (!success) {
-          Log.d(TAG,"~~~~~~ connect() failed!");
-        }
- else {
-          Log.d(TAG,"~~~~~~ connect() succeeded!");
-        }
-      }
- catch (      Throwable e) {
-        Log.e(TAG,"connect()",e);
-        broadcastConnectivity(VpnState.IDLE,VpnManager.VPN_ERROR_CONNECTION_FAILED);
-      }
- finally {
-        mContext.unbindService(this);
-      }
-    }
-    public void onServiceDisconnected(    ComponentName className){
-      checkStatus();
-    }
-  }
-;
-  if (!bindService(c)) {
-    broadcastConnectivity(VpnState.IDLE,VpnManager.VPN_ERROR_CONNECTION_FAILED);
-  }
+  mVpnManager.connect(mProfile,username,password);
 }

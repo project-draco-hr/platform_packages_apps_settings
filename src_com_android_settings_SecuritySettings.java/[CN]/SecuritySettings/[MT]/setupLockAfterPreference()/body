@@ -1,0 +1,10 @@
+{
+  long currentTimeout=Settings.Secure.getLong(getContentResolver(),Settings.Secure.LOCK_SCREEN_LOCK_AFTER_TIMEOUT,5000);
+  mLockAfter.setValue(String.valueOf(currentTimeout));
+  mLockAfter.setOnPreferenceChangeListener(this);
+  final long adminTimeout=(mDPM != null ? mDPM.getMaximumTimeToLock(null) : 0);
+  final long displayTimeout=Math.max(0,Settings.System.getInt(getContentResolver(),SCREEN_OFF_TIMEOUT,0));
+  if (adminTimeout > 0) {
+    disableUnusableTimeouts(Math.max(0,adminTimeout - displayTimeout));
+  }
+}

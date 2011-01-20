@@ -1,4 +1,6 @@
 {
   super.onStop();
-  mContentQueryMap.deleteObserver(mSettingsObserver);
+  if (mSettingsObserver != null) {
+    mContentQueryMap.deleteObserver(mSettingsObserver);
+  }
 }

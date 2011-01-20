@@ -11,7 +11,7 @@
   chkbxPref.setKey(imiId);
   chkbxPref.setTitle(label);
   keyboardSettingsCategory.addPreference(chkbxPref);
-  if (!mHaveHardKeyboard && (imiSize <= 1 || isSystemIME)) {
+  if (imiSize <= 1 || isSystemIME) {
     chkbxPref.setEnabled(false);
   }
   Intent intent;

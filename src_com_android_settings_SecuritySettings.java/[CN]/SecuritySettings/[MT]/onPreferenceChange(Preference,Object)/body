@@ -1,8 +1,8 @@
 {
   if (preference == mLockAfter) {
-    int lockAfter=Integer.parseInt((String)value);
+    int timeout=Integer.parseInt((String)value);
     try {
-      Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_LOCK_AFTER_TIMEOUT,lockAfter);
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_LOCK_AFTER_TIMEOUT,timeout);
     }
  catch (    NumberFormatException e) {
       Log.e("SecuritySettings","could not persist lockAfter timeout setting",e);
@@ -10,9 +10,18 @@
     updateLockAfterPreferenceSummary();
   }
  else   if (preference == mUseLocation) {
-    boolean newValue=value == null ? false : (Boolean)value;
+    boolean newValue=(value == null ? false : (Boolean)value);
     GoogleLocationSettingHelper.setUseLocationForServices(getActivity(),newValue);
     return false;
+  }
+ else   if (preference == mEnableCredentials) {
+    if (value != null && (Boolean)value) {
+      getActivity().startActivity(new Intent(CredentialStorage.ACTION_UNLOCK));
+      return false;
+    }
+ else {
+      KeyStore.getInstance().lock();
+    }
   }
   return true;
 }

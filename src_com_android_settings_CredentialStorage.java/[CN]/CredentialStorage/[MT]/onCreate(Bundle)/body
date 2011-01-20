@@ -1,0 +1,27 @@
+{
+  super.onCreate(savedInstanceState);
+  Intent intent=getIntent();
+  String action=intent.getAction();
+  int state=mKeyStore.test();
+  if (ACTION_RESET.equals(action)) {
+    showResetDialog();
+  }
+ else   if (ACTION_SET_PASSWORD.equals(action)) {
+    showPasswordDialog(state == KeyStore.UNINITIALIZED);
+  }
+ else {
+    if (ACTION_INSTALL.equals(action) && "com.android.certinstaller".equals(getCallingPackage())) {
+      mBundle=intent.getExtras();
+    }
+    if (state == KeyStore.UNINITIALIZED) {
+      showPasswordDialog(true);
+    }
+ else     if (state == KeyStore.LOCKED) {
+      showUnlockDialog();
+    }
+ else {
+      install();
+      finish();
+    }
+  }
+}

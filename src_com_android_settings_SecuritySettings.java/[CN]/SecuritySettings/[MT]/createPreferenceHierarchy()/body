@@ -1,17 +1,17 @@
 {
-  PreferenceScreen root=this.getPreferenceScreen();
+  PreferenceScreen root=getPreferenceScreen();
   if (root != null) {
     root.removeAll();
   }
   addPreferencesFromResource(R.xml.security_settings);
-  root=this.getPreferenceScreen();
-  mNetwork=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_NETWORK);
-  mGps=(CheckBoxPreference)getPreferenceScreen().findPreference(LOCATION_GPS);
-  mAssistedGps=(CheckBoxPreference)getPreferenceScreen().findPreference(ASSISTED_GPS);
+  root=getPreferenceScreen();
+  mNetwork=(CheckBoxPreference)root.findPreference(KEY_LOCATION_NETWORK);
+  mGps=(CheckBoxPreference)root.findPreference(KEY_LOCATION_GPS);
+  mAssistedGps=(CheckBoxPreference)root.findPreference(KEY_ASSISTED_GPS);
   if (GoogleLocationSettingHelper.isAvailable(getActivity())) {
-    PreferenceGroup locationCat=(PreferenceGroup)root.findPreference(LOCATION_CATEGORY);
+    PreferenceGroup locationCat=(PreferenceGroup)root.findPreference(KEY_LOCATION_CATEGORY);
     CheckBoxPreference useLocation=new CheckBoxPreference(getActivity());
-    useLocation.setKey(USE_LOCATION);
+    useLocation.setKey(KEY_USE_LOCATION);
     useLocation.setTitle(R.string.use_location_title);
     useLocation.setSummaryOn(R.string.use_location_summary_enabled);
     useLocation.setSummaryOff(R.string.use_location_summary_disabled);
@@ -21,7 +21,6 @@
     locationCat.addPreference(useLocation);
     mUseLocation=useLocation;
   }
-  PreferenceManager pm=getPreferenceManager();
   addPreferencesFromResource(R.xml.security_settings_encryption);
   int resid=0;
   if (!mLockPatternUtils.isSecure()) {
@@ -48,48 +47,26 @@ break;
 }
 }
 addPreferencesFromResource(resid);
-mLockAfter=setupLockAfterPreference(pm);
+mLockAfter=(ListPreference)root.findPreference(KEY_LOCK_AFTER_TIMEOUT);
+if (mLockAfter != null) {
+setupLockAfterPreference();
 updateLockAfterPreferenceSummary();
-mVisiblePattern=(CheckBoxPreference)pm.findPreference(KEY_VISIBLE_PATTERN);
-mTactileFeedback=(CheckBoxPreference)pm.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
+}
+mVisiblePattern=(CheckBoxPreference)root.findPreference(KEY_VISIBLE_PATTERN);
+mTactileFeedback=(CheckBoxPreference)root.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
 if (!((Vibrator)getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator()) {
-PreferenceGroup securityCategory=(PreferenceGroup)pm.findPreference(KEY_SECURITY_CATEGORY);
+PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
 if (securityCategory != null && mTactileFeedback != null) {
 securityCategory.removePreference(mTactileFeedback);
 }
 }
-int activePhoneType=TelephonyManager.getDefault().getPhoneType();
-if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
-PreferenceScreen simLockPreferences=getPreferenceManager().createPreferenceScreen(getActivity());
-simLockPreferences.setTitle(R.string.sim_lock_settings_category);
-simLockPreferences.setIntent(new Intent().setClassName(PACKAGE,ICC_LOCK_SETTINGS));
-PreferenceCategory simLockCat=new PreferenceCategory(getActivity());
-simLockCat.setTitle(R.string.sim_lock_settings_title);
-root.addPreference(simLockCat);
-simLockCat.addPreference(simLockPreferences);
+addPreferencesFromResource(R.xml.security_settings_misc);
+if (TelephonyManager.PHONE_TYPE_CDMA == TelephonyManager.getDefault().getPhoneType()) {
+root.removePreference(root.findPreference(KEY_SIM_LOCK));
 }
-PreferenceCategory passwordsCat=new PreferenceCategory(getActivity());
-passwordsCat.setTitle(R.string.security_passwords_title);
-root.addPreference(passwordsCat);
-CheckBoxPreference showPassword=mShowPassword=new CheckBoxPreference(getActivity());
-showPassword.setKey("show_password");
-showPassword.setTitle(R.string.show_password);
-showPassword.setSummary(R.string.show_password_summary);
-showPassword.setPersistent(false);
-passwordsCat.addPreference(showPassword);
-PreferenceCategory devicePoliciesCat=new PreferenceCategory(getActivity());
-devicePoliciesCat.setTitle(R.string.device_admin_title);
-root.addPreference(devicePoliciesCat);
-Preference deviceAdminButton=new Preference(getActivity());
-deviceAdminButton.setTitle(R.string.manage_device_admin);
-deviceAdminButton.setSummary(R.string.manage_device_admin_summary);
-Intent deviceAdminIntent=new Intent();
-deviceAdminIntent.setClass(getActivity(),DeviceAdminSettings.class);
-deviceAdminButton.setIntent(deviceAdminIntent);
-devicePoliciesCat.addPreference(deviceAdminButton);
-PreferenceCategory credentialsCat=new PreferenceCategory(getActivity());
-credentialsCat.setTitle(R.string.credentials_category);
-root.addPreference(credentialsCat);
-mCredentialStorage.createPreferences(credentialsCat);
+mShowPassword=(CheckBoxPreference)root.findPreference(KEY_SHOW_PASSWORD);
+mEnableCredentials=(CheckBoxPreference)root.findPreference(KEY_ENABLE_CREDENTIALS);
+mEnableCredentials.setOnPreferenceChangeListener(this);
+mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
 return root;
 }

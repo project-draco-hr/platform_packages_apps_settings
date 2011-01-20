@@ -1,6 +1,16 @@
 {
   super.onResume();
   createPreferenceHierarchy();
+  updateLocationToggles();
+  if (mSettingsObserver == null) {
+    mSettingsObserver=new Observer(){
+      public void update(      Observable o,      Object arg){
+        updateLocationToggles();
+      }
+    }
+;
+    mContentQueryMap.addObserver(mSettingsObserver);
+  }
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (mVisiblePattern != null) {
     mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled());
@@ -9,5 +19,8 @@
     mTactileFeedback.setChecked(lockPatternUtils.isTactileFeedbackEnabled());
   }
   mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0);
-  mCredentialStorage.resume();
+  int state=KeyStore.getInstance().test();
+  mEnableCredentials.setChecked(state == KeyStore.NO_ERROR);
+  mEnableCredentials.setEnabled(state != KeyStore.UNINITIALIZED);
+  mResetCredentials.setEnabled(state != KeyStore.UNINITIALIZED);
 }

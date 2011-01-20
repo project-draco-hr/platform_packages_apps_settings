@@ -1,0 +1,13 @@
+{
+  TextView passwordEntry=(TextView)findViewById(R.id.passwordEntry);
+  passwordEntry.setOnEditorActionListener(this);
+  KeyboardView keyboardView=(PasswordEntryKeyboardView)findViewById(R.id.keyboard);
+  PasswordEntryKeyboardHelper keyboardHelper=new PasswordEntryKeyboardHelper(this,keyboardView,passwordEntry,false);
+  keyboardHelper.setKeyboardMode(PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA);
+  passwordEntry.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_lock_idle_lock,0,0,0);
+  String dateFormatString=getString(com.android.internal.R.string.full_wday_month_day_no_year);
+  TextView date=(TextView)findViewById(R.id.date);
+  date.setText(DateFormat.format(dateFormatString,new Date()));
+  StatusBarManager sbm=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);
+  sbm.disable(StatusBarManager.DISABLE_EXPAND | StatusBarManager.DISABLE_NOTIFICATION_ICONS | StatusBarManager.DISABLE_NOTIFICATION_ALERTS| StatusBarManager.DISABLE_SYSTEM_INFO| StatusBarManager.DISABLE_NAVIGATION);
+}

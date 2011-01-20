@@ -1,0 +1,7 @@
+{
+  Preference preference=new Preference(getActivity());
+  preference.setFragment(CryptKeeperComfirm.class.getName());
+  preference.setTitle(R.string.crypt_keeper_confirm_title);
+  preference.getExtras().putString("password",password);
+  ((PreferenceActivity)getActivity()).onPreferenceStartFragment(null,preference);
+}

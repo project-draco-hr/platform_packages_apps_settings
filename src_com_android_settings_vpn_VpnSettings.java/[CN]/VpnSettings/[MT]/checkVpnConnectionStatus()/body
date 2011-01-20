@@ -1,5 +1,8 @@
 {
   for (  VpnProfile p : mVpnProfileList) {
+    changeState(p,mVpnManager.getState(p));
+  }
+  for (  VpnProfile p : mVpnProfileList) {
     VpnPreference pref=mVpnPreferenceMap.get(p.getName());
     mVpnListContainer.addPreference(pref);
   }

@@ -1,6 +1,11 @@
 {
   if (TextUtils.isEmpty(mNetworkName) && mWifiConfig != null) {
-    mNetworkName=mWifiConfig.getController().getConfig().SSID;
+    if (mWifiConfig.getController() != null && mWifiConfig.getController().getConfig() != null) {
+      mNetworkName=mWifiConfig.getController().getConfig().SSID;
+    }
+ else {
+      Log.w(TAG,"Unexpected null found (WifiController or WifiConfig is null). " + "Ignore them.");
+    }
   }
   mTitleView.setText(getString(R.string.wifi_setup_title_connected_network,mNetworkName));
 }

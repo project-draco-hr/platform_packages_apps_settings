@@ -3,7 +3,13 @@ switch (item.getItemId()) {
 case MENU_SAVE:
     Intent resultIntent=validateAndGetResult();
   if (resultIntent != null) {
-    ((PreferenceActivity)getActivity()).finishPreferencePanel(this,Activity.RESULT_OK,resultIntent);
+    PreferenceActivity activity=(PreferenceActivity)getActivity();
+    if (!mVpnManager.isIdle()) {
+      Toast.makeText(activity,R.string.service_busy,Toast.LENGTH_SHORT).show();
+    }
+ else {
+      activity.finishPreferencePanel(this,Activity.RESULT_OK,resultIntent);
+    }
   }
 return true;
 case MENU_CANCEL:

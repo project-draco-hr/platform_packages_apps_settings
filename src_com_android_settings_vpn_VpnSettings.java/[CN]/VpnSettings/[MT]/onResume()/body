@@ -7,5 +7,10 @@
     mUnlockAction=null;
     getActivity().runOnUiThread(action);
   }
-  checkVpnConnectionStatus();
+  if (mConnectDialog == null || !mConnectDialog.isShowing()) {
+    checkVpnConnectionStatus();
+  }
+ else {
+    if (!mVpnManager.isIdle())     removeConnectDialog();
+  }
 }

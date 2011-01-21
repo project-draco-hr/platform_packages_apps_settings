@@ -1,7 +1,5 @@
 {
-  mVpnPreferenceMap=new LinkedHashMap<String,VpnPreference>();
-  mVpnProfileList=Collections.synchronizedList(new ArrayList<VpnProfile>());
-  mVpnListContainer.removeAll();
+  if (sVpnProfileList.size() > 0)   return;
   File root=new File(PROFILES_ROOT);
   String[] dirs=root.list();
   if (dirs == null)   return;
@@ -12,20 +10,17 @@
       VpnProfile p=deserialize(f);
       if (p == null)       continue;
       if (!checkIdConsistency(dir,p))       continue;
-      mVpnProfileList.add(p);
+      sVpnProfileList.add(p);
     }
  catch (    IOException e) {
       Log.e(TAG,"retrieveVpnListFromStorage()",e);
     }
   }
-  Collections.sort(mVpnProfileList,new Comparator<VpnProfile>(){
+  Collections.sort(sVpnProfileList,new Comparator<VpnProfile>(){
     public int compare(    VpnProfile p1,    VpnProfile p2){
       return p1.getName().compareTo(p2.getName());
     }
   }
 );
-  for (  VpnProfile p : mVpnProfileList) {
-    Preference pref=addPreferenceFor(p,false);
-  }
   disableProfilePreferencesIfOneActive();
 }

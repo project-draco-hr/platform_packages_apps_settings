@@ -1,4 +1,9 @@
 {
+  if (mProgressBar.isIndeterminate() && accessPoints.size() > 0) {
+    mProgressBar.setIndeterminate(false);
+    mAddNetworkButton.setEnabled(true);
+    mRefreshButton.setEnabled(true);
+  }
   for (  AccessPoint accessPoint : accessPoints) {
     accessPoint.setLayoutResource(R.layout.custom_preference);
     holder.addPreference(accessPoint);

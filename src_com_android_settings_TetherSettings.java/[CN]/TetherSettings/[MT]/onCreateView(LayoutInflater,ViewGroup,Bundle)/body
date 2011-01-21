@@ -1,5 +1,5 @@
 {
-  super.onActivityCreated(savedInstanceState);
+  View view=super.onCreateView(inflater,container,savedInstanceState);
   final Activity activity=getActivity();
   mBluetoothPan=new BluetoothPan(activity);
   mEnableWifiAp=(CheckBoxPreference)findPreference(ENABLE_WIFI_AP);
@@ -34,4 +34,5 @@
   }
   mWifiApEnabler=new WifiApEnabler(activity,mEnableWifiAp);
   mView=new WebView(activity);
+  return view;
 }

@@ -8,8 +8,9 @@
     IMountService service=getMountService();
     try {
       service.decryptStorage(password);
-      mFailedAttempts++;
-      if (mFailedAttempts == MAX_FAILED_ATTEMPTS) {
+      if (mFailedAttempts == 0) {
+      }
+ else       if (mFailedAttempts == MAX_FAILED_ATTEMPTS) {
         sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
       }
  else       if ((mFailedAttempts % COOL_DOWN_ATTEMPTS) == 0) {

@@ -1,5 +1,9 @@
 {
   mContentView=inflater.inflate(R.layout.crypt_keeper_settings,null);
-  establishInitialState();
+  mIntentFilter=new IntentFilter();
+  mIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+  mInitiateButton=(Button)mContentView.findViewById(R.id.initiate_encrypt);
+  mInitiateButton.setOnClickListener(mInitiateListener);
+  mInitiateButton.setEnabled(false);
   return mContentView;
 }

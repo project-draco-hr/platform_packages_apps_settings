@@ -1,0 +1,14 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  Activity activity=getActivity();
+  Intent intent=activity.getIntent();
+  if (DevicePolicyManager.ACTION_START_ENCRYPTION.equals(intent.getAction())) {
+    DevicePolicyManager dpm=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
+    if (dpm != null) {
+      int status=dpm.getStorageEncryptionStatus();
+      if (status != DevicePolicyManager.ENCRYPTION_STATUS_INACTIVE) {
+        activity.finish();
+      }
+    }
+  }
+}

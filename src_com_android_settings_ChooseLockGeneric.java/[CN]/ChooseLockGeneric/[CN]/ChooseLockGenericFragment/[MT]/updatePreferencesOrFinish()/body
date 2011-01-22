@@ -1,15 +1,17 @@
 {
   int quality=getActivity().getIntent().getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,-1);
   if (quality == -1) {
-    quality=mChooseLockSettingsHelper.utils().getKeyguardStoredPasswordQuality();
+    quality=mDPM.getPasswordQuality(null);
+    quality=upgradeQualityForEncryption(quality);
     final PreferenceScreen prefScreen=getPreferenceScreen();
     if (prefScreen != null) {
       prefScreen.removeAll();
     }
     addPreferencesFromResource(R.xml.security_settings_picker);
-    disableUnusablePreferences(mDPM.getPasswordQuality(null));
+    disableUnusablePreferences(quality);
   }
  else {
+    quality=upgradeQualityForEncryption(quality);
     updateUnlockMethodAndFinish(quality,false);
   }
 }

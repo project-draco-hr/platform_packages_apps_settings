@@ -1,11 +1,12 @@
 {
   if (!mPasswordConfirmed) {
-    throw new IllegalStateException("Tried to update password without confirming first");
+    throw new IllegalStateException("Tried to update password without confirming it");
   }
   int minQuality=mDPM.getPasswordQuality(null);
   if (quality < minQuality) {
     quality=minQuality;
   }
+  quality=upgradeQualityForEncryption(quality);
   if (quality >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
     int minLength=mDPM.getPasswordMinimumLength(null);
     if (minLength < MIN_PASSWORD_LENGTH) {

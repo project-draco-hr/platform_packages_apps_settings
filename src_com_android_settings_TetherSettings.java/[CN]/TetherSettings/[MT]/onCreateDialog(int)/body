@@ -33,6 +33,10 @@
       url=url.replace("%x","");
     }
     mView.loadUrl(url);
+    ViewParent parent=mView.getParent();
+    if (parent != null && parent instanceof ViewGroup) {
+      ((ViewGroup)parent).removeView(mView);
+    }
     return new AlertDialog.Builder(getActivity()).setCancelable(true).setTitle(R.string.tethering_help_button_text).setView(mView).create();
   }
   return null;

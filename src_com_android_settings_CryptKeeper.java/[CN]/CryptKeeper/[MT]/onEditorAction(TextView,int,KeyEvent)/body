@@ -7,13 +7,16 @@
     v.setText(null);
     IMountService service=getMountService();
     try {
-      service.decryptStorage(password);
-      if (mFailedAttempts == 0) {
+      int failedAttempts=service.decryptStorage(password);
+      if (failedAttempts == 0) {
+        Intent intent=new Intent(this,Blank.class);
+        finish();
+        startActivity(intent);
       }
- else       if (mFailedAttempts == MAX_FAILED_ATTEMPTS) {
+ else       if (failedAttempts == MAX_FAILED_ATTEMPTS) {
         sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
       }
- else       if ((mFailedAttempts % COOL_DOWN_ATTEMPTS) == 0) {
+ else       if ((failedAttempts % COOL_DOWN_ATTEMPTS) == 0) {
         mCooldown=COOL_DOWN_INTERVAL;
         EditText passwordEntry=(EditText)findViewById(R.id.passwordEntry);
         passwordEntry.setEnabled(false);

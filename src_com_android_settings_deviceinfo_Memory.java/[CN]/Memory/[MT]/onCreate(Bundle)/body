@@ -15,25 +15,51 @@
     getPreferenceScreen().removePreference(mSdMountPreferenceGroup);
   }
   mInternalSize=findPreference(MEMORY_INTERNAL_SIZE);
-  mInternalAvail=findPreference(MEMORY_INTERNAL_AVAIL);
-  mInternalMediaUsage=findPreference(MEMORY_INTERNAL_MEDIA);
-  mInternalAppsUsage=findPreference(MEMORY_INTERNAL_APPS);
-  mInternalMediaColor=mRes.getColor(R.color.memory_media_usage);
   mInternalAppsColor=mRes.getColor(R.color.memory_apps_usage);
   mInternalUsedColor=android.graphics.Color.GRAY;
+  mInternalAvailColor=mRes.getColor(R.color.memory_avail);
+  final int buttonSize=(int)mRes.getDimension(R.dimen.device_memory_usage_button_size);
   float[] radius=new float[]{5f,5f,5f,5f,5f,5f,5f,5f};
   RoundRectShape shape1=new RoundRectShape(radius,null,null);
-  ShapeDrawable mediaShape=new ShapeDrawable(shape1);
-  mediaShape.setIntrinsicWidth(32);
-  mediaShape.setIntrinsicHeight(32);
-  mediaShape.getPaint().setColor(mInternalMediaColor);
-  mInternalMediaUsage.setIcon(mediaShape);
+  mInternalAvail=findPreference(MEMORY_INTERNAL_AVAIL);
+  ShapeDrawable availShape=new ShapeDrawable(shape1);
+  availShape.setIntrinsicWidth(buttonSize);
+  availShape.setIntrinsicHeight(buttonSize);
+  availShape.getPaint().setColor(mInternalAvailColor);
+  mInternalAvail.setIcon(availShape);
+  mInternalAppsUsage=findPreference(MEMORY_INTERNAL_APPS);
   ShapeDrawable appsShape=new ShapeDrawable(shape1);
-  appsShape.setIntrinsicWidth(32);
-  appsShape.setIntrinsicHeight(32);
+  appsShape.setIntrinsicWidth(buttonSize);
+  appsShape.setIntrinsicHeight(buttonSize);
   appsShape.getPaint().setColor(mInternalAppsColor);
   mInternalAppsUsage.setIcon(appsShape);
-  mInternalUsageChart=(UsageBarPreference)findPreference(MEMORY_INTERNAL_CHART);
-  mMeasurement=MemoryMeasurement.getInstance(getActivity());
-  mMeasurement.setReceiver(this);
+  for (int i=0; i < Constants.NUM_MEDIA_DIRS_TRACKED; i++) {
+    if (Constants.mMediaDirs.get(i).mPreferenceName == null) {
+      continue;
+    }
+    mMediaPreferences[i]=findPreference(Constants.mMediaDirs.get(i).mPreferenceName);
+    ShapeDrawable shape=new ShapeDrawable(shape1);
+    shape.setIntrinsicWidth(buttonSize);
+    shape.setIntrinsicHeight(buttonSize);
+    int color=0;
+switch (i) {
+case Constants.DOWNLOADS_INDEX:
+      color=mRes.getColor(R.color.memory_downloads);
+    break;
+case Constants.PIC_VIDEO_INDEX:
+  color=mRes.getColor(R.color.memory_video);
+break;
+case Constants.MUSIC_INDEX:
+color=mRes.getColor(R.color.memory_audio);
+break;
+case Constants.MEDIA_MISC_INDEX:
+color=mRes.getColor(R.color.memory_misc);
+break;
+}
+shape.getPaint().setColor(color);
+mMediaPreferences[i].setIcon(shape);
+}
+mInternalUsageChart=(UsageBarPreference)findPreference(MEMORY_INTERNAL_CHART);
+mMeasurement=MemoryMeasurement.getInstance(getActivity());
+mMeasurement.setReceiver(this);
 }

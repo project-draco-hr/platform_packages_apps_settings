@@ -1,0 +1,9 @@
+{
+  if (mData == null) {
+    return;
+  }
+  for (  Object o : objs) {
+    mData.remove(o);
+    mDataSize-=((MemoryMeasurement.FileInfo)o).mSize;
+  }
+}

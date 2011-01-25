@@ -1,0 +1,42 @@
+{
+  ListView lv=getListView();
+switch (item.getItemId()) {
+case R.id.action_delete:
+    SparseBooleanArray checkedItems=lv.getCheckedItemPositions();
+  int checkedCount=getListView().getCheckedItemCount();
+if (checkedCount > mDataCount) {
+  throw new IllegalStateException("checked item counts do not match. " + "checkedCount: " + checkedCount + ", dataSize: "+ mDataCount);
+}
+if (mDataCount > 0) {
+ArrayList<Object> toRemove=new ArrayList<Object>();
+for (int i=0; i < mDataCount; i++) {
+  if (!checkedItems.get(i)) {
+    continue;
+  }
+  if (MemoryMeasurement.LOGV) {
+    Log.i(TAG,"deleting: " + mAdapter.getItem(i));
+  }
+  File file=new File(mAdapter.getItem(i).mFileName);
+  if (file.isDirectory()) {
+    deleteDir(file);
+  }
+ else {
+    file.delete();
+  }
+  toRemove.add(mAdapter.getItem(i));
+}
+mAdapter.removeAll(toRemove);
+mAdapter.notifyDataSetChanged();
+mDataCount=mAdapter.getCount();
+}
+mode.finish();
+break;
+case R.id.action_select_all:
+for (int i=0; i < mDataCount; i++) {
+lv.setItemChecked(i,true);
+}
+onItemCheckedStateChanged(mode,1,0,true);
+break;
+}
+return true;
+}

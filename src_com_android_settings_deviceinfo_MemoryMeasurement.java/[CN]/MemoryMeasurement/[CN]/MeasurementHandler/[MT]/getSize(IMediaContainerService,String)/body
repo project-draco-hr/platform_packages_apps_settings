@@ -1,0 +1,10 @@
+{
+  try {
+    long size=imcs.calculateDirectorySize(dir);
+    return size;
+  }
+ catch (  Exception e) {
+    Log.w(TAG,"Could not read memory from default container service for " + dir,e);
+    return -1;
+  }
+}

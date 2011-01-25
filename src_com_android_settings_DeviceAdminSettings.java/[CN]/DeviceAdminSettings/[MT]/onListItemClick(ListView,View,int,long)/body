@@ -1,7 +1,7 @@
 {
   DeviceAdminInfo dpi=(DeviceAdminInfo)l.getAdapter().getItem(position);
   Intent intent=new Intent();
-  intent.setClass(this,DeviceAdminAdd.class);
+  intent.setClass(getActivity(),DeviceAdminAdd.class);
   intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,dpi.getComponent());
   startActivity(intent);
 }

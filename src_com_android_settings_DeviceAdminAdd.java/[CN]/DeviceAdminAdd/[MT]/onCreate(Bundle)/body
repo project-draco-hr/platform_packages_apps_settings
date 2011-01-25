@@ -57,11 +57,11 @@ catch (  IOException e) {
   }
   mAddMsgText=getIntent().getCharSequenceExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION);
   setContentView(R.layout.device_admin_add);
-  mTitle=(TextView)findViewById(R.id.title);
   mAdminIcon=(ImageView)findViewById(R.id.admin_icon);
   mAdminName=(TextView)findViewById(R.id.admin_name);
   mAdminDescription=(TextView)findViewById(R.id.admin_description);
   mAddMsg=(TextView)findViewById(R.id.add_msg);
+  mAddMsgExpander=(ImageView)findViewById(R.id.add_msg_expander);
   mAddMsg.setOnClickListener(new View.OnClickListener(){
     public void onClick(    View v){
       toggleMessageEllipsis(v);

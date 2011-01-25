@@ -21,7 +21,6 @@
     locationCat.addPreference(useLocation);
     mUseLocation=useLocation;
   }
-  addPreferencesFromResource(R.xml.security_settings_encryption);
   int resid=0;
   if (!mLockPatternUtils.isSecure()) {
     if (mLockPatternUtils.isLockScreenDisabled()) {
@@ -47,6 +46,13 @@ break;
 }
 }
 addPreferencesFromResource(resid);
+String status=SystemProperties.get("ro.crypto.state","unsupported");
+if ("encrypted".equalsIgnoreCase(status)) {
+addPreferencesFromResource(R.xml.security_settings_encrypted);
+}
+ else if ("unencrypted".equalsIgnoreCase(status)) {
+addPreferencesFromResource(R.xml.security_settings_unencrypted);
+}
 mLockAfter=(ListPreference)root.findPreference(KEY_LOCK_AFTER_TIMEOUT);
 if (mLockAfter != null) {
 setupLockAfterPreference();

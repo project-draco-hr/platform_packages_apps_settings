@@ -23,15 +23,6 @@
   addPreferencesFromResource(R.xml.bluetooth_device_advanced);
   getPreferenceScreen().setOrderingAsAdded(false);
   mProfileContainer=(PreferenceGroup)findPreference(KEY_PROFILE_CONTAINER);
-  mAllowIncomingPref=(CheckBoxPreference)findPreference(KEY_ALLOW_INCOMING);
-  if (isObjectPushSupported(device)) {
-    mAllowIncomingPref.setChecked(isIncomingFileTransfersAllowed());
-    mAllowIncomingPref.setOnPreferenceChangeListener(this);
-  }
- else {
-    getPreferenceScreen().removePreference(mAllowIncomingPref);
-    mAllowIncomingPref=null;
-  }
   mDeviceNamePref=(EditTextPreference)findPreference(KEY_RENAME_DEVICE);
   mDeviceNamePref.setSummary(mCachedDevice.getName());
   mDeviceNamePref.setText(mCachedDevice.getName());

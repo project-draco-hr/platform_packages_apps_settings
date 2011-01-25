@@ -1,11 +1,12 @@
 {
+  final Activity activity=getActivity();
   ViewHolder vh=(ViewHolder)view.getTag();
   DeviceAdminInfo item=mAvailableAdmins.get(position);
-  vh.icon.setImageDrawable(item.loadIcon(getPackageManager()));
-  vh.name.setText(item.loadLabel(getPackageManager()));
+  vh.icon.setImageDrawable(item.loadIcon(activity.getPackageManager()));
+  vh.name.setText(item.loadLabel(activity.getPackageManager()));
   vh.checkbox.setChecked(mActiveAdmins.contains(item.getComponent()));
   try {
-    vh.description.setText(item.loadDescription(getPackageManager()));
+    vh.description.setText(item.loadDescription(activity.getPackageManager()));
   }
  catch (  Resources.NotFoundException e) {
   }

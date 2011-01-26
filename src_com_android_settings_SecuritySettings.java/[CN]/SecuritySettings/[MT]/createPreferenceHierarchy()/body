@@ -46,12 +46,14 @@ break;
 }
 }
 addPreferencesFromResource(resid);
-String status=SystemProperties.get("ro.crypto.state","unsupported");
-if ("encrypted".equalsIgnoreCase(status)) {
+DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+switch (dpm.getStorageEncryptionStatus()) {
+case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
 addPreferencesFromResource(R.xml.security_settings_encrypted);
-}
- else if ("unencrypted".equalsIgnoreCase(status)) {
+break;
+case DevicePolicyManager.ENCRYPTION_STATUS_INACTIVE:
 addPreferencesFromResource(R.xml.security_settings_unencrypted);
+break;
 }
 mLockAfter=(ListPreference)root.findPreference(KEY_LOCK_AFTER_TIMEOUT);
 if (mLockAfter != null) {

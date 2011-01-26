@@ -1,3 +1,11 @@
 {
-  getActivity().onBackPressed();
+  (new Handler()).post(new Runnable(){
+    @Override public void run(){
+      Activity a=getActivity();
+      if (a != null) {
+        a.onBackPressed();
+      }
+    }
+  }
+);
 }

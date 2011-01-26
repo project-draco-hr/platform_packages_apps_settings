@@ -6,9 +6,9 @@ case DLG_CONFIRM_UNMOUNT:
         doUnmount(true);
       }
     }
-).setNegativeButton(R.string.cancel,null).setMessage(R.string.dlg_confirm_unmount_text).setOnCancelListener(this).create();
+).setNegativeButton(R.string.cancel,null).setMessage(R.string.dlg_confirm_unmount_text).create();
 case DLG_ERROR_UNMOUNT:
-  return new AlertDialog.Builder(getActivity()).setTitle(R.string.dlg_error_unmount_title).setNeutralButton(R.string.dlg_ok,null).setMessage(R.string.dlg_error_unmount_text).setOnCancelListener(this).create();
+  return new AlertDialog.Builder(getActivity()).setTitle(R.string.dlg_error_unmount_title).setNeutralButton(R.string.dlg_ok,null).setMessage(R.string.dlg_error_unmount_text).create();
 }
 return null;
 }

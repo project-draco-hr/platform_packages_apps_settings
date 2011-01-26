@@ -1,5 +1,6 @@
 {
   super.onResume();
+  updatePreferenceMap();
   if (DEBUG)   Log.d(TAG,"onResume");
   mVpnManager.registerConnectivityReceiver(mConnectivityReceiver);
   if ((mUnlockAction != null) && isKeyStoreUnlocked()) {
@@ -11,7 +12,7 @@
     checkVpnConnectionStatus();
   }
  else {
-    if (!mVpnManager.isIdle()) {
+    if (!mVpnManager.isIdle() || (mActiveProfile == null)) {
       removeDialog(DIALOG_CONNECT);
       checkVpnConnectionStatus();
     }

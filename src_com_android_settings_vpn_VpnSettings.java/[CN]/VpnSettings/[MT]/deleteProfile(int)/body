@@ -1,10 +1,12 @@
 {
-  if ((position < 0) || (position >= mVpnProfileList.size()))   return;
+  if ((position < 0) || (position >= sVpnProfileList.size()))   return;
+  final VpnProfile target=sVpnProfileList.get(position);
   DialogInterface.OnClickListener onClickListener=new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
-      dialog.dismiss();
+      VpnProfile p=sVpnProfileList.get(position);
+      if (p != target)       return;
       if (which == OK_BUTTON) {
-        VpnProfile p=mVpnProfileList.remove(position);
+        sVpnProfileList.remove(position);
         VpnPreference pref=mVpnPreferenceMap.remove(p.getName());
         mVpnListContainer.removePreference(pref);
         removeProfileFromStorage(p);

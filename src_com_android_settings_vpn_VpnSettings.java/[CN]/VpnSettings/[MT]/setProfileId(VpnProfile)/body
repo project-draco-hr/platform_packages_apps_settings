@@ -4,7 +4,7 @@
     id=String.valueOf(Math.abs(Double.doubleToLongBits(Math.random())));
     if (id.length() >= 8)     break;
   }
-  for (  VpnProfile p : mVpnProfileList) {
+  for (  VpnProfile p : sVpnProfileList) {
     if (p.getId().equals(id)) {
       setProfileId(profile);
       return;

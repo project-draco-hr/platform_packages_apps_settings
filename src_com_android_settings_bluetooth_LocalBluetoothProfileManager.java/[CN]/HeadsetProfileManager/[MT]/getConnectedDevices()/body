@@ -1,3 +1,8 @@
 {
-  return mService.getConnectedDevices();
+  if (mService != null) {
+    return mService.getConnectedDevices();
+  }
+ else {
+    return new ArrayList<BluetoothDevice>();
+  }
 }

@@ -1,0 +1,15 @@
+{
+  TextView tv=(TextView)findViewById(R.id.status);
+  if (mCooldown <= 0) {
+    EditText passwordEntry=(EditText)findViewById(R.id.passwordEntry);
+    passwordEntry.setEnabled(true);
+    tv.setText(R.string.try_again);
+  }
+ else {
+    CharSequence tempalte=getText(R.string.crypt_keeper_cooldown);
+    tv.setText(TextUtils.expandTemplate(tempalte,Integer.toString(mCooldown)));
+    mCooldown--;
+    mHandler.removeMessages(COOLDOWN);
+    mHandler.sendEmptyMessageDelayed(COOLDOWN,1000);
+  }
+}

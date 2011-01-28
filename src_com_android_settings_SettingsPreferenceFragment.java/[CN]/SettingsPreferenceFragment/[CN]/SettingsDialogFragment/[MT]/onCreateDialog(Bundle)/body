@@ -1,3 +1,13 @@
 {
+  if (savedInstanceState != null) {
+    mDialogId=savedInstanceState.getInt(KEY_DIALOG_ID,0);
+    int mParentFragmentId=savedInstanceState.getInt(KEY_PARENT_FRAGMENT_ID,-1);
+    if (mParentFragmentId > -1) {
+      mParentFragment=getFragmentManager().findFragmentById(mParentFragmentId);
+      if (!(mParentFragment instanceof DialogCreatable)) {
+        throw new IllegalArgumentException(KEY_PARENT_FRAGMENT_ID + " must implement " + DialogCreatable.class.getName());
+      }
+    }
+  }
   return ((DialogCreatable)mParentFragment).onCreateDialog(mDialogId);
 }

@@ -14,6 +14,9 @@
     mSsidView.addTextChangedListener(this);
     mSecuritySpinner=((Spinner)mView.findViewById(R.id.security));
     mSecuritySpinner.setOnItemSelectedListener(this);
+    if (context instanceof WifiSettingsForSetupWizardXL) {
+      mSecuritySpinner.setAdapter(new ArrayAdapter<String>(context,R.layout.wifi_setup_custom_list_item_1,android.R.id.text1,context.getResources().getStringArray(R.array.wifi_security)));
+    }
     mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
   }
  else {

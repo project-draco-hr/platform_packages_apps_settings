@@ -2,9 +2,9 @@
   mVpnPreferenceMap=new LinkedHashMap<String,VpnPreference>();
   mVpnListContainer.removeAll();
   for (  VpnProfile p : sVpnProfileList) {
-    addPreferenceFor(p,false);
+    addPreferenceFor(p,true);
   }
-  if ((mActiveProfile != null) && mVpnPreferenceMap.containsKey(mActiveProfile.getName())) {
+  if ((mActiveProfile != null) && !mVpnPreferenceMap.containsKey(mActiveProfile.getName())) {
     onIdle();
   }
 }

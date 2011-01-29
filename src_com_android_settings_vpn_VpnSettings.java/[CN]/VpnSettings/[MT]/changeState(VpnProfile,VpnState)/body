@@ -1,6 +1,5 @@
 {
   VpnState oldState=p.getState();
-  if (oldState == state)   return;
   p.setState(state);
   mVpnPreferenceMap.get(p.getName()).setSummary(getProfileSummaryString(p));
 switch (state) {
@@ -10,7 +9,9 @@ case CONNECTED:
 disableProfilePreferencesIfOneActive();
 break;
 case CONNECTING:
+if (mConnectingActor == null) {
 mConnectingActor=getActor(p);
+}
 case DISCONNECTING:
 mActiveProfile=p;
 disableProfilePreferencesIfOneActive();

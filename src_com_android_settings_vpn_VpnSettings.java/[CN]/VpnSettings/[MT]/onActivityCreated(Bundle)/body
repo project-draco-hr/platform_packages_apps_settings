@@ -1,16 +1,4 @@
 {
   super.onActivityCreated(savedInstanceState);
-  mVpnManager=new VpnManager(getActivity());
-  mVpnListContainer=(PreferenceCategory)findPreference(PREF_VPN_LIST);
-  mAddVpn=(PreferenceScreen)findPreference(PREF_ADD_VPN);
-  mAddVpn.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-    public boolean onPreferenceClick(    Preference preference){
-      startVpnTypeSelection();
-      return true;
-    }
-  }
-);
   registerForContextMenu(getListView());
-  retrieveVpnListFromStorage();
-  restoreInstanceState(savedInstanceState);
 }

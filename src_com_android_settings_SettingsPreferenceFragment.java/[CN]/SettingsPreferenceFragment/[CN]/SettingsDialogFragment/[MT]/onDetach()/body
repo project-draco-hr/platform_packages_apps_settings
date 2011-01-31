@@ -1,6 +1,8 @@
 {
   super.onDetach();
-  if (((SettingsPreferenceFragment)mParentFragment).mDialogFragment == this) {
-    ((SettingsPreferenceFragment)mParentFragment).mDialogFragment=null;
+  if (mParentFragment instanceof SettingsPreferenceFragment) {
+    if (((SettingsPreferenceFragment)mParentFragment).mDialogFragment == this) {
+      ((SettingsPreferenceFragment)mParentFragment).mDialogFragment=null;
+    }
   }
 }

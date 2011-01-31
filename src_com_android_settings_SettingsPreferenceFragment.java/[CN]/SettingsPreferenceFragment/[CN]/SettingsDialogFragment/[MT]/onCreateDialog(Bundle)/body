@@ -8,7 +8,9 @@
         throw new IllegalArgumentException(KEY_PARENT_FRAGMENT_ID + " must implement " + DialogCreatable.class.getName());
       }
     }
-    ((SettingsPreferenceFragment)mParentFragment).mDialogFragment=this;
+    if (mParentFragment instanceof SettingsPreferenceFragment) {
+      ((SettingsPreferenceFragment)mParentFragment).mDialogFragment=this;
+    }
   }
   return ((DialogCreatable)mParentFragment).onCreateDialog(mDialogId);
 }

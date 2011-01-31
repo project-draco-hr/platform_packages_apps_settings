@@ -1,4 +1,8 @@
 {
+  int quality=new LockPatternUtils(getActivity()).getKeyguardStoredPasswordQuality();
+  if (quality < MIN_PASSWORD_QUALITY) {
+    return false;
+  }
   Resources res=getActivity().getResources();
   return new ChooseLockSettingsHelper(getActivity(),this).launchConfirmationActivity(request,res.getText(R.string.master_clear_gesture_prompt),res.getText(R.string.master_clear_gesture_explanation));
 }

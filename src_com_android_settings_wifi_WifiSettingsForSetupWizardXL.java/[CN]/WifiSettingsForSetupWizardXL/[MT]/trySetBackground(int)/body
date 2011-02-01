@@ -1,5 +1,6 @@
 {
-  if (mBackgroundId != resId) {
+  final int orientation=getResources().getConfiguration().orientation;
+  if (orientation == Configuration.ORIENTATION_LANDSCAPE && mBackgroundId != resId) {
     getWindow().setBackgroundDrawable(getResources().getDrawable(resId));
     mBackgroundId=resId;
   }

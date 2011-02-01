@@ -9,8 +9,8 @@
     mCheckBoxPreference.setSummaryOn(null);
     return;
   }
-  String formattedTimeLeft=String.valueOf((endTimestamp - currentTimestamp) / 1000);
-  mCheckBoxPreference.setSummaryOn(mContext.getResources().getString(R.string.bluetooth_is_discoverable,formattedTimeLeft));
+  int timeLeft=(int)((endTimestamp - currentTimestamp) / 1000L);
+  updateTimerDisplay(timeLeft);
 synchronized (this) {
     mUiHandler.removeCallbacks(mUpdateCountdownSummaryRunnable);
     mUiHandler.postDelayed(mUpdateCountdownSummaryRunnable,1000);

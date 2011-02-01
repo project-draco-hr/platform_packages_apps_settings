@@ -6,10 +6,7 @@
  else   if (intent != null && intent.getAction().equals(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE)) {
     mTimeout=intent.getIntExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,BluetoothDiscoverableEnabler.DEFAULT_DISCOVERABLE_TIMEOUT);
     Log.e(TAG,"Timeout = " + mTimeout);
-    if (mTimeout > MAX_DISCOVERABLE_TIMEOUT) {
-      mTimeout=MAX_DISCOVERABLE_TIMEOUT;
-    }
- else     if (mTimeout <= 0) {
+    if (mTimeout <= 0) {
       mTimeout=BluetoothDiscoverableEnabler.DEFAULT_DISCOVERABLE_TIMEOUT;
     }
   }

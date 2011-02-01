@@ -4,6 +4,12 @@
   Configuration config=getResources().getConfiguration();
   mHaveHardKeyboard=(config.keyboard == Configuration.KEYBOARD_QWERTY);
   mInputMethodId=getActivity().getIntent().getStringExtra(android.provider.Settings.EXTRA_INPUT_METHOD_ID);
+  if (mInputMethodId == null && (getArguments() != null)) {
+    final String inputMethodId=getArguments().getString(android.provider.Settings.EXTRA_INPUT_METHOD_ID);
+    if (inputMethodId != null) {
+      mInputMethodId=inputMethodId;
+    }
+  }
   onCreateIMM();
   setPreferenceScreen(createPreferenceHierarchy());
 }

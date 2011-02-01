@@ -1,5 +1,9 @@
 {
   String state=SystemProperties.get("vold.encrypt_progress");
+  if ("error_partially_encrypted".equals(state)) {
+    showFactoryReset();
+    return;
+  }
   int progress=0;
   try {
     progress=Integer.parseInt(state);

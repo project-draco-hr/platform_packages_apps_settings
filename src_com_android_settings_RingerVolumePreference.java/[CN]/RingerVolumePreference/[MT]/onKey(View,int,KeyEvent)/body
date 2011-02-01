@@ -1,0 +1,16 @@
+{
+  boolean isdown=(event.getAction() == KeyEvent.ACTION_DOWN);
+switch (keyCode) {
+case KeyEvent.KEYCODE_VOLUME_DOWN:
+case KeyEvent.KEYCODE_VOLUME_UP:
+case KeyEvent.KEYCODE_VOLUME_MUTE:
+    if (mIgnoreVolumeKeys) {
+      return true;
+    }
+ else {
+      return super.onKey(v,keyCode,event);
+    }
+default :
+  return false;
+}
+}

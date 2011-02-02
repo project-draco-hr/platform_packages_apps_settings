@@ -3,8 +3,10 @@
   if (requestCode != KEYGUARD_REQUEST) {
     return;
   }
-  if (resultCode == Activity.RESULT_OK) {
+  if (resultCode == Activity.RESULT_OK && data != null) {
     String password=data.getStringExtra("password");
-    showFinalConfirmation(password);
+    if (!TextUtils.isEmpty(password)) {
+      showFinalConfirmation(password);
+    }
   }
 }

@@ -7,15 +7,6 @@
     pm.setComponentEnabledSetting(name,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,0);
     return;
   }
-  String progress=SystemProperties.get("vold.encrypt_progress");
-  if (!"".equals(progress)) {
-    setContentView(R.layout.crypt_keeper_progress);
-    encryptionProgressInit();
-  }
- else {
-    setContentView(R.layout.crypt_keeper_password_entry);
-    passwordEntryInit();
-  }
   StatusBarManager sbm=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);
   sbm.disable(StatusBarManager.DISABLE_EXPAND | StatusBarManager.DISABLE_NOTIFICATION_ICONS | StatusBarManager.DISABLE_NOTIFICATION_ALERTS| StatusBarManager.DISABLE_SYSTEM_INFO| StatusBarManager.DISABLE_NAVIGATION| StatusBarManager.DISABLE_BACK);
   Object lastInstance=getLastNonConfigurationInstance();

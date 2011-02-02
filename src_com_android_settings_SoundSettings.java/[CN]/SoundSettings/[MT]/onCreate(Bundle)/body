@@ -1,7 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   ContentResolver resolver=getContentResolver();
-  int activePhoneType=TelephonyManager.getDefault().getPhoneType();
+  int activePhoneType=TelephonyManager.getDefault().getCurrentPhoneType();
   mAudioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
   addPreferencesFromResource(R.xml.sound_settings);
   if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {

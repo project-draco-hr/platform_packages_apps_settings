@@ -1,0 +1,14 @@
+{
+  for (int i=0; i < SEEKBAR_TYPE.length; i++) {
+    int streamType=SEEKBAR_TYPE[i];
+    boolean muted=mAudioManager.isStreamMute(streamType);
+    if (mCheckBoxes[i] != null) {
+      mCheckBoxes[i].setImageResource(muted ? SEEKBAR_MUTED_RES_ID[i] : SEEKBAR_UNMUTED_RES_ID[i]);
+    }
+    if (mSeekBars[i] != null) {
+      mSeekBars[i].setEnabled(!muted);
+      final int volume=muted ? mAudioManager.getLastAudibleStreamVolume(streamType) : mAudioManager.getStreamVolume(streamType);
+      mSeekBars[i].setProgress(volume);
+    }
+  }
+}

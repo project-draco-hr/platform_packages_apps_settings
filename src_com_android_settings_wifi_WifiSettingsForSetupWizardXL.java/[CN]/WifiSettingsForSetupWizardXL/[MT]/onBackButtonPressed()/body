@@ -1,11 +1,12 @@
 {
   trySetBackground(R.drawable.setups_bg_default);
-  if (mAfterConnectAction) {
+  if (mScreenState == SCREEN_STATE_CONNECTING || mScreenState == SCREEN_STATE_CONNECTED) {
     if (DEBUG)     Log.d(TAG,"Back button pressed after connect action.");
-    mAfterConnectAction=false;
+    mScreenState=SCREEN_STATE_DISCONNECTED;
     restoreFirstButtonVisibilityState();
     mSkipOrNextButton.setEnabled(true);
     changeNextButtonState(false);
+    mProgressBar.setIndeterminate(true);
     refreshAccessPoints(true);
   }
  else {
@@ -15,7 +16,7 @@
     mRefreshButton.setEnabled(true);
     mSkipOrNextButton.setEnabled(true);
   }
-  findViewById(R.id.wifi_setup).setVisibility(View.VISIBLE);
+  mWifiSettingsFragmentLayout.setVisibility(View.VISIBLE);
   mConnectingStatusLayout.setVisibility(View.GONE);
   final ViewGroup parent=(ViewGroup)findViewById(R.id.wifi_config_ui);
   parent.removeAllViews();

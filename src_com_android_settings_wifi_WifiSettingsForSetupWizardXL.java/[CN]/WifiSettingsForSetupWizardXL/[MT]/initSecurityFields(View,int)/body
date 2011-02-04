@@ -1,0 +1,21 @@
+{
+  view.findViewById(R.id.eap_not_supported).setVisibility(View.GONE);
+  view.findViewById(R.id.eap_not_supported_for_add_network).setVisibility(View.GONE);
+  view.findViewById(R.id.ssid_text).setVisibility(View.VISIBLE);
+  view.findViewById(R.id.ssid_layout).setVisibility(View.VISIBLE);
+  if (accessPointSecurity == AccessPoint.SECURITY_EAP) {
+    hideSoftwareKeyboard();
+    if (view.findViewById(R.id.type).getVisibility() == View.VISIBLE) {
+      view.findViewById(R.id.eap_not_supported_for_add_network).setVisibility(View.VISIBLE);
+    }
+ else {
+      view.findViewById(R.id.eap_not_supported).setVisibility(View.VISIBLE);
+    }
+    view.findViewById(R.id.security_fields).setVisibility(View.GONE);
+    view.findViewById(R.id.ssid_text).setVisibility(View.GONE);
+    view.findViewById(R.id.ssid_layout).setVisibility(View.GONE);
+    onEapNetworkSelected();
+    return false;
+  }
+  return true;
+}

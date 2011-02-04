@@ -1,6 +1,8 @@
 {
-  final View layoutRoot=findViewById(R.id.layout_root);
-  layoutRoot.setSystemUiVisibility(View.STATUS_BAR_DISABLE_BACK);
+  if (getIntent().getBooleanExtra("firstRun",false)) {
+    final View layoutRoot=findViewById(R.id.layout_root);
+    layoutRoot.setSystemUiVisibility(View.STATUS_BAR_DISABLE_BACK);
+  }
   mTitleView=(TextView)findViewById(R.id.wifi_setup_title);
   mProgressBar=(ProgressBar)findViewById(R.id.scanning_progress_bar);
   mProgressBar.setMax(2);
@@ -17,6 +19,7 @@
   mBackButton.setOnClickListener(this);
   mTopPadding=findViewById(R.id.top_padding);
   mWifiConfigPadding=findViewById(R.id.wifi_config_padding);
+  mWifiSettingsFragmentLayout=findViewById(R.id.wifi_settings_fragment_layout);
   mConnectingStatusLayout=findViewById(R.id.connecting_status_layout);
   mConnectingStatusView=(TextView)findViewById(R.id.connecting_status);
   showScanningStatus();

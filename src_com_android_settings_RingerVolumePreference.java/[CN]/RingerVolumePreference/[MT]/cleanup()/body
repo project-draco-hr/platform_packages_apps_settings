@@ -9,4 +9,8 @@
       mSeekBarVolumizer[i]=null;
     }
   }
+  if (mRingModeChangedReceiver != null) {
+    getContext().unregisterReceiver(mRingModeChangedReceiver);
+    mRingModeChangedReceiver=null;
+  }
 }

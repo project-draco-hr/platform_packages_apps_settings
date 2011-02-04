@@ -1,0 +1,11 @@
+{
+switch (mAudioManager.getRingerMode()) {
+case AudioManager.RINGER_MODE_NORMAL:
+    mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+  break;
+case AudioManager.RINGER_MODE_VIBRATE:
+case AudioManager.RINGER_MODE_SILENT:
+mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+break;
+}
+}

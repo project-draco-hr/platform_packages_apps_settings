@@ -30,6 +30,7 @@
   if (authVal != null) {
     values.put(Telephony.Carriers.AUTH_TYPE,Integer.parseInt(authVal));
   }
+  values.put(Telephony.Carriers.PROTOCOL,checkNotSet(mProtocol.getValue()));
   values.put(Telephony.Carriers.TYPE,checkNotSet(mApnType.getText()));
   values.put(Telephony.Carriers.MCC,mcc);
   values.put(Telephony.Carriers.MNC,mnc);

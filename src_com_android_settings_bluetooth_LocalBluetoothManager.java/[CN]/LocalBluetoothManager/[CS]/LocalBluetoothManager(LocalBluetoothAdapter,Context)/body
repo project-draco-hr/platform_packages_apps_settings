@@ -1,0 +1,7 @@
+{
+  mContext=context;
+  mLocalAdapter=adapter;
+  mCachedDeviceManager=new CachedBluetoothDeviceManager();
+  mEventManager=new BluetoothEventManager(mLocalAdapter,mCachedDeviceManager);
+  mProfileManager=new LocalBluetoothProfileManager(context,mLocalAdapter,mCachedDeviceManager,mEventManager);
+}

@@ -1,0 +1,12 @@
+{
+  if (!ensurePaired()) {
+    return;
+  }
+  if (profile.connect(mDevice)) {
+    if (Utils.D) {
+      Log.d(TAG,"Command sent successfully:CONNECT " + describe(profile));
+    }
+    return;
+  }
+  Log.i(TAG,"Failed to connect " + profile.toString() + " to "+ mName);
+}

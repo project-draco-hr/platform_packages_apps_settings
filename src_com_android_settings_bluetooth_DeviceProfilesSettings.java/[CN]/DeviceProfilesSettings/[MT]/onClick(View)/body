@@ -1,16 +1,16 @@
 {
-  if (v.getTag() instanceof Profile) {
-    Profile prof=(Profile)v.getTag();
-    CheckBoxPreference autoConnectPref=mAutoConnectPrefs.get(prof.toString());
+  if (v.getTag() instanceof LocalBluetoothProfile) {
+    LocalBluetoothProfile prof=(LocalBluetoothProfile)v.getTag();
+    CheckBoxPreference autoConnectPref=mAutoConnectPrefs.get(prof);
     if (autoConnectPref == null) {
       autoConnectPref=new CheckBoxPreference(getActivity());
       autoConnectPref.setLayoutResource(com.android.internal.R.layout.preference_child);
       autoConnectPref.setKey(prof.toString());
       autoConnectPref.setTitle(R.string.bluetooth_auto_connect);
-      autoConnectPref.setOrder(getProfilePreferenceIndex(prof) + 1);
+      autoConnectPref.setOrder(getProfilePreferenceIndex(prof.getOrdinal()) + 1);
       autoConnectPref.setChecked(getAutoConnect(prof));
       autoConnectPref.setOnPreferenceChangeListener(this);
-      mAutoConnectPrefs.put(prof.name(),autoConnectPref);
+      mAutoConnectPrefs.put(prof,autoConnectPref);
     }
     BluetoothProfilePreference profilePref=(BluetoothProfilePreference)findPreference(prof.toString());
     if (profilePref != null) {

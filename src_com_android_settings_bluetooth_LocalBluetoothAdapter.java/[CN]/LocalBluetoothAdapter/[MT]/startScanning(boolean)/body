@@ -1,0 +1,16 @@
+{
+  if (!mAdapter.isDiscovering()) {
+    if (!force) {
+      if (mLastScan + SCAN_EXPIRATION_MS > System.currentTimeMillis()) {
+        return;
+      }
+      A2dpProfile a2dp=mProfileManager.getA2dpProfile();
+      if (a2dp != null && a2dp.isA2dpPlaying()) {
+        return;
+      }
+    }
+    if (mAdapter.startDiscovery()) {
+      mLastScan=System.currentTimeMillis();
+    }
+  }
+}

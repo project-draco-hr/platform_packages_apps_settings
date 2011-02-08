@@ -1,11 +1,8 @@
 {
   int timeout=SystemProperties.getInt(SYSTEM_PROPERTY_DISCOVERABLE_TIMEOUT,-1);
   if (timeout < 0) {
-    String timeoutValue=null;
-    if (mTimeoutListPreference != null && mTimeoutListPreference.getValue() != null) {
-      timeoutValue=mTimeoutListPreference.getValue().toString();
-    }
- else {
+    String timeoutValue=mTimeoutListPreference.getValue();
+    if (timeoutValue == null) {
       mTimeoutListPreference.setValue(VALUE_DISCOVERABLE_TIMEOUT_TWO_MINUTES);
       return DISCOVERABLE_TIMEOUT_TWO_MINUTES;
     }

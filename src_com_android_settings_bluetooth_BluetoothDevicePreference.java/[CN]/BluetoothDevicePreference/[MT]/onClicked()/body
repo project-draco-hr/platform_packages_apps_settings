@@ -1,0 +1,12 @@
+{
+  int bondState=mCachedDevice.getBondState();
+  if (mCachedDevice.isConnected()) {
+    askDisconnect();
+  }
+ else   if (bondState == BluetoothDevice.BOND_BONDED) {
+    mCachedDevice.connect(true);
+  }
+ else   if (bondState == BluetoothDevice.BOND_NONE) {
+    pair();
+  }
+}

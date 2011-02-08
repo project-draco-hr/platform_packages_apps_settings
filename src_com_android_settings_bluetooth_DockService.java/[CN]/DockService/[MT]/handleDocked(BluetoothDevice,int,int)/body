@@ -1,9 +1,9 @@
 {
-  if (mBtManager.getDockAutoConnectSetting(device.getAddress())) {
-    initBtSettings(mContext,device,state,false);
+  if (LocalBluetoothPreferences.getDockAutoConnectSetting(this,device.getAddress())) {
+    initBtSettings(device,state,false);
     applyBtSettings(mDevice,startId);
   }
  else {
-    createDialog(mContext,device,state,startId);
+    createDialog(device,state,startId);
   }
 }

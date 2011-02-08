@@ -1,0 +1,9 @@
+{
+synchronized (mCallbacks) {
+    for (    BluetoothCallback callback : mCallbacks) {
+      callback.onScanningStateChanged(mStarted);
+    }
+  }
+  mDeviceManager.onScanningStateChanged(mStarted);
+  LocalBluetoothPreferences.persistDiscoveringTimestamp(context);
+}

@@ -1,7 +1,7 @@
 {
   String key=preference.getKey();
   if (preference instanceof BluetoothProfilePreference) {
-    onProfileClicked(Profile.valueOf(key));
+    onProfileClicked(mProfileManager.getProfileByName(key));
     return true;
   }
  else   if (key.equals(KEY_UNPAIR)) {
@@ -9,5 +9,5 @@
     finish();
     return true;
   }
-  return false;
+  return super.onPreferenceTreeClick(screen,preference);
 }

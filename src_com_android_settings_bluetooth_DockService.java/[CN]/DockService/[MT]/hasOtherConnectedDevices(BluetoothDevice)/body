@@ -1,15 +1,17 @@
 {
-  List<CachedBluetoothDevice> cachedDevices=mBtManager.getCachedDeviceManager().getCachedDevicesCopy();
-  Set<BluetoothDevice> btDevices=mBtManager.getBluetoothAdapter().getBondedDevices();
-  if (btDevices == null || cachedDevices == null || btDevices.size() == 0) {
+  Collection<CachedBluetoothDevice> cachedDevices=mDeviceManager.getCachedDevicesCopy();
+  Set<BluetoothDevice> btDevices=mLocalAdapter.getBondedDevices();
+  if (btDevices == null || cachedDevices == null || btDevices.isEmpty()) {
     return false;
   }
-  if (DEBUG)   Log.d(TAG,"btDevices = " + btDevices.size());
-  if (DEBUG)   Log.d(TAG,"cachedDevices = " + cachedDevices.size());
-  for (  CachedBluetoothDevice device : cachedDevices) {
-    BluetoothDevice btDevice=device.getDevice();
-    if (!btDevice.equals(dock) && btDevices.contains(btDevice) && device.isConnected()) {
-      if (DEBUG)       Log.d(TAG,"connected device = " + device.getName());
+  if (DEBUG) {
+    Log.d(TAG,"btDevices = " + btDevices.size());
+    Log.d(TAG,"cachedDeviceUIs = " + cachedDevices.size());
+  }
+  for (  CachedBluetoothDevice deviceUI : cachedDevices) {
+    BluetoothDevice btDevice=deviceUI.getDevice();
+    if (!btDevice.equals(dock) && btDevices.contains(btDevice) && deviceUI.isConnected()) {
+      if (DEBUG)       Log.d(TAG,"connected deviceUI = " + deviceUI.getName());
       return true;
     }
   }

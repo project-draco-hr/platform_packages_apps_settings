@@ -1,0 +1,12 @@
+{
+  boolean success=enabled ? mAdapter.enable() : mAdapter.disable();
+  if (success) {
+    setBluetoothStateInt(enabled ? BluetoothAdapter.STATE_TURNING_ON : BluetoothAdapter.STATE_TURNING_OFF);
+  }
+ else {
+    if (Utils.V) {
+      Log.v(TAG,"setBluetoothEnabled call, manager didn't return " + "success for enabled: " + enabled);
+    }
+    syncBluetoothState();
+  }
+}

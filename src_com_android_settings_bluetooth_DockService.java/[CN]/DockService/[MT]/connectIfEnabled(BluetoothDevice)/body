@@ -1,21 +1,10 @@
 {
-  CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(mContext,mBtManager,device);
-  List<Profile> profiles=cachedDevice.getConnectableProfiles();
-  for (int i=0; i < profiles.size(); i++) {
-    LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mBtManager,profiles.get(i));
-    int auto;
-    if (Profile.A2DP == profiles.get(i)) {
-      auto=BluetoothA2dp.PRIORITY_AUTO_CONNECT;
-    }
- else     if (Profile.HEADSET == profiles.get(i)) {
-      auto=BluetoothHeadset.PRIORITY_AUTO_CONNECT;
-    }
- else {
-      continue;
-    }
-    if (profileManager.getPreferred(device) == auto) {
+  CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(device);
+  List<LocalBluetoothProfile> profiles=cachedDevice.getConnectableProfiles();
+  for (  LocalBluetoothProfile profile : profiles) {
+    if (profile.getPreferred(device) == BluetoothProfile.PRIORITY_AUTO_CONNECT) {
       cachedDevice.connect(false);
-      break;
+      return;
     }
   }
 }

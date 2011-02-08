@@ -1,0 +1,11 @@
+{
+  final AlertController.AlertParams p=mAlertParams;
+  p.mIconId=android.R.drawable.ic_dialog_info;
+  p.mTitle=getString(R.string.bluetooth_pairing_request);
+  p.mView=createView(deviceManager);
+  p.mPositiveButtonText=getString(R.string.bluetooth_pairing_accept);
+  p.mPositiveButtonListener=this;
+  p.mNegativeButtonText=getString(R.string.bluetooth_pairing_decline);
+  p.mNegativeButtonListener=this;
+  setupAlert();
+}

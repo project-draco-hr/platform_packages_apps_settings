@@ -3,13 +3,13 @@
     Locale locale=Locale.getDefault();
     final AssetManager am=getActivity().getAssets();
     String path=HELP_PATH.replace("%y",locale.getLanguage().toLowerCase());
-    path=path.replace("%z","_" + locale.getCountry().toLowerCase());
+    path=path.replace("%z",'_' + locale.getCountry().toLowerCase());
     boolean useCountry=true;
     InputStream is=null;
     try {
       is=am.open(path);
     }
- catch (    Exception e) {
+ catch (    Exception ignored) {
       useCountry=false;
     }
  finally {
@@ -17,12 +17,12 @@
         try {
           is.close();
         }
- catch (        Exception e) {
+ catch (        Exception ignored) {
         }
       }
     }
     String url=HELP_URL.replace("%y",locale.getLanguage().toLowerCase());
-    url=url.replace("%z",(useCountry ? "_" + locale.getCountry().toLowerCase() : ""));
+    url=url.replace("%z",useCountry ? '_' + locale.getCountry().toLowerCase() : "");
     if ((mUsbRegexs.length != 0) && (mWifiRegexs.length == 0)) {
       url=url.replace("%x",USB_HELP_MODIFIER);
     }

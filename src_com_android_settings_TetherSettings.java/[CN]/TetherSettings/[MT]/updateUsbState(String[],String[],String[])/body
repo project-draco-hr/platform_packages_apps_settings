@@ -1,9 +1,7 @@
 {
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-  boolean usbTethered=false;
   boolean usbAvailable=false;
   int usbError=ConnectivityManager.TETHER_ERROR_NO_ERROR;
-  boolean usbErrored=false;
   boolean massStorageActive=Environment.MEDIA_SHARED.equals(Environment.getExternalStorageState());
   for (  String s : available) {
     for (    String regex : mUsbRegexs) {
@@ -15,11 +13,13 @@
       }
     }
   }
+  boolean usbTethered=false;
   for (  String s : tethered) {
     for (    String regex : mUsbRegexs) {
       if (s.matches(regex))       usbTethered=true;
     }
   }
+  boolean usbErrored=false;
   for (  String s : errored) {
     for (    String regex : mUsbRegexs) {
       if (s.matches(regex))       usbErrored=true;

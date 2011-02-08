@@ -1,0 +1,9 @@
+{
+  int state=intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothAdapter.ERROR);
+  mLocalAdapter.setBluetoothStateInt(state);
+synchronized (mCallbacks) {
+    for (    BluetoothCallback callback : mCallbacks) {
+      callback.onBluetoothStateChanged(state);
+    }
+  }
+}

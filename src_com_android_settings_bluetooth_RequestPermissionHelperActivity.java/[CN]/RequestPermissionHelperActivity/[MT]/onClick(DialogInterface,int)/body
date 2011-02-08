@@ -1,27 +1,27 @@
 {
   int returnCode;
 switch (which) {
-case DialogInterface.BUTTON_POSITIVE:
+case BUTTON_POSITIVE:
     int btState=0;
   try {
     int retryCount=30;
     do {
-      btState=mLocalManager.getBluetoothState();
+      btState=mLocalAdapter.getBluetoothState();
       Thread.sleep(100);
     }
  while (btState == BluetoothAdapter.STATE_TURNING_OFF && --retryCount > 0);
   }
- catch (  InterruptedException e) {
+ catch (  InterruptedException ignored) {
   }
-if (btState == BluetoothAdapter.STATE_TURNING_ON || btState == BluetoothAdapter.STATE_ON || mLocalManager.getBluetoothAdapter().enable()) {
+if (btState == BluetoothAdapter.STATE_TURNING_ON || btState == BluetoothAdapter.STATE_ON || mLocalAdapter.enable()) {
   returnCode=RequestPermissionActivity.RESULT_BT_STARTING_OR_STARTED;
 }
  else {
-  returnCode=Activity.RESULT_CANCELED;
+  returnCode=RESULT_CANCELED;
 }
 break;
-case DialogInterface.BUTTON_NEGATIVE:
-returnCode=Activity.RESULT_CANCELED;
+case BUTTON_NEGATIVE:
+returnCode=RESULT_CANCELED;
 break;
 default :
 return;

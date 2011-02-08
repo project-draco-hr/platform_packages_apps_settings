@@ -1,24 +1,22 @@
 {
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-  boolean bluetoothTethered=false;
-  boolean bluetoothAvailable=false;
   int bluetoothError=ConnectivityManager.TETHER_ERROR_NO_ERROR;
-  boolean bluetoothErrored=false;
   for (  String s : available) {
     for (    String regex : mBluetoothRegexs) {
       if (s.matches(regex)) {
-        bluetoothAvailable=true;
         if (bluetoothError == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
           bluetoothError=cm.getLastTetherError(s);
         }
       }
     }
   }
+  boolean bluetoothTethered=false;
   for (  String s : tethered) {
     for (    String regex : mBluetoothRegexs) {
       if (s.matches(regex))       bluetoothTethered=true;
     }
   }
+  boolean bluetoothErrored=false;
   for (  String s : errored) {
     for (    String regex : mBluetoothRegexs) {
       if (s.matches(regex))       bluetoothErrored=true;

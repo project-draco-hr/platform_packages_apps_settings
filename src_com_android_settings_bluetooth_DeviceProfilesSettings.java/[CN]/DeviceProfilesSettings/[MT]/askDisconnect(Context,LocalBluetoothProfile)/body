@@ -1,0 +1,20 @@
+{
+  final CachedBluetoothDevice device=mCachedDevice;
+  String name=device.getName();
+  if (TextUtils.isEmpty(name)) {
+    name=context.getString(R.string.bluetooth_device);
+  }
+  int disconnectMessage=profile.getDisconnectResource();
+  if (disconnectMessage == 0) {
+    Log.w(TAG,"askDisconnect: unexpected profile " + profile);
+    disconnectMessage=R.string.bluetooth_disconnect_blank;
+  }
+  String message=context.getString(disconnectMessage,name);
+  DialogInterface.OnClickListener disconnectListener=new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      device.disconnect(profile);
+    }
+  }
+;
+  mDisconnectDialog=Utils.showDisconnectDialog(context,mDisconnectDialog,disconnectListener,name,message);
+}

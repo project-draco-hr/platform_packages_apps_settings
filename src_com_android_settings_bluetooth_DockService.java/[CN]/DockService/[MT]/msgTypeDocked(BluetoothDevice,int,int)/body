@@ -1,0 +1,31 @@
+{
+  if (DEBUG) {
+    Log.d(TAG,"1 Has undock perm msg = " + mServiceHandler.hasMessages(MSG_TYPE_UNDOCKED_PERMANENT,mDevice));
+    Log.d(TAG,"2 Has undock perm msg = " + mServiceHandler.hasMessages(MSG_TYPE_UNDOCKED_PERMANENT,device));
+  }
+  mServiceHandler.removeMessages(MSG_TYPE_UNDOCKED_PERMANENT);
+  mServiceHandler.removeMessages(MSG_TYPE_DISABLE_BT);
+  getPrefs().edit().remove(KEY_DISABLE_BT).apply();
+  if (device != null && !device.equals(mDevice)) {
+    if (mDevice != null) {
+      handleUndocked(mDevice);
+    }
+    mDevice=device;
+    mProfileManager.addServiceListener(this);
+    if (mProfileManager.isManagerReady()) {
+      handleDocked(device,state,startId);
+      mProfileManager.removeServiceListener(this);
+    }
+ else {
+      final BluetoothDevice d=device;
+      mRunnable=new Runnable(){
+        public void run(){
+          handleDocked(d,state,startId);
+        }
+      }
+;
+      return true;
+    }
+  }
+  return false;
+}

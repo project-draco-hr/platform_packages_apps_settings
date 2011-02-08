@@ -1,7 +1,7 @@
 {
   super.onClick();
   EditText et=getEditText();
-  if (et != null) {
-    et.setText(mLocalManager.getBluetoothAdapter().getName());
+  if (et != null && mLocalAdapter != null) {
+    et.setText(mLocalAdapter.getName());
   }
 }

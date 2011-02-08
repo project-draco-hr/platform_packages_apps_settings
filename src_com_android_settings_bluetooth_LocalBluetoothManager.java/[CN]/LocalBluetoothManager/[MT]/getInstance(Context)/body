@@ -1,12 +1,11 @@
 {
-synchronized (LocalBluetoothManager.class) {
-    if (sInstance == null) {
-      sInstance=new LocalBluetoothManager();
-      if (!sInstance.init(context)) {
-        return null;
-      }
-      LocalBluetoothProfileManager.init(sInstance);
+  if (sInstance == null) {
+    LocalBluetoothAdapter adapter=LocalBluetoothAdapter.getInstance();
+    if (adapter == null) {
+      return null;
     }
-    return sInstance;
+    Context appContext=context.getApplicationContext();
+    sInstance=new LocalBluetoothManager(adapter,appContext);
   }
+  return sInstance;
 }

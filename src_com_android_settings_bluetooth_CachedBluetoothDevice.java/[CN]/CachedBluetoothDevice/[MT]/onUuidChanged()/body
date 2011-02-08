@@ -3,7 +3,7 @@
   if (DEBUG) {
     Log.e(TAG,"onUuidChanged: Time since last connect" + (SystemClock.elapsedRealtime() - mConnectAttempted));
   }
-  if (mProfiles.size() > 0 && (mConnectAttempted + MAX_UUID_DELAY_FOR_AUTO_CONNECT) > SystemClock.elapsedRealtime()) {
+  if (!mProfiles.isEmpty() && (mConnectAttempted + MAX_UUID_DELAY_FOR_AUTO_CONNECT) > SystemClock.elapsedRealtime()) {
     connectWithoutResettingTimer(false);
   }
   dispatchAttributesChanged();

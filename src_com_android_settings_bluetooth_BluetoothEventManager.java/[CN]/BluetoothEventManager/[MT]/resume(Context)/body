@@ -1,0 +1,11 @@
+{
+  if (mLocalAdapter.syncBluetoothState()) {
+    int newState=mLocalAdapter.getState();
+synchronized (mCallbacks) {
+      for (      BluetoothCallback callback : mCallbacks) {
+        callback.onBluetoothStateChanged(newState);
+      }
+    }
+  }
+  context.registerReceiver(mBroadcastReceiver,mIntentFilter);
+}

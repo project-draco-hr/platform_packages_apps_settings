@@ -1,0 +1,7 @@
+{
+  String action=intent.getAction();
+  Log.v(TAG,"Received: " + action);
+  if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED) || action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
+    LocalBluetoothPreferences.persistDiscoveringTimestamp(context);
+  }
+}

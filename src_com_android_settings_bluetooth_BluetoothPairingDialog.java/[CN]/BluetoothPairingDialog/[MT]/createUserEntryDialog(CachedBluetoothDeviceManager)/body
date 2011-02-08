@@ -1,0 +1,13 @@
+{
+  final AlertController.AlertParams p=mAlertParams;
+  p.mIconId=android.R.drawable.ic_dialog_info;
+  p.mTitle=getString(R.string.bluetooth_pairing_request);
+  p.mView=createView(deviceManager);
+  p.mPositiveButtonText=getString(android.R.string.ok);
+  p.mPositiveButtonListener=this;
+  p.mNegativeButtonText=getString(android.R.string.cancel);
+  p.mNegativeButtonListener=this;
+  setupAlert();
+  mOkButton=mAlert.getButton(BUTTON_POSITIVE);
+  mOkButton.setEnabled(false);
+}

@@ -1,10 +1,10 @@
 {
-  int mode=mLocalManager.getBluetoothAdapter().getScanMode();
+  int mode=mLocalAdapter.getScanMode();
   if (mode != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
     return;
   }
   long currentTimestamp=System.currentTimeMillis();
-  long endTimestamp=mLocalManager.getSharedPreferences().getLong(SHARED_PREFERENCES_KEY_DISCOVERABLE_END_TIMESTAMP,0);
+  long endTimestamp=LocalBluetoothPreferences.getDiscoverableEndTimestamp(mContext);
   if (currentTimestamp > endTimestamp) {
     mCheckBoxPreference.setSummaryOn(null);
     return;

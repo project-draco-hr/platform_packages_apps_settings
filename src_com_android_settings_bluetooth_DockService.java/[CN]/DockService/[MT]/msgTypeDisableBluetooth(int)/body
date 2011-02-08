@@ -1,0 +1,18 @@
+{
+  if (DEBUG) {
+    Log.d(TAG,"BT DISABLE");
+  }
+  final SharedPreferences prefs=getPrefs();
+  if (mLocalAdapter.disable()) {
+    prefs.edit().remove(KEY_DISABLE_BT_WHEN_UNDOCKED).apply();
+    return false;
+  }
+ else {
+    prefs.edit().putBoolean(KEY_DISABLE_BT,true).apply();
+    mPendingTurnOffStartId=startId;
+    if (DEBUG) {
+      Log.d(TAG,"disable failed. try again later " + startId);
+    }
+    return true;
+  }
+}

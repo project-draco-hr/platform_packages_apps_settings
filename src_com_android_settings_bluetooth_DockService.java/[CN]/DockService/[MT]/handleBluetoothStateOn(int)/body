@@ -1,0 +1,41 @@
+{
+  if (mPendingDevice != null) {
+    if (mPendingDevice.equals(mDevice)) {
+      if (DEBUG) {
+        Log.d(TAG,"applying settings");
+      }
+      applyBtSettings(mPendingDevice,mPendingStartId);
+    }
+ else     if (DEBUG) {
+      Log.d(TAG,"mPendingDevice  (" + mPendingDevice + ") != mDevice ("+ mDevice+ ')');
+    }
+    mPendingDevice=null;
+    DockEventReceiver.finishStartingService(this,mPendingStartId);
+  }
+ else {
+    final SharedPreferences prefs=getPrefs();
+    if (DEBUG) {
+      Log.d(TAG,"A DISABLE_BT_WHEN_UNDOCKED = " + prefs.getBoolean(KEY_DISABLE_BT_WHEN_UNDOCKED,false));
+    }
+    Intent i=registerReceiver(null,new IntentFilter(Intent.ACTION_DOCK_EVENT));
+    if (i != null) {
+      int state=i.getIntExtra(Intent.EXTRA_DOCK_STATE,Intent.EXTRA_DOCK_STATE_UNDOCKED);
+      if (state != Intent.EXTRA_DOCK_STATE_UNDOCKED) {
+        BluetoothDevice device=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+        if (device != null) {
+          connectIfEnabled(device);
+        }
+      }
+ else       if (prefs.getBoolean(KEY_DISABLE_BT,false) && mLocalAdapter.disable()) {
+        mPendingTurnOffStartId=startId;
+        prefs.edit().remove(KEY_DISABLE_BT).apply();
+        return;
+      }
+    }
+  }
+  if (mPendingTurnOnStartId != INVALID_STARTID) {
+    DockEventReceiver.finishStartingService(this,mPendingTurnOnStartId);
+    mPendingTurnOnStartId=INVALID_STARTID;
+  }
+  DockEventReceiver.finishStartingService(this,startId);
+}

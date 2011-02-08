@@ -1,8 +1,6 @@
 {
   super.onResume();
-  mLocalManager.registerCallback(this);
-  updateProgressUi(mLocalManager.getBluetoothAdapter().isDiscovering());
-  IntentFilter intentFilter=new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-  getActivity().registerReceiver(mReceiver,intentFilter);
   mLocalManager.setForegroundActivity(getActivity());
+  mLocalManager.getEventManager().registerCallback(this);
+  updateProgressUi(mLocalAdapter.isDiscovering());
 }

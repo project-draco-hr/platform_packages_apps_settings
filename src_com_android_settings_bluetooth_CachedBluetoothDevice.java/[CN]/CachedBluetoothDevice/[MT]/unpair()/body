@@ -5,15 +5,15 @@
     mDevice.cancelBondProcess();
   }
   if (state != BluetoothDevice.BOND_NONE) {
-    final BluetoothDevice dev=getDevice();
+    final BluetoothDevice dev=mDevice;
     if (dev != null) {
       final boolean successful=dev.removeBond();
       if (successful) {
-        if (D) {
+        if (Utils.D) {
           Log.d(TAG,"Command sent successfully:REMOVE_BOND " + describe(null));
         }
       }
- else       if (V) {
+ else       if (Utils.V) {
         Log.v(TAG,"Framework rejected command immediately:REMOVE_BOND " + describe(null));
       }
     }

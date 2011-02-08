@@ -1,0 +1,10 @@
+{
+  if (Utils.D) {
+    Log.d(TAG,"onProfileStateChanged: profile " + profile + " newProfileState "+ newProfileState);
+  }
+  if (newProfileState == BluetoothProfile.STATE_CONNECTED) {
+    if (!mProfiles.contains(profile)) {
+      mProfiles.add(profile);
+    }
+  }
+}

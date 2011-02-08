@@ -1,0 +1,35 @@
+{
+  BluetoothClass btClass=mCachedDevice.getBtClass();
+  if (btClass != null) {
+switch (btClass.getMajorDeviceClass()) {
+case BluetoothClass.Device.Major.COMPUTER:
+      return R.drawable.ic_bt_laptop;
+case BluetoothClass.Device.Major.PHONE:
+    return R.drawable.ic_bt_cellphone;
+case BluetoothClass.Device.Major.PERIPHERAL:
+  return HidProfile.getHidClassDrawable(btClass);
+case BluetoothClass.Device.Major.IMAGING:
+return R.drawable.ic_bt_imaging;
+default :
+}
+}
+ else {
+Log.w(TAG,"mBtClass is null");
+}
+List<LocalBluetoothProfile> profiles=mCachedDevice.getProfiles();
+for (LocalBluetoothProfile profile : profiles) {
+int resId=profile.getDrawableResource(btClass);
+if (resId != 0) {
+return resId;
+}
+}
+if (btClass != null) {
+if (btClass.doesClassMatch(BluetoothClass.PROFILE_A2DP)) {
+return R.drawable.ic_bt_headphones_a2dp;
+}
+if (btClass.doesClassMatch(BluetoothClass.PROFILE_HEADSET)) {
+return R.drawable.ic_bt_headset_hfp;
+}
+}
+return 0;
+}

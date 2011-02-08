@@ -1,0 +1,17 @@
+{
+  mContext=context;
+  mLocalAdapter=adapter;
+  mDeviceManager=deviceManager;
+  mEventManager=eventManager;
+  mLocalAdapter.setProfileManager(this);
+  mEventManager.setProfileManager(this);
+  ParcelUuid[] uuids=adapter.getUuids();
+  if (uuids != null) {
+    updateLocalProfiles(uuids);
+  }
+  mHidProfile=new HidProfile(context,mLocalAdapter);
+  addProfile(mHidProfile,HidProfile.NAME,BluetoothInputDevice.ACTION_CONNECTION_STATE_CHANGED);
+  mPanProfile=new PanProfile(context);
+  addProfile(mPanProfile,PanProfile.NAME,BluetoothPan.ACTION_CONNECTION_STATE_CHANGED);
+  Log.d(TAG,"LocalBluetoothProfileManager construction complete");
+}

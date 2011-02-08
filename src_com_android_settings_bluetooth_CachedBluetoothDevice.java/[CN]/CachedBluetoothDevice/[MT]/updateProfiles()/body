@@ -1,17 +1,16 @@
 {
   ParcelUuid[] uuids=mDevice.getUuids();
   if (uuids == null)   return false;
-  BluetoothAdapter adapter=mLocalManager.getBluetoothAdapter();
-  ParcelUuid[] localUuids=adapter.getUuids();
+  ParcelUuid[] localUuids=mLocalAdapter.getUuids();
   if (localUuids == null)   return false;
-  LocalBluetoothProfileManager.updateProfiles(uuids,localUuids,mProfiles);
+  mProfileManager.updateProfiles(uuids,localUuids,mProfiles);
   if (DEBUG) {
     Log.e(TAG,"updating profiles for " + mDevice.getName());
     BluetoothClass bluetoothClass=mDevice.getBluetoothClass();
     if (bluetoothClass != null)     Log.v(TAG,"Class: " + bluetoothClass.toString());
     Log.v(TAG,"UUID:");
-    for (int i=0; i < uuids.length; i++) {
-      Log.v(TAG,"  " + uuids[i]);
+    for (    ParcelUuid uuid : uuids) {
+      Log.v(TAG,"  " + uuid);
     }
   }
   return true;

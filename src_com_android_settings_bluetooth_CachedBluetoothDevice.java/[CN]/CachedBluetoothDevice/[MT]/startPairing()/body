@@ -1,0 +1,10 @@
+{
+  if (mLocalAdapter.isDiscovering()) {
+    mLocalAdapter.cancelDiscovery();
+  }
+  if (!mDevice.createBond()) {
+    return false;
+  }
+  mConnectAfterPairing=true;
+  return true;
+}

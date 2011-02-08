@@ -3,7 +3,7 @@
     Log.e(TAG,"Got onDeviceAdded, but cachedDevice already exists");
     return;
   }
-  if (addDevicePreference(cachedDevice)) {
+  if (mFilter.matches(cachedDevice.getDevice())) {
     createDevicePreference(cachedDevice);
   }
 }

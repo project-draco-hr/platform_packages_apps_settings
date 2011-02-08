@@ -1,0 +1,12 @@
+{
+  mRunnable=null;
+  mProfileManager.removeServiceListener(this);
+  if (mDialog != null) {
+    mDialog.dismiss();
+    mDialog=null;
+  }
+  mDevice=null;
+  mPendingDevice=null;
+  CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(device);
+  cachedDevice.disconnect();
+}

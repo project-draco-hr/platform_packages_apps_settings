@@ -1,5 +1,5 @@
 {
-  if (DEBUG)   Log.d(TAG,"onStartCommand startId:" + startId + " flags: "+ flags);
+  if (DEBUG)   Log.d(TAG,"onStartCommand startId: " + startId + " flags: "+ flags);
   if (intent == null) {
     if (DEBUG)     Log.d(TAG,"START_NOT_STICKY - intent is null.");
     DockEventReceiver.finishStartingService(this,startId);
@@ -9,21 +9,22 @@
     handleBtStateChange(intent,startId);
     return START_NOT_STICKY;
   }
+  final SharedPreferences prefs=getPrefs();
   if (BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED.equals(intent.getAction())) {
     BluetoothDevice disconnectedDevice=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-    int retryCount=getSettingInt(SHARED_PREFERENCES_KEY_CONNECT_RETRY_COUNT,0);
+    int retryCount=prefs.getInt(KEY_CONNECT_RETRY_COUNT,0);
     if (retryCount < MAX_CONNECT_RETRY) {
-      setSettingInt(SHARED_PREFERENCES_KEY_CONNECT_RETRY_COUNT,retryCount + 1);
-      handleUnexpectedDisconnect(disconnectedDevice,Profile.HEADSET,startId);
+      prefs.edit().putInt(KEY_CONNECT_RETRY_COUNT,retryCount + 1).apply();
+      handleUnexpectedDisconnect(disconnectedDevice,mProfileManager.getHeadsetProfile(),startId);
     }
     return START_NOT_STICKY;
   }
  else   if (BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED.equals(intent.getAction())) {
     BluetoothDevice disconnectedDevice=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-    int retryCount=getSettingInt(SHARED_PREFERENCES_KEY_CONNECT_RETRY_COUNT,0);
+    int retryCount=prefs.getInt(KEY_CONNECT_RETRY_COUNT,0);
     if (retryCount < MAX_CONNECT_RETRY) {
-      setSettingInt(SHARED_PREFERENCES_KEY_CONNECT_RETRY_COUNT,retryCount + 1);
-      handleUnexpectedDisconnect(disconnectedDevice,Profile.A2DP,startId);
+      prefs.edit().putInt(KEY_CONNECT_RETRY_COUNT,retryCount + 1).apply();
+      handleUnexpectedDisconnect(disconnectedDevice,mProfileManager.getA2dpProfile(),startId);
     }
     return START_NOT_STICKY;
   }
@@ -34,7 +35,7 @@
     return START_NOT_STICKY;
   }
   if (msg.what == MSG_TYPE_DOCKED) {
-    removeSetting(SHARED_PREFERENCES_KEY_CONNECT_RETRY_COUNT);
+    prefs.edit().remove(KEY_CONNECT_RETRY_COUNT).apply();
   }
   msg.arg2=startId;
   processMessage(msg);

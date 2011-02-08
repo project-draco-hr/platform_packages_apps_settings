@@ -1,9 +1,10 @@
 {
-  if (sLocalBluetoothManager == null) {
-    sLocalBluetoothManager=LocalBluetoothManager.getInstance(context);
-    if (sLocalBluetoothManager == null) {
+  if (sLocalBluetoothAdapter == null) {
+    LocalBluetoothManager manager=LocalBluetoothManager.getInstance(context);
+    if (manager == null) {
       return STATE_UNKNOWN;
     }
+    sLocalBluetoothAdapter=manager.getBluetoothAdapter();
   }
-  return bluetoothStateToFiveState(sLocalBluetoothManager.getBluetoothState());
+  return bluetoothStateToFiveState(sLocalBluetoothAdapter.getBluetoothState());
 }

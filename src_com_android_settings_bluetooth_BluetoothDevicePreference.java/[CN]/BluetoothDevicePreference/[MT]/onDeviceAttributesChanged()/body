@@ -1,7 +1,6 @@
 {
   setTitle(mCachedDevice.getName());
-  setSummary(mCachedDevice.getSummary());
-  mIsBusy=mCachedDevice.isBusy();
-  notifyChanged();
+  setSummary(getConnectionSummary());
+  setEnabled(!mCachedDevice.isBusy());
   notifyHierarchyChanged();
 }

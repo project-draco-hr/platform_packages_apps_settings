@@ -1,0 +1,19 @@
+{
+  if (DEBUG) {
+    Log.d(TAG,"handling failed connect for " + disconnectedDevice);
+  }
+  if (disconnectedDevice != null) {
+    Intent intent=registerReceiver(null,new IntentFilter(Intent.ACTION_DOCK_EVENT));
+    if (intent != null) {
+      int state=intent.getIntExtra(Intent.EXTRA_DOCK_STATE,Intent.EXTRA_DOCK_STATE_UNDOCKED);
+      if (state != Intent.EXTRA_DOCK_STATE_UNDOCKED) {
+        BluetoothDevice dockedDevice=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+        if (dockedDevice != null && dockedDevice.equals(disconnectedDevice)) {
+          CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(dockedDevice);
+          cachedDevice.connectProfile(profile);
+        }
+      }
+    }
+  }
+  DockEventReceiver.finishStartingService(this,startId);
+}

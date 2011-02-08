@@ -1,12 +1,9 @@
 {
-  for (  Profile profile : mProfiles) {
-    int status=LocalBluetoothProfileManager.getProfileManager(mLocalManager,profile).getConnectionStatus(mDevice);
-    if (SettingsBtStatus.isConnectionStatusBusy(status)) {
+  for (  LocalBluetoothProfile profile : mProfiles) {
+    int status=profile.getConnectionStatus(mDevice);
+    if (status == BluetoothProfile.STATE_CONNECTING || status == BluetoothProfile.STATE_DISCONNECTING) {
       return true;
     }
   }
-  if (getBondState() == BluetoothDevice.BOND_BONDING) {
-    return true;
-  }
-  return false;
+  return getBondState() == BluetoothDevice.BOND_BONDING;
 }

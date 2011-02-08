@@ -1,0 +1,14 @@
+{
+  super.onCreate(savedInstanceState);
+  mLocalManager=LocalBluetoothManager.getInstance(getActivity());
+  if (mLocalManager == null) {
+    Log.e(TAG,"Bluetooth is not supported on this device");
+    return;
+  }
+  mLocalAdapter=mLocalManager.getBluetoothAdapter();
+  addPreferencesForActivity();
+  mDeviceList=(PreferenceCategory)findPreference(KEY_BT_DEVICE_LIST);
+  if (mDeviceList == null) {
+    Log.e(TAG,"Could not find device list preference object!");
+  }
+}

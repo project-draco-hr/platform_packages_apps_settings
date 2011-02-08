@@ -1,0 +1,43 @@
+{
+  int numOfProfiles;
+switch (state) {
+case Intent.EXTRA_DOCK_STATE_DESK:
+    numOfProfiles=1;
+  break;
+case Intent.EXTRA_DOCK_STATE_CAR:
+numOfProfiles=2;
+break;
+default :
+return null;
+}
+mProfiles=new LocalBluetoothProfile[numOfProfiles];
+mCheckedItems=new boolean[numOfProfiles];
+CharSequence[] items=new CharSequence[numOfProfiles];
+switch (state) {
+case Intent.EXTRA_DOCK_STATE_CAR:
+items[0]=getString(R.string.bluetooth_dock_settings_headset);
+items[1]=getString(R.string.bluetooth_dock_settings_a2dp);
+mProfiles[0]=mProfileManager.getHeadsetProfile();
+mProfiles[1]=mProfileManager.getA2dpProfile();
+if (firstTime) {
+mCheckedItems[0]=true;
+mCheckedItems[1]=true;
+}
+ else {
+mCheckedItems[0]=mProfiles[0].isPreferred(device);
+mCheckedItems[1]=mProfiles[1].isPreferred(device);
+}
+break;
+case Intent.EXTRA_DOCK_STATE_DESK:
+items[0]=getString(R.string.bluetooth_dock_settings_a2dp);
+mProfiles[0]=mProfileManager.getA2dpProfile();
+if (firstTime) {
+mCheckedItems[0]=false;
+}
+ else {
+mCheckedItems[0]=mProfiles[0].isPreferred(device);
+}
+break;
+}
+return items;
+}

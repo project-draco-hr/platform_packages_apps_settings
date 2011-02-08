@@ -1,0 +1,10 @@
+{
+  QueuedWork.singleThreadExecutor().submit(new Runnable(){
+    public void run(){
+      SharedPreferences.Editor editor=getSharedPreferences(context).edit();
+      editor.putLong(KEY_DISCOVERING_TIMESTAMP,System.currentTimeMillis());
+      editor.apply();
+    }
+  }
+);
+}

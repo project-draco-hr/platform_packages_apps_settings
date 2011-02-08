@@ -1,0 +1,14 @@
+{
+  CachedBluetoothDevice cachedDevice=mDeviceManager.findDevice(device);
+  if (cachedDevice == null) {
+    Log.w(TAG,"received ACTION_DISAPPEARED for an unknown device: " + device);
+    return;
+  }
+  if (mDeviceManager.onDeviceDisappeared(cachedDevice)) {
+synchronized (mCallbacks) {
+      for (      BluetoothCallback callback : mCallbacks) {
+        callback.onDeviceDeleted(cachedDevice);
+      }
+    }
+  }
+}

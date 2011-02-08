@@ -1,53 +1,52 @@
 {
-  if (device == null || mProfiles == null || mCheckedItems == null)   return;
-synchronized (this) {
-    for (    boolean enable : mCheckedItems) {
-      if (enable) {
-        int btState=mBtManager.getBluetoothState();
-        if (DEBUG)         Log.d(TAG,"BtState = " + btState);
-        mBtManager.getBluetoothAdapter().enable();
-switch (btState) {
-case BluetoothAdapter.STATE_OFF:
-case BluetoothAdapter.STATE_TURNING_OFF:
-case BluetoothAdapter.STATE_TURNING_ON:
-          if (mPendingDevice != null && mPendingDevice.equals(mDevice)) {
-            return;
-          }
+  if (device == null || mProfiles == null || mCheckedItems == null || mLocalAdapter == null) {
+    return;
+  }
+  for (  boolean enable : mCheckedItems) {
+    if (enable) {
+      int btState=mLocalAdapter.getBluetoothState();
+      if (DEBUG) {
+        Log.d(TAG,"BtState = " + btState);
+      }
+      mLocalAdapter.enable();
+      if (btState != BluetoothAdapter.STATE_ON) {
+        if (mPendingDevice != null && mPendingDevice.equals(mDevice)) {
+          return;
+        }
         mPendingDevice=device;
-      mPendingStartId=startId;
-    if (btState != BluetoothAdapter.STATE_TURNING_ON) {
-      setSettingBool(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED,true);
+        mPendingStartId=startId;
+        if (btState != BluetoothAdapter.STATE_TURNING_ON) {
+          getPrefs().edit().putBoolean(KEY_DISABLE_BT_WHEN_UNDOCKED,true).apply();
+        }
+        return;
+      }
     }
-  return;
-}
-}
-}
-}
-mPendingDevice=null;
-boolean callConnect=false;
-CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(mContext,mBtManager,device);
-for (int i=0; i < mProfiles.length; i++) {
-LocalBluetoothProfileManager profileManager=LocalBluetoothProfileManager.getProfileManager(mBtManager,mProfiles[i]);
-if (DEBUG) Log.d(TAG,mProfiles[i].toString() + " = " + mCheckedItems[i]);
-if (mCheckedItems[i]) {
-callConnect=true;
-}
- else if (!mCheckedItems[i]) {
-int status=profileManager.getConnectionStatus(cachedDevice.getDevice());
-if (SettingsBtStatus.isConnectionStatusConnected(status)) {
-if (DEBUG) Log.d(TAG,"applyBtSettings - Disconnecting");
-cachedDevice.disconnect(mProfiles[i]);
-}
-}
-profileManager.setPreferred(device,mCheckedItems[i]);
-if (DEBUG) {
-if (mCheckedItems[i] != profileManager.isPreferred(device)) {
-Log.e(TAG,"Can't save preferred value");
-}
-}
-}
-if (callConnect) {
-if (DEBUG) Log.d(TAG,"applyBtSettings - Connecting");
-cachedDevice.connect(false);
-}
+  }
+  mPendingDevice=null;
+  boolean callConnect=false;
+  CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(device);
+  for (int i=0; i < mProfiles.length; i++) {
+    LocalBluetoothProfile profile=mProfiles[i];
+    if (DEBUG)     Log.d(TAG,profile.toString() + " = " + mCheckedItems[i]);
+    if (mCheckedItems[i]) {
+      callConnect=true;
+    }
+ else     if (!mCheckedItems[i]) {
+      int status=profile.getConnectionStatus(cachedDevice.getDevice());
+      if (status == BluetoothProfile.STATE_CONNECTED) {
+        if (DEBUG)         Log.d(TAG,"applyBtSettings - Disconnecting");
+        cachedDevice.disconnect(mProfiles[i]);
+      }
+    }
+    profile.setPreferred(device,mCheckedItems[i]);
+    if (DEBUG) {
+      if (mCheckedItems[i] != profile.isPreferred(device)) {
+        Log.e(TAG,"Can't save preferred value");
+      }
+    }
+  }
+  if (callConnect) {
+    if (DEBUG)     Log.d(TAG,"applyBtSettings - Connecting");
+    cachedDevice.connect(false);
+  }
 }

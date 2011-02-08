@@ -1,4 +1,8 @@
 {
   super.onPrepareForRemoval();
   mCachedDevice.unregisterCallback(this);
+  if (mDisconnectDialog != null) {
+    mDisconnectDialog.dismiss();
+    mDisconnectDialog=null;
+  }
 }

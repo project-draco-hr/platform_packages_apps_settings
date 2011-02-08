@@ -9,7 +9,7 @@
   mAirplaneModeEnabler=new AirplaneModeEnabler(activity,airplane);
   mAirplaneModePreference=(CheckBoxPreference)findPreference(KEY_TOGGLE_AIRPLANE);
   mWifiEnabler=new WifiEnabler(activity,wifi);
-  mBtEnabler=new BluetoothEnabler(activity,bt);
+  mBtEnabler=new BluetoothEnabler(activity,LocalBluetoothManager.getInstance(activity).getBluetoothAdapter(),bt);
   mNfcEnabler=new NfcEnabler(activity,nfc);
   String toggleable=Settings.System.getString(activity.getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   if (toggleable == null || !toggleable.contains(Settings.System.RADIO_WIFI)) {

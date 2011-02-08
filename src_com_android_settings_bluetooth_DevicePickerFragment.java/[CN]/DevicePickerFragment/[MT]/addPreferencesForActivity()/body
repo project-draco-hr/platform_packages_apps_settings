@@ -1,0 +1,8 @@
+{
+  addPreferencesFromResource(R.xml.device_picker);
+  Intent intent=getActivity().getIntent();
+  mNeedAuth=intent.getBooleanExtra(BluetoothDevicePicker.EXTRA_NEED_AUTH,false);
+  setFilter(intent.getIntExtra(BluetoothDevicePicker.EXTRA_FILTER_TYPE,BluetoothDevicePicker.FILTER_TYPE_ALL));
+  mLaunchPackage=intent.getStringExtra(BluetoothDevicePicker.EXTRA_LAUNCH_PACKAGE);
+  mLaunchClass=intent.getStringExtra(BluetoothDevicePicker.EXTRA_LAUNCH_CLASS);
+}

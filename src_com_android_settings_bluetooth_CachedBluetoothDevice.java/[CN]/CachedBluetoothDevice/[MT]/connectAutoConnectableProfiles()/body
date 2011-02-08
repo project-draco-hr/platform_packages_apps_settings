@@ -1,0 +1,12 @@
+{
+  if (!ensurePaired()) {
+    return;
+  }
+  mIsConnectingErrorPossible=true;
+  for (  LocalBluetoothProfile profile : mProfiles) {
+    if (profile.isAutoConnectable()) {
+      profile.setPreferred(mDevice,true);
+      connectInt(profile);
+    }
+  }
+}

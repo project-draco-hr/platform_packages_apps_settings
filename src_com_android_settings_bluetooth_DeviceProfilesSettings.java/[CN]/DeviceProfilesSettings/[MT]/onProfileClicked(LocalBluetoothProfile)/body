@@ -1,0 +1,11 @@
+{
+  BluetoothDevice device=mCachedDevice.getDevice();
+  int status=profile.getConnectionStatus(device);
+  boolean isConnected=status == BluetoothProfile.STATE_CONNECTED;
+  if (isConnected) {
+    askDisconnect(getActivity(),profile);
+  }
+ else {
+    mCachedDevice.connectProfile(profile);
+  }
+}

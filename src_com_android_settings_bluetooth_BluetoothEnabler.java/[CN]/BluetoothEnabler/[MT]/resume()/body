@@ -1,8 +1,8 @@
 {
-  if (mLocalManager == null) {
+  if (mLocalAdapter == null) {
     return;
   }
-  handleStateChanged(mLocalManager.getBluetoothState());
+  handleStateChanged(mLocalAdapter.getBluetoothState());
   mContext.registerReceiver(mReceiver,mIntentFilter);
   mCheckBox.setOnPreferenceChangeListener(this);
 }

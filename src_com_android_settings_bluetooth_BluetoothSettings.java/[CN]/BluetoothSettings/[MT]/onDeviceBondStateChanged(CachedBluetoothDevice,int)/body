@@ -1,9 +1,7 @@
 {
   if (bondState == BluetoothDevice.BOND_BONDED) {
     if (mDevicePreferenceMap.get(cachedDevice) == null) {
-      if (addDevicePreference(cachedDevice)) {
-        createDevicePreference(cachedDevice);
-      }
+      createDevicePreference(cachedDevice);
     }
   }
  else   if (bondState == BluetoothDevice.BOND_NONE) {

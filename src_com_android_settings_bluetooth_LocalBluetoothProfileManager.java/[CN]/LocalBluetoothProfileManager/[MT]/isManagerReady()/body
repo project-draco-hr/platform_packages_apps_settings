@@ -1,7 +1,11 @@
 {
-  LocalBluetoothProfileManager profileManager=sProfileMap.get(Profile.HEADSET);
-  if (profileManager == null) {
-    return sProfileMap.size() > 0;
+  LocalBluetoothProfile profile=mHeadsetProfile;
+  if (profile != null) {
+    return profile.isProfileReady();
   }
-  return profileManager.isProfileReady();
+  profile=mA2dpProfile;
+  if (profile != null) {
+    return profile.isProfileReady();
+  }
+  return false;
 }

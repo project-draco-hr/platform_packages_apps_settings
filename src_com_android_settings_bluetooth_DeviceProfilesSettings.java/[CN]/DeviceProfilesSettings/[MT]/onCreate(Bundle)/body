@@ -8,25 +8,28 @@
     Bundle args=getArguments();
     device=args.getParcelable(EXTRA_DEVICE);
   }
+  addPreferencesFromResource(R.xml.bluetooth_device_advanced);
+  getPreferenceScreen().setOrderingAsAdded(false);
+  mProfileContainer=(PreferenceGroup)findPreference(KEY_PROFILE_CONTAINER);
+  mDeviceNamePref=(EditTextPreference)findPreference(KEY_RENAME_DEVICE);
   if (device == null) {
     Log.w(TAG,"Activity started without a remote Bluetooth device");
     finish();
     return;
   }
   mManager=LocalBluetoothManager.getInstance(getActivity());
-  mCachedDevice=mManager.getCachedDeviceManager().findDevice(device);
+  CachedBluetoothDeviceManager deviceManager=mManager.getCachedDeviceManager();
+  mProfileManager=mManager.getProfileManager();
+  mCachedDevice=deviceManager.findDevice(device);
   if (mCachedDevice == null) {
     Log.w(TAG,"Device not found, cannot connect to it");
     finish();
     return;
   }
-  addPreferencesFromResource(R.xml.bluetooth_device_advanced);
-  getPreferenceScreen().setOrderingAsAdded(false);
-  mProfileContainer=(PreferenceGroup)findPreference(KEY_PROFILE_CONTAINER);
-  mDeviceNamePref=(EditTextPreference)findPreference(KEY_RENAME_DEVICE);
-  mDeviceNamePref.setSummary(mCachedDevice.getName());
-  mDeviceNamePref.setText(mCachedDevice.getName());
+  String deviceName=mCachedDevice.getName();
+  mDeviceNamePref.setSummary(deviceName);
+  mDeviceNamePref.setText(deviceName);
   mDeviceNamePref.setOnPreferenceChangeListener(this);
-  findPreference(KEY_TITLE).setTitle(getResources().getString(R.string.bluetooth_device_advanced_title,mCachedDevice.getName()));
+  findPreference(KEY_TITLE).setTitle(getString(R.string.bluetooth_device_advanced_title,deviceName));
   addPreferencesForProfiles();
 }

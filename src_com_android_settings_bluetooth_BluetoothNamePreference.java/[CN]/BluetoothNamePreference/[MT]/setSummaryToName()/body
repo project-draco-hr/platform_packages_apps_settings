@@ -1,6 +1,5 @@
 {
-  BluetoothAdapter adapter=mLocalManager.getBluetoothAdapter();
-  if (adapter.isEnabled()) {
-    setSummary(adapter.getName());
+  if (mLocalAdapter != null && mLocalAdapter.isEnabled()) {
+    setSummary(mLocalAdapter.getName());
   }
 }

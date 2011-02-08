@@ -3,56 +3,21 @@
 synchronized (this) {
     if (DEBUG)     Log.d(TAG,"BtState = " + btState + " mPendingDevice = "+ mPendingDevice);
     if (btState == BluetoothAdapter.STATE_ON) {
-      if (mPendingDevice != null) {
-        if (mPendingDevice.equals(mDevice)) {
-          if (DEBUG)           Log.d(TAG,"applying settings");
-          applyBtSettings(mPendingDevice,mPendingStartId);
-        }
- else         if (DEBUG) {
-          Log.d(TAG,"mPendingDevice  (" + mPendingDevice + ") != mDevice ("+ mDevice+ ")");
-        }
-        mPendingDevice=null;
-        DockEventReceiver.finishStartingService(mContext,mPendingStartId);
-      }
- else {
-        if (DEBUG) {
-          Log.d(TAG,"A DISABLE_BT_WHEN_UNDOCKED = " + getSettingBool(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED));
-        }
-        Intent i=registerReceiver(null,new IntentFilter(Intent.ACTION_DOCK_EVENT));
-        if (i != null) {
-          int state=i.getIntExtra(Intent.EXTRA_DOCK_STATE,Intent.EXTRA_DOCK_STATE_UNDOCKED);
-          if (state != Intent.EXTRA_DOCK_STATE_UNDOCKED) {
-            BluetoothDevice device=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            if (device != null) {
-              connectIfEnabled(device);
-            }
-          }
- else           if (getSettingBool(SHARED_PREFERENCES_KEY_DISABLE_BT) && mBtManager.getBluetoothAdapter().disable()) {
-            mPendingTurnOffStartId=startId;
-            removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT);
-            return;
-          }
-        }
-      }
-      if (mPendingTurnOnStartId != INVALID_STARTID) {
-        DockEventReceiver.finishStartingService(this,mPendingTurnOnStartId);
-        mPendingTurnOnStartId=INVALID_STARTID;
-      }
-      DockEventReceiver.finishStartingService(this,startId);
+      handleBluetoothStateOn(startId);
     }
  else     if (btState == BluetoothAdapter.STATE_TURNING_OFF) {
-      removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT_WHEN_UNDOCKED);
+      getPrefs().edit().remove(KEY_DISABLE_BT_WHEN_UNDOCKED).apply();
       DockEventReceiver.finishStartingService(this,startId);
     }
  else     if (btState == BluetoothAdapter.STATE_OFF) {
       if (DEBUG)       Log.d(TAG,"Bluetooth = OFF mPendingDevice = " + mPendingDevice);
       if (mPendingTurnOffStartId != INVALID_STARTID) {
         DockEventReceiver.finishStartingService(this,mPendingTurnOffStartId);
-        removeSetting(SHARED_PREFERENCES_KEY_DISABLE_BT);
+        getPrefs().edit().remove(KEY_DISABLE_BT).apply();
         mPendingTurnOffStartId=INVALID_STARTID;
       }
       if (mPendingDevice != null) {
-        mBtManager.getBluetoothAdapter().enable();
+        mLocalAdapter.enable();
         mPendingTurnOnStartId=startId;
       }
  else {

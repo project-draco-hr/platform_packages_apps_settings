@@ -12,14 +12,15 @@
   }
  else {
     Log.e(TAG,"Error: this activity may be started only with intent " + BluetoothAdapter.ACTION_REQUEST_ENABLE + " or "+ BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-    setResult(Activity.RESULT_CANCELED);
+    setResult(RESULT_CANCELED);
     return true;
   }
-  mLocalManager=LocalBluetoothManager.getInstance(this);
-  if (mLocalManager == null) {
-    Log.e(TAG,"Error: there's a problem starting bluetooth");
-    setResult(Activity.RESULT_CANCELED);
+  LocalBluetoothManager manager=LocalBluetoothManager.getInstance(this);
+  if (manager == null) {
+    Log.e(TAG,"Error: there's a problem starting Bluetooth");
+    setResult(RESULT_CANCELED);
     return true;
   }
+  mLocalAdapter=manager.getBluetoothAdapter();
   return false;
 }

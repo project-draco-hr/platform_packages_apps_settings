@@ -1,14 +1,13 @@
 {
-  BluetoothAdapter manager=mLocalManager.getBluetoothAdapter();
   if (enable) {
     int timeout=getDiscoverableTimeout();
-    manager.setDiscoverableTimeout(timeout);
+    mLocalAdapter.setDiscoverableTimeout(timeout);
     long endTimestamp=System.currentTimeMillis() + timeout * 1000L;
-    persistDiscoverableEndTimestamp(endTimestamp);
+    LocalBluetoothPreferences.persistDiscoverableEndTimestamp(mContext,endTimestamp);
     updateCountdownSummary();
-    manager.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,timeout);
+    mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,timeout);
   }
  else {
-    manager.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE);
+    mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE);
   }
 }

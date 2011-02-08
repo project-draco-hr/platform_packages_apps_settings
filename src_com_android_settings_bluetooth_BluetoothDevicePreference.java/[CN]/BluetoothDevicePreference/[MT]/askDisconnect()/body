@@ -1,0 +1,15 @@
+{
+  Context context=getContext();
+  String name=mCachedDevice.getName();
+  if (TextUtils.isEmpty(name)) {
+    name=context.getString(R.string.bluetooth_device);
+  }
+  String message=context.getString(R.string.bluetooth_disconnect_blank,name);
+  DialogInterface.OnClickListener disconnectListener=new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      mCachedDevice.disconnect();
+    }
+  }
+;
+  mDisconnectDialog=Utils.showDisconnectDialog(context,mDisconnectDialog,disconnectListener,name,message);
+}

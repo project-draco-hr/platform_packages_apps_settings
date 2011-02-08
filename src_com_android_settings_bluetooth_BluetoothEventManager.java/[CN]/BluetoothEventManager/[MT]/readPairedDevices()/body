@@ -1,0 +1,16 @@
+{
+  Set<BluetoothDevice> bondedDevices=mLocalAdapter.getBondedDevices();
+  if (bondedDevices == null) {
+    return false;
+  }
+  boolean deviceAdded=false;
+  for (  BluetoothDevice device : bondedDevices) {
+    CachedBluetoothDevice cachedDevice=mDeviceManager.findDevice(device);
+    if (cachedDevice == null) {
+      cachedDevice=mDeviceManager.addDevice(mLocalAdapter,mProfileManager,device);
+      dispatchDeviceAdded(cachedDevice);
+      deviceAdded=true;
+    }
+  }
+  return deviceAdded;
+}

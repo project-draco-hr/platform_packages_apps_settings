@@ -1,9 +1,8 @@
 {
   super.onPause();
-  mLocalManager.stopScanning();
+  mLocalAdapter.stopScanning();
   mLocalManager.setForegroundActivity(null);
+  mLocalManager.getEventManager().unregisterCallback(this);
   mDevicePreferenceMap.clear();
   mDeviceList.removeAll();
-  getActivity().unregisterReceiver(mReceiver);
-  mLocalManager.unregisterCallback(this);
 }

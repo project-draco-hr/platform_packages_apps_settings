@@ -1,7 +1,17 @@
 {
   if (DEBUG)   Log.d(TAG,"onCreate");
-  mBtManager=LocalBluetoothManager.getInstance(this);
-  mContext=this;
+  LocalBluetoothManager manager=LocalBluetoothManager.getInstance(this);
+  if (manager == null) {
+    Log.e(TAG,"Can't get LocalBluetoothManager: exiting");
+    return;
+  }
+  mLocalAdapter=manager.getBluetoothAdapter();
+  mDeviceManager=manager.getCachedDeviceManager();
+  mProfileManager=manager.getProfileManager();
+  if (mProfileManager == null) {
+    Log.e(TAG,"Can't get LocalBluetoothProfileManager: exiting");
+    return;
+  }
   HandlerThread thread=new HandlerThread("DockService");
   thread.start();
   mServiceLooper=thread.getLooper();

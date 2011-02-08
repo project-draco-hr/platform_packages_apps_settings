@@ -1,0 +1,16 @@
+{
+  if (dialog == null) {
+    dialog=new AlertDialog.Builder(context).setPositiveButton(android.R.string.ok,disconnectListener).setNegativeButton(android.R.string.cancel,null).create();
+  }
+ else {
+    if (dialog.isShowing()) {
+      dialog.dismiss();
+    }
+    CharSequence okText=context.getText(android.R.string.ok);
+    dialog.setButton(DialogInterface.BUTTON_POSITIVE,okText,disconnectListener);
+  }
+  dialog.setTitle(title);
+  dialog.setMessage(message);
+  dialog.show();
+  return dialog;
+}

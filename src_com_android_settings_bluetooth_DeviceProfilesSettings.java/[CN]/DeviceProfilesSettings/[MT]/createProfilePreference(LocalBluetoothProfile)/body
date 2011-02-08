@@ -1,0 +1,16 @@
+{
+  BluetoothProfilePreference pref=new BluetoothProfilePreference(getActivity(),profile);
+  pref.setKey(profile.toString());
+  pref.setTitle(profile.getNameResource());
+  pref.setExpanded(false);
+  pref.setPersistent(false);
+  pref.setOrder(getProfilePreferenceIndex(profile.getOrdinal()));
+  pref.setOnExpandClickListener(this);
+  int iconResource=profile.getDrawableResource(null);
+  if (iconResource != 0) {
+    pref.setProfileDrawable(getResources().getDrawable(iconResource));
+  }
+  pref.setEnabled(!mCachedDevice.isBusy());
+  refreshProfilePreference(pref,profile);
+  return pref;
+}

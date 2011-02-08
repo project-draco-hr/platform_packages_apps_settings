@@ -1,0 +1,9 @@
+{
+  if (sInstance == null) {
+    BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+    if (adapter != null) {
+      sInstance=new LocalBluetoothAdapter(adapter);
+    }
+  }
+  return sInstance;
+}

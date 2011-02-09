@@ -21,9 +21,9 @@
         mIpAddressView.setText(linkAddress.getAddress().getHostAddress());
         mNetworkPrefixLengthView.setText(Integer.toString(linkAddress.getNetworkPrefixLength()));
       }
-      InetAddress gateway=linkProperties.getGateway();
-      if (gateway != null) {
-        mGatewayView.setText(linkProperties.getGateway().getHostAddress());
+      Iterator<InetAddress> gateways=linkProperties.getGateways().iterator();
+      if (gateways.hasNext()) {
+        mGatewayView.setText(gateways.next().getHostAddress());
       }
       Iterator<InetAddress> dnsIterator=linkProperties.getDnses().iterator();
       if (dnsIterator.hasNext()) {

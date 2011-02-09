@@ -14,7 +14,14 @@
     if (!InetAddress.isNumeric(gateway)) {
       return R.string.wifi_ip_settings_invalid_gateway;
     }
-    linkProperties.setGateway(InetAddress.getByName(gateway));
+    InetAddress gatewayAddr;
+    try {
+      gatewayAddr=InetAddress.getByName(gateway);
+    }
+ catch (    UnknownHostException e) {
+      return R.string.wifi_ip_settings_invalid_gateway;
+    }
+    linkProperties.addGateway(gatewayAddr);
     String dns=mDns1View.getText().toString();
     if (!InetAddress.isNumeric(dns)) {
       return R.string.wifi_ip_settings_invalid_dns;

@@ -4,7 +4,7 @@
   }
   trySetBackground(R.drawable.setups_bg_default);
   mWifiSettings.pauseWifiScan();
-  findViewById(R.id.wifi_setup).setVisibility(View.GONE);
+  mWifiSettingsFragmentLayout.setVisibility(View.GONE);
   mConnectingStatusLayout.setVisibility(View.GONE);
   final ViewGroup parent=(ViewGroup)findViewById(R.id.wifi_config_ui);
   parent.setVisibility(View.VISIBLE);
@@ -13,9 +13,6 @@
   mConnectButton.setTag(null);
   if (selectedAccessPoint == null) {
     showAddNetworkTitle();
-    if (mWifiConfig != null) {
-      mWifiConfig.getView().findViewById(R.id.wifi_general_info).setVisibility(View.GONE);
-    }
     mConnectButton.setVisibility(View.VISIBLE);
     mConnectButton.setTag(CONNECT_BUTTON_TAG_ADD_NETWORK);
     showEditingButtonState();
@@ -29,8 +26,7 @@
     showEditingTitle();
     showEditingButtonState();
     if (selectedAccessPoint.security == AccessPoint.SECURITY_EAP) {
-      mConnectButton.setVisibility(View.GONE);
-      mBackButton.setText(R.string.wifi_setup_back);
+      onEapNetworkSelected();
     }
  else {
       mConnectButton.setVisibility(View.VISIBLE);

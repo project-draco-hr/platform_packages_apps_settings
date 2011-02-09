@@ -1,10 +1,10 @@
 {
-  if (mAccessPointSecurity == AccessPoint.SECURITY_NONE) {
-    mView.findViewById(R.id.security_fields).setVisibility(View.GONE);
-    return;
+  if (mInXlSetupWizard) {
+    if (!((WifiSettingsForSetupWizardXL)mConfigUi.getContext()).initSecurityFields(mView,mAccessPointSecurity)) {
+      return;
+    }
   }
- else   if (mAccessPointSecurity == AccessPoint.SECURITY_EAP && mInXlSetupWizard) {
-    mView.findViewById(R.id.eap_not_supported).setVisibility(View.VISIBLE);
+  if (mAccessPointSecurity == AccessPoint.SECURITY_NONE) {
     mView.findViewById(R.id.security_fields).setVisibility(View.GONE);
     return;
   }

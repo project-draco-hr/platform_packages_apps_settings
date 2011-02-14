@@ -11,8 +11,14 @@ synchronized (mEntriesMap) {
     if (mApplications == null) {
       mApplications=new ArrayList<ApplicationInfo>();
     }
-    for (int i=0; i < mAppEntries.size(); i++) {
-      mAppEntries.get(i).sizeStale=true;
+    if (mInterestingConfigChanges.applyNewConfig(mContext.getResources())) {
+      mEntriesMap.clear();
+      mAppEntries.clear();
+    }
+ else {
+      for (int i=0; i < mAppEntries.size(); i++) {
+        mAppEntries.get(i).sizeStale=true;
+      }
     }
     for (int i=0; i < mApplications.size(); i++) {
       final ApplicationInfo info=mApplications.get(i);

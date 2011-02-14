@@ -2,6 +2,12 @@
 synchronized (mLock) {
     mResumed=true;
     mRefreshUiListener=listener;
+    if (mInterestingConfigChanges.applyNewConfig(mApplicationContext.getResources())) {
+      mHaveData=false;
+      mBackgroundHandler.removeMessages(MSG_RESET_CONTENTS);
+      mBackgroundHandler.removeMessages(MSG_UPDATE_CONTENTS);
+      mBackgroundHandler.sendEmptyMessage(MSG_RESET_CONTENTS);
+    }
     if (!mBackgroundHandler.hasMessages(MSG_UPDATE_CONTENTS)) {
       mBackgroundHandler.sendEmptyMessage(MSG_UPDATE_CONTENTS);
     }

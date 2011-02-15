@@ -6,7 +6,10 @@
   mTitleView=(TextView)findViewById(R.id.wifi_setup_title);
   mProgressBar=(ProgressBar)findViewById(R.id.scanning_progress_bar);
   mProgressBar.setMax(2);
+  mTopDividerNoProgress=findViewById(R.id.top_divider_no_progress);
+  mProgressBar.setVisibility(View.VISIBLE);
   mProgressBar.setIndeterminate(true);
+  mTopDividerNoProgress.setVisibility(View.GONE);
   mAddNetworkButton=(Button)findViewById(R.id.wifi_setup_add_network);
   mAddNetworkButton.setOnClickListener(this);
   mRefreshButton=(Button)findViewById(R.id.wifi_setup_refresh_list);

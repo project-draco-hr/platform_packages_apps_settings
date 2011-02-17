@@ -9,9 +9,10 @@
   mWifiApEnabler=new WifiApEnabler(activity,mEnableWifiAp);
   if (mWifiConfig == null) {
     final String s=activity.getString(com.android.internal.R.string.wifi_tether_configure_ssid_default);
-    mCreateNetwork.setSummary(String.format(activity.getString(CONFIG_SUBTEXT),s,mSecurityType[OPEN_INDEX]));
+    mCreateNetwork.setSummary(String.format(activity.getString(CONFIG_SUBTEXT),s,mSecurityType[WifiApDialog.OPEN_INDEX]));
   }
  else {
-    mCreateNetwork.setSummary(String.format(activity.getString(CONFIG_SUBTEXT),mWifiConfig.SSID,mWifiConfig.allowedKeyManagement.get(KeyMgmt.WPA_PSK) ? mSecurityType[WPA_INDEX] : mSecurityType[OPEN_INDEX]));
+    int index=WifiApDialog.getSecurityTypeIndex(mWifiConfig);
+    mCreateNetwork.setSummary(String.format(activity.getString(CONFIG_SUBTEXT),mWifiConfig.SSID,mSecurityType[index]));
   }
 }

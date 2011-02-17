@@ -6,7 +6,7 @@
   }
   int signalDbm=mPhoneStateReceiver.getSignalStrengthDbm();
   if (-1 == signalDbm)   signalDbm=0;
-  int signalAsu=mPhoneStateReceiver.getSignalStrength();
+  int signalAsu=mPhoneStateReceiver.getSignalStrengthLevelAsu();
   if (-1 == signalAsu)   signalAsu=0;
   dBm.setText(String.valueOf(signalDbm) + " " + r.getString(R.string.radioInfo_display_dbm)+ "   "+ String.valueOf(signalAsu)+ " "+ r.getString(R.string.radioInfo_display_asu));
 }

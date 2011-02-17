@@ -1,6 +1,6 @@
 {
   double power=0;
-  final int BINS=BatteryStats.NUM_SIGNAL_STRENGTH_BINS;
+  final int BINS=SignalStrength.NUM_SIGNAL_STRENGTH_BINS;
   long signalTimeMs=0;
   for (int i=0; i < BINS; i++) {
     long strengthTimeMs=mStats.getPhoneSignalStrengthTime(i,uSecNow,mStatsType) / 1000;

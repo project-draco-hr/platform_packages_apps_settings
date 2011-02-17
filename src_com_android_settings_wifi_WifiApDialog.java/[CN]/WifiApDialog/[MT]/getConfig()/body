@@ -1,12 +1,20 @@
 {
   WifiConfiguration config=new WifiConfiguration();
   config.SSID=mSsid.getText().toString();
-switch (mSecurityType) {
-case AccessPoint.SECURITY_NONE:
+switch (mSecurityTypeIndex) {
+case OPEN_INDEX:
     config.allowedKeyManagement.set(KeyMgmt.NONE);
   return config;
-case AccessPoint.SECURITY_PSK:
+case WPA_INDEX:
 config.allowedKeyManagement.set(KeyMgmt.WPA_PSK);
+config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
+if (mPassword.length() != 0) {
+String password=mPassword.getText().toString();
+config.preSharedKey=password;
+}
+return config;
+case WPA2_INDEX:
+config.allowedKeyManagement.set(KeyMgmt.WPA2_PSK);
 config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
 if (mPassword.length() != 0) {
 String password=mPassword.getText().toString();

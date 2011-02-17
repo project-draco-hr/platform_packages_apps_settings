@@ -2,5 +2,7 @@
   super(context);
   mListener=listener;
   mWifiConfig=wifiConfig;
-  if (wifiConfig != null)   mSecurityType=AccessPoint.getSecurity(wifiConfig);
+  if (wifiConfig != null) {
+    mSecurityTypeIndex=getSecurityTypeIndex(wifiConfig);
+  }
 }

@@ -9,7 +9,8 @@
  else {
         mWifiManager.setWifiApConfiguration(mWifiConfig);
       }
-      mCreateNetwork.setSummary(String.format(getActivity().getString(CONFIG_SUBTEXT),mWifiConfig.SSID,mWifiConfig.allowedKeyManagement.get(KeyMgmt.WPA_PSK) ? mSecurityType[WPA_INDEX] : mSecurityType[OPEN_INDEX]));
+      int index=WifiApDialog.getSecurityTypeIndex(mWifiConfig);
+      mCreateNetwork.setSummary(String.format(getActivity().getString(CONFIG_SUBTEXT),mWifiConfig.SSID,mSecurityType[index]));
     }
   }
 }

@@ -1,3 +1,5 @@
 {
-  mReceiver=new WeakReference<MeasurementReceiver>(receiver);
+  if (mReceiver == null || mReceiver.get() == null) {
+    mReceiver=new WeakReference<MeasurementReceiver>(receiver);
+  }
 }

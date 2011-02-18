@@ -1,0 +1,33 @@
+{
+  final FileItemInfoLayout view=(convertView == null) ? (FileItemInfoLayout)mInflater.inflate(R.layout.settings_storage_miscfiles,parent,false) : (FileItemInfoLayout)convertView;
+  FileInfo item=getItem(position);
+  view.setFileName(item.mFileName);
+  view.setFileSize(Formatter.formatFileSize(mContext,item.mSize));
+  final ListView listView=(ListView)parent;
+  final int listPosition=position;
+  view.getCheckBox().setOnCheckedChangeListener(new OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      listView.setItemChecked(listPosition,isChecked);
+    }
+  }
+);
+  view.setOnLongClickListener(new OnLongClickListener(){
+    @Override public boolean onLongClick(    View v){
+      if (listView.getCheckedItemCount() > 0) {
+        return false;
+      }
+      listView.setItemChecked(listPosition,!view.isChecked());
+      return true;
+    }
+  }
+);
+  view.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      if (listView.getCheckedItemCount() > 0) {
+        listView.setItemChecked(listPosition,!view.isChecked());
+      }
+    }
+  }
+);
+  return view;
+}

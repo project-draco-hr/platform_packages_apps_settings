@@ -36,6 +36,7 @@ case MSG_CONNECTED:
 {
   IMediaContainerService imcs=(IMediaContainerService)msg.obj;
   measureExactInternalStorage(imcs);
+  break;
 }
 case MSG_DISCONNECT:
 {
@@ -49,6 +50,7 @@ synchronized (mLock) {
     context.unbindService(mDefContainerConn);
   }
 }
+break;
 }
 case MSG_COMPLETED:
 {

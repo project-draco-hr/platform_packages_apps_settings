@@ -21,5 +21,29 @@
     startActivity(intent);
     return true;
   }
+ else   if (preference == mMediaPreferences[Constants.DOWNLOADS_INDEX]) {
+    Intent intent=new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS).putExtra(DownloadManager.INTENT_EXTRAS_SORT_BY_SIZE,true);
+    startActivity(intent);
+    return true;
+  }
+ else   if (preference == mMediaPreferences[Constants.MUSIC_INDEX]) {
+    Intent intent=new Intent("android.intent.action.GET_CONTENT");
+    intent.setType("audio/mp3");
+    startActivity(intent);
+    return true;
+  }
+ else   if (preference == mMediaPreferences[Constants.PIC_VIDEO_INDEX]) {
+    Intent intent=new Intent("android.intent.action.GET_CONTENT");
+    intent.setType("image/jpeg");
+    startActivity(intent);
+    return true;
+  }
+ else   if (preference == mMediaPreferences[Constants.MEDIA_MISC_INDEX]) {
+    Context context=getActivity().getApplicationContext();
+    if (MemoryMeasurement.getInstance(context).isSizeOfMiscCategorynonZero()) {
+      startActivity(new Intent(context,MiscFilesHandler.class));
+    }
+    return true;
+  }
   return false;
 }

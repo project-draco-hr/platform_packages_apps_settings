@@ -2,7 +2,10 @@
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.tether_prefs);
   final Activity activity=getActivity();
-  mBluetoothPan=new BluetoothPan(activity);
+  BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+  if (adapter != null) {
+    adapter.getProfileProxy(activity.getApplicationContext(),mProfileServiceListener,BluetoothProfile.PAN);
+  }
   mEnableWifiAp=(CheckBoxPreference)findPreference(ENABLE_WIFI_AP);
   mWifiApSettings=(PreferenceScreen)findPreference(WIFI_AP_SETTINGS);
   mUsbTether=(CheckBoxPreference)findPreference(USB_TETHER_SETTINGS);
@@ -26,7 +29,7 @@
     getPreferenceScreen().removePreference(mBluetoothTether);
   }
  else {
-    if (mBluetoothPan.isTetheringOn()) {
+    if (mBluetoothPan != null && mBluetoothPan.isTetheringOn()) {
       mBluetoothTether.setChecked(true);
     }
  else {

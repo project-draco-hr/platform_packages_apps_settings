@@ -2,5 +2,5 @@
   if ((getActivity() == null) || isRemoving())   return;
   Bundle args=new Bundle();
   args.putParcelable(KEY_VPN_PROFILE,profile);
-  ((PreferenceActivity)getActivity()).startPreferencePanel(VpnEditor.class.getCanonicalName(),args,add ? R.string.vpn_details_title : R.string.vpn_details_title,null,this,REQUEST_ADD_OR_EDIT_PROFILE);
+  ((PreferenceActivity)getActivity()).startPreferencePanel(VpnEditor.class.getCanonicalName(),args,0,VpnEditor.getTitle(getActivity(),profile,add),this,REQUEST_ADD_OR_EDIT_PROFILE);
 }

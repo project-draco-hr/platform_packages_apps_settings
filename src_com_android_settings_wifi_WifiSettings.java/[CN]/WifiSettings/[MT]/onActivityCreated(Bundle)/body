@@ -1,5 +1,6 @@
 {
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
+  mWifiManager.asyncConnect(getActivity(),new WifiServiceHandler());
   final Activity activity=getActivity();
   final Intent intent=activity.getIntent();
   mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);

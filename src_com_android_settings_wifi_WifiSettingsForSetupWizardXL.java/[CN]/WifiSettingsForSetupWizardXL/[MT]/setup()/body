@@ -7,6 +7,7 @@
   mProgressBar=(ProgressBar)findViewById(R.id.scanning_progress_bar);
   mProgressBar.setMax(2);
   mTopDividerNoProgress=findViewById(R.id.top_divider_no_progress);
+  mBottomPadding=findViewById(R.id.bottom_padding);
   mProgressBar.setVisibility(View.VISIBLE);
   mProgressBar.setIndeterminate(true);
   mTopDividerNoProgress.setVisibility(View.GONE);
@@ -26,5 +27,4 @@
   mConnectingStatusLayout=findViewById(R.id.connecting_status_layout);
   mConnectingStatusView=(TextView)findViewById(R.id.connecting_status);
   showScanningStatus();
-  mHandler.postDelayed(mSkipButtonEnabler,DELAYED_SKIP_ENABLE_TIME);
 }

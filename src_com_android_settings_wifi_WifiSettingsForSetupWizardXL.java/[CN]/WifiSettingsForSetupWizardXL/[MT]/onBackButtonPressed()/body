@@ -6,9 +6,7 @@
     restoreFirstButtonVisibilityState();
     mSkipOrNextButton.setEnabled(true);
     changeNextButtonState(false);
-    mProgressBar.setVisibility(View.VISIBLE);
-    mProgressBar.setIndeterminate(true);
-    mTopDividerNoProgress.setVisibility(View.GONE);
+    showScanningProgressBar();
     final List<WifiConfiguration> configs=mWifiManager.getConfiguredNetworks();
     for (    WifiConfiguration config : configs) {
       if (DEBUG) {

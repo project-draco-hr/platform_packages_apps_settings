@@ -38,15 +38,19 @@
     mWifiRunningOffset=mWakeLockOffset + barOffset;
     mGpsOnOffset=mWifiRunningOffset + (mHaveWifi ? barOffset : 0);
     mPhoneSignalOffset=mGpsOnOffset + (mHaveGps ? barOffset : 0);
-    mLevelOffset=mPhoneSignalOffset + barOffset + mLineWidth;
-    mPhoneSignalChart.init(w);
+    mLevelOffset=mPhoneSignalOffset + (mHavePhoneSignal ? barOffset : 0) + mLineWidth;
+    if (mHavePhoneSignal) {
+      mPhoneSignalChart.init(w);
+    }
   }
  else {
     mScreenOnOffset=mGpsOnOffset=mWifiRunningOffset=mWakeLockOffset=mLineWidth;
     mChargingOffset=mLineWidth * 2;
     mPhoneSignalOffset=0;
     mLevelOffset=mLineWidth * 3;
-    mPhoneSignalChart.init(0);
+    if (mHavePhoneSignal) {
+      mPhoneSignalChart.init(0);
+    }
   }
   mBatLevelPath.reset();
   mBatGoodPath.reset();
@@ -154,7 +158,7 @@
             }
             lastWakeLock=wakeLock;
           }
-          if (mLargeMode) {
+          if (mLargeMode && mHavePhoneSignal) {
             int bin;
             if (((rec.states & HistoryItem.STATE_PHONE_STATE_MASK) >> HistoryItem.STATE_PHONE_STATE_SHIFT) == ServiceState.STATE_POWER_OFF) {
               bin=0;

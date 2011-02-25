@@ -6,6 +6,10 @@
   mAutoTimePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME);
   mAutoTimePref.setChecked(autoTimeEnabled);
   mAutoTimeZonePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME_ZONE);
+  if (Utils.isWifiOnly()) {
+    getPreferenceScreen().removePreference(mAutoTimeZonePref);
+    autoTimeZoneEnabled=false;
+  }
   mAutoTimeZonePref.setChecked(autoTimeZoneEnabled);
   mTimePref=findPreference("time");
   mTime24Pref=findPreference("24 hour");

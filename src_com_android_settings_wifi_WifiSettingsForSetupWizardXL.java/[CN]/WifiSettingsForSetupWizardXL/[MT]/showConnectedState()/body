@@ -3,11 +3,8 @@
   hideSoftwareKeyboard();
   setPaddingVisibility(View.VISIBLE);
   trySetBackground(R.drawable.setups_bg_complete);
-  mProgressBar.setVisibility(View.VISIBLE);
-  mProgressBar.setIndeterminate(false);
-  mProgressBar.setProgress(2);
-  mTopDividerNoProgress.setVisibility(View.GONE);
   showConnectedTitle();
+  showConnectedProgressBar();
   mWifiSettingsFragmentLayout.setVisibility(View.GONE);
   mConnectingStatusLayout.setVisibility(View.VISIBLE);
   mConnectingStatusView.setText(R.string.wifi_setup_description_connected);
@@ -18,5 +15,4 @@
   mBackButton.setText(R.string.wifi_setup_back);
   mSkipOrNextButton.setVisibility(View.VISIBLE);
   mSkipOrNextButton.setEnabled(true);
-  mHandler.removeCallbacks(mSkipButtonEnabler);
 }

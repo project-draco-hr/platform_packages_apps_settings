@@ -7,14 +7,10 @@ switch (state) {
 case SCANNING:
 {
       if (mWifiSettings.getAccessPointsCount() == 0) {
-        mProgressBar.setVisibility(View.VISIBLE);
-        mProgressBar.setIndeterminate(true);
-        mTopDividerNoProgress.setVisibility(View.GONE);
+        showScanningProgressBar();
       }
  else {
-        mProgressBar.setVisibility(View.GONE);
-        mProgressBar.setIndeterminate(false);
-        mTopDividerNoProgress.setVisibility(View.VISIBLE);
+        showDisconnectedProgressBar();
       }
       break;
     }

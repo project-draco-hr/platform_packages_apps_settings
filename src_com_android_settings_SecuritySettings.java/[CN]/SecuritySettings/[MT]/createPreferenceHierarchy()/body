@@ -21,6 +21,9 @@
     locationCat.addPreference(useLocation);
     mUseLocation=useLocation;
   }
+  if (Utils.isWifiOnly()) {
+    mNetwork.setSummaryOn(R.string.location_neighborhood_level_wifi);
+  }
   int resid=0;
   if (!mLockPatternUtils.isSecure()) {
     if (mLockPatternUtils.isLockScreenDisabled()) {

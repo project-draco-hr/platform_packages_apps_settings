@@ -1,7 +1,7 @@
 {
   ListView lv=getListView();
   int numChecked=lv.getCheckedItemCount();
-  mode.setTitle(mNumSelectedStr + " : " + numChecked+ " "+ mNumSelectedOutOfStr+ " "+ mAdapter.getCount());
+  mode.setTitle(String.format(mNumSelectedFormat,numChecked,mAdapter.getCount()));
   SparseBooleanArray checkedItems=lv.getCheckedItemPositions();
   long selectedDataSize=0;
   if (numChecked > 0) {
@@ -11,5 +11,5 @@
       }
     }
   }
-  mode.setSubtitle(Formatter.formatFileSize(mContext,selectedDataSize) + " " + mNumSelectedOutOfStr+ " "+ Formatter.formatFileSize(mContext,mAdapter.getDataSize()));
+  mode.setSubtitle(String.format(mNumBytesSelectedFormat,Formatter.formatFileSize(mContext,selectedDataSize),Formatter.formatFileSize(mContext,mAdapter.getDataSize())));
 }

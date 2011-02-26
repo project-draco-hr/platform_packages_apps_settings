@@ -35,7 +35,7 @@
   getPreferenceScreen().removePreference(mGlobalProxy);
   mGlobalProxy.setEnabled(mDPM.getGlobalProxyAdmin() == null);
   ConnectivityManager cm=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-  if (!cm.isTetheringSupported() || Utils.isWifiOnly()) {
+  if (!cm.isTetheringSupported()) {
     getPreferenceScreen().removePreference(findPreference(KEY_TETHER_SETTINGS));
   }
  else {

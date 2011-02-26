@@ -38,4 +38,11 @@
   mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
   setWifiStatus();
   setBtStatus();
+  String serial=Build.SERIAL;
+  if (serial != null && !serial.equals("")) {
+    setSummaryText(KEY_SERIAL_NUMBER,serial);
+  }
+ else {
+    removePreferenceFromScreen(KEY_SERIAL_NUMBER);
+  }
 }

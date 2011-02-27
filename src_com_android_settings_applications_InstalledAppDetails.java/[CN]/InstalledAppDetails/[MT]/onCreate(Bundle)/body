@@ -2,5 +2,7 @@
   super.onCreate(icicle);
   mState=ApplicationsState.getInstance(getActivity().getApplication());
   mPm=getActivity().getPackageManager();
+  IBinder b=ServiceManager.getService(Context.USB_SERVICE);
+  mUsbManager=IUsbManager.Stub.asInterface(b);
   mCanBeOnSdCardChecker=new CanBeOnSdCardChecker();
 }

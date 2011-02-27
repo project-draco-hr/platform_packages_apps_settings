@@ -25,8 +25,15 @@
   List<IntentFilter> intentList=new ArrayList<IntentFilter>();
   mPm.getPreferredActivities(intentList,prefActList,packageName);
   if (localLOGV)   Log.i(TAG,"Have " + prefActList.size() + " number of activities in prefered list");
+  boolean hasUsbDefaults=false;
+  try {
+    hasUsbDefaults=mUsbManager.hasDefaults(packageName,mAppEntry.info.uid);
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"mUsbManager.hasDefaults",e);
+  }
   TextView autoLaunchView=(TextView)mRootView.findViewById(R.id.auto_launch);
-  if (prefActList.size() <= 0) {
+  if (prefActList.size() <= 0 && !hasUsbDefaults) {
     autoLaunchView.setText(R.string.auto_launch_disable_text);
     mActivitiesButton.setEnabled(false);
   }

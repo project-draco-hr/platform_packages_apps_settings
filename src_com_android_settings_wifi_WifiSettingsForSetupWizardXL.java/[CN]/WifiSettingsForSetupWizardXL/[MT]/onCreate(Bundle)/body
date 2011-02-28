@@ -2,11 +2,11 @@
   super.onCreate(savedInstanceState);
   requestWindowFeature(Window.FEATURE_NO_TITLE);
   setContentView(R.layout.wifi_settings_for_setup_wizard_xl);
-  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   mWifiManager.setWifiEnabled(true);
   mWifiManager.asyncConnect(this,new WifiServiceHandler());
   mWifiSettings=(WifiSettings)getFragmentManager().findFragmentById(R.id.wifi_setup_fragment);
   mInputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-  setup();
+  initViews();
+  showScanningStatus();
 }

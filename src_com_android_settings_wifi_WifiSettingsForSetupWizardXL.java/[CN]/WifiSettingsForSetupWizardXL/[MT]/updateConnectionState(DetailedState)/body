@@ -1,5 +1,5 @@
 {
-  final DetailedState state=stateMap.get(originalState);
+  final DetailedState state=sNetworkStateMap.get(originalState);
   if (originalState == DetailedState.FAILED) {
     refreshAccessPoints(true);
   }
@@ -32,5 +32,5 @@ showDisconnectedState(Summary.get(this,state));
 }
 break;
 }
-mPreviousState=state;
+mPreviousNetworkState=state;
 }

@@ -1,9 +1,12 @@
 {
   super.onDialogClosed(positiveResult);
+  final ContentResolver resolver=getContext().getContentResolver();
   if (positiveResult) {
-    Settings.System.putInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS,mSeekBar.getProgress() + MINIMUM_BACKLIGHT);
+    Settings.System.putInt(resolver,Settings.System.SCREEN_BRIGHTNESS,mSeekBar.getProgress() + MINIMUM_BACKLIGHT);
   }
  else {
     restoreOldState();
   }
+  resolver.unregisterContentObserver(mBrightnessObserver);
+  resolver.unregisterContentObserver(mBrightnessModeObserver);
 }

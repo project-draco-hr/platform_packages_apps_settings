@@ -25,5 +25,7 @@
   if (lastWakeLock) {
     mWakeLockPath.lineTo(w,h - mWakeLockOffset);
   }
-  mPhoneSignalChart.finish(w);
+  if (mHavePhoneSignal) {
+    mPhoneSignalChart.finish(w);
+  }
 }

@@ -1,10 +1,12 @@
 {
   super.onResume();
-  mPhoneStateReceiver.registerIntent();
+  if (!Utils.isWifiOnly()) {
+    mPhoneStateReceiver.registerIntent();
+    updateSignalStrength();
+    updateServiceState(mPhone.getServiceState());
+    updateDataState();
+    mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
+  }
   registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-  updateSignalStrength();
-  updateServiceState(mPhone.getServiceState());
-  updateDataState();
-  mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
   mHandler.sendEmptyMessage(EVENT_UPDATE_STATS);
 }

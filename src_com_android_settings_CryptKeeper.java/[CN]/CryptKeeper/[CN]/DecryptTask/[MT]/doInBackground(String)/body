@@ -1,0 +1,10 @@
+{
+  IMountService service=getMountService();
+  try {
+    return service.decryptStorage(params[0]);
+  }
+ catch (  Exception e) {
+    Log.e(TAG,"Error while decrypting...",e);
+    return -1;
+  }
+}

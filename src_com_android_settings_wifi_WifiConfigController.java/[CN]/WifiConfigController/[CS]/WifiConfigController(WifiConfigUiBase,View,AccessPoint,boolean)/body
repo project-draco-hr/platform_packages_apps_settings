@@ -9,13 +9,17 @@
   final Resources resources=context.getResources();
   if (mAccessPoint == null) {
     mConfigUi.setTitle(R.string.wifi_add_network);
-    mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
     mSsidView=(TextView)mView.findViewById(R.id.ssid);
     mSsidView.addTextChangedListener(this);
     mSecuritySpinner=((Spinner)mView.findViewById(R.id.security));
     mSecuritySpinner.setOnItemSelectedListener(this);
     if (mInXlSetupWizard) {
+      mView.findViewById(R.id.type_ssid).setVisibility(View.VISIBLE);
+      mView.findViewById(R.id.type_security).setVisibility(View.VISIBLE);
       mSecuritySpinner.setAdapter(new ArrayAdapter<String>(context,R.layout.wifi_setup_custom_list_item_1,android.R.id.text1,context.getResources().getStringArray(R.array.wifi_security)));
+    }
+ else {
+      mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
     }
     mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
   }

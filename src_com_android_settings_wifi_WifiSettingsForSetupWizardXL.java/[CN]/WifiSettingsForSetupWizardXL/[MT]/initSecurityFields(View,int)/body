@@ -4,8 +4,9 @@
   view.findViewById(R.id.ssid_text).setVisibility(View.VISIBLE);
   view.findViewById(R.id.ssid_layout).setVisibility(View.VISIBLE);
   if (accessPointSecurity == AccessPoint.SECURITY_EAP) {
+    setPaddingVisibility(View.VISIBLE);
     hideSoftwareKeyboard();
-    if (view.findViewById(R.id.type).getVisibility() == View.VISIBLE) {
+    if (view.findViewById(R.id.type_ssid).getVisibility() == View.VISIBLE) {
       view.findViewById(R.id.eap_not_supported_for_add_network).setVisibility(View.VISIBLE);
     }
  else {
@@ -16,6 +17,16 @@
     view.findViewById(R.id.ssid_layout).setVisibility(View.GONE);
     onEapNetworkSelected();
     return false;
+  }
+  mConnectButton.setVisibility(View.VISIBLE);
+  setPaddingVisibility(View.GONE);
+  if (mWifiConfig != null) {
+    if (accessPointSecurity == AccessPoint.SECURITY_PSK || accessPointSecurity == AccessPoint.SECURITY_WEP) {
+      mWifiConfig.requestFocusAndShowKeyboard(R.id.password);
+    }
+ else {
+      mWifiConfig.requestFocusAndShowKeyboard(R.id.ssid);
+    }
   }
   return true;
 }

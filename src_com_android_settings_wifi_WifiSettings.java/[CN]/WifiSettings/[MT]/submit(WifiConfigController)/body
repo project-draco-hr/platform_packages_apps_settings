@@ -4,43 +4,26 @@ switch (networkSetup) {
 case WifiConfigController.WPS_PBC:
 case WifiConfigController.WPS_PIN_FROM_ACCESS_POINT:
 case WifiConfigController.WPS_PIN_FROM_DEVICE:
-    WpsResult result=mWifiManager.startWps(configController.getWpsConfig());
-  AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.wifi_wps_setup_title).setPositiveButton(android.R.string.ok,null);
-switch (result.status) {
-case FAILURE:
-  dialog.setMessage(R.string.wifi_wps_failed);
-dialog.show();
-break;
-case IN_PROGRESS:
-dialog.setMessage(R.string.wifi_wps_in_progress);
-dialog.show();
-break;
-default :
-if (networkSetup == WifiConfigController.WPS_PIN_FROM_DEVICE) {
-dialog.setMessage(getResources().getString(R.string.wifi_wps_pin_output,result.pin));
-dialog.show();
-}
-break;
-}
-break;
+    mWifiManager.startWps(configController.getWpsConfig());
+  break;
 case WifiConfigController.MANUAL:
 final WifiConfiguration config=configController.getConfig();
 if (config == null) {
 if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig()) && mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
-mWifiManager.connectNetwork(mSelectedAccessPoint.networkId);
+  mWifiManager.connectNetwork(mSelectedAccessPoint.networkId);
 }
 }
  else if (config.networkId != INVALID_NETWORK_ID) {
 if (mSelectedAccessPoint != null) {
-saveNetwork(config);
+  saveNetwork(config);
 }
 }
  else {
 if (configController.isEdit() || requireKeyStore(config)) {
-saveNetwork(config);
+  saveNetwork(config);
 }
  else {
-mWifiManager.connectNetwork(config);
+  mWifiManager.connectNetwork(config);
 }
 }
 break;

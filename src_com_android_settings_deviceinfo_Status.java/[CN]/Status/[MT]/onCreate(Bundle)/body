@@ -13,29 +13,36 @@
   mPhone=PhoneFactory.getDefaultPhone();
   mSignalStrength=findPreference(KEY_SIGNAL_STRENGTH);
   mUptime=findPreference("up_time");
-  if (mPhone.getPhoneName().equals("CDMA")) {
-    setSummaryText(KEY_MEID_NUMBER,mPhone.getMeid());
-    setSummaryText(KEY_MIN_NUMBER,mPhone.getCdmaMin());
-    setSummaryText(KEY_PRL_VERSION,mPhone.getCdmaPrlVersion());
-    removePreferenceFromScreen(KEY_IMEI);
-    removePreferenceFromScreen(KEY_IMEI_SV);
+  if (Utils.isWifiOnly()) {
+    for (    String key : PHONE_RELATED_ENTRIES) {
+      removePreferenceFromScreen(key);
+    }
   }
  else {
-    setSummaryText(KEY_IMEI,mPhone.getDeviceId());
-    setSummaryText(KEY_IMEI_SV,((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
-    removePreferenceFromScreen(KEY_PRL_VERSION);
-    removePreferenceFromScreen(KEY_MEID_NUMBER);
-    removePreferenceFromScreen(KEY_MIN_NUMBER);
+    if (mPhone.getPhoneName().equals("CDMA")) {
+      setSummaryText(KEY_MEID_NUMBER,mPhone.getMeid());
+      setSummaryText(KEY_MIN_NUMBER,mPhone.getCdmaMin());
+      setSummaryText(KEY_PRL_VERSION,mPhone.getCdmaPrlVersion());
+      removePreferenceFromScreen(KEY_IMEI);
+      removePreferenceFromScreen(KEY_IMEI_SV);
+    }
+ else {
+      setSummaryText(KEY_IMEI,mPhone.getDeviceId());
+      setSummaryText(KEY_IMEI_SV,((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
+      removePreferenceFromScreen(KEY_PRL_VERSION);
+      removePreferenceFromScreen(KEY_MEID_NUMBER);
+      removePreferenceFromScreen(KEY_MIN_NUMBER);
+    }
+    String rawNumber=mPhone.getLine1Number();
+    String formattedNumber=null;
+    if (!TextUtils.isEmpty(rawNumber)) {
+      formattedNumber=PhoneNumberUtils.formatNumber(rawNumber);
+    }
+    setSummaryText(KEY_PHONE_NUMBER,formattedNumber);
+    mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
+    mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
+    mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
   }
-  String rawNumber=mPhone.getLine1Number();
-  String formattedNumber=null;
-  if (!TextUtils.isEmpty(rawNumber)) {
-    formattedNumber=PhoneNumberUtils.formatNumber(rawNumber);
-  }
-  setSummaryText(KEY_PHONE_NUMBER,formattedNumber);
-  mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
-  mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
-  mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
   setWifiStatus();
   setBtStatus();
   String serial=Build.SERIAL;

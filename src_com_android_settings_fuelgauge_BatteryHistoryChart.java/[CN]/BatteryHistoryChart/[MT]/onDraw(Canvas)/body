@@ -19,8 +19,10 @@
   if (!mBatCriticalPath.isEmpty()) {
     canvas.drawPath(mBatCriticalPath,mBatteryCriticalPaint);
   }
-  int top=height - mPhoneSignalOffset - (mLineWidth / 2);
-  mPhoneSignalChart.draw(canvas,top,mLineWidth);
+  int top=height - (mHavePhoneSignal ? mPhoneSignalOffset - (mLineWidth / 2) : 0);
+  if (mHavePhoneSignal) {
+    mPhoneSignalChart.draw(canvas,top,mLineWidth);
+  }
   if (!mScreenOnPath.isEmpty()) {
     canvas.drawPath(mScreenOnPath,mScreenOnPaint);
   }
@@ -41,7 +43,9 @@
     canvas.drawPath(mWakeLockPath,mWakeLockPaint);
   }
   if (mLargeMode) {
-    canvas.drawText(mPhoneSignalLabel,0,height - mPhoneSignalOffset - mTextDescent,mTextPaint);
+    if (mHavePhoneSignal) {
+      canvas.drawText(mPhoneSignalLabel,0,height - mPhoneSignalOffset - mTextDescent,mTextPaint);
+    }
     if (mHaveGps) {
       canvas.drawText(mGpsOnLabel,0,height - mGpsOnOffset - mTextDescent,mTextPaint);
     }

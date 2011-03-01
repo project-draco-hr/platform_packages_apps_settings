@@ -15,6 +15,12 @@
   }
  else   if (v == mActivitiesButton) {
     mPm.clearPackagePreferredActivities(packageName);
+    try {
+      mUsbManager.clearDefaults(packageName,mAppEntry.info.uid);
+    }
+ catch (    RemoteException e) {
+      Log.e(TAG,"mUsbManager.clearDefaults",e);
+    }
     mActivitiesButton.setEnabled(false);
   }
  else   if (v == mClearDataButton) {

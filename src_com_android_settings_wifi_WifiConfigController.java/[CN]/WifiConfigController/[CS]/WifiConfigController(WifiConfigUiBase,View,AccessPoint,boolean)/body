@@ -44,10 +44,6 @@
     WifiInfo info=mAccessPoint.getInfo();
     if (info != null) {
       addRow(group,R.string.wifi_speed,info.getLinkSpeed() + WifiInfo.LINK_SPEED_UNITS);
-      int address=info.getIpAddress();
-      if (address != 0) {
-        addRow(group,R.string.wifi_ip_address,Formatter.formatIpAddress(address));
-      }
     }
     if (mAccessPoint.networkId != INVALID_NETWORK_ID) {
       WifiConfiguration config=mAccessPoint.getConfig();
@@ -56,6 +52,9 @@
       }
  else {
         mIpSettingsSpinner.setSelection(DHCP);
+        for (        InetAddress a : config.linkProperties.getAddresses()) {
+          addRow(group,R.string.wifi_ip_address,a.getHostAddress());
+        }
       }
       if (config.proxySettings == ProxySettings.STATIC) {
         mProxySettingsSpinner.setSelection(PROXY_STATIC);

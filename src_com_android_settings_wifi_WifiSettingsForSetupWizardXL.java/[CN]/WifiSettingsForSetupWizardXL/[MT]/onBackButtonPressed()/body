@@ -3,10 +3,10 @@
   if (mScreenState == SCREEN_STATE_CONNECTING || mScreenState == SCREEN_STATE_CONNECTED) {
     if (DEBUG)     Log.d(TAG,"Back button pressed after connect action.");
     mScreenState=SCREEN_STATE_DISCONNECTED;
-    restoreFirstButtonVisibilityState();
+    restoreFirstVisibilityState();
     mSkipOrNextButton.setEnabled(true);
     changeNextButtonState(false);
-    showScanningProgressBar();
+    showScanningState();
     final List<WifiConfiguration> configs=mWifiManager.getConfiguredNetworks();
     for (    WifiConfiguration config : configs) {
       if (DEBUG) {
@@ -14,16 +14,20 @@
       }
       mWifiManager.forgetNetwork(config.networkId);
     }
+    mWifiSettingsFragmentLayout.setVisibility(View.GONE);
     refreshAccessPoints(true);
   }
  else {
+    mScreenState=SCREEN_STATE_DISCONNECTED;
     mWifiSettings.resumeWifiScan();
-    restoreFirstButtonVisibilityState();
+    restoreFirstVisibilityState();
     mAddNetworkButton.setEnabled(true);
     mRefreshButton.setEnabled(true);
     mSkipOrNextButton.setEnabled(true);
+    mWifiSettingsFragmentLayout.setVisibility(View.VISIBLE);
+    showDisconnectedProgressBar();
   }
-  mWifiSettingsFragmentLayout.setVisibility(View.VISIBLE);
+  setPaddingVisibility(View.VISIBLE);
   mConnectingStatusLayout.setVisibility(View.GONE);
   final ViewGroup parent=(ViewGroup)findViewById(R.id.wifi_config_ui);
   parent.removeAllViews();

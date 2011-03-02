@@ -7,10 +7,14 @@ switch (state) {
 case SCANNING:
 {
       if (mWifiSettings.getAccessPointsCount() == 0) {
-        showScanningProgressBar();
+        showScanningState();
       }
  else {
         showDisconnectedProgressBar();
+        if (mScreenState == SCREEN_STATE_DISCONNECTED) {
+          mWifiSettingsFragmentLayout.setVisibility(View.VISIBLE);
+          mBottomPadding.setVisibility(View.GONE);
+        }
       }
       break;
     }

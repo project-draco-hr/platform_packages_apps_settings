@@ -1,6 +1,12 @@
 {
-  mProgressBar.setVisibility(View.GONE);
-  mProgressBar.setIndeterminate(false);
-  mTopDividerNoProgress.setVisibility(View.VISIBLE);
-  mBottomPadding.setVisibility(View.VISIBLE);
+  if (mScreenState == SCREEN_STATE_DISCONNECTED) {
+    mProgressBar.setVisibility(View.GONE);
+    mProgressBar.setIndeterminate(false);
+    mTopDividerNoProgress.setVisibility(View.VISIBLE);
+  }
+ else {
+    mProgressBar.setVisibility(View.VISIBLE);
+    mProgressBar.setIndeterminate(false);
+    mTopDividerNoProgress.setVisibility(View.GONE);
+  }
 }

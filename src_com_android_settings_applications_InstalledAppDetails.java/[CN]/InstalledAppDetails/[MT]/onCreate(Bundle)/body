@@ -2,6 +2,8 @@
   super.onCreate(icicle);
   mState=ApplicationsState.getInstance(getApplication());
   mPm=getPackageManager();
+  IBinder b=ServiceManager.getService(Context.USB_SERVICE);
+  mUsbManager=IUsbManager.Stub.asInterface(b);
   mCanBeOnSdCardChecker=new CanBeOnSdCardChecker();
   setContentView(R.layout.installed_app_details);
   mComputingStr=getText(R.string.computing_size);

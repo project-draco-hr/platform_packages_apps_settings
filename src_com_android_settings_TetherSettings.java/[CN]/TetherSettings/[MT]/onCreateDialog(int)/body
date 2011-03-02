@@ -39,5 +39,10 @@
     }
     return new AlertDialog.Builder(getActivity()).setCancelable(true).setTitle(R.string.tethering_help_button_text).setView(mView).create();
   }
+ else   if (id == DIALOG_AP_SETTINGS) {
+    final Activity activity=getActivity();
+    mDialog=new WifiApDialog(activity,this,mWifiConfig);
+    return mDialog;
+  }
   return null;
 }

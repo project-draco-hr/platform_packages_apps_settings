@@ -14,34 +14,4 @@
   final ViewGroup parent=(ViewGroup)findViewById(R.id.wifi_config_ui);
   parent.setVisibility(View.VISIBLE);
   mConnectingStatusLayout.setVisibility(View.GONE);
-  final View wpsFieldView=findViewById(R.id.wps_fields);
-  if (wpsFieldView != null) {
-    wpsFieldView.setVisibility(mPreviousWpsFieldsVisibility);
-  }
-  final View securityFieldsView=findViewById(R.id.security_fields);
-  if (securityFieldsView != null) {
-    securityFieldsView.setVisibility(mPreviousSecurityFieldsVisibility);
-    if (mPreviousSecurityFieldsVisibility == View.VISIBLE && mWifiConfig != null) {
-      final View passwordView=findViewById(R.id.password);
-      if (passwordView != null) {
-        if (passwordView.isFocused()) {
-          setPaddingVisibility(View.GONE);
-        }
-        mWifiConfig.requestFocusAndShowKeyboard(R.id.password);
-      }
-    }
-  }
-  final View typeView=findViewById(R.id.type);
-  if (typeView != null) {
-    typeView.setVisibility(mPreviousTypeVisibility);
-    if (mPreviousTypeVisibility == View.VISIBLE && mWifiConfig != null) {
-      final View ssidView=findViewById(R.id.ssid);
-      if (ssidView != null) {
-        if (ssidView.isFocused()) {
-          setPaddingVisibility(View.GONE);
-        }
-        mWifiConfig.requestFocusAndShowKeyboard(R.id.ssid);
-      }
-    }
-  }
 }

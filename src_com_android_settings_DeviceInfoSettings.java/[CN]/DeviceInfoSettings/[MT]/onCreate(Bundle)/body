@@ -9,13 +9,16 @@
   if (tutorials == null || tutorials.isEmpty()) {
     getPreferenceScreen().removePreference(findPreference("system_tutorial"));
   }
-  setStringSummary("firmware_version",Build.VERSION.RELEASE);
-  findPreference("firmware_version").setEnabled(true);
-  setValueSummary("baseband_version","gsm.version.baseband");
-  setStringSummary("device_model",Build.MODEL);
-  setStringSummary("build_number",Build.DISPLAY);
-  findPreference("kernel_version").setSummary(getFormattedKernelVersion());
+  setStringSummary(KEY_FIRMWARE_VERSION,Build.VERSION.RELEASE);
+  findPreference(KEY_FIRMWARE_VERSION).setEnabled(true);
+  setValueSummary(KEY_BASEBAND_VERSION,"gsm.version.baseband");
+  setStringSummary(KEY_DEVICE_MODEL,Build.MODEL);
+  setStringSummary(KEY_BUILD_NUMBER,Build.DISPLAY);
+  findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
   removePreferenceIfPropertyMissing(getPreferenceScreen(),"safetylegal",PROPERTY_URL_SAFETYLEGAL);
+  if (Utils.isWifiOnly()) {
+    getPreferenceScreen().removePreference(findPreference(KEY_BASEBAND_VERSION));
+  }
   final Activity act=getActivity();
   PreferenceGroup parentPreference=(PreferenceGroup)findPreference(KEY_CONTAINER);
   Utils.updatePreferenceToSpecificActivityOrRemove(act,parentPreference,KEY_TERMS,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);

@@ -30,6 +30,7 @@
   }
   mDefaultRatePref.setValue(String.valueOf(mDefaultRate));
   mDefaultRatePref.setOnPreferenceChangeListener(this);
+  mTts.setSpeechRate(mDefaultRate / 100.0f);
   mDefaultLocPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
   initDefaultLang();
   mDefaultLocPref.setOnPreferenceChangeListener(this);

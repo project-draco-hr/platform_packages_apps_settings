@@ -9,8 +9,11 @@
     mView.findViewById(R.id.proxy_fields).setVisibility(View.VISIBLE);
     if (mProxyHostView == null) {
       mProxyHostView=(TextView)mView.findViewById(R.id.proxy_hostname);
+      mProxyHostView.addTextChangedListener(this);
       mProxyPortView=(TextView)mView.findViewById(R.id.proxy_port);
+      mProxyPortView.addTextChangedListener(this);
       mProxyExclusionListView=(TextView)mView.findViewById(R.id.proxy_exclusionlist);
+      mProxyExclusionListView.addTextChangedListener(this);
     }
     if (config != null) {
       ProxyProperties proxyProperties=config.linkProperties.getHttpProxy();

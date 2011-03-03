@@ -1,9 +1,7 @@
 {
   final boolean autoEnabled=isChecked;
   if (buttonView == mAutoDateTimeButton) {
-    if (!mXLargeScreenSize) {
-      Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,isChecked ? 1 : 0);
-    }
+    Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,isChecked ? 1 : 0);
     mTimePicker.setEnabled(!autoEnabled);
     mDatePicker.setEnabled(!autoEnabled);
   }

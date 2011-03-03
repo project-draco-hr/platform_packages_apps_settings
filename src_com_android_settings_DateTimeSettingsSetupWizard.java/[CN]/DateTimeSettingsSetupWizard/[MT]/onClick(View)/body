@@ -21,8 +21,10 @@ case R.id.next_button:
         final AlarmManager alarm=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarm.setTimeZone(mSelectedTimeZone.getID());
       }
-      DateTimeSettings.setDate(mDatePicker.getYear(),mDatePicker.getMonth(),mDatePicker.getDayOfMonth());
-      DateTimeSettings.setTime(mTimePicker.getCurrentHour(),mTimePicker.getCurrentMinute());
+      if (!mAutoDateTimeButton.isChecked()) {
+        DateTimeSettings.setDate(mDatePicker.getYear(),mDatePicker.getMonth(),mDatePicker.getDayOfMonth());
+        DateTimeSettings.setTime(mTimePicker.getCurrentHour(),mTimePicker.getCurrentMinute());
+      }
     }
   }
 case R.id.skip_button:

@@ -1,0 +1,8 @@
+{
+  if (preference == mLongPressTimeoutListPreference) {
+    int intValue=Integer.parseInt((String)newValue);
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,intValue);
+    return true;
+  }
+  return false;
+}

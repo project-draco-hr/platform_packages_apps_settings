@@ -1,8 +1,10 @@
 {
   mLocalAdapter=adapter;
   mDeviceManager=deviceManager;
-  mIntentFilter=new IntentFilter();
+  mAdapterIntentFilter=new IntentFilter();
+  mProfileIntentFilter=new IntentFilter();
   mHandlerMap=new HashMap<String,Handler>();
+  mContext=context;
   addHandler(BluetoothAdapter.ACTION_STATE_CHANGED,new AdapterStateChangedHandler());
   addHandler(BluetoothAdapter.ACTION_DISCOVERY_STARTED,new ScanningStateChangedHandler(true));
   addHandler(BluetoothAdapter.ACTION_DISCOVERY_FINISHED,new ScanningStateChangedHandler(false));
@@ -14,4 +16,5 @@
   addHandler(BluetoothDevice.ACTION_CLASS_CHANGED,new ClassChangedHandler());
   addHandler(BluetoothDevice.ACTION_UUID,new UuidChangedHandler());
   addHandler(Intent.ACTION_DOCK_EVENT,new DockEventHandler());
+  mContext.registerReceiver(mBroadcastReceiver,mAdapterIntentFilter);
 }

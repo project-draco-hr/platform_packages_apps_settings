@@ -1,8 +1,18 @@
 {
+  Button submit=mConfigUi.getSubmitButton();
+  if (submit == null)   return;
+  boolean enabled=false;
   if ((mSsidView != null && mSsidView.length() == 0) || ((mAccessPoint == null || mAccessPoint.networkId == INVALID_NETWORK_ID) && ((mAccessPointSecurity == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mAccessPointSecurity == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8)))) {
-    mConfigUi.getSubmitButton().setEnabled(false);
+    enabled=false;
   }
  else {
-    mConfigUi.getSubmitButton().setEnabled(true);
+    enabled=true;
   }
+  if (ipAndProxyFieldsAreValid()) {
+    enabled=true;
+  }
+ else {
+    enabled=false;
+  }
+  submit.setEnabled(enabled);
 }

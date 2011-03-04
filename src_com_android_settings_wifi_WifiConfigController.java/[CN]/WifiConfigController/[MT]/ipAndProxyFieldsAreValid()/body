@@ -4,9 +4,7 @@
   if (mIpAssignment == IpAssignment.STATIC) {
     int result=validateIpConfigFields(mLinkProperties);
     if (result != 0) {
-      mLinkProperties.clear();
-      Toast.makeText(mConfigUi.getContext(),result,Toast.LENGTH_LONG).show();
-      mIpAssignment=IpAssignment.UNASSIGNED;
+      return false;
     }
   }
   mProxySettings=(mProxySettingsSpinner != null && mProxySettingsSpinner.getSelectedItemPosition() == PROXY_STATIC) ? ProxySettings.STATIC : ProxySettings.NONE;
@@ -28,8 +26,8 @@
       mLinkProperties.setHttpProxy(proxyProperties);
     }
  else {
-      Toast.makeText(mConfigUi.getContext(),result,Toast.LENGTH_LONG).show();
-      mProxySettings=ProxySettings.UNASSIGNED;
+      return false;
     }
   }
+  return true;
 }

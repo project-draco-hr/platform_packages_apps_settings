@@ -8,10 +8,15 @@
     mView.findViewById(R.id.staticip).setVisibility(View.VISIBLE);
     if (mIpAddressView == null) {
       mIpAddressView=(TextView)mView.findViewById(R.id.ipaddress);
+      mIpAddressView.addTextChangedListener(this);
       mGatewayView=(TextView)mView.findViewById(R.id.gateway);
+      mGatewayView.addTextChangedListener(this);
       mNetworkPrefixLengthView=(TextView)mView.findViewById(R.id.network_prefix_length);
+      mNetworkPrefixLengthView.addTextChangedListener(this);
       mDns1View=(TextView)mView.findViewById(R.id.dns1);
+      mDns1View.addTextChangedListener(this);
       mDns2View=(TextView)mView.findViewById(R.id.dns2);
+      mDns2View.addTextChangedListener(this);
     }
     if (config != null) {
       LinkProperties linkProperties=config.linkProperties;

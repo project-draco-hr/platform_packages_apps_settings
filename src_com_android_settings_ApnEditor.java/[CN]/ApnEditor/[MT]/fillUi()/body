@@ -32,6 +32,7 @@
  else {
       mAuthType.setValue(null);
     }
+    mProtocol.setValue(mCursor.getString(PROTOCOL_INDEX));
   }
   mName.setSummary(checkNull(mName.getText()));
   mApn.setSummary(checkNull(mApn.getText()));
@@ -56,4 +57,5 @@
  else {
     mAuthType.setSummary(sNotSet);
   }
+  mProtocol.setSummary(checkNull(protocolDescription(mProtocol.getValue())));
 }

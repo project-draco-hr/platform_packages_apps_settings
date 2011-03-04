@@ -11,11 +11,9 @@
   parent.setVisibility(View.VISIBLE);
   parent.removeAllViews();
   mWifiConfig=new WifiConfigUiForSetupWizardXL(this,parent,selectedAccessPoint,edit);
-  mConnectButton.setTag(null);
   if (selectedAccessPoint == null) {
     showAddNetworkTitle();
     mConnectButton.setVisibility(View.VISIBLE);
-    mConnectButton.setTag(CONNECT_BUTTON_TAG_ADD_NETWORK);
     showEditingButtonState();
   }
  else   if (selectedAccessPoint.security == AccessPoint.SECURITY_NONE) {

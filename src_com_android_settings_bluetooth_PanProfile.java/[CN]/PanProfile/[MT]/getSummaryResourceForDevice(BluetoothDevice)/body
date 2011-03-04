@@ -4,7 +4,12 @@ switch (state) {
 case BluetoothProfile.STATE_DISCONNECTED:
     return R.string.bluetooth_pan_profile_summary_use_for;
 case BluetoothProfile.STATE_CONNECTED:
-  return R.string.bluetooth_pan_profile_summary_connected;
+  if (isLocalRoleNap(device)) {
+    return R.string.bluetooth_pan_nap_profile_summary_connected;
+  }
+ else {
+    return R.string.bluetooth_pan_user_profile_summary_connected;
+  }
 default :
 return Utils.getConnectionStateSummary(state);
 }

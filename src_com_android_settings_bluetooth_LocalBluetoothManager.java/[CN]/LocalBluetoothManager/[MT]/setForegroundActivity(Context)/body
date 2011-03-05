@@ -2,12 +2,10 @@
   if (context != null) {
     Log.d(TAG,"setting foreground activity to non-null context");
     mForegroundActivity=context;
-    mEventManager.resume(context);
   }
  else {
     if (mForegroundActivity != null) {
       Log.d(TAG,"setting foreground activity to null");
-      mEventManager.pause(mForegroundActivity);
       mForegroundActivity=null;
     }
   }

@@ -1,11 +1,5 @@
 {
-  final Object tag=mConnectButton.getTag();
-  if (tag != null && (tag instanceof Integer) && ((Integer)tag == CONNECT_BUTTON_TAG_ADD_NETWORK)) {
-    showDisconnectedState(Summary.get(this,mPreviousNetworkState));
-  }
- else {
-    showScanningState();
-  }
+  showScanningState();
   if (disconnectNetwork) {
     mWifiManager.disconnect();
   }

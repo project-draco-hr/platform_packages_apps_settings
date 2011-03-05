@@ -95,10 +95,20 @@ catch (  IOException e) {
         finish();
       }
  else {
+        try {
+          ActivityManagerNative.getDefault().stopAppSwitches();
+        }
+ catch (        RemoteException e) {
+        }
         mDPM.getRemoveWarning(mDeviceAdmin.getComponent(),new RemoteCallback(mHandler){
           @Override protected void onResult(          Bundle bundle){
             CharSequence msg=bundle != null ? bundle.getCharSequence(DeviceAdminReceiver.EXTRA_DISABLE_WARNING) : null;
             if (msg == null) {
+              try {
+                ActivityManagerNative.getDefault().resumeAppSwitches();
+              }
+ catch (              RemoteException e) {
+              }
               mDPM.removeActiveAdmin(mDeviceAdmin.getComponent());
               finish();
             }

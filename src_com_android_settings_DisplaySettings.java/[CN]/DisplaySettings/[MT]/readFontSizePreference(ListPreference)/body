@@ -1,0 +1,8 @@
+{
+  try {
+    mCurConfig.updateFrom(ActivityManagerNative.getDefault().getConfiguration());
+  }
+ catch (  RemoteException e) {
+  }
+  pref.setValueIndex(floatToIndex(mCurConfig.fontScale,R.array.entryvalues_font_size));
+}

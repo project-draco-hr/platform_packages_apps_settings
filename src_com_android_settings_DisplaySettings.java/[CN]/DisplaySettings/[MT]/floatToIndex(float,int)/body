@@ -1,0 +1,12 @@
+{
+  String[] indices=getResources().getStringArray(resid);
+  float lastVal=Float.parseFloat(indices[0]);
+  for (int i=1; i < indices.length; i++) {
+    float thisVal=Float.parseFloat(indices[i]);
+    if (val < (lastVal + (thisVal - lastVal) * .5f)) {
+      return i - 1;
+    }
+    lastVal=thisVal;
+  }
+  return indices.length - 1;
+}

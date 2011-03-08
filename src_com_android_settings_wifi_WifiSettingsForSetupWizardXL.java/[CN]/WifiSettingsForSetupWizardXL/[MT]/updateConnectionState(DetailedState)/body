@@ -6,15 +6,18 @@
 switch (state) {
 case SCANNING:
 {
-      if (mWifiSettings.getAccessPointsCount() == 0) {
-        showScanningState();
-      }
+      if (mScreenState == SCREEN_STATE_DISCONNECTED) {
+        if (mWifiSettings.getAccessPointsCount() == 0) {
+          showScanningState();
+        }
  else {
-        showDisconnectedProgressBar();
-        if (mScreenState == SCREEN_STATE_DISCONNECTED && mWifiSettings.getAccessPointsCount() > 0) {
+          showDisconnectedProgressBar();
           mWifiSettingsFragmentLayout.setVisibility(View.VISIBLE);
           mBottomPadding.setVisibility(View.GONE);
         }
+      }
+ else {
+        showDisconnectedProgressBar();
       }
       break;
     }

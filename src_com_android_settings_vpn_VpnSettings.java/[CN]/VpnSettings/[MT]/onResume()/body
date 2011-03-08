@@ -9,7 +9,9 @@
     getActivity().runOnUiThread(action);
   }
   if (!mConnectDialogShowing) {
-    checkVpnConnectionStatus();
+    if ((mActiveProfile == null) || (mActiveProfile.getState() != VpnState.IDLE)) {
+      checkVpnConnectionStatus();
+    }
   }
  else {
     if (!mVpnManager.isIdle() || (mActiveProfile == null)) {

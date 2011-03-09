@@ -14,7 +14,7 @@
   mKeyboardHelper.setKeyboardMode(isAlpha ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
   mKeyboardView.requestFocus();
   int currentType=mPasswordEntry.getInputType();
-  mPasswordEntry.setInputType(isAlpha ? currentType : (currentType | InputType.TYPE_CLASS_NUMBER));
+  mPasswordEntry.setInputType(isAlpha ? currentType : (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD));
   if (activity instanceof PreferenceActivity) {
     final PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
     int id=isAlpha ? R.string.lockpassword_confirm_your_password_header : R.string.lockpassword_confirm_your_pin_header;

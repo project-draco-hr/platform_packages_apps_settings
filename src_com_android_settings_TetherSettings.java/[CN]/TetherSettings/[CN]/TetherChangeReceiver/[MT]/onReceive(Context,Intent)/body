@@ -1,14 +1,28 @@
 {
-  if (intent.getAction().equals(ConnectivityManager.ACTION_TETHER_STATE_CHANGED)) {
+  String action=intent.getAction();
+  if (action.equals(ConnectivityManager.ACTION_TETHER_STATE_CHANGED)) {
     ArrayList<String> available=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_AVAILABLE_TETHER);
     ArrayList<String> active=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ACTIVE_TETHER);
     ArrayList<String> errored=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ERRORED_TETHER);
     updateState(available.toArray(new String[available.size()]),active.toArray(new String[active.size()]),errored.toArray(new String[errored.size()]));
   }
- else   if (intent.getAction().equals(Intent.ACTION_MEDIA_SHARED) || intent.getAction().equals(Intent.ACTION_MEDIA_UNSHARED)) {
+ else   if (action.equals(Intent.ACTION_MEDIA_SHARED) || action.equals(Intent.ACTION_MEDIA_UNSHARED)) {
     updateState();
   }
- else   if (intent.getAction().equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
-    updateState();
-  }
+ else   if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
+    if (mBluetoothEnableForTether) {
+switch (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothAdapter.ERROR)) {
+case BluetoothAdapter.STATE_ON:
+        mBluetoothPan.setBluetoothTethering(true);
+      mBluetoothEnableForTether=false;
+    break;
+case BluetoothAdapter.STATE_OFF:
+case BluetoothAdapter.ERROR:
+  mBluetoothEnableForTether=false;
+break;
+default :
+}
+}
+updateState();
+}
 }

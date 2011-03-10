@@ -1,4 +1,6 @@
 {
+  removedProfiles.clear();
+  removedProfiles.addAll(profiles);
   profiles.clear();
   if (uuids == null) {
     return;
@@ -6,18 +8,23 @@
   if (mHeadsetProfile != null) {
     if ((BluetoothUuid.isUuidPresent(localUuids,BluetoothUuid.HSP_AG) && BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.HSP)) || (BluetoothUuid.isUuidPresent(localUuids,BluetoothUuid.Handsfree_AG) && BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.Handsfree))) {
       profiles.add(mHeadsetProfile);
+      removedProfiles.remove(mHeadsetProfile);
     }
   }
   if (BluetoothUuid.containsAnyUuid(uuids,A2dpProfile.SINK_UUIDS) && mA2dpProfile != null) {
     profiles.add(mA2dpProfile);
+    removedProfiles.remove(mA2dpProfile);
   }
   if (BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.ObexObjectPush) && mOppProfile != null) {
     profiles.add(mOppProfile);
+    removedProfiles.remove(mOppProfile);
   }
   if (BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.Hid) && mHidProfile != null) {
     profiles.add(mHidProfile);
+    removedProfiles.remove(mHidProfile);
   }
   if (BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.NAP) && mPanProfile != null) {
     profiles.add(mPanProfile);
+    removedProfiles.remove(mPanProfile);
   }
 }

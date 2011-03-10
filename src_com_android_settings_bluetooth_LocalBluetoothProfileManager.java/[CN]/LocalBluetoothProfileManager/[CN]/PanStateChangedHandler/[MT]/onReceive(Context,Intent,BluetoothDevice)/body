@@ -1,0 +1,6 @@
+{
+  PanProfile panProfile=(PanProfile)mProfile;
+  int role=intent.getIntExtra(BluetoothPan.EXTRA_LOCAL_ROLE,0);
+  panProfile.setLocalRole(device,role);
+  super.onReceive(context,intent,device);
+}

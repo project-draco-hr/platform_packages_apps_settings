@@ -11,6 +11,18 @@
   mBtEnabler=new BluetoothEnabler(this,bt);
   mNfcEnabler=new NfcEnabler(this,nfc);
   String toggleable=Settings.System.getString(getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
+  boolean isWimaxEnabled=this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);
+  if (!isWimaxEnabled) {
+    PreferenceScreen root=getPreferenceScreen();
+    Preference ps=(Preference)findPreference(KEY_WIMAX_SETTINGS);
+    if (ps != null)     root.removePreference(ps);
+  }
+ else {
+    if (toggleable == null || !toggleable.contains(Settings.System.RADIO_WIMAX) && isWimaxEnabled) {
+      Preference ps=(Preference)findPreference(KEY_WIMAX_SETTINGS);
+      ps.setDependency(KEY_TOGGLE_AIRPLANE);
+    }
+  }
   if (toggleable == null || !toggleable.contains(Settings.System.RADIO_WIFI)) {
     wifi.setDependency(KEY_TOGGLE_AIRPLANE);
     findPreference(KEY_WIFI_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);

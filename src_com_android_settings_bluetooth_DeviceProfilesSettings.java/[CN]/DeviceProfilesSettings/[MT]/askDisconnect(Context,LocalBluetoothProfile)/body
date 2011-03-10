@@ -4,7 +4,7 @@
   if (TextUtils.isEmpty(name)) {
     name=context.getString(R.string.bluetooth_device);
   }
-  int disconnectMessage=profile.getDisconnectResource();
+  int disconnectMessage=profile.getDisconnectResource(device.getDevice());
   if (disconnectMessage == 0) {
     Log.w(TAG,"askDisconnect: unexpected profile " + profile);
     disconnectMessage=R.string.bluetooth_disconnect_blank;

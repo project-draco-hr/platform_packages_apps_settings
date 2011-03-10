@@ -5,7 +5,17 @@
   mProfileConnectionState.put(profile,newProfileState);
   if (newProfileState == BluetoothProfile.STATE_CONNECTED) {
     if (!mProfiles.contains(profile)) {
+      mRemovedProfiles.remove(profile);
       mProfiles.add(profile);
+      if (profile instanceof PanProfile && ((PanProfile)profile).isLocalRoleNap(mDevice)) {
+        mLocalNapRoleConnected=true;
+      }
     }
+  }
+ else   if (mLocalNapRoleConnected && profile instanceof PanProfile && ((PanProfile)profile).isLocalRoleNap(mDevice)&& newProfileState == BluetoothProfile.STATE_DISCONNECTED) {
+    Log.d(TAG,"Removing PanProfile from device after NAP disconnect");
+    mProfiles.remove(profile);
+    mRemovedProfiles.add(profile);
+    mLocalNapRoleConnected=false;
   }
 }

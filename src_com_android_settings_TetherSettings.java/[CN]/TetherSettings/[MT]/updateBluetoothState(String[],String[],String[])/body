@@ -1,19 +1,8 @@
 {
-  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-  int bluetoothError=ConnectivityManager.TETHER_ERROR_NO_ERROR;
-  for (  String s : available) {
-    for (    String regex : mBluetoothRegexs) {
-      if (s.matches(regex)) {
-        if (bluetoothError == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
-          bluetoothError=cm.getLastTetherError(s);
-        }
-      }
-    }
-  }
-  boolean bluetoothTethered=false;
+  int bluetoothTethered=0;
   for (  String s : tethered) {
     for (    String regex : mBluetoothRegexs) {
-      if (s.matches(regex))       bluetoothTethered=true;
+      if (s.matches(regex))       bluetoothTethered++;
     }
   }
   boolean bluetoothErrored=false;
@@ -32,19 +21,21 @@
     mBluetoothTether.setEnabled(false);
     mBluetoothTether.setSummary(R.string.bluetooth_turning_on);
   }
- else   if (mBluetoothPan.isTetheringOn()) {
+ else   if (btState == BluetoothAdapter.STATE_ON && mBluetoothPan.isTetheringOn()) {
     mBluetoothTether.setChecked(true);
-    if (btState == BluetoothAdapter.STATE_ON) {
-      mBluetoothTether.setEnabled(true);
-      if (bluetoothTethered) {
-        mBluetoothTether.setSummary(R.string.bluetooth_tethering_connected_subtext);
-      }
- else       if (bluetoothErrored) {
-        mBluetoothTether.setSummary(R.string.bluetooth_tethering_errored_subtext);
-      }
+    mBluetoothTether.setEnabled(true);
+    if (bluetoothTethered > 1) {
+      String summary=getString(R.string.bluetooth_tethering_devices_connected_subtext,bluetoothTethered);
+      mBluetoothTether.setSummary(summary);
+    }
+ else     if (bluetoothTethered == 1) {
+      mBluetoothTether.setSummary(R.string.bluetooth_tethering_device_connected_subtext);
+    }
+ else     if (bluetoothErrored) {
+      mBluetoothTether.setSummary(R.string.bluetooth_tethering_errored_subtext);
+    }
  else {
-        mBluetoothTether.setSummary(R.string.bluetooth_tethering_available_subtext);
-      }
+      mBluetoothTether.setSummary(R.string.bluetooth_tethering_available_subtext);
     }
   }
  else {

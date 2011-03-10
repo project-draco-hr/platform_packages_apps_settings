@@ -9,4 +9,11 @@
       refreshProfilePreference(profilePref,profile);
     }
   }
+  for (  LocalBluetoothProfile profile : mCachedDevice.getRemovedProfiles()) {
+    Preference profilePref=findPreference(profile.toString());
+    if (profilePref != null) {
+      Log.d(TAG,"Removing " + profile.toString() + " from profile list");
+      mProfileContainer.removePreference(profilePref);
+    }
+  }
 }

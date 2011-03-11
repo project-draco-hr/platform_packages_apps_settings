@@ -1,0 +1,52 @@
+{
+  if (data == null) {
+    Log.e(TAG,"TTS data check failed data = null");
+    mEnableDemo=false;
+    mVoicesMissing=false;
+    updateWidgetState();
+    return;
+  }
+  Log.v(TAG,"TTS data check completed, data = " + data.toUri(0));
+  ArrayList<String> available=data.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_AVAILABLE_VOICES);
+  ArrayList<String> unavailable=data.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_UNAVAILABLE_VOICES);
+  if (available == null || unavailable == null) {
+    Log.e(TAG,"TTS data check failed (available == == null)");
+    mEnableDemo=false;
+    mVoicesMissing=false;
+    updateWidgetState();
+    return;
+  }
+  if (available.size() > 0) {
+    if (mTts == null) {
+      mTts=new TextToSpeech(getActivity(),this);
+    }
+    updateDefaultLocPref(available);
+    mEnableDemo=true;
+    int languageResult=mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry,mDefaultLocVariant));
+    if (languageResult < TextToSpeech.LANG_AVAILABLE) {
+      Locale currentLocale=Locale.getDefault();
+      mDefaultLanguage=currentLocale.getISO3Language();
+      mDefaultCountry=currentLocale.getISO3Country();
+      mDefaultLocVariant=currentLocale.getVariant();
+      languageResult=mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry,mDefaultLocVariant));
+      if (languageResult < TextToSpeech.LANG_AVAILABLE) {
+        parseLocaleInfo(mDefaultLocPref.getEntryValues()[0].toString());
+        mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry,mDefaultLocVariant));
+      }
+      ContentResolver resolver=getContentResolver();
+      Settings.Secure.putString(resolver,TTS_DEFAULT_LANG,mDefaultLanguage);
+      Settings.Secure.putString(resolver,TTS_DEFAULT_COUNTRY,mDefaultCountry);
+      Settings.Secure.putString(resolver,TTS_DEFAULT_VARIANT,mDefaultLocVariant);
+    }
+  }
+ else {
+    mEnableDemo=false;
+  }
+  if (unavailable.size() > 0) {
+    mVoicesMissing=true;
+  }
+ else {
+    mVoicesMissing=false;
+  }
+  updateWidgetState();
+}

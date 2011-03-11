@@ -1,0 +1,24 @@
+{
+  Context context=getActivity();
+  List<TextToSpeech.EngineInfo> engines=mTts.getEngines();
+  for (  TextToSpeech.EngineInfo engine : engines) {
+    String prefKey="";
+    final String engineName=engine.name;
+    if (!engineName.equals(TextToSpeech.Engine.DEFAULT_ENGINE)) {
+      CheckBoxPreference enablePref=new CheckBoxPreference(context);
+      prefKey=KEY_PLUGIN_ENABLED_PREFIX + engineName;
+      enablePref.setKey(prefKey);
+      enablePref.setTitle(engine.label);
+      mEnginesGroup.addPreference(enablePref);
+    }
+    if (engineHasSettings(engineName)) {
+      Preference pref=new Preference(context);
+      prefKey=KEY_PLUGIN_SETTINGS_PREFIX + engineName;
+      pref.setKey(prefKey);
+      pref.setTitle(engine.label);
+      CharSequence settingsLabel=getResources().getString(R.string.tts_engine_name_settings,engine.label);
+      pref.setSummary(settingsLabel);
+      mEnginesGroup.addPreference(pref);
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
   if (KEY_TTS_USE_DEFAULT.equals(preference.getKey())) {
-    int value=(Boolean)objValue ? 1 : 0;
+    int value=((Boolean)objValue) ? 1 : 0;
     Settings.Secure.putInt(getContentResolver(),TTS_USE_DEFAULTS,value);
-    Log.i(TAG,"TTS use default settings is " + objValue.toString());
+    Log.i(TAG,"TTS 'use default' settings changed, now " + value);
   }
  else   if (KEY_TTS_DEFAULT_RATE.equals(preference.getKey())) {
     mDefaultRate=Integer.parseInt((String)objValue);
@@ -11,7 +11,7 @@
       if (mTts != null) {
         mTts.setSpeechRate(mDefaultRate / 100.0f);
       }
-      Log.i(TAG,"TTS default rate is " + mDefaultRate);
+      Log.v(TAG,"TTS default rate changed, now " + mDefaultRate);
     }
  catch (    NumberFormatException e) {
       Log.e(TAG,"could not persist default TTS rate setting",e);
@@ -28,20 +28,20 @@
       mTts.setLanguage(new Locale(mDefaultLanguage,mDefaultCountry,mDefaultLocVariant));
     }
     int newIndex=mDefaultLocPref.findIndexOfValue((String)objValue);
-    Log.v("Settings"," selected is " + newIndex);
+    Log.v(TAG," selected is " + newIndex);
     mDemoStringIndex=newIndex > -1 ? newIndex : 0;
   }
  else   if (KEY_TTS_DEFAULT_SYNTH.equals(preference.getKey())) {
-    mDefaultEng=objValue.toString();
-    Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_SYNTH,mDefaultEng);
+    String defaultEng=objValue.toString();
+    Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_SYNTH,defaultEng);
     if (mTts != null) {
-      mTts.setEngineByPackageName(mDefaultEng);
+      mTts.setEngineByPackageName(defaultEng);
       mEnableDemo=false;
       mVoicesMissing=false;
       updateWidgetState();
       checkVoiceData();
     }
-    Log.v("Settings","The default synth is: " + objValue.toString());
+    Log.v(TAG,"The default synth is: " + objValue.toString());
   }
   return true;
 }

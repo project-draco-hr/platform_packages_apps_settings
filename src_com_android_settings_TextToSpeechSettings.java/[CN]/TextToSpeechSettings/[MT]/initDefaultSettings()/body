@@ -1,26 +1,10 @@
 {
   ContentResolver resolver=getContentResolver();
-  int useDefault=0;
-  mUseDefaultPref=(CheckBoxPreference)findPreference(KEY_TTS_USE_DEFAULT);
-  try {
-    useDefault=Settings.Secure.getInt(resolver,TTS_USE_DEFAULTS);
-  }
- catch (  SettingNotFoundException e) {
-    useDefault=TextToSpeech.Engine.USE_DEFAULTS;
-    Settings.Secure.putInt(resolver,TTS_USE_DEFAULTS,useDefault);
-  }
+  int useDefault=Settings.Secure.getInt(resolver,TTS_USE_DEFAULTS,TextToSpeech.Engine.USE_DEFAULTS);
   mUseDefaultPref.setChecked(useDefault == 1);
   mUseDefaultPref.setOnPreferenceChangeListener(this);
-  mDefaultSynthPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_SYNTH);
   loadEngines();
   mDefaultSynthPref.setOnPreferenceChangeListener(this);
-  String engine=Settings.Secure.getString(resolver,TTS_DEFAULT_SYNTH);
-  if (engine == null) {
-    engine=FALLBACK_TTS_DEFAULT_SYNTH;
-    Settings.Secure.putString(resolver,TTS_DEFAULT_SYNTH,engine);
-  }
-  mDefaultEng=engine;
-  mDefaultRatePref=(ListPreference)findPreference(KEY_TTS_DEFAULT_RATE);
   try {
     mDefaultRate=Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
   }
@@ -30,8 +14,6 @@
   }
   mDefaultRatePref.setValue(String.valueOf(mDefaultRate));
   mDefaultRatePref.setOnPreferenceChangeListener(this);
-  mTts.setSpeechRate(mDefaultRate / 100.0f);
-  mDefaultLocPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
   initDefaultLang();
   mDefaultLocPref.setOnPreferenceChangeListener(this);
 }

@@ -1,29 +1,19 @@
 {
-  mDefaultSynthPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_SYNTH);
-  Intent intent=new Intent("android.intent.action.START_TTS_ENGINE");
-  ResolveInfo[] enginesArray=new ResolveInfo[0];
-  PackageManager pm=getPackageManager();
-  enginesArray=pm.queryIntentActivities(intent,0).toArray(enginesArray);
+  List<TextToSpeech.EngineInfo> engines=mTts.getEngines();
   ArrayList<CharSequence> entries=new ArrayList<CharSequence>();
   ArrayList<CharSequence> values=new ArrayList<CharSequence>();
-  String enabledEngines="";
-  for (int i=0; i < enginesArray.length; i++) {
-    String pluginPackageName=enginesArray[i].activityInfo.packageName;
-    if (pluginPackageName.equals(SYSTEM_TTS)) {
-      entries.add(enginesArray[i].loadLabel(pm));
-      values.add(pluginPackageName);
-    }
- else {
-      CheckBoxPreference pref=(CheckBoxPreference)findPreference(KEY_PLUGIN_ENABLED_PREFIX + pluginPackageName);
-      if ((pref != null) && pref.isChecked()) {
-        entries.add(enginesArray[i].loadLabel(pm));
-        values.add(pluginPackageName);
-        enabledEngines=enabledEngines + pluginPackageName + " ";
-      }
+  StringBuilder enabledEngines=new StringBuilder();
+  for (  TextToSpeech.EngineInfo engine : engines) {
+    Log.v(TAG,"Engine: " + engine);
+    if (isEngineEnabled(engine.name)) {
+      entries.add(engine.label);
+      values.add(engine.name);
+      if (enabledEngines.length() > 0)       enabledEngines.append(' ');
+      enabledEngines.append(engine.name);
     }
   }
   ContentResolver resolver=getContentResolver();
-  Settings.Secure.putString(resolver,TTS_ENABLED_PLUGINS,enabledEngines);
+  Settings.Secure.putString(resolver,TTS_ENABLED_PLUGINS,enabledEngines.toString());
   CharSequence entriesArray[]=new CharSequence[entries.size()];
   CharSequence valuesArray[]=new CharSequence[values.size()];
   mDefaultSynthPref.setEntries(entries.toArray(entriesArray));
@@ -31,7 +21,9 @@
   String selectedEngine=Settings.Secure.getString(getContentResolver(),TTS_DEFAULT_SYNTH);
   int selectedEngineIndex=mDefaultSynthPref.findIndexOfValue(selectedEngine);
   if (selectedEngineIndex == -1) {
-    selectedEngineIndex=mDefaultSynthPref.findIndexOfValue(SYSTEM_TTS);
+    selectedEngineIndex=mDefaultSynthPref.findIndexOfValue(TextToSpeech.Engine.DEFAULT_ENGINE);
   }
-  mDefaultSynthPref.setValueIndex(selectedEngineIndex);
+  if (selectedEngineIndex >= 0) {
+    mDefaultSynthPref.setValueIndex(selectedEngineIndex);
+  }
 }

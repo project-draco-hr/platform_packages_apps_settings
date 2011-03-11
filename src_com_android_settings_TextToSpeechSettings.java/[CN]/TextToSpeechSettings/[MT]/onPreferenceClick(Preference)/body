@@ -3,9 +3,31 @@
     getSampleText();
     return true;
   }
-  if (preference == mInstallData) {
+ else   if (preference == mInstallData) {
     installVoiceData();
     finish();
+    return true;
+  }
+ else   if (preference.getKey().startsWith(KEY_PLUGIN_ENABLED_PREFIX)) {
+    final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
+    if (chkPref.isChecked()) {
+      chkPref.setChecked(false);
+      AlertDialog d=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getActivity().getString(R.string.tts_engine_security_warning,chkPref.getTitle())).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+        public void onClick(        DialogInterface dialog,        int which){
+          chkPref.setChecked(true);
+          loadEngines();
+        }
+      }
+).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+        public void onClick(        DialogInterface dialog,        int which){
+        }
+      }
+).create();
+      d.show();
+    }
+ else {
+      loadEngines();
+    }
     return true;
   }
   return false;

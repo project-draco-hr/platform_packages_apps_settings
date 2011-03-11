@@ -1,0 +1,15 @@
+{
+  if (resultCode == TextToSpeech.LANG_AVAILABLE) {
+    String sample=getActivity().getString(R.string.tts_demo);
+    if (data != null && data.getStringExtra("sampleText") != null) {
+      sample=data.getStringExtra("sampleText");
+    }
+    Log.v(TAG,"Got sample text: " + sample);
+    if (mTts != null) {
+      mTts.speak(sample,TextToSpeech.QUEUE_FLUSH,null);
+    }
+  }
+ else {
+    Log.e(TAG,"Did not have a sample string for the requested language");
+  }
+}

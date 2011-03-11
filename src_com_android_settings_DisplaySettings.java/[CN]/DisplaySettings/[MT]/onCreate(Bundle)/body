@@ -3,6 +3,11 @@
   ContentResolver resolver=getActivity().getContentResolver();
   mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
   addPreferencesFromResource(R.xml.display_settings);
+  try {
+    mAnimationScales=mWindowManager.getAnimationScales();
+  }
+ catch (  RemoteException e) {
+  }
   mAnimations=(ListPreference)findPreference(KEY_ANIMATIONS);
   mAnimations.setOnPreferenceChangeListener(this);
   mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);

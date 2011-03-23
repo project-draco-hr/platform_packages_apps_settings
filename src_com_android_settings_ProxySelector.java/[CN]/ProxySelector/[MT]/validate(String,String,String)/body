@@ -1,8 +1,11 @@
 {
   Matcher match=HOSTNAME_PATTERN.matcher(hostname);
-  Matcher listMatch=EXCLLIST_PATTERN.matcher(exclList);
+  String exclListArray[]=exclList.split(",");
   if (!match.matches())   return R.string.proxy_error_invalid_host;
-  if (!listMatch.matches())   return R.string.proxy_error_invalid_exclusion_list;
+  for (  String excl : exclListArray) {
+    Matcher m=EXCLUSION_PATTERN.matcher(excl);
+    if (!m.matches())     return R.string.proxy_error_invalid_exclusion_list;
+  }
   if (hostname.length() > 0 && port.length() == 0) {
     return R.string.proxy_error_empty_port;
   }

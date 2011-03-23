@@ -1,0 +1,8 @@
+{
+  if (HDCP_CHECKING_KEY.equals(preference.getKey())) {
+    SystemProperties.set(HDCP_CHECKING_PROPERTY,newValue.toString());
+    updateHdcpValues();
+    return true;
+  }
+  return false;
+}

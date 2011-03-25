@@ -24,4 +24,8 @@
   parentPreference=getPreferenceScreen();
   Utils.updatePreferenceToSpecificActivityOrRemove(this,parentPreference,KEY_SYSTEM_UPDATE_SETTINGS,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
   Utils.updatePreferenceToSpecificActivityOrRemove(this,parentPreference,KEY_CONTRIBUTORS,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
+  boolean mUpdateSettingAvailable=getResources().getBoolean(R.bool.config_additional_system_update_setting_enable);
+  if (mUpdateSettingAvailable == false) {
+    getPreferenceScreen().removePreference(findPreference(KEY_UPDATE_SETTING));
+  }
 }

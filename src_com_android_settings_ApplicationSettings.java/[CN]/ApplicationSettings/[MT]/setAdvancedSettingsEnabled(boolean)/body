@@ -1,0 +1,7 @@
+{
+  int value=enabled ? 1 : 0;
+  Settings.Secure.putInt(getContentResolver(),Settings.System.ADVANCED_SETTINGS,value);
+  Intent intent=new Intent(Intent.ACTION_ADVANCED_SETTINGS_CHANGED);
+  intent.putExtra("state",value);
+  getActivity().sendBroadcast(intent);
+}

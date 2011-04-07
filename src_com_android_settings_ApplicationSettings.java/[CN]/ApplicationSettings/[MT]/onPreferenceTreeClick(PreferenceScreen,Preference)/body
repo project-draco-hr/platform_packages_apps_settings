@@ -8,5 +8,9 @@
       setNonMarketAppsAllowed(false);
     }
   }
+ else   if (preference == mToggleAdvancedSettings) {
+    boolean value=mToggleAdvancedSettings.isChecked();
+    setAdvancedSettingsEnabled(value);
+  }
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

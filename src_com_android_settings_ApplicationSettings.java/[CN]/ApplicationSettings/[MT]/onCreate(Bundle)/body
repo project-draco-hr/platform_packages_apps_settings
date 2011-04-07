@@ -3,6 +3,11 @@
   addPreferencesFromResource(R.xml.application_settings);
   mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
   mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
+  mToggleAdvancedSettings=(CheckBoxPreference)findPreference(KEY_TOGGLE_ADVANCED_SETTINGS);
+  mToggleAdvancedSettings.setChecked(isAdvancedSettingsEnabled());
+  if (false) {
+    getPreferenceScreen().removePreference(mInstallLocation);
+  }
   mInstallLocation=(ListPreference)findPreference(KEY_APP_INSTALL_LOCATION);
   boolean userSetInstLocation=(Settings.System.getInt(getContentResolver(),Settings.Secure.SET_INSTALL_LOCATION,0) != 0);
   if (!userSetInstLocation) {

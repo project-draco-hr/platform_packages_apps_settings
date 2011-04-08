@@ -7,7 +7,10 @@
       icon=authContext.getResources().getDrawable(desc.iconId);
     }
  catch (    PackageManager.NameNotFoundException e) {
-      Log.w(TAG,"No icon for account type " + accountType);
+      Log.w(TAG,"No icon name for account type " + accountType);
+    }
+catch (    Resources.NotFoundException e) {
+      Log.w(TAG,"No icon resource for account type " + accountType);
     }
   }
   return icon;

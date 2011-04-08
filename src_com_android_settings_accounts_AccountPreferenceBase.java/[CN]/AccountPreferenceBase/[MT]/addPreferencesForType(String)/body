@@ -12,6 +12,9 @@
  catch (    PackageManager.NameNotFoundException e) {
       Log.w(TAG,"Couldn't load preferences.xml file from " + desc.packageName);
     }
+catch (    Resources.NotFoundException e) {
+      Log.w(TAG,"Couldn't load preferences.xml file from " + desc.packageName);
+    }
   }
   return prefs;
 }

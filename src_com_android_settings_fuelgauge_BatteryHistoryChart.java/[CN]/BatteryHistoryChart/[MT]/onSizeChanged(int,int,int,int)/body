@@ -4,7 +4,12 @@
   mThinLineWidth=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2,getResources().getDisplayMetrics());
   if (h > (textHeight * 6)) {
     mLargeMode=true;
-    mLineWidth=textHeight / 2;
+    if (h > (textHeight * 15)) {
+      mLineWidth=textHeight / 2;
+    }
+ else {
+      mLineWidth=textHeight / 3;
+    }
     mLevelTop=textHeight + mLineWidth;
     mScreenOnPaint.setARGB(255,32,64,255);
     mGpsOnPaint.setARGB(255,32,64,255);
@@ -38,7 +43,7 @@
     mWifiRunningOffset=mWakeLockOffset + barOffset;
     mGpsOnOffset=mWifiRunningOffset + (mHaveWifi ? barOffset : 0);
     mPhoneSignalOffset=mGpsOnOffset + (mHaveGps ? barOffset : 0);
-    mLevelOffset=mPhoneSignalOffset + (mHavePhoneSignal ? barOffset : 0) + mLineWidth;
+    mLevelOffset=mPhoneSignalOffset + (mHavePhoneSignal ? barOffset : 0) + ((mLineWidth * 3) / 2);
     if (mHavePhoneSignal) {
       mPhoneSignalChart.init(w);
     }

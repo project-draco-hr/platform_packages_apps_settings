@@ -19,8 +19,8 @@
   if (!mBatCriticalPath.isEmpty()) {
     canvas.drawPath(mBatCriticalPath,mBatteryCriticalPaint);
   }
-  int top=height - (mHavePhoneSignal ? mPhoneSignalOffset - (mLineWidth / 2) : 0);
   if (mHavePhoneSignal) {
+    int top=height - mPhoneSignalOffset - (mLineWidth / 2);
     mPhoneSignalChart.draw(canvas,top,mLineWidth);
   }
   if (!mScreenOnPath.isEmpty()) {

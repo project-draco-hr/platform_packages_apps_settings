@@ -17,7 +17,7 @@
   mScreenTimeoutPreference.setValue(String.valueOf(currentTimeout));
   mScreenTimeoutPreference.setOnPreferenceChangeListener(this);
   disableUnusableTimeouts(mScreenTimeoutPreference);
-  updateTimeoutPreferenceDescription(resolver,currentTimeout);
+  updateTimeoutPreferenceDescription(resolver,mScreenTimeoutPreference,R.string.screen_timeout_summary,currentTimeout);
   mFontSizePref=(ListPreference)findPreference(KEY_FONT_SIZE);
   mFontSizePref.setOnPreferenceChangeListener(this);
 }

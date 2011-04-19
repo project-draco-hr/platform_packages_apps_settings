@@ -2,9 +2,12 @@
   final int storedQuality=mLockPatternUtils.getKeyguardStoredPasswordQuality();
   View view=inflater.inflate(R.layout.confirm_lock_password,null);
   view.findViewById(R.id.cancel_button).setOnClickListener(this);
-  view.findViewById(R.id.next_button).setOnClickListener(this);
+  mContinueButton=(Button)view.findViewById(R.id.next_button);
+  mContinueButton.setOnClickListener(this);
+  mContinueButton.setEnabled(false);
   mPasswordEntry=(TextView)view.findViewById(R.id.password_entry);
   mPasswordEntry.setOnEditorActionListener(this);
+  mPasswordEntry.addTextChangedListener(this);
   mKeyboardView=(PasswordEntryKeyboardView)view.findViewById(R.id.keyboard);
   mHeaderText=(TextView)view.findViewById(R.id.headerText);
   final boolean isAlpha=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_COMPLEX == storedQuality;

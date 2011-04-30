@@ -25,7 +25,7 @@
  catch (  IllegalArgumentException e) {
     return R.string.wifi_ip_settings_invalid_gateway;
   }
-  linkProperties.addGateway(gatewayAddr);
+  linkProperties.addRoute(new RouteInfo(gatewayAddr));
   String dns=mDns1View.getText().toString();
   InetAddress dnsAddr=null;
   try {

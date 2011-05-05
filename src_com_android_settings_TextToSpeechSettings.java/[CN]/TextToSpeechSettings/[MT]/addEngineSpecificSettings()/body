@@ -19,6 +19,15 @@
       pref.setTitle(engine.label);
       CharSequence settingsLabel=getResources().getString(R.string.tts_engine_name_settings,engine.label);
       pref.setSummary(settingsLabel);
+      pref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+        public boolean onPreferenceClick(        Preference preference){
+          Intent i=new Intent();
+          i.setClassName(engineName,engineName + ".EngineSettings");
+          startActivity(i);
+          return true;
+        }
+      }
+);
       mEnginesGroup.addPreference(pref);
     }
   }

@@ -1,0 +1,12 @@
+{
+  final Preference newPref=new Preference(getActivity());
+  newPref.setOrder(order);
+  newPref.setTitle(activity.getString(R.string.user_dict_settings_title));
+  final Intent intent=new Intent(USER_DICTIONARY_SETTINGS_INTENT_ACTION);
+  if (null != locale) {
+    newPref.setSummary(new Locale(locale).getDisplayName());
+    intent.putExtra("locale",locale);
+  }
+  newPref.setIntent(intent);
+  return newPref;
+}

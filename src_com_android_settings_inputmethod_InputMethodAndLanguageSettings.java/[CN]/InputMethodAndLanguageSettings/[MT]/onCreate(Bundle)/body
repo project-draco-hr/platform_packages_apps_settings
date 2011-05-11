@@ -12,6 +12,7 @@
  else {
     mLanguagePref=findPreference(KEY_PHONE_LANGUAGE);
   }
+  createUserDictSettings((PreferenceGroup)findPreference(KEY_LANGUAGE_SETTINGS_CATEGORY));
   mShowInputMethodSelectorPref=(ListPreference)findPreference(KEY_INPUT_METHOD_SELECTOR);
   mShowInputMethodSelectorPref.setOnPreferenceChangeListener(this);
   updateInputMethodSelectorSummary(loadInputMethodSelectorVisibility());

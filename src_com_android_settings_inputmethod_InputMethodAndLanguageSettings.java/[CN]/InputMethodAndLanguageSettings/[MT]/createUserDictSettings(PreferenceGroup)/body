@@ -1,0 +1,20 @@
+{
+  final Activity activity=getActivity();
+  final Cursor locales=activity.managedQuery(UserDictionary.Words.CONTENT_URI,new String[]{UserDictionary.Words.LOCALE},null,null,null);
+  final TreeMap<String,Preference> prefs=new TreeMap<String,Preference>();
+  int order=findPreference(KEY_PHONE_LANGUAGE).getOrder();
+  if (!locales.moveToFirst()) {
+    prefs.put("",createUserDictionaryPreference(null,activity,++order));
+  }
+ else {
+    final int columnIndex=locales.getColumnIndex(UserDictionary.Words.LOCALE);
+    do {
+      final String locale=locales.getString(columnIndex);
+      if (!prefs.containsKey(locale))       prefs.put(locale,createUserDictionaryPreference(locale,activity,++order));
+    }
+ while (locales.moveToNext());
+  }
+  for (  final Preference p : prefs.values()) {
+    userDictGroup.addPreference(p);
+  }
+}

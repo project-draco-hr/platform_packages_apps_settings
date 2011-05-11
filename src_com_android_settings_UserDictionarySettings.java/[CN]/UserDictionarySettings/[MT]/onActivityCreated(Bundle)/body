@@ -1,6 +1,8 @@
 {
   super.onActivityCreated(savedInstanceState);
-  mCursor=createCursor();
+  final Intent intent=getActivity().getIntent();
+  final String locale=intent.getStringExtra("locale");
+  mCursor=createCursor(null != locale ? locale : Locale.getDefault().toString());
   TextView emptyView=(TextView)mView.findViewById(R.id.empty);
   emptyView.setText(R.string.user_dict_settings_empty_text);
   final ListView listView=getListView();

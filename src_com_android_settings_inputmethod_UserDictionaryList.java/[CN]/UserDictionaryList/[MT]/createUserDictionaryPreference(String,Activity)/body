@@ -1,0 +1,16 @@
+{
+  final Preference newPref=new Preference(getActivity());
+  final Intent intent=new Intent(USER_DICTIONARY_SETTINGS_INTENT_ACTION);
+  if (null == locale) {
+    newPref.setTitle(Locale.getDefault().getDisplayName());
+  }
+ else {
+    if ("".equals(locale))     newPref.setTitle(getString(R.string.user_dict_settings_all_languages));
+ else     newPref.setTitle(Utils.createLocaleFromString(locale).getDisplayName());
+    intent.putExtra("locale",locale);
+    newPref.getExtras().putString("locale",locale);
+  }
+  newPref.setIntent(intent);
+  newPref.setFragment(UserDictionarySettings.class.getName());
+  return newPref;
+}

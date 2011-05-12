@@ -1,0 +1,16 @@
+{
+  final Activity activity=getActivity();
+  final Set<String> localeList=UserDictionaryList.getUserDictionaryLocalesList(activity);
+  if (localeList.size() <= 1) {
+    userDictionaryPreference.setTitle(R.string.user_dict_single_settings_title);
+    userDictionaryPreference.setFragment(UserDictionarySettings.class.getName());
+    if (localeList.size() == 1) {
+      final String locale=(String)localeList.toArray()[0];
+      userDictionaryPreference.getExtras().putString("locale",locale);
+    }
+  }
+ else {
+    userDictionaryPreference.setTitle(R.string.user_dict_multiple_settings_title);
+    userDictionaryPreference.setFragment(UserDictionaryList.class.getName());
+  }
+}

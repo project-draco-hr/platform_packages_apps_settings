@@ -1,0 +1,13 @@
+{
+  final Activity activity=getActivity();
+  userDictGroup.removeAll();
+  final Set<String> localeList=UserDictionaryList.getUserDictionaryLocalesList(activity);
+  if (localeList.isEmpty()) {
+    userDictGroup.addPreference(createUserDictionaryPreference(null,activity));
+  }
+ else {
+    for (    String locale : localeList) {
+      userDictGroup.addPreference(createUserDictionaryPreference(locale,activity));
+    }
+  }
+}

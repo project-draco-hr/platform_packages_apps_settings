@@ -1,8 +1,21 @@
 {
   super.onActivityCreated(savedInstanceState);
   final Intent intent=getActivity().getIntent();
-  final String locale=intent.getStringExtra("locale");
-  mCursor=createCursor(null != locale ? locale : Locale.getDefault().toString());
+  final String localeFromIntent=null == intent ? null : intent.getStringExtra("locale");
+  final Bundle arguments=getArguments();
+  final String localeFromArguments=null == arguments ? null : arguments.getString("locale");
+  final String locale;
+  if (null != localeFromArguments) {
+    locale=localeFromArguments;
+  }
+ else   if (null != localeFromIntent) {
+    locale=localeFromIntent;
+  }
+ else {
+    locale=null;
+  }
+  mLocale=locale;
+  mCursor=createCursor(locale);
   TextView emptyView=(TextView)mView.findViewById(R.id.empty);
   emptyView.setText(R.string.user_dict_settings_empty_text);
   final ListView listView=getListView();

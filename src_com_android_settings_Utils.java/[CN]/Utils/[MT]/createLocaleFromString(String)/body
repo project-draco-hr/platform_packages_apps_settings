@@ -1,0 +1,13 @@
+{
+  if (null == localeStr)   return Locale.getDefault();
+  String[] brokenDownLocale=localeStr.split("_",3);
+  if (1 == brokenDownLocale.length) {
+    return new Locale(brokenDownLocale[0]);
+  }
+ else   if (2 == brokenDownLocale.length) {
+    return new Locale(brokenDownLocale[0],brokenDownLocale[1]);
+  }
+ else {
+    return new Locale(brokenDownLocale[0],brokenDownLocale[1],brokenDownLocale[2]);
+  }
+}

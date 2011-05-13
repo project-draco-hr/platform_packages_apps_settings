@@ -25,28 +25,16 @@
   mInternalAppsUsage=findPreference(MEMORY_INTERNAL_APPS);
   mInternalAppsUsage.setIcon(createRectShape(buttonHeight,buttonWidth,mInternalAppsColor));
   for (int i=0; i < Constants.NUM_MEDIA_DIRS_TRACKED; i++) {
-    if (Constants.mMediaDirs.get(i).mPreferenceName == null) {
+    final MediaDirectory mediaDirectory=Constants.mMediaDirs.get(i);
+    final String preferenceName=mediaDirectory.mPreferenceName;
+    if (preferenceName == null) {
       continue;
     }
-    mMediaPreferences[i]=findPreference(Constants.mMediaDirs.get(i).mPreferenceName);
-    int color=0;
-switch (i) {
-case Constants.DOWNLOADS_INDEX:
-      color=mRes.getColor(R.color.memory_downloads);
-    break;
-case Constants.PIC_VIDEO_INDEX:
-  color=mRes.getColor(R.color.memory_video);
-break;
-case Constants.MUSIC_INDEX:
-color=mRes.getColor(R.color.memory_audio);
-break;
-case Constants.MEDIA_MISC_INDEX:
-color=mRes.getColor(R.color.memory_misc);
-break;
-}
-mMediaPreferences[i].setIcon(createRectShape(buttonHeight,buttonWidth,color));
-}
-mInternalUsageChart=(UsageBarPreference)findPreference(MEMORY_INTERNAL_CHART);
-mMeasurement=MemoryMeasurement.getInstance(getActivity());
-mMeasurement.setReceiver(this);
+    mMediaPreferences[i]=findPreference(preferenceName);
+    final int color=mRes.getColor(mediaDirectory.mColor);
+    mMediaPreferences[i].setIcon(createRectShape(buttonHeight,buttonWidth,color));
+  }
+  mInternalUsageChart=(UsageBarPreference)findPreference(MEMORY_INTERNAL_CHART);
+  mMeasurement=MemoryMeasurement.getInstance(getActivity());
+  mMeasurement.setReceiver(this);
 }

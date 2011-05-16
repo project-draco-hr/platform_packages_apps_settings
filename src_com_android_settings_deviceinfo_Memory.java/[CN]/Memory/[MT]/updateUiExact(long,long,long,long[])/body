@@ -1,5 +1,11 @@
 {
-  long appsPlusRemaining=totalSize - availSize - mediaSizes[Constants.DOWNLOADS_INDEX]- mediaSizes[Constants.PIC_VIDEO_INDEX]- mediaSizes[Constants.MUSIC_INDEX]- mediaSizes[Constants.MEDIA_MISC_INDEX];
+  long appsPlusRemaining=totalSize - availSize;
+  for (int i=0; i < Constants.NUM_MEDIA_DIRS_TRACKED; i++) {
+    if (Constants.mMediaDirs.get(i).mPreferenceName == null) {
+      continue;
+    }
+    appsPlusRemaining-=mediaSizes[i];
+  }
   mInternalSize.setSummary(formatSize(totalSize));
   mInternalAvail.setSummary(formatSize(availSize));
   mInternalAppsUsage.setSummary(formatSize(appsPlusRemaining));
@@ -10,25 +16,11 @@
       continue;
     }
     this.mMediaPreferences[i].setSummary(formatSize(mediaSizes[i]));
-    if (i != Constants.MEDIA_INDEX && mediaSizes[i] > 0) {
-      int color=0;
-switch (i) {
-case Constants.DOWNLOADS_INDEX:
-        color=mRes.getColor(R.color.memory_downloads);
-      break;
-case Constants.PIC_VIDEO_INDEX:
-    color=mRes.getColor(R.color.memory_video);
-  break;
-case Constants.MUSIC_INDEX:
-color=mRes.getColor(R.color.memory_audio);
-break;
-case Constants.MEDIA_MISC_INDEX:
-color=mRes.getColor(R.color.memory_misc);
-break;
-}
-mInternalUsageChart.addEntry(mediaSizes[i] / (float)totalSize,color);
-}
-}
-mInternalUsageChart.addEntry(availSize / (float)totalSize,mInternalAvailColor);
-mInternalUsageChart.commit();
+    if (mediaSizes[i] > 0) {
+      final int color=mRes.getColor(Constants.mMediaDirs.get(i).mColor);
+      mInternalUsageChart.addEntry(mediaSizes[i] / (float)totalSize,color);
+    }
+  }
+  mInternalUsageChart.addEntry(availSize / (float)totalSize,mInternalAvailColor);
+  mInternalUsageChart.commit();
 }

@@ -1,6 +1,6 @@
 {
-  if (mSubmit) {
-    mSubmit=false;
+  if (mPositive) {
+    mPositive=false;
     mError.setVisibility(View.VISIBLE);
     if (mNewPassword == null) {
       mKeyStore.unlock(mOldPassword.getText().toString());
@@ -42,6 +42,11 @@
       ((AlertDialog)dialog).show();
       return;
     }
+  }
+  if (mNeutral) {
+    mNeutral=false;
+    new ResetKeyStoreAndKeyChain().execute();
+    return;
   }
   finish();
 }

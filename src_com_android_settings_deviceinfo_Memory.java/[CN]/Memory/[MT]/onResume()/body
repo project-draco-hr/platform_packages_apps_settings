@@ -1,13 +1,10 @@
 {
   super.onResume();
-  mMeasurement.setReceiver(this);
   IntentFilter intentFilter=new IntentFilter(Intent.ACTION_MEDIA_SCANNER_STARTED);
   intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
   intentFilter.addDataScheme("file");
-  getActivity().registerReceiver(mReceiver,intentFilter);
-  mMeasurement.invalidate();
-  if (!Environment.isExternalStorageEmulated()) {
-    mMeasurement.measureExternal();
+  getActivity().registerReceiver(mMediaScannerReceiver,intentFilter);
+  for (int i=0; i < mStorageVolumePreferenceCategories.length; i++) {
+    mStorageVolumePreferenceCategories[i].onResume();
   }
-  mMeasurement.measureInternal();
 }

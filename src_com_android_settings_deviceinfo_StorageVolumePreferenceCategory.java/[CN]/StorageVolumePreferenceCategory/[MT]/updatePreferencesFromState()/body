@@ -1,0 +1,38 @@
+{
+  resetPreferences();
+  String state=getStorageVolumeState();
+  String readOnly="";
+  if (state.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+    state=Environment.MEDIA_MOUNTED;
+    readOnly=mResources.getString(R.string.read_only);
+    removePreference(mFormatPreference);
+  }
+  if (mStorageVolume.isEmulated()) {
+    removePreference(mFormatPreference);
+  }
+  if (!mStorageVolume.isRemovable() && !state.equals(Environment.MEDIA_UNMOUNTED)) {
+    removePreference(mMountTogglePreference);
+  }
+  if (state.equals(Environment.MEDIA_MOUNTED)) {
+    mPreferences[AVAILABLE].setSummary(mPreferences[AVAILABLE].getSummary() + readOnly);
+    mMountTogglePreference.setEnabled(true);
+    mMountTogglePreference.setTitle(mResources.getString(R.string.sd_eject));
+    mMountTogglePreference.setSummary(mResources.getString(R.string.sd_eject_summary));
+  }
+ else {
+    if (state.equals(Environment.MEDIA_UNMOUNTED) || state.equals(Environment.MEDIA_NOFS) || state.equals(Environment.MEDIA_UNMOUNTABLE)) {
+      mMountTogglePreference.setEnabled(true);
+      mMountTogglePreference.setTitle(mResources.getString(R.string.sd_mount));
+      mMountTogglePreference.setSummary(mResources.getString(R.string.sd_mount_summary));
+    }
+ else {
+      mMountTogglePreference.setEnabled(false);
+      mMountTogglePreference.setTitle(mResources.getString(R.string.sd_mount));
+      mMountTogglePreference.setSummary(mResources.getString(R.string.sd_insert_summary));
+    }
+    removePreference(mUsageBarPreference);
+    removePreference(mPreferences[TOTAL_SIZE]);
+    removePreference(mPreferences[AVAILABLE]);
+    removePreference(mFormatPreference);
+  }
+}

@@ -6,13 +6,12 @@
     enabled=false;
   }
  else {
-    enabled=true;
-  }
-  if (ipAndProxyFieldsAreValid()) {
-    enabled=true;
-  }
+    if (ipAndProxyFieldsAreValid()) {
+      enabled=true;
+    }
  else {
-    enabled=false;
+      enabled=false;
+    }
   }
   submit.setEnabled(enabled);
 }

@@ -2,17 +2,15 @@
   if (parent == mSecuritySpinner) {
     mAccessPointSecurity=position;
     showSecurityFields();
-    enableSubmitIfAppropriate();
   }
  else   if (parent == mNetworkSetupSpinner) {
     showNetworkSetupFields();
   }
  else   if (parent == mProxySettingsSpinner) {
     showProxyFields();
-    enableSubmitIfAppropriate();
   }
  else {
     showIpConfigFields();
-    enableSubmitIfAppropriate();
   }
+  enableSubmitIfAppropriate();
 }

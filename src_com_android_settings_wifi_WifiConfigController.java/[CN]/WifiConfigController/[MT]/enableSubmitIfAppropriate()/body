@@ -2,7 +2,11 @@
   Button submit=mConfigUi.getSubmitButton();
   if (submit == null)   return;
   boolean enabled=false;
-  if ((mSsidView != null && mSsidView.length() == 0) || ((mAccessPoint == null || mAccessPoint.networkId == INVALID_NETWORK_ID) && ((mAccessPointSecurity == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mAccessPointSecurity == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8)))) {
+  boolean passwordInvalid=false;
+  if (chosenNetworkSetupMethod() == MANUAL && ((mAccessPointSecurity == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mAccessPointSecurity == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8))) {
+    passwordInvalid=true;
+  }
+  if ((mSsidView != null && mSsidView.length() == 0) || ((mAccessPoint == null || mAccessPoint.networkId == INVALID_NETWORK_ID) && passwordInvalid)) {
     enabled=false;
   }
  else {

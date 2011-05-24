@@ -16,6 +16,9 @@
   if (mPhone.getPhoneName().equals("CDMA")) {
     setSummaryText("meid_number",mPhone.getMeid());
     setSummaryText("min_number",mPhone.getCdmaMin());
+    if (getResources().getBoolean(R.bool.config_msid_enable)) {
+      findPreference("min_number").setTitle(R.string.status_msid_number);
+    }
     setSummaryText("prl_version",mPhone.getCdmaPrlVersion());
     removablePref=findPreference("imei");
     if (removablePref != null) {

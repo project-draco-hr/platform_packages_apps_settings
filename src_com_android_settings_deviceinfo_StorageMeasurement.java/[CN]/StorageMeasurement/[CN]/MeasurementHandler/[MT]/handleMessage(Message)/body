@@ -1,0 +1,58 @@
+{
+switch (msg.what) {
+case MSG_MEASURE:
+{
+      if (mMeasured) {
+        sendExactUpdate();
+        break;
+      }
+      final Context context=(mContext != null) ? mContext.get() : null;
+      if (context == null) {
+        return;
+      }
+      measureApproximateStorage();
+synchronized (mLock) {
+        if (mBound) {
+          removeMessages(MSG_DISCONNECT);
+          sendMessage(obtainMessage(MSG_CONNECTED,mDefaultContainer));
+        }
+ else {
+          Intent service=new Intent().setComponent(DEFAULT_CONTAINER_COMPONENT);
+          context.bindService(service,mDefContainerConn,Context.BIND_AUTO_CREATE);
+        }
+      }
+      break;
+    }
+case MSG_CONNECTED:
+{
+    IMediaContainerService imcs=(IMediaContainerService)msg.obj;
+    measureExactStorage(imcs);
+    break;
+  }
+case MSG_DISCONNECT:
+{
+synchronized (mLock) {
+    if (mBound) {
+      final Context context=(mContext != null) ? mContext.get() : null;
+      if (context == null) {
+        return;
+      }
+      mBound=false;
+      context.unbindService(mDefContainerConn);
+    }
+  }
+  break;
+}
+case MSG_COMPLETED:
+{
+mMeasured=true;
+sendExactUpdate();
+break;
+}
+case MSG_INVALIDATE:
+{
+mMeasured=false;
+break;
+}
+}
+}

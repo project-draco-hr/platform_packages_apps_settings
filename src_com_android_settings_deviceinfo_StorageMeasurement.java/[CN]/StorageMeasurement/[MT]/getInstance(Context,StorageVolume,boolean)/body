@@ -1,0 +1,10 @@
+{
+  if (sInstances.containsKey(storageVolume)) {
+    return sInstances.get(storageVolume);
+  }
+ else {
+    StorageMeasurement storageMeasurement=new StorageMeasurement(context.getApplicationContext(),storageVolume,isPrimary);
+    sInstances.put(storageVolume,storageMeasurement);
+    return storageMeasurement;
+  }
+}

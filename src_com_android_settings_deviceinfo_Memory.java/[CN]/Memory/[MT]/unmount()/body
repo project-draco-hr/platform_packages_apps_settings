@@ -4,11 +4,12 @@
       showDialogInner(DLG_CONFIRM_UNMOUNT);
     }
  else {
-      doUnmount(true);
+      doUnmount();
     }
   }
  catch (  RemoteException e) {
     Log.e(TAG,"Is MountService running?");
     showDialogInner(DLG_ERROR_UNMOUNT);
+    mClickedMountToggle=null;
   }
 }

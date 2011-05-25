@@ -1,0 +1,55 @@
+{
+  Context context=mContext != null ? mContext.get() : null;
+  if (context == null) {
+    return;
+  }
+  for (int i=0; i < StorageVolumePreferenceCategory.sMediaCategories.length; i++) {
+    if (mIsPrimary) {
+      String[] dirs=StorageVolumePreferenceCategory.sMediaCategories[i].mDirPaths;
+      final int length=dirs.length;
+      mMediaSizes[i]=0;
+      for (int d=0; d < length; d++) {
+        final String path=dirs[d];
+        mMediaSizes[i]+=getDirectorySize(imcs,path);
+      }
+    }
+ else {
+      mMediaSizes[i]=0;
+    }
+  }
+  if (mIsPrimary) {
+    final String downloadsPath=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+    mDownloadsSize=getDirectorySize(imcs,downloadsPath);
+  }
+ else {
+    mDownloadsSize=0;
+  }
+  mMiscSize=0;
+  if (mIsPrimary) {
+    measureSizesOfMisc(imcs);
+  }
+  PackageManager pm=context.getPackageManager();
+  if (pm == null) {
+    return;
+  }
+  final List<ApplicationInfo> apps;
+  if (mIsPrimary) {
+    apps=pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
+  }
+ else {
+    apps=Collections.emptyList();
+  }
+  if (apps != null && apps.size() > 0) {
+    mStatsObserver=new StatsObserver();
+synchronized (mStatsObserver.mAppsList) {
+      for (int i=0; i < apps.size(); i++) {
+        final ApplicationInfo info=apps.get(i);
+        mStatsObserver.queuePackageMeasurementLocked(info.packageName);
+      }
+    }
+    requestQueuedMeasurementsLocked(pm);
+  }
+ else {
+    onInternalMeasurementComplete();
+  }
+}

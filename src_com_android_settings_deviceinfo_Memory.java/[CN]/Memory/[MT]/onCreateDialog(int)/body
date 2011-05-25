@@ -3,7 +3,7 @@ switch (id) {
 case DLG_CONFIRM_UNMOUNT:
     return new AlertDialog.Builder(getActivity()).setTitle(R.string.dlg_confirm_unmount_title).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
       public void onClick(      DialogInterface dialog,      int which){
-        doUnmount(true);
+        doUnmount();
       }
     }
 ).setNegativeButton(R.string.cancel,null).setMessage(R.string.dlg_confirm_unmount_text).create();

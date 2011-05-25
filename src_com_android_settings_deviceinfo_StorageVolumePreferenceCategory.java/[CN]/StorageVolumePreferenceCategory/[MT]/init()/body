@@ -1,0 +1,24 @@
+{
+  mUsageBarPreference=new UsageBarPreference(getContext());
+  final int width=(int)mResources.getDimension(R.dimen.device_memory_usage_button_width);
+  final int height=(int)mResources.getDimension(R.dimen.device_memory_usage_button_height);
+  final int numberOfCategories=sCategoryInfos.length;
+  mPreferences=new Preference[numberOfCategories];
+  mColors=new int[numberOfCategories];
+  for (int i=0; i < numberOfCategories; i++) {
+    final Preference preference=new Preference(getContext());
+    mPreferences[i]=preference;
+    preference.setTitle(sCategoryInfos[i].mTitle);
+    preference.setSummary(R.string.memory_calculating_size);
+    if (i != TOTAL_SIZE) {
+      mColors[i]=mResources.getColor(sCategoryInfos[i].mColor);
+      preference.setIcon(createRectShape(width,height,mColors[i]));
+    }
+  }
+  mMountTogglePreference=new Preference(getContext());
+  mMountTogglePreference.setTitle(R.string.sd_eject);
+  mMountTogglePreference.setSummary(R.string.sd_eject_summary);
+  mFormatPreference=new Preference(getContext());
+  mFormatPreference.setTitle(R.string.sd_format);
+  mFormatPreference.setSummary(R.string.sd_format_summary);
+}

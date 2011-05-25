@@ -1,0 +1,30 @@
+{
+  Intent intent=null;
+  if (preference == mFormatPreference) {
+    intent=new Intent(Intent.ACTION_VIEW);
+    intent.setClass(getContext(),com.android.settings.MediaFormat.class);
+  }
+ else   if (preference == mPreferences[APPLICATIONS]) {
+    intent=new Intent(Intent.ACTION_MANAGE_PACKAGE_STORAGE);
+    intent.setClass(getContext(),com.android.settings.Settings.ManageApplicationsActivity.class);
+  }
+ else   if (preference == mPreferences[DOWNLOADS]) {
+    intent=new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS).putExtra(DownloadManager.INTENT_EXTRAS_SORT_BY_SIZE,true);
+  }
+ else   if (preference == mPreferences[MUSIC]) {
+    intent=new Intent(Intent.ACTION_GET_CONTENT);
+    intent.setType("audio/mp3");
+  }
+ else   if (preference == mPreferences[DCIM]) {
+    intent=new Intent(Intent.ACTION_GET_CONTENT);
+    intent.setType("image/jpeg");
+  }
+ else   if (preference == mPreferences[MISC]) {
+    Context context=getContext().getApplicationContext();
+    if (mMeasurement.getMiscSize() > 0) {
+      intent=new Intent(context,MiscFilesHandler.class);
+      intent.putExtra(STORAGE_VOLUME,mStorageVolume);
+    }
+  }
+  return intent;
+}

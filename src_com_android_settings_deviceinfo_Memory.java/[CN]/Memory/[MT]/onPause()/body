@@ -1,5 +1,7 @@
 {
   super.onPause();
-  getActivity().unregisterReceiver(mReceiver);
-  mMeasurement.cleanUp();
+  getActivity().unregisterReceiver(mMediaScannerReceiver);
+  for (int i=0; i < mStorageVolumePreferenceCategories.length; i++) {
+    mStorageVolumePreferenceCategories[i].onPause();
+  }
 }

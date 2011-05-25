@@ -1,11 +1,11 @@
 {
-  View view=View.inflate(this,R.layout.credentials_dialog,null);
+  View view=View.inflate(CredentialStorage.this,R.layout.credentials_dialog,null);
   ((TextView)view.findViewById(R.id.hint)).setText(R.string.credentials_unlock_hint);
   mOldPassword=(TextView)view.findViewById(R.id.old_password);
   mOldPassword.setVisibility(View.VISIBLE);
   mOldPassword.addTextChangedListener(this);
   mError=(TextView)view.findViewById(R.id.error);
-  AlertDialog dialog=new AlertDialog.Builder(this).setView(view).setTitle(R.string.credentials_unlock).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
+  AlertDialog dialog=new AlertDialog.Builder(CredentialStorage.this).setView(view).setTitle(R.string.credentials_unlock).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
   dialog.setOnDismissListener(this);
   dialog.show();
   mButton=dialog.getButton(DialogInterface.BUTTON_POSITIVE);

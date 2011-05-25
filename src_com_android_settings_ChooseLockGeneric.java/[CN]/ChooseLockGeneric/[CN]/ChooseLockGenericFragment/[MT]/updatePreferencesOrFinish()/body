@@ -1,8 +1,8 @@
 {
   int quality=getActivity().getIntent().getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,-1);
   if (quality == -1) {
-    quality=mDPM.getPasswordQuality(null);
-    quality=upgradeQualityForEncryption(quality);
+    quality=getActivity().getIntent().getIntExtra(MINIMUM_QUALITY_KEY,-1);
+    quality=upgradeQuality(quality);
     final PreferenceScreen prefScreen=getPreferenceScreen();
     if (prefScreen != null) {
       prefScreen.removeAll();
@@ -11,7 +11,6 @@
     disableUnusablePreferences(quality);
   }
  else {
-    quality=upgradeQualityForEncryption(quality);
     updateUnlockMethodAndFinish(quality,false);
   }
 }

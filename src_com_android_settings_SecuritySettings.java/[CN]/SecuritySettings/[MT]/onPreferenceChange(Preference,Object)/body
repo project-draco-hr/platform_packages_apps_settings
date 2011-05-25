@@ -14,14 +14,5 @@
     GoogleLocationSettingHelper.setUseLocationForServices(getActivity(),newValue);
     return false;
   }
- else   if (preference == mEnableCredentials) {
-    if (value != null && (Boolean)value) {
-      getActivity().startActivity(new Intent(CredentialStorage.ACTION_UNLOCK));
-      return false;
-    }
- else {
-      KeyStore.getInstance().lock();
-    }
-  }
   return true;
 }

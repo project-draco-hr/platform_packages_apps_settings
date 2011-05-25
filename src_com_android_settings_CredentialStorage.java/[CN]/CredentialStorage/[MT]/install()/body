@@ -1,17 +1,12 @@
 {
   if (mBundle != null && !mBundle.isEmpty()) {
-    try {
-      for (      String key : mBundle.keySet()) {
-        byte[] value=mBundle.getByteArray(key);
-        if (value != null && !mKeyStore.put(key.getBytes("UTF-8"),value)) {
-          Log.e(TAG,"Failed to install " + key);
-          return;
-        }
+    for (    String key : mBundle.keySet()) {
+      byte[] value=mBundle.getByteArray(key);
+      if (value != null && !mKeyStore.put(key,value)) {
+        Log.e(TAG,"Failed to install " + key);
+        return;
       }
-      setResult(RESULT_OK);
     }
- catch (    UnsupportedEncodingException e) {
-      throw new RuntimeException(e);
-    }
+    setResult(RESULT_OK);
   }
 }

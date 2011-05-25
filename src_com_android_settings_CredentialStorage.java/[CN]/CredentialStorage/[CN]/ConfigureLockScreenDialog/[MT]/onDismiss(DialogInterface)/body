@@ -1,0 +1,10 @@
+{
+  if (mConfigureConfirmed) {
+    mConfigureConfirmed=false;
+    Intent intent=new Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD);
+    intent.putExtra(ChooseLockGeneric.ChooseLockGenericFragment.MINIMUM_QUALITY_KEY,MIN_PASSWORD_QUALITY);
+    startActivity(intent);
+    return;
+  }
+  finish();
+}

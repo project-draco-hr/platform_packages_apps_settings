@@ -4,7 +4,7 @@ case L2TP_IPSEC_PSK:
     L2tpIpsecPskProfile pskProfile=(L2tpIpsecPskProfile)p;
   String presharedKey=pskProfile.getPresharedKey();
 String key=KEY_PREFIX_IPSEC_PSK + p.getId();
-if (!TextUtils.isEmpty(presharedKey) && !mKeyStore.put(key,presharedKey)) {
+if (!TextUtils.isEmpty(presharedKey) && !mKeyStore.put(key,presharedKey.getBytes(Charsets.UTF_8))) {
 Log.e(TAG,"keystore write failed: key=" + key);
 }
 pskProfile.setPresharedKey(key);
@@ -14,7 +14,7 @@ L2tpProfile l2tpProfile=(L2tpProfile)p;
 key=KEY_PREFIX_L2TP_SECRET + p.getId();
 if (l2tpProfile.isSecretEnabled()) {
 String secret=l2tpProfile.getSecretString();
-if (!TextUtils.isEmpty(secret) && !mKeyStore.put(key,secret)) {
+if (!TextUtils.isEmpty(secret) && !mKeyStore.put(key,secret.getBytes(Charsets.UTF_8))) {
 Log.e(TAG,"keystore write failed: key=" + key);
 }
 l2tpProfile.setSecretString(key);

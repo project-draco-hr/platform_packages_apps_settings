@@ -1,49 +1,24 @@
 {
-  if (preference == mSdMountToggle) {
-    String status=Environment.getExternalStorageState();
-    if (status.equals(Environment.MEDIA_MOUNTED)) {
-      unmount();
+  for (int i=0; i < mStorageVolumePreferenceCategories.length; i++) {
+    StorageVolumePreferenceCategory svpc=mStorageVolumePreferenceCategories[i];
+    Intent intent=svpc.intentForClick(preference);
+    if (intent != null) {
+      startActivity(intent);
+      return true;
     }
+    boolean mountToggleClicked=svpc.mountToggleClicked(preference);
+    if (mountToggleClicked && mClickedMountToggle == null) {
+      mClickedMountToggle=preference;
+      mClickedMountPoint=svpc.getMountPoint();
+      String state=svpc.getStorageVolumeState();
+      if (state.equals(Environment.MEDIA_MOUNTED) || state.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+        unmount();
+      }
  else {
-      mount();
+        mount();
+      }
+      return true;
     }
-    return true;
-  }
- else   if (preference == mSdFormat) {
-    Intent intent=new Intent(Intent.ACTION_VIEW);
-    intent.setClass(getActivity(),com.android.settings.MediaFormat.class);
-    startActivity(intent);
-    return true;
-  }
- else   if (preference == mInternalAppsUsage) {
-    Intent intent=new Intent(Intent.ACTION_MANAGE_PACKAGE_STORAGE);
-    intent.setClass(getActivity(),com.android.settings.Settings.ManageApplicationsActivity.class);
-    startActivity(intent);
-    return true;
-  }
- else   if (preference == mMediaPreferences[Constants.DOWNLOADS_INDEX]) {
-    Intent intent=new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS).putExtra(DownloadManager.INTENT_EXTRAS_SORT_BY_SIZE,true);
-    startActivity(intent);
-    return true;
-  }
- else   if (preference == mMediaPreferences[Constants.MUSIC_INDEX]) {
-    Intent intent=new Intent("android.intent.action.GET_CONTENT");
-    intent.setType("audio/mp3");
-    startActivity(intent);
-    return true;
-  }
- else   if (preference == mMediaPreferences[Constants.PIC_VIDEO_INDEX]) {
-    Intent intent=new Intent("android.intent.action.GET_CONTENT");
-    intent.setType("image/jpeg");
-    startActivity(intent);
-    return true;
-  }
- else   if (preference == mMediaPreferences[Constants.MEDIA_MISC_INDEX]) {
-    Context context=getActivity().getApplicationContext();
-    if (MemoryMeasurement.getInstance(context).isSizeOfMiscCategoryNonZero()) {
-      startActivity(new Intent(context,MiscFilesHandler.class));
-    }
-    return true;
   }
   return false;
 }

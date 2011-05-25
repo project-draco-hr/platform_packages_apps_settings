@@ -2,7 +2,7 @@
   IMountService mountService=getMountService();
   try {
     if (mountService != null) {
-      mountService.mountVolume(Environment.getExternalStorageDirectory().toString());
+      mountService.mountVolume(mClickedMountPoint);
     }
  else {
       Log.e(TAG,"Mount service is null, can't mount");
@@ -10,4 +10,5 @@
   }
  catch (  RemoteException ex) {
   }
+  mClickedMountToggle=null;
 }

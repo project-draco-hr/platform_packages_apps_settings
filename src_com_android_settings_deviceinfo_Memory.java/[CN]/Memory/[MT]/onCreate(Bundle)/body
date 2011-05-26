@@ -5,36 +5,21 @@
     mStorageManager.registerListener(mStorageListener);
   }
   addPreferencesFromResource(R.xml.device_info_memory);
-  mRes=getResources();
-  mSdSize=findPreference(MEMORY_SD_SIZE);
-  mSdAvail=findPreference(MEMORY_SD_AVAIL);
-  mSdMountToggle=findPreference(MEMORY_SD_MOUNT_TOGGLE);
-  mSdFormat=findPreference(MEMORY_SD_FORMAT);
-  mSdMountPreferenceGroup=(PreferenceGroup)findPreference(MEMORY_SD_GROUP);
-  if (Environment.isExternalStorageEmulated()) {
-    getPreferenceScreen().removePreference(mSdMountPreferenceGroup);
-  }
-  mInternalSize=findPreference(MEMORY_INTERNAL_SIZE);
-  mInternalAppsColor=mRes.getColor(R.color.memory_apps_usage);
-  mInternalUsedColor=android.graphics.Color.GRAY;
-  mInternalAvailColor=mRes.getColor(R.color.memory_avail);
-  final int buttonWidth=(int)mRes.getDimension(R.dimen.device_memory_usage_button_width);
-  final int buttonHeight=(int)mRes.getDimension(R.dimen.device_memory_usage_button_height);
-  mInternalAvail=findPreference(MEMORY_INTERNAL_AVAIL);
-  mInternalAvail.setIcon(createRectShape(buttonHeight,buttonWidth,mInternalAvailColor));
-  mInternalAppsUsage=findPreference(MEMORY_INTERNAL_APPS);
-  mInternalAppsUsage.setIcon(createRectShape(buttonHeight,buttonWidth,mInternalAppsColor));
-  for (int i=0; i < Constants.NUM_MEDIA_DIRS_TRACKED; i++) {
-    final MediaDirectory mediaDirectory=Constants.mMediaDirs.get(i);
-    final String preferenceName=mediaDirectory.mPreferenceName;
-    if (preferenceName == null) {
-      continue;
+  mResources=getResources();
+  try {
+    IMountService mountService=IMountService.Stub.asInterface(ServiceManager.getService("mount"));
+    Parcelable[] volumes=mountService.getVolumeList();
+    int length=volumes.length;
+    mStorageVolumePreferenceCategories=new StorageVolumePreferenceCategory[length];
+    for (int i=0; i < length; i++) {
+      StorageVolume storageVolume=(StorageVolume)volumes[i];
+      StorageVolumePreferenceCategory storagePreferenceCategory=new StorageVolumePreferenceCategory(getActivity(),mResources,storageVolume,i == 0);
+      mStorageVolumePreferenceCategories[i]=storagePreferenceCategory;
+      getPreferenceScreen().addPreference(storagePreferenceCategory);
+      storagePreferenceCategory.init();
     }
-    mMediaPreferences[i]=findPreference(preferenceName);
-    final int color=mRes.getColor(mediaDirectory.mColor);
-    mMediaPreferences[i].setIcon(createRectShape(buttonHeight,buttonWidth,color));
   }
-  mInternalUsageChart=(UsageBarPreference)findPreference(MEMORY_INTERNAL_CHART);
-  mMeasurement=MemoryMeasurement.getInstance(getActivity());
-  mMeasurement.setReceiver(this);
+ catch (  Exception e) {
+    Log.e(TAG,"couldn't talk to MountService",e);
+  }
 }

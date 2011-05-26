@@ -1,0 +1,9 @@
+{
+  if (size > 0) {
+    mPreferences[category].setSummary(formatSize(size));
+    mUsageBarPreference.addEntry(size / (float)totalSize,mColors[category]);
+  }
+ else {
+    removePreference(mPreferences[category]);
+  }
+}

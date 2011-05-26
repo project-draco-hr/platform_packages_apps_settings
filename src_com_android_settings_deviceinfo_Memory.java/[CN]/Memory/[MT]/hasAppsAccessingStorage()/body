@@ -1,13 +1,7 @@
 {
-  String extStoragePath=Environment.getExternalStorageDirectory().toString();
   IMountService mountService=getMountService();
-  int stUsers[]=mountService.getStorageUsers(extStoragePath);
+  int stUsers[]=mountService.getStorageUsers(mClickedMountPoint);
   if (stUsers != null && stUsers.length > 0) {
-    return true;
-  }
-  ActivityManager am=(ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
-  List<ApplicationInfo> list=am.getRunningExternalApplications();
-  if (list != null && list.size() > 0) {
     return true;
   }
   return false;

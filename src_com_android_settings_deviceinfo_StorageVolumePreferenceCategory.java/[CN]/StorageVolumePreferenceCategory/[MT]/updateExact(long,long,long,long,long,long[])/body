@@ -1,0 +1,16 @@
+{
+  mUsageBarPreference.clear();
+  mPreferences[TOTAL_SIZE].setSummary(formatSize(totalSize));
+  updatePreference(appsSize,totalSize,APPLICATIONS);
+  long totalMediaSize=0;
+  for (int i=0; i < sMediaCategories.length; i++) {
+    final int category=sMediaCategories[i].mCategory;
+    final long size=mediaSizes[i];
+    updatePreference(size,totalSize,category);
+    totalMediaSize+=size;
+  }
+  updatePreference(downloadsSize,totalSize,DOWNLOADS);
+  updatePreference(miscSize,totalSize,MISC);
+  updatePreference(availSize,totalSize,AVAILABLE);
+  mUsageBarPreference.commit();
+}

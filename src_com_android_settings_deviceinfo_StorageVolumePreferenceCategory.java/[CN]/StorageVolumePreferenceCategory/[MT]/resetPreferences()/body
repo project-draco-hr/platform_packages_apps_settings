@@ -1,0 +1,16 @@
+{
+  final int numberOfCategories=sCategoryInfos.length;
+  removePreference(mUsageBarPreference);
+  for (int i=0; i < numberOfCategories; i++) {
+    removePreference(mPreferences[i]);
+  }
+  removePreference(mMountTogglePreference);
+  removePreference(mFormatPreference);
+  addPreference(mUsageBarPreference);
+  for (int i=0; i < numberOfCategories; i++) {
+    addPreference(mPreferences[i]);
+  }
+  addPreference(mMountTogglePreference);
+  addPreference(mFormatPreference);
+  mMountTogglePreference.setEnabled(true);
+}

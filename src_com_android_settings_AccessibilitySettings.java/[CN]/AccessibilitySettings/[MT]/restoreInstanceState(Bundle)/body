@@ -3,8 +3,8 @@
   if (key != null) {
     Preference preference=findPreference(key);
     if (!(preference instanceof CheckBoxPreference)) {
-      throw new IllegalArgumentException(KEY_TOGGLE_ACCESSIBILITY_SERVICE_CHECKBOX + " must be mapped to an instance of a " + CheckBoxPreference.class.getName());
+      throw new IllegalArgumentException(KEY_TOGGLE_ACCESSIBILITY_SERVICE_CHECKBOX + " must be mapped to an instance of a " + SettingsCheckBoxPreference.class.getName());
     }
-    mToggleAccessibilityServiceCheckBox=(CheckBoxPreference)preference;
+    mToggleAccessibilityServiceCheckBox=(SettingsCheckBoxPreference)preference;
   }
 }

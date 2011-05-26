@@ -18,7 +18,7 @@ case DIALOG_ID_ENABLE_SCRIPT_INJECTION:
   }
 ).setNegativeButton(android.R.string.cancel,null).create();
 case DIALOG_ID_ENABLE_ACCESSIBILITY_SERVICE:
-return new AlertDialog.Builder(getActivity()).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getResources().getString(R.string.accessibility_service_security_warning,mAccessibilityServices.get(mToggleAccessibilityServiceCheckBox.getKey()).applicationInfo.loadLabel(getActivity().getPackageManager()))).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+return new AlertDialog.Builder(getActivity()).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getResources().getString(R.string.accessibility_service_security_warning,mAccessibilityServices.get(mToggleAccessibilityServiceCheckBox.getKey()).getResolveInfo().serviceInfo.applicationInfo.loadLabel(getActivity().getPackageManager()))).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
   public void onClick(  DialogInterface dialog,  int which){
     mToggleAccessibilityServiceCheckBox.setChecked(true);
     persistEnabledAccessibilityServices();

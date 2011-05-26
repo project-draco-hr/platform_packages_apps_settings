@@ -1,17 +1,25 @@
 {
   AccessibilityManager accessibilityManager=(AccessibilityManager)getSystemService(Service.ACCESSIBILITY_SERVICE);
-  List<ServiceInfo> installedServices=accessibilityManager.getAccessibilityServiceList();
+  List<AccessibilityServiceInfo> installedServices=accessibilityManager.getInstalledAccessibilityServiceList();
   if (installedServices.isEmpty()) {
     getPreferenceScreen().removePreference(mAccessibilityServicesCategory);
     return;
   }
   getPreferenceScreen().addPreference(mAccessibilityServicesCategory);
   for (int i=0, count=installedServices.size(); i < count; ++i) {
-    ServiceInfo serviceInfo=installedServices.get(i);
-    String key=serviceInfo.packageName + "/" + serviceInfo.name;
-    if (mAccessibilityServices.put(key,serviceInfo) == null) {
-      CheckBoxPreference preference=new CheckBoxPreference(getActivity());
+    AccessibilityServiceInfo accessibilityServiceInfo=installedServices.get(i);
+    String key=accessibilityServiceInfo.getId();
+    if (mAccessibilityServices.put(key,accessibilityServiceInfo) == null) {
+      String settingsActivityName=accessibilityServiceInfo.getSettingsActivityName();
+      Intent settingsIntent=null;
+      if (!TextUtils.isEmpty(settingsActivityName)) {
+        String packageName=accessibilityServiceInfo.getResolveInfo().serviceInfo.packageName;
+        settingsIntent=new Intent(Intent.ACTION_MAIN);
+        settingsIntent.setClassName(packageName,settingsActivityName);
+      }
+      SettingsCheckBoxPreference preference=new SettingsCheckBoxPreference(getActivity(),settingsIntent);
       preference.setKey(key);
+      ServiceInfo serviceInfo=accessibilityServiceInfo.getResolveInfo().serviceInfo;
       preference.setTitle(serviceInfo.loadLabel(getActivity().getPackageManager()));
       mAccessibilityServicesCategory.addPreference(preference);
     }

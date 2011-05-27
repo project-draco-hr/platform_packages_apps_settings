@@ -1,7 +1,26 @@
 {
   int timeout=SystemProperties.getInt(SYSTEM_PROPERTY_DISCOVERABLE_TIMEOUT,-1);
-  if (timeout <= 0) {
-    timeout=DEFAULT_DISCOVERABLE_TIMEOUT;
+  if (timeout < 0) {
+    String timeoutValue=null;
+    if (mTimeoutListPreference != null && mTimeoutListPreference.getValue() != null) {
+      timeoutValue=mTimeoutListPreference.getValue().toString();
+    }
+ else {
+      mTimeoutListPreference.setValue(VALUE_DISCOVERABLE_TIMEOUT_TWO_MINUTES);
+      return DISCOVERABLE_TIMEOUT_TWO_MINUTES;
+    }
+    if (timeoutValue.equals(VALUE_DISCOVERABLE_TIMEOUT_NEVER)) {
+      timeout=DISCOVERABLE_TIMEOUT_NEVER;
+    }
+ else     if (timeoutValue.equals(VALUE_DISCOVERABLE_TIMEOUT_ONE_HOUR)) {
+      timeout=DISCOVERABLE_TIMEOUT_ONE_HOUR;
+    }
+ else     if (timeoutValue.equals(VALUE_DISCOVERABLE_TIMEOUT_FIVE_MINUTES)) {
+      timeout=DISCOVERABLE_TIMEOUT_FIVE_MINUTES;
+    }
+ else {
+      timeout=DISCOVERABLE_TIMEOUT_TWO_MINUTES;
+    }
   }
   return timeout;
 }

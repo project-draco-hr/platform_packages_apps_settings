@@ -1,4 +1,10 @@
 {
-  setEnabled((Boolean)value);
+  if (preference == mCheckBoxPreference) {
+    setEnabled((Boolean)value);
+  }
+ else   if (preference == mTimeoutListPreference) {
+    mTimeoutListPreference.setValue((String)value);
+    setEnabled(true);
+  }
   return true;
 }

@@ -7,7 +7,12 @@
     builder.setCancelable(false);
   }
  else {
-    builder.setMessage(getString(R.string.bluetooth_ask_enablement_and_discovery,mTimeout));
+    if (mTimeout == BluetoothDiscoverableEnabler.DISCOVERABLE_TIMEOUT_NEVER) {
+      builder.setMessage(getString(R.string.bluetooth_ask_enablement_and_lasting_discovery));
+    }
+ else {
+      builder.setMessage(getString(R.string.bluetooth_ask_enablement_and_discovery,mTimeout));
+    }
     builder.setPositiveButton(getString(R.string.yes),this);
     builder.setNegativeButton(getString(R.string.no),this);
   }

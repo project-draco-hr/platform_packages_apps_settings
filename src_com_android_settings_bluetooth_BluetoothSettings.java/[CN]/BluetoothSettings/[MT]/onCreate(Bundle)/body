@@ -17,7 +17,7 @@
  else {
     addPreferencesFromResource(R.xml.bluetooth_settings);
     mEnabler=new BluetoothEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_CHECKBOX));
-    mDiscoverableEnabler=new BluetoothDiscoverableEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_DISCOVERABLE));
+    mDiscoverableEnabler=new BluetoothDiscoverableEnabler(this,(CheckBoxPreference)findPreference(KEY_BT_DISCOVERABLE),(ListPreference)findPreference(KEY_BT_DISCOVERABLE_TIMEOUT));
     mNamePreference=(BluetoothNamePreference)findPreference(KEY_BT_NAME);
     mDeviceList=(ProgressCategory)findPreference(KEY_BT_DEVICE_LIST);
   }

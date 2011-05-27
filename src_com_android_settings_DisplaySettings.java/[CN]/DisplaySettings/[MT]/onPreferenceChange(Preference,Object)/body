@@ -24,7 +24,7 @@
     int value=Integer.parseInt((String)objValue);
     try {
       Settings.System.putInt(getContentResolver(),SCREEN_OFF_TIMEOUT,value);
-      updateTimeoutPreferenceDescription(getContentResolver(),value);
+      updateTimeoutPreferenceDescription(getContentResolver(),mScreenTimeoutPreference,R.string.screen_timeout_summary,value);
     }
  catch (    NumberFormatException e) {
       Log.e(TAG,"could not persist screen timeout setting",e);

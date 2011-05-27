@@ -6,20 +6,14 @@
   }
   addPreferencesFromResource(R.xml.device_info_memory);
   mResources=getResources();
-  try {
-    IMountService mountService=IMountService.Stub.asInterface(ServiceManager.getService("mount"));
-    Parcelable[] volumes=mountService.getVolumeList();
-    int length=volumes.length;
-    mStorageVolumePreferenceCategories=new StorageVolumePreferenceCategory[length];
-    for (int i=0; i < length; i++) {
-      StorageVolume storageVolume=(StorageVolume)volumes[i];
-      StorageVolumePreferenceCategory storagePreferenceCategory=new StorageVolumePreferenceCategory(getActivity(),mResources,storageVolume,i == 0);
-      mStorageVolumePreferenceCategories[i]=storagePreferenceCategory;
-      getPreferenceScreen().addPreference(storagePreferenceCategory);
-      storagePreferenceCategory.init();
-    }
-  }
- catch (  Exception e) {
-    Log.e(TAG,"couldn't talk to MountService",e);
+  StorageVolume[] storageVolumes=mStorageManager.getVolumeList();
+  int length=storageVolumes.length;
+  mStorageVolumePreferenceCategories=new StorageVolumePreferenceCategory[length];
+  for (int i=0; i < length; i++) {
+    StorageVolume storageVolume=storageVolumes[i];
+    StorageVolumePreferenceCategory storagePreferenceCategory=new StorageVolumePreferenceCategory(getActivity(),mResources,storageVolume,mStorageManager,i == 0);
+    mStorageVolumePreferenceCategories[i]=storagePreferenceCategory;
+    getPreferenceScreen().addPreference(storagePreferenceCategory);
+    storagePreferenceCategory.init();
   }
 }

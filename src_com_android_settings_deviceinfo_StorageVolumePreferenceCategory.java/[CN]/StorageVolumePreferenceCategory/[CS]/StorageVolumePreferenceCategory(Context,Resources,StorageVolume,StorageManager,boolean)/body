@@ -2,6 +2,7 @@
   super(context);
   mResources=resources;
   mStorageVolume=storageVolume;
+  mStorageManager=storageManager;
   setTitle(storageVolume.getDescription());
   mMeasurement=StorageMeasurement.getInstance(context,storageVolume,isPrimary);
   mMeasurement.setReceiver(this);

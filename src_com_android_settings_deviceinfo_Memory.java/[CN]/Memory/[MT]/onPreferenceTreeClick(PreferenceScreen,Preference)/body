@@ -9,9 +9,10 @@
     boolean mountToggleClicked=svpc.mountToggleClicked(preference);
     if (mountToggleClicked && mClickedMountToggle == null) {
       mClickedMountToggle=preference;
-      mClickedMountPoint=svpc.getMountPoint();
-      String state=svpc.getStorageVolumeState();
-      if (state.equals(Environment.MEDIA_MOUNTED) || state.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+      final StorageVolume storageVolume=svpc.getStorageVolume();
+      mClickedMountPoint=storageVolume.getPath();
+      String state=mStorageManager.getVolumeState(storageVolume.getPath());
+      if (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
         unmount();
       }
  else {

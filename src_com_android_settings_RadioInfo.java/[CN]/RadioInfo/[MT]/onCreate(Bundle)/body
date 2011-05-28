@@ -57,6 +57,5 @@
   mPhoneStateReceiver.notifyPhoneCallState(EVENT_PHONE_STATE_CHANGED);
   phone.getPreferredNetworkType(mHandler.obtainMessage(EVENT_QUERY_PREFERRED_TYPE_DONE));
   phone.getNeighboringCids(mHandler.obtainMessage(EVENT_QUERY_NEIGHBORING_CIDS_DONE));
-  netstat=INetStatService.Stub.asInterface(ServiceManager.getService("netstat"));
   CellLocation.requestLocationUpdate();
 }

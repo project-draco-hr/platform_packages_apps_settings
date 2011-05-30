@@ -1,0 +1,37 @@
+{
+  mContent.set(l + getPaddingLeft(),t + getPaddingTop(),r - getPaddingRight(),b - getPaddingBottom());
+  final int width=mContent.width();
+  final int height=mContent.height();
+  mHoriz.setSize(width);
+  mVert.setSize(height);
+  final Rect parentRect=new Rect();
+  final Rect childRect=new Rect();
+  for (int i=0; i < getChildCount(); i++) {
+    final View child=getChildAt(i);
+    final LayoutParams params=(LayoutParams)child.getLayoutParams();
+    parentRect.set(mContent);
+    if (child instanceof ChartNetworkSeriesView || child instanceof ChartGridView) {
+      Gravity.apply(params.gravity,width,height,parentRect,childRect);
+      child.layout(childRect.left,childRect.top,childRect.right,childRect.bottom);
+    }
+ else     if (child instanceof ChartSweepView) {
+      final ChartSweepView sweep=(ChartSweepView)child;
+      final ChartAxis axis=sweep.getAxis();
+      final float point=sweep.getPoint();
+      if (axis == mHoriz) {
+        parentRect.left=parentRect.right=(int)point + getPaddingLeft();
+        parentRect.bottom+=child.getMeasuredWidth();
+        Gravity.apply(params.gravity,child.getMeasuredWidth(),parentRect.height(),parentRect,childRect);
+      }
+ else       if (axis == mVert) {
+        parentRect.top=parentRect.bottom=(int)point + getPaddingTop();
+        parentRect.right+=child.getMeasuredHeight();
+        Gravity.apply(params.gravity,parentRect.width(),child.getMeasuredHeight(),parentRect,childRect);
+      }
+ else {
+        throw new IllegalStateException("unexpected axis");
+      }
+    }
+    child.layout(childRect.left,childRect.top,childRect.right,childRect.bottom);
+  }
+}

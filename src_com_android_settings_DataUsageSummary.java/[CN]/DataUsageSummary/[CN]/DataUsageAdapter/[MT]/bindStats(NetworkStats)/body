@@ -1,0 +1,11 @@
+{
+  mData.clear();
+  for (int i=0; i < stats.length(); i++) {
+    final UsageRecord record=new UsageRecord();
+    record.uid=stats.uid[i];
+    record.total=stats.rx[i] + stats.tx[i];
+    mData.add(record);
+  }
+  Collections.sort(mData);
+  notifyDataSetChanged();
+}

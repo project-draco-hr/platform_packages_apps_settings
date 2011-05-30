@@ -1,0 +1,30 @@
+{
+  final Context context=inflater.getContext();
+  final long now=System.currentTimeMillis();
+  mStatsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+  mAxisTime=new TimeAxis();
+  mAxisData=new InvertedChartAxis(new DataAxis());
+  mChart=new ChartView(context,mAxisTime,mAxisData);
+  mChart.setPadding(20,20,20,20);
+  mChart.addView(new ChartGridView(context,mAxisTime,mAxisData),buildChartParams());
+  mSeries=new ChartNetworkSeriesView(context,mAxisTime,mAxisData);
+  mChart.addView(mSeries,buildChartParams());
+  mSweepTime1=new ChartSweepView(context,mAxisTime,now - DateUtils.DAY_IN_MILLIS * 14,Color.parseColor("#ffffff"));
+  mSweepTime2=new ChartSweepView(context,mAxisTime,now - DateUtils.DAY_IN_MILLIS * 7,Color.parseColor("#ffffff"));
+  mSweepDataWarn=new ChartSweepView(context,mAxisData,DATA_WARN,Color.parseColor("#f7931d"));
+  mSweepDataLimit=new ChartSweepView(context,mAxisData,DATA_LIMIT,Color.parseColor("#be1d2c"));
+  mChart.addView(mSweepTime1,buildSweepParams());
+  mChart.addView(mSweepTime2,buildSweepParams());
+  mChart.addView(mSweepDataWarn,buildSweepParams());
+  mChart.addView(mSweepDataLimit,buildSweepParams());
+  mSeries.bindSweepRange(mSweepTime1,mSweepTime2);
+  mSweepTime1.addOnSweepListener(mSweepListener);
+  mSweepTime2.addOnSweepListener(mSweepListener);
+  mAdapter=new DataUsageAdapter();
+  final View view=inflater.inflate(R.layout.data_usage_summary,container,false);
+  mChartContainer=(ViewGroup)view.findViewById(R.id.chart_container);
+  mChartContainer.addView(mChart);
+  mList=(ListView)view.findViewById(R.id.list);
+  mList.setAdapter(mAdapter);
+  return view;
+}

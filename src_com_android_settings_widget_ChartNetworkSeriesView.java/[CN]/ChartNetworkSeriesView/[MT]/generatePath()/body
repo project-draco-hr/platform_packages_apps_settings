@@ -1,0 +1,37 @@
+{
+  mPathStroke.reset();
+  mPathFill.reset();
+  if (mStats == null || mStats.bucketCount < 2)   return;
+  final int width=getWidth();
+  final int height=getHeight();
+  boolean started=false;
+  float firstX=0;
+  float lastX=0;
+  float lastY=0;
+  long totalData=0;
+  for (int i=0; i < mStats.bucketCount; i++) {
+    final float x=mHoriz.convertToPoint(mStats.bucketStart[i]);
+    final float y=mVert.convertToPoint(totalData);
+    if (i > 0 && !started && x > 0) {
+      mPathStroke.moveTo(lastX,lastY);
+      mPathFill.moveTo(lastX,lastY);
+      started=true;
+      firstX=x;
+    }
+    if (started) {
+      mPathStroke.lineTo(x,y);
+      mPathFill.lineTo(x,y);
+      totalData+=mStats.rx[i] + mStats.tx[i];
+    }
+    if (x > width)     break;
+    lastX=x;
+    lastY=y;
+  }
+  if (LOGD) {
+    final RectF bounds=new RectF();
+    mPathFill.computeBounds(bounds,true);
+    Log.d(TAG,"onLayout() rendered with bounds=" + bounds.toString());
+  }
+  mPathFill.lineTo(lastX,height);
+  mPathFill.lineTo(firstX,height);
+}

@@ -2,8 +2,8 @@
   int encryptionStatus=mDPM.getStorageEncryptionStatus();
   boolean encrypted=(encryptionStatus == DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE) || (encryptionStatus == DevicePolicyManager.ENCRYPTION_STATUS_ACTIVATING);
   if (encrypted) {
-    if (quality < DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
-      quality=DevicePolicyManager.PASSWORD_QUALITY_NUMERIC;
+    if (quality < CryptKeeperSettings.MIN_PASSWORD_QUALITY) {
+      quality=CryptKeeperSettings.MIN_PASSWORD_QUALITY;
     }
   }
   return quality;

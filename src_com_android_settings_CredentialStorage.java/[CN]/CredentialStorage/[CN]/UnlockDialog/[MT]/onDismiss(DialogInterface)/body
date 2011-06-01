@@ -1,0 +1,30 @@
+{
+  if (mUnlockConfirmed) {
+    mUnlockConfirmed=false;
+    mError.setVisibility(View.VISIBLE);
+    mKeyStore.unlock(mOldPassword.getText().toString());
+    int error=mKeyStore.getLastError();
+    if (error == KeyStore.NO_ERROR) {
+      Toast.makeText(CredentialStorage.this,R.string.credentials_enabled,Toast.LENGTH_SHORT).show();
+      install();
+    }
+ else     if (error == KeyStore.UNINITIALIZED) {
+      Toast.makeText(CredentialStorage.this,R.string.credentials_erased,Toast.LENGTH_SHORT).show();
+    }
+ else     if (error >= KeyStore.WRONG_PASSWORD) {
+      int count=error - KeyStore.WRONG_PASSWORD + 1;
+      if (count > 3) {
+        mError.setText(R.string.credentials_wrong_password);
+      }
+ else       if (count == 1) {
+        mError.setText(R.string.credentials_reset_warning);
+      }
+ else {
+        mError.setText(getString(R.string.credentials_reset_warning_plural,count));
+      }
+      ((AlertDialog)dialog).show();
+      return;
+    }
+  }
+  finish();
+}

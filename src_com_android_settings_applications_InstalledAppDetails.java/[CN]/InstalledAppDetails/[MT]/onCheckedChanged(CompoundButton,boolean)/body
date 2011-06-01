@@ -1,0 +1,10 @@
+{
+  String packageName=mAppEntry.info.packageName;
+  ActivityManager am=(ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+  if (buttonView == mAskCompatibilityCB) {
+    am.setPackageAskScreenCompat(packageName,isChecked);
+  }
+ else   if (buttonView == mEnableCompatibilityCB) {
+    am.setPackageScreenCompatMode(packageName,isChecked ? ActivityManager.COMPAT_MODE_ENABLED : ActivityManager.COMPAT_MODE_DISABLED);
+  }
+}

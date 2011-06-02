@@ -1,0 +1,5 @@
+{
+  super.showDialog(state);
+  getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.POINTER_SPEED),true,mSpeedObserver);
+  mRestoredOldState=false;
+}

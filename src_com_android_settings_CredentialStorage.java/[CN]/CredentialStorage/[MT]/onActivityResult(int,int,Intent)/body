@@ -1,0 +1,13 @@
+{
+  super.onActivityResult(requestCode,resultCode,data);
+  if (requestCode == CONFIRM_KEY_GUARD_REQUEST) {
+    if (resultCode == Activity.RESULT_OK) {
+      String password=data.getStringExtra(ChooseLockSettingsHelper.EXTRA_KEY_PASSWORD);
+      if (!TextUtils.isEmpty(password)) {
+        mKeyStore.password(password);
+        return;
+      }
+    }
+    finish();
+  }
+}

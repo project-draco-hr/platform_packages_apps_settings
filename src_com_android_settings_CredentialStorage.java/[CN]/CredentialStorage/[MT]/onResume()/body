@@ -6,23 +6,9 @@
     new ResetDialog();
   }
  else {
-    if (!checkKeyguardQuality()) {
-      new ConfigureLockScreenDialog();
-      return;
-    }
     if (ACTION_INSTALL.equals(action) && "com.android.certinstaller".equals(getCallingPackage())) {
-      mBundle=intent.getExtras();
+      mInstallBundle=intent.getExtras();
     }
-switch (mKeyStore.state()) {
-case UNINITIALIZED:
-      throw new AssertionError();
-case LOCKED:
-    new UnlockDialog();
-  break;
-case UNLOCKED:
-install();
-finish();
-break;
-}
-}
+    handleUnlockOrInstall();
+  }
 }

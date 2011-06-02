@@ -1,0 +1,14 @@
+{
+  if (mInstallBundle != null && !mInstallBundle.isEmpty()) {
+    Bundle bundle=mInstallBundle;
+    mInstallBundle=null;
+    for (    String key : bundle.keySet()) {
+      byte[] value=bundle.getByteArray(key);
+      if (value != null && !mKeyStore.put(key,value)) {
+        Log.e(TAG,"Failed to install " + key);
+        return;
+      }
+    }
+    setResult(RESULT_OK);
+  }
+}

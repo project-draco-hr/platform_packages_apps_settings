@@ -1,0 +1,27 @@
+{
+  if (isFinishing()) {
+    return;
+  }
+switch (mKeyStore.state()) {
+case UNINITIALIZED:
+{
+      ensureKeyGuard();
+      return;
+    }
+case LOCKED:
+{
+    new UnlockDialog();
+    return;
+  }
+case UNLOCKED:
+{
+  if (!checkKeyGuardQuality()) {
+    new ConfigureKeyGuardDialog();
+    return;
+  }
+  installIfAvailable();
+  finish();
+  return;
+}
+}
+}

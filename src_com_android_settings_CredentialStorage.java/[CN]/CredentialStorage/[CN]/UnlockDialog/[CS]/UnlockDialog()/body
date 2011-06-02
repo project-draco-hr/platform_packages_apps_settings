@@ -1,6 +1,19 @@
 {
   View view=View.inflate(CredentialStorage.this,R.layout.credentials_dialog,null);
-  ((TextView)view.findViewById(R.id.hint)).setText(R.string.credentials_unlock_hint);
+  CharSequence text;
+  if (mRetriesRemaining == -1) {
+    text=getResources().getText(R.string.credentials_unlock_hint);
+  }
+ else   if (mRetriesRemaining > 3) {
+    text=getResources().getText(R.string.credentials_wrong_password);
+  }
+ else   if (mRetriesRemaining == 1) {
+    text=getResources().getText(R.string.credentials_reset_warning);
+  }
+ else {
+    text=getString(R.string.credentials_reset_warning_plural,mRetriesRemaining);
+  }
+  ((TextView)view.findViewById(R.id.hint)).setText(text);
   mOldPassword=(TextView)view.findViewById(R.id.old_password);
   mOldPassword.setVisibility(View.VISIBLE);
   mOldPassword.addTextChangedListener(this);

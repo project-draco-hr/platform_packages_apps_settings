@@ -1,9 +1,0 @@
-{
-  try {
-    IMountService mountService=IMountService.Stub.asInterface(ServiceManager.getService("mount"));
-    return mountService.getVolumeState(getMountPoint());
-  }
- catch (  Exception rex) {
-    return Environment.MEDIA_REMOVED;
-  }
-}

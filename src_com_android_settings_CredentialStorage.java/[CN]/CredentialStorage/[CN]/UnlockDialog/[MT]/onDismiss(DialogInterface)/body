@@ -5,26 +5,20 @@
     mKeyStore.unlock(mOldPassword.getText().toString());
     int error=mKeyStore.getLastError();
     if (error == KeyStore.NO_ERROR) {
+      mRetriesRemaining=-1;
       Toast.makeText(CredentialStorage.this,R.string.credentials_enabled,Toast.LENGTH_SHORT).show();
-      install();
+      ensureKeyGuard();
     }
  else     if (error == KeyStore.UNINITIALIZED) {
+      mRetriesRemaining=-1;
       Toast.makeText(CredentialStorage.this,R.string.credentials_erased,Toast.LENGTH_SHORT).show();
+      handleUnlockOrInstall();
     }
  else     if (error >= KeyStore.WRONG_PASSWORD) {
-      int count=error - KeyStore.WRONG_PASSWORD + 1;
-      if (count > 3) {
-        mError.setText(R.string.credentials_wrong_password);
-      }
- else       if (count == 1) {
-        mError.setText(R.string.credentials_reset_warning);
-      }
- else {
-        mError.setText(getString(R.string.credentials_reset_warning_plural,count));
-      }
-      ((AlertDialog)dialog).show();
-      return;
+      mRetriesRemaining=error - KeyStore.WRONG_PASSWORD + 1;
+      handleUnlockOrInstall();
     }
+    return;
   }
   finish();
 }

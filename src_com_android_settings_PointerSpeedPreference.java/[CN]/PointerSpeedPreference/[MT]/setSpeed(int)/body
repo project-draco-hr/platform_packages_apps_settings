@@ -1,0 +1,10 @@
+{
+  try {
+    IWindowManager wm=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
+    if (wm != null) {
+      wm.setPointerSpeed(speed);
+    }
+  }
+ catch (  RemoteException e) {
+  }
+}

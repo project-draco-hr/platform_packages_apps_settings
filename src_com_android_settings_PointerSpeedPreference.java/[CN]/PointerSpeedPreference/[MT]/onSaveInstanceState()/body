@@ -1,0 +1,9 @@
+{
+  final Parcelable superState=super.onSaveInstanceState();
+  if (getDialog() == null || !getDialog().isShowing())   return superState;
+  final SavedState myState=new SavedState(superState);
+  myState.progress=mSeekBar.getProgress();
+  myState.oldSpeed=mOldSpeed;
+  restoreOldState();
+  return myState;
+}

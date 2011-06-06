@@ -2,6 +2,7 @@
   File top=new File(mStorageVolume.getPath());
   mFileInfoForMisc=new ArrayList<FileInfo>();
   File[] files=top.listFiles();
+  if (files == null)   return;
   final int len=files.length;
   long counter=0;
   for (int i=0; i < len; i++) {

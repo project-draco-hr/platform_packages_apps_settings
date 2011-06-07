@@ -1,12 +1,14 @@
 {
   boolean autoTimeEnabled=getAutoState(Settings.System.AUTO_TIME);
   boolean autoTimeZoneEnabled=getAutoState(Settings.System.AUTO_TIME_ZONE);
+  Intent intent=getActivity().getIntent();
+  boolean isFirstRun=intent.getBooleanExtra(EXTRA_IS_FIRST_RUN,false);
   mDummyDate=Calendar.getInstance();
   mDummyDate.set(mDummyDate.get(Calendar.YEAR),11,31,13,0,0);
   mAutoTimePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME);
   mAutoTimePref.setChecked(autoTimeEnabled);
   mAutoTimeZonePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME_ZONE);
-  if (Utils.isWifiOnly()) {
+  if (Utils.isWifiOnly() || isFirstRun) {
     getPreferenceScreen().removePreference(mAutoTimeZonePref);
     autoTimeZoneEnabled=false;
   }
@@ -16,6 +18,10 @@
   mTimeZone=findPreference("timezone");
   mDatePref=findPreference("date");
   mDateFormat=(ListPreference)findPreference(KEY_DATE_FORMAT);
+  if (isFirstRun) {
+    getPreferenceScreen().removePreference(mTime24Pref);
+    getPreferenceScreen().removePreference(mDateFormat);
+  }
   String[] dateFormats=getResources().getStringArray(R.array.date_format_values);
   String[] formattedDates=new String[dateFormats.length];
   String currentFormat=getDateFormat();

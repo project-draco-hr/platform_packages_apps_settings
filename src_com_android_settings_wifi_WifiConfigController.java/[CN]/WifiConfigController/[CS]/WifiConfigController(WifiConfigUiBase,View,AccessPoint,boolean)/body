@@ -52,9 +52,9 @@
       }
  else {
         mIpSettingsSpinner.setSelection(DHCP);
-        for (        InetAddress a : config.linkProperties.getAddresses()) {
-          addRow(group,R.string.wifi_ip_address,a.getHostAddress());
-        }
+      }
+      for (      InetAddress a : config.linkProperties.getAddresses()) {
+        addRow(group,R.string.wifi_ip_address,a.getHostAddress());
       }
       if (config.proxySettings == ProxySettings.STATIC) {
         mProxySettingsSpinner.setSelection(PROXY_STATIC);

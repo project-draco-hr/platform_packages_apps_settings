@@ -2,25 +2,21 @@
 switch (view.getId()) {
 case R.id.time_zone_button:
 {
-      mTimeZonePopup=new ListPopupWindow(this,null);
-      mTimeZonePopup.setWidth(mTimeZoneButton.getWidth());
-      mTimeZonePopup.setAnchorView(mTimeZoneButton);
-      mTimeZonePopup.setAdapter(mTimeZoneAdapter);
-      mTimeZonePopup.setOnItemClickListener(this);
-      mTimeZonePopup.setModal(true);
-      mTimeZonePopup.show();
+      showTimezonePicker(R.id.time_zone_button);
       break;
     }
 case R.id.next_button:
 {
-    if (mXLargeScreenSize) {
-      Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,mAutoDateTimeButton.isChecked() ? 1 : 0);
+    if (mSelectedTimeZone != null) {
       final TimeZone systemTimeZone=TimeZone.getDefault();
       if (!systemTimeZone.equals(mSelectedTimeZone)) {
         Log.i(TAG,"Another TimeZone is selected by a user. Changing system TimeZone.");
         final AlarmManager alarm=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarm.setTimeZone(mSelectedTimeZone.getID());
       }
+    }
+    if (mAutoDateTimeButton != null) {
+      Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,mAutoDateTimeButton.isChecked() ? 1 : 0);
       if (!mAutoDateTimeButton.isChecked()) {
         DateTimeSettings.setDate(mDatePicker.getYear(),mDatePicker.getMonth(),mDatePicker.getDayOfMonth());
         DateTimeSettings.setTime(mTimePicker.getCurrentHour(),mTimePicker.getCurrentMinute());

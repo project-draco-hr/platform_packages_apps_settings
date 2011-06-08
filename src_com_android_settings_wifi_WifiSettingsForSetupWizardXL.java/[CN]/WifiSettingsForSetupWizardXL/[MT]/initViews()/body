@@ -1,7 +1,14 @@
 {
-  if (getIntent().getBooleanExtra("firstRun",false)) {
+  Intent intent=getIntent();
+  if (intent.getBooleanExtra("firstRun",false)) {
     final View layoutRoot=findViewById(R.id.layout_root);
     layoutRoot.setSystemUiVisibility(View.STATUS_BAR_DISABLE_BACK);
+  }
+  if (intent.getBooleanExtra(EXTRA_PREFS_LANDSCAPE_LOCK,false)) {
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+  }
+  if (intent.getBooleanExtra(EXTRA_PREFS_PORTRAIT_LOCK,false)) {
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
   }
   mTitleView=(TextView)findViewById(R.id.wifi_setup_title);
   mProgressBar=(ProgressBar)findViewById(R.id.scanning_progress_bar);

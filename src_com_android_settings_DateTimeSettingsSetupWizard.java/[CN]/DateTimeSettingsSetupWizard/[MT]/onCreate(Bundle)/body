@@ -2,11 +2,16 @@
   requestWindowFeature(Window.FEATURE_NO_TITLE);
   super.onCreate(savedInstanceState);
   setContentView(R.layout.date_time_settings_setupwizard);
-  mXLargeScreenSize=(getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-  if (mXLargeScreenSize) {
+  mUsingXLargeLayout=findViewById(R.id.time_zone_button) != null;
+  if (mUsingXLargeLayout) {
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     initUiForXl();
   }
  else {
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
     findViewById(R.id.next_button).setOnClickListener(this);
   }
+  mTimeZoneAdapter=ZonePicker.constructTimezoneAdapter(this,false,R.layout.date_time_setup_custom_list_item_2);
+  final View layoutRoot=findViewById(R.id.layout_root);
+  layoutRoot.setSystemUiVisibility(View.STATUS_BAR_DISABLE_BACK);
 }

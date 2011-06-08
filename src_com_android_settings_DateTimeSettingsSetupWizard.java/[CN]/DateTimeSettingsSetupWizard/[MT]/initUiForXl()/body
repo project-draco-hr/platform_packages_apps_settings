@@ -1,13 +1,9 @@
 {
-  final View layoutRoot=findViewById(R.id.layout_root);
-  layoutRoot.setSystemUiVisibility(View.STATUS_BAR_DISABLE_BACK);
-  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
   final TimeZone tz=TimeZone.getDefault();
   mSelectedTimeZone=tz;
   mTimeZoneButton=(Button)findViewById(R.id.time_zone_button);
   mTimeZoneButton.setText(tz.getDisplayName());
   mTimeZoneButton.setOnClickListener(this);
-  mTimeZoneAdapter=ZonePicker.constructTimezoneAdapter(this,false,R.layout.date_time_setup_custom_list_item_2);
   final boolean autoDateTimeEnabled;
   final Intent intent=getIntent();
   if (intent.hasExtra(EXTRA_INITIAL_AUTO_DATETIME_VALUE)) {
@@ -18,7 +14,6 @@
   }
   mAutoDateTimeButton=(CompoundButton)findViewById(R.id.date_time_auto_button);
   mAutoDateTimeButton.setChecked(autoDateTimeEnabled);
-  ((TextView)findViewById(R.id.date_time_auto_text)).setText(autoDateTimeEnabled ? R.string.date_time_auto_summaryOn : R.string.date_time_auto_summaryOff);
   mAutoDateTimeButton.setOnCheckedChangeListener(this);
   mTimePicker=(TimePicker)findViewById(R.id.time_picker);
   mTimePicker.setEnabled(!autoDateTimeEnabled);

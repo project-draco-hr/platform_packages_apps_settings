@@ -1,0 +1,14 @@
+{
+  View anchorView=findViewById(anchorViewId);
+  if (anchorView == null) {
+    Log.e(TAG,"Unable to find zone picker anchor view " + anchorViewId);
+    return;
+  }
+  mTimeZonePopup=new ListPopupWindow(this,null);
+  mTimeZonePopup.setWidth(anchorView.getWidth());
+  mTimeZonePopup.setAnchorView(anchorView);
+  mTimeZonePopup.setAdapter(mTimeZoneAdapter);
+  mTimeZonePopup.setOnItemClickListener(this);
+  mTimeZonePopup.setModal(true);
+  mTimeZonePopup.show();
+}

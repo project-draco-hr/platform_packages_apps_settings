@@ -2,13 +2,12 @@
   Toast.makeText(getActivity(),R.string.unmount_inform_text,Toast.LENGTH_SHORT).show();
   IMountService mountService=getMountService();
   try {
-    mClickedMountToggle.setEnabled(false);
-    mClickedMountToggle.setTitle(mResources.getString(R.string.sd_ejecting_title));
-    mClickedMountToggle.setSummary(mResources.getString(R.string.sd_ejecting_summary));
+    mLastClickedMountToggle.setEnabled(false);
+    mLastClickedMountToggle.setTitle(mResources.getString(R.string.sd_ejecting_title));
+    mLastClickedMountToggle.setSummary(mResources.getString(R.string.sd_ejecting_summary));
     mountService.unmountVolume(mClickedMountPoint,true);
   }
  catch (  RemoteException e) {
     showDialogInner(DLG_ERROR_UNMOUNT);
   }
-  mClickedMountToggle=null;
 }

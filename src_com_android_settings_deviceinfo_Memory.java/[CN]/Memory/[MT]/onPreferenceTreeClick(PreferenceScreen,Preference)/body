@@ -6,9 +6,8 @@
       startActivity(intent);
       return true;
     }
-    boolean mountToggleClicked=svpc.mountToggleClicked(preference);
-    if (mountToggleClicked && mClickedMountToggle == null) {
-      mClickedMountToggle=preference;
+    if (svpc.mountToggleClicked(preference)) {
+      mLastClickedMountToggle=preference;
       final StorageVolume storageVolume=svpc.getStorageVolume();
       mClickedMountPoint=storageVolume.getPath();
       String state=mStorageManager.getVolumeState(storageVolume.getPath());

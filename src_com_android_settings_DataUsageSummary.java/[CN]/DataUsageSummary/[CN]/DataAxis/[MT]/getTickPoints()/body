@@ -1,0 +1,11 @@
+{
+  final float[] tickPoints=new float[16];
+  long value=mMax;
+  float mult=0.8f;
+  for (int i=0; i < tickPoints.length; i++) {
+    tickPoints[i]=convertToPoint(value);
+    value=(long)(value * mult);
+    mult*=0.9;
+  }
+  return tickPoints;
+}

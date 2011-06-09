@@ -1,0 +1,20 @@
+{
+  final float sweep1=mSweep1.getPoint();
+  final float sweep2=mSweep2.getPoint();
+  final float sweepLeft=Math.min(sweep1,sweep2);
+  final float sweepRight=Math.max(sweep1,sweep2);
+  int save;
+  save=canvas.save();
+  canvas.clipRect(0,0,sweepLeft,getHeight());
+  canvas.drawPath(mPathFill,mPaintFillDisabled);
+  canvas.restoreToCount(save);
+  save=canvas.save();
+  canvas.clipRect(sweepRight,0,getWidth(),getHeight());
+  canvas.drawPath(mPathFill,mPaintFillDisabled);
+  canvas.restoreToCount(save);
+  save=canvas.save();
+  canvas.clipRect(sweepLeft,0,sweepRight,getHeight());
+  canvas.drawPath(mPathFill,mPaintFill);
+  canvas.drawPath(mPathStroke,mPaintStroke);
+  canvas.restoreToCount(save);
+}

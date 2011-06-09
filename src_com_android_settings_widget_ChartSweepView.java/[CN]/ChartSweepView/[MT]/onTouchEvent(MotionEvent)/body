@@ -1,0 +1,39 @@
+{
+  final View parent=(View)getParent();
+switch (event.getAction()) {
+case MotionEvent.ACTION_DOWN:
+{
+      mTracking=event.copy();
+      return true;
+    }
+case MotionEvent.ACTION_MOVE:
+{
+    if (mHorizontal) {
+      setTranslationY(event.getRawY() - mTracking.getRawY());
+      final float point=(getTop() + getTranslationY() + (getHeight() / 2)) - parent.getPaddingTop();
+      mValue=mAxis.convertToValue(point);
+      dispatchOnSweep(false);
+    }
+ else {
+      setTranslationX(event.getRawX() - mTracking.getRawX());
+      final float point=(getLeft() + getTranslationX() + (getWidth() / 2)) - parent.getPaddingLeft();
+      mValue=mAxis.convertToValue(point);
+      dispatchOnSweep(false);
+    }
+    return true;
+  }
+case MotionEvent.ACTION_UP:
+{
+  mTracking=null;
+  setTranslationX(0);
+  setTranslationY(0);
+  requestLayout();
+  dispatchOnSweep(true);
+  return true;
+}
+default :
+{
+return false;
+}
+}
+}

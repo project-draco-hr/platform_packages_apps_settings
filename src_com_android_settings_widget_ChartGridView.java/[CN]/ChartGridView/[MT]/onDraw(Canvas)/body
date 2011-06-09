@@ -1,0 +1,13 @@
+{
+  final int width=getWidth();
+  final int height=getHeight();
+  final float[] vertTicks=mVert.getTickPoints();
+  for (  float y : vertTicks) {
+    canvas.drawLine(0,y,width,y,mPaintVert);
+  }
+  final float[] horizTicks=mHoriz.getTickPoints();
+  for (  float x : horizTicks) {
+    canvas.drawLine(x,0,x,height,mPaintHoriz);
+  }
+  canvas.drawRect(0,0,width,height,mPaintHoriz);
+}

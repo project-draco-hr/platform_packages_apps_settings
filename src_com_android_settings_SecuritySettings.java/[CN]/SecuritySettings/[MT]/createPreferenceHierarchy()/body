@@ -5,25 +5,6 @@
   }
   addPreferencesFromResource(R.xml.security_settings);
   root=getPreferenceScreen();
-  mNetwork=(CheckBoxPreference)root.findPreference(KEY_LOCATION_NETWORK);
-  mGps=(CheckBoxPreference)root.findPreference(KEY_LOCATION_GPS);
-  mAssistedGps=(CheckBoxPreference)root.findPreference(KEY_ASSISTED_GPS);
-  if (GoogleLocationSettingHelper.isAvailable(getActivity())) {
-    PreferenceGroup locationCat=(PreferenceGroup)root.findPreference(KEY_LOCATION_CATEGORY);
-    CheckBoxPreference useLocation=new CheckBoxPreference(getActivity());
-    useLocation.setKey(KEY_USE_LOCATION);
-    useLocation.setTitle(R.string.use_location_title);
-    useLocation.setSummaryOn(R.string.use_location_summary_enabled);
-    useLocation.setSummaryOff(R.string.use_location_summary_disabled);
-    useLocation.setChecked(GoogleLocationSettingHelper.getUseLocationForServices(getActivity()) == GoogleLocationSettingHelper.USE_LOCATION_FOR_SERVICES_ON);
-    useLocation.setPersistent(false);
-    useLocation.setOnPreferenceChangeListener(this);
-    locationCat.addPreference(useLocation);
-    mUseLocation=useLocation;
-  }
-  if (Utils.isWifiOnly()) {
-    mNetwork.setSummaryOn(R.string.location_neighborhood_level_wifi);
-  }
   int resid=0;
   if (!mLockPatternUtils.isSecure()) {
     if (mLockPatternUtils.isLockScreenDisabled()) {

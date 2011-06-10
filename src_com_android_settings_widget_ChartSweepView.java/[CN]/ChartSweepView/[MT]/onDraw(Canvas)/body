@@ -2,11 +2,12 @@
   final int width=getWidth();
   final int height=getHeight();
   mHorizontal=width > height;
+  final Paint linePaint=isEnabled() ? mPaintSweep : mPaintSweepDisabled;
   if (mHorizontal) {
     final int centerY=height / 2;
     final int endX=width - height;
     canvas.drawLine(0,centerY,endX,centerY,mPaintShadow);
-    canvas.drawLine(0,centerY,endX,centerY,mPaintSweep);
+    canvas.drawLine(0,centerY,endX,centerY,linePaint);
     canvas.drawCircle(endX,centerY,4.0f,mPaintShadow);
     canvas.drawCircle(endX,centerY,4.0f,mPaintSweep);
   }
@@ -14,7 +15,7 @@
     final int centerX=width / 2;
     final int endY=height - width;
     canvas.drawLine(centerX,0,centerX,endY,mPaintShadow);
-    canvas.drawLine(centerX,0,centerX,endY,mPaintSweep);
+    canvas.drawLine(centerX,0,centerX,endY,linePaint);
     canvas.drawCircle(centerX,endY,4.0f,mPaintShadow);
     canvas.drawCircle(centerX,endY,4.0f,mPaintSweep);
   }

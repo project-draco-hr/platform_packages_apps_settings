@@ -1,9 +1,0 @@
-{
-  try {
-    final NetworkStatsHistory history=mStatsService.getHistoryForNetwork(TrafficStats.TEMPLATE_MOBILE_ALL);
-    mSeries.bindNetworkStats(history);
-  }
- catch (  RemoteException e) {
-    Log.w(TAG,"problem reading stats");
-  }
-}

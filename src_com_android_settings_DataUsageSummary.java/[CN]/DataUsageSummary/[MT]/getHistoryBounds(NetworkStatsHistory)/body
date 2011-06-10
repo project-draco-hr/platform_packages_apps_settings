@@ -1,0 +1,10 @@
+{
+  final long currentTime=System.currentTimeMillis();
+  long start=currentTime;
+  long end=currentTime;
+  if (history.bucketCount > 0) {
+    start=history.bucketStart[0];
+    end=history.bucketStart[history.bucketCount - 1];
+  }
+  return new long[]{start,end};
+}

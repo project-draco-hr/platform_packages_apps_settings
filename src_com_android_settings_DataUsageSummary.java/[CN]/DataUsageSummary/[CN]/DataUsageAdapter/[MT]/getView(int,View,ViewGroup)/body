@@ -6,8 +6,8 @@
   final PackageManager pm=context.getPackageManager();
   final TextView text1=(TextView)convertView.findViewById(android.R.id.text1);
   final TextView text2=(TextView)convertView.findViewById(android.R.id.text2);
-  final UsageRecord record=mData.get(position);
-  text1.setText(pm.getNameForUid(record.uid));
-  text2.setText(Formatter.formatFileSize(context,record.total));
+  final AppUsageItem item=mItems.get(position);
+  text1.setText(pm.getNameForUid(item.uid));
+  text2.setText(Formatter.formatFileSize(context,item.total));
   return convertView;
 }

@@ -1,0 +1,11 @@
+{
+  if (policy.limitBytes != -1) {
+    mSweepDataLimit.setValue(policy.limitBytes);
+    mSweepDataLimit.setEnabled(true);
+  }
+ else {
+    mSweepDataLimit.setValue(5 * GB_IN_BYTES);
+    mSweepDataLimit.setEnabled(false);
+  }
+  mSweepDataWarn.setValue(policy.warningBytes);
+}

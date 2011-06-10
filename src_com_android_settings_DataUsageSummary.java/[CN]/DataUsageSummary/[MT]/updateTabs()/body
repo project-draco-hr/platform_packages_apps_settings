@@ -1,0 +1,21 @@
+{
+  final boolean tabsVisible=mSplit4G || mShowWifi;
+  mTabWidget.setVisibility(tabsVisible ? View.VISIBLE : View.GONE);
+  mTabHost.clearAllTabs();
+  if (mSplit4G) {
+    mTabHost.addTab(buildTabSpec(TAB_3G,R.string.data_usage_tab_3g));
+    mTabHost.addTab(buildTabSpec(TAB_4G,R.string.data_usage_tab_4g));
+  }
+  if (mShowWifi) {
+    if (!mSplit4G) {
+      mTabHost.addTab(buildTabSpec(TAB_MOBILE,R.string.data_usage_tab_mobile));
+    }
+    mTabHost.addTab(buildTabSpec(TAB_WIFI,R.string.data_usage_tab_wifi));
+  }
+  if (mTabWidget.getTabCount() > 0) {
+    mTabHost.setCurrentTab(0);
+  }
+ else {
+    updateBody();
+  }
+}

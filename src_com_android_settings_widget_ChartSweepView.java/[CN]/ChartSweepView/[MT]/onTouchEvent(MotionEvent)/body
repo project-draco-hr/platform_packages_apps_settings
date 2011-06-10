@@ -1,4 +1,5 @@
 {
+  if (!isEnabled())   return false;
   final View parent=(View)getParent();
 switch (event.getAction()) {
 case MotionEvent.ACTION_DOWN:
@@ -8,6 +9,7 @@ case MotionEvent.ACTION_DOWN:
     }
 case MotionEvent.ACTION_MOVE:
 {
+    getParent().requestDisallowInterceptTouchEvent(true);
     if (mHorizontal) {
       setTranslationY(event.getRawY() - mTracking.getRawY());
       final float point=(getTop() + getTranslationY() + (getHeight() / 2)) - parent.getPaddingTop();

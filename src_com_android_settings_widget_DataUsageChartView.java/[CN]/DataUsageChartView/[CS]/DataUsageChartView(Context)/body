@@ -1,0 +1,18 @@
+{
+  super(context,buildTimeAxis(),buildDataAxis());
+  setPadding(20,20,20,20);
+  addView(new ChartGridView(context,mHoriz,mVert),buildChartParams());
+  mSeries=new ChartNetworkSeriesView(context,mHoriz,mVert);
+  addView(mSeries,buildChartParams());
+  mSweepTime1=new ChartSweepView(context,mHoriz,0L,Color.parseColor("#ffffff"));
+  mSweepTime2=new ChartSweepView(context,mHoriz,0L,Color.parseColor("#ffffff"));
+  mSweepDataWarn=new ChartSweepView(context,mVert,0L,Color.parseColor("#f7931d"));
+  mSweepDataLimit=new ChartSweepView(context,mVert,0L,Color.parseColor("#be1d2c"));
+  addView(mSweepTime1,buildSweepParams());
+  addView(mSweepTime2,buildSweepParams());
+  addView(mSweepDataWarn,buildSweepParams());
+  addView(mSweepDataLimit,buildSweepParams());
+  mSeries.bindSweepRange(mSweepTime1,mSweepTime2);
+  mSweepTime1.addOnSweepListener(mSweepListener);
+  mSweepTime2.addOnSweepListener(mSweepListener);
+}

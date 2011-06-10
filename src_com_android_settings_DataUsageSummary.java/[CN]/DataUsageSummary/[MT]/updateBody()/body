@@ -1,0 +1,46 @@
+{
+  final String tabTag=mTabHost.getCurrentTabTag();
+  final String currentTab=tabTag != null ? tabTag : TAB_MOBILE;
+  if (LOGD)   Log.d(TAG,"updateBody() with currentTab=" + currentTab);
+  if (TAB_WIFI.equals(currentTab)) {
+    mDataEnabledView.setVisibility(View.GONE);
+    mDisableAtLimitView.setVisibility(View.GONE);
+    mTemplate=TEMPLATE_WIFI;
+  }
+ else {
+    mDataEnabledView.setVisibility(View.VISIBLE);
+    mDisableAtLimitView.setVisibility(View.VISIBLE);
+  }
+  if (TAB_MOBILE.equals(currentTab)) {
+    mDataEnabled.setTitle(R.string.data_usage_enable_mobile);
+    mDisableAtLimit.setTitle(R.string.data_usage_disable_mobile_limit);
+    mTemplate=TEMPLATE_MOBILE_ALL;
+  }
+ else   if (TAB_3G.equals(currentTab)) {
+    mDataEnabled.setTitle(R.string.data_usage_enable_3g);
+    mDisableAtLimit.setTitle(R.string.data_usage_disable_3g_limit);
+    mTemplate=TEMPLATE_MOBILE_3G_LOWER;
+  }
+ else   if (TAB_4G.equals(currentTab)) {
+    mDataEnabled.setTitle(R.string.data_usage_enable_4g);
+    mDisableAtLimit.setTitle(R.string.data_usage_disable_4g_limit);
+    mTemplate=TEMPLATE_MOBILE_4G;
+  }
+  mDataEnabled.setChecked(true);
+  try {
+    mPolicy=mPolicyService.getNetworkPolicy(mTemplate,null);
+    mHistory=mStatsService.getHistoryForNetwork(mTemplate);
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("problem reading network policy or stats",e);
+  }
+  if (mPolicy == null) {
+    mPolicy=new NetworkPolicy(1,4 * GB_IN_BYTES,-1);
+  }
+  mChart.bindNetworkPolicy(mPolicy);
+  mChart.bindNetworkStats(mHistory);
+  updateCycleList();
+  mDisableAtLimit.setChecked(mPolicy.limitBytes != -1);
+  mListView.smoothScrollToPosition(0);
+  refreshPreferenceViews();
+}

@@ -1,10 +1,8 @@
 {
-  final long sweep1=mSweepTime1.getValue();
-  final long sweep2=mSweepTime2.getValue();
-  final long start=Math.min(sweep1,sweep2);
-  final long end=Math.max(sweep1,sweep2);
+  if (LOGD)   Log.d(TAG,"updateDetailData()");
   try {
-    final NetworkStats stats=mStatsService.getSummaryForAllUid(start,end,TrafficStats.TEMPLATE_MOBILE_ALL);
+    final long[] range=mChart.getInspectRange();
+    final NetworkStats stats=mStatsService.getSummaryForAllUid(range[0],range[1],mTemplate);
     mAdapter.bindStats(stats);
   }
  catch (  RemoteException e) {

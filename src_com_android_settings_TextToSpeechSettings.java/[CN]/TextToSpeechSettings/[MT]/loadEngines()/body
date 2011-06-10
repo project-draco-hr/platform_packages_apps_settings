@@ -1,11 +1,11 @@
 {
-  List<TextToSpeech.EngineInfo> engines=mTts.getEngines();
+  List<EngineInfo> engines=mEnginesHelper.getEngines();
   ArrayList<CharSequence> entries=new ArrayList<CharSequence>();
   ArrayList<CharSequence> values=new ArrayList<CharSequence>();
   StringBuilder enabledEngines=new StringBuilder();
-  for (  TextToSpeech.EngineInfo engine : engines) {
+  for (  EngineInfo engine : engines) {
     Log.v(TAG,"Engine: " + engine);
-    if (isEngineEnabled(engine.name)) {
+    if (mEnginesHelper.isEngineEnabled(engine.name)) {
       entries.add(engine.label);
       values.add(engine.name);
       if (enabledEngines.length() > 0)       enabledEngines.append(' ');
@@ -21,7 +21,7 @@
   String selectedEngine=Settings.Secure.getString(getContentResolver(),TTS_DEFAULT_SYNTH);
   int selectedEngineIndex=mDefaultSynthPref.findIndexOfValue(selectedEngine);
   if (selectedEngineIndex == -1) {
-    selectedEngineIndex=mDefaultSynthPref.findIndexOfValue(TextToSpeech.Engine.DEFAULT_ENGINE);
+    selectedEngineIndex=mDefaultSynthPref.findIndexOfValue(mEnginesHelper.getHighestRankedEngineName());
   }
   if (selectedEngineIndex >= 0) {
     mDefaultSynthPref.setValueIndex(selectedEngineIndex);

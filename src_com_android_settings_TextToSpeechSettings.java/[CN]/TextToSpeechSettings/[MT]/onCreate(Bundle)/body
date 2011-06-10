@@ -18,6 +18,7 @@
   mDefaultLocPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
   mEnginesGroup=(PreferenceGroup)findPreference(KEY_TTS_ENGINES);
   mTts=new TextToSpeech(getActivity().getApplicationContext(),this);
+  mEnginesHelper=new TtsEngines(getActivity().getApplicationContext());
   initDefaultSettings();
   addEngineSpecificSettings();
 }

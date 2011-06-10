@@ -1,21 +1,18 @@
 {
   Context context=getActivity();
-  List<TextToSpeech.EngineInfo> engines=mTts.getEngines();
-  for (  TextToSpeech.EngineInfo engine : engines) {
-    String prefKey="";
+  List<EngineInfo> engines=mTts.getEngines();
+  for (  EngineInfo engine : engines) {
     final String engineName=engine.name;
-    if (!engineName.equals(TextToSpeech.Engine.DEFAULT_ENGINE)) {
+    if (!engine.system) {
       CheckBoxPreference enablePref=new CheckBoxPreference(context);
-      prefKey=KEY_PLUGIN_ENABLED_PREFIX + engineName;
-      enablePref.setKey(prefKey);
+      enablePref.setKey(KEY_PLUGIN_ENABLED_PREFIX + engineName);
       enablePref.setTitle(engine.label);
       enablePref.setOnPreferenceClickListener(this);
       mEnginesGroup.addPreference(enablePref);
     }
     if (engineHasSettings(engineName)) {
       Preference pref=new Preference(context);
-      prefKey=KEY_PLUGIN_SETTINGS_PREFIX + engineName;
-      pref.setKey(prefKey);
+      pref.setKey(KEY_PLUGIN_SETTINGS_PREFIX + engineName);
       pref.setTitle(engine.label);
       CharSequence settingsLabel=getResources().getString(R.string.tts_engine_name_settings,engine.label);
       pref.setSummary(settingsLabel);

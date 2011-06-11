@@ -6,4 +6,6 @@
   setTitle(storageVolume.getDescription());
   mMeasurement=StorageMeasurement.getInstance(context,storageVolume,isPrimary);
   mMeasurement.setReceiver(this);
+  mAllowFormat=!mStorageVolume.isEmulated();
+  if (!isPrimary)   mAllowFormat=false;
 }

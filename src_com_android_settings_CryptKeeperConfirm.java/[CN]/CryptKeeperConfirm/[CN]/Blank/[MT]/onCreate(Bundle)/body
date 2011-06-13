@@ -10,6 +10,8 @@
     public void run(){
       IBinder service=ServiceManager.getService("mount");
       if (service == null) {
+        Log.e("CryptKeeper","Failed to find the mount service");
+        finish();
         return;
       }
       IMountService mountService=IMountService.Stub.asInterface(service);

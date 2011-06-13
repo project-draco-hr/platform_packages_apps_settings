@@ -2,6 +2,8 @@
   mPasswordEntry=(EditText)findViewById(R.id.passwordEntry);
   mPasswordEntry.setOnEditorActionListener(this);
   KeyboardView keyboardView=(PasswordEntryKeyboardView)findViewById(R.id.keyboard);
-  PasswordEntryKeyboardHelper keyboardHelper=new PasswordEntryKeyboardHelper(this,keyboardView,mPasswordEntry,false);
-  keyboardHelper.setKeyboardMode(PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA);
+  if (keyboardView != null) {
+    PasswordEntryKeyboardHelper keyboardHelper=new PasswordEntryKeyboardHelper(this,keyboardView,mPasswordEntry,false);
+    keyboardHelper.setKeyboardMode(PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA);
+  }
 }

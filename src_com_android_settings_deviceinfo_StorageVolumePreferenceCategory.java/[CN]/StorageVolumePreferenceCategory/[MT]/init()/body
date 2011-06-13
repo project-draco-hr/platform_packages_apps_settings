@@ -18,7 +18,9 @@
   mMountTogglePreference=new Preference(getContext());
   mMountTogglePreference.setTitle(R.string.sd_eject);
   mMountTogglePreference.setSummary(R.string.sd_eject_summary);
-  mFormatPreference=new Preference(getContext());
-  mFormatPreference.setTitle(R.string.sd_format);
-  mFormatPreference.setSummary(R.string.sd_format_summary);
+  if (mAllowFormat) {
+    mFormatPreference=new Preference(getContext());
+    mFormatPreference.setTitle(R.string.sd_format);
+    mFormatPreference.setSummary(R.string.sd_format_summary);
+  }
 }

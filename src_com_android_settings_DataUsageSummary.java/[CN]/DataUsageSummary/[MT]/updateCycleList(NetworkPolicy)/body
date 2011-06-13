@@ -1,0 +1,26 @@
+{
+  mCycleAdapter.clear();
+  final Context context=mCycleSpinner.getContext();
+  final long[] bounds=getHistoryBounds(mHistory);
+  final long historyStart=bounds[0];
+  final long historyEnd=bounds[1];
+  if (policy != null) {
+    long cycleEnd=computeNextCycleBoundary(historyEnd,policy);
+    int guardCount=0;
+    while (cycleEnd > historyStart) {
+      final long cycleStart=computeLastCycleBoundary(cycleEnd,policy);
+      Log.d(TAG,"generating cs=" + cycleStart + " to ce="+ cycleEnd+ " waiting for hs="+ historyStart);
+      mCycleAdapter.add(new CycleItem(context,cycleStart,cycleEnd));
+      cycleEnd=cycleStart;
+      if (guardCount++ > 50) {
+        Log.wtf(TAG,"stuck generating ranges for bounds=" + Arrays.toString(bounds) + " and policy="+ policy);
+      }
+    }
+    mCycleAdapter.add(new CycleChangeItem(context));
+  }
+ else {
+    mCycleAdapter.add(new CycleItem(context,historyStart,historyEnd));
+  }
+  mCycleSpinner.setSelection(0);
+  mCycleListener.onItemSelected(mCycleSpinner,null,0,0);
+}

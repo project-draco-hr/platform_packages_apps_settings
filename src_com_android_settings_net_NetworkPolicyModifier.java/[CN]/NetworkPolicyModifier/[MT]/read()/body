@@ -1,0 +1,12 @@
+{
+  try {
+    final NetworkPolicy[] policies=mPolicyService.getNetworkPolicies();
+    mPolicies.clear();
+    for (    NetworkPolicy policy : policies) {
+      mPolicies.add(policy);
+    }
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("problem reading policies",e);
+  }
+}

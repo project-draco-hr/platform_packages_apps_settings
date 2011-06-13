@@ -8,7 +8,7 @@
   mTabHost.setOnTabChangedListener(mTabListener);
   mHeader=inflater.inflate(R.layout.data_usage_header,mListView,false);
   mListView.addHeaderView(mHeader,null,false);
-  mDataEnabled=new CheckBoxPreference(context);
+  mDataEnabled=new SwitchPreference(context);
   mDisableAtLimit=new CheckBoxPreference(context);
   refreshPreferenceViews();
   mDataEnabledView.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT,72));

@@ -1,0 +1,9 @@
+{
+  try {
+    final NetworkPolicy[] policies=mPolicies.toArray(new NetworkPolicy[mPolicies.size()]);
+    mPolicyService.setNetworkPolicies(policies);
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("problem reading policies",e);
+  }
+}

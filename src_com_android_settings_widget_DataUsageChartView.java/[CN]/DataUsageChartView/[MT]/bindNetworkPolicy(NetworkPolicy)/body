@@ -1,11 +1,24 @@
 {
-  if (policy.limitBytes != -1) {
+  if (policy == null) {
+    mSweepDataLimit.setVisibility(View.INVISIBLE);
+    mSweepDataWarn.setVisibility(View.INVISIBLE);
+    return;
+  }
+  if (policy.limitBytes != NetworkPolicy.LIMIT_DISABLED) {
+    mSweepDataLimit.setVisibility(View.VISIBLE);
     mSweepDataLimit.setValue(policy.limitBytes);
     mSweepDataLimit.setEnabled(true);
   }
  else {
+    mSweepDataLimit.setVisibility(View.VISIBLE);
     mSweepDataLimit.setValue(5 * GB_IN_BYTES);
     mSweepDataLimit.setEnabled(false);
   }
-  mSweepDataWarn.setValue(policy.warningBytes);
+  if (policy.warningBytes != NetworkPolicy.WARNING_DISABLED) {
+    mSweepDataWarn.setVisibility(View.VISIBLE);
+    mSweepDataWarn.setValue(policy.warningBytes);
+  }
+ else {
+    mSweepDataWarn.setVisibility(View.INVISIBLE);
+  }
 }

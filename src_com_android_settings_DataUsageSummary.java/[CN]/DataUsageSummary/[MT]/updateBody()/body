@@ -28,19 +28,13 @@
   }
   mDataEnabled.setChecked(true);
   try {
-    mPolicy=mPolicyService.getNetworkPolicy(mTemplate,null);
     mHistory=mStatsService.getHistoryForNetwork(mTemplate);
   }
  catch (  RemoteException e) {
     throw new RuntimeException("problem reading network policy or stats",e);
   }
-  if (mPolicy == null) {
-    mPolicy=new NetworkPolicy(1,4 * GB_IN_BYTES,-1);
-  }
-  mChart.bindNetworkPolicy(mPolicy);
   mChart.bindNetworkStats(mHistory);
-  updateCycleList();
-  mDisableAtLimit.setChecked(mPolicy.limitBytes != -1);
+  updatePolicy();
   mListView.smoothScrollToPosition(0);
   refreshPreferenceViews();
 }

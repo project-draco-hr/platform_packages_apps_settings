@@ -13,6 +13,8 @@
   addView(mSweepDataWarn,buildSweepParams());
   addView(mSweepDataLimit,buildSweepParams());
   mSeries.bindSweepRange(mSweepTime1,mSweepTime2);
+  mSweepDataWarn.addOnSweepListener(mWarningListener);
+  mSweepDataLimit.addOnSweepListener(mLimitListener);
   mSweepTime1.addOnSweepListener(mSweepListener);
   mSweepTime2.addOnSweepListener(mSweepListener);
 }

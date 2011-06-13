@@ -1,0 +1,7 @@
+{
+  final NetworkPolicy policy=mPolicyModifier.getPolicy(mTemplate);
+  mDisableAtLimit.setChecked(policy != null && policy.limitBytes != LIMIT_DISABLED);
+  mChart.bindNetworkPolicy(policy);
+  updateCycleList(policy);
+  refreshPreferenceViews();
+}

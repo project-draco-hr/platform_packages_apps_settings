@@ -1,0 +1,7 @@
+{
+  super.onResume();
+  final Context context=getActivity();
+  mUid=getArguments().getInt(Intent.EXTRA_UID);
+  mTitle.setText(context.getPackageManager().getNameForUid(mUid));
+  updateBody();
+}

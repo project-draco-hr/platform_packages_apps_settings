@@ -2,19 +2,7 @@
   super(context);
   mHoriz=Preconditions.checkNotNull(horiz,"missing horiz");
   mVert=Preconditions.checkNotNull(vert,"missing vert");
-  mPaintStroke=new Paint();
-  mPaintStroke.setStrokeWidth(6.0f);
-  mPaintStroke.setColor(Color.parseColor("#24aae1"));
-  mPaintStroke.setStyle(Style.STROKE);
-  mPaintStroke.setAntiAlias(true);
-  mPaintFill=new Paint();
-  mPaintFill.setColor(Color.parseColor("#c050ade5"));
-  mPaintFill.setStyle(Style.FILL);
-  mPaintFill.setAntiAlias(true);
-  mPaintFillDisabled=new Paint();
-  mPaintFillDisabled.setColor(Color.parseColor("#88566abc"));
-  mPaintFillDisabled.setStyle(Style.FILL);
-  mPaintFillDisabled.setAntiAlias(true);
+  setChartColor(Color.parseColor("#24aae1"),Color.parseColor("#c050ade5"),Color.parseColor("#88566abc"));
   mPathStroke=new Path();
   mPathFill=new Path();
 }

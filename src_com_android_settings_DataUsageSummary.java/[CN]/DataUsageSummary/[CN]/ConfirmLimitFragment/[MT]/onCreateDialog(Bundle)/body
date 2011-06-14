@@ -1,0 +1,18 @@
+{
+  final Context context=getActivity();
+  final int messageId=getArguments().getInt(EXTRA_MESSAGE_ID);
+  final long limitBytes=getArguments().getLong(EXTRA_LIMIT_BYTES);
+  final AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  builder.setTitle(R.string.data_usage_limit_dialog_title);
+  builder.setMessage(messageId);
+  builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      final DataUsageSummary target=(DataUsageSummary)getTargetFragment();
+      if (target != null) {
+        target.setPolicyLimitBytes(limitBytes);
+      }
+    }
+  }
+);
+  return builder.create();
+}

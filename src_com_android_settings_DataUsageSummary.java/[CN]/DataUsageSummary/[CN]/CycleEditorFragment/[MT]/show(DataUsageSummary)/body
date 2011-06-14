@@ -1,0 +1,9 @@
+{
+  final NetworkPolicy policy=parent.mPolicyModifier.getPolicy(parent.mTemplate);
+  final Bundle args=new Bundle();
+  args.putInt(CycleEditorFragment.EXTRA_CYCLE_DAY,policy.cycleDay);
+  final CycleEditorFragment dialog=new CycleEditorFragment();
+  dialog.setArguments(args);
+  dialog.setTargetFragment(parent,0);
+  dialog.show(parent.getFragmentManager(),TAG_CYCLE_EDITOR);
+}

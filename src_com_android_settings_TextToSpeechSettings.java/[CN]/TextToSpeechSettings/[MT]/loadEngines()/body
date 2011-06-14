@@ -1,20 +1,15 @@
 {
   List<EngineInfo> engines=mEnginesHelper.getEngines();
-  updateUserEnabledEngines(engines);
-  ArrayList<CharSequence> entries=new ArrayList<CharSequence>();
-  ArrayList<CharSequence> values=new ArrayList<CharSequence>();
-  StringBuilder enabledEngines=new StringBuilder();
-  for (  EngineInfo engine : engines) {
-    Log.v(TAG,"Engine: " + engine);
-    if (mEnginesHelper.isEngineEnabled(engine.name)) {
-      entries.add(engine.label);
-      values.add(engine.name);
-    }
+  CharSequence entries[]=new CharSequence[engines.size()];
+  CharSequence values[]=new CharSequence[engines.size()];
+  final int count=engines.size();
+  for (int i=0; i < count; ++i) {
+    final EngineInfo engine=engines.get(i);
+    entries[i]=engine.label;
+    values[i]=engine.name;
   }
-  CharSequence entriesArray[]=new CharSequence[entries.size()];
-  CharSequence valuesArray[]=new CharSequence[values.size()];
-  mDefaultSynthPref.setEntries(entries.toArray(entriesArray));
-  mDefaultSynthPref.setEntryValues(values.toArray(valuesArray));
+  mDefaultSynthPref.setEntries(entries);
+  mDefaultSynthPref.setEntryValues(values);
   String selectedEngine=Settings.Secure.getString(getContentResolver(),TTS_DEFAULT_SYNTH);
   int selectedEngineIndex=mDefaultSynthPref.findIndexOfValue(selectedEngine);
   if (selectedEngineIndex == -1) {

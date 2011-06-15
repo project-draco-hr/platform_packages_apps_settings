@@ -1,0 +1,28 @@
+{
+  final String[] packageNames=pm.getPackagesForUid(uid);
+  final int length=packageNames != null ? packageNames.length : 0;
+  CharSequence label=pm.getNameForUid(uid);
+  try {
+    if (length == 1) {
+      final ApplicationInfo info=pm.getApplicationInfo(packageNames[0],0);
+      label=info.loadLabel(pm);
+    }
+ else     if (length > 1) {
+      for (      String packageName : packageNames) {
+        final PackageInfo info=pm.getPackageInfo(packageName,0);
+        if (info.sharedUserLabel != 0) {
+          label=pm.getText(packageName,info.sharedUserLabel,info.applicationInfo);
+          if (!TextUtils.isEmpty(label)) {
+            break;
+          }
+        }
+      }
+    }
+  }
+ catch (  NameNotFoundException e) {
+  }
+  if (TextUtils.isEmpty(label)) {
+    label=Integer.toString(uid);
+  }
+  return label;
+}

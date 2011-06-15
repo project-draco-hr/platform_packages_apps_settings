@@ -1,4 +1,10 @@
 {
   super.onResume();
+  final Intent intent=getActivity().getIntent();
+  mIntentTab=computeTabFromIntent(intent);
   updateTabs();
+  final String action=intent.getAction();
+  if (ACTION_DATA_USAGE_LIMIT.equals(action)) {
+    PolicyLimitFragment.show(this);
+  }
 }

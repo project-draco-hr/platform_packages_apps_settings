@@ -14,7 +14,12 @@
     mTabHost.addTab(buildTabSpec(TAB_WIFI,R.string.data_usage_tab_wifi));
   }
   if (mTabWidget.getTabCount() > 0) {
-    mTabHost.setCurrentTab(0);
+    if (mIntentTab != null) {
+      mTabHost.setCurrentTabByTag(mIntentTab);
+    }
+ else {
+      mTabHost.setCurrentTab(0);
+    }
   }
  else {
     updateBody();

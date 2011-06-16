@@ -1,8 +1,5 @@
 {
   ContentResolver resolver=getContentResolver();
-  int useDefault=Settings.Secure.getInt(resolver,TTS_USE_DEFAULTS,TextToSpeech.Engine.USE_DEFAULTS);
-  mUseDefaultPref.setChecked(useDefault == 1);
-  mUseDefaultPref.setOnPreferenceChangeListener(this);
   loadEngines();
   mDefaultSynthPref.setOnPreferenceChangeListener(this);
   try {

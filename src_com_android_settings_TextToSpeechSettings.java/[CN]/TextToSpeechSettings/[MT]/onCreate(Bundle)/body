@@ -12,13 +12,13 @@
   mPlayExample.setOnPreferenceClickListener(this);
   mInstallData=findPreference(KEY_TTS_INSTALL_DATA);
   mInstallData.setOnPreferenceClickListener(this);
-  mUseDefaultPref=(CheckBoxPreference)findPreference(KEY_TTS_USE_DEFAULT);
   mDefaultSynthPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_SYNTH);
   mDefaultRatePref=(ListPreference)findPreference(KEY_TTS_DEFAULT_RATE);
   mDefaultLocPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
-  mEnginesGroup=(PreferenceGroup)findPreference(KEY_TTS_ENGINES);
+  mEngineSettings=(Preference)findPreference(KEY_TTS_ENGINE_SETTINGS);
+  mEngineSettings.setEnabled(false);
   mTts=new TextToSpeech(getActivity().getApplicationContext(),this);
   mEnginesHelper=new TtsEngines(getActivity().getApplicationContext());
   initDefaultSettings();
-  addEngineSpecificSettings();
+  initEngineSpecificSettings();
 }

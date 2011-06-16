@@ -1,0 +1,20 @@
+{
+  final String engineName=mEnginesHelper.getDefaultEngine();
+  final EngineInfo engine=mEnginesHelper.getEngineInfo(engineName);
+  mEngineSettings.setTitle(getResources().getString(R.string.tts_engine_settings_title,engine.label));
+  if (engineHasSettings(engineName)) {
+    mEngineSettings.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+      public boolean onPreferenceClick(      Preference preference){
+        Intent i=new Intent();
+        i.setClassName(engineName,engineName + ".EngineSettings");
+        startActivity(i);
+        return true;
+      }
+    }
+);
+    mEngineSettings.setEnabled(true);
+  }
+ else {
+    mEngineSettings.setEnabled(false);
+  }
+}

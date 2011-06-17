@@ -34,7 +34,7 @@
  catch (    RemoteException e) {
       throw new RuntimeException("problem reading network policy",e);
     }
-    final boolean restrictBackground=(mUidPolicy & POLICY_REJECT_PAID_BACKGROUND) != 0;
+    final boolean restrictBackground=(uidPolicy & POLICY_REJECT_METERED_BACKGROUND) != 0;
     mRestrictBackground.setChecked(restrictBackground);
     refreshPreferenceViews();
   }

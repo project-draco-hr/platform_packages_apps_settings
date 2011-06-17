@@ -1,7 +1,7 @@
 {
   if (LOGD)   Log.d(TAG,"setRestrictBackground()");
   try {
-    mPolicyService.setUidPolicy(mUid,restrictBackground ? POLICY_REJECT_PAID_BACKGROUND : POLICY_NONE);
+    mPolicyService.setUidPolicy(mUid,restrictBackground ? POLICY_REJECT_METERED_BACKGROUND : POLICY_NONE);
   }
  catch (  RemoteException e) {
     throw new RuntimeException("unable to save policy",e);

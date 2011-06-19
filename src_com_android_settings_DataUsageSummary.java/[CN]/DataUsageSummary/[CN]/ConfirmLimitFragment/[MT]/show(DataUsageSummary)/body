@@ -1,19 +1,19 @@
 {
   final Bundle args=new Bundle();
-switch (parent.mTemplate) {
-case TEMPLATE_MOBILE_3G_LOWER:
+switch (parent.mTemplate.getMatchRule()) {
+case MATCH_MOBILE_3G_LOWER:
 {
       args.putInt(EXTRA_MESSAGE_ID,R.string.data_usage_limit_dialog_3g);
       args.putLong(EXTRA_LIMIT_BYTES,5 * GB_IN_BYTES);
       break;
     }
-case TEMPLATE_MOBILE_4G:
+case MATCH_MOBILE_4G:
 {
     args.putInt(EXTRA_MESSAGE_ID,R.string.data_usage_limit_dialog_4g);
     args.putLong(EXTRA_LIMIT_BYTES,5 * GB_IN_BYTES);
     break;
   }
-case TEMPLATE_MOBILE_ALL:
+case MATCH_MOBILE_ALL:
 {
   args.putInt(EXTRA_MESSAGE_ID,R.string.data_usage_limit_dialog_mobile);
   args.putLong(EXTRA_LIMIT_BYTES,5 * GB_IN_BYTES);

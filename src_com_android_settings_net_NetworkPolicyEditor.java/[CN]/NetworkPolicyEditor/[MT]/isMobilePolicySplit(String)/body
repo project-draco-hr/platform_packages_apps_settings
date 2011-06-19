@@ -1,0 +1,18 @@
+{
+  boolean has3g=false;
+  boolean has4g=false;
+  for (  NetworkPolicy policy : mPolicies) {
+    final NetworkTemplate template=policy.template;
+    if (Objects.equal(subscriberId,template.getSubscriberId())) {
+switch (template.getMatchRule()) {
+case MATCH_MOBILE_3G_LOWER:
+        has3g=true;
+      break;
+case MATCH_MOBILE_4G:
+    has4g=true;
+  break;
+}
+}
+}
+return has3g && has4g;
+}

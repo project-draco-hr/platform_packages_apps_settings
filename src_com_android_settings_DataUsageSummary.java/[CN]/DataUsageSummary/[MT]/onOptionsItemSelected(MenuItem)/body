@@ -3,8 +3,8 @@ switch (item.getItemId()) {
 case R.id.action_split_4g:
 {
       final boolean mobileSplit=!item.isChecked();
-      mPolicyModifier.setMobilePolicySplit(mobileSplit);
-      item.setChecked(mPolicyModifier.isMobilePolicySplit());
+      setMobilePolicySplit(mobileSplit);
+      item.setChecked(isMobilePolicySplit());
       updateTabs();
       return true;
     }

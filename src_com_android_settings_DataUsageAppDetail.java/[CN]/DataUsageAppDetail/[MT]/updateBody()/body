@@ -1,6 +1,7 @@
 {
   final PackageManager pm=getActivity().getPackageManager();
-  mUid=getArguments().getInt(Intent.EXTRA_UID);
+  mUid=getArguments().getInt(EXTRA_UID);
+  mTemplate=getArguments().getParcelable(EXTRA_NETWORK_TEMPLATE);
   mTitle.setText(pm.getNameForUid(mUid));
   final String[] packageNames=pm.getPackagesForUid(mUid);
   if (packageNames != null && packageNames.length > 0) {
@@ -15,7 +16,7 @@
     mAppSettings.setEnabled(false);
   }
   try {
-    mHistory=mStatsService.getHistoryForUid(mUid,TEMPLATE_MOBILE_ALL);
+    mHistory=mStatsService.getHistoryForUid(mTemplate,mUid);
   }
  catch (  RemoteException e) {
     throw new RuntimeException("problem reading network stats",e);

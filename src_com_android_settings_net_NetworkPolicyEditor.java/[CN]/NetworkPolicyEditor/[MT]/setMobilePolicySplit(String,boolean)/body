@@ -1,0 +1,25 @@
+{
+  final boolean beforeSplit=isMobilePolicySplit(subscriberId);
+  final NetworkTemplate template3g=new NetworkTemplate(MATCH_MOBILE_3G_LOWER,subscriberId);
+  final NetworkTemplate template4g=new NetworkTemplate(MATCH_MOBILE_4G,subscriberId);
+  final NetworkTemplate templateAll=new NetworkTemplate(MATCH_MOBILE_ALL,subscriberId);
+  if (split == beforeSplit) {
+    return;
+  }
+ else   if (beforeSplit && !split) {
+    final NetworkPolicy policy3g=getPolicy(template3g);
+    final NetworkPolicy policy4g=getPolicy(template4g);
+    final NetworkPolicy restrictive=policy3g.compareTo(policy4g) < 0 ? policy3g : policy4g;
+    mPolicies.remove(policy3g);
+    mPolicies.remove(policy4g);
+    mPolicies.add(new NetworkPolicy(templateAll,restrictive.cycleDay,restrictive.warningBytes,restrictive.limitBytes));
+    writeAsync();
+  }
+ else   if (!beforeSplit && split) {
+    final NetworkPolicy policyAll=getPolicy(templateAll);
+    mPolicies.remove(policyAll);
+    mPolicies.add(new NetworkPolicy(template3g,policyAll.cycleDay,policyAll.warningBytes,policyAll.limitBytes));
+    mPolicies.add(new NetworkPolicy(template4g,policyAll.cycleDay,policyAll.warningBytes,policyAll.limitBytes));
+    writeAsync();
+  }
+}

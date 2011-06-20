@@ -1,0 +1,13 @@
+{
+  mContext=context;
+  mSwitch=switch_;
+  LocalBluetoothManager manager=LocalBluetoothManager.getInstance(context);
+  if (manager == null) {
+    mLocalAdapter=null;
+    mSwitch.setEnabled(false);
+  }
+ else {
+    mLocalAdapter=manager.getBluetoothAdapter();
+  }
+  mIntentFilter=new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+}

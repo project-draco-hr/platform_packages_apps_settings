@@ -4,44 +4,33 @@
   final Activity activity=getActivity();
   final Intent intent=activity.getIntent();
   mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
-  if (getPreferenceScreen() == null || getPreferenceScreen().getPreferenceCount() < 2) {
-    if (mEnableNextOnConnection) {
-      if (hasNextButton()) {
-        final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-          NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-          changeNextButtonState(info.isConnected());
-        }
+  if (mEnableNextOnConnection) {
+    if (hasNextButton()) {
+      final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+      if (connectivity != null) {
+        NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        changeNextButtonState(info.isConnected());
       }
     }
-    if (mInXlSetupWizard) {
-      addPreferencesFromResource(R.xml.wifi_access_points_for_wifi_setup_xl);
-    }
- else     if (intent.getBooleanExtra("only_access_points",false)) {
-      addPreferencesFromResource(R.xml.wifi_access_points);
-    }
- else {
-      addPreferencesFromResource(R.xml.wifi_settings);
-      mWifiEnabler=new WifiEnabler(activity,(CheckBoxPreference)findPreference("enable_wifi"));
-      mNotifyOpenNetworks=(CheckBoxPreference)findPreference("notify_open_networks");
-      mNotifyOpenNetworks.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,0) == 1);
-    }
-    final ProgressCategoryBase preference=(ProgressCategoryBase)findPreference("access_points");
-    mAccessPoints=preference;
-    mAccessPoints.setOrderingAsAdded(false);
-    mAddNetwork=findPreference("add_network");
-    ListPreference pref=(ListPreference)findPreference(KEY_SLEEP_POLICY);
-    if (pref != null) {
-      if (Utils.isWifiOnly()) {
-        pref.setEntries(R.array.wifi_sleep_policy_entries_wifi_only);
-        pref.setSummary(R.string.wifi_setting_sleep_policy_summary_wifi_only);
-      }
-      pref.setOnPreferenceChangeListener(this);
-      int value=Settings.System.getInt(getContentResolver(),Settings.System.WIFI_SLEEP_POLICY,Settings.System.WIFI_SLEEP_POLICY_NEVER);
-      pref.setValue(String.valueOf(value));
-    }
-    registerForContextMenu(getListView());
-    setHasOptionsMenu(true);
   }
+  if (mInXlSetupWizard) {
+    addPreferencesFromResource(R.xml.wifi_access_points_for_wifi_setup_xl);
+  }
+ else {
+    addPreferencesFromResource(R.xml.wifi_settings);
+    Switch actionBarSwitch=new Switch(activity);
+    if (activity instanceof PreferenceActivity) {
+      PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
+      if (preferenceActivity.onIsHidingHeaders() || !preferenceActivity.onIsMultiPane()) {
+        final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+        actionBarSwitch.setPadding(0,0,padding,0);
+        activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
+        activity.getActionBar().setCustomView(actionBarSwitch,new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.RIGHT));
+      }
+    }
+    mWifiEnabler=new WifiEnabler(activity,actionBarSwitch);
+  }
+  registerForContextMenu(getListView());
+  setHasOptionsMenu(true);
   super.onActivityCreated(savedInstanceState);
 }

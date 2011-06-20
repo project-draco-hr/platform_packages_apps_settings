@@ -1,0 +1,28 @@
+{
+  final PreferenceScreen preferenceScreen=getPreferenceScreen();
+  getActivity().invalidateOptionsMenu();
+  int messageId=0;
+switch (bluetoothState) {
+case BluetoothAdapter.STATE_ON:
+    preferenceScreen.removeAll();
+  addDevices();
+mLocalAdapter.startScanning(false);
+return;
+case BluetoothAdapter.STATE_TURNING_OFF:
+int preferenceCount=preferenceScreen.getPreferenceCount();
+for (int i=0; i < preferenceCount; i++) {
+preferenceScreen.getPreference(i).setEnabled(false);
+}
+return;
+case BluetoothAdapter.STATE_OFF:
+messageId=R.string.bluetooth_empty_list_bluetooth_off;
+break;
+case BluetoothAdapter.STATE_TURNING_ON:
+messageId=R.string.bluetooth_turning_on;
+break;
+}
+removeAllDevices();
+Preference emptyListPreference=new Preference(getActivity());
+emptyListPreference.setTitle(messageId);
+preferenceScreen.addPreference(emptyListPreference);
+}

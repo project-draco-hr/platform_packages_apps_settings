@@ -1,0 +1,58 @@
+{
+  HeaderViewHolder holder;
+  Header header=getItem(position);
+  int headerType=getHeaderType(header);
+  View view=null;
+  if (convertView == null) {
+    holder=new HeaderViewHolder();
+switch (headerType) {
+case HEADER_TYPE_CATEGORY:
+      view=new TextView(getContext(),null,android.R.attr.listSeparatorTextViewStyle);
+    holder.title=(TextView)view;
+  break;
+case HEADER_TYPE_SWITCH:
+view=mInflater.inflate(R.layout.preference_header_switch_item,parent,false);
+holder.icon=(ImageView)view.findViewById(R.id.icon);
+holder.title=(TextView)view.findViewById(com.android.internal.R.id.title);
+holder.summary=(TextView)view.findViewById(com.android.internal.R.id.summary);
+holder.switch_=(Switch)view.findViewById(R.id.switchWidget);
+break;
+case HEADER_TYPE_NORMAL:
+view=mInflater.inflate(com.android.internal.R.layout.preference_header_item,parent,false);
+holder.icon=(ImageView)view.findViewById(com.android.internal.R.id.icon);
+holder.title=(TextView)view.findViewById(com.android.internal.R.id.title);
+holder.summary=(TextView)view.findViewById(com.android.internal.R.id.summary);
+break;
+}
+view.setTag(holder);
+}
+ else {
+view=convertView;
+holder=(HeaderViewHolder)view.getTag();
+}
+switch (headerType) {
+case HEADER_TYPE_CATEGORY:
+holder.title.setText(header.getTitle(getContext().getResources()));
+break;
+case HEADER_TYPE_SWITCH:
+if (header.id == R.id.wifi_settings) {
+mWifiEnabler.setSwitch(holder.switch_);
+}
+ else {
+mBluetoothEnabler.setSwitch(holder.switch_);
+}
+case HEADER_TYPE_NORMAL:
+holder.icon.setImageResource(header.iconRes);
+holder.title.setText(header.getTitle(getContext().getResources()));
+CharSequence summary=header.getSummary(getContext().getResources());
+if (!TextUtils.isEmpty(summary)) {
+holder.summary.setVisibility(View.VISIBLE);
+holder.summary.setText(summary);
+}
+ else {
+holder.summary.setVisibility(View.GONE);
+}
+break;
+}
+return view;
+}

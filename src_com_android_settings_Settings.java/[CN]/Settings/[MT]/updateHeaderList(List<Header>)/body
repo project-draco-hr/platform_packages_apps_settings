@@ -12,6 +12,11 @@
  else     if (id == R.id.call_settings) {
       if (!Utils.isVoiceCapable(this))       target.remove(header);
     }
+ else     if (id == R.id.bluetooth_settings) {
+      if (ServiceManager.getService(BluetoothAdapter.BLUETOOTH_SERVICE) == null) {
+        target.remove(header);
+      }
+    }
     if (target.get(i) == header) {
       if (i == 0)       mFirstHeader=header;
       mHeaderIndexMap.put(id,i);

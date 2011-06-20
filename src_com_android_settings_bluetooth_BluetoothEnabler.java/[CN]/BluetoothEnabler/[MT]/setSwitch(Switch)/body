@@ -1,0 +1,11 @@
+{
+  if (mSwitch == switch_)   return;
+  mSwitch.setOnCheckedChangeListener(null);
+  mSwitch=switch_;
+  mSwitch.setOnCheckedChangeListener(this);
+  final int bluetoothState=mLocalAdapter.getBluetoothState();
+  boolean isEnabled=bluetoothState == BluetoothAdapter.STATE_ON;
+  boolean isDisabled=bluetoothState == BluetoothAdapter.STATE_OFF;
+  mSwitch.setChecked(isEnabled);
+  mSwitch.setEnabled(isEnabled || isDisabled);
+}

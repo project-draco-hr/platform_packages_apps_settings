@@ -1,6 +1,7 @@
 {
-  if (mAccessPoints != null) {
-    return mAccessPoints.getPreferenceCount();
+  final boolean wifiIsEnabled=mWifiManager.isWifiEnabled();
+  if (wifiIsEnabled) {
+    return getPreferenceScreen().getPreferenceCount();
   }
  else {
     return 0;

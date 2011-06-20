@@ -1,6 +1,19 @@
 {
   addPreferencesFromResource(R.xml.bluetooth_settings);
-  mEnabler=new BluetoothEnabler(getActivity(),(CheckBoxPreference)findPreference(KEY_BT_CHECKBOX));
-  mDiscoverableEnabler=new BluetoothDiscoverableEnabler(getActivity(),mLocalAdapter,(CheckBoxPreference)findPreference(KEY_BT_DISCOVERABLE),(ListPreference)findPreference(KEY_BT_DISCOVERABLE_TIMEOUT));
-  mNamePreference=(BluetoothNamePreference)findPreference(KEY_BT_NAME);
+  Activity activity=getActivity();
+  Switch actionBarSwitch=new Switch(activity);
+  if (activity instanceof PreferenceActivity) {
+    PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
+    if (preferenceActivity.onIsHidingHeaders() || !preferenceActivity.onIsMultiPane()) {
+      final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+      actionBarSwitch.setPadding(0,0,padding,0);
+      activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
+      activity.getActionBar().setCustomView(actionBarSwitch,new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.RIGHT));
+    }
+  }
+  mBluetoothEnabler=new BluetoothEnabler(activity,actionBarSwitch);
+  if (mLocalAdapter != null && mLocalAdapter.isEnabled()) {
+    activity.getActionBar().setSubtitle(mLocalAdapter.getName());
+  }
+  setHasOptionsMenu(true);
 }

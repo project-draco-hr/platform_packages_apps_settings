@@ -1,0 +1,16 @@
+{
+  ListPreference pref=(ListPreference)findPreference(KEY_FREQUENCY_BAND);
+  if (mWifiManager.isDualBandSupported()) {
+    pref.setOnPreferenceChangeListener(this);
+    int value=mWifiManager.getFrequencyBand();
+    if (value != -1) {
+      pref.setValue(String.valueOf(value));
+    }
+ else {
+      Log.e(TAG,"Failed to fetch frequency band");
+    }
+  }
+ else {
+    getPreferenceScreen().removePreference(pref);
+  }
+}

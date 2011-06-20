@@ -1,9 +1,17 @@
 {
-  if (state == WifiManager.WIFI_STATE_ENABLED) {
+  getActivity().invalidateOptionsMenu();
+switch (state) {
+case WifiManager.WIFI_STATE_ENABLED:
     mScanner.resume();
-  }
- else {
-    mScanner.pause();
-    mAccessPoints.removeAll();
-  }
+  return;
+case WifiManager.WIFI_STATE_ENABLING:
+getPreferenceScreen().removeAll();
+addMessagePreference(R.string.wifi_starting);
+break;
+case WifiManager.WIFI_STATE_DISABLED:
+getPreferenceScreen().removeAll();
+addMessagePreference(R.string.wifi_empty_list_wifi_off);
+break;
+}
+mScanner.pause();
 }

@@ -2,28 +2,15 @@
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.wireless_settings);
   final Activity activity=getActivity();
-  CheckBoxPreference airplane=(CheckBoxPreference)findPreference(KEY_TOGGLE_AIRPLANE);
-  CheckBoxPreference wifi=(CheckBoxPreference)findPreference(KEY_TOGGLE_WIFI);
-  CheckBoxPreference bt=(CheckBoxPreference)findPreference(KEY_TOGGLE_BLUETOOTH);
-  CheckBoxPreference nfc=(CheckBoxPreference)findPreference(KEY_TOGGLE_NFC);
-  mAirplaneModeEnabler=new AirplaneModeEnabler(activity,airplane);
   mAirplaneModePreference=(CheckBoxPreference)findPreference(KEY_TOGGLE_AIRPLANE);
-  mWifiEnabler=new WifiEnabler(activity,wifi);
-  mBtEnabler=new BluetoothEnabler(activity,bt);
+  CheckBoxPreference nfc=(CheckBoxPreference)findPreference(KEY_TOGGLE_NFC);
+  mAirplaneModeEnabler=new AirplaneModeEnabler(activity,mAirplaneModePreference);
   mNfcEnabler=new NfcEnabler(activity,nfc);
   String toggleable=Settings.System.getString(activity.getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   if (toggleable == null || !toggleable.contains(Settings.System.RADIO_WIFI)) {
-    wifi.setDependency(KEY_TOGGLE_AIRPLANE);
-    findPreference(KEY_WIFI_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
     findPreference(KEY_VPN_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
   }
   if (toggleable == null || !toggleable.contains(Settings.System.RADIO_BLUETOOTH)) {
-    bt.setDependency(KEY_TOGGLE_AIRPLANE);
-    findPreference(KEY_BT_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
-  }
-  if (ServiceManager.getService(BluetoothAdapter.BLUETOOTH_SERVICE) == null) {
-    getPreferenceScreen().removePreference(bt);
-    getPreferenceScreen().removePreference(findPreference(KEY_BT_SETTINGS));
   }
   if (NfcAdapter.getDefaultAdapter(activity) == null) {
     getPreferenceScreen().removePreference(nfc);

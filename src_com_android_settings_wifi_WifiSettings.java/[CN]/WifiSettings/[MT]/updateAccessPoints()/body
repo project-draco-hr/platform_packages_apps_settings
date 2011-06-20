@@ -1,12 +1,24 @@
 {
-  mAccessPoints.removeAll();
-  final Collection<AccessPoint> accessPoints=constructAccessPoints();
+  final PreferenceScreen preferenceScreen=getPreferenceScreen();
+  preferenceScreen.removeAll();
+  final int wifiState=mWifiManager.getWifiState();
+switch (wifiState) {
+case WifiManager.WIFI_STATE_ENABLED:
+    final Collection<AccessPoint> accessPoints=constructAccessPoints();
   if (mInXlSetupWizard) {
-    ((WifiSettingsForSetupWizardXL)getActivity()).onAccessPointsUpdated(mAccessPoints,accessPoints);
+    ((WifiSettingsForSetupWizardXL)getActivity()).onAccessPointsUpdated(getPreferenceScreen(),accessPoints);
   }
  else {
     for (    AccessPoint accessPoint : accessPoints) {
-      mAccessPoints.addPreference(accessPoint);
+      getPreferenceScreen().addPreference(accessPoint);
     }
   }
+break;
+case WifiManager.WIFI_STATE_DISABLING:
+addMessagePreference(R.string.wifi_stopping);
+break;
+case WifiManager.WIFI_STATE_DISABLED:
+addMessagePreference(R.string.wifi_empty_list_wifi_off);
+break;
+}
 }

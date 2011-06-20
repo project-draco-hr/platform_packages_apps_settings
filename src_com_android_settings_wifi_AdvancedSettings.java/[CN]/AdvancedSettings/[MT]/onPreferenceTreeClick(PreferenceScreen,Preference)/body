@@ -1,0 +1,10 @@
+{
+  String key=preference.getKey();
+  if (KEY_NOTIFY_OPEN_NETWORKS.equals(key)) {
+    Secure.putInt(getContentResolver(),Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,((CheckBoxPreference)preference).isChecked() ? 1 : 0);
+  }
+ else {
+    return super.onPreferenceTreeClick(screen,preference);
+  }
+  return true;
+}

@@ -1,26 +1,21 @@
 {
 switch (state) {
 case WifiManager.WIFI_STATE_ENABLING:
-    mCheckBox.setSummary(R.string.wifi_starting);
-  mCheckBox.setEnabled(false);
-break;
+    mSwitch.setEnabled(false);
+  break;
 case WifiManager.WIFI_STATE_ENABLED:
-mCheckBox.setChecked(true);
-mCheckBox.setSummary(null);
-mCheckBox.setEnabled(true);
+mSwitch.setChecked(true);
+mSwitch.setEnabled(true);
 break;
 case WifiManager.WIFI_STATE_DISABLING:
-mCheckBox.setSummary(R.string.wifi_stopping);
-mCheckBox.setEnabled(false);
+mSwitch.setEnabled(false);
 break;
 case WifiManager.WIFI_STATE_DISABLED:
-mCheckBox.setChecked(false);
-mCheckBox.setSummary(mOriginalSummary);
-mCheckBox.setEnabled(true);
+mSwitch.setChecked(false);
+mSwitch.setEnabled(true);
 break;
 default :
-mCheckBox.setChecked(false);
-mCheckBox.setSummary(R.string.wifi_error);
-mCheckBox.setEnabled(true);
+mSwitch.setChecked(false);
+mSwitch.setEnabled(true);
 }
 }

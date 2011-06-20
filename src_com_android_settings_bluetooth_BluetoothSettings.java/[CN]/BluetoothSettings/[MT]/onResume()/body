@@ -1,7 +1,5 @@
 {
   super.onResume();
-  addDevices();
-  mEnabler.resume();
-  mDiscoverableEnabler.resume();
-  mNamePreference.resume();
+  mBluetoothEnabler.resume();
+  updateContent(mLocalAdapter.getBluetoothState());
 }

@@ -1,0 +1,10 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.bluetooth_advanced_settings);
+  LocalBluetoothManager localManager=LocalBluetoothManager.getInstance(getActivity());
+  if (localManager != null) {
+    LocalBluetoothAdapter localAdapter=localManager.getBluetoothAdapter();
+    mDiscoverableEnabler=new BluetoothDiscoverableEnabler(getActivity(),localAdapter,(CheckBoxPreference)findPreference(KEY_BT_DISCOVERABLE),(ListPreference)findPreference(KEY_BT_DISCOVERABLE_TIMEOUT));
+  }
+  mNamePreference=(BluetoothNamePreference)findPreference(KEY_BT_NAME);
+}

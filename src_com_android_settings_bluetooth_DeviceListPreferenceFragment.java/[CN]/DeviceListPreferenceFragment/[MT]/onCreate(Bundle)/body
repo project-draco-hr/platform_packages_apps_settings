@@ -7,8 +7,12 @@
   }
   mLocalAdapter=mLocalManager.getBluetoothAdapter();
   addPreferencesForActivity();
-  mDeviceList=(PreferenceCategory)findPreference(KEY_BT_DEVICE_LIST);
-  if (mDeviceList == null) {
+  mDeviceListGroup=(PreferenceCategory)findPreference(KEY_BT_DEVICE_LIST);
+  if (mDeviceListGroup == null) {
+    mDeviceListGroup=getPreferenceScreen();
+    mDeviceListGroup.setOrderingAsAdded(false);
+  }
+  if (mDeviceListGroup == null) {
     Log.e(TAG,"Could not find device list preference object!");
   }
 }

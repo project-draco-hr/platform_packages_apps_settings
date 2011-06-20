@@ -16,7 +16,7 @@
     mAppSettings.setEnabled(false);
   }
   try {
-    mHistory=mStatsService.getHistoryForUid(mTemplate,mUid);
+    mHistory=mStatsService.getHistoryForUid(mTemplate,mUid,NetworkStats.TAG_NONE);
   }
  catch (  RemoteException e) {
     throw new RuntimeException("problem reading network stats",e);

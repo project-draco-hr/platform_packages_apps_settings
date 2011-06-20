@@ -15,7 +15,7 @@
   mDefaultSynthPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_SYNTH);
   mDefaultRatePref=(ListPreference)findPreference(KEY_TTS_DEFAULT_RATE);
   mDefaultLocPref=(ListPreference)findPreference(KEY_TTS_DEFAULT_LANG);
-  mEngineSettings=(Preference)findPreference(KEY_TTS_ENGINE_SETTINGS);
+  mEngineSettings=findPreference(KEY_TTS_ENGINE_SETTINGS);
   mEngineSettings.setEnabled(false);
   mTts=new TextToSpeech(getActivity().getApplicationContext(),this);
   mEnginesHelper=new TtsEngines(getActivity().getApplicationContext());

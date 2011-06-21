@@ -1,4 +1,11 @@
 {
+  final Context context=getActivity();
   final MenuItem split4g=menu.findItem(R.id.action_split_4g);
+  split4g.setVisible(hasMobile4gRadio(context));
   split4g.setChecked(isMobilePolicySplit());
+  final MenuItem showWifi=menu.findItem(R.id.action_show_wifi);
+  showWifi.setVisible(hasMobileRadio(context) && hasWifiRadio(context));
+  showWifi.setChecked(mShowWifi);
+  final MenuItem settings=menu.findItem(R.id.action_settings);
+  settings.setVisible(split4g.isVisible() || showWifi.isVisible());
 }

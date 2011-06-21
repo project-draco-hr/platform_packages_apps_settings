@@ -12,8 +12,13 @@
  else     if (id == R.id.call_settings) {
       if (!Utils.isVoiceCapable(this))       target.remove(header);
     }
+ else     if (id == R.id.wifi_settings) {
+      if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
+        target.remove(header);
+      }
+    }
  else     if (id == R.id.bluetooth_settings) {
-      if (ServiceManager.getService(BluetoothAdapter.BLUETOOTH_SERVICE) == null) {
+      if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
         target.remove(header);
       }
     }

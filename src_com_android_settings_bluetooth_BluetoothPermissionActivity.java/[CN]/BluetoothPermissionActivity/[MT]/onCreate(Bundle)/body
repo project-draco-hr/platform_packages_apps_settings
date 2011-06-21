@@ -1,0 +1,15 @@
+{
+  super.onCreate(savedInstanceState);
+  if (DEBUG)   Log.d(TAG,"onCreate");
+  Intent i=getIntent();
+  String action=i.getAction();
+  if (action.equals(BluetoothDevice.ACTION_CONNECTION_ACCESS_REQUEST)) {
+    mDevice=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+    showConnectionDialog();
+    registerReceiver(mReceiver,new IntentFilter(BluetoothDevice.ACTION_CONNECTION_ACCESS_CANCEL));
+  }
+ else {
+    Log.e(TAG,"Error: this activity may be started only with intent " + "ACTION_CONNECTION_ACCESS_REQUEST");
+    finish();
+  }
+}

@@ -16,6 +16,15 @@
  else   if (preference == mShowPassword) {
     Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,mShowPassword.isChecked() ? 1 : 0);
   }
+ else   if (preference == mToggleAppInstallation) {
+    if (mToggleAppInstallation.isChecked()) {
+      mToggleAppInstallation.setChecked(false);
+      warnAppInstallation();
+    }
+ else {
+      setNonMarketAppsAllowed(false);
+    }
+  }
  else {
     return super.onPreferenceTreeClick(preferenceScreen,preference);
   }

@@ -1,0 +1,14 @@
+{
+  super.onResume();
+  createPreferenceHierarchy();
+  updateLocationToggles();
+  if (mSettingsObserver == null) {
+    mSettingsObserver=new Observer(){
+      public void update(      Observable o,      Object arg){
+        updateLocationToggles();
+      }
+    }
+;
+    mContentQueryMap.addObserver(mSettingsObserver);
+  }
+}

@@ -1,19 +1,20 @@
 {
-  final boolean mobileSplit=isMobilePolicySplit();
-  final boolean tabsVisible=mobileSplit || mShowWifi;
-  mTabWidget.setVisibility(tabsVisible ? View.VISIBLE : View.GONE);
+  final Context context=getActivity();
   mTabHost.clearAllTabs();
-  if (mobileSplit) {
+  final boolean mobileSplit=isMobilePolicySplit();
+  if (mobileSplit && hasMobile4gRadio(context)) {
     mTabHost.addTab(buildTabSpec(TAB_3G,R.string.data_usage_tab_3g));
     mTabHost.addTab(buildTabSpec(TAB_4G,R.string.data_usage_tab_4g));
   }
-  if (mShowWifi) {
+  if (mShowWifi && hasWifiRadio(context) && hasMobileRadio(context)) {
     if (!mobileSplit) {
       mTabHost.addTab(buildTabSpec(TAB_MOBILE,R.string.data_usage_tab_mobile));
     }
     mTabHost.addTab(buildTabSpec(TAB_WIFI,R.string.data_usage_tab_wifi));
   }
-  if (mTabWidget.getTabCount() > 0) {
+  final boolean hasTabs=mTabWidget.getTabCount() > 0;
+  mTabWidget.setVisibility(hasTabs ? View.VISIBLE : View.GONE);
+  if (hasTabs) {
     if (mIntentTab != null) {
       mTabHost.setCurrentTabByTag(mIntentTab);
     }

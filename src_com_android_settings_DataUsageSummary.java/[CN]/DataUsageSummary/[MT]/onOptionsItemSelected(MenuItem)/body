@@ -11,6 +11,7 @@ case R.id.action_split_4g:
 case R.id.action_show_wifi:
 {
     mShowWifi=!item.isChecked();
+    mPrefs.edit().putBoolean(PREF_SHOW_WIFI,mShowWifi).apply();
     item.setChecked(mShowWifi);
     updateTabs();
     return true;

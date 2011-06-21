@@ -1,8 +1,20 @@
 {
-  final String tabTag=mTabHost.getCurrentTabTag();
-  final String currentTab=tabTag != null ? tabTag : TAB_MOBILE;
+  mBinding=true;
   final Context context=getActivity();
-  final String subscriberId=getActiveSubscriberId(context);
+  final String tabTag=mTabHost.getCurrentTabTag();
+  final String currentTab;
+  if (tabTag != null) {
+    currentTab=tabTag;
+  }
+ else   if (hasMobileRadio(context)) {
+    currentTab=TAB_MOBILE;
+  }
+ else   if (hasWifiRadio(context)) {
+    currentTab=TAB_WIFI;
+  }
+ else {
+    throw new IllegalStateException("no mobile or wifi radios");
+  }
   if (LOGD)   Log.d(TAG,"updateBody() with currentTab=" + currentTab);
   if (TAB_WIFI.equals(currentTab)) {
     mDataEnabledView.setVisibility(View.GONE);
@@ -13,22 +25,23 @@
     mDataEnabledView.setVisibility(View.VISIBLE);
     mDisableAtLimitView.setVisibility(View.VISIBLE);
   }
+  final String subscriberId=getActiveSubscriberId(context);
   if (TAB_MOBILE.equals(currentTab)) {
-    mDataEnabled.setTitle(R.string.data_usage_enable_mobile);
-    mDisableAtLimit.setTitle(R.string.data_usage_disable_mobile_limit);
+    setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_mobile);
+    setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_mobile_limit);
+    mDataEnabled.setChecked(mConnService.getMobileDataEnabled());
     mTemplate=new NetworkTemplate(MATCH_MOBILE_ALL,subscriberId);
   }
  else   if (TAB_3G.equals(currentTab)) {
-    mDataEnabled.setTitle(R.string.data_usage_enable_3g);
-    mDisableAtLimit.setTitle(R.string.data_usage_disable_3g_limit);
+    setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_3g);
+    setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_3g_limit);
     mTemplate=new NetworkTemplate(MATCH_MOBILE_3G_LOWER,subscriberId);
   }
  else   if (TAB_4G.equals(currentTab)) {
-    mDataEnabled.setTitle(R.string.data_usage_enable_4g);
-    mDisableAtLimit.setTitle(R.string.data_usage_disable_4g_limit);
+    setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_4g);
+    setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_4g_limit);
     mTemplate=new NetworkTemplate(MATCH_MOBILE_4G,subscriberId);
   }
-  mDataEnabled.setChecked(true);
   try {
     mHistory=mStatsService.getHistoryForNetwork(mTemplate);
   }
@@ -38,5 +51,5 @@
   mChart.bindNetworkStats(mHistory);
   updatePolicy(true);
   mListView.smoothScrollToPosition(0);
-  refreshPreferenceViews();
+  mBinding=false;
 }

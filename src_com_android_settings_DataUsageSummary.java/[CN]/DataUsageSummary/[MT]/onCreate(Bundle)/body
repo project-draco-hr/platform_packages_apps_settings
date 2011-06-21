@@ -2,7 +2,10 @@
   super.onCreate(savedInstanceState);
   mStatsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
   mPolicyService=INetworkPolicyManager.Stub.asInterface(ServiceManager.getService(Context.NETWORK_POLICY_SERVICE));
+  mConnService=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+  mPrefs=getActivity().getSharedPreferences(PREF_FILE,Context.MODE_PRIVATE);
   mPolicyEditor=new NetworkPolicyEditor(mPolicyService);
   mPolicyEditor.read();
+  mShowWifi=mPrefs.getBoolean(PREF_SHOW_WIFI,false);
   setHasOptionsMenu(true);
 }

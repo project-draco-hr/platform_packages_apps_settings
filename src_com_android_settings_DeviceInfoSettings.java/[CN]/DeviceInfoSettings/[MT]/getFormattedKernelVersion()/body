@@ -12,11 +12,11 @@
     Pattern p=Pattern.compile(PROC_VERSION_REGEX);
     Matcher m=p.matcher(procVersionStr);
     if (!m.matches()) {
-      Log.e(TAG,"Regex did not match on /proc/version: " + procVersionStr);
+      Log.e(LOG_TAG,"Regex did not match on /proc/version: " + procVersionStr);
       return "Unavailable";
     }
  else     if (m.groupCount() < 4) {
-      Log.e(TAG,"Regex match on /proc/version only returned " + m.groupCount() + " groups");
+      Log.e(LOG_TAG,"Regex match on /proc/version only returned " + m.groupCount() + " groups");
       return "Unavailable";
     }
  else {
@@ -24,7 +24,7 @@
     }
   }
  catch (  IOException e) {
-    Log.e(TAG,"IO Exception when getting kernel version for Device Info screen",e);
+    Log.e(LOG_TAG,"IO Exception when getting kernel version for Device Info screen",e);
     return "Unavailable";
   }
 }

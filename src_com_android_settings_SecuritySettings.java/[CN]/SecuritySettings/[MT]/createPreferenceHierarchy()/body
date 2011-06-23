@@ -58,5 +58,7 @@ root.removePreference(root.findPreference(KEY_SIM_LOCK));
 }
 mShowPassword=(CheckBoxPreference)root.findPreference(KEY_SHOW_PASSWORD);
 mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
+mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
+mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
 return root;
 }

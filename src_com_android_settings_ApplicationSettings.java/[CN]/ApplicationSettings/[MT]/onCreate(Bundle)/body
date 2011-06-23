@@ -1,8 +1,6 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.application_settings);
-  mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
-  mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
   mToggleAdvancedSettings=(CheckBoxPreference)findPreference(KEY_TOGGLE_ADVANCED_SETTINGS);
   mToggleAdvancedSettings.setChecked(isAdvancedSettingsEnabled());
   getPreferenceScreen().removePreference(mToggleAdvancedSettings);

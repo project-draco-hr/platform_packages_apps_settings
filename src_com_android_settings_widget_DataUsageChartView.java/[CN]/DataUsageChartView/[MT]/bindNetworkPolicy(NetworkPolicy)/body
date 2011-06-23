@@ -1,25 +1,33 @@
 {
   if (policy == null) {
-    mSweepDataLimit.setVisibility(View.INVISIBLE);
-    mSweepDataWarn.setVisibility(View.INVISIBLE);
+    mSweepLimit.setVisibility(View.INVISIBLE);
+    mSweepWarning.setVisibility(View.INVISIBLE);
     return;
   }
   if (policy.limitBytes != NetworkPolicy.LIMIT_DISABLED) {
-    mSweepDataLimit.setVisibility(View.VISIBLE);
-    mSweepDataLimit.setValue(policy.limitBytes);
-    mSweepDataLimit.setEnabled(true);
+    mSweepLimit.setVisibility(View.VISIBLE);
+    mSweepLimit.setValue(policy.limitBytes);
+    mSweepLimit.setEnabled(true);
   }
  else {
-    mSweepDataLimit.setVisibility(View.VISIBLE);
-    mSweepDataLimit.setValue(5 * GB_IN_BYTES);
-    mSweepDataLimit.setEnabled(false);
+    mSweepLimit.setVisibility(View.VISIBLE);
+    mSweepLimit.setValue(5 * GB_IN_BYTES);
+    mSweepLimit.setEnabled(false);
   }
   if (policy.warningBytes != NetworkPolicy.WARNING_DISABLED) {
-    mSweepDataWarn.setVisibility(View.VISIBLE);
-    mSweepDataWarn.setValue(policy.warningBytes);
+    mSweepWarning.setVisibility(View.VISIBLE);
+    mSweepWarning.setValue(policy.warningBytes);
   }
  else {
-    mSweepDataWarn.setVisibility(View.INVISIBLE);
+    mSweepWarning.setVisibility(View.INVISIBLE);
   }
   requestLayout();
+  if (policy.limitBytes < -1 || policy.limitBytes > 5 * GB_IN_BYTES) {
+    policy.limitBytes=5 * GB_IN_BYTES;
+    mLimitListener.onSweep(mSweepLimit,true);
+  }
+  if (policy.warningBytes < -1 || policy.warningBytes > 5 * GB_IN_BYTES) {
+    policy.warningBytes=4 * GB_IN_BYTES;
+    mWarningListener.onSweep(mSweepWarning,true);
+  }
 }

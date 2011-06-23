@@ -1,13 +1,23 @@
 {
   final int width=getWidth();
   final int height=getHeight();
+  final Drawable secondary=mSecondary;
+  final int secondaryHeight=mSecondary.getIntrinsicHeight();
   final float[] vertTicks=mVert.getTickPoints();
   for (  float y : vertTicks) {
-    canvas.drawLine(0,y,width,y,mPaintVert);
+    final int bottom=(int)Math.min(y + secondaryHeight,height);
+    secondary.setBounds(0,(int)y,width,bottom);
+    secondary.draw(canvas);
   }
+  final Drawable primary=mPrimary;
+  final int primaryWidth=mPrimary.getIntrinsicWidth();
+  final int primaryHeight=mPrimary.getIntrinsicHeight();
   final float[] horizTicks=mHoriz.getTickPoints();
   for (  float x : horizTicks) {
-    canvas.drawLine(x,0,x,height,mPaintHoriz);
+    final int right=(int)Math.min(x + primaryWidth,width);
+    primary.setBounds((int)x,0,right,height);
+    primary.draw(canvas);
   }
-  canvas.drawRect(0,0,width,height,mPaintHoriz);
+  mBorder.setBounds(0,0,width,height);
+  mBorder.draw(canvas);
 }

@@ -3,8 +3,9 @@
   final long halfRange=(end + start) / 2;
   final long sweepMax=Math.min(end,dataBoundary);
   final long sweepMin=Math.max(start,(sweepMax - DateUtils.WEEK_IN_MILLIS));
-  mSweepTime1.setValue(sweepMin);
-  mSweepTime2.setValue(sweepMax);
+  mSweepLeft.setValue(sweepMin);
+  mSweepRight.setValue(sweepMax);
+  mSeries.setPrimaryRange(sweepMin,sweepMax);
   requestLayout();
   mSeries.generatePath();
   mSeries.invalidate();

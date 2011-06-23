@@ -1,0 +1,11 @@
+{
+  super(context,attrs,defStyle);
+  final TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.ChartNetworkSeriesView,defStyle,0);
+  final int stroke=a.getColor(R.styleable.ChartNetworkSeriesView_strokeColor,Color.RED);
+  final int fill=a.getColor(R.styleable.ChartNetworkSeriesView_fillColor,Color.RED);
+  final int fillSecondary=a.getColor(R.styleable.ChartNetworkSeriesView_fillColorSecondary,Color.RED);
+  setChartColor(stroke,fill,fillSecondary);
+  a.recycle();
+  mPathStroke=new Path();
+  mPathFill=new Path();
+}

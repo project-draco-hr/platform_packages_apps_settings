@@ -1,0 +1,18 @@
+{
+  if (mSweep != null) {
+    mSweep.setCallback(null);
+    unscheduleDrawable(mSweep);
+  }
+  if (sweep != null) {
+    sweep.setCallback(this);
+    if (sweep.isStateful()) {
+      sweep.setState(getDrawableState());
+    }
+    sweep.setVisible(getVisibility() == VISIBLE,false);
+    mSweep=sweep;
+  }
+ else {
+    mSweep=null;
+  }
+  invalidate();
+}

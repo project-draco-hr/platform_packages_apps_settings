@@ -6,6 +6,7 @@
   mVert.setSize(height);
   final Rect parentRect=new Rect();
   final Rect childRect=new Rect();
+  final Rect extraMargins=new Rect();
   for (int i=0; i < getChildCount(); i++) {
     final View child=getChildAt(i);
     final LayoutParams params=(LayoutParams)child.getLayoutParams();
@@ -16,20 +17,19 @@
     }
  else     if (child instanceof ChartSweepView) {
       final ChartSweepView sweep=(ChartSweepView)child;
-      final ChartAxis axis=sweep.getAxis();
       final float point=sweep.getPoint();
-      if (axis == mHoriz) {
+      sweep.getExtraMargins(extraMargins);
+      if (sweep.getFollowAxis() == ChartSweepView.HORIZONTAL) {
         parentRect.left=parentRect.right=(int)point + getPaddingLeft();
-        parentRect.bottom+=child.getMeasuredWidth();
+        parentRect.top-=extraMargins.top;
+        parentRect.bottom+=extraMargins.bottom;
         Gravity.apply(params.gravity,child.getMeasuredWidth(),parentRect.height(),parentRect,childRect);
       }
- else       if (axis == mVert) {
-        parentRect.top=parentRect.bottom=(int)point + getPaddingTop();
-        parentRect.right+=child.getMeasuredHeight();
-        Gravity.apply(params.gravity,parentRect.width(),child.getMeasuredHeight(),parentRect,childRect);
-      }
  else {
-        throw new IllegalStateException("unexpected axis");
+        parentRect.top=parentRect.bottom=(int)point + getPaddingTop();
+        parentRect.left-=extraMargins.left;
+        parentRect.right+=extraMargins.right;
+        Gravity.apply(params.gravity,parentRect.width(),child.getMeasuredHeight(),parentRect,childRect);
       }
     }
     child.layout(childRect.left,childRect.top,childRect.right,childRect.bottom);

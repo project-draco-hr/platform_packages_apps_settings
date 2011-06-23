@@ -1,0 +1,9 @@
+{
+  super(context,attrs,defStyle);
+  setWillNotDraw(false);
+  final TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.ChartGridView,defStyle,0);
+  mPrimary=a.getDrawable(R.styleable.ChartGridView_primaryDrawable);
+  mSecondary=a.getDrawable(R.styleable.ChartGridView_secondaryDrawable);
+  mBorder=a.getDrawable(R.styleable.ChartGridView_borderDrawable);
+  a.recycle();
+}

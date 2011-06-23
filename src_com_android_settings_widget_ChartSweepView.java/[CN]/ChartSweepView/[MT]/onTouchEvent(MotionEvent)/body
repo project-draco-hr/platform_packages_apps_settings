@@ -10,14 +10,18 @@ case MotionEvent.ACTION_DOWN:
 case MotionEvent.ACTION_MOVE:
 {
     getParent().requestDisallowInterceptTouchEvent(true);
-    if (mHorizontal) {
-      setTranslationY(event.getRawY() - mTracking.getRawY());
+    if (mFollowAxis == VERTICAL) {
+      final float chartHeight=parent.getHeight() - parent.getPaddingTop() - parent.getPaddingBottom();
+      final float translationY=MathUtils.constrain(event.getRawY() - mTracking.getRawY(),-getTop(),chartHeight - getTop());
+      setTranslationY(translationY);
       final float point=(getTop() + getTranslationY() + (getHeight() / 2)) - parent.getPaddingTop();
       mValue=mAxis.convertToValue(point);
       dispatchOnSweep(false);
     }
  else {
-      setTranslationX(event.getRawX() - mTracking.getRawX());
+      final float chartWidth=parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
+      final float translationX=MathUtils.constrain(event.getRawX() - mTracking.getRawX(),-getLeft(),chartWidth - getLeft());
+      setTranslationX(translationX);
       final float point=(getLeft() + getTranslationX() + (getWidth() / 2)) - parent.getPaddingLeft();
       mValue=mAxis.convertToValue(point);
       dispatchOnSweep(false);

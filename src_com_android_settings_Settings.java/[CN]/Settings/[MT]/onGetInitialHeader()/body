@@ -8,12 +8,5 @@
     mCurrentHeader=header;
     return header;
   }
-  int position=0;
-  while (position < mHeaders.size()) {
-    Header header=mHeaders.get(position);
-    if (HeaderAdapter.getHeaderType(header) != HeaderAdapter.HEADER_TYPE_CATEGORY)     return header;
-    position++;
-  }
-  Log.e(LOG_TAG,"Unable to find a non-category header");
-  return null;
+  return mFirstHeader;
 }

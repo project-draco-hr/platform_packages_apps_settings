@@ -1,6 +1,8 @@
 {
   java.text.DateFormat shortDateFormat=DateFormat.getDateFormat(context);
   final Calendar now=Calendar.getInstance();
+  mDummyDate.setTimeZone(now.getTimeZone());
+  mDummyDate.set(now.get(Calendar.YEAR),11,31,13,0,0);
   Date dummyDate=mDummyDate.getTime();
   mTimePref.setSummary(DateFormat.getTimeFormat(getActivity()).format(now.getTime()));
   mTimeZone.setSummary(getTimeZoneText(now.getTimeZone()));

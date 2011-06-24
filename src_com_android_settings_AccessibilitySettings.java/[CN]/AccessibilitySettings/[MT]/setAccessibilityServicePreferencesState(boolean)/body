@@ -5,7 +5,8 @@
   int count=mAccessibilityServicesCategory.getPreferenceCount();
   for (int i=0; i < count; i++) {
     Preference pref=mAccessibilityServicesCategory.getPreference(i);
-    pref.setEnabled(isEnabled);
+    if (pref != mToggleAccessibilityCheckBox) {
+      pref.setEnabled(isEnabled);
+    }
   }
-  mToggleScriptInjectionCheckBox.setEnabled(isEnabled);
 }

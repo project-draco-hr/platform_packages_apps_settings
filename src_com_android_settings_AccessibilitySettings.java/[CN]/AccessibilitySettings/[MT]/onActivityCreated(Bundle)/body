@@ -1,5 +1,5 @@
 {
-  addAccessibilitServicePreferences();
+  addAccessibilityServicePreferences();
   final HashSet<String> enabled=new HashSet<String>();
   String settingValue=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
   if (settingValue != null) {
@@ -36,5 +36,6 @@
     mToggleAccessibilityCheckBox.setEnabled(false);
     showDialog(DIALOG_ID_NO_ACCESSIBILITY_SERVICES);
   }
+  readFontSizePreference();
   super.onActivityCreated(savedInstanceState);
 }

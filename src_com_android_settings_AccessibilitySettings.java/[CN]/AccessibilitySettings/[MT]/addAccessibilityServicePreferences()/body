@@ -1,11 +1,13 @@
 {
   AccessibilityManager accessibilityManager=(AccessibilityManager)getSystemService(Service.ACCESSIBILITY_SERVICE);
   List<AccessibilityServiceInfo> installedServices=accessibilityManager.getInstalledAccessibilityServiceList();
-  if (installedServices.isEmpty()) {
-    getPreferenceScreen().removePreference(mAccessibilityServicesCategory);
-    return;
+  for (int i=0; i < mAccessibilityServicesCategory.getPreferenceCount(); i++) {
+    Preference pref=mAccessibilityServicesCategory.getPreference(i);
+    if (pref != mToggleAccessibilityCheckBox && pref != mToggleScriptInjectionCheckBox) {
+      mAccessibilityServicesCategory.removePreference(pref);
+      i--;
+    }
   }
-  getPreferenceScreen().addPreference(mAccessibilityServicesCategory);
   for (int i=0, count=installedServices.size(); i < count; ++i) {
     AccessibilityServiceInfo accessibilityServiceInfo=installedServices.get(i);
     String key=accessibilityServiceInfo.getId();
@@ -19,6 +21,7 @@
       }
       SettingsCheckBoxPreference preference=new SettingsCheckBoxPreference(getActivity(),settingsIntent);
       preference.setKey(key);
+      preference.setOrder(i);
       ServiceInfo serviceInfo=accessibilityServiceInfo.getResolveInfo().serviceInfo;
       preference.setTitle(serviceInfo.loadLabel(getActivity().getPackageManager()));
       mAccessibilityServicesCategory.addPreference(preference);

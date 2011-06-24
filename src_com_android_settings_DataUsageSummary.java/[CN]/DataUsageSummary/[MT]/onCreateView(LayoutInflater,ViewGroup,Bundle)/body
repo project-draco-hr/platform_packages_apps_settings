@@ -6,25 +6,43 @@
   mListView=(ListView)view.findViewById(android.R.id.list);
   mTabHost.setup();
   mTabHost.setOnTabChangedListener(mTabListener);
-  mHeader=inflater.inflate(R.layout.data_usage_header,mListView,false);
+  mHeader=(ViewGroup)inflater.inflate(R.layout.data_usage_header,mListView,false);
   mListView.addHeaderView(mHeader,null,false);
-  mDataEnabled=new Switch(inflater.getContext());
-  mDataEnabledView=inflatePreference(inflater,mSwitches,mDataEnabled);
-  mDataEnabled.setOnCheckedChangeListener(mDataEnabledListener);
-  mDisableAtLimit=new CheckBox(inflater.getContext());
-  mDisableAtLimit.setClickable(false);
-  mDisableAtLimitView=inflatePreference(inflater,mSwitches,mDisableAtLimit);
-  mDisableAtLimitView.setOnClickListener(mDisableAtLimitListener);
-  mSwitches=(LinearLayout)mHeader.findViewById(R.id.switches);
-  mSwitches.addView(mDataEnabledView);
-  mSwitches.addView(mDisableAtLimitView);
+{
+    mNetworkSwitches=(LinearLayout)mHeader.findViewById(R.id.network_switches);
+    mDataEnabled=new Switch(inflater.getContext());
+    mDataEnabledView=inflatePreference(inflater,mNetworkSwitches,mDataEnabled);
+    mDataEnabled.setOnCheckedChangeListener(mDataEnabledListener);
+    mNetworkSwitches.addView(mDataEnabledView);
+    mDisableAtLimit=new CheckBox(inflater.getContext());
+    mDisableAtLimit.setClickable(false);
+    mDisableAtLimitView=inflatePreference(inflater,mNetworkSwitches,mDisableAtLimit);
+    mDisableAtLimitView.setOnClickListener(mDisableAtLimitListener);
+    mNetworkSwitches.addView(mDisableAtLimitView);
+  }
   mCycleSpinner=(Spinner)mHeader.findViewById(R.id.cycles);
   mCycleAdapter=new CycleAdapter(context);
   mCycleSpinner.setAdapter(mCycleAdapter);
   mCycleSpinner.setOnItemSelectedListener(mCycleListener);
-  mChart=(DataUsageChartView)inflater.inflate(R.layout.data_usage_chart,mListView,false);
+  mChart=(DataUsageChartView)mHeader.findViewById(R.id.chart);
   mChart.setListener(mChartListener);
-  mListView.addHeaderView(mChart,null,false);
+{
+    mAppDetail=view.findViewById(R.id.app_detail);
+    mAppTitle=(TextView)view.findViewById(R.id.app_title);
+    mAppSubtitle=(TextView)view.findViewById(R.id.app_subtitle);
+    mAppSwitches=(LinearLayout)view.findViewById(R.id.app_switches);
+    mAppSettings=(Button)view.findViewById(R.id.app_settings);
+    mAppSettings.setOnClickListener(mAppSettingsListener);
+    mAppRestrict=new CheckBox(inflater.getContext());
+    mAppRestrict.setClickable(false);
+    mAppRestrictView=inflatePreference(inflater,mAppSwitches,mAppRestrict);
+    setPreferenceTitle(mAppRestrictView,R.string.data_usage_app_restrict_background);
+    setPreferenceSummary(mAppRestrictView,R.string.data_usage_app_restrict_background_summary);
+    mAppRestrictView.setOnClickListener(mAppRestrictListener);
+    mAppSwitches.addView(mAppRestrictView);
+  }
+  final LayoutTransition transition=new LayoutTransition();
+  mHeader.setLayoutTransition(transition);
   mAdapter=new DataUsageAdapter();
   mListView.setOnItemClickListener(mListListener);
   mListView.setAdapter(mAdapter);

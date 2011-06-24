@@ -4,26 +4,40 @@
 switch (event.getAction()) {
 case MotionEvent.ACTION_DOWN:
 {
-      mTracking=event.copy();
-      return true;
+      final boolean accept;
+      if (mFollowAxis == VERTICAL) {
+        accept=event.getX() > getWidth() - (mSweepMargins.right * 2);
+      }
+ else {
+        accept=event.getY() > getHeight() - (mSweepMargins.bottom * 2);
+      }
+      if (accept) {
+        mTracking=event.copy();
+        return true;
+      }
+ else {
+        return false;
+      }
     }
 case MotionEvent.ACTION_MOVE:
 {
     getParent().requestDisallowInterceptTouchEvent(true);
+    final Rect sweepMargins=mSweepMargins;
+    final Rect parentContent=new Rect(parent.getPaddingLeft(),parent.getPaddingTop(),parent.getWidth() - parent.getPaddingRight(),parent.getHeight() - parent.getPaddingBottom());
     if (mFollowAxis == VERTICAL) {
-      final float chartHeight=parent.getHeight() - parent.getPaddingTop() - parent.getPaddingBottom();
-      final float translationY=MathUtils.constrain(event.getRawY() - mTracking.getRawY(),-getTop(),chartHeight - getTop());
-      setTranslationY(translationY);
-      final float point=(getTop() + getTranslationY() + (getHeight() / 2)) - parent.getPaddingTop();
-      mValue=mAxis.convertToValue(point);
+      final float currentTargetY=getTop() + getTargetInset();
+      final float requestedTargetY=currentTargetY + (event.getRawY() - mTracking.getRawY());
+      final float clampedTargetY=MathUtils.constrain(requestedTargetY,parentContent.top,parentContent.bottom);
+      setTranslationY(clampedTargetY - currentTargetY);
+      mValue=mAxis.convertToValue(clampedTargetY - parentContent.top);
       dispatchOnSweep(false);
     }
  else {
-      final float chartWidth=parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
-      final float translationX=MathUtils.constrain(event.getRawX() - mTracking.getRawX(),-getLeft(),chartWidth - getLeft());
-      setTranslationX(translationX);
-      final float point=(getLeft() + getTranslationX() + (getWidth() / 2)) - parent.getPaddingLeft();
-      mValue=mAxis.convertToValue(point);
+      final float currentTargetX=getLeft() + getTargetInset();
+      final float requestedTargetX=currentTargetX + (event.getRawX() - mTracking.getRawX());
+      final float clampedTargetX=MathUtils.constrain(requestedTargetX,parentContent.left,parentContent.right);
+      setTranslationX(clampedTargetX - currentTargetX);
+      mValue=mAxis.convertToValue(clampedTargetX - parentContent.left);
       dispatchOnSweep(false);
     }
     return true;

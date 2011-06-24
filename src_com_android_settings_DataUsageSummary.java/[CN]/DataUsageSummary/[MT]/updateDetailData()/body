@@ -1,5 +1,16 @@
 {
   if (LOGD)   Log.d(TAG,"updateDetailData()");
+  if (isAppDetailMode()) {
+    if (mDetailHistory != null) {
+      final Context context=mChart.getContext();
+      final long[] range=mChart.getInspectRange();
+      final long[] total=mDetailHistory.getTotalData(range[0],range[1],null);
+      final long totalCombined=total[0] + total[1];
+      mAppSubtitle.setText(Formatter.formatFileSize(context,totalCombined));
+    }
+    mAdapter.bindStats(null);
+    return;
+  }
   new AsyncTask<Void,Void,NetworkStats>(){
     @Override protected NetworkStats doInBackground(    Void... params){
       try {

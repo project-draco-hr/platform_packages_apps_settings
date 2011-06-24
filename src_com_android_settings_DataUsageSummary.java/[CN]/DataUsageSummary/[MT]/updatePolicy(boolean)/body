@@ -1,4 +1,10 @@
 {
+  if (isAppDetailMode()) {
+    mNetworkSwitches.setVisibility(View.GONE);
+  }
+ else {
+    mNetworkSwitches.setVisibility(View.VISIBLE);
+  }
   final NetworkPolicy policy=mPolicyEditor.getPolicy(mTemplate);
   mDisableAtLimit.setChecked(policy != null && policy.limitBytes != LIMIT_DISABLED);
   mChart.bindNetworkPolicy(policy);

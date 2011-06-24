@@ -1,8 +1,0 @@
-{
-  if (LOGD)   Log.d(TAG,"updateDetailData()");
-  final Context context=mChart.getContext();
-  final long[] range=mChart.getInspectRange();
-  final long[] total=mHistory.getTotalData(range[0],range[1],null);
-  final long totalCombined=total[0] + total[1];
-  mText1.setText(Formatter.formatFileSize(context,totalCombined));
-}

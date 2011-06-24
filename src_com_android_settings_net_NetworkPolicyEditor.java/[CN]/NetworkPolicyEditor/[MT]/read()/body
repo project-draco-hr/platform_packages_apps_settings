@@ -3,6 +3,12 @@
     final NetworkPolicy[] policies=mPolicyService.getNetworkPolicies();
     mPolicies.clear();
     for (    NetworkPolicy policy : policies) {
+      if (policy.limitBytes < -1) {
+        policy.limitBytes=LIMIT_DISABLED;
+      }
+      if (policy.warningBytes < -1) {
+        policy.warningBytes=WARNING_DISABLED;
+      }
       mPolicies.add(policy);
     }
   }

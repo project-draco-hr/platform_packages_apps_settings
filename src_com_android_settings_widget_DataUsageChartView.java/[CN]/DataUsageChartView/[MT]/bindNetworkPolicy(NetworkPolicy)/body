@@ -22,12 +22,4 @@
     mSweepWarning.setVisibility(View.INVISIBLE);
   }
   requestLayout();
-  if (policy.limitBytes < -1 || policy.limitBytes > 5 * GB_IN_BYTES) {
-    policy.limitBytes=5 * GB_IN_BYTES;
-    mLimitListener.onSweep(mSweepLimit,true);
-  }
-  if (policy.warningBytes < -1 || policy.warningBytes > 5 * GB_IN_BYTES) {
-    policy.warningBytes=4 * GB_IN_BYTES;
-    mWarningListener.onSweep(mSweepWarning,true);
-  }
 }

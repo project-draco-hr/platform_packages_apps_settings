@@ -2,6 +2,8 @@
   super.onFinishInflate();
   mGrid=(ChartGridView)findViewById(R.id.grid);
   mSeries=(ChartNetworkSeriesView)findViewById(R.id.series);
+  mDetailSeries=(ChartNetworkSeriesView)findViewById(R.id.detail_series);
+  mDetailSeries.setVisibility(View.GONE);
   mSweepLeft=(ChartSweepView)findViewById(R.id.sweep_left);
   mSweepRight=(ChartSweepView)findViewById(R.id.sweep_right);
   mSweepLimit=(ChartSweepView)findViewById(R.id.sweep_limit);
@@ -12,6 +14,7 @@
   mSweepLimit.addOnSweepListener(mLimitListener);
   mGrid.init(mHoriz,mVert);
   mSeries.init(mHoriz,mVert);
+  mDetailSeries.init(mHoriz,mVert);
   mSweepLeft.init(mHoriz);
   mSweepRight.init(mHoriz);
   mSweepWarning.init(mVert);

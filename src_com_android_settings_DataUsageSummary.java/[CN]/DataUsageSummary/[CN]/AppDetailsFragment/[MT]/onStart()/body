@@ -1,0 +1,6 @@
+{
+  super.onStart();
+  final DataUsageSummary target=(DataUsageSummary)getTargetFragment();
+  target.mUid=getArguments().getInt(EXTRA_UID);
+  target.updateBody();
+}

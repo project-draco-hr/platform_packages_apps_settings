@@ -1,0 +1,49 @@
+{
+  if (isAppDetailMode()) {
+    mAppDetail.setVisibility(View.VISIBLE);
+  }
+ else {
+    mAppDetail.setVisibility(View.GONE);
+    mChart.bindDetailNetworkStats(null);
+    return;
+  }
+  mChart.bindNetworkPolicy(null);
+  final PackageManager pm=getActivity().getPackageManager();
+  mAppTitle.setText(pm.getNameForUid(mUid));
+  final String[] packageNames=pm.getPackagesForUid(mUid);
+  if (packageNames != null && packageNames.length > 0) {
+    mAppSettingsIntent=new Intent(Intent.ACTION_MANAGE_NETWORK_USAGE);
+    mAppSettingsIntent.setPackage(packageNames[0]);
+    mAppSettingsIntent.addCategory(Intent.CATEGORY_DEFAULT);
+    final boolean matchFound=pm.resolveActivity(mAppSettingsIntent,0) != null;
+    mAppSettings.setEnabled(matchFound);
+  }
+ else {
+    mAppSettingsIntent=null;
+    mAppSettings.setEnabled(false);
+  }
+  try {
+    mDetailHistory=mStatsService.getHistoryForUid(mTemplate,mUid,NetworkStats.TAG_NONE);
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("problem reading network stats",e);
+  }
+  mChart.bindDetailNetworkStats(mDetailHistory);
+  updateDetailData();
+  final Context context=getActivity();
+  if (NetworkPolicyManager.isUidValidForPolicy(context,mUid)) {
+    mAppRestrictView.setVisibility(View.VISIBLE);
+    final int uidPolicy;
+    try {
+      uidPolicy=mPolicyService.getUidPolicy(mUid);
+    }
+ catch (    RemoteException e) {
+      throw new RuntimeException("problem reading network policy",e);
+    }
+    final boolean restrictBackground=(uidPolicy & POLICY_REJECT_METERED_BACKGROUND) != 0;
+    mAppRestrict.setChecked(restrictBackground);
+  }
+ else {
+    mAppRestrictView.setVisibility(View.GONE);
+  }
+}

@@ -5,7 +5,7 @@
   final long sweepMin=Math.max(start,(sweepMax - DateUtils.WEEK_IN_MILLIS));
   mSweepLeft.setValue(sweepMin);
   mSweepRight.setValue(sweepMax);
-  mSeries.setPrimaryRange(sweepMin,sweepMax);
+  updatePrimaryRange();
   requestLayout();
   mSeries.generatePath();
   mSeries.invalidate();

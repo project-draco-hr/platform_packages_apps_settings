@@ -1,11 +1,13 @@
 {
   mItems.clear();
-  for (int i=0; i < stats.size; i++) {
-    final long total=stats.rx[i] + stats.tx[i];
-    final AppUsageItem item=new AppUsageItem();
-    item.uid=stats.uid[i];
-    item.total=total;
-    mItems.add(item);
+  if (stats != null) {
+    for (int i=0; i < stats.size; i++) {
+      final long total=stats.rx[i] + stats.tx[i];
+      final AppUsageItem item=new AppUsageItem();
+      item.uid=stats.uid[i];
+      item.total=total;
+      mItems.add(item);
+    }
   }
   Collections.sort(mItems);
   notifyDataSetChanged();

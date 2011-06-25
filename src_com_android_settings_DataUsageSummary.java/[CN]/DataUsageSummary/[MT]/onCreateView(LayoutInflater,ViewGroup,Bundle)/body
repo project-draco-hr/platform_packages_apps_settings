@@ -2,6 +2,7 @@
   final Context context=inflater.getContext();
   final View view=inflater.inflate(R.layout.data_usage_summary,container,false);
   mTabHost=(TabHost)view.findViewById(android.R.id.tabhost);
+  mTabsContainer=(ViewGroup)view.findViewById(R.id.tabs_container);
   mTabWidget=(TabWidget)view.findViewById(android.R.id.tabs);
   mListView=(ListView)view.findViewById(android.R.id.list);
   mTabHost.setup();
@@ -9,6 +10,7 @@
   mHeader=(ViewGroup)inflater.inflate(R.layout.data_usage_header,mListView,false);
   mListView.addHeaderView(mHeader,null,false);
 {
+    mNetworkSwitchesContainer=(ViewGroup)mHeader.findViewById(R.id.network_switches_container);
     mNetworkSwitches=(LinearLayout)mHeader.findViewById(R.id.network_switches);
     mDataEnabled=new Switch(inflater.getContext());
     mDataEnabledView=inflatePreference(inflater,mNetworkSwitches,mDataEnabled);
@@ -41,8 +43,7 @@
     mAppRestrictView.setOnClickListener(mAppRestrictListener);
     mAppSwitches.addView(mAppRestrictView);
   }
-  final LayoutTransition transition=new LayoutTransition();
-  mHeader.setLayoutTransition(transition);
+  mHeader.getViewTreeObserver().addOnGlobalLayoutListener(mFirstLayoutListener);
   mAdapter=new DataUsageAdapter();
   mListView.setOnItemClickListener(mListListener);
   mListView.setAdapter(mAdapter);

@@ -1,3 +1,5 @@
 {
-  return (long)(mMin + ((point * (mMax - mMin)) / mSize));
+  final double y=point / mSize;
+  final double fraction=6.869341163271789302 * Math.pow(10,9) * Math.pow(y,2.71117746931646030774);
+  return (long)fraction;
 }

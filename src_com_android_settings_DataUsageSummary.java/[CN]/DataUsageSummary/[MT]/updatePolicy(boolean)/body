@@ -4,6 +4,9 @@
   }
  else {
     mNetworkSwitches.setVisibility(View.VISIBLE);
+    if (!refreshCycle) {
+      updateDetailData();
+    }
   }
   final NetworkPolicy policy=mPolicyEditor.getPolicy(mTemplate);
   mDisableAtLimit.setChecked(policy != null && policy.limitBytes != LIMIT_DISABLED);

@@ -1,0 +1,41 @@
+{
+  View view=View.inflate(getActivity(),R.layout.trusted_credential_details,null);
+  AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+  builder.setTitle(com.android.internal.R.string.ssl_certificate);
+  builder.setView(view);
+  builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int id){
+      dialog.dismiss();
+    }
+  }
+);
+  final Dialog certDialog=builder.create();
+  FrameLayout details=(FrameLayout)view.findViewById(R.id.cert_details);
+  details.addView(certHolder.mSslCert.inflateCertificateView(getActivity()));
+  Button removeButton=(Button)view.findViewById(R.id.cert_remove_button);
+  removeButton.setText(certHolder.mTab.getButtonLabel(certHolder));
+  removeButton.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+      builder.setMessage(certHolder.mTab.getButtonConfirmation(certHolder));
+      builder.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+        @Override public void onClick(        DialogInterface dialog,        int id){
+          new AliasOperation(certHolder).execute();
+          dialog.dismiss();
+          certDialog.dismiss();
+        }
+      }
+);
+      builder.setNegativeButton(android.R.string.no,new DialogInterface.OnClickListener(){
+        @Override public void onClick(        DialogInterface dialog,        int id){
+          dialog.cancel();
+        }
+      }
+);
+      AlertDialog alert=builder.create();
+      alert.show();
+    }
+  }
+);
+  certDialog.show();
+}

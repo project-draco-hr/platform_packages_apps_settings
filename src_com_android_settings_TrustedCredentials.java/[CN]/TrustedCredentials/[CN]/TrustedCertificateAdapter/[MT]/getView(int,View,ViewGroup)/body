@@ -1,0 +1,21 @@
+{
+  ViewHolder holder;
+  if (view == null) {
+    LayoutInflater inflater=LayoutInflater.from(getActivity());
+    view=inflater.inflate(R.layout.trusted_credential,parent,false);
+    holder=new ViewHolder();
+    holder.mSubjectView=(TextView)view.findViewById(R.id.trusted_credential_subject);
+    holder.mCheckBox=(CheckBox)view.findViewById(R.id.trusted_credential_status);
+    view.setTag(holder);
+  }
+ else {
+    holder=(ViewHolder)view.getTag();
+  }
+  CertHolder certHolder=mCertHolders.get(position);
+  holder.mSubjectView.setText(certHolder.mSubject);
+  if (mTab.mCheckbox) {
+    holder.mCheckBox.setChecked(!certHolder.mDeleted);
+    holder.mCheckBox.setVisibility(View.VISIBLE);
+  }
+  return view;
+}

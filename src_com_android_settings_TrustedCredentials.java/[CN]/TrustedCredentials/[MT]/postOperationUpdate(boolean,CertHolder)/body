@@ -1,0 +1,14 @@
+{
+  if (ok) {
+    if (certHolder.mTab.mCheckbox) {
+      certHolder.mDeleted=!certHolder.mDeleted;
+    }
+ else {
+      certHolder.mAdapter.mCertHolders.remove(certHolder);
+    }
+    certHolder.mAdapter.notifyDataSetChanged();
+  }
+ else {
+    certHolder.mAdapter.load();
+  }
+}

@@ -1,0 +1,34 @@
+{
+  mStore=store;
+  mAdapter=adapter;
+  mTab=tab;
+  mAlias=alias;
+  mX509Cert=x509Cert;
+  mSslCert=new SslCertificate(x509Cert);
+  String cn=mSslCert.getIssuedTo().getCName();
+  String o=mSslCert.getIssuedTo().getOName();
+  String ou=mSslCert.getIssuedTo().getUName();
+  StringBuilder sb=new StringBuilder();
+  if (!cn.isEmpty()) {
+    sb.append("CN=" + cn);
+  }
+  if (!o.isEmpty()) {
+    if (sb.length() != 0) {
+      sb.append(", ");
+    }
+    sb.append("O=" + o);
+  }
+  if (!ou.isEmpty()) {
+    if (sb.length() != 0) {
+      sb.append(", ");
+    }
+    sb.append("OU=" + ou);
+  }
+  if (sb.length() != 0) {
+    mSubject=sb.toString();
+  }
+ else {
+    mSubject=mSslCert.getIssuedTo().getDName();
+  }
+  mDeleted=mTab.deleted(mStore,mAlias);
+}

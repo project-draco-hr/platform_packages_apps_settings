@@ -1,0 +1,25 @@
+{
+  if (mDialog != null) {
+    Log.v(TAG,"onContextItemSelected() is called when mDialog != null");
+    return false;
+  }
+  VpnPreference preference=mPreferences.get(mSelectedKey);
+  if (preference == null) {
+    Log.v(TAG,"onContextItemSelected() is called but no preference is found");
+    return false;
+  }
+switch (item.getItemId()) {
+case R.string.vpn_menu_edit:
+    mDialog=new VpnDialog(getActivity(),this,preference.getProfile(),true);
+  mDialog.setOnDismissListener(this);
+mDialog.show();
+return true;
+case R.string.vpn_menu_delete:
+disconnect(mSelectedKey);
+getPreferenceScreen().removePreference(preference);
+mPreferences.remove(mSelectedKey);
+mKeyStore.delete(Credentials.VPN + mSelectedKey);
+return true;
+}
+return false;
+}

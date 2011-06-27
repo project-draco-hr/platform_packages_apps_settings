@@ -1,0 +1,19 @@
+{
+  if (button == DialogInterface.BUTTON_POSITIVE) {
+    VpnProfile profile=mDialog.getProfile();
+    mKeyStore.put(Credentials.VPN + profile.key,profile.encode());
+    VpnPreference preference=mPreferences.get(profile.key);
+    if (preference != null) {
+      disconnect(profile.key);
+      preference.update(profile);
+    }
+ else {
+      preference=new VpnPreference(getActivity(),profile);
+      mPreferences.put(profile.key,preference);
+      getPreferenceScreen().addPreference(preference);
+    }
+    if (!mDialog.isEditing()) {
+      connect(profile.key);
+    }
+  }
+}

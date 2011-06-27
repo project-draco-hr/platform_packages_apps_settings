@@ -1,0 +1,13 @@
+{
+  super.onCreate(savedState);
+  addPreferencesFromResource(R.xml.vpn_settings2);
+  PreferenceGroup group=getPreferenceScreen();
+  group.setOrderingAsAdded(false);
+  group.findPreference("add_network").setOnPreferenceClickListener(this);
+  if (savedState != null) {
+    VpnProfile profile=VpnProfile.decode(savedState.getString("VpnKey"),savedState.getByteArray("VpnProfile"));
+    if (profile != null) {
+      mDialog=new VpnDialog(getActivity(),this,profile,savedState.getBoolean("VpnEditing"));
+    }
+  }
+}

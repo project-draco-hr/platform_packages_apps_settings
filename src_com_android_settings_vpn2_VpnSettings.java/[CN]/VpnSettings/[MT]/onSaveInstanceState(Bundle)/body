@@ -1,0 +1,8 @@
+{
+  if (mDialog != null) {
+    VpnProfile profile=mDialog.getProfile();
+    savedState.putString("VpnKey",profile.key);
+    savedState.putByteArray("VpnProfile",profile.encode());
+    savedState.putBoolean("VpnEditing",mDialog.isEditing());
+  }
+}

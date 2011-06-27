@@ -1,0 +1,10 @@
+{
+  int result=1;
+  if (preference instanceof VpnPreference) {
+    VpnPreference another=(VpnPreference)preference;
+    if ((result=another.mState - mState) == 0 && (result=mProfile.name.compareTo(another.mProfile.name)) == 0 && (result=mProfile.type - another.mProfile.type) == 0) {
+      result=mProfile.key.compareTo(another.mProfile.key);
+    }
+  }
+  return result;
+}

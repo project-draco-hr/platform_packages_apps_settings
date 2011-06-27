@@ -1,0 +1,16 @@
+{
+  StringBuilder builder=new StringBuilder(name);
+  builder.append('\0').append(type);
+  builder.append('\0').append(server);
+  builder.append('\0').append(saveLogin ? username : "");
+  builder.append('\0').append(saveLogin ? password : "");
+  builder.append('\0').append(domains);
+  builder.append('\0').append(routes);
+  builder.append('\0').append(mppe);
+  builder.append('\0').append(l2tpSecret);
+  builder.append('\0').append(ipsecIdentifier);
+  builder.append('\0').append(ipsecSecret);
+  builder.append('\0').append(ipsecUserCert);
+  builder.append('\0').append(ipsecCaCert);
+  return builder.toString().getBytes(Charsets.UTF_8);
+}

@@ -1,0 +1,45 @@
+{
+  super.onResume();
+  if (mKeyStore.state() != KeyStore.State.UNLOCKED) {
+    if (!mUnlocking) {
+      Credentials.getInstance().unlock(getActivity());
+    }
+ else {
+      getActivity().getFragmentManager().popBackStack();
+    }
+    mUnlocking=!mUnlocking;
+    return;
+  }
+  mUnlocking=false;
+  if (mPreferences == null) {
+    mPreferences=new HashMap<String,VpnPreference>();
+    String[] keys=mKeyStore.saw(Credentials.VPN);
+    if (keys != null && keys.length > 0) {
+      Context context=getActivity();
+      for (      String key : keys) {
+        VpnProfile profile=VpnProfile.decode(key,mKeyStore.get(Credentials.VPN + key));
+        if (profile == null) {
+          Log.w(TAG,"bad profile: key = " + key);
+          mKeyStore.delete(Credentials.VPN + key);
+        }
+ else {
+          VpnPreference preference=new VpnPreference(context,profile);
+          mPreferences.put(key,preference);
+        }
+      }
+    }
+  }
+  PreferenceGroup group=getPreferenceScreen();
+  for (  VpnPreference preference : mPreferences.values()) {
+    group.addPreference(preference);
+  }
+  if (mDialog != null) {
+    mDialog.setOnDismissListener(this);
+    mDialog.show();
+  }
+  if (mHandler == null) {
+    mHandler=new Handler(this);
+  }
+  mHandler.sendEmptyMessage(0);
+  registerForContextMenu(getListView());
+}

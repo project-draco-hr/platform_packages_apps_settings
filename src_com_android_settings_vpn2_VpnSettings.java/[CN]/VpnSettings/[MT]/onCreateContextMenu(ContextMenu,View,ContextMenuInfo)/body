@@ -1,0 +1,16 @@
+{
+  if (mDialog != null) {
+    Log.v(TAG,"onCreateContextMenu() is called when mDialog != null");
+    return;
+  }
+  if (info instanceof AdapterContextMenuInfo) {
+    Preference preference=(Preference)getListView().getItemAtPosition(((AdapterContextMenuInfo)info).position);
+    if (preference instanceof VpnPreference) {
+      VpnProfile profile=((VpnPreference)preference).getProfile();
+      mSelectedKey=profile.key;
+      menu.setHeaderTitle(profile.name);
+      menu.add(Menu.NONE,R.string.vpn_menu_edit,0,R.string.vpn_menu_edit);
+      menu.add(Menu.NONE,R.string.vpn_menu_delete,0,R.string.vpn_menu_delete);
+    }
+  }
+}

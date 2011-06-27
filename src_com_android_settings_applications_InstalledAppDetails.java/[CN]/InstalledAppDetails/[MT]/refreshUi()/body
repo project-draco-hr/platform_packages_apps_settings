@@ -44,7 +44,7 @@
   }
   ActivityManager am=(ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
   int compatMode=am.getPackageScreenCompatMode(packageName);
-  if (compatMode == ActivityManager.COMPAT_MODE_DISABLED || compatMode == ActivityManager.COMPAT_MODE_ENABLED) {
+  if (false && (compatMode == ActivityManager.COMPAT_MODE_DISABLED || compatMode == ActivityManager.COMPAT_MODE_ENABLED)) {
     mScreenCompatSection.setVisibility(View.VISIBLE);
     mAskCompatibilityCB.setChecked(am.getPackageAskScreenCompat(packageName));
     mAskCompatibilityCB.setOnCheckedChangeListener(this);

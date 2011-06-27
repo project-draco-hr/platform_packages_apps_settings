@@ -1,0 +1,23 @@
+{
+  Context context=getContext();
+  String first=(firstId == 0) ? "" : context.getString(firstId);
+  String[] certs=mKeyStore.saw(prefix);
+  if (certs == null || certs.length == 0) {
+    certs=new String[]{first};
+  }
+ else {
+    String[] array=new String[certs.length + 1];
+    array[0]=first;
+    System.arraycopy(certs,0,array,1,certs.length);
+    certs=array;
+  }
+  ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,certs);
+  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+  spinner.setAdapter(adapter);
+  for (int i=1; i < certs.length; ++i) {
+    if (certs[i].equals(selected)) {
+      spinner.setSelection(i);
+      break;
+    }
+  }
+}

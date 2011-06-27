@@ -1,0 +1,57 @@
+{
+  mView=getLayoutInflater().inflate(R.layout.vpn_dialog,null);
+  setView(mView);
+  setInverseBackgroundForced(true);
+  Context context=getContext();
+  mName=(TextView)mView.findViewById(R.id.name);
+  mType=(Spinner)mView.findViewById(R.id.type);
+  mServer=(TextView)mView.findViewById(R.id.server);
+  mUsername=(TextView)mView.findViewById(R.id.username);
+  mPassword=(TextView)mView.findViewById(R.id.password);
+  mDomains=(TextView)mView.findViewById(R.id.domains);
+  mRoutes=(TextView)mView.findViewById(R.id.routes);
+  mMppe=(CheckBox)mView.findViewById(R.id.mppe);
+  mL2tpSecret=(TextView)mView.findViewById(R.id.l2tp_secret);
+  mIpsecIdentifier=(TextView)mView.findViewById(R.id.ipsec_identifier);
+  mIpsecSecret=(TextView)mView.findViewById(R.id.ipsec_secret);
+  mIpsecUserCert=(Spinner)mView.findViewById(R.id.ipsec_user_cert);
+  mIpsecCaCert=(Spinner)mView.findViewById(R.id.ipsec_ca_cert);
+  mSaveLogin=(CheckBox)mView.findViewById(R.id.save_login);
+  mName.setText(mProfile.name);
+  mType.setSelection(mProfile.type);
+  mServer.setText(mProfile.server);
+  mUsername.setText(mProfile.username);
+  mPassword.setText(getDummy(mProfile.password));
+  mDomains.setText(mProfile.domains);
+  mRoutes.setText(mProfile.routes);
+  mMppe.setChecked(mProfile.mppe);
+  mL2tpSecret.setText(getDummy(mProfile.l2tpSecret));
+  mIpsecIdentifier.setText(mProfile.ipsecIdentifier);
+  mIpsecSecret.setText(getDummy(mProfile.ipsecSecret));
+  loadCertificates(mIpsecUserCert,Credentials.USER_CERTIFICATE,0,mProfile.ipsecUserCert);
+  loadCertificates(mIpsecUserCert,Credentials.CA_CERTIFICATE,R.string.vpn_no_ca_cert,mProfile.ipsecCaCert);
+  mSaveLogin.setChecked(mProfile.saveLogin);
+  mName.addTextChangedListener(this);
+  mType.setOnItemSelectedListener(this);
+  mServer.addTextChangedListener(this);
+  mUsername.addTextChangedListener(this);
+  mPassword.addTextChangedListener(this);
+  mIpsecSecret.addTextChangedListener(this);
+  mIpsecUserCert.setOnItemSelectedListener(this);
+  boolean valid=validate(true);
+  mEditing=mEditing || !valid;
+  if (mEditing) {
+    setTitle(R.string.vpn_edit);
+    mView.findViewById(R.id.editor).setVisibility(View.VISIBLE);
+    changeType(mProfile.type);
+    setButton(DialogInterface.BUTTON_POSITIVE,context.getString(R.string.vpn_save),mListener);
+  }
+ else {
+    setTitle(context.getString(R.string.vpn_connect_to,mProfile.name));
+    mView.findViewById(R.id.login).setVisibility(View.VISIBLE);
+    setButton(DialogInterface.BUTTON_POSITIVE,context.getString(R.string.vpn_connect),mListener);
+  }
+  setButton(DialogInterface.BUTTON_NEGATIVE,context.getString(R.string.vpn_cancel),mListener);
+  super.onCreate(null);
+  getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(mEditing ? valid : validate(false));
+}

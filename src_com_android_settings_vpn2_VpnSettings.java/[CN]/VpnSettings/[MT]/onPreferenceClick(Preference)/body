@@ -1,0 +1,19 @@
+{
+  if (mDialog != null) {
+    Log.v(TAG,"onPreferenceClick() is called when mDialog != null");
+    return true;
+  }
+  if (preference instanceof VpnPreference) {
+    mDialog=new VpnDialog(getActivity(),this,((VpnPreference)preference).getProfile(),false);
+  }
+ else {
+    long millis=System.currentTimeMillis();
+    while (mPreferences.containsKey(Long.toHexString(millis))) {
+      ++millis;
+    }
+    mDialog=new VpnDialog(getActivity(),this,new VpnProfile(Long.toHexString(millis)),true);
+  }
+  mDialog.setOnDismissListener(this);
+  mDialog.show();
+  return true;
+}

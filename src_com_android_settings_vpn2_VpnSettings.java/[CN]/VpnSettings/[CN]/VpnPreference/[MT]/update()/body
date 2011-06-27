@@ -1,0 +1,12 @@
+{
+  if (mState != STATE_NONE) {
+    String[] states=getContext().getResources().getStringArray(R.array.vpn_states);
+    setSummary(states[mState]);
+  }
+ else {
+    String[] types=getContext().getResources().getStringArray(R.array.vpn_types_long);
+    setSummary(types[mProfile.type]);
+  }
+  setTitle(mProfile.name);
+  notifyChanged();
+}

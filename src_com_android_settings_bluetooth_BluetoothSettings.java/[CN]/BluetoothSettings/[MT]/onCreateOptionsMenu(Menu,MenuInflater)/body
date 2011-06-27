@@ -1,6 +1,5 @@
 {
   boolean bluetoothIsEnabled=mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_ON;
-  menu.add(Menu.NONE,MENU_ID_MAKE_DISCOVERABLE,0,R.string.bluetooth_visibility).setEnabled(bluetoothIsEnabled);
-  menu.add(Menu.NONE,MENU_ID_SCAN,0,R.string.bluetooth_preference_find_nearby_title).setIcon(R.drawable.ic_menu_scan_network).setEnabled(bluetoothIsEnabled);
-  menu.add(Menu.NONE,MENU_ID_ADVANCED,0,R.string.bluetooth_menu_advanced).setIcon(android.R.drawable.ic_menu_manage);
+  menu.add(Menu.NONE,MENU_ID_SCAN,0,R.string.bluetooth_preference_find_nearby_title).setEnabled(bluetoothIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+  menu.add(Menu.NONE,MENU_ID_ADVANCED,0,R.string.bluetooth_menu_advanced).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 }

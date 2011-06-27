@@ -1,0 +1,17 @@
+{
+  if (mInputMethodSettingsButton != null) {
+    final boolean checked=isChecked();
+    mInputMethodSettingsButton.setEnabled(checked);
+    mInputMethodSettingsButton.setClickable(checked);
+    mInputMethodSettingsButton.setFocusable(checked);
+    if (!checked) {
+      mInputMethodSettingsButton.setAlpha(DISABLED_ALPHA);
+    }
+  }
+  if (mTitleText != null) {
+    mTitleText.setEnabled(true);
+  }
+  if (mSummaryText != null) {
+    mSummaryText.setEnabled(true);
+  }
+}

@@ -1,13 +1,25 @@
 {
   super.onResume();
-  if (mLanguagePref != null) {
-    Configuration conf=getResources().getConfiguration();
-    String locale=conf.locale.getDisplayName(conf.locale);
-    if (locale != null && locale.length() > 1) {
-      locale=Character.toUpperCase(locale.charAt(0)) + locale.substring(1);
-      mLanguagePref.setSummary(locale);
+  if (!mIsOnlyImeSettings) {
+    if (mLanguagePref != null) {
+      Configuration conf=getResources().getConfiguration();
+      String locale=conf.locale.getDisplayName(conf.locale);
+      if (locale != null && locale.length() > 1) {
+        locale=Character.toUpperCase(locale.charAt(0)) + locale.substring(1);
+        mLanguagePref.setSummary(locale);
+      }
+    }
+    updateUserDictionaryPreference(findPreference(KEY_USER_DICTIONARY_SETTINGS));
+    if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {
+      mShowInputMethodSelectorPref.setOnPreferenceChangeListener(this);
     }
   }
-  updateUserDictionaryPreference(findPreference(KEY_USER_DICTIONARY_SETTINGS));
-  mShowInputMethodSelectorPref.setOnPreferenceChangeListener(this);
+  if (mHaveHardKeyboard) {
+    for (int i=0; i < sHardKeyboardKeys.length; ++i) {
+      InputMethodPreference chkPref=(InputMethodPreference)mHardKeyboardCategory.findPreference(sHardKeyboardKeys[i]);
+      chkPref.setChecked(System.getInt(getContentResolver(),sSystemSettingNames[i],1) > 0);
+    }
+  }
+  InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,getContentResolver(),mImis,null);
+  updateActiveInputMethodsSummary();
 }

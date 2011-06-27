@@ -1,4 +1,7 @@
 {
   super.onPause();
-  mShowInputMethodSelectorPref.setOnPreferenceChangeListener(null);
+  if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {
+    mShowInputMethodSelectorPref.setOnPreferenceChangeListener(null);
+  }
+  InputMethodAndSubtypeUtil.saveInputMethodSubtypeList(this,getContentResolver(),mImis,mHaveHardKeyboard);
 }

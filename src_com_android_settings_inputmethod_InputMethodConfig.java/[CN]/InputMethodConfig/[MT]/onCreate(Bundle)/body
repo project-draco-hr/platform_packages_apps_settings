@@ -1,8 +1,0 @@
-{
-  super.onCreate(icicle);
-  Configuration config=getResources().getConfiguration();
-  mHaveHardKeyboard=(config.keyboard == Configuration.KEYBOARD_QWERTY);
-  InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-  mInputMethodProperties=imm.getInputMethodList();
-  setPreferenceScreen(createPreferenceHierarchy());
-}

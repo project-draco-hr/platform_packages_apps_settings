@@ -1,0 +1,12 @@
+{
+  final StringBuilder builder=new StringBuilder();
+  final List<InputMethodSubtype> subtypes=mImm.getEnabledInputMethodSubtypeList(mImi,true);
+  for (  InputMethodSubtype subtype : subtypes) {
+    if (builder.length() > 0) {
+      builder.append(", ");
+    }
+    final CharSequence subtypeLabel=subtype.getDisplayName(mFragment.getActivity(),mImi.getPackageName(),mImi.getServiceInfo().applicationInfo);
+    builder.append(subtypeLabel);
+  }
+  return builder.toString();
+}

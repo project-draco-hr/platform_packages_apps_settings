@@ -12,8 +12,16 @@
  else {
     mLanguagePref=findPreference(KEY_PHONE_LANGUAGE);
   }
-  mShowInputMethodSelectorPref=(ListPreference)findPreference(KEY_INPUT_METHOD_SELECTOR);
-  mShowInputMethodSelectorPref.setOnPreferenceChangeListener(this);
-  updateInputMethodSelectorSummary(loadInputMethodSelectorVisibility());
+  if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {
+    mShowInputMethodSelectorPref=(ListPreference)findPreference(KEY_INPUT_METHOD_SELECTOR);
+    mShowInputMethodSelectorPref.setOnPreferenceChangeListener(this);
+    updateInputMethodSelectorSummary(loadInputMethodSelectorVisibility());
+  }
   new VoiceInputOutputSettings(this).onCreate();
+  final Configuration config=getResources().getConfiguration();
+  mHaveHardKeyboard=(config.keyboard == Configuration.KEYBOARD_QWERTY);
+  mIsOnlyImeSettings=Settings.ACTION_INPUT_METHOD_SETTINGS.equals(getActivity().getIntent().getAction());
+  mImm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+  mImis=mImm.getInputMethodList();
+  createImePreferenceHierarchy((PreferenceGroup)findPreference("keyboard_settings_category"));
 }

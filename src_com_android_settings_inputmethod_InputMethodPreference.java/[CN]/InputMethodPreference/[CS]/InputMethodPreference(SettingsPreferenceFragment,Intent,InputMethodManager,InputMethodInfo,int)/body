@@ -1,0 +1,28 @@
+{
+  super(fragment.getActivity(),null,R.style.InputMethodPreferenceStyle);
+  setLayoutResource(R.layout.preference_inputmethod);
+  setWidgetLayoutResource(R.layout.preference_inputmethod_widget);
+  mFragment=fragment;
+  mSettingsIntent=settingsIntent;
+  mImm=imm;
+  mImi=imi;
+  updateSummary();
+  mIsSystemIme=InputMethodAndSubtypeUtil.isSystemIme(imi);
+  final int subtypeCount=imi.getSubtypeCount();
+  boolean onlyAux=true;
+  if (subtypeCount == 0) {
+    onlyAux=false;
+  }
+ else {
+    for (int i=0; i < subtypeCount; ++i) {
+      final InputMethodSubtype subtype=imi.getSubtypeAt(i);
+      if (!subtype.isAuxiliary()) {
+        onlyAux=false;
+        break;
+      }
+    }
+  }
+  if (imiCount <= 1 || (mIsSystemIme && !onlyAux)) {
+    setEnabled(false);
+  }
+}

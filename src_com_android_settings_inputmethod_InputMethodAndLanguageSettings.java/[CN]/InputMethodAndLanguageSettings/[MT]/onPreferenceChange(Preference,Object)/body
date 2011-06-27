@@ -1,7 +1,9 @@
 {
-  if (preference == mShowInputMethodSelectorPref) {
-    if (value instanceof String) {
-      saveInputMethodSelectorVisibility((String)value);
+  if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {
+    if (preference == mShowInputMethodSelectorPref) {
+      if (value instanceof String) {
+        saveInputMethodSelectorVisibility((String)value);
+      }
     }
   }
   return false;

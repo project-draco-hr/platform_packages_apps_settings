@@ -1,3 +1,6 @@
 {
-  preference.setOnSettingsClickListener(mListener);
+  CachedBluetoothDevice cachedDevice=preference.getCachedDevice();
+  if (cachedDevice.getBondState() == BluetoothDevice.BOND_BONDED) {
+    preference.setOnSettingsClickListener(mDeviceProfilesListener);
+  }
 }

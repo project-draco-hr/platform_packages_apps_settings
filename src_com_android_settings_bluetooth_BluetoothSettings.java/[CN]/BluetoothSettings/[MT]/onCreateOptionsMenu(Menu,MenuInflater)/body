@@ -1,5 +1,5 @@
 {
   boolean bluetoothIsEnabled=mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_ON;
-  menu.add(Menu.NONE,MENU_ID_SCAN,0,R.string.bluetooth_preference_find_nearby_title).setEnabled(bluetoothIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+  menu.add(Menu.NONE,MENU_ID_SCAN,0,R.string.bluetooth_scan_nearby_devices).setEnabled(bluetoothIsEnabled && !mLocalAdapter.isDiscovering()).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
   menu.add(Menu.NONE,MENU_ID_ADVANCED,0,R.string.bluetooth_menu_advanced).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 }

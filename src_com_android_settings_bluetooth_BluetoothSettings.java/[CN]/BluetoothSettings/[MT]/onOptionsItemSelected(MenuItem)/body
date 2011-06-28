@@ -1,18 +1,16 @@
 {
 switch (item.getItemId()) {
-case MENU_ID_MAKE_DISCOVERABLE:
-    return true;
 case MENU_ID_SCAN:
-  if (mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_ON) {
-    mLocalAdapter.startScanning(true);
-  }
-return true;
+    if (mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_ON) {
+      mLocalAdapter.startScanning(true);
+    }
+  return true;
 case MENU_ID_ADVANCED:
 if (getActivity() instanceof PreferenceActivity) {
-((PreferenceActivity)getActivity()).startPreferencePanel(AdvancedBluetoothSettings.class.getCanonicalName(),null,R.string.bluetooth_advanced_titlebar,null,this,0);
+  ((PreferenceActivity)getActivity()).startPreferencePanel(AdvancedBluetoothSettings.class.getCanonicalName(),null,R.string.bluetooth_advanced_titlebar,null,this,0);
 }
  else {
-startFragment(this,AdvancedBluetoothSettings.class.getCanonicalName(),-1,null);
+  startFragment(this,AdvancedBluetoothSettings.class.getCanonicalName(),-1,null);
 }
 return true;
 }

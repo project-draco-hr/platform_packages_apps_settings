@@ -1,0 +1,22 @@
+{
+  super.onCreate(savedInstanceState);
+  Intent i=getIntent();
+  String action=i.getAction();
+  mDevice=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+  mReturnPackage=i.getStringExtra(BluetoothDevice.EXTRA_PACKAGE_NAME);
+  mReturnClass=i.getStringExtra(BluetoothDevice.EXTRA_CLASS_NAME);
+  if (action.equals(BluetoothDevice.ACTION_CONNECTION_ACCESS_REQUEST)) {
+    mDevice=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+    if (i.getIntExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS) == BluetoothDevice.REQUEST_TYPE_PROFILE_CONNECTION) {
+      showConnectionDialog();
+    }
+ else {
+      showPbapDialog();
+    }
+  }
+ else {
+    Log.e(TAG,"Error: this activity may be started only with intent " + "ACTION_CONNECTION_ACCESS_REQUEST");
+    finish();
+  }
+  registerReceiver(mReceiver,new IntentFilter(BluetoothDevice.ACTION_CONNECTION_ACCESS_CANCEL));
+}

@@ -9,9 +9,6 @@
  else     if (id == R.id.operator_settings || id == R.id.manufacturer_settings) {
       Utils.updateHeaderToSpecificActivityFromMetaDataOrRemove(this,target,header);
     }
- else     if (id == R.id.call_settings) {
-      if (!Utils.isVoiceCapable(this))       target.remove(header);
-    }
  else     if (id == R.id.wifi_settings) {
       if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
         target.remove(header);

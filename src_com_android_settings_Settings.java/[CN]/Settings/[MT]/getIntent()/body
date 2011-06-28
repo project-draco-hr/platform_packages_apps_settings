@@ -1,7 +1,7 @@
 {
   Intent superIntent=super.getIntent();
   String startingFragment=getStartingFragmentClass(superIntent);
-  if (startingFragment != null && !isMultiPane()) {
+  if (startingFragment != null && !onIsMultiPane()) {
     Intent modIntent=new Intent(superIntent);
     modIntent.putExtra(EXTRA_SHOW_FRAGMENT,startingFragment);
     Bundle args=superIntent.getExtras();

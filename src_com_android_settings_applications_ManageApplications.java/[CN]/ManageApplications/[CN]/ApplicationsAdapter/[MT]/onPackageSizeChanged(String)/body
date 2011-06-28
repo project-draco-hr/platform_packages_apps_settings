@@ -3,7 +3,7 @@
     AppViewHolder holder=(AppViewHolder)mActive.get(i).getTag();
     if (holder.entry.info.packageName.equals(packageName)) {
 synchronized (holder.entry) {
-        holder.updateSizeText(ManageApplications.this);
+        holder.updateSizeText(ManageApplications.this,mWhichSize);
       }
       if (holder.entry.info.packageName.equals(mCurrentPkgName) && mLastSortMode == SORT_ORDER_SIZE) {
         rebuild(false);

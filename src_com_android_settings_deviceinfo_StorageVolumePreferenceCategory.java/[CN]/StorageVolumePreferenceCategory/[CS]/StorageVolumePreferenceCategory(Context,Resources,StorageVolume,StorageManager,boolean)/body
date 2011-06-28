@@ -3,9 +3,9 @@
   mResources=resources;
   mStorageVolume=storageVolume;
   mStorageManager=storageManager;
-  setTitle(storageVolume.getDescription());
+  setTitle(storageVolume != null ? storageVolume.getDescription() : resources.getText(R.string.internal_storage));
   mMeasurement=StorageMeasurement.getInstance(context,storageVolume,isPrimary);
   mMeasurement.setReceiver(this);
-  mAllowFormat=!mStorageVolume.isEmulated();
+  mAllowFormat=mStorageVolume != null && !mStorageVolume.isEmulated();
   if (!isPrimary)   mAllowFormat=false;
 }

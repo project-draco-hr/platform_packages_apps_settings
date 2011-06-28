@@ -1,6 +1,6 @@
 {
   resetPreferences();
-  String state=mStorageManager.getVolumeState(mStorageVolume.getPath());
+  String state=mStorageVolume != null ? mStorageManager.getVolumeState(mStorageVolume.getPath()) : Environment.MEDIA_MOUNTED;
   String readOnly="";
   if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
     state=Environment.MEDIA_MOUNTED;
@@ -12,7 +12,7 @@
   if (mFormatPreference != null) {
     removePreference(mFormatPreference);
   }
-  if (!mStorageVolume.isRemovable() && !Environment.MEDIA_UNMOUNTED.equals(state)) {
+  if ((mStorageVolume == null || !mStorageVolume.isRemovable()) && !Environment.MEDIA_UNMOUNTED.equals(state)) {
     removePreference(mMountTogglePreference);
   }
   if (Environment.MEDIA_MOUNTED.equals(state)) {

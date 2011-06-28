@@ -1,6 +1,7 @@
 {
   super.onPause();
   getActivity().unregisterReceiver(mMediaScannerReceiver);
+  mInternalStorageVolumePreferenceCategory.onPause();
   for (int i=0; i < mStorageVolumePreferenceCategories.length; i++) {
     mStorageVolumePreferenceCategories[i].onPause();
   }

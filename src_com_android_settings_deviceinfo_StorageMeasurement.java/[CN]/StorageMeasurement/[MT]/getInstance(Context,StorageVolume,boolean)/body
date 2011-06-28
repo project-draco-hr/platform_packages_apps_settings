@@ -1,4 +1,10 @@
 {
+  if (storageVolume == null) {
+    if (sInternalInstance == null) {
+      sInternalInstance=new StorageMeasurement(context.getApplicationContext(),storageVolume,isPrimary);
+    }
+    return sInternalInstance;
+  }
   if (sInstances.containsKey(storageVolume)) {
     return sInstances.get(storageVolume);
   }

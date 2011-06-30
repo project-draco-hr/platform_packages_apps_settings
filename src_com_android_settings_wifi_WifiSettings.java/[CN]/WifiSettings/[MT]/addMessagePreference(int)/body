@@ -1,5 +1,4 @@
 {
-  Preference emptyListPreference=new Preference(getActivity());
-  emptyListPreference.setTitle(messageId);
-  getPreferenceScreen().addPreference(emptyListPreference);
+  if (mEmptyView != null)   mEmptyView.setText(messageId);
+  getPreferenceScreen().removeAll();
 }

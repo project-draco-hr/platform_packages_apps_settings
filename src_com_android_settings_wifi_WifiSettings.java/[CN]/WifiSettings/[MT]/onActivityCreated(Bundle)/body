@@ -30,6 +30,8 @@
     }
     mWifiEnabler=new WifiEnabler(activity,actionBarSwitch);
   }
+  mEmptyView=(TextView)mView.findViewById(R.id.empty);
+  getListView().setEmptyView(mEmptyView);
   registerForContextMenu(getListView());
   setHasOptionsMenu(true);
   super.onActivityCreated(savedInstanceState);

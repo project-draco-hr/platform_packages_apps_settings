@@ -1,0 +1,25 @@
+{
+  WifiP2pConfig config=new WifiP2pConfig();
+  config.deviceAddress=mDeviceAddress.getText().toString();
+  config.deviceName=mDeviceName.getText().toString();
+  config.wpsConfig=new WpsConfiguration();
+switch (mWpsSetupIndex) {
+case WPS_PBC:
+    config.wpsConfig.setup=Setup.PBC;
+  break;
+case WPS_KEYPAD:
+config.wpsConfig.setup=Setup.KEYPAD;
+config.wpsConfig.pin=((TextView)mView.findViewById(R.id.wps_pin)).getText().toString();
+break;
+case WPS_DISPLAY:
+config.wpsConfig.setup=Setup.DISPLAY;
+break;
+default :
+config.wpsConfig.setup=Setup.PBC;
+break;
+}
+if (mDevice.isGroupOwner()) {
+config.joinExistingGroup=true;
+}
+return config;
+}

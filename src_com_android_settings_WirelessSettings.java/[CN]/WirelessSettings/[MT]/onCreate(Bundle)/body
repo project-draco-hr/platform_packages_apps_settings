@@ -20,6 +20,10 @@
   if (Utils.isWifiOnly()) {
     getPreferenceScreen().removePreference(findPreference(KEY_MOBILE_NETWORK_SETTINGS));
   }
+  WifiP2pManager wifiP2p=(WifiP2pManager)getSystemService(Context.WIFI_P2P_SERVICE);
+  if (!wifiP2p.isP2pSupported()) {
+    getPreferenceScreen().removePreference(findPreference(KEY_WIFI_P2P_SETTINGS));
+  }
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
   DevicePolicyManager mDPM=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
   getPreferenceScreen().removePreference(mGlobalProxy);

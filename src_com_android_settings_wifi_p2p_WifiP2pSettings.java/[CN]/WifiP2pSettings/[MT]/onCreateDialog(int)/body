@@ -1,0 +1,11 @@
+{
+  if (id == DIALOG_CONNECT) {
+    mConnectDialog=new WifiP2pDialog(getActivity(),mConnectListener,mSelectedWifiPeer.device);
+    return mConnectDialog;
+  }
+ else   if (id == DIALOG_DISCONNECT) {
+    AlertDialog dialog=new AlertDialog.Builder(getActivity()).setTitle("Disconnect ?").setMessage("Do you want to disconnect ?").setPositiveButton(getActivity().getString(R.string.dlg_ok),mDisconnectListener).setNegativeButton(getActivity().getString(R.string.dlg_cancel),null).create();
+    return dialog;
+  }
+  return null;
+}

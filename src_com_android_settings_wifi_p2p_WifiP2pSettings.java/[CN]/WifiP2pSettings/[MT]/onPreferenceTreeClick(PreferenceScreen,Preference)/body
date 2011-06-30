@@ -1,0 +1,12 @@
+{
+  if (preference instanceof WifiP2pPeer) {
+    mSelectedWifiPeer=(WifiP2pPeer)preference;
+    if (mSelectedWifiPeer.device.status == WifiP2pDevice.Status.CONNECTED) {
+      showDialog(DIALOG_DISCONNECT);
+    }
+ else {
+      showDialog(DIALOG_CONNECT);
+    }
+  }
+  return super.onPreferenceTreeClick(screen,preference);
+}

@@ -1,0 +1,7 @@
+{
+  final PreferenceScreen preferenceScreen=getPreferenceScreen();
+  preferenceScreen.removeAll();
+  for (  WifiP2pDevice peer : peers.getDeviceList()) {
+    preferenceScreen.addPreference(new WifiP2pPeer(getActivity(),peer));
+  }
+}

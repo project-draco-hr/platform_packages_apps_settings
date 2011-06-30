@@ -1,0 +1,8 @@
+{
+  super.onResume();
+  getActivity().registerReceiver(mReceiver,mIntentFilter);
+  if (mWifiP2pEnabler != null) {
+    mWifiP2pEnabler.resume();
+  }
+  if (mWifiP2pManager != null)   mWifiP2pManager.discoverPeers();
+}

@@ -1,0 +1,7 @@
+{
+  if (mSwitch == switch_)   return;
+  mSwitch.setOnCheckedChangeListener(null);
+  mSwitch=switch_;
+  mSwitch.setOnCheckedChangeListener(this);
+  mSwitch.setChecked(mWifiP2pState == WifiP2pManager.WIFI_P2P_STATE_ENABLED);
+}

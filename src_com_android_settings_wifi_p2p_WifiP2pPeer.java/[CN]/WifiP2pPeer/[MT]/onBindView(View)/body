@@ -1,0 +1,18 @@
+{
+  if (TextUtils.isEmpty(device.deviceName)) {
+    setTitle(device.deviceAddress);
+  }
+ else {
+    setTitle(device.deviceName);
+  }
+  mSignal=(ImageView)view.findViewById(R.id.signal);
+  if (mRssi == Integer.MAX_VALUE) {
+    mSignal.setImageDrawable(null);
+  }
+ else {
+    mSignal.setImageResource(R.drawable.wifi_signal);
+    mSignal.setImageState(STATE_SECURED,true);
+  }
+  refresh();
+  super.onBindView(view);
+}

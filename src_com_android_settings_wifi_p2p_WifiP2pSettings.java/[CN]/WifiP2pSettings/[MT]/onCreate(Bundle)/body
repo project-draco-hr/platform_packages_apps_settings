@@ -1,0 +1,45 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.wifi_p2p_settings);
+  mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+  mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+  final Activity activity=getActivity();
+  mWifiP2pManager=(WifiP2pManager)getSystemService(Context.WIFI_P2P_SERVICE);
+  if (!mWifiP2pManager.connectHandler(activity,mHandler)) {
+    Log.e(TAG,"Failed to set up connection with wifi p2p service");
+    mWifiP2pManager=null;
+  }
+  Switch actionBarSwitch=new Switch(activity);
+  if (activity instanceof PreferenceActivity) {
+    PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
+    if (preferenceActivity.onIsHidingHeaders() || !preferenceActivity.onIsMultiPane()) {
+      final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+      actionBarSwitch.setPadding(0,0,padding,0);
+      activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
+      activity.getActionBar().setCustomView(actionBarSwitch,new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.RIGHT));
+    }
+  }
+  mWifiP2pEnabler=new WifiP2pEnabler(activity,actionBarSwitch);
+  mConnectListener=new OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      if (which == DialogInterface.BUTTON_POSITIVE) {
+        WifiP2pConfig config=mConnectDialog.getConfig();
+        if (mWifiP2pManager != null) {
+          mWifiP2pManager.connect(config);
+        }
+      }
+    }
+  }
+;
+  mDisconnectListener=new OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      if (which == DialogInterface.BUTTON_POSITIVE) {
+        if (mWifiP2pManager != null) {
+          mWifiP2pManager.disconnect();
+        }
+      }
+    }
+  }
+;
+  setHasOptionsMenu(true);
+}

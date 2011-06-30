@@ -1,0 +1,13 @@
+{
+switch (item.getItemId()) {
+case MENU_ID_SEARCH:
+    mWifiP2pManager.discoverPeers();
+  return true;
+case MENU_ID_CREATE_GROUP:
+mWifiP2pManager.createGroup();
+return true;
+case MENU_ID_ADVANCED:
+return true;
+}
+return super.onOptionsItemSelected(item);
+}

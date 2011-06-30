@@ -1,0 +1,7 @@
+{
+  super.onPause();
+  if (mWifiP2pEnabler != null) {
+    mWifiP2pEnabler.pause();
+  }
+  getActivity().unregisterReceiver(mReceiver);
+}

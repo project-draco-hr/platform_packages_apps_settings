@@ -1,0 +1,9 @@
+{
+  if (mSignal == null) {
+    return;
+  }
+  Context context=getContext();
+  mSignal.setImageLevel(getLevel());
+  String[] statusArray=context.getResources().getStringArray(R.array.wifi_p2p_status);
+  setSummary(statusArray[device.status.ordinal()]);
+}

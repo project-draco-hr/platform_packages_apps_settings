@@ -2,12 +2,22 @@
   if (DEBUG)   Log.i(TAG,"Rebuilding app list...");
   ApplicationsState.AppFilter filterObj;
   Comparator<AppEntry> comparatorObj;
+  boolean emulated=Environment.isExternalStorageEmulated();
+  if (emulated) {
+    mWhichSize=SIZE_TOTAL;
+  }
+ else {
+    mWhichSize=SIZE_INTERNAL;
+  }
 switch (mLastFilterMode) {
 case FILTER_APPS_THIRD_PARTY:
     filterObj=ApplicationsState.THIRD_PARTY_FILTER;
   break;
 case FILTER_APPS_SDCARD:
 filterObj=ApplicationsState.ON_SD_CARD_FILTER;
+if (!emulated) {
+mWhichSize=SIZE_EXTERNAL;
+}
 break;
 default :
 filterObj=null;

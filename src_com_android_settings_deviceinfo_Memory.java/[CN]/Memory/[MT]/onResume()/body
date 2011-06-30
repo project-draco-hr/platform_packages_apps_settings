@@ -4,6 +4,7 @@
   intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
   intentFilter.addDataScheme("file");
   getActivity().registerReceiver(mMediaScannerReceiver,intentFilter);
+  mInternalStorageVolumePreferenceCategory.onResume();
   for (int i=0; i < mStorageVolumePreferenceCategories.length; i++) {
     mStorageVolumePreferenceCategories[i].onResume();
   }

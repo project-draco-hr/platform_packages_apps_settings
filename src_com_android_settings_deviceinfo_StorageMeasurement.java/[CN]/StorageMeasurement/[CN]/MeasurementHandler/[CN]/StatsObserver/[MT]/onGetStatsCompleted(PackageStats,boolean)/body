@@ -3,7 +3,15 @@
     return;
   }
   if (succeeded) {
-    mAppsSizeForThisStatsObserver+=stats.codeSize + stats.dataSize + stats.externalCacheSize+ stats.externalDataSize+ stats.externalMediaSize+ stats.externalObbSize;
+    if (mIsInternal) {
+      mAppsSizeForThisStatsObserver+=stats.codeSize + stats.dataSize;
+    }
+ else     if (!Environment.isExternalStorageEmulated()) {
+      mAppsSizeForThisStatsObserver+=stats.externalObbSize + stats.externalCodeSize + stats.externalDataSize+ stats.externalCacheSize+ stats.externalMediaSize;
+    }
+ else {
+      mAppsSizeForThisStatsObserver+=stats.codeSize + stats.dataSize + stats.externalCodeSize+ stats.externalDataSize+ stats.externalCacheSize+ stats.externalMediaSize+ stats.externalObbSize;
+    }
   }
 synchronized (mAppsList) {
     mAppsList.remove(stats.packageName);

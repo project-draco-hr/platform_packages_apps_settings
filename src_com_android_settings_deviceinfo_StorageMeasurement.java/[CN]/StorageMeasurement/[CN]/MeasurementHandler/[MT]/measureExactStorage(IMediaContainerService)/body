@@ -33,7 +33,7 @@
     return;
   }
   final List<ApplicationInfo> apps;
-  if (mIsPrimary) {
+  if (mIsPrimary || mIsInternal) {
     apps=pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
   }
  else {

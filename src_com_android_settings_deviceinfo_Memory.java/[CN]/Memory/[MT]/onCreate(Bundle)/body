@@ -6,6 +6,12 @@
   }
   addPreferencesFromResource(R.xml.device_info_memory);
   mResources=getResources();
+  if (!Environment.isExternalStorageEmulated()) {
+    StorageVolumePreferenceCategory storagePreferenceCategory=new StorageVolumePreferenceCategory(getActivity(),mResources,null,mStorageManager,true);
+    mInternalStorageVolumePreferenceCategory=storagePreferenceCategory;
+    getPreferenceScreen().addPreference(storagePreferenceCategory);
+    storagePreferenceCategory.init();
+  }
   StorageVolume[] storageVolumes=mStorageManager.getVolumeList();
   int length=storageVolumes.length;
   mStorageVolumePreferenceCategories=new StorageVolumePreferenceCategory[length];

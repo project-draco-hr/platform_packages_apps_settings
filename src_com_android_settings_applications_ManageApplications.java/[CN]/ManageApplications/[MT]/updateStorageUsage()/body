@@ -18,6 +18,11 @@
     }
  catch (    IllegalArgumentException e) {
     }
+    final int N=mApplicationsAdapter.getCount();
+    for (int i=0; i < N; i++) {
+      ApplicationsState.AppEntry ae=mApplicationsAdapter.getAppEntry(i);
+      appStorage+=ae.externalCodeSize + ae.externalDataSize;
+    }
   }
  else {
     if (!mLastShowedInternalStorage) {
@@ -31,10 +36,14 @@
     }
  catch (    IllegalArgumentException e) {
     }
+    final boolean emulatedStorage=Environment.isExternalStorageEmulated();
     final int N=mApplicationsAdapter.getCount();
     for (int i=0; i < N; i++) {
       ApplicationsState.AppEntry ae=mApplicationsAdapter.getAppEntry(i);
       appStorage+=ae.codeSize + ae.dataSize;
+      if (emulatedStorage) {
+        appStorage+=ae.externalCodeSize + ae.externalDataSize;
+      }
     }
     freeStorage+=mApplicationsState.sumCacheSizes();
   }

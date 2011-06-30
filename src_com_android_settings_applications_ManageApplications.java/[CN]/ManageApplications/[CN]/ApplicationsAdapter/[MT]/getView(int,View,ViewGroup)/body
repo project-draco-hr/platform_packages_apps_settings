@@ -24,7 +24,7 @@ synchronized (entry) {
     if (entry.icon != null) {
       holder.appIcon.setImageDrawable(entry.icon);
     }
-    holder.updateSizeText(ManageApplications.this);
+    holder.updateSizeText(ManageApplications.this,mWhichSize);
     if (InstalledAppDetails.SUPPORT_DISABLE_APPS) {
       holder.disabled.setVisibility(entry.info.enabled ? View.GONE : View.VISIBLE);
     }

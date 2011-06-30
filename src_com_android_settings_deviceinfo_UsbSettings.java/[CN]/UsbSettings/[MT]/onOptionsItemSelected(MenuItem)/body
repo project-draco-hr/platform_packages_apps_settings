@@ -1,0 +1,11 @@
+{
+switch (item.getItemId()) {
+case MENU_ID_INSTALLER_CD:
+    mUsbManager.setCurrentFunction(UsbManager.USB_FUNCTION_MASS_STORAGE,false);
+  mUsbManager.setMassStorageBackingFile(mInstallerImagePath);
+mMtp.setChecked(false);
+mPtp.setChecked(false);
+return true;
+}
+return super.onOptionsItemSelected(item);
+}

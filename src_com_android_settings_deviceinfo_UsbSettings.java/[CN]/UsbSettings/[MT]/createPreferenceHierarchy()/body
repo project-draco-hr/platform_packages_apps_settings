@@ -1,0 +1,11 @@
+{
+  PreferenceScreen root=getPreferenceScreen();
+  if (root != null) {
+    root.removeAll();
+  }
+  addPreferencesFromResource(R.xml.usb_settings);
+  root=getPreferenceScreen();
+  mMtp=(CheckBoxPreference)root.findPreference(KEY_MTP);
+  mPtp=(CheckBoxPreference)root.findPreference(KEY_PTP);
+  return root;
+}

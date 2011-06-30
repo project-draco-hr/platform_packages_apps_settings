@@ -1,0 +1,19 @@
+{
+  Log.d(TAG,"onPreferenceTreeClick " + preference);
+  if (preference instanceof CheckBoxPreference) {
+    CheckBoxPreference checkBox=(CheckBoxPreference)preference;
+    if (!checkBox.isChecked()) {
+      checkBox.setChecked(true);
+      return true;
+    }
+  }
+  if (preference == mMtp) {
+    mUsbManager.setCurrentFunction(UsbManager.USB_FUNCTION_MTP,true);
+    mPtp.setChecked(false);
+  }
+ else   if (preference == mPtp) {
+    mUsbManager.setCurrentFunction(UsbManager.USB_FUNCTION_PTP,true);
+    mMtp.setChecked(false);
+  }
+  return true;
+}

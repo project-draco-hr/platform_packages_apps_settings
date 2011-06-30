@@ -1,0 +1,14 @@
+{
+  if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_MTP)) {
+    mMtp.setChecked(true);
+    mPtp.setChecked(false);
+  }
+ else   if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_PTP)) {
+    mMtp.setChecked(false);
+    mPtp.setChecked(true);
+  }
+ else {
+    mMtp.setChecked(false);
+    mPtp.setChecked(false);
+  }
+}

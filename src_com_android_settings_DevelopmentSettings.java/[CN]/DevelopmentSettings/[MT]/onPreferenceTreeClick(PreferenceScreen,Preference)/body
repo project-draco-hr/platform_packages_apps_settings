@@ -19,5 +19,29 @@
  else   if (preference == mAllowMockLocation) {
     Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,mAllowMockLocation.isChecked() ? 1 : 0);
   }
+ else   if (preference == mStrictMode) {
+    writeStrictModeVisualOptions();
+  }
+ else   if (preference == mPointerLocation) {
+    writePointerLocationOptions();
+  }
+ else   if (preference == mShowScreenUpdates) {
+    writeFlingerOptions();
+  }
+ else   if (preference == mShowCpuUsage) {
+    writeCpuUsageOptions();
+  }
+ else   if (preference == mWindowAnimationScale) {
+    writeAnimationScaleOption(0,mWindowAnimationScale);
+  }
+ else   if (preference == mTransitionAnimationScale) {
+    writeAnimationScaleOption(1,mTransitionAnimationScale);
+  }
+ else   if (preference == mImmediatelyDestroyActivities) {
+    writeImmediatelyDestroyActivitiesOptions();
+  }
+ else   if (preference == mAppProcessLimit) {
+    writeAppProcessLimitOptions();
+  }
   return false;
 }

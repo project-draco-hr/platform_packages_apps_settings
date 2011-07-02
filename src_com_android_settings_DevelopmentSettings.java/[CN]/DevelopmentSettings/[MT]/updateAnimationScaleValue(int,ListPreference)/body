@@ -1,0 +1,16 @@
+{
+  try {
+    float scale=mWindowManager.getAnimationScale(which);
+    CharSequence[] values=pref.getEntryValues();
+    for (int i=0; i < values.length; i++) {
+      float val=Float.parseFloat(values[i].toString());
+      if (scale <= val) {
+        pref.setValueIndex(i);
+        return;
+      }
+    }
+    pref.setValueIndex(values.length - 1);
+  }
+ catch (  RemoteException e) {
+  }
+}

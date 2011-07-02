@@ -1,0 +1,16 @@
+{
+  try {
+    int limit=ActivityManagerNative.getDefault().getProcessLimit();
+    CharSequence[] values=mAppProcessLimit.getEntryValues();
+    for (int i=0; i < values.length; i++) {
+      int val=Integer.parseInt(values[i].toString());
+      if (val >= limit) {
+        mAppProcessLimit.setValueIndex(i);
+        return;
+      }
+    }
+    mAppProcessLimit.setValueIndex(0);
+  }
+ catch (  RemoteException e) {
+  }
+}

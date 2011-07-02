@@ -1,0 +1,15 @@
+{
+  try {
+    IBinder flinger=ServiceManager.getService("SurfaceFlinger");
+    if (flinger != null) {
+      Parcel data=Parcel.obtain();
+      data.writeInterfaceToken("android.ui.ISurfaceComposer");
+      data.writeInt(mShowScreenUpdates.isChecked() ? 1 : 0);
+      flinger.transact(1002,data,null,0);
+      data.recycle();
+      updateFlingerOptions();
+    }
+  }
+ catch (  RemoteException ex) {
+  }
+}

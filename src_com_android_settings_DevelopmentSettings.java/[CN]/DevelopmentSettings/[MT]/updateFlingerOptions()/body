@@ -1,0 +1,20 @@
+{
+  try {
+    IBinder flinger=ServiceManager.getService("SurfaceFlinger");
+    if (flinger != null) {
+      Parcel data=Parcel.obtain();
+      Parcel reply=Parcel.obtain();
+      data.writeInterfaceToken("android.ui.ISurfaceComposer");
+      flinger.transact(1010,data,reply,0);
+      @SuppressWarnings("unused") int showCpu=reply.readInt();
+      @SuppressWarnings("unused") int enableGL=reply.readInt();
+      int showUpdates=reply.readInt();
+      mShowScreenUpdates.setChecked(showUpdates != 0);
+      @SuppressWarnings("unused") int showBackground=reply.readInt();
+      reply.recycle();
+      data.recycle();
+    }
+  }
+ catch (  RemoteException ex) {
+  }
+}

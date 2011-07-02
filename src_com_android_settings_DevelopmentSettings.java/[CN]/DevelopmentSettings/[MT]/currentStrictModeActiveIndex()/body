@@ -1,0 +1,7 @@
+{
+  if (TextUtils.isEmpty(SystemProperties.get(StrictMode.VISUAL_PROPERTY))) {
+    return 0;
+  }
+  boolean enabled=SystemProperties.getBoolean(StrictMode.VISUAL_PROPERTY,false);
+  return enabled ? 1 : 2;
+}

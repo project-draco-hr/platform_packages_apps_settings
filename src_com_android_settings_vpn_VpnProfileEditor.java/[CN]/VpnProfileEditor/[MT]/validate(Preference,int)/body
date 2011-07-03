@@ -1,6 +1,0 @@
-{
-  Context c=pref.getContext();
-  String value=(pref instanceof EditTextPreference) ? ((EditTextPreference)pref).getText() : ((ListPreference)pref).getValue();
-  String formatString=(pref instanceof EditTextPreference) ? c.getString(R.string.vpn_error_miss_entering) : c.getString(R.string.vpn_error_miss_selecting);
-  return (TextUtils.isEmpty(value) ? String.format(formatString,c.getString(fieldNameId)) : null);
-}

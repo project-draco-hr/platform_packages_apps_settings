@@ -4,7 +4,16 @@
     return true;
   }
   if (preference instanceof VpnPreference) {
-    mDialog=new VpnDialog(getActivity(),this,((VpnPreference)preference).getProfile(),false);
+    VpnProfile profile=((VpnPreference)preference).getProfile();
+    if (mInfo != null && profile.key.equals(mInfo.key) && mInfo.state == LegacyVpnInfo.STATE_CONNECTED) {
+      try {
+        mInfo.intent.send();
+        return true;
+      }
+ catch (      Exception e) {
+      }
+    }
+    mDialog=new VpnDialog(getActivity(),this,profile,false);
   }
  else {
     long millis=System.currentTimeMillis();

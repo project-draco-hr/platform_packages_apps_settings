@@ -25,13 +25,14 @@ mtpd=new String[]{"l2tp",profile.server,"1701",profile.l2tpSecret,"name",profile
 break;
 }
 VpnConfig config=new VpnConfig();
+config.packagz=profile.key;
 config.session=profile.name;
 config.routes=profile.routes;
 if (!profile.searchDomains.isEmpty()) {
 config.searchDomains=Arrays.asList(profile.searchDomains.split(" "));
 }
 try {
-getService().doLegacyVpn(config,racoon,mtpd);
+mService.startLegacyVpn(config,racoon,mtpd);
 }
  catch (Exception e) {
 Log.e(TAG,"connect",e);

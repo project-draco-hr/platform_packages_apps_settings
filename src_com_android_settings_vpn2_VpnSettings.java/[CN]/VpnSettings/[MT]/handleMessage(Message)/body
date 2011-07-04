@@ -1,6 +1,25 @@
 {
   mUpdater.removeMessages(0);
   if (isResumed()) {
+    try {
+      LegacyVpnInfo info=mService.getLegacyVpnInfo();
+      if (mInfo != null) {
+        VpnPreference preference=mPreferences.get(mInfo.key);
+        if (preference != null) {
+          preference.update(-1);
+        }
+        mInfo=null;
+      }
+      if (info != null) {
+        VpnPreference preference=mPreferences.get(info.key);
+        if (preference != null) {
+          preference.update(info.state);
+          mInfo=info;
+        }
+      }
+    }
+ catch (    Exception e) {
+    }
     mUpdater.sendEmptyMessageDelayed(0,1000);
   }
   return true;

@@ -10,9 +10,10 @@
     Preference pref=context.findPreference(imiId);
     if (pref == null)     continue;
     final boolean isImeChecked=(pref instanceof CheckBoxPreference) ? ((CheckBoxPreference)pref).isChecked() : enabledIMEAndSubtypesMap.containsKey(imiId);
-    boolean isCurrentInputMethod=imiId.equals(currentInputMethodId);
-    boolean systemIme=isSystemIme(imi);
-    if (((onlyOneIME || systemIme) && !hasHardKeyboard) || isImeChecked) {
+    final boolean isCurrentInputMethod=imiId.equals(currentInputMethodId);
+    final boolean auxIme=isAuxiliaryIme(imi);
+    final boolean systemIme=isSystemIme(imi);
+    if (((onlyOneIME || (systemIme && !auxIme)) && !hasHardKeyboard) || isImeChecked) {
       if (!enabledIMEAndSubtypesMap.containsKey(imiId)) {
         enabledIMEAndSubtypesMap.put(imiId,new HashSet<String>());
       }

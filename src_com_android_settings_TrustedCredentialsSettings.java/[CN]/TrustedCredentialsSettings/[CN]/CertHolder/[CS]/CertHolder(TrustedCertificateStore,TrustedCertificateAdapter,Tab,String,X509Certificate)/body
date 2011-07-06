@@ -8,27 +8,25 @@
   String cn=mSslCert.getIssuedTo().getCName();
   String o=mSslCert.getIssuedTo().getOName();
   String ou=mSslCert.getIssuedTo().getUName();
-  StringBuilder sb=new StringBuilder();
-  if (!cn.isEmpty()) {
-    sb.append("CN=" + cn);
-  }
   if (!o.isEmpty()) {
-    if (sb.length() != 0) {
-      sb.append(", ");
+    if (!cn.isEmpty()) {
+      mSubjectPrimary=o;
+      mSubjectSecondary=cn;
     }
-    sb.append("O=" + o);
-  }
-  if (!ou.isEmpty()) {
-    if (sb.length() != 0) {
-      sb.append(", ");
+ else {
+      mSubjectPrimary=o;
+      mSubjectSecondary=ou;
     }
-    sb.append("OU=" + ou);
-  }
-  if (sb.length() != 0) {
-    mSubject=sb.toString();
   }
  else {
-    mSubject=mSslCert.getIssuedTo().getDName();
+    if (!cn.isEmpty()) {
+      mSubjectPrimary=cn;
+      mSubjectSecondary="";
+    }
+ else {
+      mSubjectPrimary=mSslCert.getIssuedTo().getDName();
+      mSubjectSecondary="";
+    }
   }
   mDeleted=mTab.deleted(mStore,mAlias);
 }

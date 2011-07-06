@@ -4,7 +4,8 @@
     LayoutInflater inflater=LayoutInflater.from(getActivity());
     view=inflater.inflate(R.layout.trusted_credential,parent,false);
     holder=new ViewHolder();
-    holder.mSubjectView=(TextView)view.findViewById(R.id.trusted_credential_subject);
+    holder.mSubjectPrimaryView=(TextView)view.findViewById(R.id.trusted_credential_subject_primary);
+    holder.mSubjectSecondaryView=(TextView)view.findViewById(R.id.trusted_credential_subject_secondary);
     holder.mCheckBox=(CheckBox)view.findViewById(R.id.trusted_credential_status);
     view.setTag(holder);
   }
@@ -12,7 +13,8 @@
     holder=(ViewHolder)view.getTag();
   }
   CertHolder certHolder=mCertHolders.get(position);
-  holder.mSubjectView.setText(certHolder.mSubject);
+  holder.mSubjectPrimaryView.setText(certHolder.mSubjectPrimary);
+  holder.mSubjectSecondaryView.setText(certHolder.mSubjectSecondary);
   if (mTab.mCheckbox) {
     holder.mCheckBox.setChecked(!certHolder.mDeleted);
     holder.mCheckBox.setVisibility(View.VISIBLE);

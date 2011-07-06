@@ -1,3 +1,7 @@
 {
-  return this.mSubject.compareTo(o.mSubject);
+  int primary=this.mSubjectPrimary.compareToIgnoreCase(o.mSubjectPrimary);
+  if (primary != 0) {
+    return primary;
+  }
+  return this.mSubjectSecondary.compareToIgnoreCase(o.mSubjectSecondary);
 }

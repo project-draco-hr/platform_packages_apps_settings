@@ -1,9 +1,12 @@
 {
   Set<String> aliases=mTab.getAliases(mStore);
-  List<CertHolder> certHolders=new ArrayList<CertHolder>(aliases.size());
+  int max=aliases.size();
+  int progress=0;
+  List<CertHolder> certHolders=new ArrayList<CertHolder>(max);
   for (  String alias : aliases) {
     X509Certificate cert=(X509Certificate)mStore.getCertificate(alias,true);
     certHolders.add(new CertHolder(mStore,TrustedCertificateAdapter.this,mTab,alias,cert));
+    publishProgress(++progress,max);
   }
   Collections.sort(certHolders);
   return certHolders;

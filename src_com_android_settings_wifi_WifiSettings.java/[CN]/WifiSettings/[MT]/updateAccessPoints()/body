@@ -1,18 +1,20 @@
 {
-  final PreferenceScreen preferenceScreen=getPreferenceScreen();
-  preferenceScreen.removeAll();
   final int wifiState=mWifiManager.getWifiState();
 switch (wifiState) {
 case WifiManager.WIFI_STATE_ENABLED:
-    final Collection<AccessPoint> accessPoints=constructAccessPoints();
-  if (mInXlSetupWizard) {
-    ((WifiSettingsForSetupWizardXL)getActivity()).onAccessPointsUpdated(getPreferenceScreen(),accessPoints);
-  }
+    getPreferenceScreen().removeAll();
+  final Collection<AccessPoint> accessPoints=constructAccessPoints();
+if (mInXlSetupWizard) {
+  ((WifiSettingsForSetupWizardXL)getActivity()).onAccessPointsUpdated(getPreferenceScreen(),accessPoints);
+}
  else {
-    for (    AccessPoint accessPoint : accessPoints) {
-      getPreferenceScreen().addPreference(accessPoint);
-    }
+  for (  AccessPoint accessPoint : accessPoints) {
+    getPreferenceScreen().addPreference(accessPoint);
   }
+}
+break;
+case WifiManager.WIFI_STATE_ENABLING:
+getPreferenceScreen().removeAll();
 break;
 case WifiManager.WIFI_STATE_DISABLING:
 addMessagePreference(R.string.wifi_stopping);

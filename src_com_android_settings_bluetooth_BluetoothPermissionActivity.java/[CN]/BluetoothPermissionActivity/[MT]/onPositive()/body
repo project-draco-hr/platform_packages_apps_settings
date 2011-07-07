@@ -1,0 +1,5 @@
+{
+  if (DEBUG)   Log.d(TAG,"onPositive mAlwaysAllowedValue: " + mAlwaysAllowedValue);
+  sendIntentToReceiver(BluetoothDevice.ACTION_CONNECTION_ACCESS_REPLY,true,BluetoothDevice.EXTRA_ALWAYS_ALLOWED,mAlwaysAllowedValue);
+  finish();
+}

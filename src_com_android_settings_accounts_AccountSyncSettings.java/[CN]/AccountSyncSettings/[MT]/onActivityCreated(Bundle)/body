@@ -3,7 +3,12 @@
   final Activity activity=getActivity();
   mDateFormat=DateFormat.getDateFormat(activity);
   mTimeFormat=DateFormat.getTimeFormat(activity);
-  mAccount=(Account)getArguments().getParcelable(ACCOUNT_KEY);
+  Bundle arguments=getArguments();
+  if (arguments == null) {
+    Log.e(TAG,"No arguments provided when starting intent. ACCOUNT_KEY needed.");
+    return;
+  }
+  mAccount=(Account)arguments.getParcelable(ACCOUNT_KEY);
   if (mAccount != null) {
     if (Log.isLoggable(TAG,Log.VERBOSE))     Log.v(TAG,"Got account: " + mAccount);
     mUserId.setText(mAccount.name);

@@ -13,7 +13,12 @@
       getPreferenceScreen().addPreference(preference);
     }
     if (!mDialog.isEditing()) {
-      connect(profile);
+      try {
+        connect(profile);
+      }
+ catch (      Exception e) {
+        Log.e(TAG,"connect",e);
+      }
     }
   }
 }

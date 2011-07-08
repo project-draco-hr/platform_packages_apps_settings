@@ -1,15 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   ContentResolver resolver=getActivity().getContentResolver();
-  mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
   addPreferencesFromResource(R.xml.display_settings);
-  try {
-    mAnimationScales=mWindowManager.getAnimationScales();
-  }
- catch (  RemoteException e) {
-  }
-  mAnimations=(ListPreference)findPreference(KEY_ANIMATIONS);
-  mAnimations.setOnPreferenceChangeListener(this);
   mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
   mAccelerometer.setPersistent(false);
   mScreenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
@@ -17,7 +9,7 @@
   mScreenTimeoutPreference.setValue(String.valueOf(currentTimeout));
   mScreenTimeoutPreference.setOnPreferenceChangeListener(this);
   disableUnusableTimeouts(mScreenTimeoutPreference);
-  updateTimeoutPreferenceDescription(resolver,mScreenTimeoutPreference,R.string.screen_timeout_summary,currentTimeout);
+  updateTimeoutPreferenceDescription(mScreenTimeoutPreference,R.string.screen_timeout_summary,currentTimeout);
   mFontSizePref=(ListPreference)findPreference(KEY_FONT_SIZE);
   mFontSizePref.setOnPreferenceChangeListener(this);
 }

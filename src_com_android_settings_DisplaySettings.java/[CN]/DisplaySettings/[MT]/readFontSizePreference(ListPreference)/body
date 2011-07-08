@@ -3,6 +3,7 @@
     mCurConfig.updateFrom(ActivityManagerNative.getDefault().getConfiguration());
   }
  catch (  RemoteException e) {
+    Log.w(TAG,"Unable to retrieve font size");
   }
   pref.setValueIndex(floatToIndex(mCurConfig.fontScale,R.array.entryvalues_font_size));
 }

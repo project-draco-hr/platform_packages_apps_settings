@@ -1,3 +1,29 @@
 {
-  setMeasuredDimension(mSweep.getIntrinsicWidth(),mSweep.getIntrinsicHeight());
+  if (isEnabled() && mLabelLayout != null) {
+    final int sweepHeight=mSweep.getIntrinsicHeight();
+    final int templateHeight=mLabelLayout.getHeight();
+    mSweepOffset.x=0;
+    mSweepOffset.y=(int)((templateHeight / 2) - getTargetInset());
+    setMeasuredDimension(mSweep.getIntrinsicWidth(),Math.max(sweepHeight,templateHeight));
+  }
+ else {
+    mSweepOffset.x=0;
+    mSweepOffset.y=0;
+    setMeasuredDimension(mSweep.getIntrinsicWidth(),mSweep.getIntrinsicHeight());
+  }
+  if (mFollowAxis == VERTICAL) {
+    final int targetHeight=mSweep.getIntrinsicHeight() - mSweepPadding.top - mSweepPadding.bottom;
+    mMargins.top=-(mSweepPadding.top + (targetHeight / 2));
+    mMargins.bottom=0;
+    mMargins.left=-mSweepPadding.left;
+    mMargins.right=mSweepPadding.right;
+  }
+ else {
+    final int targetWidth=mSweep.getIntrinsicWidth() - mSweepPadding.left - mSweepPadding.right;
+    mMargins.left=-(mSweepPadding.left + (targetWidth / 2));
+    mMargins.right=0;
+    mMargins.top=-mSweepPadding.top;
+    mMargins.bottom=mSweepPadding.bottom;
+  }
+  mMargins.offset(-mSweepOffset.x,-mSweepOffset.y);
 }

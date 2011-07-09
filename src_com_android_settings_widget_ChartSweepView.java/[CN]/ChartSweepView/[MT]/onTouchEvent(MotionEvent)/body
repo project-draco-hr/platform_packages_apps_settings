@@ -6,10 +6,10 @@ case MotionEvent.ACTION_DOWN:
 {
       final boolean accept;
       if (mFollowAxis == VERTICAL) {
-        accept=event.getX() > getWidth() - (mSweepMargins.right * 2);
+        accept=event.getX() > getWidth() - (mSweepPadding.right * 2);
       }
  else {
-        accept=event.getY() > getHeight() - (mSweepMargins.bottom * 2);
+        accept=event.getY() > getHeight() - (mSweepPadding.bottom * 2);
       }
       if (accept) {
         mTracking=event.copy();
@@ -22,33 +22,31 @@ case MotionEvent.ACTION_DOWN:
 case MotionEvent.ACTION_MOVE:
 {
     getParent().requestDisallowInterceptTouchEvent(true);
-    final Rect sweepMargins=mSweepMargins;
     final Rect parentContent=new Rect(parent.getPaddingLeft(),parent.getPaddingTop(),parent.getWidth() - parent.getPaddingRight(),parent.getHeight() - parent.getPaddingBottom());
     if (mFollowAxis == VERTICAL) {
-      final float currentTargetY=getTop() + getTargetInset();
+      final float currentTargetY=getTop() - mMargins.top;
       final float requestedTargetY=currentTargetY + (event.getRawY() - mTracking.getRawY());
       final float clampedTargetY=MathUtils.constrain(requestedTargetY,parentContent.top,parentContent.bottom);
       setTranslationY(clampedTargetY - currentTargetY);
-      mValue=mAxis.convertToValue(clampedTargetY - parentContent.top);
-      dispatchOnSweep(false);
+      setValue(mAxis.convertToValue(clampedTargetY - parentContent.top));
     }
  else {
-      final float currentTargetX=getLeft() + getTargetInset();
+      final float currentTargetX=getLeft() - mMargins.left;
       final float requestedTargetX=currentTargetX + (event.getRawX() - mTracking.getRawX());
       final float clampedTargetX=MathUtils.constrain(requestedTargetX,parentContent.left,parentContent.right);
       setTranslationX(clampedTargetX - currentTargetX);
-      mValue=mAxis.convertToValue(clampedTargetX - parentContent.left);
-      dispatchOnSweep(false);
+      setValue(mAxis.convertToValue(clampedTargetX - parentContent.left));
     }
+    dispatchOnSweep(false);
     return true;
   }
 case MotionEvent.ACTION_UP:
 {
   mTracking=null;
+  dispatchOnSweep(true);
   setTranslationX(0);
   setTranslationY(0);
   requestLayout();
-  dispatchOnSweep(true);
   return true;
 }
 default :

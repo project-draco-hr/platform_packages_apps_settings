@@ -1,0 +1,18 @@
+{
+  if (mLabelTemplateRes != 0) {
+    final CharSequence template=getResources().getText(mLabelTemplateRes);
+    final TextPaint paint=new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    paint.density=getResources().getDisplayMetrics().density;
+    paint.setCompatibilityScaling(getResources().getCompatibilityInfo().applicationScale);
+    paint.setColor(mLabelColor);
+    mLabelTemplate=new SpannableStringBuilder(template);
+    mLabelLayout=new DynamicLayout(mLabelTemplate,paint,mLabelSize,Alignment.ALIGN_RIGHT,1f,0f,false);
+    invalidateLabel();
+  }
+ else {
+    mLabelTemplate=null;
+    mLabelLayout=null;
+  }
+  invalidate();
+  requestLayout();
+}

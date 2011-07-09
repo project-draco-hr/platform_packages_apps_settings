@@ -3,7 +3,9 @@
   final TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.ChartSweepView,defStyle,0);
   setSweepDrawable(a.getDrawable(R.styleable.ChartSweepView_sweepDrawable));
   setFollowAxis(a.getInt(R.styleable.ChartSweepView_followAxis,-1));
-  setShowLabel(a.getBoolean(R.styleable.ChartSweepView_showLabel,false));
+  setLabelSize(a.getDimensionPixelSize(R.styleable.ChartSweepView_labelSize,0));
+  setLabelTemplate(a.getResourceId(R.styleable.ChartSweepView_labelTemplate,0));
+  setLabelColor(a.getColor(R.styleable.ChartSweepView_labelColor,Color.BLUE));
   a.recycle();
   setClipToPadding(false);
   setClipChildren(false);

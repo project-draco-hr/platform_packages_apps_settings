@@ -1,0 +1,23 @@
+{
+  float result=value;
+  final CharSequence unit;
+  if (result <= 100 * MB_IN_BYTES) {
+    unit=res.getText(com.android.internal.R.string.megabyteShort);
+    result/=MB_IN_BYTES;
+  }
+ else {
+    unit=res.getText(com.android.internal.R.string.gigabyteShort);
+    result/=GB_IN_BYTES;
+  }
+  final CharSequence size;
+  if (result < 10) {
+    size=String.format("%.1f",result);
+  }
+ else {
+    size=String.format("%.0f",result);
+  }
+  final int[] sizeBounds=findOrCreateSpan(builder,sSpanSize,"^1");
+  builder.replace(sizeBounds[0],sizeBounds[1],size);
+  final int[] unitBounds=findOrCreateSpan(builder,sSpanUnit,"^2");
+  builder.replace(unitBounds[0],unitBounds[1],unit);
+}

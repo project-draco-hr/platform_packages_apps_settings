@@ -1,6 +1,19 @@
 {
   final int width=getWidth();
   final int height=getHeight();
-  mSweep.setBounds(0,0,width,height);
+  final int labelSize;
+  if (isEnabled() && mLabelLayout != null) {
+    mLabelLayout.draw(canvas);
+    labelSize=mLabelSize;
+  }
+ else {
+    labelSize=0;
+  }
+  if (mFollowAxis == VERTICAL) {
+    mSweep.setBounds(labelSize,mSweepOffset.y,width,mSweepOffset.y + mSweep.getIntrinsicHeight());
+  }
+ else {
+    mSweep.setBounds(mSweepOffset.x,labelSize,mSweepOffset.x + mSweep.getIntrinsicWidth(),height);
+  }
   mSweep.draw(canvas);
 }

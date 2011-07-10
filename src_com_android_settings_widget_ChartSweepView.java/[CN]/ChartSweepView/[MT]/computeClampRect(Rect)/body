@@ -1,0 +1,22 @@
+{
+  final Rect clampRect=new Rect(parentContent);
+  final ChartSweepView after=mClampAfter;
+  final ChartSweepView before=mClampBefore;
+  if (mFollowAxis == VERTICAL) {
+    if (after != null) {
+      clampRect.top+=after.getPoint();
+    }
+    if (before != null) {
+      clampRect.bottom-=clampRect.height() - before.getPoint();
+    }
+  }
+ else {
+    if (after != null) {
+      clampRect.left+=after.getPoint();
+    }
+    if (before != null) {
+      clampRect.right-=clampRect.width() - before.getPoint();
+    }
+  }
+  return clampRect;
+}

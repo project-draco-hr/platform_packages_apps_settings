@@ -23,17 +23,18 @@ case MotionEvent.ACTION_MOVE:
 {
     getParent().requestDisallowInterceptTouchEvent(true);
     final Rect parentContent=new Rect(parent.getPaddingLeft(),parent.getPaddingTop(),parent.getWidth() - parent.getPaddingRight(),parent.getHeight() - parent.getPaddingBottom());
+    final Rect clampRect=computeClampRect(parentContent);
     if (mFollowAxis == VERTICAL) {
       final float currentTargetY=getTop() - mMargins.top;
       final float requestedTargetY=currentTargetY + (event.getRawY() - mTracking.getRawY());
-      final float clampedTargetY=MathUtils.constrain(requestedTargetY,parentContent.top,parentContent.bottom);
+      final float clampedTargetY=MathUtils.constrain(requestedTargetY,clampRect.top,clampRect.bottom);
       setTranslationY(clampedTargetY - currentTargetY);
       setValue(mAxis.convertToValue(clampedTargetY - parentContent.top));
     }
  else {
       final float currentTargetX=getLeft() - mMargins.left;
       final float requestedTargetX=currentTargetX + (event.getRawX() - mTracking.getRawX());
-      final float clampedTargetX=MathUtils.constrain(requestedTargetX,parentContent.left,parentContent.right);
+      final float clampedTargetX=MathUtils.constrain(requestedTargetX,clampRect.left,clampRect.right);
       setTranslationX(clampedTargetX - currentTargetX);
       setValue(mAxis.convertToValue(clampedTargetX - parentContent.left));
     }

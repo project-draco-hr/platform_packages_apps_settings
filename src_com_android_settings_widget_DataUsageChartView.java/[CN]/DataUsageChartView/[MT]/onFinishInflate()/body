@@ -8,6 +8,10 @@
   mSweepRight=(ChartSweepView)findViewById(R.id.sweep_right);
   mSweepLimit=(ChartSweepView)findViewById(R.id.sweep_limit);
   mSweepWarning=(ChartSweepView)findViewById(R.id.sweep_warning);
+  mSweepLeft.setClampBefore(mSweepRight);
+  mSweepRight.setClampAfter(mSweepLeft);
+  mSweepLimit.setClampBefore(mSweepWarning);
+  mSweepWarning.setClampAfter(mSweepLimit);
   mSweepLeft.addOnSweepListener(mSweepListener);
   mSweepRight.addOnSweepListener(mSweepListener);
   mSweepWarning.addOnSweepListener(mWarningListener);

@@ -16,10 +16,11 @@
         Log.wtf(TAG,"stuck generating ranges for bounds=" + Arrays.toString(bounds) + " and policy="+ policy);
       }
     }
-    mCycleAdapter.add(new CycleChangeItem(context));
+    mCycleAdapter.setChangePossible(true);
   }
  else {
     mCycleAdapter.add(new CycleItem(context,historyStart,historyEnd));
+    mCycleAdapter.setChangePossible(false);
   }
   mCycleSpinner.setSelection(0);
   mCycleListener.onItemSelected(mCycleSpinner,null,0,0);

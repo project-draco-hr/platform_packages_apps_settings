@@ -1,21 +1,43 @@
 {
 switch (item.getItemId()) {
-case R.id.action_split_4g:
+case R.id.data_usage_menu_roaming:
 {
-      final boolean mobileSplit=!item.isChecked();
-      setMobilePolicySplit(mobileSplit);
-      item.setChecked(isMobilePolicySplit());
-      updateTabs();
+      final boolean dataRoaming=!item.isChecked();
+      if (dataRoaming) {
+        ConfirmDataRoamingFragment.show(this);
+      }
+ else {
+        setDataRoaming(false);
+      }
       return true;
     }
-case R.id.action_show_wifi:
+case R.id.data_usage_menu_restrict_background:
 {
-    mShowWifi=!item.isChecked();
-    mPrefs.edit().putBoolean(PREF_SHOW_WIFI,mShowWifi).apply();
-    item.setChecked(mShowWifi);
-    updateTabs();
+    final boolean restrictBackground=!item.isChecked();
+    if (restrictBackground) {
+      ConfirmRestrictFragment.show(this);
+    }
+ else {
+      setRestrictBackground(false);
+    }
     return true;
   }
+case R.id.data_usage_menu_split_4g:
+{
+  final boolean mobileSplit=!item.isChecked();
+  setMobilePolicySplit(mobileSplit);
+  item.setChecked(isMobilePolicySplit());
+  updateTabs();
+  return true;
+}
+case R.id.data_usage_menu_show_wifi:
+{
+mShowWifi=!item.isChecked();
+mPrefs.edit().putBoolean(PREF_SHOW_WIFI,mShowWifi).apply();
+item.setChecked(mShowWifi);
+updateTabs();
+return true;
+}
 }
 return false;
 }

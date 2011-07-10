@@ -1,13 +1,13 @@
 {
   final Context context=getActivity();
   final AlertDialog.Builder builder=new AlertDialog.Builder(context);
-  builder.setTitle(R.string.data_usage_restrict_background_title);
-  builder.setMessage(R.string.data_usage_restrict_background);
+  builder.setTitle(R.string.data_usage_app_restrict_dialog_title);
+  builder.setMessage(R.string.data_usage_app_restrict_dialog);
   builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
       final DataUsageSummary target=(DataUsageSummary)getTargetFragment();
       if (target != null) {
-        target.setRestrictBackground(true);
+        target.setAppRestrictBackground(true);
       }
     }
   }

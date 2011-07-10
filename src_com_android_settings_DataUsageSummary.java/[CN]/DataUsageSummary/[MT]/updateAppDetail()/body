@@ -1,9 +1,11 @@
 {
   if (isAppDetailMode()) {
     mAppDetail.setVisibility(View.VISIBLE);
+    mCycleAdapter.setChangeVisible(false);
   }
  else {
     mAppDetail.setVisibility(View.GONE);
+    mCycleAdapter.setChangeVisible(true);
     mChart.bindDetailNetworkStats(null);
     return;
   }
@@ -33,15 +35,7 @@
   final Context context=getActivity();
   if (NetworkPolicyManager.isUidValidForPolicy(context,mUid)) {
     mAppRestrictView.setVisibility(View.VISIBLE);
-    final int uidPolicy;
-    try {
-      uidPolicy=mPolicyService.getUidPolicy(mUid);
-    }
- catch (    RemoteException e) {
-      throw new RuntimeException("problem reading network policy",e);
-    }
-    final boolean restrictBackground=(uidPolicy & POLICY_REJECT_METERED_BACKGROUND) != 0;
-    mAppRestrict.setChecked(restrictBackground);
+    mAppRestrict.setChecked(getAppRestrictBackground());
   }
  else {
     mAppRestrictView.setVisibility(View.GONE);

@@ -1,0 +1,10 @@
+{
+  final int uidPolicy;
+  try {
+    uidPolicy=mPolicyService.getUidPolicy(mUid);
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("problem reading network policy",e);
+  }
+  return (uidPolicy & POLICY_REJECT_METERED_BACKGROUND) != 0;
+}

@@ -7,4 +7,18 @@
   if (ACTION_DATA_USAGE_LIMIT.equals(action)) {
     PolicyLimitFragment.show(this);
   }
+  new AsyncTask<Void,Void,Void>(){
+    @Override protected Void doInBackground(    Void... params){
+      try {
+        mStatsService.forceUpdate();
+      }
+ catch (      RemoteException e) {
+      }
+      return null;
+    }
+    @Override protected void onPostExecute(    Void result){
+      updateBody();
+    }
+  }
+.execute();
 }

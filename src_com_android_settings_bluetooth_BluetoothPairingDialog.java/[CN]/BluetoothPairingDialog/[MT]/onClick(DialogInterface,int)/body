@@ -1,7 +1,12 @@
 {
 switch (which) {
 case BUTTON_POSITIVE:
-    onPair(mPairingView.getText().toString());
+    if (mPairingView != null) {
+      onPair(mPairingView.getText().toString());
+    }
+ else {
+      onPair(null);
+    }
   break;
 case BUTTON_NEGATIVE:
 default :

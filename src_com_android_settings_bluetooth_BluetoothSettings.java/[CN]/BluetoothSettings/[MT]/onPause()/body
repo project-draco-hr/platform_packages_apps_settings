@@ -1,4 +1,8 @@
 {
   super.onPause();
   mBluetoothEnabler.pause();
+  getActivity().unregisterReceiver(mReceiver);
+  if (mDiscoverableEnabler != null) {
+    mDiscoverableEnabler.pause();
+  }
 }

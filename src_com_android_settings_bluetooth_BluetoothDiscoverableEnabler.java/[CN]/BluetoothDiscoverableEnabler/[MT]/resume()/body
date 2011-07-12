@@ -4,7 +4,6 @@
   }
   IntentFilter filter=new IntentFilter(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
   mContext.registerReceiver(mReceiver,filter);
-  mCheckBoxPreference.setOnPreferenceChangeListener(this);
-  mTimeoutListPreference.setOnPreferenceChangeListener(this);
+  mDiscoveryPreference.setOnPreferenceClickListener(this);
   handleModeChanged(mLocalAdapter.getScanMode());
 }

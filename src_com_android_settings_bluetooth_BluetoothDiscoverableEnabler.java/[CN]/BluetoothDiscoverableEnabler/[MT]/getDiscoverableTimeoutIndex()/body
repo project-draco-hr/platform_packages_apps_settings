@@ -1,0 +1,14 @@
+{
+  int timeout=getDiscoverableTimeout();
+switch (timeout) {
+case DISCOVERABLE_TIMEOUT_TWO_MINUTES:
+default :
+    return 0;
+case DISCOVERABLE_TIMEOUT_FIVE_MINUTES:
+  return 1;
+case DISCOVERABLE_TIMEOUT_ONE_HOUR:
+return 2;
+case DISCOVERABLE_TIMEOUT_NEVER:
+return 3;
+}
+}

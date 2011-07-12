@@ -1,6 +1,5 @@
 {
   final CachedBluetoothDevice cachedDevice=mCachedDevice;
-  final BluetoothDevice device=cachedDevice.getDevice();
   for (  LocalBluetoothProfile profile : cachedDevice.getProfiles()) {
     int connectionStatus=cachedDevice.getProfileConnectionState(profile);
     if (connectionStatus != BluetoothProfile.STATE_DISCONNECTED) {

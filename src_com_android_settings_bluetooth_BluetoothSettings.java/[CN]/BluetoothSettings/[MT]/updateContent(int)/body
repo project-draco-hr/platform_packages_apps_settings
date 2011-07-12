@@ -12,8 +12,12 @@ if (mMyDevicePreference == null) {
 if (mLocalAdapter != null) {
 mMyDevicePreference.setTitle(mLocalAdapter.getName());
 }
+mMyDevicePreference.setPersistent(false);
 mMyDevicePreference.setEnabled(true);
 preferenceScreen.addPreference(mMyDevicePreference);
+if (mDiscoverableEnabler == null) {
+mDiscoverableEnabler=new BluetoothDiscoverableEnabler(getActivity(),mLocalAdapter,mMyDevicePreference);
+}
 if (mPairedDevicesCategory == null) {
 mPairedDevicesCategory=new PreferenceCategory(getActivity());
 }
@@ -22,6 +26,7 @@ mPairedDevicesCategory.removeAll();
 }
 addDeviceCategory(mPairedDevicesCategory,R.string.bluetooth_preference_paired_devices,BluetoothDeviceFilter.BONDED_DEVICE_FILTER);
 int numberOfPairedDevices=mPairedDevicesCategory.getPreferenceCount();
+mDiscoverableEnabler.setNumberOfPairedDevices(numberOfPairedDevices);
 if (mAvailableDevicesCategory == null) {
 mAvailableDevicesCategory=new ProgressCategory(getActivity(),null);
 }

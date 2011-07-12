@@ -4,8 +4,8 @@
     mLocalAdapter.setDiscoverableTimeout(timeout);
     long endTimestamp=System.currentTimeMillis() + timeout * 1000L;
     LocalBluetoothPreferences.persistDiscoverableEndTimestamp(mContext,endTimestamp);
-    updateCountdownSummary();
     mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,timeout);
+    updateCountdownSummary();
   }
  else {
     mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE);

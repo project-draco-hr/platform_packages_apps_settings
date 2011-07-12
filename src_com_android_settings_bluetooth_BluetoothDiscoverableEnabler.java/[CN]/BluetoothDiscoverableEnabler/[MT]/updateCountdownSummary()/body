@@ -6,7 +6,7 @@
   long currentTimestamp=System.currentTimeMillis();
   long endTimestamp=LocalBluetoothPreferences.getDiscoverableEndTimestamp(mContext);
   if (currentTimestamp > endTimestamp) {
-    mCheckBoxPreference.setSummaryOn(null);
+    updateTimerDisplay(0);
     return;
   }
   int timeLeft=(int)((endTimestamp - currentTimestamp) / 1000L);

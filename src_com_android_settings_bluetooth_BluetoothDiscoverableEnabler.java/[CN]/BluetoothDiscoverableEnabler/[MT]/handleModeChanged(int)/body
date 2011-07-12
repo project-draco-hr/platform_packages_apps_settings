@@ -1,9 +1,10 @@
 {
   if (mode == BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-    mCheckBoxPreference.setChecked(true);
+    mDiscoverable=true;
     updateCountdownSummary();
   }
  else {
-    mCheckBoxPreference.setChecked(false);
+    mDiscoverable=false;
+    setSummaryNotDiscoverable();
   }
 }

@@ -1,38 +1,24 @@
 {
-  View view=getLayoutInflater().inflate(R.layout.bluetooth_pin_entry,null);
+  View view=getLayoutInflater().inflate(R.layout.bluetooth_pin_confirm,null);
   String name=deviceManager.getName(mDevice);
   TextView messageView=(TextView)view.findViewById(R.id.message);
-  mPairingView=(EditText)view.findViewById(R.id.text);
-  mPairingView.addTextChangedListener(this);
+  String messageText;
 switch (mType) {
-case BluetoothDevice.PAIRING_VARIANT_PIN:
-    messageView.setText(getString(R.string.bluetooth_enter_pin_msg,name));
-  mPairingView.setFilters(new InputFilter[]{new LengthFilter(BLUETOOTH_PIN_MAX_LENGTH)});
-break;
-case BluetoothDevice.PAIRING_VARIANT_PASSKEY:
-messageView.setText(getString(R.string.bluetooth_enter_passkey_msg,name));
-mPairingView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-mPairingView.setFilters(new InputFilter[]{new LengthFilter(BLUETOOTH_PASSKEY_MAX_LENGTH)});
-break;
 case BluetoothDevice.PAIRING_VARIANT_PASSKEY_CONFIRMATION:
-mPairingView.setVisibility(View.GONE);
-messageView.setText(getString(R.string.bluetooth_confirm_passkey_msg,name,mPairingKey));
-break;
+    messageText=getString(R.string.bluetooth_confirm_passkey_msg,name,mPairingKey);
+  break;
 case BluetoothDevice.PAIRING_VARIANT_CONSENT:
-mPairingView.setVisibility(View.GONE);
-messageView.setText(getString(R.string.bluetooth_incoming_pairing_msg,name));
+case BluetoothDevice.PAIRING_VARIANT_OOB_CONSENT:
+messageText=getString(R.string.bluetooth_incoming_pairing_msg,name);
 break;
 case BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY:
 case BluetoothDevice.PAIRING_VARIANT_DISPLAY_PIN:
-mPairingView.setVisibility(View.GONE);
-messageView.setText(getString(R.string.bluetooth_display_passkey_pin_msg,name,mPairingKey));
-break;
-case BluetoothDevice.PAIRING_VARIANT_OOB_CONSENT:
-mPairingView.setVisibility(View.GONE);
-messageView.setText(getString(R.string.bluetooth_incoming_pairing_msg,name));
+messageText=getString(R.string.bluetooth_display_passkey_pin_msg,name,mPairingKey);
 break;
 default :
 Log.e(TAG,"Incorrect pairing type received, not creating view");
+return null;
 }
+messageView.setText(Html.fromHtml(messageText));
 return view;
 }

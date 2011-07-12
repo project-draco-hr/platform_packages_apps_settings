@@ -2,4 +2,11 @@
   super.onResume();
   mBluetoothEnabler.resume();
   updateContent(mLocalAdapter.getBluetoothState());
+  if (mDiscoverableEnabler != null) {
+    mDiscoverableEnabler.resume();
+  }
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+  filter.addAction(BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED);
+  getActivity().registerReceiver(mReceiver,filter);
 }

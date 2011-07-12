@@ -1,8 +1,9 @@
 {
   if (getDiscoverableTimeout() == DISCOVERABLE_TIMEOUT_NEVER) {
-    mCheckBoxPreference.setSummaryOn(mContext.getString(R.string.bluetooth_is_discoverable_always));
+    mDiscoveryPreference.setSummary(R.string.bluetooth_is_discoverable_always);
   }
  else {
-    mCheckBoxPreference.setSummaryOn(mContext.getString(R.string.bluetooth_is_discoverable,timeout));
+    String textTimeout=DateUtils.formatElapsedTime(timeout);
+    mDiscoveryPreference.setSummary(mContext.getString(R.string.bluetooth_is_discoverable,textTimeout));
   }
 }

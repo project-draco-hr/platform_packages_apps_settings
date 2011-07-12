@@ -5,13 +5,15 @@ case MENU_ID_SCAN:
       startScanning();
     }
   return true;
-case MENU_ID_ADVANCED:
-if (getActivity() instanceof PreferenceActivity) {
-  ((PreferenceActivity)getActivity()).startPreferencePanel(AdvancedBluetoothSettings.class.getCanonicalName(),null,R.string.bluetooth_advanced_titlebar,null,this,0);
-}
- else {
-  startFragment(this,AdvancedBluetoothSettings.class.getCanonicalName(),-1,null);
-}
+case MENU_ID_RENAME_DEVICE:
+new BluetoothNameDialogFragment(mLocalAdapter).show(getFragmentManager(),"rename device");
+return true;
+case MENU_ID_VISIBILITY_TIMEOUT:
+new BluetoothVisibilityTimeoutFragment(mDiscoverableEnabler).show(getFragmentManager(),"visibility timeout");
+return true;
+case MENU_ID_SHOW_RECEIVED:
+Intent intent=new Intent(BTOPP_ACTION_OPEN_RECEIVED_FILES);
+getActivity().sendBroadcast(intent);
 return true;
 }
 return super.onOptionsItemSelected(item);

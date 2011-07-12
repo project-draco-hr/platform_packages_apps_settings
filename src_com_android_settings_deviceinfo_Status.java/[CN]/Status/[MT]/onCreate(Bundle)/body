@@ -23,8 +23,15 @@
       setSummaryText(KEY_MEID_NUMBER,mPhone.getMeid());
       setSummaryText(KEY_MIN_NUMBER,mPhone.getCdmaMin());
       setSummaryText(KEY_PRL_VERSION,mPhone.getCdmaPrlVersion());
-      removePreferenceFromScreen(KEY_IMEI);
       removePreferenceFromScreen(KEY_IMEI_SV);
+      if (mPhone.getLteOnCdmaMode() == Phone.LTE_ON_CDMA_TRUE) {
+        setSummaryText(KEY_ICC_ID,mPhone.getIccSerialNumber());
+        setSummaryText(KEY_IMEI,mPhone.getImei());
+      }
+ else {
+        removePreferenceFromScreen(KEY_IMEI);
+        removePreferenceFromScreen(KEY_ICC_ID);
+      }
     }
  else {
       setSummaryText(KEY_IMEI,mPhone.getDeviceId());
@@ -32,6 +39,7 @@
       removePreferenceFromScreen(KEY_PRL_VERSION);
       removePreferenceFromScreen(KEY_MEID_NUMBER);
       removePreferenceFromScreen(KEY_MIN_NUMBER);
+      removePreferenceFromScreen(KEY_ICC_ID);
     }
     String rawNumber=mPhone.getLine1Number();
     String formattedNumber=null;

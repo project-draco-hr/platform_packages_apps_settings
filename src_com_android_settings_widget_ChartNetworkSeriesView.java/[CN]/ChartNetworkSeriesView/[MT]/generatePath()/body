@@ -2,7 +2,7 @@
   if (LOGD)   Log.d(TAG,"generatePath()");
   mPathStroke.reset();
   mPathFill.reset();
-  if (mStats == null || mStats.bucketCount < 2)   return;
+  if (mStats == null || mStats.size() < 2)   return;
   final int width=getWidth();
   final int height=getHeight();
   boolean started=false;
@@ -10,8 +10,10 @@
   float lastX=0;
   float lastY=0;
   long totalData=0;
-  for (int i=0; i < mStats.bucketCount; i++) {
-    final float x=mHoriz.convertToPoint(mStats.bucketStart[i]);
+  NetworkStatsHistory.Entry entry=null;
+  for (int i=0; i < mStats.size(); i++) {
+    entry=mStats.getValues(i,entry);
+    final float x=mHoriz.convertToPoint(entry.bucketStart);
     final float y=mVert.convertToPoint(totalData);
     if (i > 0 && !started && x > 0) {
       mPathStroke.moveTo(lastX,lastY);
@@ -22,7 +24,7 @@
     if (started) {
       mPathStroke.lineTo(x,y);
       mPathFill.lineTo(x,y);
-      totalData+=mStats.rx[i] + mStats.tx[i];
+      totalData+=entry.rxBytes + entry.txBytes;
     }
     if (x > width)     break;
     lastX=x;

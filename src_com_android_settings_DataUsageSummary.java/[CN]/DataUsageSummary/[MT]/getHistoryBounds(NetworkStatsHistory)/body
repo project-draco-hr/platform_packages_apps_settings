@@ -2,9 +2,12 @@
   final long currentTime=System.currentTimeMillis();
   long start=currentTime;
   long end=currentTime;
-  if (history.bucketCount > 0) {
-    start=history.bucketStart[0];
-    end=history.bucketStart[history.bucketCount - 1];
+  NetworkStatsHistory.Entry entry=null;
+  if (history.size() > 0) {
+    entry=history.getValues(0,entry);
+    start=entry.bucketStart;
+    entry=history.getValues(history.size() - 1,entry);
+    end=entry.bucketStart + entry.bucketDuration;
   }
   return new long[]{start,end};
 }

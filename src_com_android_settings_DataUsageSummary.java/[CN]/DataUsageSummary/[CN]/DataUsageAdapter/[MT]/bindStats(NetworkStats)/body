@@ -1,13 +1,24 @@
 {
   mItems.clear();
   if (stats != null) {
+    final AppUsageItem systemItem=new AppUsageItem();
+    systemItem.uid=android.os.Process.SYSTEM_UID;
     NetworkStats.Entry entry=null;
     for (int i=0; i < stats.size(); i++) {
       entry=stats.getValues(i,entry);
-      final AppUsageItem item=new AppUsageItem();
-      item.uid=entry.uid;
-      item.total=entry.rxBytes + entry.txBytes;
-      mItems.add(item);
+      final boolean isApp=entry.uid >= android.os.Process.FIRST_APPLICATION_UID && entry.uid <= android.os.Process.LAST_APPLICATION_UID;
+      if (isApp || entry.uid == TrafficStats.UID_REMOVED) {
+        final AppUsageItem item=new AppUsageItem();
+        item.uid=entry.uid;
+        item.total=entry.rxBytes + entry.txBytes;
+        mItems.add(item);
+      }
+ else {
+        systemItem.total+=entry.rxBytes + entry.txBytes;
+      }
+    }
+    if (systemItem.total > 0) {
+      mItems.add(systemItem);
     }
   }
   Collections.sort(mItems);

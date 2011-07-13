@@ -1,0 +1,16 @@
+{
+  super(context);
+  mController=controller;
+  final View container=LayoutInflater.from(context).inflate(R.layout.accessibility_tutorial_container,this,true);
+  mInstructions=(TextView)container.findViewById(R.id.instructions);
+  mTitle=(TextView)container.findViewById(R.id.title);
+  mTitle.setText(titleResId);
+  mPrevious=(Button)container.findViewById(R.id.back_button);
+  mPrevious.setOnClickListener(this);
+  mNext=(Button)container.findViewById(R.id.next_button);
+  mNext.setOnClickListener(this);
+  mFinish=(Button)container.findViewById(R.id.finish_button);
+  mFinish.setOnClickListener(this);
+  final ViewGroup contentHolder=(ViewGroup)container.findViewById(R.id.content);
+  LayoutInflater.from(context).inflate(layoutResId,contentHolder,true);
+}

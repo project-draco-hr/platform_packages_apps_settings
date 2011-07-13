@@ -3,11 +3,10 @@
     convertView=LayoutInflater.from(parent.getContext()).inflate(R.layout.data_usage_item,parent,false);
   }
   final Context context=parent.getContext();
-  final PackageManager pm=context.getPackageManager();
   final TextView text1=(TextView)convertView.findViewById(android.R.id.text1);
   final TextView text2=(TextView)convertView.findViewById(android.R.id.text2);
   final AppUsageItem item=mItems.get(position);
-  text1.setText(resolveLabelForUid(pm,item.uid));
+  text1.setText(resolveLabelForUid(context,item.uid));
   text2.setText(Formatter.formatFileSize(context,item.total));
   return convertView;
 }

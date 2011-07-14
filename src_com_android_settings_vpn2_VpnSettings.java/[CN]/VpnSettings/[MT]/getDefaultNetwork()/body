@@ -1,0 +1,21 @@
+{
+  LinkProperties network=mService.getActiveLinkProperties();
+  if (network == null) {
+    throw new IllegalStateException("Network is not available");
+  }
+  String interfaze=network.getInterfaceName();
+  if (interfaze == null) {
+    throw new IllegalStateException("Cannot get the default interface");
+  }
+  String gateway=null;
+  for (  RouteInfo route : network.getRoutes()) {
+    if (route.isDefaultRoute() && route.getGateway() instanceof Inet4Address) {
+      gateway=route.getGateway().getHostAddress();
+      break;
+    }
+  }
+  if (gateway == null) {
+    throw new IllegalStateException("Cannot get the default gateway");
+  }
+  return new String[]{interfaze,gateway};
+}

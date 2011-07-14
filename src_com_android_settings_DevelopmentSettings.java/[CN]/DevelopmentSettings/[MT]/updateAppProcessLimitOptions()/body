@@ -6,10 +6,12 @@
       int val=Integer.parseInt(values[i].toString());
       if (val >= limit) {
         mAppProcessLimit.setValueIndex(i);
+        mAppProcessLimit.setSummary(mAppProcessLimit.getEntries()[i]);
         return;
       }
     }
     mAppProcessLimit.setValueIndex(0);
+    mAppProcessLimit.setSummary(mAppProcessLimit.getEntries()[0]);
   }
  catch (  RemoteException e) {
   }

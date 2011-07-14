@@ -6,10 +6,12 @@
       float val=Float.parseFloat(values[i].toString());
       if (scale <= val) {
         pref.setValueIndex(i);
+        pref.setSummary(pref.getEntries()[i]);
         return;
       }
     }
     pref.setValueIndex(values.length - 1);
+    pref.setSummary(pref.getEntries()[0]);
   }
  catch (  RemoteException e) {
   }

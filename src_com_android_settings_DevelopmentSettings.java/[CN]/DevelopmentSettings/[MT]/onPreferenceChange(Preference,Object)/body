@@ -4,5 +4,17 @@
     updateHdcpValues();
     return true;
   }
+ else   if (preference == mWindowAnimationScale) {
+    writeAnimationScaleOption(0,mWindowAnimationScale,newValue);
+    return true;
+  }
+ else   if (preference == mTransitionAnimationScale) {
+    writeAnimationScaleOption(1,mTransitionAnimationScale,newValue);
+    return true;
+  }
+ else   if (preference == mAppProcessLimit) {
+    writeAppProcessLimitOptions(newValue);
+    return true;
+  }
   return false;
 }

@@ -2,6 +2,7 @@
   try {
     int limit=Integer.parseInt(newValue.toString());
     ActivityManagerNative.getDefault().setProcessLimit(limit);
+    updateAppProcessLimitOptions();
   }
  catch (  RemoteException e) {
   }

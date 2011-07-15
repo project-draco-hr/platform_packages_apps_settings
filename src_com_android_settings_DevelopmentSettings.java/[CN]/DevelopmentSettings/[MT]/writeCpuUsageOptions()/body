@@ -1,7 +1,7 @@
 {
   boolean value=mShowCpuUsage.isChecked();
   Settings.System.putInt(getActivity().getContentResolver(),Settings.System.SHOW_PROCESSES,value ? 1 : 0);
-  Intent service=(new Intent()).setClassName("android","com.android.server.LoadAverageService");
+  Intent service=(new Intent()).setClassName("com.android.systemui","com.android.systemui.LoadAverageService");
   if (value) {
     getActivity().startService(service);
   }

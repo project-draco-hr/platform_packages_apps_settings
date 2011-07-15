@@ -6,23 +6,32 @@
     mTabHost.addTab(buildTabSpec(TAB_3G,R.string.data_usage_tab_3g));
     mTabHost.addTab(buildTabSpec(TAB_4G,R.string.data_usage_tab_4g));
   }
-  if (mShowWifi && hasWifiRadio(context) && hasMobileRadio(context)) {
-    if (!mobileSplit) {
-      mTabHost.addTab(buildTabSpec(TAB_MOBILE,R.string.data_usage_tab_mobile));
-    }
+ else   if (hasMobileRadio(context)) {
+    mTabHost.addTab(buildTabSpec(TAB_MOBILE,R.string.data_usage_tab_mobile));
+  }
+  if (mShowWifi && hasWifiRadio(context)) {
     mTabHost.addTab(buildTabSpec(TAB_WIFI,R.string.data_usage_tab_wifi));
   }
-  final boolean hasTabs=mTabWidget.getTabCount() > 0;
-  mTabWidget.setVisibility(hasTabs ? View.VISIBLE : View.GONE);
-  if (hasTabs) {
-    if (mIntentTab != null) {
+  if (mShowEthernet && hasEthernet(context)) {
+    mTabHost.addTab(buildTabSpec(TAB_ETHERNET,R.string.data_usage_tab_ethernet));
+  }
+  final boolean multipleTabs=mTabWidget.getTabCount() > 1;
+  mTabWidget.setVisibility(multipleTabs ? View.VISIBLE : View.GONE);
+  if (mIntentTab != null) {
+    if (Objects.equal(mIntentTab,mTabHost.getCurrentTabTag())) {
+      updateBody();
+    }
+ else {
       mTabHost.setCurrentTabByTag(mIntentTab);
+    }
+    mIntentTab=null;
+  }
+ else {
+    if (mTabHost.getCurrentTab() == 0) {
+      updateBody();
     }
  else {
       mTabHost.setCurrentTab(0);
     }
-  }
- else {
-    updateBody();
   }
 }

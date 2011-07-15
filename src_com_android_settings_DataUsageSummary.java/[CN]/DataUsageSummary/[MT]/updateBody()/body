@@ -1,19 +1,14 @@
 {
   mBinding=true;
   final Context context=getActivity();
-  final String tabTag=mTabHost.getCurrentTabTag();
-  final String currentTab;
-  if (tabTag != null) {
-    currentTab=tabTag;
-  }
- else   if (hasMobileRadio(context)) {
-    currentTab=TAB_MOBILE;
-  }
- else   if (hasWifiRadio(context)) {
-    currentTab=TAB_WIFI;
+  final String currentTab=mTabHost.getCurrentTabTag();
+  if (currentTab == null) {
+    Log.w(TAG,"no tab selected; hiding body");
+    mListView.setVisibility(View.GONE);
+    return;
   }
  else {
-    throw new IllegalStateException("no mobile or wifi radios");
+    mListView.setVisibility(View.VISIBLE);
   }
   final boolean tabChanged=!currentTab.equals(mCurrentTab);
   mCurrentTab=currentTab;
@@ -21,28 +16,32 @@
   if (TAB_WIFI.equals(currentTab)) {
     mDataEnabledView.setVisibility(View.GONE);
     mDisableAtLimitView.setVisibility(View.GONE);
-    mTemplate=new NetworkTemplate(MATCH_WIFI,null);
+    mTemplate=buildTemplateWifi();
+  }
+ else   if (TAB_ETHERNET.equals(currentTab)) {
+    mDataEnabledView.setVisibility(View.GONE);
+    mDisableAtLimitView.setVisibility(View.GONE);
+    mTemplate=buildTemplateEthernet();
   }
  else {
     mDataEnabledView.setVisibility(View.VISIBLE);
     mDisableAtLimitView.setVisibility(View.VISIBLE);
   }
-  final String subscriberId=getActiveSubscriberId(context);
   if (TAB_MOBILE.equals(currentTab)) {
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_mobile);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_mobile_limit);
     mDataEnabled.setChecked(mConnService.getMobileDataEnabled());
-    mTemplate=new NetworkTemplate(MATCH_MOBILE_ALL,subscriberId);
+    mTemplate=buildTemplateMobileAll(getActiveSubscriberId(context));
   }
  else   if (TAB_3G.equals(currentTab)) {
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_3g);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_3g_limit);
-    mTemplate=new NetworkTemplate(MATCH_MOBILE_3G_LOWER,subscriberId);
+    mTemplate=buildTemplateMobile3gLower(getActiveSubscriberId(context));
   }
  else   if (TAB_4G.equals(currentTab)) {
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_4g);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_4g_limit);
-    mTemplate=new NetworkTemplate(MATCH_MOBILE_4G,subscriberId);
+    mTemplate=buildTemplateMobile4g(getActiveSubscriberId(context));
   }
   try {
     mHistory=mStatsService.getHistoryForNetwork(mTemplate);

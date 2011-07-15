@@ -17,7 +17,9 @@
       return null;
     }
     @Override protected void onPostExecute(    Void result){
-      updateBody();
+      if (isAdded()) {
+        updateBody();
+      }
     }
   }
 .execute();

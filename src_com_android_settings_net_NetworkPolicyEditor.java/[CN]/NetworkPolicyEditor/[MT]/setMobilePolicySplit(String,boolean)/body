@@ -1,8 +1,8 @@
 {
   final boolean beforeSplit=isMobilePolicySplit(subscriberId);
-  final NetworkTemplate template3g=new NetworkTemplate(MATCH_MOBILE_3G_LOWER,subscriberId);
-  final NetworkTemplate template4g=new NetworkTemplate(MATCH_MOBILE_4G,subscriberId);
-  final NetworkTemplate templateAll=new NetworkTemplate(MATCH_MOBILE_ALL,subscriberId);
+  final NetworkTemplate template3g=buildTemplateMobile3gLower(subscriberId);
+  final NetworkTemplate template4g=buildTemplateMobile4g(subscriberId);
+  final NetworkTemplate templateAll=buildTemplateMobileAll(subscriberId);
   if (split == beforeSplit) {
     return;
   }

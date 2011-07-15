@@ -1,4 +1,7 @@
 {
+  if (TEST_RADIOS) {
+    return SystemProperties.get(TEST_RADIOS_PROP).contains("4g");
+  }
   final ConnectivityManager conn=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
   final TelephonyManager telephony=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
   final boolean hasWimax=conn.getNetworkInfo(TYPE_WIMAX) != null;

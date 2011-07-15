@@ -1,4 +1,10 @@
 {
-  final String subscriberId=getActiveSubscriberId(getActivity());
-  return mPolicyEditor.isMobilePolicySplit(subscriberId);
+  final Context context=getActivity();
+  if (hasMobileRadio(context)) {
+    final String subscriberId=getActiveSubscriberId(context);
+    return mPolicyEditor.isMobilePolicySplit(subscriberId);
+  }
+ else {
+    return false;
+  }
 }

@@ -38,6 +38,14 @@ item.setChecked(mShowWifi);
 updateTabs();
 return true;
 }
+case R.id.data_usage_menu_show_ethernet:
+{
+mShowEthernet=!item.isChecked();
+mPrefs.edit().putBoolean(PREF_SHOW_ETHERNET,mShowEthernet).apply();
+item.setChecked(mShowEthernet);
+updateTabs();
+return true;
+}
 }
 return false;
 }

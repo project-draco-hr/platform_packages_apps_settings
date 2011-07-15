@@ -49,6 +49,13 @@
       Log.e(TAG,Settings.System.NOTIFICATION_LIGHT_PULSE + " not found");
     }
   }
+  mMusicFx=mSoundSettings.findPreference(KEY_MUSICFX);
+  Intent i=new Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL);
+  PackageManager p=getPackageManager();
+  List<ResolveInfo> ris=p.queryIntentActivities(i,PackageManager.GET_DISABLED_COMPONENTS);
+  if (ris.size() <= 2) {
+    mSoundSettings.removePreference(mMusicFx);
+  }
   if (!Utils.isVoiceCapable(getActivity())) {
     for (    String prefKey : NEED_VOICE_CAPABILITY) {
       Preference pref=findPreference(prefKey);

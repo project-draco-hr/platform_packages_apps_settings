@@ -3,4 +3,13 @@
   mManager.setForegroundActivity(getActivity());
   mCachedDevice.registerCallback(this);
   refresh();
+  EditText et=mDeviceNamePref.getEditText();
+  if (et != null) {
+    et.addTextChangedListener(mRenameDeviceNamePref);
+    Dialog d=mDeviceNamePref.getDialog();
+    if (d instanceof AlertDialog) {
+      Button b=((AlertDialog)d).getButton(AlertDialog.BUTTON_POSITIVE);
+      b.setEnabled(et.getText().length() > 0);
+    }
+  }
 }

@@ -7,6 +7,7 @@
   mToggleScriptInjectionCheckBox=(CheckBoxPreference)findPreference(TOGGLE_ACCESSIBILITY_SCRIPT_INJECTION_CHECKBOX);
   mPowerButtonCategory=(PreferenceCategory)findPreference(POWER_BUTTON_CATEGORY);
   mPowerButtonEndsCallCheckBox=(CheckBoxPreference)findPreference(POWER_BUTTON_ENDS_CALL_CHECKBOX);
+  mTouchExplorationEnabledCheckBox=(CheckBoxPreference)findPreference(TOUCH_EXPLORATION_ENABLED_CHECKBOX);
   mLongPressTimeoutListPreference=(ListPreference)findPreference(KEY_LONG_PRESS_TIMEOUT_LIST_PREFERENCE);
   boolean scriptInjectionEnabled=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,0) == 1);
   mToggleScriptInjectionCheckBox.setChecked(scriptInjectionEnabled);
@@ -20,5 +21,7 @@
  else {
     getPreferenceScreen().removePreference(mPowerButtonCategory);
   }
+  boolean touchExplorationEnabled=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.TOUCH_EXPLORATION_REQUESTED,0) == 1);
+  mTouchExplorationEnabledCheckBox.setChecked(touchExplorationEnabled);
   mLongPressTimeoutListPreference.setOnPreferenceChangeListener(this);
 }

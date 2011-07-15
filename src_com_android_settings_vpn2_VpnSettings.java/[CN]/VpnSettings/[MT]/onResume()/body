@@ -13,6 +13,7 @@
   mUnlocking=false;
   if (mPreferences == null) {
     mPreferences=new HashMap<String,VpnPreference>();
+    PreferenceGroup group=getPreferenceScreen();
     String[] keys=mKeyStore.saw(Credentials.VPN);
     if (keys != null && keys.length > 0) {
       Context context=getActivity();
@@ -25,13 +26,11 @@
  else {
           VpnPreference preference=new VpnPreference(context,profile);
           mPreferences.put(key,preference);
+          group.addPreference(preference);
         }
       }
     }
-  }
-  PreferenceGroup group=getPreferenceScreen();
-  for (  VpnPreference preference : mPreferences.values()) {
-    group.addPreference(preference);
+    group.findPreference("add_network").setOnPreferenceClickListener(this);
   }
   if (mDialog != null) {
     mDialog.setOnDismissListener(this);

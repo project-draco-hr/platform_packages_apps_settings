@@ -12,14 +12,14 @@
     AccessibilityServiceInfo accessibilityServiceInfo=installedServices.get(i);
     String key=accessibilityServiceInfo.getId();
     if (mAccessibilityServices.put(key,accessibilityServiceInfo) == null) {
-      String settingsActivityName=accessibilityServiceInfo.getSettingsActivityName();
+      SettingsCheckBoxPreference preference=null;
       Intent settingsIntent=null;
+      String settingsActivityName=accessibilityServiceInfo.getSettingsActivityName();
       if (!TextUtils.isEmpty(settingsActivityName)) {
-        String packageName=accessibilityServiceInfo.getResolveInfo().serviceInfo.packageName;
         settingsIntent=new Intent(Intent.ACTION_MAIN);
-        settingsIntent.setClassName(packageName,settingsActivityName);
+        settingsIntent.setClassName(accessibilityServiceInfo.getResolveInfo().serviceInfo.packageName,settingsActivityName);
       }
-      SettingsCheckBoxPreference preference=new SettingsCheckBoxPreference(getActivity(),settingsIntent);
+      preference=new SettingsCheckBoxPreference(getActivity(),settingsIntent);
       preference.setKey(key);
       preference.setOrder(i);
       ServiceInfo serviceInfo=accessibilityServiceInfo.getResolveInfo().serviceInfo;

@@ -41,6 +41,13 @@ getOwner().forceStopPackage(getOwner().mAppEntry.info.packageName);
 case DLG_MOVE_FAILED:
 CharSequence msg=getActivity().getString(R.string.move_app_failed_dlg_text,getOwner().getMoveErrMsg(moveErrorCode));
 return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.string.move_app_failed_dlg_title)).setIcon(android.R.drawable.ic_dialog_alert).setMessage(msg).setNeutralButton(R.string.dlg_ok,null).create();
+case DLG_DISABLE:
+return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.string.app_disable_dlg_title)).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getActivity().getText(R.string.app_disable_dlg_text)).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+new DisableChanger(getOwner(),getOwner().mAppEntry.info,PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER).execute((Object)null);
+}
+}
+).setNegativeButton(R.string.dlg_cancel,null).create();
 }
 throw new IllegalArgumentException("unknown id " + id);
 }

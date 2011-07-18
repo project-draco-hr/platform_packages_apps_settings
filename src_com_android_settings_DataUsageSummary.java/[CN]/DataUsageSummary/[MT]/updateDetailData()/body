@@ -7,8 +7,7 @@
       final Context context=mChart.getContext();
       final long now=System.currentTimeMillis();
       final NetworkStatsHistory.Entry entry=mDetailHistory.getValues(start,end,now,null);
-      final long total=entry.rxBytes + entry.txBytes;
-      mAppSubtitle.setText(Formatter.formatFileSize(context,total));
+      mAppSubtitle.setText(getString(R.string.data_usage_received_sent,Formatter.formatFileSize(context,entry.rxBytes),Formatter.formatFileSize(context,entry.txBytes)));
     }
     getLoaderManager().destroyLoader(LOADER_SUMMARY);
   }

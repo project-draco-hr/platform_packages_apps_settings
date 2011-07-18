@@ -15,6 +15,10 @@
     boolean isChecked=((CheckBoxPreference)preference).isChecked();
     Settings.Secure.putInt(getContentResolver(),Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,(isChecked ? Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP : Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_SCREEN_OFF));
   }
+ else   if (TOUCH_EXPLORATION_ENABLED_CHECKBOX.equals(key)) {
+    final int touchExplorationState=((CheckBoxPreference)preference).isChecked() ? 1 : 0;
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.TOUCH_EXPLORATION_REQUESTED,touchExplorationState);
+  }
  else   if (TOGGLE_ACCESSIBILITY_SCRIPT_INJECTION_CHECKBOX.equals(key)) {
     handleToggleAccessibilityScriptInjection((CheckBoxPreference)preference);
   }

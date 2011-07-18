@@ -1,5 +1,13 @@
 {
   super.onCreate(savedInstanceState);
+  if (savedInstanceState != null) {
+    mAddAccountCalled=savedInstanceState.getBoolean(KEY_ADD_CALLED);
+    if (Log.isLoggable(TAG,Log.VERBOSE))     Log.v(TAG,"restored");
+  }
+  if (mAddAccountCalled) {
+    finish();
+    return;
+  }
   final String[] authorities=getIntent().getStringArrayExtra(AccountPreferenceBase.AUTHORITIES_FILTER_KEY);
   final String[] accountTypes=getIntent().getStringArrayExtra(AccountPreferenceBase.ACCOUNT_TYPES_FILTER_KEY);
   final Intent intent=new Intent(this,ChooseAccountActivity.class);

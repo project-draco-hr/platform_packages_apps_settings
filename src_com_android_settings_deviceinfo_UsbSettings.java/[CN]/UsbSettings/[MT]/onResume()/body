@@ -1,5 +1,5 @@
 {
   super.onResume();
   createPreferenceHierarchy();
-  updateToggles();
+  getActivity().registerReceiver(mStateReceiver,new IntentFilter(UsbManager.ACTION_USB_STATE));
 }

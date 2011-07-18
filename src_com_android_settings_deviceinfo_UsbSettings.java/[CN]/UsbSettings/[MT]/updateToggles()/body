@@ -11,4 +11,12 @@
     mMtp.setChecked(false);
     mPtp.setChecked(false);
   }
+  if (mInstallerCd != null) {
+    if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_MASS_STORAGE)) {
+      mInstallerCd.setTitle(R.string.usb_label_installer_cd_done);
+    }
+ else {
+      mInstallerCd.setTitle(R.string.usb_label_installer_cd);
+    }
+  }
 }

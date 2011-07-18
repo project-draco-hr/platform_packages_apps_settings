@@ -9,11 +9,10 @@
   }
   if (preference == mMtp) {
     mUsbManager.setCurrentFunction(UsbManager.USB_FUNCTION_MTP,true);
-    mPtp.setChecked(false);
   }
  else   if (preference == mPtp) {
     mUsbManager.setCurrentFunction(UsbManager.USB_FUNCTION_PTP,true);
-    mMtp.setChecked(false);
   }
+  updateToggles();
   return true;
 }

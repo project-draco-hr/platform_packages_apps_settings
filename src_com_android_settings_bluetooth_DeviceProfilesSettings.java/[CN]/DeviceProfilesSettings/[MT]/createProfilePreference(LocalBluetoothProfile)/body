@@ -6,7 +6,7 @@
   pref.setPersistent(false);
   pref.setOrder(getProfilePreferenceIndex(profile.getOrdinal()));
   pref.setOnExpandClickListener(this);
-  int iconResource=profile.getDrawableResource(null);
+  int iconResource=profile.getDrawableResource(mCachedDevice.getBtClass());
   if (iconResource != 0) {
     pref.setProfileDrawable(getResources().getDrawable(iconResource));
   }

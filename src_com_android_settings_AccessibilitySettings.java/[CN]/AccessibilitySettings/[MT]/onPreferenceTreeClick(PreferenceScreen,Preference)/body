@@ -6,7 +6,7 @@
  else   if (TOGGLE_LARGE_TEXT_CHECKBOX.equals(key)) {
     try {
       mCurConfig.fontScale=mToggleLargeTextCheckBox.isChecked() ? LARGE_FONT_SCALE : 1;
-      ActivityManagerNative.getDefault().updateConfiguration(mCurConfig);
+      ActivityManagerNative.getDefault().updatePersistentConfiguration(mCurConfig);
     }
  catch (    RemoteException e) {
     }

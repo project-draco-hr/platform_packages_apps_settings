@@ -2,11 +2,10 @@
   super.onResume();
   if (mOkButton == null) {
     mOkButton=mAlertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-    mOkButton.setEnabled(false);
+    mOkButton.setEnabled(mDeviceNameEdited);
   }
   IntentFilter filter=new IntentFilter();
   filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
   filter.addAction(BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED);
   getActivity().registerReceiver(mReceiver,filter);
-  updateDeviceName();
 }

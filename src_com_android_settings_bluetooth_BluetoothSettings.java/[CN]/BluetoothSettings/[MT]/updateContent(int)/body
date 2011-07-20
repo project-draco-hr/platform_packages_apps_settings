@@ -21,6 +21,7 @@ preferenceScreen.addPreference(mMyDevicePreference);
 if (mDiscoverableEnabler == null) {
 mDiscoverableEnabler=new BluetoothDiscoverableEnabler(getActivity(),mLocalAdapter,mMyDevicePreference);
 mDiscoverableEnabler.resume();
+LocalBluetoothManager.getInstance(getActivity()).setDiscoverableEnabler(mDiscoverableEnabler);
 }
 if (mPairedDevicesCategory == null) {
 mPairedDevicesCategory=new PreferenceCategory(getActivity());

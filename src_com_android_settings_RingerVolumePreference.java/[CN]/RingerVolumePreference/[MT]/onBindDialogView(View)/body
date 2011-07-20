@@ -12,8 +12,13 @@
   }
   mNotificationsUseRingVolumeCheckbox=(CheckBox)view.findViewById(R.id.same_notification_volume);
   mNotificationsUseRingVolumeCheckbox.setOnCheckedChangeListener(this);
-  mNotificationsUseRingVolumeCheckbox.setChecked(Utils.isVoiceCapable(getContext()) && Settings.System.getInt(getContext().getContentResolver(),Settings.System.NOTIFICATIONS_USE_RING_VOLUME,1) == 1);
-  setNotificationVolumeVisibility(!mNotificationsUseRingVolumeCheckbox.isChecked());
+  mNotificationsUseRingVolumeCheckbox.setChecked(Settings.System.getInt(getContext().getContentResolver(),Settings.System.NOTIFICATIONS_USE_RING_VOLUME,1) == 1);
+  if (Utils.isVoiceCapable(getContext())) {
+    setNotificationVolumeVisibility(!mNotificationsUseRingVolumeCheckbox.isChecked());
+  }
+ else {
+    setNotificationVolumeVisibility(true);
+  }
   disableSettingsThatNeedVoice(view);
   for (int i=0; i < mCheckBoxes.length; i++) {
     ImageView checkbox=(ImageView)view.findViewById(CHECKBOX_VIEW_ID[i]);

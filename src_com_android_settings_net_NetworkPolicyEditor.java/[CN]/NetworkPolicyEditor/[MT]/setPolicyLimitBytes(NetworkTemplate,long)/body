@@ -1,4 +1,6 @@
 {
-  getPolicy(template).limitBytes=limitBytes;
+  final NetworkPolicy policy=getPolicy(template);
+  policy.limitBytes=limitBytes;
+  policy.lastSnooze=SNOOZE_NEVER;
   writeAsync();
 }

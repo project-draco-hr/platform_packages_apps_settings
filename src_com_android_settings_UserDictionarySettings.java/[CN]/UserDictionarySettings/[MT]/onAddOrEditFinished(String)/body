@@ -15,7 +15,7 @@
     UserDictionary.Words.addWord(getActivity(),word.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,UserDictionary.Words.LOCALE_TYPE_CURRENT);
     Locale.setDefault(prevLocale);
   }
-  if (!mCursor.requery()) {
+  if (null != mCursor && !mCursor.requery()) {
     throw new IllegalStateException("can't requery on already-closed cursor.");
   }
   mAddedWordAlready=true;

@@ -1,7 +1,10 @@
 {
   final Activity activity=getActivity();
   final Set<String> localeList=UserDictionaryList.getUserDictionaryLocalesList(activity);
-  if (localeList.size() <= 1) {
+  if (null == localeList) {
+    ((PreferenceGroup)findPreference("language_settings_category")).removePreference(userDictionaryPreference);
+  }
+ else   if (localeList.size() <= 1) {
     userDictionaryPreference.setTitle(R.string.user_dict_single_settings_title);
     userDictionaryPreference.setFragment(UserDictionarySettings.class.getName());
     if (localeList.size() == 1) {

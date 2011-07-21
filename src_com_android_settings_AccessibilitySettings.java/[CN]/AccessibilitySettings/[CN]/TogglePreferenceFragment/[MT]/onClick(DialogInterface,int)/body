@@ -1,0 +1,13 @@
+{
+switch (which) {
+case DialogInterface.BUTTON_POSITIVE:
+    mToggleSwitch.setCheckedNoBeforeCheckedChangeListener(true);
+  onPreferenceToggled(mPreferenceKey,true);
+break;
+case DialogInterface.BUTTON_NEGATIVE:
+onPreferenceToggled(mPreferenceKey,false);
+break;
+default :
+throw new IllegalArgumentException();
+}
+}

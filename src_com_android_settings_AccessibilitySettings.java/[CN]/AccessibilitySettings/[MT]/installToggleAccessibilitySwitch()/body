@@ -1,0 +1,18 @@
+{
+  mToggleAccessibilitySwitch=createActionBarToggleSwitch(getActivity());
+  final boolean checked=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0) == 1);
+  mToggleAccessibilitySwitch.setChecked(checked);
+  mToggleAccessibilitySwitch.setOnBeforeCheckedChangeListener(new OnBeforeCheckedChangeListener(){
+    @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
+      if (!checked) {
+        toggleSwitch.setCheckedNoBeforeCheckedChangeListener(true);
+        showDialog(DIALOG_ID_DISABLE_ACCESSIBILITY);
+        return true;
+      }
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,1);
+      updatePreferencesForAccessibilityState();
+      return false;
+    }
+  }
+);
+}

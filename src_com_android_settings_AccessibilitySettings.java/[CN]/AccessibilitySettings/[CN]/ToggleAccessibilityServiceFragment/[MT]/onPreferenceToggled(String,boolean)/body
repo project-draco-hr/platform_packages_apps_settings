@@ -1,0 +1,31 @@
+{
+  String enabledServices=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+  if (enabledServices == null) {
+    enabledServices="";
+  }
+  final int length=enabledServices.length();
+  if (enabled) {
+    if (enabledServices.contains(preferenceKey)) {
+      return;
+    }
+    if (length == 0) {
+      enabledServices+=preferenceKey;
+      Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServices);
+    }
+ else     if (length > 0) {
+      enabledServices+=ENABLED_ACCESSIBILITY_SERVICES_SEPARATOR + preferenceKey;
+      Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServices);
+    }
+  }
+ else {
+    final int index=enabledServices.indexOf(preferenceKey);
+    if (index == 0) {
+      enabledServices=enabledServices.replace(preferenceKey,"");
+      Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServices);
+    }
+ else     if (index > 0) {
+      enabledServices=enabledServices.replace(ENABLED_ACCESSIBILITY_SERVICES_SEPARATOR + preferenceKey,"");
+      Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServices);
+    }
+  }
+}

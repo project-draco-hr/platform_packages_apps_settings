@@ -1,0 +1,8 @@
+{
+switch (dialogId) {
+case DIALOG_ID_WARNING:
+    return new AlertDialog.Builder(getActivity()).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(mWarningMessage).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
+default :
+  throw new IllegalArgumentException();
+}
+}

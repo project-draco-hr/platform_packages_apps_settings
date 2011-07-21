@@ -1,27 +1,6 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.accessibility_settings);
-  mToggleLargeTextCheckBox=(CheckBoxPreference)findPreference(TOGGLE_LARGE_TEXT_CHECKBOX);
-  mAccessibilityServicesCategory=(PreferenceGroup)findPreference(ACCESSIBILITY_SERVICES_CATEGORY);
-  mToggleAccessibilityCheckBox=(CheckBoxPreference)findPreference(TOGGLE_ACCESSIBILITY_CHECKBOX);
-  mToggleScriptInjectionCheckBox=(CheckBoxPreference)findPreference(TOGGLE_ACCESSIBILITY_SCRIPT_INJECTION_CHECKBOX);
-  mPowerButtonCategory=(PreferenceCategory)findPreference(POWER_BUTTON_CATEGORY);
-  mPowerButtonEndsCallCheckBox=(CheckBoxPreference)findPreference(POWER_BUTTON_ENDS_CALL_CHECKBOX);
-  mTouchExplorationEnabledCheckBox=(CheckBoxPreference)findPreference(TOUCH_EXPLORATION_ENABLED_CHECKBOX);
-  mLongPressTimeoutListPreference=(ListPreference)findPreference(KEY_LONG_PRESS_TIMEOUT_LIST_PREFERENCE);
-  boolean scriptInjectionEnabled=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,0) == 1);
-  mToggleScriptInjectionCheckBox.setChecked(scriptInjectionEnabled);
-  mToggleScriptInjectionCheckBox.setEnabled(true);
-  if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER) && Utils.isVoiceCapable(getActivity())) {
-    int incallPowerBehavior=Settings.Secure.getInt(getContentResolver(),Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT);
-    boolean powerButtonCheckboxEnabled=(incallPowerBehavior == Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP);
-    mPowerButtonEndsCallCheckBox.setChecked(powerButtonCheckboxEnabled);
-    mPowerButtonEndsCallCheckBox.setEnabled(true);
-  }
- else {
-    getPreferenceScreen().removePreference(mPowerButtonCategory);
-  }
-  boolean touchExplorationEnabled=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.TOUCH_EXPLORATION_REQUESTED,0) == 1);
-  mTouchExplorationEnabledCheckBox.setChecked(touchExplorationEnabled);
-  mLongPressTimeoutListPreference.setOnPreferenceChangeListener(this);
+  installToggleAccessibilitySwitch();
+  findPreferences();
 }

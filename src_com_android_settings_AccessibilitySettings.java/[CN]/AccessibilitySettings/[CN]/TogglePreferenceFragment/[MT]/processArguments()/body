@@ -1,0 +1,21 @@
+{
+  Bundle arguments=getArguments();
+  mPreferenceKey=arguments.getString(EXTRA_PREFERENCE_KEY);
+  final boolean enabled=arguments.getBoolean(EXTRA_CHECKED);
+  mToggleSwitch.setCheckedNoBeforeCheckedChangeListener(enabled);
+  String title=arguments.getString(EXTRA_TITLE);
+  getActivity().getActionBar().setTitle(arguments.getCharSequence(EXTRA_TITLE));
+  String summary=arguments.getString(EXTRA_SUMMARY);
+  mSummaryPreference.setSummary(summary);
+  String settingsTitle=arguments.getString(EXTRA_SETTINGS_TITLE);
+  String settingsComponentName=arguments.getString(EXTRA_SETTINGS_COMPONENT_NAME);
+  if (!TextUtils.isEmpty(settingsTitle) && !TextUtils.isEmpty(settingsComponentName)) {
+    Intent settingsIntent=new Intent(Intent.ACTION_MAIN).setComponent(ComponentName.unflattenFromString(settingsComponentName.toString()));
+    if (!getPackageManager().queryIntentActivities(settingsIntent,0).isEmpty()) {
+      mSettingsTitle=settingsTitle;
+      mSettingsIntent=settingsIntent;
+      setHasOptionsMenu(true);
+    }
+  }
+  mWarningMessage=arguments.getCharSequence(AccessibilitySettings.EXTRA_WARNING_MESSAGE);
+}

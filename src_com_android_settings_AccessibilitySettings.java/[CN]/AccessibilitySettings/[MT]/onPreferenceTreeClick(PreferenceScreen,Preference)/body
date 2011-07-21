@@ -1,29 +1,16 @@
 {
   final String key=preference.getKey();
-  if (TOGGLE_ACCESSIBILITY_CHECKBOX.equals(key)) {
-    handleEnableAccessibilityStateChange((CheckBoxPreference)preference);
+  if (mToggleLargeTextPreference == preference) {
+    handleToggleLargeTextPreference((CheckBoxPreference)preference);
+    return true;
   }
- else   if (TOGGLE_LARGE_TEXT_CHECKBOX.equals(key)) {
-    try {
-      mCurConfig.fontScale=mToggleLargeTextCheckBox.isChecked() ? LARGE_FONT_SCALE : 1;
-      ActivityManagerNative.getDefault().updatePersistentConfiguration(mCurConfig);
-    }
- catch (    RemoteException e) {
-    }
+ else   if (mTogglePowerButtonEndsCallPreference == preference) {
+    handleTogglePowerButtonEndsCallPreference((CheckBoxPreference)preference);
+    return true;
   }
- else   if (POWER_BUTTON_ENDS_CALL_CHECKBOX.equals(key)) {
-    boolean isChecked=((CheckBoxPreference)preference).isChecked();
-    Settings.Secure.putInt(getContentResolver(),Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,(isChecked ? Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP : Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_SCREEN_OFF));
-  }
- else   if (TOUCH_EXPLORATION_ENABLED_CHECKBOX.equals(key)) {
-    final int touchExplorationState=((CheckBoxPreference)preference).isChecked() ? 1 : 0;
-    Settings.Secure.putInt(getContentResolver(),Settings.Secure.TOUCH_EXPLORATION_REQUESTED,touchExplorationState);
-  }
- else   if (TOGGLE_ACCESSIBILITY_SCRIPT_INJECTION_CHECKBOX.equals(key)) {
-    handleToggleAccessibilityScriptInjection((CheckBoxPreference)preference);
-  }
- else   if (preference instanceof CheckBoxPreference) {
-    handleEnableAccessibilityServiceStateChange((SettingsCheckBoxPreference)preference);
+ else   if (mToggleScriptInjectionPreference == preference) {
+    handleToggleAccessibilityScriptInjectionPreference(preference);
+    return true;
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

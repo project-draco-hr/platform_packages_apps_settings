@@ -1,0 +1,42 @@
+{
+  try {
+    mCurConfig.updateFrom(ActivityManagerNative.getDefault().getConfiguration());
+  }
+ catch (  RemoteException re) {
+  }
+  mToggleLargeTextPreference.setChecked(Float.compare(mCurConfig.fontScale,LARGE_FONT_SCALE) == 0);
+  if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER) && Utils.isVoiceCapable(getActivity())) {
+    final int incallPowerBehavior=Settings.Secure.getInt(getContentResolver(),Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT);
+    final boolean powerButtonEndsCall=(incallPowerBehavior == Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP);
+    mTogglePowerButtonEndsCallPreference.setChecked(powerButtonEndsCall);
+  }
+ else {
+    getPreferenceScreen().removePreference(mTogglePowerButtonEndsCallPreference);
+  }
+  final boolean touchExplorationEnabled=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.TOUCH_EXPLORATION_ENABLED,0) == 1);
+  if (touchExplorationEnabled) {
+    mTouchExplorationEnabledPreference.setSummary(getString(R.string.accessibility_service_state_on));
+    mTouchExplorationEnabledPreference.getExtras().putBoolean(EXTRA_CHECKED,true);
+  }
+ else {
+    mTouchExplorationEnabledPreference.setSummary(getString(R.string.accessibility_service_state_off));
+    mTouchExplorationEnabledPreference.getExtras().putBoolean(EXTRA_CHECKED,false);
+  }
+  if (mLongPressTimeoutValuetoTitleMap.isEmpty()) {
+    String[] timeoutValues=getResources().getStringArray(R.array.long_press_timeout_selector_values);
+    String[] timeoutTitles=getResources().getStringArray(R.array.long_press_timeout_selector_titles);
+    final int timeoutValueCount=timeoutValues.length;
+    for (int i=0; i < timeoutValueCount; i++) {
+      mLongPressTimeoutValuetoTitleMap.put(timeoutValues[i],timeoutTitles[i]);
+    }
+  }
+  String longPressTimeout=String.valueOf(Settings.Secure.getInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,0));
+  mSelectLongPressTimeoutPreference.setSummary(mLongPressTimeoutValuetoTitleMap.get(longPressTimeout));
+  final boolean scriptInjectionAllowed=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,0) == 1);
+  if (scriptInjectionAllowed) {
+    mToggleScriptInjectionPreference.setSummary(getString(R.string.accessibility_script_injection_allowed));
+  }
+ else {
+    mToggleScriptInjectionPreference.setSummary(getString(R.string.accessibility_script_injection_disallowed));
+  }
+}

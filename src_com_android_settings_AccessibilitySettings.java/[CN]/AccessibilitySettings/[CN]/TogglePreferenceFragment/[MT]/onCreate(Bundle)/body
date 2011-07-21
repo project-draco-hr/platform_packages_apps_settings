@@ -1,0 +1,16 @@
+{
+  super.onCreate(savedInstanceState);
+  PreferenceScreen preferenceScreen=getPreferenceManager().createPreferenceScreen(getActivity());
+  setPreferenceScreen(preferenceScreen);
+  mSummaryPreference=new Preference(getActivity()){
+    @Override protected void onBindView(    View view){
+      super.onBindView(view);
+      TextView summaryView=(TextView)view.findViewById(R.id.summary);
+      summaryView.setText(getSummary());
+    }
+  }
+;
+  mSummaryPreference.setPersistent(false);
+  mSummaryPreference.setLayoutResource(R.layout.text_description_preference);
+  preferenceScreen.addPreference(mSummaryPreference);
+}

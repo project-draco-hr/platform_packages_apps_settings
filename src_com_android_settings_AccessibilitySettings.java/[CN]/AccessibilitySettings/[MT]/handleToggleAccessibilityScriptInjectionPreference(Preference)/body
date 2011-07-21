@@ -1,0 +1,10 @@
+{
+  String allowed=getString(R.string.accessibility_script_injection_disallowed);
+  if (preference.getSummary().equals(allowed)) {
+    showDialog(DIALOG_ID_ENABLE_SCRIPT_INJECTION);
+  }
+ else {
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,0);
+    mToggleScriptInjectionPreference.setSummary(getString(R.string.accessibility_script_injection_disallowed));
+  }
+}

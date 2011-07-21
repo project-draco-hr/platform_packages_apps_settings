@@ -1,0 +1,16 @@
+{
+  Log.e("AAP","onCheckedChanged!");
+  final boolean desiredState=(Boolean)value;
+  boolean success=false;
+  mCheckbox.setEnabled(false);
+  if (desiredState) {
+    success=mNfcAdapter.enableZeroClick();
+  }
+ else {
+    success=mNfcAdapter.disableZeroClick();
+  }
+  if (success) {
+    mCheckbox.setChecked(desiredState);
+  }
+  mCheckbox.setEnabled(true);
+}

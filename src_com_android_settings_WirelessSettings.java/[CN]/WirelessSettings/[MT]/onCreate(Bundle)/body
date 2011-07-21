@@ -4,8 +4,9 @@
   final Activity activity=getActivity();
   mAirplaneModePreference=(CheckBoxPreference)findPreference(KEY_TOGGLE_AIRPLANE);
   CheckBoxPreference nfc=(CheckBoxPreference)findPreference(KEY_TOGGLE_NFC);
+  PreferenceScreen zeroclick=(PreferenceScreen)findPreference(KEY_ZEROCLICK_SETTINGS);
   mAirplaneModeEnabler=new AirplaneModeEnabler(activity,mAirplaneModePreference);
-  mNfcEnabler=new NfcEnabler(activity,nfc);
+  mNfcEnabler=new NfcEnabler(activity,nfc,zeroclick);
   String toggleable=Settings.System.getString(activity.getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   if (toggleable == null || !toggleable.contains(Settings.System.RADIO_WIFI)) {
     findPreference(KEY_VPN_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
@@ -14,6 +15,7 @@
   }
   if (NfcAdapter.getDefaultAdapter(activity) == null) {
     getPreferenceScreen().removePreference(nfc);
+    getPreferenceScreen().removePreference(zeroclick);
   }
   if (Utils.isWifiOnly()) {
     getPreferenceScreen().removePreference(findPreference(KEY_MOBILE_NETWORK_SETTINGS));

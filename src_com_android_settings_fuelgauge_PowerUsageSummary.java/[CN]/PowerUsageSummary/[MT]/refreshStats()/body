@@ -12,6 +12,8 @@
   mWifiSippers.clear();
   mBluetoothSippers.clear();
   mAppListGroup.setOrderingAsAdded(false);
+  mBatteryStatusPref.setOrder(-2);
+  mAppListGroup.addPreference(mBatteryStatusPref);
   BatteryHistoryPreference hist=new BatteryHistoryPreference(getActivity(),mStats);
   hist.setOrder(-1);
   mAppListGroup.addPreference(hist);

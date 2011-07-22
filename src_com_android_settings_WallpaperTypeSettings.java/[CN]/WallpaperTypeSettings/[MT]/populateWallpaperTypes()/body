@@ -2,6 +2,8 @@
   Intent intent=new Intent(Intent.ACTION_SET_WALLPAPER);
   final PackageManager pm=getPackageManager();
   List<ResolveInfo> rList=pm.queryIntentActivities(intent,PackageManager.MATCH_DEFAULT_ONLY);
+  final PreferenceScreen parent=getPreferenceScreen();
+  parent.setOrderingAsAdded(false);
   for (  ResolveInfo info : rList) {
     Preference pref=new Preference(getActivity());
     Intent prefIntent=new Intent(intent);
@@ -10,6 +12,6 @@
     CharSequence label=info.loadLabel(pm);
     if (label == null)     label=info.activityInfo.packageName;
     pref.setTitle(label);
-    getPreferenceScreen().addPreference(pref);
+    parent.addPreference(pref);
   }
 }

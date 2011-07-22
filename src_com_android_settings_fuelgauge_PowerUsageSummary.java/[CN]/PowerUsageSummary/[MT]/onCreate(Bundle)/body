@@ -5,7 +5,8 @@
   }
   addPreferencesFromResource(R.xml.power_usage_summary);
   mBatteryInfo=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
-  mAppListGroup=(PreferenceGroup)findPreference("app_list");
+  mAppListGroup=(PreferenceGroup)findPreference(KEY_APP_LIST);
+  mBatteryStatusPref=mAppListGroup.findPreference(KEY_BATTERY_STATUS);
   mPowerProfile=new PowerProfile(getActivity());
   setHasOptionsMenu(true);
 }

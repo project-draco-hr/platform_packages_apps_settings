@@ -1,9 +1,13 @@
 {
   super.onStart();
   final Activity activity=getActivity();
+  mMassStorageActive=Environment.MEDIA_SHARED.equals(Environment.getExternalStorageState());
   mTetherChangeReceiver=new TetherChangeReceiver();
   IntentFilter filter=new IntentFilter(ConnectivityManager.ACTION_TETHER_STATE_CHANGED);
   Intent intent=activity.registerReceiver(mTetherChangeReceiver,filter);
+  filter=new IntentFilter();
+  filter.addAction(UsbManager.ACTION_USB_STATE);
+  activity.registerReceiver(mTetherChangeReceiver,filter);
   filter=new IntentFilter();
   filter.addAction(Intent.ACTION_MEDIA_SHARED);
   filter.addAction(Intent.ACTION_MEDIA_UNSHARED);

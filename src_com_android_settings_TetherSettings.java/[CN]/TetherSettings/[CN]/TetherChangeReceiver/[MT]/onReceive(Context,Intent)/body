@@ -6,7 +6,16 @@
     ArrayList<String> errored=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ERRORED_TETHER);
     updateState(available.toArray(new String[available.size()]),active.toArray(new String[active.size()]),errored.toArray(new String[errored.size()]));
   }
- else   if (action.equals(Intent.ACTION_MEDIA_SHARED) || action.equals(Intent.ACTION_MEDIA_UNSHARED)) {
+ else   if (action.equals(Intent.ACTION_MEDIA_SHARED)) {
+    mMassStorageActive=true;
+    updateState();
+  }
+ else   if (action.equals(Intent.ACTION_MEDIA_UNSHARED)) {
+    mMassStorageActive=false;
+    updateState();
+  }
+ else   if (action.equals(UsbManager.ACTION_USB_STATE)) {
+    mUsbConnected=intent.getBooleanExtra(UsbManager.USB_CONNECTED,false);
     updateState();
   }
  else   if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {

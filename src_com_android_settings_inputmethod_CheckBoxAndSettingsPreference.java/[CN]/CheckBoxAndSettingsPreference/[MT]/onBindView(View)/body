@@ -1,0 +1,20 @@
+{
+  super.onBindView(view);
+  mCheckBox=view.findViewById(R.id.inputmethod_pref);
+  mCheckBox.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View arg0){
+      onCheckBoxClicked(arg0);
+    }
+  }
+);
+  mSetingsButton=(ImageView)view.findViewById(R.id.inputmethod_settings);
+  mTitleText=(TextView)view.findViewById(android.R.id.title);
+  mSummaryText=(TextView)view.findViewById(android.R.id.summary);
+  mSetingsButton.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View arg0){
+      onSettingsButtonClicked(arg0);
+    }
+  }
+);
+  enableSettingsButton();
+}

@@ -1,0 +1,22 @@
+{
+  if (mSetingsButton != null) {
+    if (mSettingsIntent == null) {
+      mSetingsButton.setVisibility(View.GONE);
+    }
+ else {
+      final boolean checked=isChecked();
+      mSetingsButton.setEnabled(checked);
+      mSetingsButton.setClickable(checked);
+      mSetingsButton.setFocusable(checked);
+      if (!checked) {
+        mSetingsButton.setAlpha(DISABLED_ALPHA);
+      }
+    }
+  }
+  if (mTitleText != null) {
+    mTitleText.setEnabled(true);
+  }
+  if (mSummaryText != null) {
+    mSummaryText.setEnabled(true);
+  }
+}

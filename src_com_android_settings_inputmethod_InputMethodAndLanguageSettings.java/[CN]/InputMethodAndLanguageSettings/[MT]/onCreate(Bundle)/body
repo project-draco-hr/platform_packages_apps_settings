@@ -24,4 +24,7 @@
   mImm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
   mImis=mImm.getInputMethodList();
   createImePreferenceHierarchy((PreferenceGroup)findPreference("keyboard_settings_category"));
+  final Intent intent=new Intent(Intent.ACTION_MAIN);
+  intent.setClass(getActivity(),SpellCheckersSettingsActivity.class);
+  ((SpellCheckersPreference)findPreference("spellcheckers_settings")).setFragmentIntent(this,intent);
 }

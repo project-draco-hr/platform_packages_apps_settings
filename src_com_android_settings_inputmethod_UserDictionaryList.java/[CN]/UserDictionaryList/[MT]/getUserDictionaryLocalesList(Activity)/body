@@ -1,5 +1,5 @@
 {
-  final Cursor cursor=activity.managedQuery(UserDictionary.Words.CONTENT_URI,new String[]{UserDictionary.Words.LOCALE},null,null,null);
+  @SuppressWarnings("deprecation") final Cursor cursor=activity.managedQuery(UserDictionary.Words.CONTENT_URI,new String[]{UserDictionary.Words.LOCALE},null,null,null);
   final Set<String> localeList=new TreeSet<String>();
   if (null == cursor) {
     return null;

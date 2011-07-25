@@ -1,0 +1,13 @@
+{
+  mCurrentSci=SpellCheckerUtils.getCurrentSpellChecker();
+  mEnabledScis=SpellCheckerUtils.getEnabledSpellCheckers();
+  if (mCurrentSci == null || mEnabledScis == null) {
+    return;
+  }
+  for (int i=0; i < mEnabledScis.length; ++i) {
+    final SpellCheckerInfo sci=mEnabledScis[i];
+    final PreferenceScreen scs=new PreferenceScreen(getActivity(),null);
+    scs.setTitle(sci.getId());
+    getPreferenceScreen().addPreference(scs);
+  }
+}

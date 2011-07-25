@@ -1,0 +1,9 @@
+{
+  try {
+    return mBackupManager.setBackupPassword(currentPw,newPw);
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Unable to communicate with backup manager");
+    return false;
+  }
+}

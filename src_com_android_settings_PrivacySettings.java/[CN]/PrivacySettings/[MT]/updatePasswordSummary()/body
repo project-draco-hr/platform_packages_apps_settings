@@ -1,0 +1,12 @@
+{
+  try {
+    if (mBackupManager.hasBackupPassword()) {
+      mPassword.setSummary(R.string.local_backup_password_summary_change);
+    }
+ else {
+      mPassword.setSummary(R.string.local_backup_password_summary_none);
+    }
+  }
+ catch (  RemoteException e) {
+  }
+}

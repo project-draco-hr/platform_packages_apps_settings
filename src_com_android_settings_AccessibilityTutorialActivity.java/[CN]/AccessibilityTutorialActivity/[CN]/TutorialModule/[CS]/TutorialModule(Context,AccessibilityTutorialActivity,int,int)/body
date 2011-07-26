@@ -1,6 +1,7 @@
 {
   super(context);
   mController=controller;
+  mTitleResId=titleResId;
   final View container=LayoutInflater.from(context).inflate(R.layout.accessibility_tutorial_container,this,true);
   mInstructions=(TextView)container.findViewById(R.id.instructions);
   mSkip=(Button)container.findViewById(R.id.skip_button);
@@ -15,7 +16,6 @@
   if (title != null) {
     title.setText(titleResId);
   }
-  controller.setTitle(titleResId);
   final ViewGroup contentHolder=(ViewGroup)container.findViewById(R.id.content);
   LayoutInflater.from(context).inflate(layoutResId,contentHolder,true);
 }

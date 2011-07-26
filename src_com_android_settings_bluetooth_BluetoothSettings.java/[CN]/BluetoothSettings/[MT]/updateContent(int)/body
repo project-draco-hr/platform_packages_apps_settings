@@ -1,6 +1,5 @@
 {
   final PreferenceScreen preferenceScreen=getPreferenceScreen();
-  getActivity().invalidateOptionsMenu();
   int messageId=0;
 switch (bluetoothState) {
 case BluetoothAdapter.STATE_ON:
@@ -9,14 +8,13 @@ case BluetoothAdapter.STATE_ON:
 if (mMyDevicePreference == null) {
   mMyDevicePreference=new Preference(getActivity());
 }
-if (mLocalAdapter != null) {
 mMyDevicePreference.setTitle(mLocalAdapter.getName());
-}
 mMyDevicePreference.setPersistent(false);
 mMyDevicePreference.setEnabled(true);
 preferenceScreen.addPreference(mMyDevicePreference);
 if (mDiscoverableEnabler == null) {
 mDiscoverableEnabler=new BluetoothDiscoverableEnabler(getActivity(),mLocalAdapter,mMyDevicePreference);
+mDiscoverableEnabler.resume();
 }
 if (mPairedDevicesCategory == null) {
 mPairedDevicesCategory=new PreferenceCategory(getActivity());
@@ -44,13 +42,11 @@ if (numberOfPairedDevices == 0) {
 preferenceScreen.removePreference(mPairedDevicesCategory);
 startScanning();
 }
+getActivity().invalidateOptionsMenu();
 return;
 case BluetoothAdapter.STATE_TURNING_OFF:
-int preferenceCount=preferenceScreen.getPreferenceCount();
-for (int i=0; i < preferenceCount; i++) {
-preferenceScreen.getPreference(i).setEnabled(false);
-}
-return;
+messageId=R.string.bluetooth_turning_off;
+break;
 case BluetoothAdapter.STATE_OFF:
 messageId=R.string.bluetooth_empty_list_bluetooth_off;
 break;
@@ -61,4 +57,5 @@ break;
 setDeviceListGroup(preferenceScreen);
 removeAllDevices();
 mEmptyView.setText(messageId);
+getActivity().invalidateOptionsMenu();
 }

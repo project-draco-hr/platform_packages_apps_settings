@@ -1,22 +1,19 @@
 {
   final Rect clampRect=new Rect(parentContent);
-  final ChartSweepView after=mClampAfter;
-  final ChartSweepView before=mClampBefore;
+  float validAfterPoint=mAxis.convertToPoint(getValidAfterValue());
+  float validBeforePoint=mAxis.convertToPoint(getValidBeforeValue());
+  if (validAfterPoint > validBeforePoint) {
+    float swap=validBeforePoint;
+    validBeforePoint=validAfterPoint;
+    validAfterPoint=swap;
+  }
   if (mFollowAxis == VERTICAL) {
-    if (after != null) {
-      clampRect.top+=after.getPoint();
-    }
-    if (before != null) {
-      clampRect.bottom-=clampRect.height() - before.getPoint();
-    }
+    clampRect.bottom=clampRect.top + (int)validBeforePoint;
+    clampRect.top+=validAfterPoint;
   }
  else {
-    if (after != null) {
-      clampRect.left+=after.getPoint();
-    }
-    if (before != null) {
-      clampRect.right-=clampRect.width() - before.getPoint();
-    }
+    clampRect.right=clampRect.left + (int)validBeforePoint;
+    clampRect.left+=validAfterPoint;
   }
   return clampRect;
 }

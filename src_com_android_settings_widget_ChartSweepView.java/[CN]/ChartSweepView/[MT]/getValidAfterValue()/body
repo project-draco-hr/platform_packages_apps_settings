@@ -1,0 +1,5 @@
+{
+  final ChartSweepView dynamic=mValidAfterDynamic;
+  final boolean dynamicEnabled=dynamic != null && dynamic.isEnabled();
+  return Math.max(mValidAfter,dynamicEnabled ? dynamic.getValue() + mValidBufferArea : Long.MIN_VALUE);
+}

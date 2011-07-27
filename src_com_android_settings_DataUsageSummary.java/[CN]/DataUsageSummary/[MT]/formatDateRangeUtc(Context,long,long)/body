@@ -1,0 +1,10 @@
+{
+synchronized (sBuilder) {
+    int flags=DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH;
+    if (Time.getJulianDay(start,0) == Time.getJulianDay(end,0)) {
+      flags|=DateUtils.FORMAT_SHOW_TIME;
+    }
+    sBuilder.setLength(0);
+    return DateUtils.formatDateRange(context,sFormatter,start,end,flags,Time.TIMEZONE_UTC).toString();
+  }
+}

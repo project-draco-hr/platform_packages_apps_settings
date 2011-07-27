@@ -13,6 +13,9 @@ case MotionEvent.ACTION_DOWN:
       }
       if (accept) {
         mTracking=event.copy();
+        if (!parent.isActivated()) {
+          parent.setActivated(true);
+        }
         return true;
       }
  else {

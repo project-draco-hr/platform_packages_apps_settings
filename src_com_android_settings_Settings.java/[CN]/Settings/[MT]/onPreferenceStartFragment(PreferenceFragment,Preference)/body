@@ -1,0 +1,8 @@
+{
+  CharSequence title=pref.getTitle();
+  if (pref.getFragment().equals(WallpaperTypeSettings.class.getName())) {
+    title=getString(R.string.wallpaper_settings_fragment_title);
+  }
+  startPreferencePanel(pref.getFragment(),pref.getExtras(),0,title,null,0);
+  return true;
+}

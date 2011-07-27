@@ -1,0 +1,8 @@
+{
+  try {
+    mCurConfig.fontScale=mToggleLargeTextPreference.isChecked() ? LARGE_FONT_SCALE : 1;
+    ActivityManagerNative.getDefault().updatePersistentConfiguration(mCurConfig);
+  }
+ catch (  RemoteException re) {
+  }
+}

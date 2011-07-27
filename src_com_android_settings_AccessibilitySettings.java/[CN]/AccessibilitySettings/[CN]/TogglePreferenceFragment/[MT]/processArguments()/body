@@ -2,9 +2,13 @@
   Bundle arguments=getArguments();
   mPreferenceKey=arguments.getString(EXTRA_PREFERENCE_KEY);
   final boolean enabled=arguments.getBoolean(EXTRA_CHECKED);
-  mToggleSwitch.setCheckedNoBeforeCheckedChangeListener(enabled);
-  String title=arguments.getString(EXTRA_TITLE);
-  getActivity().getActionBar().setTitle(arguments.getCharSequence(EXTRA_TITLE));
+  mToggleSwitch.setCheckedInternal(enabled);
+  PreferenceActivity activity=(PreferenceActivity)getActivity();
+  if (!activity.onIsMultiPane() || activity.onIsHidingHeaders()) {
+    mOldActivityTitle=getActivity().getTitle();
+    String title=arguments.getString(EXTRA_TITLE);
+    getActivity().getActionBar().setTitle(arguments.getCharSequence(EXTRA_TITLE));
+  }
   String summary=arguments.getString(EXTRA_SUMMARY);
   mSummaryPreference.setSummary(summary);
   String settingsTitle=arguments.getString(EXTRA_SETTINGS_TITLE);

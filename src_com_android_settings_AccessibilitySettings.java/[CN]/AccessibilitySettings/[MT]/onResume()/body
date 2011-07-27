@@ -1,7 +1,9 @@
 {
   super.onResume();
-  updateServicesPreferences();
-  updateSystemPreferences();
-  updatePreferencesForAccessibilityState();
+  final boolean accessibilityEnabled=mToggleAccessibilitySwitch.isChecked();
+  updateAllPreferences(accessibilityEnabled);
+  if (accessibilityEnabled) {
+    offerInstallAccessibilitySerivceOnce();
+  }
   mSettingsPackageMonitor.register(getActivity(),false);
 }

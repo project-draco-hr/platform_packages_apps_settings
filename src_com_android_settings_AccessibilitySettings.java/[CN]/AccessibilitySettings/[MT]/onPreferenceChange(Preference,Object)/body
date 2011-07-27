@@ -1,8 +1,8 @@
 {
   if (preference == mSelectLongPressTimeoutPreference) {
-    final int intValue=Integer.parseInt((String)newValue);
-    Settings.Secure.putInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,intValue);
-    mSelectLongPressTimeoutPreference.setSummary(mLongPressTimeoutValuetoTitleMap.get(String.valueOf(intValue)));
+    String stringValue=(String)newValue;
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,Integer.parseInt(stringValue));
+    mSelectLongPressTimeoutPreference.setSummary(mLongPressTimeoutValuetoTitleMap.get(stringValue));
     return true;
   }
   return false;

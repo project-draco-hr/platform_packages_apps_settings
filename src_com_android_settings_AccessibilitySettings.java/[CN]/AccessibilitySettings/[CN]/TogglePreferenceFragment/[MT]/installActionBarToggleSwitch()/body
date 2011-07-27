@@ -1,10 +1,10 @@
 {
-  mToggleSwitch=createActionBarToggleSwitch(getActivity());
+  mToggleSwitch=createAndAddActionBarToggleSwitch(getActivity());
   mToggleSwitch.setOnBeforeCheckedChangeListener(new OnBeforeCheckedChangeListener(){
     @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
       if (checked) {
         if (!TextUtils.isEmpty(mWarningMessage)) {
-          toggleSwitch.setCheckedNoBeforeCheckedChangeListener(false);
+          toggleSwitch.setCheckedInternal(false);
           showDialog(DIALOG_ID_WARNING);
           return true;
         }

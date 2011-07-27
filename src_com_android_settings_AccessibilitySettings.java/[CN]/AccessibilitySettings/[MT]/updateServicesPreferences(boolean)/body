@@ -1,0 +1,51 @@
+{
+  mServicesCategory.removeAll();
+  AccessibilityManager accessibilityManager=AccessibilityManager.getInstance(getActivity());
+  List<AccessibilityServiceInfo> installedServices=accessibilityManager.getInstalledAccessibilityServiceList();
+  Set<ComponentName> enabledComponentNames=new HashSet<ComponentName>();
+  String settingValue=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+  if (settingValue != null) {
+    SimpleStringSplitter splitter=mStringColonSplitter;
+    splitter.setString(settingValue);
+    while (splitter.hasNext()) {
+      enabledComponentNames.add(ComponentName.unflattenFromString(splitter.next()));
+    }
+  }
+  for (int i=0, count=installedServices.size(); i < count; ++i) {
+    AccessibilityServiceInfo info=installedServices.get(i);
+    String key=info.getId();
+    PreferenceScreen preference=getPreferenceManager().createPreferenceScreen(getActivity());
+    String title=info.getResolveInfo().loadLabel(getPackageManager()).toString();
+    ServiceInfo serviceInfo=info.getResolveInfo().serviceInfo;
+    ComponentName componentName=new ComponentName(serviceInfo.packageName,serviceInfo.name);
+    preference.setKey(componentName.flattenToString());
+    preference.setTitle(title);
+    final boolean enabled=enabledComponentNames.contains(componentName);
+    if (enabled) {
+      preference.setSummary(getString(R.string.accessibility_service_state_on));
+    }
+ else {
+      preference.setSummary(getString(R.string.accessibility_service_state_off));
+    }
+    preference.setOrder(i);
+    preference.setFragment(ToggleAccessibilityServiceFragment.class.getName());
+    preference.setPersistent(true);
+    Bundle extras=preference.getExtras();
+    extras.putString(EXTRA_PREFERENCE_KEY,preference.getKey());
+    extras.putBoolean(EXTRA_CHECKED,enabled);
+    extras.putString(EXTRA_TITLE,title);
+    String description=info.getDescription();
+    if (TextUtils.isEmpty(description)) {
+      description=getString(R.string.accessibility_service_default_description);
+    }
+    extras.putString(EXTRA_SUMMARY,description);
+    extras.putString(EXTRA_WARNING_MESSAGE,getString(R.string.accessibility_service_security_warning,info.getResolveInfo().loadLabel(getPackageManager())));
+    String settingsClassName=info.getSettingsActivityName();
+    if (!TextUtils.isEmpty(settingsClassName)) {
+      extras.putString(EXTRA_SETTINGS_TITLE,getString(R.string.accessibility_menu_item_settings));
+      extras.putString(EXTRA_SETTINGS_COMPONENT_NAME,new ComponentName(info.getResolveInfo().serviceInfo.packageName,settingsClassName).flattenToString());
+    }
+    mServicesCategory.addPreference(preference);
+  }
+  mServicesCategory.setEnabled(accessibilityEnabled);
+}

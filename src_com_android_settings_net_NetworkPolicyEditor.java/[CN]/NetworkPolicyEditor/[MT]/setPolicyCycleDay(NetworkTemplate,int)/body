@@ -1,4 +1,6 @@
 {
-  getPolicy(template).cycleDay=cycleDay;
+  final NetworkPolicy policy=getPolicy(template);
+  policy.cycleDay=cycleDay;
+  policy.lastSnooze=SNOOZE_NEVER;
   writeAsync();
 }

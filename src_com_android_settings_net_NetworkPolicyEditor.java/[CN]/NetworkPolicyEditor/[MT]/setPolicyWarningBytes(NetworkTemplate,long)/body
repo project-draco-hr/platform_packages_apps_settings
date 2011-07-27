@@ -1,4 +1,6 @@
 {
-  getPolicy(template).warningBytes=warningBytes;
+  final NetworkPolicy policy=getPolicy(template);
+  policy.warningBytes=warningBytes;
+  policy.lastSnooze=SNOOZE_NEVER;
   writeAsync();
 }

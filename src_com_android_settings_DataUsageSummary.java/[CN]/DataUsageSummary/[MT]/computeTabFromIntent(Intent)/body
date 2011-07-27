@@ -1,6 +1,7 @@
 {
-  final int networkTemplate=intent.getIntExtra(EXTRA_NETWORK_TEMPLATE,MATCH_MOBILE_ALL);
-switch (networkTemplate) {
+  final NetworkTemplate template=intent.getParcelableExtra(EXTRA_NETWORK_TEMPLATE);
+  if (template == null)   return null;
+switch (template.getMatchRule()) {
 case MATCH_MOBILE_3G_LOWER:
     return TAB_3G;
 case MATCH_MOBILE_4G:

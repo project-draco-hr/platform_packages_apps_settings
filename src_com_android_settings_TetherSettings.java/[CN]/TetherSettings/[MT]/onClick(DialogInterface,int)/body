@@ -3,8 +3,8 @@
     mWifiConfig=mDialog.getConfig();
     if (mWifiConfig != null) {
       if (mWifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_ENABLED) {
+        mWifiManager.setWifiApEnabled(null,false);
         mWifiManager.setWifiApEnabled(mWifiConfig,true);
-        mWifiApEnabler.updateConfigSummary(mWifiConfig);
       }
  else {
         mWifiManager.setWifiApConfiguration(mWifiConfig);

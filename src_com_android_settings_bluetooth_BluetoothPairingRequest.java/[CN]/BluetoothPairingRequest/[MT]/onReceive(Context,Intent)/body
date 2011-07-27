@@ -24,7 +24,7 @@
       PendingIntent pending=PendingIntent.getActivity(context,0,pairingIntent,PendingIntent.FLAG_ONE_SHOT);
       String name=intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
       if (TextUtils.isEmpty(name)) {
-        name=device != null ? device.getName() : context.getString(android.R.string.unknownName);
+        name=device != null ? device.getAliasName() : context.getString(android.R.string.unknownName);
       }
       builder.setContentTitle(res.getString(R.string.bluetooth_notif_title)).setContentText(res.getString(R.string.bluetooth_notif_message,name)).setContentIntent(pending).setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND);
       NotificationManager manager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);

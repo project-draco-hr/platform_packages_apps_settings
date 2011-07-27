@@ -9,6 +9,7 @@
   mUsername=(TextView)mView.findViewById(R.id.username);
   mPassword=(TextView)mView.findViewById(R.id.password);
   mSearchDomains=(TextView)mView.findViewById(R.id.search_domains);
+  mDnsServers=(TextView)mView.findViewById(R.id.dns_servers);
   mRoutes=(TextView)mView.findViewById(R.id.routes);
   mMppe=(CheckBox)mView.findViewById(R.id.mppe);
   mL2tpSecret=(TextView)mView.findViewById(R.id.l2tp_secret);
@@ -23,6 +24,7 @@
   mUsername.setText(mProfile.username);
   mPassword.setText(mProfile.password);
   mSearchDomains.setText(mProfile.searchDomains);
+  mDnsServers.setText(mProfile.dnsServers);
   mRoutes.setText(mProfile.routes);
   mMppe.setChecked(mProfile.mppe);
   mL2tpSecret.setText(mProfile.l2tpSecret);
@@ -36,6 +38,8 @@
   mServer.addTextChangedListener(this);
   mUsername.addTextChangedListener(this);
   mPassword.addTextChangedListener(this);
+  mDnsServers.addTextChangedListener(this);
+  mRoutes.addTextChangedListener(this);
   mIpsecSecret.addTextChangedListener(this);
   mIpsecUserCert.setOnItemSelectedListener(this);
   boolean valid=validate(true);
@@ -44,6 +48,13 @@
     setTitle(R.string.vpn_edit);
     mView.findViewById(R.id.editor).setVisibility(View.VISIBLE);
     changeType(mProfile.type);
+    View showOptions=mView.findViewById(R.id.show_options);
+    if (mProfile.searchDomains.isEmpty() && mProfile.dnsServers.isEmpty() && mProfile.routes.isEmpty()) {
+      showOptions.setOnClickListener(this);
+    }
+ else {
+      onClick(showOptions);
+    }
     setButton(DialogInterface.BUTTON_POSITIVE,context.getString(R.string.vpn_save),mListener);
   }
  else {
@@ -54,4 +65,5 @@
   setButton(DialogInterface.BUTTON_NEGATIVE,context.getString(R.string.vpn_cancel),mListener);
   super.onCreate(null);
   getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(mEditing ? valid : validate(false));
+  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 }

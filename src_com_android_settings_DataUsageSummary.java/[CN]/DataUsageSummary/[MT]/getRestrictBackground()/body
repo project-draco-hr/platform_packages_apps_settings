@@ -1,3 +1,9 @@
 {
-  return !mConnService.getBackgroundDataSetting();
+  try {
+    return mPolicyService.getRestrictBackground();
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"problem talking with policy service: " + e);
+    return false;
+  }
 }

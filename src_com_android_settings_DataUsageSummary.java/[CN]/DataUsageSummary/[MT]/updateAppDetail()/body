@@ -33,7 +33,7 @@
   mChart.bindDetailNetworkStats(mDetailHistory);
   updateDetailData();
   final Context context=getActivity();
-  if (NetworkPolicyManager.isUidValidForPolicy(context,mUid)) {
+  if (NetworkPolicyManager.isUidValidForPolicy(context,mUid) && !getRestrictBackground()) {
     mAppRestrictView.setVisibility(View.VISIBLE);
     mAppRestrict.setChecked(getAppRestrictBackground());
   }

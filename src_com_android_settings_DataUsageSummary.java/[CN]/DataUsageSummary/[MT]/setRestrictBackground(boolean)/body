@@ -1,5 +1,10 @@
 {
   if (LOGD)   Log.d(TAG,"setRestrictBackground()");
-  mConnService.setBackgroundDataSetting(!restrictBackground);
-  mMenuRestrictBackground.setChecked(restrictBackground);
+  try {
+    mPolicyService.setRestrictBackground(restrictBackground);
+    mMenuRestrictBackground.setChecked(restrictBackground);
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"problem talking with policy service: " + e);
+  }
 }

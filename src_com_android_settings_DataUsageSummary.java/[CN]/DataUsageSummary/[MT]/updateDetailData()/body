@@ -2,16 +2,25 @@
   if (LOGD)   Log.d(TAG,"updateDetailData()");
   final long start=mChart.getInspectStart();
   final long end=mChart.getInspectEnd();
+  final long now=System.currentTimeMillis();
+  final Context context=getActivity();
+  final NetworkStatsHistory.Entry entry;
   if (isAppDetailMode()) {
     if (mDetailHistory != null) {
-      final Context context=mChart.getContext();
-      final long now=System.currentTimeMillis();
-      final NetworkStatsHistory.Entry entry=mDetailHistory.getValues(start,end,now,null);
+      entry=mDetailHistory.getValues(start,end,now,null);
       mAppSubtitle.setText(getString(R.string.data_usage_received_sent,Formatter.formatFileSize(context,entry.rxBytes),Formatter.formatFileSize(context,entry.txBytes)));
+    }
+ else {
+      entry=null;
     }
     getLoaderManager().destroyLoader(LOADER_SUMMARY);
   }
  else {
+    entry=mHistory.getValues(start,end,now,null);
     getLoaderManager().restartLoader(LOADER_SUMMARY,SummaryForAllUidLoader.buildArgs(mTemplate,start,end),mSummaryForAllUid);
   }
+  final long totalBytes=entry != null ? entry.rxBytes + entry.txBytes : 0;
+  final String totalPhrase=Formatter.formatFileSize(context,totalBytes);
+  final String rangePhrase=formatDateRangeUtc(context,start,end);
+  mUsageSummary.setText(getString(R.string.data_usage_total_during_range,totalPhrase,rangePhrase));
 }

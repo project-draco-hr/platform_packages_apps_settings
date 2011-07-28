@@ -1,6 +1,6 @@
 {
   boolean success=false;
-  mCheckbox.setEnabled(false);
+  mActionBarSwitch.setEnabled(false);
   if (desiredState) {
     success=mNfcAdapter.enableZeroClick();
   }
@@ -8,7 +8,7 @@
     success=mNfcAdapter.disableZeroClick();
   }
   if (success) {
-    mCheckbox.setChecked(desiredState);
+    mActionBarSwitch.setChecked(desiredState);
   }
-  mCheckbox.setEnabled(true);
+  mActionBarSwitch.setEnabled(true);
 }

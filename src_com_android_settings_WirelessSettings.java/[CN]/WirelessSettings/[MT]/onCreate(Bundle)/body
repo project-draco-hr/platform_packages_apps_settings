@@ -13,7 +13,8 @@
   }
   if (toggleable == null || !toggleable.contains(Settings.System.RADIO_BLUETOOTH)) {
   }
-  if (NfcAdapter.getDefaultAdapter(activity) == null) {
+  mNfcAdapter=NfcAdapter.getDefaultAdapter(activity);
+  if (mNfcAdapter == null) {
     getPreferenceScreen().removePreference(nfc);
     getPreferenceScreen().removePreference(zeroclick);
   }

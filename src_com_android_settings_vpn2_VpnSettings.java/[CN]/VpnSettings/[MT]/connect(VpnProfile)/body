@@ -51,8 +51,11 @@ config.packagz=profile.key;
 config.interfaze=interfaze;
 config.session=profile.name;
 config.routes=profile.routes;
+if (!profile.dnsServers.isEmpty()) {
+config.dnsServers=Arrays.asList(profile.dnsServers.split(" +"));
+}
 if (!profile.searchDomains.isEmpty()) {
-config.searchDomains=Arrays.asList(profile.searchDomains.split(" "));
+config.searchDomains=Arrays.asList(profile.searchDomains.split(" +"));
 }
 mService.startLegacyVpn(config,racoon,mtpd);
 }

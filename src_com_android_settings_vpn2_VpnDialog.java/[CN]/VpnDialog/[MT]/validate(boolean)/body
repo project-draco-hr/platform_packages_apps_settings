@@ -2,7 +2,7 @@
   if (!editing) {
     return mUsername.getText().length() != 0 && mPassword.getText().length() != 0;
   }
-  if (mName.getText().length() == 0 || mServer.getText().length() == 0) {
+  if (mName.getText().length() == 0 || mServer.getText().length() == 0 || !validateAddresses(mDnsServers.getText().toString(),false) || !validateAddresses(mRoutes.getText().toString(),true)) {
     return false;
   }
 switch (mType.getSelectedItemPosition()) {

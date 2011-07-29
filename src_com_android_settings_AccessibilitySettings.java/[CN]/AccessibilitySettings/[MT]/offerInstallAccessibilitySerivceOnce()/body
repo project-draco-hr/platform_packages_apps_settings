@@ -1,0 +1,11 @@
+{
+  if (mServicesCategory.getPreferenceCount() > 0) {
+    return;
+  }
+  SharedPreferences preferences=getActivity().getPreferences(Context.MODE_PRIVATE);
+  final boolean offerInstallService=!preferences.getBoolean(KEY_INSTALL_ACCESSIBILITY_SERVICE_OFFERED_ONCE,false);
+  if (offerInstallService) {
+    preferences.edit().putBoolean(KEY_INSTALL_ACCESSIBILITY_SERVICE_OFFERED_ONCE,true).commit();
+    showDialog(DIALOG_ID_NO_ACCESSIBILITY_SERVICES);
+  }
+}

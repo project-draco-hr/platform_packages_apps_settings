@@ -1,0 +1,9 @@
+{
+  Parcelable superState=super.onSaveInstanceState();
+  if (isPersistent()) {
+    return superState;
+  }
+  SavedState myState=new SavedState(superState);
+  myState.mInjectionAllowed=mInjectionAllowed;
+  return myState;
+}

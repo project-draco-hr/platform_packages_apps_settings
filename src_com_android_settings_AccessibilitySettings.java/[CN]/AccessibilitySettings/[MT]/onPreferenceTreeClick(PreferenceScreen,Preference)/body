@@ -1,15 +1,11 @@
 {
   final String key=preference.getKey();
   if (mToggleLargeTextPreference == preference) {
-    handleToggleLargeTextPreference((CheckBoxPreference)preference);
+    handleToggleLargeTextPreferenceClick();
     return true;
   }
  else   if (mTogglePowerButtonEndsCallPreference == preference) {
-    handleTogglePowerButtonEndsCallPreference((CheckBoxPreference)preference);
-    return true;
-  }
- else   if (mToggleScriptInjectionPreference == preference) {
-    handleToggleAccessibilityScriptInjectionPreference(preference);
+    handleTogglePowerButtonEndsCallPreferenceClick();
     return true;
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

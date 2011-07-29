@@ -1,0 +1,60 @@
+{
+  final boolean accessibilityEnabled=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0) == 1);
+  mServicesCategory=(PreferenceCategory)findPreference(SERVICES_CATEGORY);
+  mSystemsCategory=(PreferenceCategory)findPreference(SYSTEM_CATEGORY);
+  mToggleLargeTextPreference=(CheckBoxPreference)findPreference(TOGGLE_LARGE_TEXT_PREFERENCE);
+  if (accessibilityEnabled) {
+    try {
+      mCurConfig.updateFrom(ActivityManagerNative.getDefault().getConfiguration());
+    }
+ catch (    RemoteException re) {
+    }
+    mToggleLargeTextPreference.setChecked(mCurConfig.fontScale == LARGE_FONT_SCALE);
+  }
+  mTogglePowerButtonEndsCallPreference=(CheckBoxPreference)findPreference(TOGGLE_POWER_BUTTON_ENDS_CALL_PREFERENCE);
+  if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER) && Utils.isVoiceCapable(getActivity())) {
+    if (accessibilityEnabled) {
+      final int incallPowerBehavior=Settings.Secure.getInt(getContentResolver(),Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT);
+      final boolean powerButtonEndsCall=(incallPowerBehavior == Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP);
+      mTogglePowerButtonEndsCallPreference.setChecked(powerButtonEndsCall);
+    }
+  }
+ else {
+    mSystemsCategory.removePreference(mTogglePowerButtonEndsCallPreference);
+  }
+  mToggleTouchExplorationPreference=findPreference(TOGGLE_TOUCH_EXPLORATION_PREFERENCE);
+  final boolean touchExplorationEnabled=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.TOUCH_EXPLORATION_ENABLED,0) == 1);
+  if (touchExplorationEnabled) {
+    mToggleTouchExplorationPreference.setSummary(getString(R.string.accessibility_service_state_on));
+    mToggleTouchExplorationPreference.getExtras().putBoolean(EXTRA_CHECKED,true);
+  }
+ else {
+    mToggleTouchExplorationPreference.setSummary(getString(R.string.accessibility_service_state_off));
+    mToggleTouchExplorationPreference.getExtras().putBoolean(EXTRA_CHECKED,false);
+  }
+  mSelectLongPressTimeoutPreference=(ListPreference)findPreference(SELECT_LONG_PRESS_TIMEOUT_PREFERENCE);
+  mSelectLongPressTimeoutPreference.setOnPreferenceChangeListener(this);
+  if (mLongPressTimeoutValuetoTitleMap.size() == 0) {
+    String[] timeoutValues=getResources().getStringArray(R.array.long_press_timeout_selector_values);
+    mLongPressTimeoutDefault=Integer.parseInt(timeoutValues[0]);
+    String[] timeoutTitles=getResources().getStringArray(R.array.long_press_timeout_selector_titles);
+    final int timeoutValueCount=timeoutValues.length;
+    for (int i=0; i < timeoutValueCount; i++) {
+      mLongPressTimeoutValuetoTitleMap.put(timeoutValues[i],timeoutTitles[i]);
+    }
+  }
+  if (accessibilityEnabled) {
+    final int longPressTimeout=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,mLongPressTimeoutDefault);
+    String value=String.valueOf(longPressTimeout);
+    mSelectLongPressTimeoutPreference.setValue(value);
+    mSelectLongPressTimeoutPreference.setSummary(mLongPressTimeoutValuetoTitleMap.get(value));
+  }
+ else {
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,mLongPressTimeoutDefault);
+  }
+  mToggleScriptInjectionPreference=(AccessibilityEnableScriptInjectionPreference)findPreference(TOGGLE_SCRIPT_INJECTION_PREFERENCE);
+  if (accessibilityEnabled) {
+    final boolean scriptInjectionAllowed=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,0) == 1);
+    mToggleScriptInjectionPreference.setInjectionAllowed(scriptInjectionAllowed);
+  }
+}

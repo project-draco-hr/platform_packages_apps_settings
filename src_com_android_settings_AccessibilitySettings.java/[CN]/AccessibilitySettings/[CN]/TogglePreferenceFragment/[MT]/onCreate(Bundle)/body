@@ -7,6 +7,17 @@
       super.onBindView(view);
       TextView summaryView=(TextView)view.findViewById(R.id.summary);
       summaryView.setText(getSummary());
+      sendAccessibilityEvent(summaryView);
+    }
+    private void sendAccessibilityEvent(    View view){
+      AccessibilityManager accessibilityManager=AccessibilityManager.getInstance(getActivity());
+      if (accessibilityManager.isEnabled()) {
+        AccessibilityEvent event=AccessibilityEvent.obtain();
+        event.setEventType(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+        view.onInitializeAccessibilityEvent(event);
+        view.dispatchPopulateAccessibilityEvent(event);
+        accessibilityManager.sendAccessibilityEvent(event);
+      }
     }
   }
 ;

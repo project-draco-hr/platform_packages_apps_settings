@@ -3,11 +3,18 @@
   addPreferencesFromResource(R.xml.wifi_p2p_settings);
   mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
   mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+  mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
   final Activity activity=getActivity();
   mWifiP2pManager=(WifiP2pManager)getSystemService(Context.WIFI_P2P_SERVICE);
-  if (!mWifiP2pManager.connectHandler(activity,mHandler)) {
-    Log.e(TAG,"Failed to set up connection with wifi p2p service");
-    mWifiP2pManager=null;
+  if (mWifiP2pManager != null) {
+    mChannel=mWifiP2pManager.initialize(activity,mHandler);
+    if (mChannel == null) {
+      Log.e(TAG,"Failed to set up connection with wifi p2p service");
+      mWifiP2pManager=null;
+    }
+  }
+ else {
+    Log.e(TAG,"mWifiP2pManager is null !");
   }
   Switch actionBarSwitch=new Switch(activity);
   if (activity instanceof PreferenceActivity) {
@@ -25,7 +32,7 @@
       if (which == DialogInterface.BUTTON_POSITIVE) {
         WifiP2pConfig config=mConnectDialog.getConfig();
         if (mWifiP2pManager != null) {
-          mWifiP2pManager.connect(config);
+          mWifiP2pManager.connect(mChannel,config);
         }
       }
     }
@@ -35,7 +42,7 @@
     @Override public void onClick(    DialogInterface dialog,    int which){
       if (which == DialogInterface.BUTTON_POSITIVE) {
         if (mWifiP2pManager != null) {
-          mWifiP2pManager.disconnect();
+          mWifiP2pManager.disconnect(mChannel);
         }
       }
     }

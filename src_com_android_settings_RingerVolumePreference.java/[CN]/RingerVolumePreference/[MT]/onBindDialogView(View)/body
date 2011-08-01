@@ -10,16 +10,6 @@
       mSeekBarVolumizer[i]=new SeekBarVolumizer(getContext(),seekBar,SEEKBAR_TYPE[i]);
     }
   }
-  mNotificationsUseRingVolumeCheckbox=(CheckBox)view.findViewById(R.id.same_notification_volume);
-  mNotificationsUseRingVolumeCheckbox.setOnCheckedChangeListener(this);
-  mNotificationsUseRingVolumeCheckbox.setChecked(Settings.System.getInt(getContext().getContentResolver(),Settings.System.NOTIFICATIONS_USE_RING_VOLUME,1) == 1);
-  if (Utils.isVoiceCapable(getContext())) {
-    setNotificationVolumeVisibility(!mNotificationsUseRingVolumeCheckbox.isChecked());
-  }
- else {
-    setNotificationVolumeVisibility(true);
-  }
-  disableSettingsThatNeedVoice(view);
   for (int i=0; i < mCheckBoxes.length; i++) {
     ImageView checkbox=(ImageView)view.findViewById(CHECKBOX_VIEW_ID[i]);
     checkbox.setOnClickListener(this);
@@ -40,4 +30,13 @@
 ;
     getContext().registerReceiver(mRingModeChangedReceiver,filter);
   }
+  int id;
+  if (!Utils.isVoiceCapable(getContext())) {
+    id=R.id.ringer_section;
+  }
+ else {
+    id=R.id.notification_section;
+  }
+  View hideSection=view.findViewById(id);
+  hideSection.setVisibility(View.GONE);
 }

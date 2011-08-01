@@ -1,9 +1,0 @@
-{
-  if (Utils.isVoiceCapable(getContext())) {
-    setNotificationVolumeVisibility(!isChecked);
-    Settings.System.putInt(getContext().getContentResolver(),Settings.System.NOTIFICATIONS_USE_RING_VOLUME,isChecked ? 1 : 0);
-    if (isChecked) {
-      mAudioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,mAudioManager.getStreamVolume(AudioManager.STREAM_RING),0);
-    }
-  }
-}

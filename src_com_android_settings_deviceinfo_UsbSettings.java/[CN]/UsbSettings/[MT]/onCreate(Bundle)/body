@@ -1,9 +1,4 @@
 {
   super.onCreate(icicle);
   mUsbManager=(UsbManager)getSystemService(Context.USB_SERVICE);
-  mInstallerImagePath=getString(com.android.internal.R.string.config_isoImagePath);
-  if (!(new File(mInstallerImagePath)).exists()) {
-    mInstallerImagePath=null;
-  }
-  setHasOptionsMenu(mInstallerImagePath != null);
 }

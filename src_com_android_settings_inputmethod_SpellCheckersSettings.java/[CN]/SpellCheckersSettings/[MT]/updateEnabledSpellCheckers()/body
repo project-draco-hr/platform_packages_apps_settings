@@ -4,10 +4,13 @@
   if (mCurrentSci == null || mEnabledScis == null) {
     return;
   }
+  mSpellCheckers.clear();
   for (int i=0; i < mEnabledScis.length; ++i) {
     final SpellCheckerInfo sci=mEnabledScis[i];
-    final PreferenceScreen scs=new PreferenceScreen(getActivity(),null);
-    scs.setTitle(sci.getId());
-    getPreferenceScreen().addPreference(scs);
+    final SingleSpellCheckerPreference scPref=new SingleSpellCheckerPreference(this,null,sci);
+    mSpellCheckers.add(scPref);
+    scPref.setTitle(sci.getId());
+    scPref.setSelected(mCurrentSci != null && mCurrentSci.getId().equals(sci.getId()));
+    getPreferenceScreen().addPreference(scPref);
   }
 }

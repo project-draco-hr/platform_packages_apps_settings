@@ -6,7 +6,9 @@
     sDimAlpha=(int)(outValue.getFloat() * 255);
   }
   mCachedDevice=cachedDevice;
-  setWidgetLayoutResource(R.layout.preference_bluetooth);
+  if (cachedDevice.getBondState() == BluetoothDevice.BOND_BONDED) {
+    setWidgetLayoutResource(R.layout.preference_bluetooth);
+  }
   mCachedDevice.registerCallback(this);
   onDeviceAttributesChanged();
 }

@@ -1,6 +1,16 @@
 {
   setTitle(mCachedDevice.getName());
-  setSummary(getConnectionSummary());
+  int summaryResId=getConnectionSummary();
+  if (summaryResId != 0) {
+    setSummary(summaryResId);
+  }
+ else {
+    setSummary(null);
+  }
+  int iconResId=getBtClassDrawable();
+  if (iconResId != 0) {
+    setIcon(iconResId);
+  }
   setEnabled(!mCachedDevice.isBusy());
   notifyHierarchyChanged();
 }

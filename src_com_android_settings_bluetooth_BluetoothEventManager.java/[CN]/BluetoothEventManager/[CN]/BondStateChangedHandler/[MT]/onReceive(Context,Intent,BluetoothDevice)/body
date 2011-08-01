@@ -27,7 +27,7 @@ synchronized (mCallbacks) {
     if (device.isBluetoothDock()) {
       LocalBluetoothPreferences.removeDockAutoConnectSetting(context,device.getAddress());
       if (!device.getAddress().equals(getDockedDeviceAddress(context))) {
-        mDeviceManager.onDeviceDisappeared(cachedDevice);
+        cachedDevice.setVisible(false);
       }
     }
     int reason=intent.getIntExtra(BluetoothDevice.EXTRA_REASON,BluetoothDevice.ERROR);

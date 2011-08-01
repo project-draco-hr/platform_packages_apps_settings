@@ -4,17 +4,15 @@
   if (TextUtils.isEmpty(name)) {
     name=context.getString(R.string.bluetooth_device);
   }
-  int disconnectMessage=profile.getDisconnectResource(device.getDevice());
-  if (disconnectMessage == 0) {
-    Log.w(TAG,"askDisconnect: unexpected profile " + profile);
-    disconnectMessage=R.string.bluetooth_disconnect_blank;
-  }
-  String message=context.getString(disconnectMessage,name);
+  String profileName=context.getString(profile.getNameResource(device.getDevice()));
+  String title=context.getString(R.string.bluetooth_disable_profile_title);
+  String message=context.getString(R.string.bluetooth_disable_profile_message,profileName,name);
   DialogInterface.OnClickListener disconnectListener=new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
       device.disconnect(profile);
+      profile.setPreferred(device.getDevice(),false);
     }
   }
 ;
-  mDisconnectDialog=Utils.showDisconnectDialog(context,mDisconnectDialog,disconnectListener,name,message);
+  mDisconnectDialog=Utils.showDisconnectDialog(context,mDisconnectDialog,disconnectListener,title,Html.fromHtml(message));
 }

@@ -1,5 +1,6 @@
 {
   BluetoothDevice device=mCachedDevice.getDevice();
   profilePref.setEnabled(!mCachedDevice.isBusy());
+  profilePref.setChecked(mCachedDevice.isConnectedProfile(profile));
   profilePref.setSummary(profile.getSummaryResourceForDevice(device));
 }

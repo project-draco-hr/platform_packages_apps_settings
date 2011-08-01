@@ -2,35 +2,13 @@
   if (null != findPreferenceInHierarchy("bt_checkbox")) {
     setDependency("bt_checkbox");
   }
+  if (mCachedDevice.getBondState() == BluetoothDevice.BOND_BONDED) {
+    ImageView deviceDetails=(ImageView)view.findViewById(R.id.deviceDetails);
+    if (deviceDetails != null) {
+      deviceDetails.setOnClickListener(this);
+      deviceDetails.setTag(mCachedDevice);
+      deviceDetails.setAlpha(isEnabled() ? 255 : sDimAlpha);
+    }
+  }
   super.onBindView(view);
-  ImageView btClass=(ImageView)view.findViewById(android.R.id.icon);
-  btClass.setImageResource(getBtClassDrawable());
-  btClass.setAlpha(isEnabled() ? 255 : sDimAlpha);
-  btClass.setVisibility(View.VISIBLE);
-  ImageView deviceDetails=(ImageView)view.findViewById(R.id.deviceDetails);
-  if (mOnSettingsClickListener != null) {
-    deviceDetails.setOnClickListener(this);
-    deviceDetails.setTag(mCachedDevice);
-    deviceDetails.setAlpha(isEnabled() ? 255 : sDimAlpha);
-  }
- else {
-    deviceDetails.setVisibility(View.GONE);
-    View divider=view.findViewById(R.id.divider);
-    if (divider != null) {
-      divider.setVisibility(View.GONE);
-    }
-  }
-  LayoutInflater inflater=(LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-  ViewGroup profilesGroup=(ViewGroup)view.findViewById(R.id.profileIcons);
-  for (  LocalBluetoothProfile profile : mCachedDevice.getProfiles()) {
-    int iconResource=profile.getDrawableResource(mCachedDevice.getBtClass());
-    if (iconResource != 0) {
-      Drawable icon=getContext().getResources().getDrawable(iconResource);
-      inflater.inflate(R.layout.profile_icon_small,profilesGroup,true);
-      ImageView imageView=(ImageView)profilesGroup.getChildAt(profilesGroup.getChildCount() - 1);
-      imageView.setImageDrawable(icon);
-      boolean profileEnabled=mCachedDevice.isConnectedProfile(profile);
-      imageView.setAlpha(profileEnabled ? 255 : sDimAlpha);
-    }
-  }
 }

@@ -1,0 +1,12 @@
+{
+  final long maxEstimate=mSeries.getMaxEstimate();
+  long interestLine=Long.MAX_VALUE;
+  if (mSweepWarning.isEnabled()) {
+    interestLine=mSweepWarning.getValue();
+  }
+ else   if (mSweepLimit.isEnabled()) {
+    interestLine=mSweepLimit.getValue();
+  }
+  final boolean estimateVisible=(maxEstimate >= interestLine * 7 / 10);
+  mSeries.setEstimateVisible(estimateVisible);
+}

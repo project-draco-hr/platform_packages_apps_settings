@@ -1,5 +1,5 @@
 {
-  final double y=point / mSize;
-  final double fraction=6.869341163271789302 * Math.pow(10,9) * Math.pow(y,2.71117746931646030774);
-  return (long)fraction;
+  final double normalized=point / mSize;
+  final double fraction=1.3102228476089056629 * Math.pow(normalized,2.7111774693164631640);
+  return (long)(mMin + (fraction * (mMax - mMin)));
 }

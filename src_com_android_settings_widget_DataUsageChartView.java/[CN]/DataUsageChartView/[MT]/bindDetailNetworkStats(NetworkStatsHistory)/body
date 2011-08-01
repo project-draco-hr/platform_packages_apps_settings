@@ -1,6 +1,11 @@
 {
   mDetailSeries.bindNetworkStats(stats);
   mDetailSeries.setVisibility(stats != null ? View.VISIBLE : View.GONE);
+  if (mHistory != null) {
+    mDetailSeries.setEndTime(mHistory.getEnd());
+  }
+  updateVertAxisBounds(null);
+  updateEstimateVisible();
   updatePrimaryRange();
   requestLayout();
 }

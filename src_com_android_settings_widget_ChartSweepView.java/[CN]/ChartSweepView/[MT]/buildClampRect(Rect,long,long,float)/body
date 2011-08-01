@@ -1,0 +1,21 @@
+{
+  if (mAxis instanceof InvertedChartAxis) {
+    long temp=beforeValue;
+    beforeValue=afterValue;
+    afterValue=temp;
+  }
+  final boolean afterValid=afterValue != Long.MIN_VALUE && afterValue != Long.MAX_VALUE;
+  final boolean beforeValid=beforeValue != Long.MIN_VALUE && beforeValue != Long.MAX_VALUE;
+  final float afterPoint=mAxis.convertToPoint(afterValue) + margin;
+  final float beforePoint=mAxis.convertToPoint(beforeValue) - margin;
+  final Rect clampRect=new Rect(parentContent);
+  if (mFollowAxis == VERTICAL) {
+    if (beforeValid)     clampRect.bottom=clampRect.top + (int)beforePoint;
+    if (afterValid)     clampRect.top+=afterPoint;
+  }
+ else {
+    if (beforeValid)     clampRect.right=clampRect.left + (int)beforePoint;
+    if (afterValid)     clampRect.left+=afterPoint;
+  }
+  return clampRect;
+}

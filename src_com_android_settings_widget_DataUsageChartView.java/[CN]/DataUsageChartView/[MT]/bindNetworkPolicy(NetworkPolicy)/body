@@ -1,17 +1,20 @@
 {
   if (policy == null) {
     mSweepLimit.setVisibility(View.INVISIBLE);
+    mSweepLimit.setValue(-1);
     mSweepWarning.setVisibility(View.INVISIBLE);
+    mSweepWarning.setValue(-1);
     return;
   }
   if (policy.limitBytes != NetworkPolicy.LIMIT_DISABLED) {
     mSweepLimit.setVisibility(View.VISIBLE);
-    mSweepLimit.setValue(policy.limitBytes);
     mSweepLimit.setEnabled(true);
+    mSweepLimit.setValue(policy.limitBytes);
   }
  else {
     mSweepLimit.setVisibility(View.VISIBLE);
     mSweepLimit.setEnabled(false);
+    mSweepLimit.setValue(-1);
   }
   if (policy.warningBytes != NetworkPolicy.WARNING_DISABLED) {
     mSweepWarning.setVisibility(View.VISIBLE);
@@ -19,6 +22,8 @@
   }
  else {
     mSweepWarning.setVisibility(View.INVISIBLE);
+    mSweepWarning.setValue(-1);
   }
+  updateVertAxisBounds(null);
   requestLayout();
 }

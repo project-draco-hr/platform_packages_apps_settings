@@ -9,8 +9,10 @@
   final long sweepMin=Math.max(visibleStart,(sweepMax - DateUtils.WEEK_IN_MILLIS));
   mSweepLeft.setValue(sweepMin);
   mSweepRight.setValue(sweepMax);
-  updatePrimaryRange();
   requestLayout();
   mSeries.generatePath();
   mSeries.invalidate();
+  updateVertAxisBounds(null);
+  updateEstimateVisible();
+  updatePrimaryRange();
 }

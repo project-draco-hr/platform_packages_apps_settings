@@ -1,19 +1,6 @@
 {
-  final Rect clampRect=new Rect(parentContent);
-  float validAfterPoint=mAxis.convertToPoint(getValidAfterValue());
-  float validBeforePoint=mAxis.convertToPoint(getValidBeforeValue());
-  if (validAfterPoint > validBeforePoint) {
-    float swap=validBeforePoint;
-    validBeforePoint=validAfterPoint;
-    validAfterPoint=swap;
-  }
-  if (mFollowAxis == VERTICAL) {
-    clampRect.bottom=clampRect.top + (int)validBeforePoint;
-    clampRect.top+=validAfterPoint;
-  }
- else {
-    clampRect.right=clampRect.left + (int)validBeforePoint;
-    clampRect.left+=validAfterPoint;
-  }
-  return clampRect;
+  final Rect rect=buildClampRect(parentContent,mValidAfter,mValidBefore,0f);
+  final Rect dynamicRect=buildClampRect(parentContent,getValidAfterDynamic(),getValidBeforeDynamic(),mNeighborMargin);
+  rect.intersect(dynamicRect);
+  return rect;
 }

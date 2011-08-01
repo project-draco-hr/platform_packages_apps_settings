@@ -2,10 +2,12 @@
   int save;
   final float primaryLeftPoint=mHoriz.convertToPoint(mPrimaryLeft);
   final float primaryRightPoint=mHoriz.convertToPoint(mPrimaryRight);
-  save=canvas.save();
-  canvas.clipRect(0,0,getWidth(),getHeight());
-  canvas.drawPath(mPathEstimate,mPaintEstimate);
-  canvas.restoreToCount(save);
+  if (mEstimateVisible) {
+    save=canvas.save();
+    canvas.clipRect(0,0,getWidth(),getHeight());
+    canvas.drawPath(mPathEstimate,mPaintEstimate);
+    canvas.restoreToCount(save);
+  }
   save=canvas.save();
   canvas.clipRect(0,0,primaryLeftPoint,getHeight());
   canvas.drawPath(mPathFill,mPaintFillSecondary);

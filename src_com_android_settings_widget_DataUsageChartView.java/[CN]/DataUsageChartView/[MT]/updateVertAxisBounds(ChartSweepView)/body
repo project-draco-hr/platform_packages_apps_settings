@@ -1,0 +1,35 @@
+{
+  final long max=mVertMax;
+  final long newMax;
+  if (activeSweep != null) {
+    final int adjustAxis=activeSweep.shouldAdjustAxis();
+    if (adjustAxis > 0) {
+      newMax=max * 11 / 10;
+    }
+ else     if (adjustAxis < 0) {
+      newMax=max * 9 / 10;
+    }
+ else {
+      newMax=max;
+    }
+  }
+ else {
+    final long maxSweep=Math.max(mSweepWarning.getValue(),mSweepLimit.getValue());
+    final long maxVisible=Math.max(mSeries.getMaxVisible(),maxSweep) * 12 / 10;
+    newMax=Math.max(maxVisible,2 * GB_IN_BYTES);
+  }
+  if (newMax != mVertMax) {
+    mVertMax=newMax;
+    mVert.setBounds(0L,newMax);
+    mSweepWarning.setValidRange(0L,newMax);
+    mSweepLimit.setValidRange(0L,newMax);
+    mSeries.generatePath();
+    mDetailSeries.generatePath();
+    mGrid.invalidate();
+    mSeries.invalidate();
+    mDetailSeries.invalidate();
+    if (activeSweep != null) {
+      activeSweep.updateValueFromPosition();
+    }
+  }
+}

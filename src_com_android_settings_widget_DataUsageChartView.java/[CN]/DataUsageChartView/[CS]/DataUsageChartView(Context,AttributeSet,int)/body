@@ -1,4 +1,13 @@
 {
   super(context,attrs,defStyle);
   init(new TimeAxis(),new InvertedChartAxis(new DataAxis()));
+  mHandler=new Handler(){
+    @Override public void handleMessage(    Message msg){
+      final ChartSweepView sweep=(ChartSweepView)msg.obj;
+      updateVertAxisBounds(sweep);
+      updateEstimateVisible();
+      sendUpdateAxisDelayed(sweep,true);
+    }
+  }
+;
 }

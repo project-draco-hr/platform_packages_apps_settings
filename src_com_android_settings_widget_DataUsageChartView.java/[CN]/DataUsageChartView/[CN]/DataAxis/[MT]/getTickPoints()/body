@@ -1,10 +1,12 @@
 {
-  final float[] tickPoints=new float[16];
-  final long jump=((mMax - mMin) / tickPoints.length);
+  final long range=mMax - mMin;
+  final long tickJump=256 * MB_IN_BYTES;
+  final int tickCount=(int)(range / tickJump);
+  final float[] tickPoints=new float[tickCount];
   long value=mMin;
   for (int i=0; i < tickPoints.length; i++) {
     tickPoints[i]=convertToPoint(value);
-    value+=jump;
+    value+=tickJump;
   }
   return tickPoints;
 }

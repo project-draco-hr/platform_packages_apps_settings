@@ -1,0 +1,11 @@
+{
+  final Rect parentContent=getParentContentRect();
+  if (mFollowAxis == VERTICAL) {
+    final float effectiveY=getY() - mMargins.top - parentContent.top;
+    setValue(mAxis.convertToValue(effectiveY));
+  }
+ else {
+    final float effectiveX=getX() - mMargins.left - parentContent.left;
+    setValue(mAxis.convertToValue(effectiveX));
+  }
+}

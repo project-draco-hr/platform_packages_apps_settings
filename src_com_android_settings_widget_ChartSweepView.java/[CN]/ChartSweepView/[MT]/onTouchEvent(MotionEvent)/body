@@ -25,7 +25,7 @@ case MotionEvent.ACTION_DOWN:
 case MotionEvent.ACTION_MOVE:
 {
     getParent().requestDisallowInterceptTouchEvent(true);
-    final Rect parentContent=new Rect(parent.getPaddingLeft(),parent.getPaddingTop(),parent.getWidth() - parent.getPaddingRight(),parent.getHeight() - parent.getPaddingBottom());
+    final Rect parentContent=getParentContentRect();
     final Rect clampRect=computeClampRect(parentContent);
     if (mFollowAxis == VERTICAL) {
       final float currentTargetY=getTop() - mMargins.top;

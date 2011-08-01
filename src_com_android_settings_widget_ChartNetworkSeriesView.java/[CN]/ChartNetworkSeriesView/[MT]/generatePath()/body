@@ -1,5 +1,6 @@
 {
   if (LOGD)   Log.d(TAG,"generatePath()");
+  mMax=0;
   mPathStroke.reset();
   mPathFill.reset();
   mPathEstimate.reset();
@@ -15,8 +16,8 @@
   NetworkStatsHistory.Entry entry=null;
   for (int i=0; i < mStats.size(); i++) {
     entry=mStats.getValues(i,entry);
-    lastTime=entry.bucketStart;
-    final float x=mHoriz.convertToPoint(entry.bucketStart);
+    lastTime=entry.bucketStart + entry.bucketDuration;
+    final float x=mHoriz.convertToPoint(lastTime);
     final float y=mVert.convertToPoint(totalData);
     if (i > 0 && !started && x > 0) {
       mPathStroke.moveTo(lastX,lastY);
@@ -33,6 +34,13 @@
     lastX=x;
     lastY=y;
   }
+  if (lastTime < mEndTime) {
+    lastX=mHoriz.convertToPoint(mEndTime);
+    if (started) {
+      mPathStroke.lineTo(lastX,lastY);
+      mPathFill.lineTo(lastX,lastY);
+    }
+  }
   if (LOGD) {
     final RectF bounds=new RectF();
     mPathFill.computeBounds(bounds,true);
@@ -40,6 +48,7 @@
   }
   mPathFill.lineTo(lastX,height);
   mPathFill.lineTo(firstX,height);
+  mMax=totalData;
   mPathEstimate.moveTo(lastX,lastY);
   final long now=System.currentTimeMillis();
   final long bucketDuration=mStats.getBucketDuration();
@@ -53,7 +62,8 @@
     final long shortWindow=(entry.rxBytes + entry.txBytes) * bucketDuration / entry.bucketDuration;
     totalData+=(longWindow * 7 + shortWindow * 3) / 10;
     lastX=mHoriz.convertToPoint(lastTime + futureTime);
-    final float y=mVert.convertToPoint(totalData);
-    mPathEstimate.lineTo(lastX,y);
+    lastY=mVert.convertToPoint(totalData);
+    mPathEstimate.lineTo(lastX,lastY);
   }
+  mMaxEstimate=totalData;
 }

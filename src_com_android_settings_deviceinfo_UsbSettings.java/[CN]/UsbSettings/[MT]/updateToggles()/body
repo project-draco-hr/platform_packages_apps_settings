@@ -1,9 +1,10 @@
 {
-  if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_MTP)) {
+  String function=mUsbManager.getDefaultFunction();
+  if (UsbManager.USB_FUNCTION_MTP.equals(function)) {
     mMtp.setChecked(true);
     mPtp.setChecked(false);
   }
- else   if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_PTP)) {
+ else   if (UsbManager.USB_FUNCTION_PTP.equals(function)) {
     mMtp.setChecked(false);
     mPtp.setChecked(true);
   }

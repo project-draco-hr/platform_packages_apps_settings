@@ -1,0 +1,21 @@
+{
+  super.onBindView(view);
+  mPrefAll=view.findViewById(R.id.pref_all);
+  mPrefLeftButton=view.findViewById(R.id.pref_left_button);
+  mPrefLeftButton.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View arg0){
+      onLeftButtonClicked(arg0);
+    }
+  }
+);
+  mSetingsButton=(ImageView)view.findViewById(R.id.pref_right_button);
+  mTitleText=(TextView)view.findViewById(android.R.id.title);
+  mSummaryText=(TextView)view.findViewById(android.R.id.summary);
+  mSetingsButton.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View arg0){
+      onSettingsButtonClicked(arg0);
+    }
+  }
+);
+  updateSelectedState(mSelected);
+}

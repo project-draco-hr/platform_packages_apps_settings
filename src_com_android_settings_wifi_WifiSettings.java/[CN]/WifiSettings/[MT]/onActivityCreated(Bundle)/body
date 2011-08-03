@@ -1,6 +1,10 @@
 {
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   mWifiManager.asyncConnect(getActivity(),new WifiServiceHandler());
+  if (savedInstanceState != null && savedInstanceState.containsKey(SAVE_DIALOG_ACCESS_POINT_STATE)) {
+    mDlgEdit=savedInstanceState.getBoolean(SAVE_DIALOG_EDIT_MODE);
+    mAccessPointSavedState=savedInstanceState.getBundle(SAVE_DIALOG_ACCESS_POINT_STATE);
+  }
   final Activity activity=getActivity();
   final Intent intent=activity.getIntent();
   mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);

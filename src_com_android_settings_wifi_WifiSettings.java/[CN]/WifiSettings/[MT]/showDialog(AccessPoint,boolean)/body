@@ -1,7 +1,9 @@
 {
   if (mDialog != null) {
-    mDialog.dismiss();
+    removeDialog(WIFI_DIALOG_ID);
+    mDialog=null;
   }
-  mDialog=new WifiDialog(getActivity(),this,accessPoint,edit);
-  mDialog.show();
+  mDlgAccessPoint=accessPoint;
+  mDlgEdit=edit;
+  showDialog(WIFI_DIALOG_ID);
 }

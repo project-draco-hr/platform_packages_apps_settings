@@ -1,0 +1,12 @@
+{
+  AccessPoint ap=mDlgAccessPoint;
+  if (ap == null) {
+    if (mAccessPointSavedState != null) {
+      ap=new AccessPoint(getActivity(),mAccessPointSavedState);
+      mDlgAccessPoint=ap;
+    }
+  }
+  mSelectedAccessPoint=ap;
+  mDialog=new WifiDialog(getActivity(),this,ap,mDlgEdit);
+  return mDialog;
+}

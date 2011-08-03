@@ -1,0 +1,11 @@
+{
+  super.onSaveInstanceState(outState);
+  if (mDialog != null && mDialog.isShowing()) {
+    outState.putBoolean(SAVE_DIALOG_EDIT_MODE,mDlgEdit);
+    if (mDlgAccessPoint != null) {
+      mAccessPointSavedState=new Bundle();
+      mDlgAccessPoint.saveWifiState(mAccessPointSavedState);
+      outState.putBundle(SAVE_DIALOG_ACCESS_POINT_STATE,mAccessPointSavedState);
+    }
+  }
+}

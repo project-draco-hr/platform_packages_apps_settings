@@ -1,0 +1,17 @@
+{
+  super(context);
+  setWidgetLayoutResource(R.layout.preference_widget_wifi_signal);
+  mConfig=savedState.getParcelable(KEY_CONFIG);
+  if (mConfig != null) {
+    loadConfig(mConfig);
+  }
+  mScanResult=(ScanResult)savedState.getParcelable(KEY_SCANRESULT);
+  if (mScanResult != null) {
+    loadResult(mScanResult);
+  }
+  mInfo=(WifiInfo)savedState.getParcelable(KEY_WIFIINFO);
+  if (savedState.containsKey(KEY_DETAILEDSTATE)) {
+    mState=DetailedState.valueOf(savedState.getString(KEY_DETAILEDSTATE));
+  }
+  update(mInfo,mState);
+}

@@ -21,7 +21,7 @@
         Log.wtf(TAG,"stuck generating ranges for historyStart=" + historyStart + ", historyEnd="+ historyEnd+ " and policy="+ policy);
       }
     }
-    mCycleAdapter.setChangePossible(true);
+    mCycleAdapter.setChangePossible(isNetworkPolicyModifiable());
   }
   if (!hasCycles) {
     mCycleAdapter.add(new CycleItem(context,historyStart,historyEnd));

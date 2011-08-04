@@ -1,5 +1,6 @@
 {
   super.onCreate(savedInstanceState);
+  mNetworkService=INetworkManagementService.Stub.asInterface(ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
   mStatsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
   mPolicyService=INetworkPolicyManager.Stub.asInterface(ServiceManager.getService(Context.NETWORK_POLICY_SERVICE));
   mConnService=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);

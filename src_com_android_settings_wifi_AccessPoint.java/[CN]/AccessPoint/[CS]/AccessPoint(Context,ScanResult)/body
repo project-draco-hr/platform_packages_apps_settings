@@ -1,10 +1,5 @@
 {
   super(context);
   setWidgetLayoutResource(R.layout.preference_widget_wifi_signal);
-  ssid=result.SSID;
-  bssid=result.BSSID;
-  security=getSecurity(result);
-  wpsAvailable=security != SECURITY_EAP && result.capabilities.contains("WPS");
-  networkId=-1;
-  mRssi=result.level;
+  loadResult(result);
 }

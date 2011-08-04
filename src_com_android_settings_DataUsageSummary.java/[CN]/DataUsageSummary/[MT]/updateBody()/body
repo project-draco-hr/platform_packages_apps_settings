@@ -44,7 +44,7 @@
     mTemplate=buildTemplateMobile4g(getActiveSubscriberId(context));
   }
   try {
-    mHistory=mStatsService.getHistoryForNetwork(mTemplate);
+    mHistory=mStatsService.getHistoryForNetwork(mTemplate,FIELD_RX_BYTES | FIELD_TX_BYTES);
   }
  catch (  RemoteException e) {
     throw new RuntimeException("problem reading network policy or stats",e);

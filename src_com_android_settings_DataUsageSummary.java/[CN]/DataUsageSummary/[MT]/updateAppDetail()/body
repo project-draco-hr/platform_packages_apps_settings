@@ -25,7 +25,7 @@
     mAppSettings.setEnabled(false);
   }
   try {
-    mDetailHistory=mStatsService.getHistoryForUid(mTemplate,mUid,NetworkStats.TAG_NONE);
+    mDetailHistory=mStatsService.getHistoryForUid(mTemplate,mUid,TAG_NONE,FIELD_RX_BYTES | FIELD_TX_BYTES);
   }
  catch (  RemoteException e) {
     throw new RuntimeException("problem reading network stats",e);
@@ -33,7 +33,7 @@
   mChart.bindDetailNetworkStats(mDetailHistory);
   updateDetailData();
   final Context context=getActivity();
-  if (NetworkPolicyManager.isUidValidForPolicy(context,mUid) && !getRestrictBackground()) {
+  if (NetworkPolicyManager.isUidValidForPolicy(context,mUid) && !getRestrictBackground() && isBandwidthControlEnabled()) {
     mAppRestrictView.setVisibility(View.VISIBLE);
     mAppRestrict.setChecked(getAppRestrictBackground());
   }

@@ -8,7 +8,6 @@
   if (isAppDetailMode()) {
     if (mDetailHistory != null) {
       entry=mDetailHistory.getValues(start,end,now,null);
-      mAppSubtitle.setText(getString(R.string.data_usage_received_sent,Formatter.formatFileSize(context,entry.rxBytes),Formatter.formatFileSize(context,entry.txBytes)));
     }
  else {
       entry=null;
@@ -21,6 +20,6 @@
   }
   final long totalBytes=entry != null ? entry.rxBytes + entry.txBytes : 0;
   final String totalPhrase=Formatter.formatFileSize(context,totalBytes);
-  final String rangePhrase=formatDateRange(context,start,end,null);
+  final String rangePhrase=formatDateRange(context,start,end,false);
   mUsageSummary.setText(getString(R.string.data_usage_total_during_range,totalPhrase,rangePhrase));
 }

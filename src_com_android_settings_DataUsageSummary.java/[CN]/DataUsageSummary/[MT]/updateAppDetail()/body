@@ -1,4 +1,7 @@
 {
+  final Context context=getActivity();
+  final PackageManager pm=context.getPackageManager();
+  final LayoutInflater inflater=getActivity().getLayoutInflater();
   if (isAppDetailMode()) {
     mAppDetail.setVisibility(View.VISIBLE);
     mCycleAdapter.setChangeVisible(false);
@@ -10,8 +13,17 @@
     return;
   }
   mChart.bindNetworkPolicy(null);
-  final PackageManager pm=getActivity().getPackageManager();
-  mAppTitle.setText(pm.getNameForUid(mUid));
+  final UidDetail detail=resolveDetailForUid(context,mUid);
+  mAppIcon.setImageDrawable(detail.icon);
+  mAppTitles.removeAllViews();
+  if (detail.detailLabels != null) {
+    for (    CharSequence label : detail.detailLabels) {
+      mAppTitles.addView(inflateAppTitle(inflater,mAppTitles,label));
+    }
+  }
+ else {
+    mAppTitles.addView(inflateAppTitle(inflater,mAppTitles,detail.label));
+  }
   final String[] packageNames=pm.getPackagesForUid(mUid);
   if (packageNames != null && packageNames.length > 0) {
     mAppSettingsIntent=new Intent(Intent.ACTION_MANAGE_NETWORK_USAGE);
@@ -32,7 +44,6 @@
   }
   mChart.bindDetailNetworkStats(mDetailHistory);
   updateDetailData();
-  final Context context=getActivity();
   if (NetworkPolicyManager.isUidValidForPolicy(context,mUid) && !getRestrictBackground() && isBandwidthControlEnabled()) {
     mAppRestrictView.setVisibility(View.VISIBLE);
     mAppRestrict.setChecked(getAppRestrictBackground());

@@ -20,4 +20,19 @@
   }
   mBorder.setBounds(0,0,width,height);
   mBorder.draw(canvas);
+  final int padding=mLayoutStart.getHeight() / 8;
+  final Layout start=mLayoutStart;
+  if (start != null) {
+    canvas.save();
+    canvas.translate(0,height + padding);
+    start.draw(canvas);
+    canvas.restore();
+  }
+  final Layout end=mLayoutEnd;
+  if (end != null) {
+    canvas.save();
+    canvas.translate(width - end.getWidth(),height + padding);
+    end.draw(canvas);
+    canvas.restore();
+  }
 }

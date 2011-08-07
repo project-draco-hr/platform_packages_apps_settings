@@ -27,5 +27,7 @@
     }
   }
 );
-  SECONDARY_SERVER_MEM=Integer.valueOf(SystemProperties.get("ro.SECONDARY_SERVER_MEM")) * PAGE_SIZE;
+  ActivityManager.MemoryInfo memInfo=new ActivityManager.MemoryInfo();
+  mAm.getMemoryInfo(memInfo);
+  SECONDARY_SERVER_MEM=memInfo.secondaryServerThreshold;
 }

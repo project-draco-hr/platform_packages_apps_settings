@@ -63,7 +63,11 @@
         mInterestingProcesses.add(proc);
       }
       proc.mCurSeq=mSequence;
+      proc.mInteresting=true;
       proc.ensureLabel(pm);
+    }
+ else {
+      proc.mInteresting=false;
     }
     proc.mRunningSeq=mSequence;
     proc.mRunningProcessInfo=pi;
@@ -94,7 +98,7 @@
   int NHP=mInterestingProcesses.size();
   for (int i=0; i < NHP; i++) {
     ProcessItem proc=mInterestingProcesses.get(i);
-    if (mRunningProcesses.get(proc.mPid) == null) {
+    if (!proc.mInteresting || mRunningProcesses.get(proc.mPid) == null) {
       changed=true;
       mInterestingProcesses.remove(i);
       i--;

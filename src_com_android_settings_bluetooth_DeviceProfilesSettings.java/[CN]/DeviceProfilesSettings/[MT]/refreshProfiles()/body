@@ -1,6 +1,6 @@
 {
   for (  LocalBluetoothProfile profile : mCachedDevice.getConnectableProfiles()) {
-    Preference profilePref=findPreference(profile.toString());
+    CheckBoxPreference profilePref=(CheckBoxPreference)findPreference(profile.toString());
     if (profilePref == null) {
       profilePref=createProfilePreference(profile);
       mProfileContainer.addPreference(profilePref);
@@ -16,4 +16,5 @@
       mProfileContainer.removePreference(profilePref);
     }
   }
+  showOrHideProfileGroup();
 }

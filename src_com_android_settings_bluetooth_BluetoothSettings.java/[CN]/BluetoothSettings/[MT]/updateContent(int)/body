@@ -9,6 +9,12 @@ if (mMyDevicePreference == null) {
   mMyDevicePreference=new Preference(getActivity());
 }
 mMyDevicePreference.setTitle(mLocalAdapter.getName());
+if (getResources().getBoolean(com.android.internal.R.bool.config_voice_capable)) {
+mMyDevicePreference.setIcon(R.drawable.ic_bt_cellphone);
+}
+ else {
+mMyDevicePreference.setIcon(R.drawable.ic_bt_laptop);
+}
 mMyDevicePreference.setPersistent(false);
 mMyDevicePreference.setEnabled(true);
 preferenceScreen.addPreference(mMyDevicePreference);

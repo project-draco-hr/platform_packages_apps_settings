@@ -1,0 +1,11 @@
+{
+  int numProfiles=mProfileContainer.getPreferenceCount();
+  if (!mProfileGroupIsRemoved && numProfiles == 0) {
+    getPreferenceScreen().removePreference(mProfileContainer);
+    mProfileGroupIsRemoved=true;
+  }
+ else   if (mProfileGroupIsRemoved && numProfiles != 0) {
+    getPreferenceScreen().addPreference(mProfileContainer);
+    mProfileGroupIsRemoved=false;
+  }
+}

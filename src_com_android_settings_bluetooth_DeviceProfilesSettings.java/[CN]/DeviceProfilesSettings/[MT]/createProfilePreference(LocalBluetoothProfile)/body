@@ -1,14 +1,13 @@
 {
-  BluetoothProfilePreference pref=new BluetoothProfilePreference(getActivity(),profile);
+  CheckBoxPreference pref=new CheckBoxPreference(getActivity());
   pref.setKey(profile.toString());
-  pref.setTitle(profile.getNameResource());
-  pref.setExpanded(false);
+  pref.setTitle(profile.getNameResource(mCachedDevice.getDevice()));
   pref.setPersistent(false);
   pref.setOrder(getProfilePreferenceIndex(profile.getOrdinal()));
-  pref.setOnExpandClickListener(this);
+  pref.setOnPreferenceChangeListener(this);
   int iconResource=profile.getDrawableResource(mCachedDevice.getBtClass());
   if (iconResource != 0) {
-    pref.setProfileDrawable(getResources().getDrawable(iconResource));
+    pref.setIcon(getResources().getDrawable(iconResource));
   }
   pref.setEnabled(!mCachedDevice.isBusy());
   refreshProfilePreference(pref,profile);

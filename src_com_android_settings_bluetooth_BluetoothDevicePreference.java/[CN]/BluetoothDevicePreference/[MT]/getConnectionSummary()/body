@@ -1,18 +1,48 @@
 {
   final CachedBluetoothDevice cachedDevice=mCachedDevice;
+  boolean profileConnected=false;
+  boolean a2dpNotConnected=false;
+  boolean headsetNotConnected=false;
   for (  LocalBluetoothProfile profile : cachedDevice.getProfiles()) {
     int connectionStatus=cachedDevice.getProfileConnectionState(profile);
-    if (connectionStatus != BluetoothProfile.STATE_DISCONNECTED) {
+switch (connectionStatus) {
+case BluetoothProfile.STATE_CONNECTING:
+case BluetoothProfile.STATE_DISCONNECTING:
       return Utils.getConnectionStateSummary(connectionStatus);
-    }
+case BluetoothProfile.STATE_CONNECTED:
+    profileConnected=true;
+  break;
+case BluetoothProfile.STATE_DISCONNECTED:
+if (profile.isProfileReady() && profile.isPreferred(cachedDevice.getDevice())) {
+  if (profile instanceof A2dpProfile) {
+    a2dpNotConnected=true;
   }
+ else   if (profile instanceof HeadsetProfile) {
+    headsetNotConnected=true;
+  }
+}
+break;
+}
+}
+if (profileConnected) {
+if (a2dpNotConnected && headsetNotConnected) {
+return R.string.bluetooth_connected_no_headset_no_a2dp;
+}
+ else if (a2dpNotConnected) {
+return R.string.bluetooth_connected_no_a2dp;
+}
+ else if (headsetNotConnected) {
+return R.string.bluetooth_connected_no_headset;
+}
+ else {
+return R.string.bluetooth_connected;
+}
+}
 switch (cachedDevice.getBondState()) {
-case BluetoothDevice.BOND_BONDED:
-    return R.string.bluetooth_paired;
 case BluetoothDevice.BOND_BONDING:
-  return R.string.bluetooth_pairing;
+return R.string.bluetooth_pairing;
+case BluetoothDevice.BOND_BONDED:
 case BluetoothDevice.BOND_NONE:
-return R.string.bluetooth_not_connected;
 default :
 return 0;
 }

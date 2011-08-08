@@ -3,10 +3,9 @@
     mCachedDevice.setName((String)newValue);
   }
  else   if (preference instanceof CheckBoxPreference) {
-    boolean autoConnect=(Boolean)newValue;
     LocalBluetoothProfile prof=getProfileOf(preference);
-    prof.setPreferred(mCachedDevice.getDevice(),autoConnect);
-    return true;
+    onProfileClicked(prof);
+    return false;
   }
  else {
     return false;

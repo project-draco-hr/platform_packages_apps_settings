@@ -5,7 +5,7 @@
     if (device != null && device.getBondState() == BluetoothDevice.BOND_NONE) {
       CachedBluetoothDevice cachedDevice=mDeviceManager.findDevice(device);
       if (cachedDevice != null) {
-        mDeviceManager.onDeviceDisappeared(cachedDevice);
+        cachedDevice.setVisible(false);
       }
     }
   }

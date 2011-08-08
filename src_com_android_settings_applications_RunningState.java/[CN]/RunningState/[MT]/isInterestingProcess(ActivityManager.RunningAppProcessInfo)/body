@@ -2,7 +2,7 @@
   if ((pi.flags & ActivityManager.RunningAppProcessInfo.FLAG_CANT_SAVE_STATE) != 0) {
     return true;
   }
-  if ((pi.flags & ActivityManager.RunningAppProcessInfo.FLAG_PERSISTENT) == 0 && pi.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && pi.importanceReasonCode == ActivityManager.RunningAppProcessInfo.REASON_UNKNOWN) {
+  if ((pi.flags & ActivityManager.RunningAppProcessInfo.FLAG_PERSISTENT) == 0 && pi.importance >= ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && pi.importance < ActivityManager.RunningAppProcessInfo.IMPORTANCE_CANT_SAVE_STATE && pi.importanceReasonCode == ActivityManager.RunningAppProcessInfo.REASON_UNKNOWN) {
     return true;
   }
   return false;

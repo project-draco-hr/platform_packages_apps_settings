@@ -4,5 +4,7 @@
     mDialog.setOnDismissListener(null);
     mDialog.dismiss();
   }
-  unregisterForContextMenu(getListView());
+  if (getView() != null) {
+    unregisterForContextMenu(getListView());
+  }
 }

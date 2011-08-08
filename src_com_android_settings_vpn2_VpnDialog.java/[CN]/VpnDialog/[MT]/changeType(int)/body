@@ -1,7 +1,6 @@
 {
   mMppe.setVisibility(View.GONE);
   mView.findViewById(R.id.l2tp).setVisibility(View.GONE);
-  mView.findViewById(R.id.ipsec_id).setVisibility(View.GONE);
   mView.findViewById(R.id.ipsec_psk).setVisibility(View.GONE);
   mView.findViewById(R.id.ipsec_user).setVisibility(View.GONE);
   mView.findViewById(R.id.ipsec_ca).setVisibility(View.GONE);
@@ -11,10 +10,7 @@ case VpnProfile.TYPE_PPTP:
   break;
 case VpnProfile.TYPE_L2TP_IPSEC_PSK:
 mView.findViewById(R.id.l2tp).setVisibility(View.VISIBLE);
-mView.findViewById(R.id.ipsec_psk).setVisibility(View.VISIBLE);
-break;
 case VpnProfile.TYPE_IPSEC_XAUTH_PSK:
-mView.findViewById(R.id.ipsec_id).setVisibility(View.VISIBLE);
 mView.findViewById(R.id.ipsec_psk).setVisibility(View.VISIBLE);
 break;
 case VpnProfile.TYPE_L2TP_IPSEC_RSA:

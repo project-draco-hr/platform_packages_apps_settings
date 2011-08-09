@@ -1,4 +1,7 @@
 {
   super.onDestroy();
-  unregisterReceiver(mReceiver);
+  if (mReceiverRegistered) {
+    unregisterReceiver(mReceiver);
+    mReceiverRegistered=false;
+  }
 }

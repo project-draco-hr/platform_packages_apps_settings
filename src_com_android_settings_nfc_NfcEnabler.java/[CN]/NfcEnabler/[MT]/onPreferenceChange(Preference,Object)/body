@@ -1,36 +1,11 @@
 {
   final boolean desiredState=(Boolean)value;
   mCheckbox.setEnabled(false);
-  new Thread("toggleNFC"){
-    @Override public void run(){
-      Log.d(TAG,"Setting NFC enabled state to: " + desiredState);
-      boolean success=false;
-      if (desiredState) {
-        success=mNfcAdapter.enable();
-      }
- else {
-        success=mNfcAdapter.disable();
-      }
-      if (success) {
-        Log.d(TAG,"Successfully changed NFC enabled state to " + desiredState);
-        mHandler.post(new Runnable(){
-          public void run(){
-            handleNfcStateChanged(desiredState);
-          }
-        }
-);
-      }
- else {
-        Log.w(TAG,"Error setting NFC enabled state to " + desiredState);
-        mHandler.post(new Runnable(){
-          public void run(){
-            mCheckbox.setEnabled(true);
-          }
-        }
-);
-      }
-    }
+  if (desiredState) {
+    mNfcAdapter.enable();
   }
-.start();
+ else {
+    mNfcAdapter.disable();
+  }
   return false;
 }

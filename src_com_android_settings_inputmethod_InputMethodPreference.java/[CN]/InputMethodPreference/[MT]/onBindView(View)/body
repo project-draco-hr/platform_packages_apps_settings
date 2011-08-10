@@ -23,7 +23,12 @@
   if (mSettingsIntent != null) {
     mInputMethodSettingsButton.setOnClickListener(new OnClickListener(){
       @Override public void onClick(      View arg0){
-        mFragment.startActivity(mSettingsIntent);
+        try {
+          mFragment.startActivity(mSettingsIntent);
+        }
+ catch (        ActivityNotFoundException e) {
+          Log.d(TAG,"IME's Settings Activity Not Found: " + e);
+        }
       }
     }
 );

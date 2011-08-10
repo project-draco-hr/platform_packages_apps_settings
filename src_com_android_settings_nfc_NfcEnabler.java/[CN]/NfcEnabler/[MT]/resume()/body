@@ -2,8 +2,7 @@
   if (mNfcAdapter == null) {
     return;
   }
+  handleNfcStateChanged(mNfcAdapter.getAdapterState());
   mContext.registerReceiver(mReceiver,mIntentFilter);
   mCheckbox.setOnPreferenceChangeListener(this);
-  mNfcState=mNfcAdapter.isEnabled();
-  mCheckbox.setChecked(mNfcState);
 }

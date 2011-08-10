@@ -1,0 +1,31 @@
+{
+switch (newState) {
+case NfcAdapter.STATE_OFF:
+    mCheckbox.setChecked(false);
+  mCheckbox.setEnabled(true);
+mZeroClick.setEnabled(false);
+mZeroClick.setSummary(R.string.zeroclick_off_summary);
+break;
+case NfcAdapter.STATE_ON:
+mCheckbox.setChecked(true);
+mCheckbox.setEnabled(true);
+mZeroClick.setEnabled(true);
+if (mNfcAdapter.isZeroClickEnabled()) {
+mZeroClick.setSummary(R.string.zeroclick_on_summary);
+}
+ else {
+mZeroClick.setSummary(R.string.zeroclick_off_summary);
+}
+break;
+case NfcAdapter.STATE_TURNING_ON:
+mCheckbox.setChecked(true);
+mCheckbox.setEnabled(false);
+mZeroClick.setEnabled(false);
+break;
+case NfcAdapter.STATE_TURNING_OFF:
+mCheckbox.setChecked(false);
+mCheckbox.setEnabled(false);
+mZeroClick.setEnabled(false);
+break;
+}
+}

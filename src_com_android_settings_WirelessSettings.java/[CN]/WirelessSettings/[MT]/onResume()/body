@@ -1,14 +1,7 @@
 {
   super.onResume();
   mAirplaneModeEnabler.resume();
-  mNfcEnabler.resume();
-  if (mNfcAdapter != null) {
-    Preference zeroClick=getPreferenceScreen().findPreference(KEY_ZEROCLICK_SETTINGS);
-    if (mNfcAdapter.zeroClickEnabled()) {
-      zeroClick.setSummary(R.string.zeroclick_on_summary);
-    }
- else {
-      zeroClick.setSummary(R.string.zeroclick_off_summary);
-    }
+  if (mNfcEnabler != null) {
+    mNfcEnabler.resume();
   }
 }

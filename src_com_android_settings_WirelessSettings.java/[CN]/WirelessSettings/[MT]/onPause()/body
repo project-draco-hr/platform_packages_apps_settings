@@ -1,5 +1,7 @@
 {
   super.onPause();
   mAirplaneModeEnabler.pause();
-  mNfcEnabler.pause();
+  if (mNfcEnabler != null) {
+    mNfcEnabler.pause();
+  }
 }

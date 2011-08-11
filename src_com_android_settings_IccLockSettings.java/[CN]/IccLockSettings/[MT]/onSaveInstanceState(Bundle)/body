@@ -4,8 +4,21 @@
     out.putString(DIALOG_PIN,mPinDialog.getEditText().getText().toString());
     out.putString(DIALOG_ERROR,mError);
     out.putBoolean(ENABLE_TO_STATE,mToState);
-  }
+switch (mDialogState) {
+case ICC_NEW_MODE:
+      out.putString(OLD_PINCODE,mOldPin);
+    break;
+case ICC_REENTER_MODE:
+  out.putString(OLD_PINCODE,mOldPin);
+out.putString(NEW_PINCODE,mNewPin);
+break;
+case ICC_LOCK_MODE:
+case ICC_OLD_MODE:
+default :
+break;
+}
+}
  else {
-    super.onSaveInstanceState(out);
-  }
+super.onSaveInstanceState(out);
+}
 }

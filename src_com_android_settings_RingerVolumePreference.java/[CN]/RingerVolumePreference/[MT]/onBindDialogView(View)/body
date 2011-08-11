@@ -10,9 +10,12 @@
       mSeekBarVolumizer[i]=new SeekBarVolumizer(getContext(),seekBar,SEEKBAR_TYPE[i]);
     }
   }
+  final int silentableStreams=System.getInt(getContext().getContentResolver(),System.MODE_RINGER_STREAMS_AFFECTED,((1 << AudioSystem.STREAM_NOTIFICATION) | (1 << AudioSystem.STREAM_RING)));
   for (int i=0; i < mCheckBoxes.length; i++) {
     ImageView checkbox=(ImageView)view.findViewById(CHECKBOX_VIEW_ID[i]);
-    checkbox.setOnClickListener(this);
+    if ((silentableStreams & (1 << SEEKBAR_TYPE[i])) != 0) {
+      checkbox.setOnClickListener(this);
+    }
     mCheckBoxes[i]=checkbox;
   }
   updateSlidersAndMutedStates();

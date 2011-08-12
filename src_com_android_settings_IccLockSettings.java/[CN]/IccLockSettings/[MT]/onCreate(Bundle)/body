@@ -12,9 +12,22 @@
     mPin=savedInstanceState.getString(DIALOG_PIN);
     mError=savedInstanceState.getString(DIALOG_ERROR);
     mToState=savedInstanceState.getBoolean(ENABLE_TO_STATE);
-  }
-  mPinDialog.setOnPinEnteredListener(this);
-  getPreferenceScreen().setPersistent(false);
-  mPhone=PhoneFactory.getDefaultPhone();
-  mRes=getResources();
+switch (mDialogState) {
+case ICC_NEW_MODE:
+      mOldPin=savedInstanceState.getString(OLD_PINCODE);
+    break;
+case ICC_REENTER_MODE:
+  mOldPin=savedInstanceState.getString(OLD_PINCODE);
+mNewPin=savedInstanceState.getString(NEW_PINCODE);
+break;
+case ICC_LOCK_MODE:
+case ICC_OLD_MODE:
+default :
+break;
+}
+}
+mPinDialog.setOnPinEnteredListener(this);
+getPreferenceScreen().setPersistent(false);
+mPhone=PhoneFactory.getDefaultPhone();
+mRes=getResources();
 }

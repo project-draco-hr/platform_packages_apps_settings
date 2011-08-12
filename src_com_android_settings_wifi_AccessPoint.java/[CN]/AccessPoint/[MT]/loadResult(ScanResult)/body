@@ -3,6 +3,7 @@
   bssid=result.BSSID;
   security=getSecurity(result);
   wpsAvailable=security != SECURITY_EAP && result.capabilities.contains("WPS");
+  if (security == SECURITY_PSK)   pskType=getPskType(result);
   networkId=-1;
   mRssi=result.level;
   mScanResult=result;

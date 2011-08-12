@@ -11,12 +11,12 @@
       mInputMethodId=inputMethodId;
     }
   }
-  CharSequence title=getActivity().getIntent().getStringExtra(Intent.EXTRA_TITLE);
-  if (title == null && (arguments != null)) {
-    title=arguments.getString(Intent.EXTRA_TITLE);
-  }
-  if (!TextUtils.isEmpty(title)) {
-    getActivity().setTitle(title);
+  mTitle=getActivity().getIntent().getStringExtra(Intent.EXTRA_TITLE);
+  if (mTitle == null && (arguments != null)) {
+    final String title=arguments.getString(Intent.EXTRA_TITLE);
+    if (title != null) {
+      mTitle=title;
+    }
   }
   onCreateIMM();
   setPreferenceScreen(createPreferenceHierarchy());

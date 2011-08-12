@@ -1,0 +1,9 @@
+{
+  super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+  final int slack=getMeasuredWidth() - mOptimalWidth;
+  if (mOptimalWidth > 0 && slack > 0) {
+    final int targetWidth=(int)(mOptimalWidth + (slack * mOptimalWidthWeight));
+    widthMeasureSpec=MeasureSpec.makeMeasureSpec(targetWidth,MeasureSpec.EXACTLY);
+    super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+  }
+}

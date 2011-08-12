@@ -4,14 +4,20 @@
   final long end=mChart.getInspectEnd();
   final long now=System.currentTimeMillis();
   final Context context=getActivity();
-  final NetworkStatsHistory.Entry entry;
-  if (isAppDetailMode()) {
-    if (mDetailHistory != null) {
-      entry=mDetailHistory.getValues(start,end,now,null);
-    }
- else {
-      entry=null;
-    }
+  NetworkStatsHistory.Entry entry=null;
+  if (isAppDetailMode() && mDetailHistory != null) {
+    entry=mDetailHistoryDefault.getValues(start,end,now,entry);
+    final long defaultBytes=entry.rxBytes + entry.txBytes;
+    entry=mDetailHistoryForeground.getValues(start,end,now,entry);
+    final long foregroundBytes=entry.rxBytes + entry.txBytes;
+    mAppPieChart.setOriginAngle(175);
+    mAppPieChart.removeAllSlices();
+    mAppPieChart.addSlice(foregroundBytes,Color.parseColor("#d88d3a"));
+    mAppPieChart.addSlice(defaultBytes,Color.parseColor("#666666"));
+    mAppPieChart.generatePath();
+    mAppBackground.setText(Formatter.formatFileSize(context,defaultBytes));
+    mAppForeground.setText(Formatter.formatFileSize(context,foregroundBytes));
+    entry=mDetailHistory.getValues(start,end,now,null);
     getLoaderManager().destroyLoader(LOADER_SUMMARY);
   }
  else {

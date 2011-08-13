@@ -8,15 +8,12 @@
     }
   }
  else   if (preference == mAutoRestore) {
-    IBackupManager bm=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
-    if (bm != null) {
-      boolean curState=mAutoRestore.isChecked();
-      try {
-        bm.setAutoRestore(curState);
-      }
- catch (      RemoteException e) {
-        mAutoRestore.setChecked(!curState);
-      }
+    boolean curState=mAutoRestore.isChecked();
+    try {
+      mBackupManager.setAutoRestore(curState);
+    }
+ catch (    RemoteException e) {
+      mAutoRestore.setChecked(!curState);
     }
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

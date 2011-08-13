@@ -1,10 +1,12 @@
 {
   super.onCreate(icicle);
   mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
+  mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
   addPreferencesFromResource(R.xml.development_prefs);
   mEnableAdb=(CheckBoxPreference)findPreference(ENABLE_ADB);
   mKeepScreenOn=(CheckBoxPreference)findPreference(KEEP_SCREEN_ON);
   mAllowMockLocation=(CheckBoxPreference)findPreference(ALLOW_MOCK_LOCATION);
+  mPassword=(PreferenceScreen)findPreference(LOCAL_BACKUP_PASSWORD);
   mStrictMode=(CheckBoxPreference)findPreference(STRICT_MODE_KEY);
   mPointerLocation=(CheckBoxPreference)findPreference(POINTER_LOCATION_KEY);
   mShowScreenUpdates=(CheckBoxPreference)findPreference(SHOW_SCREEN_UPDATES_KEY);

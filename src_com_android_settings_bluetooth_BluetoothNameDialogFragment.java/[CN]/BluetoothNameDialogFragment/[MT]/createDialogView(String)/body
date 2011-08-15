@@ -3,6 +3,7 @@
   View view=layoutInflater.inflate(R.layout.dialog_edittext,null);
   mDeviceNameView=(EditText)view.findViewById(R.id.edittext);
   mDeviceNameView.setFilters(new InputFilter[]{new Utf8ByteLengthFilter(BLUETOOTH_NAME_MAX_LENGTH_BYTES)});
+  mDeviceNameView.setText(deviceName);
   mDeviceNameView.addTextChangedListener(this);
   return view;
 }

@@ -1,10 +1,14 @@
 {
 switch (item.getItemId()) {
 case MENU_ID_SEARCH:
-    mWifiP2pManager.discoverPeers();
+    if (mWifiP2pManager != null) {
+      mWifiP2pManager.discoverPeers(mChannel);
+    }
   return true;
 case MENU_ID_CREATE_GROUP:
-mWifiP2pManager.createGroup();
+if (mWifiP2pManager != null) {
+  mWifiP2pManager.createGroup(mChannel);
+}
 return true;
 case MENU_ID_ADVANCED:
 return true;

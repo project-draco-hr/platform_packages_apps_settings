@@ -35,7 +35,6 @@
     if (state != null) {
       addRow(group,R.string.wifi_status,Summary.get(mConfigUi.getContext(),state));
     }
-    addRow(group,R.string.wifi_security,mAccessPoint.getSecurityString(false));
     int level=mAccessPoint.getLevel();
     if (level != -1) {
       String[] signal=resources.getStringArray(R.array.wifi_signal);
@@ -45,10 +44,13 @@
     if (info != null && info.getLinkSpeed() != -1) {
       addRow(group,R.string.wifi_speed,info.getLinkSpeed() + WifiInfo.LINK_SPEED_UNITS);
     }
+    addRow(group,R.string.wifi_security,mAccessPoint.getSecurityString(false));
+    boolean showAdvancedFields=false;
     if (mAccessPoint.networkId != INVALID_NETWORK_ID) {
       WifiConfiguration config=mAccessPoint.getConfig();
       if (config.ipAssignment == IpAssignment.STATIC) {
         mIpSettingsSpinner.setSelection(STATIC_IP);
+        showAdvancedFields=true;
       }
  else {
         mIpSettingsSpinner.setSelection(DHCP);
@@ -58,6 +60,7 @@
       }
       if (config.proxySettings == ProxySettings.STATIC) {
         mProxySettingsSpinner.setSelection(PROXY_STATIC);
+        showAdvancedFields=true;
       }
  else {
         mProxySettingsSpinner.setSelection(PROXY_NONE);
@@ -70,6 +73,12 @@
       showSecurityFields();
       showIpConfigFields();
       showProxyFields();
+      mView.findViewById(R.id.wifi_advanced_toggle).setVisibility(View.VISIBLE);
+      mView.findViewById(R.id.wifi_advanced_togglebox).setOnClickListener(this);
+      if (showAdvancedFields) {
+        ((CheckBox)mView.findViewById(R.id.wifi_advanced_togglebox)).setChecked(true);
+        mView.findViewById(R.id.wifi_advanced_fields).setVisibility(View.VISIBLE);
+      }
     }
     if (mEdit) {
       mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));

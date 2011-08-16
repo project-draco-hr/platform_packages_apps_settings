@@ -1,7 +1,3 @@
 {
-  final LayoutInflater inflater=LayoutInflater.from(mTabWidget.getContext());
-  final View indicator=inflater.inflate(R.layout.tab_indicator_thin_holo,mTabWidget,false);
-  final TextView title=(TextView)indicator.findViewById(android.R.id.title);
-  title.setText(titleRes);
-  return mTabHost.newTabSpec(tag).setIndicator(indicator).setContent(mEmptyTabContent);
+  return mTabHost.newTabSpec(tag).setIndicator(getText(titleRes)).setContent(mEmptyTabContent);
 }

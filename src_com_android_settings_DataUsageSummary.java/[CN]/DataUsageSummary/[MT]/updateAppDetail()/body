@@ -9,6 +9,9 @@
  else {
     mAppDetail.setVisibility(View.GONE);
     mCycleAdapter.setChangeVisible(true);
+    mDetailHistory=null;
+    mDetailHistoryDefault=null;
+    mDetailHistoryForeground=null;
     mChart.bindDetailNetworkStats(null);
     return;
   }
@@ -37,11 +40,15 @@
     mAppSettings.setEnabled(false);
   }
   try {
-    mDetailHistory=mStatsService.getHistoryForUid(mTemplate,mUid,TAG_NONE,FIELD_RX_BYTES | FIELD_TX_BYTES);
+    mDetailHistoryDefault=mStatsService.getHistoryForUid(mTemplate,mUid,SET_DEFAULT,TAG_NONE,FIELD_RX_BYTES | FIELD_TX_BYTES);
+    mDetailHistoryForeground=mStatsService.getHistoryForUid(mTemplate,mUid,SET_FOREGROUND,TAG_NONE,FIELD_RX_BYTES | FIELD_TX_BYTES);
   }
  catch (  RemoteException e) {
     throw new RuntimeException("problem reading network stats",e);
   }
+  mDetailHistory=new NetworkStatsHistory(mDetailHistoryForeground.getBucketDuration());
+  mDetailHistory.recordEntireHistory(mDetailHistoryDefault);
+  mDetailHistory.recordEntireHistory(mDetailHistoryForeground);
   mChart.bindDetailNetworkStats(mDetailHistory);
   updateDetailData();
   if (NetworkPolicyManager.isUidValidForPolicy(context,mUid) && !getRestrictBackground() && isBandwidthControlEnabled()) {

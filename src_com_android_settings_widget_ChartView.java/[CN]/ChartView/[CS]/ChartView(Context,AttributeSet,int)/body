@@ -1,5 +1,8 @@
 {
   super(context,attrs,defStyle);
+  final TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.ChartView,defStyle,0);
+  setOptimalWidth(a.getDimensionPixelSize(R.styleable.ChartView_optimalWidth,-1),a.getFloat(R.styleable.ChartView_optimalWidthWeight,0));
+  a.recycle();
   setClipToPadding(false);
   setClipChildren(false);
 }

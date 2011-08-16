@@ -1,6 +1,7 @@
 {
-  final int theme=getIntent().getIntExtra(EXTRA_THEME,android.R.style.Theme_Holo);
-  setTheme(theme);
+  if (getIntent().getBooleanExtra(EXTRA_CLEAR_UI_OPTIONS,false)) {
+    getWindow().setUiOptions(0);
+  }
   getMetaData();
   mInLocalHeaderSwitch=true;
   super.onCreate(savedInstanceState);

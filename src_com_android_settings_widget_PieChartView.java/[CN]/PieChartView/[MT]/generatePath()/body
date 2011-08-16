@@ -1,0 +1,35 @@
+{
+  if (LOGD)   Log.d(TAG,"generatePath()");
+  long total=0;
+  for (  Slice slice : mSlices) {
+    slice.pathPrimary.reset();
+    slice.pathShadow.reset();
+    total+=slice.value;
+  }
+  mPathSide.reset();
+  mPathSideShadow.reset();
+  mPathShadow.reset();
+  if (total == 0) {
+    invalidate();
+    return;
+  }
+  final int width=getWidth();
+  final int height=getHeight();
+  final RectF rect=new RectF(0,0,width,height);
+  mPathSide.addOval(rect,Direction.CW);
+  mPathSideShadow.addOval(rect,Direction.CW);
+  mPathShadow.addOval(rect,Direction.CW);
+  int startAngle=mOriginAngle;
+  for (  Slice slice : mSlices) {
+    final int sweepAngle=(int)(slice.value * 360 / total);
+    slice.pathPrimary.moveTo(rect.centerX(),rect.centerY());
+    slice.pathPrimary.arcTo(rect,startAngle,sweepAngle);
+    slice.pathPrimary.lineTo(rect.centerX(),rect.centerY());
+    slice.pathShadow.moveTo(rect.centerX(),rect.centerY());
+    slice.pathShadow.arcTo(rect,startAngle,0);
+    slice.pathShadow.moveTo(rect.centerX(),rect.centerY());
+    slice.pathShadow.arcTo(rect,startAngle + sweepAngle,0);
+    startAngle+=sweepAngle;
+  }
+  invalidate();
+}

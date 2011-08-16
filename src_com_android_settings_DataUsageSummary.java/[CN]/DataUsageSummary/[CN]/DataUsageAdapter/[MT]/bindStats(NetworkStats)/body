@@ -1,25 +1,30 @@
 {
   mItems.clear();
-  if (stats != null) {
-    final AppUsageItem systemItem=new AppUsageItem();
-    systemItem.uid=android.os.Process.SYSTEM_UID;
-    NetworkStats.Entry entry=null;
-    for (int i=0; i < stats.size(); i++) {
-      entry=stats.getValues(i,entry);
-      final boolean isApp=entry.uid >= android.os.Process.FIRST_APPLICATION_UID && entry.uid <= android.os.Process.LAST_APPLICATION_UID;
-      if (isApp || entry.uid == TrafficStats.UID_REMOVED) {
-        final AppUsageItem item=new AppUsageItem();
-        item.uid=entry.uid;
-        item.total=entry.rxBytes + entry.txBytes;
+  final AppUsageItem systemItem=new AppUsageItem();
+  systemItem.uid=android.os.Process.SYSTEM_UID;
+  final SparseArray<AppUsageItem> knownUids=new SparseArray<AppUsageItem>();
+  NetworkStats.Entry entry=null;
+  final int size=stats != null ? stats.size() : 0;
+  for (int i=0; i < size; i++) {
+    entry=stats.getValues(i,entry);
+    final int uid=entry.uid;
+    final boolean isApp=uid >= android.os.Process.FIRST_APPLICATION_UID && uid <= android.os.Process.LAST_APPLICATION_UID;
+    if (isApp || uid == TrafficStats.UID_REMOVED) {
+      AppUsageItem item=knownUids.get(uid);
+      if (item == null) {
+        item=new AppUsageItem();
+        item.uid=uid;
+        knownUids.put(uid,item);
         mItems.add(item);
       }
+      item.total+=entry.rxBytes + entry.txBytes;
+    }
  else {
-        systemItem.total+=entry.rxBytes + entry.txBytes;
-      }
+      systemItem.total+=entry.rxBytes + entry.txBytes;
     }
-    if (systemItem.total > 0) {
-      mItems.add(systemItem);
-    }
+  }
+  if (systemItem.total > 0) {
+    mItems.add(systemItem);
   }
   Collections.sort(mItems);
   mLargest=(mItems.size() > 0) ? mItems.get(0).total : 0;

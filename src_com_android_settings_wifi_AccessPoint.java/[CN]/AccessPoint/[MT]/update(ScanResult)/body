@@ -3,6 +3,7 @@
     if (WifiManager.compareSignalLevel(result.level,mRssi) > 0) {
       mRssi=result.level;
     }
+    if (security == SECURITY_PSK)     pskType=getPskType(result);
     return true;
   }
   return false;

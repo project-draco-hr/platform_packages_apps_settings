@@ -1,8 +1,5 @@
 {
   if (getActivity() == null)   return;
-  final ConnectivityManager connManager=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-  final boolean backgroundDataSetting=connManager.getBackgroundDataSetting();
-  mBackgroundDataCheckBox.setChecked(backgroundDataSetting);
   boolean masterSyncAutomatically=ContentResolver.getMasterSyncAutomatically();
   mAutoSyncCheckbox.setChecked(masterSyncAutomatically);
   SyncInfo currentSync=ContentResolver.getCurrentSync();
@@ -28,7 +25,7 @@
     if (authorities != null) {
       for (      String authority : authorities) {
         SyncStatusInfo status=ContentResolver.getSyncStatus(account,authority);
-        boolean syncEnabled=ContentResolver.getSyncAutomatically(account,authority) && masterSyncAutomatically && backgroundDataSetting&& (ContentResolver.getIsSyncable(account,authority) > 0);
+        boolean syncEnabled=ContentResolver.getSyncAutomatically(account,authority) && masterSyncAutomatically && (ContentResolver.getIsSyncable(account,authority) > 0);
         boolean authorityIsPending=ContentResolver.isSyncPending(account,authority);
         boolean activelySyncing=currentSync != null && currentSync.authority.equals(authority) && new Account(currentSync.account.name,currentSync.account.type).equals(account);
         boolean lastSyncFailed=status != null && syncEnabled && status.lastFailureTime != 0 && status.getLastFailureMesgAsInt(0) != ContentResolver.SYNC_ERROR_SYNC_ALREADY_IN_PROGRESS;

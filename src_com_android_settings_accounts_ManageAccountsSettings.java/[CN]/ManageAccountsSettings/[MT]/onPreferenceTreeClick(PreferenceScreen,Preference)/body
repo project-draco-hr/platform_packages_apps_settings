@@ -1,20 +1,5 @@
 {
-  if (preference == mBackgroundDataCheckBox) {
-    final ConnectivityManager connManager=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-    final boolean oldBackgroundDataSetting=connManager.getBackgroundDataSetting();
-    final boolean backgroundDataSetting=mBackgroundDataCheckBox.isChecked();
-    if (oldBackgroundDataSetting != backgroundDataSetting) {
-      if (backgroundDataSetting) {
-        setBackgroundDataInt(true);
-        onSyncStateUpdated();
-      }
- else {
-        mBackgroundDataCheckBox.setChecked(true);
-        showDialog(DIALOG_DISABLE_BACKGROUND_DATA);
-      }
-    }
-  }
- else   if (preference == mAutoSyncCheckbox) {
+  if (preference == mAutoSyncCheckbox) {
     ContentResolver.setMasterSyncAutomatically(mAutoSyncCheckbox.isChecked());
     onSyncStateUpdated();
   }

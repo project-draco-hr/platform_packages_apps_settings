@@ -1,12 +1,12 @@
 {
   String state=SystemProperties.get("vold.encrypt_progress");
-  if ("error_partially_encrypted".equals(state)) {
+  if ("error_partially_encrypted".equals(state) || isDebugView(FORCE_VIEW_ERROR)) {
     showFactoryReset();
     return;
   }
   int progress=0;
   try {
-    progress=Integer.parseInt(state);
+    progress=isDebugView() ? 50 : Integer.parseInt(state);
   }
  catch (  Exception e) {
     Log.w(TAG,"Error parsing progress: " + e.toString());

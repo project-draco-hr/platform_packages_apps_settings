@@ -1,7 +1,7 @@
 {
   super.onStart();
   String progress=SystemProperties.get("vold.encrypt_progress");
-  if (!"".equals(progress)) {
+  if (!"".equals(progress) || isDebugView(FORCE_VIEW_PROGRESS) || isDebugView(FORCE_VIEW_ERROR)) {
     setContentView(R.layout.crypt_keeper_progress);
     encryptionProgressInit();
   }

@@ -1,7 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   String state=SystemProperties.get("vold.decrypt");
-  if ("".equals(state) || DECRYPT_STATE.equals(state)) {
+  if (!isDebugView() && ("".equals(state) || DECRYPT_STATE.equals(state))) {
     PackageManager pm=getPackageManager();
     ComponentName name=new ComponentName(this,CryptKeeper.class);
     pm.setComponentEnabledSetting(name,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,0);

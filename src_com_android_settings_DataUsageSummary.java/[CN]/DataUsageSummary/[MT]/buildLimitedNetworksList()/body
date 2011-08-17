@@ -1,0 +1,24 @@
+{
+  final Context context=getActivity();
+  final String subscriberId=getActiveSubscriberId(context);
+  final ArrayList<CharSequence> limited=Lists.newArrayList();
+  if (mPolicyEditor.hasLimitedPolicy(buildTemplateMobileAll(subscriberId))) {
+    limited.add(getText(R.string.data_usage_list_mobile));
+  }
+  if (mPolicyEditor.hasLimitedPolicy(buildTemplateMobile3gLower(subscriberId))) {
+    limited.add(getText(R.string.data_usage_tab_3g));
+  }
+  if (mPolicyEditor.hasLimitedPolicy(buildTemplateMobile4g(subscriberId))) {
+    limited.add(getText(R.string.data_usage_tab_4g));
+  }
+  if (mPolicyEditor.hasLimitedPolicy(buildTemplateWifi())) {
+    limited.add(getText(R.string.data_usage_tab_wifi));
+  }
+  if (mPolicyEditor.hasLimitedPolicy(buildTemplateEthernet())) {
+    limited.add(getText(R.string.data_usage_tab_ethernet));
+  }
+  if (limited.isEmpty()) {
+    limited.add(getText(R.string.data_usage_list_none));
+  }
+  return TextUtils.join(limited);
+}

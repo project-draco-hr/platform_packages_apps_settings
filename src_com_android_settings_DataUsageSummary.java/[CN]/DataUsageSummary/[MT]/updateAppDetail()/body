@@ -52,6 +52,8 @@
   mChart.bindDetailNetworkStats(mDetailHistory);
   updateDetailData();
   if (NetworkPolicyManager.isUidValidForPolicy(context,mUid) && !getRestrictBackground() && isBandwidthControlEnabled()) {
+    setPreferenceTitle(mAppRestrictView,R.string.data_usage_app_restrict_background);
+    setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary,buildLimitedNetworksList()));
     mAppRestrictView.setVisibility(View.VISIBLE);
     mAppRestrict.setChecked(getAppRestrictBackground());
   }

@@ -23,8 +23,7 @@
   mRunningProcessesView=(RunningProcessesView)mRootView.findViewById(R.id.running_processes);
   mCreatedRunning=mResumedRunning=false;
   mCurView=VIEW_NOTHING;
-  View tabRoot=mInflater.inflate(R.layout.manage_apps_tab_content,null);
-  mTabHost=(TabHost)tabRoot.findViewById(com.android.internal.R.id.tabhost);
+  mTabHost=(TabHost)mInflater.inflate(R.layout.manage_apps_tab_content,container,false);
   mTabHost.setup();
   final TabHost tabHost=mTabHost;
   tabHost.addTab(tabHost.newTabSpec(TAB_DOWNLOADED).setIndicator(getActivity().getString(R.string.filter_apps_third_party),getActivity().getResources().getDrawable(R.drawable.ic_tab_download)).setContent(this));
@@ -35,5 +34,6 @@
   tabHost.addTab(tabHost.newTabSpec(TAB_RUNNING).setIndicator(getActivity().getString(R.string.filter_apps_running),getActivity().getResources().getDrawable(R.drawable.ic_tab_running)).setContent(this));
   tabHost.setCurrentTabByTag(mDefaultTab);
   tabHost.setOnTabChangedListener(this);
-  return tabRoot;
+  prepareCustomPreferencesList(container,mTabHost,mListView);
+  return mTabHost;
 }

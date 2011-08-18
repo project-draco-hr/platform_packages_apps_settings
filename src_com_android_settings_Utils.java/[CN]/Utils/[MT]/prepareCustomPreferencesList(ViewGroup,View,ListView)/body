@@ -1,0 +1,10 @@
+{
+  final boolean movePadding=list.getScrollBarStyle() == View.SCROLLBARS_OUTSIDE_OVERLAY;
+  if (movePadding && parent instanceof PreferenceFrameLayout) {
+    ((PreferenceFrameLayout.LayoutParams)child.getLayoutParams()).removeBorders=true;
+    final Resources res=list.getResources();
+    final int paddingSide=res.getDimensionPixelSize(com.android.internal.R.dimen.preference_fragment_padding_side);
+    final int paddingBottom=res.getDimensionPixelSize(com.android.internal.R.dimen.preference_fragment_padding_bottom);
+    list.setPadding(paddingSide,0,paddingSide,paddingBottom);
+  }
+}

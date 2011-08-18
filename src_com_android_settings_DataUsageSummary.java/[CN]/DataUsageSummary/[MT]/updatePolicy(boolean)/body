@@ -8,7 +8,7 @@
       updateDetailData();
     }
   }
-  final NetworkPolicy policy=mPolicyEditor.getPolicy(mTemplate);
+  final NetworkPolicy policy=mPolicyEditor.getPolicy(mTemplate,true);
   if (isNetworkPolicyModifiable()) {
     mDisableAtLimitView.setVisibility(View.VISIBLE);
     mDisableAtLimit.setChecked(policy != null && policy.limitBytes != LIMIT_DISABLED);

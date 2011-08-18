@@ -1,18 +1,30 @@
 {
-  final Bundle args=new Bundle();
+  final Resources res=parent.getResources();
+  final CharSequence message;
+  final long limitBytes;
   final String currentTab=parent.mCurrentTab;
   if (TAB_3G.equals(currentTab)) {
-    args.putInt(EXTRA_MESSAGE_ID,R.string.data_usage_limit_dialog_3g);
-    args.putLong(EXTRA_LIMIT_BYTES,5 * GB_IN_BYTES);
+    message=buildDialogMessage(res,R.string.data_usage_tab_3g);
+    limitBytes=5 * GB_IN_BYTES;
   }
  else   if (TAB_4G.equals(currentTab)) {
-    args.putInt(EXTRA_MESSAGE_ID,R.string.data_usage_limit_dialog_4g);
-    args.putLong(EXTRA_LIMIT_BYTES,5 * GB_IN_BYTES);
+    message=buildDialogMessage(res,R.string.data_usage_tab_4g);
+    limitBytes=5 * GB_IN_BYTES;
   }
  else   if (TAB_MOBILE.equals(currentTab)) {
-    args.putInt(EXTRA_MESSAGE_ID,R.string.data_usage_limit_dialog_mobile);
-    args.putLong(EXTRA_LIMIT_BYTES,5 * GB_IN_BYTES);
+    message=buildDialogMessage(res,R.string.data_usage_list_mobile);
+    limitBytes=5 * GB_IN_BYTES;
   }
+ else   if (TAB_WIFI.equals(currentTab)) {
+    message=buildDialogMessage(res,R.string.data_usage_tab_wifi);
+    limitBytes=5 * GB_IN_BYTES;
+  }
+ else {
+    throw new IllegalArgumentException("unknown current tab: " + currentTab);
+  }
+  final Bundle args=new Bundle();
+  args.putCharSequence(EXTRA_MESSAGE,message);
+  args.putLong(EXTRA_LIMIT_BYTES,limitBytes);
   final ConfirmLimitFragment dialog=new ConfirmLimitFragment();
   dialog.setArguments(args);
   dialog.setTargetFragment(parent,0);

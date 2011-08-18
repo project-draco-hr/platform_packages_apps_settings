@@ -1,10 +1,10 @@
 {
   final Context context=getActivity();
-  final int messageId=getArguments().getInt(EXTRA_MESSAGE_ID);
+  final CharSequence message=getArguments().getCharSequence(EXTRA_MESSAGE);
   final long limitBytes=getArguments().getLong(EXTRA_LIMIT_BYTES);
   final AlertDialog.Builder builder=new AlertDialog.Builder(context);
   builder.setTitle(R.string.data_usage_limit_dialog_title);
-  builder.setMessage(messageId);
+  builder.setMessage(message);
   builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
       final DataUsageSummary target=(DataUsageSummary)getTargetFragment();

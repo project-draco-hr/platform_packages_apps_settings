@@ -13,20 +13,8 @@
   final boolean tabChanged=!currentTab.equals(mCurrentTab);
   mCurrentTab=currentTab;
   if (LOGD)   Log.d(TAG,"updateBody() with currentTab=" + currentTab);
-  if (TAB_WIFI.equals(currentTab)) {
-    mDataEnabledView.setVisibility(View.GONE);
-    mDisableAtLimitView.setVisibility(View.GONE);
-    mTemplate=buildTemplateWifi();
-  }
- else   if (TAB_ETHERNET.equals(currentTab)) {
-    mDataEnabledView.setVisibility(View.GONE);
-    mDisableAtLimitView.setVisibility(View.GONE);
-    mTemplate=buildTemplateEthernet();
-  }
- else {
-    mDataEnabledView.setVisibility(View.VISIBLE);
-    mDisableAtLimitView.setVisibility(View.VISIBLE);
-  }
+  mDataEnabledView.setVisibility(View.VISIBLE);
+  mDisableAtLimitView.setVisibility(View.VISIBLE);
   if (TAB_MOBILE.equals(currentTab)) {
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_mobile);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_mobile_limit);
@@ -42,6 +30,19 @@
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_4g);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_4g_limit);
     mTemplate=buildTemplateMobile4g(getActiveSubscriberId(context));
+  }
+ else   if (TAB_WIFI.equals(currentTab)) {
+    mDataEnabledView.setVisibility(View.GONE);
+    setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_wifi_limit);
+    mTemplate=buildTemplateWifi();
+  }
+ else   if (TAB_ETHERNET.equals(currentTab)) {
+    mDataEnabledView.setVisibility(View.GONE);
+    mDisableAtLimitView.setVisibility(View.GONE);
+    mTemplate=buildTemplateEthernet();
+  }
+ else {
+    throw new IllegalStateException("unknown tab: " + currentTab);
   }
   try {
     mHistory=mStatsService.getHistoryForNetwork(mTemplate,FIELD_RX_BYTES | FIELD_TX_BYTES);

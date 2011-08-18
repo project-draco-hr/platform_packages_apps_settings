@@ -1,0 +1,15 @@
+{
+  if (status == TextToSpeech.SUCCESS) {
+    if (DBG) {
+      Log.d(TAG,"Updating engine: Successfully bound to the engine: " + mTts.getCurrentEngine());
+    }
+    checkVoiceData(mTts.getCurrentEngine());
+  }
+ else {
+    if (DBG)     Log.d(TAG,"Updating engine: Failed to bind to engine, reverting.");
+    if (mPreviousEngine != null) {
+      mTts=new TextToSpeech(getActivity().getApplicationContext(),mInitListener,mPreviousEngine);
+    }
+    mPreviousEngine=null;
+  }
+}

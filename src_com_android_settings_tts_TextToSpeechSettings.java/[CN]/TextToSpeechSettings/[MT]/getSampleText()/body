@@ -1,0 +1,20 @@
+{
+  String currentEngine=mTts.getCurrentEngine();
+  Locale currentLocale=mTts.getLanguage();
+  if (TextUtils.isEmpty(currentEngine))   currentEngine=mTts.getDefaultEngine();
+  Intent intent=new Intent(TextToSpeech.Engine.ACTION_GET_SAMPLE_TEXT);
+  if (currentLocale != null) {
+    intent.putExtra("language",currentLocale.getLanguage());
+    intent.putExtra("country",currentLocale.getCountry());
+    intent.putExtra("variant",currentLocale.getVariant());
+  }
+  intent.setPackage(currentEngine);
+  try {
+    if (DBG)     Log.d(TAG,"Getting sample text: " + intent.toUri(0));
+    startActivityForResult(intent,GET_SAMPLE_TEXT);
+  }
+ catch (  ActivityNotFoundException ex) {
+    Log.e(TAG,"Failed to get sample text, no activity found for " + intent + ")");
+    onSampleTextReceived(TextToSpeech.ERROR,null);
+  }
+}

@@ -1,0 +1,21 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.tts_engine_settings);
+  mEnginesHelper=new TtsEngines(getActivity());
+  final PreferenceScreen root=getPreferenceScreen();
+  mLocalePreference=(ListPreference)root.findPreference(KEY_ENGINE_LOCALE);
+  mLocalePreference.setOnPreferenceChangeListener(this);
+  mEngineSettingsPreference=root.findPreference(KEY_ENGINE_SETTINGS);
+  mEngineSettingsPreference.setOnPreferenceClickListener(this);
+  mInstallVoicesPreference=root.findPreference(KEY_INSTALL_DATA);
+  mInstallVoicesPreference.setOnPreferenceClickListener(this);
+  root.setTitle(getEngineLabel());
+  root.setKey(getEngineName());
+  mEngineSettingsPreference.setTitle(getResources().getString(R.string.tts_engine_settings_title,getEngineLabel()));
+  mEngineSettingsIntent=mEnginesHelper.getSettingsIntent(getEngineName());
+  if (mEngineSettingsIntent == null) {
+    mEngineSettingsPreference.setEnabled(false);
+  }
+  mInstallVoicesPreference.setEnabled(false);
+  updateVoiceDetails();
+}

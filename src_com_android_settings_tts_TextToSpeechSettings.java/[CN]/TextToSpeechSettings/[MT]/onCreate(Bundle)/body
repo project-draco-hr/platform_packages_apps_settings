@@ -1,0 +1,12 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.tts_settings);
+  getActivity().setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+  mPlayExample=findPreference(KEY_PLAY_EXAMPLE);
+  mPlayExample.setOnPreferenceClickListener(this);
+  mEnginePreferenceCategory=(PreferenceCategory)findPreference(KEY_ENGINE_PREFERENCE_SECTION);
+  mDefaultRatePref=(ListPreference)findPreference(KEY_DEFAULT_RATE);
+  mTts=new TextToSpeech(getActivity().getApplicationContext(),mInitListener);
+  mEnginesHelper=new TtsEngines(getActivity().getApplicationContext());
+  initSettings();
+}

@@ -1,0 +1,24 @@
+{
+  final String engine=mTts.getCurrentEngine();
+  if (engine == null) {
+    Log.e(TAG,"Voice data check complete, but no engine bound");
+    return;
+  }
+  if (data == null) {
+    Log.e(TAG,"Engine failed voice data integrity check (null return)" + mTts.getCurrentEngine());
+    return;
+  }
+  Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_SYNTH,engine);
+  final int engineCount=mEnginePreferenceCategory.getPreferenceCount();
+  for (int i=0; i < engineCount; ++i) {
+    final Preference p=mEnginePreferenceCategory.getPreference(i);
+    if (p instanceof TtsEnginePreference) {
+      TtsEnginePreference enginePref=(TtsEnginePreference)p;
+      if (enginePref.getKey().equals(engine)) {
+        enginePref.setVoiceDataDetails(data);
+        break;
+      }
+    }
+  }
+  updateWidgetState(true);
+}

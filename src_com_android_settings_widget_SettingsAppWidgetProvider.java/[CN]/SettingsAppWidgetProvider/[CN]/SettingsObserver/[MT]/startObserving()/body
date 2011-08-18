@@ -1,0 +1,5 @@
+{
+  ContentResolver resolver=mContext.getContentResolver();
+  resolver.registerContentObserver(Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS),false,this);
+  resolver.registerContentObserver(Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS_MODE),false,this);
+}

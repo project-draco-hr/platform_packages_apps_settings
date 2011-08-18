@@ -1,13 +1,9 @@
 {
   final ConnectivityManager connManager=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-  final boolean backgroundData=getBackgroundDataState(context);
   final boolean sync=ContentResolver.getMasterSyncAutomatically();
   new AsyncTask<Void,Void,Boolean>(){
     @Override protected Boolean doInBackground(    Void... args){
       if (desiredState) {
-        if (!backgroundData) {
-          connManager.setBackgroundDataSetting(true);
-        }
         if (!sync) {
           ContentResolver.setMasterSyncAutomatically(true);
         }

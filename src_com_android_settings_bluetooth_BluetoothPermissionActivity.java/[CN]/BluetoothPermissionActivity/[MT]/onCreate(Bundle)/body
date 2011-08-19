@@ -2,21 +2,26 @@
   super.onCreate(savedInstanceState);
   Intent i=getIntent();
   String action=i.getAction();
+  if (!action.equals(BluetoothDevice.ACTION_CONNECTION_ACCESS_REQUEST)) {
+    Log.e(TAG,"Error: this activity may be started only with intent " + "ACTION_CONNECTION_ACCESS_REQUEST");
+    finish();
+    return;
+  }
   mDevice=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
   mReturnPackage=i.getStringExtra(BluetoothDevice.EXTRA_PACKAGE_NAME);
   mReturnClass=i.getStringExtra(BluetoothDevice.EXTRA_CLASS_NAME);
-  if (action.equals(BluetoothDevice.ACTION_CONNECTION_ACCESS_REQUEST)) {
-    mDevice=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-    if (i.getIntExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS) == BluetoothDevice.REQUEST_TYPE_PROFILE_CONNECTION) {
-      showConnectionDialog();
-    }
- else {
-      showPbapDialog();
-    }
+  int requestType=i.getIntExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS);
+  if (requestType == BluetoothDevice.REQUEST_TYPE_PROFILE_CONNECTION) {
+    showConnectionDialog();
+  }
+ else   if (requestType == BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS) {
+    showPhonebookDialog();
   }
  else {
-    Log.e(TAG,"Error: this activity may be started only with intent " + "ACTION_CONNECTION_ACCESS_REQUEST");
+    Log.e(TAG,"Error: bad request type: " + requestType);
     finish();
+    return;
   }
   registerReceiver(mReceiver,new IntentFilter(BluetoothDevice.ACTION_CONNECTION_ACCESS_CANCEL));
+  mReceiverRegistered=true;
 }

@@ -1,5 +1,8 @@
 {
-  if (DEBUG)   Log.d(TAG,"onNegative mAlwaysAllowedValue: " + mAlwaysAllowedValue);
+  if (DEBUG)   Log.d(TAG,"onNegative mRememberChoiceValue: " + mRememberChoiceValue);
+  if (mRememberChoiceValue) {
+    savePhonebookPermissionChoice(CachedBluetoothDevice.PHONEBOOK_ACCESS_REJECTED);
+  }
   sendIntentToReceiver(BluetoothDevice.ACTION_CONNECTION_ACCESS_REPLY,false,null,false);
   finish();
 }

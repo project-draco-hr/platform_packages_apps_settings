@@ -1,0 +1,29 @@
+{
+  boolean processed=false;
+  if (mRequestType != BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS) {
+    return processed;
+  }
+  LocalBluetoothManager bluetoothManager=LocalBluetoothManager.getInstance(mContext);
+  CachedBluetoothDeviceManager cachedDeviceManager=bluetoothManager.getCachedDeviceManager();
+  CachedBluetoothDevice cachedDevice=cachedDeviceManager.findDevice(mDevice);
+  if (cachedDevice == null) {
+    cachedDevice=cachedDeviceManager.addDevice(bluetoothManager.getBluetoothAdapter(),bluetoothManager.getProfileManager(),mDevice);
+  }
+  int phonebookPermission=cachedDevice.getPhonebookPermissionChoice();
+  if (phonebookPermission == CachedBluetoothDevice.PHONEBOOK_ACCESS_UNKNOWN) {
+    return processed;
+  }
+  String intentName=BluetoothDevice.ACTION_CONNECTION_ACCESS_REPLY;
+  if (phonebookPermission == CachedBluetoothDevice.PHONEBOOK_ACCESS_ALLOWED) {
+    sendIntentToReceiver(intentName,true,BluetoothDevice.EXTRA_ALWAYS_ALLOWED,true);
+    processed=true;
+  }
+ else   if (phonebookPermission == CachedBluetoothDevice.PHONEBOOK_ACCESS_REJECTED) {
+    sendIntentToReceiver(intentName,false,null,false);
+    processed=true;
+  }
+ else {
+    Log.e(TAG,"Bad phonebookPermission: " + phonebookPermission);
+  }
+  return processed;
+}

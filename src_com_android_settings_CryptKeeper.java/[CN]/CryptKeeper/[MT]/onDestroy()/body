@@ -1,6 +1,7 @@
 {
   super.onDestroy();
   if (mWakeLock != null) {
+    Log.d(TAG,"Releasing and destroying wakelock");
     mWakeLock.release();
     mWakeLock=null;
   }

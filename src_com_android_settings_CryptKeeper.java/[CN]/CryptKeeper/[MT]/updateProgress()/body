@@ -12,6 +12,7 @@
     Log.w(TAG,"Error parsing progress: " + e.toString());
   }
   CharSequence status=getText(R.string.crypt_keeper_setup_description);
+  Log.v(TAG,"Encryption progress: " + progress);
   TextView tv=(TextView)findViewById(R.id.status);
   tv.setText(TextUtils.expandTemplate(status,Integer.toString(progress)));
   mHandler.removeMessages(UPDATE_PROGRESS);

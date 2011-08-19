@@ -5,6 +5,7 @@
   mTabsContainer=(ViewGroup)view.findViewById(R.id.tabs_container);
   mTabWidget=(TabWidget)view.findViewById(android.R.id.tabs);
   mListView=(ListView)view.findViewById(android.R.id.list);
+  prepareCustomPreferencesList(container,view,mListView);
   mTabHost.setup();
   mTabHost.setOnTabChangedListener(mTabListener);
   mHeader=(ViewGroup)inflater.inflate(R.layout.data_usage_header,mListView,false);

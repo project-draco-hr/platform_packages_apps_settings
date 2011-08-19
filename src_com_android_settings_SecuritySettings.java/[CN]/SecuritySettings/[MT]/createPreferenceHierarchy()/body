@@ -53,7 +53,8 @@ securityCategory.removePreference(mTactileFeedback);
 }
 }
 addPreferencesFromResource(R.xml.security_settings_misc);
-if (TelephonyManager.PHONE_TYPE_CDMA == TelephonyManager.getDefault().getCurrentPhoneType()) {
+TelephonyManager tm=TelephonyManager.getDefault();
+if ((TelephonyManager.PHONE_TYPE_CDMA == tm.getCurrentPhoneType()) && (tm.getLteOnCdmaMode() != Phone.LTE_ON_CDMA_TRUE)) {
 root.removePreference(root.findPreference(KEY_SIM_LOCK));
 }
 mShowPassword=(CheckBoxPreference)root.findPreference(KEY_SHOW_PASSWORD);

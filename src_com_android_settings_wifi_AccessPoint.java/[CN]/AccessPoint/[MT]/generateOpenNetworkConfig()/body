@@ -1,0 +1,7 @@
+{
+  if (security != SECURITY_NONE)   throw new IllegalStateException();
+  if (mConfig != null)   return;
+  mConfig=new WifiConfiguration();
+  mConfig.SSID=AccessPoint.convertToQuotedString(ssid);
+  mConfig.allowedKeyManagement.set(KeyMgmt.NONE);
+}

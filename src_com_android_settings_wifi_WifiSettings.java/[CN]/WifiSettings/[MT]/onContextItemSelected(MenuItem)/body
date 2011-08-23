@@ -11,10 +11,8 @@ case MENU_ID_CONNECT:
         }
       }
  else       if (mSelectedAccessPoint.security == AccessPoint.SECURITY_NONE) {
-        WifiConfiguration config=new WifiConfiguration();
-        config.SSID=AccessPoint.convertToQuotedString(mSelectedAccessPoint.ssid);
-        config.allowedKeyManagement.set(KeyMgmt.NONE);
-        mWifiManager.connectNetwork(config);
+        mSelectedAccessPoint.generateOpenNetworkConfig();
+        mWifiManager.connectNetwork(mSelectedAccessPoint.getConfig());
       }
  else {
         showConfigUi(mSelectedAccessPoint,true);

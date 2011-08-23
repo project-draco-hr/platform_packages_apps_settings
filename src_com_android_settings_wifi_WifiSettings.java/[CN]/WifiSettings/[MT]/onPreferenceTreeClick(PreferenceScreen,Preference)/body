@@ -1,7 +1,13 @@
 {
   if (preference instanceof AccessPoint) {
     mSelectedAccessPoint=(AccessPoint)preference;
-    showConfigUi(mSelectedAccessPoint,false);
+    if (mSelectedAccessPoint.security == AccessPoint.SECURITY_NONE && mSelectedAccessPoint.networkId == INVALID_NETWORK_ID) {
+      mSelectedAccessPoint.generateOpenNetworkConfig();
+      mWifiManager.connectNetwork(mSelectedAccessPoint.getConfig());
+    }
+ else {
+      showConfigUi(mSelectedAccessPoint,false);
+    }
   }
  else {
     return super.onPreferenceTreeClick(screen,preference);

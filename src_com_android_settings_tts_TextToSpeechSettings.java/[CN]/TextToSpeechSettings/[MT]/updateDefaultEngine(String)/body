@@ -1,0 +1,16 @@
+{
+  if (DBG)   Log.d(TAG,"Updating default synth to : " + engine);
+  updateWidgetState(false);
+  mPreviousEngine=mTts.getCurrentEngine();
+  if (mTts != null) {
+    try {
+      mTts.shutdown();
+      mTts=null;
+    }
+ catch (    Exception e) {
+      Log.e(TAG,"Error shutting down TTS engine" + e);
+    }
+  }
+  if (DBG)   Log.d(TAG,"Updating engine : Attempting to connect to engine: " + engine);
+  mTts=new TextToSpeech(getActivity().getApplicationContext(),mUpdateListener,engine);
+}

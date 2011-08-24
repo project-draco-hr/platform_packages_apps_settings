@@ -1,0 +1,16 @@
+{
+  if (KEY_DEFAULT_RATE.equals(preference.getKey())) {
+    mDefaultRate=Integer.parseInt((String)objValue);
+    try {
+      Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_RATE,mDefaultRate);
+      if (mTts != null) {
+        mTts.setSpeechRate(mDefaultRate / 100.0f);
+      }
+      if (DBG)       Log.d(TAG,"TTS default rate changed, now " + mDefaultRate);
+    }
+ catch (    NumberFormatException e) {
+      Log.e(TAG,"could not persist default TTS rate setting",e);
+    }
+  }
+  return true;
+}

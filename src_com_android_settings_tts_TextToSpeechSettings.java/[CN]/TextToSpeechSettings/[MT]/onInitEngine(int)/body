@@ -1,0 +1,10 @@
+{
+  if (status == TextToSpeech.SUCCESS) {
+    updateWidgetState(true);
+    if (DBG)     Log.d(TAG,"TTS engine for settings screen initialized.");
+  }
+ else {
+    if (DBG)     Log.d(TAG,"TTS engine for settings screen failed to initialize successfully.");
+    updateWidgetState(false);
+  }
+}

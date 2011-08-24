@@ -1,0 +1,14 @@
+{
+  if (mPreventRadioButtonCallbacks) {
+    return;
+  }
+  if (isChecked) {
+    if (mSharedState.getCurrentChecked() != null) {
+      mSharedState.getCurrentChecked().setChecked(false);
+    }
+    mSharedState.setCurrentChecked(buttonView);
+    mSharedState.setCurrentKey(getKey());
+    callChangeListener(mSharedState.getCurrentKey());
+  }
+  mSettingsIcon.setEnabled(isChecked);
+}

@@ -1,0 +1,26 @@
+{
+  final ContentResolver resolver=getContentResolver();
+  try {
+    mDefaultRate=Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
+  }
+ catch (  SettingNotFoundException e) {
+    mDefaultRate=TextToSpeech.Engine.DEFAULT_RATE;
+  }
+  mDefaultRatePref.setValue(String.valueOf(mDefaultRate));
+  mDefaultRatePref.setOnPreferenceChangeListener(this);
+  mCurrentEngine=mTts.getCurrentEngine();
+  PreferenceActivity preferenceActivity=null;
+  if (getActivity() instanceof PreferenceActivity) {
+    preferenceActivity=(PreferenceActivity)getActivity();
+  }
+ else {
+    throw new IllegalStateException("TextToSpeechSettings used outside a " + "PreferenceActivity");
+  }
+  mEnginePreferenceCategory.removeAll();
+  List<EngineInfo> engines=mEnginesHelper.getEngines();
+  for (  EngineInfo engine : engines) {
+    TtsEnginePreference enginePref=new TtsEnginePreference(getActivity(),engine,this,preferenceActivity);
+    mEnginePreferenceCategory.addPreference(enginePref);
+  }
+  checkVoiceData(mCurrentEngine);
+}

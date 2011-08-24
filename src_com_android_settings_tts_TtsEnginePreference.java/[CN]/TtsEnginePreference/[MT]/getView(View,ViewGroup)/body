@@ -1,0 +1,38 @@
+{
+  if (mSharedState == null) {
+    throw new IllegalStateException("Call to getView() before a call to" + "setSharedState()");
+  }
+  View view=super.getView(convertView,parent);
+  final RadioButton rb=(RadioButton)view.findViewById(R.id.tts_engine_radiobutton);
+  rb.setOnCheckedChangeListener(mRadioChangeListener);
+  boolean isChecked=getKey().equals(mSharedState.getCurrentKey());
+  if (isChecked) {
+    mSharedState.setCurrentChecked(rb);
+  }
+  mPreventRadioButtonCallbacks=true;
+  rb.setChecked(isChecked);
+  mPreventRadioButtonCallbacks=false;
+  mRadioButton=rb;
+  View textLayout=view.findViewById(R.id.tts_engine_pref_text);
+  textLayout.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      onRadioButtonClicked(rb,!rb.isChecked());
+    }
+  }
+);
+  mSettingsIcon=view.findViewById(R.id.tts_engine_settings);
+  mSettingsIcon.setEnabled(isChecked && mVoiceCheckData != null);
+  mSettingsIcon.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      Bundle args=new Bundle();
+      args.putString(FRAGMENT_ARGS_NAME,mEngineInfo.name);
+      args.putString(FRAGMENT_ARGS_LABEL,mEngineInfo.label);
+      if (mVoiceCheckData != null) {
+        args.putParcelable(FRAGMENT_ARGS_VOICES,mVoiceCheckData);
+      }
+      mPreferenceActivity.startPreferencePanel(TtsEngineSettingsFragment.class.getName(),args,0,mEngineInfo.label,null,0);
+    }
+  }
+);
+  return view;
+}

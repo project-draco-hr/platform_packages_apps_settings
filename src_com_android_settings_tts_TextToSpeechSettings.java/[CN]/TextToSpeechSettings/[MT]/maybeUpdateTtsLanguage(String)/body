@@ -1,0 +1,10 @@
+{
+  if (currentEngine != null && mTts != null) {
+    final String localeString=mEnginesHelper.getLocalePrefForEngine(currentEngine);
+    if (localeString != null) {
+      final String[] locale=TtsEngines.parseLocalePref(localeString);
+      if (DBG)       Log.d(TAG,"Loading language ahead of sample check : " + locale);
+      mTts.setLanguage(new Locale(locale[0],locale[1],locale[2]));
+    }
+  }
+}

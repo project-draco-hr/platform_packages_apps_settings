@@ -1,7 +1,8 @@
 {
   String currentEngine=mTts.getCurrentEngine();
-  Locale currentLocale=mTts.getLanguage();
   if (TextUtils.isEmpty(currentEngine))   currentEngine=mTts.getDefaultEngine();
+  maybeUpdateTtsLanguage(currentEngine);
+  Locale currentLocale=mTts.getLanguage();
   Intent intent=new Intent(TextToSpeech.Engine.ACTION_GET_SAMPLE_TEXT);
   if (currentLocale != null) {
     intent.putExtra("language",currentLocale.getLanguage());
@@ -15,6 +16,5 @@
   }
  catch (  ActivityNotFoundException ex) {
     Log.e(TAG,"Failed to get sample text, no activity found for " + intent + ")");
-    onSampleTextReceived(TextToSpeech.ERROR,null);
   }
 }

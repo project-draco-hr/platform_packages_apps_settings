@@ -1,11 +1,11 @@
 {
   mContext=context;
   mCheckbox=checkBoxPreference;
-  mZeroClick=zeroclick;
+  mNdefPush=ndefPush;
   mNfcAdapter=NfcAdapter.getDefaultAdapter(context);
   if (mNfcAdapter == null) {
     mCheckbox.setEnabled(false);
-    mZeroClick.setEnabled(false);
+    mNdefPush.setEnabled(false);
     mIntentFilter=null;
     return;
   }

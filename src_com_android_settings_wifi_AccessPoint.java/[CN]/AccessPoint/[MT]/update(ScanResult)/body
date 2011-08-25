@@ -1,9 +1,16 @@
 {
   if (ssid.equals(result.SSID) && security == getSecurity(result)) {
     if (WifiManager.compareSignalLevel(result.level,mRssi) > 0) {
+      int oldLevel=getLevel();
       mRssi=result.level;
+      if (getLevel() != oldLevel) {
+        notifyChanged();
+      }
     }
-    if (security == SECURITY_PSK)     pskType=getPskType(result);
+    if (security == SECURITY_PSK) {
+      pskType=getPskType(result);
+    }
+    refresh();
     return true;
   }
   return false;

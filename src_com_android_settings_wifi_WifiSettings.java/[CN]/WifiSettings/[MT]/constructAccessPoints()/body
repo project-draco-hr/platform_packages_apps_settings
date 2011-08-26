@@ -1,11 +1,13 @@
 {
-  Collection<AccessPoint> accessPoints=new ArrayList<AccessPoint>();
+  ArrayList<AccessPoint> accessPoints=new ArrayList<AccessPoint>();
+  Multimap<String,AccessPoint> apMap=new Multimap<String,AccessPoint>();
   final List<WifiConfiguration> configs=mWifiManager.getConfiguredNetworks();
   if (configs != null) {
     for (    WifiConfiguration config : configs) {
       AccessPoint accessPoint=new AccessPoint(getActivity(),config);
       accessPoint.update(mLastInfo,mLastState);
       accessPoints.add(accessPoint);
+      apMap.put(accessPoint.ssid,accessPoint);
     }
   }
   final List<ScanResult> results=mWifiManager.getScanResults();
@@ -15,16 +17,18 @@
         continue;
       }
       boolean found=false;
-      for (      AccessPoint accessPoint : accessPoints) {
-        if (accessPoint.update(result)) {
-          found=true;
-          break;
+      if (apMap.getAll(result.SSID) != null) {
+        for (        AccessPoint accessPoint : apMap.getAll(result.SSID)) {
+          if (accessPoint.update(result))           found=true;
         }
       }
       if (!found) {
-        accessPoints.add(new AccessPoint(getActivity(),result));
+        AccessPoint accessPoint=new AccessPoint(getActivity(),result);
+        accessPoints.add(accessPoint);
+        apMap.put(accessPoint.ssid,accessPoint);
       }
     }
   }
+  Collections.sort(accessPoints);
   return accessPoints;
 }

@@ -27,6 +27,10 @@
  else {
         mTsm.setSpellCheckerSubtype(mSpellCheckerInfo.getSubtypeAt(which - 1));
       }
+      if (DBG) {
+        final SpellCheckerSubtype subtype=mTsm.getCurrentSpellCheckerSubtype(true);
+        Log.d(TAG,"Current spell check locale is " + subtype == null ? "null" : subtype.getLocale());
+      }
       dialog.dismiss();
     }
   }

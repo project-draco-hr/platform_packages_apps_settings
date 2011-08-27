@@ -2,10 +2,10 @@
   boolean success=false;
   mActionBarSwitch.setEnabled(false);
   if (desiredState) {
-    success=mNfcAdapter.enableZeroClick();
+    success=mNfcAdapter.enableNdefPush();
   }
  else {
-    success=mNfcAdapter.disableZeroClick();
+    success=mNfcAdapter.disableNdefPush();
   }
   if (success) {
     mActionBarSwitch.setChecked(desiredState);

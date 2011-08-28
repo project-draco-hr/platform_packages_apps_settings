@@ -17,10 +17,8 @@
         continue;
       }
       boolean found=false;
-      if (apMap.getAll(result.SSID) != null) {
-        for (        AccessPoint accessPoint : apMap.getAll(result.SSID)) {
-          if (accessPoint.update(result))           found=true;
-        }
+      for (      AccessPoint accessPoint : apMap.getAll(result.SSID)) {
+        if (accessPoint.update(result))         found=true;
       }
       if (!found) {
         AccessPoint accessPoint=new AccessPoint(getActivity(),result);

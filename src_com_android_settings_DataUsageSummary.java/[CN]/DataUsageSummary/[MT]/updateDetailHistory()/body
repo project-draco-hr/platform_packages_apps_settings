@@ -1,0 +1,17 @@
+{
+  try {
+    mDetailHistoryDefault=null;
+    mDetailHistoryForeground=null;
+    for (    int uid : mAppDetailUids) {
+      mDetailHistoryDefault=collectHistoryForUid(uid,SET_DEFAULT,mDetailHistoryDefault);
+      mDetailHistoryForeground=collectHistoryForUid(uid,SET_FOREGROUND,mDetailHistoryForeground);
+    }
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("problem reading network stats",e);
+  }
+  mDetailHistory=new NetworkStatsHistory(mDetailHistoryForeground.getBucketDuration());
+  mDetailHistory.recordEntireHistory(mDetailHistoryDefault);
+  mDetailHistory.recordEntireHistory(mDetailHistoryForeground);
+  mChart.bindDetailNetworkStats(mDetailHistory);
+}

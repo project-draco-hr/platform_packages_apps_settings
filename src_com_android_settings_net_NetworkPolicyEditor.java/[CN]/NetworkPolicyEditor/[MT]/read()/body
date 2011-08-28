@@ -1,18 +1,27 @@
 {
+  final NetworkPolicy[] policies;
   try {
-    final NetworkPolicy[] policies=mPolicyService.getNetworkPolicies();
-    mPolicies.clear();
-    for (    NetworkPolicy policy : policies) {
-      if (policy.limitBytes < -1) {
-        policy.limitBytes=LIMIT_DISABLED;
-      }
-      if (policy.warningBytes < -1) {
-        policy.warningBytes=WARNING_DISABLED;
-      }
-      mPolicies.add(policy);
-    }
+    policies=mPolicyService.getNetworkPolicies();
   }
  catch (  RemoteException e) {
     throw new RuntimeException("problem reading policies",e);
   }
+  boolean modified=false;
+  mPolicies.clear();
+  for (  NetworkPolicy policy : policies) {
+    if (policy.limitBytes < -1) {
+      policy.limitBytes=LIMIT_DISABLED;
+      modified=true;
+    }
+    if (policy.warningBytes < -1) {
+      policy.warningBytes=WARNING_DISABLED;
+      modified=true;
+    }
+    if (policy.template.getMatchRule() == MATCH_WIFI) {
+      modified=true;
+      continue;
+    }
+    mPolicies.add(policy);
+  }
+  if (modified)   writeAsync();
 }

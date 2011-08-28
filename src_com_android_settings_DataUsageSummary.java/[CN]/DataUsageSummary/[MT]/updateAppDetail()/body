@@ -16,7 +16,8 @@
     return;
   }
   mChart.bindNetworkPolicy(null);
-  final UidDetail detail=resolveDetailForUid(context,mUid);
+  final int primaryUid=getAppDetailPrimaryUid();
+  final UidDetail detail=resolveDetailForUid(context,primaryUid);
   mAppIcon.setImageDrawable(detail.icon);
   mAppTitles.removeAllViews();
   if (detail.detailLabels != null) {
@@ -27,7 +28,7 @@
  else {
     mAppTitles.addView(inflateAppTitle(inflater,mAppTitles,detail.label));
   }
-  final String[] packageNames=pm.getPackagesForUid(mUid);
+  final String[] packageNames=pm.getPackagesForUid(primaryUid);
   if (packageNames != null && packageNames.length > 0) {
     mAppSettingsIntent=new Intent(Intent.ACTION_MANAGE_NETWORK_USAGE);
     mAppSettingsIntent.setPackage(packageNames[0]);
@@ -39,19 +40,9 @@
     mAppSettingsIntent=null;
     mAppSettings.setEnabled(false);
   }
-  try {
-    mDetailHistoryDefault=mStatsService.getHistoryForUid(mTemplate,mUid,SET_DEFAULT,TAG_NONE,FIELD_RX_BYTES | FIELD_TX_BYTES);
-    mDetailHistoryForeground=mStatsService.getHistoryForUid(mTemplate,mUid,SET_FOREGROUND,TAG_NONE,FIELD_RX_BYTES | FIELD_TX_BYTES);
-  }
- catch (  RemoteException e) {
-    throw new RuntimeException("problem reading network stats",e);
-  }
-  mDetailHistory=new NetworkStatsHistory(mDetailHistoryForeground.getBucketDuration());
-  mDetailHistory.recordEntireHistory(mDetailHistoryDefault);
-  mDetailHistory.recordEntireHistory(mDetailHistoryForeground);
-  mChart.bindDetailNetworkStats(mDetailHistory);
+  updateDetailHistory();
   updateDetailData();
-  if (NetworkPolicyManager.isUidValidForPolicy(context,mUid) && !getRestrictBackground() && isBandwidthControlEnabled()) {
+  if (NetworkPolicyManager.isUidValidForPolicy(context,primaryUid) && !getRestrictBackground() && isBandwidthControlEnabled()) {
     setPreferenceTitle(mAppRestrictView,R.string.data_usage_app_restrict_background);
     setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary,buildLimitedNetworksList()));
     mAppRestrictView.setVisibility(View.VISIBLE);

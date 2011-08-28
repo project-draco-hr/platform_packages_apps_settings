@@ -21,12 +21,22 @@
         Log.wtf(TAG,"stuck generating ranges for historyStart=" + historyStart + ", historyEnd="+ historyEnd+ " and policy="+ policy);
       }
     }
-    mCycleAdapter.setChangePossible(isNetworkPolicyModifiable());
+    mCycleAdapter.setChangePossible(isNetworkPolicyModifiable(policy));
   }
   if (!hasCycles) {
-    mCycleAdapter.add(new CycleItem(context,historyStart,historyEnd));
+    long cycleEnd=historyEnd;
+    while (cycleEnd > historyStart) {
+      final long cycleStart=cycleEnd - (DateUtils.WEEK_IN_MILLIS * 4);
+      mCycleAdapter.add(new CycleItem(context,cycleStart,cycleEnd));
+      cycleEnd=cycleStart;
+    }
     mCycleAdapter.setChangePossible(false);
   }
-  mCycleSpinner.setSelection(0);
-  mCycleListener.onItemSelected(mCycleSpinner,null,0,0);
+  if (mCycleAdapter.getCount() > 0) {
+    mCycleSpinner.setSelection(0);
+    mCycleListener.onItemSelected(mCycleSpinner,null,0,0);
+  }
+ else {
+    updateDetailData();
+  }
 }

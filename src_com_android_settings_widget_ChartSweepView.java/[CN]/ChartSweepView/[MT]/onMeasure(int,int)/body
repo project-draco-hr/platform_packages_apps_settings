@@ -3,6 +3,7 @@
     final int sweepHeight=mSweep.getIntrinsicHeight();
     final int templateHeight=mLabelLayout.getHeight();
     mSweepOffset.x=0;
+    mSweepOffset.y=0;
     mSweepOffset.y=(int)((templateHeight / 2) - getTargetInset());
     setMeasuredDimension(mSweep.getIntrinsicWidth(),Math.max(sweepHeight,templateHeight));
   }
@@ -25,5 +26,20 @@
     mMargins.top=-mSweepPadding.top;
     mMargins.bottom=mSweepPadding.bottom;
   }
+  mContentOffset.x=0;
+  mContentOffset.y=0;
+  if (mFollowAxis == HORIZONTAL) {
+    final int widthBefore=getMeasuredWidth();
+    final int widthAfter=widthBefore * 3;
+    setMeasuredDimension(widthAfter,getMeasuredHeight());
+    mContentOffset.offset((widthAfter - widthBefore) / 2,0);
+  }
+ else {
+    final int heightBefore=getMeasuredHeight();
+    final int heightAfter=heightBefore * 3;
+    setMeasuredDimension(getMeasuredWidth(),heightAfter);
+    mContentOffset.offset(0,(heightAfter - heightBefore) / 2);
+  }
+  mSweepOffset.offset(mContentOffset.x,mContentOffset.y);
   mMargins.offset(-mSweepOffset.x,-mSweepOffset.y);
 }

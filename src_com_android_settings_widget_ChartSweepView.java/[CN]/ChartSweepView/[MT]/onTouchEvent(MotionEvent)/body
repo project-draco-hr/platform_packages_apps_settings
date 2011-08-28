@@ -6,10 +6,15 @@ case MotionEvent.ACTION_DOWN:
 {
       final boolean accept;
       if (mFollowAxis == VERTICAL) {
-        accept=event.getX() > getWidth() - (mSweepPadding.right * 2);
+        accept=event.getX() > getWidth() - (mSweepPadding.right * 3);
       }
  else {
-        accept=event.getY() > getHeight() - (mSweepPadding.bottom * 2);
+        accept=event.getY() > getHeight() - (mSweepPadding.bottom * 3);
+      }
+      final MotionEvent eventInParent=event.copy();
+      eventInParent.offsetLocation(getLeft(),getTop());
+      if (isTouchCloserTo(eventInParent,mValidAfterDynamic) || isTouchCloserTo(eventInParent,mValidBeforeDynamic)) {
+        return false;
       }
       if (accept) {
         mTracking=event.copy();

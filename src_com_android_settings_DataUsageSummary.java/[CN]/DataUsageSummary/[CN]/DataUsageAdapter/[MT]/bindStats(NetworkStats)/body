@@ -1,7 +1,6 @@
 {
   mItems.clear();
-  final AppUsageItem systemItem=new AppUsageItem();
-  systemItem.uid=android.os.Process.SYSTEM_UID;
+  final AppUsageItem systemItem=new AppUsageItem(android.os.Process.SYSTEM_UID);
   final SparseArray<AppUsageItem> knownUids=new SparseArray<AppUsageItem>();
   NetworkStats.Entry entry=null;
   final int size=stats != null ? stats.size() : 0;
@@ -12,8 +11,7 @@
     if (isApp || uid == TrafficStats.UID_REMOVED) {
       AppUsageItem item=knownUids.get(uid);
       if (item == null) {
-        item=new AppUsageItem();
-        item.uid=uid;
+        item=new AppUsageItem(uid);
         knownUids.put(uid,item);
         mItems.add(item);
       }
@@ -21,6 +19,7 @@
     }
  else {
       systemItem.total+=entry.rxBytes + entry.txBytes;
+      systemItem.addUid(uid);
     }
   }
   if (systemItem.total > 0) {

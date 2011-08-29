@@ -1,10 +1,10 @@
 {
   if (mFollowAxis == VERTICAL) {
     final float targetHeight=mSweep.getIntrinsicHeight() - mSweepPadding.top - mSweepPadding.bottom;
-    return mSweepPadding.top + (targetHeight / 2);
+    return mSweepPadding.top + (targetHeight / 2) + mSweepOffset.y;
   }
  else {
     final float targetWidth=mSweep.getIntrinsicWidth() - mSweepPadding.left - mSweepPadding.right;
-    return mSweepPadding.left + (targetWidth / 2);
+    return mSweepPadding.left + (targetWidth / 2) + mSweepOffset.x;
   }
 }

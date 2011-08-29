@@ -1,7 +1,8 @@
 {
+  final NetworkPolicy[] policies=mPolicies.toArray(new NetworkPolicy[mPolicies.size()]);
   new AsyncTask<Void,Void,Void>(){
     @Override protected Void doInBackground(    Void... params){
-      write();
+      write(policies);
       return null;
     }
   }

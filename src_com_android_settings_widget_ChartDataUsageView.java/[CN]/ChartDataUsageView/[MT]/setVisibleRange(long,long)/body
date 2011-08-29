@@ -1,0 +1,24 @@
+{
+  mHoriz.setBounds(visibleStart,visibleEnd);
+  mGrid.setBounds(visibleStart,visibleEnd);
+  final long validStart=Math.max(visibleStart,getStatsStart());
+  final long validEnd=Math.min(visibleEnd,getStatsEnd());
+  if (LIMIT_SWEEPS_TO_VALID_DATA) {
+    mSweepLeft.setValidRange(validStart,validEnd);
+    mSweepRight.setValidRange(validStart,validEnd);
+  }
+ else {
+    mSweepLeft.setValidRange(visibleStart,visibleEnd);
+    mSweepRight.setValidRange(visibleStart,visibleEnd);
+  }
+  final long halfRange=(visibleEnd + visibleStart) / 2;
+  final long sweepMax=validEnd;
+  final long sweepMin=Math.max(visibleStart,(sweepMax - DateUtils.WEEK_IN_MILLIS));
+  mSweepLeft.setValue(sweepMin);
+  mSweepRight.setValue(sweepMax);
+  requestLayout();
+  mSeries.generatePath();
+  updateVertAxisBounds(null);
+  updateEstimateVisible();
+  updatePrimaryRange();
+}

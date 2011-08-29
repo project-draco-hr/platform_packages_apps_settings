@@ -8,7 +8,7 @@
   final TextView summary=(TextView)convertView.findViewById(android.R.id.summary);
   final ProgressBar progress=(ProgressBar)convertView.findViewById(android.R.id.progress);
   final AppUsageItem item=mItems.get(position);
-  final UidDetail detail=resolveDetailForUid(context,item.uid);
+  final UidDetail detail=resolveDetailForUid(context,item.uids[0]);
   icon.setImageDrawable(detail.icon);
   title.setText(detail.label);
   summary.setText(Formatter.formatFileSize(context,item.total));

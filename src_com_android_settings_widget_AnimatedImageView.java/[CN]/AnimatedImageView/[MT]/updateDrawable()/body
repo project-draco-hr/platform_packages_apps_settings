@@ -1,0 +1,17 @@
+{
+  if (isShown() && mDrawable != null) {
+    mDrawable.stop();
+  }
+  final Drawable drawable=getDrawable();
+  if (drawable instanceof AnimatedRotateDrawable) {
+    mDrawable=(AnimatedRotateDrawable)drawable;
+    mDrawable.setFramesCount(56);
+    mDrawable.setFramesDuration(32);
+    if (isShown() && mAnimating) {
+      mDrawable.start();
+    }
+  }
+ else {
+    mDrawable=null;
+  }
+}

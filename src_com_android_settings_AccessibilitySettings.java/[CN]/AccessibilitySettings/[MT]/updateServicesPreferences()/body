@@ -13,7 +13,6 @@
   }
   for (int i=0, count=installedServices.size(); i < count; ++i) {
     AccessibilityServiceInfo info=installedServices.get(i);
-    String key=info.getId();
     PreferenceScreen preference=getPreferenceManager().createPreferenceScreen(getActivity());
     String title=info.getResolveInfo().loadLabel(getPackageManager()).toString();
     ServiceInfo serviceInfo=info.getResolveInfo().serviceInfo;
@@ -39,7 +38,11 @@
       description=getString(R.string.accessibility_service_default_description);
     }
     extras.putString(EXTRA_SUMMARY,description);
-    extras.putString(EXTRA_WARNING_MESSAGE,getString(R.string.accessibility_service_security_warning,info.getResolveInfo().loadLabel(getPackageManager())));
+    CharSequence applicationLabel=info.getResolveInfo().loadLabel(getPackageManager());
+    extras.putString(EXTRA_ENABLE_WARNING_TITLE,getString(R.string.accessibility_service_security_warning_title,applicationLabel));
+    extras.putString(EXTRA_ENABLE_WARNING_MESSAGE,getString(R.string.accessibility_service_security_warning_summary,applicationLabel));
+    extras.putString(EXTRA_DISABLE_WARNING_TITLE,getString(R.string.accessibility_service_disable_warning_title,applicationLabel));
+    extras.putString(EXTRA_DISABLE_WARNING_MESSAGE,getString(R.string.accessibility_service_disable_warning_summary,applicationLabel));
     String settingsClassName=info.getSettingsActivityName();
     if (!TextUtils.isEmpty(settingsClassName)) {
       extras.putString(EXTRA_SETTINGS_TITLE,getString(R.string.accessibility_menu_item_settings));
@@ -47,5 +50,23 @@
     }
     mServicesCategory.addPreference(preference);
   }
-  mServicesCategory.setEnabled(accessibilityEnabled);
+  if (mServicesCategory.getPreferenceCount() == 0) {
+    if (mNoServicesMessagePreference == null) {
+      mNoServicesMessagePreference=new Preference(getActivity()){
+        @Override protected void onBindView(        View view){
+          super.onBindView(view);
+          LinearLayout containerView=(LinearLayout)view.findViewById(R.id.message_container);
+          containerView.setGravity(Gravity.CENTER);
+          TextView summaryView=(TextView)view.findViewById(R.id.summary);
+          String title=getString(R.string.accessibility_service_no_apps_title);
+          summaryView.setText(title);
+        }
+      }
+;
+      mNoServicesMessagePreference.setPersistent(false);
+      mNoServicesMessagePreference.setLayoutResource(R.layout.text_description_preference);
+      mNoServicesMessagePreference.setSelectable(false);
+    }
+    mServicesCategory.addPreference(mNoServicesMessagePreference);
+  }
 }

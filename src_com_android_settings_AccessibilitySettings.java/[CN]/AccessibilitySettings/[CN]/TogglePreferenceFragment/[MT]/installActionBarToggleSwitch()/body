@@ -3,14 +3,19 @@
   mToggleSwitch.setOnBeforeCheckedChangeListener(new OnBeforeCheckedChangeListener(){
     @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
       if (checked) {
-        if (!TextUtils.isEmpty(mWarningMessage)) {
+        if (!TextUtils.isEmpty(mEnableWarningMessage)) {
           toggleSwitch.setCheckedInternal(false);
-          showDialog(DIALOG_ID_WARNING);
+          showDialog(DIALOG_ID_ENABLE_WARNING);
           return true;
         }
         onPreferenceToggled(mPreferenceKey,true);
       }
  else {
+        if (!TextUtils.isEmpty(mDisableWarningMessage)) {
+          toggleSwitch.setCheckedInternal(true);
+          showDialog(DIALOG_ID_DISABLE_WARNING);
+          return true;
+        }
         onPreferenceToggled(mPreferenceKey,false);
       }
       return false;

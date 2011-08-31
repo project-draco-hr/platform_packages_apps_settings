@@ -1,11 +1,14 @@
 {
-  final String key=preference.getKey();
   if (mToggleLargeTextPreference == preference) {
     handleToggleLargeTextPreferenceClick();
     return true;
   }
  else   if (mTogglePowerButtonEndsCallPreference == preference) {
     handleTogglePowerButtonEndsCallPreferenceClick();
+    return true;
+  }
+ else   if (mToggleAutoRotateScreenPreference == preference) {
+    handleToggleAutoRotateScreenPreferenceClick();
     return true;
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

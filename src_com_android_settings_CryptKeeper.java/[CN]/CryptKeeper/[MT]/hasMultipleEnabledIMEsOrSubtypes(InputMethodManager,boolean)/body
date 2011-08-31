@@ -1,0 +1,24 @@
+{
+  final List<InputMethodInfo> enabledImis=imm.getEnabledInputMethodList();
+  int filteredImisCount=0;
+  for (  InputMethodInfo imi : enabledImis) {
+    if (filteredImisCount > 1)     return true;
+    final List<InputMethodSubtype> subtypes=imm.getEnabledInputMethodSubtypeList(imi,true);
+    if (subtypes.isEmpty()) {
+      ++filteredImisCount;
+      continue;
+    }
+    int auxCount=0;
+    for (    InputMethodSubtype subtype : subtypes) {
+      if (subtype.isAuxiliary()) {
+        ++auxCount;
+      }
+    }
+    final int nonAuxCount=subtypes.size() - auxCount;
+    if (nonAuxCount > 0 || (shouldIncludeAuxiliarySubtypes && auxCount > 1)) {
+      ++filteredImisCount;
+      continue;
+    }
+  }
+  return filteredImisCount > 1 || imm.getEnabledInputMethodSubtypeList(null,false).size() > 1;
+}

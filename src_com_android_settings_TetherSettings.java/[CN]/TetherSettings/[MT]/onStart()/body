@@ -17,6 +17,8 @@
   filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
   activity.registerReceiver(mTetherChangeReceiver,filter);
   if (intent != null)   mTetherChangeReceiver.onReceive(activity,intent);
-  mWifiApEnabler.resume();
+  if (mWifiApEnabler != null) {
+    mWifiApEnabler.resume();
+  }
   updateState();
 }

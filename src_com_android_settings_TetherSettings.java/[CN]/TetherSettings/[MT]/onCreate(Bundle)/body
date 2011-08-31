@@ -7,7 +7,7 @@
     adapter.getProfileProxy(activity.getApplicationContext(),mProfileServiceListener,BluetoothProfile.PAN);
   }
   CheckBoxPreference enableWifiAp=(CheckBoxPreference)findPreference(ENABLE_WIFI_AP);
-  Preference wifiApSettings=findPreference(WIFI_AP_SETTINGS);
+  Preference wifiApSettings=findPreference(WIFI_AP_SSID_AND_SECURITY);
   mUsbTether=(CheckBoxPreference)findPreference(USB_TETHER_SETTINGS);
   mBluetoothTether=(CheckBoxPreference)findPreference(ENABLE_BLUETOOTH_TETHERING);
   mTetherHelp=(PreferenceScreen)findPreference(TETHERING_HELP);
@@ -21,7 +21,11 @@
   if (!usbAvailable || Utils.isMonkeyRunning()) {
     getPreferenceScreen().removePreference(mUsbTether);
   }
-  if (!wifiAvailable) {
+  if (wifiAvailable) {
+    mWifiApEnabler=new WifiApEnabler(activity,enableWifiAp);
+    initWifiTethering();
+  }
+ else {
     getPreferenceScreen().removePreference(enableWifiAp);
     getPreferenceScreen().removePreference(wifiApSettings);
   }
@@ -36,7 +40,5 @@
       mBluetoothTether.setChecked(false);
     }
   }
-  mWifiApEnabler=new WifiApEnabler(activity,enableWifiAp);
   mView=new WebView(activity);
-  initWifiTethering();
 }

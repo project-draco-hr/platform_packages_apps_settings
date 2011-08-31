@@ -7,7 +7,7 @@
   mAutoTimePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME);
   mAutoTimePref.setChecked(autoTimeEnabled);
   mAutoTimeZonePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME_ZONE);
-  if (Utils.isWifiOnly() || isFirstRun) {
+  if (Utils.isWifiOnly(getActivity()) || isFirstRun) {
     getPreferenceScreen().removePreference(mAutoTimeZonePref);
     autoTimeZoneEnabled=false;
   }

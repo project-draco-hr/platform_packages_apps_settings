@@ -1,6 +1,6 @@
 {
   super.onResume();
-  if (!Utils.isWifiOnly()) {
+  if (!Utils.isWifiOnly(getApplicationContext())) {
     mPhoneStateReceiver.registerIntent();
     updateSignalStrength();
     updateServiceState(mPhone.getServiceState());

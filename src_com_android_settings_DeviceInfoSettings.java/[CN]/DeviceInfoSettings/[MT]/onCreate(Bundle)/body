@@ -16,7 +16,7 @@
   setStringSummary(KEY_BUILD_NUMBER,Build.DISPLAY);
   findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
   removePreferenceIfPropertyMissing(getPreferenceScreen(),"safetylegal",PROPERTY_URL_SAFETYLEGAL);
-  if (Utils.isWifiOnly()) {
+  if (Utils.isWifiOnly(getActivity())) {
     getPreferenceScreen().removePreference(findPreference(KEY_BASEBAND_VERSION));
   }
   final Activity act=getActivity();

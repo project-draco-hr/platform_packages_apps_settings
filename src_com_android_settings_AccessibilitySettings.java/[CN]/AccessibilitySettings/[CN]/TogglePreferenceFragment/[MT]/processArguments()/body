@@ -7,7 +7,7 @@
   if (!activity.onIsMultiPane() || activity.onIsHidingHeaders()) {
     mOldActivityTitle=getActivity().getTitle();
     String title=arguments.getString(EXTRA_TITLE);
-    getActivity().getActionBar().setTitle(arguments.getCharSequence(EXTRA_TITLE));
+    getActivity().getActionBar().setTitle(title);
   }
   String summary=arguments.getString(EXTRA_SUMMARY);
   mSummaryPreference.setSummary(summary);
@@ -21,5 +21,8 @@
       setHasOptionsMenu(true);
     }
   }
-  mWarningMessage=arguments.getCharSequence(AccessibilitySettings.EXTRA_WARNING_MESSAGE);
+  mEnableWarningTitle=arguments.getCharSequence(AccessibilitySettings.EXTRA_ENABLE_WARNING_TITLE);
+  mEnableWarningMessage=arguments.getCharSequence(AccessibilitySettings.EXTRA_ENABLE_WARNING_MESSAGE);
+  mDisableWarningTitle=arguments.getString(AccessibilitySettings.EXTRA_DISABLE_WARNING_TITLE);
+  mDisableWarningMessage=arguments.getString(AccessibilitySettings.EXTRA_DISABLE_WARNING_MESSAGE);
 }

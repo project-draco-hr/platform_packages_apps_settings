@@ -1,8 +1,19 @@
 {
+  CharSequence title=null;
+  CharSequence message=null;
 switch (dialogId) {
-case DIALOG_ID_WARNING:
-    return new AlertDialog.Builder(getActivity()).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(mWarningMessage).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
+case DIALOG_ID_ENABLE_WARNING:
+    mShownDialogId=DIALOG_ID_ENABLE_WARNING;
+  title=mEnableWarningTitle;
+message=mEnableWarningMessage;
+break;
+case DIALOG_ID_DISABLE_WARNING:
+mShownDialogId=DIALOG_ID_DISABLE_WARNING;
+title=mDisableWarningTitle;
+message=mDisableWarningMessage;
+break;
 default :
-  throw new IllegalArgumentException();
+throw new IllegalArgumentException();
 }
+return new AlertDialog.Builder(getActivity()).setTitle(title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(message).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
 }

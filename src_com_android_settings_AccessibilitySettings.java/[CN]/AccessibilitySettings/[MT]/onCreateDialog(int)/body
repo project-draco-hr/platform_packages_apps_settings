@@ -1,31 +1,17 @@
 {
 switch (dialogId) {
-case DIALOG_ID_DISABLE_ACCESSIBILITY:
-    return (new AlertDialog.Builder(getActivity())).setTitle(R.string.accessibility_disable_warning_title).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getResources().getString(R.string.accessibility_disable_warning_summary)).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-      public void onClick(      DialogInterface dialog,      int which){
-        Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
-        mToggleAccessibilitySwitch.setCheckedInternal(false);
-        updateAllPreferences(false);
-      }
-    }
-).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-      public void onClick(      DialogInterface dialog,      int which){
-        mToggleAccessibilitySwitch.setCheckedInternal(true);
-      }
-    }
-).create();
 case DIALOG_ID_NO_ACCESSIBILITY_SERVICES:
-  return new AlertDialog.Builder(getActivity()).setTitle(R.string.accessibility_service_no_apps_title).setMessage(R.string.accessibility_service_no_apps_message).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int which){
-      removeDialog(DIALOG_ID_NO_ACCESSIBILITY_SERVICES);
-      String screenreaderMarketLink=SystemProperties.get(SYSTEM_PROPERTY_MARKET_URL,DEFAULT_SCREENREADER_MARKET_LINK);
-      Uri marketUri=Uri.parse(screenreaderMarketLink);
-      Intent marketIntent=new Intent(Intent.ACTION_VIEW,marketUri);
-      startActivity(marketIntent);
+    return new AlertDialog.Builder(getActivity()).setTitle(R.string.accessibility_service_no_apps_title).setMessage(R.string.accessibility_service_no_apps_message).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+      public void onClick(      DialogInterface dialog,      int which){
+        removeDialog(DIALOG_ID_NO_ACCESSIBILITY_SERVICES);
+        String screenreaderMarketLink=SystemProperties.get(SYSTEM_PROPERTY_MARKET_URL,DEFAULT_SCREENREADER_MARKET_LINK);
+        Uri marketUri=Uri.parse(screenreaderMarketLink);
+        Intent marketIntent=new Intent(Intent.ACTION_VIEW,marketUri);
+        startActivity(marketIntent);
+      }
     }
-  }
 ).setNegativeButton(android.R.string.cancel,null).create();
 default :
-return null;
+  return null;
 }
 }

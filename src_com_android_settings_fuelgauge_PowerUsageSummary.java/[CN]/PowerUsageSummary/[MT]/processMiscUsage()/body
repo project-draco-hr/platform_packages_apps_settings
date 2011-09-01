@@ -11,7 +11,7 @@
   addWiFiUsage(uSecNow);
   addBluetoothUsage(uSecNow);
   addIdleUsage(uSecNow);
-  if (!com.android.settings.Utils.isWifiOnly()) {
+  if (!com.android.settings.Utils.isWifiOnly(getActivity())) {
     addRadioUsage(uSecNow);
   }
 }

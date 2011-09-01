@@ -13,7 +13,7 @@
   mPhone=PhoneFactory.getDefaultPhone();
   mSignalStrength=findPreference(KEY_SIGNAL_STRENGTH);
   mUptime=findPreference("up_time");
-  if (Utils.isWifiOnly()) {
+  if (Utils.isWifiOnly(getApplicationContext())) {
     for (    String key : PHONE_RELATED_ENTRIES) {
       removePreferenceFromScreen(key);
     }

@@ -24,7 +24,7 @@
     getPreferenceScreen().removePreference(ndefPush);
     mNfcEnabler=null;
   }
-  if (Utils.isWifiOnly()) {
+  if (Utils.isWifiOnly(getActivity())) {
     getPreferenceScreen().removePreference(findPreference(KEY_MOBILE_NETWORK_SETTINGS));
   }
   WifiP2pManager p2p=(WifiP2pManager)activity.getSystemService(Context.WIFI_P2P_SERVICE);

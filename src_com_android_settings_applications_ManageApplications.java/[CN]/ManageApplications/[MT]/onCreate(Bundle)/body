@@ -13,12 +13,12 @@
   if (className.equals(RunningServicesActivity.class.getName())) {
     defaultTabTag=TAB_RUNNING;
   }
- else   if (className.equals(StorageUseActivity.class.getName()) || action.equals(Intent.ACTION_MANAGE_PACKAGE_STORAGE)) {
+ else   if (className.equals(StorageUseActivity.class.getName()) || Intent.ACTION_MANAGE_PACKAGE_STORAGE.equals(action)) {
     mSortOrder=SORT_ORDER_SIZE;
     mFilterApps=FILTER_APPS_ALL;
     defaultTabTag=TAB_ALL;
   }
- else   if (action.equals(Settings.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS)) {
+ else   if (Settings.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS.equals(action)) {
     defaultTabTag=TAB_ALL;
   }
   if (savedInstanceState != null) {

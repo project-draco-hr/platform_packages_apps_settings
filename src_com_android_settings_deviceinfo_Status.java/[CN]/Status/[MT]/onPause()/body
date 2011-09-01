@@ -1,6 +1,6 @@
 {
   super.onPause();
-  if (!Utils.isWifiOnly()) {
+  if (!Utils.isWifiOnly(getApplicationContext())) {
     mPhoneStateReceiver.unregisterIntent();
     mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
   }

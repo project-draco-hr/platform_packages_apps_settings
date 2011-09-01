@@ -1,11 +1,15 @@
 {
+  final boolean checked;
 switch (which) {
 case DialogInterface.BUTTON_POSITIVE:
-    mToggleSwitch.setCheckedInternal(true);
-  onPreferenceToggled(mPreferenceKey,true);
+    checked=(mShownDialogId == DIALOG_ID_ENABLE_WARNING);
+  mToggleSwitch.setCheckedInternal(checked);
+onPreferenceToggled(mPreferenceKey,checked);
 break;
 case DialogInterface.BUTTON_NEGATIVE:
-onPreferenceToggled(mPreferenceKey,false);
+checked=(mShownDialogId == DIALOG_ID_DISABLE_WARNING);
+mToggleSwitch.setCheckedInternal(checked);
+onPreferenceToggled(mPreferenceKey,checked);
 break;
 default :
 throw new IllegalArgumentException();

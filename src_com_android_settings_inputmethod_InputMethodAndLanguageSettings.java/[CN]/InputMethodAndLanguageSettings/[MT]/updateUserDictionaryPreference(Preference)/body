@@ -2,7 +2,7 @@
   final Activity activity=getActivity();
   final Set<String> localeList=UserDictionaryList.getUserDictionaryLocalesList(activity);
   if (null == localeList) {
-    ((PreferenceGroup)findPreference("language_settings_category")).removePreference(userDictionaryPreference);
+    getPreferenceScreen().removePreference(userDictionaryPreference);
   }
  else   if (localeList.size() <= 1) {
     userDictionaryPreference.setTitle(R.string.user_dict_single_settings_title);

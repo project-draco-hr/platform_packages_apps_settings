@@ -2,10 +2,10 @@
   List<ResolveInfo> availableRecognitionServices=mFragment.getPackageManager().queryIntentServices(new Intent(RecognitionService.SERVICE_INTERFACE),PackageManager.GET_META_DATA);
   int numAvailable=availableRecognitionServices.size();
   if (numAvailable == 0) {
-    mFragment.getPreferenceScreen().removePreference(mVoiceInputCategory);
+    mFragment.getPreferenceScreen().removePreference(mVoiceCategory);
   }
  else   if (numAvailable == 1) {
-    mVoiceInputCategory.removePreference(mRecognizerPref);
+    mVoiceCategory.removePreference(mRecognizerPref);
     ResolveInfo resolveInfo=availableRecognitionServices.get(0);
     String recognizerComponent=new ComponentName(resolveInfo.serviceInfo.packageName,resolveInfo.serviceInfo.name).flattenToShortString();
     mAvailableRecognizersMap.put(recognizerComponent,resolveInfo);

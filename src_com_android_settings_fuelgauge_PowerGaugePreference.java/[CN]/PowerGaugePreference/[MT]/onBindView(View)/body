@@ -1,12 +1,7 @@
 {
   super.onBindView(view);
-  ImageView appIcon=(ImageView)view.findViewById(R.id.appIcon);
-  if (mIcon == null) {
-    mIcon=getContext().getResources().getDrawable(android.R.drawable.sym_def_app_icon);
-  }
-  appIcon.setImageDrawable(mIcon);
-  ImageView appGauge=(ImageView)view.findViewById(R.id.appGauge);
-  appGauge.setImageDrawable(mGauge);
-  TextView percentView=(TextView)view.findViewById(R.id.percent);
-  percentView.setText((int)(Math.ceil(mPercent)) + "%");
+  final ProgressBar progress=(ProgressBar)view.findViewById(android.R.id.progress);
+  progress.setProgress(mProgress);
+  final TextView text1=(TextView)view.findViewById(android.R.id.text1);
+  text1.setText(mProgressText);
 }

@@ -8,6 +8,11 @@
       updateDetailData();
     }
   }
+  if (TAB_MOBILE.equals(mCurrentTab)) {
+    mBinding=true;
+    mDataEnabled.setChecked(isMobileDataEnabled());
+    mBinding=false;
+  }
   final NetworkPolicy policy=mPolicyEditor.getPolicy(mTemplate);
   if (isNetworkPolicyModifiable(policy)) {
     mDisableAtLimitView.setVisibility(View.VISIBLE);

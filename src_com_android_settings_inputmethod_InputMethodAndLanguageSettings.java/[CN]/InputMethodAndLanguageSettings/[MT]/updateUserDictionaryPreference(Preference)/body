@@ -5,8 +5,9 @@
     getPreferenceScreen().removePreference(userDictionaryPreference);
   }
  else   if (localeList.size() <= 1) {
+    final Intent intent=new Intent(UserDictionaryList.USER_DICTIONARY_SETTINGS_INTENT_ACTION);
     userDictionaryPreference.setTitle(R.string.user_dict_single_settings_title);
-    userDictionaryPreference.setFragment(UserDictionarySettings.class.getName());
+    userDictionaryPreference.setIntent(intent);
     if (localeList.size() == 1) {
       final String locale=(String)localeList.toArray()[0];
       userDictionaryPreference.getExtras().putString("locale",locale);

@@ -30,12 +30,13 @@
   WifiP2pManager p2p=(WifiP2pManager)activity.getSystemService(Context.WIFI_P2P_SERVICE);
   if (!p2p.isP2pSupported()) {
     getPreferenceScreen().removePreference(wifiP2p);
+    getPreferenceScreen().removePreference(findPreference(KEY_WIFI_P2P_SETTINGS));
   }
  else {
     mWifiP2pEnabler=new WifiP2pEnabler(activity,wifiP2p);
-  }
-  if (!WIFI_P2P_DEBUG) {
-    getPreferenceScreen().removePreference(findPreference(KEY_WIFI_P2P_SETTINGS));
+    if (WIFI_P2P_DEBUG == 0) {
+      getPreferenceScreen().removePreference(findPreference(KEY_WIFI_P2P_SETTINGS));
+    }
   }
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
   DevicePolicyManager mDPM=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);

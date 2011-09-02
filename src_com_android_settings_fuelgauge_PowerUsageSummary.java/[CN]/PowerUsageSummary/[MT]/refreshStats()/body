@@ -29,12 +29,11 @@
     final double percentOfTotal=((sipper.getSortValue() / mTotalPower) * 100);
     if (percentOfTotal < 1)     continue;
     PowerGaugePreference pref=new PowerGaugePreference(getActivity(),sipper.getIcon(),sipper);
-    double percentOfMax=(sipper.getSortValue() * 100) / mMaxPower;
+    final double percentOfMax=(sipper.getSortValue() * 100) / mMaxPower;
     sipper.percent=percentOfTotal;
     pref.setTitle(sipper.name);
-    pref.setPercent(percentOfTotal);
     pref.setOrder(Integer.MAX_VALUE - (int)sipper.getSortValue());
-    pref.setGaugeValue(percentOfMax);
+    pref.setPercent(percentOfMax,percentOfTotal);
     if (sipper.uidObj != null) {
       pref.setKey(Integer.toString(sipper.uidObj.getUid()));
     }

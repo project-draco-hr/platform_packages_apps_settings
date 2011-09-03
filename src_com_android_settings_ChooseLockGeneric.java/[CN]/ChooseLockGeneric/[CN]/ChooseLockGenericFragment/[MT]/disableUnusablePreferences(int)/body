@@ -2,16 +2,23 @@
   final Preference picker=getPreferenceScreen().findPreference("security_picker_category");
   final PreferenceCategory cat=(PreferenceCategory)picker;
   final int preferenceCount=cat.getPreferenceCount();
-  for (int i=0; i < preferenceCount; i++) {
+  final boolean onlyShowFallback=getActivity().getIntent().getBooleanExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,false);
+  final boolean weakBiometricAvailable=isBiometricSensorAvailable(DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK);
+  for (int i=preferenceCount - 1; i >= 0; --i) {
     Preference pref=cat.getPreference(i);
     if (pref instanceof PreferenceScreen) {
       final String key=((PreferenceScreen)pref).getKey();
       boolean enabled=true;
+      boolean visible=true;
       if (KEY_UNLOCK_SET_OFF.equals(key)) {
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
       }
  else       if (KEY_UNLOCK_SET_NONE.equals(key)) {
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
+      }
+ else       if (KEY_UNLOCK_SET_BIOMETRIC_WEAK.equals(key)) {
+        enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK;
+        visible=weakBiometricAvailable;
       }
  else       if (KEY_UNLOCK_SET_PATTERN.equals(key)) {
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_SOMETHING;
@@ -22,7 +29,10 @@
  else       if (KEY_UNLOCK_SET_PASSWORD.equals(key)) {
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_COMPLEX;
       }
-      if (!enabled) {
+      if (!visible || (onlyShowFallback && !allowedForFallback(key))) {
+        cat.removePreference(pref);
+      }
+ else       if (!enabled) {
         pref.setSummary(R.string.unlock_set_unlock_disabled_summary);
         pref.setEnabled(false);
       }

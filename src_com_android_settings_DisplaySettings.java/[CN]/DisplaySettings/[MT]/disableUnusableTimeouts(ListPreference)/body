@@ -9,7 +9,7 @@
   ArrayList<CharSequence> revisedEntries=new ArrayList<CharSequence>();
   ArrayList<CharSequence> revisedValues=new ArrayList<CharSequence>();
   for (int i=0; i < values.length; i++) {
-    long timeout=Long.valueOf(values[i].toString());
+    long timeout=Long.parseLong(values[i].toString());
     if (timeout <= maxTimeout) {
       revisedEntries.add(entries[i]);
       revisedValues.add(values[i]);
@@ -18,7 +18,7 @@
   if (revisedEntries.size() != entries.length || revisedValues.size() != values.length) {
     screenTimeoutPreference.setEntries(revisedEntries.toArray(new CharSequence[revisedEntries.size()]));
     screenTimeoutPreference.setEntryValues(revisedValues.toArray(new CharSequence[revisedValues.size()]));
-    final int userPreference=Integer.valueOf(screenTimeoutPreference.getValue());
+    final int userPreference=Integer.parseInt(screenTimeoutPreference.getValue());
     if (userPreference <= maxTimeout) {
       screenTimeoutPreference.setValue(String.valueOf(userPreference));
     }

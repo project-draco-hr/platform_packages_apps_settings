@@ -36,12 +36,15 @@
           }
         }
  else {
-          final CheckBoxPreference chkbxPref=new CheckBoxPreference(context);
+          final CheckBoxPreference chkbxPref=new SubtypeCheckBoxPreference(context,subtype.getLocale(),mSystemLocale);
           chkbxPref.setKey(imiId + subtype.hashCode());
           chkbxPref.setTitle(subtypeLabel);
-          activeInputMethodsCategory.addPreference(chkbxPref);
           subtypePreferences.add(chkbxPref);
         }
+      }
+      Collections.sort(subtypePreferences);
+      for (int j=0; j < subtypePreferences.size(); ++j) {
+        activeInputMethodsCategory.addPreference(subtypePreferences.get(j));
       }
       mInputMethodAndSubtypePrefsMap.put(imiId,subtypePreferences);
     }

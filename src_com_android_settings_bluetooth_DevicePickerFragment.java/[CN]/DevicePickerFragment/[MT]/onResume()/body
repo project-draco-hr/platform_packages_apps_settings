@@ -1,5 +1,8 @@
 {
   super.onResume();
   addCachedDevices();
-  mLocalAdapter.startScanning(true);
+  if (mStartScanOnResume) {
+    mLocalAdapter.startScanning(true);
+    mStartScanOnResume=false;
+  }
 }

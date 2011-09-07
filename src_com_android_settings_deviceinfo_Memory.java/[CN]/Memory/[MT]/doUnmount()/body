@@ -5,7 +5,7 @@
     mLastClickedMountToggle.setEnabled(false);
     mLastClickedMountToggle.setTitle(mResources.getString(R.string.sd_ejecting_title));
     mLastClickedMountToggle.setSummary(mResources.getString(R.string.sd_ejecting_summary));
-    mountService.unmountVolume(mClickedMountPoint,true);
+    mountService.unmountVolume(mClickedMountPoint,true,false);
   }
  catch (  RemoteException e) {
     showDialogInner(DLG_ERROR_UNMOUNT);

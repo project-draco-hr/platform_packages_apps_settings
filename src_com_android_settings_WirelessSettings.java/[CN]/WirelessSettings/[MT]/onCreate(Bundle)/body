@@ -28,7 +28,7 @@
     getPreferenceScreen().removePreference(findPreference(KEY_MOBILE_NETWORK_SETTINGS));
   }
   WifiP2pManager p2p=(WifiP2pManager)activity.getSystemService(Context.WIFI_P2P_SERVICE);
-  if (!p2p.isP2pSupported()) {
+  if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI_DIRECT)) {
     getPreferenceScreen().removePreference(wifiP2p);
     getPreferenceScreen().removePreference(findPreference(KEY_WIFI_P2P_SETTINGS));
   }

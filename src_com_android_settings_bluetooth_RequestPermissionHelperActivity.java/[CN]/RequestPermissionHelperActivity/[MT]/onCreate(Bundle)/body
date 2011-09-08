@@ -5,4 +5,8 @@
     return;
   }
   createDialog();
+  if (getResources().getBoolean(R.bool.auto_confirm_bluetooth_activation_dialog) == true) {
+    onClick(null,BUTTON_POSITIVE);
+    dismiss();
+  }
 }

@@ -3,14 +3,61 @@
   mSequence++;
   boolean changed=false;
   List<ActivityManager.RunningServiceInfo> services=am.getRunningServices(MAX_SERVICES);
-  final int NS=services != null ? services.size() : 0;
+  int NS=services != null ? services.size() : 0;
   for (int i=0; i < NS; i++) {
     ActivityManager.RunningServiceInfo si=services.get(i);
     if (!si.started && si.clientLabel == 0) {
+      services.remove(i);
+      i--;
+      NS--;
       continue;
     }
     if ((si.flags & ActivityManager.RunningServiceInfo.FLAG_PERSISTENT_PROCESS) != 0) {
+      services.remove(i);
+      i--;
+      NS--;
       continue;
+    }
+  }
+  List<ActivityManager.RunningAppProcessInfo> processes=am.getRunningAppProcesses();
+  final int NP=processes != null ? processes.size() : 0;
+  mTmpAppProcesses.clear();
+  for (int i=0; i < NP; i++) {
+    ActivityManager.RunningAppProcessInfo pi=processes.get(i);
+    mTmpAppProcesses.put(pi.pid,new AppProcessInfo(pi));
+  }
+  for (int i=0; i < NS; i++) {
+    ActivityManager.RunningServiceInfo si=services.get(i);
+    if (si.restarting == 0 && si.pid > 0) {
+      AppProcessInfo ainfo=mTmpAppProcesses.get(si.pid);
+      if (ainfo != null) {
+        ainfo.hasServices=true;
+        if (si.foreground) {
+          ainfo.hasForegroundServices=true;
+        }
+      }
+    }
+  }
+  for (int i=0; i < NS; i++) {
+    ActivityManager.RunningServiceInfo si=services.get(i);
+    if (si.restarting == 0 && si.pid > 0) {
+      AppProcessInfo ainfo=mTmpAppProcesses.get(si.pid);
+      if (ainfo != null && !ainfo.hasForegroundServices) {
+        if (ainfo.info.importance < ActivityManager.RunningAppProcessInfo.IMPORTANCE_SERVICE) {
+          boolean skip=false;
+          ainfo=mTmpAppProcesses.get(ainfo.info.importanceReasonPid);
+          while (ainfo != null) {
+            if (ainfo.hasServices || isInterestingProcess(ainfo.info)) {
+              skip=true;
+              break;
+            }
+            ainfo=mTmpAppProcesses.get(ainfo.info.importanceReasonPid);
+          }
+          if (skip) {
+            continue;
+          }
+        }
+      }
     }
     HashMap<String,ProcessItem> procs=mServiceProcessesByName.get(si.uid);
     if (procs == null) {
@@ -42,8 +89,6 @@
     }
     changed|=proc.updateService(context,si);
   }
-  List<ActivityManager.RunningAppProcessInfo> processes=am.getRunningAppProcesses();
-  final int NP=processes != null ? processes.size() : 0;
   for (int i=0; i < NP; i++) {
     ActivityManager.RunningAppProcessInfo pi=processes.get(i);
     ProcessItem proc=mServiceProcessesByPid.get(pi.pid);

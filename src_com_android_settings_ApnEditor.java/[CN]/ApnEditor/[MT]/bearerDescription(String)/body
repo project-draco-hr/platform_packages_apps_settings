@@ -1,0 +1,15 @@
+{
+  int mBearerIndex=mBearer.findIndexOfValue(raw);
+  if (mBearerIndex == -1) {
+    return null;
+  }
+ else {
+    String[] values=mRes.getStringArray(R.array.bearer_entries);
+    try {
+      return values[mBearerIndex];
+    }
+ catch (    ArrayIndexOutOfBoundsException e) {
+      return null;
+    }
+  }
+}

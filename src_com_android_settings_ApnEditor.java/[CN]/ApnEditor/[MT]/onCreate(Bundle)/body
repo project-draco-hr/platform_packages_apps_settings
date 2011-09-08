@@ -19,6 +19,9 @@
   mAuthType.setOnPreferenceChangeListener(this);
   mProtocol=(ListPreference)findPreference(KEY_PROTOCOL);
   mProtocol.setOnPreferenceChangeListener(this);
+  mCarrierEnabled=(CheckBoxPreference)findPreference(KEY_CARRIER_ENABLED);
+  mBearer=(ListPreference)findPreference(KEY_BEARER);
+  mBearer.setOnPreferenceChangeListener(this);
   mRes=getResources();
   final Intent intent=getIntent();
   final String action=intent.getAction();

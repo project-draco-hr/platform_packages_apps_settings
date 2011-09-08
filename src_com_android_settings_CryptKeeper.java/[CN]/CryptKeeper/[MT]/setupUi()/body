@@ -9,8 +9,12 @@
     setContentView(R.layout.crypt_keeper_progress);
     encryptionProgressInit();
   }
- else {
+ else   if (mValidationComplete) {
     setContentView(R.layout.crypt_keeper_password_entry);
     passwordEntryInit();
+  }
+ else   if (!mValidationRequested) {
+    new ValidationTask().execute((Void[])null);
+    mValidationRequested=true;
   }
 }

@@ -1,6 +1,7 @@
 {
   IMountService service=getMountService();
   try {
+    Log.d(TAG,"Validating encryption state.");
     int state=service.getEncryptionState();
     if (state == IMountService.ENCRYPTION_STATE_NONE) {
       Log.w(TAG,"Unexpectedly in CryptKeeper even though there is no encryption.");

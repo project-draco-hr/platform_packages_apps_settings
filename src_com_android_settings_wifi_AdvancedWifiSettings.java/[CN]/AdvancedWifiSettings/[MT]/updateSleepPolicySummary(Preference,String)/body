@@ -1,0 +1,17 @@
+{
+  if (value != null) {
+    String[] values=getResources().getStringArray(R.array.wifi_sleep_policy_values);
+    final int summaryArrayResId=Utils.isWifiOnly(getActivity()) ? R.array.wifi_sleep_policy_entries_wifi_only : R.array.wifi_sleep_policy_entries;
+    String[] summaries=getResources().getStringArray(summaryArrayResId);
+    for (int i=0; i < values.length; i++) {
+      if (value.equals(values[i])) {
+        if (i < summaries.length) {
+          sleepPolicyPref.setSummary(summaries[i]);
+          return;
+        }
+      }
+    }
+  }
+  sleepPolicyPref.setSummary("");
+  Log.e(TAG,"Invalid sleep policy value: " + value);
+}

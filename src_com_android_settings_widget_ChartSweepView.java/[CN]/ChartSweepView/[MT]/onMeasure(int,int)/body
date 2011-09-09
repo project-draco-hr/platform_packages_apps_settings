@@ -26,20 +26,25 @@
     mMargins.top=-mSweepPadding.top;
     mMargins.bottom=mSweepPadding.bottom;
   }
-  mContentOffset.x=0;
-  mContentOffset.y=0;
+  mContentOffset.set(0,0,0,0);
+  final int widthBefore=getMeasuredWidth();
+  final int heightBefore=getMeasuredHeight();
   if (mFollowAxis == HORIZONTAL) {
-    final int widthBefore=getMeasuredWidth();
     final int widthAfter=widthBefore * 3;
-    setMeasuredDimension(widthAfter,getMeasuredHeight());
-    mContentOffset.offset((widthAfter - widthBefore) / 2,0);
+    setMeasuredDimension(widthAfter,heightBefore);
+    mContentOffset.left=(widthAfter - widthBefore) / 2;
+    final int offset=mSweepPadding.bottom * 2;
+    mContentOffset.bottom-=offset;
+    mMargins.bottom+=offset;
   }
  else {
-    final int heightBefore=getMeasuredHeight();
     final int heightAfter=heightBefore * 3;
-    setMeasuredDimension(getMeasuredWidth(),heightAfter);
+    setMeasuredDimension(widthBefore,heightAfter);
     mContentOffset.offset(0,(heightAfter - heightBefore) / 2);
+    final int offset=mSweepPadding.right * 2;
+    mContentOffset.right-=offset;
+    mMargins.right+=offset;
   }
-  mSweepOffset.offset(mContentOffset.x,mContentOffset.y);
+  mSweepOffset.offset(mContentOffset.left,mContentOffset.top);
   mMargins.offset(-mSweepOffset.x,-mSweepOffset.y);
 }

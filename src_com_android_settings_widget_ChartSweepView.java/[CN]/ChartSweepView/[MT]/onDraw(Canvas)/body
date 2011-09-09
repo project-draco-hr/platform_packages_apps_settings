@@ -30,7 +30,7 @@
   if (isEnabled() && mLabelLayout != null) {
     final int count=canvas.save();
 {
-      canvas.translate(mContentOffset.x,mContentOffset.y + labelOffset);
+      canvas.translate(mContentOffset.left,mContentOffset.top + labelOffset);
       mLabelLayout.draw(canvas);
     }
     canvas.restoreToCount(count);
@@ -40,10 +40,10 @@
     labelSize=0;
   }
   if (mFollowAxis == VERTICAL) {
-    mSweep.setBounds(labelSize,mSweepOffset.y,width,mSweepOffset.y + mSweep.getIntrinsicHeight());
+    mSweep.setBounds(labelSize,mSweepOffset.y,width + mContentOffset.right,mSweepOffset.y + mSweep.getIntrinsicHeight());
   }
  else {
-    mSweep.setBounds(mSweepOffset.x,labelSize,mSweepOffset.x + mSweep.getIntrinsicWidth(),height);
+    mSweep.setBounds(mSweepOffset.x,labelSize,mSweepOffset.x + mSweep.getIntrinsicWidth(),height + mContentOffset.bottom);
   }
   mSweep.draw(canvas);
 }

@@ -5,6 +5,7 @@
     final Resources res=list.getResources();
     final int paddingSide=res.getDimensionPixelSize(com.android.internal.R.dimen.preference_fragment_padding_side);
     final int paddingBottom=res.getDimensionPixelSize(com.android.internal.R.dimen.preference_fragment_padding_bottom);
-    list.setPadding(paddingSide,0,paddingSide,paddingBottom);
+    final int effectivePaddingSide=ignoreSidePadding ? 0 : paddingBottom;
+    list.setPadding(effectivePaddingSide,0,effectivePaddingSide,paddingBottom);
   }
 }

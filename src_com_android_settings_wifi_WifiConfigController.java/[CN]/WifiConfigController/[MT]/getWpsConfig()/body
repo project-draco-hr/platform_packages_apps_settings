@@ -1,17 +1,17 @@
 {
-  Wps config=new Wps();
+  WpsInfo config=new WpsInfo();
 switch (mNetworkSetupSpinner.getSelectedItemPosition()) {
 case WPS_PBC:
-    config.setup=Setup.PBC;
+    config.setup=WpsInfo.PBC;
   break;
 case WPS_KEYPAD:
-config.setup=Setup.KEYPAD;
+config.setup=WpsInfo.KEYPAD;
 break;
 case WPS_DISPLAY:
-config.setup=Setup.DISPLAY;
+config.setup=WpsInfo.DISPLAY;
 break;
 default :
-config.setup=Setup.INVALID;
+config.setup=WpsInfo.INVALID;
 Log.e(TAG,"WPS not selected type");
 return config;
 }

@@ -6,10 +6,10 @@ case MotionEvent.ACTION_DOWN:
 {
       final boolean accept;
       if (mFollowAxis == VERTICAL) {
-        accept=event.getX() > getWidth() - (mSweepPadding.right * 3);
+        accept=event.getX() > getWidth() - (mSweepPadding.right * 8);
       }
  else {
-        accept=event.getY() > getHeight() - (mSweepPadding.bottom * 3);
+        accept=event.getY() > getHeight() - (mSweepPadding.bottom * 8);
       }
       final MotionEvent eventInParent=event.copy();
       eventInParent.offsetLocation(getLeft(),getTop());
@@ -52,6 +52,7 @@ case MotionEvent.ACTION_MOVE:
 case MotionEvent.ACTION_UP:
 {
   mTracking=null;
+  mValue=mLabelValue;
   dispatchOnSweep(true);
   setTranslationX(0);
   setTranslationY(0);

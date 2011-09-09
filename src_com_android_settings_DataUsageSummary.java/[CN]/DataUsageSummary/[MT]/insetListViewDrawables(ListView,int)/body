@@ -1,0 +1,9 @@
+{
+  final Drawable selector=view.getSelector();
+  final Drawable divider=view.getDivider();
+  final Drawable stub=new ColorDrawable(Color.TRANSPARENT);
+  view.setSelector(stub);
+  view.setDivider(stub);
+  view.setSelector(new InsetBoundsDrawable(selector,insetSide));
+  view.setDivider(new InsetBoundsDrawable(divider,insetSide));
+}

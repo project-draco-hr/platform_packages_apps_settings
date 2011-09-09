@@ -1,0 +1,10 @@
+{
+  Intent fallBackIntent=new Intent().setClass(getActivity(),ChooseLockGeneric.class);
+  fallBackIntent.putExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,true);
+  fallBackIntent.putExtra(CONFIRM_CREDENTIALS,false);
+  fallBackIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+  Intent intent=new Intent().setClassName("com.android.facelock","com.android.facelock.SetupFaceLock");
+  PendingIntent pending=PendingIntent.getActivity(getActivity(),0,fallBackIntent,0);
+  intent.putExtra("PendingIntent",pending);
+  return intent;
+}

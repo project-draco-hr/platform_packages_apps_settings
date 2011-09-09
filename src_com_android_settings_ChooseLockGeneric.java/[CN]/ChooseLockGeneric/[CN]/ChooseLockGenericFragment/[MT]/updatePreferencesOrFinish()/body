@@ -1,7 +1,8 @@
 {
-  int quality=getActivity().getIntent().getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,-1);
+  Intent intent=getActivity().getIntent();
+  int quality=intent.getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,-1);
   if (quality == -1) {
-    quality=getActivity().getIntent().getIntExtra(MINIMUM_QUALITY_KEY,-1);
+    quality=intent.getIntExtra(MINIMUM_QUALITY_KEY,-1);
     quality=upgradeQuality(quality);
     final PreferenceScreen prefScreen=getPreferenceScreen();
     if (prefScreen != null) {

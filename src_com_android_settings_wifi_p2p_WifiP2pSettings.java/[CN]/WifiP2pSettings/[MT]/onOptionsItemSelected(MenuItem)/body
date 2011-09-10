@@ -26,6 +26,19 @@ if (mWifiP2pManager != null) {
 );
 }
 return true;
+case MENU_ID_REMOVE_GROUP:
+if (mWifiP2pManager != null) {
+mWifiP2pManager.removeGroup(mChannel,new WifiP2pManager.ActionListener(){
+public void onSuccess(){
+  Log.d(TAG," remove group success");
+}
+public void onFailure(int reason){
+  Log.d(TAG," remove group fail " + reason);
+}
+}
+);
+}
+return true;
 case MENU_ID_ADVANCED:
 return true;
 }

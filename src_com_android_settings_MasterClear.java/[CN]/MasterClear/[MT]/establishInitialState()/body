@@ -3,12 +3,14 @@
   mInitiateButton.setOnClickListener(mInitiateListener);
   mExternalStorageContainer=mContentView.findViewById(R.id.erase_external_container);
   mExternalStorage=(CheckBox)mContentView.findViewById(R.id.erase_external);
-  if (Environment.isExternalStorageEmulated()) {
+  boolean isExtStorageEmulated=Environment.isExternalStorageEmulated();
+  if (isExtStorageEmulated || (!Environment.isExternalStorageRemovable() && isExtStorageEncrypted())) {
     mExternalStorageContainer.setVisibility(View.GONE);
     final View externalOption=mContentView.findViewById(R.id.erase_external_option_text);
     externalOption.setVisibility(View.GONE);
     final View externalAlsoErased=mContentView.findViewById(R.id.also_erases_external);
     externalAlsoErased.setVisibility(View.VISIBLE);
+    mExternalStorage.setChecked(!isExtStorageEmulated);
   }
  else {
     mExternalStorageContainer.setOnClickListener(new View.OnClickListener(){

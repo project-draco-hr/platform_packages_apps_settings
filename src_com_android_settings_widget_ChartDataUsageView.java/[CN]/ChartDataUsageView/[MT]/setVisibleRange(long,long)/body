@@ -1,6 +1,8 @@
 {
-  mHoriz.setBounds(visibleStart,visibleEnd);
+  final boolean changed=mHoriz.setBounds(visibleStart,visibleEnd);
   mGrid.setBounds(visibleStart,visibleEnd);
+  mSeries.setBounds(visibleStart,visibleEnd);
+  mDetailSeries.setBounds(visibleStart,visibleEnd);
   final long validStart=Math.max(visibleStart,getStatsStart());
   final long validEnd=Math.min(visibleEnd,getStatsEnd());
   if (LIMIT_SWEEPS_TO_VALID_DATA) {
@@ -17,7 +19,10 @@
   mSweepLeft.setValue(sweepMin);
   mSweepRight.setValue(sweepMax);
   requestLayout();
-  mSeries.generatePath();
+  if (changed) {
+    mSeries.invalidatePath();
+    mDetailSeries.invalidatePath();
+  }
   updateVertAxisBounds(null);
   updateEstimateVisible();
   updatePrimaryRange();

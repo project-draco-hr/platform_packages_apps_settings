@@ -14,16 +14,19 @@
     }
   }
   final long maxSweep=Math.max(mSweepWarning.getValue(),mSweepLimit.getValue());
-  final long maxVisible=Math.max(mSeries.getMaxVisible(),maxSweep) * 12 / 10;
+  final long maxSeries=Math.max(mSeries.getMaxVisible(),mDetailSeries.getMaxVisible());
+  final long maxVisible=Math.max(maxSeries,maxSweep) * 12 / 10;
   final long maxDefault=Math.max(maxVisible,2 * GB_IN_BYTES);
   newMax=Math.max(maxDefault,newMax);
   if (newMax != mVertMax) {
     mVertMax=newMax;
-    mVert.setBounds(0L,newMax);
+    final boolean changed=mVert.setBounds(0L,newMax);
     mSweepWarning.setValidRange(0L,newMax);
     mSweepLimit.setValidRange(0L,newMax);
-    mSeries.generatePath();
-    mDetailSeries.generatePath();
+    if (changed) {
+      mSeries.invalidatePath();
+      mDetailSeries.invalidatePath();
+    }
     mGrid.invalidate();
     if (activeSweep != null) {
       activeSweep.updateValueFromPosition();

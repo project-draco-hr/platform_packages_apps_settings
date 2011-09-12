@@ -1,25 +1,23 @@
 {
   mCycleAdapter.clear();
   final Context context=mCycleSpinner.getContext();
-  long historyStart=mHistory.getStart();
-  long historyEnd=mHistory.getEnd();
-  if (historyStart == Long.MAX_VALUE || historyEnd == Long.MIN_VALUE) {
-    historyStart=System.currentTimeMillis();
-    historyEnd=System.currentTimeMillis();
+  long historyStart=Long.MAX_VALUE;
+  long historyEnd=Long.MIN_VALUE;
+  if (mChartData != null) {
+    historyStart=mChartData.network.getStart();
+    historyEnd=mChartData.network.getEnd();
   }
+  if (historyStart == Long.MAX_VALUE)   historyStart=System.currentTimeMillis();
+  if (historyEnd == Long.MIN_VALUE)   historyEnd=System.currentTimeMillis();
   boolean hasCycles=false;
   if (policy != null) {
     long cycleEnd=computeNextCycleBoundary(historyEnd,policy);
-    int guardCount=0;
     while (cycleEnd > historyStart) {
       final long cycleStart=computeLastCycleBoundary(cycleEnd,policy);
       Log.d(TAG,"generating cs=" + cycleStart + " to ce="+ cycleEnd+ " waiting for hs="+ historyStart);
       mCycleAdapter.add(new CycleItem(context,cycleStart,cycleEnd));
       cycleEnd=cycleStart;
       hasCycles=true;
-      if (guardCount++ > 50) {
-        Log.wtf(TAG,"stuck generating ranges for historyStart=" + historyStart + ", historyEnd="+ historyEnd+ " and policy="+ policy);
-      }
     }
     mCycleAdapter.setChangePossible(isNetworkPolicyModifiable(policy));
   }

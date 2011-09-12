@@ -9,15 +9,12 @@
  else {
     mAppDetail.setVisibility(View.GONE);
     mCycleAdapter.setChangeVisible(true);
-    mDetailHistory=null;
-    mDetailHistoryDefault=null;
-    mDetailHistoryForeground=null;
     mChart.bindDetailNetworkStats(null);
     return;
   }
   mChart.bindNetworkPolicy(null);
   final int primaryUid=getAppDetailPrimaryUid();
-  final UidDetail detail=resolveDetailForUid(context,primaryUid);
+  final UidDetail detail=mUidDetailProvider.getUidDetail(primaryUid,true);
   mAppIcon.setImageDrawable(detail.icon);
   mAppTitles.removeAllViews();
   if (detail.detailLabels != null) {
@@ -40,7 +37,6 @@
     mAppSettingsIntent=null;
     mAppSettings.setEnabled(false);
   }
-  updateDetailHistory();
   updateDetailData();
   if (NetworkPolicyManager.isUidValidForPolicy(context,primaryUid) && !getRestrictBackground() && isBandwidthControlEnabled()) {
     setPreferenceTitle(mAppRestrictView,R.string.data_usage_app_restrict_background);

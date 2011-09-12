@@ -7,6 +7,9 @@
  else   if (mSweepLimit.isEnabled()) {
     interestLine=mSweepLimit.getValue();
   }
+  if (interestLine < 0) {
+    interestLine=Long.MAX_VALUE;
+  }
   final boolean estimateVisible=(maxEstimate >= interestLine * 7 / 10);
   mSeries.setEstimateVisible(estimateVisible);
 }

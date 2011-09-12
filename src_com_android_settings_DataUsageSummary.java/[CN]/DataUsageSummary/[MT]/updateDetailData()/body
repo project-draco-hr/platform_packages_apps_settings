@@ -5,10 +5,10 @@
   final long now=System.currentTimeMillis();
   final Context context=getActivity();
   NetworkStatsHistory.Entry entry=null;
-  if (isAppDetailMode() && mDetailHistory != null) {
-    entry=mDetailHistoryDefault.getValues(start,end,now,entry);
+  if (isAppDetailMode() && mChartData != null && mChartData.detail != null) {
+    entry=mChartData.detailDefault.getValues(start,end,now,entry);
     final long defaultBytes=entry.rxBytes + entry.txBytes;
-    entry=mDetailHistoryForeground.getValues(start,end,now,entry);
+    entry=mChartData.detailForeground.getValues(start,end,now,entry);
     final long foregroundBytes=entry.rxBytes + entry.txBytes;
     mAppPieChart.setOriginAngle(175);
     mAppPieChart.removeAllSlices();
@@ -17,12 +17,14 @@
     mAppPieChart.generatePath();
     mAppBackground.setText(Formatter.formatFileSize(context,defaultBytes));
     mAppForeground.setText(Formatter.formatFileSize(context,foregroundBytes));
-    entry=mDetailHistory.getValues(start,end,now,null);
+    entry=mChartData.detail.getValues(start,end,now,null);
     getLoaderManager().destroyLoader(LOADER_SUMMARY);
   }
  else {
-    entry=mHistory.getValues(start,end,now,null);
-    getLoaderManager().restartLoader(LOADER_SUMMARY,SummaryForAllUidLoader.buildArgs(mTemplate,start,end),mSummaryForAllUid);
+    if (mChartData != null) {
+      entry=mChartData.network.getValues(start,end,now,null);
+    }
+    getLoaderManager().restartLoader(LOADER_SUMMARY,SummaryForAllUidLoader.buildArgs(mTemplate,start,end),mSummaryCallbacks);
   }
   final long totalBytes=entry != null ? entry.rxBytes + entry.txBytes : 0;
   final String totalPhrase=Formatter.formatFileSize(context,totalBytes);

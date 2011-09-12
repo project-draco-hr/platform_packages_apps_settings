@@ -1,25 +1,5 @@
 {
-  final boolean beforeSplit=isMobilePolicySplit(subscriberId);
-  final NetworkTemplate template3g=buildTemplateMobile3gLower(subscriberId);
-  final NetworkTemplate template4g=buildTemplateMobile4g(subscriberId);
-  final NetworkTemplate templateAll=buildTemplateMobileAll(subscriberId);
-  if (split == beforeSplit) {
-    return;
-  }
- else   if (beforeSplit && !split) {
-    final NetworkPolicy policy3g=getPolicy(template3g);
-    final NetworkPolicy policy4g=getPolicy(template4g);
-    final NetworkPolicy restrictive=policy3g.compareTo(policy4g) < 0 ? policy3g : policy4g;
-    mPolicies.remove(policy3g);
-    mPolicies.remove(policy4g);
-    mPolicies.add(new NetworkPolicy(templateAll,restrictive.cycleDay,restrictive.warningBytes,restrictive.limitBytes,SNOOZE_NEVER));
-    writeAsync();
-  }
- else   if (!beforeSplit && split) {
-    final NetworkPolicy policyAll=getPolicy(templateAll);
-    mPolicies.remove(policyAll);
-    mPolicies.add(new NetworkPolicy(template3g,policyAll.cycleDay,policyAll.warningBytes,policyAll.limitBytes,SNOOZE_NEVER));
-    mPolicies.add(new NetworkPolicy(template4g,policyAll.cycleDay,policyAll.warningBytes,policyAll.limitBytes,SNOOZE_NEVER));
+  if (setMobilePolicySplitInternal(subscriberId,split)) {
     writeAsync();
   }
 }

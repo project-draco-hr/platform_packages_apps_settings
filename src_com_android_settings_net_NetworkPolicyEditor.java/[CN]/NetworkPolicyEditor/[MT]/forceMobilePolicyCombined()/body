@@ -1,0 +1,11 @@
+{
+  final HashSet<String> subscriberIds=Sets.newHashSet();
+  for (  NetworkPolicy policy : mPolicies) {
+    subscriberIds.add(policy.template.getSubscriberId());
+  }
+  boolean modified=false;
+  for (  String subscriberId : subscriberIds) {
+    modified|=setMobilePolicySplitInternal(subscriberId,false);
+  }
+  return modified;
+}

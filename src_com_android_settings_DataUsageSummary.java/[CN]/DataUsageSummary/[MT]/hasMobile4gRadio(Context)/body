@@ -1,4 +1,7 @@
 {
+  if (!NetworkPolicyEditor.ENABLE_SPLIT_POLICIES) {
+    return false;
+  }
   if (TEST_RADIOS) {
     return SystemProperties.get(TEST_RADIOS_PROP).contains("4g");
   }

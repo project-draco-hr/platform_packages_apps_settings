@@ -4,7 +4,7 @@
   }
   WifiP2pPeer other=(WifiP2pPeer)preference;
   if (device.status != other.device.status) {
-    return device.status.ordinal() < other.device.status.ordinal() ? -1 : 1;
+    return device.status < other.device.status ? -1 : 1;
   }
   if (device.deviceName != null) {
     return device.deviceName.compareToIgnoreCase(other.device.deviceName);

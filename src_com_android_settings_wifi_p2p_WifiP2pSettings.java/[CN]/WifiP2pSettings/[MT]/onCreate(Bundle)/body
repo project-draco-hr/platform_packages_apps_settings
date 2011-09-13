@@ -7,7 +7,7 @@
   final Activity activity=getActivity();
   mWifiP2pManager=(WifiP2pManager)getSystemService(Context.WIFI_P2P_SERVICE);
   if (mWifiP2pManager != null) {
-    mChannel=mWifiP2pManager.initialize(activity,mHandler);
+    mChannel=mWifiP2pManager.initialize(activity,getActivity().getMainLooper(),null);
     if (mChannel == null) {
       Log.e(TAG,"Failed to set up connection with wifi p2p service");
       mWifiP2pManager=null;
@@ -21,7 +21,15 @@
       if (which == DialogInterface.BUTTON_POSITIVE) {
         WifiP2pConfig config=mConnectDialog.getConfig();
         if (mWifiP2pManager != null) {
-          mWifiP2pManager.connect(mChannel,config);
+          mWifiP2pManager.connect(mChannel,config,new WifiP2pManager.ActionListener(){
+            public void onSuccess(){
+              Log.d(TAG," connect success");
+            }
+            public void onFailure(            int reason){
+              Log.d(TAG," connect fail " + reason);
+            }
+          }
+);
         }
       }
     }
@@ -31,7 +39,15 @@
     @Override public void onClick(    DialogInterface dialog,    int which){
       if (which == DialogInterface.BUTTON_POSITIVE) {
         if (mWifiP2pManager != null) {
-          mWifiP2pManager.removeGroup(mChannel);
+          mWifiP2pManager.removeGroup(mChannel,new WifiP2pManager.ActionListener(){
+            public void onSuccess(){
+              Log.d(TAG," remove group success");
+            }
+            public void onFailure(            int reason){
+              Log.d(TAG," remove group fail " + reason);
+            }
+          }
+);
         }
       }
     }

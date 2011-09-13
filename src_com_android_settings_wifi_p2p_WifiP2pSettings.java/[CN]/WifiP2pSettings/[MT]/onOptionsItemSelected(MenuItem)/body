@@ -2,12 +2,28 @@
 switch (item.getItemId()) {
 case MENU_ID_SEARCH:
     if (mWifiP2pManager != null) {
-      mWifiP2pManager.discoverPeers(mChannel);
+      mWifiP2pManager.discoverPeers(mChannel,new WifiP2pManager.ActionListener(){
+        public void onSuccess(){
+          Log.d(TAG," discover success");
+        }
+        public void onFailure(        int reason){
+          Log.d(TAG," discover fail " + reason);
+        }
+      }
+);
     }
   return true;
 case MENU_ID_CREATE_GROUP:
 if (mWifiP2pManager != null) {
-  mWifiP2pManager.createGroup(mChannel);
+  mWifiP2pManager.createGroup(mChannel,new WifiP2pManager.ActionListener(){
+    public void onSuccess(){
+      Log.d(TAG," create group success");
+    }
+    public void onFailure(    int reason){
+      Log.d(TAG," create group fail " + reason);
+    }
+  }
+);
 }
 return true;
 case MENU_ID_ADVANCED:

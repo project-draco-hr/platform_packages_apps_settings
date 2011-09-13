@@ -19,7 +19,17 @@
 );
   mInputMethodSettingsButton=(ImageView)view.findViewById(R.id.inputmethod_settings);
   mTitleText=(TextView)view.findViewById(android.R.id.title);
+  final boolean hasSubtypes=mImi.getSubtypeCount() > 1;
+  final String imiId=mImi.getId();
   mSummaryText=(TextView)view.findViewById(android.R.id.summary);
+  mSummaryText.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View arg0){
+      final Bundle bundle=new Bundle();
+      bundle.putString(Settings.EXTRA_INPUT_METHOD_ID,imiId);
+      startFragment(mFragment,InputMethodAndSubtypeEnabler.class.getName(),0,bundle);
+    }
+  }
+);
   if (mSettingsIntent != null) {
     mInputMethodSettingsButton.setOnClickListener(new OnClickListener(){
       @Override public void onClick(      View arg0){
@@ -33,8 +43,6 @@
     }
 );
   }
-  final boolean hasSubtypes=mImi.getSubtypeCount() > 1;
-  final String imiId=mImi.getId();
   if (hasSubtypes) {
     final OnLongClickListener listener=new OnLongClickListener(){
       @Override public boolean onLongClick(      View arg0){

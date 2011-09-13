@@ -1,6 +1,6 @@
 {
+  final boolean checked=isChecked();
   if (mInputMethodSettingsButton != null) {
-    final boolean checked=isChecked();
     mInputMethodSettingsButton.setEnabled(checked);
     mInputMethodSettingsButton.setClickable(checked);
     mInputMethodSettingsButton.setFocusable(checked);
@@ -12,6 +12,7 @@
     mTitleText.setEnabled(true);
   }
   if (mSummaryText != null) {
-    mSummaryText.setEnabled(true);
+    mSummaryText.setEnabled(checked);
+    mSummaryText.setClickable(checked);
   }
 }

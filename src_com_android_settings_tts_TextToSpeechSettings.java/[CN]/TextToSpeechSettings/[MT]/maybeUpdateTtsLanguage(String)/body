@@ -3,8 +3,12 @@
     final String localeString=mEnginesHelper.getLocalePrefForEngine(currentEngine);
     if (localeString != null) {
       final String[] locale=TtsEngines.parseLocalePref(localeString);
-      if (DBG)       Log.d(TAG,"Loading language ahead of sample check : " + locale);
-      mTts.setLanguage(new Locale(locale[0],locale[1],locale[2]));
+      final Locale newLocale=new Locale(locale[0],locale[1],locale[2]);
+      final Locale engineLocale=mTts.getLanguage();
+      if (!newLocale.equals(engineLocale)) {
+        if (DBG)         Log.d(TAG,"Loading language ahead of sample check : " + locale);
+        mTts.setLanguage(newLocale);
+      }
     }
   }
 }

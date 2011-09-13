@@ -1,5 +1,6 @@
 {
   mBinding=true;
+  if (!isAdded())   return;
   final Context context=getActivity();
   final String currentTab=mTabHost.getCurrentTabTag();
   if (currentTab == null) {
@@ -43,15 +44,7 @@
  else {
     throw new IllegalStateException("unknown tab: " + currentTab);
   }
-  try {
-    mHistory=mStatsService.getHistoryForNetwork(mTemplate,FIELD_RX_BYTES | FIELD_TX_BYTES);
-  }
- catch (  RemoteException e) {
-    throw new RuntimeException("problem reading network policy or stats",e);
-  }
-  mChart.bindNetworkStats(mHistory);
-  updatePolicy(tabChanged);
-  updateAppDetail();
-  mListView.smoothScrollToPosition(0);
+  getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(mTemplate,mAppDetailUids),mChartDataCallbacks);
+  getActivity().invalidateOptionsMenu();
   mBinding=false;
 }

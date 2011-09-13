@@ -1,3 +1,10 @@
 {
-  return mEstimateVisible ? mMaxEstimate : mMax;
+  final long maxVisible=mEstimateVisible ? mMaxEstimate : mMax;
+  if (maxVisible <= 0 && mStats != null) {
+    final NetworkStatsHistory.Entry entry=mStats.getValues(mStart,mEnd,null);
+    return entry.rxBytes + entry.txBytes;
+  }
+ else {
+    return maxVisible;
+  }
 }

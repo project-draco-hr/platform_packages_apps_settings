@@ -4,33 +4,11 @@
   if (DRAW_OUTLINE) {
     canvas.drawRect(0,0,width,height,mOutlinePaint);
   }
-  float margin;
-  float labelOffset=0;
-  if (mFollowAxis == VERTICAL) {
-    if (mValidAfterDynamic != null) {
-      margin=getLabelTop(mValidAfterDynamic) - getLabelBottom(this);
-      if (margin < 0) {
-        labelOffset=margin / 2;
-      }
-    }
- else     if (mValidBeforeDynamic != null) {
-      margin=getLabelTop(this) - getLabelBottom(mValidBeforeDynamic);
-      if (margin < 0) {
-        labelOffset=-margin / 2;
-      }
-    }
-  }
- else {
-  }
-  if (labelOffset != 0) {
-    if (mValidAfterDynamic != null)     mValidAfterDynamic.invalidate();
-    if (mValidBeforeDynamic != null)     mValidBeforeDynamic.invalidate();
-  }
   final int labelSize;
   if (isEnabled() && mLabelLayout != null) {
     final int count=canvas.save();
 {
-      canvas.translate(mContentOffset.left,mContentOffset.top + labelOffset);
+      canvas.translate(mContentOffset.left,mContentOffset.top + mLabelOffset);
       mLabelLayout.draw(canvas);
     }
     canvas.restoreToCount(count);

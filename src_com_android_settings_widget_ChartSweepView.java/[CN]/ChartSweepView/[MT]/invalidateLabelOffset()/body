@@ -1,0 +1,26 @@
+{
+  float margin;
+  float labelOffset=0;
+  if (mFollowAxis == VERTICAL) {
+    if (mValidAfterDynamic != null) {
+      margin=getLabelTop(mValidAfterDynamic) - getLabelBottom(this);
+      if (margin < 0) {
+        labelOffset=margin / 2;
+      }
+    }
+ else     if (mValidBeforeDynamic != null) {
+      margin=getLabelTop(this) - getLabelBottom(mValidBeforeDynamic);
+      if (margin < 0) {
+        labelOffset=-margin / 2;
+      }
+    }
+  }
+ else {
+  }
+  if (labelOffset != mLabelOffset) {
+    mLabelOffset=labelOffset;
+    invalidate();
+    if (mValidAfterDynamic != null)     mValidAfterDynamic.invalidateLabelOffset();
+    if (mValidBeforeDynamic != null)     mValidBeforeDynamic.invalidateLabelOffset();
+  }
+}

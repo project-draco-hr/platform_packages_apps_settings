@@ -1,9 +1,5 @@
 {
-  if (preference == mAutoSyncCheckbox) {
-    ContentResolver.setMasterSyncAutomatically(mAutoSyncCheckbox.isChecked());
-    onSyncStateUpdated();
-  }
- else   if (preference instanceof AccountPreference) {
+  if (preference instanceof AccountPreference) {
     startAccountSettings((AccountPreference)preference);
   }
  else {

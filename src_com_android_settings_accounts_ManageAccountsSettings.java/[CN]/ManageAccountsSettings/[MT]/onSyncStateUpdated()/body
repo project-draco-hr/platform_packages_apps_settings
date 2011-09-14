@@ -1,7 +1,8 @@
 {
   if (getActivity() == null)   return;
-  boolean masterSyncAutomatically=ContentResolver.getMasterSyncAutomatically();
-  mAutoSyncCheckbox.setChecked(masterSyncAutomatically);
+  if (mSyncAppMenuItem != null) {
+    mSyncAppMenuItem.setChecked(ContentResolver.getMasterSyncAutomatically());
+  }
   SyncInfo currentSync=ContentResolver.getCurrentSync();
   boolean anySyncFailed=false;
   final SyncAdapterType[] syncAdapters=ContentResolver.getSyncAdapterTypes();
@@ -12,8 +13,8 @@
       userFacing.add(sa.authority);
     }
   }
-  for (int i=0, count=mManageAccountsCategory.getPreferenceCount(); i < count; i++) {
-    Preference pref=mManageAccountsCategory.getPreference(i);
+  for (int i=0, count=getPreferenceScreen().getPreferenceCount(); i < count; i++) {
+    Preference pref=getPreferenceScreen().getPreference(i);
     if (!(pref instanceof AccountPreference)) {
       continue;
     }
@@ -25,7 +26,7 @@
     if (authorities != null) {
       for (      String authority : authorities) {
         SyncStatusInfo status=ContentResolver.getSyncStatus(account,authority);
-        boolean syncEnabled=ContentResolver.getSyncAutomatically(account,authority) && masterSyncAutomatically && (ContentResolver.getIsSyncable(account,authority) > 0);
+        boolean syncEnabled=ContentResolver.getSyncAutomatically(account,authority) && ContentResolver.getMasterSyncAutomatically() && (ContentResolver.getIsSyncable(account,authority) > 0);
         boolean authorityIsPending=ContentResolver.isSyncPending(account,authority);
         boolean activelySyncing=currentSync != null && currentSync.authority.equals(authority) && new Account(currentSync.account.name,currentSync.account.type).equals(account);
         boolean lastSyncFailed=status != null && syncEnabled && status.lastFailureTime != 0 && status.getLastFailureMesgAsInt(0) != ContentResolver.SYNC_ERROR_SYNC_ALREADY_IN_PROGRESS;

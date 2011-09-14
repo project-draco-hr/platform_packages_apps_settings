@@ -1,9 +1,7 @@
 {
+  super.onDraw(canvas);
   final int width=getWidth();
   final int height=getHeight();
-  if (DRAW_OUTLINE) {
-    canvas.drawRect(0,0,width,height,mOutlinePaint);
-  }
   final int labelSize;
   if (isEnabled() && mLabelLayout != null) {
     final int count=canvas.save();
@@ -24,4 +22,8 @@
     mSweep.setBounds(mSweepOffset.x,labelSize,mSweepOffset.x + mSweep.getIntrinsicWidth(),height + mContentOffset.bottom);
   }
   mSweep.draw(canvas);
+  if (DRAW_OUTLINE) {
+    mOutlinePaint.setColor(Color.RED);
+    canvas.drawRect(0,0,width,height,mOutlinePaint);
+  }
 }

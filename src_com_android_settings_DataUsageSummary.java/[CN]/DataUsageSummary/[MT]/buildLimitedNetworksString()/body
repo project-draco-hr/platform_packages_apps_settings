@@ -1,0 +1,7 @@
+{
+  final List<CharSequence> limited=buildLimitedNetworksList();
+  if (limited.isEmpty()) {
+    limited.add(getText(R.string.data_usage_list_none));
+  }
+  return TextUtils.join(limited);
+}

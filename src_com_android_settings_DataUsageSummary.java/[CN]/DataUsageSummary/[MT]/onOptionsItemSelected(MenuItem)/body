@@ -15,7 +15,12 @@ case R.id.data_usage_menu_restrict_background:
 {
     final boolean restrictBackground=!item.isChecked();
     if (restrictBackground) {
-      ConfirmRestrictFragment.show(this);
+      if (hasLimitedNetworks()) {
+        ConfirmRestrictFragment.show(this);
+      }
+ else {
+        DeniedRestrictFragment.show(this);
+      }
     }
  else {
       setRestrictBackground(false);

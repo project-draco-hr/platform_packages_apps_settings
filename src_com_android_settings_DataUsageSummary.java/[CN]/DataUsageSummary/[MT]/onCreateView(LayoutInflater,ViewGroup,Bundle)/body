@@ -17,7 +17,9 @@
   mTabHost.setup();
   mTabHost.setOnTabChangedListener(mTabListener);
   mHeader=(ViewGroup)inflater.inflate(R.layout.data_usage_header,mListView,false);
-  mListView.addHeaderView(mHeader,null,false);
+  mHeader.setClickable(true);
+  mListView.addHeaderView(mHeader,null,true);
+  mListView.setItemsCanFocus(true);
   if (mInsetSide > 0) {
     insetListViewDrawables(mListView,mInsetSide);
     mHeader.setPadding(mInsetSide,0,mInsetSide,0);
@@ -31,7 +33,10 @@
     mNetworkSwitches.addView(mDataEnabledView);
     mDisableAtLimit=new CheckBox(inflater.getContext());
     mDisableAtLimit.setClickable(false);
+    mDisableAtLimit.setFocusable(false);
     mDisableAtLimitView=inflatePreference(inflater,mNetworkSwitches,mDisableAtLimit);
+    mDisableAtLimitView.setClickable(true);
+    mDisableAtLimitView.setFocusable(true);
     mDisableAtLimitView.setOnClickListener(mDisableAtLimitListener);
     mNetworkSwitches.addView(mDisableAtLimitView);
   }
@@ -54,7 +59,10 @@
     mAppSettings.setOnClickListener(mAppSettingsListener);
     mAppRestrict=new CheckBox(inflater.getContext());
     mAppRestrict.setClickable(false);
+    mAppRestrict.setFocusable(false);
     mAppRestrictView=inflatePreference(inflater,mAppSwitches,mAppRestrict);
+    mAppRestrictView.setClickable(true);
+    mAppRestrictView.setFocusable(true);
     mAppRestrictView.setOnClickListener(mAppRestrictListener);
     mAppSwitches.addView(mAppRestrictView);
   }

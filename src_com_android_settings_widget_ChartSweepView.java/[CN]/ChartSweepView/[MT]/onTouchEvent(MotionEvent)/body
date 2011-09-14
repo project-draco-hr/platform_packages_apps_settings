@@ -4,59 +4,88 @@
 switch (event.getAction()) {
 case MotionEvent.ACTION_DOWN:
 {
-      final boolean accept;
+      final boolean acceptDrag;
+      final boolean acceptLabel;
       if (mFollowAxis == VERTICAL) {
-        accept=event.getX() > getWidth() - (mSweepPadding.right * 8);
+        acceptDrag=event.getX() > getWidth() - (mSweepPadding.right * 8);
+        acceptLabel=mLabelLayout != null ? event.getX() < mLabelLayout.getWidth() : false;
       }
  else {
-        accept=event.getY() > getHeight() - (mSweepPadding.bottom * 8);
+        acceptDrag=event.getY() > getHeight() - (mSweepPadding.bottom * 8);
+        acceptLabel=mLabelLayout != null ? event.getY() < mLabelLayout.getHeight() : false;
       }
       final MotionEvent eventInParent=event.copy();
       eventInParent.offsetLocation(getLeft(),getTop());
       if (isTouchCloserTo(eventInParent,mValidAfterDynamic) || isTouchCloserTo(eventInParent,mValidBeforeDynamic)) {
         return false;
       }
-      if (accept) {
+      if (acceptDrag) {
+        if (mFollowAxis == VERTICAL) {
+          mTrackingStart=getTop() - mMargins.top;
+        }
+ else {
+          mTrackingStart=getLeft() - mMargins.left;
+        }
         mTracking=event.copy();
+        mTouchMode=MODE_DRAG;
         if (!parent.isActivated()) {
           parent.setActivated(true);
         }
         return true;
       }
+ else       if (acceptLabel) {
+        mTouchMode=MODE_LABEL;
+        return true;
+      }
  else {
+        mTouchMode=MODE_NONE;
         return false;
       }
     }
 case MotionEvent.ACTION_MOVE:
 {
+    if (mTouchMode == MODE_LABEL) {
+      return true;
+    }
     getParent().requestDisallowInterceptTouchEvent(true);
     final Rect parentContent=getParentContentRect();
     final Rect clampRect=computeClampRect(parentContent);
+    if (clampRect.isEmpty())     return true;
+    long value;
     if (mFollowAxis == VERTICAL) {
       final float currentTargetY=getTop() - mMargins.top;
-      final float requestedTargetY=currentTargetY + (event.getRawY() - mTracking.getRawY());
+      final float requestedTargetY=mTrackingStart + (event.getRawY() - mTracking.getRawY());
       final float clampedTargetY=MathUtils.constrain(requestedTargetY,clampRect.top,clampRect.bottom);
       setTranslationY(clampedTargetY - currentTargetY);
-      setValue(mAxis.convertToValue(clampedTargetY - parentContent.top));
+      value=mAxis.convertToValue(clampedTargetY - parentContent.top);
     }
  else {
       final float currentTargetX=getLeft() - mMargins.left;
-      final float requestedTargetX=currentTargetX + (event.getRawX() - mTracking.getRawX());
+      final float requestedTargetX=mTrackingStart + (event.getRawX() - mTracking.getRawX());
       final float clampedTargetX=MathUtils.constrain(requestedTargetX,clampRect.left,clampRect.right);
       setTranslationX(clampedTargetX - currentTargetX);
-      setValue(mAxis.convertToValue(clampedTargetX - parentContent.left));
+      value=mAxis.convertToValue(clampedTargetX - parentContent.left);
     }
+    value-=value % mDragInterval;
+    setValue(value);
     dispatchOnSweep(false);
     return true;
   }
 case MotionEvent.ACTION_UP:
 {
-  mTracking=null;
-  mValue=mLabelValue;
-  dispatchOnSweep(true);
-  setTranslationX(0);
-  setTranslationY(0);
-  requestLayout();
+  if (mTouchMode == MODE_LABEL) {
+    performClick();
+  }
+ else   if (mTouchMode == MODE_DRAG) {
+    mTrackingStart=0;
+    mTracking=null;
+    mValue=mLabelValue;
+    dispatchOnSweep(true);
+    setTranslationX(0);
+    setTranslationY(0);
+    requestLayout();
+  }
+  mTouchMode=MODE_NONE;
   return true;
 }
 default :

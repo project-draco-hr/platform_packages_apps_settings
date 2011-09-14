@@ -1,0 +1,8 @@
+{
+  final Bundle args=new Bundle();
+  args.putParcelable(EXTRA_TEMPLATE,parent.mTemplate);
+  final LimitEditorFragment dialog=new LimitEditorFragment();
+  dialog.setArguments(args);
+  dialog.setTargetFragment(parent,0);
+  dialog.show(parent.getFragmentManager(),TAG_LIMIT_EDITOR);
+}

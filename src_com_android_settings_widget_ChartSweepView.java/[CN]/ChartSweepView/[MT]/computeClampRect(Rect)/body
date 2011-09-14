@@ -1,6 +1,8 @@
 {
   final Rect rect=buildClampRect(parentContent,mValidAfter,mValidBefore,0f);
   final Rect dynamicRect=buildClampRect(parentContent,getValidAfterDynamic(),getValidBeforeDynamic(),mNeighborMargin);
-  rect.intersect(dynamicRect);
+  if (!rect.intersect(dynamicRect)) {
+    rect.setEmpty();
+  }
   return rect;
 }

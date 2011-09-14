@@ -16,6 +16,12 @@
   mSweepRight.addOnSweepListener(mHorizListener);
   mSweepWarning.addOnSweepListener(mVertListener);
   mSweepLimit.addOnSweepListener(mVertListener);
+  mSweepWarning.setDragInterval(5 * MB_IN_BYTES);
+  mSweepLimit.setDragInterval(5 * MB_IN_BYTES);
+  mSweepLeft.setClickable(false);
+  mSweepLeft.setFocusable(false);
+  mSweepRight.setClickable(false);
+  mSweepRight.setFocusable(false);
   mGrid.init(mHoriz,mVert);
   mSeries.init(mHoriz,mVert);
   mDetailSeries.init(mHoriz,mVert);

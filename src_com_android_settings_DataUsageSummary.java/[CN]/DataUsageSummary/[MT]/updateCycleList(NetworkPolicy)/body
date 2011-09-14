@@ -1,4 +1,5 @@
 {
+  final CycleItem previousItem=(CycleItem)mCycleSpinner.getSelectedItem();
   mCycleAdapter.clear();
   final Context context=mCycleSpinner.getContext();
   long historyStart=Long.MAX_VALUE;
@@ -31,8 +32,15 @@
     mCycleAdapter.setChangePossible(false);
   }
   if (mCycleAdapter.getCount() > 0) {
-    mCycleSpinner.setSelection(0);
-    mCycleListener.onItemSelected(mCycleSpinner,null,0,0);
+    final int position=mCycleAdapter.findNearestPosition(previousItem);
+    mCycleSpinner.setSelection(position);
+    final CycleItem selectedItem=mCycleAdapter.getItem(position);
+    if (!Objects.equal(selectedItem,previousItem)) {
+      mCycleListener.onItemSelected(mCycleSpinner,null,position,0);
+    }
+ else {
+      updateDetailData();
+    }
   }
  else {
     updateDetailData();

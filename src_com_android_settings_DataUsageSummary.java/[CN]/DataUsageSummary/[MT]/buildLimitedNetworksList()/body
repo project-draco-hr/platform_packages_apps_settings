@@ -17,8 +17,5 @@
   if (mPolicyEditor.hasLimitedPolicy(buildTemplateEthernet())) {
     limited.add(getText(R.string.data_usage_tab_ethernet));
   }
-  if (limited.isEmpty()) {
-    limited.add(getText(R.string.data_usage_list_none));
-  }
-  return TextUtils.join(limited);
+  return limited;
 }

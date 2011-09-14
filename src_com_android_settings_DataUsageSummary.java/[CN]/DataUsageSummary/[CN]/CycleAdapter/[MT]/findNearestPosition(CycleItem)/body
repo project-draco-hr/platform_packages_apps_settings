@@ -1,0 +1,15 @@
+{
+  if (target != null) {
+    final int count=getCount();
+    for (int i=count - 1; i >= 0; i--) {
+      final CycleItem item=getItem(i);
+      if (item instanceof CycleChangeItem) {
+        continue;
+      }
+ else       if (item.compareTo(target) >= 0) {
+        return i;
+      }
+    }
+  }
+  return 0;
+}

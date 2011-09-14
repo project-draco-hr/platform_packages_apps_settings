@@ -1,6 +1,12 @@
 {
-  if (item.getItemId() == MENU_ADD_ACCOUNT) {
+  final int itemId=item.getItemId();
+  if (itemId == MENU_ADD_ACCOUNT) {
     onAddAccountClicked();
+    return true;
+  }
+ else   if (itemId == MENU_SYNC_APP) {
+    ContentResolver.setMasterSyncAutomatically(!item.isChecked());
+    onSyncStateUpdated();
     return true;
   }
  else {

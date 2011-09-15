@@ -41,6 +41,10 @@
       values.put(Telephony.Carriers.CURRENT,1);
     }
   }
+  String bearerVal=mBearer.getValue();
+  if (bearerVal != null) {
+    values.put(Telephony.Carriers.BEARER,Integer.parseInt(bearerVal));
+  }
   getContentResolver().update(mUri,values,null,null);
   return true;
 }

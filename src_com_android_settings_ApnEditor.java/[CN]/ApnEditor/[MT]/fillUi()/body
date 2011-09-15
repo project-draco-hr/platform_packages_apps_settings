@@ -33,6 +33,8 @@
       mAuthType.setValue(null);
     }
     mProtocol.setValue(mCursor.getString(PROTOCOL_INDEX));
+    mCarrierEnabled.setChecked(mCursor.getInt(CARRIER_ENABLED_INDEX) == 1);
+    mBearer.setValue(mCursor.getString(BEARER_INDEX));
   }
   mName.setSummary(checkNull(mName.getText()));
   mApn.setSummary(checkNull(mApn.getText()));
@@ -58,4 +60,5 @@
     mAuthType.setSummary(sNotSet);
   }
   mProtocol.setSummary(checkNull(protocolDescription(mProtocol.getValue())));
+  mBearer.setSummary(checkNull(bearerDescription(mBearer.getValue())));
 }

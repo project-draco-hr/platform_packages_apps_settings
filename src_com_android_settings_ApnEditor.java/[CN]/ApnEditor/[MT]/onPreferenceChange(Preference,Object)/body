@@ -20,5 +20,13 @@
     mProtocol.setSummary(protocol);
     mProtocol.setValue((String)newValue);
   }
+  if (KEY_BEARER.equals(key)) {
+    String bearer=bearerDescription((String)newValue);
+    if (bearer == null) {
+      return false;
+    }
+    mBearer.setValue((String)newValue);
+    mBearer.setSummary(bearer);
+  }
   return true;
 }

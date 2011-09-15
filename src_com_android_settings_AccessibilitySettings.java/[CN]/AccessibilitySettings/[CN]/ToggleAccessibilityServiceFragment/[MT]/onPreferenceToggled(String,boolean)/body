@@ -3,6 +3,9 @@
   if (enabledServices == null) {
     enabledServices="";
   }
+  if (enabledServices.endsWith(ENABLED_ACCESSIBILITY_SERVICES_SEPARATOR)) {
+    enabledServices=enabledServices.substring(0,enabledServices.length() - 1);
+  }
   final int length=enabledServices.length();
   if (enabled) {
     if (enabledServices.contains(preferenceKey)) {

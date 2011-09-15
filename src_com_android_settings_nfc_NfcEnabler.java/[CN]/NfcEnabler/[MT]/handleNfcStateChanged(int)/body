@@ -3,29 +3,18 @@ switch (newState) {
 case NfcAdapter.STATE_OFF:
     mCheckbox.setChecked(false);
   mCheckbox.setEnabled(true);
-mNdefPush.setEnabled(false);
-mNdefPush.setSummary(R.string.ndef_push_settings_summary);
 break;
 case NfcAdapter.STATE_ON:
 mCheckbox.setChecked(true);
 mCheckbox.setEnabled(true);
-mNdefPush.setEnabled(true);
-if (mNfcAdapter.isNdefPushEnabled()) {
-mNdefPush.setSummary(R.string.ndef_push_on_summary);
-}
- else {
-mNdefPush.setSummary(R.string.ndef_push_off_summary);
-}
 break;
 case NfcAdapter.STATE_TURNING_ON:
 mCheckbox.setChecked(true);
 mCheckbox.setEnabled(false);
-mNdefPush.setEnabled(false);
 break;
 case NfcAdapter.STATE_TURNING_OFF:
 mCheckbox.setChecked(false);
 mCheckbox.setEnabled(false);
-mNdefPush.setEnabled(false);
 break;
 }
 }

@@ -1,11 +1,14 @@
 {
-  Intent intent=new Intent(Intent.ACTION_QUERY_PACKAGE_RESTART,Uri.fromParts("package",mAppEntry.info.packageName,null));
-  intent.putExtra(Intent.EXTRA_PACKAGES,new String[]{mAppEntry.info.packageName});
-  intent.putExtra(Intent.EXTRA_UID,mAppEntry.info.uid);
-  if ((mAppEntry.info.flags & ApplicationInfo.FLAG_STOPPED) == 0) {
+  if (mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
+    updateForceStopButton(false);
+  }
+ else   if ((mAppEntry.info.flags & ApplicationInfo.FLAG_STOPPED) == 0) {
     updateForceStopButton(true);
   }
  else {
+    Intent intent=new Intent(Intent.ACTION_QUERY_PACKAGE_RESTART,Uri.fromParts("package",mAppEntry.info.packageName,null));
+    intent.putExtra(Intent.EXTRA_PACKAGES,new String[]{mAppEntry.info.packageName});
+    intent.putExtra(Intent.EXTRA_UID,mAppEntry.info.uid);
     getActivity().sendOrderedBroadcast(intent,null,mCheckKillProcessesReceiver,null,Activity.RESULT_CANCELED,null,null);
   }
 }

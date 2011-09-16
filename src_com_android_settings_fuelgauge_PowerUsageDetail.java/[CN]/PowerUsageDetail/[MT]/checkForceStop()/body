@@ -3,6 +3,23 @@
     mForceStopButton.setEnabled(false);
     return;
   }
+  for (int i=0; i < mPackages.length; i++) {
+    if (mDpm.packageHasActiveAdmins(mPackages[i])) {
+      mForceStopButton.setEnabled(false);
+      return;
+    }
+  }
+  for (int i=0; i < mPackages.length; i++) {
+    try {
+      ApplicationInfo info=mPm.getApplicationInfo(mPackages[i],0);
+      if ((info.flags & ApplicationInfo.FLAG_STOPPED) == 0) {
+        mForceStopButton.setEnabled(true);
+        break;
+      }
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+    }
+  }
   Intent intent=new Intent(Intent.ACTION_QUERY_PACKAGE_RESTART,Uri.fromParts("package",mPackages[0],null));
   intent.putExtra(Intent.EXTRA_PACKAGES,mPackages);
   intent.putExtra(Intent.EXTRA_UID,mUid);

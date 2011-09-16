@@ -4,5 +4,6 @@
   mPm=getActivity().getPackageManager();
   IBinder b=ServiceManager.getService(Context.USB_SERVICE);
   mUsbManager=IUsbManager.Stub.asInterface(b);
+  mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   mCanBeOnSdCardChecker=new CanBeOnSdCardChecker();
 }

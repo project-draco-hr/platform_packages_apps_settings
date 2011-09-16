@@ -35,6 +35,9 @@
       mUninstallButton.setText(R.string.uninstall_text);
     }
   }
+  if (mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
+    enabled=false;
+  }
   mUninstallButton.setEnabled(enabled);
   if (enabled) {
     mUninstallButton.setOnClickListener(this);

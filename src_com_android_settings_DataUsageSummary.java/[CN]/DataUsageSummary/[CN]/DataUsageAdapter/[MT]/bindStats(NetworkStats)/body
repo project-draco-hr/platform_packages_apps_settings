@@ -8,7 +8,7 @@
     entry=stats.getValues(i,entry);
     final int uid=entry.uid;
     final boolean isApp=uid >= android.os.Process.FIRST_APPLICATION_UID && uid <= android.os.Process.LAST_APPLICATION_UID;
-    if (isApp || uid == TrafficStats.UID_REMOVED) {
+    if (isApp || uid == UID_REMOVED || uid == UID_TETHERING) {
       AppUsageItem item=knownUids.get(uid);
       if (item == null) {
         item=new AppUsageItem(uid);

@@ -1,36 +1,45 @@
 {
-  String enabledServices=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-  if (enabledServices == null) {
-    enabledServices="";
+  String enabledServicesSetting=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+  if (enabledServicesSetting == null) {
+    enabledServicesSetting="";
   }
-  if (enabledServices.endsWith(ENABLED_ACCESSIBILITY_SERVICES_SEPARATOR)) {
-    enabledServices=enabledServices.substring(0,enabledServices.length() - 1);
+  Set<ComponentName> enabledServices=sEnabledServices;
+  enabledServices.clear();
+  SimpleStringSplitter colonSplitter=sStringColonSplitter;
+  colonSplitter.setString(enabledServicesSetting);
+  while (colonSplitter.hasNext()) {
+    String componentNameString=colonSplitter.next();
+    ComponentName enabledService=ComponentName.unflattenFromString(componentNameString);
+    if (enabledService != null) {
+      enabledServices.add(enabledService);
+    }
   }
-  final int length=enabledServices.length();
+  ComponentName toggledService=ComponentName.unflattenFromString(preferenceKey);
+  final boolean accessibilityEnabled;
   if (enabled) {
-    if (enabledServices.contains(preferenceKey)) {
-      return;
-    }
-    if (length == 0) {
-      enabledServices+=preferenceKey;
-      Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServices);
-      Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,1);
-    }
- else     if (length > 0) {
-      enabledServices+=ENABLED_ACCESSIBILITY_SERVICES_SEPARATOR + preferenceKey;
-      Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServices);
-    }
+    accessibilityEnabled=true;
+    enabledServices.add(toggledService);
   }
  else {
-    final int index=enabledServices.indexOf(preferenceKey);
-    if (index == 0) {
-      enabledServices=enabledServices.replace(preferenceKey,"");
-      Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServices);
-      Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0);
+    int enabledAndInstalledServiceCount=0;
+    Set<ComponentName> installedServices=sInstalledServices;
+    for (    ComponentName enabledService : enabledServices) {
+      if (installedServices.contains(enabledService)) {
+        enabledAndInstalledServiceCount++;
+      }
     }
- else     if (index > 0) {
-      enabledServices=enabledServices.replace(ENABLED_ACCESSIBILITY_SERVICES_SEPARATOR + preferenceKey,"");
-      Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServices);
-    }
+    accessibilityEnabled=enabledAndInstalledServiceCount > 1 || (enabledAndInstalledServiceCount == 1 && !installedServices.contains(toggledService));
+    enabledServices.remove(toggledService);
   }
+  StringBuilder enabledServicesBuilder=new StringBuilder();
+  for (  ComponentName enabledService : enabledServices) {
+    enabledServicesBuilder.append(enabledService.flattenToString());
+    enabledServicesBuilder.append(ENABLED_ACCESSIBILITY_SERVICES_SEPARATOR);
+  }
+  final int enabledServicesBuilderLength=enabledServicesBuilder.length();
+  if (enabledServicesBuilderLength > 0) {
+    enabledServicesBuilder.deleteCharAt(enabledServicesBuilderLength - 1);
+  }
+  Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServicesBuilder.toString());
+  Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,accessibilityEnabled ? 1 : 0);
 }

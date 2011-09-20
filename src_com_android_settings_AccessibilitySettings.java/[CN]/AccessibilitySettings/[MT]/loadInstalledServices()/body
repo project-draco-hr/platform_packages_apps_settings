@@ -1,0 +1,11 @@
+{
+  List<AccessibilityServiceInfo> installedServiceInfos=AccessibilityManager.getInstance(getActivity()).getInstalledAccessibilityServiceList();
+  Set<ComponentName> installedServices=sInstalledServices;
+  installedServices.clear();
+  final int installedServiceInfoCount=installedServiceInfos.size();
+  for (int i=0; i < installedServiceInfoCount; i++) {
+    ResolveInfo resolveInfo=installedServiceInfos.get(i).getResolveInfo();
+    ComponentName installedService=new ComponentName(resolveInfo.serviceInfo.packageName,resolveInfo.serviceInfo.name);
+    installedServices.add(installedService);
+  }
+}

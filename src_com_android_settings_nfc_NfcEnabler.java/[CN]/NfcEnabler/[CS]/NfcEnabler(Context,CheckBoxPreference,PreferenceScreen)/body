@@ -1,9 +1,11 @@
 {
   mContext=context;
   mCheckbox=checkBoxPreference;
+  mAndroidBeam=androidBeam;
   mNfcAdapter=NfcAdapter.getDefaultAdapter(context);
   if (mNfcAdapter == null) {
     mCheckbox.setEnabled(false);
+    mAndroidBeam.setEnabled(false);
     mIntentFilter=null;
     return;
   }

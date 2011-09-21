@@ -5,7 +5,7 @@
   Set<ComponentName> enabledComponentNames=new HashSet<ComponentName>();
   String settingValue=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
   if (settingValue != null) {
-    SimpleStringSplitter splitter=mStringColonSplitter;
+    SimpleStringSplitter splitter=sStringColonSplitter;
     splitter.setString(settingValue);
     while (splitter.hasNext()) {
       enabledComponentNames.add(ComponentName.unflattenFromString(splitter.next()));

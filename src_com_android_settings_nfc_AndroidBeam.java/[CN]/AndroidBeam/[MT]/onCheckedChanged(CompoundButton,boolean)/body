@@ -1,0 +1,14 @@
+{
+  boolean success=false;
+  mActionBarSwitch.setEnabled(false);
+  if (desiredState) {
+    success=mNfcAdapter.enableNdefPush();
+  }
+ else {
+    success=mNfcAdapter.disableNdefPush();
+  }
+  if (success) {
+    mActionBarSwitch.setChecked(desiredState);
+  }
+  mActionBarSwitch.setEnabled(true);
+}

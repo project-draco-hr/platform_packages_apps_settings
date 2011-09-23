@@ -1,19 +1,5 @@
 {
-  String enabledServicesSetting=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-  if (enabledServicesSetting == null) {
-    enabledServicesSetting="";
-  }
-  Set<ComponentName> enabledServices=sEnabledServices;
-  enabledServices.clear();
-  SimpleStringSplitter colonSplitter=sStringColonSplitter;
-  colonSplitter.setString(enabledServicesSetting);
-  while (colonSplitter.hasNext()) {
-    String componentNameString=colonSplitter.next();
-    ComponentName enabledService=ComponentName.unflattenFromString(componentNameString);
-    if (enabledService != null) {
-      enabledServices.add(enabledService);
-    }
-  }
+  Set<ComponentName> enabledServices=getEnabledServicesFromSettings(getActivity());
   ComponentName toggledService=ComponentName.unflattenFromString(preferenceKey);
   final boolean accessibilityEnabled;
   if (enabled) {

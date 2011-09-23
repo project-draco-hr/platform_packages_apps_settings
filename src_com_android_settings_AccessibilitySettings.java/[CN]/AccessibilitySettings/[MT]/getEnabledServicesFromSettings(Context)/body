@@ -1,0 +1,17 @@
+{
+  String enabledServicesSetting=Settings.Secure.getString(context.getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+  if (enabledServicesSetting == null) {
+    enabledServicesSetting="";
+  }
+  Set<ComponentName> enabledServices=new HashSet<ComponentName>();
+  SimpleStringSplitter colonSplitter=sStringColonSplitter;
+  colonSplitter.setString(enabledServicesSetting);
+  while (colonSplitter.hasNext()) {
+    String componentNameString=colonSplitter.next();
+    ComponentName enabledService=ComponentName.unflattenFromString(componentNameString);
+    if (enabledService != null) {
+      enabledServices.add(enabledService);
+    }
+  }
+  return enabledServices;
+}

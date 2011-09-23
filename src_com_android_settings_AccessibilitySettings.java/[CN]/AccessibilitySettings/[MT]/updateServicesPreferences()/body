@@ -2,15 +2,8 @@
   mServicesCategory.removeAll();
   AccessibilityManager accessibilityManager=AccessibilityManager.getInstance(getActivity());
   List<AccessibilityServiceInfo> installedServices=accessibilityManager.getInstalledAccessibilityServiceList();
-  Set<ComponentName> enabledComponentNames=new HashSet<ComponentName>();
-  String settingValue=Settings.Secure.getString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-  if (settingValue != null) {
-    SimpleStringSplitter splitter=sStringColonSplitter;
-    splitter.setString(settingValue);
-    while (splitter.hasNext()) {
-      enabledComponentNames.add(ComponentName.unflattenFromString(splitter.next()));
-    }
-  }
+  Set<ComponentName> enabledServices=getEnabledServicesFromSettings(getActivity());
+  final boolean accessibilityEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0) == 1;
   for (int i=0, count=installedServices.size(); i < count; ++i) {
     AccessibilityServiceInfo info=installedServices.get(i);
     PreferenceScreen preference=getPreferenceManager().createPreferenceScreen(getActivity());
@@ -19,8 +12,8 @@
     ComponentName componentName=new ComponentName(serviceInfo.packageName,serviceInfo.name);
     preference.setKey(componentName.flattenToString());
     preference.setTitle(title);
-    final boolean enabled=enabledComponentNames.contains(componentName);
-    if (enabled) {
+    final boolean serviceEnabled=accessibilityEnabled && enabledServices.contains(componentName);
+    if (serviceEnabled) {
       preference.setSummary(getString(R.string.accessibility_service_state_on));
     }
  else {
@@ -31,7 +24,7 @@
     preference.setPersistent(true);
     Bundle extras=preference.getExtras();
     extras.putString(EXTRA_PREFERENCE_KEY,preference.getKey());
-    extras.putBoolean(EXTRA_CHECKED,enabled);
+    extras.putBoolean(EXTRA_CHECKED,serviceEnabled);
     extras.putString(EXTRA_TITLE,title);
     String description=info.getDescription();
     if (TextUtils.isEmpty(description)) {

@@ -1,13 +1,5 @@
 {
-  if (another == null)   return false;
-  if (mFollowAxis == HORIZONTAL) {
-    final float selfDist=Math.abs(eventInParent.getX() - (getX() + getTargetInset()));
-    final float anotherDist=Math.abs(eventInParent.getX() - (another.getX() + another.getTargetInset()));
-    return anotherDist < selfDist;
-  }
- else {
-    final float selfDist=Math.abs(eventInParent.getY() - (getY() + getTargetInset()));
-    final float anotherDist=Math.abs(eventInParent.getY() - (another.getY() + another.getTargetInset()));
-    return anotherDist < selfDist;
-  }
+  final float selfDist=getTouchDistanceFromTarget(eventInParent);
+  final float anotherDist=another.getTouchDistanceFromTarget(eventInParent);
+  return anotherDist < selfDist;
 }

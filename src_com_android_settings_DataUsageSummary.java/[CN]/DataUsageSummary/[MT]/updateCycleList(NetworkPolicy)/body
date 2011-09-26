@@ -8,8 +8,9 @@
     historyStart=mChartData.network.getStart();
     historyEnd=mChartData.network.getEnd();
   }
-  if (historyStart == Long.MAX_VALUE)   historyStart=System.currentTimeMillis();
-  if (historyEnd == Long.MIN_VALUE)   historyEnd=System.currentTimeMillis();
+  final long now=System.currentTimeMillis();
+  if (historyStart == Long.MAX_VALUE)   historyStart=now;
+  if (historyEnd == Long.MIN_VALUE)   historyEnd=now + 1;
   boolean hasCycles=false;
   if (policy != null) {
     long cycleEnd=computeNextCycleBoundary(historyEnd,policy);

@@ -3,7 +3,9 @@
   paint.setColor(color);
   paint.setStyle(Style.FILL_AND_STROKE);
   paint.setAntiAlias(true);
-  final int width=(int)(280 * res.getDisplayMetrics().density);
-  paint.setShader(new RadialGradient(0,0,width,color,darken(color),TileMode.MIRROR));
+  if (FILL_GRADIENT) {
+    final int width=(int)(280 * res.getDisplayMetrics().density);
+    paint.setShader(new RadialGradient(0,0,width,color,darken(color),TileMode.MIRROR));
+  }
   return paint;
 }

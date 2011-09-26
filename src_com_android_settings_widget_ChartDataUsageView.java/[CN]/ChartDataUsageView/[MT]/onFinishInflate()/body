@@ -12,6 +12,10 @@
   mSweepRight.setValidRangeDynamic(mSweepLeft,null);
   mSweepWarning.setValidRangeDynamic(null,mSweepLimit);
   mSweepLimit.setValidRangeDynamic(mSweepWarning,null);
+  mSweepLeft.setNeighbors(mSweepRight);
+  mSweepRight.setNeighbors(mSweepLeft);
+  mSweepLimit.setNeighbors(mSweepWarning,mSweepLeft,mSweepRight);
+  mSweepWarning.setNeighbors(mSweepLimit,mSweepLeft,mSweepRight);
   mSweepLeft.addOnSweepListener(mHorizListener);
   mSweepRight.addOnSweepListener(mHorizListener);
   mSweepWarning.addOnSweepListener(mVertListener);

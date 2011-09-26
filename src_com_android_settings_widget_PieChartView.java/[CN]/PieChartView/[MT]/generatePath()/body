@@ -2,13 +2,14 @@
   if (LOGD)   Log.d(TAG,"generatePath()");
   long total=0;
   for (  Slice slice : mSlices) {
-    slice.pathPrimary.reset();
-    slice.pathShadow.reset();
+    slice.path.reset();
+    slice.pathSide.reset();
+    slice.pathOutline.reset();
     total+=slice.value;
   }
   mPathSide.reset();
-  mPathSideShadow.reset();
-  mPathShadow.reset();
+  mPathSideOutline.reset();
+  mPathOutline.reset();
   if (total == 0) {
     invalidate();
     return;
@@ -16,19 +17,44 @@
   final int width=getWidth();
   final int height=getHeight();
   final RectF rect=new RectF(0,0,width,height);
-  mPathSide.addOval(rect,Direction.CW);
-  mPathSideShadow.addOval(rect,Direction.CW);
-  mPathShadow.addOval(rect,Direction.CW);
+  final RectF rectSide=new RectF();
+  rectSide.set(rect);
+  rectSide.offset(-mSideWidth,0);
+  mPathSide.addOval(rectSide,Direction.CW);
+  mPathSideOutline.addOval(rectSide,Direction.CW);
+  mPathOutline.addOval(rect,Direction.CW);
   int startAngle=mOriginAngle;
   for (  Slice slice : mSlices) {
     final int sweepAngle=(int)(slice.value * 360 / total);
-    slice.pathPrimary.moveTo(rect.centerX(),rect.centerY());
-    slice.pathPrimary.arcTo(rect,startAngle,sweepAngle);
-    slice.pathPrimary.lineTo(rect.centerX(),rect.centerY());
-    slice.pathShadow.moveTo(rect.centerX(),rect.centerY());
-    slice.pathShadow.arcTo(rect,startAngle,0);
-    slice.pathShadow.moveTo(rect.centerX(),rect.centerY());
-    slice.pathShadow.arcTo(rect,startAngle + sweepAngle,0);
+    final int endAngle=startAngle + sweepAngle;
+    final float startAngleMod=startAngle % 360;
+    final float endAngleMod=endAngle % 360;
+    final boolean startSideVisible=startAngleMod > 90 && startAngleMod < 270;
+    final boolean endSideVisible=endAngleMod > 90 && endAngleMod < 270;
+    slice.path.moveTo(rect.centerX(),rect.centerY());
+    slice.path.arcTo(rect,startAngle,sweepAngle);
+    slice.path.lineTo(rect.centerX(),rect.centerY());
+    if (startSideVisible || endSideVisible) {
+      final float startAngleSide=startSideVisible ? startAngle : 450;
+      final float endAngleSide=endSideVisible ? endAngle : 270;
+      final float sweepAngleSide=endAngleSide - startAngleSide;
+      slice.pathSide.moveTo(rect.centerX(),rect.centerY());
+      slice.pathSide.arcTo(rect,startAngleSide,0);
+      slice.pathSide.rLineTo(-mSideWidth,0);
+      slice.pathSide.arcTo(rectSide,startAngleSide,sweepAngleSide);
+      slice.pathSide.rLineTo(mSideWidth,0);
+      slice.pathSide.arcTo(rect,endAngleSide,-sweepAngleSide);
+    }
+    slice.pathOutline.moveTo(rect.centerX(),rect.centerY());
+    slice.pathOutline.arcTo(rect,startAngle,0);
+    if (startSideVisible) {
+      slice.pathOutline.rLineTo(-mSideWidth,0);
+    }
+    slice.pathOutline.moveTo(rect.centerX(),rect.centerY());
+    slice.pathOutline.arcTo(rect,startAngle + sweepAngle,0);
+    if (endSideVisible) {
+      slice.pathOutline.rLineTo(-mSideWidth,0);
+    }
     startAngle+=sweepAngle;
   }
   invalidate();

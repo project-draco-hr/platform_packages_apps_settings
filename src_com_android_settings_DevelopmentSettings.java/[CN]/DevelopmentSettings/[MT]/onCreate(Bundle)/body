@@ -20,5 +20,11 @@
   mAppProcessLimit=(ListPreference)findPreference(APP_PROCESS_LIMIT_KEY);
   mAppProcessLimit.setOnPreferenceChangeListener(this);
   mShowAllANRs=(CheckBoxPreference)findPreference(SHOW_ALL_ANRS_KEY);
+  final Preference verifierDeviceIdentifier=findPreference(VERIFIER_DEVICE_IDENTIFIER);
+  final PackageManager pm=getActivity().getPackageManager();
+  final VerifierDeviceIdentity verifierIndentity=pm.getVerifierDeviceIdentity();
+  if (verifierIndentity != null) {
+    verifierDeviceIdentifier.setSummary(verifierIndentity.toString());
+  }
   removeHdcpOptionsForProduction();
 }

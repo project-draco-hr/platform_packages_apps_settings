@@ -1,0 +1,9 @@
+{
+  View v=super.onCreateView(inflater,container,savedInstanceState);
+  final boolean onlyShowFallback=getActivity().getIntent().getBooleanExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,false);
+  if (onlyShowFallback) {
+    View header=v.inflate(getActivity(),R.layout.weak_biometric_fallback_header,null);
+    ((ListView)v.findViewById(android.R.id.list)).addHeaderView(header,null,false);
+  }
+  return v;
+}

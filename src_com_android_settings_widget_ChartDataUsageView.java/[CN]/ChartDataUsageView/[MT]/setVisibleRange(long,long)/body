@@ -3,8 +3,10 @@
   mGrid.setBounds(visibleStart,visibleEnd);
   mSeries.setBounds(visibleStart,visibleEnd);
   mDetailSeries.setBounds(visibleStart,visibleEnd);
-  final long validStart=Math.max(visibleStart,getStatsStart());
-  final long validEnd=Math.min(visibleEnd,getStatsEnd());
+  final long historyStart=getHistoryStart();
+  final long historyEnd=getHistoryEnd();
+  final long validStart=historyStart == Long.MAX_VALUE ? visibleStart : Math.max(visibleStart,historyStart);
+  final long validEnd=historyEnd == Long.MIN_VALUE ? visibleEnd : Math.min(visibleEnd,historyEnd);
   if (LIMIT_SWEEPS_TO_VALID_DATA) {
     mSweepLeft.setValidRange(validStart,validEnd);
     mSweepRight.setValidRange(validStart,validEnd);

@@ -1,15 +1,12 @@
 {
-  canvas.translate(getWidth() * 0.25f,getHeight() * -0.05f);
-  canvas.rotate(-40,getWidth() * 0.5f,getHeight());
-  canvas.scale(0.7f,1.0f,getWidth(),getHeight());
-  canvas.save();
-  canvas.translate(-mSideWidth,0);
-  canvas.drawPath(mPathSide,mPaintPrimary);
-  canvas.drawPath(mPathSideShadow,mPaintShadow);
-  canvas.restore();
+  canvas.concat(mMatrix);
   for (  Slice slice : mSlices) {
-    canvas.drawPath(slice.pathPrimary,slice.paintPrimary);
-    canvas.drawPath(slice.pathShadow,mPaintShadow);
+    canvas.drawPath(slice.pathSide,slice.paint);
   }
-  canvas.drawPath(mPathShadow,mPaintShadow);
+  canvas.drawPath(mPathSideOutline,mPaintOutline);
+  for (  Slice slice : mSlices) {
+    canvas.drawPath(slice.path,slice.paint);
+    canvas.drawPath(slice.pathOutline,mPaintOutline);
+  }
+  canvas.drawPath(mPathOutline,mPaintOutline);
 }

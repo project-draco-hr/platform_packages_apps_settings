@@ -16,8 +16,10 @@ case MotionEvent.ACTION_DOWN:
       }
       final MotionEvent eventInParent=event.copy();
       eventInParent.offsetLocation(getLeft(),getTop());
-      if (isTouchCloserTo(eventInParent,mValidAfterDynamic) || isTouchCloserTo(eventInParent,mValidBeforeDynamic)) {
-        return false;
+      for (      ChartSweepView neighbor : mNeighbors) {
+        if (isTouchCloserTo(eventInParent,neighbor)) {
+          return false;
+        }
       }
       if (acceptDrag) {
         if (mFollowAxis == VERTICAL) {

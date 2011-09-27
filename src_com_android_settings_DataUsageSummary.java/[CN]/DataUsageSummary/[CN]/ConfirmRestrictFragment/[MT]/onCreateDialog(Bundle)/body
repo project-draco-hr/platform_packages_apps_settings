@@ -2,11 +2,7 @@
   final Context context=getActivity();
   final AlertDialog.Builder builder=new AlertDialog.Builder(context);
   builder.setTitle(R.string.data_usage_restrict_background_title);
-  final DataUsageSummary target=(DataUsageSummary)getTargetFragment();
-  if (target != null) {
-    final CharSequence limitedNetworks=target.buildLimitedNetworksString();
-    builder.setMessage(getString(R.string.data_usage_restrict_background,limitedNetworks));
-  }
+  builder.setMessage(getString(R.string.data_usage_restrict_background));
   builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
       final DataUsageSummary target=(DataUsageSummary)getTargetFragment();

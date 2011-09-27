@@ -40,7 +40,12 @@
   updateDetailData();
   if (NetworkPolicyManager.isUidValidForPolicy(context,primaryUid) && !getRestrictBackground() && isBandwidthControlEnabled()) {
     setPreferenceTitle(mAppRestrictView,R.string.data_usage_app_restrict_background);
-    setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary,buildLimitedNetworksString()));
+    if (hasLimitedNetworks()) {
+      setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary));
+    }
+ else {
+      setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary_disabled));
+    }
     mAppRestrictView.setVisibility(View.VISIBLE);
     mAppRestrict.setChecked(getAppRestrictBackground());
   }

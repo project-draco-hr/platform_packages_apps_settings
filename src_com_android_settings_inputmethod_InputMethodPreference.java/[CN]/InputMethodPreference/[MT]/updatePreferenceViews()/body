@@ -13,6 +13,14 @@
   }
   if (mSummaryText != null) {
     mSummaryText.setEnabled(checked);
-    mSummaryText.setClickable(checked);
+  }
+  if (mInputMethodPref != null) {
+    mInputMethodPref.setEnabled(true);
+    mInputMethodPref.setLongClickable(checked);
+    final boolean enabled=isEnabled();
+    mInputMethodPref.setOnClickListener(enabled ? mPrefOnclickListener : null);
+    if (!enabled) {
+      mInputMethodPref.setBackgroundColor(0);
+    }
   }
 }

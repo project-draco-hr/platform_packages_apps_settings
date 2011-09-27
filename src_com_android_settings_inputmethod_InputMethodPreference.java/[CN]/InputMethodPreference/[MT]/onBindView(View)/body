@@ -1,32 +1,18 @@
 {
   super.onBindView(view);
   mInputMethodPref=view.findViewById(R.id.inputmethod_pref);
-  mInputMethodPref.setOnClickListener(new OnClickListener(){
-    @Override public void onClick(    View arg0){
-      if (isChecked()) {
-        setChecked(false);
-      }
- else {
-        if (mIsSystemIme) {
-          setChecked(true);
-        }
- else {
-          showSecurityWarnDialog(mImi,InputMethodPreference.this);
-        }
-      }
-    }
-  }
-);
+  mInputMethodPref.setOnClickListener(mPrefOnclickListener);
   mInputMethodSettingsButton=(ImageView)view.findViewById(R.id.inputmethod_settings);
   mTitleText=(TextView)view.findViewById(android.R.id.title);
+  mSummaryText=(TextView)view.findViewById(android.R.id.summary);
   final boolean hasSubtypes=mImi.getSubtypeCount() > 1;
   final String imiId=mImi.getId();
-  mSummaryText=(TextView)view.findViewById(android.R.id.summary);
-  mSummaryText.setOnClickListener(new OnClickListener(){
-    @Override public void onClick(    View arg0){
+  mInputMethodPref.setOnLongClickListener(new OnLongClickListener(){
+    @Override public boolean onLongClick(    View arg0){
       final Bundle bundle=new Bundle();
       bundle.putString(Settings.EXTRA_INPUT_METHOD_ID,imiId);
       startFragment(mFragment,InputMethodAndSubtypeEnabler.class.getName(),0,bundle);
+      return true;
     }
   }
 );
@@ -59,6 +45,6 @@
     mInputMethodSettingsButton.setVisibility(View.GONE);
   }
  else {
-    enableSettingsButton();
+    updatePreferenceViews();
   }
 }

@@ -1,13 +1,7 @@
 {
   String procVersionStr;
   try {
-    BufferedReader reader=new BufferedReader(new FileReader("/proc/version"),256);
-    try {
-      procVersionStr=reader.readLine();
-    }
-  finally {
-      reader.close();
-    }
+    procVersionStr=readLine(FILENAME_PROC_VERSION);
     final String PROC_VERSION_REGEX="\\w+\\s+" + "\\w+\\s+" + "([^\\s]+)\\s+"+ "\\(([^\\s@]+(?:@[^\\s.]+)?)[^)]*\\)\\s+"+ "\\((?:[^(]*\\([^)]*\\))?[^)]*\\)\\s+"+ "([^\\s]+)\\s+"+ "(?:PREEMPT\\s+)?"+ "(.+)";
     Pattern p=Pattern.compile(PROC_VERSION_REGEX);
     Matcher m=p.matcher(procVersionStr);

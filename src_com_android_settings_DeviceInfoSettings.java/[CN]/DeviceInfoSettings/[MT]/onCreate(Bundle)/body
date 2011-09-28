@@ -12,7 +12,7 @@
   setStringSummary(KEY_FIRMWARE_VERSION,Build.VERSION.RELEASE);
   findPreference(KEY_FIRMWARE_VERSION).setEnabled(true);
   setValueSummary(KEY_BASEBAND_VERSION,"gsm.version.baseband");
-  setStringSummary(KEY_DEVICE_MODEL,Build.MODEL);
+  setStringSummary(KEY_DEVICE_MODEL,Build.MODEL + getMsvSuffix());
   setStringSummary(KEY_BUILD_NUMBER,Build.DISPLAY);
   findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
   removePreferenceIfPropertyMissing(getPreferenceScreen(),"safetylegal",PROPERTY_URL_SAFETYLEGAL);

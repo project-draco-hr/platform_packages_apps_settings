@@ -4,6 +4,19 @@
   final View view=getView();
   mErrorInfoView=(TextView)view.findViewById(R.id.sync_settings_error_info);
   mErrorInfoView.setVisibility(View.GONE);
+  mAutoSyncSwitch=new Switch(activity);
+  final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+  mAutoSyncSwitch.setPadding(0,0,padding,0);
+  activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
+  activity.getActionBar().setCustomView(mAutoSyncSwitch,new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.RIGHT));
+  mAutoSyncSwitch.setChecked(ContentResolver.getMasterSyncAutomatically());
+  mAutoSyncSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      ContentResolver.setMasterSyncAutomatically(isChecked);
+      onSyncStateUpdated();
+    }
+  }
+);
   mAuthorities=activity.getIntent().getStringArrayExtra(AUTHORITIES_FILTER_KEY);
   updateAuthDescriptions();
 }

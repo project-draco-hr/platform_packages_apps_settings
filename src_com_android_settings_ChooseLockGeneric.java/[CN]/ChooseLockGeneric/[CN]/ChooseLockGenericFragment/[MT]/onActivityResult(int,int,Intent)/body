@@ -4,6 +4,11 @@
     mPasswordConfirmed=true;
     updatePreferencesOrFinish();
   }
+ else   if (requestCode == FALLBACK_REQUEST) {
+    mChooseLockSettingsHelper.utils().deleteTempGallery();
+    getActivity().setResult(resultCode);
+    finish();
+  }
  else {
     getActivity().setResult(Activity.RESULT_CANCELED);
     finish();

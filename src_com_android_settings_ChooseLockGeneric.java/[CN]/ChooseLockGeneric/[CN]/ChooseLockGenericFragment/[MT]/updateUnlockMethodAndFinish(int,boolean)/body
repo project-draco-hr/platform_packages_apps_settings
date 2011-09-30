@@ -4,7 +4,6 @@
   }
   final boolean isFallback=getActivity().getIntent().getBooleanExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,false);
   quality=upgradeQuality(quality);
-  LockPatternUtils.setLastAttemptWasBiometric(false);
   if (quality >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
     int minLength=mDPM.getPasswordMinimumLength(null);
     if (minLength < MIN_PASSWORD_LENGTH) {
@@ -16,22 +15,33 @@
     intent.putExtra(ChooseLockPassword.PASSWORD_MIN_KEY,minLength);
     intent.putExtra(ChooseLockPassword.PASSWORD_MAX_KEY,maxLength);
     intent.putExtra(CONFIRM_CREDENTIALS,false);
-    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
     intent.putExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,isFallback);
-    startActivity(intent);
+    if (isFallback) {
+      startActivityForResult(intent,FALLBACK_REQUEST);
+      return;
+    }
+ else {
+      intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+      startActivity(intent);
+    }
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
     boolean showTutorial=!mChooseLockSettingsHelper.utils().isPatternEverChosen();
     Intent intent=new Intent();
     intent.setClass(getActivity(),showTutorial ? ChooseLockPatternTutorial.class : ChooseLockPattern.class);
-    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
     intent.putExtra("key_lock_method","pattern");
     intent.putExtra(CONFIRM_CREDENTIALS,false);
     intent.putExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,isFallback);
-    startActivity(intent);
+    if (isFallback) {
+      startActivityForResult(intent,FALLBACK_REQUEST);
+      return;
+    }
+ else {
+      intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+      startActivity(intent);
+    }
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK) {
-    LockPatternUtils.setLastAttemptWasBiometric(true);
     Intent intent=getBiometricSensorIntent(quality);
     startActivity(intent);
   }

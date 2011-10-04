@@ -9,6 +9,8 @@
   }
   final double averageCostPerByte=getAverageDataCost();
   long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime() * 1000,which);
+  long appWakelockTime=0;
+  BatterySipper osApp=null;
   mStatsPeriod=uSecTime;
   SparseArray<? extends Uid> uidStats=mStats.getUidStats();
   final int NU=uidStats.size();
@@ -71,6 +73,7 @@
       }
     }
     wakelockTime/=1000;
+    appWakelockTime+=wakelockTime;
     power+=(wakelockTime * mPowerProfile.getAveragePower(PowerProfile.POWER_CPU_AWAKE)) / 1000;
     long tcpBytesReceived=u.getTcpBytesReceived(mStatsType);
     long tcpBytesSent=u.getTcpBytesSent(mStatsType);
@@ -102,7 +105,7 @@ if (sensorData != null) {
 power+=(multiplier * sensorTime) / 1000;
 }
 if (DEBUG) Log.i(TAG,"UID " + u.getUid() + ": power="+ power);
-if (power != 0) {
+if (power != 0 || u.getUid() == 0) {
 BatterySipper app=new BatterySipper(getActivity(),mRequestQueue,mHandler,packageWithHighestDrain,DrainType.APP,0,u,new double[]{power});
 app.cpuTime=cpuTime;
 app.gpsTime=gpsTime;
@@ -120,6 +123,9 @@ mBluetoothSippers.add(app);
  else {
 mUsageList.add(app);
 }
+if (u.getUid() == 0) {
+osApp=app;
+}
 }
 if (u.getUid() == Process.WIFI_UID) {
 mWifiPower+=power;
@@ -132,5 +138,17 @@ if (power > mMaxPower) mMaxPower=power;
 mTotalPower+=power;
 }
 if (DEBUG) Log.i(TAG,"Added power = " + power);
+}
+if (osApp != null) {
+long wakeTimeMillis=mStats.computeBatteryUptime(SystemClock.uptimeMillis() * 1000,which) / 1000;
+wakeTimeMillis-=appWakelockTime - (mStats.getScreenOnTime(SystemClock.elapsedRealtime(),which) / 1000);
+if (wakeTimeMillis > 0) {
+double power=(wakeTimeMillis * mPowerProfile.getAveragePower(PowerProfile.POWER_CPU_AWAKE)) / 1000;
+osApp.wakeLockTime+=wakeTimeMillis;
+osApp.value+=power;
+osApp.values[0]+=power;
+if (osApp.value > mMaxPower) mMaxPower=osApp.value;
+mTotalPower+=power;
+}
 }
 }

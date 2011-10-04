@@ -1,7 +1,7 @@
 {
   final PreferenceScreen entries=getPreferenceScreen();
   final boolean onlyShowFallback=getActivity().getIntent().getBooleanExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,false);
-  final boolean weakBiometricAvailable=isBiometricSensorAvailable(DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK);
+  final boolean weakBiometricAvailable=mChooseLockSettingsHelper.utils().isBiometricWeakInstalled();
   for (int i=entries.getPreferenceCount() - 1; i >= 0; --i) {
     Preference pref=entries.getPreference(i);
     if (pref instanceof PreferenceScreen) {

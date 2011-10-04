@@ -3,11 +3,10 @@
     IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
     if (power != null) {
       int brightness=Settings.System.getInt(context.getContentResolver(),Settings.System.SCREEN_BRIGHTNESS);
-      return brightness > 100;
+      return brightness;
     }
   }
  catch (  Exception e) {
-    Log.d(TAG,"getBrightness: " + e);
   }
-  return false;
+  return 0;
 }

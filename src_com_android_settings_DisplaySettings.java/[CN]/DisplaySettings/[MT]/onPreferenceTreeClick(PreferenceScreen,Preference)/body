@@ -1,6 +1,17 @@
 {
   if (preference == mAccelerometer) {
-    Settings.System.putInt(getContentResolver(),Settings.System.ACCELEROMETER_ROTATION,mAccelerometer.isChecked() ? 1 : 0);
+    try {
+      IWindowManager wm=IWindowManager.Stub.asInterface(ServiceManager.getService(Context.WINDOW_SERVICE));
+      if (mAccelerometer.isChecked()) {
+        wm.thawRotation();
+      }
+ else {
+        wm.freezeRotation(Surface.ROTATION_0);
+      }
+    }
+ catch (    RemoteException exc) {
+      Log.w(TAG,"Unable to save auto-rotate setting");
+    }
   }
  else   if (preference == mNotificationPulse) {
     boolean value=mNotificationPulse.isChecked();

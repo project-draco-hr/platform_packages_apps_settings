@@ -1,9 +1,11 @@
 {
-  mParent=(PreferenceGroup)mFragment.getPreferenceScreen();
+  mParent=mFragment.getPreferenceScreen();
   mVoiceCategory=(PreferenceCategory)mParent.findPreference(KEY_VOICE_CATEGORY);
   mRecognizerPref=(ListPreference)mVoiceCategory.findPreference(KEY_RECOGNIZER);
+  mRecognizerSettingsPref=mVoiceCategory.findPreference(KEY_RECOGNIZER_SETTINGS);
+  mTtsSettingsPref=mVoiceCategory.findPreference(KEY_TTS_SETTINGS);
   mRecognizerPref.setOnPreferenceChangeListener(this);
   mSettingsPref=(PreferenceScreen)mVoiceCategory.findPreference(KEY_RECOGNIZER_SETTINGS);
   mAvailableRecognizersMap=new HashMap<String,ResolveInfo>();
-  populateOrRemoveRecognizerPreference();
+  populateOrRemovePreferences();
 }

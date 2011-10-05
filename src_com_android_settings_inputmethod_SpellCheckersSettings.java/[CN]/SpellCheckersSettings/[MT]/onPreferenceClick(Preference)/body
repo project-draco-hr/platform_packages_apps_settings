@@ -1,12 +1,17 @@
 {
+  SingleSpellCheckerPreference targetScp=null;
   for (  SingleSpellCheckerPreference scp : mSpellCheckers) {
-    if (arg0.equals(scp)) {
-      mTsm.setCurrentSpellChecker(scp.getSpellCheckerInfo());
+    if (pref.equals(scp)) {
+      targetScp=scp;
     }
   }
-  if (DBG) {
-    Log.d(TAG,"Current spell check is " + SpellCheckerUtils.getCurrentSpellChecker(mTsm).getId());
+  if (targetScp != null) {
+    if (!isSystemApp(targetScp.getSpellCheckerInfo())) {
+      showSecurityWarnDialog(targetScp);
+    }
+ else {
+      changeCurrentSpellChecker(targetScp);
+    }
   }
-  updateScreen();
   return true;
 }

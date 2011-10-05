@@ -1,4 +1,7 @@
 {
+  if (mDialog != null && mDialog.isShowing()) {
+    mDialog.dismiss();
+  }
   final AlertDialog.Builder builder=new AlertDialog.Builder(mFragment.getActivity());
   builder.setTitle(R.string.phone_language);
   final int size=mSpellCheckerInfo.getSubtypeCount();
@@ -35,5 +38,6 @@
     }
   }
 );
-  builder.show();
+  mDialog=builder.create();
+  mDialog.show();
 }

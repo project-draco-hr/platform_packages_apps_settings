@@ -1,0 +1,7 @@
+{
+  boolean hasRecognizerPrefs=populateOrRemoveRecognizerPrefs();
+  boolean hasTtsPrefs=populateOrRemoveTtsPrefs();
+  if (!hasRecognizerPrefs && !hasTtsPrefs) {
+    mFragment.getPreferenceScreen().removePreference(mVoiceCategory);
+  }
+}

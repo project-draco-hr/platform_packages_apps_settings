@@ -1,0 +1,17 @@
+{
+  if (mDialog != null && mDialog.isShowing()) {
+    mDialog.dismiss();
+  }
+  mDialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      changeCurrentSpellChecker(scp);
+    }
+  }
+).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+    }
+  }
+).create();
+  mDialog.setMessage(getResources().getString(R.string.spellchecker_security_warning,scp.getSpellCheckerInfo().getServiceInfo().applicationInfo.loadLabel(getActivity().getPackageManager())));
+  mDialog.show();
+}

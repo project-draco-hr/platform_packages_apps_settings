@@ -1,0 +1,17 @@
+{
+  boolean enable=(Boolean)value;
+  if (enable) {
+    String intentStr=getActivity().getString(com.android.internal.R.string.config_mobile_hotspot_provision_intent);
+    if (TextUtils.isEmpty(intentStr)) {
+      mWifiApEnabler.setSoftapEnabled(true);
+    }
+ else {
+      Intent intent=new Intent(intentStr);
+      startActivityForResult(intent,MHS_REQUEST);
+    }
+  }
+ else {
+    mWifiApEnabler.setSoftapEnabled(false);
+  }
+  return false;
+}

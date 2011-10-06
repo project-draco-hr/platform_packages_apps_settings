@@ -1,6 +1,5 @@
 {
   final ContentResolver cr=mContext.getContentResolver();
-  boolean enable=(Boolean)value;
   int wifiState=mWifiManager.getWifiState();
   if (enable && ((wifiState == WifiManager.WIFI_STATE_ENABLING) || (wifiState == WifiManager.WIFI_STATE_ENABLED))) {
     mWifiManager.setWifiEnabled(false);
@@ -25,5 +24,4 @@
       Settings.Secure.putInt(cr,Settings.Secure.WIFI_SAVED_STATE,0);
     }
   }
-  return false;
 }

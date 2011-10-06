@@ -18,6 +18,7 @@
   activity.registerReceiver(mTetherChangeReceiver,filter);
   if (intent != null)   mTetherChangeReceiver.onReceive(activity,intent);
   if (mWifiApEnabler != null) {
+    mEnableWifiAp.setOnPreferenceChangeListener(this);
     mWifiApEnabler.resume();
   }
   updateState();

@@ -1,9 +1,6 @@
 {
   mHeaderText.setText(msg);
-  mHandler.postDelayed(new Runnable(){
-    public void run(){
-      updateStage(next);
-    }
-  }
-,ERROR_MESSAGE_TIMEOUT);
+  Message mesg=mHandler.obtainMessage(MSG_SHOW_ERROR,next);
+  mHandler.removeMessages(MSG_SHOW_ERROR);
+  mHandler.sendMessageDelayed(mesg,ERROR_MESSAGE_TIMEOUT);
 }

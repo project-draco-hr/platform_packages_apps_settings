@@ -33,6 +33,7 @@
       mAuthType.setValue(null);
     }
     mProtocol.setValue(mCursor.getString(PROTOCOL_INDEX));
+    mRoamingProtocol.setValue(mCursor.getString(ROAMING_PROTOCOL_INDEX));
     mCarrierEnabled.setChecked(mCursor.getInt(CARRIER_ENABLED_INDEX) == 1);
     mBearer.setValue(mCursor.getString(BEARER_INDEX));
   }
@@ -59,6 +60,7 @@
  else {
     mAuthType.setSummary(sNotSet);
   }
-  mProtocol.setSummary(checkNull(protocolDescription(mProtocol.getValue())));
+  mProtocol.setSummary(checkNull(protocolDescription(mProtocol.getValue(),mProtocol)));
+  mRoamingProtocol.setSummary(checkNull(protocolDescription(mRoamingProtocol.getValue(),mRoamingProtocol)));
   mBearer.setSummary(checkNull(bearerDescription(mBearer.getValue())));
 }

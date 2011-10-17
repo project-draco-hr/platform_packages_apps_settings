@@ -19,6 +19,14 @@
   mAuthType.setOnPreferenceChangeListener(this);
   mProtocol=(ListPreference)findPreference(KEY_PROTOCOL);
   mProtocol.setOnPreferenceChangeListener(this);
+  mRoamingProtocol=(ListPreference)findPreference(KEY_ROAMING_PROTOCOL);
+  TelephonyManager tm=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+  if (tm.getCurrentPhoneType() == Phone.PHONE_TYPE_CDMA) {
+    mRoamingProtocol.setOnPreferenceChangeListener(this);
+  }
+ else {
+    getPreferenceScreen().removePreference(mRoamingProtocol);
+  }
   mCarrierEnabled=(CheckBoxPreference)findPreference(KEY_CARRIER_ENABLED);
   mBearer=(ListPreference)findPreference(KEY_BEARER);
   mBearer.setOnPreferenceChangeListener(this);

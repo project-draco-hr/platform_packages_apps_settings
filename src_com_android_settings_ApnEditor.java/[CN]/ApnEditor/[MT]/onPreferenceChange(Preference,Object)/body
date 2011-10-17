@@ -10,17 +10,24 @@
  catch (    NumberFormatException e) {
       return false;
     }
-    return true;
   }
-  if (KEY_PROTOCOL.equals(key)) {
-    String protocol=protocolDescription((String)newValue);
+ else   if (KEY_PROTOCOL.equals(key)) {
+    String protocol=protocolDescription((String)newValue,mProtocol);
     if (protocol == null) {
       return false;
     }
     mProtocol.setSummary(protocol);
     mProtocol.setValue((String)newValue);
   }
-  if (KEY_BEARER.equals(key)) {
+ else   if (KEY_ROAMING_PROTOCOL.equals(key)) {
+    String protocol=protocolDescription((String)newValue,mRoamingProtocol);
+    if (protocol == null) {
+      return false;
+    }
+    mRoamingProtocol.setSummary(protocol);
+    mRoamingProtocol.setValue((String)newValue);
+  }
+ else   if (KEY_BEARER.equals(key)) {
     String bearer=bearerDescription((String)newValue);
     if (bearer == null) {
       return false;

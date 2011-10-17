@@ -1,0 +1,11 @@
+{
+  if (prop == null)   return null;
+  Iterator<InetAddress> iter=prop.getAddresses().iterator();
+  if (!iter.hasNext())   return null;
+  String addresses="";
+  while (iter.hasNext()) {
+    addresses+=iter.next().getHostAddress();
+    if (iter.hasNext())     addresses+=", ";
+  }
+  return addresses;
+}

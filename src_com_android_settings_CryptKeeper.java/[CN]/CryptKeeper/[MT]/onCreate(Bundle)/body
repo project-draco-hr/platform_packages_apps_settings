@@ -6,10 +6,6 @@
     ComponentName name=new ComponentName(this,CryptKeeper.class);
     pm.setComponentEnabledSetting(name,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
     finish();
-    Intent intent=getIntent();
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.setComponent(null);
-    startActivity(intent);
     return;
   }
   StatusBarManager sbm=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);

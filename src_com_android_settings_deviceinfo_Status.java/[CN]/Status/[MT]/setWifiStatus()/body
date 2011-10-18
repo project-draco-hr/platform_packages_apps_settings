@@ -4,12 +4,4 @@
   Preference wifiMacAddressPref=findPreference(KEY_WIFI_MAC_ADDRESS);
   String macAddress=wifiInfo == null ? null : wifiInfo.getMacAddress();
   wifiMacAddressPref.setSummary(!TextUtils.isEmpty(macAddress) ? macAddress : getString(R.string.status_unavailable));
-  Preference wifiIpAddressPref=findPreference(KEY_WIFI_IP_ADDRESS);
-  String ipAddress=Utils.getWifiIpAddresses(this);
-  if (ipAddress != null) {
-    wifiIpAddressPref.setSummary(ipAddress);
-  }
- else {
-    wifiIpAddressPref.setSummary(getString(R.string.status_unavailable));
-  }
 }

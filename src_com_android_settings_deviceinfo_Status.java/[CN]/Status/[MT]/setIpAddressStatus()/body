@@ -1,0 +1,10 @@
+{
+  Preference ipAddressPref=findPreference(KEY_IP_ADDRESS);
+  String ipAddress=Utils.getDefaultIpAddresses(this);
+  if (ipAddress != null) {
+    ipAddressPref.setSummary(ipAddress);
+  }
+ else {
+    ipAddressPref.setSummary(getString(R.string.status_unavailable));
+  }
+}

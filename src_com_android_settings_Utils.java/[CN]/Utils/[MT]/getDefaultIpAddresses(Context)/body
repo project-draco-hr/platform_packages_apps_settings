@@ -1,5 +1,5 @@
 {
   ConnectivityManager cm=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-  LinkProperties prop=cm.getLinkProperties(ConnectivityManager.TYPE_WIFI);
+  LinkProperties prop=cm.getActiveLinkProperties();
   return formatIpAddresses(prop);
 }

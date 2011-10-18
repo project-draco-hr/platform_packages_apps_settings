@@ -5,6 +5,7 @@
       if (checked) {
         if (!TextUtils.isEmpty(mEnableWarningMessage)) {
           toggleSwitch.setCheckedInternal(false);
+          getArguments().putBoolean(EXTRA_CHECKED,false);
           showDialog(DIALOG_ID_ENABLE_WARNING);
           return true;
         }
@@ -13,6 +14,7 @@
  else {
         if (!TextUtils.isEmpty(mDisableWarningMessage)) {
           toggleSwitch.setCheckedInternal(true);
+          getArguments().putBoolean(EXTRA_CHECKED,true);
           showDialog(DIALOG_ID_DISABLE_WARNING);
           return true;
         }

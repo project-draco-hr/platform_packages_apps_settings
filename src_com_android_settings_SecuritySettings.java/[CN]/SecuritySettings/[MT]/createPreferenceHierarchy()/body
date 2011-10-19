@@ -48,6 +48,12 @@ setupLockAfterPreference();
 updateLockAfterPreferenceSummary();
 }
 mVisiblePattern=(CheckBoxPreference)root.findPreference(KEY_VISIBLE_PATTERN);
+if (resid == R.xml.security_settings_biometric_weak && mLockPatternUtils.getKeyguardStoredPasswordQuality() != DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
+PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
+if (securityCategory != null && mVisiblePattern != null) {
+securityCategory.removePreference(root.findPreference(KEY_VISIBLE_PATTERN));
+}
+}
 mTactileFeedback=(CheckBoxPreference)root.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
 if (!((Vibrator)getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator()) {
 PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);

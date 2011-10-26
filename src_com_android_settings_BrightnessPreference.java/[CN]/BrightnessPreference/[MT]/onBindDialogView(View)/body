@@ -1,9 +1,9 @@
 {
   super.onBindDialogView(view);
   mSeekBar=getSeekBar(view);
-  mSeekBar.setMax(MAXIMUM_BACKLIGHT - MINIMUM_BACKLIGHT);
+  mSeekBar.setMax(MAXIMUM_BACKLIGHT - mScreenBrightnessDim);
   mOldBrightness=getBrightness(0);
-  mSeekBar.setProgress(mOldBrightness - MINIMUM_BACKLIGHT);
+  mSeekBar.setProgress(mOldBrightness - mScreenBrightnessDim);
   mCheckBox=(CheckBox)view.findViewById(R.id.automatic_mode);
   if (mAutomaticAvailable) {
     mCheckBox.setOnCheckedChangeListener(this);

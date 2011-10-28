@@ -9,6 +9,10 @@
   }
   if (unavailable.size() > 0) {
     mInstallVoicesPreference.setEnabled(true);
+    getPreferenceScreen().addPreference(mInstallVoicesPreference);
+  }
+ else {
+    getPreferenceScreen().removePreference(mInstallVoicesPreference);
   }
   if (available.size() > 0) {
     updateDefaultLocalePref(available);

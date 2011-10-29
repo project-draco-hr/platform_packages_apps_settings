@@ -1,7 +1,7 @@
 {
 switch (mAudioManager.getRingerMode()) {
 case AudioManager.RINGER_MODE_NORMAL:
-    mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+    mAudioManager.setRingerMode((Settings.System.getInt(getContext().getContentResolver(),Settings.System.VIBRATE_IN_SILENT,1) == 1) ? AudioManager.RINGER_MODE_VIBRATE : AudioManager.RINGER_MODE_SILENT);
   break;
 case AudioManager.RINGER_MODE_VIBRATE:
 case AudioManager.RINGER_MODE_SILENT:

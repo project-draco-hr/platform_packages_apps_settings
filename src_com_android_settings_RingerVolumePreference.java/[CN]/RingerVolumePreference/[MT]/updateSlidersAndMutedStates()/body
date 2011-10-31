@@ -3,7 +3,12 @@
     int streamType=SEEKBAR_TYPE[i];
     boolean muted=mAudioManager.isStreamMute(streamType);
     if (mCheckBoxes[i] != null) {
-      mCheckBoxes[i].setImageResource(muted ? SEEKBAR_MUTED_RES_ID[i] : SEEKBAR_UNMUTED_RES_ID[i]);
+      if (streamType == AudioManager.STREAM_RING && muted && mAudioManager.shouldVibrate(AudioManager.VIBRATE_TYPE_RINGER)) {
+        mCheckBoxes[i].setImageResource(com.android.internal.R.drawable.ic_audio_ring_notif_vibrate);
+      }
+ else {
+        mCheckBoxes[i].setImageResource(muted ? SEEKBAR_MUTED_RES_ID[i] : SEEKBAR_UNMUTED_RES_ID[i]);
+      }
     }
     if (mSeekBars[i] != null) {
       mSeekBars[i].setEnabled(!muted);

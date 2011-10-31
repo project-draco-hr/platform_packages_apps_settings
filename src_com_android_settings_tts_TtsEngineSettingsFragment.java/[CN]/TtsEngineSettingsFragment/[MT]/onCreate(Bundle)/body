@@ -9,6 +9,7 @@
   mEngineSettingsPreference.setOnPreferenceClickListener(this);
   mInstallVoicesPreference=root.findPreference(KEY_INSTALL_DATA);
   mInstallVoicesPreference.setOnPreferenceClickListener(this);
+  root.removePreference(mInstallVoicesPreference);
   root.setTitle(getEngineLabel());
   root.setKey(getEngineName());
   mEngineSettingsPreference.setTitle(getResources().getString(R.string.tts_engine_settings_title,getEngineLabel()));

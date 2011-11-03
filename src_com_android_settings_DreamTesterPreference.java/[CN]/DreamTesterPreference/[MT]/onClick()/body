@@ -2,7 +2,7 @@
   String component=Settings.Secure.getString(resolver,DREAM_COMPONENT);
   if (component != null) {
     ComponentName cn=ComponentName.unflattenFromString(component);
-    Intent intent=new Intent(Intent.ACTION_MAIN).setComponent(cn).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_SINGLE_TOP).putExtra("android.dreams.TEST",true);
+    Intent intent=new Intent(Intent.ACTION_MAIN).setComponent(cn).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS).putExtra("android.dreams.TEST",true);
     getContext().startActivity(intent);
   }
 }

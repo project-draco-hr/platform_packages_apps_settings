@@ -1,0 +1,25 @@
+{
+switch (mTetherChoice) {
+case WIFI_TETHERING:
+    mWifiApEnabler.setSoftapEnabled(true);
+  break;
+case BLUETOOTH_TETHERING:
+BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+if (adapter.getState() == BluetoothAdapter.STATE_OFF) {
+mBluetoothEnableForTether=true;
+adapter.enable();
+mBluetoothTether.setSummary(R.string.bluetooth_turning_on);
+mBluetoothTether.setEnabled(false);
+}
+ else {
+mBluetoothPan.setBluetoothTethering(true);
+mBluetoothTether.setSummary(R.string.bluetooth_tethering_available_subtext);
+}
+break;
+case USB_TETHERING:
+setUsbTethering(true);
+break;
+default :
+break;
+}
+}

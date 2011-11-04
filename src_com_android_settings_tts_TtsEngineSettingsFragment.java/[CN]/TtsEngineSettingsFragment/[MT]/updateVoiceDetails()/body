@@ -3,11 +3,14 @@
   if (DBG)   Log.d(TAG,"Parsing voice data details, data: " + voiceDataDetails.toUri(0));
   ArrayList<String> available=voiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_AVAILABLE_VOICES);
   ArrayList<String> unavailable=voiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_UNAVAILABLE_VOICES);
-  if (available == null || unavailable == null) {
+  if (available == null) {
     Log.e(TAG,"TTS data check failed (available == null).");
+    final CharSequence[] empty=new CharSequence[0];
+    mLocalePreference.setEntries(empty);
+    mLocalePreference.setEntryValues(empty);
     return;
   }
-  if (unavailable.size() > 0) {
+  if (unavailable != null && unavailable.size() > 0) {
     mInstallVoicesPreference.setEnabled(true);
     getPreferenceScreen().addPreference(mInstallVoicesPreference);
   }

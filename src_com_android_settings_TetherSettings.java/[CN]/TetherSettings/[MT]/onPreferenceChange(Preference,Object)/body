@@ -1,15 +1,7 @@
 {
   boolean enable=(Boolean)value;
   if (enable) {
-    String[] appDetails=getResources().getStringArray(com.android.internal.R.array.config_mobile_hotspot_provision_app);
-    if (appDetails.length != 2) {
-      mWifiApEnabler.setSoftapEnabled(true);
-    }
- else {
-      Intent intent=new Intent(Intent.ACTION_MAIN);
-      intent.setClassName(appDetails[0],appDetails[1]);
-      startActivityForResult(intent,MHS_REQUEST);
-    }
+    startProvisioningIfNecessary(WIFI_TETHERING);
   }
  else {
     mWifiApEnabler.setSoftapEnabled(false);

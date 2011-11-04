@@ -2,27 +2,17 @@
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   if (preference == mUsbTether) {
     boolean newState=mUsbTether.isChecked();
-    if (cm.setUsbTethering(newState) != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
-      mUsbTether.setChecked(false);
-      mUsbTether.setSummary(R.string.usb_tethering_errored_subtext);
-      return true;
+    if (newState) {
+      startProvisioningIfNecessary(USB_TETHERING);
     }
-    mUsbTether.setSummary("");
+ else {
+      setUsbTethering(newState);
+    }
   }
  else   if (preference == mBluetoothTether) {
     boolean bluetoothTetherState=mBluetoothTether.isChecked();
     if (bluetoothTetherState) {
-      BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
-      if (adapter.getState() == BluetoothAdapter.STATE_OFF) {
-        mBluetoothEnableForTether=true;
-        adapter.enable();
-        mBluetoothTether.setSummary(R.string.bluetooth_turning_on);
-        mBluetoothTether.setEnabled(false);
-      }
- else {
-        mBluetoothPan.setBluetoothTethering(true);
-        mBluetoothTether.setSummary(R.string.bluetooth_tethering_available_subtext);
-      }
+      startProvisioningIfNecessary(BLUETOOTH_TETHERING);
     }
  else {
       boolean errored=false;

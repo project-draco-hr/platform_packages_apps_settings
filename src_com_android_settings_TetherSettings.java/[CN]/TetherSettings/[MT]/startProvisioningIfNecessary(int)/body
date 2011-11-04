@@ -1,0 +1,11 @@
+{
+  mTetherChoice=choice;
+  if (isProvisioningNeeded()) {
+    Intent intent=new Intent(Intent.ACTION_MAIN);
+    intent.setClassName(mProvisionApp[0],mProvisionApp[1]);
+    startActivityForResult(intent,PROVISION_REQUEST);
+  }
+ else {
+    startTethering();
+  }
+}

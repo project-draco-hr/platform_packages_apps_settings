@@ -1,8 +1,19 @@
 {
   super.onActivityResult(requestCode,resultCode,intent);
-  if (requestCode == MHS_REQUEST) {
+  if (requestCode == PROVISION_REQUEST) {
     if (resultCode == Activity.RESULT_OK) {
-      mWifiApEnabler.setSoftapEnabled(true);
+      startTethering();
     }
-  }
+ else {
+switch (mTetherChoice) {
+case BLUETOOTH_TETHERING:
+        mBluetoothTether.setChecked(false);
+      break;
+case USB_TETHERING:
+    mUsbTether.setChecked(false);
+  break;
+}
+mTetherChoice=INVALID;
+}
+}
 }

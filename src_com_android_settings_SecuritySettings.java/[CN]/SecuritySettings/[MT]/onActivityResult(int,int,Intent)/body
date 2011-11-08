@@ -1,4 +1,8 @@
 {
   super.onActivityResult(requestCode,resultCode,data);
+  if (requestCode == CONFIRM_EXISTING_FOR_BIOMETRIC_IMPROVE_REQUEST && resultCode == Activity.RESULT_OK) {
+    startBiometricWeakImprove();
+    return;
+  }
   createPreferenceHierarchy();
 }

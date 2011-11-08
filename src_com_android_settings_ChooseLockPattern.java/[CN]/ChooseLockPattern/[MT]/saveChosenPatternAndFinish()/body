@@ -4,7 +4,6 @@
   final boolean isFallback=getActivity().getIntent().getBooleanExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,false);
   utils.saveLockPattern(mChosenPattern,isFallback);
   utils.setLockPatternEnabled(true);
-  Toast.makeText(getActivity(),R.string.lock_setup,Toast.LENGTH_SHORT).show();
   if (lockVirgin) {
     utils.setVisiblePatternEnabled(true);
     utils.setTactileFeedbackEnabled(false);

@@ -5,7 +5,8 @@
   fallBackIntent.putExtra(EXTRA_SHOW_FRAGMENT_TITLE,R.string.backup_lock_settings_picker_title);
   boolean showTutorial=ALWAY_SHOW_TUTORIAL || !mChooseLockSettingsHelper.utils().isBiometricWeakEverChosen();
   Intent intent=new Intent();
-  intent.setClassName("com.android.facelock",showTutorial ? "com.android.facelock.FaceLockTutorial" : "com.android.facelock.SetupFaceLock");
+  intent.setClassName("com.android.facelock","com.android.facelock.SetupIntro");
+  intent.putExtra("showTutorial",showTutorial);
   PendingIntent pending=PendingIntent.getActivity(getActivity(),0,fallBackIntent,0);
   intent.putExtra("PendingIntent",pending);
   return intent;

@@ -1,0 +1,14 @@
+{
+  ConnectivityManager cm=(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+  NetworkInfo ni=cm.getNetworkInfo(ConnectivityManager.TYPE_WIMAX);
+  if (ni == null) {
+    PreferenceScreen root=getPreferenceScreen();
+    Preference ps=(Preference)findPreference(KEY_WIMAX_MAC_ADDRESS);
+    if (ps != null)     root.removePreference(ps);
+  }
+ else {
+    Preference wimaxMacAddressPref=findPreference(KEY_WIMAX_MAC_ADDRESS);
+    String macAddress=SystemProperties.get("net.wimax.mac.address",getString(R.string.status_unavailable));
+    wimaxMacAddressPref.setSummary(macAddress);
+  }
+}

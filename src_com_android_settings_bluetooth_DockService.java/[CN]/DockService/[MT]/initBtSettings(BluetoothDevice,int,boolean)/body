@@ -2,6 +2,8 @@
   int numOfProfiles;
 switch (state) {
 case Intent.EXTRA_DOCK_STATE_DESK:
+case Intent.EXTRA_DOCK_STATE_LE_DESK:
+case Intent.EXTRA_DOCK_STATE_HE_DESK:
     numOfProfiles=1;
   break;
 case Intent.EXTRA_DOCK_STATE_CAR:
@@ -29,6 +31,8 @@ mCheckedItems[1]=mProfiles[1].isPreferred(device);
 }
 break;
 case Intent.EXTRA_DOCK_STATE_DESK:
+case Intent.EXTRA_DOCK_STATE_LE_DESK:
+case Intent.EXTRA_DOCK_STATE_HE_DESK:
 items[0]=getString(R.string.bluetooth_dock_settings_a2dp);
 mProfiles[0]=mProfileManager.getA2dpProfile();
 if (firstTime) {

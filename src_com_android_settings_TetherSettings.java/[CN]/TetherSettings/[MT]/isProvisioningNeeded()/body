@@ -1,3 +1,6 @@
 {
+  if (SystemProperties.getBoolean("net.tethering.noprovisioning",false)) {
+    return false;
+  }
   return mProvisionApp.length == 2;
 }

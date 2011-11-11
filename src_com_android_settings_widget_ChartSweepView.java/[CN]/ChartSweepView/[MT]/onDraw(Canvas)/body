@@ -6,11 +6,12 @@
   if (isEnabled() && mLabelLayout != null) {
     final int count=canvas.save();
 {
-      canvas.translate(mContentOffset.left,mContentOffset.top + mLabelOffset);
+      final float alignOffset=mLabelSize - LARGE_WIDTH;
+      canvas.translate(mContentOffset.left + alignOffset,mContentOffset.top + mLabelOffset);
       mLabelLayout.draw(canvas);
     }
     canvas.restoreToCount(count);
-    labelSize=mLabelSize;
+    labelSize=(int)mLabelSize;
   }
  else {
     labelSize=0;

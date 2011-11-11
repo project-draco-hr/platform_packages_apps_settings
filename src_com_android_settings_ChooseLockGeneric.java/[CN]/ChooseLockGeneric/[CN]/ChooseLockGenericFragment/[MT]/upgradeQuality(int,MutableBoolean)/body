@@ -1,0 +1,14 @@
+{
+  quality=upgradeQualityForDPM(quality);
+  quality=upgradeQualityForKeyStore(quality);
+  int encryptionQuality=upgradeQualityForEncryption(quality);
+  if (encryptionQuality > quality) {
+    if (allowBiometric != null) {
+      allowBiometric.value=quality <= DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK;
+    }
+ else     if (quality == DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK) {
+      return quality;
+    }
+  }
+  return encryptionQuality;
+}

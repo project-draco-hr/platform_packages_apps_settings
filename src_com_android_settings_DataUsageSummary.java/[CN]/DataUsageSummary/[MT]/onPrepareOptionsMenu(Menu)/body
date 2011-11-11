@@ -5,7 +5,7 @@
   mMenuDataRoaming.setVisible(hasMobileRadio(context) && !appDetailMode);
   mMenuDataRoaming.setChecked(getDataRoaming());
   mMenuRestrictBackground=menu.findItem(R.id.data_usage_menu_restrict_background);
-  mMenuRestrictBackground.setVisible(!appDetailMode);
+  mMenuRestrictBackground.setVisible(hasMobileRadio(context) && !appDetailMode);
   mMenuRestrictBackground.setChecked(getRestrictBackground());
   final MenuItem split4g=menu.findItem(R.id.data_usage_menu_split_4g);
   split4g.setVisible(hasMobile4gRadio(context) && !appDetailMode);

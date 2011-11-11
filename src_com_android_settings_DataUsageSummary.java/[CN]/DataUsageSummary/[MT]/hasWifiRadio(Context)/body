@@ -2,5 +2,6 @@
   if (TEST_RADIOS) {
     return SystemProperties.get(TEST_RADIOS_PROP).contains("wifi");
   }
-  return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI);
+  final ConnectivityManager conn=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+  return conn.isNetworkSupported(TYPE_WIFI);
 }

@@ -7,7 +7,7 @@
   }
   final ConnectivityManager conn=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
   final TelephonyManager telephony=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-  final boolean hasWimax=conn.getNetworkInfo(TYPE_WIMAX) != null;
+  final boolean hasWimax=conn.isNetworkSupported(TYPE_WIMAX);
   final boolean hasLte=telephony.getLteOnCdmaMode() == Phone.LTE_ON_CDMA_TRUE;
   return hasWimax || hasLte;
 }

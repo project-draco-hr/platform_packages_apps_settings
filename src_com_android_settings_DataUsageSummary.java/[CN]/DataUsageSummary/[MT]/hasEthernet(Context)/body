@@ -3,5 +3,5 @@
     return SystemProperties.get(TEST_RADIOS_PROP).contains("ethernet");
   }
   final ConnectivityManager conn=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-  return conn.getNetworkInfo(TYPE_ETHERNET) != null;
+  return conn.isNetworkSupported(TYPE_ETHERNET);
 }

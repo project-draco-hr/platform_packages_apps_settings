@@ -3,5 +3,5 @@
     return SystemProperties.get(TEST_RADIOS_PROP).contains("mobile");
   }
   final ConnectivityManager conn=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-  return conn.getNetworkInfo(TYPE_MOBILE) != null;
+  return conn.isNetworkSupported(TYPE_MOBILE);
 }

@@ -3,20 +3,26 @@
   float labelOffset=0;
   if (mFollowAxis == VERTICAL) {
     if (mValidAfterDynamic != null) {
+      mLabelSize=Math.max(getLabelWidth(this),getLabelWidth(mValidAfterDynamic));
       margin=getLabelTop(mValidAfterDynamic) - getLabelBottom(this);
       if (margin < 0) {
         labelOffset=margin / 2;
       }
     }
  else     if (mValidBeforeDynamic != null) {
+      mLabelSize=Math.max(getLabelWidth(this),getLabelWidth(mValidBeforeDynamic));
       margin=getLabelTop(this) - getLabelBottom(mValidBeforeDynamic);
       if (margin < 0) {
         labelOffset=-margin / 2;
       }
     }
+ else {
+      mLabelSize=getLabelWidth(this);
+    }
   }
  else {
   }
+  mLabelSize=Math.max(mLabelSize,mLabelMinSize);
   if (labelOffset != mLabelOffset) {
     mLabelOffset=labelOffset;
     invalidate();

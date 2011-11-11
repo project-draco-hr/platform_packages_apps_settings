@@ -38,7 +38,7 @@
     mAppSettings.setEnabled(false);
   }
   updateDetailData();
-  if (NetworkPolicyManager.isUidValidForPolicy(context,primaryUid) && !getRestrictBackground() && isBandwidthControlEnabled()) {
+  if (NetworkPolicyManager.isUidValidForPolicy(context,primaryUid) && !getRestrictBackground() && isBandwidthControlEnabled()&& hasMobileRadio(context)) {
     setPreferenceTitle(mAppRestrictView,R.string.data_usage_app_restrict_background);
     if (hasLimitedNetworks()) {
       setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary));

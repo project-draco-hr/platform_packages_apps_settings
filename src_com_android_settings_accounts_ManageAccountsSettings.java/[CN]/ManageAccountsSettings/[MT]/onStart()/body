@@ -1,4 +1,7 @@
 {
   super.onStart();
-  AccountManager.get(getActivity()).addOnAccountsUpdatedListener(this,null,true);
+  Activity activity=getActivity();
+  AccountManager.get(activity).addOnAccountsUpdatedListener(this,null,true);
+  activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
+  activity.getActionBar().setCustomView(mAutoSyncSwitch,new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.RIGHT));
 }

@@ -1,4 +1,7 @@
 {
   super.onStop();
-  AccountManager.get(getActivity()).removeOnAccountsUpdatedListener(this);
+  final Activity activity=getActivity();
+  AccountManager.get(activity).removeOnAccountsUpdatedListener(this);
+  activity.getActionBar().setDisplayOptions(0,ActionBar.DISPLAY_SHOW_CUSTOM);
+  activity.getActionBar().setCustomView(null);
 }

@@ -1,5 +1,8 @@
 {
   String component=Settings.Secure.getString(resolver,DREAM_COMPONENT);
+  if (component == null) {
+    component=getContext().getResources().getString(com.android.internal.R.string.config_defaultDreamComponent);
+  }
   if (component != null) {
     ComponentName cn=ComponentName.unflattenFromString(component);
     try {

@@ -1,0 +1,8 @@
+{
+  if (mSwitch == switch_)   return;
+  if (mSwitch != null)   mSwitch.setOnCheckedChangeListener(null);
+  mSwitch=switch_;
+  mSwitch.setOnCheckedChangeListener(this);
+  final boolean enabled=isScreenSaverEnabled(mContext);
+  mSwitch.setChecked(enabled);
+}

@@ -1,0 +1,6 @@
+{
+  if (preference == mActivateOnDockPreference) {
+    Settings.Secure.putInt(getContentResolver(),SCREENSAVER_ACTIVATE_ON_DOCK,mActivateOnDockPreference.isChecked() ? 1 : 0);
+  }
+  return super.onPreferenceTreeClick(preferenceScreen,preference);
+}

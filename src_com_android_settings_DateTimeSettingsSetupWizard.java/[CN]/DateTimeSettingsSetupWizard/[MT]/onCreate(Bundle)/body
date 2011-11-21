@@ -4,11 +4,9 @@
   setContentView(R.layout.date_time_settings_setupwizard);
   mUsingXLargeLayout=findViewById(R.id.time_zone_button) != null;
   if (mUsingXLargeLayout) {
-    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     initUiForXl();
   }
  else {
-    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
     findViewById(R.id.next_button).setOnClickListener(this);
   }
   mTimeZoneAdapter=ZonePicker.constructTimezoneAdapter(this,false,R.layout.date_time_setup_custom_list_item_2);

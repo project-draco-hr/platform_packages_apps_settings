@@ -1,15 +1,6 @@
 {
   super.onResume();
+  mWifiP2pEnabler.resume();
   getActivity().registerReceiver(mReceiver,mIntentFilter);
-  if (mWifiP2pManager != null) {
-    mWifiP2pManager.discoverPeers(mChannel,new WifiP2pManager.ActionListener(){
-      public void onSuccess(){
-        Log.d(TAG," discover success");
-      }
-      public void onFailure(      int reason){
-        Log.d(TAG," discover fail " + reason);
-      }
-    }
-);
-  }
+  startSearch();
 }

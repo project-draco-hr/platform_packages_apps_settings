@@ -1,0 +1,20 @@
+{
+  if (mWifiP2pManager != null && !mWifiP2pSearching) {
+    mWifiP2pManager.discoverPeers(mChannel,new WifiP2pManager.ActionListener(){
+      public void onSuccess(){
+        updateSearchMenu(true);
+        mUiHandler.postDelayed(new Runnable(){
+          public void run(){
+            updateSearchMenu(false);
+          }
+        }
+,20000);
+      }
+      public void onFailure(      int reason){
+        if (DBG)         Log.d(TAG," discover fail " + reason);
+        updateSearchMenu(false);
+      }
+    }
+);
+  }
+}

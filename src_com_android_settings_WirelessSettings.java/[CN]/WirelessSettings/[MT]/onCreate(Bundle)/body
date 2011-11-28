@@ -5,7 +5,6 @@
   mAirplaneModePreference=(CheckBoxPreference)findPreference(KEY_TOGGLE_AIRPLANE);
   CheckBoxPreference nfc=(CheckBoxPreference)findPreference(KEY_TOGGLE_NFC);
   PreferenceScreen androidBeam=(PreferenceScreen)findPreference(KEY_ANDROID_BEAM_SETTINGS);
-  CheckBoxPreference wifiP2p=(CheckBoxPreference)findPreference(KEY_TOGGLE_WIFI_P2P);
   mAirplaneModeEnabler=new AirplaneModeEnabler(activity,mAirplaneModePreference);
   mNfcEnabler=new NfcEnabler(activity,nfc,androidBeam);
   String toggleable=Settings.System.getString(activity.getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
@@ -41,12 +40,8 @@
   }
   WifiP2pManager p2p=(WifiP2pManager)activity.getSystemService(Context.WIFI_P2P_SERVICE);
   if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI_DIRECT)) {
-    getPreferenceScreen().removePreference(wifiP2p);
+    getPreferenceScreen().removePreference(findPreference(KEY_WIFI_P2P_SETTINGS));
   }
- else {
-    mWifiP2pEnabler=new WifiP2pEnabler(activity,wifiP2p);
-  }
-  getPreferenceScreen().removePreference(findPreference(KEY_WIFI_P2P_SETTINGS));
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
   DevicePolicyManager mDPM=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
   getPreferenceScreen().removePreference(mGlobalProxy);

@@ -1,45 +1,9 @@
 {
 switch (item.getItemId()) {
 case MENU_ID_SEARCH:
-    if (mWifiP2pManager != null) {
-      mWifiP2pManager.discoverPeers(mChannel,new WifiP2pManager.ActionListener(){
-        public void onSuccess(){
-          Log.d(TAG," discover success");
-        }
-        public void onFailure(        int reason){
-          Log.d(TAG," discover fail " + reason);
-        }
-      }
-);
-    }
+    startSearch();
   return true;
-case MENU_ID_CREATE_GROUP:
-if (mWifiP2pManager != null) {
-  mWifiP2pManager.createGroup(mChannel,new WifiP2pManager.ActionListener(){
-    public void onSuccess(){
-      Log.d(TAG," create group success");
-    }
-    public void onFailure(    int reason){
-      Log.d(TAG," create group fail " + reason);
-    }
-  }
-);
-}
-return true;
-case MENU_ID_REMOVE_GROUP:
-if (mWifiP2pManager != null) {
-mWifiP2pManager.removeGroup(mChannel,new WifiP2pManager.ActionListener(){
-public void onSuccess(){
-  Log.d(TAG," remove group success");
-}
-public void onFailure(int reason){
-  Log.d(TAG," remove group fail " + reason);
-}
-}
-);
-}
-return true;
-case MENU_ID_ADVANCED:
+case MENU_ID_RENAME:
 return true;
 }
 return super.onOptionsItemSelected(item);

@@ -1,5 +1,4 @@
 {
-  mThisDevicePref=new Preference(getActivity());
   if (mThisDevice != null) {
     if (TextUtils.isEmpty(mThisDevice.deviceName)) {
       mThisDevicePref.setTitle(mThisDevice.deviceAddress);
@@ -7,13 +6,8 @@
  else {
       mThisDevicePref.setTitle(mThisDevice.deviceName);
     }
-    if (mThisDevice.status == WifiP2pDevice.CONNECTED) {
-      String[] statusArray=getActivity().getResources().getStringArray(R.array.wifi_p2p_status);
-      mThisDevicePref.setSummary(statusArray[mThisDevice.status]);
-    }
     mThisDevicePref.setPersistent(false);
     mThisDevicePref.setEnabled(true);
     mThisDevicePref.setSelectable(false);
   }
-  onPeersAvailable(mPeers);
 }

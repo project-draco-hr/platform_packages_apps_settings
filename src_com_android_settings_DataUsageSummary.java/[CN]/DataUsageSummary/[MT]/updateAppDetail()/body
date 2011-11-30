@@ -40,12 +40,7 @@
   updateDetailData();
   if (NetworkPolicyManager.isUidValidForPolicy(context,primaryUid) && !getRestrictBackground() && isBandwidthControlEnabled()&& hasMobileRadio(context)) {
     setPreferenceTitle(mAppRestrictView,R.string.data_usage_app_restrict_background);
-    if (hasLimitedNetworks()) {
-      setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary));
-    }
- else {
-      setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary_disabled));
-    }
+    setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary));
     mAppRestrictView.setVisibility(View.VISIBLE);
     mAppRestrict.setChecked(getAppRestrictBackground());
   }

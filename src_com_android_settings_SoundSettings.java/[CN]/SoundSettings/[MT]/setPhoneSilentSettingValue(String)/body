@@ -1,0 +1,10 @@
+{
+  int ringerMode=AudioManager.RINGER_MODE_NORMAL;
+  if (value.equals(SILENT_MODE_MUTE)) {
+    ringerMode=AudioManager.RINGER_MODE_SILENT;
+  }
+ else   if (value.equals(SILENT_MODE_VIBRATE)) {
+    ringerMode=AudioManager.RINGER_MODE_VIBRATE;
+  }
+  mAudioManager.setRingerMode(ringerMode);
+}

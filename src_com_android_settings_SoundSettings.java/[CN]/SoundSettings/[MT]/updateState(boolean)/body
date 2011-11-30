@@ -1,13 +1,7 @@
 {
   if (getActivity() == null)   return;
-  final int ringerMode=mAudioManager.getRingerMode();
-  final boolean silentOrVibrateMode=ringerMode != AudioManager.RINGER_MODE_NORMAL;
-  if (silentOrVibrateMode != mSilent.isChecked() || force) {
-    mSilent.setChecked(silentOrVibrateMode);
-  }
-  String phoneVibrateSetting=getPhoneVibrateSettingValue();
-  if (!phoneVibrateSetting.equals(mVibrate.getValue()) || force) {
-    mVibrate.setValue(phoneVibrateSetting);
-  }
-  mVibrate.setSummary(mVibrate.getEntry());
+  final int vibrateMode=mAudioManager.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER);
+  mVibrateOnRing.setChecked(vibrateMode == AudioManager.VIBRATE_SETTING_ON);
+  mSilentMode.setValue(getPhoneSilentModeSettingValue());
+  mSilentMode.setSummary(mSilentMode.getEntry());
 }

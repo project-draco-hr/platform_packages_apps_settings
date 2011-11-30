@@ -1,15 +1,5 @@
 {
-  if (preference == mSilent) {
-    if (mSilent.isChecked()) {
-      boolean vibeInSilent=(1 == Settings.System.getInt(getContentResolver(),Settings.System.VIBRATE_IN_SILENT,1));
-      mAudioManager.setRingerMode(vibeInSilent ? AudioManager.RINGER_MODE_VIBRATE : AudioManager.RINGER_MODE_SILENT);
-    }
- else {
-      mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-    }
-    updateState(false);
-  }
- else   if (preference == mDtmfTone) {
+  if (preference == mDtmfTone) {
     Settings.System.putInt(getContentResolver(),Settings.System.DTMF_TONE_WHEN_DIALING,mDtmfTone.isChecked() ? 1 : 0);
   }
  else   if (preference == mSoundEffects) {

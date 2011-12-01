@@ -1,5 +1,9 @@
 {
-  int quality=new LockPatternUtils(getActivity()).getActivePasswordQuality();
+  LockPatternUtils lockPatternUtils=new LockPatternUtils(getActivity());
+  int quality=lockPatternUtils.getActivePasswordQuality();
+  if (quality == DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK && lockPatternUtils.isLockPasswordEnabled()) {
+    quality=lockPatternUtils.getKeyguardStoredPasswordQuality();
+  }
   if (quality < MIN_PASSWORD_QUALITY) {
     return false;
   }

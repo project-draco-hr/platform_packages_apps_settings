@@ -9,9 +9,11 @@
       Log.e(TAG,"could not persist emergency tone setting",e);
     }
   }
- else   if (preference == mVibrate) {
-    setPhoneVibrateSettingValue(objValue.toString());
-    updateState(false);
+ else   if (preference == mVibrateOnRing) {
+    setPhoneVibrateSettingValue((Boolean)objValue);
+  }
+ else   if (preference == mSilentMode) {
+    setPhoneSilentSettingValue(objValue.toString());
   }
   return true;
 }

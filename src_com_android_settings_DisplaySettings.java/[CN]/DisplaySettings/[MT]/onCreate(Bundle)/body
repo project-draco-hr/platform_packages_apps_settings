@@ -4,7 +4,6 @@
   addPreferencesFromResource(R.xml.display_settings);
   mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
   mAccelerometer.setPersistent(false);
-  mScreenSaverPreference=findPreference(KEY_SCREEN_SAVER);
   mScreenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
   final long currentTimeout=Settings.System.getLong(resolver,SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE);
   mScreenTimeoutPreference.setValue(String.valueOf(currentTimeout));

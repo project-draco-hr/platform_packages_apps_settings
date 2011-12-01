@@ -15,7 +15,7 @@
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
       }
  else       if (KEY_UNLOCK_SET_BIOMETRIC_WEAK.equals(key)) {
-        enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK;
+        enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK || allowBiometric.value;
         visible=weakBiometricAvailable;
       }
  else       if (KEY_UNLOCK_SET_PATTERN.equals(key)) {

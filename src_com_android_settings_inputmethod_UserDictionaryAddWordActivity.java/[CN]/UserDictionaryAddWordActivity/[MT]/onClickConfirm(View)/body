@@ -1,0 +1,24 @@
+{
+  if (MODE_EDIT == mMode && !TextUtils.isEmpty(mOldWord)) {
+    UserDictionarySettings.deleteWord(mOldWord,this.getContentResolver());
+  }
+  final String newWord=mEditText.getText().toString();
+  if (TextUtils.isEmpty(newWord)) {
+    finish();
+    return;
+  }
+  UserDictionarySettings.deleteWord(newWord,this.getContentResolver());
+  if (null == mLocale) {
+    UserDictionary.Words.addWord(this,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,UserDictionary.Words.LOCALE_TYPE_CURRENT);
+  }
+ else   if ("".equals(mLocale)) {
+    UserDictionary.Words.addWord(this,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,UserDictionary.Words.LOCALE_TYPE_ALL);
+  }
+ else {
+    final Locale prevLocale=Locale.getDefault();
+    Locale.setDefault(Utils.createLocaleFromString(mLocale));
+    UserDictionary.Words.addWord(this,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,UserDictionary.Words.LOCALE_TYPE_CURRENT);
+    Locale.setDefault(prevLocale);
+  }
+  finish();
+}

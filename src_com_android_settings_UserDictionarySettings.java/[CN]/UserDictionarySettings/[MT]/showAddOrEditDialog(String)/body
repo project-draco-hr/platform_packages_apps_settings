@@ -1,4 +1,6 @@
 {
-  mDialogEditingWord=editingWord;
-  showDialog(DIALOG_ADD_OR_EDIT);
+  final Intent intent=new Intent(null == editingWord ? UserDictionaryAddWordActivity.MODE_INSERT_ACTION : UserDictionaryAddWordActivity.MODE_EDIT_ACTION);
+  intent.putExtra(UserDictionaryAddWordActivity.EXTRA_WORD,editingWord);
+  intent.putExtra(UserDictionaryAddWordActivity.EXTRA_LOCALE,mLocale);
+  startActivity(intent);
 }

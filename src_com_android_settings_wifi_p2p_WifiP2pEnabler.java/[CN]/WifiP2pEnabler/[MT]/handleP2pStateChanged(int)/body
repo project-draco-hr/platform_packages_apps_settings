@@ -1,13 +1,17 @@
 {
-  mCheckBox.setEnabled(true);
+  setSwitchChecked(true);
 switch (state) {
 case WifiP2pManager.WIFI_P2P_STATE_ENABLED:
-    mCheckBox.setChecked(true);
-  break;
+    setSwitchChecked(true);
+  mSwitch.setEnabled(true);
+break;
 case WifiP2pManager.WIFI_P2P_STATE_DISABLED:
-mCheckBox.setChecked(false);
+setSwitchChecked(false);
+mSwitch.setEnabled(true);
 break;
 default :
+mSwitch.setEnabled(false);
+setSwitchChecked(false);
 Log.e(TAG,"Unhandled wifi state " + state);
 break;
 }

@@ -1,0 +1,11 @@
+{
+  if (mStateMachineEvent)   return;
+  if (mWifiP2pManager == null)   return;
+  mSwitch.setEnabled(false);
+  if (isChecked) {
+    mWifiP2pManager.enableP2p(mChannel);
+  }
+ else {
+    mWifiP2pManager.disableP2p(mChannel);
+  }
+}

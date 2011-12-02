@@ -1,0 +1,18 @@
+{
+  MenuItem searchMenu=menu.findItem(MENU_ID_SEARCH);
+  MenuItem renameMenu=menu.findItem(MENU_ID_RENAME);
+  if (mWifiP2pEnabled) {
+    searchMenu.setEnabled(true);
+    renameMenu.setEnabled(true);
+  }
+ else {
+    searchMenu.setEnabled(false);
+    renameMenu.setEnabled(false);
+  }
+  if (mWifiP2pSearching) {
+    searchMenu.setTitle(R.string.wifi_p2p_menu_searching);
+  }
+ else {
+    searchMenu.setTitle(R.string.wifi_p2p_menu_search);
+  }
+}

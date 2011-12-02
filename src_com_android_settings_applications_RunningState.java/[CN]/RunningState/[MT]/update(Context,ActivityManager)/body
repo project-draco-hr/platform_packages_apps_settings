@@ -118,7 +118,7 @@
     proc.mRunningProcessInfo=pi;
   }
   int NRP=mRunningProcesses.size();
-  for (int i=0; i < NRP; i++) {
+  for (int i=0; i < NRP; ) {
     ProcessItem proc=mRunningProcesses.valueAt(i);
     if (proc.mRunningSeq == mSequence) {
       int clientPid=proc.mRunningProcessInfo.importanceReasonPid;
@@ -134,10 +134,12 @@
  else {
         proc.mClient=null;
       }
+      i++;
     }
  else {
       changed=true;
       mRunningProcesses.remove(mRunningProcesses.keyAt(i));
+      NRP--;
     }
   }
   int NHP=mInterestingProcesses.size();

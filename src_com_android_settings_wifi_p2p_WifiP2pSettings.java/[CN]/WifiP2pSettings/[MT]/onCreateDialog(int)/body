@@ -1,10 +1,8 @@
 {
-  if (id == DIALOG_CONNECT) {
-    mConnectDialog=new WifiP2pDialog(getActivity(),mConnectListener,mSelectedWifiPeer.device);
-    return mConnectDialog;
-  }
- else   if (id == DIALOG_DISCONNECT) {
-    AlertDialog dialog=new AlertDialog.Builder(getActivity()).setTitle("Disconnect ?").setMessage("Do you want to disconnect ?").setPositiveButton(getActivity().getString(R.string.dlg_ok),mDisconnectListener).setNegativeButton(getActivity().getString(R.string.dlg_cancel),null).create();
+  if (id == DIALOG_DISCONNECT) {
+    int stringId=(mConnectedDevices > 1) ? R.string.wifi_p2p_disconnect_multiple_message : R.string.wifi_p2p_disconnect_message;
+    String deviceName=TextUtils.isEmpty(mSelectedWifiPeer.device.deviceName) ? mSelectedWifiPeer.device.deviceAddress : mSelectedWifiPeer.device.deviceName;
+    AlertDialog dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.wifi_p2p_disconnect_title).setMessage(getActivity().getString(stringId,deviceName)).setPositiveButton(getActivity().getString(R.string.dlg_ok),mDisconnectListener).setNegativeButton(getActivity().getString(R.string.dlg_cancel),null).create();
     return dialog;
   }
   return null;

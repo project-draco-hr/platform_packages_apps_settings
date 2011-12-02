@@ -1,19 +1,9 @@
 {
-  final PreferenceScreen preferenceScreen=getPreferenceScreen();
-  preferenceScreen.removeAll();
-  preferenceScreen.setOrderingAsAdded(true);
-  if (mPeersGroup == null) {
-    mPeersGroup=new PreferenceCategory(getActivity());
-  }
- else {
-    mPeersGroup.removeAll();
-  }
-  preferenceScreen.addPreference(mThisDevicePref);
-  mPeersGroup.setTitle(R.string.wifi_p2p_available_devices);
-  mPeersGroup.setEnabled(true);
-  preferenceScreen.addPreference(mPeersGroup);
+  mPeersGroup.removeAll();
   mPeers=peers;
+  mConnectedDevices=0;
   for (  WifiP2pDevice peer : peers.getDeviceList()) {
     mPeersGroup.addPreference(new WifiP2pPeer(getActivity(),peer));
+    if (peer.status == WifiP2pDevice.CONNECTED)     mConnectedDevices++;
   }
 }

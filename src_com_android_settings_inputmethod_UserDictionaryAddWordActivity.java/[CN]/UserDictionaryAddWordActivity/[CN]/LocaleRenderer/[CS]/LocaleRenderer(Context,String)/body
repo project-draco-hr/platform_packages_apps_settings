@@ -1,0 +1,9 @@
+{
+  mLocaleString=localeString;
+  if ("".equals(localeString)) {
+    mDescription=context.getString(R.string.user_dict_settings_all_languages);
+  }
+ else {
+    mDescription=Utils.createLocaleFromString(localeString).getDisplayName();
+  }
+}

@@ -12,6 +12,8 @@
   }
   final boolean autoRotationEnabled=Settings.System.getInt(getContentResolver(),Settings.System.ACCELEROMETER_ROTATION,0) != 0;
   mToggleAutoRotateScreenPreference.setChecked(autoRotationEnabled);
+  final boolean speakPasswordEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SPEAK_PASSWORD,0) != 0;
+  mToggleSpeakPasswordPreference.setChecked(speakPasswordEnabled);
   if (AccessibilityManager.getInstance(getActivity()).isEnabled()) {
     mSystemsCategory.addPreference(mToggleTouchExplorationPreference);
     final boolean touchExplorationEnabled=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.TOUCH_EXPLORATION_ENABLED,0) == 1);

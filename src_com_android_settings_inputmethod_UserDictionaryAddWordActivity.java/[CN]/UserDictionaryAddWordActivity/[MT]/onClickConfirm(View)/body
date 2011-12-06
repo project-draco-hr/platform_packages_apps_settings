@@ -8,10 +8,7 @@
     return;
   }
   UserDictionarySettings.deleteWord(newWord,this.getContentResolver());
-  if (null == mLocale) {
-    UserDictionary.Words.addWord(this,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,UserDictionary.Words.LOCALE_TYPE_CURRENT);
-  }
- else   if ("".equals(mLocale)) {
+  if (TextUtils.isEmpty(mLocale)) {
     UserDictionary.Words.addWord(this,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,UserDictionary.Words.LOCALE_TYPE_ALL);
   }
  else {

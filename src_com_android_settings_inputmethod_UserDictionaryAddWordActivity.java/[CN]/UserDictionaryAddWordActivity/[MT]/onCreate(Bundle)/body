@@ -13,7 +13,8 @@
     throw new RuntimeException("Unsupported action: " + action);
   }
   mOldWord=intent.getStringExtra(EXTRA_WORD);
-  mLocale=intent.getStringExtra(EXTRA_LOCALE);
+  final String locale=intent.getStringExtra(EXTRA_LOCALE);
+  mLocale=null == locale ? Locale.getDefault().toString() : locale;
   mEditText=(EditText)findViewById(R.id.user_dictionary_add_word_text);
   if (null != mOldWord) {
     mEditText.setText(mOldWord);

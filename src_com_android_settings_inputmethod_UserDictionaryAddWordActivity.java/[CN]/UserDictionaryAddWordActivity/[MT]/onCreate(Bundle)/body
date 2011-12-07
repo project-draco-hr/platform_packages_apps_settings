@@ -2,8 +2,21 @@
   super.onCreate(savedInstanceState);
   setContentView(R.layout.user_dictionary_add_word);
   final Intent intent=getIntent();
-  final String word=intent.getStringExtra(EXTRA_WORD);
+  final String action=intent.getAction();
+  if (MODE_EDIT_ACTION.equals(action)) {
+    mMode=MODE_EDIT;
+  }
+ else   if (MODE_INSERT_ACTION.equals(action)) {
+    mMode=MODE_INSERT;
+  }
+ else {
+    throw new RuntimeException("Unsupported action: " + action);
+  }
+  mOldWord=intent.getStringExtra(EXTRA_WORD);
+  mLocale=intent.getStringExtra(EXTRA_LOCALE);
   mEditText=(EditText)findViewById(R.id.user_dictionary_add_word_text);
-  mEditText.setText(word);
-  mEditText.setSelection(word.length());
+  if (null != mOldWord) {
+    mEditText.setText(mOldWord);
+    mEditText.setSelection(mOldWord.length());
+  }
 }

@@ -3,8 +3,10 @@
   notifyOpenNetworks.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,0) == 1);
   notifyOpenNetworks.setEnabled(mWifiManager.isWifiEnabled());
   CheckBoxPreference watchdogEnabled=(CheckBoxPreference)findPreference(KEY_ENABLE_WIFI_WATCHDOG);
-  watchdogEnabled.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_WATCHDOG_ON,1) == 1);
-  getPreferenceScreen().removePreference(watchdogEnabled);
+  if (watchdogEnabled != null) {
+    watchdogEnabled.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_WATCHDOG_ON,1) == 1);
+    getPreferenceScreen().removePreference(watchdogEnabled);
+  }
   ListPreference frequencyPref=(ListPreference)findPreference(KEY_FREQUENCY_BAND);
   if (mWifiManager.isDualBandSupported()) {
     frequencyPref.setOnPreferenceChangeListener(this);

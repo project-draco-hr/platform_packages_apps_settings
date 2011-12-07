@@ -4,7 +4,7 @@
       return null;
     }
     String[] values=new String(value,Charsets.UTF_8).split("\0",-1);
-    if (values.length < 14) {
+    if (values.length < 14 || values.length > 15) {
       return null;
     }
     VpnProfile profile=new VpnProfile(key);
@@ -25,6 +25,7 @@
     profile.ipsecSecret=values[11];
     profile.ipsecUserCert=values[12];
     profile.ipsecCaCert=values[13];
+    profile.ipsecServerCert=(values.length > 14) ? values[14] : "";
     profile.saveLogin=!profile.username.isEmpty() || !profile.password.isEmpty();
     return profile;
   }

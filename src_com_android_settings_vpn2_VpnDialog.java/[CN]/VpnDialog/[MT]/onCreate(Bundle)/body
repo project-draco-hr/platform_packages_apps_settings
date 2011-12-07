@@ -17,6 +17,7 @@
   mIpsecSecret=(TextView)mView.findViewById(R.id.ipsec_secret);
   mIpsecUserCert=(Spinner)mView.findViewById(R.id.ipsec_user_cert);
   mIpsecCaCert=(Spinner)mView.findViewById(R.id.ipsec_ca_cert);
+  mIpsecServerCert=(Spinner)mView.findViewById(R.id.ipsec_server_cert);
   mSaveLogin=(CheckBox)mView.findViewById(R.id.save_login);
   mName.setText(mProfile.name);
   mType.setSelection(mProfile.type);
@@ -32,6 +33,7 @@
   mIpsecSecret.setText(mProfile.ipsecSecret);
   loadCertificates(mIpsecUserCert,Credentials.USER_CERTIFICATE,0,mProfile.ipsecUserCert);
   loadCertificates(mIpsecCaCert,Credentials.CA_CERTIFICATE,R.string.vpn_no_ca_cert,mProfile.ipsecCaCert);
+  loadCertificates(mIpsecServerCert,Credentials.USER_CERTIFICATE,R.string.vpn_no_server_cert,mProfile.ipsecServerCert);
   mSaveLogin.setChecked(mProfile.saveLogin);
   mName.addTextChangedListener(this);
   mType.setOnItemSelectedListener(this);

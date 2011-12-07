@@ -1,4 +1,9 @@
 {
   super.onCreate(savedInstanceState);
-  setContentView(R.layout.dialog_edittext);
+  setContentView(R.layout.user_dictionary_add_word);
+  final Intent intent=getIntent();
+  final String word=intent.getStringExtra(EXTRA_WORD);
+  mEditText=(EditText)findViewById(R.id.user_dictionary_add_word_text);
+  mEditText.setText(word);
+  mEditText.setSelection(word.length());
 }

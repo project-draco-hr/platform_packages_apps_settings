@@ -1,18 +1,18 @@
 {
   super.onBindView(view);
-  mCheckBox=view.findViewById(R.id.inputmethod_pref);
-  mCheckBox.setOnClickListener(new OnClickListener(){
+  View textLayout=view.findViewById(R.id.inputmethod_pref);
+  textLayout.setOnClickListener(new OnClickListener(){
     @Override public void onClick(    View arg0){
       onCheckBoxClicked();
     }
   }
 );
-  mSetingsButton=(ImageView)view.findViewById(R.id.inputmethod_settings);
+  mSettingsButton=(ImageView)view.findViewById(R.id.inputmethod_settings);
   mTitleText=(TextView)view.findViewById(android.R.id.title);
   mSummaryText=(TextView)view.findViewById(android.R.id.summary);
-  mSetingsButton.setOnClickListener(new OnClickListener(){
-    @Override public void onClick(    View arg0){
-      onSettingsButtonClicked(arg0);
+  mSettingsButton.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View clickedView){
+      onSettingsButtonClicked();
     }
   }
 );

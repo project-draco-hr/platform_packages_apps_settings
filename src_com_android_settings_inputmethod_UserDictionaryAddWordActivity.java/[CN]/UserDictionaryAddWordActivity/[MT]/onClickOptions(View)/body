@@ -3,4 +3,23 @@
   moreOptionsView.setVisibility(View.VISIBLE);
   findViewById(R.id.user_dictionary_settings_add_dialog_options).setVisibility(View.GONE);
   findViewById(R.id.user_dictionary_settings_add_dialog_manage).setVisibility(View.VISIBLE);
+  final Set<String> locales=UserDictionaryList.getUserDictionaryLocalesList(this);
+  if (null != mLocale && locales.contains(mLocale)) {
+    locales.remove(mLocale);
+  }
+  final String systemLocale=Locale.getDefault().toString();
+  if (null != systemLocale && locales.contains(systemLocale)) {
+    locales.remove(systemLocale);
+  }
+  final ArrayList<String> localesList=new ArrayList<String>();
+  addLocaleDisplayNameToList(localesList,mLocale);
+  addLocaleDisplayNameToList(localesList,systemLocale);
+  for (  final String l : locales) {
+    addLocaleDisplayNameToList(localesList,l);
+  }
+  localesList.add(getString(R.string.user_dict_settings_all_languages));
+  final Spinner localeSpinner=(Spinner)findViewById(R.id.user_dictionary_settings_add_dialog_locale);
+  final ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,localesList);
+  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+  localeSpinner.setAdapter(adapter);
 }

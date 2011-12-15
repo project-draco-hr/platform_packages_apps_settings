@@ -12,14 +12,14 @@
     final NetworkPolicy restrictive=policy3g.compareTo(policy4g) < 0 ? policy3g : policy4g;
     mPolicies.remove(policy3g);
     mPolicies.remove(policy4g);
-    mPolicies.add(new NetworkPolicy(templateAll,restrictive.cycleDay,restrictive.warningBytes,restrictive.limitBytes,SNOOZE_NEVER));
+    mPolicies.add(new NetworkPolicy(templateAll,restrictive.cycleDay,restrictive.warningBytes,restrictive.limitBytes,SNOOZE_NEVER,restrictive.metered));
     return true;
   }
  else   if (!beforeSplit && split) {
     final NetworkPolicy policyAll=getPolicy(templateAll);
     mPolicies.remove(policyAll);
-    mPolicies.add(new NetworkPolicy(template3g,policyAll.cycleDay,policyAll.warningBytes,policyAll.limitBytes,SNOOZE_NEVER));
-    mPolicies.add(new NetworkPolicy(template4g,policyAll.cycleDay,policyAll.warningBytes,policyAll.limitBytes,SNOOZE_NEVER));
+    mPolicies.add(new NetworkPolicy(template3g,policyAll.cycleDay,policyAll.warningBytes,policyAll.limitBytes,SNOOZE_NEVER,policyAll.metered));
+    mPolicies.add(new NetworkPolicy(template4g,policyAll.cycleDay,policyAll.warningBytes,policyAll.limitBytes,SNOOZE_NEVER,policyAll.metered));
     return true;
   }
  else {

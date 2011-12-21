@@ -7,14 +7,20 @@
  else {
       WifiP2pConfig config=new WifiP2pConfig();
       config.deviceAddress=mSelectedWifiPeer.device.deviceAddress;
-      if (mSelectedWifiPeer.device.wpsPbcSupported()) {
-        config.wps.setup=WpsInfo.PBC;
-      }
- else       if (mSelectedWifiPeer.device.wpsKeypadSupported()) {
-        config.wps.setup=WpsInfo.KEYPAD;
+      int forceWps=SystemProperties.getInt("wifidirect.wps",-1);
+      if (forceWps != -1) {
+        config.wps.setup=forceWps;
       }
  else {
-        config.wps.setup=WpsInfo.DISPLAY;
+        if (mSelectedWifiPeer.device.wpsPbcSupported()) {
+          config.wps.setup=WpsInfo.PBC;
+        }
+ else         if (mSelectedWifiPeer.device.wpsKeypadSupported()) {
+          config.wps.setup=WpsInfo.KEYPAD;
+        }
+ else {
+          config.wps.setup=WpsInfo.DISPLAY;
+        }
       }
       mWifiP2pManager.connect(mChannel,config,new WifiP2pManager.ActionListener(){
         public void onSuccess(){

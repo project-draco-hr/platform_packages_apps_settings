@@ -1,0 +1,9 @@
+{
+  mEnginesHelper.updateLocalePrefForEngine(getEngineName(),locale);
+  if (getEngineName().equals(mTts.getCurrentEngine())) {
+    String[] localeArray=TtsEngines.parseLocalePref(locale);
+    if (localeArray != null) {
+      mTts.setLanguage(new Locale(localeArray[0],localeArray[1],localeArray[2]));
+    }
+  }
+}

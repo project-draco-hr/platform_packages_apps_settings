@@ -1,7 +1,6 @@
 {
   String currentEngine=mTts.getCurrentEngine();
   if (TextUtils.isEmpty(currentEngine))   currentEngine=mTts.getDefaultEngine();
-  maybeUpdateTtsLanguage(currentEngine);
   Locale currentLocale=mTts.getLanguage();
   Intent intent=new Intent(TextToSpeech.Engine.ACTION_GET_SAMPLE_TEXT);
   if (currentLocale != null) {

@@ -18,5 +18,6 @@
     mEngineSettingsPreference.setEnabled(false);
   }
   mInstallVoicesPreference.setEnabled(false);
-  updateVoiceDetails();
+  mLocalePreference.setEnabled(false);
+  mTts=new TextToSpeech(getActivity().getApplicationContext(),mTtsInitListener,getEngineName());
 }

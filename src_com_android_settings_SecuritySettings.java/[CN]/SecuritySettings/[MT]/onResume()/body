@@ -8,6 +8,9 @@
   if (mTactileFeedback != null) {
     mTactileFeedback.setChecked(lockPatternUtils.isTactileFeedbackEnabled());
   }
+  if (mPowerButtonInstantlyLocks != null) {
+    mPowerButtonInstantlyLocks.setChecked(lockPatternUtils.getPowerButtonInstantlyLocks());
+  }
   mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0);
   KeyStore.State state=KeyStore.getInstance().state();
   mResetCredentials.setEnabled(state != KeyStore.State.UNINITIALIZED);

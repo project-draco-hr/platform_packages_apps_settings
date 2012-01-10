@@ -48,6 +48,7 @@ setupLockAfterPreference();
 updateLockAfterPreferenceSummary();
 }
 mVisiblePattern=(CheckBoxPreference)root.findPreference(KEY_VISIBLE_PATTERN);
+mPowerButtonInstantlyLocks=(CheckBoxPreference)root.findPreference(KEY_POWER_INSTANTLY_LOCKS);
 if (resid == R.xml.security_settings_biometric_weak && mLockPatternUtils.getKeyguardStoredPasswordQuality() != DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
 PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
 if (securityCategory != null && mVisiblePattern != null) {

@@ -21,7 +21,7 @@
   if (!usbAvailable || Utils.isMonkeyRunning()) {
     getPreferenceScreen().removePreference(mUsbTether);
   }
-  if (wifiAvailable) {
+  if (wifiAvailable && !Utils.isMonkeyRunning()) {
     mWifiApEnabler=new WifiApEnabler(activity,mEnableWifiAp);
     initWifiTethering();
   }

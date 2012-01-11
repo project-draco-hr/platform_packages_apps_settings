@@ -1,5 +1,5 @@
 {
   super.onPause();
-  mWifiP2pEnabler.pause();
+  mWifiP2pManager.stopPeerDiscovery(mChannel,null);
   getActivity().unregisterReceiver(mReceiver);
 }

@@ -4,6 +4,9 @@
   intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
   intentFilter.addDataScheme("file");
   getActivity().registerReceiver(mMediaScannerReceiver,intentFilter);
+  intentFilter=new IntentFilter();
+  intentFilter.addAction(UsbManager.ACTION_USB_STATE);
+  getActivity().registerReceiver(mMediaScannerReceiver,intentFilter);
   if (mInternalStorageVolumePreferenceCategory != null) {
     mInternalStorageVolumePreferenceCategory.onResume();
   }

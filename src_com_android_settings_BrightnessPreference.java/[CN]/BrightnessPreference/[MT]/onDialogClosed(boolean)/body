@@ -2,7 +2,7 @@
   super.onDialogClosed(positiveResult);
   final ContentResolver resolver=getContext().getContentResolver();
   if (positiveResult) {
-    Settings.System.putInt(resolver,Settings.System.SCREEN_BRIGHTNESS,mSeekBar.getProgress() + mScreenBrightnessDim);
+    setBrightness(mSeekBar.getProgress(),true);
   }
  else {
     restoreOldState();

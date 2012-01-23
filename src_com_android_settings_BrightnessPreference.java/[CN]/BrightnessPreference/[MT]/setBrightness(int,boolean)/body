@@ -1,0 +1,33 @@
+{
+  if (mAutomaticMode) {
+    float valf=(((float)brightness * 2) / 10000) - 1.0f;
+    try {
+      IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
+      if (power != null) {
+        power.setAutoBrightnessAdjustment(valf);
+      }
+      if (write) {
+        final ContentResolver resolver=getContext().getContentResolver();
+        Settings.System.putFloat(resolver,Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ,valf);
+      }
+    }
+ catch (    RemoteException doe) {
+    }
+  }
+ else {
+    int range=(MAXIMUM_BACKLIGHT - mScreenBrightnessDim);
+    brightness=(brightness * range) / 10000 + mScreenBrightnessDim;
+    try {
+      IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
+      if (power != null) {
+        power.setBacklightBrightness(brightness);
+      }
+      if (write) {
+        final ContentResolver resolver=getContext().getContentResolver();
+        Settings.System.putInt(resolver,Settings.System.SCREEN_BRIGHTNESS,brightness);
+      }
+    }
+ catch (    RemoteException doe) {
+    }
+  }
+}

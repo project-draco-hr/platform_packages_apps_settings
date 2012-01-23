@@ -1,6 +1,4 @@
 {
   setMode(isChecked ? Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC : Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-  if (!isChecked) {
-    setBrightness(mSeekBar.getProgress() + mScreenBrightnessDim);
-  }
+  mSeekBar.setProgress(getBrightness());
 }

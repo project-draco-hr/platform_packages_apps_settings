@@ -7,9 +7,7 @@
   mBatteryLevel=findPreference(KEY_BATTERY_LEVEL);
   mBatteryStatus=findPreference(KEY_BATTERY_STATUS);
   mRes=getResources();
-  if (sUnknown == null) {
-    sUnknown=mRes.getString(R.string.device_info_default);
-  }
+  sUnknown=mRes.getString(R.string.device_info_default);
   mPhone=PhoneFactory.getDefaultPhone();
   mSignalStrength=findPreference(KEY_SIGNAL_STRENGTH);
   mUptime=findPreference("up_time");

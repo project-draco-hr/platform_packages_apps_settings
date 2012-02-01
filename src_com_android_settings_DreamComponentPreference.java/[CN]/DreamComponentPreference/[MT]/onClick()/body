@@ -3,11 +3,16 @@
   AlertDialog alert=new AlertDialog.Builder(getContext()).setAdapter(list,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
       ResolveInfo ri=(ResolveInfo)list.getItem(which);
-      ActivityInfo act=ri.activityInfo;
-      ComponentName cn=new ComponentName(act.applicationInfo.packageName,act.name);
-      Intent intent=new Intent(Intent.ACTION_MAIN).setComponent(cn);
+      String pn=(ri.activityInfo != null) ? ri.activityInfo.applicationInfo.packageName : ri.serviceInfo.applicationInfo.packageName;
+      String n=(ri.activityInfo != null) ? ri.activityInfo.name : ri.serviceInfo.name;
+      ComponentName cn=new ComponentName(pn,n);
       setSummary(ri.loadLabel(pm));
-      Settings.Secure.putString(resolver,SCREENSAVER_COMPONENT,cn.flattenToString());
+      IDreamManager dm=IDreamManager.Stub.asInterface(ServiceManager.getService("dreams"));
+      try {
+        dm.setDreamComponent(cn);
+      }
+ catch (      RemoteException ex) {
+      }
     }
   }
 ).create();

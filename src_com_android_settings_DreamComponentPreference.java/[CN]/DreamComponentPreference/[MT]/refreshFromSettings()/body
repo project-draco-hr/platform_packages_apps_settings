@@ -1,14 +1,21 @@
 {
-  String component=Settings.Secure.getString(resolver,SCREENSAVER_COMPONENT);
-  if (component == null) {
-    component=getContext().getResources().getString(com.android.internal.R.string.config_defaultDreamComponent);
+  ComponentName cn=null;
+  IDreamManager dm=IDreamManager.Stub.asInterface(ServiceManager.getService("dreams"));
+  try {
+    cn=dm.getDreamComponent();
   }
-  if (component != null) {
-    ComponentName cn=ComponentName.unflattenFromString(component);
+ catch (  RemoteException ex) {
+    setSummary("(unknown)");
+    return;
+  }
+  try {
+    setSummary(pm.getActivityInfo(cn,0).loadLabel(pm));
+  }
+ catch (  PackageManager.NameNotFoundException ex) {
     try {
-      setSummary(pm.getActivityInfo(cn,0).loadLabel(pm));
+      setSummary(pm.getServiceInfo(cn,0).loadLabel(pm));
     }
- catch (    PackageManager.NameNotFoundException ex) {
+ catch (    PackageManager.NameNotFoundException ex2) {
       setSummary("(unknown)");
     }
   }

@@ -4,7 +4,11 @@
   if (component != null) {
     ComponentName cn=ComponentName.unflattenFromString(component);
     Log.v(TAG,"cn=" + cn);
-    Intent intent=new Intent(Intent.ACTION_MAIN).setComponent(cn).addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS).putExtra("android.dreams.TEST",true);
-    getContext().startActivity(intent);
+    IDreamManager dm=IDreamManager.Stub.asInterface(ServiceManager.getService("dreams"));
+    try {
+      dm.testDream(cn);
+    }
+ catch (    RemoteException ex) {
+    }
   }
 }

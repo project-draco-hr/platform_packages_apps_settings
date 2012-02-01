@@ -1,9 +1,15 @@
 {
   Intent choosy=new Intent(Intent.ACTION_MAIN).addCategory("android.intent.category.DREAM");
   inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-  results=new ArrayList<ResolveInfo>(pm.queryIntentActivities(choosy,0));
+  results=new ArrayList<ResolveInfo>();
+  if (SHOW_DREAM_ACTIVITIES) {
+    results.addAll(pm.queryIntentActivities(choosy,PackageManager.GET_META_DATA));
+  }
+  if (SHOW_DREAM_SERVICES) {
+    results.addAll(pm.queryIntentServices(choosy,PackageManager.GET_META_DATA));
+  }
   Collections.sort(results,sResolveInfoComparator);
-  if (SHOW_DOCK_APPS_TOO) {
+  if (SHOW_DOCK_APPS) {
     choosy=new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_DESK_DOCK);
     List<ResolveInfo> dockApps=pm.queryIntentActivities(choosy,0);
     for (    ResolveInfo app : dockApps) {

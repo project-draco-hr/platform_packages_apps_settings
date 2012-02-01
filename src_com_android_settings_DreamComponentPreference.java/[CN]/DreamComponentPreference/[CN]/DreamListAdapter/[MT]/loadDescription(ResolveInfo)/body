@@ -1,0 +1,15 @@
+{
+  CharSequence desc=null;
+  if (ri != null) {
+    Bundle metaData=(ri.activityInfo != null) ? ri.activityInfo.metaData : ri.serviceInfo.metaData;
+    Log.d(TAG,"loadDescription: ri=" + ri + " metaData="+ metaData);
+    if (metaData != null) {
+      desc=metaData.getCharSequence("android.screensaver.description");
+      Log.d(TAG,"loadDescription: desc=" + desc);
+      if (desc != null) {
+        desc=desc.toString().trim();
+      }
+    }
+  }
+  return desc;
+}

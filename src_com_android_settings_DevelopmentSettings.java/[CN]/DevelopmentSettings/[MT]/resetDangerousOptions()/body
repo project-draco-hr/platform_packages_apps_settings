@@ -1,0 +1,14 @@
+{
+  for (int i=0; i < mResetCbPrefs.size(); i++) {
+    CheckBoxPreference cb=mResetCbPrefs.get(i);
+    if (cb.isChecked()) {
+      cb.setChecked(false);
+      onPreferenceTreeClick(null,cb);
+    }
+  }
+  writeAnimationScaleOption(0,mWindowAnimationScale,null);
+  writeAnimationScaleOption(1,mTransitionAnimationScale,null);
+  writeAnimationScaleOption(2,mAnimatorDurationScale,null);
+  writeAppProcessLimitOptions(null);
+  updateAllOptions();
+}

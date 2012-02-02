@@ -1,6 +1,6 @@
 {
   try {
-    int limit=Integer.parseInt(newValue.toString());
+    int limit=newValue != null ? Integer.parseInt(newValue.toString()) : -1;
     ActivityManagerNative.getDefault().setProcessLimit(limit);
     updateAppProcessLimitOptions();
   }

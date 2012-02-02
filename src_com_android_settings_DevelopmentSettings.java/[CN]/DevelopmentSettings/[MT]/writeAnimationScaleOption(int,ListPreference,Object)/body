@@ -1,6 +1,6 @@
 {
   try {
-    float scale=Float.parseFloat(newValue.toString());
+    float scale=newValue != null ? Float.parseFloat(newValue.toString()) : 1;
     mWindowManager.setAnimationScale(which,scale);
     updateAnimationScaleValue(which,pref);
   }

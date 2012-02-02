@@ -1,5 +1,14 @@
 {
-  if (!mOkClicked) {
-    mEnableAdb.setChecked(false);
+  if (dialog == mAdbDialog) {
+    if (!mDialogClicked) {
+      mEnableAdb.setChecked(false);
+    }
+    mAdbDialog=null;
+  }
+ else   if (dialog == mEnableDialog) {
+    if (!mDialogClicked) {
+      mEnabledSwitch.setChecked(false);
+    }
+    mEnableDialog=null;
   }
 }

@@ -1,4 +1,5 @@
 {
   final TelephonyManager telephony=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-  return telephony.getSubscriberId();
+  final String actualSubscriberId=telephony.getSubscriberId();
+  return SystemProperties.get(TEST_SUBSCRIBER_PROP,actualSubscriberId);
 }

@@ -1,5 +1,10 @@
 {
-  final double normalized=point / mSize;
-  final double fraction=1.3102228476089056629 * Math.pow(normalized,2.7111774693164631640);
-  return (long)(mMin + (fraction * (mMax - mMin)));
+  if (LOG_SCALE) {
+    final double normalized=point / mSize;
+    final double fraction=1.3102228476089056629 * Math.pow(normalized,2.7111774693164631640);
+    return (long)(mMin + (fraction * (mMax - mMin)));
+  }
+ else {
+    return (long)(mMin + ((point * (mMax - mMin)) / mSize));
+  }
 }

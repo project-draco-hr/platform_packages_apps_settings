@@ -1,8 +1,19 @@
 {
-  final int tickCount=(int)((mMax - mMin) / TICK_INTERVAL);
-  final float[] tickPoints=new float[tickCount];
-  for (int i=0; i < tickCount; i++) {
-    tickPoints[i]=convertToPoint(mMax - (TICK_INTERVAL * (i + 1)));
+  final float[] ticks=new float[32];
+  int i=0;
+  final Time time=new Time();
+  time.set(mMax);
+  time.monthDay-=time.weekDay - FIRST_DAY_OF_WEEK;
+  time.hour=time.minute=time.second=0;
+  time.normalize(true);
+  long timeMillis=time.toMillis(true);
+  while (timeMillis > mMin) {
+    if (timeMillis <= mMax) {
+      ticks[i++]=convertToPoint(timeMillis);
+    }
+    time.monthDay-=7;
+    time.normalize(true);
+    timeMillis=time.toMillis(true);
   }
-  return tickPoints;
+  return Arrays.copyOf(ticks,i);
 }

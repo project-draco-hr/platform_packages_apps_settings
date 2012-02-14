@@ -1,6 +1,7 @@
 {
   Button submit=mConfigUi.getSubmitButton();
   if (submit == null)   return;
+  if (mPasswordView == null)   return;
   boolean enabled=false;
   boolean passwordInvalid=false;
   if (chosenNetworkSetupMethod() == MANUAL && ((mAccessPointSecurity == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mAccessPointSecurity == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8))) {

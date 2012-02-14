@@ -1,0 +1,10 @@
+{
+  super.onCreate(icicle);
+  mAdapter=new AppListAdapter(this);
+  if (mAdapter.getCount() <= 0) {
+    finish();
+  }
+ else {
+    setListAdapter(mAdapter);
+  }
+}

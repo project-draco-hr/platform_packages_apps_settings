@@ -1,0 +1,7 @@
+{
+  MyApplicationInfo app=mAdapter.getItem(position);
+  Intent intent=new Intent();
+  if (app.info != null)   intent.setAction(app.info.packageName);
+  setResult(RESULT_OK,intent);
+  finish();
+}

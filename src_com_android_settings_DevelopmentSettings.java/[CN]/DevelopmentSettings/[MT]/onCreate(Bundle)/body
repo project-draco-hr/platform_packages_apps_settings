@@ -14,10 +14,14 @@
   mResetCbPrefs.add(mAllowMockLocation);
   mPassword=(PreferenceScreen)findPreference(LOCAL_BACKUP_PASSWORD);
   mAllPrefs.add(mPassword);
+  mDebugAppPref=findPreference(DEBUG_APP_KEY);
+  mAllPrefs.add(mDebugAppPref);
+  mWaitForDebugger=(CheckBoxPreference)findPreference(WAIT_FOR_DEBUGGER_KEY);
+  mAllPrefs.add(mWaitForDebugger);
+  mResetCbPrefs.add(mWaitForDebugger);
   mStrictMode=(CheckBoxPreference)findPreference(STRICT_MODE_KEY);
   mAllPrefs.add(mStrictMode);
   mResetCbPrefs.add(mStrictMode);
-  mResetCbPrefs.add(mAllowMockLocation);
   mPointerLocation=(CheckBoxPreference)findPreference(POINTER_LOCATION_KEY);
   mAllPrefs.add(mPointerLocation);
   mResetCbPrefs.add(mPointerLocation);

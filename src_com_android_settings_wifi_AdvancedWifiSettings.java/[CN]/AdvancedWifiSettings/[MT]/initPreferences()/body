@@ -4,8 +4,7 @@
   notifyOpenNetworks.setEnabled(mWifiManager.isWifiEnabled());
   CheckBoxPreference watchdogEnabled=(CheckBoxPreference)findPreference(KEY_ENABLE_WIFI_WATCHDOG);
   if (watchdogEnabled != null) {
-    watchdogEnabled.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_WATCHDOG_ON,1) == 1);
-    getPreferenceScreen().removePreference(watchdogEnabled);
+    watchdogEnabled.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_WATCHDOG_POOR_NETWORK_TEST_ENABLED,1) == 1);
   }
   ListPreference frequencyPref=(ListPreference)findPreference(KEY_FREQUENCY_BAND);
   if (mWifiManager.isDualBandSupported()) {

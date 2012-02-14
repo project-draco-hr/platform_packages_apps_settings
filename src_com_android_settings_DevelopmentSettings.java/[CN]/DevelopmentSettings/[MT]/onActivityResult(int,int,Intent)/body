@@ -1,0 +1,12 @@
+{
+  if (requestCode == RESULT_DEBUG_APP) {
+    if (resultCode == Activity.RESULT_OK) {
+      mDebugApp=data.getAction();
+      writeDebuggerOptions();
+      updateDebuggerOptions();
+    }
+  }
+ else {
+    super.onActivityResult(requestCode,resultCode,data);
+  }
+}

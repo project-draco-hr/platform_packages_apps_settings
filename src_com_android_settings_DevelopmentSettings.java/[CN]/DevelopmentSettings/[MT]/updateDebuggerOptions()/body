@@ -1,0 +1,21 @@
+{
+  mDebugApp=Settings.System.getString(getActivity().getContentResolver(),Settings.System.DEBUG_APP);
+  mWaitForDebugger.setChecked(Settings.System.getInt(getActivity().getContentResolver(),Settings.System.WAIT_FOR_DEBUGGER,0) != 0);
+  if (mDebugApp != null && mDebugApp.length() > 0) {
+    String label;
+    try {
+      ApplicationInfo ai=getActivity().getPackageManager().getApplicationInfo(mDebugApp,PackageManager.GET_DISABLED_COMPONENTS);
+      CharSequence lab=getActivity().getPackageManager().getApplicationLabel(ai);
+      label=lab != null ? lab.toString() : mDebugApp;
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+      label=mDebugApp;
+    }
+    mDebugAppPref.setSummary(getResources().getString(R.string.debug_app_set,label));
+    mWaitForDebugger.setEnabled(true);
+  }
+ else {
+    mDebugAppPref.setSummary(getResources().getString(R.string.debug_app_not_set));
+    mWaitForDebugger.setEnabled(false);
+  }
+}

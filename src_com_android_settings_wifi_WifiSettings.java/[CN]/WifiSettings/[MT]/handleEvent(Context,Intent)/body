@@ -25,12 +25,4 @@
  else   if (WifiManager.RSSI_CHANGED_ACTION.equals(action)) {
     updateConnectionState(null);
   }
- else   if (WifiManager.ERROR_ACTION.equals(action)) {
-    int errorCode=intent.getIntExtra(WifiManager.EXTRA_ERROR_CODE,0);
-switch (errorCode) {
-case WifiManager.WPS_OVERLAP_ERROR:
-      Toast.makeText(context,R.string.wifi_wps_overlap_error,Toast.LENGTH_SHORT).show();
-    break;
-}
-}
 }

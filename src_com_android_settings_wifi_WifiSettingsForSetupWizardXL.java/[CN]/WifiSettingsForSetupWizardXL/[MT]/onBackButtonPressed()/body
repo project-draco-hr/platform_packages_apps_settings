@@ -11,7 +11,13 @@
       if (DEBUG) {
         Log.d(TAG,String.format("forgeting Wi-Fi network \"%s\" (id: %d)",config.SSID,config.networkId));
       }
-      mWifiManager.forgetNetwork(config.networkId);
+      mWifiManager.forget(mChannel,config.networkId,new WifiManager.ActionListener(){
+        public void onSuccess(){
+        }
+        public void onFailure(        int reason){
+        }
+      }
+);
     }
     mWifiSettingsFragmentLayout.setVisibility(View.GONE);
     refreshAccessPoints(true);

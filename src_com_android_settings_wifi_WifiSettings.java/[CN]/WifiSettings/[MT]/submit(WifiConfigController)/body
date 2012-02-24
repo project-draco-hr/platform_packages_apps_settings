@@ -4,13 +4,13 @@ switch (networkSetup) {
 case WifiConfigController.WPS_PBC:
 case WifiConfigController.WPS_DISPLAY:
 case WifiConfigController.WPS_KEYPAD:
-    mWifiManager.startWps(configController.getWpsConfig());
+    mWifiManager.startWps(mChannel,configController.getWpsConfig(),mWpsListener);
   break;
 case WifiConfigController.MANUAL:
 final WifiConfiguration config=configController.getConfig();
 if (config == null) {
 if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig()) && mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
-  mWifiManager.connectNetwork(mSelectedAccessPoint.networkId);
+  mWifiManager.connect(mChannel,mSelectedAccessPoint.networkId,mConnectListener);
 }
 }
  else if (config.networkId != INVALID_NETWORK_ID) {
@@ -23,7 +23,7 @@ if (configController.isEdit() || requireKeyStore(config)) {
   saveNetwork(config);
 }
  else {
-  mWifiManager.connectNetwork(config);
+  mWifiManager.connect(mChannel,config,mConnectListener);
 }
 }
 break;

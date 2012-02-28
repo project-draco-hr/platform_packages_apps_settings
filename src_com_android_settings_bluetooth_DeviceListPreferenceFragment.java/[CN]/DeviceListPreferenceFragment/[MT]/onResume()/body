@@ -1,5 +1,6 @@
 {
   super.onResume();
+  if (mLocalManager == null)   return;
   mLocalManager.setForegroundActivity(getActivity());
   mLocalManager.getEventManager().registerCallback(this);
   updateProgressUi(mLocalAdapter.isDiscovering());

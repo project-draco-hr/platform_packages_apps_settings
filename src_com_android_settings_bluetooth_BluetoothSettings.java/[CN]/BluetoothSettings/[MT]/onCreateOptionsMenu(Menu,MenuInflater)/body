@@ -1,4 +1,5 @@
 {
+  if (mLocalAdapter == null)   return;
   boolean bluetoothIsEnabled=mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_ON;
   boolean isDiscovering=mLocalAdapter.isDiscovering();
   int textId=isDiscovering ? R.string.bluetooth_searching_for_devices : R.string.bluetooth_search_for_devices;

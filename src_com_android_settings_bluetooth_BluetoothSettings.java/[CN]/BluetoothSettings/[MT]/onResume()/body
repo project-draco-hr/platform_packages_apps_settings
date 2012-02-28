@@ -1,9 +1,13 @@
 {
-  mBluetoothEnabler.resume();
+  if (mBluetoothEnabler != null) {
+    mBluetoothEnabler.resume();
+  }
   super.onResume();
   if (mDiscoverableEnabler != null) {
     mDiscoverableEnabler.resume();
   }
   getActivity().registerReceiver(mReceiver,mIntentFilter);
-  updateContent(mLocalAdapter.getBluetoothState(),mActivityStarted);
+  if (mLocalAdapter != null) {
+    updateContent(mLocalAdapter.getBluetoothState(),mActivityStarted);
+  }
 }

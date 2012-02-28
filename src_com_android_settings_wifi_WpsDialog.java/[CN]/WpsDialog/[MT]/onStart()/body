@@ -1,0 +1,18 @@
+{
+  mTimer=new Timer(false);
+  mTimer.schedule(new TimerTask(){
+    @Override public void run(){
+      mHandler.post(new Runnable(){
+        @Override public void run(){
+          mTimeoutBar.incrementProgressBy(1);
+        }
+      }
+);
+    }
+  }
+,1000,1000);
+  mContext.registerReceiver(mReceiver,mFilter);
+  WpsInfo wpsConfig=new WpsInfo();
+  wpsConfig.setup=mWpsSetup;
+  mWifiManager.startWps(mChannel,wpsConfig,mWpsListener);
+}

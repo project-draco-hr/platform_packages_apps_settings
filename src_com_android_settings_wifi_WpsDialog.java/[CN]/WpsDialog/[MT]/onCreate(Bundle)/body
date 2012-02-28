@@ -1,0 +1,23 @@
+{
+  setTitle(R.string.wifi_wps_setup_title);
+  mView=getLayoutInflater().inflate(R.layout.wifi_wps_dialog,null);
+  mTextView=(TextView)mView.findViewById(R.id.wps_dialog_txt);
+  mTextView.setText(R.string.wifi_wps_setup_msg);
+  mTimeoutBar=((ProgressBar)mView.findViewById(R.id.wps_timeout_bar));
+  mTimeoutBar.setMax(WPS_TIMEOUT_S);
+  mTimeoutBar.setProgress(0);
+  mProgressBar=((ProgressBar)mView.findViewById(R.id.wps_progress_bar));
+  mProgressBar.setVisibility(View.GONE);
+  mButton=((Button)mView.findViewById(R.id.wps_dialog_btn));
+  mButton.setText(R.string.wifi_cancel);
+  mButton.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      dismiss();
+    }
+  }
+);
+  mWifiManager=(WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
+  mChannel=mWifiManager.initialize(mContext,mContext.getMainLooper(),null);
+  setView(mView);
+  super.onCreate(savedInstanceState);
+}

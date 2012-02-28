@@ -25,70 +25,42 @@
     }
   }
 ;
-class WpsListener implements WifiManager.WpsListener {
-    public void onStartSuccess(    String pin){
-      if (pin != null) {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.wifi_wps_setup_title).setPositiveButton(android.R.string.ok,null);
-        dialog.setMessage(getResources().getString(R.string.wifi_wps_pin_output,pin));
-        dialog.show();
+  if (savedInstanceState != null && savedInstanceState.containsKey(SAVE_DIALOG_ACCESS_POINT_STATE)) {
+    mDlgEdit=savedInstanceState.getBoolean(SAVE_DIALOG_EDIT_MODE);
+    mAccessPointSavedState=savedInstanceState.getBundle(SAVE_DIALOG_ACCESS_POINT_STATE);
+  }
+  final Activity activity=getActivity();
+  final Intent intent=activity.getIntent();
+  mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
+  if (mEnableNextOnConnection) {
+    if (hasNextButton()) {
+      final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+      if (connectivity != null) {
+        NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        changeNextButtonState(info.isConnected());
       }
     }
-    public void onCompletion(){
-    }
-    public void onFailure(    int reason){
-      AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.wifi_wps_setup_title).setPositiveButton(android.R.string.ok,null);
-switch (reason) {
-case WifiManager.IN_PROGRESS:
-        dialog.setMessage(R.string.wifi_wps_in_progress);
-      dialog.show();
-    break;
-case WifiManager.WPS_OVERLAP_ERROR:
-  Toast.makeText(getActivity(),R.string.wifi_wps_overlap_error,Toast.LENGTH_SHORT).show();
-break;
-default :
-dialog.setMessage(R.string.wifi_wps_failed);
-dialog.show();
-break;
-}
-}
-}
-mWpsListener=new WpsListener();
-if (savedInstanceState != null && savedInstanceState.containsKey(SAVE_DIALOG_ACCESS_POINT_STATE)) {
-mDlgEdit=savedInstanceState.getBoolean(SAVE_DIALOG_EDIT_MODE);
-mAccessPointSavedState=savedInstanceState.getBundle(SAVE_DIALOG_ACCESS_POINT_STATE);
-}
-final Activity activity=getActivity();
-final Intent intent=activity.getIntent();
-mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
-if (mEnableNextOnConnection) {
-if (hasNextButton()) {
-final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-if (connectivity != null) {
-NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-changeNextButtonState(info.isConnected());
-}
-}
-}
-if (mInXlSetupWizard) {
-addPreferencesFromResource(R.xml.wifi_access_points_for_wifi_setup_xl);
-}
+  }
+  if (mInXlSetupWizard) {
+    addPreferencesFromResource(R.xml.wifi_access_points_for_wifi_setup_xl);
+  }
  else {
-addPreferencesFromResource(R.xml.wifi_settings);
-Switch actionBarSwitch=new Switch(activity);
-if (activity instanceof PreferenceActivity) {
-PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
-if (preferenceActivity.onIsHidingHeaders() || !preferenceActivity.onIsMultiPane()) {
-final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
-actionBarSwitch.setPadding(0,0,padding,0);
-activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
-activity.getActionBar().setCustomView(actionBarSwitch,new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.RIGHT));
-}
-}
-mWifiEnabler=new WifiEnabler(activity,actionBarSwitch);
-}
-mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
-getListView().setEmptyView(mEmptyView);
-registerForContextMenu(getListView());
-setHasOptionsMenu(true);
-super.onActivityCreated(savedInstanceState);
+    addPreferencesFromResource(R.xml.wifi_settings);
+    Switch actionBarSwitch=new Switch(activity);
+    if (activity instanceof PreferenceActivity) {
+      PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
+      if (preferenceActivity.onIsHidingHeaders() || !preferenceActivity.onIsMultiPane()) {
+        final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+        actionBarSwitch.setPadding(0,0,padding,0);
+        activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
+        activity.getActionBar().setCustomView(actionBarSwitch,new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.RIGHT));
+      }
+    }
+    mWifiEnabler=new WifiEnabler(activity,actionBarSwitch);
+  }
+  mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
+  getListView().setEmptyView(mEmptyView);
+  registerForContextMenu(getListView());
+  setHasOptionsMenu(true);
+  super.onActivityCreated(savedInstanceState);
 }

@@ -1,0 +1,23 @@
+{
+  if (mDialogState.ordinal() >= state.ordinal()) {
+    return;
+  }
+  mDialogState=state;
+switch (state) {
+case WPS_COMPLETE:
+    mTimeoutBar.setVisibility(View.GONE);
+  mProgressBar.setVisibility(View.VISIBLE);
+break;
+case CONNECTED:
+case WPS_FAILED:
+mButton.setText(mContext.getString(R.string.dlg_ok));
+mTimeoutBar.setVisibility(View.GONE);
+mProgressBar.setVisibility(View.GONE);
+if (mReceiver != null) {
+mContext.unregisterReceiver(mReceiver);
+mReceiver=null;
+}
+break;
+}
+mTextView.setText(msg);
+}

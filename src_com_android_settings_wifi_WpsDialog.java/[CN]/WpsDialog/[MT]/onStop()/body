@@ -1,0 +1,12 @@
+{
+  if (mDialogState != DialogState.WPS_COMPLETE) {
+    mWifiManager.cancelWps(mChannel,null);
+  }
+  if (mReceiver != null) {
+    mContext.unregisterReceiver(mReceiver);
+    mReceiver=null;
+  }
+  if (mTimer != null) {
+    mTimer.cancel();
+  }
+}

@@ -7,8 +7,9 @@
     updateAccessPoints();
   }
  else   if (WifiManager.SUPPLICANT_STATE_CHANGED_ACTION.equals(action)) {
-    if (!mConnected.get()) {
-      updateConnectionState(WifiInfo.getDetailedStateOf((SupplicantState)intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE)));
+    SupplicantState state=(SupplicantState)intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE);
+    if (!mConnected.get() && SupplicantState.isHandshakeState(state)) {
+      updateConnectionState(WifiInfo.getDetailedStateOf(state));
     }
     if (mInXlSetupWizard) {
       ((WifiSettingsForSetupWizardXL)getActivity()).onSupplicantStateChanged(intent);

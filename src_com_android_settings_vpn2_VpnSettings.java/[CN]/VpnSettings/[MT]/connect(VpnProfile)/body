@@ -21,6 +21,7 @@
     serverCert=(value == null) ? null : new String(value,Charsets.UTF_8);
   }
   if (privateKey == null || userCert == null || caCert == null || serverCert == null) {
+    Toast.makeText(getActivity(),R.string.vpn_missing_cert,Toast.LENGTH_LONG).show();
     throw new IllegalStateException("Cannot load credentials");
   }
   String[] racoon=null;

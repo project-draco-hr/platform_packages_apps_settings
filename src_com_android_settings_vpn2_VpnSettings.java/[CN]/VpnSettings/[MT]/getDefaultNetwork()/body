@@ -1,10 +1,12 @@
 {
   LinkProperties network=mService.getActiveLinkProperties();
   if (network == null) {
+    Toast.makeText(getActivity(),R.string.vpn_no_network,Toast.LENGTH_LONG).show();
     throw new IllegalStateException("Network is not available");
   }
   String interfaze=network.getInterfaceName();
   if (interfaze == null) {
+    Toast.makeText(getActivity(),R.string.vpn_no_network,Toast.LENGTH_LONG).show();
     throw new IllegalStateException("Cannot get the default interface");
   }
   String gateway=null;
@@ -15,6 +17,7 @@
     }
   }
   if (gateway == null) {
+    Toast.makeText(getActivity(),R.string.vpn_no_network,Toast.LENGTH_LONG).show();
     throw new IllegalStateException("Cannot get the default gateway");
   }
   return new String[]{interfaze,gateway};

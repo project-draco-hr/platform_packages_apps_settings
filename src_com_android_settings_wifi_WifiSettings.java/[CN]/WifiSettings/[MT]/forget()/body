@@ -1,5 +1,5 @@
 {
-  mWifiManager.forgetNetwork(mSelectedAccessPoint.networkId);
+  mWifiManager.forget(mChannel,mSelectedAccessPoint.networkId,mForgetListener);
   if (mWifiManager.isWifiEnabled()) {
     mScanner.resume();
   }

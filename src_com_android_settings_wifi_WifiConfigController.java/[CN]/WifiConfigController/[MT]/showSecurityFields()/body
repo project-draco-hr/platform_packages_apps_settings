@@ -24,6 +24,7 @@
   mView.findViewById(R.id.eap).setVisibility(View.VISIBLE);
   if (mEapMethodSpinner == null) {
     mEapMethodSpinner=(Spinner)mView.findViewById(R.id.method);
+    mEapMethodSpinner.setOnItemSelectedListener(this);
     mPhase2Spinner=(Spinner)mView.findViewById(R.id.phase2);
     mEapCaCertSpinner=(Spinner)mView.findViewById(R.id.ca_cert);
     mEapUserCertSpinner=(Spinner)mView.findViewById(R.id.user_cert);
@@ -40,5 +41,19 @@
       mEapIdentityView.setText(config.identity.value());
       mEapAnonymousView.setText(config.anonymous_identity.value());
     }
+  }
+  mView.findViewById(R.id.l_method).setVisibility(View.VISIBLE);
+  mView.findViewById(R.id.l_identity).setVisibility(View.VISIBLE);
+  if (mEapMethodSpinner.getSelectedItemPosition() == WIFI_EAP_METHOD_PWD) {
+    mView.findViewById(R.id.l_phase2).setVisibility(View.GONE);
+    mView.findViewById(R.id.l_ca_cert).setVisibility(View.GONE);
+    mView.findViewById(R.id.l_user_cert).setVisibility(View.GONE);
+    mView.findViewById(R.id.l_anonymous).setVisibility(View.GONE);
+  }
+ else {
+    mView.findViewById(R.id.l_phase2).setVisibility(View.VISIBLE);
+    mView.findViewById(R.id.l_ca_cert).setVisibility(View.VISIBLE);
+    mView.findViewById(R.id.l_user_cert).setVisibility(View.VISIBLE);
+    mView.findViewById(R.id.l_anonymous).setVisibility(View.VISIBLE);
   }
 }

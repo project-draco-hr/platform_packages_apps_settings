@@ -1,13 +1,19 @@
 {
 switch (item.getItemId()) {
-case MENU_ID_SCAN:
-    if (mWifiManager.isWifiEnabled()) {
-      mScanner.forceScan();
-    }
+case MENU_ID_WPS_PBC:
+    showDialog(WPS_PBC_DIALOG_ID);
   return true;
+case MENU_ID_WPS_PIN:
+showDialog(WPS_PIN_DIALOG_ID);
+return true;
+case MENU_ID_SCAN:
+if (mWifiManager.isWifiEnabled()) {
+mScanner.forceScan();
+}
+return true;
 case MENU_ID_ADD_NETWORK:
 if (mWifiManager.isWifiEnabled()) {
-  onAddNetworkPressed();
+onAddNetworkPressed();
 }
 return true;
 case MENU_ID_ADVANCED:

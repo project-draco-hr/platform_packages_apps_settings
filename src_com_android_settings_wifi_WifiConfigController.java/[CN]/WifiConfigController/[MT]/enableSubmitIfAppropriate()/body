@@ -4,7 +4,7 @@
   if (mPasswordView == null)   return;
   boolean enabled=false;
   boolean passwordInvalid=false;
-  if (chosenNetworkSetupMethod() == MANUAL && ((mAccessPointSecurity == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mAccessPointSecurity == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8))) {
+  if ((mAccessPointSecurity == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mAccessPointSecurity == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8)) {
     passwordInvalid=true;
   }
   if ((mSsidView != null && mSsidView.length() == 0) || ((mAccessPoint == null || mAccessPoint.networkId == INVALID_NETWORK_ID) && passwordInvalid)) {

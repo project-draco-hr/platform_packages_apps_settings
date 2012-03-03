@@ -1,35 +1,25 @@
 {
-  int networkSetup=configController.chosenNetworkSetupMethod();
-switch (networkSetup) {
-case WifiConfigController.WPS_PBC:
-case WifiConfigController.WPS_DISPLAY:
-case WifiConfigController.WPS_KEYPAD:
-    mWifiManager.startWps(mChannel,configController.getWpsConfig(),mWpsListener);
-  break;
-case WifiConfigController.MANUAL:
-final WifiConfiguration config=configController.getConfig();
-if (config == null) {
-if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig()) && mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
-  mWifiManager.connect(mChannel,mSelectedAccessPoint.networkId,mConnectListener);
-}
-}
- else if (config.networkId != INVALID_NETWORK_ID) {
-if (mSelectedAccessPoint != null) {
-  saveNetwork(config);
-}
-}
+  final WifiConfiguration config=configController.getConfig();
+  if (config == null) {
+    if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig()) && mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
+      mWifiManager.connect(mChannel,mSelectedAccessPoint.networkId,mConnectListener);
+    }
+  }
+ else   if (config.networkId != INVALID_NETWORK_ID) {
+    if (mSelectedAccessPoint != null) {
+      saveNetwork(config);
+    }
+  }
  else {
-if (configController.isEdit() || requireKeyStore(config)) {
-  saveNetwork(config);
-}
+    if (configController.isEdit() || requireKeyStore(config)) {
+      saveNetwork(config);
+    }
  else {
-  mWifiManager.connect(mChannel,config,mConnectListener);
-}
-}
-break;
-}
-if (mWifiManager.isWifiEnabled()) {
-mScanner.resume();
-}
-updateAccessPoints();
+      mWifiManager.connect(mChannel,config,mConnectListener);
+    }
+  }
+  if (mWifiManager.isWifiEnabled()) {
+    mScanner.resume();
+  }
+  updateAccessPoints();
 }

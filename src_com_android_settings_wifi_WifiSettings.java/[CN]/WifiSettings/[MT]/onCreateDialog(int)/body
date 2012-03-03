@@ -1,12 +1,20 @@
 {
-  AccessPoint ap=mDlgAccessPoint;
+switch (dialogId) {
+case WIFI_DIALOG_ID:
+    AccessPoint ap=mDlgAccessPoint;
   if (ap == null) {
     if (mAccessPointSavedState != null) {
       ap=new AccessPoint(getActivity(),mAccessPointSavedState);
       mDlgAccessPoint=ap;
     }
   }
-  mSelectedAccessPoint=ap;
-  mDialog=new WifiDialog(getActivity(),this,ap,mDlgEdit);
-  return mDialog;
+mSelectedAccessPoint=ap;
+mDialog=new WifiDialog(getActivity(),this,ap,mDlgEdit);
+return mDialog;
+case WPS_PBC_DIALOG_ID:
+return new WpsDialog(getActivity(),WpsInfo.PBC);
+case WPS_PIN_DIALOG_ID:
+return new WpsDialog(getActivity(),WpsInfo.DISPLAY);
+}
+return super.onCreateDialog(dialogId);
 }

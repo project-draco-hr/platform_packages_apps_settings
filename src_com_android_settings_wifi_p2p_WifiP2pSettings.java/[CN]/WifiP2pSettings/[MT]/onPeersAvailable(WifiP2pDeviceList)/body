@@ -3,7 +3,9 @@
   mPeers=peers;
   mConnectedDevices=0;
   for (  WifiP2pDevice peer : peers.getDeviceList()) {
+    if (DBG)     Log.d(TAG," peer " + peer);
     mPeersGroup.addPreference(new WifiP2pPeer(getActivity(),peer));
     if (peer.status == WifiP2pDevice.CONNECTED)     mConnectedDevices++;
   }
+  if (DBG)   Log.d(TAG," mConnectedDevices " + mConnectedDevices);
 }

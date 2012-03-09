@@ -36,10 +36,12 @@
     }
   }
 ;
+  setHasOptionsMenu(true);
   final PreferenceScreen preferenceScreen=getPreferenceScreen();
   preferenceScreen.removeAll();
   preferenceScreen.setOrderingAsAdded(true);
   mThisDevicePref=new Preference(getActivity());
   preferenceScreen.addPreference(mThisDevicePref);
-  setHasOptionsMenu(true);
+  mPeersGroup=new PreferenceCategory(getActivity());
+  mPeersGroup.setTitle(R.string.wifi_p2p_peer_devices);
 }

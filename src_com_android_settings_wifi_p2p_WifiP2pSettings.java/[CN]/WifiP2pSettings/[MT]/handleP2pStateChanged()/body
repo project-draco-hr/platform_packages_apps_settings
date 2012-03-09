@@ -4,10 +4,7 @@
     final PreferenceScreen preferenceScreen=getPreferenceScreen();
     preferenceScreen.removeAll();
     preferenceScreen.setOrderingAsAdded(true);
-    mThisDevicePref=new Preference(getActivity());
     preferenceScreen.addPreference(mThisDevicePref);
-    mPeersGroup=new PreferenceCategory(getActivity());
-    mPeersGroup.setTitle(R.string.wifi_p2p_peer_devices);
     mPeersGroup.setEnabled(true);
     preferenceScreen.addPreference(mPeersGroup);
     if (mConnectedDevices == 0)     startSearch();

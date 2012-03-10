@@ -17,7 +17,8 @@
   builder.setPositiveButton(R.string.data_usage_cycle_editor_positive,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
       final int cycleDay=cycleDayPicker.getValue();
-      editor.setPolicyCycleDay(template,cycleDay);
+      final String cycleTimezone=new Time().timezone;
+      editor.setPolicyCycleDay(template,cycleDay,cycleTimezone);
       target.updatePolicy(true);
     }
   }

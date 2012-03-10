@@ -2,5 +2,6 @@
   final Time time=new Time();
   time.setToNow();
   final int cycleDay=time.monthDay;
-  return new NetworkPolicy(template,cycleDay,WARNING_DISABLED,LIMIT_DISABLED,true);
+  final String cycleTimezone=time.timezone;
+  return new NetworkPolicy(template,cycleDay,cycleTimezone,WARNING_DISABLED,LIMIT_DISABLED,true);
 }

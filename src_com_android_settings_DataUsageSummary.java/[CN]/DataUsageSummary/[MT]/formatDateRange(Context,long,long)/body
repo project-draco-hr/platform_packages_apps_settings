@@ -1,0 +1,7 @@
+{
+  final int flags=FORMAT_SHOW_DATE | FORMAT_ABBREV_MONTH;
+synchronized (sBuilder) {
+    sBuilder.setLength(0);
+    return DateUtils.formatDateRange(context,sFormatter,start,end,flags,null).toString();
+  }
+}

@@ -28,6 +28,6 @@
   }
   final long totalBytes=entry != null ? entry.rxBytes + entry.txBytes : 0;
   final String totalPhrase=Formatter.formatFileSize(context,totalBytes);
-  final String rangePhrase=formatDateRange(context,start,end,false);
+  final String rangePhrase=formatDateRange(context,start,end);
   mUsageSummary.setText(getString(R.string.data_usage_total_during_range,totalPhrase,rangePhrase));
 }

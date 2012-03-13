@@ -1,10 +1,9 @@
 {
   Button submit=mConfigUi.getSubmitButton();
   if (submit == null)   return;
-  if (mPasswordView == null)   return;
   boolean enabled=false;
   boolean passwordInvalid=false;
-  if ((mAccessPointSecurity == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mAccessPointSecurity == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8)) {
+  if (mPasswordView != null && ((mAccessPointSecurity == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mAccessPointSecurity == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8))) {
     passwordInvalid=true;
   }
   if ((mSsidView != null && mSsidView.length() == 0) || ((mAccessPoint == null || mAccessPoint.networkId == INVALID_NETWORK_ID) && passwordInvalid)) {

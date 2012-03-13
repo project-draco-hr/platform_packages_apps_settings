@@ -8,7 +8,7 @@
     }
   }
   mProxySettings=(mProxySettingsSpinner != null && mProxySettingsSpinner.getSelectedItemPosition() == PROXY_STATIC) ? ProxySettings.STATIC : ProxySettings.NONE;
-  if (mProxySettings == ProxySettings.STATIC) {
+  if (mProxySettings == ProxySettings.STATIC && mProxyHostView != null) {
     String host=mProxyHostView.getText().toString();
     String portStr=mProxyPortView.getText().toString();
     String exclusionList=mProxyExclusionListView.getText().toString();

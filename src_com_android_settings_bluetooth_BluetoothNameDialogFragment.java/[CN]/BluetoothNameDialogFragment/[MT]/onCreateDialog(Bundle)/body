@@ -6,13 +6,11 @@
   }
   mAlertDialog=new AlertDialog.Builder(getActivity()).setIcon(android.R.drawable.ic_dialog_info).setTitle(R.string.bluetooth_rename_device).setView(createDialogView(deviceName)).setPositiveButton(R.string.bluetooth_rename_button,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
-      if (mLocalAdapter != null) {
-        String deviceName=mDeviceNameView.getText().toString();
-        Log.d(TAG,"Setting device name to " + deviceName);
-        mLocalAdapter.setName(deviceName);
-      }
+      String deviceName=mDeviceNameView.getText().toString();
+      setDeviceName(deviceName);
     }
   }
 ).setNegativeButton(android.R.string.cancel,null).create();
+  mAlertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
   return mAlertDialog;
 }

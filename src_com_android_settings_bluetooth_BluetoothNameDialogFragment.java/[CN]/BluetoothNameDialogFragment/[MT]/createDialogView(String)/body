@@ -5,5 +5,18 @@
   mDeviceNameView.setFilters(new InputFilter[]{new Utf8ByteLengthFilter(BLUETOOTH_NAME_MAX_LENGTH_BYTES)});
   mDeviceNameView.setText(deviceName);
   mDeviceNameView.addTextChangedListener(this);
+  mDeviceNameView.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+    @Override public boolean onEditorAction(    TextView v,    int actionId,    KeyEvent event){
+      if (actionId == EditorInfo.IME_ACTION_DONE) {
+        setDeviceName(v.getText().toString());
+        mAlertDialog.dismiss();
+        return true;
+      }
+ else {
+        return false;
+      }
+    }
+  }
+);
   return view;
 }

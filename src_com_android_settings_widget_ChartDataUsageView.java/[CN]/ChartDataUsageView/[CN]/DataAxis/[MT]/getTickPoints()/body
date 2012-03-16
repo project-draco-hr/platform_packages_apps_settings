@@ -1,15 +1,6 @@
 {
   final long range=mMax - mMin;
-  final long tickJump;
-  if (range < 6 * GB_IN_BYTES) {
-    tickJump=256 * MB_IN_BYTES;
-  }
- else   if (range < 12 * GB_IN_BYTES) {
-    tickJump=512 * MB_IN_BYTES;
-  }
- else {
-    tickJump=1 * GB_IN_BYTES;
-  }
+  final long tickJump=roundUpToPowerOfTwo(range / 16);
   final int tickCount=(int)(range / tickJump);
   final float[] tickPoints=new float[tickCount];
   long value=mMin;

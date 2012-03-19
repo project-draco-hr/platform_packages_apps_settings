@@ -10,6 +10,9 @@
       startBiometricWeakImprove();
     }
   }
+ else   if (KEY_BIOMETRIC_WEAK_LIVELINESS.equals(key)) {
+    lockPatternUtils.setBiometricWeakLivelinessEnabled(isToggled(preference));
+  }
  else   if (KEY_LOCK_ENABLED.equals(key)) {
     lockPatternUtils.setLockPatternEnabled(isToggled(preference));
   }

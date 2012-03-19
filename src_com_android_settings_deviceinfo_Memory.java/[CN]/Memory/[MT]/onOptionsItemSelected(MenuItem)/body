@@ -1,6 +1,6 @@
 {
 switch (item.getItemId()) {
-case MENU_ID_USB:
+case R.id.storage_usb:
     if (getActivity() instanceof PreferenceActivity) {
       ((PreferenceActivity)getActivity()).startPreferencePanel(UsbSettings.class.getCanonicalName(),null,R.string.storage_title_usb,null,this,0);
     }
@@ -8,6 +8,19 @@ case MENU_ID_USB:
       startFragment(this,UsbSettings.class.getCanonicalName(),-1,null);
     }
   return true;
+case R.id.storage_enforce_read_external:
+{
+  final boolean checked=!item.isChecked();
+  item.setChecked(checked);
+  final int enforcement=checked ? ENFORCEMENT_YES : ENFORCEMENT_DEFAULT;
+  try {
+    mPackageService.setPermissionEnforcement(READ_EXTERNAL_STORAGE,enforcement);
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("Problem talking with PackageManager",e);
+  }
+  return true;
+}
 }
 return super.onOptionsItemSelected(item);
 }

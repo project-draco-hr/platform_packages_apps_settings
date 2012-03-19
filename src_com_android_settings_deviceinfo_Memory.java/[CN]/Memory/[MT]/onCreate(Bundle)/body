@@ -4,6 +4,7 @@
     mStorageManager=(StorageManager)getSystemService(Context.STORAGE_SERVICE);
     mStorageManager.registerListener(mStorageListener);
   }
+  mPackageService=ActivityThread.getPackageManager();
   addPreferencesFromResource(R.xml.device_info_memory);
   mResources=getResources();
   if (!Environment.isExternalStorageEmulated()) {
@@ -12,7 +13,6 @@
     mInternalStorageVolumePreferenceCategory.init();
   }
   StorageVolume[] storageVolumes=mStorageManager.getVolumeList();
-  boolean massStorageEnabled=(storageVolumes.length > 0 && storageVolumes[0].allowMassStorage());
   int length=storageVolumes.length;
   mStorageVolumePreferenceCategories=new StorageVolumePreferenceCategory[length];
   for (int i=0; i < length; i++) {
@@ -22,5 +22,5 @@
     getPreferenceScreen().addPreference(mStorageVolumePreferenceCategories[i]);
     mStorageVolumePreferenceCategories[i].init();
   }
-  setHasOptionsMenu(!massStorageEnabled);
+  setHasOptionsMenu(true);
 }

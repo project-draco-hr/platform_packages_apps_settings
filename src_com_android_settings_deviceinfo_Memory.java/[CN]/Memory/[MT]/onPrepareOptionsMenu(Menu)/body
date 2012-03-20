@@ -1,0 +1,13 @@
+{
+  final MenuItem usb=menu.findItem(R.id.storage_usb);
+  usb.setVisible(!isMassStorageEnabled());
+  final int enforcement;
+  try {
+    enforcement=mPackageService.getPermissionEnforcement(READ_EXTERNAL_STORAGE);
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("Problem talking with PackageManager",e);
+  }
+  final MenuItem enforceReadExternal=menu.findItem(R.id.storage_enforce_read_external);
+  enforceReadExternal.setChecked(enforcement == ENFORCEMENT_YES);
+}

@@ -5,8 +5,13 @@
   mAccessPoint=accessPoint;
   mAccessPointSecurity=(accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.security;
   mEdit=edit;
+  mTextViewChangedHandler=new Handler();
   final Context context=mConfigUi.getContext();
   final Resources resources=context.getResources();
+  mIpSettingsSpinner=(Spinner)mView.findViewById(R.id.ip_settings);
+  mIpSettingsSpinner.setOnItemSelectedListener(this);
+  mProxySettingsSpinner=(Spinner)mView.findViewById(R.id.proxy_settings);
+  mProxySettingsSpinner.setOnItemSelectedListener(this);
   if (mAccessPoint == null) {
     mConfigUi.setTitle(R.string.wifi_add_network);
     mSsidView=(TextView)mView.findViewById(R.id.ssid);
@@ -22,14 +27,14 @@
  else {
       mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
     }
+    showIpConfigFields();
+    showProxyFields();
+    mView.findViewById(R.id.wifi_advanced_toggle).setVisibility(View.VISIBLE);
+    mView.findViewById(R.id.wifi_advanced_togglebox).setOnClickListener(this);
     mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
   }
  else {
     mConfigUi.setTitle(mAccessPoint.ssid);
-    mIpSettingsSpinner=(Spinner)mView.findViewById(R.id.ip_settings);
-    mIpSettingsSpinner.setOnItemSelectedListener(this);
-    mProxySettingsSpinner=(Spinner)mView.findViewById(R.id.proxy_settings);
-    mProxySettingsSpinner.setOnItemSelectedListener(this);
     ViewGroup group=(ViewGroup)mView.findViewById(R.id.info);
     DetailedState state=mAccessPoint.getState();
     if (state != null) {
@@ -64,9 +69,6 @@
       }
  else {
         mProxySettingsSpinner.setSelection(PROXY_NONE);
-      }
-      if (config.status == Status.DISABLED && config.disableReason == WifiConfiguration.DISABLED_DNS_FAILURE) {
-        addRow(group,R.string.wifi_disabled_heading,context.getString(R.string.wifi_disabled_help));
       }
     }
     if (mAccessPoint.networkId == INVALID_NETWORK_ID || mEdit) {

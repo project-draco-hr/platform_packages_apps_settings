@@ -7,9 +7,8 @@
   String caCert="";
   String serverCert="";
   if (!profile.ipsecUserCert.isEmpty()) {
-    byte[] value=mKeyStore.get(Credentials.USER_PRIVATE_KEY + profile.ipsecUserCert);
-    privateKey=(value == null) ? null : new String(value,Charsets.UTF_8);
-    value=mKeyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecUserCert);
+    privateKey=Credentials.USER_PRIVATE_KEY + profile.ipsecUserCert;
+    byte[] value=mKeyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecUserCert);
     userCert=(value == null) ? null : new String(value,Charsets.UTF_8);
   }
   if (!profile.ipsecCaCert.isEmpty()) {

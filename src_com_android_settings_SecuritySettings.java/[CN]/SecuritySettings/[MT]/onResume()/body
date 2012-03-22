@@ -2,6 +2,9 @@
   super.onResume();
   createPreferenceHierarchy();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
+  if (mBiometricWeakLiveliness != null) {
+    mBiometricWeakLiveliness.setChecked(lockPatternUtils.isBiometricWeakLivelinessEnabled());
+  }
   if (mVisiblePattern != null) {
     mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled());
   }

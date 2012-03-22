@@ -1,0 +1,13 @@
+{
+  final UidDetailTask existing=(UidDetailTask)target.getTag();
+  if (existing != null) {
+    existing.cancel(false);
+  }
+  final UidDetail cachedDetail=provider.getUidDetail(item.appId,false);
+  if (cachedDetail != null) {
+    bindView(cachedDetail,target);
+  }
+ else {
+    target.setTag(new UidDetailTask(provider,item,target).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR));
+  }
+}

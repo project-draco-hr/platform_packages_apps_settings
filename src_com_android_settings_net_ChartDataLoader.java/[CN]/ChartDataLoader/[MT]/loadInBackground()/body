@@ -1,9 +1,9 @@
 {
   final NetworkTemplate template=mArgs.getParcelable(KEY_TEMPLATE);
-  final int[] uids=mArgs.getIntArray(KEY_UIDS);
+  final AppItem app=mArgs.getParcelable(KEY_APP);
   final int fields=mArgs.getInt(KEY_FIELDS);
   try {
-    return loadInBackground(template,uids,fields);
+    return loadInBackground(template,app,fields);
   }
  catch (  RemoteException e) {
     throw new RuntimeException("problem reading network stats",e);

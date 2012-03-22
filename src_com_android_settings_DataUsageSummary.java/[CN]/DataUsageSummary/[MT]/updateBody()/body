@@ -43,7 +43,7 @@
  else {
     throw new IllegalStateException("unknown tab: " + currentTab);
   }
-  getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(mTemplate,mAppDetailUids),mChartDataCallbacks);
+  getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(mTemplate,mCurrentApp),mChartDataCallbacks);
   getActivity().invalidateOptionsMenu();
   mBinding=false;
 }

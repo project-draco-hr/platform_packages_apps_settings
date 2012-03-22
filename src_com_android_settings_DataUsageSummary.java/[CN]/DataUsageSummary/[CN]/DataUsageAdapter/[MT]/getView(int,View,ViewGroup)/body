@@ -8,7 +8,7 @@
   final Context context=parent.getContext();
   final TextView text1=(TextView)convertView.findViewById(android.R.id.text1);
   final ProgressBar progress=(ProgressBar)convertView.findViewById(android.R.id.progress);
-  final AppUsageItem item=mItems.get(position);
+  final AppItem item=mItems.get(position);
   UidDetailTask.bindView(mProvider,item,convertView);
   text1.setText(Formatter.formatFileSize(context,item.total));
   final int percentTotal=mLargest != 0 ? (int)(item.total * 100 / mLargest) : 0;

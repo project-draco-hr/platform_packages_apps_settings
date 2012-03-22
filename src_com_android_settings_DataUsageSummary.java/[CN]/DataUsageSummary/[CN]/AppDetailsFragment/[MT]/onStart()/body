@@ -1,6 +1,6 @@
 {
   super.onStart();
   final DataUsageSummary target=(DataUsageSummary)getTargetFragment();
-  target.mAppDetailUids=getArguments().getIntArray(EXTRA_UIDS);
+  target.mCurrentApp=getArguments().getParcelable(EXTRA_APP);
   target.updateBody();
 }

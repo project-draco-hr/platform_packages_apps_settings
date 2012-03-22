@@ -1,8 +1,8 @@
 {
-  final int primaryUid=getAppDetailPrimaryUid();
+  final int appId=mCurrentApp.appId;
   final int uidPolicy;
   try {
-    uidPolicy=mPolicyService.getUidPolicy(primaryUid);
+    uidPolicy=mPolicyService.getAppPolicy(appId);
   }
  catch (  RemoteException e) {
     throw new RuntimeException("problem reading network policy",e);

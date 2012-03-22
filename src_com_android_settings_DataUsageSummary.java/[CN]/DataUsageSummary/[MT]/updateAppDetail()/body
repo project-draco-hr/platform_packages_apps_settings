@@ -13,8 +13,8 @@
     return;
   }
   mChart.bindNetworkPolicy(null);
-  final int primaryUid=getAppDetailPrimaryUid();
-  final UidDetail detail=mUidDetailProvider.getUidDetail(primaryUid,true);
+  final int appId=mCurrentApp.appId;
+  final UidDetail detail=mUidDetailProvider.getUidDetail(appId,true);
   mAppIcon.setImageDrawable(detail.icon);
   mAppTitles.removeAllViews();
   if (detail.detailLabels != null) {
@@ -25,7 +25,7 @@
  else {
     mAppTitles.addView(inflateAppTitle(inflater,mAppTitles,detail.label));
   }
-  final String[] packageNames=pm.getPackagesForUid(primaryUid);
+  final String[] packageNames=pm.getPackagesForUid(appId);
   if (packageNames != null && packageNames.length > 0) {
     mAppSettingsIntent=new Intent(Intent.ACTION_MANAGE_NETWORK_USAGE);
     mAppSettingsIntent.setPackage(packageNames[0]);
@@ -38,7 +38,7 @@
     mAppSettings.setEnabled(false);
   }
   updateDetailData();
-  if (NetworkPolicyManager.isUidValidForPolicy(context,primaryUid) && !getRestrictBackground() && isBandwidthControlEnabled()&& hasMobileRadio(context)) {
+  if (UserId.isApp(appId) && !getRestrictBackground() && isBandwidthControlEnabled()&& hasMobileRadio(context)) {
     setPreferenceTitle(mAppRestrictView,R.string.data_usage_app_restrict_background);
     setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary));
     mAppRestrictView.setVisibility(View.VISIBLE);

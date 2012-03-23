@@ -6,12 +6,22 @@
   }
  else   if (KEY_BIOMETRIC_WEAK_IMPROVE_MATCHING.equals(key)) {
     ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
-    if (!helper.launchConfirmationActivity(CONFIRM_EXISTING_FOR_BIOMETRIC_IMPROVE_REQUEST,null,null)) {
+    if (!helper.launchConfirmationActivity(CONFIRM_EXISTING_FOR_BIOMETRIC_WEAK_IMPROVE_REQUEST,null,null)) {
       startBiometricWeakImprove();
     }
   }
  else   if (KEY_BIOMETRIC_WEAK_LIVELINESS.equals(key)) {
-    lockPatternUtils.setBiometricWeakLivelinessEnabled(isToggled(preference));
+    if (isToggled(preference)) {
+      lockPatternUtils.setBiometricWeakLivelinessEnabled(true);
+    }
+ else {
+      mBiometricWeakLiveliness.setChecked(true);
+      ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
+      if (!helper.launchConfirmationActivity(CONFIRM_EXISTING_FOR_BIOMETRIC_WEAK_LIVELINESS_OFF,null,null)) {
+        lockPatternUtils.setBiometricWeakLivelinessEnabled(false);
+        mBiometricWeakLiveliness.setChecked(false);
+      }
+    }
   }
  else   if (KEY_LOCK_ENABLED.equals(key)) {
     lockPatternUtils.setLockPatternEnabled(isToggled(preference));

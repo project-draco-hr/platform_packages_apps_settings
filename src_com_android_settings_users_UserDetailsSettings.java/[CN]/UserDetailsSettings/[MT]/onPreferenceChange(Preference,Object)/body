@@ -1,0 +1,26 @@
+{
+  if (preference instanceof CheckBoxPreference) {
+    String packageName=preference.getKey();
+    int newState=((Boolean)newValue) ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER;
+    try {
+      mIPm.setApplicationEnabledSetting(packageName,newState,0,mUserId);
+    }
+ catch (    RemoteException re) {
+      Log.e(TAG,"Unable to change enabled state of package " + packageName + " for user "+ mUserId);
+    }
+  }
+ else   if (preference == mNamePref) {
+    String name=(String)newValue;
+    if (TextUtils.isEmpty(name)) {
+      return false;
+    }
+    try {
+      mIPm.updateUserName(mUserId,(String)newValue);
+      mNamePref.setSummary((String)newValue);
+    }
+ catch (    RemoteException re) {
+      return false;
+    }
+  }
+  return true;
+}

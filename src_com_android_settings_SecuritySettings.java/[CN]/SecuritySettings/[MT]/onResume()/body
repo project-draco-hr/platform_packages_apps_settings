@@ -14,7 +14,11 @@
   if (mPowerButtonInstantlyLocks != null) {
     mPowerButtonInstantlyLocks.setChecked(lockPatternUtils.getPowerButtonInstantlyLocks());
   }
-  mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0);
+  if (mShowPassword != null) {
+    mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0);
+  }
   KeyStore.State state=KeyStore.getInstance().state();
-  mResetCredentials.setEnabled(state != KeyStore.State.UNINITIALIZED);
+  if (mResetCredentials != null) {
+    mResetCredentials.setEnabled(state != KeyStore.State.UNINITIALIZED);
+  }
 }

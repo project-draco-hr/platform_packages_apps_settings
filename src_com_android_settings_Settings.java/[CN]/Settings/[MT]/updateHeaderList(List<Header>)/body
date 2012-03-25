@@ -19,6 +19,14 @@
         target.remove(header);
       }
     }
+ else     if (id == R.id.user_settings) {
+      if (!UserId.MU_ENABLED || UserId.myUserId() != 0 || !getResources().getBoolean(R.bool.enable_user_management) || Utils.isMonkeyRunning()) {
+        target.remove(header);
+      }
+    }
+    if (UserId.MU_ENABLED && UserId.myUserId() != 0 && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,id)) {
+      target.remove(header);
+    }
     if (target.get(i) == header) {
       if (mFirstHeader == null && HeaderAdapter.getHeaderType(header) != HeaderAdapter.HEADER_TYPE_CATEGORY) {
         mFirstHeader=header;

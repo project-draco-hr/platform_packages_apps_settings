@@ -1,0 +1,11 @@
+{
+  super.onResume();
+  mPm=getActivity().getPackageManager();
+  if (mUserId > 0) {
+    initExistingUser();
+  }
+ else {
+    initNewUser();
+  }
+  refreshApps();
+}

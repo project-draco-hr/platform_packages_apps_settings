@@ -1,0 +1,14 @@
+{
+  List<UserInfo> users=mPm.getUsers();
+  UserInfo foundUser=null;
+  for (  UserInfo user : users) {
+    if (user.id == mUserId) {
+      foundUser=user;
+      break;
+    }
+  }
+  if (foundUser != null) {
+    mNamePref.setSummary(foundUser.name);
+    mNamePref.setText(foundUser.name);
+  }
+}

@@ -1,6 +1,8 @@
 {
   if (dialog == mWarnInstallApps && which == DialogInterface.BUTTON_POSITIVE) {
     setNonMarketAppsAllowed(true);
-    mToggleAppInstallation.setChecked(true);
+    if (mToggleAppInstallation != null) {
+      mToggleAppInstallation.setChecked(true);
+    }
   }
 }

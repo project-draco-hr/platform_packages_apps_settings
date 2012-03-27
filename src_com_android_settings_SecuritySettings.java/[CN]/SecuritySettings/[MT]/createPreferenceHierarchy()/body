@@ -34,6 +34,7 @@ break;
 }
 addPreferencesFromResource(resid);
 DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+if (UserId.myUserId() == 0) {
 switch (dpm.getStorageEncryptionStatus()) {
 case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
 addPreferencesFromResource(R.xml.security_settings_encrypted);
@@ -41,6 +42,7 @@ break;
 case DevicePolicyManager.ENCRYPTION_STATUS_INACTIVE:
 addPreferencesFromResource(R.xml.security_settings_unencrypted);
 break;
+}
 }
 mLockAfter=(ListPreference)root.findPreference(KEY_LOCK_AFTER_TIMEOUT);
 if (mLockAfter != null) {
@@ -62,6 +64,9 @@ PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURI
 if (securityCategory != null && mTactileFeedback != null) {
 securityCategory.removePreference(mTactileFeedback);
 }
+}
+if (UserId.myUserId() > 0) {
+return root;
 }
 addPreferencesFromResource(R.xml.security_settings_misc);
 TelephonyManager tm=TelephonyManager.getDefault();

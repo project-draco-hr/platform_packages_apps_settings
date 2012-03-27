@@ -1,0 +1,11 @@
+{
+  String sid=pref.getKey();
+  if (sid != null && sid.startsWith("id=")) {
+    int id=Integer.parseInt(sid.substring(3));
+    Bundle args=new Bundle();
+    args.putInt(UserDetailsSettings.EXTRA_USER_ID,id);
+    ((PreferenceActivity)getActivity()).startPreferencePanel(UserDetailsSettings.class.getName(),args,0,pref.getTitle(),this,0);
+    return true;
+  }
+  return false;
+}

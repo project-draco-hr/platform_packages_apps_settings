@@ -2,7 +2,10 @@
   if (config == null) {
     return false;
   }
-  String values[]={config.ca_cert.value(),config.client_cert.value(),config.private_key.value()};
+  if (config.key_id.value() != null) {
+    return true;
+  }
+  String values[]={config.ca_cert.value(),config.client_cert.value()};
   for (  String value : values) {
     if (value != null && value.startsWith(KEYSTORE_SPACE)) {
       return true;

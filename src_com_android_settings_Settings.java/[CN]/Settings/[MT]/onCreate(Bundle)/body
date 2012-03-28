@@ -2,6 +2,9 @@
   if (getIntent().getBooleanExtra(EXTRA_CLEAR_UI_OPTIONS,false)) {
     getWindow().setUiOptions(0);
   }
+  if (android.provider.Settings.Secure.getInt(getContentResolver(),"multiuser_enabled",-1) > 0) {
+    mEnableUserManagement=true;
+  }
   getMetaData();
   mInLocalHeaderSwitch=true;
   super.onCreate(savedInstanceState);

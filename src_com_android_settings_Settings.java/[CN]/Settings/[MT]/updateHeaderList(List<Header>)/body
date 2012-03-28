@@ -20,7 +20,7 @@
       }
     }
  else     if (id == R.id.user_settings) {
-      if (!UserId.MU_ENABLED || UserId.myUserId() != 0 || !getResources().getBoolean(R.bool.enable_user_management) || Utils.isMonkeyRunning()) {
+      if (!mEnableUserManagement || !UserId.MU_ENABLED || UserId.myUserId() != 0 || !getResources().getBoolean(R.bool.enable_user_management) || Utils.isMonkeyRunning()) {
         target.remove(header);
       }
     }

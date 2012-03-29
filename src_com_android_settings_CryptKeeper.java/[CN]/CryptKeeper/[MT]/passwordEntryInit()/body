@@ -2,12 +2,12 @@
   mPasswordEntry=(EditText)findViewById(R.id.passwordEntry);
   mPasswordEntry.setOnEditorActionListener(this);
   mPasswordEntry.requestFocus();
-  View imeSwitcher=findViewById(R.id.switch_ime_button);
+  final View imeSwitcher=findViewById(R.id.switch_ime_button);
   final InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
   if (imeSwitcher != null && hasMultipleEnabledIMEsOrSubtypes(imm,false)) {
     imeSwitcher.setVisibility(View.VISIBLE);
     imeSwitcher.setOnClickListener(new OnClickListener(){
-      public void onClick(      View v){
+      @Override public void onClick(      View v){
         imm.showInputMethodPicker();
       }
     }

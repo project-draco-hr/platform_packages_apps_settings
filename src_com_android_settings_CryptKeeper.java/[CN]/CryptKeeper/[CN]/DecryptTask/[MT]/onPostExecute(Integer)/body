@@ -1,6 +1,6 @@
 {
   if (failedAttempts == 0) {
-    Intent intent=new Intent(CryptKeeper.this,Blank.class);
+    Intent intent=new Intent(CryptKeeper.this,FadeToBlack.class);
     finish();
     startActivity(intent);
   }
@@ -12,9 +12,9 @@
     cooldown();
   }
  else {
-    TextView tv=(TextView)findViewById(R.id.status);
-    tv.setText(R.string.try_again);
-    tv.setVisibility(View.VISIBLE);
+    final TextView status=(TextView)findViewById(R.id.status);
+    status.setText(R.string.try_again);
+    status.setVisibility(View.VISIBLE);
     mPasswordEntry.setEnabled(true);
   }
 }

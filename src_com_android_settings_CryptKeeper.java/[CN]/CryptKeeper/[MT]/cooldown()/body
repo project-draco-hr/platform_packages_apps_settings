@@ -1,13 +1,13 @@
 {
-  TextView tv=(TextView)findViewById(R.id.status);
+  final TextView status=(TextView)findViewById(R.id.status);
   if (mCooldown <= 0) {
     mPasswordEntry.setEnabled(true);
-    tv.setVisibility(View.GONE);
+    status.setVisibility(View.GONE);
   }
  else {
     CharSequence template=getText(R.string.crypt_keeper_cooldown);
-    tv.setText(TextUtils.expandTemplate(template,Integer.toString(mCooldown)));
-    tv.setVisibility(View.VISIBLE);
+    status.setText(TextUtils.expandTemplate(template,Integer.toString(mCooldown)));
+    status.setVisibility(View.VISIBLE);
     mCooldown--;
     mHandler.removeMessages(COOLDOWN);
     mHandler.sendEmptyMessageDelayed(COOLDOWN,1000);

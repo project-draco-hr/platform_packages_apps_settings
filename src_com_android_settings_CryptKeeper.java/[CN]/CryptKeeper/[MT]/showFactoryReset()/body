@@ -1,18 +1,16 @@
 {
   findViewById(R.id.encroid).setVisibility(View.GONE);
-  Button button=(Button)findViewById(R.id.factory_reset);
+  final Button button=(Button)findViewById(R.id.factory_reset);
   button.setVisibility(View.VISIBLE);
   button.setOnClickListener(new OnClickListener(){
-    public void onClick(    View v){
+    @Override public void onClick(    View v){
       sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
     }
   }
 );
-  TextView tv=(TextView)findViewById(R.id.title);
-  tv.setText(R.string.crypt_keeper_failed_title);
-  tv=(TextView)findViewById(R.id.status);
-  tv.setText(R.string.crypt_keeper_failed_summary);
-  View view=findViewById(R.id.bottom_divider);
+  ((TextView)findViewById(R.id.title)).setText(R.string.crypt_keeper_failed_title);
+  ((TextView)findViewById(R.id.status)).setText(R.string.crypt_keeper_failed_summary);
+  final View view=findViewById(R.id.bottom_divider);
   if (view != null) {
     view.setVisibility(View.VISIBLE);
   }

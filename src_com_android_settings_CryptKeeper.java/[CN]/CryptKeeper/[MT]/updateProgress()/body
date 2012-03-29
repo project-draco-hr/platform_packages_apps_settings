@@ -1,5 +1,5 @@
 {
-  String state=SystemProperties.get("vold.encrypt_progress");
+  final String state=SystemProperties.get("vold.encrypt_progress");
   if ("error_partially_encrypted".equals(state)) {
     showFactoryReset();
     return;
@@ -11,9 +11,9 @@
  catch (  Exception e) {
     Log.w(TAG,"Error parsing progress: " + e.toString());
   }
-  CharSequence status=getText(R.string.crypt_keeper_setup_description);
+  final CharSequence status=getText(R.string.crypt_keeper_setup_description);
   Log.v(TAG,"Encryption progress: " + progress);
-  TextView tv=(TextView)findViewById(R.id.status);
+  final TextView tv=(TextView)findViewById(R.id.status);
   tv.setText(TextUtils.expandTemplate(status,Integer.toString(progress)));
   mHandler.removeMessages(UPDATE_PROGRESS);
   mHandler.sendEmptyMessageDelayed(UPDATE_PROGRESS,5000);

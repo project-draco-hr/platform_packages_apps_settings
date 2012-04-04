@@ -1,0 +1,8 @@
+{
+  if (TEST_RADIOS) {
+    return SystemProperties.get(TEST_RADIOS_PROP).contains("mobile");
+  }
+  final ConnectivityManager conn=ConnectivityManager.from(context);
+  final TelephonyManager tele=TelephonyManager.from(context);
+  return conn.isNetworkSupported(TYPE_MOBILE) && tele.getSimState() == SIM_STATE_READY;
+}

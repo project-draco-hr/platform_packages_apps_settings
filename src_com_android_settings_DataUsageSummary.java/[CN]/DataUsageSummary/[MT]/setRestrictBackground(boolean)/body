@@ -1,10 +1,4 @@
 {
-  if (LOGD)   Log.d(TAG,"setRestrictBackground()");
-  try {
-    mPolicyService.setRestrictBackground(restrictBackground);
-    mMenuRestrictBackground.setChecked(restrictBackground);
-  }
- catch (  RemoteException e) {
-    Log.w(TAG,"problem talking with policy service: " + e);
-  }
+  mPolicyManager.setRestrictBackground(restrictBackground);
+  mMenuRestrictBackground.setChecked(restrictBackground);
 }

@@ -1,11 +1,12 @@
 {
   super.onCreate(savedInstanceState);
+  final Context context=getActivity();
   mNetworkService=INetworkManagementService.Stub.asInterface(ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
   mStatsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
-  mPolicyService=INetworkPolicyManager.Stub.asInterface(ServiceManager.getService(Context.NETWORK_POLICY_SERVICE));
-  mConnService=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+  mPolicyManager=NetworkPolicyManager.from(context);
+  mConnService=ConnectivityManager.from(context);
   mPrefs=getActivity().getSharedPreferences(PREF_FILE,Context.MODE_PRIVATE);
-  mPolicyEditor=new NetworkPolicyEditor(mPolicyService);
+  mPolicyEditor=new NetworkPolicyEditor(mPolicyManager);
   mPolicyEditor.read();
   mShowWifi=mPrefs.getBoolean(PREF_SHOW_WIFI,false);
   mShowEthernet=mPrefs.getBoolean(PREF_SHOW_ETHERNET,false);

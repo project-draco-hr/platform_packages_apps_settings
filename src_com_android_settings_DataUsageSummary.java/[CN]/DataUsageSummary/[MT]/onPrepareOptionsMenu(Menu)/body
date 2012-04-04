@@ -2,16 +2,16 @@
   final Context context=getActivity();
   final boolean appDetailMode=isAppDetailMode();
   mMenuDataRoaming=menu.findItem(R.id.data_usage_menu_roaming);
-  mMenuDataRoaming.setVisible(hasMobileRadio(context) && !appDetailMode);
+  mMenuDataRoaming.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
   mMenuDataRoaming.setChecked(getDataRoaming());
   mMenuRestrictBackground=menu.findItem(R.id.data_usage_menu_restrict_background);
-  mMenuRestrictBackground.setVisible(hasMobileRadio(context) && !appDetailMode);
-  mMenuRestrictBackground.setChecked(getRestrictBackground());
+  mMenuRestrictBackground.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
+  mMenuRestrictBackground.setChecked(mPolicyManager.getRestrictBackground());
   final MenuItem split4g=menu.findItem(R.id.data_usage_menu_split_4g);
   split4g.setVisible(hasMobile4gRadio(context) && !appDetailMode);
   split4g.setChecked(isMobilePolicySplit());
   final MenuItem showWifi=menu.findItem(R.id.data_usage_menu_show_wifi);
-  if (hasWifiRadio(context) && hasMobileRadio(context)) {
+  if (hasWifiRadio(context) && hasReadyMobileRadio(context)) {
     showWifi.setVisible(!appDetailMode);
     showWifi.setChecked(mShowWifi);
   }
@@ -20,12 +20,19 @@
     mShowWifi=true;
   }
   final MenuItem showEthernet=menu.findItem(R.id.data_usage_menu_show_ethernet);
-  if (hasEthernet(context) && hasMobileRadio(context)) {
+  if (hasEthernet(context) && hasReadyMobileRadio(context)) {
     showEthernet.setVisible(!appDetailMode);
     showEthernet.setChecked(mShowEthernet);
   }
  else {
     showEthernet.setVisible(false);
     mShowEthernet=true;
+  }
+  final MenuItem metered=menu.findItem(R.id.data_usage_menu_metered);
+  if (hasReadyMobileRadio(context) || hasWifiRadio(context)) {
+    metered.setVisible(!appDetailMode);
+  }
+ else {
+    metered.setVisible(false);
   }
 }

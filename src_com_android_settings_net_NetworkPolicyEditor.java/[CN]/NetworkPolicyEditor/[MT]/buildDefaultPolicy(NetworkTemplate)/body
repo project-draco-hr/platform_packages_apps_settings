@@ -1,7 +1,18 @@
 {
-  final Time time=new Time();
-  time.setToNow();
-  final int cycleDay=time.monthDay;
-  final String cycleTimezone=time.timezone;
-  return new NetworkPolicy(template,cycleDay,cycleTimezone,WARNING_DISABLED,LIMIT_DISABLED,SNOOZE_NEVER,SNOOZE_NEVER,true,false);
+  final int cycleDay;
+  final String cycleTimezone;
+  final boolean metered;
+  if (template.getMatchRule() == MATCH_WIFI) {
+    cycleDay=CYCLE_NONE;
+    cycleTimezone=Time.TIMEZONE_UTC;
+    metered=false;
+  }
+ else {
+    final Time time=new Time();
+    time.setToNow();
+    cycleDay=time.monthDay;
+    cycleTimezone=time.timezone;
+    metered=true;
+  }
+  return new NetworkPolicy(template,cycleDay,cycleTimezone,WARNING_DISABLED,LIMIT_DISABLED,SNOOZE_NEVER,SNOOZE_NEVER,metered,true);
 }

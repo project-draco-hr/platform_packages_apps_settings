@@ -1,11 +1,5 @@
 {
-  final NetworkPolicy[] policies;
-  try {
-    policies=mPolicyService.getNetworkPolicies();
-  }
- catch (  RemoteException e) {
-    throw new RuntimeException("problem reading policies",e);
-  }
+  final NetworkPolicy[] policies=mPolicyManager.getNetworkPolicies();
   boolean modified=false;
   mPolicies.clear();
   for (  NetworkPolicy policy : policies) {
@@ -16,10 +10,6 @@
     if (policy.warningBytes < -1) {
       policy.warningBytes=WARNING_DISABLED;
       modified=true;
-    }
-    if (policy.template.getMatchRule() == MATCH_WIFI) {
-      modified=true;
-      continue;
     }
     mPolicies.add(policy);
   }

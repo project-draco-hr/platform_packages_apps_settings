@@ -1,13 +1,16 @@
 {
   if (enable) {
     int timeout=getDiscoverableTimeout();
-    mLocalAdapter.setDiscoverableTimeout(timeout);
     long endTimestamp=System.currentTimeMillis() + timeout * 1000L;
     LocalBluetoothPreferences.persistDiscoverableEndTimestamp(mContext,endTimestamp);
     mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,timeout);
     updateCountdownSummary();
+    if (0 < timeout) {
+      setDiscoverableAlarm(endTimestamp);
+    }
   }
  else {
     mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE);
+    cancelDiscoverableAlarm();
   }
 }

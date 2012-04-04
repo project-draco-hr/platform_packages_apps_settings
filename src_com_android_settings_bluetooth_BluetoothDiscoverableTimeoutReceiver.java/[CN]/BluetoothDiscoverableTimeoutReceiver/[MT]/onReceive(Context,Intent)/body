@@ -1,0 +1,10 @@
+{
+  LocalBluetoothAdapter localBluetoothAdapter=LocalBluetoothAdapter.getInstance();
+  if (null != localBluetoothAdapter && localBluetoothAdapter.getState() == BluetoothAdapter.STATE_ON) {
+    Log.d(TAG,"Disable discoverable...");
+    localBluetoothAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE);
+  }
+ else {
+    Log.e(TAG,"localBluetoothAdapter is NULL!!");
+  }
+}

@@ -15,6 +15,7 @@
   mCurrentTab=currentTab;
   if (LOGD)   Log.d(TAG,"updateBody() with currentTab=" + currentTab);
   mDataEnabledView.setVisibility(View.VISIBLE);
+  final TelephonyManager tele=TelephonyManager.from(context);
   if (TAB_MOBILE.equals(currentTab)) {
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_mobile);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_mobile_limit);
@@ -33,7 +34,7 @@
  else   if (TAB_WIFI.equals(currentTab)) {
     mDataEnabledView.setVisibility(View.GONE);
     mDisableAtLimitView.setVisibility(View.GONE);
-    mTemplate=buildTemplateWifi();
+    mTemplate=buildTemplateWifiWildcard();
   }
  else   if (TAB_ETHERNET.equals(currentTab)) {
     mDataEnabledView.setVisibility(View.GONE);

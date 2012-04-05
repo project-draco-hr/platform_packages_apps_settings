@@ -1,0 +1,7 @@
+{
+  final TelephonyManager tele=TelephonyManager.from(context);
+  final NetworkTemplate template=NetworkTemplate.buildTemplateMobileAll(tele.getSubscriberId());
+  final MeteredPreference pref=new MeteredPreference(context,template);
+  pref.setTitle(tele.getNetworkOperatorName());
+  return pref;
+}

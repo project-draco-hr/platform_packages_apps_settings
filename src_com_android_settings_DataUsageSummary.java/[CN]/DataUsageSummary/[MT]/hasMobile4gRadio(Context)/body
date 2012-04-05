@@ -5,9 +5,9 @@
   if (TEST_RADIOS) {
     return SystemProperties.get(TEST_RADIOS_PROP).contains("4g");
   }
-  final ConnectivityManager conn=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-  final TelephonyManager telephony=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+  final ConnectivityManager conn=ConnectivityManager.from(context);
+  final TelephonyManager tele=TelephonyManager.from(context);
   final boolean hasWimax=conn.isNetworkSupported(TYPE_WIMAX);
-  final boolean hasLte=telephony.getLteOnCdmaMode() == Phone.LTE_ON_CDMA_TRUE;
+  final boolean hasLte=tele.getLteOnCdmaMode() == Phone.LTE_ON_CDMA_TRUE;
   return hasWimax || hasLte;
 }

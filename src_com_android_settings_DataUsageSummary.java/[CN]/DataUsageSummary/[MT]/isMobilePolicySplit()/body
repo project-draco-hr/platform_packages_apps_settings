@@ -1,8 +1,8 @@
 {
   final Context context=getActivity();
-  if (hasMobileRadio(context)) {
-    final String subscriberId=getActiveSubscriberId(context);
-    return mPolicyEditor.isMobilePolicySplit(subscriberId);
+  if (hasReadyMobileRadio(context)) {
+    final TelephonyManager tele=TelephonyManager.from(context);
+    return mPolicyEditor.isMobilePolicySplit(getActiveSubscriberId(context));
   }
  else {
     return false;

@@ -1,17 +1,20 @@
 {
   final Context context=getActivity();
-  final String subscriberId=getActiveSubscriberId(context);
   final ArrayList<CharSequence> limited=Lists.newArrayList();
-  if (mPolicyEditor.hasLimitedPolicy(buildTemplateMobileAll(subscriberId))) {
-    limited.add(getText(R.string.data_usage_list_mobile));
+  final TelephonyManager tele=TelephonyManager.from(context);
+  if (tele.getSimState() == SIM_STATE_READY) {
+    final String subscriberId=getActiveSubscriberId(context);
+    if (mPolicyEditor.hasLimitedPolicy(buildTemplateMobileAll(subscriberId))) {
+      limited.add(getText(R.string.data_usage_list_mobile));
+    }
+    if (mPolicyEditor.hasLimitedPolicy(buildTemplateMobile3gLower(subscriberId))) {
+      limited.add(getText(R.string.data_usage_tab_3g));
+    }
+    if (mPolicyEditor.hasLimitedPolicy(buildTemplateMobile4g(subscriberId))) {
+      limited.add(getText(R.string.data_usage_tab_4g));
+    }
   }
-  if (mPolicyEditor.hasLimitedPolicy(buildTemplateMobile3gLower(subscriberId))) {
-    limited.add(getText(R.string.data_usage_tab_3g));
-  }
-  if (mPolicyEditor.hasLimitedPolicy(buildTemplateMobile4g(subscriberId))) {
-    limited.add(getText(R.string.data_usage_tab_4g));
-  }
-  if (mPolicyEditor.hasLimitedPolicy(buildTemplateWifi())) {
+  if (mPolicyEditor.hasLimitedPolicy(buildTemplateWifiWildcard())) {
     limited.add(getText(R.string.data_usage_tab_wifi));
   }
   if (mPolicyEditor.hasLimitedPolicy(buildTemplateEthernet())) {

@@ -1,11 +1,5 @@
 {
   final int appId=mCurrentApp.appId;
-  final int uidPolicy;
-  try {
-    uidPolicy=mPolicyService.getAppPolicy(appId);
-  }
- catch (  RemoteException e) {
-    throw new RuntimeException("problem reading network policy",e);
-  }
+  final int uidPolicy=mPolicyManager.getAppPolicy(appId);
   return (uidPolicy & POLICY_REJECT_METERED_BACKGROUND) != 0;
 }

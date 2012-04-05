@@ -1,0 +1,20 @@
+{
+  if (hasReadyMobileRadio(context)) {
+    mMobileCategory.removeAll();
+    mMobileCategory.addPreference(buildMobilePref(context));
+  }
+ else {
+    getPreferenceScreen().removePreference(mMobileCategory);
+  }
+  if (hasWifiRadio(context)) {
+    mWifiCategory.removeAll();
+    for (    WifiConfiguration config : mWifiManager.getConfiguredNetworks()) {
+      if (config.SSID != null) {
+        mWifiCategory.addPreference(buildWifiPref(context,config));
+      }
+    }
+  }
+ else {
+    getPreferenceScreen().removePreference(mWifiCategory);
+  }
+}

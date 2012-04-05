@@ -1,0 +1,12 @@
+{
+  super.onCreate(icicle);
+  final Context context=getActivity();
+  mPolicyManager=NetworkPolicyManager.from(context);
+  mWifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+  mPolicyEditor=new NetworkPolicyEditor(mPolicyManager);
+  mPolicyEditor.read();
+  addPreferencesFromResource(R.xml.data_usage_metered_prefs);
+  mMobileCategory=(PreferenceCategory)findPreference("mobile");
+  mWifiCategory=(PreferenceCategory)findPreference("wifi");
+  updateNetworks(context);
+}

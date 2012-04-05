@@ -38,7 +38,7 @@
     mAppSettings.setEnabled(false);
   }
   updateDetailData();
-  if (UserId.isApp(appId) && !getRestrictBackground() && isBandwidthControlEnabled()&& hasMobileRadio(context)) {
+  if (UserId.isApp(appId) && !mPolicyManager.getRestrictBackground() && isBandwidthControlEnabled()&& hasReadyMobileRadio(context)) {
     setPreferenceTitle(mAppRestrictView,R.string.data_usage_app_restrict_background);
     setPreferenceSummary(mAppRestrictView,getString(R.string.data_usage_app_restrict_background_summary));
     mAppRestrictView.setVisibility(View.VISIBLE);

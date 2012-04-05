@@ -1,0 +1,43 @@
+{
+  mHardKeyboardPreferenceList.clear();
+  if (getResources().getConfiguration().keyboard == Configuration.KEYBOARD_QWERTY) {
+    final InputManager im=(InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
+    final int[] devices=InputDevice.getDeviceIds();
+    for (int i=0; i < devices.length; i++) {
+      InputDevice device=InputDevice.getDevice(devices[i]);
+      if (device != null && (device.getSources() & InputDevice.SOURCE_KEYBOARD) != 0 && device.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {
+        final String inputDeviceDescriptor=device.getDescriptor();
+        final String keyboardLayoutDescriptor=im.getInputDeviceKeyboardLayoutDescriptor(inputDeviceDescriptor);
+        final KeyboardLayout keyboardLayout=keyboardLayoutDescriptor != null ? im.getKeyboardLayout(keyboardLayoutDescriptor) : null;
+        final Intent intent=new Intent(Intent.ACTION_MAIN);
+        intent.setClass(getActivity(),KeyboardLayoutPickerActivity.class);
+        intent.putExtra(KeyboardLayoutPicker.EXTRA_INPUT_DEVICE_DESCRIPTOR,inputDeviceDescriptor);
+        final PreferenceScreen pref=new PreferenceScreen(getActivity(),null);
+        pref.setTitle(device.getName());
+        if (keyboardLayout != null) {
+          pref.setSummary(keyboardLayout.getLabel());
+        }
+        pref.setIntent(intent);
+        mHardKeyboardPreferenceList.add(pref);
+      }
+    }
+  }
+  if (!mHardKeyboardPreferenceList.isEmpty()) {
+    for (int i=mHardKeyboardCategory.getPreferenceCount(); i-- > 0; ) {
+      final Preference pref=mHardKeyboardCategory.getPreference(i);
+      if (pref.getOrder() < 1000) {
+        mHardKeyboardCategory.removePreference(pref);
+      }
+    }
+    Collections.sort(mHardKeyboardPreferenceList);
+    final int count=mHardKeyboardPreferenceList.size();
+    for (int i=0; i < count; i++) {
+      final Preference pref=mHardKeyboardPreferenceList.get(i);
+      pref.setOrder(i);
+      mHardKeyboardCategory.addPreference(pref);
+    }
+  }
+ else {
+    getPreferenceScreen().removePreference(mHardKeyboardCategory);
+  }
+}

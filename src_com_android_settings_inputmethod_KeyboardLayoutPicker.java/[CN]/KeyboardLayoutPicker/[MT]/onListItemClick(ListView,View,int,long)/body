@@ -1,0 +1,8 @@
+{
+  if (mInputDeviceDescriptor != null) {
+    KeyboardLayout c=(KeyboardLayout)l.getItemAtPosition(position);
+    InputManager im=(InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
+    im.setInputDeviceKeyboardLayoutDescriptor(mInputDeviceDescriptor,c.getDescriptor());
+  }
+  getActivity().finish();
+}

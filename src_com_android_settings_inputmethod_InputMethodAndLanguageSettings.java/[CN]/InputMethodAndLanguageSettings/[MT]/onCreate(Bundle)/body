@@ -18,13 +18,41 @@
     updateInputMethodSelectorSummary(loadInputMethodSelectorVisibility());
   }
   new VoiceInputOutputSettings(this).onCreate();
-  final Configuration config=getResources().getConfiguration();
-  mHaveHardKeyboard=(config.keyboard == Configuration.KEYBOARD_QWERTY);
+  mHardKeyboardCategory=(PreferenceCategory)findPreference("hard_keyboard");
+  mKeyboardSettingsCategory=(PreferenceCategory)findPreference("keyboard_settings_category");
   mIsOnlyImeSettings=Settings.ACTION_INPUT_METHOD_SETTINGS.equals(getActivity().getIntent().getAction());
   getActivity().getIntent().setAction(null);
+  if (mIsOnlyImeSettings) {
+    getPreferenceScreen().removeAll();
+    getPreferenceScreen().addPreference(mHardKeyboardCategory);
+    if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {
+      getPreferenceScreen().addPreference(mShowInputMethodSelectorPref);
+    }
+    getPreferenceScreen().addPreference(mKeyboardSettingsCategory);
+  }
   mImm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
   mImis=mImm.getInputMethodList();
-  createImePreferenceHierarchy((PreferenceGroup)findPreference("keyboard_settings_category"));
+  mKeyboardSettingsCategory.removeAll();
+  if (!mIsOnlyImeSettings) {
+    final PreferenceScreen currentIme=new PreferenceScreen(getActivity(),null);
+    currentIme.setKey(KEY_CURRENT_INPUT_METHOD);
+    currentIme.setTitle(getResources().getString(R.string.current_input_method));
+    mKeyboardSettingsCategory.addPreference(currentIme);
+  }
+  mInputMethodPreferenceList.clear();
+  final int N=(mImis == null ? 0 : mImis.size());
+  for (int i=0; i < N; ++i) {
+    final InputMethodInfo imi=mImis.get(i);
+    final InputMethodPreference pref=getInputMethodPreference(imi,N);
+    mInputMethodPreferenceList.add(pref);
+  }
+  if (!mInputMethodPreferenceList.isEmpty()) {
+    Collections.sort(mInputMethodPreferenceList);
+    for (int i=0; i < N; ++i) {
+      mKeyboardSettingsCategory.addPreference(mInputMethodPreferenceList.get(i));
+    }
+  }
+  updateHardKeyboards();
   final Intent intent=new Intent(Intent.ACTION_MAIN);
   intent.setClass(getActivity(),SpellCheckersSettingsActivity.class);
   final SpellCheckersPreference scp=((SpellCheckersPreference)findPreference("spellcheckers_settings"));

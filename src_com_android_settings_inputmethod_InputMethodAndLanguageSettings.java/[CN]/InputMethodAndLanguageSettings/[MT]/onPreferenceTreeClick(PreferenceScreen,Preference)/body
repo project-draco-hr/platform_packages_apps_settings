@@ -12,7 +12,7 @@
   }
  else   if (preference instanceof CheckBoxPreference) {
     final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
-    if (mHaveHardKeyboard) {
+    if (!mHardKeyboardPreferenceList.isEmpty()) {
       for (int i=0; i < sHardKeyboardKeys.length; ++i) {
         if (chkPref == mHardKeyboardCategory.findPreference(sHardKeyboardKeys[i])) {
           System.putInt(getContentResolver(),sSystemSettingNames[i],chkPref.isChecked() ? 1 : 0);

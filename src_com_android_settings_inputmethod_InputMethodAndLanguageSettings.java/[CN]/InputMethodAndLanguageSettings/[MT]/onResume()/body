@@ -14,12 +14,13 @@
       mShowInputMethodSelectorPref.setOnPreferenceChangeListener(this);
     }
   }
-  if (mHaveHardKeyboard) {
+  if (!mHardKeyboardPreferenceList.isEmpty()) {
     for (int i=0; i < sHardKeyboardKeys.length; ++i) {
       CheckBoxPreference chkPref=(CheckBoxPreference)mHardKeyboardCategory.findPreference(sHardKeyboardKeys[i]);
       chkPref.setChecked(System.getInt(getContentResolver(),sSystemSettingNames[i],1) > 0);
     }
   }
+  updateHardKeyboards();
   InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,getContentResolver(),mImis,null);
   updateActiveInputMethodsSummary();
 }

@@ -7,5 +7,5 @@
   super.onRestoreInstanceState(myState.getSuperState());
   mOldSpeed=myState.oldSpeed;
   mSeekBar.setProgress(myState.progress);
-  setSpeed(myState.progress + MIN_SPEED);
+  mIm.tryPointerSpeed(myState.progress + InputManager.MIN_POINTER_SPEED);
 }

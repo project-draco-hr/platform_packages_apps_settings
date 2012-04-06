@@ -1,5 +1,5 @@
 {
-  final NetworkStatsHistory history=mStatsService.getHistoryForUid(template,uid,set,TAG_NONE,FIELD_RX_BYTES | FIELD_TX_BYTES);
+  final NetworkStatsHistory history=mSession.getHistoryForUid(template,uid,set,TAG_NONE,FIELD_RX_BYTES | FIELD_TX_BYTES);
   if (existing != null) {
     existing.recordEntireHistory(history);
     return existing;

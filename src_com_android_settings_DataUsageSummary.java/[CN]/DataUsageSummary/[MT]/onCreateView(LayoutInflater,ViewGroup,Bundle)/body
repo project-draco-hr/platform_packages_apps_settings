@@ -2,6 +2,12 @@
   final Context context=inflater.getContext();
   final View view=inflater.inflate(R.layout.data_usage_summary,container,false);
   mUidDetailProvider=new UidDetailProvider(context);
+  try {
+    mStatsSession=mStatsService.openSession();
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException(e);
+  }
   mTabHost=(TabHost)view.findViewById(android.R.id.tabhost);
   mTabsContainer=(ViewGroup)view.findViewById(R.id.tabs_container);
   mTabWidget=(TabWidget)view.findViewById(android.R.id.tabs);

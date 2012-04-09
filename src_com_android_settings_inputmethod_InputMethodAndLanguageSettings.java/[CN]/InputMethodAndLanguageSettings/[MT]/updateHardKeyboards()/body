@@ -5,9 +5,9 @@
     final int[] devices=InputDevice.getDeviceIds();
     for (int i=0; i < devices.length; i++) {
       InputDevice device=InputDevice.getDevice(devices[i]);
-      if (device != null && (device.getSources() & InputDevice.SOURCE_KEYBOARD) != 0 && device.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {
+      if (device != null && !device.isVirtual() && (device.getSources() & InputDevice.SOURCE_KEYBOARD) != 0 && device.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {
         final String inputDeviceDescriptor=device.getDescriptor();
-        final String keyboardLayoutDescriptor=im.getInputDeviceKeyboardLayoutDescriptor(inputDeviceDescriptor);
+        final String keyboardLayoutDescriptor=im.getKeyboardLayoutForInputDevice(inputDeviceDescriptor);
         final KeyboardLayout keyboardLayout=keyboardLayoutDescriptor != null ? im.getKeyboardLayout(keyboardLayoutDescriptor) : null;
         final Intent intent=new Intent(Intent.ACTION_MAIN);
         intent.setClass(getActivity(),KeyboardLayoutPickerActivity.class);

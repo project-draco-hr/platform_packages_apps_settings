@@ -2,7 +2,7 @@
   super.onDialogClosed(positiveResult);
   final ContentResolver resolver=getContext().getContentResolver();
   if (positiveResult) {
-    mIm.setPointerSpeed(mSeekBar.getProgress() + InputManager.MIN_POINTER_SPEED);
+    mIm.setPointerSpeed(getContext(),mSeekBar.getProgress() + InputManager.MIN_POINTER_SPEED);
   }
  else {
     restoreOldState();

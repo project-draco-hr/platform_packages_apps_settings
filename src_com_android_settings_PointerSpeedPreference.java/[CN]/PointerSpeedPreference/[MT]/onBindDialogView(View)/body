@@ -2,7 +2,7 @@
   super.onBindDialogView(view);
   mSeekBar=getSeekBar(view);
   mSeekBar.setMax(InputManager.MAX_POINTER_SPEED - InputManager.MIN_POINTER_SPEED);
-  mOldSpeed=mIm.getPointerSpeed();
+  mOldSpeed=mIm.getPointerSpeed(getContext());
   mSeekBar.setProgress(mOldSpeed - InputManager.MIN_POINTER_SPEED);
   mSeekBar.setOnSeekBarChangeListener(this);
 }

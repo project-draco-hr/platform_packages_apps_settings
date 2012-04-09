@@ -21,7 +21,7 @@
   builder.setTitle(R.string.data_usage_limit_editor_title);
   builder.setView(view);
   builder.setPositiveButton(R.string.data_usage_cycle_editor_positive,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int which){
+    @Override public void onClick(    DialogInterface dialog,    int which){
       bytesPicker.clearFocus();
       final long bytes=bytesPicker.getValue() * MB_IN_BYTES;
       editor.setPolicyLimitBytes(template,bytes);

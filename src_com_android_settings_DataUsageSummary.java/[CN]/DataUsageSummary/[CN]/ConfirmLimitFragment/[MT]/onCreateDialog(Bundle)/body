@@ -6,7 +6,7 @@
   builder.setTitle(R.string.data_usage_limit_dialog_title);
   builder.setMessage(message);
   builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int which){
+    @Override public void onClick(    DialogInterface dialog,    int which){
       final DataUsageSummary target=(DataUsageSummary)getTargetFragment();
       if (target != null) {
         target.setPolicyLimitBytes(limitBytes);

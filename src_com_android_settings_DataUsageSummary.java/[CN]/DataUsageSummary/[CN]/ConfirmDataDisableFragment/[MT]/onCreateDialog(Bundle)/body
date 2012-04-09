@@ -3,7 +3,7 @@
   final AlertDialog.Builder builder=new AlertDialog.Builder(context);
   builder.setMessage(R.string.data_usage_disable_mobile);
   builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int which){
+    @Override public void onClick(    DialogInterface dialog,    int which){
       final DataUsageSummary target=(DataUsageSummary)getTargetFragment();
       if (target != null) {
         target.setMobileDataEnabled(false);

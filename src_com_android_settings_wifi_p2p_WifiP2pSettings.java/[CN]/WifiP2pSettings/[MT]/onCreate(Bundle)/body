@@ -36,6 +36,24 @@
     }
   }
 ;
+  mCancelConnectListener=new OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      if (which == DialogInterface.BUTTON_POSITIVE) {
+        if (mWifiP2pManager != null) {
+          mWifiP2pManager.cancelConnect(mChannel,new WifiP2pManager.ActionListener(){
+            public void onSuccess(){
+              if (DBG)               Log.d(TAG," cancel connect success");
+            }
+            public void onFailure(            int reason){
+              if (DBG)               Log.d(TAG," cancel connect fail " + reason);
+            }
+          }
+);
+        }
+      }
+    }
+  }
+;
   setHasOptionsMenu(true);
   final PreferenceScreen preferenceScreen=getPreferenceScreen();
   preferenceScreen.removeAll();

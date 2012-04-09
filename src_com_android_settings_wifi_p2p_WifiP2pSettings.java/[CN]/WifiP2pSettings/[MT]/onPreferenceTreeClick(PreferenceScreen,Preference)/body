@@ -4,6 +4,9 @@
     if (mSelectedWifiPeer.device.status == WifiP2pDevice.CONNECTED) {
       showDialog(DIALOG_DISCONNECT);
     }
+ else     if (mSelectedWifiPeer.device.status == WifiP2pDevice.INVITED) {
+      showDialog(DIALOG_CANCEL_CONNECT);
+    }
  else {
       WifiP2pConfig config=new WifiP2pConfig();
       config.deviceAddress=mSelectedWifiPeer.device.deviceAddress;

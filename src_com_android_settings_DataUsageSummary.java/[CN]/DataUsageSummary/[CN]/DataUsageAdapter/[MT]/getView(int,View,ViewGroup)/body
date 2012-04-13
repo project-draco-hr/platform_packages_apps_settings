@@ -10,7 +10,14 @@
   final ProgressBar progress=(ProgressBar)convertView.findViewById(android.R.id.progress);
   final AppItem item=mItems.get(position);
   UidDetailTask.bindView(mProvider,item,convertView);
-  text1.setText(Formatter.formatFileSize(context,item.total));
+  if (item.restricted && item.total <= 0) {
+    text1.setText(R.string.data_usage_app_restricted);
+    progress.setVisibility(View.GONE);
+  }
+ else {
+    text1.setText(Formatter.formatFileSize(context,item.total));
+    progress.setVisibility(View.VISIBLE);
+  }
   final int percentTotal=mLargest != 0 ? (int)(item.total * 100 / mLargest) : 0;
   progress.setProgress(percentTotal);
   return convertView;

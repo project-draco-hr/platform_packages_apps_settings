@@ -1,0 +1,10 @@
+{
+  Log.d(TAG,"cancelDiscoverableAlarm(): Enter");
+  Intent intent=new Intent(INTENT_DISCOVERABLE_TIMEOUT);
+  intent.setClass(context,BluetoothDiscoverableTimeoutReceiver.class);
+  PendingIntent pending=PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_NO_CREATE);
+  if (pending != null) {
+    AlarmManager alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+    alarmManager.cancel(pending);
+  }
+}

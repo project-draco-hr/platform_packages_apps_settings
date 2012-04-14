@@ -1,0 +1,10 @@
+{
+  if (haveInputDeviceWithVibrator()) {
+    getPreferenceScreen().addPreference(mGameControllerCategory);
+    CheckBoxPreference chkPref=(CheckBoxPreference)mGameControllerCategory.findPreference("vibrate_input_devices");
+    chkPref.setChecked(System.getInt(getContentResolver(),Settings.System.VIBRATE_INPUT_DEVICES,1) > 0);
+  }
+ else {
+    getPreferenceScreen().removePreference(mGameControllerCategory);
+  }
+}

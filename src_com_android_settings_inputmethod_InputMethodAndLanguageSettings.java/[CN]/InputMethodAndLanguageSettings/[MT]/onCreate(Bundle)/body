@@ -20,6 +20,7 @@
   new VoiceInputOutputSettings(this).onCreate();
   mHardKeyboardCategory=(PreferenceCategory)findPreference("hard_keyboard");
   mKeyboardSettingsCategory=(PreferenceCategory)findPreference("keyboard_settings_category");
+  mGameControllerCategory=(PreferenceCategory)findPreference("game_controller_settings_category");
   mIsOnlyImeSettings=Settings.ACTION_INPUT_METHOD_SETTINGS.equals(getActivity().getIntent().getAction());
   getActivity().getIntent().setAction(null);
   if (mIsOnlyImeSettings) {
@@ -53,7 +54,7 @@
     }
   }
   mIm=(InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
-  updateHardKeyboards();
+  updateInputDevices();
   final Intent intent=new Intent(Intent.ACTION_MAIN);
   intent.setClass(getActivity(),SpellCheckersSettingsActivity.class);
   final SpellCheckersPreference scp=((SpellCheckersPreference)findPreference("spellcheckers_settings"));

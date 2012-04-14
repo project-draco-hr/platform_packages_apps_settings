@@ -20,6 +20,10 @@
         }
       }
     }
+    if (chkPref == mGameControllerCategory.findPreference("vibrate_input_devices")) {
+      System.putInt(getContentResolver(),Settings.System.VIBRATE_INPUT_DEVICES,chkPref.isChecked() ? 1 : 0);
+      return true;
+    }
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

@@ -1,5 +1,6 @@
 {
   super.onPause();
+  mIm.unregisterInputDeviceListener(this);
   if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {
     mShowInputMethodSelectorPref.setOnPreferenceChangeListener(null);
   }

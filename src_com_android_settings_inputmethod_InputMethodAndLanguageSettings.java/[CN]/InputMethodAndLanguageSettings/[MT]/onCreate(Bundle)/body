@@ -52,6 +52,7 @@
       mKeyboardSettingsCategory.addPreference(mInputMethodPreferenceList.get(i));
     }
   }
+  mIm=(InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
   updateHardKeyboards();
   final Intent intent=new Intent(Intent.ACTION_MAIN);
   intent.setClass(getActivity(),SpellCheckersSettingsActivity.class);

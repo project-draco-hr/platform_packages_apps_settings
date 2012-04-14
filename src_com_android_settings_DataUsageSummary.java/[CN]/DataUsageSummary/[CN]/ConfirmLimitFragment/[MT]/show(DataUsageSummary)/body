@@ -5,19 +5,15 @@
   final long limitBytes;
   final String currentTab=parent.mCurrentTab;
   if (TAB_3G.equals(currentTab)) {
-    message=buildDialogMessage(res,R.string.data_usage_tab_3g);
+    message=res.getString(R.string.data_usage_limit_dialog_mobile);
     limitBytes=5 * GB_IN_BYTES;
   }
  else   if (TAB_4G.equals(currentTab)) {
-    message=buildDialogMessage(res,R.string.data_usage_tab_4g);
+    message=res.getString(R.string.data_usage_limit_dialog_mobile);
     limitBytes=5 * GB_IN_BYTES;
   }
  else   if (TAB_MOBILE.equals(currentTab)) {
-    message=buildDialogMessage(res,R.string.data_usage_list_mobile);
-    limitBytes=5 * GB_IN_BYTES;
-  }
- else   if (TAB_WIFI.equals(currentTab)) {
-    message=buildDialogMessage(res,R.string.data_usage_tab_wifi);
+    message=res.getString(R.string.data_usage_limit_dialog_mobile);
     limitBytes=5 * GB_IN_BYTES;
   }
  else {

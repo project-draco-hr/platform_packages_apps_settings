@@ -23,6 +23,15 @@
       systemItem.addUid(entry.uid);
     }
   }
+  for (  int appId : restrictedAppIds) {
+    AppItem item=knownUids.get(appId);
+    if (item == null) {
+      item=new AppItem(appId);
+      item.total=-1;
+      mItems.add(item);
+    }
+    item.restricted=true;
+  }
   if (systemItem.total > 0) {
     mItems.add(systemItem);
   }

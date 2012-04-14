@@ -1,14 +1,13 @@
 {
   mHardKeyboardPreferenceList.clear();
   if (getResources().getConfiguration().keyboard == Configuration.KEYBOARD_QWERTY) {
-    final InputManager im=(InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
     final int[] devices=InputDevice.getDeviceIds();
     for (int i=0; i < devices.length; i++) {
       InputDevice device=InputDevice.getDevice(devices[i]);
       if (device != null && !device.isVirtual() && (device.getSources() & InputDevice.SOURCE_KEYBOARD) != 0 && device.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {
         final String inputDeviceDescriptor=device.getDescriptor();
-        final String keyboardLayoutDescriptor=im.getKeyboardLayoutForInputDevice(inputDeviceDescriptor);
-        final KeyboardLayout keyboardLayout=keyboardLayoutDescriptor != null ? im.getKeyboardLayout(keyboardLayoutDescriptor) : null;
+        final String keyboardLayoutDescriptor=mIm.getKeyboardLayoutForInputDevice(inputDeviceDescriptor);
+        final KeyboardLayout keyboardLayout=keyboardLayoutDescriptor != null ? mIm.getKeyboardLayout(keyboardLayoutDescriptor) : null;
         final Intent intent=new Intent(Intent.ACTION_MAIN);
         intent.setClass(getActivity(),KeyboardLayoutPickerActivity.class);
         intent.putExtra(KeyboardLayoutPicker.EXTRA_INPUT_DEVICE_DESCRIPTOR,inputDeviceDescriptor);
@@ -36,6 +35,7 @@
       pref.setOrder(i);
       mHardKeyboardCategory.addPreference(pref);
     }
+    getPreferenceScreen().addPreference(mHardKeyboardCategory);
   }
  else {
     getPreferenceScreen().removePreference(mHardKeyboardCategory);

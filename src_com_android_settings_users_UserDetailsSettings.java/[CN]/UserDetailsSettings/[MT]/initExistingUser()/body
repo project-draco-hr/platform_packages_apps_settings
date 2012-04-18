@@ -10,5 +10,8 @@
   if (foundUser != null) {
     mNamePref.setSummary(foundUser.name);
     mNamePref.setText(foundUser.name);
+    if (foundUser.iconPath != null) {
+      setPhotoId(foundUser.iconPath);
+    }
   }
 }

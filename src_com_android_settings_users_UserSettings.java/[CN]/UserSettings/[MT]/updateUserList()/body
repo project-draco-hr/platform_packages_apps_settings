@@ -2,11 +2,13 @@
   List<UserInfo> users=getActivity().getPackageManager().getUsers();
   mUserListCategory.removeAll();
   for (  UserInfo user : users) {
-    if (user.id == 0)     continue;
     Preference pref=new Preference(getActivity());
     pref.setTitle(user.name);
     pref.setOnPreferenceClickListener(this);
     pref.setKey("id=" + user.id);
+    if (user.iconPath != null) {
+      setPhotoId(pref,user.iconPath);
+    }
     mUserListCategory.addPreference(pref);
   }
 }

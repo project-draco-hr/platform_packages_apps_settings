@@ -1,0 +1,12 @@
+{
+  final Uri inputPhotoUri=imageUri;
+  Intent intent=new Intent("com.android.camera.action.CROP");
+  intent.setDataAndType(inputPhotoUri,"image/*");
+  intent.putExtra("crop","true");
+  intent.putExtra("aspectX",1);
+  intent.putExtra("aspectY",1);
+  intent.putExtra("outputX",96);
+  intent.putExtra("outputY",96);
+  intent.putExtra("return-data",true);
+  startActivityForResult(intent,RESULT_CROP_IMAGE);
+}

@@ -16,5 +16,14 @@
   mInstalledAppGroup=(PreferenceGroup)findPreference(KEY_INSTALLED_APPS);
   mNamePref=(EditTextPreference)findPreference(KEY_USER_NAME);
   mNamePref.setOnPreferenceChangeListener(this);
+  mPicturePref=findPreference(KEY_USER_PICTURE);
+  mPicturePref.setOnPreferenceClickListener(this);
+  mAccountPref=findPreference(KEY_ACCOUNT);
+  mAccountPref.setOnPreferenceClickListener(this);
+  if (mUserId == 0) {
+    getPreferenceScreen().removePreference(mSystemAppGroup);
+    getPreferenceScreen().removePreference(mInstalledAppGroup);
+    getPreferenceScreen().removePreference(findPreference(KEY_RESTRICTIONS));
+  }
   setHasOptionsMenu(true);
 }

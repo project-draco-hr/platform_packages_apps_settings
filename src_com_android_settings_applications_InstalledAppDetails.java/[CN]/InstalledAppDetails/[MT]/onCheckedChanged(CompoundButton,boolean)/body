@@ -7,4 +7,13 @@
  else   if (buttonView == mEnableCompatibilityCB) {
     am.setPackageScreenCompatMode(packageName,isChecked ? ActivityManager.COMPAT_MODE_ENABLED : ActivityManager.COMPAT_MODE_DISABLED);
   }
+ else   if (buttonView == mNotificationSwitch) {
+    INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+    try {
+      nm.setNotificationsEnabledForPackage(packageName,isChecked);
+    }
+ catch (    android.os.RemoteException ex) {
+      mNotificationSwitch.setChecked(!isChecked);
+    }
+  }
 }

@@ -20,9 +20,7 @@
     size=String.format("%.0f",result);
     resultRounded=unitFactor * Math.round(result);
   }
-  final int[] sizeBounds=findOrCreateSpan(builder,sSpanSize,"^1");
-  builder.replace(sizeBounds[0],sizeBounds[1],size);
-  final int[] unitBounds=findOrCreateSpan(builder,sSpanUnit,"^2");
-  builder.replace(unitBounds[0],unitBounds[1],unit);
+  setText(builder,sSpanSize,size,"^1");
+  setText(builder,sSpanUnit,unit,"^2");
   return (long)resultRounded;
 }

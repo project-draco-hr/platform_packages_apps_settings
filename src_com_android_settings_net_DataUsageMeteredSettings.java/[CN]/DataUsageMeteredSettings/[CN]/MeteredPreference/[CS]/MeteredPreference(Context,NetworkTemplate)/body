@@ -2,5 +2,19 @@
   super(context);
   mTemplate=template;
   setPersistent(false);
-  setChecked(mPolicyEditor.getPolicyMetered(mTemplate));
+  mBinding=true;
+  final NetworkPolicy policy=mPolicyEditor.getPolicy(template);
+  if (policy != null) {
+    if (policy.limitBytes != LIMIT_DISABLED) {
+      setChecked(true);
+      setEnabled(false);
+    }
+ else {
+      setChecked(policy.metered);
+    }
+  }
+ else {
+    setChecked(false);
+  }
+  mBinding=false;
 }

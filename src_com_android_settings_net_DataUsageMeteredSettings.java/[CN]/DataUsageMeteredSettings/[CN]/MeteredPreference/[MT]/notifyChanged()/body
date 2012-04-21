@@ -1,4 +1,6 @@
 {
   super.notifyChanged();
-  mPolicyEditor.setPolicyMetered(mTemplate,isChecked());
+  if (!mBinding) {
+    mPolicyEditor.setPolicyMetered(mTemplate,isChecked());
+  }
 }

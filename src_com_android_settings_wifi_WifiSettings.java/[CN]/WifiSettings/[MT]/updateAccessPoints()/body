@@ -5,16 +5,11 @@ switch (wifiState) {
 case WifiManager.WIFI_STATE_ENABLED:
     final Collection<AccessPoint> accessPoints=constructAccessPoints();
   getPreferenceScreen().removeAll();
-if (mInXlSetupWizard) {
-  ((WifiSettingsForSetupWizardXL)getActivity()).onAccessPointsUpdated(getPreferenceScreen(),accessPoints);
+if (accessPoints.size() == 0) {
+  addMessagePreference(R.string.wifi_empty_list_wifi_on);
 }
- else {
-  if (accessPoints.size() == 0) {
-    addMessagePreference(R.string.wifi_empty_list_wifi_on);
-  }
-  for (  AccessPoint accessPoint : accessPoints) {
-    getPreferenceScreen().addPreference(accessPoint);
-  }
+for (AccessPoint accessPoint : accessPoints) {
+getPreferenceScreen().addPreference(accessPoint);
 }
 break;
 case WifiManager.WIFI_STATE_ENABLING:

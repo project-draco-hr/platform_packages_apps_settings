@@ -15,7 +15,7 @@ case MENU_ID_CONNECT:
         mWifiManager.connect(mChannel,mSelectedAccessPoint.getConfig(),mConnectListener);
       }
  else {
-        showConfigUi(mSelectedAccessPoint,true);
+        showDialog(mSelectedAccessPoint,true);
       }
       return true;
     }
@@ -26,7 +26,7 @@ case MENU_ID_FORGET:
   }
 case MENU_ID_MODIFY:
 {
-  showConfigUi(mSelectedAccessPoint,true);
+  showDialog(mSelectedAccessPoint,true);
   return true;
 }
 }

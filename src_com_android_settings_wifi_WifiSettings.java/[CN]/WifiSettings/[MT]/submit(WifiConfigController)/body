@@ -7,12 +7,12 @@
   }
  else   if (config.networkId != INVALID_NETWORK_ID) {
     if (mSelectedAccessPoint != null) {
-      saveNetwork(config);
+      mWifiManager.save(mChannel,config,mSaveListener);
     }
   }
  else {
     if (configController.isEdit() || requireKeyStore(config)) {
-      saveNetwork(config);
+      mWifiManager.save(mChannel,config,mSaveListener);
     }
  else {
       mWifiManager.connect(mChannel,config,mConnectListener);

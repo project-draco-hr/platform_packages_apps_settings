@@ -14,6 +14,12 @@
   if (orgIntent.hasExtra(EXTRA_PREFS_SET_BACK_TEXT)) {
     intent.putExtra(EXTRA_PREFS_SET_BACK_TEXT,orgIntent.getStringExtra(EXTRA_PREFS_SET_BACK_TEXT));
   }
+  if (orgIntent.hasExtra(EXTRA_WIFI_SHOW_ACTION_BAR)) {
+    intent.putExtra(EXTRA_WIFI_SHOW_ACTION_BAR,orgIntent.getBooleanExtra(EXTRA_WIFI_SHOW_ACTION_BAR,true));
+  }
+  if (orgIntent.hasExtra(EXTRA_WIFI_SHOW_MENUS)) {
+    intent.putExtra(EXTRA_WIFI_SHOW_MENUS,orgIntent.getBooleanExtra(EXTRA_WIFI_SHOW_MENUS,true));
+  }
   if (resultTo == null) {
     startActivity(intent);
   }

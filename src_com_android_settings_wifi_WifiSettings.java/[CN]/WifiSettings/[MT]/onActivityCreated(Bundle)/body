@@ -41,11 +41,9 @@
       }
     }
   }
-  if (mInXlSetupWizard) {
-    addPreferencesFromResource(R.xml.wifi_access_points_for_wifi_setup_xl);
-  }
- else {
-    addPreferencesFromResource(R.xml.wifi_settings);
+  addPreferencesFromResource(R.xml.wifi_settings);
+  final boolean showActionBar=intent.getBooleanExtra(EXTRA_WIFI_SHOW_ACTION_BAR,true);
+  if (showActionBar) {
     Switch actionBarSwitch=new Switch(activity);
     if (activity instanceof PreferenceActivity) {
       PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
@@ -60,7 +58,10 @@
   }
   mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
   getListView().setEmptyView(mEmptyView);
-  registerForContextMenu(getListView());
-  setHasOptionsMenu(true);
+  mShowMenu=intent.getBooleanExtra(EXTRA_WIFI_SHOW_MENUS,true);
+  if (mShowMenu) {
+    registerForContextMenu(getListView());
+  }
+  setHasOptionsMenu(mShowMenu);
   super.onActivityCreated(savedInstanceState);
 }

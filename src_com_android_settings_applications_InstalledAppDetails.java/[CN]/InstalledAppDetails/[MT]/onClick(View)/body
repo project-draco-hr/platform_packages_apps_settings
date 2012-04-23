@@ -30,9 +30,11 @@
   }
  else   if (v == mClearDataButton) {
     if (mAppEntry.info.manageSpaceActivityName != null) {
-      Intent intent=new Intent(Intent.ACTION_DEFAULT);
-      intent.setClassName(mAppEntry.info.packageName,mAppEntry.info.manageSpaceActivityName);
-      startActivityForResult(intent,-1);
+      if (!Utils.isMonkeyRunning()) {
+        Intent intent=new Intent(Intent.ACTION_DEFAULT);
+        intent.setClassName(mAppEntry.info.packageName,mAppEntry.info.manageSpaceActivityName);
+        startActivityForResult(intent,-1);
+      }
     }
  else {
       showDialogInner(DLG_CLEAR_DATA,0);

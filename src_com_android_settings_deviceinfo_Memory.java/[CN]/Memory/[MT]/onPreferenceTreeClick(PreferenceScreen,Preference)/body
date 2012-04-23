@@ -3,7 +3,9 @@
     StorageVolumePreferenceCategory svpc=mStorageVolumePreferenceCategories[i];
     Intent intent=svpc.intentForClick(preference);
     if (intent != null) {
-      startActivity(intent);
+      if (!Utils.isMonkeyRunning()) {
+        startActivity(intent);
+      }
       return true;
     }
     if (svpc.mountToggleClicked(preference)) {

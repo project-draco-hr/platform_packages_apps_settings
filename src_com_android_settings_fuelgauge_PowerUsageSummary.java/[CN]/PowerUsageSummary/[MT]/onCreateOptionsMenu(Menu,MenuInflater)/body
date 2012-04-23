@@ -4,4 +4,12 @@
   }
   MenuItem refresh=menu.add(0,MENU_STATS_REFRESH,0,R.string.menu_stats_refresh).setIcon(R.drawable.ic_menu_refresh_holo_dark).setAlphabeticShortcut('r');
   refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+  String helpUrl;
+  if (!TextUtils.isEmpty(helpUrl=getResources().getString(R.string.help_url_battery))) {
+    final MenuItem help=menu.add(0,MENU_HELP,0,R.string.help_label);
+    Intent helpIntent=new Intent(Intent.ACTION_VIEW,Uri.parse(helpUrl));
+    helpIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+    help.setIntent(helpIntent);
+    help.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+  }
 }

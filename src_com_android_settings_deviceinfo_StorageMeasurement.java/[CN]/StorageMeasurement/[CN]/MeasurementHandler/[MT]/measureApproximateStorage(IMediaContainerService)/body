@@ -1,0 +1,12 @@
+{
+  final String path=mStorageVolume != null ? mStorageVolume.getPath() : Environment.getDataDirectory().getPath();
+  try {
+    final long[] stats=imcs.getFileSystemStats(path);
+    mTotalSize=stats[0];
+    mAvailSize=stats[1];
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"Problem in container service",e);
+  }
+  sendInternalApproximateUpdate();
+}

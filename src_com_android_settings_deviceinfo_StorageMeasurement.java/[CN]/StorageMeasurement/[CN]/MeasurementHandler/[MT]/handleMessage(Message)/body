@@ -10,7 +10,6 @@ case MSG_MEASURE:
       if (context == null) {
         return;
       }
-      measureApproximateStorage();
 synchronized (mLock) {
         if (mBound) {
           removeMessages(MSG_DISCONNECT);
@@ -26,6 +25,7 @@ synchronized (mLock) {
 case MSG_CONNECTED:
 {
     IMediaContainerService imcs=(IMediaContainerService)msg.obj;
+    measureApproximateStorage(imcs);
     measureExactStorage(imcs);
     break;
   }

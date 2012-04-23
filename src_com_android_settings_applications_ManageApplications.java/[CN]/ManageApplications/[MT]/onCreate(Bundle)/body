@@ -29,8 +29,8 @@
     mShowBackground=savedInstanceState.getBoolean("showBackground",false);
   }
   mDefaultTab=defaultTabTag;
-  mDataFileStats=new StatFs("/data");
-  mSDCardFileStats=new StatFs(Environment.getExternalStorageDirectory().toString());
+  final Intent containerIntent=new Intent().setComponent(StorageMeasurement.DEFAULT_CONTAINER_COMPONENT);
+  getActivity().bindService(containerIntent,mContainerConnection,Context.BIND_AUTO_CREATE);
   mInvalidSizeStr=getActivity().getText(R.string.invalid_size_value);
   mComputingSizeStr=getActivity().getText(R.string.computing_size);
 }

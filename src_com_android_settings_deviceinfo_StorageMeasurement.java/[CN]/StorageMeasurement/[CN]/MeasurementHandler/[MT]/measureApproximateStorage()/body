@@ -1,9 +1,0 @@
-{
-  final StatFs stat=new StatFs(mStorageVolume != null ? mStorageVolume.getPath() : Environment.getDataDirectory().getPath());
-  final long blockSize=stat.getBlockSize();
-  final long totalBlocks=stat.getBlockCount();
-  final long availableBlocks=stat.getAvailableBlocks();
-  mTotalSize=totalBlocks * blockSize;
-  mAvailSize=availableBlocks * blockSize;
-  sendInternalApproximateUpdate();
-}

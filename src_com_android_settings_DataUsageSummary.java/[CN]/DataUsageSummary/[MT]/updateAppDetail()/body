@@ -32,6 +32,7 @@
     mAppSettingsIntent.addCategory(Intent.CATEGORY_DEFAULT);
     final boolean matchFound=pm.resolveActivity(mAppSettingsIntent,0) != null;
     mAppSettings.setEnabled(matchFound);
+    mAppSettings.setVisibility(View.VISIBLE);
   }
  else {
     mAppSettingsIntent=null;

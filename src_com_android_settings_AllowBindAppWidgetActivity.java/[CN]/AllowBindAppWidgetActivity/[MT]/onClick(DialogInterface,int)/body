@@ -1,0 +1,21 @@
+{
+  if (which == AlertDialog.BUTTON_POSITIVE) {
+    setResult(RESULT_CANCELED);
+    if (mAppWidgetId != -1 && mComponentName != null && mCallingPackage != null) {
+      try {
+        mAppWidgetManager.bindAppWidgetId(mAppWidgetId,mComponentName);
+        Intent result=new Intent();
+        result.putExtra("EXTRA_APPWIDGET_ID",mAppWidgetId);
+        setResult(RESULT_OK);
+      }
+ catch (      Exception e) {
+        Log.v("BIND_APPWIDGET","Error binding widget with id " + mAppWidgetId + " and component "+ mComponentName);
+      }
+    }
+    boolean alwaysAllowBind=mAlwaysUse.isChecked();
+    if (alwaysAllowBind != mAppWidgetManager.hasBindAppWidgetPermission(mCallingPackage)) {
+      mAppWidgetManager.setBindAppWidgetPermission(mCallingPackage,alwaysAllowBind);
+    }
+  }
+  finish();
+}

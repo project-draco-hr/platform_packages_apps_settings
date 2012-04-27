@@ -22,11 +22,11 @@
     defaultTabTag=TAB_ALL;
   }
   if (savedInstanceState != null) {
-    mSortOrder=savedInstanceState.getInt("sortOrder",mSortOrder);
-    mFilterApps=savedInstanceState.getInt("filterApps",mFilterApps);
-    String tmp=savedInstanceState.getString("defaultTabTag");
+    mSortOrder=savedInstanceState.getInt(EXTRA_SORT_ORDER,mSortOrder);
+    mFilterApps=savedInstanceState.getInt(EXTRA_FILTER_APPS,mFilterApps);
+    String tmp=savedInstanceState.getString(EXTRA_DEFAULT_TAB_TAG);
     if (tmp != null)     defaultTabTag=tmp;
-    mShowBackground=savedInstanceState.getBoolean("showBackground",false);
+    mShowBackground=savedInstanceState.getBoolean(EXTRA_SHOW_BACKGROUND,false);
   }
   mDefaultTab=defaultTabTag;
   final Intent containerIntent=new Intent().setComponent(StorageMeasurement.DEFAULT_CONTAINER_COMPONENT);

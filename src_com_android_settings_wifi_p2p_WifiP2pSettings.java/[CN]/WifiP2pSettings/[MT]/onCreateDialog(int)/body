@@ -11,5 +11,10 @@
     AlertDialog dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.wifi_p2p_cancel_connect_title).setMessage(getActivity().getString(stringId,deviceName)).setPositiveButton(getActivity().getString(R.string.dlg_ok),mCancelConnectListener).setNegativeButton(getActivity().getString(R.string.dlg_cancel),null).create();
     return dialog;
   }
+ else   if (id == DIALOG_RENAME) {
+    mDeviceNameText=new EditText(getActivity());
+    AlertDialog dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.wifi_p2p_menu_rename).setView(mDeviceNameText).setPositiveButton(getActivity().getString(R.string.dlg_ok),mRenameListener).setNegativeButton(getActivity().getString(R.string.dlg_cancel),null).create();
+    return dialog;
+  }
   return null;
 }

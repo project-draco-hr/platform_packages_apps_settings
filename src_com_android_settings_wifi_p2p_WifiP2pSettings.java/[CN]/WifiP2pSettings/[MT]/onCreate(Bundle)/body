@@ -18,6 +18,24 @@
  else {
     Log.e(TAG,"mWifiP2pManager is null !");
   }
+  mRenameListener=new OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      if (which == DialogInterface.BUTTON_POSITIVE) {
+        if (mWifiP2pManager != null) {
+          mWifiP2pManager.setDeviceName(mChannel,mDeviceNameText.getText().toString(),new WifiP2pManager.ActionListener(){
+            public void onSuccess(){
+              if (DBG)               Log.d(TAG," device rename success");
+            }
+            public void onFailure(            int reason){
+              Toast.makeText(getActivity(),R.string.wifi_p2p_failed_rename_message,Toast.LENGTH_LONG).show();
+            }
+          }
+);
+        }
+      }
+    }
+  }
+;
   mDisconnectListener=new OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
       if (which == DialogInterface.BUTTON_POSITIVE) {

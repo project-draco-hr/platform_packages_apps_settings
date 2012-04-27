@@ -1,0 +1,14 @@
+{
+  Set<BluetoothDevice> bondedDevices=mLocalAdapter.getBondedDevices();
+  for (  BluetoothDevice device : bondedDevices) {
+    if (profile.getPreferred(device) == BluetoothProfile.PRIORITY_AUTO_CONNECT) {
+      Log.d(TAG,"handleAutoConnect for device");
+      CachedBluetoothDevice cacheDevice=mDeviceManager.findDevice(device);
+      if (null != cacheDevice) {
+        cacheDevice.connectInt(profile);
+        break;
+      }
+ else       Log.e(TAG,"Bluetooth cache devices mismatch with actual");
+    }
+  }
+}

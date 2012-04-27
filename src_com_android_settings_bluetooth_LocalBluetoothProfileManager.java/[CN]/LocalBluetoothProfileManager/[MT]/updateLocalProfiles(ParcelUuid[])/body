@@ -2,7 +2,7 @@
   if (BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.AudioSource)) {
     if (mA2dpProfile == null) {
       Log.d(TAG,"Adding local A2DP profile");
-      mA2dpProfile=new A2dpProfile(mContext);
+      mA2dpProfile=new A2dpProfile(mContext,this);
       addProfile(mA2dpProfile,A2dpProfile.NAME,BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED);
     }
   }

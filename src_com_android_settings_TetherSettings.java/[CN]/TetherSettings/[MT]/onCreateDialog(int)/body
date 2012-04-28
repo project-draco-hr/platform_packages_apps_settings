@@ -1,45 +1,5 @@
 {
-  if (id == DIALOG_TETHER_HELP) {
-    Locale locale=Locale.getDefault();
-    final AssetManager am=getActivity().getAssets();
-    String path=HELP_PATH.replace("%y",locale.getLanguage().toLowerCase());
-    path=path.replace("%z",'_' + locale.getCountry().toLowerCase());
-    boolean useCountry=true;
-    InputStream is=null;
-    try {
-      is=am.open(path);
-    }
- catch (    Exception ignored) {
-      useCountry=false;
-    }
- finally {
-      if (is != null) {
-        try {
-          is.close();
-        }
- catch (        Exception ignored) {
-        }
-      }
-    }
-    String url=HELP_URL.replace("%y",locale.getLanguage().toLowerCase());
-    url=url.replace("%z",useCountry ? '_' + locale.getCountry().toLowerCase() : "");
-    if ((mUsbRegexs.length != 0) && (mWifiRegexs.length == 0)) {
-      url=url.replace("%x",USB_HELP_MODIFIER);
-    }
- else     if ((mWifiRegexs.length != 0) && (mUsbRegexs.length == 0)) {
-      url=url.replace("%x",WIFI_HELP_MODIFIER);
-    }
- else {
-      url=url.replace("%x","");
-    }
-    mView.loadUrl(url);
-    ViewParent parent=mView.getParent();
-    if (parent != null && parent instanceof ViewGroup) {
-      ((ViewGroup)parent).removeView(mView);
-    }
-    return new AlertDialog.Builder(getActivity()).setCancelable(true).setTitle(R.string.tethering_help_button_text).setView(mView).create();
-  }
- else   if (id == DIALOG_AP_SETTINGS) {
+  if (id == DIALOG_AP_SETTINGS) {
     final Activity activity=getActivity();
     mDialog=new WifiApDialog(activity,this,mWifiConfig);
     return mDialog;

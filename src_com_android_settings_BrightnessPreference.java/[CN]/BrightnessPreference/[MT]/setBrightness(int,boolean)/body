@@ -1,6 +1,6 @@
 {
   if (mAutomaticMode) {
-    float valf=(((float)brightness * 2) / 10000) - 1.0f;
+    float valf=(((float)brightness * 2) / SEEK_BAR_RANGE) - 1.0f;
     try {
       IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
       if (power != null) {
@@ -16,7 +16,7 @@
   }
  else {
     int range=(MAXIMUM_BACKLIGHT - mScreenBrightnessDim);
-    brightness=(brightness * range) / 10000 + mScreenBrightnessDim;
+    brightness=(brightness * range) / SEEK_BAR_RANGE + mScreenBrightnessDim;
     try {
       IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
       if (power != null) {

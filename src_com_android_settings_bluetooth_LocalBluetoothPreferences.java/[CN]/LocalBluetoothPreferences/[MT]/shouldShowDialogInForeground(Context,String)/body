@@ -3,6 +3,9 @@
   if (manager == null) {
     return false;
   }
+  if ((context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_TYPE_APPLIANCE) == Configuration.UI_MODE_TYPE_APPLIANCE) {
+    return false;
+  }
   if (manager.isForegroundActivity()) {
     return true;
   }

@@ -14,7 +14,9 @@
   final CharSequence status=getText(R.string.crypt_keeper_setup_description);
   Log.v(TAG,"Encryption progress: " + progress);
   final TextView tv=(TextView)findViewById(R.id.status);
-  tv.setText(TextUtils.expandTemplate(status,Integer.toString(progress)));
-  mHandler.removeMessages(UPDATE_PROGRESS);
-  mHandler.sendEmptyMessageDelayed(UPDATE_PROGRESS,5000);
+  if (tv != null) {
+    tv.setText(TextUtils.expandTemplate(status,Integer.toString(progress)));
+  }
+  mHandler.removeMessages(MESSAGE_UPDATE_PROGRESS);
+  mHandler.sendEmptyMessageDelayed(MESSAGE_UPDATE_PROGRESS,5000);
 }

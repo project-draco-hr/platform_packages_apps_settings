@@ -1,0 +1,13 @@
+{
+  Log.d(TAG,"Notifying user that we are waiting for input...");
+  if (mAudioManager != null) {
+    try {
+      mAudioManager.playSoundEffect(AudioManager.FX_KEYPRESS_STANDARD,100);
+    }
+ catch (    Exception e) {
+      Log.w(TAG,"notifyUser: Exception while playing sound: " + e);
+    }
+  }
+  mHandler.removeMessages(MESSAGE_NOTIFY);
+  mHandler.sendEmptyMessageDelayed(MESSAGE_NOTIFY,30 * 1000);
+}

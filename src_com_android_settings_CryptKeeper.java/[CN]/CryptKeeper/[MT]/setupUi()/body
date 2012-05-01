@@ -4,12 +4,12 @@
     showFactoryReset();
     return;
   }
-  String progress=SystemProperties.get("vold.encrypt_progress");
+  final String progress=SystemProperties.get("vold.encrypt_progress");
   if (!"".equals(progress) || isDebugView(FORCE_VIEW_PROGRESS)) {
     setContentView(R.layout.crypt_keeper_progress);
     encryptionProgressInit();
   }
- else   if (mValidationComplete) {
+ else   if (mValidationComplete || isDebugView(FORCE_VIEW_PASSWORD)) {
     setContentView(R.layout.crypt_keeper_password_entry);
     passwordEntryInit();
   }

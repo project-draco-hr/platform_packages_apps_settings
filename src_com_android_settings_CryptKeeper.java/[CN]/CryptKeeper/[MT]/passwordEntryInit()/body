@@ -13,6 +13,14 @@
     }
 );
   }
+  if (mWakeLock == null) {
+    Log.d(TAG,"Acquiring wakelock.");
+    final PowerManager pm=(PowerManager)getSystemService(Context.POWER_SERVICE);
+    if (pm != null) {
+      mWakeLock=pm.newWakeLock(PowerManager.FULL_WAKE_LOCK,TAG);
+      mWakeLock.acquire();
+    }
+  }
   mHandler.postDelayed(new Runnable(){
     @Override public void run(){
       imm.showSoftInputUnchecked(0,null);
@@ -20,4 +28,5 @@
   }
 ,0);
   updateEmergencyCallButtonState();
+  notifyUser();
 }

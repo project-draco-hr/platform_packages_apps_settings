@@ -2,6 +2,7 @@
   final TextView status=(TextView)findViewById(R.id.status);
   if (mCooldown <= 0) {
     mPasswordEntry.setEnabled(true);
+    mIgnoreBack=false;
     status.setVisibility(View.GONE);
   }
  else {
@@ -9,7 +10,7 @@
     status.setText(TextUtils.expandTemplate(template,Integer.toString(mCooldown)));
     status.setVisibility(View.VISIBLE);
     mCooldown--;
-    mHandler.removeMessages(COOLDOWN);
-    mHandler.sendEmptyMessageDelayed(COOLDOWN,1000);
+    mHandler.removeMessages(MESSAGE_COOLDOWN);
+    mHandler.sendEmptyMessageDelayed(MESSAGE_COOLDOWN,1000);
   }
 }

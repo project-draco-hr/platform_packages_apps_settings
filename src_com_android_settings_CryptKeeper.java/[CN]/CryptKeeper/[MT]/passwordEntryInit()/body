@@ -28,5 +28,6 @@
   }
 ,0);
   updateEmergencyCallButtonState();
-  notifyUser();
+  mHandler.removeMessages(MESSAGE_NOTIFY);
+  mHandler.sendEmptyMessageDelayed(MESSAGE_NOTIFY,30 * 1000);
 }

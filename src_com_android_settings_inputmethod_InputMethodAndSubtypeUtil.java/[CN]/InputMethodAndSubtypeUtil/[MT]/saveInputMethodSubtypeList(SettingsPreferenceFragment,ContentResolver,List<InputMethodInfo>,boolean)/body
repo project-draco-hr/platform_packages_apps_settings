@@ -3,7 +3,7 @@
   final int selectedInputMethodSubtype=getInputMethodSubtypeSelected(resolver);
   HashMap<String,HashSet<String>> enabledIMEAndSubtypesMap=getEnabledInputMethodsAndSubtypeList(resolver);
   HashSet<String> disabledSystemIMEs=getDisabledSystemIMEs(resolver);
-  final boolean onlyOneIME=inputMethodInfos.size() == 1;
+  final int imiCount=inputMethodInfos.size();
   boolean needsToResetSelectedSubtype=false;
   for (  InputMethodInfo imi : inputMethodInfos) {
     final String imiId=imi.getId();
@@ -11,9 +11,8 @@
     if (pref == null)     continue;
     final boolean isImeChecked=(pref instanceof CheckBoxPreference) ? ((CheckBoxPreference)pref).isChecked() : enabledIMEAndSubtypesMap.containsKey(imiId);
     final boolean isCurrentInputMethod=imiId.equals(currentInputMethodId);
-    final boolean auxIme=isAuxiliaryIme(imi);
     final boolean systemIme=isSystemIme(imi);
-    if (((onlyOneIME || (systemIme && !auxIme)) && !hasHardKeyboard) || isImeChecked) {
+    if ((!hasHardKeyboard && isAlwaysCheckedIme(imi,context.getActivity(),imiCount)) || isImeChecked) {
       if (!enabledIMEAndSubtypesMap.containsKey(imiId)) {
         enabledIMEAndSubtypesMap.put(imiId,new HashSet<String>());
       }

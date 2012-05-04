@@ -75,7 +75,6 @@
   }
   mUsageSummary=(TextView)mHeader.findViewById(R.id.usage_summary);
   mEmpty=(TextView)mHeader.findViewById(android.R.id.empty);
-  mListView.getViewTreeObserver().addOnGlobalLayoutListener(mFirstLayoutListener);
   mAdapter=new DataUsageAdapter(mUidDetailProvider,mInsetSide);
   mListView.setOnItemClickListener(mListListener);
   mListView.setAdapter(mAdapter);

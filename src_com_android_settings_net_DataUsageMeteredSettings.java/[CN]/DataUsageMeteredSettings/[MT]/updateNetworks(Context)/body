@@ -6,8 +6,8 @@
  else {
     getPreferenceScreen().removePreference(mMobileCategory);
   }
-  if (hasWifiRadio(context)) {
-    mWifiCategory.removeAll();
+  mWifiCategory.removeAll();
+  if (hasWifiRadio(context) && mWifiManager.isWifiEnabled()) {
     for (    WifiConfiguration config : mWifiManager.getConfiguredNetworks()) {
       if (config.SSID != null) {
         mWifiCategory.addPreference(buildWifiPref(context,config));
@@ -15,6 +15,6 @@
     }
   }
  else {
-    getPreferenceScreen().removePreference(mWifiCategory);
+    mWifiCategory.addPreference(mWifiDisabled);
   }
 }

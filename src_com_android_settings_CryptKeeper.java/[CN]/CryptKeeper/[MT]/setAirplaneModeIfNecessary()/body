@@ -1,0 +1,9 @@
+{
+  final boolean isLteDevice=TelephonyManager.getDefault().getLteOnCdmaMode() == Phone.LTE_ON_CDMA_TRUE;
+  if (!isLteDevice) {
+    Log.d(TAG,"Going into airplane mode.");
+    final Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+    intent.putExtra("state",true);
+    sendBroadcast(intent);
+  }
+}

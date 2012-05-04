@@ -1,0 +1,15 @@
+{
+  if (imiCount <= 1) {
+    return true;
+  }
+  if (!isSystemIme(imi)) {
+    return false;
+  }
+  if (isAuxiliaryIme(imi)) {
+    return false;
+  }
+  if (isValidDefaultIme(imi,context)) {
+    return true;
+  }
+  return containsSubtypeOf(imi,ENGLISH_LOCALE.getLanguage());
+}

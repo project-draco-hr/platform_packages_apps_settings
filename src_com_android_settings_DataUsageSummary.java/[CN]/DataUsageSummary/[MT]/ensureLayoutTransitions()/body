@@ -1,0 +1,10 @@
+{
+  if (mChart.getLayoutTransition() != null)   return;
+  mTabsContainer.setLayoutTransition(buildLayoutTransition());
+  mHeader.setLayoutTransition(buildLayoutTransition());
+  mNetworkSwitchesContainer.setLayoutTransition(buildLayoutTransition());
+  final LayoutTransition chartTransition=buildLayoutTransition();
+  chartTransition.disableTransitionType(LayoutTransition.APPEARING);
+  chartTransition.disableTransitionType(LayoutTransition.DISAPPEARING);
+  mChart.setLayoutTransition(chartTransition);
+}

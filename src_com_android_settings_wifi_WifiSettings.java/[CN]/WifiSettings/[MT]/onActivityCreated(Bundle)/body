@@ -32,6 +32,17 @@
   }
   final Activity activity=getActivity();
   final Intent intent=activity.getIntent();
+  mAutoFinishOnConnection=intent.getBooleanExtra(EXTRA_AUTO_FINISH_ON_CONNECT,false);
+  if (mAutoFinishOnConnection) {
+    if (hasNextButton()) {
+      getNextButton().setVisibility(View.GONE);
+    }
+    final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (connectivity != null && connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
+      activity.finish();
+      return;
+    }
+  }
   mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
   if (mEnableNextOnConnection) {
     if (hasNextButton()) {

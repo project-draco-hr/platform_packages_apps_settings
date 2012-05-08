@@ -2,6 +2,9 @@
   mPasswordEntry=(EditText)findViewById(R.id.passwordEntry);
   mPasswordEntry.setOnEditorActionListener(this);
   mPasswordEntry.requestFocus();
+  mPasswordEntry.setOnKeyListener(this);
+  mPasswordEntry.setOnTouchListener(this);
+  mPasswordEntry.addTextChangedListener(this);
   final TelephonyManager tm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
   if (!tm.isVoiceCapable()) {
     final View emergencyCall=findViewById(R.id.emergencyCallButton);
@@ -37,5 +40,5 @@
 ,0);
   updateEmergencyCallButtonState();
   mHandler.removeMessages(MESSAGE_NOTIFY);
-  mHandler.sendEmptyMessageDelayed(MESSAGE_NOTIFY,30 * 1000);
+  mHandler.sendEmptyMessageDelayed(MESSAGE_NOTIFY,120 * 1000);
 }

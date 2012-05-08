@@ -1,5 +1,8 @@
 {
-  if (preference == mDtmfTone) {
+  if (preference == mVibrateWhenRinging) {
+    Settings.System.putInt(getContentResolver(),Settings.System.VIBRATE_WHEN_RINGING,mVibrateWhenRinging.isChecked() ? 1 : 0);
+  }
+ else   if (preference == mDtmfTone) {
     Settings.System.putInt(getContentResolver(),Settings.System.DTMF_TONE_WHEN_DIALING,mDtmfTone.isChecked() ? 1 : 0);
   }
  else   if (preference == mSoundEffects) {

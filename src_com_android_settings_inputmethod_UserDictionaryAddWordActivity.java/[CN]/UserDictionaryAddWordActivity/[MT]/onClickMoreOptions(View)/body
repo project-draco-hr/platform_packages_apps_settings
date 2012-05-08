@@ -6,13 +6,13 @@
   findViewById(R.id.user_dictionary_settings_add_dialog_more_options).setVisibility(View.GONE);
   findViewById(R.id.user_dictionary_settings_add_dialog_less_options).setVisibility(View.VISIBLE);
   final Set<String> locales=UserDictionaryList.getUserDictionaryLocalesList(this);
-  locales.remove(mLocale);
+  locales.remove(mContents.mLocale);
   final String systemLocale=Locale.getDefault().toString();
   locales.remove(systemLocale);
   locales.remove("");
   final ArrayList<LocaleRenderer> localesList=new ArrayList<LocaleRenderer>();
-  addLocaleDisplayNameToList(this,localesList,mLocale);
-  if (!systemLocale.equals(mLocale)) {
+  addLocaleDisplayNameToList(this,localesList,mContents.mLocale);
+  if (!systemLocale.equals(mContents.mLocale)) {
     addLocaleDisplayNameToList(this,localesList,systemLocale);
   }
   for (  final String l : locales) {

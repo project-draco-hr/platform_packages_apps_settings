@@ -1,0 +1,10 @@
+{
+  mEditText=(EditText)view.findViewById(R.id.user_dictionary_add_word_text);
+  final String word=args.getString(EXTRA_WORD);
+  if (null != word) {
+    mEditText.setText(word);
+    mEditText.setSelection(word.length());
+  }
+  mMode=args.getInt(EXTRA_MODE);
+  updateLocale(args.getString(EXTRA_LOCALE));
+}

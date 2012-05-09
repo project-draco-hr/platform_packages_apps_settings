@@ -1,12 +1,28 @@
 {
   final ContentResolver resolver=context.getContentResolver();
   if (UserDictionaryAddWordContents.MODE_EDIT == mMode && !TextUtils.isEmpty(mOldWord)) {
-    UserDictionarySettings.deleteWord(mOldWord,resolver);
+    UserDictionarySettings.deleteWord(mOldWord,mOldShortcut,resolver);
   }
   final String newWord=mWordEditText.getText().toString();
+  final String newShortcut;
+  if (null == mShortcutEditText) {
+    newShortcut=null;
+  }
+ else {
+    final String tmpShortcut=mShortcutEditText.getText().toString();
+    if (TextUtils.isEmpty(tmpShortcut)) {
+      newShortcut=null;
+    }
+ else {
+      newShortcut=tmpShortcut;
+    }
+  }
   if (TextUtils.isEmpty(newWord)) {
     return;
   }
-  UserDictionarySettings.deleteWord(newWord,resolver);
-  UserDictionary.Words.addWord(context,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,null == mShortcutEditText ? null : mShortcutEditText.getText().toString(),TextUtils.isEmpty(mLocale) ? null : Utils.createLocaleFromString(mLocale));
+  UserDictionarySettings.deleteWord(newWord,null,resolver);
+  if (!TextUtils.isEmpty(newShortcut)) {
+    UserDictionarySettings.deleteWord(newWord,newShortcut,resolver);
+  }
+  UserDictionary.Words.addWord(context,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,newShortcut,TextUtils.isEmpty(mLocale) ? null : Utils.createLocaleFromString(mLocale));
 }

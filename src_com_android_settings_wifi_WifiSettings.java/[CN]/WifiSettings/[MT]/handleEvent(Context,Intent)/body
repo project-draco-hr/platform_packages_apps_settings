@@ -18,6 +18,10 @@
     changeNextButtonState(info.isConnected());
     updateAccessPoints();
     updateConnectionState(info.getDetailedState());
+    if (mAutoFinishOnConnection && info.isConnected()) {
+      getActivity().finish();
+      return;
+    }
   }
  else   if (WifiManager.RSSI_CHANGED_ACTION.equals(action)) {
     updateConnectionState(null);

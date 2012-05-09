@@ -16,15 +16,7 @@
   final Bundle args=intent.getExtras();
   args.putInt(UserDictionaryAddWordContents.EXTRA_MODE,mode);
   if (null != savedInstanceState) {
-    mIsShowingMoreOptions=savedInstanceState.getBoolean(STATE_KEY_IS_OPEN,mIsShowingMoreOptions);
     args.putAll(savedInstanceState);
   }
   mContents=new UserDictionaryAddWordContents(getWindow().getDecorView(),args);
-  if (mIsShowingMoreOptions) {
-    onClickMoreOptions(findViewById(R.id.user_dictionary_settings_add_dialog_more_options));
-  }
-  final ViewGroup v=(ViewGroup)findViewById(R.id.user_dictionary_add_word_grid);
-  final LayoutTransition transition=new LayoutTransition();
-  transition.setStartDelay(LayoutTransition.APPEARING,0);
-  v.setLayoutTransition(transition);
 }

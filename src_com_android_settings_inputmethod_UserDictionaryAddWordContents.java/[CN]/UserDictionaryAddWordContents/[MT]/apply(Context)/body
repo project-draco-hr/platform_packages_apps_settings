@@ -1,6 +1,6 @@
 {
   final ContentResolver resolver=context.getContentResolver();
-  if (UserDictionaryAddWordContents.MODE_EDIT == mMode && !TextUtils.isEmpty(mOldWord)) {
+  if (MODE_EDIT == mMode && !TextUtils.isEmpty(mOldWord)) {
     UserDictionarySettings.deleteWord(mOldWord,mOldShortcut,resolver);
   }
   final String newWord=mWordEditText.getText().toString();

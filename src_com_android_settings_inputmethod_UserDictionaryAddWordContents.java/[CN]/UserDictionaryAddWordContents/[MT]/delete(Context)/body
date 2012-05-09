@@ -1,0 +1,6 @@
+{
+  if (MODE_EDIT == mMode && !TextUtils.isEmpty(mOldWord)) {
+    final ContentResolver resolver=context.getContentResolver();
+    UserDictionarySettings.deleteWord(mOldWord,mOldShortcut,resolver);
+  }
+}

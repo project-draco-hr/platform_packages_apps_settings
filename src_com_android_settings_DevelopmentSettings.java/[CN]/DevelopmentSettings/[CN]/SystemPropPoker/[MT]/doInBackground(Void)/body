@@ -1,0 +1,22 @@
+{
+  String[] services;
+  try {
+    services=ServiceManager.listServices();
+  }
+ catch (  RemoteException e) {
+    return null;
+  }
+  for (  String service : services) {
+    IBinder obj=ServiceManager.checkService(service);
+    if (obj != null) {
+      Parcel data=Parcel.obtain();
+      try {
+        obj.transact(IBinder.SYSPROPS_TRANSACTION,data,null,0);
+      }
+ catch (      RemoteException e) {
+      }
+      data.recycle();
+    }
+  }
+  return null;
+}

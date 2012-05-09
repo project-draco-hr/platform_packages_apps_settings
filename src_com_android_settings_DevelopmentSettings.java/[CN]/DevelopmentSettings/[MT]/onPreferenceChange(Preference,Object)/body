@@ -2,6 +2,7 @@
   if (HDCP_CHECKING_KEY.equals(preference.getKey())) {
     SystemProperties.set(HDCP_CHECKING_PROPERTY,newValue.toString());
     updateHdcpValues();
+    pokeSystemProperties();
     return true;
   }
  else   if (preference == mWindowAnimationScale) {

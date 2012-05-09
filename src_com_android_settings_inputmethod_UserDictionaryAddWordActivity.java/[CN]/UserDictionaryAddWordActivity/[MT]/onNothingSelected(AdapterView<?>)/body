@@ -1,5 +1,4 @@
 {
   final Intent intent=getIntent();
-  final String locale=intent.getStringExtra(EXTRA_LOCALE);
-  mLocale=null == locale ? Locale.getDefault().toString() : locale;
+  mContents.updateLocale(intent.getStringExtra(UserDictionaryAddWordContents.EXTRA_LOCALE));
 }

@@ -19,7 +19,6 @@
     mIsShowingMoreOptions=savedInstanceState.getBoolean(STATE_KEY_IS_OPEN,mIsShowingMoreOptions);
     args.putAll(savedInstanceState);
   }
-  mOldWord=intent.getStringExtra(UserDictionaryAddWordContents.EXTRA_WORD);
   mContents=new UserDictionaryAddWordContents(getWindow().getDecorView(),args);
   if (mIsShowingMoreOptions) {
     onClickMoreOptions(findViewById(R.id.user_dictionary_settings_add_dialog_more_options));

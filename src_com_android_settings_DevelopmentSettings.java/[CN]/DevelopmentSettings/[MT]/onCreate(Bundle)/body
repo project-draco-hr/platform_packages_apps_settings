@@ -39,12 +39,6 @@
   mShowAllANRs=(CheckBoxPreference)findPreference(SHOW_ALL_ANRS_KEY);
   mAllPrefs.add(mShowAllANRs);
   mResetCbPrefs.add(mShowAllANRs);
-  final Preference verifierDeviceIdentifier=findPreference(VERIFIER_DEVICE_IDENTIFIER);
-  final PackageManager pm=getActivity().getPackageManager();
-  final VerifierDeviceIdentity verifierIndentity=pm.getVerifierDeviceIdentity();
-  if (verifierIndentity != null) {
-    verifierDeviceIdentifier.setSummary(verifierIndentity.toString());
-  }
   Preference hdcpChecking=findPreference(HDCP_CHECKING_KEY);
   if (hdcpChecking != null) {
     mAllPrefs.add(hdcpChecking);

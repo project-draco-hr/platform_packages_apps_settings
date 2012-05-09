@@ -5,6 +5,9 @@
     for (int i=0; i < values.length; i++) {
       int val=Integer.parseInt(values[i].toString());
       if (val >= limit) {
+        if (i != 0) {
+          mHaveDebugSettings=true;
+        }
         mAppProcessLimit.setValueIndex(i);
         mAppProcessLimit.setSummary(mAppProcessLimit.getEntries()[i]);
         return;

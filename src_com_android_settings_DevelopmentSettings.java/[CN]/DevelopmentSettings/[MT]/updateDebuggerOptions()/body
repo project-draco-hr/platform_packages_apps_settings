@@ -1,6 +1,6 @@
 {
   mDebugApp=Settings.System.getString(getActivity().getContentResolver(),Settings.System.DEBUG_APP);
-  mWaitForDebugger.setChecked(Settings.System.getInt(getActivity().getContentResolver(),Settings.System.WAIT_FOR_DEBUGGER,0) != 0);
+  updateCheckBox(mWaitForDebugger,Settings.System.getInt(getActivity().getContentResolver(),Settings.System.WAIT_FOR_DEBUGGER,0) != 0);
   if (mDebugApp != null && mDebugApp.length() > 0) {
     String label;
     try {
@@ -13,6 +13,7 @@
     }
     mDebugAppPref.setSummary(getResources().getString(R.string.debug_app_set,label));
     mWaitForDebugger.setEnabled(true);
+    mHaveDebugSettings=true;
   }
  else {
     mDebugAppPref.setSummary(getResources().getString(R.string.debug_app_not_set));

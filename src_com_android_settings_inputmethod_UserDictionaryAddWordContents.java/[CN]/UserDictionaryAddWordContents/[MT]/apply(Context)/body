@@ -3,10 +3,10 @@
   if (UserDictionaryAddWordContents.MODE_EDIT == mMode && !TextUtils.isEmpty(mOldWord)) {
     UserDictionarySettings.deleteWord(mOldWord,resolver);
   }
-  final String newWord=mEditText.getText().toString();
+  final String newWord=mWordEditText.getText().toString();
   if (TextUtils.isEmpty(newWord)) {
     return;
   }
   UserDictionarySettings.deleteWord(newWord,resolver);
-  UserDictionary.Words.addWord(context,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,null,TextUtils.isEmpty(mLocale) ? null : Utils.createLocaleFromString(mLocale));
+  UserDictionary.Words.addWord(context,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,null == mShortcutEditText ? null : mShortcutEditText.getText().toString(),TextUtils.isEmpty(mLocale) ? null : Utils.createLocaleFromString(mLocale));
 }

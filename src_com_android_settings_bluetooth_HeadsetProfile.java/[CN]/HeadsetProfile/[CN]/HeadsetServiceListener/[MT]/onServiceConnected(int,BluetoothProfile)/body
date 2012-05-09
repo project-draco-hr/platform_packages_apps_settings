@@ -1,6 +1,6 @@
 {
+  if (V)   Log.d(TAG,"Bluetooth service connected");
   mService=(BluetoothHeadset)proxy;
-  mProfileReady=true;
   List<BluetoothDevice> deviceList=mService.getConnectedDevices();
   if (deviceList.isEmpty()) {
     mProfileManager.setHfServiceUp(true);
@@ -15,4 +15,5 @@
   device.onProfileStateChanged(HeadsetProfile.this,BluetoothProfile.STATE_CONNECTED);
   mProfileManager.callServiceConnectedListeners();
   mProfileManager.setHfServiceUp(true);
+  mIsProfileReady=true;
 }

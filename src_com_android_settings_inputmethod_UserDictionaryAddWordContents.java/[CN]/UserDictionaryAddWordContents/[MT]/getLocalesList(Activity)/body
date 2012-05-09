@@ -1,0 +1,18 @@
+{
+  final TreeSet<String> locales=UserDictionaryList.getUserDictionaryLocalesSet(activity);
+  locales.remove(mLocale);
+  final String systemLocale=Locale.getDefault().toString();
+  locales.remove(systemLocale);
+  locales.remove("");
+  final ArrayList<LocaleRenderer> localesList=new ArrayList<LocaleRenderer>();
+  addLocaleDisplayNameToList(activity,localesList,mLocale);
+  if (!systemLocale.equals(mLocale)) {
+    addLocaleDisplayNameToList(activity,localesList,systemLocale);
+  }
+  for (  final String l : locales) {
+    addLocaleDisplayNameToList(activity,localesList,l);
+  }
+  localesList.add(new LocaleRenderer(activity,""));
+  localesList.add(new LocaleRenderer(activity,null));
+  return localesList;
+}

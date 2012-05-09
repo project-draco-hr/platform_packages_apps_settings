@@ -1,7 +1,7 @@
 {
   final Activity activity=getActivity();
   userDictGroup.removeAll();
-  final Set<String> localeList=UserDictionaryList.getUserDictionaryLocalesList(activity);
+  final TreeSet<String> localeList=UserDictionaryList.getUserDictionaryLocalesSet(activity);
   if (localeList.isEmpty()) {
     userDictGroup.addPreference(createUserDictionaryPreference(null,activity));
   }

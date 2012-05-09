@@ -1,0 +1,8 @@
+{
+  if (TextUtils.isEmpty(shortcut)) {
+    resolver.delete(UserDictionary.Words.CONTENT_URI,DELETE_SELECTION_WITHOUT_SHORTCUT,new String[]{word});
+  }
+ else {
+    resolver.delete(UserDictionary.Words.CONTENT_URI,DELETE_SELECTION_WITH_SHORTCUT,new String[]{word,shortcut});
+  }
+}

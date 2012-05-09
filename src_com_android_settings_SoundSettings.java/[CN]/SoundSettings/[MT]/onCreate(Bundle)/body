@@ -15,6 +15,9 @@
  else {
     mSilentMode.setOnPreferenceChangeListener(this);
   }
+  mVibrateWhenRinging=(CheckBoxPreference)findPreference(KEY_VIBRATE);
+  mVibrateWhenRinging.setPersistent(false);
+  mVibrateWhenRinging.setChecked(Settings.System.getInt(resolver,Settings.System.VIBRATE_WHEN_RINGING,0) != 0);
   mDtmfTone=(CheckBoxPreference)findPreference(KEY_DTMF_TONE);
   mDtmfTone.setPersistent(false);
   mDtmfTone.setChecked(Settings.System.getInt(resolver,Settings.System.DTMF_TONE_WHEN_DIALING,1) != 0);
@@ -29,7 +32,9 @@
   mLockSounds.setChecked(Settings.System.getInt(resolver,Settings.System.LOCKSCREEN_SOUNDS_ENABLED,1) != 0);
   mRingtonePreference=findPreference(KEY_RINGTONE);
   mNotificationPreference=findPreference(KEY_NOTIFICATION_SOUND);
-  if (!((Vibrator)getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator()) {
+  Vibrator vibrator=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+  if (vibrator == null || !vibrator.hasVibrator()) {
+    getPreferenceScreen().removePreference(mVibrateWhenRinging);
     getPreferenceScreen().removePreference(mHapticFeedback);
   }
   if (TelephonyManager.PHONE_TYPE_CDMA == activePhoneType) {

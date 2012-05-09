@@ -11,4 +11,18 @@
   }
   cachedDevice.onProfileStateChanged(mProfile,newState);
   cachedDevice.refresh();
+  if ((mProfile instanceof HeadsetProfile) || (mProfile instanceof A2dpProfile)) {
+    if ((BluetoothProfile.STATE_CONNECTED == newState) && (!isHfA2dpConnectMessagePosted)) {
+      Message mes=hfA2dpConnectHandler.obtainMessage(CONNECT_HF_OR_A2DP);
+      mes.obj=device;
+      hfA2dpConnectHandler.sendMessageDelayed(mes,CONNECT_HF_OR_A2DP_TIMEOUT);
+      Log.i(TAG,"Message posted for hf/a2dp connection");
+      isHfA2dpConnectMessagePosted=true;
+    }
+ else     if (isHfA2dpConnectMessagePosted) {
+      hfA2dpConnectHandler.removeMessages(CONNECT_HF_OR_A2DP);
+      Log.i(TAG,"Message removed for hf/a2dp connection");
+      isHfA2dpConnectMessagePosted=false;
+    }
+  }
 }

@@ -1,6 +1,8 @@
 {
-  final Intent intent=new Intent(null == editingWord ? UserDictionaryAddWordActivity.MODE_INSERT_ACTION : UserDictionaryAddWordActivity.MODE_EDIT_ACTION);
-  intent.putExtra(UserDictionaryAddWordActivity.EXTRA_WORD,editingWord);
-  intent.putExtra(UserDictionaryAddWordActivity.EXTRA_LOCALE,mLocale);
-  startActivity(intent);
+  final Bundle args=new Bundle();
+  args.putString(UserDictionaryAddWordActivity.EXTRA_MODE,null == editingWord ? UserDictionaryAddWordActivity.MODE_INSERT_ACTION : UserDictionaryAddWordActivity.MODE_EDIT_ACTION);
+  args.putString(UserDictionaryAddWordActivity.EXTRA_WORD,editingWord);
+  args.putString(UserDictionaryAddWordActivity.EXTRA_LOCALE,mLocale);
+  android.preference.PreferenceActivity pa=(android.preference.PreferenceActivity)getActivity();
+  pa.startPreferencePanel(com.android.settings.inputmethod.UserDictionaryAddWordFragment.class.getName(),args,R.string.details_title,null,null,0);
 }

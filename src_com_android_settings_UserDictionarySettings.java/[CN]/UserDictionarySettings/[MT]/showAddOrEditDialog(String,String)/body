@@ -2,6 +2,7 @@
   final Bundle args=new Bundle();
   args.putInt(UserDictionaryAddWordContents.EXTRA_MODE,null == editingWord ? UserDictionaryAddWordContents.MODE_INSERT : UserDictionaryAddWordContents.MODE_EDIT);
   args.putString(UserDictionaryAddWordContents.EXTRA_WORD,editingWord);
+  args.putString(UserDictionaryAddWordContents.EXTRA_SHORTCUT,editingShortcut);
   args.putString(UserDictionaryAddWordContents.EXTRA_LOCALE,mLocale);
   android.preference.PreferenceActivity pa=(android.preference.PreferenceActivity)getActivity();
   pa.startPreferencePanel(com.android.settings.inputmethod.UserDictionaryAddWordFragment.class.getName(),args,R.string.details_title,null,null,0);

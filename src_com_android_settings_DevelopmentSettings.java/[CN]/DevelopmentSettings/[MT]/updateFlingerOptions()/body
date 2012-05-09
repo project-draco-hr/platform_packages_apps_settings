@@ -9,10 +9,10 @@
       @SuppressWarnings("unused") int showCpu=reply.readInt();
       @SuppressWarnings("unused") int enableGL=reply.readInt();
       int showUpdates=reply.readInt();
-      mShowScreenUpdates.setChecked(showUpdates != 0);
+      updateCheckBox(mShowScreenUpdates,showUpdates != 0);
       @SuppressWarnings("unused") int showBackground=reply.readInt();
       int disableOverlays=reply.readInt();
-      mDisableOverlays.setChecked(disableOverlays != 0);
+      updateCheckBox(mDisableOverlays,disableOverlays != 0);
       reply.recycle();
       data.recycle();
     }

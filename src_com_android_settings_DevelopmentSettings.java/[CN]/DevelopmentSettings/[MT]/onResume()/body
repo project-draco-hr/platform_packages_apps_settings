@@ -4,4 +4,9 @@
   mLastEnabledState=Settings.Secure.getInt(cr,Settings.Secure.DEVELOPMENT_SETTINGS_ENABLED,0) != 0;
   mEnabledSwitch.setChecked(mLastEnabledState);
   setPrefsEnabledState(mLastEnabledState);
+  if (mHaveDebugSettings && !mLastEnabledState) {
+    Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.DEVELOPMENT_SETTINGS_ENABLED,1);
+    mLastEnabledState=true;
+    setPrefsEnabledState(mLastEnabledState);
+  }
 }

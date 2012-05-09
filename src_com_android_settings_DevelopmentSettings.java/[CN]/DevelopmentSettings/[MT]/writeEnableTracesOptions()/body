@@ -1,0 +1,11 @@
+{
+  long value=0;
+  String[] values=mEnableTracesPref.getEntryValues();
+  for (int i=Trace.TRACE_FLAGS_START_BIT; i < values.length; i++) {
+    if (mEnableTracesPref.getValue(i - Trace.TRACE_FLAGS_START_BIT)) {
+      value|=1 << i;
+    }
+  }
+  writeEnableTracesOptions(value);
+  updateEnableTracesOptions();
+}

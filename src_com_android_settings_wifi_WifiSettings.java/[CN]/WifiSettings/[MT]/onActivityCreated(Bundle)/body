@@ -57,8 +57,7 @@
   if (intent.getBooleanExtra(EXTRA_WIFI_DISABLE_BACK,false)) {
     getView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_BACK);
   }
-  final boolean showActionBar=intent.getBooleanExtra(EXTRA_WIFI_SHOW_ACTION_BAR,true);
-  if (showActionBar) {
+  if (!mSetupWizardMode) {
     Switch actionBarSwitch=new Switch(activity);
     if (activity instanceof PreferenceActivity) {
       PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
@@ -73,8 +72,7 @@
   }
   mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
   getListView().setEmptyView(mEmptyView);
-  mShowMenu=intent.getBooleanExtra(EXTRA_WIFI_SHOW_MENUS,true);
-  if (mShowMenu) {
+  if (!mSetupWizardMode) {
     registerForContextMenu(getListView());
   }
   setHasOptionsMenu(true);

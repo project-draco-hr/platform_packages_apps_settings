@@ -12,7 +12,9 @@
   for (  final String l : locales) {
     addLocaleDisplayNameToList(activity,localesList,l);
   }
-  localesList.add(new LocaleRenderer(activity,""));
+  if (!"".equals(mLocale)) {
+    addLocaleDisplayNameToList(activity,localesList,"");
+  }
   localesList.add(new LocaleRenderer(activity,null));
   return localesList;
 }

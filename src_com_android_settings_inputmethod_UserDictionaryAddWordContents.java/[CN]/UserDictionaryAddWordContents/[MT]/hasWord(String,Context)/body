@@ -1,0 +1,16 @@
+{
+  final Cursor cursor;
+  if ("".equals(mLocale)) {
+    cursor=context.getContentResolver().query(UserDictionary.Words.CONTENT_URI,HAS_WORD_PROJECTION,HAS_WORD_SELECTION_ALL_LOCALES,new String[]{word},null);
+  }
+ else {
+    cursor=context.getContentResolver().query(UserDictionary.Words.CONTENT_URI,HAS_WORD_PROJECTION,HAS_WORD_SELECTION_ONE_LOCALE,new String[]{word,mLocale},null);
+  }
+  try {
+    if (null == cursor)     return false;
+    return cursor.getCount() > 0;
+  }
+  finally {
+    if (null != cursor)     cursor.close();
+  }
+}

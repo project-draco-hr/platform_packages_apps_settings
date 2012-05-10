@@ -1,17 +1,19 @@
 {
   if (mAutomaticMode) {
-    float valf=(((float)brightness * 2) / SEEK_BAR_RANGE) - 1.0f;
-    try {
-      IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
-      if (power != null) {
-        power.setAutoBrightnessAdjustment(valf);
+    if (false) {
+      float valf=(((float)brightness * 2) / SEEK_BAR_RANGE) - 1.0f;
+      try {
+        IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
+        if (power != null) {
+          power.setAutoBrightnessAdjustment(valf);
+        }
+        if (write) {
+          final ContentResolver resolver=getContext().getContentResolver();
+          Settings.System.putFloat(resolver,Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ,valf);
+        }
       }
-      if (write) {
-        final ContentResolver resolver=getContext().getContentResolver();
-        Settings.System.putFloat(resolver,Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ,valf);
+ catch (      RemoteException doe) {
       }
-    }
- catch (    RemoteException doe) {
     }
   }
  else {

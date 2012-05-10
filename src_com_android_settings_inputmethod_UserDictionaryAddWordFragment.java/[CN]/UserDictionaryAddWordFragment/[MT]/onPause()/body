@@ -1,4 +1,6 @@
 {
   super.onPause();
-  mContents.apply(getActivity());
+  if (!mIsDeleting) {
+    mContents.apply(getActivity());
+  }
 }

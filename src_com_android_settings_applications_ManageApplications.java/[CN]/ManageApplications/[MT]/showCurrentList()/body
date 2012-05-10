@@ -1,16 +1,16 @@
 {
-  String tabId=mDefaultTab=mTabHost.getCurrentTabTag();
+  int listType=mIndexToType.get(mSpinner.getSelectedItemPosition());
   int newOption;
-  if (TAB_DOWNLOADED.equalsIgnoreCase(tabId)) {
+  if (LIST_TYPE_DOWNLOADED == listType) {
     newOption=FILTER_APPS_THIRD_PARTY;
   }
- else   if (TAB_ALL.equalsIgnoreCase(tabId)) {
+ else   if (LIST_TYPE_ALL == listType) {
     newOption=FILTER_APPS_ALL;
   }
- else   if (TAB_SDCARD.equalsIgnoreCase(tabId)) {
+ else   if (LIST_TYPE_SDCARD == listType) {
     newOption=FILTER_APPS_SDCARD;
   }
- else   if (TAB_RUNNING.equalsIgnoreCase(tabId)) {
+ else   if (LIST_TYPE_RUNNING == listType) {
     ((InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(),0);
     selectView(VIEW_RUNNING);
     return;

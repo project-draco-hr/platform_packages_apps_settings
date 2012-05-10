@@ -5,30 +5,30 @@
   mApplicationsAdapter=new ApplicationsAdapter(mApplicationsState);
   Intent intent=getActivity().getIntent();
   String action=intent.getAction();
-  String defaultTabTag=TAB_DOWNLOADED;
+  int defaultListType=LIST_TYPE_DOWNLOADED;
   String className=getArguments() != null ? getArguments().getString("classname") : null;
   if (className == null) {
     className=intent.getComponent().getClassName();
   }
   if (className.equals(RunningServicesActivity.class.getName()) || className.endsWith(".RunningServices")) {
-    defaultTabTag=TAB_RUNNING;
+    defaultListType=LIST_TYPE_RUNNING;
   }
  else   if (className.equals(StorageUseActivity.class.getName()) || Intent.ACTION_MANAGE_PACKAGE_STORAGE.equals(action) || className.endsWith(".StorageUse")) {
     mSortOrder=SORT_ORDER_SIZE;
     mFilterApps=FILTER_APPS_ALL;
-    defaultTabTag=TAB_ALL;
+    defaultListType=LIST_TYPE_ALL;
   }
  else   if (Settings.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS.equals(action)) {
-    defaultTabTag=TAB_ALL;
+    defaultListType=LIST_TYPE_ALL;
   }
   if (savedInstanceState != null) {
     mSortOrder=savedInstanceState.getInt(EXTRA_SORT_ORDER,mSortOrder);
     mFilterApps=savedInstanceState.getInt(EXTRA_FILTER_APPS,mFilterApps);
-    String tmp=savedInstanceState.getString(EXTRA_DEFAULT_TAB_TAG);
-    if (tmp != null)     defaultTabTag=tmp;
+    int tmp=savedInstanceState.getInt(EXTRA_DEFAULT_LIST_TYPE,-1);
+    if (tmp != -1)     defaultListType=tmp;
     mShowBackground=savedInstanceState.getBoolean(EXTRA_SHOW_BACKGROUND,false);
   }
-  mDefaultTab=defaultTabTag;
+  mDefaultListType=defaultListType;
   final Intent containerIntent=new Intent().setComponent(StorageMeasurement.DEFAULT_CONTAINER_COMPONENT);
   getActivity().bindService(containerIntent,mContainerConnection,Context.BIND_AUTO_CREATE);
   mInvalidSizeStr=getActivity().getText(R.string.invalid_size_value);

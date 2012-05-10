@@ -20,6 +20,7 @@
   if (TextUtils.isEmpty(newWord)) {
     return;
   }
+  if (hasWord(newWord,context))   return;
   UserDictionarySettings.deleteWord(newWord,null,resolver);
   if (!TextUtils.isEmpty(newShortcut)) {
     UserDictionarySettings.deleteWord(newWord,newShortcut,resolver);

@@ -1,5 +1,8 @@
 {
   mRootView=inflater.inflate(R.layout.user_dictionary_add_word_fullscreen,null);
   mIsDeleting=false;
+  if (null == mContents) {
+    mContents=new UserDictionaryAddWordContents(mRootView,getArguments());
+  }
   return mRootView;
 }

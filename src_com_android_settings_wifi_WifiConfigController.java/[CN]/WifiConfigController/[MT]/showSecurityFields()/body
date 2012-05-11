@@ -35,7 +35,13 @@
     if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
       WifiConfiguration config=mAccessPoint.getConfig();
       setSelection(mEapMethodSpinner,config.eap.value());
-      setSelection(mPhase2Spinner,config.phase2.value());
+      final String phase2Method=config.phase2.value();
+      if (phase2Method != null && phase2Method.startsWith(PHASE2_PREFIX)) {
+        setSelection(mPhase2Spinner,phase2Method.substring(PHASE2_PREFIX.length()));
+      }
+ else {
+        setSelection(mPhase2Spinner,phase2Method);
+      }
       setCertificate(mEapCaCertSpinner,KEYSTORE_SPACE + Credentials.CA_CERTIFICATE,config.ca_cert.value());
       setCertificate(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY,config.key_id.value());
       mEapIdentityView.setText(config.identity.value());

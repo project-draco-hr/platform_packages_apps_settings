@@ -26,6 +26,8 @@
         }
  catch (        ActivityNotFoundException e) {
           Log.d(TAG,"IME's Settings Activity Not Found: " + e);
+          final String msg=mFragment.getString(R.string.failed_to_open_app_settings_toast,mImi.loadLabel(mFragment.getActivity().getPackageManager()));
+          Toast.makeText(mFragment.getActivity(),msg,Toast.LENGTH_LONG).show();
         }
       }
     }

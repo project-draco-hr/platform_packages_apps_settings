@@ -1,0 +1,11 @@
+{
+  if (mResetDialog == null) {
+    AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+    builder.setTitle(R.string.reset_app_preferences_title);
+    builder.setMessage(R.string.reset_app_preferences_desc);
+    builder.setPositiveButton(R.string.reset_app_preferences_button,this);
+    builder.setNegativeButton(R.string.cancel,null);
+    mResetDialog=builder.show();
+    mResetDialog.setOnDismissListener(this);
+  }
+}

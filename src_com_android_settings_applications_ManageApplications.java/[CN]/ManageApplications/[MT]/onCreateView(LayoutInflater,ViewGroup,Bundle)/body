@@ -49,5 +49,8 @@
   mSpinner.setSelection(getIndex(mDefaultListType));
   mSpinner.setAdapter(sa);
   prepareCustomPreferencesList(container,spinnerHost,mListView,false);
+  if (savedInstanceState != null && savedInstanceState.getBoolean(EXTRA_RESET_DIALOG)) {
+    buildResetDialog();
+  }
   return spinnerHost;
 }

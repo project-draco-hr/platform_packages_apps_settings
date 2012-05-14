@@ -2,7 +2,7 @@
   if (config == null) {
     return false;
   }
-  if (config.key_id.value() != null) {
+  if (!TextUtils.isEmpty(config.key_id.value())) {
     return true;
   }
   String values[]={config.ca_cert.value(),config.client_cert.value()};

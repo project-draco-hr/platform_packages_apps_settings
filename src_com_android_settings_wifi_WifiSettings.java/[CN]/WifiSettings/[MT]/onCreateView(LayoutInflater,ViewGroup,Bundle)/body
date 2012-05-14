@@ -1,0 +1,29 @@
+{
+  if (mSetupWizardMode) {
+    View view=inflater.inflate(R.layout.setup_preference,container,false);
+    ImageButton b1=(ImageButton)view.findViewById(R.id.wps_push);
+    if (b1 != null) {
+      b1.setOnClickListener(new OnClickListener(){
+        @Override public void onClick(        View v){
+          showDialog(WPS_PBC_DIALOG_ID);
+        }
+      }
+);
+    }
+    ImageButton b2=(ImageButton)view.findViewById(R.id.add_network);
+    if (b2 != null) {
+      b2.setOnClickListener(new OnClickListener(){
+        @Override public void onClick(        View v){
+          if (mWifiManager.isWifiEnabled()) {
+            onAddNetworkPressed();
+          }
+        }
+      }
+);
+    }
+    return view;
+  }
+ else {
+    return super.onCreateView(inflater,container,savedInstanceState);
+  }
+}

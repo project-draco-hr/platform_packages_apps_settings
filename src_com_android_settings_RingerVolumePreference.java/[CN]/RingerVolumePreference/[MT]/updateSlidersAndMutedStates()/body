@@ -3,7 +3,7 @@
     int streamType=SEEKBAR_TYPE[i];
     boolean muted=mAudioManager.isStreamMute(streamType);
     if (mCheckBoxes[i] != null) {
-      if (streamType == AudioManager.STREAM_RING && muted && !(mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT)) {
+      if ((streamType == AudioManager.STREAM_RING) && (mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE)) {
         mCheckBoxes[i].setImageResource(com.android.internal.R.drawable.ic_audio_ring_notif_vibrate);
       }
  else {
@@ -11,8 +11,14 @@
       }
     }
     if (mSeekBars[i] != null) {
-      final int volume=muted ? mAudioManager.getLastAudibleStreamVolume(streamType) : mAudioManager.getStreamVolume(streamType);
+      final int volume=mAudioManager.getStreamVolume(streamType);
       mSeekBars[i].setProgress(volume);
+      if (streamType != mAudioManager.getMasterStreamType() && muted) {
+        mSeekBars[i].setEnabled(false);
+      }
+ else {
+        mSeekBars[i].setEnabled(true);
+      }
     }
   }
 }

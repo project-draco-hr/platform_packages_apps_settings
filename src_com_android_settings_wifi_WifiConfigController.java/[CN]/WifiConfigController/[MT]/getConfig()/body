@@ -48,7 +48,7 @@ case AccessPoint.SECURITY_EAP:
 config.allowedKeyManagement.set(KeyMgmt.WPA_EAP);
 config.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
 config.eap.setValue((String)mEapMethodSpinner.getSelectedItem());
-config.phase2.setValue((mPhase2Spinner.getSelectedItemPosition() == 0) ? "" : "auth=" + mPhase2Spinner.getSelectedItem());
+config.phase2.setValue((mPhase2Spinner.getSelectedItemPosition() == 0) ? "" : PHASE2_PREFIX + mPhase2Spinner.getSelectedItem());
 config.ca_cert.setValue((mEapCaCertSpinner.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.CA_CERTIFICATE + (String)mEapCaCertSpinner.getSelectedItem());
 config.client_cert.setValue((mEapUserCertSpinner.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_CERTIFICATE + (String)mEapUserCertSpinner.getSelectedItem());
 config.engine.setValue(WifiConfiguration.ENGINE_ENABLE);

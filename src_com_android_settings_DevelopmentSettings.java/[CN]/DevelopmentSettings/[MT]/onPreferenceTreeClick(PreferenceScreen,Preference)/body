@@ -16,6 +16,14 @@
  else   if (preference == mKeepScreenOn) {
     Settings.System.putInt(getActivity().getContentResolver(),Settings.System.STAY_ON_WHILE_PLUGGED_IN,mKeepScreenOn.isChecked() ? (BatteryManager.BATTERY_PLUGGED_AC | BatteryManager.BATTERY_PLUGGED_USB) : 0);
   }
+ else   if (preference == mEnforceReadExternal) {
+    if (mEnforceReadExternal.isChecked()) {
+      ConfirmEnforceFragment.show(this);
+    }
+ else {
+      setPermissionEnforced(getActivity(),READ_EXTERNAL_STORAGE,false);
+    }
+  }
  else   if (preference == mAllowMockLocation) {
     Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,mAllowMockLocation.isChecked() ? 1 : 0);
   }

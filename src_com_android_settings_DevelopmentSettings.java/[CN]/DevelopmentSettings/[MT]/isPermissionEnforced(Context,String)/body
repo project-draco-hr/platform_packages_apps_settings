@@ -1,0 +1,8 @@
+{
+  try {
+    return ActivityThread.getPackageManager().isPermissionEnforced(READ_EXTERNAL_STORAGE);
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("Problem talking with PackageManager",e);
+  }
+}

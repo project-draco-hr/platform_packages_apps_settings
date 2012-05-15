@@ -8,18 +8,6 @@ case R.id.storage_usb:
       startFragment(this,UsbSettings.class.getCanonicalName(),-1,null);
     }
   return true;
-case R.id.storage_enforce_read_external:
-{
-  final boolean checked=!item.isChecked();
-  item.setChecked(checked);
-  try {
-    mPackageService.setPermissionEnforced(READ_EXTERNAL_STORAGE,checked);
-  }
- catch (  RemoteException e) {
-    throw new RuntimeException("Problem talking with PackageManager",e);
-  }
-  return true;
-}
 }
 return super.onOptionsItemSelected(item);
 }

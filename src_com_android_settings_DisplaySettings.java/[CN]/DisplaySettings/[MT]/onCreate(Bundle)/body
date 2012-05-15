@@ -2,8 +2,8 @@
   super.onCreate(savedInstanceState);
   ContentResolver resolver=getActivity().getContentResolver();
   addPreferencesFromResource(R.xml.display_settings);
-  mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
-  mAccelerometer.setPersistent(false);
+  mRotationLock=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
+  mRotationLock.setPersistent(false);
   mScreenSaverPreference=findPreference(KEY_SCREEN_SAVER);
   if (mScreenSaverPreference != null && getResources().getBoolean(com.android.internal.R.bool.config_enableDreams) == false) {
     getPreferenceScreen().removePreference(mScreenSaverPreference);

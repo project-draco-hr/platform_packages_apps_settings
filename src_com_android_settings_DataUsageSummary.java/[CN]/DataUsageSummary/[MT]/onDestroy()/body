@@ -1,4 +1,9 @@
 {
+  mDataEnabledView=null;
+  mDisableAtLimitView=null;
+  mUidDetailProvider.clearCache();
+  mUidDetailProvider=null;
+  TrafficStats.closeQuietly(mStatsSession);
   if (this.isRemoving()) {
     getFragmentManager().popBackStack(TAG_APP_DETAILS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
   }

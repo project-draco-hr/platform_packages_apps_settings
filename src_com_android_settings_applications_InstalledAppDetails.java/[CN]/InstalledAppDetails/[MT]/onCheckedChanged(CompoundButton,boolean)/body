@@ -8,12 +8,11 @@
     am.setPackageScreenCompatMode(packageName,isChecked ? ActivityManager.COMPAT_MODE_ENABLED : ActivityManager.COMPAT_MODE_DISABLED);
   }
  else   if (buttonView == mNotificationSwitch) {
-    INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
-    try {
-      nm.setNotificationsEnabledForPackage(packageName,isChecked);
+    if (!isChecked) {
+      showDialogInner(DLG_DISABLE_NOTIFICATIONS,0);
     }
- catch (    android.os.RemoteException ex) {
-      mNotificationSwitch.setChecked(!isChecked);
+ else {
+      setNotificationsEnabled(true);
     }
   }
 }

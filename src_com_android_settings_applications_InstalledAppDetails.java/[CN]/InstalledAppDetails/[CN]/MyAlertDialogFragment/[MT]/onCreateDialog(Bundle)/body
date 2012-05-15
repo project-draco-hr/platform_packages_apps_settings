@@ -48,6 +48,18 @@ new DisableChanger(getOwner(),getOwner().mAppEntry.info,PackageManager.COMPONENT
 }
 }
 ).setNegativeButton(R.string.dlg_cancel,null).create();
+case DLG_DISABLE_NOTIFICATIONS:
+return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.string.app_disable_notifications_dlg_title)).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getActivity().getText(R.string.app_disable_notifications_dlg_text)).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+getOwner().setNotificationsEnabled(false);
+}
+}
+).setNegativeButton(R.string.dlg_cancel,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+getOwner().mNotificationSwitch.setChecked(true);
+}
+}
+).create();
 }
 throw new IllegalArgumentException("unknown id " + id);
 }

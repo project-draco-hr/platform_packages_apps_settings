@@ -1,0 +1,9 @@
+{
+  try {
+    PackageInfo sys=mPm.getPackageInfo("android",PackageManager.GET_SIGNATURES);
+    return (mPackageInfo != null && mPackageInfo.signatures != null && sys.signatures[0].equals(mPackageInfo.signatures[0]));
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    return false;
+  }
+}

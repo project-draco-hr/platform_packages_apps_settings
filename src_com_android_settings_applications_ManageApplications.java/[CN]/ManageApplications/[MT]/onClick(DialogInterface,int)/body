@@ -1,0 +1,55 @@
+{
+  if (mResetDialog == dialog) {
+    final PackageManager pm=getActivity().getPackageManager();
+    final INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+    final NetworkPolicyManager npm=NetworkPolicyManager.from(getActivity());
+    final Handler handler=new Handler(getActivity().getMainLooper());
+    (new AsyncTask<Void,Void,Void>(){
+      @Override protected Void doInBackground(      Void... params){
+        List<ApplicationInfo> apps=pm.getInstalledApplications(PackageManager.GET_DISABLED_COMPONENTS);
+        for (int i=0; i < apps.size(); i++) {
+          ApplicationInfo app=apps.get(i);
+          try {
+            if (DEBUG)             Log.v(TAG,"Enabling notifications: " + app.packageName);
+            nm.setNotificationsEnabledForPackage(app.packageName,true);
+          }
+ catch (          android.os.RemoteException ex) {
+          }
+          if (DEBUG)           Log.v(TAG,"Clearing preferred: " + app.packageName);
+          pm.clearPackagePreferredActivities(app.packageName);
+          if (!app.enabled) {
+            if (DEBUG)             Log.v(TAG,"Enabling app: " + app.packageName);
+            if (pm.getApplicationEnabledSetting(app.packageName) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER) {
+              pm.setApplicationEnabledSetting(app.packageName,PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,PackageManager.DONT_KILL_APP);
+            }
+          }
+        }
+        ArrayList<IntentFilter> filters=new ArrayList<IntentFilter>();
+        ArrayList<ComponentName> prefActivities=new ArrayList<ComponentName>();
+        pm.getPreferredActivities(filters,prefActivities,null);
+        for (int i=0; i < prefActivities.size(); i++) {
+          if (DEBUG)           Log.v(TAG,"Clearing preferred: " + prefActivities.get(i).getPackageName());
+          pm.clearPackagePreferredActivities(prefActivities.get(i).getPackageName());
+        }
+        final int[] restrictedAppIds=npm.getAppsWithPolicy(POLICY_REJECT_METERED_BACKGROUND);
+        for (        int i : restrictedAppIds) {
+          if (DEBUG)           Log.v(TAG,"Clearing data policy: " + i);
+          npm.setAppPolicy(i,POLICY_NONE);
+        }
+        handler.post(new Runnable(){
+          @Override public void run(){
+            if (DEBUG)             Log.v(TAG,"Done clearing");
+            if (getActivity() != null && mActivityResumed) {
+              if (DEBUG)               Log.v(TAG,"Updating UI!");
+              mApplicationsAdapter.pause();
+              showCurrentList();
+            }
+          }
+        }
+);
+        return null;
+      }
+    }
+).execute();
+  }
+}

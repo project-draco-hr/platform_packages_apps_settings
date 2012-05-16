@@ -1,11 +1,7 @@
 {
   super.onPause();
   mActivityResumed=false;
-  mApplicationsAdapter.pause();
-  if (mResumedRunning) {
-    mRunningProcessesView.doPause();
-    mResumedRunning=false;
+  for (int i=0; i < mTabs.size(); i++) {
+    mTabs.get(i).pause();
   }
-  mSpinner.setEnabled(false);
-  mSpinnerContent.setEnabled(false);
 }

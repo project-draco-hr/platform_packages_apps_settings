@@ -2,17 +2,21 @@
   int menuId=item.getItemId();
   if ((menuId == SORT_ORDER_ALPHA) || (menuId == SORT_ORDER_SIZE)) {
     mSortOrder=menuId;
-    if (mCurView != VIEW_RUNNING) {
-      mApplicationsAdapter.rebuild(mFilterApps,mSortOrder);
+    if (mCurTab != null && mCurTab.mApplications != null) {
+      mCurTab.mApplications.rebuild(mSortOrder);
     }
   }
  else   if (menuId == SHOW_RUNNING_SERVICES) {
     mShowBackground=false;
-    mRunningProcessesView.mAdapter.setShowBackground(false);
+    if (mCurTab != null && mCurTab.mRunningProcessesView != null) {
+      mCurTab.mRunningProcessesView.mAdapter.setShowBackground(false);
+    }
   }
  else   if (menuId == SHOW_BACKGROUND_PROCESSES) {
     mShowBackground=true;
-    mRunningProcessesView.mAdapter.setShowBackground(true);
+    if (mCurTab != null && mCurTab.mRunningProcessesView != null) {
+      mCurTab.mRunningProcessesView.mAdapter.setShowBackground(true);
+    }
   }
  else   if (menuId == RESET_APP_PREFERENCES) {
     buildResetDialog();

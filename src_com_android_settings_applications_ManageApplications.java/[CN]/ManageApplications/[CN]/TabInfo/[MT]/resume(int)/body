@@ -1,0 +1,15 @@
+{
+  if (mApplications != null) {
+    mApplications.resume(sortOrder);
+  }
+  if (mRunningProcessesView != null) {
+    boolean haveData=mRunningProcessesView.doResume(mOwner,mRunningProcessesAvail);
+    if (haveData) {
+      mRunningProcessesView.setVisibility(View.VISIBLE);
+      mLoadingContainer.setVisibility(View.INVISIBLE);
+    }
+ else {
+      mLoadingContainer.setVisibility(View.VISIBLE);
+    }
+  }
+}

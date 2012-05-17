@@ -2,8 +2,9 @@
   if (mOptionsMenu == null) {
     return;
   }
-  if (mCurView == VIEW_RUNNING) {
-    boolean showingBackground=mRunningProcessesView != null ? mRunningProcessesView.mAdapter.getShowBackground() : false;
+  if (mCurTab != null && mCurTab.mListType == LIST_TYPE_RUNNING) {
+    TabInfo tab=tabForType(LIST_TYPE_RUNNING);
+    boolean showingBackground=tab != null && tab.mRunningProcessesView != null ? tab.mRunningProcessesView.mAdapter.getShowBackground() : false;
     mOptionsMenu.findItem(SORT_ORDER_ALPHA).setVisible(false);
     mOptionsMenu.findItem(SORT_ORDER_SIZE).setVisible(false);
     mOptionsMenu.findItem(SHOW_RUNNING_SERVICES).setVisible(showingBackground);

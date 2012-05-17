@@ -1,0 +1,19 @@
+{
+  if (ManageApplications.DEBUG)   Log.i(ManageApplications.TAG,"updateSizeText of " + entry.label + " "+ entry+ ": "+ entry.sizeStr);
+  if (entry.sizeStr != null) {
+switch (whichSize) {
+case ManageApplications.SIZE_INTERNAL:
+      appSize.setText(entry.internalSizeStr);
+    break;
+case ManageApplications.SIZE_EXTERNAL:
+  appSize.setText(entry.externalSizeStr);
+break;
+default :
+appSize.setText(entry.sizeStr);
+break;
+}
+}
+ else if (entry.size == ApplicationsState.SIZE_INVALID) {
+appSize.setText(invalidSizeStr);
+}
+}

@@ -1,9 +1,7 @@
 {
   super.onBindDialogView(view);
-  final EditText editText=(EditText)view.findViewById(android.R.id.edit);
+  final EditText editText=getEditText();
   if (editText != null) {
-    editText.setSingleLine(true);
-    editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-    editText.setKeyListener(DigitsKeyListener.getInstance());
+    editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
   }
 }

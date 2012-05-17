@@ -7,13 +7,8 @@
   if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
     getPreferenceScreen().removePreference(findPreference(KEY_EMERGENCY_TONE));
   }
-  mSilentMode=(ListPreference)findPreference(KEY_SILENT_MODE);
   if (!getResources().getBoolean(R.bool.has_silent_mode)) {
-    getPreferenceScreen().removePreference(mSilentMode);
     findPreference(KEY_RING_VOLUME).setDependency(null);
-  }
- else {
-    mSilentMode.setOnPreferenceChangeListener(this);
   }
   mVibrateWhenRinging=(CheckBoxPreference)findPreference(KEY_VIBRATE);
   mVibrateWhenRinging.setPersistent(false);

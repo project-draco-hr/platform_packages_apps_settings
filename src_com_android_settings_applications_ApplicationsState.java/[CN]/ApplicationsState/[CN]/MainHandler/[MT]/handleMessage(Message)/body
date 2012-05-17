@@ -1,44 +1,46 @@
 {
+  rebuildActiveSessions();
 switch (msg.what) {
 case MSG_REBUILD_COMPLETE:
 {
-      if (mCurCallbacks != null) {
-        mCurCallbacks.onRebuildComplete((ArrayList<AppEntry>)msg.obj);
+      Session s=(Session)msg.obj;
+      if (mActiveSessions.contains(s)) {
+        s.mCallbacks.onRebuildComplete(s.mLastAppList);
       }
     }
   break;
 case MSG_PACKAGE_LIST_CHANGED:
 {
-  if (mCurCallbacks != null) {
-    mCurCallbacks.onPackageListChanged();
+  for (int i=0; i < mActiveSessions.size(); i++) {
+    mActiveSessions.get(i).mCallbacks.onPackageListChanged();
   }
 }
 break;
 case MSG_PACKAGE_ICON_CHANGED:
 {
-if (mCurCallbacks != null) {
-mCurCallbacks.onPackageIconChanged();
+for (int i=0; i < mActiveSessions.size(); i++) {
+mActiveSessions.get(i).mCallbacks.onPackageIconChanged();
 }
 }
 break;
 case MSG_PACKAGE_SIZE_CHANGED:
 {
-if (mCurCallbacks != null) {
-mCurCallbacks.onPackageSizeChanged((String)msg.obj);
+for (int i=0; i < mActiveSessions.size(); i++) {
+mActiveSessions.get(i).mCallbacks.onPackageSizeChanged((String)msg.obj);
 }
 }
 break;
 case MSG_ALL_SIZES_COMPUTED:
 {
-if (mCurCallbacks != null) {
-mCurCallbacks.onAllSizesComputed();
+for (int i=0; i < mActiveSessions.size(); i++) {
+mActiveSessions.get(i).mCallbacks.onAllSizesComputed();
 }
 }
 break;
 case MSG_RUNNING_STATE_CHANGED:
 {
-if (mCurCallbacks != null) {
-mCurCallbacks.onRunningStateChanged(msg.arg1 != 0);
+for (int i=0; i < mActiveSessions.size(); i++) {
+mActiveSessions.get(i).mCallbacks.onRunningStateChanged(msg.arg1 != 0);
 }
 }
 break;

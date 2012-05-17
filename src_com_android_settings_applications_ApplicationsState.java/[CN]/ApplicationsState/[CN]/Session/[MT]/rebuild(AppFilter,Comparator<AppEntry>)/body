@@ -1,0 +1,30 @@
+{
+synchronized (mRebuildSync) {
+synchronized (mEntriesMap) {
+      mRebuildingSessions.add(this);
+      mRebuildRequested=true;
+      mRebuildAsync=false;
+      mRebuildFilter=filter;
+      mRebuildComparator=comparator;
+      mRebuildResult=null;
+      if (!mBackgroundHandler.hasMessages(BackgroundHandler.MSG_REBUILD_LIST)) {
+        Message msg=mBackgroundHandler.obtainMessage(BackgroundHandler.MSG_REBUILD_LIST);
+        mBackgroundHandler.sendMessage(msg);
+      }
+    }
+    long waitend=SystemClock.uptimeMillis() + 250;
+    while (mRebuildResult == null) {
+      long now=SystemClock.uptimeMillis();
+      if (now >= waitend) {
+        break;
+      }
+      try {
+        mRebuildSync.wait(waitend - now);
+      }
+ catch (      InterruptedException e) {
+      }
+    }
+    mRebuildAsync=true;
+    return mRebuildResult;
+  }
+}

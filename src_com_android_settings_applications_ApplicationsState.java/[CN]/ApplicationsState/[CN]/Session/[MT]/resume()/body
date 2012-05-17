@@ -1,0 +1,11 @@
+{
+  if (DEBUG_LOCKING)   Log.v(TAG,"resume about to acquire lock...");
+synchronized (mEntriesMap) {
+    if (!mResumed) {
+      mResumed=true;
+      mSessionsChanged=true;
+      doResumeIfNeededLocked();
+    }
+  }
+  if (DEBUG_LOCKING)   Log.v(TAG,"...resume releasing lock");
+}

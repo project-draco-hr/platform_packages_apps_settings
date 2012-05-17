@@ -1,56 +1,16 @@
 {
   mInflater=inflater;
-  mRootView=inflater.inflate(R.layout.manage_applications,null);
-  mLoadingContainer=mRootView.findViewById(R.id.loading_container);
-  mListContainer=mRootView.findViewById(R.id.list_container);
-  ListView lv=(ListView)mListContainer.findViewById(android.R.id.list);
-  View emptyView=mListContainer.findViewById(com.android.internal.R.id.empty);
-  if (emptyView != null) {
-    lv.setEmptyView(emptyView);
-  }
-  lv.setOnItemClickListener(this);
-  lv.setSaveEnabled(true);
-  lv.setItemsCanFocus(true);
-  lv.setOnItemClickListener(this);
-  lv.setTextFilterEnabled(true);
-  mListView=lv;
-  lv.setRecyclerListener(mApplicationsAdapter);
-  mListView.setAdapter(mApplicationsAdapter);
-  mColorBar=(LinearColorBar)mListContainer.findViewById(R.id.storage_color_bar);
-  mStorageChartLabel=(TextView)mListContainer.findViewById(R.id.storageChartLabel);
-  mUsedStorageText=(TextView)mListContainer.findViewById(R.id.usedStorageText);
-  mFreeStorageText=(TextView)mListContainer.findViewById(R.id.freeStorageText);
-  mRunningProcessesView=(RunningProcessesView)mRootView.findViewById(R.id.running_processes);
-  mCreatedRunning=mResumedRunning=false;
-  mCurView=VIEW_NOTHING;
-  View spinnerHost=mInflater.inflate(R.layout.manage_apps_spinner_content,container,false);
-  mSpinner=(Spinner)spinnerHost.findViewById(R.id.spinner);
-  mSpinnerContent=(FrameLayout)spinnerHost.findViewById(R.id.spinner_content);
-  mSpinnerContent.addView(mRootView);
-  AppFilterAdapter sa=new AppFilterAdapter(getActivity());
-  mIndexToType.append(sa.getCount(),LIST_TYPE_DOWNLOADED);
-  sa.add(getActivity().getString(R.string.filter_apps_third_party));
-  if (!Environment.isExternalStorageEmulated()) {
-    mIndexToType.append(sa.getCount(),LIST_TYPE_SDCARD);
-    sa.add(getActivity().getString(R.string.filter_apps_onsdcard));
-  }
-  mIndexToType.append(sa.getCount(),LIST_TYPE_RUNNING);
-  sa.add(getActivity().getString(R.string.filter_apps_running));
-  mIndexToType.append(sa.getCount(),LIST_TYPE_ALL);
-  sa.add(getActivity().getString(R.string.filter_apps_all));
-  mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-    @Override public void onItemSelected(    AdapterView<?> parent,    View view,    int position,    long id){
-      showCurrentList();
-    }
-    @Override public void onNothingSelected(    AdapterView<?> parent){
-    }
-  }
-);
-  mSpinner.setSelection(getIndex(mDefaultListType));
-  mSpinner.setAdapter(sa);
-  prepareCustomPreferencesList(container,spinnerHost,mListView,false);
+  View rootView=mInflater.inflate(R.layout.manage_applications_content,container,false);
+  mContentContainer=container;
+  mRootView=rootView;
+  mViewPager=(ViewPager)rootView.findViewById(R.id.pager);
+  MyPagerAdapter adapter=new MyPagerAdapter();
+  mViewPager.setAdapter(adapter);
+  mViewPager.setOnPageChangeListener(adapter);
+  PagerTabStrip tabs=(PagerTabStrip)rootView.findViewById(R.id.tabs);
+  tabs.setTabIndicatorColorResource(android.R.color.holo_blue_light);
   if (savedInstanceState != null && savedInstanceState.getBoolean(EXTRA_RESET_DIALOG)) {
     buildResetDialog();
   }
-  return spinnerHost;
+  return rootView;
 }

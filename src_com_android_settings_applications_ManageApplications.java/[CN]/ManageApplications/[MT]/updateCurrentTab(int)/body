@@ -1,0 +1,23 @@
+{
+  TabInfo tab=mTabs.get(position);
+  mCurTab=tab;
+  if (mActivityResumed) {
+    mCurTab.build(mInflater,mContentContainer,mRootView);
+    mCurTab.resume(mSortOrder);
+  }
+ else {
+    mCurTab.pause();
+  }
+  for (int i=0; i < mTabs.size(); i++) {
+    TabInfo t=mTabs.get(i);
+    if (t != mCurTab) {
+      t.pause();
+    }
+  }
+  mCurTab.updateStorageUsage();
+  updateOptionsMenu();
+  final Activity host=getActivity();
+  if (host != null) {
+    host.invalidateOptionsMenu();
+  }
+}

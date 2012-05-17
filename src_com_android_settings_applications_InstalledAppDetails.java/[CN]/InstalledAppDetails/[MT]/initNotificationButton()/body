@@ -7,5 +7,11 @@
  catch (  android.os.RemoteException ex) {
   }
   mNotificationSwitch.setChecked(enabled);
-  mNotificationSwitch.setOnCheckedChangeListener(this);
+  if (isThisASystemPackage()) {
+    mNotificationSwitch.setEnabled(false);
+  }
+ else {
+    mNotificationSwitch.setEnabled(true);
+    mNotificationSwitch.setOnCheckedChangeListener(this);
+  }
 }

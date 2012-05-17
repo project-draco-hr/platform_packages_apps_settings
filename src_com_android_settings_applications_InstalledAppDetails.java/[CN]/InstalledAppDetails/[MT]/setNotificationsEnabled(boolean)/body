@@ -1,0 +1,11 @@
+{
+  String packageName=mAppEntry.info.packageName;
+  INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+  try {
+    final boolean enable=mNotificationSwitch.isChecked();
+    nm.setNotificationsEnabledForPackage(packageName,enabled);
+  }
+ catch (  android.os.RemoteException ex) {
+    mNotificationSwitch.setChecked(!enabled);
+  }
+}

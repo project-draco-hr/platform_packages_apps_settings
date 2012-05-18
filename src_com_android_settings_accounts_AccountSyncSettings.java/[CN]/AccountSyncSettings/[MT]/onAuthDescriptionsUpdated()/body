@@ -4,10 +4,6 @@
   if (mAccount != null) {
     mProviderIcon.setImageDrawable(getDrawableForType(mAccount.type));
     mProviderId.setText(getLabelForType(mAccount.type));
-    PreferenceScreen prefs=addPreferencesForType(mAccount.type);
-    if (prefs != null) {
-      updatePreferenceIntents(prefs);
-    }
   }
   addPreferencesFromResource(R.xml.account_sync_settings);
 }

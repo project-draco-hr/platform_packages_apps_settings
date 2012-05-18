@@ -1,8 +1,10 @@
 {
   if (getActivity() == null)   return;
   getPreferenceScreen().removeAll();
+  addPreferencesFromResource(R.xml.manage_accounts_settings);
   for (int i=0, n=accounts.length; i < n; i++) {
     final Account account=accounts[i];
+    if (mAccountType != null && !account.type.equals(mAccountType))     continue;
     final ArrayList<String> auths=getAuthoritiesForAccountType(account.type);
     boolean showAccount=true;
     if (mAuthorities != null && auths != null) {
@@ -19,6 +21,9 @@
       final AccountPreference preference=new AccountPreference(getActivity(),account,icon,auths);
       getPreferenceScreen().addPreference(preference);
     }
+  }
+  if (mAccountType != null) {
+    addAuthenticatorSettings();
   }
   onSyncStateUpdated();
 }

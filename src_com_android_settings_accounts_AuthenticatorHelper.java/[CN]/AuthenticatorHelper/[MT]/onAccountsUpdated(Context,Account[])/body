@@ -1,0 +1,12 @@
+{
+  if (accounts == null) {
+    accounts=AccountManager.get(context).getAccounts();
+  }
+  mEnabledAccountTypes.clear();
+  mAccTypeIconCache.clear();
+  for (  Account account : accounts) {
+    if (!mEnabledAccountTypes.contains(account.type)) {
+      mEnabledAccountTypes.add(account.type);
+    }
+  }
+}

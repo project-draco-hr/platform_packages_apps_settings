@@ -1,10 +1,8 @@
 {
   if (getActivity() == null)   return;
-  if (mAutoSyncSwitch != null) {
-    mAutoSyncSwitch.setChecked(ContentResolver.getMasterSyncAutomatically());
-  }
   SyncInfo currentSync=ContentResolver.getCurrentSync();
   boolean anySyncFailed=false;
+  Date date=new Date();
   final SyncAdapterType[] syncAdapters=ContentResolver.getSyncAdapterTypes();
   HashSet<String> userFacing=new HashSet<String>();
   for (int k=0, n=syncAdapters.length; k < n; k++) {
@@ -21,8 +19,10 @@
     AccountPreference accountPref=(AccountPreference)pref;
     Account account=accountPref.getAccount();
     int syncCount=0;
+    long lastSuccessTime=0;
     boolean syncIsFailing=false;
     final ArrayList<String> authorities=accountPref.getAuthorities();
+    boolean syncingNow=false;
     if (authorities != null) {
       for (      String authority : authorities) {
         SyncStatusInfo status=ContentResolver.getSyncStatus(account,authority);
@@ -34,6 +34,10 @@
           syncIsFailing=true;
           anySyncFailed=true;
         }
+        syncingNow|=activelySyncing;
+        if (status != null && lastSuccessTime < status.lastSuccessTime) {
+          lastSuccessTime=status.lastSuccessTime;
+        }
         syncCount+=syncEnabled && userFacing.contains(authority) ? 1 : 0;
       }
     }
@@ -42,17 +46,29 @@
         Log.v(TAG,"no syncadapters found for " + account);
       }
     }
-    int syncStatus=AccountPreference.SYNC_DISABLED;
     if (syncIsFailing) {
-      syncStatus=AccountPreference.SYNC_ERROR;
+      accountPref.setSyncStatus(AccountPreference.SYNC_ERROR);
     }
  else     if (syncCount == 0) {
-      syncStatus=AccountPreference.SYNC_DISABLED;
+      accountPref.setSyncStatus(AccountPreference.SYNC_DISABLED);
     }
  else     if (syncCount > 0) {
-      syncStatus=AccountPreference.SYNC_ENABLED;
+      if (syncingNow) {
+        accountPref.setSyncStatus(AccountPreference.SYNC_IN_PROGRESS);
+      }
+ else {
+        accountPref.setSyncStatus(AccountPreference.SYNC_ENABLED);
+        if (lastSuccessTime > 0) {
+          accountPref.setSyncStatus(AccountPreference.SYNC_ENABLED);
+          date.setTime(lastSuccessTime);
+          final String timeString=formatSyncDate(date);
+          accountPref.setSummary(getResources().getString(R.string.last_synced,timeString));
+        }
+      }
     }
-    accountPref.setSyncStatus(syncStatus);
+ else {
+      accountPref.setSyncStatus(AccountPreference.SYNC_DISABLED);
+    }
   }
   mErrorInfoView.setVisibility(anySyncFailed ? View.VISIBLE : View.GONE);
 }

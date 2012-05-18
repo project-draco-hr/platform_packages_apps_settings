@@ -5,12 +5,15 @@
   if (android.provider.Settings.Secure.getInt(getContentResolver(),"multiuser_enabled",-1) > 0) {
     mEnableUserManagement=true;
   }
+  mAuthenticatorHelper=new AuthenticatorHelper();
+  mAuthenticatorHelper.updateAuthDescriptions(this);
+  mAuthenticatorHelper.onAccountsUpdated(this,null);
   getMetaData();
   mInLocalHeaderSwitch=true;
   super.onCreate(savedInstanceState);
   mInLocalHeaderSwitch=false;
   if (!onIsHidingHeaders() && onIsMultiPane()) {
-    highlightHeader();
+    highlightHeader(mTopLevelHeaderId);
     setTitle(R.string.settings_label);
   }
   if (savedInstanceState != null) {

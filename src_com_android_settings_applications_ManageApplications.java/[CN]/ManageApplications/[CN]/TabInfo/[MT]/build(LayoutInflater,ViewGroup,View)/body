@@ -26,6 +26,13 @@
     mUsedStorageText=(TextView)mListContainer.findViewById(R.id.usedStorageText);
     mFreeStorageText=(TextView)mListContainer.findViewById(R.id.freeStorageText);
     Utils.prepareCustomPreferencesList(contentParent,contentChild,mListView,false);
+    if (mFilter == FILTER_APPS_SDCARD) {
+      mStorageChartLabel.setText(mOwner.getActivity().getText(R.string.sd_card_storage));
+    }
+ else {
+      mStorageChartLabel.setText(mOwner.getActivity().getText(R.string.internal_storage));
+    }
+    applyCurrentStorage();
   }
   mRunningProcessesView=(RunningProcessesView)mRootView.findViewById(R.id.running_processes);
   if (mRunningProcessesView != null) {

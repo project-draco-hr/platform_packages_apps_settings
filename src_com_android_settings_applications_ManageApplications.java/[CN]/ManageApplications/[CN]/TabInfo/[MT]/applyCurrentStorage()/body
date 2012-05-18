@@ -1,0 +1,30 @@
+{
+  if (mRootView == null) {
+    return;
+  }
+  if (mTotalStorage > 0) {
+    mColorBar.setRatios((mTotalStorage - mFreeStorage - mAppStorage) / (float)mTotalStorage,mAppStorage / (float)mTotalStorage,mFreeStorage / (float)mTotalStorage);
+    long usedStorage=mTotalStorage - mFreeStorage;
+    if (mLastUsedStorage != usedStorage) {
+      mLastUsedStorage=usedStorage;
+      String sizeStr=Formatter.formatShortFileSize(mOwner.getActivity(),usedStorage);
+      mUsedStorageText.setText(mOwner.getActivity().getResources().getString(R.string.service_foreground_processes,sizeStr));
+    }
+    if (mLastFreeStorage != mFreeStorage) {
+      mLastFreeStorage=mFreeStorage;
+      String sizeStr=Formatter.formatShortFileSize(mOwner.getActivity(),mFreeStorage);
+      mFreeStorageText.setText(mOwner.getActivity().getResources().getString(R.string.service_background_processes,sizeStr));
+    }
+  }
+ else {
+    mColorBar.setRatios(0,0,0);
+    if (mLastUsedStorage != -1) {
+      mLastUsedStorage=-1;
+      mUsedStorageText.setText("");
+    }
+    if (mLastFreeStorage != -1) {
+      mLastFreeStorage=-1;
+      mFreeStorageText.setText("");
+    }
+  }
+}

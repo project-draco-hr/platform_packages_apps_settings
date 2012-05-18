@@ -1,0 +1,22 @@
+{
+  mOwner=owner;
+  mApplicationsState=apps;
+  mContainerService=containerService;
+  mLabel=label;
+  mListType=listType;
+switch (listType) {
+case LIST_TYPE_DOWNLOADED:
+    mFilter=FILTER_APPS_THIRD_PARTY;
+  break;
+case LIST_TYPE_SDCARD:
+mFilter=FILTER_APPS_SDCARD;
+break;
+default :
+mFilter=FILTER_APPS_ALL;
+break;
+}
+mClickListener=clickListener;
+mInvalidSizeStr=owner.getActivity().getText(R.string.invalid_size_value);
+mComputingSizeStr=owner.getActivity().getText(R.string.computing_size);
+mSavedInstanceState=savedInstanceState;
+}

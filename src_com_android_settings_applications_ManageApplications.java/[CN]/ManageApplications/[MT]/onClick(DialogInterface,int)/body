@@ -41,8 +41,15 @@
             if (DEBUG)             Log.v(TAG,"Done clearing");
             if (getActivity() != null && mActivityResumed) {
               if (DEBUG)               Log.v(TAG,"Updating UI!");
-              mApplicationsAdapter.pause();
-              showCurrentList();
+              for (int i=0; i < mTabs.size(); i++) {
+                TabInfo tab=mTabs.get(i);
+                if (tab.mApplications != null) {
+                  tab.mApplications.pause();
+                }
+              }
+              if (mCurTab != null) {
+                mCurTab.resume(mSortOrder);
+              }
             }
           }
         }

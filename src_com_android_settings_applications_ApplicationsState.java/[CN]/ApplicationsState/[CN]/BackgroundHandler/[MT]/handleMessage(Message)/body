@@ -1,5 +1,16 @@
 {
-  handleRebuildList();
+  ArrayList<Session> rebuildingSessions=null;
+synchronized (mEntriesMap) {
+    if (mRebuildingSessions.size() > 0) {
+      rebuildingSessions=new ArrayList<Session>(mRebuildingSessions);
+      mRebuildingSessions.clear();
+    }
+  }
+  if (rebuildingSessions != null) {
+    for (int i=0; i < rebuildingSessions.size(); i++) {
+      rebuildingSessions.get(i).handleRebuildList();
+    }
+  }
 switch (msg.what) {
 case MSG_REBUILD_LIST:
 {

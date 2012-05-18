@@ -9,7 +9,7 @@
  else {
     mWhichSize=SIZE_INTERNAL;
   }
-switch (mLastFilterMode) {
+switch (mFilterMode) {
 case FILTER_APPS_THIRD_PARTY:
     filterObj=ApplicationsState.THIRD_PARTY_FILTER;
   break;
@@ -41,7 +41,7 @@ default :
 comparatorObj=ApplicationsState.ALPHA_COMPARATOR;
 break;
 }
-ArrayList<ApplicationsState.AppEntry> entries=mState.rebuild(filterObj,comparatorObj);
+ArrayList<ApplicationsState.AppEntry> entries=mSession.rebuild(filterObj,comparatorObj);
 if (entries == null && !eraseold) {
 return;
 }
@@ -53,14 +53,14 @@ mEntries=applyPrefixFilter(mCurFilterPrefix,mBaseEntries);
 mEntries=null;
 }
 notifyDataSetChanged();
-updateStorageUsage();
+mTab.updateStorageUsage();
 if (entries == null) {
 mWaitingForData=true;
-mListContainer.setVisibility(View.INVISIBLE);
-mLoadingContainer.setVisibility(View.VISIBLE);
+mTab.mListContainer.setVisibility(View.INVISIBLE);
+mTab.mLoadingContainer.setVisibility(View.VISIBLE);
 }
  else {
-mListContainer.setVisibility(View.VISIBLE);
-mLoadingContainer.setVisibility(View.GONE);
+mTab.mListContainer.setVisibility(View.VISIBLE);
+mTab.mLoadingContainer.setVisibility(View.GONE);
 }
 }

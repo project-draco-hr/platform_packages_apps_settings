@@ -1,0 +1,12 @@
+{
+  if (DEBUG_LOCKING)   Log.v(TAG,"pause about to acquire lock...");
+synchronized (mEntriesMap) {
+    if (mResumed) {
+      mResumed=false;
+      mSessionsChanged=true;
+      mBackgroundHandler.removeMessages(BackgroundHandler.MSG_REBUILD_LIST,this);
+      doPauseIfNeededLocked();
+    }
+    if (DEBUG_LOCKING)     Log.v(TAG,"...pause releasing lock");
+  }
+}

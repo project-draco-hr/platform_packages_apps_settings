@@ -1,0 +1,15 @@
+{
+  if (!mResumed) {
+    return;
+  }
+  for (int i=0; i < mSessions.size(); i++) {
+    if (mSessions.get(i).mResumed) {
+      return;
+    }
+  }
+  mResumed=false;
+  if (mPackageIntentReceiver != null) {
+    mPackageIntentReceiver.unregisterReceiver();
+    mPackageIntentReceiver=null;
+  }
+}

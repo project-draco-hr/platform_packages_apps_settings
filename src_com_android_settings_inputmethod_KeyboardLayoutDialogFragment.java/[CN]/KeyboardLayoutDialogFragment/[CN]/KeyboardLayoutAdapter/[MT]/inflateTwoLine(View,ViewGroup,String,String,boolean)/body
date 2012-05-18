@@ -1,0 +1,14 @@
+{
+  View view=convertView;
+  if (view == null || !isTwoLine(view)) {
+    view=mInflater.inflate(com.android.internal.R.layout.simple_list_item_2_single_choice,parent,false);
+    setTwoLine(view,true);
+  }
+  TextView headline=(TextView)view.findViewById(android.R.id.text1);
+  TextView subText=(TextView)view.findViewById(android.R.id.text2);
+  RadioButton radioButton=(RadioButton)view.findViewById(com.android.internal.R.id.radio);
+  headline.setText(label);
+  subText.setText(collection);
+  radioButton.setChecked(checked);
+  return view;
+}

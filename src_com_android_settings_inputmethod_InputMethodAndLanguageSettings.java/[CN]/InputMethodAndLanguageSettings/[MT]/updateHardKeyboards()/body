@@ -6,11 +6,8 @@
       InputDevice device=InputDevice.getDevice(devices[i]);
       if (device != null && !device.isVirtual() && (device.getSources() & InputDevice.SOURCE_KEYBOARD) != 0 && device.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {
         final String inputDeviceDescriptor=device.getDescriptor();
-        final String keyboardLayoutDescriptor=mIm.getKeyboardLayoutForInputDevice(inputDeviceDescriptor);
+        final String keyboardLayoutDescriptor=mIm.getCurrentKeyboardLayoutForInputDevice(inputDeviceDescriptor);
         final KeyboardLayout keyboardLayout=keyboardLayoutDescriptor != null ? mIm.getKeyboardLayout(keyboardLayoutDescriptor) : null;
-        final Intent intent=new Intent(Intent.ACTION_MAIN);
-        intent.setClass(getActivity(),KeyboardLayoutPickerActivity.class);
-        intent.putExtra(KeyboardLayoutPicker.EXTRA_INPUT_DEVICE_DESCRIPTOR,inputDeviceDescriptor);
         final PreferenceScreen pref=new PreferenceScreen(getActivity(),null);
         pref.setTitle(device.getName());
         if (keyboardLayout != null) {
@@ -19,7 +16,13 @@
  else {
           pref.setSummary(R.string.keyboard_layout_default_label);
         }
-        pref.setIntent(intent);
+        pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
+          @Override public boolean onPreferenceClick(          Preference preference){
+            showKeyboardLayoutDialog(inputDeviceDescriptor);
+            return true;
+          }
+        }
+);
         mHardKeyboardPreferenceList.add(pref);
       }
     }

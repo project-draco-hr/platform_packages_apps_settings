@@ -1,0 +1,11 @@
+{
+  super.onResume();
+  mIm.registerInputDeviceListener(this,null);
+  InputDevice inputDevice=mIm.getInputDeviceByDescriptor(mInputDeviceDescriptor);
+  if (inputDevice == null) {
+    getActivity().finish();
+    return;
+  }
+  mInputDeviceId=inputDevice.getId();
+  updateCheckedState();
+}

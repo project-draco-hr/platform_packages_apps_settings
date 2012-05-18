@@ -1,0 +1,19 @@
+{
+  KeyboardLayout item=getItem(position);
+  String label, collection;
+  if (item != null) {
+    label=item.getLabel();
+    collection=item.getCollection();
+  }
+ else {
+    label=getContext().getString(R.string.keyboard_layout_default_label);
+    collection="";
+  }
+  boolean checked=(position == mCheckedItem);
+  if (collection.isEmpty()) {
+    return inflateOneLine(convertView,parent,label,checked);
+  }
+ else {
+    return inflateTwoLine(convertView,parent,label,collection,checked);
+  }
+}

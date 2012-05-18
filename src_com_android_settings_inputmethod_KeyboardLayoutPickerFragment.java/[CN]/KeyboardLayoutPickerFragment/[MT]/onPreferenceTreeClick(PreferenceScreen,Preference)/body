@@ -1,0 +1,17 @@
+{
+  if (preference instanceof CheckBoxPreference) {
+    CheckBoxPreference checkboxPref=(CheckBoxPreference)preference;
+    KeyboardLayout layout=mPreferenceMap.get(checkboxPref);
+    if (layout != null) {
+      boolean checked=checkboxPref.isChecked();
+      if (checked) {
+        mIm.addKeyboardLayoutForInputDevice(mInputDeviceDescriptor,layout.getDescriptor());
+      }
+ else {
+        mIm.removeKeyboardLayoutForInputDevice(mInputDeviceDescriptor,layout.getDescriptor());
+      }
+      return true;
+    }
+  }
+  return super.onPreferenceTreeClick(preferenceScreen,preference);
+}

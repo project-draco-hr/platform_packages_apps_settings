@@ -1,7 +1,7 @@
 {
   try {
     IWindowManager wm=IWindowManager.Stub.asInterface(ServiceManager.getService(Context.WINDOW_SERVICE));
-    if (mToggleAutoRotateScreenPreference.isChecked()) {
+    if (!mToggleLockScreenRotationPreference.isChecked()) {
       wm.thawRotation();
     }
  else {

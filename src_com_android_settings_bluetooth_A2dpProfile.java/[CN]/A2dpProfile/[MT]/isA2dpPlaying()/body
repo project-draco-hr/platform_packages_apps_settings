@@ -1,4 +1,5 @@
 {
+  if (mService == null)   return false;
   List<BluetoothDevice> sinks=mService.getConnectedDevices();
   if (!sinks.isEmpty()) {
     if (mService.isA2dpPlaying(sinks.get(0))) {

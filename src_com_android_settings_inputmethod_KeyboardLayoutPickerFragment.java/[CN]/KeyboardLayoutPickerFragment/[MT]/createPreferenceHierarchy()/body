@@ -1,0 +1,12 @@
+{
+  PreferenceScreen root=getPreferenceManager().createPreferenceScreen(getActivity());
+  Context context=getActivity();
+  for (  KeyboardLayout layout : mKeyboardLayouts) {
+    CheckBoxPreference pref=new CheckBoxPreference(context);
+    pref.setTitle(layout.getLabel());
+    pref.setSummary(layout.getCollection());
+    root.addPreference(pref);
+    mPreferenceMap.put(pref,layout);
+  }
+  return root;
+}

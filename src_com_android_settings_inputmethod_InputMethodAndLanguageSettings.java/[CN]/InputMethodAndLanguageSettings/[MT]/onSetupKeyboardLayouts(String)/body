@@ -1,0 +1,7 @@
+{
+  final Intent intent=new Intent(Intent.ACTION_MAIN);
+  intent.setClass(getActivity(),KeyboardLayoutPickerActivity.class);
+  intent.putExtra(KeyboardLayoutPickerFragment.EXTRA_INPUT_DEVICE_DESCRIPTOR,inputDeviceDescriptor);
+  mIntentWaitingForResult=intent;
+  startActivityForResult(intent,0);
+}

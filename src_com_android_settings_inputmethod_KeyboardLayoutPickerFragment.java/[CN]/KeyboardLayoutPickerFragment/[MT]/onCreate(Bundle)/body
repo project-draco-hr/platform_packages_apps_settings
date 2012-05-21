@@ -1,0 +1,11 @@
+{
+  super.onCreate(icicle);
+  mInputDeviceDescriptor=getActivity().getIntent().getStringExtra(EXTRA_INPUT_DEVICE_DESCRIPTOR);
+  if (mInputDeviceDescriptor == null) {
+    getActivity().finish();
+  }
+  mIm=(InputManager)getSystemService(Context.INPUT_SERVICE);
+  mKeyboardLayouts=mIm.getKeyboardLayouts();
+  Arrays.sort(mKeyboardLayouts);
+  setPreferenceScreen(createPreferenceHierarchy());
+}

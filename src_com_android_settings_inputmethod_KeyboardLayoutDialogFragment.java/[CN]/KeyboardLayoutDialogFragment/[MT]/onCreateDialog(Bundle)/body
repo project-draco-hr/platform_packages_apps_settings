@@ -1,0 +1,17 @@
+{
+  Context context=getActivity();
+  LayoutInflater inflater=LayoutInflater.from(context);
+  AlertDialog.Builder builder=new AlertDialog.Builder(context).setTitle(R.string.keyboard_layout_dialog_title).setPositiveButton(R.string.keyboard_layout_dialog_setup_button,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      onSetupLayoutsButtonClicked();
+    }
+  }
+).setSingleChoiceItems(mAdapter,-1,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      onKeyboardLayoutClicked(which);
+    }
+  }
+).setView(inflater.inflate(R.layout.keyboard_layout_dialog_switch_hint,null));
+  updateSwitchHintVisibility();
+  return builder.create();
+}

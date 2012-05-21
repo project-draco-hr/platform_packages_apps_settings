@@ -1,0 +1,11 @@
+{
+  View view=convertView;
+  if (view == null || isTwoLine(view)) {
+    view=mInflater.inflate(com.android.internal.R.layout.simple_list_item_single_choice,parent,false);
+    setTwoLine(view,false);
+  }
+  CheckedTextView headline=(CheckedTextView)view.findViewById(android.R.id.text1);
+  headline.setText(label);
+  headline.setChecked(checked);
+  return view;
+}

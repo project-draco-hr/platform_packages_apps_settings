@@ -1,0 +1,10 @@
+{
+  mAdapter.clear();
+  mAdapter.addAll(data.keyboardLayouts);
+  mAdapter.setCheckedItem(data.current);
+  AlertDialog dialog=(AlertDialog)getDialog();
+  if (dialog != null) {
+    dialog.getListView().setItemChecked(data.current,true);
+  }
+  updateSwitchHintVisibility();
+}

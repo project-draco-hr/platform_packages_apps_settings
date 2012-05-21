@@ -1,0 +1,7 @@
+{
+  AlertDialog dialog=(AlertDialog)getDialog();
+  if (dialog != null) {
+    View customPanel=dialog.findViewById(com.android.internal.R.id.customPanel);
+    customPanel.setVisibility(mAdapter.getCount() > 1 ? View.VISIBLE : View.GONE);
+  }
+}

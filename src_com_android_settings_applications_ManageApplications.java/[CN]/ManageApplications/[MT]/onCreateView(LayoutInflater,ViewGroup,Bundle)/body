@@ -9,6 +9,9 @@
   mViewPager.setOnPageChangeListener(adapter);
   PagerTabStrip tabs=(PagerTabStrip)rootView.findViewById(R.id.tabs);
   tabs.setTabIndicatorColorResource(android.R.color.holo_blue_light);
+  if (container instanceof PreferenceFrameLayout) {
+    ((PreferenceFrameLayout.LayoutParams)rootView.getLayoutParams()).removeBorders=true;
+  }
   if (savedInstanceState != null && savedInstanceState.getBoolean(EXTRA_RESET_DIALOG)) {
     buildResetDialog();
   }

@@ -32,14 +32,14 @@
   getActivity().bindService(containerIntent,mContainerConnection,Context.BIND_AUTO_CREATE);
   mInvalidSizeStr=getActivity().getText(R.string.invalid_size_value);
   mComputingSizeStr=getActivity().getText(R.string.computing_size);
-  TabInfo tab=new TabInfo(this,mApplicationsState,mContainerService,getActivity().getString(R.string.filter_apps_third_party),LIST_TYPE_DOWNLOADED,this,savedInstanceState);
+  TabInfo tab=new TabInfo(this,mApplicationsState,getActivity().getString(R.string.filter_apps_third_party),LIST_TYPE_DOWNLOADED,this,savedInstanceState);
   mTabs.add(tab);
   if (!Environment.isExternalStorageEmulated()) {
-    tab=new TabInfo(this,mApplicationsState,mContainerService,getActivity().getString(R.string.filter_apps_onsdcard),LIST_TYPE_SDCARD,this,savedInstanceState);
+    tab=new TabInfo(this,mApplicationsState,getActivity().getString(R.string.filter_apps_onsdcard),LIST_TYPE_SDCARD,this,savedInstanceState);
     mTabs.add(tab);
   }
-  tab=new TabInfo(this,mApplicationsState,mContainerService,getActivity().getString(R.string.filter_apps_running),LIST_TYPE_RUNNING,this,savedInstanceState);
+  tab=new TabInfo(this,mApplicationsState,getActivity().getString(R.string.filter_apps_running),LIST_TYPE_RUNNING,this,savedInstanceState);
   mTabs.add(tab);
-  tab=new TabInfo(this,mApplicationsState,mContainerService,getActivity().getString(R.string.filter_apps_all),LIST_TYPE_ALL,this,savedInstanceState);
+  tab=new TabInfo(this,mApplicationsState,getActivity().getString(R.string.filter_apps_all),LIST_TYPE_ALL,this,savedInstanceState);
   mTabs.add(tab);
 }

@@ -2,17 +2,15 @@
   if (V)   Log.d(TAG,"Bluetooth service connected");
   mService=(BluetoothHeadset)proxy;
   List<BluetoothDevice> deviceList=mService.getConnectedDevices();
-  if (deviceList.isEmpty()) {
-    mProfileManager.setHfServiceUp(true);
-    return;
+  if (!deviceList.isEmpty()) {
+    BluetoothDevice firstDevice=deviceList.get(0);
+    CachedBluetoothDevice device=mDeviceManager.findDevice(firstDevice);
+    if (device == null) {
+      Log.w(TAG,"HeadsetProfile found new device: " + firstDevice);
+      device=mDeviceManager.addDevice(mLocalAdapter,mProfileManager,firstDevice);
+    }
+    device.onProfileStateChanged(HeadsetProfile.this,BluetoothProfile.STATE_CONNECTED);
   }
-  BluetoothDevice firstDevice=deviceList.get(0);
-  CachedBluetoothDevice device=mDeviceManager.findDevice(firstDevice);
-  if (device == null) {
-    Log.w(TAG,"HeadsetProfile found new device: " + firstDevice);
-    device=mDeviceManager.addDevice(mLocalAdapter,mProfileManager,firstDevice);
-  }
-  device.onProfileStateChanged(HeadsetProfile.this,BluetoothProfile.STATE_CONNECTED);
   mProfileManager.callServiceConnectedListeners();
   mProfileManager.setHfServiceUp(true);
   mIsProfileReady=true;

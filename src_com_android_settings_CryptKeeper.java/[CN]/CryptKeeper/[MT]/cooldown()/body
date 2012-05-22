@@ -3,12 +3,11 @@
   if (mCooldown <= 0) {
     mPasswordEntry.setEnabled(true);
     mIgnoreBack=false;
-    status.setVisibility(View.GONE);
+    status.setText(R.string.enter_password);
   }
  else {
     CharSequence template=getText(R.string.crypt_keeper_cooldown);
     status.setText(TextUtils.expandTemplate(template,Integer.toString(mCooldown)));
-    status.setVisibility(View.VISIBLE);
     mCooldown--;
     mHandler.removeMessages(MESSAGE_COOLDOWN);
     mHandler.sendEmptyMessageDelayed(MESSAGE_COOLDOWN,1000);

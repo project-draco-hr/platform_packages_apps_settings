@@ -5,6 +5,9 @@
       public void onClick(      DialogInterface dialog,      int which){
         AccountManager.get(AccountSyncSettings.this.getActivity()).removeAccount(mAccount,new AccountManagerCallback<Boolean>(){
           public void run(          AccountManagerFuture<Boolean> future){
+            if (!AccountSyncSettings.this.isResumed()) {
+              return;
+            }
             boolean failed=true;
             try {
               if (future.getResult() == true) {

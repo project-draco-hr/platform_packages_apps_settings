@@ -6,4 +6,5 @@
     offerInstallAccessibilitySerivceOnce();
   }
   mSettingsPackageMonitor.register(getActivity(),getActivity().getMainLooper(),false);
+  getActivity().getContentResolver().registerContentObserver(mLockScreenRotationUri,false,mSettingsContentObserver);
 }

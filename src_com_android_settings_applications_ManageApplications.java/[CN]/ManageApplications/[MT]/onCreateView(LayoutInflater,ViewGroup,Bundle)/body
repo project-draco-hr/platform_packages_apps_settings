@@ -15,5 +15,14 @@
   if (savedInstanceState != null && savedInstanceState.getBoolean(EXTRA_RESET_DIALOG)) {
     buildResetDialog();
   }
+  if (savedInstanceState == null) {
+    for (int i=0; i < mTabs.size(); i++) {
+      TabInfo tab=mTabs.get(i);
+      if (tab.mListType == mDefaultListType) {
+        mViewPager.setCurrentItem(i);
+        break;
+      }
+    }
+  }
   return rootView;
 }

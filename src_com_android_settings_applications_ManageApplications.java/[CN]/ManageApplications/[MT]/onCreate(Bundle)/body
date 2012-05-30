@@ -14,7 +14,6 @@
   }
  else   if (className.equals(StorageUseActivity.class.getName()) || Intent.ACTION_MANAGE_PACKAGE_STORAGE.equals(action) || className.endsWith(".StorageUse")) {
     mSortOrder=SORT_ORDER_SIZE;
-    mFilterApps=FILTER_APPS_ALL;
     defaultListType=LIST_TYPE_ALL;
   }
  else   if (Settings.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS.equals(action)) {
@@ -22,7 +21,6 @@
   }
   if (savedInstanceState != null) {
     mSortOrder=savedInstanceState.getInt(EXTRA_SORT_ORDER,mSortOrder);
-    mFilterApps=savedInstanceState.getInt(EXTRA_FILTER_APPS,mFilterApps);
     int tmp=savedInstanceState.getInt(EXTRA_DEFAULT_LIST_TYPE,-1);
     if (tmp != -1)     defaultListType=tmp;
     mShowBackground=savedInstanceState.getBoolean(EXTRA_SHOW_BACKGROUND,false);

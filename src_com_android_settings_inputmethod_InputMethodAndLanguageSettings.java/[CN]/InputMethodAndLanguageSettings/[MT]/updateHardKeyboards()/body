@@ -4,7 +4,7 @@
     final int[] devices=InputDevice.getDeviceIds();
     for (int i=0; i < devices.length; i++) {
       InputDevice device=InputDevice.getDevice(devices[i]);
-      if (device != null && !device.isVirtual() && (device.getSources() & InputDevice.SOURCE_KEYBOARD) != 0 && device.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {
+      if (device != null && !device.isVirtual() && device.isFullKeyboard()) {
         final String inputDeviceDescriptor=device.getDescriptor();
         final String keyboardLayoutDescriptor=mIm.getCurrentKeyboardLayoutForInputDevice(inputDeviceDescriptor);
         final KeyboardLayout keyboardLayout=keyboardLayoutDescriptor != null ? mIm.getKeyboardLayout(keyboardLayoutDescriptor) : null;

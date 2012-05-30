@@ -1,0 +1,11 @@
+{
+  super.onActivityResult(requestCode,resultCode,data);
+  if (requestCode == CONFIRM_EXISTING_FOR_BIOMETRIC_WEAK_LIVELINESS_OFF && resultCode == Activity.RESULT_OK) {
+    final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
+    lockPatternUtils.setBiometricWeakLivelinessEnabled(false);
+    mSuppressCheckChanged=true;
+    mActionBarSwitch.setChecked(false);
+    mSuppressCheckChanged=false;
+    return;
+  }
+}

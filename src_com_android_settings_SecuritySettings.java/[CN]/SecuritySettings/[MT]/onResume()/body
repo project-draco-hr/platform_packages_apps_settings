@@ -3,7 +3,7 @@
   createPreferenceHierarchy();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (mBiometricWeakLiveliness != null) {
-    mBiometricWeakLiveliness.setChecked(lockPatternUtils.isBiometricWeakLivelinessEnabled());
+    mBiometricWeakLiveliness.setSummary(lockPatternUtils.isBiometricWeakLivelinessEnabled() ? R.string.biometric_weak_liveliness_on_summary : R.string.biometric_weak_liveliness_off_summary);
   }
   if (mVisiblePattern != null) {
     mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled());

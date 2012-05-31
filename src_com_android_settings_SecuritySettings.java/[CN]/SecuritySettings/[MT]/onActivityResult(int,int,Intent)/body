@@ -4,11 +4,5 @@
     startBiometricWeakImprove();
     return;
   }
- else   if (requestCode == CONFIRM_EXISTING_FOR_BIOMETRIC_WEAK_LIVELINESS_OFF && resultCode == Activity.RESULT_OK) {
-    final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
-    lockPatternUtils.setBiometricWeakLivelinessEnabled(false);
-    mBiometricWeakLiveliness.setChecked(false);
-    return;
-  }
   createPreferenceHierarchy();
 }

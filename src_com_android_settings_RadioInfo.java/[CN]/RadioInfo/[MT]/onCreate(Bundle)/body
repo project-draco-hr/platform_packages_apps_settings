@@ -16,6 +16,7 @@
   mCfi=(TextView)findViewById(R.id.cfi);
   mLocation=(TextView)findViewById(R.id.location);
   mNeighboringCids=(TextView)findViewById(R.id.neighboring);
+  mCellInfo=(TextView)findViewById(R.id.cellinfo);
   resets=(TextView)findViewById(R.id.resets);
   attempts=(TextView)findViewById(R.id.attempts);
   successes=(TextView)findViewById(R.id.successes);
@@ -64,4 +65,6 @@
   phone.getPreferredNetworkType(mHandler.obtainMessage(EVENT_QUERY_PREFERRED_TYPE_DONE));
   phone.getNeighboringCids(mHandler.obtainMessage(EVENT_QUERY_NEIGHBORING_CIDS_DONE));
   CellLocation.requestLocationUpdate();
+  mCellInfoValue=mTelephonyManager.getAllCellInfo();
+  Log.d(TAG,"[RadioInfo] onCreate: mCellInfoValue=" + mCellInfoValue);
 }

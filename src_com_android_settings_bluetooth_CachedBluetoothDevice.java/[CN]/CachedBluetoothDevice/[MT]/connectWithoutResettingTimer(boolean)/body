@@ -1,9 +1,7 @@
 {
   if (mProfiles.isEmpty()) {
-    if (!updateProfiles()) {
-      if (DEBUG)       Log.d(TAG,"No profiles. Maybe we will connect later");
-      return;
-    }
+    Log.d(TAG,"No profiles. Maybe we will connect later");
+    return;
   }
   mIsConnectingErrorPossible=true;
   int preferredProfiles=0;

@@ -6,7 +6,12 @@
     brightness=(brightness + 1) / 2;
   }
  else {
-    brightness=Settings.System.getInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS,100);
+    if (mCurBrightness < 0) {
+      brightness=Settings.System.getInt(getContext().getContentResolver(),Settings.System.SCREEN_BRIGHTNESS,100);
+    }
+ else {
+      brightness=mCurBrightness;
+    }
     brightness=(brightness - mScreenBrightnessDim) / (MAXIMUM_BACKLIGHT - mScreenBrightnessDim);
   }
   return (int)(brightness * SEEK_BAR_RANGE);

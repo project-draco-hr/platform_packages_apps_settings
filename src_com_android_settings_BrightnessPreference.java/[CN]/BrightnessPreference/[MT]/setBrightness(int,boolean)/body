@@ -25,8 +25,12 @@
         power.setBacklightBrightness(brightness);
       }
       if (write) {
+        mCurBrightness=-1;
         final ContentResolver resolver=getContext().getContentResolver();
         Settings.System.putInt(resolver,Settings.System.SCREEN_BRIGHTNESS,brightness);
+      }
+ else {
+        mCurBrightness=brightness;
       }
     }
  catch (    RemoteException doe) {

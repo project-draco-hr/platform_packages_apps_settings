@@ -4,17 +4,10 @@
   final View view=getView();
   mErrorInfoView=(TextView)view.findViewById(R.id.sync_settings_error_info);
   mErrorInfoView.setVisibility(View.GONE);
-  mAutoSyncSwitch=new Switch(activity);
-  final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
-  mAutoSyncSwitch.setPadding(0,0,padding,0);
-  mAutoSyncSwitch.setChecked(ContentResolver.getMasterSyncAutomatically());
-  mAutoSyncSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
-      ContentResolver.setMasterSyncAutomatically(isChecked);
-      onSyncStateUpdated();
-    }
-  }
-);
   mAuthorities=activity.getIntent().getStringArrayExtra(AUTHORITIES_FILTER_KEY);
+  Bundle args=getArguments();
+  if (args != null && args.containsKey(KEY_ACCOUNT_LABEL)) {
+    getActivity().setTitle(args.getString(KEY_ACCOUNT_LABEL));
+  }
   updateAuthDescriptions();
 }

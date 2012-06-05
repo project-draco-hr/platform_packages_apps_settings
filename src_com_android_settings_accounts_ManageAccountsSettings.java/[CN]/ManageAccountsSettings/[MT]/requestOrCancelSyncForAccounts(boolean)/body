@@ -1,0 +1,23 @@
+{
+  SyncAdapterType[] syncAdapters=ContentResolver.getSyncAdapterTypes();
+  Bundle extras=new Bundle();
+  extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL,true);
+  int count=getPreferenceScreen().getPreferenceCount();
+  for (int i=0; i < count; i++) {
+    Preference pref=getPreferenceScreen().getPreference(i);
+    if (pref instanceof AccountPreference) {
+      Account account=((AccountPreference)pref).getAccount();
+      for (int j=0; j < syncAdapters.length; j++) {
+        SyncAdapterType sa=syncAdapters[j];
+        if (syncAdapters[j].accountType.equals(mAccountType) && ContentResolver.getSyncAutomatically(account,sa.authority)) {
+          if (sync) {
+            ContentResolver.requestSync(account,sa.authority,extras);
+          }
+ else {
+            ContentResolver.cancelSync(account,sa.authority);
+          }
+        }
+      }
+    }
+  }
+}

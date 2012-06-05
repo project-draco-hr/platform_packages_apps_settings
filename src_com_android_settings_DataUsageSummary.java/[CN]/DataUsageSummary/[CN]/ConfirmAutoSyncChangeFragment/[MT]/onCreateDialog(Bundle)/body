@@ -1,0 +1,20 @@
+{
+  final Context context=getActivity();
+  final AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  if (!mEnabling) {
+    builder.setTitle(R.string.data_usage_auto_sync_off_dialog_title);
+    builder.setMessage(R.string.data_usage_auto_sync_off_dialog);
+  }
+ else {
+    builder.setTitle(R.string.data_usage_auto_sync_on_dialog_title);
+    builder.setMessage(R.string.data_usage_auto_sync_on_dialog);
+  }
+  builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      ContentResolver.setMasterSyncAutomatically(mEnabling);
+    }
+  }
+);
+  builder.setNegativeButton(android.R.string.cancel,null);
+  return builder.create();
+}

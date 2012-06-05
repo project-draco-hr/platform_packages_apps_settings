@@ -42,7 +42,18 @@ mWifiEnabler.setSwitch(holder.switch_);
 mBluetoothEnabler.setSwitch(holder.switch_);
 }
 case HEADER_TYPE_NORMAL:
+if (header.extras != null && header.extras.containsKey(ManageAccountsSettings.KEY_ACCOUNT_TYPE)) {
+String accType=header.extras.getString(ManageAccountsSettings.KEY_ACCOUNT_TYPE);
+ViewGroup.LayoutParams lp=holder.icon.getLayoutParams();
+lp.width=getContext().getResources().getDimensionPixelSize(R.dimen.header_icon_width);
+lp.height=lp.width;
+holder.icon.setLayoutParams(lp);
+Drawable icon=mAuthHelper.getDrawableForType(getContext(),accType);
+holder.icon.setImageDrawable(icon);
+}
+ else {
 holder.icon.setImageResource(header.iconRes);
+}
 holder.title.setText(header.getTitle(getContext().getResources()));
 CharSequence summary=header.getSummary(getContext().getResources());
 if (!TextUtils.isEmpty(summary)) {

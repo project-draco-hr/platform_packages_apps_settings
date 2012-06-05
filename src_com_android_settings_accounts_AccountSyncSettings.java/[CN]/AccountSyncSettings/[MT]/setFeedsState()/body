@@ -25,10 +25,16 @@
       Log.d(TAG,"Update sync status: " + account + " "+ authority+ " active = "+ activelySyncing+ " pend ="+ authorityIsPending);
     }
     final long successEndTime=(status == null) ? 0 : status.lastSuccessTime;
-    if (successEndTime != 0) {
+    if (!syncEnabled) {
+      syncPref.setSummary(R.string.sync_disabled);
+    }
+ else     if (activelySyncing) {
+      syncPref.setSummary(R.string.sync_in_progress);
+    }
+ else     if (successEndTime != 0) {
       date.setTime(successEndTime);
-      final String timeString=mDateFormat.format(date) + " " + mTimeFormat.format(date);
-      syncPref.setSummary(timeString);
+      final String timeString=formatSyncDate(date);
+      syncPref.setSummary(getResources().getString(R.string.last_synced,timeString));
     }
  else {
       syncPref.setSummary("");

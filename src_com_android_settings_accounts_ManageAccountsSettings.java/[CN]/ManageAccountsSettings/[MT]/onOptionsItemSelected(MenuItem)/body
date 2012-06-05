@@ -1,10 +1,11 @@
 {
-  final int itemId=item.getItemId();
-  if (itemId == MENU_ADD_ACCOUNT) {
-    onAddAccountClicked();
-    return true;
-  }
- else {
-    return super.onOptionsItemSelected(item);
-  }
+switch (item.getItemId()) {
+case MENU_SYNC_NOW_ID:
+    requestOrCancelSyncForAccounts(true);
+  return true;
+case MENU_SYNC_CANCEL_ID:
+requestOrCancelSyncForAccounts(false);
+return true;
+}
+return super.onOptionsItemSelected(item);
 }

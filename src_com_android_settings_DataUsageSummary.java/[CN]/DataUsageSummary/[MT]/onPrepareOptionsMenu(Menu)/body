@@ -7,6 +7,8 @@
   mMenuRestrictBackground=menu.findItem(R.id.data_usage_menu_restrict_background);
   mMenuRestrictBackground.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
   mMenuRestrictBackground.setChecked(mPolicyManager.getRestrictBackground());
+  mMenuAutoSync=menu.findItem(R.id.data_usage_menu_auto_sync);
+  mMenuAutoSync.setChecked(ContentResolver.getMasterSyncAutomatically());
   final MenuItem split4g=menu.findItem(R.id.data_usage_menu_split_4g);
   split4g.setVisible(hasReadyMobile4gRadio(context) && !appDetailMode);
   split4g.setChecked(isMobilePolicySplit());

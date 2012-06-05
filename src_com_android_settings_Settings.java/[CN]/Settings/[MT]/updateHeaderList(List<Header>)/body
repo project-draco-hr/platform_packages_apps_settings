@@ -29,6 +29,10 @@
  catch (      RemoteException e) {
       }
     }
+ else     if (id == R.id.account_settings) {
+      int headerIndex=i + 1;
+      i=insertAccountsHeaders(target,headerIndex);
+    }
  else     if (id == R.id.user_settings) {
       if (!mEnableUserManagement || !UserId.MU_ENABLED || UserId.myUserId() != 0 || !getResources().getBoolean(R.bool.enable_user_management) || Utils.isMonkeyRunning()) {
         target.remove(header);

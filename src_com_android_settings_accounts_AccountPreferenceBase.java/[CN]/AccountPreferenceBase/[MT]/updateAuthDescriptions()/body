@@ -1,7 +1,4 @@
 {
-  mAuthDescs=AccountManager.get(getActivity()).getAuthenticatorTypes();
-  for (int i=0; i < mAuthDescs.length; i++) {
-    mTypeToAuthDescription.put(mAuthDescs[i].type,mAuthDescs[i]);
-  }
+  mAuthenticatorHelper.updateAuthDescriptions(getActivity());
   onAuthDescriptionsUpdated();
 }

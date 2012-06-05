@@ -1,0 +1,17 @@
+{
+  PackageManager pm=getActivity().getPackageManager();
+  for (int i=0; i < prefs.getPreferenceCount(); ) {
+    Intent intent=prefs.getPreference(i).getIntent();
+    if (intent != null) {
+      ResolveInfo ri=pm.resolveActivity(intent,PackageManager.MATCH_DEFAULT_ONLY);
+      if (ri == null) {
+        prefs.removePreference(prefs.getPreference(i));
+        continue;
+      }
+ else {
+        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+      }
+    }
+    i++;
+  }
+}

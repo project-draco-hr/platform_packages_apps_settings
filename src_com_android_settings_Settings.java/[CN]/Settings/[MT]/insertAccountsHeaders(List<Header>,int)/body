@@ -1,0 +1,32 @@
+{
+  String[] accountTypes=mAuthenticatorHelper.getEnabledAccountTypes();
+  List<Header> accountHeaders=new ArrayList<Header>(accountTypes.length);
+  for (  String accountType : accountTypes) {
+    CharSequence label=mAuthenticatorHelper.getLabelForType(this,accountType);
+    Header accHeader=new Header();
+    accHeader.title=label;
+    if (accHeader.extras == null) {
+      accHeader.extras=new Bundle();
+    }
+    accHeader.extras.putString(ManageAccountsSettings.KEY_ACCOUNT_TYPE,accountType);
+    accHeader.breadCrumbTitle=label;
+    accHeader.breadCrumbShortTitle=label;
+    accHeader.fragment=ManageAccountsSettings.class.getName();
+    accHeader.fragmentArguments=new Bundle();
+    accHeader.fragmentArguments.putString(ManageAccountsSettings.KEY_ACCOUNT_TYPE,accountType);
+    if (!isMultiPane()) {
+      accHeader.fragmentArguments.putString(ManageAccountsSettings.KEY_ACCOUNT_LABEL,label.toString());
+    }
+    accountHeaders.add(accHeader);
+  }
+  Collections.sort(accountHeaders,new Comparator<Header>(){
+    @Override public int compare(    Header h1,    Header h2){
+      return h1.title.toString().compareTo(h2.title.toString());
+    }
+  }
+);
+  for (  Header header : accountHeaders) {
+    target.add(headerIndex++,header);
+  }
+  return headerIndex;
+}

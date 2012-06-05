@@ -1,7 +1,9 @@
 {
   for (int i=0; i < getPreferenceScreen().getPreferenceCount(); i++) {
-    AccountPreference pref=(AccountPreference)getPreferenceScreen().getPreference(i);
-    pref.setProviderIcon(getDrawableForType(pref.getAccount().type));
-    pref.setSummary(getLabelForType(pref.getAccount().type));
+    Preference pref=getPreferenceScreen().getPreference(i);
+    if (pref instanceof AccountPreference) {
+      AccountPreference accPref=(AccountPreference)pref;
+      accPref.setSummary(getLabelForType(accPref.getAccount().type));
+    }
   }
 }

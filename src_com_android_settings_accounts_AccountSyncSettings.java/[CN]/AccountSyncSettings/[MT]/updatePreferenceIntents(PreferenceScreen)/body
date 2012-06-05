@@ -1,9 +1,0 @@
-{
-  for (int i=0; i < prefs.getPreferenceCount(); i++) {
-    Intent intent=prefs.getPreference(i).getIntent();
-    if (intent != null) {
-      intent.putExtra(ACCOUNT_KEY,mAccount);
-      intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
-    }
-  }
-}

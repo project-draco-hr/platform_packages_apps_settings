@@ -1,0 +1,13 @@
+{
+  boolean revert=false;
+  if (header.id == R.id.account_add) {
+    revert=true;
+  }
+  super.onHeaderClick(header,position);
+  if (revert && mLastHeader != null) {
+    highlightHeader((int)mLastHeader.id);
+  }
+ else {
+    mLastHeader=header;
+  }
+}

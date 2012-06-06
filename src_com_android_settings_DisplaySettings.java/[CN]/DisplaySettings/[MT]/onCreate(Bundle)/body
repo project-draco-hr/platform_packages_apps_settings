@@ -4,6 +4,9 @@
   addPreferencesFromResource(R.xml.display_settings);
   mAccelerometer=(CheckBoxPreference)findPreference(KEY_ACCELEROMETER);
   mAccelerometer.setPersistent(false);
+  if (RotationPolicy.isRotationLockToggleSupported(getActivity())) {
+    getPreferenceScreen().removePreference(mAccelerometer);
+  }
   mScreenSaverPreference=findPreference(KEY_SCREEN_SAVER);
   if (mScreenSaverPreference != null && getResources().getBoolean(com.android.internal.R.bool.config_enableDreams) == false) {
     getPreferenceScreen().removePreference(mScreenSaverPreference);

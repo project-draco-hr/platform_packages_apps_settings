@@ -1,5 +1,5 @@
 {
   mSettingsPackageMonitor.unregister();
-  getContentResolver().unregisterContentObserver(mSettingsContentObserver);
+  RotationPolicy.unregisterRotationPolicyListener(getActivity(),mRotationPolicyListener);
   super.onPause();
 }

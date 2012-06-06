@@ -1,5 +1,5 @@
 {
   super.onResume();
   updateState();
-  getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.ACCELEROMETER_ROTATION),true,mAccelerometerRotationObserver);
+  RotationPolicy.registerRotationPolicyListener(getActivity(),mRotationPolicyListener);
 }

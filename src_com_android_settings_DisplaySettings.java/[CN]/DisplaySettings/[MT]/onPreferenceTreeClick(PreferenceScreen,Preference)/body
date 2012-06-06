@@ -1,17 +1,6 @@
 {
   if (preference == mAccelerometer) {
-    try {
-      IWindowManager wm=IWindowManager.Stub.asInterface(ServiceManager.getService(Context.WINDOW_SERVICE));
-      if (mAccelerometer.isChecked()) {
-        wm.thawRotation();
-      }
- else {
-        wm.freezeRotation(Surface.ROTATION_0);
-      }
-    }
- catch (    RemoteException exc) {
-      Log.w(TAG,"Unable to save auto-rotate setting");
-    }
+    RotationPolicy.setRotationLockForAccessibility(getActivity(),!mAccelerometer.isChecked());
   }
  else   if (preference == mNotificationPulse) {
     boolean value=mNotificationPulse.isChecked();

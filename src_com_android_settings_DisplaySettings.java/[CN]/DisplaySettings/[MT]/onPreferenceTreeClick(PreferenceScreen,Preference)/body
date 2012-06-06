@@ -1,8 +1,8 @@
 {
-  if (preference == mRotationLock) {
+  if (preference == mAccelerometer) {
     try {
       IWindowManager wm=IWindowManager.Stub.asInterface(ServiceManager.getService(Context.WINDOW_SERVICE));
-      if (!mRotationLock.isChecked()) {
+      if (mAccelerometer.isChecked()) {
         wm.thawRotation();
       }
  else {

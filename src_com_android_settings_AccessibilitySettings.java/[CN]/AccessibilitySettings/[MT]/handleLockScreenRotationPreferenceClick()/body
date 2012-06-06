@@ -1,14 +1,3 @@
 {
-  try {
-    IWindowManager wm=IWindowManager.Stub.asInterface(ServiceManager.getService(Context.WINDOW_SERVICE));
-    if (!mToggleLockScreenRotationPreference.isChecked()) {
-      wm.thawRotation();
-    }
- else {
-      wm.freezeRotation(Surface.ROTATION_0);
-    }
-  }
- catch (  RemoteException exc) {
-    Log.w(TAG,"Unable to save auto-rotate setting");
-  }
+  RotationPolicy.setRotationLockForAccessibility(getActivity(),!mToggleLockScreenRotationPreference.isChecked());
 }

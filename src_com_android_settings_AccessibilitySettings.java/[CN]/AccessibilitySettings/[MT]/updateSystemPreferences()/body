@@ -10,8 +10,7 @@
     final boolean powerButtonEndsCall=(incallPowerBehavior == Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP);
     mTogglePowerButtonEndsCallPreference.setChecked(powerButtonEndsCall);
   }
-  final boolean lockRotationEnabled=Settings.System.getInt(getContentResolver(),Settings.System.ACCELEROMETER_ROTATION,0) != 1;
-  mToggleLockScreenRotationPreference.setChecked(lockRotationEnabled);
+  updateLockScreenRotationCheckbox();
   final boolean speakPasswordEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SPEAK_PASSWORD,0) != 0;
   mToggleSpeakPasswordPreference.setChecked(speakPasswordEnabled);
   final int longPressTimeout=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,mLongPressTimeoutDefault);

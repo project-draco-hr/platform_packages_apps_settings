@@ -1,0 +1,10 @@
+{
+  for (int i=0; i < getPreferenceScreen().getPreferenceCount(); i++) {
+    Preference pref=getPreferenceScreen().getPreference(i);
+    if (pref instanceof AccountPreference) {
+      AccountPreference accPref=(AccountPreference)getPreferenceScreen().getPreference(i);
+      accPref.setIcon(getDrawableForType(accPref.getAccount().type));
+      accPref.setSummary(getLabelForType(accPref.getAccount().type));
+    }
+  }
+}

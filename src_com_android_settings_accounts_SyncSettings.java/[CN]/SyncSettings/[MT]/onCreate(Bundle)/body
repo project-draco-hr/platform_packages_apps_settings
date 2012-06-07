@@ -1,0 +1,13 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.sync_settings);
+  mAutoSyncPreference=(CheckBoxPreference)getPreferenceScreen().findPreference(KEY_SYNC_SWITCH);
+  mAutoSyncPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      ContentResolver.setMasterSyncAutomatically((Boolean)newValue);
+      return true;
+    }
+  }
+);
+  setHasOptionsMenu(true);
+}

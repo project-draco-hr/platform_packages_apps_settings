@@ -1,7 +1,8 @@
 {
   super.onBindView(view);
-  setSummary(getSyncStatusMessage(mStatus));
-  ImageView iconView=(ImageView)view.findViewById(android.R.id.icon);
-  iconView.setImageResource(getSyncStatusIcon(mStatus));
-  iconView.setContentDescription(getSyncContentDescription(mStatus));
+  if (!mShowTypeIcon) {
+    mSyncStatusIcon=(ImageView)view.findViewById(android.R.id.icon);
+    mSyncStatusIcon.setImageResource(getSyncStatusIcon(mStatus));
+    mSyncStatusIcon.setContentDescription(getSyncContentDescription(mStatus));
+  }
 }

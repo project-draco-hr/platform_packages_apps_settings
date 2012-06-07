@@ -1,0 +1,7 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  final Activity activity=getActivity();
+  mAutoSyncPreference.setChecked(ContentResolver.getMasterSyncAutomatically());
+  mAuthorities=activity.getIntent().getStringArrayExtra(AUTHORITIES_FILTER_KEY);
+  updateAuthDescriptions();
+}

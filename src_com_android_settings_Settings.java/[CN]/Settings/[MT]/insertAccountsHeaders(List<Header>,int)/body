@@ -28,5 +28,9 @@
   for (  Header header : accountHeaders) {
     target.add(headerIndex++,header);
   }
+  if (!mListeningToAccountUpdates) {
+    AccountManager.get(this).addOnAccountsUpdatedListener(this,null,true);
+    mListeningToAccountUpdates=true;
+  }
   return headerIndex;
 }

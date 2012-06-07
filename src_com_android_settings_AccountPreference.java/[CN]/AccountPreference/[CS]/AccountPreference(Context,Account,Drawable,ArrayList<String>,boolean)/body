@@ -1,0 +1,16 @@
+{
+  super(context);
+  mAccount=account;
+  mAuthorities=authorities;
+  mShowTypeIcon=showTypeIcon;
+  if (showTypeIcon) {
+    setIcon(icon);
+  }
+ else {
+    setIcon(getSyncStatusIcon(SYNC_DISABLED));
+  }
+  setTitle(mAccount.name);
+  setSummary("");
+  setPersistent(false);
+  setSyncStatus(SYNC_DISABLED,false);
+}

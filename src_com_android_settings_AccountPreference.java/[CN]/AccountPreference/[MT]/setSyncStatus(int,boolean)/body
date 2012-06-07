@@ -1,0 +1,10 @@
+{
+  mStatus=status;
+  if (!mShowTypeIcon && mSyncStatusIcon != null) {
+    mSyncStatusIcon.setImageResource(getSyncStatusIcon(status));
+    mSyncStatusIcon.setContentDescription(getSyncContentDescription(mStatus));
+  }
+  if (updateSummary) {
+    setSummary(getSyncStatusMessage(status));
+  }
+}

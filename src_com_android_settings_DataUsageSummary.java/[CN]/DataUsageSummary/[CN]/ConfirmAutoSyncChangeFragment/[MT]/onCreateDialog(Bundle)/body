@@ -1,5 +1,8 @@
 {
   final Context context=getActivity();
+  if (savedInstanceState != null) {
+    mEnabling=savedInstanceState.getBoolean(SAVE_ENABLING);
+  }
   final AlertDialog.Builder builder=new AlertDialog.Builder(context);
   if (!mEnabling) {
     builder.setTitle(R.string.data_usage_auto_sync_off_dialog_title);

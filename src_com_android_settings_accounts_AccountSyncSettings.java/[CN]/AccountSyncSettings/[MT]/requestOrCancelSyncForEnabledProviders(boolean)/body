@@ -12,8 +12,10 @@
     requestOrCancelSync(syncPref.getAccount(),syncPref.getAuthority(),startSync);
   }
   if (mAccount != null) {
-    for (    String authority : mInvisibleAdapters) {
-      requestOrCancelSync(mAccount,authority,startSync);
+    for (    SyncAdapterType syncAdapter : mInvisibleAdapters) {
+      if (syncAdapter.accountType.equals(mAccount.type)) {
+        requestOrCancelSync(mAccount,syncAdapter.authority,startSync);
+      }
     }
   }
 }

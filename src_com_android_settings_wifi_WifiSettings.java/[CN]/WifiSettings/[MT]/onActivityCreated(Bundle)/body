@@ -54,8 +54,8 @@
     }
   }
   addPreferencesFromResource(R.xml.wifi_settings);
-  if (intent.getBooleanExtra(EXTRA_WIFI_DISABLE_BACK,false)) {
-    getView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_BACK);
+  if (mSetupWizardMode) {
+    getView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_BACK | View.STATUS_BAR_DISABLE_HOME | View.STATUS_BAR_DISABLE_RECENT| View.STATUS_BAR_DISABLE_NOTIFICATION_ALERTS| View.STATUS_BAR_DISABLE_CLOCK);
   }
   if (!mSetupWizardMode) {
     Switch actionBarSwitch=new Switch(activity);

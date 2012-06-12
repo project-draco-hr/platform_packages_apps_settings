@@ -7,7 +7,9 @@
  else {
     addMsg("Starting activity to enable bt + discovery");
     i.setAction(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-    i.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,20);
+    int timeout=(mDiscoveryWithTimeout ? 20 : 0);
+    i.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,timeout);
+    mDiscoveryWithTimeout=!mDiscoveryWithTimeout;
   }
   startActivityForResult(i,1);
 }

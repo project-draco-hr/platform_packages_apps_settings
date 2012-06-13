@@ -23,4 +23,17 @@
     mFormatPreference.setTitle(R.string.sd_format);
     mFormatPreference.setSummary(R.string.sd_format_summary);
   }
+  final IPackageManager pm=ActivityThread.getPackageManager();
+  try {
+    if (pm.isStorageLow()) {
+      mStorageLow=new Preference(getContext());
+      mStorageLow.setTitle(R.string.storage_low_title);
+      mStorageLow.setSummary(R.string.storage_low_summary);
+    }
+ else {
+      mStorageLow=null;
+    }
+  }
+ catch (  RemoteException e) {
+  }
 }

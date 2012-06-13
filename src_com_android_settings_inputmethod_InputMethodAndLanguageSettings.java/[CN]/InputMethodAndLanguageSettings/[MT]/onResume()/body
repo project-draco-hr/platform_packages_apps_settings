@@ -4,10 +4,17 @@
   if (!mIsOnlyImeSettings) {
     if (mLanguagePref != null) {
       Configuration conf=getResources().getConfiguration();
-      String locale=conf.locale.getDisplayName(conf.locale);
-      if (locale != null && locale.length() > 1) {
-        locale=Character.toUpperCase(locale.charAt(0)) + locale.substring(1);
-        mLanguagePref.setSummary(locale);
+      String language=conf.locale.getLanguage();
+      String localeString;
+      if (hasOnlyOneLanguageInstance(language,Resources.getSystem().getAssets().getLocales())) {
+        localeString=conf.locale.getDisplayLanguage(conf.locale);
+      }
+ else {
+        localeString=conf.locale.getDisplayName(conf.locale);
+      }
+      if (localeString.length() > 1) {
+        localeString=Character.toUpperCase(localeString.charAt(0)) + localeString.substring(1);
+        mLanguagePref.setSummary(localeString);
       }
     }
     updateUserDictionaryPreference(findPreference(KEY_USER_DICTIONARY_SETTINGS));

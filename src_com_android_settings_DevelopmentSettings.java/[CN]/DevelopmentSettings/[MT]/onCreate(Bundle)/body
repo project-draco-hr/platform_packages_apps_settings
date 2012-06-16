@@ -2,6 +2,7 @@
   super.onCreate(icicle);
   mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
   mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
+  mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   addPreferencesFromResource(R.xml.development_prefs);
   mEnableAdb=findAndInitCheckboxPref(ENABLE_ADB);
   mKeepScreenOn=findAndInitCheckboxPref(KEEP_SCREEN_ON);

@@ -1,5 +1,11 @@
 {
   super.onResume();
+  if (mDpm.getMaximumTimeToLock(null) > 0) {
+    mDisabledPrefs.add(mKeepScreenOn);
+  }
+ else {
+    mDisabledPrefs.remove(mKeepScreenOn);
+  }
   final ContentResolver cr=getActivity().getContentResolver();
   mLastEnabledState=Settings.Secure.getInt(cr,Settings.Secure.DEVELOPMENT_SETTINGS_ENABLED,0) != 0;
   mEnabledSwitch.setChecked(mLastEnabledState);

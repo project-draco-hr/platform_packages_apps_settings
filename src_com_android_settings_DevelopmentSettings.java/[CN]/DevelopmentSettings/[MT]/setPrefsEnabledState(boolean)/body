@@ -1,6 +1,7 @@
 {
   for (int i=0; i < mAllPrefs.size(); i++) {
-    mAllPrefs.get(i).setEnabled(enabled);
+    Preference pref=mAllPrefs.get(i);
+    pref.setEnabled(enabled && !mDisabledPrefs.contains(pref));
   }
   updateAllOptions();
 }

@@ -1,9 +1,8 @@
 {
-  if (mHeaders == null) {
-    mHeaders=new ArrayList<Header>();
-    for (int i=0; i < adapter.getCount(); i++) {
-      mHeaders.add((Header)adapter.getItem(i));
-    }
+  if (adapter == null) {
+    super.setListAdapter(null);
   }
-  super.setListAdapter(new HeaderAdapter(this,mHeaders,mAuthenticatorHelper));
+ else {
+    super.setListAdapter(new HeaderAdapter(this,getHeaders(),mAuthenticatorHelper));
+  }
 }

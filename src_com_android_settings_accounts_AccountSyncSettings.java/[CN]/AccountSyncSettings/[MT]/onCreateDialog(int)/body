@@ -20,7 +20,7 @@ catch (            IOException e) {
             }
 catch (            AuthenticatorException e) {
             }
-            if (failed) {
+            if (failed && getActivity() != null && !getActivity().isFinishing()) {
               showDialog(FAILED_REMOVAL_DIALOG);
             }
  else {

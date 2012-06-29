@@ -6,7 +6,7 @@
     mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,timeout);
     updateCountdownSummary();
     Log.d(TAG,"setEnabled(): enabled = " + enable + "timeout = "+ timeout);
-    if (0 < timeout) {
+    if (timeout > 0) {
       BluetoothDiscoverableTimeoutReceiver.setDiscoverableAlarm(mContext,endTimestamp);
     }
   }

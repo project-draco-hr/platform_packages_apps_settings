@@ -1,7 +1,6 @@
 {
   mP2pSupported=getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI_DIRECT);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-  mChannel=mWifiManager.initialize(getActivity(),getActivity().getMainLooper(),null);
   mConnectListener=new WifiManager.ActionListener(){
     public void onSuccess(){
     }

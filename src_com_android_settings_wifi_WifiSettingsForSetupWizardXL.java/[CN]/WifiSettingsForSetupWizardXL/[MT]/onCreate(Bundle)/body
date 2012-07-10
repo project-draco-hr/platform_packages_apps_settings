@@ -3,7 +3,6 @@
   requestWindowFeature(Window.FEATURE_NO_TITLE);
   setContentView(R.layout.wifi_settings_for_setup_wizard_xl);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-  mChannel=mWifiManager.initialize(this,getMainLooper(),null);
   mWifiManager.setWifiEnabled(true);
   mWifiSettings=(WifiSettings)getFragmentManager().findFragmentById(R.id.wifi_setup_fragment);
   mInputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

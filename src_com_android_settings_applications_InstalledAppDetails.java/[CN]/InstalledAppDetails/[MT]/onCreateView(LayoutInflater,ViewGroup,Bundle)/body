@@ -6,6 +6,10 @@
   mDataSize=(TextView)view.findViewById(R.id.data_size_text);
   mExternalCodeSize=(TextView)view.findViewById(R.id.external_code_size_text);
   mExternalDataSize=(TextView)view.findViewById(R.id.external_data_size_text);
+  if (Environment.isExternalStorageEmulated()) {
+    ((View)mExternalCodeSize.getParent()).setVisibility(View.GONE);
+    ((View)mExternalDataSize.getParent()).setVisibility(View.GONE);
+  }
   View btnPanel=view.findViewById(R.id.control_buttons_panel);
   mForceStopButton=(Button)btnPanel.findViewById(R.id.left_button);
   mForceStopButton.setText(R.string.force_stop);

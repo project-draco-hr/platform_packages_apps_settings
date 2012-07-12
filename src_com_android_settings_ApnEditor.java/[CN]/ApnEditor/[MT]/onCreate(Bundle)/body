@@ -21,7 +21,7 @@
   mProtocol.setOnPreferenceChangeListener(this);
   mRoamingProtocol=(ListPreference)findPreference(KEY_ROAMING_PROTOCOL);
   TelephonyManager tm=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-  if (tm.getCurrentPhoneType() == Phone.PHONE_TYPE_CDMA) {
+  if (tm.getCurrentPhoneType() == PhoneConstants.PHONE_TYPE_CDMA) {
     mRoamingProtocol.setOnPreferenceChangeListener(this);
   }
  else {

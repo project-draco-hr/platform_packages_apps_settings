@@ -8,6 +8,6 @@
   final ConnectivityManager conn=ConnectivityManager.from(context);
   final TelephonyManager tele=TelephonyManager.from(context);
   final boolean hasWimax=conn.isNetworkSupported(TYPE_WIMAX);
-  final boolean hasLte=(tele.getLteOnCdmaMode() == Phone.LTE_ON_CDMA_TRUE) && hasReadyMobileRadio(context);
+  final boolean hasLte=(tele.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE) && hasReadyMobileRadio(context);
   return hasWimax || hasLte;
 }

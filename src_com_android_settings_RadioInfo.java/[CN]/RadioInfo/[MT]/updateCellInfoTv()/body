@@ -1,0 +1,16 @@
+{
+  StringBuilder value=new StringBuilder();
+  if (mCellInfoValue != null) {
+    int index=0;
+    for (    CellInfo ci : mCellInfoValue) {
+      value.append('[');
+      value.append(index);
+      value.append("]=");
+      value.append(ci.toString());
+      if (++index < mCellInfoValue.size()) {
+        value.append("\n");
+      }
+    }
+  }
+  mCellInfo.setText(value.toString());
+}

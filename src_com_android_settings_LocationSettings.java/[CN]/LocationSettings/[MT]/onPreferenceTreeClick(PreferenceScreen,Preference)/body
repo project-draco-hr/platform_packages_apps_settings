@@ -1,16 +1,17 @@
 {
+  final ContentResolver cr=getContentResolver();
   if (preference == mNetwork) {
-    Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.NETWORK_PROVIDER,mNetwork.isChecked());
+    Settings.Secure.setLocationProviderEnabled(cr,LocationManager.NETWORK_PROVIDER,mNetwork.isChecked());
   }
  else   if (preference == mGps) {
     boolean enabled=mGps.isChecked();
-    Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.GPS_PROVIDER,enabled);
+    Settings.Secure.setLocationProviderEnabled(cr,LocationManager.GPS_PROVIDER,enabled);
     if (mAssistedGps != null) {
       mAssistedGps.setEnabled(enabled);
     }
   }
  else   if (preference == mAssistedGps) {
-    Settings.Secure.putInt(getContentResolver(),Settings.Secure.ASSISTED_GPS_ENABLED,mAssistedGps.isChecked() ? 1 : 0);
+    Settings.Secure.putInt(cr,Settings.Secure.ASSISTED_GPS_ENABLED,mAssistedGps.isChecked() ? 1 : 0);
   }
  else {
     return super.onPreferenceTreeClick(preferenceScreen,preference);

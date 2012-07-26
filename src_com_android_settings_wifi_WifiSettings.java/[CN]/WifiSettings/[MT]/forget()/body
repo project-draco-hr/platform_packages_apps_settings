@@ -3,7 +3,7 @@
     Log.e(TAG,"Failed to forget invalid network " + mSelectedAccessPoint.getConfig());
     return;
   }
-  mWifiManager.forget(mChannel,mSelectedAccessPoint.networkId,mForgetListener);
+  mWifiManager.forget(mSelectedAccessPoint.networkId,mForgetListener);
   if (mWifiManager.isWifiEnabled()) {
     mScanner.resume();
   }

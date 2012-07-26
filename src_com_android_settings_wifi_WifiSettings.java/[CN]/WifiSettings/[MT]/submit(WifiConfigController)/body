@@ -2,20 +2,20 @@
   final WifiConfiguration config=configController.getConfig();
   if (config == null) {
     if (mSelectedAccessPoint != null && !requireKeyStore(mSelectedAccessPoint.getConfig()) && mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
-      mWifiManager.connect(mChannel,mSelectedAccessPoint.networkId,mConnectListener);
+      mWifiManager.connect(mSelectedAccessPoint.networkId,mConnectListener);
     }
   }
  else   if (config.networkId != INVALID_NETWORK_ID) {
     if (mSelectedAccessPoint != null) {
-      mWifiManager.save(mChannel,config,mSaveListener);
+      mWifiManager.save(config,mSaveListener);
     }
   }
  else {
     if (configController.isEdit() || requireKeyStore(config)) {
-      mWifiManager.save(mChannel,config,mSaveListener);
+      mWifiManager.save(config,mSaveListener);
     }
  else {
-      mWifiManager.connect(mChannel,config,mConnectListener);
+      mWifiManager.connect(config,mConnectListener);
     }
   }
   if (mWifiManager.isWifiEnabled()) {

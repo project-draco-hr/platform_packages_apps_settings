@@ -7,12 +7,12 @@ case MENU_ID_CONNECT:
 {
       if (mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
         if (!requireKeyStore(mSelectedAccessPoint.getConfig())) {
-          mWifiManager.connect(mChannel,mSelectedAccessPoint.networkId,mConnectListener);
+          mWifiManager.connect(mSelectedAccessPoint.networkId,mConnectListener);
         }
       }
  else       if (mSelectedAccessPoint.security == AccessPoint.SECURITY_NONE) {
         mSelectedAccessPoint.generateOpenNetworkConfig();
-        mWifiManager.connect(mChannel,mSelectedAccessPoint.getConfig(),mConnectListener);
+        mWifiManager.connect(mSelectedAccessPoint.getConfig(),mConnectListener);
       }
  else {
         showDialog(mSelectedAccessPoint,true);
@@ -21,7 +21,7 @@ case MENU_ID_CONNECT:
     }
 case MENU_ID_FORGET:
 {
-    mWifiManager.forget(mChannel,mSelectedAccessPoint.networkId,mForgetListener);
+    mWifiManager.forget(mSelectedAccessPoint.networkId,mForgetListener);
     return true;
   }
 case MENU_ID_MODIFY:

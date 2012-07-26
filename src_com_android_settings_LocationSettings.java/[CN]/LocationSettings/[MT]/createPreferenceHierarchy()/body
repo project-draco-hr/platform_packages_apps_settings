@@ -5,19 +5,10 @@
   }
   addPreferencesFromResource(R.xml.location_settings);
   root=getPreferenceScreen();
+  mLocationAccess=(SwitchPreference)root.findPreference(KEY_LOCATION_TOGGLE);
   mNetwork=(CheckBoxPreference)root.findPreference(KEY_LOCATION_NETWORK);
   mGps=(CheckBoxPreference)root.findPreference(KEY_LOCATION_GPS);
   mAssistedGps=(CheckBoxPreference)root.findPreference(KEY_ASSISTED_GPS);
-  if (GoogleLocationSettingHelper.isAvailable(getActivity())) {
-    CheckBoxPreference useLocation=new CheckBoxPreference(getActivity());
-    useLocation.setKey(KEY_USE_LOCATION);
-    useLocation.setTitle(R.string.use_location_title);
-    useLocation.setSummary(R.string.use_location_summary);
-    useLocation.setChecked(GoogleLocationSettingHelper.getUseLocationForServices(getActivity()) == GoogleLocationSettingHelper.USE_LOCATION_FOR_SERVICES_ON);
-    useLocation.setPersistent(false);
-    useLocation.setOnPreferenceChangeListener(this);
-    getPreferenceScreen().addPreference(useLocation);
-    mUseLocation=useLocation;
-  }
+  mLocationAccess.setOnPreferenceChangeListener(this);
   return root;
 }

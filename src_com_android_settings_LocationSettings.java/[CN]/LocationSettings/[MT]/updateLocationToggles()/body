@@ -1,8 +1,10 @@
 {
   ContentResolver res=getContentResolver();
   boolean gpsEnabled=Settings.Secure.isLocationProviderEnabled(res,LocationManager.GPS_PROVIDER);
-  mNetwork.setChecked(Settings.Secure.isLocationProviderEnabled(res,LocationManager.NETWORK_PROVIDER));
+  boolean networkEnabled=Settings.Secure.isLocationProviderEnabled(res,LocationManager.NETWORK_PROVIDER);
   mGps.setChecked(gpsEnabled);
+  mNetwork.setChecked(networkEnabled);
+  mLocationAccess.setChecked(gpsEnabled || networkEnabled);
   if (mAssistedGps != null) {
     mAssistedGps.setChecked(Settings.Secure.getInt(res,Settings.Secure.ASSISTED_GPS_ENABLED,2) == 1);
     mAssistedGps.setEnabled(gpsEnabled);

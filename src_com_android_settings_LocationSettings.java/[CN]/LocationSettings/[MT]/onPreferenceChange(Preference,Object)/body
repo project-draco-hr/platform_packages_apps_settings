@@ -1,8 +1,6 @@
 {
-  if (preference == mUseLocation) {
-    boolean newValue=(value == null ? false : (Boolean)value);
-    GoogleLocationSettingHelper.setUseLocationForServices(getActivity(),newValue);
-    return false;
+  if (pref.getKey().equals(KEY_LOCATION_TOGGLE)) {
+    onToggleLocationAccess((Boolean)newValue);
   }
   return true;
 }

@@ -2,4 +2,8 @@
   for (  LocalBluetoothProfile profile : mProfiles) {
     disconnect(profile);
   }
+  PbapServerProfile PbapProfile=mProfileManager.getPbapProfile();
+  if (PbapProfile.getConnectionStatus(mDevice) == BluetoothProfile.STATE_CONNECTED) {
+    PbapProfile.disconnect(mDevice);
+  }
 }

@@ -1,7 +1,0 @@
-{
-  List<BluetoothDevice> a2dpConnDevList=mA2dpProfile.getConnectedDevices();
-  List<BluetoothDevice> hfConnDevList=mHeadsetProfile.getConnectedDevices();
-  if (!a2dpConnDevList.isEmpty() && !hfConnDevList.isEmpty())   return false;
-  if (a2dpConnDevList.isEmpty() && mA2dpProfile.isPreferred(device))   return true;
-  return false;
-}

@@ -16,5 +16,6 @@
   addHandler(BluetoothDevice.ACTION_CLASS_CHANGED,new ClassChangedHandler());
   addHandler(BluetoothDevice.ACTION_UUID,new UuidChangedHandler());
   addHandler(Intent.ACTION_DOCK_EVENT,new DockEventHandler());
+  addHandler(BluetoothProfile.ACTION_CONNECT_OTHER_PROFILES,new ConnectOtherProfilesHandler());
   mContext.registerReceiver(mBroadcastReceiver,mAdapterIntentFilter);
 }

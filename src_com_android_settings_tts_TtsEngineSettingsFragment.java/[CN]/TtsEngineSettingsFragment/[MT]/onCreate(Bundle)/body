@@ -19,6 +19,9 @@
   }
   mInstallVoicesPreference.setEnabled(false);
   mLocalePreference.setEnabled(false);
+  mVoiceDataDetails=getArguments().getParcelable(TtsEnginePreference.FRAGMENT_ARGS_VOICES);
   updateVoiceDetails();
   mTts=new TextToSpeech(getActivity().getApplicationContext(),mTtsInitListener,getEngineName());
+  checkTtsData();
+  getActivity().registerReceiver(mLanguagesChangedReceiver,new IntentFilter(TextToSpeech.Engine.ACTION_TTS_DATA_INSTALLED));
 }

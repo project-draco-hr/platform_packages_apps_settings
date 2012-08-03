@@ -1,8 +1,7 @@
 {
-  final Intent voiceDataDetails=getArguments().getParcelable(TtsEnginePreference.FRAGMENT_ARGS_VOICES);
-  if (DBG)   Log.d(TAG,"Parsing voice data details, data: " + voiceDataDetails.toUri(0));
-  final ArrayList<String> available=voiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_AVAILABLE_VOICES);
-  final ArrayList<String> unavailable=voiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_UNAVAILABLE_VOICES);
+  if (DBG)   Log.d(TAG,"Parsing voice data details, data: " + mVoiceDataDetails.toUri(0));
+  final ArrayList<String> available=mVoiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_AVAILABLE_VOICES);
+  final ArrayList<String> unavailable=mVoiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_UNAVAILABLE_VOICES);
   if (available == null) {
     Log.e(TAG,"TTS data check failed (available == null).");
     final CharSequence[] empty=new CharSequence[0];

@@ -1,14 +1,11 @@
 {
-  String component=Settings.Secure.getString(resolver,SCREENSAVER_COMPONENT);
-  Log.v(TAG,"component=" + component);
-  if (component != null) {
-    ComponentName cn=ComponentName.unflattenFromString(component);
-    Log.v(TAG,"cn=" + cn);
-    IDreamManager dm=IDreamManager.Stub.asInterface(ServiceManager.getService("dreams"));
-    try {
-      dm.testDream(cn);
-    }
- catch (    RemoteException ex) {
-    }
+  IDreamManager dm=IDreamManager.Stub.asInterface(ServiceManager.getService("dreams"));
+  try {
+    ComponentName cn=dm.getDreamComponent();
+    Log.v(TAG,"DreamComponent cn=" + cn);
+    dm.testDream(cn);
+  }
+ catch (  RemoteException ex) {
+    Log.w(TAG,"error testing dream",ex);
   }
 }

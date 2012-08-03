@@ -1,0 +1,11 @@
+{
+  Intent intent=new Intent(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+  intent.setPackage(getEngineName());
+  try {
+    if (DBG)     Log.d(TAG,"Updating engine: Checking voice data: " + intent.toUri(0));
+    startActivityForResult(intent,VOICE_DATA_INTEGRITY_CHECK);
+  }
+ catch (  ActivityNotFoundException ex) {
+    Log.e(TAG,"Failed to check TTS data, no activity found for " + intent + ")");
+  }
+}

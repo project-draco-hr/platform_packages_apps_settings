@@ -3,7 +3,7 @@
   if (uuids == null)   return false;
   ParcelUuid[] localUuids=mLocalAdapter.getUuids();
   if (localUuids == null)   return false;
-  mProfileManager.updateProfiles(uuids,localUuids,mProfiles,mRemovedProfiles);
+  mProfileManager.updateProfiles(uuids,localUuids,mProfiles,mRemovedProfiles,mLocalNapRoleConnected);
   if (DEBUG) {
     Log.e(TAG,"updating profiles for " + mDevice.getAliasName());
     BluetoothClass bluetoothClass=mDevice.getBluetoothClass();

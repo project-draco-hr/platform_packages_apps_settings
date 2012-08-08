@@ -1,4 +1,7 @@
 {
   if (mService == null)   return false;
+  if (mService.getPriority(device) > BluetoothProfile.PRIORITY_ON) {
+    mService.setPriority(device,BluetoothProfile.PRIORITY_ON);
+  }
   return mService.disconnect(device);
 }

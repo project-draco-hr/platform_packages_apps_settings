@@ -1,0 +1,12 @@
+{
+  if (V)   Log.d(TAG,"finalize()");
+  if (mService != null) {
+    try {
+      mService.close();
+      mService=null;
+    }
+ catch (    Throwable t) {
+      Log.w(TAG,"Error cleaning up PBAP proxy",t);
+    }
+  }
+}

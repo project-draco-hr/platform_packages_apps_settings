@@ -7,6 +7,15 @@
   setStringSummary(KEY_DEVICE_MODEL,Build.MODEL + getMsvSuffix());
   setStringSummary(KEY_BUILD_NUMBER,Build.DISPLAY);
   findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
+  if (!SELinux.isSELinuxEnabled()) {
+    String status=getResources().getString(R.string.selinux_status_disabled);
+    setStringSummary(KEY_SELINUX_STATUS,status);
+  }
+ else   if (!SELinux.isSELinuxEnforced()) {
+    String status=getResources().getString(R.string.selinux_status_permissive);
+    setStringSummary(KEY_SELINUX_STATUS,status);
+  }
+  removePreferenceIfPropertyMissing(getPreferenceScreen(),KEY_SELINUX_STATUS,PROPERTY_SELINUX_STATUS);
   removePreferenceIfPropertyMissing(getPreferenceScreen(),"safetylegal",PROPERTY_URL_SAFETYLEGAL);
   if (Utils.isWifiOnly(getActivity())) {
     getPreferenceScreen().removePreference(findPreference(KEY_BASEBAND_VERSION));

@@ -6,8 +6,5 @@
   if (!mProfiles.isEmpty() && (mConnectAttempted + MAX_UUID_DELAY_FOR_AUTO_CONNECT) > SystemClock.elapsedRealtime()) {
     connectWithoutResettingTimer(false);
   }
-  for (  LocalBluetoothProfile profile : mProfiles) {
-    profile.setPreferred(mDevice,true);
-  }
   dispatchAttributesChanged();
 }

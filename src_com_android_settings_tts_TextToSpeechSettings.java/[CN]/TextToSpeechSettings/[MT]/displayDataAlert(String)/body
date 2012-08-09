@@ -6,7 +6,7 @@
   builder.setMessage(getActivity().getString(R.string.tts_engine_security_warning,mEnginesHelper.getEngineInfo(key).label));
   builder.setCancelable(true);
   builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int which){
+    @Override public void onClick(    DialogInterface dialog,    int which){
       updateDefaultEngine(key);
     }
   }

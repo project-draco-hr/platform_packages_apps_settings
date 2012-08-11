@@ -1,5 +1,8 @@
 {
   super(context,attrs);
+  PowerManager pm=(PowerManager)context.getSystemService(Context.POWER_SERVICE);
+  mScreenBrightnessMinimum=pm.getMinimumScreenBrightnessSetting();
+  mScreenBrightnessMaximum=pm.getMaximumScreenBrightnessSetting();
   mAutomaticAvailable=context.getResources().getBoolean(com.android.internal.R.bool.config_automatic_brightness_available);
   setDialogLayoutResource(R.layout.preference_dialog_brightness);
   setDialogIcon(R.drawable.ic_settings_display);

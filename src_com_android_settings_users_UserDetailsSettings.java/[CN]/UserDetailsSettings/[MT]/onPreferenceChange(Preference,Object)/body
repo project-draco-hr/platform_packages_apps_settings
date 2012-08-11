@@ -14,13 +14,8 @@
     if (TextUtils.isEmpty(name)) {
       return false;
     }
-    try {
-      mIPm.setUserName(mUserId,(String)newValue);
-      mNamePref.setSummary((String)newValue);
-    }
- catch (    RemoteException re) {
-      return false;
-    }
+    mUm.setUserName(mUserId,(String)newValue);
+    mNamePref.setSummary((String)newValue);
   }
   return true;
 }

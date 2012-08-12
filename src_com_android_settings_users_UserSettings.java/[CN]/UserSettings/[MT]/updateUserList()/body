@@ -1,5 +1,5 @@
 {
-  List<UserInfo> users=getActivity().getPackageManager().getUsers();
+  List<UserInfo> users=((UserManager)getActivity().getSystemService(Context.USER_SERVICE)).getUsers();
   mUserListCategory.removeAll();
   for (  UserInfo user : users) {
     Preference pref=new Preference(getActivity());

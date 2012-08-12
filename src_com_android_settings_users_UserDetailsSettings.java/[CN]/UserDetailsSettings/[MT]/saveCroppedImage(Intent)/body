@@ -1,14 +1,10 @@
 {
-  try {
-    if (data.hasExtra("data")) {
-      Bitmap bitmap=(Bitmap)data.getParcelableExtra("data");
-      ParcelFileDescriptor fd=mIPm.setUserIcon(mUserId);
-      if (fd != null) {
-        bitmap.compress(CompressFormat.PNG,100,new ParcelFileDescriptor.AutoCloseOutputStream(fd));
-        setPhotoId(mPm.getUser(mUserId).iconPath);
-      }
+  if (data.hasExtra("data")) {
+    Bitmap bitmap=(Bitmap)data.getParcelableExtra("data");
+    ParcelFileDescriptor fd=mUm.setUserIcon(mUserId);
+    if (fd != null) {
+      bitmap.compress(CompressFormat.PNG,100,new ParcelFileDescriptor.AutoCloseOutputStream(fd));
+      setPhotoId(mUm.getUserInfo(mUserId).iconPath);
     }
-  }
- catch (  RemoteException re) {
   }
 }

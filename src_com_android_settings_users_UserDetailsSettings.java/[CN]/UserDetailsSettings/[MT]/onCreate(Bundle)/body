@@ -5,12 +5,9 @@
   mNewUser=args == null || args.getInt(EXTRA_USER_ID,-1) == -1;
   mUserId=mNewUser ? -1 : args.getInt(EXTRA_USER_ID,-1);
   mIPm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
+  mUm=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   if (mUserId == -1) {
-    try {
-      mUserId=mIPm.createUser(getString(R.string.user_new_user_name),0).id;
-    }
- catch (    RemoteException re) {
-    }
+    mUserId=mUm.createUser(getString(R.string.user_new_user_name),0).id;
   }
   mSystemAppGroup=(PreferenceGroup)findPreference(KEY_SYSTEM_APPS);
   mInstalledAppGroup=(PreferenceGroup)findPreference(KEY_INSTALLED_APPS);

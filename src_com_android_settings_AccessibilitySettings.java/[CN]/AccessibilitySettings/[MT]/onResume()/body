@@ -2,9 +2,7 @@
   super.onResume();
   loadInstalledServices();
   updateAllPreferences();
-  if (mServicesCategory.getPreference(0) == mNoServicesMessagePreference) {
-    offerInstallAccessibilitySerivceOnce();
-  }
+  offerInstallAccessibilitySerivceOnce();
   mSettingsPackageMonitor.register(getActivity(),getActivity().getMainLooper(),false);
   RotationPolicy.registerRotationPolicyListener(getActivity(),mRotationPolicyListener);
 }

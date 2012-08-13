@@ -7,7 +7,7 @@ case DIALOG_CONFIRM_STOP:
       if (getOwner().activeDetailForService(comp) == null) {
         return null;
       }
-      return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getString(R.string.runningservicedetails_stop_dlg_title)).setIcon(android.R.drawable.ic_dialog_alert).setMessage(getActivity().getString(R.string.runningservicedetails_stop_dlg_text)).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
+      return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getString(R.string.runningservicedetails_stop_dlg_title)).setIconAttribute(android.R.attr.alertDialogIcon).setMessage(getActivity().getString(R.string.runningservicedetails_stop_dlg_text)).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
         public void onClick(        DialogInterface dialog,        int which){
           ActiveDetail ad=getOwner().activeDetailForService(comp);
           if (ad != null) {

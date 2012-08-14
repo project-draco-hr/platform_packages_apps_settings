@@ -10,6 +10,7 @@
   mInstallVoicesPreference=root.findPreference(KEY_INSTALL_DATA);
   mInstallVoicesPreference.setOnPreferenceClickListener(this);
   root.removePreference(mInstallVoicesPreference);
+  root.removePreference(mLocalePreference);
   root.setTitle(getEngineLabel());
   root.setKey(getEngineName());
   mEngineSettingsPreference.setTitle(getResources().getString(R.string.tts_engine_settings_title,getEngineLabel()));
@@ -20,7 +21,6 @@
   mInstallVoicesPreference.setEnabled(false);
   mLocalePreference.setEnabled(false);
   mVoiceDataDetails=getArguments().getParcelable(TtsEnginePreference.FRAGMENT_ARGS_VOICES);
-  updateVoiceDetails();
   mTts=new TextToSpeech(getActivity().getApplicationContext(),mTtsInitListener,getEngineName());
   checkTtsData();
   getActivity().registerReceiver(mLanguagesChangedReceiver,new IntentFilter(TextToSpeech.Engine.ACTION_TTS_DATA_INSTALLED));

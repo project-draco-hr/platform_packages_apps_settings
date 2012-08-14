@@ -4,9 +4,8 @@
   final ArrayList<String> unavailable=mVoiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_UNAVAILABLE_VOICES);
   if (available == null) {
     Log.e(TAG,"TTS data check failed (available == null).");
-    final CharSequence[] empty=new CharSequence[0];
-    mLocalePreference.setEntries(empty);
-    mLocalePreference.setEntryValues(empty);
+    mLocalePreference.setEnabled(false);
+    getPreferenceScreen().removePreference(mLocalePreference);
     return;
   }
   if (unavailable != null && unavailable.size() > 0) {
@@ -17,11 +16,12 @@
     getPreferenceScreen().removePreference(mInstallVoicesPreference);
   }
   if (available.size() > 0) {
+    mLocalePreference.setEnabled(true);
+    getPreferenceScreen().addPreference(mLocalePreference);
     updateDefaultLocalePref(available);
   }
  else {
-    final CharSequence[] empty=new CharSequence[0];
-    mLocalePreference.setEntries(empty);
-    mLocalePreference.setEntryValues(empty);
+    mLocalePreference.setEnabled(false);
+    getPreferenceScreen().removePreference(mLocalePreference);
   }
 }

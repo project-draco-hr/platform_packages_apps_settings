@@ -27,7 +27,7 @@
       }
       chkPref.setChecked(false);
       if (mDialog == null) {
-        mDialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIcon(android.R.drawable.ic_dialog_alert).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+        mDialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setIconAttribute(android.R.attr.alertDialogIcon).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
           @Override public void onClick(          DialogInterface dialog,          int which){
             chkPref.setChecked(true);
             InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(InputMethodAndSubtypeEnabler.this,mInputMethodProperties,id,true);

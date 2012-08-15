@@ -5,7 +5,7 @@
       try {
         IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
         if (power != null) {
-          power.setAutoBrightnessAdjustment(valf);
+          power.setTemporaryScreenAutoBrightnessAdjustmentSettingOverride(valf);
         }
         if (write) {
           final ContentResolver resolver=getContext().getContentResolver();
@@ -17,12 +17,12 @@
     }
   }
  else {
-    int range=(MAXIMUM_BACKLIGHT - mScreenBrightnessDim);
-    brightness=(brightness * range) / SEEK_BAR_RANGE + mScreenBrightnessDim;
+    int range=(mScreenBrightnessMaximum - mScreenBrightnessMinimum);
+    brightness=(brightness * range) / SEEK_BAR_RANGE + mScreenBrightnessMinimum;
     try {
       IPowerManager power=IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
       if (power != null) {
-        power.setBacklightBrightness(brightness);
+        power.setTemporaryScreenBrightnessSettingOverride(brightness);
       }
       if (write) {
         mCurBrightness=-1;

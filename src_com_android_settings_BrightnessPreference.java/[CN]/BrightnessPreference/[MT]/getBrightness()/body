@@ -12,7 +12,7 @@
  else {
       brightness=mCurBrightness;
     }
-    brightness=(brightness - mScreenBrightnessDim) / (MAXIMUM_BACKLIGHT - mScreenBrightnessDim);
+    brightness=(brightness - mScreenBrightnessMinimum) / (mScreenBrightnessMaximum - mScreenBrightnessMinimum);
   }
   return (int)(brightness * SEEK_BAR_RANGE);
 }

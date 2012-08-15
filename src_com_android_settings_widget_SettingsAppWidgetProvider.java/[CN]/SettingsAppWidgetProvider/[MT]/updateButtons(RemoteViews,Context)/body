@@ -9,16 +9,19 @@
   }
  else {
     final int brightness=getBrightness(context);
-    if (brightness > FULL_BRIGHTNESS_THRESHOLD) {
+    final PowerManager pm=(PowerManager)context.getSystemService(Context.POWER_SERVICE);
+    final int full=(int)(pm.getMaximumScreenBrightnessSetting() * FULL_BRIGHTNESS_THRESHOLD);
+    final int half=(int)(pm.getMaximumScreenBrightnessSetting() * HALF_BRIGHTNESS_THRESHOLD);
+    if (brightness > full) {
       views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_full_holo);
     }
- else     if (brightness > HALF_BRIGHTNESS_THRESHOLD) {
+ else     if (brightness > half) {
       views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_half_holo);
     }
  else {
       views.setImageViewResource(R.id.img_brightness,R.drawable.ic_appwidget_settings_brightness_off_holo);
     }
-    if (brightness > HALF_BRIGHTNESS_THRESHOLD) {
+    if (brightness > half) {
       views.setImageViewResource(R.id.ind_brightness,R.drawable.appwidget_settings_ind_on_r_holo);
     }
  else {

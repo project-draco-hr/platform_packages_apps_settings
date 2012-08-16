@@ -6,8 +6,8 @@
   final int size=stats != null ? stats.size() : 0;
   for (int i=0; i < size; i++) {
     entry=stats.getValues(i,entry);
-    final boolean isApp=UserId.isApp(entry.uid);
-    final int appId=isApp ? UserId.getAppId(entry.uid) : entry.uid;
+    final boolean isApp=UserHandle.isApp(entry.uid);
+    final int appId=isApp ? UserHandle.getAppId(entry.uid) : entry.uid;
     if (isApp || appId == UID_REMOVED || appId == UID_TETHERING) {
       AppItem item=knownUids.get(appId);
       if (item == null) {

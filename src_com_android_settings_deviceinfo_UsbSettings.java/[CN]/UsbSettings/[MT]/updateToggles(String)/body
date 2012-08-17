@@ -11,4 +11,14 @@
     mMtp.setChecked(false);
     mPtp.setChecked(false);
   }
+  if (!mUsbAccessoryMode) {
+    Log.e(TAG,"USB Normal Mode");
+    mMtp.setEnabled(true);
+    mPtp.setEnabled(true);
+  }
+ else {
+    Log.e(TAG,"USB Accessory Mode");
+    mMtp.setEnabled(false);
+    mPtp.setEnabled(false);
+  }
 }

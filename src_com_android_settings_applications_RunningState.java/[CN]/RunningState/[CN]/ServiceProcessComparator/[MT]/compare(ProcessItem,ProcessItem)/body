@@ -1,4 +1,9 @@
 {
+  if (object1.mUserId != object2.mUserId) {
+    if (object1.mUserId == mMyUserId)     return -1;
+    if (object2.mUserId == mMyUserId)     return 1;
+    return object1.mUserId < object2.mUserId ? -1 : 1;
+  }
   if (object1.mIsStarted != object2.mIsStarted) {
     return object1.mIsStarted ? -1 : 1;
   }

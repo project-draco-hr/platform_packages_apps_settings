@@ -1,7 +1,8 @@
 {
   super.onCreate(savedInstanceState);
-  mUid=getArguments().getInt(KEY_UID,0);
-  mProcessName=getArguments().getString(KEY_PROCESS);
+  mUid=getArguments().getInt(KEY_UID,-1);
+  mUserId=getArguments().getInt(KEY_USER_ID,0);
+  mProcessName=getArguments().getString(KEY_PROCESS,null);
   mShowBackground=getArguments().getBoolean(KEY_BACKGROUND,false);
   mAm=(ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
   mInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

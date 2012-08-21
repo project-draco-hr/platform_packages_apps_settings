@@ -4,7 +4,7 @@
   ServiceItem si=mServices.get(service.service);
   if (si == null) {
     changed=true;
-    si=new ServiceItem();
+    si=new ServiceItem(mUserId);
     si.mRunningService=service;
     try {
       si.mServiceInfo=pm.getServiceInfo(service.service,0);

@@ -42,7 +42,8 @@
     }
   }
   if (mServices.size() > 0) {
-    mPackageInfo=mServices.values().iterator().next().mServiceInfo.applicationInfo;
+    ApplicationInfo ai=mServices.values().iterator().next().mServiceInfo.applicationInfo;
+    mPackageInfo=ai;
     mDisplayLabel=mPackageInfo.loadLabel(pm);
     mLabel=mDisplayLabel.toString();
     return;

@@ -4,7 +4,13 @@
   if (newItems != null) {
     for (int i=0; i < newItems.size(); i++) {
       RunningState.MergedItem mi=newItems.get(i);
-      if (mi.mProcess.mUid == mUid && mi.mProcess.mProcessName.equals(mProcessName)) {
+      if (mi.mUserId != mUserId) {
+        continue;
+      }
+      if (mUid >= 0 && mi.mProcess != null && mi.mProcess.mUid != mUid) {
+        continue;
+      }
+      if (mProcessName == null || (mi.mProcess != null && mProcessName.equals(mi.mProcess.mProcessName))) {
         item=mi;
         break;
       }

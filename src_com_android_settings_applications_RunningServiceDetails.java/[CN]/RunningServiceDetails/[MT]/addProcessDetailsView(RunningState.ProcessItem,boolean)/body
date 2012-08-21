@@ -1,10 +1,5 @@
 {
-  if (mNumProcesses == 0) {
-    mProcessesHeader=(TextView)mInflater.inflate(R.layout.separator_label,mAllDetails,false);
-    mProcessesHeader.setText(R.string.runningservicedetails_processes_title);
-    mAllDetails.addView(mProcessesHeader);
-  }
-  mNumProcesses++;
+  addProcessesHeader();
   ActiveDetail detail=new ActiveDetail();
   View root=mInflater.inflate(R.layout.running_service_details_process,mAllDetails,false);
   mAllDetails.addView(root);
@@ -12,7 +7,10 @@
   detail.mViewHolder=new RunningProcessesView.ViewHolder(root);
   detail.mActiveItem=detail.mViewHolder.bind(mState,pi,mBuilder);
   TextView description=(TextView)root.findViewById(R.id.comp_description);
-  if (isMain) {
+  if (pi.mUserId != UserHandle.myUserId()) {
+    description.setVisibility(View.GONE);
+  }
+ else   if (isMain) {
     description.setText(R.string.main_running_process_description);
   }
  else {

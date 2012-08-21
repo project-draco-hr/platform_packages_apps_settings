@@ -2,6 +2,8 @@
   mApplicationContext=context.getApplicationContext();
   mAm=(ActivityManager)mApplicationContext.getSystemService(Context.ACTIVITY_SERVICE);
   mPm=mApplicationContext.getPackageManager();
+  mUm=(UserManager)mApplicationContext.getSystemService(Context.USER_SERVICE);
+  mMyUserId=UserHandle.myUserId();
   mResumed=false;
   mBackgroundThread=new HandlerThread("RunningState:Background");
   mBackgroundThread.start();

@@ -1,0 +1,64 @@
+{
+  if (isService) {
+    addServicesHeader();
+  }
+ else   if (mi.mUserId != UserHandle.myUserId()) {
+    addProcessesHeader();
+  }
+  RunningState.BaseItem bi=si != null ? si : mi;
+  ActiveDetail detail=new ActiveDetail();
+  View root=mInflater.inflate(R.layout.running_service_details_service,mAllDetails,false);
+  mAllDetails.addView(root);
+  detail.mRootView=root;
+  detail.mServiceItem=si;
+  detail.mViewHolder=new RunningProcessesView.ViewHolder(root);
+  detail.mActiveItem=detail.mViewHolder.bind(mState,bi,mBuilder);
+  if (!inclDetails) {
+    root.findViewById(R.id.service).setVisibility(View.GONE);
+  }
+  if (si != null && si.mRunningService.clientLabel != 0) {
+    detail.mManageIntent=mAm.getRunningServiceControlPanel(si.mRunningService.service);
+  }
+  TextView description=(TextView)root.findViewById(R.id.comp_description);
+  detail.mStopButton=(Button)root.findViewById(R.id.left_button);
+  detail.mReportButton=(Button)root.findViewById(R.id.right_button);
+  if (isService && mi.mUserId != UserHandle.myUserId()) {
+    description.setVisibility(View.GONE);
+    root.findViewById(R.id.control_buttons_panel).setVisibility(View.GONE);
+  }
+ else {
+    if (si != null && si.mServiceInfo.descriptionRes != 0) {
+      description.setText(getActivity().getPackageManager().getText(si.mServiceInfo.packageName,si.mServiceInfo.descriptionRes,si.mServiceInfo.applicationInfo));
+    }
+ else {
+      if (mi.mBackground) {
+        description.setText(R.string.background_process_stop_description);
+      }
+ else       if (detail.mManageIntent != null) {
+        try {
+          Resources clientr=getActivity().getPackageManager().getResourcesForApplication(si.mRunningService.clientPackage);
+          String label=clientr.getString(si.mRunningService.clientLabel);
+          description.setText(getActivity().getString(R.string.service_manage_description,label));
+        }
+ catch (        PackageManager.NameNotFoundException e) {
+        }
+      }
+ else {
+        description.setText(getActivity().getText(si != null ? R.string.service_stop_description : R.string.heavy_weight_stop_description));
+      }
+    }
+    detail.mStopButton.setOnClickListener(detail);
+    detail.mStopButton.setText(getActivity().getText(detail.mManageIntent != null ? R.string.service_manage : R.string.service_stop));
+    detail.mReportButton.setOnClickListener(detail);
+    detail.mReportButton.setText(com.android.internal.R.string.report);
+    int enabled=Settings.Secure.getInt(getActivity().getContentResolver(),Settings.Secure.SEND_ACTION_APP_ERROR,0);
+    if (enabled != 0 && si != null) {
+      detail.mInstaller=ApplicationErrorReport.getErrorReportReceiver(getActivity(),si.mServiceInfo.packageName,si.mServiceInfo.applicationInfo.flags);
+      detail.mReportButton.setEnabled(detail.mInstaller != null);
+    }
+ else {
+      detail.mReportButton.setEnabled(false);
+    }
+  }
+  mActiveDetails.add(detail);
+}

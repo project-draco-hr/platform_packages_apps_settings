@@ -1,29 +1,38 @@
 {
-  mPackageInfo=mProcess.mPackageInfo;
-  mDisplayLabel=mProcess.mDisplayLabel;
-  mLabel=mProcess.mLabel;
   mBackground=background;
-  if (!mBackground) {
-    int numProcesses=(mProcess.mPid > 0 ? 1 : 0) + mOtherProcesses.size();
-    int numServices=mServices.size();
-    if (mLastNumProcesses != numProcesses || mLastNumServices != numServices) {
-      mLastNumProcesses=numProcesses;
-      mLastNumServices=numServices;
-      int resid=R.string.running_processes_item_description_s_s;
-      if (numProcesses != 1) {
-        resid=numServices != 1 ? R.string.running_processes_item_description_p_p : R.string.running_processes_item_description_p_s;
+  if (mUser != null) {
+    MergedItem child0=mChildren.get(0);
+    mPackageInfo=child0.mProcess.mPackageInfo;
+    mLabel=mUser != null ? mUser.mLabel : null;
+    mDisplayLabel=mLabel;
+    int numProcesses=0;
+    int numServices=0;
+    mActiveSince=-1;
+    for (int i=0; i < mChildren.size(); i++) {
+      MergedItem child=mChildren.get(i);
+      numProcesses+=child.mLastNumProcesses;
+      numServices+=child.mLastNumServices;
+      if (child.mActiveSince >= 0 && mActiveSince < child.mActiveSince) {
+        mActiveSince=child.mActiveSince;
       }
- else       if (numServices != 1) {
-        resid=R.string.running_processes_item_description_s_p;
-      }
-      mDescription=context.getResources().getString(resid,numProcesses,numServices);
+    }
+    if (!mBackground) {
+      setDescription(context,numProcesses,numServices);
     }
   }
-  mActiveSince=-1;
-  for (int i=0; i < mServices.size(); i++) {
-    ServiceItem si=mServices.get(i);
-    if (si.mActiveSince >= 0 && mActiveSince < si.mActiveSince) {
-      mActiveSince=si.mActiveSince;
+ else {
+    mPackageInfo=mProcess.mPackageInfo;
+    mDisplayLabel=mProcess.mDisplayLabel;
+    mLabel=mProcess.mLabel;
+    if (!mBackground) {
+      setDescription(context,(mProcess.mPid > 0 ? 1 : 0) + mOtherProcesses.size(),mServices.size());
+    }
+    mActiveSince=-1;
+    for (int i=0; i < mServices.size(); i++) {
+      ServiceItem si=mServices.get(i);
+      if (si.mActiveSince >= 0 && mActiveSince < si.mActiveSince) {
+        mActiveSince=si.mActiveSince;
+      }
     }
   }
   return false;

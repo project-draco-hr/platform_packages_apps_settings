@@ -12,19 +12,23 @@
     mProcessesHeader=null;
   }
   mNumServices=mNumProcesses=0;
-  if (mMergedItem != null) {
-    for (int i=0; i < mMergedItem.mServices.size(); i++) {
-      addServiceDetailsView(mMergedItem.mServices.get(i),mMergedItem);
+  if (mMergedItem.mUser != null) {
+    ArrayList<RunningState.MergedItem> items;
+    if (mShowBackground) {
+      items=new ArrayList<RunningState.MergedItem>(mMergedItem.mChildren);
+      Collections.sort(items,mState.mBackgroundComparator);
     }
-    if (mMergedItem.mServices.size() <= 0) {
-      addServiceDetailsView(null,mMergedItem);
+ else {
+      items=mMergedItem.mChildren;
     }
-    for (int i=-1; i < mMergedItem.mOtherProcesses.size(); i++) {
-      RunningState.ProcessItem pi=i < 0 ? mMergedItem.mProcess : mMergedItem.mOtherProcesses.get(i);
-      if (pi.mPid <= 0) {
-        continue;
-      }
-      addProcessDetailsView(pi,i < 0);
+    for (int i=0; i < items.size(); i++) {
+      addDetailsViews(items.get(i),true,false);
     }
+    for (int i=0; i < items.size(); i++) {
+      addDetailsViews(items.get(i),false,true);
+    }
+  }
+ else {
+    addDetailsViews(mMergedItem,true,true);
   }
 }

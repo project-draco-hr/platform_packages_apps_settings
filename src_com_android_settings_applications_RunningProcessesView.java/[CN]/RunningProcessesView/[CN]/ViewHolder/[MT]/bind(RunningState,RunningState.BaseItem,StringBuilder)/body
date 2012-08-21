@@ -2,9 +2,12 @@
 synchronized (state.mLock) {
     PackageManager pm=rootView.getContext().getPackageManager();
     if (item.mPackageInfo == null && item instanceof RunningState.MergedItem) {
-      ((RunningState.MergedItem)item).mProcess.ensureLabel(pm);
-      item.mPackageInfo=((RunningState.MergedItem)item).mProcess.mPackageInfo;
-      item.mDisplayLabel=((RunningState.MergedItem)item).mProcess.mDisplayLabel;
+      RunningState.MergedItem mergedItem=(RunningState.MergedItem)item;
+      if (mergedItem.mProcess != null) {
+        ((RunningState.MergedItem)item).mProcess.ensureLabel(pm);
+        item.mPackageInfo=((RunningState.MergedItem)item).mProcess.mPackageInfo;
+        item.mDisplayLabel=((RunningState.MergedItem)item).mProcess.mDisplayLabel;
+      }
     }
     name.setText(item.mDisplayLabel);
     ActiveItem ai=new ActiveItem();
@@ -19,9 +22,7 @@ synchronized (state.mLock) {
       description.setText(item.mDescription);
     }
     item.mCurSizeStr=null;
-    if (item.mPackageInfo != null) {
-      icon.setImageDrawable(item.mPackageInfo.loadIcon(pm));
-    }
+    icon.setImageDrawable(item.loadIcon(rootView.getContext(),state));
     icon.setVisibility(View.VISIBLE);
     ai.updateTime(rootView.getContext(),builder);
     return ai;

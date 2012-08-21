@@ -1,0 +1,23 @@
+{
+  if (item != null) {
+    if (inclServices) {
+      for (int i=0; i < item.mServices.size(); i++) {
+        addServiceDetailsView(item.mServices.get(i),item,true,true);
+      }
+    }
+    if (inclProcesses) {
+      if (item.mServices.size() <= 0) {
+        addServiceDetailsView(null,item,false,item.mUserId != UserHandle.myUserId());
+      }
+ else {
+        for (int i=-1; i < item.mOtherProcesses.size(); i++) {
+          RunningState.ProcessItem pi=i < 0 ? item.mProcess : item.mOtherProcesses.get(i);
+          if (pi != null && pi.mPid <= 0) {
+            continue;
+          }
+          addProcessDetailsView(pi,i < 0);
+        }
+      }
+    }
+  }
+}

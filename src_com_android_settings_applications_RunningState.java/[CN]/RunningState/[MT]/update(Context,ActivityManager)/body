@@ -225,6 +225,7 @@
     Collections.sort(sortedProcesses,mServiceProcessComparator);
     ArrayList<BaseItem> newItems=new ArrayList<BaseItem>();
     ArrayList<MergedItem> newMergedItems=new ArrayList<MergedItem>();
+    SparseArray<MergedItem> otherUsers=null;
     mProcessItems.clear();
     for (int i=0; i < sortedProcesses.size(); i++) {
       ProcessItem pi=sortedProcesses.get(i);
@@ -253,7 +254,7 @@
         }
       }
       if (!haveAllMerged || mergedItem == null || mergedItem.mServices.size() != pi.mServices.size()) {
-        mergedItem=new MergedItem();
+        mergedItem=new MergedItem(pi.mUserId);
         for (        ServiceItem si : pi.mServices.values()) {
           mergedItem.mServices.add(si);
           si.mMergedItem=mergedItem;
@@ -265,19 +266,36 @@
         }
       }
       mergedItem.update(context,false);
-      newMergedItems.add(mergedItem);
+      if (mergedItem.mUserId != mMyUserId) {
+        addOtherUserItem(context,newMergedItems,mOtherUserMergedItems,mergedItem);
+      }
+ else {
+        newMergedItems.add(mergedItem);
+      }
     }
     NHP=mInterestingProcesses.size();
     for (int i=0; i < NHP; i++) {
       ProcessItem proc=mInterestingProcesses.get(i);
       if (proc.mClient == null && proc.mServices.size() <= 0) {
         if (proc.mMergedItem == null) {
-          proc.mMergedItem=new MergedItem();
+          proc.mMergedItem=new MergedItem(proc.mUserId);
           proc.mMergedItem.mProcess=proc;
         }
         proc.mMergedItem.update(context,false);
-        newMergedItems.add(0,proc.mMergedItem);
+        if (proc.mMergedItem.mUserId != mMyUserId) {
+          addOtherUserItem(context,newMergedItems,mOtherUserMergedItems,proc.mMergedItem);
+        }
+ else {
+          newMergedItems.add(0,proc.mMergedItem);
+        }
         mProcessItems.add(proc);
+      }
+    }
+    final int NU=mOtherUserMergedItems.size();
+    for (int i=0; i < NU; i++) {
+      MergedItem user=mOtherUserMergedItems.valueAt(i);
+      if (user.mCurSeq == mSequence) {
+        user.update(context,false);
       }
     }
 synchronized (mLock) {
@@ -314,6 +332,8 @@ synchronized (mLock) {
   long foregroundProcessMemory=0;
   long serviceProcessMemory=0;
   ArrayList<MergedItem> newBackgroundItems=null;
+  ArrayList<MergedItem> newUserBackgroundItems=null;
+  boolean diffUsers=false;
   try {
     final int numProc=mAllProcessItems.size();
     int[] pids=new int[numProc];
@@ -332,18 +352,22 @@ synchronized (mLock) {
         backgroundProcessMemory+=proc.mSize;
         MergedItem mergedItem;
         if (newBackgroundItems != null) {
-          mergedItem=proc.mMergedItem=new MergedItem();
+          mergedItem=proc.mMergedItem=new MergedItem(proc.mUserId);
           proc.mMergedItem.mProcess=proc;
+          diffUsers|=mergedItem.mUserId != mMyUserId;
           newBackgroundItems.add(mergedItem);
         }
  else {
           if (bgIndex >= mBackgroundItems.size() || mBackgroundItems.get(bgIndex).mProcess != proc) {
             newBackgroundItems=new ArrayList<MergedItem>(numBackgroundProcesses);
             for (int bgi=0; bgi < bgIndex; bgi++) {
-              newBackgroundItems.add(mBackgroundItems.get(bgi));
+              mergedItem=mBackgroundItems.get(bgi);
+              diffUsers|=mergedItem.mUserId != mMyUserId;
+              newBackgroundItems.add(mergedItem);
             }
-            mergedItem=proc.mMergedItem=new MergedItem();
+            mergedItem=proc.mMergedItem=new MergedItem(proc.mUserId);
             proc.mMergedItem.mProcess=proc;
+            diffUsers|=mergedItem.mUserId != mMyUserId;
             newBackgroundItems.add(mergedItem);
           }
  else {
@@ -365,7 +389,35 @@ synchronized (mLock) {
     if (mBackgroundItems.size() > numBackgroundProcesses) {
       newBackgroundItems=new ArrayList<MergedItem>(numBackgroundProcesses);
       for (int bgi=0; bgi < numBackgroundProcesses; bgi++) {
-        newBackgroundItems.add(mBackgroundItems.get(bgi));
+        MergedItem mergedItem=mBackgroundItems.get(bgi);
+        diffUsers|=mergedItem.mUserId != mMyUserId;
+        newBackgroundItems.add(mergedItem);
+      }
+    }
+  }
+  if (newBackgroundItems != null) {
+    if (!diffUsers) {
+      newUserBackgroundItems=newBackgroundItems;
+    }
+ else {
+      newUserBackgroundItems=new ArrayList<MergedItem>();
+      final int NB=newBackgroundItems.size();
+      for (int i=0; i < NB; i++) {
+        MergedItem mergedItem=newBackgroundItems.get(i);
+        if (mergedItem.mUserId != mMyUserId) {
+          addOtherUserItem(context,newUserBackgroundItems,mOtherUserBackgroundItems,mergedItem);
+        }
+ else {
+          newUserBackgroundItems.add(mergedItem);
+        }
+      }
+      final int NU=mOtherUserBackgroundItems.size();
+      for (int i=0; i < NU; i++) {
+        MergedItem user=mOtherUserBackgroundItems.valueAt(i);
+        if (user.mCurSeq == mSequence) {
+          user.update(context,true);
+          user.updateSize(context);
+        }
       }
     }
   }
@@ -381,6 +433,7 @@ synchronized (mLock) {
     mServiceProcessMemory=serviceProcessMemory;
     if (newBackgroundItems != null) {
       mBackgroundItems=newBackgroundItems;
+      mUserBackgroundItems=newUserBackgroundItems;
       if (mWatchingBackgroundItems) {
         changed=true;
       }

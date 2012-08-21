@@ -1,0 +1,9 @@
+{
+  if (mUser == null) {
+    return super.loadIcon(context,state);
+  }
+  if (mUser.mIcon != null) {
+    return mUser.mIcon.getConstantState().newDrawable();
+  }
+  return context.getResources().getDrawable(com.android.internal.R.drawable.ic_menu_cc);
+}

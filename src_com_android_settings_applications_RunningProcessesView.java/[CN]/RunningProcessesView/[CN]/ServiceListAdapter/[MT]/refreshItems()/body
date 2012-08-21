@@ -1,9 +1,16 @@
 {
   ArrayList<RunningState.MergedItem> newItems=mShowBackground ? mState.getCurrentBackgroundItems() : mState.getCurrentMergedItems();
-  if (mItems != newItems) {
-    mItems=newItems;
-  }
-  if (mItems == null) {
-    mItems=new ArrayList<RunningState.MergedItem>();
+  if (mOrigItems != newItems) {
+    mOrigItems=newItems;
+    if (newItems == null) {
+      mItems.clear();
+    }
+ else {
+      mItems.clear();
+      mItems.addAll(newItems);
+      if (mShowBackground) {
+        Collections.sort(mItems,mState.mBackgroundComparator);
+      }
+    }
   }
 }

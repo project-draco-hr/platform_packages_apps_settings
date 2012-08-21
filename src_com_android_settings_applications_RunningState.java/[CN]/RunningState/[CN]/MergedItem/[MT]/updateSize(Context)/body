@@ -1,7 +1,17 @@
 {
-  mSize=mProcess.mSize;
-  for (int i=0; i < mOtherProcesses.size(); i++) {
-    mSize+=mOtherProcesses.get(i).mSize;
+  if (mUser != null) {
+    mSize=0;
+    for (int i=0; i < mChildren.size(); i++) {
+      MergedItem child=mChildren.get(i);
+      child.updateSize(context);
+      mSize+=child.mSize;
+    }
+  }
+ else {
+    mSize=mProcess.mSize;
+    for (int i=0; i < mOtherProcesses.size(); i++) {
+      mSize+=mOtherProcesses.get(i).mSize;
+    }
   }
   String sizeStr=Formatter.formatShortFileSize(context,mSize);
   if (!sizeStr.equals(mSizeStr)) {

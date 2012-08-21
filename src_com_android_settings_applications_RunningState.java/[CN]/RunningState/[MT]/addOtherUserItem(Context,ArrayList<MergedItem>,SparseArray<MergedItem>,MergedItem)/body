@@ -1,0 +1,34 @@
+{
+  MergedItem userItem=userItems.get(newItem.mUserId);
+  boolean first=userItem == null || userItem.mCurSeq != mSequence;
+  if (first) {
+    if (userItem == null) {
+      userItem=new MergedItem(newItem.mUserId);
+      userItems.put(newItem.mUserId,userItem);
+    }
+ else {
+      userItem.mChildren.clear();
+    }
+    userItem.mCurSeq=mSequence;
+    if ((userItem.mUser=mUsers.get(newItem.mUserId)) == null) {
+      userItem.mUser=new UserState();
+      UserInfo info=mUm.getUserInfo(newItem.mUserId);
+      userItem.mUser.mInfo=info;
+      if (info != null && info.iconPath != null) {
+        try {
+          userItem.mUser.mIcon=Drawable.createFromPath(info.iconPath);
+        }
+ catch (        Exception e) {
+          Log.w(TAG,"Failure loading user picture " + info.iconPath,e);
+        }
+      }
+      String name=info != null ? info.name : null;
+      if (name == null) {
+        name=Integer.toString(info.id);
+      }
+      userItem.mUser.mLabel=context.getResources().getString(R.string.running_process_item_user_label,name);
+    }
+    newMergedItems.add(userItem);
+  }
+  userItem.mChildren.add(newItem);
+}

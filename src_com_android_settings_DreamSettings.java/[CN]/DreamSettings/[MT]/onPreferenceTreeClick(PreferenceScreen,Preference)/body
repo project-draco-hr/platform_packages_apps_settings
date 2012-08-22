@@ -1,8 +1,0 @@
-{
-  mActivateOnSleep.onClick(preference);
-  mActivateOnDock.onClick(preference);
-  boolean enabled=mActivateOnSleep.isSelected() || mActivateOnDock.isSelected();
-  Settings.Secure.putInt(getActivity().getContentResolver(),SCREENSAVER_ENABLED,enabled ? 1 : 0);
-  refreshDependents();
-  return super.onPreferenceTreeClick(preferenceScreen,preference);
-}

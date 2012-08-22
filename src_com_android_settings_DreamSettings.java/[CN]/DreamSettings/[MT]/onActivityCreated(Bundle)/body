@@ -1,8 +1,14 @@
 {
   super.onActivityCreated(savedInstanceState);
-  addPreferencesFromResource(R.xml.dream_settings);
-  mComponentPref=findPreference(KEY_COMPONENT);
-  mTestPref=findPreference(KEY_TEST);
-  mActivateOnSleep=new ActivationSetting(getActivity(),SCREENSAVER_ACTIVATE_ON_SLEEP,DEFAULT_SLEEP,(CheckBoxPreference)findPreference(KEY_ACTIVATE_ON_SLEEP));
-  mActivateOnDock=new ActivationSetting(getActivity(),SCREENSAVER_ACTIVATE_ON_DOCK,DEFAULT_DOCK,(CheckBoxPreference)findPreference(KEY_ACTIVATE_ON_DOCK));
+  ListView listView=getListView();
+  TextView emptyView=(TextView)getView().findViewById(android.R.id.empty);
+  emptyView.setText(R.string.screensaver_settings_disabled_prompt);
+  listView.setEmptyView(emptyView);
+  mAdapter=new DreamInfoAdapter(mContext);
+  listView.setAdapter(mAdapter);
+  listView.setDivider(null);
+  listView.setDividerHeight(DIVIDER_HEIGHT);
+  listView.setBackgroundColor(Color.BLACK);
+  listView.setPadding(0,DIVIDER_HEIGHT,0,DIVIDER_HEIGHT);
+  listView.setHeaderDividersEnabled(true);
 }

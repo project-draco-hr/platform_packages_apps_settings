@@ -1,0 +1,8 @@
+{
+  DreamBackend backend=new DreamBackend(context);
+  boolean isEnabled=backend.isEnabled();
+  boolean activatedOnSleep=backend.isActivatedOnSleep();
+  boolean activatedOnDock=backend.isActivatedOnDock();
+  boolean activatedOnEither=activatedOnSleep && activatedOnDock;
+  return !isEnabled ? R.string.screensaver_settings_summary_off : activatedOnEither ? R.string.screensaver_settings_summary_either_long : activatedOnSleep ? R.string.screensaver_settings_summary_sleep : activatedOnDock ? R.string.screensaver_settings_summary_dock : 0;
+}

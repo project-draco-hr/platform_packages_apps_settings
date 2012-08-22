@@ -2,5 +2,5 @@
   boolean checked=getBrightnessMode(0) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
   mCheckBox.setChecked(checked);
   mSeekBar.setProgress(getBrightness());
-  mSeekBar.setEnabled(!checked);
+  mSeekBar.setEnabled(!checked || USE_SCREEN_AUTO_BRIGHTNESS_ADJUSTMENT);
 }

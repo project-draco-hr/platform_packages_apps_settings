@@ -2,7 +2,8 @@
   ComponentName cn=null;
   IDreamManager dm=IDreamManager.Stub.asInterface(ServiceManager.getService("dreams"));
   try {
-    cn=dm.getDreamComponent();
+    ComponentName[] dreams=dm.getDreamComponents();
+    if (dreams != null && dreams.length > 0)     cn=dreams[0];
   }
  catch (  RemoteException ex) {
   }

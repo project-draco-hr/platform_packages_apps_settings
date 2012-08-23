@@ -9,7 +9,8 @@
       setSummary(ri.loadLabel(pm));
       IDreamManager dm=IDreamManager.Stub.asInterface(ServiceManager.getService("dreams"));
       try {
-        dm.setDreamComponent(cn);
+        ComponentName[] dreams={cn};
+        dm.setDreamComponents(dreams);
       }
  catch (      RemoteException ex) {
       }

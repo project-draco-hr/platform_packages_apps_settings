@@ -1,5 +1,6 @@
 {
   super.onCreate(icicle);
+  mUsbManager=(UsbManager)getSystemService(Context.USB_SERVICE);
   if (mStorageManager == null) {
     mStorageManager=(StorageManager)getSystemService(Context.STORAGE_SERVICE);
     mStorageManager.registerListener(mStorageListener);

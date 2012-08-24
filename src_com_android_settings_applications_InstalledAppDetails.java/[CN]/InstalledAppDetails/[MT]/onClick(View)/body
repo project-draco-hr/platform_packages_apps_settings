@@ -13,6 +13,14 @@
           new DisableChanger(this,mAppEntry.info,PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).execute((Object)null);
         }
       }
+ else       if ((mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
+        try {
+          mPm.installExistingPackage(packageName);
+          refreshUi();
+        }
+ catch (        NameNotFoundException e) {
+        }
+      }
  else {
         uninstallPkg(packageName);
       }

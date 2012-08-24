@@ -31,6 +31,9 @@
         }
       }
     }
+ else     if ((mPackageInfo.applicationInfo.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
+      mUninstallButton.setText(R.string.install_text);
+    }
  else {
       mUninstallButton.setText(R.string.uninstall_text);
     }

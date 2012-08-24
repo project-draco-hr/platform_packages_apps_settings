@@ -36,4 +36,18 @@
       removePreference(mFormatPreference);
     }
   }
+  if (mUsbConnected && (UsbManager.USB_FUNCTION_MTP.equals(mUsbFunction) || UsbManager.USB_FUNCTION_PTP.equals(mUsbFunction))) {
+    mMountTogglePreference.setEnabled(false);
+    if (Environment.MEDIA_MOUNTED.equals(state)) {
+      mMountTogglePreference.setSummary(mResources.getString(R.string.mtp_ptp_mode_summary));
+    }
+    if (mFormatPreference != null) {
+      mFormatPreference.setEnabled(false);
+      mFormatPreference.setSummary(mResources.getString(R.string.mtp_ptp_mode_summary));
+    }
+  }
+ else   if (mFormatPreference != null) {
+    mFormatPreference.setEnabled(true);
+    mFormatPreference.setSummary(mResources.getString(R.string.sd_format_summary));
+  }
 }

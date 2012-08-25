@@ -9,6 +9,7 @@
     }
  else {
       preference=new VpnPreference(getActivity(),profile);
+      preference.setOnPreferenceClickListener(this);
       mPreferences.put(profile.key,preference);
       getPreferenceScreen().addPreference(preference);
     }

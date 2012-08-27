@@ -14,23 +14,14 @@
   if (mPreferences == null) {
     mPreferences=new HashMap<String,VpnPreference>();
     PreferenceGroup group=getPreferenceScreen();
-    String[] keys=mKeyStore.saw(Credentials.VPN);
-    if (keys != null && keys.length > 0) {
-      Context context=getActivity();
-      for (      String key : keys) {
-        VpnProfile profile=VpnProfile.decode(key,mKeyStore.get(Credentials.VPN + key));
-        if (profile == null) {
-          Log.w(TAG,"bad profile: key = " + key);
-          mKeyStore.delete(Credentials.VPN + key);
-        }
- else {
-          VpnPreference preference=new VpnPreference(context,profile);
-          mPreferences.put(key,preference);
-          group.addPreference(preference);
-        }
-      }
+    final Context context=getActivity();
+    final List<VpnProfile> profiles=loadVpnProfiles(mKeyStore);
+    for (    VpnProfile profile : profiles) {
+      final VpnPreference pref=new VpnPreference(context,profile);
+      pref.setOnPreferenceClickListener(this);
+      mPreferences.put(profile.key,pref);
+      group.addPreference(pref);
     }
-    group.findPreference("add_network").setOnPreferenceClickListener(this);
   }
   if (mDialog != null) {
     mDialog.setOnDismissListener(this);

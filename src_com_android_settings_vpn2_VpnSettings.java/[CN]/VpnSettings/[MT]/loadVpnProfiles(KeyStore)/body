@@ -1,0 +1,13 @@
+{
+  final ArrayList<VpnProfile> result=Lists.newArrayList();
+  final String[] keys=keyStore.saw(Credentials.VPN);
+  if (keys != null) {
+    for (    String key : keys) {
+      final VpnProfile profile=VpnProfile.decode(key,keyStore.get(Credentials.VPN + key));
+      if (profile != null) {
+        result.add(profile);
+      }
+    }
+  }
+  return result;
+}

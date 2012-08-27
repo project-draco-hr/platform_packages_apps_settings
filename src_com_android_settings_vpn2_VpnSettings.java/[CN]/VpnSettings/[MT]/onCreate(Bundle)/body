@@ -1,7 +1,7 @@
 {
   super.onCreate(savedState);
+  setHasOptionsMenu(true);
   addPreferencesFromResource(R.xml.vpn_settings2);
-  getPreferenceScreen().setOrderingAsAdded(false);
   if (savedState != null) {
     VpnProfile profile=VpnProfile.decode(savedState.getString("VpnKey"),savedState.getByteArray("VpnProfile"));
     if (profile != null) {

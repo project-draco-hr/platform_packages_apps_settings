@@ -4,10 +4,10 @@
   if (mRestoreApnUiHandler == null) {
     mRestoreApnUiHandler=new RestoreApnUiHandler();
   }
-  if (mRestoreApnProcessHandler == null) {
-    HandlerThread restoreDefaultApnThread=new HandlerThread("Restore default APN Handler: Process Thread");
-    restoreDefaultApnThread.start();
-    mRestoreApnProcessHandler=new RestoreApnProcessHandler(restoreDefaultApnThread.getLooper(),mRestoreApnUiHandler);
+  if (mRestoreApnProcessHandler == null || mRestoreDefaultApnThread == null) {
+    mRestoreDefaultApnThread=new HandlerThread("Restore default APN Handler: Process Thread");
+    mRestoreDefaultApnThread.start();
+    mRestoreApnProcessHandler=new RestoreApnProcessHandler(mRestoreDefaultApnThread.getLooper(),mRestoreApnUiHandler);
   }
   mRestoreApnProcessHandler.sendEmptyMessage(EVENT_RESTORE_DEFAULTAPN_START);
   return true;

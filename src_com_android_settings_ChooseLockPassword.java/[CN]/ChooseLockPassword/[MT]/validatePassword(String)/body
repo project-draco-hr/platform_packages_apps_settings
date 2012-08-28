@@ -13,7 +13,7 @@
   int nonletter=0;
   for (int i=0; i < password.length(); i++) {
     char c=password.charAt(i);
-    if (c <= 32 || c > 127) {
+    if (c < 32 || c > 127) {
       return getString(R.string.lockpassword_illegal_character);
     }
     if (c >= '0' && c <= '9') {

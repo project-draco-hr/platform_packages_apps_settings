@@ -37,5 +37,9 @@
 );
     }
   }
+ else   if (preference instanceof WifiP2pPersistentGroup) {
+    mSelectedGroup=(WifiP2pPersistentGroup)preference;
+    showDialog(DIALOG_DELETE_GROUP);
+  }
   return super.onPreferenceTreeClick(screen,preference);
 }

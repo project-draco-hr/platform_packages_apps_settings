@@ -1,0 +1,7 @@
+{
+  mPersistentGroup.removeAll();
+  for (  WifiP2pGroup group : groups.getGroupList()) {
+    if (DBG)     Log.d(TAG," group " + group);
+    mPersistentGroup.addPreference(new WifiP2pPersistentGroup(getActivity(),group));
+  }
+}

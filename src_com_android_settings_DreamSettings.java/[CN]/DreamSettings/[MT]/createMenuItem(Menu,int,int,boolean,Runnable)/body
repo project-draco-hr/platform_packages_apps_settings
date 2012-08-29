@@ -1,0 +1,13 @@
+{
+  MenuItem item=menu.add(titleRes);
+  item.setShowAsAction(actionEnum);
+  item.setEnabled(isEnabled);
+  item.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+    @Override public boolean onMenuItemClick(    MenuItem item){
+      onClick.run();
+      return true;
+    }
+  }
+);
+  return item;
+}

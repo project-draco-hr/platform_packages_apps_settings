@@ -1,0 +1,30 @@
+{
+  DreamInfo dreamInfo=getItem(position);
+  final View row=convertView != null ? convertView : createDreamInfoRow(parent);
+  row.setTag(dreamInfo);
+  ((ImageView)row.findViewById(android.R.id.icon)).setImageDrawable(dreamInfo.icon);
+  ((TextView)row.findViewById(android.R.id.text1)).setText(dreamInfo.caption);
+  ((RadioButton)row.findViewById(android.R.id.button1)).setChecked(dreamInfo.isActive);
+  ((RadioButton)row.findViewById(android.R.id.button1)).setOnTouchListener(new OnTouchListener(){
+    @Override public boolean onTouch(    View v,    MotionEvent event){
+      row.onTouchEvent(event);
+      return false;
+    }
+  }
+);
+  row.findViewById(android.R.id.widget_frame).setVisibility(dreamInfo.isActive ? View.VISIBLE : View.GONE);
+  ((Button)row.findViewById(android.R.id.button2)).setEnabled(dreamInfo.settingsComponentName != null);
+  ((Button)row.findViewById(android.R.id.button2)).setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      mBackend.launchSettings((DreamInfo)row.getTag());
+    }
+  }
+);
+  ((Button)row.findViewById(android.R.id.button3)).setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      mBackend.preview((DreamInfo)row.getTag());
+    }
+  }
+);
+  return row;
+}

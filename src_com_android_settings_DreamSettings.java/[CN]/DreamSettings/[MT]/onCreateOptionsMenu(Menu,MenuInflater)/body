@@ -1,0 +1,21 @@
+{
+  boolean isEnabled=mBackend.isEnabled();
+  MenuItem whenToDream=createMenuItem(menu,R.string.screensaver_settings_when_to_dream,MenuItem.SHOW_AS_ACTION_NEVER,isEnabled,new Runnable(){
+    @Override public void run(){
+      showDialog(DIALOG_WHEN_TO_DREAM);
+    }
+  }
+);
+  createMenuItem(menu,R.string.help_label,MenuItem.SHOW_AS_ACTION_NEVER,true,new Runnable(){
+    @Override public void run(){
+    }
+  }
+);
+  MenuItem startDreaming=createMenuItem(menu,R.string.screensaver_settings_start_dreaming,MenuItem.SHOW_AS_ACTION_ALWAYS,isEnabled,new Runnable(){
+    @Override public void run(){
+      mBackend.startDreamingNow();
+    }
+  }
+);
+  mDependentMenuItems=new MenuItem[]{whenToDream,startDreaming};
+}

@@ -1,0 +1,10 @@
+{
+  if (mDreamManager == null)   return null;
+  try {
+    ComponentName[] dreams=mDreamManager.getDreamComponents();
+    return dreams != null && dreams.length > 0 ? dreams[0] : null;
+  }
+ catch (  RemoteException e) {
+    return null;
+  }
+}

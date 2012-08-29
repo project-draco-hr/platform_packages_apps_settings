@@ -1,0 +1,5 @@
+{
+  if (ri == null || ri.serviceInfo == null || ri.serviceInfo.metaData == null)   return null;
+  String cn=ri.serviceInfo.metaData.getString(Dream.METADATA_NAME_CONFIG_ACTIVITY);
+  return cn == null ? null : ComponentName.unflattenFromString(cn);
+}

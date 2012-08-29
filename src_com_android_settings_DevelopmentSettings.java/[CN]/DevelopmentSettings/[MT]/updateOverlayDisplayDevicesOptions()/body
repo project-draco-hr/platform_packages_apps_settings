@@ -1,0 +1,16 @@
+{
+  String value=Settings.System.getString(getActivity().getContentResolver(),Settings.Secure.OVERLAY_DISPLAY_DEVICES);
+  if (value == null) {
+    value="";
+  }
+  CharSequence[] values=mOverlayDisplayDevices.getEntryValues();
+  for (int i=0; i < values.length; i++) {
+    if (value.contentEquals(values[i])) {
+      mOverlayDisplayDevices.setValueIndex(i);
+      mOverlayDisplayDevices.setSummary(mOverlayDisplayDevices.getEntries()[i]);
+      return;
+    }
+  }
+  mOverlayDisplayDevices.setValueIndex(0);
+  mOverlayDisplayDevices.setSummary(mOverlayDisplayDevices.getEntries()[0]);
+}

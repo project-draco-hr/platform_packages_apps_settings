@@ -1,4 +1,5 @@
 {
+  logd("refreshFromBackend()");
   mRefreshing=true;
   boolean dreamsEnabled=mBackend.isEnabled();
   if (mSwitch.isChecked() != dreamsEnabled)   mSwitch.setChecked(dreamsEnabled);
@@ -7,6 +8,6 @@
     List<DreamInfo> dreamInfos=mBackend.getDreamInfos();
     mAdapter.addAll(dreamInfos);
   }
-  if (mDependentMenuItems != null)   for (  MenuItem item : mDependentMenuItems)   item.setEnabled(dreamsEnabled);
+  if (mWhenToDream != null)   mWhenToDream.setEnabled(dreamsEnabled);
   mRefreshing=false;
 }

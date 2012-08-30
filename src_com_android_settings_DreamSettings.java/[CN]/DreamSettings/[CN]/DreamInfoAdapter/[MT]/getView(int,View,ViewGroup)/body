@@ -1,20 +1,24 @@
 {
   DreamInfo dreamInfo=getItem(position);
+  logd("getView(%s)",dreamInfo.caption);
   final View row=convertView != null ? convertView : createDreamInfoRow(parent);
   row.setTag(dreamInfo);
   ((ImageView)row.findViewById(android.R.id.icon)).setImageDrawable(dreamInfo.icon);
   ((TextView)row.findViewById(android.R.id.text1)).setText(dreamInfo.caption);
-  ((RadioButton)row.findViewById(android.R.id.button1)).setChecked(dreamInfo.isActive);
-  ((RadioButton)row.findViewById(android.R.id.button1)).setOnTouchListener(new OnTouchListener(){
+  RadioButton radioButton=(RadioButton)row.findViewById(android.R.id.button1);
+  radioButton.setChecked(dreamInfo.isActive);
+  radioButton.setOnTouchListener(new OnTouchListener(){
     @Override public boolean onTouch(    View v,    MotionEvent event){
       row.onTouchEvent(event);
       return false;
     }
   }
 );
-  row.findViewById(android.R.id.widget_frame).setVisibility(dreamInfo.isActive ? View.VISIBLE : View.GONE);
-  ((Button)row.findViewById(android.R.id.button2)).setEnabled(dreamInfo.settingsComponentName != null);
-  ((Button)row.findViewById(android.R.id.button2)).setOnClickListener(new OnClickListener(){
+  View widgetFrame=row.findViewById(android.R.id.widget_frame);
+  widgetFrame.setVisibility(dreamInfo.isActive ? View.VISIBLE : View.GONE);
+  Button settingsButton=(Button)row.findViewById(android.R.id.button2);
+  settingsButton.setVisibility(dreamInfo.settingsComponentName != null ? View.VISIBLE : View.GONE);
+  settingsButton.setOnClickListener(new OnClickListener(){
     @Override public void onClick(    View v){
       mBackend.launchSettings((DreamInfo)row.getTag());
     }

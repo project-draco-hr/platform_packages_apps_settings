@@ -1,0 +1,14 @@
+{
+  final StorageItemPreference pref=(StorageItemPreference)findPreference(category);
+  if (pref != null) {
+    if (size > 0) {
+      pref.setSummary(formatSize(size));
+      if (showBar) {
+        mUsageBarPreference.addEntry(size / (float)totalSize,pref.getColor());
+      }
+    }
+ else {
+      removePreference(pref);
+    }
+  }
+}

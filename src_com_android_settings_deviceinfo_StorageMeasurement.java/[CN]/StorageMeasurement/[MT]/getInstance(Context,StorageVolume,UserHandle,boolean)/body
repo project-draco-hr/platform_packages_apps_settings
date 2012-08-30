@@ -1,0 +1,11 @@
+{
+  final Pair<StorageVolume,UserHandle> key=new Pair<StorageVolume,UserHandle>(storageVolume,user);
+synchronized (sInstances) {
+    StorageMeasurement value=sInstances.get(key);
+    if (value == null) {
+      value=new StorageMeasurement(context.getApplicationContext(),storageVolume,user,isPrimary);
+      sInstances.put(key,value);
+    }
+    return value;
+  }
+}

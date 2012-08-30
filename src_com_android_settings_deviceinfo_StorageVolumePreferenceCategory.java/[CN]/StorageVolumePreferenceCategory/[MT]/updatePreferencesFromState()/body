@@ -1,5 +1,5 @@
 {
-  resetPreferences();
+  mMountTogglePreference.setEnabled(true);
   String state=mStorageVolume != null ? mStorageManager.getVolumeState(mStorageVolume.getPath()) : Environment.MEDIA_MOUNTED;
   String readOnly="";
   if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
@@ -13,7 +13,8 @@
     removePreference(mMountTogglePreference);
   }
   if (Environment.MEDIA_MOUNTED.equals(state)) {
-    mPreferences[AVAILABLE].setSummary(mPreferences[AVAILABLE].getSummary() + readOnly);
+    final Preference pref=findPreference(KEY_AVAILABLE);
+    pref.setSummary(pref.getSummary() + readOnly);
     mMountTogglePreference.setEnabled(true);
     mMountTogglePreference.setTitle(mResources.getString(R.string.sd_eject));
     mMountTogglePreference.setSummary(mResources.getString(R.string.sd_eject_summary));
@@ -30,8 +31,8 @@
       mMountTogglePreference.setSummary(mResources.getString(R.string.sd_insert_summary));
     }
     removePreference(mUsageBarPreference);
-    removePreference(mPreferences[TOTAL_SIZE]);
-    removePreference(mPreferences[AVAILABLE]);
+    removePreference(findPreference(KEY_TOTAL_SIZE));
+    removePreference(findPreference(KEY_AVAILABLE));
     if (mFormatPreference != null) {
       removePreference(mFormatPreference);
     }

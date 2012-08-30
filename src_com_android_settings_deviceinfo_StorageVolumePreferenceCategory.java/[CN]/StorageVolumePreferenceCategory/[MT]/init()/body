@@ -1,36 +1,59 @@
 {
-  mUsageBarPreference=new UsageBarPreference(getContext());
-  final int width=(int)mResources.getDimension(R.dimen.device_memory_usage_button_width);
-  final int height=(int)mResources.getDimension(R.dimen.device_memory_usage_button_height);
-  final int numberOfCategories=sCategoryInfos.length;
-  mPreferences=new Preference[numberOfCategories];
-  mColors=new int[numberOfCategories];
-  for (int i=0; i < numberOfCategories; i++) {
-    final Preference preference=new Preference(getContext());
-    mPreferences[i]=preference;
-    preference.setTitle(sCategoryInfos[i].mTitle);
-    preference.setSummary(R.string.memory_calculating_size);
-    if (i != TOTAL_SIZE) {
-      mColors[i]=mResources.getColor(sCategoryInfos[i].mColor);
-      preference.setIcon(createRectShape(width,height,mColors[i]));
+  final Context context=getContext();
+  mUsageBarPreference=new UsageBarPreference(context);
+  mUsageBarPreference.setOrder(ORDER_USAGE_BAR);
+  addPreference(mUsageBarPreference);
+  addStorageItem(KEY_TOTAL_SIZE,R.string.memory_size,0);
+  addStorageItem(KEY_APPLICATIONS,R.string.memory_apps_usage,R.color.memory_apps_usage);
+  addStorageItem(KEY_DCIM,R.string.memory_dcim_usage,R.color.memory_dcim);
+  addStorageItem(KEY_MUSIC,R.string.memory_music_usage,R.color.memory_music);
+  addStorageItem(KEY_DOWNLOADS,R.string.memory_downloads_usage,R.color.memory_downloads);
+  addStorageItem(KEY_MISC,R.string.memory_media_misc_usage,R.color.memory_misc);
+  addStorageItem(KEY_AVAILABLE,R.string.memory_available,R.color.memory_avail);
+  if (mMeasureUsers) {
+    final UserManager userManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
+    final UserInfo currentUser;
+    try {
+      currentUser=ActivityManagerNative.getDefault().getCurrentUser();
+    }
+ catch (    RemoteException e) {
+      throw new RuntimeException("Failed to get current user");
+    }
+    int count=0;
+    for (    UserInfo info : userManager.getUsers()) {
+      if (info.id == currentUser.id) {
+        continue;
+      }
+      final UserHandle user=new UserHandle(info.id);
+      final String key=buildUserKey(user);
+      final StorageMeasurement measure=StorageMeasurement.getInstance(context,mStorageVolume,user,true);
+      measure.setIncludeAppCodeSize(false);
+      mAllMeasures.add(measure);
+      final int colorRes=count++ % 2 == 0 ? R.color.memory_user_light : R.color.memory_user_dark;
+      addPreference(new StorageItemPreference(getContext(),key,info.name,colorRes));
     }
   }
-  mMountTogglePreference=new Preference(getContext());
+  mMountTogglePreference=new Preference(context);
   mMountTogglePreference.setTitle(R.string.sd_eject);
   mMountTogglePreference.setSummary(R.string.sd_eject_summary);
+  addPreference(mMountTogglePreference);
   if (mAllowFormat) {
-    mFormatPreference=new Preference(getContext());
+    mFormatPreference=new Preference(context);
     mFormatPreference.setTitle(R.string.sd_format);
     mFormatPreference.setSummary(R.string.sd_format_summary);
+    addPreference(mFormatPreference);
   }
   final IPackageManager pm=ActivityThread.getPackageManager();
   try {
     if (pm.isStorageLow()) {
-      mStorageLow=new Preference(getContext());
+      mStorageLow=new Preference(context);
+      mStorageLow.setOrder(ORDER_STORAGE_LOW);
       mStorageLow.setTitle(R.string.storage_low_title);
       mStorageLow.setSummary(R.string.storage_low_summary);
+      addPreference(mStorageLow);
     }
- else {
+ else     if (mStorageLow != null) {
+      removePreference(mStorageLow);
       mStorageLow=null;
     }
   }

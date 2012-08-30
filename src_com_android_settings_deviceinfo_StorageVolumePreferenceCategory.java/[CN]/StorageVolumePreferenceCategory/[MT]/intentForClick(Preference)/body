@@ -1,29 +1,30 @@
 {
   Intent intent=null;
-  if (preference == mFormatPreference) {
+  final String key=pref.getKey();
+  if (pref == mFormatPreference) {
     intent=new Intent(Intent.ACTION_VIEW);
     intent.setClass(getContext(),com.android.settings.MediaFormat.class);
     intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME,mStorageVolume);
   }
- else   if (preference == mPreferences[APPLICATIONS]) {
+ else   if (KEY_APPLICATIONS.equals(key)) {
     intent=new Intent(Intent.ACTION_MANAGE_PACKAGE_STORAGE);
     intent.setClass(getContext(),com.android.settings.Settings.ManageApplicationsActivity.class);
   }
- else   if (preference == mPreferences[DOWNLOADS]) {
+ else   if (KEY_DOWNLOADS.equals(key)) {
     intent=new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS).putExtra(DownloadManager.INTENT_EXTRAS_SORT_BY_SIZE,true);
   }
- else   if (preference == mPreferences[MUSIC]) {
+ else   if (KEY_MUSIC.equals(key)) {
     intent=new Intent(Intent.ACTION_GET_CONTENT);
     intent.setType("audio/mp3");
   }
- else   if (preference == mPreferences[DCIM]) {
+ else   if (KEY_DCIM.equals(key)) {
     intent=new Intent(Intent.ACTION_VIEW);
     intent.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
     intent.setType("vnd.android.cursor.dir/image");
   }
- else   if (preference == mPreferences[MISC]) {
+ else   if (KEY_MISC.equals(key)) {
     Context context=getContext().getApplicationContext();
-    if (mMeasurement.getMiscSize() > 0) {
+    if (mLocalMeasure.getMiscSize() > 0) {
       intent=new Intent(context,MiscFilesHandler.class);
       intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME,mStorageVolume);
     }

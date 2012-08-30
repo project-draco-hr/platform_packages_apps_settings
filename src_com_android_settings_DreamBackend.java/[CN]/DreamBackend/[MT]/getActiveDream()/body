@@ -5,6 +5,7 @@
     return dreams != null && dreams.length > 0 ? dreams[0] : null;
   }
  catch (  RemoteException e) {
+    Log.w(TAG,"Failed to get active dream",e);
     return null;
   }
 }

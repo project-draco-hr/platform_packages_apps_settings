@@ -1,4 +1,5 @@
 {
+  logd("onActivityCreated(%s)",savedInstanceState);
   super.onActivityCreated(savedInstanceState);
   ListView listView=getListView();
   TextView emptyView=(TextView)getView().findViewById(android.R.id.empty);
@@ -6,9 +7,4 @@
   listView.setEmptyView(emptyView);
   mAdapter=new DreamInfoAdapter(mContext);
   listView.setAdapter(mAdapter);
-  listView.setDivider(null);
-  listView.setDividerHeight(DIVIDER_HEIGHT);
-  listView.setBackgroundColor(Color.BLACK);
-  listView.setPadding(0,DIVIDER_HEIGHT,0,DIVIDER_HEIGHT);
-  listView.setHeaderDividersEnabled(true);
 }

@@ -1,9 +1,11 @@
 {
+  logd("setActiveDream(%s)",dream);
   if (mDreamManager == null)   return;
   try {
     ComponentName[] dreams={dream};
     mDreamManager.setDreamComponents(dream == null ? null : dreams);
   }
  catch (  RemoteException e) {
+    Log.w(TAG,"Failed to set active dream to " + dream,e);
   }
 }

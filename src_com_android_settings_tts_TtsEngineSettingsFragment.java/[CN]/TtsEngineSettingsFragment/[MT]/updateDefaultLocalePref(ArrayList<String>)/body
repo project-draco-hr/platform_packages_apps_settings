@@ -1,8 +1,6 @@
 {
   String currentLocale=mEnginesHelper.getLocalePrefForEngine(getEngineName());
-  CharSequence[] entries=new CharSequence[availableLangs.size()];
-  CharSequence[] entryValues=new CharSequence[availableLangs.size()];
-  int selectedLanguageIndex=-1;
+  ArrayList<Pair<String,String>> entryPairs=Lists.newArrayListWithCapacity(availableLangs.size());
   for (int i=0; i < availableLangs.size(); i++) {
     String[] langCountryVariant=availableLangs.get(i).split("-");
     Locale loc=null;
@@ -16,12 +14,25 @@
       loc=new Locale(langCountryVariant[0],langCountryVariant[1],langCountryVariant[2]);
     }
     if (loc != null) {
-      entries[i]=loc.getDisplayName();
-      entryValues[i]=availableLangs.get(i);
-      if (availableLangs.get(i).equalsIgnoreCase(currentLocale)) {
-        selectedLanguageIndex=i;
-      }
+      entryPairs.add(new Pair<String,String>(loc.getDisplayName(),availableLangs.get(i)));
     }
+  }
+  Collections.sort(entryPairs,new Comparator<Pair<String,String>>(){
+    @Override public int compare(    Pair<String,String> lhs,    Pair<String,String> rhs){
+      return lhs.first.compareToIgnoreCase(rhs.first);
+    }
+  }
+);
+  int selectedLanguageIndex=-1;
+  CharSequence[] entries=new CharSequence[availableLangs.size()];
+  CharSequence[] entryValues=new CharSequence[availableLangs.size()];
+  int i=0;
+  for (  Pair<String,String> entry : entryPairs) {
+    if (entry.second.equalsIgnoreCase(currentLocale)) {
+      selectedLanguageIndex=i;
+    }
+    entries[i]=entry.first;
+    entryValues[i++]=entry.second;
   }
   mLocalePreference.setEntries(entries);
   mLocalePreference.setEntryValues(entryValues);

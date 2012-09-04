@@ -1,0 +1,8 @@
+{
+  if (Utils.D) {
+    Log.d(TAG," Clearing all connection state for dev:" + mDevice.getName());
+  }
+  for (  LocalBluetoothProfile profile : getProfiles()) {
+    mProfileConnectionState.put(profile,BluetoothProfile.STATE_DISCONNECTED);
+  }
+}

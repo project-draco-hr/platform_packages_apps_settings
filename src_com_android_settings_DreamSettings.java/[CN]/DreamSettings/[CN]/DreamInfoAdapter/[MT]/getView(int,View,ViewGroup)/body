@@ -4,7 +4,7 @@
   final View row=convertView != null ? convertView : createDreamInfoRow(parent);
   row.setTag(dreamInfo);
   ((ImageView)row.findViewById(android.R.id.icon)).setImageDrawable(dreamInfo.icon);
-  ((TextView)row.findViewById(android.R.id.text1)).setText(dreamInfo.caption);
+  ((TextView)row.findViewById(android.R.id.title)).setText(dreamInfo.caption);
   RadioButton radioButton=(RadioButton)row.findViewById(android.R.id.button1);
   radioButton.setChecked(dreamInfo.isActive);
   radioButton.setOnTouchListener(new OnTouchListener(){
@@ -14,19 +14,14 @@
     }
   }
 );
-  View widgetFrame=row.findViewById(android.R.id.widget_frame);
-  widgetFrame.setVisibility(dreamInfo.isActive ? View.VISIBLE : View.GONE);
-  Button settingsButton=(Button)row.findViewById(android.R.id.button2);
-  settingsButton.setVisibility(dreamInfo.settingsComponentName != null ? View.VISIBLE : View.GONE);
+  boolean showSettings=dreamInfo.settingsComponentName != null;
+  View settingsDivider=row.findViewById(R.id.divider);
+  settingsDivider.setVisibility(showSettings ? View.VISIBLE : View.INVISIBLE);
+  ImageView settingsButton=(ImageView)row.findViewById(android.R.id.button2);
+  settingsButton.setVisibility(showSettings ? View.VISIBLE : View.INVISIBLE);
   settingsButton.setOnClickListener(new OnClickListener(){
     @Override public void onClick(    View v){
       mBackend.launchSettings((DreamInfo)row.getTag());
-    }
-  }
-);
-  ((Button)row.findViewById(android.R.id.button3)).setOnClickListener(new OnClickListener(){
-    @Override public void onClick(    View v){
-      mBackend.preview((DreamInfo)row.getTag());
     }
   }
 );

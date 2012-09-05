@@ -8,6 +8,6 @@
     List<DreamInfo> dreamInfos=mBackend.getDreamInfos();
     mAdapter.addAll(dreamInfos);
   }
-  if (mWhenToDream != null)   mWhenToDream.setEnabled(dreamsEnabled);
+  if (mMenuItemsWhenEnabled != null)   for (  MenuItem menuItem : mMenuItemsWhenEnabled)   menuItem.setEnabled(dreamsEnabled);
   mRefreshing=false;
 }

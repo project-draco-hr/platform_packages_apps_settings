@@ -1,0 +1,10 @@
+{
+  logd("startDreaming()");
+  if (mDreamManager == null)   return;
+  try {
+    mDreamManager.dream();
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"Failed to dream",e);
+  }
+}

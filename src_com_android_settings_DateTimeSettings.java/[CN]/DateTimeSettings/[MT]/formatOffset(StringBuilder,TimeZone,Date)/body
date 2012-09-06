@@ -1,0 +1,19 @@
+{
+  int off=tz.getOffset(d.getTime()) / 1000 / 60;
+  sb.append("GMT");
+  if (off < 0) {
+    sb.append('-');
+    off=-off;
+  }
+ else {
+    sb.append('+');
+  }
+  int hours=off / 60;
+  int minutes=off % 60;
+  sb.append((char)('0' + hours / 10));
+  sb.append((char)('0' + hours % 10));
+  sb.append(':');
+  sb.append((char)('0' + minutes / 10));
+  sb.append((char)('0' + minutes % 10));
+  return sb;
+}

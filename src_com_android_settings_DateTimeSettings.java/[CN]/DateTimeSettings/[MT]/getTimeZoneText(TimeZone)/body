@@ -1,6 +1,4 @@
 {
-  boolean daylight=tz.inDaylightTime(new Date());
-  StringBuilder sb=new StringBuilder();
-  sb.append(formatOffset(tz.getRawOffset() + (daylight ? tz.getDSTSavings() : 0))).append(", ").append(tz.getDisplayName(daylight,TimeZone.LONG));
-  return sb.toString();
+  Date now=new Date();
+  return formatOffset(new StringBuilder(),tz,now).append(", ").append(tz.getDisplayName(tz.inDaylightTime(now),TimeZone.LONG)).toString();
 }

@@ -1,6 +1,6 @@
 {
   mMountTogglePreference.setEnabled(true);
-  String state=mStorageVolume != null ? mStorageManager.getVolumeState(mStorageVolume.getPath()) : Environment.MEDIA_MOUNTED;
+  String state=mVolume != null ? mStorageManager.getVolumeState(mVolume.getPath()) : Environment.MEDIA_MOUNTED;
   String readOnly="";
   if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
     state=Environment.MEDIA_MOUNTED;
@@ -9,7 +9,7 @@
       removePreference(mFormatPreference);
     }
   }
-  if ((mStorageVolume == null || !mStorageVolume.isRemovable()) && !Environment.MEDIA_UNMOUNTED.equals(state)) {
+  if ((mVolume == null || !mVolume.isRemovable()) && !Environment.MEDIA_UNMOUNTED.equals(state)) {
     removePreference(mMountTogglePreference);
   }
   if (Environment.MEDIA_MOUNTED.equals(state)) {

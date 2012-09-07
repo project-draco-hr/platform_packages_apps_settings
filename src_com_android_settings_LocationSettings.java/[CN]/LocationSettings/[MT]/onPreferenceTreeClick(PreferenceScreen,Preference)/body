@@ -11,7 +11,7 @@
     }
   }
  else   if (preference == mAssistedGps) {
-    Settings.Secure.putInt(cr,Settings.Secure.ASSISTED_GPS_ENABLED,mAssistedGps.isChecked() ? 1 : 0);
+    Settings.Global.putInt(cr,Settings.Global.ASSISTED_GPS_ENABLED,mAssistedGps.isChecked() ? 1 : 0);
   }
  else {
     return super.onPreferenceTreeClick(preferenceScreen,preference);

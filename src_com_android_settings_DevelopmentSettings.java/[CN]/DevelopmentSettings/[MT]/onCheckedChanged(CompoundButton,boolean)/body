@@ -9,7 +9,7 @@
       }
  else {
         resetDangerousOptions();
-        Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.DEVELOPMENT_SETTINGS_ENABLED,0);
+        Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,0);
         mLastEnabledState=isChecked;
         setPrefsEnabledState(mLastEnabledState);
       }

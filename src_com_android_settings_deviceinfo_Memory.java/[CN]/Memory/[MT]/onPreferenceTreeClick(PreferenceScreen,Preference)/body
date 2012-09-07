@@ -1,18 +1,17 @@
 {
-  for (int i=0; i < mStorageVolumePreferenceCategories.length; i++) {
-    StorageVolumePreferenceCategory svpc=mStorageVolumePreferenceCategories[i];
-    Intent intent=svpc.intentForClick(preference);
+  for (  StorageVolumePreferenceCategory category : mCategories) {
+    Intent intent=category.intentForClick(preference);
     if (intent != null) {
       if (!Utils.isMonkeyRunning()) {
         startActivity(intent);
       }
       return true;
     }
-    if (svpc.mountToggleClicked(preference)) {
-      mLastClickedMountToggle=preference;
-      final StorageVolume storageVolume=svpc.getStorageVolume();
-      mClickedMountPoint=storageVolume.getPath();
-      String state=mStorageManager.getVolumeState(storageVolume.getPath());
+    final StorageVolume volume=category.getStorageVolume();
+    if (volume != null && category.mountToggleClicked(preference)) {
+      sLastClickedMountToggle=preference;
+      sClickedMountPoint=volume.getPath();
+      String state=mStorageManager.getVolumeState(volume.getPath());
       if (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
         unmount();
       }

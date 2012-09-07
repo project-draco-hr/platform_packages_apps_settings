@@ -3,7 +3,7 @@
 synchronized (sInstances) {
     StorageMeasurement value=sInstances.get(key);
     if (value == null) {
-      value=new StorageMeasurement(context.getApplicationContext(),storageVolume,user,isPrimary);
+      value=new StorageMeasurement(context.getApplicationContext(),storageVolume,user);
       sInstances.put(key,value);
     }
     return value;

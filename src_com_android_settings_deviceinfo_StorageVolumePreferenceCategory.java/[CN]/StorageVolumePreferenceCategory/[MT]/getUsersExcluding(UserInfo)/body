@@ -1,0 +1,10 @@
+{
+  final List<UserInfo> users=mUserManager.getUsers();
+  final Iterator<UserInfo> i=users.iterator();
+  while (i.hasNext()) {
+    if (i.next().id == excluding.id) {
+      i.remove();
+    }
+  }
+  return users;
+}

@@ -4,7 +4,7 @@
   if (pref == mFormatPreference) {
     intent=new Intent(Intent.ACTION_VIEW);
     intent.setClass(getContext(),com.android.settings.MediaFormat.class);
-    intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME,mStorageVolume);
+    intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME,mVolume);
   }
  else   if (KEY_APPLICATIONS.equals(key)) {
     intent=new Intent(Intent.ACTION_MANAGE_PACKAGE_STORAGE);
@@ -26,7 +26,7 @@
     Context context=getContext().getApplicationContext();
     if (mLocalMeasure.getMiscSize() > 0) {
       intent=new Intent(context,MiscFilesHandler.class);
-      intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME,mStorageVolume);
+      intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME,mVolume);
     }
   }
   return intent;

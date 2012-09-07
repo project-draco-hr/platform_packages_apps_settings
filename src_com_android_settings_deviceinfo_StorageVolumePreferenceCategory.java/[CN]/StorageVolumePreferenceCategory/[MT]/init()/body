@@ -1,32 +1,34 @@
 {
   final Context context=getContext();
+  final UserInfo currentUser;
+  try {
+    currentUser=ActivityManagerNative.getDefault().getCurrentUser();
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("Failed to get current user");
+  }
+  final List<UserInfo> otherUsers=getUsersExcluding(currentUser);
+  final boolean measureUsers=mIsEmulated && mIsPrimary && otherUsers.size() > 0;
   mUsageBarPreference=new UsageBarPreference(context);
   mUsageBarPreference.setOrder(ORDER_USAGE_BAR);
   addPreference(mUsageBarPreference);
   addStorageItem(KEY_TOTAL_SIZE,R.string.memory_size,0);
+  addStorageItem(KEY_AVAILABLE,R.string.memory_available,R.color.memory_avail);
+  if (measureUsers) {
+    addPreference(new PreferenceHeader(context,currentUser.name));
+  }
   addStorageItem(KEY_APPLICATIONS,R.string.memory_apps_usage,R.color.memory_apps_usage);
   addStorageItem(KEY_DCIM,R.string.memory_dcim_usage,R.color.memory_dcim);
   addStorageItem(KEY_MUSIC,R.string.memory_music_usage,R.color.memory_music);
   addStorageItem(KEY_DOWNLOADS,R.string.memory_downloads_usage,R.color.memory_downloads);
   addStorageItem(KEY_MISC,R.string.memory_media_misc_usage,R.color.memory_misc);
-  addStorageItem(KEY_AVAILABLE,R.string.memory_available,R.color.memory_avail);
-  if (mMeasureUsers) {
-    final UserManager userManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
-    final UserInfo currentUser;
-    try {
-      currentUser=ActivityManagerNative.getDefault().getCurrentUser();
-    }
- catch (    RemoteException e) {
-      throw new RuntimeException("Failed to get current user");
-    }
+  if (measureUsers) {
+    addPreference(new PreferenceHeader(context,R.string.storage_other_users));
     int count=0;
-    for (    UserInfo info : userManager.getUsers()) {
-      if (info.id == currentUser.id) {
-        continue;
-      }
+    for (    UserInfo info : otherUsers) {
       final UserHandle user=new UserHandle(info.id);
       final String key=buildUserKey(user);
-      final StorageMeasurement measure=StorageMeasurement.getInstance(context,mStorageVolume,user);
+      final StorageMeasurement measure=StorageMeasurement.getInstance(context,mVolume,user);
       measure.setIncludeAppCodeSize(false);
       mAllMeasures.add(measure);
       final int colorRes=count++ % 2 == 0 ? R.color.memory_user_light : R.color.memory_user_dark;

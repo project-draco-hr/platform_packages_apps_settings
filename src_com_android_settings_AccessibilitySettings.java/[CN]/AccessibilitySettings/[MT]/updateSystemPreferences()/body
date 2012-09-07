@@ -19,4 +19,11 @@
   mSelectLongPressTimeoutPreference.setSummary(mLongPressTimeoutValuetoTitleMap.get(value));
   final boolean scriptInjectionAllowed=(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SCRIPT_INJECTION,0) == 1);
   mToggleScriptInjectionPreference.setInjectionAllowed(scriptInjectionAllowed);
+  final boolean magnificationEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_DISPLAY_MAGNIFICATION_ENABLED,0) == 1;
+  if (magnificationEnabled) {
+    mDisplayMagnificationPreferenceScreen.setSummary(R.string.accessibility_feature_state_on);
+  }
+ else {
+    mDisplayMagnificationPreferenceScreen.setSummary(R.string.accessibility_feature_state_off);
+  }
 }

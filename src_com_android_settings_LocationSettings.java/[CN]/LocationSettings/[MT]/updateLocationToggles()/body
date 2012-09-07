@@ -6,7 +6,7 @@
   mNetwork.setChecked(networkEnabled);
   mLocationAccess.setChecked(gpsEnabled || networkEnabled);
   if (mAssistedGps != null) {
-    mAssistedGps.setChecked(Settings.Secure.getInt(res,Settings.Secure.ASSISTED_GPS_ENABLED,2) == 1);
+    mAssistedGps.setChecked(Settings.Global.getInt(res,Settings.Global.ASSISTED_GPS_ENABLED,2) == 1);
     mAssistedGps.setEnabled(gpsEnabled);
   }
 }

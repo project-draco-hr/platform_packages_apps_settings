@@ -4,6 +4,31 @@
   if (KEY_UNLOCK_SET_OR_CHANGE.equals(key)) {
     startFragment(this,"com.android.settings.ChooseLockGeneric$ChooseLockGenericFragment",SET_OR_CHANGE_LOCK_METHOD_REQUEST,null);
   }
+ else   if (KEY_CHOOSE_USER_SELECTED_LOCKSCREEN_WIDGET.equals(key)) {
+    Intent pickIntent=new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
+    final int KEYGUARD_HOST_ID=0x4B455947;
+    int appWidgetId=AppWidgetHost.allocateAppWidgetIdForHost("com.android.internal.policy.impl.keyguard",KEYGUARD_HOST_ID);
+    if (appWidgetId != -1) {
+      pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
+      pickIntent.putExtra(AppWidgetManager.EXTRA_CUSTOM_SORT,false);
+      pickIntent.putExtra(AppWidgetManager.EXTRA_CATEGORY_FILTER,AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD);
+      AppWidgetProviderInfo noneInfo=new AppWidgetProviderInfo();
+      ArrayList<AppWidgetProviderInfo> extraInfos=new ArrayList<AppWidgetProviderInfo>();
+      noneInfo.label=getResources().getString(R.string.widget_none);
+      noneInfo.provider=new ComponentName("","");
+      extraInfos.add(noneInfo);
+      ArrayList<Bundle> extraExtras=new ArrayList<Bundle>();
+      Bundle b=new Bundle();
+      b.putBoolean(EXTRA_NO_WIDGET,true);
+      extraExtras.add(b);
+      pickIntent.putExtra(AppWidgetManager.EXTRA_CUSTOM_INFO,extraInfos);
+      pickIntent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS,extraExtras);
+      startActivityForResult(pickIntent,REQUEST_PICK_APPWIDGET);
+    }
+ else {
+      Log.e(TAG,"Unable to allocate an AppWidget id in lock screen");
+    }
+  }
  else   if (KEY_BIOMETRIC_WEAK_IMPROVE_MATCHING.equals(key)) {
     ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
     if (!helper.launchConfirmationActivity(CONFIRM_EXISTING_FOR_BIOMETRIC_WEAK_IMPROVE_REQUEST,null,null)) {

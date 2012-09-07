@@ -1,6 +1,18 @@
 {
   super.onCreate(icicle);
+  mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   addPreferencesFromResource(R.xml.user_settings);
   mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
+  mMePreference=(Preference)findPreference(KEY_USER_ME);
+  mMePreference.setOnPreferenceClickListener(this);
+  if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
+    mMePreference.setSummary(null);
+  }
+  mNicknamePreference=(EditTextPreference)findPreference(KEY_USER_NICKNAME);
+  mNicknamePreference.setOnPreferenceChangeListener(this);
+  mNicknamePreference.setSummary(mUserManager.getUserInfo(UserHandle.myUserId()).name);
+  loadProfile(false);
   setHasOptionsMenu(true);
+  getActivity().getContentResolver().registerContentObserver(ContactsContract.Profile.CONTENT_URI,false,mProfileObserver);
+  getActivity().registerReceiver(mUserChangeReceiver,new IntentFilter(Intent.ACTION_USER_REMOVED));
 }

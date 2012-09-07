@@ -1,14 +1,32 @@
 {
-  List<UserInfo> users=((UserManager)getActivity().getSystemService(Context.USER_SERVICE)).getUsers();
+  List<UserInfo> users=mUserManager.getUsers();
   mUserListCategory.removeAll();
+  mUserListCategory.setOrderingAsAdded(false);
   for (  UserInfo user : users) {
-    Preference pref=new Preference(getActivity());
-    pref.setTitle(user.name);
-    pref.setOnPreferenceClickListener(this);
-    pref.setKey("id=" + user.id);
-    if (user.iconPath != null) {
-      setPhotoId(pref,user.iconPath);
+    Preference pref;
+    if (user.id == UserHandle.myUserId()) {
+      pref=mMePreference;
     }
+ else {
+      pref=new UserPreference(getActivity(),null,user.id,UserHandle.myUserId() == UserHandle.USER_OWNER,this);
+      pref.setOnPreferenceClickListener(this);
+      pref.setKey("id=" + user.id);
+      mUserListCategory.addPreference(pref);
+      if (user.id == UserHandle.USER_OWNER) {
+        pref.setSummary(R.string.user_owner);
+      }
+      pref.setTitle(user.name);
+    }
+    if (user.iconPath != null) {
+      setPhotoId(pref,user);
+    }
+  }
+  if (mAddingUser) {
+    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,false,null);
+    pref.setEnabled(false);
+    pref.setTitle(R.string.user_new_user_name);
+    pref.setSummary(R.string.user_adding_new_user);
+    pref.setIcon(R.drawable.ic_user);
     mUserListCategory.addPreference(pref);
   }
 }

@@ -1,4 +1,8 @@
 {
   super.onResume();
+  if (mProfileChanged) {
+    loadProfile(true);
+    mProfileChanged=false;
+  }
   updateUserList();
 }

@@ -3,8 +3,9 @@
   if (pref != null) {
     if (size > 0) {
       pref.setSummary(formatSize(size));
-      if (showBar) {
-        mUsageBarPreference.addEntry(size / (float)totalSize,pref.getColor());
+      if (addBar) {
+        final int order=pref.getOrder();
+        mUsageBarPreference.addEntry(order,size / (float)totalSize,pref.getColor());
       }
     }
  else {

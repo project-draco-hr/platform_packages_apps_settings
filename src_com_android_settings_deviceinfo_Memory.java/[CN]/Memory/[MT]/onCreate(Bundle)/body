@@ -6,21 +6,12 @@
     mStorageManager.registerListener(mStorageListener);
   }
   addPreferencesFromResource(R.xml.device_info_memory);
-  mResources=getResources();
   if (!Environment.isExternalStorageEmulated()) {
-    mInternalStorageVolumePreferenceCategory=new StorageVolumePreferenceCategory(getActivity(),mResources,null,mStorageManager,false);
-    getPreferenceScreen().addPreference(mInternalStorageVolumePreferenceCategory);
-    mInternalStorageVolumePreferenceCategory.init();
+    addCategoryForVolume(null);
   }
-  StorageVolume[] storageVolumes=mStorageManager.getVolumeList();
-  int length=storageVolumes.length;
-  mStorageVolumePreferenceCategories=new StorageVolumePreferenceCategory[length];
-  for (int i=0; i < length; i++) {
-    StorageVolume storageVolume=storageVolumes[i];
-    boolean isPrimary=i == 0;
-    mStorageVolumePreferenceCategories[i]=new StorageVolumePreferenceCategory(getActivity(),mResources,storageVolume,mStorageManager,isPrimary);
-    getPreferenceScreen().addPreference(mStorageVolumePreferenceCategories[i]);
-    mStorageVolumePreferenceCategories[i].init();
+  final StorageVolume[] storageVolumes=mStorageManager.getVolumeList();
+  for (  StorageVolume volume : storageVolumes) {
+    addCategoryForVolume(volume);
   }
   setHasOptionsMenu(true);
 }

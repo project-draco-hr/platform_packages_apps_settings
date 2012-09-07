@@ -26,7 +26,7 @@
       }
       final UserHandle user=new UserHandle(info.id);
       final String key=buildUserKey(user);
-      final StorageMeasurement measure=StorageMeasurement.getInstance(context,mStorageVolume,user,true);
+      final StorageMeasurement measure=StorageMeasurement.getInstance(context,mStorageVolume,user);
       measure.setIncludeAppCodeSize(false);
       mAllMeasures.add(measure);
       final int colorRes=count++ % 2 == 0 ? R.color.memory_user_light : R.color.memory_user_dark;

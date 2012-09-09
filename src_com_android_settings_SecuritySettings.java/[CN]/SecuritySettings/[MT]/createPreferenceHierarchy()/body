@@ -83,6 +83,12 @@ mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
 mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
 mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
 mToggleVerifyApps=(CheckBoxPreference)findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
+if (isVerifierInstalled()) {
 mToggleVerifyApps.setChecked(isVerifyAppsEnabled());
+}
+ else {
+mToggleVerifyApps.setChecked(false);
+mToggleVerifyApps.setEnabled(false);
+}
 return root;
 }

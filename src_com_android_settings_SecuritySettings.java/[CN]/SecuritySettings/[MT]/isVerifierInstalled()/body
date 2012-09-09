@@ -1,0 +1,8 @@
+{
+  final PackageManager pm=getPackageManager();
+  final Intent verification=new Intent(Intent.ACTION_PACKAGE_NEEDS_VERIFICATION);
+  verification.setType(PACKAGE_MIME_TYPE);
+  verification.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+  final List<ResolveInfo> receivers=pm.queryBroadcastReceivers(verification,0);
+  return (receivers.size() > 0) ? true : false;
+}

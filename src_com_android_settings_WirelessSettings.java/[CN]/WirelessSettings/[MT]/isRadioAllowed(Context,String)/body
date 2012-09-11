@@ -2,6 +2,6 @@
   if (!AirplaneModeEnabler.isAirplaneModeOn(context)) {
     return true;
   }
-  String toggleable=Settings.System.getString(context.getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
+  String toggleable=Settings.Global.getString(context.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   return toggleable != null && toggleable.contains(type);
 }

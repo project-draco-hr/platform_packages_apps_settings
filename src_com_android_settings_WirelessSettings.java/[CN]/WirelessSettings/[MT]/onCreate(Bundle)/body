@@ -9,7 +9,7 @@
   mAirplaneModeEnabler=new AirplaneModeEnabler(activity,mAirplaneModePreference);
   mNfcEnabler=new NfcEnabler(activity,nfc,androidBeam);
   getPreferenceScreen().removePreference(nsd);
-  String toggleable=Settings.System.getString(activity.getContentResolver(),Settings.System.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
+  String toggleable=Settings.Global.getString(activity.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   boolean isWimaxEnabled=this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);
   if (!isWimaxEnabled) {
     PreferenceScreen root=getPreferenceScreen();
@@ -17,17 +17,17 @@
     if (ps != null)     root.removePreference(ps);
   }
  else {
-    if (toggleable == null || !toggleable.contains(Settings.System.RADIO_WIMAX) && isWimaxEnabled) {
+    if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_WIMAX) && isWimaxEnabled) {
       Preference ps=(Preference)findPreference(KEY_WIMAX_SETTINGS);
       ps.setDependency(KEY_TOGGLE_AIRPLANE);
     }
   }
-  if (toggleable == null || !toggleable.contains(Settings.System.RADIO_WIFI)) {
+  if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_WIFI)) {
     findPreference(KEY_VPN_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
   }
-  if (toggleable == null || !toggleable.contains(Settings.System.RADIO_BLUETOOTH)) {
+  if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_BLUETOOTH)) {
   }
-  if (toggleable == null || !toggleable.contains(Settings.System.RADIO_NFC)) {
+  if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_NFC)) {
     findPreference(KEY_TOGGLE_NFC).setDependency(KEY_TOGGLE_AIRPLANE);
     findPreference(KEY_ANDROID_BEAM_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
   }

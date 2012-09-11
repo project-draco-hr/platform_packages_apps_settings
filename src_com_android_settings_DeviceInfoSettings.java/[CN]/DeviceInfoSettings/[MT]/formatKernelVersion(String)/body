@@ -1,0 +1,13 @@
+{
+  final String PROC_VERSION_REGEX="Linux version (\\S+) " + "\\((\\S+?)\\) " + "(?:\\(gcc.+? \\)) "+ "(#\\d+) "+ "(?:.*?)?"+ "((Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)";
+  Matcher m=Pattern.compile(PROC_VERSION_REGEX).matcher(rawKernelVersion);
+  if (!m.matches()) {
+    Log.e(LOG_TAG,"Regex did not match on /proc/version: " + rawKernelVersion);
+    return "Unavailable";
+  }
+ else   if (m.groupCount() < 4) {
+    Log.e(LOG_TAG,"Regex match on /proc/version only returned " + m.groupCount() + " groups");
+    return "Unavailable";
+  }
+  return m.group(1) + "\n" + m.group(2)+ " "+ m.group(3)+ "\n"+ m.group(4);
+}

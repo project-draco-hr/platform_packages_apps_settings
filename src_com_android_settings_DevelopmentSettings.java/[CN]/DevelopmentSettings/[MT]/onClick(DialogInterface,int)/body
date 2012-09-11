@@ -2,7 +2,7 @@
   if (dialog == mAdbDialog) {
     if (which == DialogInterface.BUTTON_POSITIVE) {
       mDialogClicked=true;
-      Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ADB_ENABLED,1);
+      Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.ADB_ENABLED,1);
     }
  else {
       mEnableAdb.setChecked(false);
@@ -11,7 +11,7 @@
  else   if (dialog == mEnableDialog) {
     if (which == DialogInterface.BUTTON_POSITIVE) {
       mDialogClicked=true;
-      Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.DEVELOPMENT_SETTINGS_ENABLED,1);
+      Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,1);
       mLastEnabledState=true;
       setPrefsEnabledState(mLastEnabledState);
     }

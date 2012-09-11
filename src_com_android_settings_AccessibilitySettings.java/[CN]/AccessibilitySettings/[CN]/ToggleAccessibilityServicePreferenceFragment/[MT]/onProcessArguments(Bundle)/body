@@ -1,16 +1,5 @@
 {
-  Bundle arguments=getArguments();
-  mPreferenceKey=arguments.getString(EXTRA_PREFERENCE_KEY);
-  final boolean enabled=arguments.getBoolean(EXTRA_CHECKED);
-  mToggleSwitch.setCheckedInternal(enabled);
-  PreferenceActivity activity=(PreferenceActivity)getActivity();
-  if (!activity.onIsMultiPane() || activity.onIsHidingHeaders()) {
-    mOldActivityTitle=getActivity().getTitle();
-    String title=arguments.getString(EXTRA_TITLE);
-    getActivity().getActionBar().setTitle(title);
-  }
-  String summary=arguments.getString(EXTRA_SUMMARY);
-  mSummaryPreference.setSummary(summary);
+  super.onProcessArguments(arguments);
   String settingsTitle=arguments.getString(EXTRA_SETTINGS_TITLE);
   String settingsComponentName=arguments.getString(EXTRA_SETTINGS_COMPONENT_NAME);
   if (!TextUtils.isEmpty(settingsTitle) && !TextUtils.isEmpty(settingsComponentName)) {

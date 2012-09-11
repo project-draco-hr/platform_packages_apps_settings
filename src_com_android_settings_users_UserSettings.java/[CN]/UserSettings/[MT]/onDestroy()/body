@@ -1,0 +1,5 @@
+{
+  super.onDestroy();
+  getActivity().getContentResolver().unregisterContentObserver(mProfileObserver);
+  getActivity().unregisterReceiver(mUserChangeReceiver);
+}

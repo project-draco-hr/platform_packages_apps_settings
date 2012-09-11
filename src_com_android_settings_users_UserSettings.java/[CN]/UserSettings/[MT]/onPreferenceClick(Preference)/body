@@ -1,11 +1,8 @@
 {
-  String sid=pref.getKey();
-  if (sid != null && sid.startsWith("id=")) {
-    int id=Integer.parseInt(sid.substring(3));
-    Bundle args=new Bundle();
-    args.putInt(UserDetailsSettings.EXTRA_USER_ID,id);
-    ((PreferenceActivity)getActivity()).startPreferencePanel(UserDetailsSettings.class.getName(),args,0,pref.getTitle(),this,0);
-    return true;
+  if (pref == mMePreference) {
+    Intent editProfile=new Intent(Intent.ACTION_EDIT);
+    editProfile.setData(ContactsContract.Profile.CONTENT_URI);
+    startActivity(editProfile);
   }
   return false;
 }

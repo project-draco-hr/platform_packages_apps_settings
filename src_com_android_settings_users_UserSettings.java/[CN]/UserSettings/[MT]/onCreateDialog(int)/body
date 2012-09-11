@@ -1,0 +1,20 @@
+{
+switch (dialogId) {
+case DIALOG_CONFIRM_REMOVE:
+    return new AlertDialog.Builder(getActivity()).setTitle(R.string.user_confirm_remove_title).setMessage(R.string.user_confirm_remove_message).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+      public void onClick(      DialogInterface dialog,      int which){
+        removeUserNow();
+      }
+    }
+).setNegativeButton(android.R.string.cancel,null).create();
+case DIALOG_ADD_USER:
+  return new AlertDialog.Builder(getActivity()).setTitle(R.string.user_add_user_title).setMessage(R.string.user_add_user_message).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      addUserNow();
+    }
+  }
+).setNegativeButton(android.R.string.cancel,null).create();
+default :
+return null;
+}
+}

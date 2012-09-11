@@ -1,0 +1,10 @@
+{
+  view.setClickable(true);
+  view.setFocusable(true);
+  View deleteView=view.findViewById(R.id.trash_user);
+  if (deleteView != null) {
+    deleteView.setOnClickListener(mDeleteClickListener);
+    deleteView.setTag(this);
+  }
+  super.onBindView(view);
+}

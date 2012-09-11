@@ -1,0 +1,6 @@
+{
+  ParcelFileDescriptor fd=mUserManager.setUserIcon(user.id);
+  Drawable d=Drawable.createFromStream(new ParcelFileDescriptor.AutoCloseInputStream(fd),user.iconPath);
+  if (d == null)   return;
+  pref.setIcon(d);
+}

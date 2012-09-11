@@ -1,0 +1,17 @@
+{
+  if (mRemovingUserId == UserHandle.myUserId()) {
+    removeThisUser();
+  }
+ else {
+    new Thread(){
+      public void run(){
+synchronized (mUserLock) {
+          mUserManager.removeUser(mRemovingUserId);
+          mHandler.sendEmptyMessage(MESSAGE_UPDATE_LIST);
+          mRemovingUserId=-1;
+        }
+      }
+    }
+.start();
+  }
+}

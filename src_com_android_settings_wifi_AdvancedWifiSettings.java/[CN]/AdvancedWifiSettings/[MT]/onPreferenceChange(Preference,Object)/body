@@ -12,7 +12,7 @@
   if (KEY_SLEEP_POLICY.equals(key)) {
     try {
       String stringValue=(String)newValue;
-      Settings.System.putInt(getContentResolver(),Settings.System.WIFI_SLEEP_POLICY,Integer.parseInt(stringValue));
+      Settings.Global.putInt(getContentResolver(),Settings.Global.WIFI_SLEEP_POLICY,Integer.parseInt(stringValue));
       updateSleepPolicySummary(preference,stringValue);
     }
  catch (    NumberFormatException e) {

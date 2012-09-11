@@ -1,0 +1,19 @@
+{
+synchronized (mUserLock) {
+    mAddingUser=true;
+    updateUserList();
+    new Thread(){
+      public void run(){
+        UserInfo user=mUserManager.createUser(getActivity().getResources().getString(R.string.user_new_user_name),0);
+        if (user != null) {
+          assignDefaultPhoto(user);
+        }
+synchronized (mUserLock) {
+          mAddingUser=false;
+          mHandler.sendEmptyMessage(MESSAGE_UPDATE_LIST);
+        }
+      }
+    }
+.start();
+  }
+}

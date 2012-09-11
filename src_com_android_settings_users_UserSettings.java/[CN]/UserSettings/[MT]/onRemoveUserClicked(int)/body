@@ -1,7 +1,8 @@
 {
 synchronized (mUserLock) {
     if (mRemovingUserId == -1 && !mAddingUser) {
-      showDialog(DIALOG_ADD_USER);
+      mRemovingUserId=userId;
+      showDialog(DIALOG_CONFIRM_REMOVE);
       setOnDismissListener(this);
     }
   }

@@ -4,6 +4,10 @@
     onAddUserClicked();
     return true;
   }
+ else   if (itemId == MENU_REMOVE_USER) {
+    onRemoveUserClicked(UserHandle.myUserId());
+    return true;
+  }
  else {
     return super.onOptionsItemSelected(item);
   }

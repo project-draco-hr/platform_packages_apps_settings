@@ -1,0 +1,8 @@
+{
+  if (mSerialNumber < 0) {
+    if (mUserId == USERID_UNKNOWN)     return Integer.MAX_VALUE;
+    mSerialNumber=((UserManager)getContext().getSystemService(Context.USER_SERVICE)).getUserSerialNumber(mUserId);
+    if (mSerialNumber < 0)     return mUserId;
+  }
+  return mSerialNumber;
+}

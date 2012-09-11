@@ -1,6 +1,7 @@
 {
   mStorageVolume=volume;
   mUser=Preconditions.checkNotNull(user);
+  mUserEnv=new UserEnvironment(mUser.getIdentifier());
   mIsInternal=volume == null;
   mIsPrimary=volume != null ? volume.isPrimary() : false;
   final HandlerThread handlerThread=new HandlerThread("MemoryMeasurement");

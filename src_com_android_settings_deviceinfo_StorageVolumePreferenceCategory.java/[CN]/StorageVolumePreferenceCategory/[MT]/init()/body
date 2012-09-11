@@ -12,8 +12,8 @@
   mUsageBarPreference=new UsageBarPreference(context);
   mUsageBarPreference.setOrder(ORDER_USAGE_BAR);
   addPreference(mUsageBarPreference);
-  addStorageItem(KEY_TOTAL_SIZE,R.string.memory_size,0);
-  addStorageItem(KEY_AVAILABLE,R.string.memory_available,R.color.memory_avail);
+  mItemTotal=addStorageItem(KEY_TOTAL_SIZE,R.string.memory_size,0);
+  mItemAvailable=addStorageItem(KEY_AVAILABLE,R.string.memory_available,R.color.memory_avail);
   if (measureUsers) {
     addPreference(new PreferenceHeader(context,currentUser.name));
   }

@@ -16,7 +16,7 @@ case R.id.next_button:
       }
     }
     if (mAutoDateTimeButton != null) {
-      Settings.System.putInt(getContentResolver(),Settings.System.AUTO_TIME,mAutoDateTimeButton.isChecked() ? 1 : 0);
+      Settings.Global.putInt(getContentResolver(),Settings.Global.AUTO_TIME,mAutoDateTimeButton.isChecked() ? 1 : 0);
       if (!mAutoDateTimeButton.isChecked()) {
         DateTimeSettings.setDate(mDatePicker.getYear(),mDatePicker.getMonth(),mDatePicker.getDayOfMonth());
         DateTimeSettings.setTime(mTimePicker.getCurrentHour(),mTimePicker.getCurrentMinute());

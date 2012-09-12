@@ -1,4 +1,5 @@
 {
-  final StorageVolume[] storageVolumes=mStorageManager.getVolumeList();
-  return (storageVolumes.length > 0 && storageVolumes[0].allowMassStorage());
+  final StorageVolume[] volumes=mStorageManager.getVolumeList();
+  final StorageVolume primary=StorageManager.getPrimaryVolume(volumes);
+  return primary != null && primary.allowMassStorage();
 }

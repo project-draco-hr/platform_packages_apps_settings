@@ -2,6 +2,7 @@
   if (pref == mMePreference) {
     Intent editProfile=new Intent(Intent.ACTION_EDIT);
     editProfile.setData(ContactsContract.Profile.CONTENT_URI);
+    editProfile.putExtra("finishActivityOnSaveCompleted",true);
     startActivity(editProfile);
   }
   return false;

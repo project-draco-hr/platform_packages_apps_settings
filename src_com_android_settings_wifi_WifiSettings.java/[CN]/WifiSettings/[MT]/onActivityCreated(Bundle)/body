@@ -38,6 +38,7 @@
     }
     final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
     if (connectivity != null && connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
+      super.onActivityCreated(savedInstanceState);
       activity.finish();
       return;
     }

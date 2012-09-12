@@ -4,7 +4,7 @@
   mDirPaths=new String[length];
   for (int i=0; i < length; i++) {
     final String name=directories[i];
-    final String path=Environment.getExternalStoragePublicDirectory(name).getAbsolutePath();
+    final String path=sOwnerEnv.getExternalStoragePublicDirectory(name).getAbsolutePath();
     mDirPaths[i]=path;
     sPathsExcludedForMisc.add(path);
   }

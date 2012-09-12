@@ -3,7 +3,7 @@
     mUsageBarPreference.clear();
     mShowingApprox=false;
   }
-  findPreference(KEY_TOTAL_SIZE).setSummary(formatSize(totalSize));
+  mItemTotal.setSummary(formatSize(totalSize));
   if (mLocalMeasure.isExternalSDCard()) {
     final long usedSize=totalSize - availSize;
     mUsageBarPreference.addEntry(0,usedSize / (float)totalSize,android.graphics.Color.GRAY);
@@ -18,6 +18,6 @@
   }
   updatePreference(downloadsSize,totalSize,KEY_DOWNLOADS);
   updatePreference(miscSize,totalSize,KEY_MISC);
-  updatePreference(availSize,totalSize,KEY_AVAILABLE,false);
+  mItemAvailable.setSummary(formatSize(availSize));
   mUsageBarPreference.commit();
 }

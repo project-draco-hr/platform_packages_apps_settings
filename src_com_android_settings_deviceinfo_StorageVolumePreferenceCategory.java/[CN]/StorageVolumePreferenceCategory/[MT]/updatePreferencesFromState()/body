@@ -13,8 +13,7 @@
     removePreference(mMountTogglePreference);
   }
   if (Environment.MEDIA_MOUNTED.equals(state)) {
-    final Preference pref=findPreference(KEY_AVAILABLE);
-    pref.setSummary(pref.getSummary() + readOnly);
+    mItemAvailable.setSummary(mItemAvailable.getSummary() + readOnly);
     mMountTogglePreference.setEnabled(true);
     mMountTogglePreference.setTitle(mResources.getString(R.string.sd_eject));
     mMountTogglePreference.setSummary(mResources.getString(R.string.sd_eject_summary));
@@ -31,8 +30,8 @@
       mMountTogglePreference.setSummary(mResources.getString(R.string.sd_insert_summary));
     }
     removePreference(mUsageBarPreference);
-    removePreference(findPreference(KEY_TOTAL_SIZE));
-    removePreference(findPreference(KEY_AVAILABLE));
+    removePreference(mItemTotal);
+    removePreference(mItemAvailable);
     if (mFormatPreference != null) {
       removePreference(mFormatPreference);
     }

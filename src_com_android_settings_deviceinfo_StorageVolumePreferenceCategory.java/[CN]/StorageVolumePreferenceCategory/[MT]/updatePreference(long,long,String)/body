@@ -1,3 +1,13 @@
 {
-  updatePreference(size,totalSize,category,true);
+  final StorageItemPreference pref=(StorageItemPreference)findPreference(category);
+  if (pref != null) {
+    if (size > 0) {
+      pref.setSummary(formatSize(size));
+      final int order=pref.getOrder();
+      mUsageBarPreference.addEntry(order,size / (float)totalSize,pref.getColor());
+    }
+ else {
+      removePreference(pref);
+    }
+  }
 }

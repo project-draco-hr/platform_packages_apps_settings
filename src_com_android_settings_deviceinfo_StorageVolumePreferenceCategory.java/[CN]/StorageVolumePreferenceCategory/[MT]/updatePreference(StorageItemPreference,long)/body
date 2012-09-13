@@ -1,0 +1,10 @@
+{
+  if (size > 0) {
+    pref.setSummary(formatSize(size));
+    final int order=pref.getOrder();
+    mUsageBarPreference.addEntry(order,size / (float)mTotalSize,pref.color);
+  }
+ else {
+    removePreference(pref);
+  }
+}

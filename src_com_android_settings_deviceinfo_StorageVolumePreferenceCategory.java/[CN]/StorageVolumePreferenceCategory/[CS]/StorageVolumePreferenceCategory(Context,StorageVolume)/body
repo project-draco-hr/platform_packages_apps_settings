@@ -1,14 +1,9 @@
 {
   super(context);
   mVolume=volume;
-  mIsPrimary=volume != null ? volume.isPrimary() : false;
-  mIsEmulated=volume != null ? volume.isEmulated() : false;
+  mMeasure=StorageMeasurement.getInstance(context,volume);
   mResources=context.getResources();
-  mStorageManager=(StorageManager)context.getSystemService(Context.STORAGE_SERVICE);
+  mStorageManager=StorageManager.from(context);
   mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
   setTitle(volume != null ? volume.getDescription(context) : context.getText(R.string.internal_storage));
-  mLocalMeasure=StorageMeasurement.getInstance(context,volume,UserHandle.CURRENT);
-  mAllMeasures.add(mLocalMeasure);
-  mAllowFormat=mVolume != null && !mVolume.isEmulated();
-  if (!mIsPrimary)   mAllowFormat=false;
 }

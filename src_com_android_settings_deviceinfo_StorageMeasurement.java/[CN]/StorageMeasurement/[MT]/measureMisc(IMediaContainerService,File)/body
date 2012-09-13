@@ -1,0 +1,28 @@
+{
+  mFileInfoForMisc=new ArrayList<FileInfo>();
+  final File[] files=dir.listFiles();
+  if (files == null)   return 0;
+  long counter=0;
+  long miscSize=0;
+  for (  File file : files) {
+    final String path=file.getAbsolutePath();
+    final String name=file.getName();
+    if (sMeasureMediaTypes.contains(name)) {
+      continue;
+    }
+    if (file.isFile()) {
+      final long fileSize=file.length();
+      mFileInfoForMisc.add(new FileInfo(path,fileSize,counter++));
+      miscSize+=fileSize;
+    }
+ else     if (file.isDirectory()) {
+      final long dirSize=getDirectorySize(imcs,file);
+      mFileInfoForMisc.add(new FileInfo(path,dirSize,counter++));
+      miscSize+=dirSize;
+    }
+ else {
+    }
+  }
+  Collections.sort(mFileInfoForMisc);
+  return miscSize;
+}

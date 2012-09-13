@@ -1,17 +1,16 @@
 {
   super.onCreate(icicle);
+  final Context context=getActivity();
   mUsbManager=(UsbManager)getSystemService(Context.USB_SERVICE);
-  if (mStorageManager == null) {
-    mStorageManager=(StorageManager)getSystemService(Context.STORAGE_SERVICE);
-    mStorageManager.registerListener(mStorageListener);
-  }
+  mStorageManager=StorageManager.from(context);
+  mStorageManager.registerListener(mStorageListener);
   addPreferencesFromResource(R.xml.device_info_memory);
-  if (!Environment.isExternalStorageEmulated()) {
-    addCategoryForVolume(null);
-  }
+  addCategory(StorageVolumePreferenceCategory.buildForInternal(context));
   final StorageVolume[] storageVolumes=mStorageManager.getVolumeList();
   for (  StorageVolume volume : storageVolumes) {
-    addCategoryForVolume(volume);
+    if (!volume.isEmulated()) {
+      addCategory(StorageVolumePreferenceCategory.buildForPhysical(context,volume));
+    }
   }
   setHasOptionsMenu(true);
 }

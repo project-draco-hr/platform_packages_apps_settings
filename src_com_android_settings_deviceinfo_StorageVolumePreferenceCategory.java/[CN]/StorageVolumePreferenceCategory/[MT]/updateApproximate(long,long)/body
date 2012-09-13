@@ -1,10 +1,10 @@
 {
   mItemTotal.setSummary(formatSize(totalSize));
   mItemAvailable.setSummary(formatSize(availSize));
+  mTotalSize=totalSize;
   final long usedSize=totalSize - availSize;
   mUsageBarPreference.clear();
   mUsageBarPreference.addEntry(0,usedSize / (float)totalSize,android.graphics.Color.GRAY);
   mUsageBarPreference.commit();
-  mShowingApprox=true;
   updatePreferencesFromState();
 }

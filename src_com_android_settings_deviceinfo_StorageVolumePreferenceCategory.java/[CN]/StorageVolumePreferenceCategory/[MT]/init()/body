@@ -8,38 +8,49 @@
     throw new RuntimeException("Failed to get current user");
   }
   final List<UserInfo> otherUsers=getUsersExcluding(currentUser);
-  final boolean measureUsers=mIsEmulated && mIsPrimary && otherUsers.size() > 0;
+  final boolean showUsers=mVolume == null && otherUsers.size() > 0;
   mUsageBarPreference=new UsageBarPreference(context);
   mUsageBarPreference.setOrder(ORDER_USAGE_BAR);
   addPreference(mUsageBarPreference);
-  mItemTotal=addStorageItem(KEY_TOTAL_SIZE,R.string.memory_size,0);
-  mItemAvailable=addStorageItem(KEY_AVAILABLE,R.string.memory_available,R.color.memory_avail);
-  if (measureUsers) {
-    addPreference(new PreferenceHeader(context,currentUser.name));
-  }
-  addStorageItem(KEY_APPLICATIONS,R.string.memory_apps_usage,R.color.memory_apps_usage);
-  addStorageItem(KEY_DCIM,R.string.memory_dcim_usage,R.color.memory_dcim);
-  addStorageItem(KEY_MUSIC,R.string.memory_music_usage,R.color.memory_music);
-  addStorageItem(KEY_DOWNLOADS,R.string.memory_downloads_usage,R.color.memory_downloads);
-  addStorageItem(KEY_MISC,R.string.memory_media_misc_usage,R.color.memory_misc);
-  if (measureUsers) {
-    addPreference(new PreferenceHeader(context,R.string.storage_other_users));
-    int count=0;
-    for (    UserInfo info : otherUsers) {
-      final UserHandle user=new UserHandle(info.id);
-      final String key=buildUserKey(user);
-      final StorageMeasurement measure=StorageMeasurement.getInstance(context,mVolume,user);
-      measure.setIncludeAppCodeSize(false);
-      mAllMeasures.add(measure);
-      final int colorRes=count++ % 2 == 0 ? R.color.memory_user_light : R.color.memory_user_dark;
-      addPreference(new StorageItemPreference(getContext(),key,info.name,colorRes));
+  mItemTotal=buildItem(R.string.memory_size,0);
+  mItemAvailable=buildItem(R.string.memory_available,R.color.memory_avail);
+  addPreference(mItemTotal);
+  addPreference(mItemAvailable);
+  mItemApps=buildItem(R.string.memory_apps_usage,R.color.memory_apps_usage);
+  mItemDcim=buildItem(R.string.memory_dcim_usage,R.color.memory_dcim);
+  mItemMusic=buildItem(R.string.memory_music_usage,R.color.memory_music);
+  mItemDownloads=buildItem(R.string.memory_downloads_usage,R.color.memory_downloads);
+  mItemMisc=buildItem(R.string.memory_media_misc_usage,R.color.memory_misc);
+  final boolean showDetails=mVolume == null || mVolume.isPrimary();
+  if (showDetails) {
+    if (showUsers) {
+      addPreference(new PreferenceHeader(context,currentUser.name));
+    }
+    addPreference(mItemApps);
+    addPreference(mItemDcim);
+    addPreference(mItemMusic);
+    addPreference(mItemDownloads);
+    addPreference(mItemMisc);
+    if (showUsers) {
+      addPreference(new PreferenceHeader(context,R.string.storage_other_users));
+      int count=0;
+      for (      UserInfo info : otherUsers) {
+        final int colorRes=count++ % 2 == 0 ? R.color.memory_user_light : R.color.memory_user_dark;
+        final StorageItemPreference userPref=new StorageItemPreference(getContext(),info.name,colorRes,info.id);
+        mItemUsers.add(userPref);
+        addPreference(userPref);
+      }
     }
   }
-  mMountTogglePreference=new Preference(context);
-  mMountTogglePreference.setTitle(R.string.sd_eject);
-  mMountTogglePreference.setSummary(R.string.sd_eject_summary);
-  addPreference(mMountTogglePreference);
-  if (mAllowFormat) {
+  final boolean isRemovable=mVolume != null ? mVolume.isRemovable() : false;
+  if (isRemovable) {
+    mMountTogglePreference=new Preference(context);
+    mMountTogglePreference.setTitle(R.string.sd_eject);
+    mMountTogglePreference.setSummary(R.string.sd_eject_summary);
+    addPreference(mMountTogglePreference);
+  }
+  final boolean allowFormat=mVolume != null ? mVolume.isPrimary() : false;
+  if (allowFormat) {
     mFormatPreference=new Preference(context);
     mFormatPreference.setTitle(R.string.sd_format);
     mFormatPreference.setSummary(R.string.sd_format_summary);

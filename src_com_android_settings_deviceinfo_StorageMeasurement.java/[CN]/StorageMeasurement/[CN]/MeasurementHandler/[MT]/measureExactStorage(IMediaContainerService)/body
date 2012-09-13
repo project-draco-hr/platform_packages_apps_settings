@@ -1,55 +1,43 @@
 {
-  Context context=mContext != null ? mContext.get() : null;
+  final Context context=mContext != null ? mContext.get() : null;
   if (context == null) {
     return;
   }
-  for (int i=0; i < StorageVolumePreferenceCategory.sMediaCategories.length; i++) {
-    if (mIsPrimary) {
-      String[] dirs=StorageVolumePreferenceCategory.sMediaCategories[i].mDirPaths;
-      final int length=dirs.length;
-      mMediaSizes[i]=0;
-      for (int d=0; d < length; d++) {
-        final String path=dirs[d];
-        mMediaSizes[i]+=getDirectorySize(imcs,path);
+  final MeasurementDetails details=new MeasurementDetails();
+  final Message finished=obtainMessage(MSG_COMPLETED,details);
+  final UserManager userManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  final List<UserInfo> users=userManager.getUsers();
+  final int currentUser=ActivityManager.getCurrentUser();
+  final UserEnvironment currentEnv=new UserEnvironment(currentUser);
+  final boolean measureMedia=(mIsInternal && Environment.isExternalStorageEmulated()) || mIsPrimary;
+  if (measureMedia) {
+    for (    String type : sMeasureMediaTypes) {
+      final File path=currentEnv.getExternalStoragePublicDirectory(type);
+      final long size=getDirectorySize(imcs,path);
+      details.mediaSize.put(type,size);
+    }
+  }
+  if (mIsInternal || mIsPrimary) {
+    final File path=mIsInternal ? currentEnv.getExternalStorageDirectory() : mVolume.getPathFile();
+    details.miscSize=measureMisc(imcs,path);
+  }
+  for (  UserInfo user : users) {
+    final UserEnvironment userEnv=new UserEnvironment(user.id);
+    final long size=getDirectorySize(imcs,userEnv.getExternalStorageDirectory());
+    addValue(details.usersSize,user.id,size);
+  }
+  final PackageManager pm=context.getPackageManager();
+  if (mIsInternal || mIsPrimary) {
+    final List<ApplicationInfo> apps=pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
+    final int count=users.size() * apps.size();
+    final StatsObserver observer=new StatsObserver(mIsInternal,details,currentUser,finished,count);
+    for (    UserInfo user : users) {
+      for (      ApplicationInfo app : apps) {
+        pm.getPackageSizeInfo(app.packageName,user.id,observer);
       }
     }
- else {
-      mMediaSizes[i]=0;
-    }
-  }
-  if (mIsPrimary) {
-    final String downloadsPath=mUserEnv.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-    mDownloadsSize=getDirectorySize(imcs,downloadsPath);
   }
  else {
-    mDownloadsSize=0;
-  }
-  mMiscSize=0;
-  if (mIsPrimary) {
-    measureSizesOfMisc(imcs);
-  }
-  PackageManager pm=context.getPackageManager();
-  if (pm == null) {
-    return;
-  }
-  final List<ApplicationInfo> apps;
-  if (mIsPrimary || mIsInternal) {
-    apps=pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
-  }
- else {
-    apps=Collections.emptyList();
-  }
-  if (apps != null && apps.size() > 0) {
-    mStatsObserver=new StatsObserver();
-synchronized (mStatsObserver.mAppsList) {
-      for (int i=0; i < apps.size(); i++) {
-        final ApplicationInfo info=apps.get(i);
-        mStatsObserver.queuePackageMeasurementLocked(info.packageName);
-      }
-    }
-    requestQueuedMeasurementsLocked(pm);
-  }
- else {
-    onInternalMeasurementComplete();
+    finished.sendToTarget();
   }
 }

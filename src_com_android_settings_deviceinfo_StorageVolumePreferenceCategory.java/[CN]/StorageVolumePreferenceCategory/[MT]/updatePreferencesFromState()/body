@@ -1,19 +1,17 @@
 {
+  if (mVolume == null)   return;
   mMountTogglePreference.setEnabled(true);
-  String state=mVolume != null ? mStorageManager.getVolumeState(mVolume.getPath()) : Environment.MEDIA_MOUNTED;
-  String readOnly="";
+  final String state=mStorageManager.getVolumeState(mVolume.getPath());
   if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-    state=Environment.MEDIA_MOUNTED;
-    readOnly=mResources.getString(R.string.read_only);
+    mItemAvailable.setSummary(R.string.memory_available_read_only);
     if (mFormatPreference != null) {
       removePreference(mFormatPreference);
     }
   }
-  if ((mVolume == null || !mVolume.isRemovable()) && !Environment.MEDIA_UNMOUNTED.equals(state)) {
-    removePreference(mMountTogglePreference);
+ else {
+    mItemAvailable.setSummary(R.string.memory_available);
   }
-  if (Environment.MEDIA_MOUNTED.equals(state)) {
-    mItemAvailable.setSummary(mItemAvailable.getSummary() + readOnly);
+  if (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
     mMountTogglePreference.setEnabled(true);
     mMountTogglePreference.setTitle(mResources.getString(R.string.sd_eject));
     mMountTogglePreference.setSummary(mResources.getString(R.string.sd_eject_summary));
@@ -38,7 +36,7 @@
   }
   if (mUsbConnected && (UsbManager.USB_FUNCTION_MTP.equals(mUsbFunction) || UsbManager.USB_FUNCTION_PTP.equals(mUsbFunction))) {
     mMountTogglePreference.setEnabled(false);
-    if (Environment.MEDIA_MOUNTED.equals(state)) {
+    if (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
       mMountTogglePreference.setSummary(mResources.getString(R.string.mtp_ptp_mode_summary));
     }
     if (mFormatPreference != null) {

@@ -1,0 +1,10 @@
+{
+synchronized (mDetails) {
+    if (succeeded) {
+      addStatsLocked(stats);
+    }
+    if (--mRemaining == 0) {
+      mFinished.sendToTarget();
+    }
+  }
+}

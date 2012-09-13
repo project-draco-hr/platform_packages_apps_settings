@@ -1,0 +1,10 @@
+{
+  MeasurementReceiver receiver=(mReceiver != null) ? mReceiver.get() : null;
+  if (receiver == null) {
+    if (LOGV) {
+      Log.i(TAG,"measurements dropped because receiver is null! wasted effort");
+    }
+    return;
+  }
+  receiver.updateDetails(this,details);
+}

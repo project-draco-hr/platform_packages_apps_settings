@@ -22,15 +22,16 @@
     if (mBluetoothEnableForTether) {
 switch (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothAdapter.ERROR)) {
 case BluetoothAdapter.STATE_ON:
-        if (mBluetoothPan != null) {
-          mBluetoothPan.setBluetoothTethering(true);
-          mBluetoothEnableForTether=false;
-        }
-      break;
+        BluetoothPan bluetoothPan=mBluetoothPan.get();
+      if (bluetoothPan != null) {
+        bluetoothPan.setBluetoothTethering(true);
+        mBluetoothEnableForTether=false;
+      }
+    break;
 case BluetoothAdapter.STATE_OFF:
 case BluetoothAdapter.ERROR:
-    mBluetoothEnableForTether=false;
-  break;
+  mBluetoothEnableForTether=false;
+break;
 default :
 }
 }

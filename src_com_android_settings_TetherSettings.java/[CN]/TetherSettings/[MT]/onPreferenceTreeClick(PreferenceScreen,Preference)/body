@@ -21,7 +21,8 @@
       if (bluetoothIface != null && cm.untether(bluetoothIface) != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
         errored=true;
       }
-      mBluetoothPan.setBluetoothTethering(false);
+      BluetoothPan bluetoothPan=mBluetoothPan.get();
+      if (bluetoothPan != null)       bluetoothPan.setBluetoothTethering(false);
       if (errored) {
         mBluetoothTether.setSummary(R.string.bluetooth_tethering_errored_subtext);
       }

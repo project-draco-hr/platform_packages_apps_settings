@@ -1,0 +1,23 @@
+{
+  final long externalSize=stats.externalCodeSize + stats.externalDataSize + stats.externalCacheSize+ stats.externalMediaSize;
+  if (mIsInternal) {
+    final long codeSize;
+    final long dataSize;
+    if (Environment.isExternalStorageEmulated()) {
+      codeSize=stats.codeSize + stats.externalObbSize;
+      dataSize=stats.dataSize + externalSize;
+    }
+ else {
+      codeSize=stats.codeSize;
+      dataSize=stats.dataSize;
+    }
+    if (stats.userHandle == mCurrentUser) {
+      mDetails.appsSize+=codeSize;
+      mDetails.appsSize+=dataSize;
+    }
+    addValue(mDetails.usersSize,stats.userHandle,dataSize);
+  }
+ else {
+    mDetails.appsSize+=externalSize + stats.externalObbSize;
+  }
+}

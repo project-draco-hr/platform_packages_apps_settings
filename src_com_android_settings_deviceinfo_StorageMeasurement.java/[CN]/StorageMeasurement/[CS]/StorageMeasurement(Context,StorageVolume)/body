@@ -1,0 +1,8 @@
+{
+  mVolume=volume;
+  mIsInternal=volume == null;
+  mIsPrimary=volume != null ? volume.isPrimary() : false;
+  final HandlerThread handlerThread=new HandlerThread("MemoryMeasurement");
+  handlerThread.start();
+  mHandler=new MeasurementHandler(context,handlerThread.getLooper());
+}

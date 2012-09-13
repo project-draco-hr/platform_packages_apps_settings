@@ -1,0 +1,10 @@
+{
+synchronized (sInstances) {
+    StorageMeasurement value=sInstances.get(volume);
+    if (value == null) {
+      value=new StorageMeasurement(context.getApplicationContext(),volume);
+      sInstances.put(volume,value);
+    }
+    return value;
+  }
+}

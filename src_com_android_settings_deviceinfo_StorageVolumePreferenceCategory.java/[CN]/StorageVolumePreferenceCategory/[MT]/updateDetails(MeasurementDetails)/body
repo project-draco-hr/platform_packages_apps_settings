@@ -1,0 +1,18 @@
+{
+  final boolean showDetails=mVolume == null || mVolume.isPrimary();
+  if (!showDetails)   return;
+  mUsageBarPreference.clear();
+  updatePreference(mItemApps,details.appsSize);
+  final long dcimSize=totalValues(details.mediaSize,Environment.DIRECTORY_DCIM,Environment.DIRECTORY_MOVIES,Environment.DIRECTORY_PICTURES);
+  updatePreference(mItemDcim,dcimSize);
+  final long musicSize=totalValues(details.mediaSize,Environment.DIRECTORY_MUSIC,Environment.DIRECTORY_ALARMS,Environment.DIRECTORY_NOTIFICATIONS,Environment.DIRECTORY_RINGTONES,Environment.DIRECTORY_PODCASTS);
+  updatePreference(mItemMusic,musicSize);
+  final long downloadsSize=totalValues(details.mediaSize,Environment.DIRECTORY_DOWNLOADS);
+  updatePreference(mItemDownloads,musicSize);
+  updatePreference(mItemMisc,details.miscSize);
+  for (  StorageItemPreference userPref : mItemUsers) {
+    final long userSize=details.usersSize.get(userPref.userHandle);
+    updatePreference(userPref,userSize);
+  }
+  mUsageBarPreference.commit();
+}

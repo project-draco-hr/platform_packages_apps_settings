@@ -1,0 +1,11 @@
+{
+  try {
+    final long size=imcs.calculateDirectorySize(path.toString());
+    Log.d(TAG,"getDirectorySize(" + path + ") returned "+ size);
+    return size;
+  }
+ catch (  Exception e) {
+    Log.w(TAG,"Could not read memory from default container service for " + path,e);
+    return 0;
+  }
+}

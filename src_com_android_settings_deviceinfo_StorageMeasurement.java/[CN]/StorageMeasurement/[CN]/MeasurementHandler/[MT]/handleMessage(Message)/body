@@ -2,8 +2,8 @@
 switch (msg.what) {
 case MSG_MEASURE:
 {
-      if (mMeasured) {
-        sendExactUpdate();
+      if (mCached != null) {
+        sendExactUpdate(mCached);
         break;
       }
       final Context context=(mContext != null) ? mContext.get() : null;
@@ -17,7 +17,7 @@ synchronized (mLock) {
         }
  else {
           Intent service=new Intent().setComponent(DEFAULT_CONTAINER_COMPONENT);
-          context.bindService(service,mDefContainerConn,Context.BIND_AUTO_CREATE,mUser.getIdentifier());
+          context.bindService(service,mDefContainerConn,Context.BIND_AUTO_CREATE,UserHandle.USER_OWNER);
         }
       }
       break;
@@ -45,13 +45,13 @@ synchronized (mLock) {
 }
 case MSG_COMPLETED:
 {
-mMeasured=true;
-sendExactUpdate();
+mCached=(MeasurementDetails)msg.obj;
+sendExactUpdate(mCached);
 break;
 }
 case MSG_INVALIDATE:
 {
-mMeasured=false;
+mCached=null;
 break;
 }
 }

@@ -3,8 +3,5 @@
   if (receiver == null) {
     return;
   }
-  Bundle bundle=new Bundle();
-  bundle.putLong(TOTAL_SIZE,mTotalSize);
-  bundle.putLong(AVAIL_SIZE,mAvailSize);
-  receiver.updateApproximate(this,bundle);
+  receiver.updateApproximate(this,mTotalSize,mAvailSize);
 }

@@ -120,6 +120,8 @@ Log.i(TAG,String.format("sensor %s power=%.2f",sensor.toString(),p));
 }
 }
 if (DEBUG) Log.i(TAG,String.format("UID %d total power=%.2f",u.getUid(),power));
+boolean isOtherUser=false;
+final int userId=UserHandle.getUserId(u.getUid());
 if (power != 0 || u.getUid() == 0) {
 BatterySipper app=new BatterySipper(getActivity(),mRequestQueue,mHandler,packageWithHighestDrain,DrainType.APP,0,u,new double[]{power});
 app.cpuTime=cpuTime;
@@ -135,6 +137,15 @@ mWifiSippers.add(app);
  else if (u.getUid() == Process.BLUETOOTH_GID) {
 mBluetoothSippers.add(app);
 }
+ else if (userId != UserHandle.myUserId() && UserHandle.getAppId(u.getUid()) >= Process.FIRST_APPLICATION_UID) {
+isOtherUser=true;
+List<BatterySipper> list=mUserSippers.get(userId);
+if (list == null) {
+list=new ArrayList<BatterySipper>();
+mUserSippers.put(userId,list);
+}
+list.add(app);
+}
  else {
 mUsageList.add(app);
 }
@@ -142,15 +153,27 @@ if (u.getUid() == 0) {
 osApp=app;
 }
 }
+if (power != 0) {
 if (u.getUid() == Process.WIFI_UID) {
 mWifiPower+=power;
 }
  else if (u.getUid() == Process.BLUETOOTH_GID) {
 mBluetoothPower+=power;
 }
+ else if (isOtherUser) {
+Double userPower=mUserPower.get(userId);
+if (userPower == null) {
+userPower=power;
+}
+ else {
+userPower+=power;
+}
+mUserPower.put(userId,userPower);
+}
  else {
 if (power > mMaxPower) mMaxPower=power;
 mTotalPower+=power;
+}
 }
 }
 if (osApp != null) {

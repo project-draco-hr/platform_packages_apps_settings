@@ -1,7 +1,13 @@
 {
   if (pref == mMePreference) {
-    Intent editProfile=new Intent(Intent.ACTION_EDIT);
-    editProfile.setData(ContactsContract.Profile.CONTENT_URI);
+    Intent editProfile;
+    if (!mProfileExists) {
+      editProfile=new Intent(Intent.ACTION_INSERT,Contacts.CONTENT_URI);
+      editProfile.putExtra("newLocalProfile",true);
+    }
+ else {
+      editProfile=new Intent(Intent.ACTION_EDIT,ContactsContract.Profile.CONTENT_URI);
+    }
     editProfile.putExtra("finishActivityOnSaveCompleted",true);
     startActivity(editProfile);
   }

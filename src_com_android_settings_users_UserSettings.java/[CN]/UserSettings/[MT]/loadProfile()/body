@@ -1,0 +1,17 @@
+{
+  mProfileExists=false;
+  new AsyncTask<Void,Void,String>(){
+    @Override protected void onPostExecute(    String result){
+      finishLoadProfile(result);
+    }
+    @Override protected String doInBackground(    Void... values){
+      UserInfo user=mUserManager.getUserInfo(UserHandle.myUserId());
+      if (user.iconPath == null || user.iconPath.equals("")) {
+        assignProfilePhoto(user);
+      }
+      String profileName=getProfileName();
+      return profileName;
+    }
+  }
+.execute();
+}

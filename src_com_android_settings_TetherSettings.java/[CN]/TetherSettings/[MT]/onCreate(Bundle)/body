@@ -32,7 +32,8 @@
     getPreferenceScreen().removePreference(mBluetoothTether);
   }
  else {
-    if (mBluetoothPan != null && mBluetoothPan.isTetheringOn()) {
+    BluetoothPan pan=mBluetoothPan.get();
+    if (pan != null && pan.isTetheringOn()) {
       mBluetoothTether.setChecked(true);
     }
  else {

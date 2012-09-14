@@ -31,10 +31,13 @@
           if (DEBUG)           Log.v(TAG,"Clearing preferred: " + prefActivities.get(i).getPackageName());
           pm.clearPackagePreferredActivities(prefActivities.get(i).getPackageName());
         }
-        final int[] restrictedAppIds=npm.getAppsWithPolicy(POLICY_REJECT_METERED_BACKGROUND);
-        for (        int i : restrictedAppIds) {
-          if (DEBUG)           Log.v(TAG,"Clearing data policy: " + i);
-          npm.setAppPolicy(i,POLICY_NONE);
+        final int[] restrictedUids=npm.getUidsWithPolicy(POLICY_REJECT_METERED_BACKGROUND);
+        final int currentUserId=ActivityManager.getCurrentUser();
+        for (        int uid : restrictedUids) {
+          if (UserHandle.getUserId(uid) == currentUserId) {
+            if (DEBUG)             Log.v(TAG,"Clearing data policy: " + uid);
+            npm.setUidPolicy(uid,POLICY_NONE);
+          }
         }
         handler.post(new Runnable(){
           @Override public void run(){

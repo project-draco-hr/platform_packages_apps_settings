@@ -1,16 +1,20 @@
 {
   final Context context=getActivity();
   final boolean appDetailMode=isAppDetailMode();
+  final boolean isOwner=ActivityManager.getCurrentUser() == UserHandle.USER_OWNER;
   mMenuDataRoaming=menu.findItem(R.id.data_usage_menu_roaming);
   mMenuDataRoaming.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
   mMenuDataRoaming.setChecked(getDataRoaming());
+  mMenuDataRoaming.setVisible(isOwner);
   mMenuRestrictBackground=menu.findItem(R.id.data_usage_menu_restrict_background);
   mMenuRestrictBackground.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
   mMenuRestrictBackground.setChecked(mPolicyManager.getRestrictBackground());
+  mMenuRestrictBackground.setVisible(isOwner);
   mMenuAutoSync=menu.findItem(R.id.data_usage_menu_auto_sync);
   mMenuAutoSync.setChecked(ContentResolver.getMasterSyncAutomatically());
+  mMenuAutoSync.setVisible(isOwner && !appDetailMode);
   final MenuItem split4g=menu.findItem(R.id.data_usage_menu_split_4g);
-  split4g.setVisible(hasReadyMobile4gRadio(context) && !appDetailMode);
+  split4g.setVisible(hasReadyMobile4gRadio(context) && isOwner && !appDetailMode);
   split4g.setChecked(isMobilePolicySplit());
   final MenuItem showWifi=menu.findItem(R.id.data_usage_menu_show_wifi);
   if (hasWifiRadio(context) && hasReadyMobileRadio(context)) {
@@ -30,7 +34,7 @@
   }
   final MenuItem metered=menu.findItem(R.id.data_usage_menu_metered);
   if (hasReadyMobileRadio(context) || hasWifiRadio(context)) {
-    metered.setVisible(!appDetailMode);
+    metered.setVisible(isOwner && !appDetailMode);
   }
  else {
     metered.setVisible(false);

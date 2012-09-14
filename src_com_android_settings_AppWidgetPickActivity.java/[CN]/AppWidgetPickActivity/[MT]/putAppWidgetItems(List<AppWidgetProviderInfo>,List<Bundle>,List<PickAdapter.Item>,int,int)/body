@@ -17,6 +17,12 @@
     if (customExtras != null) {
       item.extras=customExtras.get(i);
     }
+    if ((info.widgetCategory & categoryFilter) == 0) {
+      continue;
+    }
+    if ((info.widgetFeatures & featuresFilter) != featuresFilter) {
+      continue;
+    }
     items.add(item);
   }
 }

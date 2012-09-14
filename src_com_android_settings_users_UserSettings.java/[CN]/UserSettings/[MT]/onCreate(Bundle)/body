@@ -11,8 +11,7 @@
   mNicknamePreference=(EditTextPreference)findPreference(KEY_USER_NICKNAME);
   mNicknamePreference.setOnPreferenceChangeListener(this);
   mNicknamePreference.setSummary(mUserManager.getUserInfo(UserHandle.myUserId()).name);
-  loadProfile(false);
+  loadProfile();
   setHasOptionsMenu(true);
-  getActivity().getContentResolver().registerContentObserver(ContactsContract.Profile.CONTENT_URI,false,mProfileObserver);
   getActivity().registerReceiver(mUserChangeReceiver,new IntentFilter(Intent.ACTION_USER_REMOVED));
 }

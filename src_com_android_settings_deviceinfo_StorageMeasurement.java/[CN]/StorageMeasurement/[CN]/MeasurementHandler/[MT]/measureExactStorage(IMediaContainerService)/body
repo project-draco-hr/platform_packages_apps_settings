@@ -5,6 +5,8 @@
   }
   final MeasurementDetails details=new MeasurementDetails();
   final Message finished=obtainMessage(MSG_COMPLETED,details);
+  details.totalSize=mTotalSize;
+  details.availSize=mAvailSize;
   final UserManager userManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
   final List<UserInfo> users=userManager.getUsers();
   final int currentUser=ActivityManager.getCurrentUser();

@@ -1,39 +1,46 @@
 {
   mItems.clear();
-  final AppItem systemItem=new AppItem(android.os.Process.SYSTEM_UID);
-  final SparseArray<AppItem> knownUids=new SparseArray<AppItem>();
+  final int currentUserId=ActivityManager.getCurrentUser();
+  final SparseArray<AppItem> knownItems=new SparseArray<AppItem>();
   NetworkStats.Entry entry=null;
   final int size=stats != null ? stats.size() : 0;
   for (int i=0; i < size; i++) {
     entry=stats.getValues(i,entry);
-    final boolean isApp=UserHandle.isApp(entry.uid);
-    final int appId=isApp ? UserHandle.getAppId(entry.uid) : entry.uid;
-    if (isApp || appId == UID_REMOVED || appId == UID_TETHERING) {
-      AppItem item=knownUids.get(appId);
-      if (item == null) {
-        item=new AppItem(appId);
-        knownUids.put(appId,item);
-        mItems.add(item);
+    final int uid=entry.uid;
+    final int collapseKey;
+    if (UserHandle.isApp(uid)) {
+      if (UserHandle.getUserId(uid) == currentUserId) {
+        collapseKey=uid;
       }
-      item.total+=entry.rxBytes + entry.txBytes;
-      item.addUid(entry.uid);
+ else {
+        collapseKey=UidDetailProvider.buildKeyForUser(UserHandle.getUserId(uid));
+      }
+    }
+ else     if (uid == UID_REMOVED || uid == UID_TETHERING) {
+      collapseKey=uid;
     }
  else {
-      systemItem.total+=entry.rxBytes + entry.txBytes;
-      systemItem.addUid(entry.uid);
+      collapseKey=android.os.Process.SYSTEM_UID;
     }
-  }
-  for (  int appId : restrictedAppIds) {
-    AppItem item=knownUids.get(appId);
+    AppItem item=knownItems.get(collapseKey);
     if (item == null) {
-      item=new AppItem(appId);
+      item=new AppItem(collapseKey);
+      mItems.add(item);
+      knownItems.put(item.key,item);
+    }
+    item.addUid(uid);
+    item.total+=entry.rxBytes + entry.txBytes;
+  }
+  for (  int uid : restrictedUids) {
+    if (UserHandle.getUserId(uid) != currentUserId)     continue;
+    AppItem item=knownItems.get(uid);
+    if (item == null) {
+      item=new AppItem(uid);
       item.total=-1;
       mItems.add(item);
+      knownItems.put(item.key,item);
     }
     item.restricted=true;
-  }
-  if (systemItem.total > 0) {
-    mItems.add(systemItem);
   }
   Collections.sort(mItems);
   mLargest=(mItems.size() > 0) ? mItems.get(0).total : 0;

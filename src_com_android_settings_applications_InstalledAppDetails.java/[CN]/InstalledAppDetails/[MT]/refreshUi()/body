@@ -83,8 +83,30 @@
   }
   LinearLayout permsView=(LinearLayout)mRootView.findViewById(R.id.permissions_section);
   AppSecurityPermissions asp=new AppSecurityPermissions(getActivity(),packageName);
-  if (asp.getPermissionCount() > 0) {
+  int premiumSmsPermission=getPremiumSmsPermission(packageName);
+  if (asp.getPermissionCount() > 0 || premiumSmsPermission != SmsUsageMonitor.PREMIUM_SMS_PERMISSION_UNKNOWN) {
     permsView.setVisibility(View.VISIBLE);
+  }
+ else {
+    permsView.setVisibility(View.GONE);
+  }
+  TextView securityBillingDesc=(TextView)permsView.findViewById(R.id.security_settings_billing_desc);
+  LinearLayout securityBillingList=(LinearLayout)permsView.findViewById(R.id.security_settings_billing_list);
+  if (premiumSmsPermission != SmsUsageMonitor.PREMIUM_SMS_PERMISSION_UNKNOWN) {
+    securityBillingDesc.setVisibility(View.VISIBLE);
+    securityBillingList.setVisibility(View.VISIBLE);
+    Spinner spinner=(Spinner)permsView.findViewById(R.id.security_settings_premium_sms_list);
+    ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getActivity(),R.array.security_settings_premium_sms_values,android.R.layout.simple_spinner_item);
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinner.setAdapter(adapter);
+    spinner.setSelection(premiumSmsPermission - 1);
+    spinner.setOnItemSelectedListener(new PremiumSmsSelectionListener(packageName,mSmsManager));
+  }
+ else {
+    securityBillingDesc.setVisibility(View.GONE);
+    securityBillingList.setVisibility(View.GONE);
+  }
+  if (asp.getPermissionCount() > 0) {
     LinearLayout securityList=(LinearLayout)permsView.findViewById(R.id.security_settings_list);
     securityList.removeAllViews();
     securityList.addView(asp.getPermissionsView());
@@ -124,9 +146,6 @@
         descr.setText(res.getString(R.string.security_settings_desc_multi,mPackageInfo.applicationInfo.loadLabel(mPm),appListStr));
       }
     }
-  }
- else {
-    permsView.setVisibility(View.GONE);
   }
   checkForceStop();
   setAppLabelAndIcon(mPackageInfo);

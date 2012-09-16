@@ -7,5 +7,6 @@
   mUsbManager=IUsbManager.Stub.asInterface(b);
   mAppWidgetManager=AppWidgetManager.getInstance(getActivity());
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+  mSmsManager=ISms.Stub.asInterface(ServiceManager.getService("isms"));
   mCanBeOnSdCardChecker=new CanBeOnSdCardChecker();
 }

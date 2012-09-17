@@ -1,0 +1,8 @@
+{
+  super.onActivityResult(requestCode,resultCode,data);
+  if (requestCode == REQUEST_UNINSTALL) {
+    if (!refreshUi()) {
+      setIntentAndFinish(true,true);
+    }
+  }
+}

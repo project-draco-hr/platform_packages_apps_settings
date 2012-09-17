@@ -1,0 +1,19 @@
+{
+  boolean showIt=true;
+  if (mUpdatedSysApp) {
+    showIt=false;
+  }
+ else   if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+    showIt=false;
+  }
+ else   if (mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
+    showIt=false;
+  }
+ else   if (UserHandle.myUserId() != 0) {
+    showIt=false;
+  }
+ else   if (mUserManager.getUsers().size() < 1) {
+    showIt=false;
+  }
+  menu.findItem(UNINSTALL_ALL_USERS_MENU).setVisible(showIt);
+}

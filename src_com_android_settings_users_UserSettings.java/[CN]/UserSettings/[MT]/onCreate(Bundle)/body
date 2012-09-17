@@ -10,7 +10,7 @@
   }
   mNicknamePreference=(EditTextPreference)findPreference(KEY_USER_NICKNAME);
   mNicknamePreference.setOnPreferenceChangeListener(this);
-  mNicknamePreference.setSummary(mUserManager.getUserInfo(UserHandle.myUserId()).name);
+  mNicknamePreference.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
   loadProfile();
   setHasOptionsMenu(true);
   getActivity().registerReceiver(mUserChangeReceiver,new IntentFilter(Intent.ACTION_USER_REMOVED));

@@ -1,0 +1,31 @@
+{
+  Uri contactUri=Profile.CONTENT_URI;
+  InputStream avatarDataStream=Contacts.openContactPhotoInputStream(context.getContentResolver(),contactUri,true);
+  if (avatarDataStream == null) {
+    return false;
+  }
+  int userId=user != null ? user.id : UserHandle.myUserId();
+  UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  ParcelFileDescriptor fd=um.setUserIcon(userId);
+  FileOutputStream os=new ParcelFileDescriptor.AutoCloseOutputStream(fd);
+  byte[] buffer=new byte[4096];
+  int readSize;
+  try {
+    while ((readSize=avatarDataStream.read(buffer)) > 0) {
+      os.write(buffer,0,readSize);
+    }
+    return true;
+  }
+ catch (  IOException ioe) {
+    Log.e("copyProfilePhoto","Error copying profile photo " + ioe);
+  }
+ finally {
+    try {
+      os.close();
+      avatarDataStream.close();
+    }
+ catch (    IOException ioe) {
+    }
+  }
+  return false;
+}

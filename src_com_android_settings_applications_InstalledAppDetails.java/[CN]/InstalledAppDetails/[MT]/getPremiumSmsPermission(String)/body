@@ -1,0 +1,10 @@
+{
+  try {
+    if (mSmsManager != null) {
+      return mSmsManager.getPremiumSmsPermission(packageName);
+    }
+  }
+ catch (  RemoteException ex) {
+  }
+  return SmsUsageMonitor.PREMIUM_SMS_PERMISSION_UNKNOWN;
+}

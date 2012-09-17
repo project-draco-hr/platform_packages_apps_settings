@@ -3,6 +3,7 @@
   if (!isAdded())   return;
   final Context context=getActivity();
   final String currentTab=mTabHost.getCurrentTabTag();
+  final boolean isOwner=ActivityManager.getCurrentUser() == UserHandle.USER_OWNER;
   if (currentTab == null) {
     Log.w(TAG,"no tab selected; hiding body");
     mListView.setVisibility(View.GONE);
@@ -14,7 +15,7 @@
   final boolean tabChanged=!currentTab.equals(mCurrentTab);
   mCurrentTab=currentTab;
   if (LOGD)   Log.d(TAG,"updateBody() with currentTab=" + currentTab);
-  mDataEnabledView.setVisibility(View.VISIBLE);
+  mDataEnabledView.setVisibility(isOwner ? View.VISIBLE : View.GONE);
   final TelephonyManager tele=TelephonyManager.from(context);
   if (TAB_MOBILE.equals(currentTab)) {
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_mobile);

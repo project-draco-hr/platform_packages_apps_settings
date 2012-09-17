@@ -1,6 +1,6 @@
 {
   if (LOGD)   Log.d(TAG,"setAppRestrictBackground()");
-  final int appId=mCurrentApp.appId;
-  mPolicyManager.setAppPolicy(appId,restrictBackground ? POLICY_REJECT_METERED_BACKGROUND : POLICY_NONE);
+  final int uid=mCurrentApp.key;
+  mPolicyManager.setUidPolicy(uid,restrictBackground ? POLICY_REJECT_METERED_BACKGROUND : POLICY_NONE);
   mAppRestrict.setChecked(restrictBackground);
 }

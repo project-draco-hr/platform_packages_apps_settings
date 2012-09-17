@@ -1,0 +1,12 @@
+{
+  try {
+    startActivityForResult(intent,requestCode);
+  }
+ catch (  ActivityNotFoundException e) {
+    Toast.makeText(getActivity(),R.string.activity_not_found,Toast.LENGTH_SHORT).show();
+  }
+catch (  SecurityException e) {
+    Toast.makeText(getActivity(),R.string.activity_not_found,Toast.LENGTH_SHORT).show();
+    Log.e(TAG,"Settings does not have the permission to launch " + intent,e);
+  }
+}

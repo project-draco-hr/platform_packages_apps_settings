@@ -91,6 +91,7 @@ mToggleVerifyApps.setChecked(false);
 mToggleVerifyApps.setEnabled(false);
 }
 mUserSelectedWidget=root.findPreference(KEY_CHOOSE_USER_SELECTED_LOCKSCREEN_WIDGET);
+if (mUserSelectedWidget != null) {
 AppWidgetManager appWidgetManager=AppWidgetManager.getInstance(getActivity());
 int appWidgetId=-1;
 String appWidgetIdString=Settings.Secure.getString(getContentResolver(),Settings.Secure.LOCK_SCREEN_USER_SELECTED_APPWIDGET_ID);
@@ -105,6 +106,7 @@ mUserSelectedWidget.setSummary(getResources().getString(R.string.widget_none));
 AppWidgetProviderInfo appWidget=appWidgetManager.getAppWidgetInfo(appWidgetId);
 if (appWidget != null) {
 mUserSelectedWidget.setSummary(appWidget.label);
+}
 }
 }
 return root;

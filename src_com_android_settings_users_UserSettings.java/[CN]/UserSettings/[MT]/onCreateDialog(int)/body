@@ -1,7 +1,7 @@
 {
 switch (dialogId) {
 case DIALOG_CONFIRM_REMOVE:
-    return new AlertDialog.Builder(getActivity()).setTitle(R.string.user_confirm_remove_title).setMessage(R.string.user_confirm_remove_message).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    return new AlertDialog.Builder(getActivity()).setTitle(UserHandle.myUserId() == mRemovingUserId ? R.string.user_confirm_remove_self_title : R.string.user_confirm_remove_title).setMessage(UserHandle.myUserId() == mRemovingUserId ? R.string.user_confirm_remove_self_message : R.string.user_confirm_remove_message).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
       public void onClick(      DialogInterface dialog,      int which){
         removeUserNow();
       }
@@ -14,6 +14,13 @@ case DIALOG_ADD_USER:
     }
   }
 ).setNegativeButton(android.R.string.cancel,null).create();
+case DIALOG_SETUP_USER:
+return new AlertDialog.Builder(getActivity()).setTitle(R.string.user_setup_dialog_title).setMessage(R.string.user_setup_dialog_message).setPositiveButton(R.string.user_setup_button_setup_now,new DialogInterface.OnClickListener(){
+  public void onClick(  DialogInterface dialog,  int which){
+    switchUserNow(mAddedUserId);
+  }
+}
+).setNegativeButton(R.string.user_setup_button_setup_later,null).create();
 default :
 return null;
 }

@@ -12,7 +12,8 @@ mBluetoothTether.setSummary(R.string.bluetooth_turning_on);
 mBluetoothTether.setEnabled(false);
 }
  else {
-mBluetoothPan.setBluetoothTethering(true);
+BluetoothPan bluetoothPan=mBluetoothPan.get();
+if (bluetoothPan != null) bluetoothPan.setBluetoothTethering(true);
 mBluetoothTether.setSummary(R.string.bluetooth_tethering_available_subtext);
 }
 break;

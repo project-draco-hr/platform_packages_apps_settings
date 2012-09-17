@@ -1,8 +1,10 @@
 {
   super.onCreate(icicle);
+  setHasOptionsMenu(true);
   mState=ApplicationsState.getInstance(getActivity().getApplication());
   mSession=mState.newSession(this);
   mPm=getActivity().getPackageManager();
+  mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   IBinder b=ServiceManager.getService(Context.USB_SERVICE);
   mUsbManager=IUsbManager.Stub.asInterface(b);
   mAppWidgetManager=AppWidgetManager.getInstance(getActivity());

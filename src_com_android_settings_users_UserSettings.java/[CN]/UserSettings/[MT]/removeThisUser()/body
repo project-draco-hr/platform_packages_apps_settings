@@ -1,6 +1,9 @@
 {
-  Toast.makeText(getActivity(),"Not implemented yet!",Toast.LENGTH_SHORT).show();
-synchronized (mUserLock) {
-    mRemovingUserId=-1;
+  try {
+    ActivityManagerNative.getDefault().switchUser(UserHandle.USER_OWNER);
+    ((UserManager)getActivity().getSystemService(Context.USER_SERVICE)).removeUser(UserHandle.myUserId());
+  }
+ catch (  RemoteException re) {
+    Log.e(TAG,"Unable to remove self user");
   }
 }

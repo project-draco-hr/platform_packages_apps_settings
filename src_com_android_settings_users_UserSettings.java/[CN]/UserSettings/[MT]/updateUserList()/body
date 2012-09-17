@@ -6,6 +6,8 @@
     Preference pref;
     if (user.id == UserHandle.myUserId()) {
       pref=mMePreference;
+      mNicknamePreference.setText(user.name);
+      mNicknamePreference.setSummary(user.name);
     }
  else {
       pref=new UserPreference(getActivity(),null,user.id,UserHandle.myUserId() == UserHandle.USER_OWNER,this);

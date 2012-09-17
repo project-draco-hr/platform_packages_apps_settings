@@ -82,6 +82,7 @@ mShowPassword=(CheckBoxPreference)root.findPreference(KEY_SHOW_PASSWORD);
 mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
 mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
 mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
+if (showVerifierSetting()) {
 mToggleVerifyApps=(CheckBoxPreference)findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
 if (isVerifierInstalled()) {
 mToggleVerifyApps.setChecked(isVerifyAppsEnabled());
@@ -89,6 +90,7 @@ mToggleVerifyApps.setChecked(isVerifyAppsEnabled());
  else {
 mToggleVerifyApps.setChecked(false);
 mToggleVerifyApps.setEnabled(false);
+}
 }
 mUserSelectedWidget=root.findPreference(KEY_CHOOSE_USER_SELECTED_LOCKSCREEN_WIDGET);
 if (mUserSelectedWidget != null) {

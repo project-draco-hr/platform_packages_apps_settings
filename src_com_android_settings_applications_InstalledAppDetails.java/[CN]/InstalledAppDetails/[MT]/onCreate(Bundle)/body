@@ -1,6 +1,5 @@
 {
   super.onCreate(icicle);
-  setHasOptionsMenu(true);
   mState=ApplicationsState.getInstance(getActivity().getApplication());
   mSession=mState.newSession(this);
   mPm=getActivity().getPackageManager();
@@ -11,4 +10,6 @@
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   mSmsManager=ISms.Stub.asInterface(ServiceManager.getService("isms"));
   mCanBeOnSdCardChecker=new CanBeOnSdCardChecker();
+  retrieveAppEntry();
+  setHasOptionsMenu(true);
 }

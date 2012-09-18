@@ -1,0 +1,12 @@
+{
+  final Bundle args=getArguments();
+  String packageName=(args != null) ? args.getString(ARG_PACKAGE_NAME) : null;
+  if (packageName == null) {
+    Intent intent=(args == null) ? getActivity().getIntent() : (Intent)args.getParcelable("intent");
+    if (intent != null) {
+      packageName=intent.getData().getSchemeSpecificPart();
+    }
+  }
+  mAppEntry=mState.getEntry(packageName);
+  return packageName;
+}

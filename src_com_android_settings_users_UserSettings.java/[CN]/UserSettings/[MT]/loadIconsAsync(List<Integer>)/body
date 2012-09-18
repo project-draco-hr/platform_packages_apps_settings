@@ -1,0 +1,17 @@
+{
+  new AsyncTask<List<Integer>,Void,Void>(){
+    @Override protected void onPostExecute(    Void result){
+      updateUserList();
+    }
+    @Override protected Void doInBackground(    List<Integer>... values){
+      if (getActivity() == null)       return null;
+      for (      int userId : values[0]) {
+        Bitmap bitmap=mUserManager.getUserIcon(userId);
+        Drawable d=new BitmapDrawable(getResources(),bitmap);
+        mUserIcons.append(userId,d);
+      }
+      return null;
+    }
+  }
+.execute(missingIcons);
+}

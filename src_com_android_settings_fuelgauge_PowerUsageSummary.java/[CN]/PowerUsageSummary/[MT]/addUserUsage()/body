@@ -5,12 +5,7 @@
     UserInfo info=mUm.getUserInfo(userId);
     Drawable icon=null;
     if (info != null && info.iconPath != null) {
-      try {
-        icon=Drawable.createFromPath(info.iconPath);
-      }
- catch (      Exception e) {
-        Log.w(TAG,"Failure loading user picture " + info.iconPath,e);
-      }
+      icon=UserUtils.getUserIcon(mUm,info);
     }
     String name=info != null ? info.name : null;
     if (name == null) {

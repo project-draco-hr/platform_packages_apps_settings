@@ -32,8 +32,6 @@
   parentPreference=getPreferenceScreen();
   Utils.updatePreferenceToSpecificActivityOrRemove(act,parentPreference,KEY_SYSTEM_UPDATE_SETTINGS,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
   Utils.updatePreferenceToSpecificActivityOrRemove(act,parentPreference,KEY_CONTRIBUTORS,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
-  boolean isUpdateSettingAvailable=getResources().getBoolean(R.bool.config_additional_system_update_setting_enable);
-  if (isUpdateSettingAvailable == false) {
-    getPreferenceScreen().removePreference(findPreference(KEY_UPDATE_SETTING));
-  }
+  removePreferenceIfBoolFalse(KEY_UPDATE_SETTING,R.bool.config_additional_system_update_setting_enable);
+  removePreferenceIfBoolFalse(KEY_REGULATORY_INFO,R.bool.config_show_regulatory_info);
 }

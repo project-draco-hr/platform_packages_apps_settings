@@ -26,12 +26,19 @@
       }
  else {
         if (noWidget) {
+          AppWidgetHost.deleteAppWidgetIdForHost(appWidgetId);
           data.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,-1);
         }
-        onActivityResult(REQUEST_CREATE_APPWIDGET,Activity.RESULT_OK,data);
+ else {
+          onActivityResult(REQUEST_CREATE_APPWIDGET,Activity.RESULT_OK,data);
+        }
       }
     }
  else     if (requestCode == REQUEST_CREATE_APPWIDGET && resultCode == Activity.RESULT_OK) {
+      int oldAppWidgetId=getUserSelectedAppWidgetId();
+      if (oldAppWidgetId != -1) {
+        AppWidgetHost.deleteAppWidgetIdForHost(oldAppWidgetId);
+      }
       Settings.Secure.putString(getContentResolver(),Settings.Secure.LOCK_SCREEN_USER_SELECTED_APPWIDGET_ID,Integer.toString(appWidgetId));
     }
  else {

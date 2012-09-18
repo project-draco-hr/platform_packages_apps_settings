@@ -3,6 +3,9 @@
   if (mUpdatedSysApp) {
     showIt=false;
   }
+ else   if (mAppEntry == null) {
+    showIt=false;
+  }
  else   if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
     showIt=false;
   }

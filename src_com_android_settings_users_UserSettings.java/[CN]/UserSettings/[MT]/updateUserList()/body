@@ -1,10 +1,15 @@
 {
+  if (getActivity() == null)   return;
   List<UserInfo> users=mUserManager.getUsers();
   mUserListCategory.removeAll();
   mUserListCategory.setOrderingAsAdded(false);
+  final ArrayList<Integer> missingIcons=new ArrayList<Integer>();
   for (  UserInfo user : users) {
     Preference pref;
-    if (user.id == UserHandle.myUserId()) {
+    if (user.id == mRemovingUserId) {
+      continue;
+    }
+ else     if (user.id == UserHandle.myUserId()) {
       pref=mMePreference;
       mNicknamePreference.setText(user.name);
       mNicknamePreference.setSummary(user.name);
@@ -20,7 +25,13 @@
       pref.setTitle(user.name);
     }
     if (user.iconPath != null) {
-      setPhotoId(pref,user);
+      if (mUserIcons.get(user.id) == null) {
+        missingIcons.add(user.id);
+        pref.setIcon(R.drawable.ic_user);
+      }
+ else {
+        setPhotoId(pref,user);
+      }
     }
   }
   if (mAddingUser) {
@@ -32,4 +43,7 @@
     mUserListCategory.addPreference(pref);
   }
   getActivity().invalidateOptionsMenu();
+  if (missingIcons.size() > 0) {
+    loadIconsAsync(missingIcons);
+  }
 }

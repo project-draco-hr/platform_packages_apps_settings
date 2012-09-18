@@ -13,5 +13,7 @@
   mNicknamePreference.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
   loadProfile();
   setHasOptionsMenu(true);
-  getActivity().registerReceiver(mUserChangeReceiver,new IntentFilter(Intent.ACTION_USER_REMOVED));
+  IntentFilter filter=new IntentFilter(Intent.ACTION_USER_REMOVED);
+  filter.addAction(Intent.ACTION_USER_INFO_CHANGED);
+  getActivity().registerReceiverAsUser(mUserChangeReceiver,UserHandle.ALL,filter,null,mHandler);
 }

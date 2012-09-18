@@ -1,7 +1,4 @@
 {
   Bitmap bitmap=BitmapFactory.decodeResource(getResources(),USER_DRAWABLES[user.id % USER_DRAWABLES.length]);
-  ParcelFileDescriptor fd=mUserManager.setUserIcon(user.id);
-  if (fd != null) {
-    bitmap.compress(CompressFormat.PNG,100,new ParcelFileDescriptor.AutoCloseOutputStream(fd));
-  }
+  mUserManager.setUserIcon(user.id,bitmap);
 }

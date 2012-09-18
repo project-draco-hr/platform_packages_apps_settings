@@ -1,7 +1,6 @@
 {
   if (user.iconPath == null)   return null;
-  ParcelFileDescriptor fd=um.getUserIcon(user.id);
-  if (fd == null)   return null;
-  Drawable d=Drawable.createFromStream(new ParcelFileDescriptor.AutoCloseInputStream(fd),user.iconPath);
-  return d;
+  Bitmap icon=um.getUserIcon(user.id);
+  if (icon == null)   return null;
+  return new BitmapDrawable(icon);
 }

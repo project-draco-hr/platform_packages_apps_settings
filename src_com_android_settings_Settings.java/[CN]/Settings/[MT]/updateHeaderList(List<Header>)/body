@@ -34,7 +34,7 @@
       i=insertAccountsHeaders(target,headerIndex);
     }
  else     if (id == R.id.user_settings) {
-      if (!UserHandle.MU_ENABLED || !getResources().getBoolean(R.bool.enable_user_management) || Utils.isMonkeyRunning()) {
+      if (!UserHandle.MU_ENABLED || !UserManager.supportsMultipleUsers() || Utils.isMonkeyRunning()) {
         target.remove(header);
       }
     }

@@ -1,5 +1,8 @@
 {
   if (!getResources().getBoolean(resId)) {
-    getPreferenceScreen().removePreference(findPreference(preference));
+    Preference pref=findPreference(preference);
+    if (pref != null) {
+      getPreferenceScreen().removePreference(pref);
+    }
   }
 }

@@ -6,11 +6,7 @@
   if (mAppEntry == null) {
     return false;
   }
-  try {
-    mPackageInfo=mPm.getPackageInfo(mAppEntry.info.packageName,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES);
-  }
- catch (  NameNotFoundException e) {
-    Log.e(TAG,"Exception when retrieving package:" + mAppEntry.info.packageName,e);
+  if (mPackageInfo == null) {
     return false;
   }
   List<ComponentName> prefActList=new ArrayList<ComponentName>();

@@ -1,0 +1,13 @@
+{
+  if (preference instanceof WifiDisplayPreference) {
+    WifiDisplayPreference p=(WifiDisplayPreference)preference;
+    WifiDisplay display=p.getDisplay();
+    if (display.equals(mWifiDisplayStatus.getActiveDisplay())) {
+      showDisconnectDialog(display);
+    }
+ else {
+      mDisplayManager.connectWifiDisplay(display.getDeviceAddress());
+    }
+  }
+  return super.onPreferenceTreeClick(preferenceScreen,preference);
+}

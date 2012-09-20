@@ -1,0 +1,20 @@
+{
+  WifiDisplayPreference p=new WifiDisplayPreference(getActivity(),d);
+  if (d.equals(mWifiDisplayStatus.getActiveDisplay())) {
+switch (mWifiDisplayStatus.getActiveDisplayState()) {
+case WifiDisplayStatus.DISPLAY_STATE_CONNECTED:
+      p.setSummary(R.string.wifi_display_status_connected);
+    break;
+case WifiDisplayStatus.DISPLAY_STATE_CONNECTING:
+  p.setSummary(R.string.wifi_display_status_connecting);
+break;
+}
+}
+ else if (paired && contains(mWifiDisplayStatus.getAvailableDisplays(),d.getDeviceAddress())) {
+p.setSummary(R.string.wifi_display_status_available);
+}
+if (paired) {
+p.setWidgetLayoutResource(R.layout.wifi_display_preference);
+}
+return p;
+}

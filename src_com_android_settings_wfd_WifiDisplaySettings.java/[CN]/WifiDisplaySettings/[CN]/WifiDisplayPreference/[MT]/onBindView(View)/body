@@ -1,0 +1,12 @@
+{
+  super.onBindView(view);
+  ImageView deviceDetails=(ImageView)view.findViewById(R.id.deviceDetails);
+  if (deviceDetails != null) {
+    deviceDetails.setOnClickListener(this);
+    if (!isEnabled()) {
+      TypedValue value=new TypedValue();
+      getContext().getTheme().resolveAttribute(android.R.attr.disabledAlpha,value,true);
+      deviceDetails.setImageAlpha((int)(value.getFloat() * 255));
+    }
+  }
+}

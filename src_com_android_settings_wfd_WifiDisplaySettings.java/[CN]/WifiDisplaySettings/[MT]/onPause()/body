@@ -1,0 +1,6 @@
+{
+  super.onPause();
+  Context context=getActivity();
+  context.unregisterReceiver(mReceiver);
+  getContentResolver().unregisterContentObserver(mSettingsObserver);
+}

@@ -1,0 +1,12 @@
+{
+  DialogInterface.OnClickListener ok=new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      if (display.equals(mWifiDisplayStatus.getActiveDisplay())) {
+        mDisplayManager.disconnectWifiDisplay();
+      }
+    }
+  }
+;
+  AlertDialog dialog=new AlertDialog.Builder(getActivity()).setCancelable(true).setTitle(R.string.wifi_display_disconnect_title).setMessage(Html.fromHtml(getResources().getString(R.string.wifi_display_disconnect_text,display.getFriendlyDisplayName()))).setPositiveButton(android.R.string.ok,ok).setNegativeButton(android.R.string.cancel,null).create();
+  dialog.show();
+}

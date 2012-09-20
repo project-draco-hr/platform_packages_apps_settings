@@ -1,0 +1,10 @@
+{
+  super.onResume();
+  Context context=getActivity();
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(DisplayManager.ACTION_WIFI_DISPLAY_STATUS_CHANGED);
+  context.registerReceiver(mReceiver,filter);
+  getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Global.WIFI_DISPLAY_ON),false,mSettingsObserver);
+  mDisplayManager.scanWifiDisplays();
+  update();
+}

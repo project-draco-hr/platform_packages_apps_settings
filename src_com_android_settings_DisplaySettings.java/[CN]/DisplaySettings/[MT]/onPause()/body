@@ -1,4 +1,7 @@
 {
   super.onPause();
   RotationPolicy.unregisterRotationPolicyListener(getActivity(),mRotationPolicyListener);
+  if (mWifiDisplayPreference != null) {
+    getActivity().unregisterReceiver(mReceiver);
+  }
 }

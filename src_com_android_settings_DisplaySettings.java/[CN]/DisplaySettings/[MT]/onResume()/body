@@ -1,5 +1,9 @@
 {
   super.onResume();
-  updateState();
   RotationPolicy.registerRotationPolicyListener(getActivity(),mRotationPolicyListener);
+  if (mWifiDisplayPreference != null) {
+    getActivity().registerReceiver(mReceiver,new IntentFilter(DisplayManager.ACTION_WIFI_DISPLAY_STATUS_CHANGED));
+    mWifiDisplayStatus=mDisplayManager.getWifiDisplayStatus();
+  }
+  updateState();
 }

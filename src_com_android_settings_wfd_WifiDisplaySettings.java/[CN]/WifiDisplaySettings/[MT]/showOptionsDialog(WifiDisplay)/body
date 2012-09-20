@@ -1,0 +1,23 @@
+{
+  View view=getActivity().getLayoutInflater().inflate(R.layout.wifi_display_options,null);
+  final EditText nameEditText=(EditText)view.findViewById(R.id.name);
+  nameEditText.setText(display.getFriendlyDisplayName());
+  DialogInterface.OnClickListener done=new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      String name=nameEditText.getText().toString().trim();
+      if (name.isEmpty() || name.equals(display.getDeviceName())) {
+        name=null;
+      }
+      mDisplayManager.renameWifiDisplay(display.getDeviceAddress(),name);
+    }
+  }
+;
+  DialogInterface.OnClickListener forget=new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      mDisplayManager.forgetWifiDisplay(display.getDeviceAddress());
+    }
+  }
+;
+  AlertDialog dialog=new AlertDialog.Builder(getActivity()).setCancelable(true).setTitle(R.string.wifi_display_options_title).setView(view).setPositiveButton(R.string.wifi_display_options_done,done).setNegativeButton(R.string.wifi_display_options_forget,forget).create();
+  dialog.show();
+}

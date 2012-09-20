@@ -1,0 +1,16 @@
+{
+  if (mWifiDisplayPreference != null) {
+switch (mWifiDisplayStatus.getFeatureState()) {
+case WifiDisplayStatus.FEATURE_STATE_OFF:
+      mWifiDisplayPreference.setSummary(R.string.wifi_display_summary_off);
+    break;
+case WifiDisplayStatus.FEATURE_STATE_ON:
+  mWifiDisplayPreference.setSummary(R.string.wifi_display_summary_on);
+break;
+case WifiDisplayStatus.FEATURE_STATE_DISABLED:
+default :
+mWifiDisplayPreference.setSummary(R.string.wifi_display_summary_disabled);
+break;
+}
+}
+}

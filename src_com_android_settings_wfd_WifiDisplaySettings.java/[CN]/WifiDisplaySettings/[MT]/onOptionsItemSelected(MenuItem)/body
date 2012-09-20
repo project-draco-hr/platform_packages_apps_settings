@@ -1,0 +1,10 @@
+{
+switch (item.getItemId()) {
+case MENU_ID_SCAN:
+    if (mWifiDisplayStatus.getFeatureState() == WifiDisplayStatus.FEATURE_STATE_ON) {
+      mDisplayManager.scanWifiDisplays();
+    }
+  return true;
+}
+return super.onOptionsItemSelected(item);
+}

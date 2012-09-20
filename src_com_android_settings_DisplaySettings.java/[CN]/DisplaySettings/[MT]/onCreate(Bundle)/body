@@ -32,4 +32,11 @@
       Log.e(TAG,Settings.System.NOTIFICATION_LIGHT_PULSE + " not found");
     }
   }
+  mDisplayManager=(DisplayManager)getActivity().getSystemService(Context.DISPLAY_SERVICE);
+  mWifiDisplayStatus=mDisplayManager.getWifiDisplayStatus();
+  mWifiDisplayPreference=(Preference)findPreference(KEY_WIFI_DISPLAY);
+  if (mWifiDisplayStatus.getFeatureState() == WifiDisplayStatus.FEATURE_STATE_UNAVAILABLE) {
+    getPreferenceScreen().removePreference(mWifiDisplayPreference);
+    mWifiDisplayPreference=null;
+  }
 }

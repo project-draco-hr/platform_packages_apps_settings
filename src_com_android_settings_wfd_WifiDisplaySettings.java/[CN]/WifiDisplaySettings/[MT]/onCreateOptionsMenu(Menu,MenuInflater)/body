@@ -1,0 +1,6 @@
+{
+  MenuItem item=menu.add(Menu.NONE,MENU_ID_SCAN,0,mWifiDisplayStatus.getScanState() == WifiDisplayStatus.SCAN_STATE_SCANNING ? R.string.wifi_display_searching_for_devices : R.string.wifi_display_search_for_devices);
+  item.setEnabled(mWifiDisplayStatus.getFeatureState() == WifiDisplayStatus.FEATURE_STATE_ON && mWifiDisplayStatus.getScanState() == WifiDisplayStatus.SCAN_STATE_NOT_SCANNING);
+  item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+  super.onCreateOptionsMenu(menu,inflater);
+}

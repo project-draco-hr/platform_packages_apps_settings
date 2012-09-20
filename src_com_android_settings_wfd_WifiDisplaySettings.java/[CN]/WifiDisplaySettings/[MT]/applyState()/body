@@ -1,0 +1,48 @@
+{
+  final int featureState=mWifiDisplayStatus.getFeatureState();
+  mActionBarSwitch.setEnabled(featureState != WifiDisplayStatus.FEATURE_STATE_DISABLED);
+  mActionBarSwitch.setChecked(mWifiDisplayOnSetting);
+  final PreferenceScreen preferenceScreen=getPreferenceScreen();
+  preferenceScreen.removeAll();
+  if (featureState == WifiDisplayStatus.FEATURE_STATE_ON) {
+    final WifiDisplay[] pairedDisplays=mWifiDisplayStatus.getRememberedDisplays();
+    final WifiDisplay[] availableDisplays=mWifiDisplayStatus.getAvailableDisplays();
+    if (mPairedDevicesCategory == null) {
+      mPairedDevicesCategory=new PreferenceCategory(getActivity());
+      mPairedDevicesCategory.setTitle(R.string.wifi_display_paired_devices);
+    }
+ else {
+      mPairedDevicesCategory.removeAll();
+    }
+    preferenceScreen.addPreference(mPairedDevicesCategory);
+    for (    WifiDisplay d : pairedDisplays) {
+      mPairedDevicesCategory.addPreference(createWifiDisplayPreference(d,true));
+    }
+    if (mPairedDevicesCategory.getPreferenceCount() == 0) {
+      preferenceScreen.removePreference(mPairedDevicesCategory);
+    }
+    if (mAvailableDevicesCategory == null) {
+      mAvailableDevicesCategory=new ProgressCategory(getActivity(),null,R.string.wifi_display_no_devices_found);
+      mAvailableDevicesCategory.setTitle(R.string.wifi_display_available_devices);
+    }
+ else {
+      mAvailableDevicesCategory.removeAll();
+    }
+    preferenceScreen.addPreference(mAvailableDevicesCategory);
+    for (    WifiDisplay d : availableDisplays) {
+      if (!contains(pairedDisplays,d.getDeviceAddress())) {
+        mAvailableDevicesCategory.addPreference(createWifiDisplayPreference(d,false));
+      }
+    }
+    if (mWifiDisplayStatus.getScanState() == WifiDisplayStatus.SCAN_STATE_SCANNING) {
+      mAvailableDevicesCategory.setProgress(true);
+    }
+ else {
+      mAvailableDevicesCategory.setProgress(false);
+    }
+  }
+ else {
+    mEmptyView.setText(featureState == WifiDisplayStatus.FEATURE_STATE_OFF ? R.string.wifi_display_settings_empty_list_wifi_display_off : R.string.wifi_display_settings_empty_list_wifi_display_disabled);
+  }
+  getActivity().invalidateOptionsMenu();
+}

@@ -7,7 +7,7 @@
     mPackageIntentReceiver=new PackageIntentReceiver();
     mPackageIntentReceiver.registerReceiver();
   }
-  mApplications=mPm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
+  mApplications=mPm.getInstalledApplications(mRetrieveFlags);
   if (mApplications == null) {
     mApplications=new ArrayList<ApplicationInfo>();
   }

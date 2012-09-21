@@ -9,35 +9,36 @@
     lockPatternUtils.setBiometricWeakLivelinessEnabled(false);
     return;
   }
- else   if (requestCode == REQUEST_PICK_APPWIDGET || requestCode == REQUEST_CREATE_APPWIDGET) {
+ else   if (requestCode == REQUEST_PICK_USER_SELECTED_APPWIDGET || requestCode == REQUEST_PICK_STATUS_APPWIDGET || requestCode == REQUEST_CREATE_USER_SELECTED_APPWIDGET || requestCode == REQUEST_CREATE_STATUS_APPWIDGET) {
     int appWidgetId=(data == null) ? -1 : data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,-1);
-    if (requestCode == REQUEST_PICK_APPWIDGET && resultCode == Activity.RESULT_OK) {
+    if ((requestCode == REQUEST_PICK_USER_SELECTED_APPWIDGET || requestCode == REQUEST_PICK_STATUS_APPWIDGET) && resultCode == Activity.RESULT_OK) {
       AppWidgetManager appWidgetManager=AppWidgetManager.getInstance(getActivity());
-      boolean noWidget=data.getBooleanExtra(EXTRA_NO_WIDGET,false);
+      boolean defaultOrNoWidget=data.getBooleanExtra(EXTRA_NO_WIDGET,false) || data.getBooleanExtra(EXTRA_DEFAULT_WIDGET,false);
       AppWidgetProviderInfo appWidget=null;
-      if (!noWidget) {
+      if (!defaultOrNoWidget) {
         appWidget=appWidgetManager.getAppWidgetInfo(appWidgetId);
       }
-      if (!noWidget && appWidget.configure != null) {
+      int newRequestCode=requestCode == REQUEST_PICK_USER_SELECTED_APPWIDGET ? REQUEST_CREATE_USER_SELECTED_APPWIDGET : REQUEST_CREATE_STATUS_APPWIDGET;
+      if (!defaultOrNoWidget && appWidget.configure != null) {
         Intent intent=new Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
         intent.setComponent(appWidget.configure);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
-        startActivityForResultSafely(intent,REQUEST_CREATE_APPWIDGET);
+        startActivityForResultSafely(intent,newRequestCode);
       }
  else {
-        if (noWidget) {
+        if (defaultOrNoWidget) {
           AppWidgetHost.deleteAppWidgetIdForSystem(appWidgetId);
           data.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,-1);
         }
-        onActivityResult(REQUEST_CREATE_APPWIDGET,Activity.RESULT_OK,data);
+        onActivityResult(newRequestCode,Activity.RESULT_OK,data);
       }
     }
- else     if (requestCode == REQUEST_CREATE_APPWIDGET && resultCode == Activity.RESULT_OK) {
-      int oldAppWidgetId=getUserSelectedAppWidgetId();
+ else     if ((requestCode == REQUEST_CREATE_USER_SELECTED_APPWIDGET || requestCode == REQUEST_CREATE_STATUS_APPWIDGET) && resultCode == Activity.RESULT_OK) {
+      int oldAppWidgetId=requestCode == REQUEST_CREATE_USER_SELECTED_APPWIDGET ? getUserSelectedAppWidgetId() : getStatusAppWidgetId();
       if (oldAppWidgetId != -1) {
         AppWidgetHost.deleteAppWidgetIdForSystem(oldAppWidgetId);
       }
-      Settings.Secure.putString(getContentResolver(),Settings.Secure.LOCK_SCREEN_USER_SELECTED_APPWIDGET_ID,Integer.toString(appWidgetId));
+      Settings.Secure.putString(getContentResolver(),(requestCode == REQUEST_CREATE_USER_SELECTED_APPWIDGET ? Settings.Secure.LOCK_SCREEN_USER_SELECTED_APPWIDGET_ID : Settings.Secure.LOCK_SCREEN_STATUS_APPWIDGET_ID),Integer.toString(appWidgetId));
     }
  else {
       AppWidgetHost.deleteAppWidgetIdForSystem(appWidgetId);

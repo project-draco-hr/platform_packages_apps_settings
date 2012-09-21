@@ -92,6 +92,20 @@ mToggleVerifyApps.setChecked(false);
 mToggleVerifyApps.setEnabled(false);
 }
 }
+mUserSelectedWidget=root.findPreference(KEY_CHOOSE_LOCKSCREEN_STATUS_WIDGET);
+if (mUserSelectedWidget != null) {
+AppWidgetManager appWidgetManager=AppWidgetManager.getInstance(getActivity());
+int appWidgetId=getStatusAppWidgetId();
+if (appWidgetId == -1) {
+mUserSelectedWidget.setSummary(getResources().getString(R.string.widget_default));
+}
+ else {
+AppWidgetProviderInfo appWidget=appWidgetManager.getAppWidgetInfo(appWidgetId);
+if (appWidget != null) {
+mUserSelectedWidget.setSummary(appWidget.label);
+}
+}
+}
 mUserSelectedWidget=root.findPreference(KEY_CHOOSE_USER_SELECTED_LOCKSCREEN_WIDGET);
 if (mUserSelectedWidget != null) {
 AppWidgetManager appWidgetManager=AppWidgetManager.getInstance(getActivity());

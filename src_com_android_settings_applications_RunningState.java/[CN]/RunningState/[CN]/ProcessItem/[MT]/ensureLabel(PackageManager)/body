@@ -3,7 +3,7 @@
     return;
   }
   try {
-    ApplicationInfo ai=pm.getApplicationInfo(mProcessName,0);
+    ApplicationInfo ai=pm.getApplicationInfo(mProcessName,PackageManager.GET_UNINSTALLED_PACKAGES);
     if (ai.uid == mUid) {
       mDisplayLabel=ai.loadLabel(pm);
       mLabel=mDisplayLabel.toString();
@@ -16,7 +16,7 @@
   String[] pkgs=pm.getPackagesForUid(mUid);
   if (pkgs.length == 1) {
     try {
-      ApplicationInfo ai=pm.getApplicationInfo(pkgs[0],0);
+      ApplicationInfo ai=pm.getApplicationInfo(pkgs[0],PackageManager.GET_UNINSTALLED_PACKAGES);
       mDisplayLabel=ai.loadLabel(pm);
       mLabel=mDisplayLabel.toString();
       mPackageInfo=ai;
@@ -49,7 +49,7 @@
     return;
   }
   try {
-    ApplicationInfo ai=pm.getApplicationInfo(pkgs[0],0);
+    ApplicationInfo ai=pm.getApplicationInfo(pkgs[0],PackageManager.GET_UNINSTALLED_PACKAGES);
     mDisplayLabel=ai.loadLabel(pm);
     mLabel=mDisplayLabel.toString();
     mPackageInfo=ai;

@@ -7,7 +7,7 @@
     si=new ServiceItem(mUserId);
     si.mRunningService=service;
     try {
-      si.mServiceInfo=pm.getServiceInfo(service.service,0);
+      si.mServiceInfo=pm.getServiceInfo(service.service,PackageManager.GET_UNINSTALLED_PACKAGES);
     }
  catch (    PackageManager.NameNotFoundException e) {
     }

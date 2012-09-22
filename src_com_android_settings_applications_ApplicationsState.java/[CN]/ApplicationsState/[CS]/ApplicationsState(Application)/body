@@ -4,6 +4,12 @@
   mThread=new HandlerThread("ApplicationsState.Loader",Process.THREAD_PRIORITY_BACKGROUND);
   mThread.start();
   mBackgroundHandler=new BackgroundHandler(mThread.getLooper());
+  if (UserHandle.myUserId() == 0) {
+    mRetrieveFlags=PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS;
+  }
+ else {
+    mRetrieveFlags=PackageManager.GET_DISABLED_COMPONENTS;
+  }
 synchronized (mEntriesMap) {
     try {
       mEntriesMap.wait(1);

@@ -10,6 +10,7 @@
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   mSmsManager=ISms.Stub.asInterface(ServiceManager.getService("isms"));
   mCanBeOnSdCardChecker=new CanBeOnSdCardChecker();
+  mSession.resume();
   retrieveAppEntry();
   setHasOptionsMenu(true);
 }

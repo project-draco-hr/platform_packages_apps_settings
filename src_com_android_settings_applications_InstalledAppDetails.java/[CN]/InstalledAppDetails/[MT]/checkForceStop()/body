@@ -9,6 +9,7 @@
     Intent intent=new Intent(Intent.ACTION_QUERY_PACKAGE_RESTART,Uri.fromParts("package",mAppEntry.info.packageName,null));
     intent.putExtra(Intent.EXTRA_PACKAGES,new String[]{mAppEntry.info.packageName});
     intent.putExtra(Intent.EXTRA_UID,mAppEntry.info.uid);
+    intent.putExtra(Intent.EXTRA_USER_HANDLE,UserHandle.getUserId(mAppEntry.info.uid));
     getActivity().sendOrderedBroadcast(intent,null,mCheckKillProcessesReceiver,null,Activity.RESULT_CANCELED,null,null);
   }
 }

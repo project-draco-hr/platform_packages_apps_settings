@@ -5,7 +5,6 @@
   mMenuDataRoaming=menu.findItem(R.id.data_usage_menu_roaming);
   mMenuDataRoaming.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
   mMenuDataRoaming.setChecked(getDataRoaming());
-  mMenuDataRoaming.setVisible(isOwner);
   mMenuRestrictBackground=menu.findItem(R.id.data_usage_menu_restrict_background);
   mMenuRestrictBackground.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
   mMenuRestrictBackground.setChecked(mPolicyManager.getRestrictBackground());
@@ -34,7 +33,7 @@
   }
   final MenuItem metered=menu.findItem(R.id.data_usage_menu_metered);
   if (hasReadyMobileRadio(context) || hasWifiRadio(context)) {
-    metered.setVisible(isOwner && !appDetailMode);
+    metered.setVisible(!appDetailMode);
   }
  else {
     metered.setVisible(false);

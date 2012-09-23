@@ -1,4 +1,9 @@
 {
-  getActivity().onBackPressed();
-  LocalePicker.updateLocale(locale);
+  if (Utils.hasMultipleUsers(getActivity())) {
+    mTargetLocale=locale;
+    showDialog(DLG_SHOW_GLOBAL_WARNING);
+  }
+ else {
+    LocalePicker.updateLocale(locale);
+  }
 }

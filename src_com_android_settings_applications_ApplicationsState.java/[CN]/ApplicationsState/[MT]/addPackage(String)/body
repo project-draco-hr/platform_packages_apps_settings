@@ -12,7 +12,7 @@ synchronized (mEntriesMap) {
         if (DEBUG_LOCKING)         Log.v(TAG,"addPackage release lock: already exists");
         return;
       }
-      ApplicationInfo info=mPm.getApplicationInfo(pkgName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
+      ApplicationInfo info=mPm.getApplicationInfo(pkgName,mRetrieveFlags);
       mApplications.add(info);
       if (!mBackgroundHandler.hasMessages(BackgroundHandler.MSG_LOAD_ENTRIES)) {
         mBackgroundHandler.sendEmptyMessage(BackgroundHandler.MSG_LOAD_ENTRIES);

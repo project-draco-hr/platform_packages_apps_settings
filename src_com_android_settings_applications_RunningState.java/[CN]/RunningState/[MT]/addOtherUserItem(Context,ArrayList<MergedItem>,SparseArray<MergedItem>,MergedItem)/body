@@ -14,13 +14,8 @@
       userItem.mUser=new UserState();
       UserInfo info=mUm.getUserInfo(newItem.mUserId);
       userItem.mUser.mInfo=info;
-      if (info != null && info.iconPath != null) {
-        try {
-          userItem.mUser.mIcon=Drawable.createFromPath(info.iconPath);
-        }
- catch (        Exception e) {
-          Log.w(TAG,"Failure loading user picture " + info.iconPath,e);
-        }
+      if (info != null) {
+        userItem.mUser.mIcon=UserUtils.getUserIcon(mUm,info,context.getResources());
       }
       String name=info != null ? info.name : null;
       if (name == null) {

@@ -2,7 +2,12 @@
   final Context context=getActivity();
   final AlertDialog.Builder builder=new AlertDialog.Builder(context);
   builder.setTitle(R.string.data_usage_restrict_background_title);
-  builder.setMessage(getString(R.string.data_usage_restrict_background));
+  if (Utils.hasMultipleUsers(context)) {
+    builder.setMessage(R.string.data_usage_restrict_background_multiuser);
+  }
+ else {
+    builder.setMessage(R.string.data_usage_restrict_background);
+  }
   builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
       final DataUsageSummary target=(DataUsageSummary)getTargetFragment();

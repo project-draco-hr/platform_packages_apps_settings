@@ -1,12 +1,16 @@
 {
   Intent intent=getIntentForPosition(which);
   int result;
-  if (intent.getExtras() != null) {
+  if (intent.getExtras() != null && (intent.getExtras().containsKey(AppWidgetManager.EXTRA_CUSTOM_INFO) || intent.getExtras().containsKey(AppWidgetManager.EXTRA_CUSTOM_EXTRAS))) {
     setResultData(RESULT_OK,intent);
   }
  else {
     try {
-      mAppWidgetManager.bindAppWidgetId(mAppWidgetId,intent.getComponent());
+      Bundle options=null;
+      if (intent.getExtras() != null) {
+        options=intent.getExtras().getBundle(AppWidgetManager.EXTRA_APPWIDGET_OPTIONS);
+      }
+      mAppWidgetManager.bindAppWidgetId(mAppWidgetId,intent.getComponent(),options);
       result=RESULT_OK;
     }
  catch (    IllegalArgumentException e) {

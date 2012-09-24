@@ -23,6 +23,7 @@
       extraExtras.add(b);
       pickIntent.putExtra(AppWidgetManager.EXTRA_CUSTOM_INFO,extraInfos);
       pickIntent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS,extraExtras);
+      pickIntent.putExtra(Intent.EXTRA_INTENT,getBaseIntent());
       startActivityForResult(pickIntent,REQUEST_PICK_USER_SELECTED_APPWIDGET);
     }
  else {
@@ -49,6 +50,7 @@
       extraExtras.add(b);
       pickIntent.putExtra(AppWidgetManager.EXTRA_CUSTOM_INFO,extraInfos);
       pickIntent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS,extraExtras);
+      pickIntent.putExtra(Intent.EXTRA_INTENT,getBaseIntent());
       startActivityForResult(pickIntent,REQUEST_PICK_STATUS_APPWIDGET);
     }
  else {

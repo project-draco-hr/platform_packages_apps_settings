@@ -1,0 +1,6 @@
+{
+  super.onPrepareOptionsMenu(menu);
+  if (SystemProperties.getBoolean("persist.radio.imsregrequired",false)) {
+    menu.findItem(R.id.vpn_lockdown).setVisible(false);
+  }
+}

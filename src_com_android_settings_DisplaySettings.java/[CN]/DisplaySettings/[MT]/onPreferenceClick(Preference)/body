@@ -1,0 +1,12 @@
+{
+  if (preference == mFontSizePref) {
+    if (Utils.hasMultipleUsers(getActivity())) {
+      showDialog(DLG_GLOBAL_CHANGE_WARNING);
+      return true;
+    }
+ else {
+      mFontSizePref.click();
+    }
+  }
+  return false;
+}

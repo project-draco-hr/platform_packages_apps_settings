@@ -1,0 +1,13 @@
+{
+  final AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  builder.setTitle(titleResId);
+  builder.setMessage(R.string.global_change_warning);
+  builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      positiveAction.run();
+    }
+  }
+);
+  builder.setNegativeButton(android.R.string.cancel,null);
+  return builder.create();
+}

@@ -17,8 +17,9 @@
   mScreenTimeoutPreference.setOnPreferenceChangeListener(this);
   disableUnusableTimeouts(mScreenTimeoutPreference);
   updateTimeoutPreferenceDescription(currentTimeout);
-  mFontSizePref=(ListPreference)findPreference(KEY_FONT_SIZE);
+  mFontSizePref=(WarnedListPreference)findPreference(KEY_FONT_SIZE);
   mFontSizePref.setOnPreferenceChangeListener(this);
+  mFontSizePref.setOnPreferenceClickListener(this);
   mNotificationPulse=(CheckBoxPreference)findPreference(KEY_NOTIFICATION_PULSE);
   if (mNotificationPulse != null && getResources().getBoolean(com.android.internal.R.bool.config_intrusiveNotificationLed) == false) {
     getPreferenceScreen().removePreference(mNotificationPulse);

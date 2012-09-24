@@ -8,9 +8,10 @@
   if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
     mMePreference.setSummary(null);
   }
-  mNicknamePreference=(EditTextPreference)findPreference(KEY_USER_NICKNAME);
+  mNicknamePreference=(SelectableEditTextPreference)findPreference(KEY_USER_NICKNAME);
   mNicknamePreference.setOnPreferenceChangeListener(this);
   mNicknamePreference.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+  mNicknamePreference.setInitialSelectionMode(SelectableEditTextPreference.SELECTION_SELECT_ALL);
   loadProfile();
   setHasOptionsMenu(true);
   IntentFilter filter=new IntentFilter(Intent.ACTION_USER_REMOVED);

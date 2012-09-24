@@ -1,0 +1,9 @@
+{
+  return Utils.buildGlobalChangeWarningDialog(getActivity(),R.string.global_locale_change_title,new Runnable(){
+    public void run(){
+      getActivity().onBackPressed();
+      LocalePicker.updateLocale(mTargetLocale);
+    }
+  }
+);
+}

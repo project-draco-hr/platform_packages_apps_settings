@@ -1,4 +1,8 @@
 {
+  if (StorageVolumePreferenceCategory.KEY_CACHE.equals(preference.getKey())) {
+    ConfirmClearCacheFragment.show(this);
+    return true;
+  }
   for (  StorageVolumePreferenceCategory category : mCategories) {
     Intent intent=category.intentForClick(preference);
     if (intent != null) {

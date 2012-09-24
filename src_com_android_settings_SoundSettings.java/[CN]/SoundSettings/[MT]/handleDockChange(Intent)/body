@@ -1,0 +1,20 @@
+{
+  if (mDockAudioSettings != null) {
+    int dockState=intent.getIntExtra(Intent.EXTRA_DOCK_STATE,0);
+    boolean isBluetooth=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE) != null;
+    if (!isBluetooth) {
+      mDockAudioSettings.setEnabled(false);
+    }
+ else {
+      mDockAudioSettings.setEnabled(true);
+      mDockIntent=intent;
+    }
+    if (dockState != Intent.EXTRA_DOCK_STATE_UNDOCKED) {
+      try {
+        removeDialog(DIALOG_NOT_DOCKED);
+      }
+ catch (      IllegalArgumentException iae) {
+      }
+    }
+  }
+}

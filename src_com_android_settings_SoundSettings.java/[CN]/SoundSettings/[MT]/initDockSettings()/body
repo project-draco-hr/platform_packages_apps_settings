@@ -1,0 +1,14 @@
+{
+  if (needsDockSettings()) {
+    ContentResolver resolver=getContentResolver();
+    mDockAudioSettings=findPreference(KEY_AUDIO_SETTINGS);
+    mDockSounds=(CheckBoxPreference)findPreference(KEY_DOCK_SOUNDS);
+    mDockSounds.setPersistent(false);
+    mDockSounds.setChecked(Settings.System.getInt(resolver,Settings.System.DOCK_SOUNDS_ENABLED,0) != 0);
+  }
+ else {
+    getPreferenceScreen().removePreference(findPreference(KEY_DOCK_CATEGORY));
+    getPreferenceScreen().removePreference(findPreference(KEY_AUDIO_SETTINGS));
+    getPreferenceScreen().removePreference(findPreference(KEY_DOCK_SOUNDS));
+  }
+}

@@ -1,4 +1,6 @@
 {
   super.onResume();
   lookupRingtoneNames();
+  IntentFilter filter=new IntentFilter(Intent.ACTION_DOCK_EVENT);
+  getActivity().registerReceiver(mReceiver,filter);
 }

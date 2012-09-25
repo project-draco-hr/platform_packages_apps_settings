@@ -1,7 +1,8 @@
 {
   Intent intent=getIntentForPosition(which);
+  PickAdapter.Item item=(PickAdapter.Item)mItems.get(which);
   int result;
-  if (intent.getExtras() != null && (intent.getExtras().containsKey(AppWidgetManager.EXTRA_CUSTOM_INFO) || intent.getExtras().containsKey(AppWidgetManager.EXTRA_CUSTOM_EXTRAS))) {
+  if (item.extras != null) {
     setResultData(RESULT_OK,intent);
   }
  else {

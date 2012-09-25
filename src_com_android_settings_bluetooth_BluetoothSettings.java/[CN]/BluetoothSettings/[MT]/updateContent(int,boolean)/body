@@ -34,7 +34,7 @@ addDeviceCategory(mPairedDevicesCategory,R.string.bluetooth_preference_paired_de
 int numberOfPairedDevices=mPairedDevicesCategory.getPreferenceCount();
 mDiscoverableEnabler.setNumberOfPairedDevices(numberOfPairedDevices);
 if (mAvailableDevicesCategory == null) {
-mAvailableDevicesCategory=new ProgressCategory(getActivity(),null,R.string.bluetooth_no_devices_found);
+mAvailableDevicesCategory=new BluetoothProgressCategory(getActivity(),null);
 }
  else {
 mAvailableDevicesCategory.removeAll();

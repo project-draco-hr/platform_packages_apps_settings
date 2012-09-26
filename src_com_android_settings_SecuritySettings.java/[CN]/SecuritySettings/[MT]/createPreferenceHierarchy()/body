@@ -34,7 +34,8 @@ break;
 }
 addPreferencesFromResource(resid);
 DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-if (UserHandle.myUserId() == 0) {
+mIsPrimary=UserHandle.myUserId() == UserHandle.USER_OWNER;
+if (mIsPrimary) {
 switch (dpm.getStorageEncryptionStatus()) {
 case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
 addPreferencesFromResource(R.xml.security_settings_encrypted);
@@ -65,33 +66,6 @@ if (securityCategory != null && mTactileFeedback != null) {
 securityCategory.removePreference(mTactileFeedback);
 }
 }
-if (UserHandle.myUserId() > 0) {
-return root;
-}
-addPreferencesFromResource(R.xml.security_settings_misc);
-TelephonyManager tm=TelephonyManager.getDefault();
-if (!tm.hasIccCard()) {
-root.removePreference(root.findPreference(KEY_SIM_LOCK));
-}
- else {
-if ((TelephonyManager.getDefault().getSimState() == TelephonyManager.SIM_STATE_ABSENT) || (TelephonyManager.getDefault().getSimState() == TelephonyManager.SIM_STATE_UNKNOWN)) {
-root.findPreference(KEY_SIM_LOCK).setEnabled(false);
-}
-}
-mShowPassword=(CheckBoxPreference)root.findPreference(KEY_SHOW_PASSWORD);
-mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
-mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
-mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
-if (showVerifierSetting()) {
-mToggleVerifyApps=(CheckBoxPreference)findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
-if (isVerifierInstalled()) {
-mToggleVerifyApps.setChecked(isVerifyAppsEnabled());
-}
- else {
-mToggleVerifyApps.setChecked(false);
-mToggleVerifyApps.setEnabled(false);
-}
-}
 mUserSelectedWidget=root.findPreference(KEY_CHOOSE_LOCKSCREEN_STATUS_WIDGET);
 if (mUserSelectedWidget != null) {
 AppWidgetManager appWidgetManager=AppWidgetManager.getInstance(getActivity());
@@ -119,6 +93,38 @@ if (appWidget != null) {
 mUserSelectedWidget.setSummary(appWidget.label);
 }
 }
+}
+addPreferencesFromResource(R.xml.security_settings_misc);
+TelephonyManager tm=TelephonyManager.getDefault();
+if (!mIsPrimary || !tm.hasIccCard()) {
+root.removePreference(root.findPreference(KEY_SIM_LOCK));
+}
+ else {
+if ((TelephonyManager.getDefault().getSimState() == TelephonyManager.SIM_STATE_ABSENT) || (TelephonyManager.getDefault().getSimState() == TelephonyManager.SIM_STATE_UNKNOWN)) {
+root.findPreference(KEY_SIM_LOCK).setEnabled(false);
+}
+}
+mShowPassword=(CheckBoxPreference)root.findPreference(KEY_SHOW_PASSWORD);
+if (mIsPrimary) {
+mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
+}
+ else {
+removePreference(KEY_CREDENTIALS_MANAGER);
+}
+mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
+mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
+mToggleVerifyApps=(CheckBoxPreference)findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
+if (mIsPrimary && showVerifierSetting()) {
+if (isVerifierInstalled()) {
+mToggleVerifyApps.setChecked(isVerifyAppsEnabled());
+}
+ else {
+mToggleVerifyApps.setChecked(false);
+mToggleVerifyApps.setEnabled(false);
+}
+}
+ else if (mToggleVerifyApps != null) {
+mToggleVerifyApps.setEnabled(false);
 }
 return root;
 }

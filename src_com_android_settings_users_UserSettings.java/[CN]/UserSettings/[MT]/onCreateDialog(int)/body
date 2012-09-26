@@ -8,17 +8,23 @@ case DIALOG_CONFIRM_REMOVE:
     }
 ).setNegativeButton(android.R.string.cancel,null).create();
 case DIALOG_ADD_USER:
-  return new AlertDialog.Builder(getActivity()).setTitle(R.string.user_add_user_title).setMessage(R.string.user_add_user_message).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int which){
-      addUserNow();
-    }
-  }
+  final SharedPreferences preferences=getActivity().getPreferences(Context.MODE_PRIVATE);
+final boolean longMessageDisplayed=preferences.getBoolean(KEY_ADD_USER_LONG_MESSAGE_DISPLAYED,false);
+final int messageResId=longMessageDisplayed ? R.string.user_add_user_message_short : R.string.user_add_user_message_long;
+return new AlertDialog.Builder(getActivity()).setTitle(R.string.user_add_user_title).setMessage(messageResId).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+addUserNow();
+if (!longMessageDisplayed) {
+  preferences.edit().putBoolean(KEY_ADD_USER_LONG_MESSAGE_DISPLAYED,true).commit();
+}
+}
+}
 ).setNegativeButton(android.R.string.cancel,null).create();
 case DIALOG_SETUP_USER:
 return new AlertDialog.Builder(getActivity()).setTitle(R.string.user_setup_dialog_title).setMessage(R.string.user_setup_dialog_message).setPositiveButton(R.string.user_setup_button_setup_now,new DialogInterface.OnClickListener(){
-  public void onClick(  DialogInterface dialog,  int which){
-    switchUserNow(mAddedUserId);
-  }
+public void onClick(DialogInterface dialog,int which){
+switchUserNow(mAddedUserId);
+}
 }
 ).setNegativeButton(R.string.user_setup_button_setup_later,null).create();
 default :

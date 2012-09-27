@@ -22,7 +22,7 @@
     pickIntent.putExtra(AppWidgetManager.EXTRA_CUSTOM_INFO,extraInfos);
     pickIntent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS,extraExtras);
     pickIntent.putExtra(Intent.EXTRA_INTENT,getBaseIntent());
-    startActivityForResult(pickIntent,REQUEST_PICK_USER_SELECTED_APPWIDGET);
+    startActivityForResult(pickIntent,widgetType);
   }
  else {
     Log.e(TAG,"Unable to allocate an AppWidget id in lock screen");

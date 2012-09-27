@@ -5,7 +5,7 @@
     startFragment(this,"com.android.settings.ChooseLockGeneric$ChooseLockGenericFragment",SET_OR_CHANGE_LOCK_METHOD_REQUEST,null);
   }
  else   if (KEY_CHOOSE_USER_SELECTED_LOCKSCREEN_WIDGET.equals(key)) {
-    launchPickActivityIntent(AppWidgetProviderInfo.WIDGET_FEATURES_NONE,R.string.widget_none,0,new ComponentName("",""),EXTRA_NO_WIDGET);
+    launchPickActivityIntent(AppWidgetProviderInfo.WIDGET_FEATURES_NONE,R.string.widget_none,0,new ComponentName("",""),EXTRA_NO_WIDGET,REQUEST_PICK_USER_SELECTED_APPWIDGET);
   }
  else   if (KEY_CHOOSE_LOCKSCREEN_STATUS_WIDGET.equals(key)) {
     int defaultIconId;
@@ -16,7 +16,7 @@
  catch (    PackageManager.NameNotFoundException e) {
       defaultIconId=0;
     }
-    launchPickActivityIntent(AppWidgetProviderInfo.WIDGET_FEATURES_STATUS,R.string.widget_default,defaultIconId,clock,EXTRA_DEFAULT_WIDGET);
+    launchPickActivityIntent(AppWidgetProviderInfo.WIDGET_FEATURES_STATUS,R.string.widget_default,defaultIconId,clock,EXTRA_DEFAULT_WIDGET,REQUEST_PICK_STATUS_APPWIDGET);
   }
  else   if (KEY_BIOMETRIC_WEAK_IMPROVE_MATCHING.equals(key)) {
     ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);

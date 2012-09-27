@@ -5,8 +5,12 @@
   mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
   mMePreference=(Preference)findPreference(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
-  if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
+  if (!mIsOwner) {
     mMePreference.setSummary(null);
+  }
+  Preference ownerInfo=findPreference("user_owner_info");
+  if (ownerInfo != null && !mIsOwner) {
+    ownerInfo.setTitle(R.string.user_info_settings_title);
   }
   mNicknamePreference=(SelectableEditTextPreference)findPreference(KEY_USER_NICKNAME);
   mNicknamePreference.setOnPreferenceChangeListener(this);

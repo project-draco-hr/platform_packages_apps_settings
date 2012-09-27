@@ -35,6 +35,12 @@ break;
 addPreferencesFromResource(resid);
 DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
 mIsPrimary=UserHandle.myUserId() == UserHandle.USER_OWNER;
+if (!mIsPrimary) {
+Preference ownerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
+if (ownerInfoPref != null) {
+ownerInfoPref.setTitle(R.string.user_info_settings_title);
+}
+}
 if (mIsPrimary) {
 switch (dpm.getStorageEncryptionStatus()) {
 case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:

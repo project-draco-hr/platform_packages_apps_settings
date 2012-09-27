@@ -7,6 +7,9 @@
   mEditText.setText(info);
   mEditText.setEnabled(enabled != 0);
   mCheckbox.setChecked(enabled != 0);
+  if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
+    mCheckbox.setText(R.string.show_user_info_on_lockscreen_label);
+  }
   mCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener(){
     public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
       Settings.Secure.putInt(res,Settings.Secure.LOCK_SCREEN_OWNER_INFO_ENABLED,isChecked ? 1 : 0);

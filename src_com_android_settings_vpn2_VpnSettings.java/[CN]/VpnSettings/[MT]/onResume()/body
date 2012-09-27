@@ -11,8 +11,7 @@
     return;
   }
   mUnlocking=false;
-  if (mPreferences == null) {
-    mPreferences=new HashMap<String,VpnPreference>();
+  if (mPreferences.size() == 0) {
     PreferenceGroup group=getPreferenceScreen();
     final Context context=getActivity();
     final List<VpnProfile> profiles=loadVpnProfiles(mKeyStore);

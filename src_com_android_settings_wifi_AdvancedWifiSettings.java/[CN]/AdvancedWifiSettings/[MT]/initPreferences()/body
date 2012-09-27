@@ -8,11 +8,11 @@
       getPreferenceScreen().removePreference(poorNetworkDetection);
     }
  else {
-      poorNetworkDetection.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_WATCHDOG_POOR_NETWORK_TEST_ENABLED,1) == 1);
+      poorNetworkDetection.setChecked(Global.getInt(getContentResolver(),Global.WIFI_WATCHDOG_POOR_NETWORK_TEST_ENABLED,1) == 1);
     }
   }
   CheckBoxPreference suspendOptimizations=(CheckBoxPreference)findPreference(KEY_SUSPEND_OPTIMIZATIONS);
-  suspendOptimizations.setChecked(Secure.getInt(getContentResolver(),Secure.WIFI_SUSPEND_OPTIMIZATIONS_ENABLED,1) == 1);
+  suspendOptimizations.setChecked(Global.getInt(getContentResolver(),Global.WIFI_SUSPEND_OPTIMIZATIONS_ENABLED,1) == 1);
   ListPreference frequencyPref=(ListPreference)findPreference(KEY_FREQUENCY_BAND);
   if (mWifiManager.isDualBandSupported()) {
     frequencyPref.setOnPreferenceChangeListener(this);

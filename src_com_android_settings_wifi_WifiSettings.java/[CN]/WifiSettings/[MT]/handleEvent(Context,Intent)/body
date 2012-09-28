@@ -19,7 +19,10 @@
     updateAccessPoints();
     updateConnectionState(info.getDetailedState());
     if (mAutoFinishOnConnection && info.isConnected()) {
-      getActivity().finish();
+      Activity activity=getActivity();
+      if (activity != null) {
+        activity.finish();
+      }
       return;
     }
   }

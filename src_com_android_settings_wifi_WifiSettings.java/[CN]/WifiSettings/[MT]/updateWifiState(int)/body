@@ -1,5 +1,8 @@
 {
-  getActivity().invalidateOptionsMenu();
+  Activity activity=getActivity();
+  if (activity != null) {
+    activity.invalidateOptionsMenu();
+  }
 switch (state) {
 case WifiManager.WIFI_STATE_ENABLED:
     mScanner.resume();

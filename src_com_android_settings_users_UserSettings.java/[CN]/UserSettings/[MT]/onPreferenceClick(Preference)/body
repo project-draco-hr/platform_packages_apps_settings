@@ -11,5 +11,17 @@
     editProfile.putExtra("finishActivityOnSaveCompleted",true);
     startActivity(editProfile);
   }
+ else   if (pref instanceof UserPreference) {
+    int userId=((UserPreference)pref).getUserId();
+    UserInfo user=mUserManager.getUserInfo(userId);
+    if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
+      showDialog(DIALOG_USER_CANNOT_MANAGE);
+    }
+ else {
+      if (!isInitialized(user)) {
+        mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SETUP_USER,user.id,user.serialNumber));
+      }
+    }
+  }
   return false;
 }

@@ -1,0 +1,4 @@
+{
+  final TelephonyManager telephonyManager=(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+  return telephonyManager != null && telephonyManager.getCurrentPhoneType() == TelephonyManager.PHONE_TYPE_GSM && telephonyManager.getSimState() != TelephonyManager.SIM_STATE_READY && telephonyManager.getSimState() != TelephonyManager.SIM_STATE_UNKNOWN;
+}

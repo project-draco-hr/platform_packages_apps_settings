@@ -33,6 +33,25 @@
       }
 );
     }
+    if (getActivity().getIntent().getBooleanExtra(EXTRA_SHOW_CUSTOM_BUTTON,false)) {
+      view.findViewById(R.id.button_bar).setVisibility(View.VISIBLE);
+      view.findViewById(R.id.back_button).setVisibility(View.INVISIBLE);
+      view.findViewById(R.id.skip_button).setVisibility(View.INVISIBLE);
+      view.findViewById(R.id.next_button).setVisibility(View.INVISIBLE);
+      Button customButton=(Button)view.findViewById(R.id.custom_button);
+      customButton.setVisibility(View.VISIBLE);
+      customButton.setOnClickListener(new OnClickListener(){
+        @Override public void onClick(        View v){
+          if (isPhone() && !hasSimProblem()) {
+            showDialog(WIFI_SKIPPED_DIALOG_ID);
+          }
+ else {
+            showDialog(WIFI_AND_MOBILE_SKIPPED_DIALOG_ID);
+          }
+        }
+      }
+);
+    }
     return view;
   }
  else {

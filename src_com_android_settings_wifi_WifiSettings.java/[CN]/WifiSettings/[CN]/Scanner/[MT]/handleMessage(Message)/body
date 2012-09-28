@@ -4,7 +4,10 @@
   }
  else   if (++mRetry >= 3) {
     mRetry=0;
-    Toast.makeText(getActivity(),R.string.wifi_fail_to_scan,Toast.LENGTH_LONG).show();
+    Activity activity=getActivity();
+    if (activity != null) {
+      Toast.makeText(activity,R.string.wifi_fail_to_scan,Toast.LENGTH_LONG).show();
+    }
     return;
   }
   sendEmptyMessageDelayed(0,WIFI_RESCAN_INTERVAL_MS);

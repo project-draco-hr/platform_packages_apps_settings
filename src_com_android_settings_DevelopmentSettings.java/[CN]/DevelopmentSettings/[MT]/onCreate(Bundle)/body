@@ -14,6 +14,16 @@
   mDebugAppPref=findPreference(DEBUG_APP_KEY);
   mAllPrefs.add(mDebugAppPref);
   mWaitForDebugger=findAndInitCheckboxPref(WAIT_FOR_DEBUGGER_KEY);
+  mVerifyAppsOverUsb=findAndInitCheckboxPref(VERIFY_APPS_OVER_USB_KEY);
+  if (!showVerifierSetting()) {
+    PreferenceGroup debugDebuggingCategory=(PreferenceGroup)findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
+    if (debugDebuggingCategory != null) {
+      debugDebuggingCategory.removePreference(mVerifyAppsOverUsb);
+    }
+ else {
+      mVerifyAppsOverUsb.setEnabled(false);
+    }
+  }
   mStrictMode=findAndInitCheckboxPref(STRICT_MODE_KEY);
   mPointerLocation=findAndInitCheckboxPref(POINTER_LOCATION_KEY);
   mShowTouches=findAndInitCheckboxPref(SHOW_TOUCHES_KEY);

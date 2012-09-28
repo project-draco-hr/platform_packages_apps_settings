@@ -129,8 +129,14 @@ mToggleVerifyApps.setChecked(false);
 mToggleVerifyApps.setEnabled(false);
 }
 }
- else if (mToggleVerifyApps != null) {
+ else {
+PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
+if (deviceAdminCategory != null) {
+deviceAdminCategory.removePreference(mToggleVerifyApps);
+}
+ else {
 mToggleVerifyApps.setEnabled(false);
+}
 }
 return root;
 }

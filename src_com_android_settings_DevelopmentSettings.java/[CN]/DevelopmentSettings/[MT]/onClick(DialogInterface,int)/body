@@ -3,6 +3,8 @@
     if (which == DialogInterface.BUTTON_POSITIVE) {
       mDialogClicked=true;
       Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.ADB_ENABLED,1);
+      mVerifyAppsOverUsb.setEnabled(true);
+      updateVerifyAppsOverUsbOptions();
     }
  else {
       mEnableAdb.setChecked(false);

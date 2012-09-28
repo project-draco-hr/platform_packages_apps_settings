@@ -11,6 +11,8 @@
     }
  else {
       Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.ADB_ENABLED,0);
+      mVerifyAppsOverUsb.setEnabled(false);
+      mVerifyAppsOverUsb.setChecked(false);
     }
   }
  else   if (preference == mBugreportInPower) {
@@ -35,6 +37,9 @@
   }
  else   if (preference == mWaitForDebugger) {
     writeDebuggerOptions();
+  }
+ else   if (preference == mVerifyAppsOverUsb) {
+    writeVerifyAppsOverUsbOptions();
   }
  else   if (preference == mStrictMode) {
     writeStrictModeVisualOptions();

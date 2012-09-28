@@ -1,0 +1,7 @@
+{
+  Bundle extras=mGlobalGesturePreferenceScreen.getExtras();
+  extras.putString(EXTRA_TITLE,getString(R.string.accessibility_global_gesture_preference_title));
+  extras.putString(EXTRA_SUMMARY,getString(R.string.accessibility_global_gesture_preference_summary));
+  extras.putBoolean(EXTRA_CHECKED,Settings.Global.getInt(getContentResolver(),Settings.Global.ENABLE_ACCESSIBILITY_GLOBAL_GESTURE_ENABLED,0) == 1);
+  super.onPreferenceTreeClick(mGlobalGesturePreferenceScreen,mGlobalGesturePreferenceScreen);
+}

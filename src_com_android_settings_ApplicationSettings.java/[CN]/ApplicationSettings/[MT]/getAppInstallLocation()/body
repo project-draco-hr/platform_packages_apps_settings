@@ -1,5 +1,5 @@
 {
-  int selectedLocation=Settings.System.getInt(getContentResolver(),Settings.Secure.DEFAULT_INSTALL_LOCATION,APP_INSTALL_AUTO);
+  int selectedLocation=Settings.Global.getInt(getContentResolver(),Settings.Global.DEFAULT_INSTALL_LOCATION,APP_INSTALL_AUTO);
   if (selectedLocation == APP_INSTALL_DEVICE) {
     return APP_INSTALL_DEVICE_ID;
   }

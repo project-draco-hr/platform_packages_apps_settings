@@ -11,7 +11,7 @@
     }
  else     if (user.id == UserHandle.myUserId()) {
       pref=mMePreference;
-      mNicknamePreference.getEditText().setText(user.name);
+      mNicknamePreference.setText(user.name);
       mNicknamePreference.setSummary(user.name);
     }
  else {
@@ -23,6 +23,9 @@
         pref.setSummary(R.string.user_owner);
       }
       pref.setTitle(user.name);
+      if (!isInitialized(user)) {
+        pref.setSummary(R.string.user_summary_not_set_up);
+      }
     }
     if (user.iconPath != null) {
       if (mUserIcons.get(user.id) == null) {

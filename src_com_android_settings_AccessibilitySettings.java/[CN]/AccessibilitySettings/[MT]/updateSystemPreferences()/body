@@ -26,4 +26,11 @@
  else {
     mDisplayMagnificationPreferenceScreen.setSummary(R.string.accessibility_feature_state_off);
   }
+  final boolean globalGestureEnabled=Settings.Global.getInt(getContentResolver(),Settings.Global.ENABLE_ACCESSIBILITY_GLOBAL_GESTURE_ENABLED,0) == 1;
+  if (globalGestureEnabled) {
+    mGlobalGesturePreferenceScreen.setSummary(R.string.accessibility_feature_state_on);
+  }
+ else {
+    mGlobalGesturePreferenceScreen.setSummary(R.string.accessibility_feature_state_off);
+  }
 }

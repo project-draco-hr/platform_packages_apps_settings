@@ -4,9 +4,9 @@
   XmlResourceParser parser=null;
   Exception caughtException=null;
   try {
-    parser=resolveInfo.serviceInfo.loadXmlMetaData(pm,Dream.DREAM_META_DATA);
+    parser=resolveInfo.serviceInfo.loadXmlMetaData(pm,DreamService.DREAM_META_DATA);
     if (parser == null) {
-      Log.w(TAG,"No " + Dream.DREAM_META_DATA + " meta-data");
+      Log.w(TAG,"No " + DreamService.DREAM_META_DATA + " meta-data");
       return null;
     }
     Resources res=pm.getResourcesForApplication(resolveInfo.serviceInfo.applicationInfo);

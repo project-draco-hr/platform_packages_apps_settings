@@ -34,7 +34,7 @@
   }
   if (TelephonyManager.PHONE_TYPE_CDMA == activePhoneType) {
     ListPreference emergencyTonePreference=(ListPreference)findPreference(KEY_EMERGENCY_TONE);
-    emergencyTonePreference.setValue(String.valueOf(Settings.System.getInt(resolver,Settings.System.EMERGENCY_TONE,FALLBACK_EMERGENCY_TONE_VALUE)));
+    emergencyTonePreference.setValue(String.valueOf(Settings.Global.getInt(resolver,Settings.Global.EMERGENCY_TONE,FALLBACK_EMERGENCY_TONE_VALUE)));
     emergencyTonePreference.setOnPreferenceChangeListener(this);
   }
   mSoundSettings=(PreferenceGroup)findPreference(KEY_SOUND_SETTINGS);

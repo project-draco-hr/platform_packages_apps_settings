@@ -1,5 +1,13 @@
 {
   super.onCreate(icicle);
+  if (icicle != null) {
+    if (icicle.containsKey(SAVE_ADDING_USER)) {
+      mAddedUserId=icicle.getInt(SAVE_ADDING_USER);
+    }
+    if (icicle.containsKey(SAVE_REMOVING_USER)) {
+      mRemovingUserId=icicle.getInt(SAVE_REMOVING_USER);
+    }
+  }
   mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   addPreferencesFromResource(R.xml.user_settings);
   mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);

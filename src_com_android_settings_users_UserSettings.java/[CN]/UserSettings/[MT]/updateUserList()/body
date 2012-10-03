@@ -30,7 +30,7 @@
     if (user.iconPath != null) {
       if (mUserIcons.get(user.id) == null) {
         missingIcons.add(user.id);
-        pref.setIcon(R.drawable.ic_user);
+        pref.setIcon(R.drawable.avatar_default_1);
       }
  else {
         setPhotoId(pref,user);
@@ -42,7 +42,7 @@
     pref.setEnabled(false);
     pref.setTitle(R.string.user_new_user_name);
     pref.setSummary(R.string.user_adding_new_user);
-    pref.setIcon(R.drawable.ic_user);
+    pref.setIcon(R.drawable.avatar_default_1);
     mUserListCategory.addPreference(pref);
   }
   getActivity().invalidateOptionsMenu();

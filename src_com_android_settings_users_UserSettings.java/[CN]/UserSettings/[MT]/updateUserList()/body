@@ -6,10 +6,7 @@
   final ArrayList<Integer> missingIcons=new ArrayList<Integer>();
   for (  UserInfo user : users) {
     Preference pref;
-    if (user.id == mRemovingUserId) {
-      continue;
-    }
- else     if (user.id == UserHandle.myUserId()) {
+    if (user.id == UserHandle.myUserId()) {
       pref=mMePreference;
       mNicknamePreference.setText(user.name);
       mNicknamePreference.setSummary(user.name);

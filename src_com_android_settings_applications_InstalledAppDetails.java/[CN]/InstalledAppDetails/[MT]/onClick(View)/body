@@ -29,7 +29,7 @@
  else   if (v == mActivitiesButton) {
     mPm.clearPackagePreferredActivities(packageName);
     try {
-      mUsbManager.clearDefaults(packageName);
+      mUsbManager.clearDefaults(packageName,UserHandle.myUserId());
     }
  catch (    RemoteException e) {
       Log.e(TAG,"mUsbManager.clearDefaults",e);

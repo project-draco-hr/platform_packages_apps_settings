@@ -15,7 +15,7 @@
   if (localLOGV)   Log.i(TAG,"Have " + prefActList.size() + " number of activities in preferred list");
   boolean hasUsbDefaults=false;
   try {
-    hasUsbDefaults=mUsbManager.hasDefaults(packageName);
+    hasUsbDefaults=mUsbManager.hasDefaults(packageName,UserHandle.myUserId());
   }
  catch (  RemoteException e) {
     Log.e(TAG,"mUsbManager.hasDefaults",e);

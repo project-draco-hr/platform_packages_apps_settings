@@ -1,6 +1,12 @@
 {
   mVoiceCheckData=data;
   if (mSettingsIcon != null && mRadioButton != null) {
-    mSettingsIcon.setEnabled(mRadioButton.isChecked());
+    if (mRadioButton.isChecked()) {
+      mSettingsIcon.setEnabled(true);
+    }
+ else {
+      mSettingsIcon.setEnabled(false);
+      mSettingsIcon.setAlpha(Utils.DISABLED_ALPHA);
+    }
   }
 }

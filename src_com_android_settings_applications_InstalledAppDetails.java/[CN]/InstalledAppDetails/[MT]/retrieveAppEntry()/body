@@ -8,11 +8,17 @@
     }
   }
   mAppEntry=mState.getEntry(packageName);
-  try {
-    mPackageInfo=mPm.getPackageInfo(mAppEntry.info.packageName,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES);
+  if (mAppEntry != null) {
+    try {
+      mPackageInfo=mPm.getPackageInfo(mAppEntry.info.packageName,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES);
+    }
+ catch (    NameNotFoundException e) {
+      Log.e(TAG,"Exception when retrieving package:" + mAppEntry.info.packageName,e);
+    }
   }
- catch (  NameNotFoundException e) {
-    Log.e(TAG,"Exception when retrieving package:" + mAppEntry.info.packageName,e);
+ else {
+    Log.w(TAG,"Missing AppEntry; maybe reinstalling?");
+    mPackageInfo=null;
   }
   return packageName;
 }

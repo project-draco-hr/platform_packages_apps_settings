@@ -8,8 +8,8 @@
     errorMsg=validatePassword(pin);
     if (errorMsg == null) {
       mFirstPin=pin;
-      updateStage(Stage.NeedToConfirm);
       mPasswordEntry.setText("");
+      updateStage(Stage.NeedToConfirm);
     }
   }
  else   if (mUiStage == Stage.NeedToConfirm) {
@@ -20,11 +20,11 @@
       getActivity().finish();
     }
  else {
-      updateStage(Stage.ConfirmWrong);
       CharSequence tmp=mPasswordEntry.getText();
       if (tmp != null) {
         Selection.setSelection((Spannable)tmp,0,tmp.length());
       }
+      updateStage(Stage.ConfirmWrong);
     }
   }
   if (errorMsg != null) {

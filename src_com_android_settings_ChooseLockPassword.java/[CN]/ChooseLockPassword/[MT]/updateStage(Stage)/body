@@ -1,4 +1,8 @@
 {
+  final Stage previousStage=mUiStage;
   mUiStage=stage;
   updateUi();
+  if (previousStage != stage) {
+    mHeaderText.announceForAccessibility(mHeaderText.getText());
+  }
 }

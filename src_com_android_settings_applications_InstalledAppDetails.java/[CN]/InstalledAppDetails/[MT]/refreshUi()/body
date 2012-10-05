@@ -139,5 +139,12 @@
   setAppLabelAndIcon(mPackageInfo);
   refreshButtons();
   refreshSizeInfo();
+  if (!mInitialized) {
+    mInitialized=true;
+    mShowUninstalled=(mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0;
+  }
+ else   if (!mShowUninstalled) {
+    return (mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0;
+  }
   return true;
 }

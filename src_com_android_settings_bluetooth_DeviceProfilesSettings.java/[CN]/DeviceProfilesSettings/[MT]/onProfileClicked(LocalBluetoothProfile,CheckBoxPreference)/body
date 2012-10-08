@@ -6,7 +6,13 @@
     askDisconnect(getActivity(),profile);
   }
  else {
-    profile.setPreferred(device,true);
-    mCachedDevice.connectProfile(profile);
+    if (profile.isPreferred(device)) {
+      profile.setPreferred(device,false);
+      refreshProfilePreference(profilePref,profile);
+    }
+ else {
+      profile.setPreferred(device,true);
+      mCachedDevice.connectProfile(profile);
+    }
   }
 }

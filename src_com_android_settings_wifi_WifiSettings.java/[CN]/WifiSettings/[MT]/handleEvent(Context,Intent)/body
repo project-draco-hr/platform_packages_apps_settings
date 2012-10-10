@@ -21,6 +21,7 @@
     if (mAutoFinishOnConnection && info.isConnected()) {
       Activity activity=getActivity();
       if (activity != null) {
+        activity.setResult(Activity.RESULT_OK);
         activity.finish();
       }
       return;

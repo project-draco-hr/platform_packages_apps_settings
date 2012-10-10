@@ -1,5 +1,7 @@
 {
+  final boolean showDev=mDevelopmentPreferences.getBoolean(DevelopmentSettings.PREF_SHOW,android.os.Build.TYPE.equals("eng"));
   int i=0;
+  mHeaderIndexMap.clear();
   while (i < target.size()) {
     Header header=target.get(i);
     int id=(int)header.id;
@@ -8,19 +10,19 @@
     }
  else     if (id == R.id.wifi_settings) {
       if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
-        target.remove(header);
+        target.remove(i);
       }
     }
  else     if (id == R.id.bluetooth_settings) {
       if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
-        target.remove(header);
+        target.remove(i);
       }
     }
  else     if (id == R.id.data_usage_settings) {
       final INetworkManagementService netManager=INetworkManagementService.Stub.asInterface(ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
       try {
         if (!netManager.isBandwidthControlEnabled()) {
-          target.remove(header);
+          target.remove(i);
         }
       }
  catch (      RemoteException e) {
@@ -32,11 +34,16 @@
     }
  else     if (id == R.id.user_settings) {
       if (!UserHandle.MU_ENABLED || !UserManager.supportsMultipleUsers() || Utils.isMonkeyRunning()) {
-        target.remove(header);
+        target.remove(i);
+      }
+    }
+ else     if (id == R.id.development_settings) {
+      if (!showDev) {
+        target.remove(i);
       }
     }
     if (UserHandle.MU_ENABLED && UserHandle.myUserId() != 0 && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,id)) {
-      target.remove(header);
+      target.remove(i);
     }
     if (target.get(i) == header) {
       if (mFirstHeader == null && HeaderAdapter.getHeaderType(header) != HeaderAdapter.HEADER_TYPE_CATEGORY) {

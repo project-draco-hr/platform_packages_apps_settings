@@ -1,6 +1,9 @@
 {
   super.onNewIntent(intent);
-  if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0 && mFirstHeader != null && !onIsHidingHeaders() && onIsMultiPane()) {
-    switchToHeaderLocal(mFirstHeader);
+  if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0) {
+    if (mFirstHeader != null && !onIsHidingHeaders() && onIsMultiPane()) {
+      switchToHeaderLocal(mFirstHeader);
+    }
+    getListView().setSelectionFromTop(0,0);
   }
 }

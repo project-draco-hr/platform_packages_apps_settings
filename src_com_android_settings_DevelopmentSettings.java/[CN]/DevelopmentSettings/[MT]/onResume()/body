@@ -13,6 +13,7 @@
   if (mHaveDebugSettings && !mLastEnabledState) {
     Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,1);
     mLastEnabledState=true;
+    mEnabledSwitch.setChecked(mLastEnabledState);
     setPrefsEnabledState(mLastEnabledState);
   }
 }

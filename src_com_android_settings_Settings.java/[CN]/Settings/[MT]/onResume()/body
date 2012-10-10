@@ -1,5 +1,12 @@
 {
   super.onResume();
+  mDevelopmentPreferencesListener=new SharedPreferences.OnSharedPreferenceChangeListener(){
+    @Override public void onSharedPreferenceChanged(    SharedPreferences sharedPreferences,    String key){
+      invalidateHeaders();
+    }
+  }
+;
+  mDevelopmentPreferences.registerOnSharedPreferenceChangeListener(mDevelopmentPreferencesListener);
   ListAdapter listAdapter=getListAdapter();
   if (listAdapter instanceof HeaderAdapter) {
     ((HeaderAdapter)listAdapter).resume();

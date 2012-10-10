@@ -3,6 +3,6 @@
   mPendingIntent=PendingIntent.getBroadcast(this,0,new Intent(),0);
   addAccountOptions.putParcelable(KEY_CALLER_IDENTITY,mPendingIntent);
   addAccountOptions.putBoolean(EXTRA_HAS_MULTIPLE_USERS,Utils.hasMultipleUsers(this));
-  AccountManager.get(this).addAccount(accountType,null,null,addAccountOptions,this,mCallback,null);
+  AccountManager.get(this).addAccount(accountType,null,null,addAccountOptions,null,mCallback,null);
   mAddAccountCalled=true;
 }

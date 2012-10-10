@@ -8,5 +8,13 @@ case CHOOSE_ACCOUNT_REQUEST:
     }
   addAccount(data.getStringExtra(EXTRA_SELECTED_ACCOUNT));
 break;
+case ADD_ACCOUNT_REQUEST:
+setResult(resultCode);
+if (mPendingIntent != null) {
+mPendingIntent.cancel();
+mPendingIntent=null;
+}
+finish();
+break;
 }
 }

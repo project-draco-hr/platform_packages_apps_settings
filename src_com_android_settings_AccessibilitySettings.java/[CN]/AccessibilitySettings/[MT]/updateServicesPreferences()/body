@@ -41,6 +41,7 @@
       extras.putString(EXTRA_SETTINGS_TITLE,getString(R.string.accessibility_menu_item_settings));
       extras.putString(EXTRA_SETTINGS_COMPONENT_NAME,new ComponentName(info.getResolveInfo().serviceInfo.packageName,settingsClassName).flattenToString());
     }
+    extras.putString(EXTRA_SERVICE_COMPONENT_NAME,componentName.flattenToString());
     mServicesCategory.addPreference(preference);
   }
   if (mServicesCategory.getPreferenceCount() == 0) {

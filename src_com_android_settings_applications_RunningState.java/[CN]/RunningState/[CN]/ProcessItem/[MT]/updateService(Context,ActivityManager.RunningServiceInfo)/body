@@ -1,5 +1,5 @@
 {
-  final PackageManager pm=context.getPackageManager();
+  final PackageManager pm=userContext.getPackageManager();
   boolean changed=false;
   ServiceItem si=mServices.get(service.service);
   if (si == null) {
@@ -31,7 +31,7 @@
     try {
       Resources clientr=pm.getResourcesForApplication(service.clientPackage);
       String label=clientr.getString(service.clientLabel);
-      si.mDescription=context.getResources().getString(R.string.service_client_name,label);
+      si.mDescription=userContext.getResources().getString(R.string.service_client_name,label);
     }
  catch (    PackageManager.NameNotFoundException e) {
       si.mDescription=null;
@@ -42,7 +42,7 @@
       si.mShownAsStarted=true;
       changed=true;
     }
-    si.mDescription=context.getResources().getString(R.string.service_started_by_app);
+    si.mDescription=userContext.getResources().getString(R.string.service_started_by_app);
   }
   return changed;
 }

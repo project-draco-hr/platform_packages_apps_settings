@@ -40,6 +40,13 @@
   }
   for (int i=0; i < NS; i++) {
     ActivityManager.RunningServiceInfo si=services.get(i);
+    final Context userContext;
+    try {
+      userContext=context.createPackageContextAsUser("android",0,new UserHandle(UserHandle.getUserId(si.uid)));
+    }
+ catch (    NameNotFoundException e) {
+      throw new RuntimeException(e);
+    }
     if (si.restarting == 0 && si.pid > 0) {
       AppProcessInfo ainfo=mTmpAppProcesses.get(si.pid);
       if (ainfo != null && !ainfo.hasForegroundServices) {
@@ -67,7 +74,7 @@
     ProcessItem proc=procs.get(si.process);
     if (proc == null) {
       changed=true;
-      proc=new ProcessItem(context,si.uid,si.process);
+      proc=new ProcessItem(userContext,si.uid,si.process);
       procs.put(si.process,proc);
     }
     if (proc.mCurSeq != mSequence) {
@@ -87,7 +94,7 @@
       proc.mDependentProcesses.clear();
       proc.mCurSeq=mSequence;
     }
-    changed|=proc.updateService(context,si);
+    changed|=proc.updateService(userContext,si);
   }
   for (int i=0; i < NP; i++) {
     ActivityManager.RunningAppProcessInfo pi=processes.get(i);

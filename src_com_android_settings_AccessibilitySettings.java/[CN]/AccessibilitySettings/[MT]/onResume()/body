@@ -4,6 +4,6 @@
   updateAllPreferences();
   offerInstallAccessibilitySerivceOnce();
   mSettingsPackageMonitor.register(getActivity(),getActivity().getMainLooper(),false);
-  mSettingsContentObserver.register();
+  mSettingsContentObserver.register(getContentResolver());
   RotationPolicy.registerRotationPolicyListener(getActivity(),mRotationPolicyListener);
 }

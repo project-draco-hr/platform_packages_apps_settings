@@ -1,5 +1,5 @@
 {
-  final PackageManager pm=userContext.getPackageManager();
+  final PackageManager pm=context.getPackageManager();
   boolean changed=false;
   ServiceItem si=mServices.get(service.service);
   if (si == null) {
@@ -7,9 +7,9 @@
     si=new ServiceItem(mUserId);
     si.mRunningService=service;
     try {
-      si.mServiceInfo=pm.getServiceInfo(service.service,PackageManager.GET_UNINSTALLED_PACKAGES);
+      si.mServiceInfo=ActivityThread.getPackageManager().getServiceInfo(service.service,PackageManager.GET_UNINSTALLED_PACKAGES,UserHandle.getUserId(service.uid));
     }
- catch (    PackageManager.NameNotFoundException e) {
+ catch (    RemoteException e) {
     }
     si.mDisplayLabel=makeLabel(pm,si.mRunningService.service.getClassName(),si.mServiceInfo);
     mLabel=mDisplayLabel != null ? mDisplayLabel.toString() : null;
@@ -31,7 +31,7 @@
     try {
       Resources clientr=pm.getResourcesForApplication(service.clientPackage);
       String label=clientr.getString(service.clientLabel);
-      si.mDescription=userContext.getResources().getString(R.string.service_client_name,label);
+      si.mDescription=context.getResources().getString(R.string.service_client_name,label);
     }
  catch (    PackageManager.NameNotFoundException e) {
       si.mDescription=null;
@@ -42,7 +42,7 @@
       si.mShownAsStarted=true;
       changed=true;
     }
-    si.mDescription=userContext.getResources().getString(R.string.service_started_by_app);
+    si.mDescription=context.getResources().getString(R.string.service_started_by_app);
   }
   return changed;
 }

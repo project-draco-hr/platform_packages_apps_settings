@@ -15,6 +15,9 @@
       }
  catch (      RemoteException e) {
       }
+catch (      Exception e) {
+        Log.i("DevSettings","Somone wrote a bad service '" + service + "' that doesn't like to be poked: "+ e);
+      }
       data.recycle();
     }
   }

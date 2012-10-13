@@ -22,9 +22,12 @@
         }
       }
  else {
-        uninstallPkg(packageName,false);
+        uninstallPkg(packageName,false,false);
       }
     }
+  }
+ else   if (v == mSpecialDisableButton) {
+    showDialogInner(DLG_SPECIAL_DISABLE,0);
   }
  else   if (v == mActivitiesButton) {
     mPm.clearPackagePreferredActivities(packageName);

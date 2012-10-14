@@ -1,0 +1,25 @@
+{
+  boolean disableable=false;
+  try {
+    PackageInfo sys=mPm.getPackageInfo("android",PackageManager.GET_SIGNATURES);
+    Intent intent=new Intent(Intent.ACTION_MAIN);
+    intent.addCategory(Intent.CATEGORY_HOME);
+    intent.setPackage(mAppEntry.info.packageName);
+    List<ResolveInfo> homes=mPm.queryIntentActivities(intent,0);
+    if ((homes != null && homes.size() > 0) || isThisASystemPackage()) {
+      button.setText(R.string.disable_text);
+    }
+ else     if (mAppEntry.info.enabled) {
+      button.setText(R.string.disable_text);
+      disableable=true;
+    }
+ else {
+      button.setText(R.string.enable_text);
+      disableable=true;
+    }
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    Log.w(TAG,"Unable to get package info",e);
+  }
+  return disableable;
+}

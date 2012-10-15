@@ -27,6 +27,7 @@
   if (currentFormat == null) {
     currentFormat="";
   }
+  mDummyDate.set(mDummyDate.get(Calendar.YEAR),mDummyDate.DECEMBER,31,13,0,0);
   for (int i=0; i < formattedDates.length; i++) {
     String formatted=DateFormat.getDateFormatForSetting(getActivity(),dateFormats[i]).format(mDummyDate.getTime());
     if (dateFormats[i].length() == 0) {

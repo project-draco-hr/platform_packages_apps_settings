@@ -5,5 +5,8 @@
   }
   handleStateChanged(mLocalAdapter.getBluetoothState());
   mContext.registerReceiver(mReceiver,mIntentFilter);
-  mSwitch.setOnCheckedChangeListener(this);
+synchronized (this) {
+    mSwitch.setOnCheckedChangeListener(this);
+    mValidListener=true;
+  }
 }

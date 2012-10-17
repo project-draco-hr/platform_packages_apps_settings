@@ -3,5 +3,8 @@
     return;
   }
   mContext.unregisterReceiver(mReceiver);
-  mSwitch.setOnCheckedChangeListener(null);
+synchronized (this) {
+    mSwitch.setOnCheckedChangeListener(null);
+    mValidListener=false;
+  }
 }

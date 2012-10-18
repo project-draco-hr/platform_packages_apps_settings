@@ -1,0 +1,10 @@
+{
+  DreamBackend backend=new DreamBackend(context);
+  boolean isEnabled=backend.isEnabled();
+  if (!isEnabled) {
+    return context.getString(R.string.screensaver_settings_summary_off);
+  }
+ else {
+    return backend.getActiveDreamName();
+  }
+}

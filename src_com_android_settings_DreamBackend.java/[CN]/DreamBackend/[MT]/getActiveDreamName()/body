@@ -1,0 +1,16 @@
+{
+  ComponentName cn=getActiveDream();
+  if (cn != null) {
+    PackageManager pm=mContext.getPackageManager();
+    try {
+      ServiceInfo ri=pm.getServiceInfo(cn,0);
+      if (ri != null) {
+        return ri.loadLabel(pm);
+      }
+    }
+ catch (    PackageManager.NameNotFoundException exc) {
+      return null;
+    }
+  }
+  return null;
+}

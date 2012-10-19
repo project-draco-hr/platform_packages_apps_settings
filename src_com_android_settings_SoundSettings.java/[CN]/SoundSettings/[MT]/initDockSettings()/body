@@ -4,7 +4,7 @@
     mDockAudioSettings=findPreference(KEY_AUDIO_SETTINGS);
     mDockSounds=(CheckBoxPreference)findPreference(KEY_DOCK_SOUNDS);
     mDockSounds.setPersistent(false);
-    mDockSounds.setChecked(Settings.System.getInt(resolver,Settings.System.DOCK_SOUNDS_ENABLED,0) != 0);
+    mDockSounds.setChecked(Settings.Global.getInt(resolver,Settings.Global.DOCK_SOUNDS_ENABLED,0) != 0);
   }
  else {
     getPreferenceScreen().removePreference(findPreference(KEY_DOCK_CATEGORY));

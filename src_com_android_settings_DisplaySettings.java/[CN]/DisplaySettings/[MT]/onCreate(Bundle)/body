@@ -8,7 +8,7 @@
     getPreferenceScreen().removePreference(mAccelerometer);
   }
   mScreenSaverPreference=findPreference(KEY_SCREEN_SAVER);
-  if (mScreenSaverPreference != null && getResources().getBoolean(com.android.internal.R.bool.config_enableDreams) == false) {
+  if (mScreenSaverPreference != null && getResources().getBoolean(com.android.internal.R.bool.config_dreamsSupported) == false) {
     getPreferenceScreen().removePreference(mScreenSaverPreference);
   }
   mScreenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);

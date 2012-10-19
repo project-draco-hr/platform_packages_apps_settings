@@ -2,4 +2,7 @@
   mContext=context;
   mDreamManager=IDreamManager.Stub.asInterface(ServiceManager.getService(DreamService.DREAM_SERVICE));
   mComparator=new DreamInfoComparator(getDefaultDream());
+  mDreamsEnabledByDefault=context.getResources().getBoolean(com.android.internal.R.bool.config_dreamsEnabledByDefault);
+  mDreamsActivatedOnSleepByDefault=context.getResources().getBoolean(com.android.internal.R.bool.config_dreamsActivatedOnSleepByDefault);
+  mDreamsActivatedOnDockByDefault=context.getResources().getBoolean(com.android.internal.R.bool.config_dreamsActivatedOnDockByDefault);
 }

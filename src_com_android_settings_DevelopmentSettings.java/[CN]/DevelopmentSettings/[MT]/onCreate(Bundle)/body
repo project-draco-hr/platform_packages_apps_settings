@@ -49,6 +49,9 @@
   mOverlayDisplayDevices=(ListPreference)findPreference(OVERLAY_DISPLAY_DEVICES_KEY);
   mAllPrefs.add(mOverlayDisplayDevices);
   mOverlayDisplayDevices.setOnPreferenceChangeListener(this);
+  mOpenGLTraces=(ListPreference)findPreference(OPENGL_TRACES_KEY);
+  mAllPrefs.add(mOpenGLTraces);
+  mOpenGLTraces.setOnPreferenceChangeListener(this);
   mEnableTracesPref=(MultiCheckPreference)findPreference(ENABLE_TRACES_KEY);
   String[] traceValues=new String[Trace.TRACE_TAGS.length];
   for (int i=Trace.TRACE_FLAGS_START_BIT; i < traceValues.length; i++) {

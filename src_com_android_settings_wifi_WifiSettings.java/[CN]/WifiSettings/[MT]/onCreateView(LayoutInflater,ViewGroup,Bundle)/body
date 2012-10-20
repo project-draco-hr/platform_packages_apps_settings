@@ -33,7 +33,8 @@
       }
 );
     }
-    if (getActivity().getIntent().getBooleanExtra(EXTRA_SHOW_CUSTOM_BUTTON,false)) {
+    Intent intent=getActivity().getIntent();
+    if (intent.getBooleanExtra(EXTRA_SHOW_CUSTOM_BUTTON,false)) {
       view.findViewById(R.id.button_bar).setVisibility(View.VISIBLE);
       view.findViewById(R.id.back_button).setVisibility(View.INVISIBLE);
       view.findViewById(R.id.skip_button).setVisibility(View.INVISIBLE);
@@ -51,6 +52,9 @@
         }
       }
 );
+    }
+    if (intent.getBooleanExtra(EXTRA_SHOW_WIFI_REQUIRED_INFO,false)) {
+      view.findViewById(R.id.wifi_required_info).setVisibility(View.VISIBLE);
     }
     return view;
   }

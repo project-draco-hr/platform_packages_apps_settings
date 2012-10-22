@@ -4,7 +4,12 @@
   mAutoSyncPreference=(CheckBoxPreference)getPreferenceScreen().findPreference(KEY_SYNC_SWITCH);
   mAutoSyncPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
-      ContentResolver.setMasterSyncAutomatically((Boolean)newValue);
+      if (ActivityManager.isUserAMonkey()) {
+        Log.d("SyncSettings","ignoring monkey's attempt to flip sync state");
+      }
+ else {
+        ContentResolver.setMasterSyncAutomatically((Boolean)newValue);
+      }
       return true;
     }
   }

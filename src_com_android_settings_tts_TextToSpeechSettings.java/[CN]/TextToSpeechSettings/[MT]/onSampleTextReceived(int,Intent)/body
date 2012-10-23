@@ -10,7 +10,16 @@
     if (DBG)     Log.d(TAG,"Using default sample text :" + sample);
   }
   if (sample != null && mTts != null) {
-    mTts.speak(sample,TextToSpeech.QUEUE_FLUSH,null);
+    final boolean networkRequired=isNetworkRequiredForSynthesis();
+    if (!networkRequired || networkRequired && (mTts.isLanguageAvailable(mTts.getLanguage()) >= TextToSpeech.LANG_AVAILABLE)) {
+      HashMap<String,String> params=new HashMap<String,String>();
+      params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"Sample");
+      mTts.speak(sample,TextToSpeech.QUEUE_FLUSH,params);
+    }
+ else {
+      Log.w(TAG,"Network required for sample synthesis for requested language");
+      displayNetworkAlert();
+    }
   }
  else {
     Log.e(TAG,"Did not have a sample string for the requested language");

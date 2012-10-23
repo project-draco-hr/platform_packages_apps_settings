@@ -9,6 +9,7 @@
     if (DBG)     Log.d(TAG,"Updating engine: Failed to bind to engine, reverting.");
     if (mPreviousEngine != null) {
       mTts=new TextToSpeech(getActivity().getApplicationContext(),mInitListener,mPreviousEngine);
+      setTtsUtteranceProgressListener();
     }
     mPreviousEngine=null;
   }

@@ -5,7 +5,7 @@
   }
   int userId=UserHandle.myUserId();
   UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
-  String profileName=Utils.getMeProfileName(context);
+  String profileName=Utils.getMeProfileName(context,false);
   if (profileName != null && profileName.length() > 0) {
     um.setUserName(userId,profileName);
     prefs.edit().putBoolean(KEY_PROFILE_NAME_COPIED_ONCE,true).commit();

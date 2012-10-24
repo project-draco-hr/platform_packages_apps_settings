@@ -1,0 +1,14 @@
+{
+  final ContentResolver cr=context.getContentResolver();
+  final Cursor profile=cr.query(Profile.CONTENT_URI,new String[]{Profile.DISPLAY_NAME},null,null,null);
+  if (profile == null)   return null;
+  try {
+    if (!profile.moveToFirst()) {
+      return null;
+    }
+    return profile.getString(0);
+  }
+  finally {
+    profile.close();
+  }
+}

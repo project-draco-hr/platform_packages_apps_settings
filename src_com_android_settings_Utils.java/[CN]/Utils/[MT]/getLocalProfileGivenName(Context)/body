@@ -1,0 +1,30 @@
+{
+  final ContentResolver cr=context.getContentResolver();
+  final long localRowProfileId;
+  final Cursor localRawProfile=cr.query(Profile.CONTENT_RAW_CONTACTS_URI,new String[]{RawContacts._ID},RawContacts.ACCOUNT_TYPE + " IS NULL AND " + RawContacts.ACCOUNT_NAME+ " IS NULL",null,null);
+  if (localRawProfile == null)   return null;
+  try {
+    if (!localRawProfile.moveToFirst()) {
+      return null;
+    }
+    localRowProfileId=localRawProfile.getLong(0);
+  }
+  finally {
+    localRawProfile.close();
+  }
+  final Cursor structuredName=cr.query(Profile.CONTENT_URI.buildUpon().appendPath(Contacts.Data.CONTENT_DIRECTORY).build(),new String[]{CommonDataKinds.StructuredName.GIVEN_NAME,CommonDataKinds.StructuredName.FAMILY_NAME},Data.RAW_CONTACT_ID + "=" + localRowProfileId,null,null);
+  if (structuredName == null)   return null;
+  try {
+    if (!structuredName.moveToFirst()) {
+      return null;
+    }
+    String partialName=structuredName.getString(0);
+    if (TextUtils.isEmpty(partialName)) {
+      partialName=structuredName.getString(1);
+    }
+    return partialName;
+  }
+  finally {
+    structuredName.close();
+  }
+}

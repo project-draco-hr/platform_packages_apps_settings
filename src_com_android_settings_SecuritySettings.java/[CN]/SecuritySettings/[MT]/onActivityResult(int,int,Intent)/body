@@ -13,21 +13,21 @@
     int appWidgetId=(data == null) ? -1 : data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,-1);
     if ((requestCode == REQUEST_PICK_APPWIDGET) && resultCode == Activity.RESULT_OK) {
       AppWidgetManager appWidgetManager=AppWidgetManager.getInstance(getActivity());
-      boolean defaultOrNoWidget=data.getBooleanExtra(EXTRA_NO_WIDGET,false) || data.getBooleanExtra(EXTRA_DEFAULT_WIDGET,false);
+      boolean defaultWidget=data.getBooleanExtra(EXTRA_DEFAULT_WIDGET,false);
       AppWidgetProviderInfo appWidget=null;
-      if (!defaultOrNoWidget) {
+      if (!defaultWidget) {
         appWidget=appWidgetManager.getAppWidgetInfo(appWidgetId);
       }
-      if (!defaultOrNoWidget && appWidget.configure != null) {
+      if (!defaultWidget && appWidget.configure != null) {
         Intent intent=new Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
         intent.setComponent(appWidget.configure);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
         startActivityForResultSafely(intent,REQUEST_CREATE_APPWIDGET);
       }
  else {
-        if (defaultOrNoWidget) {
+        if (defaultWidget) {
           AppWidgetHost.deleteAppWidgetIdForSystem(appWidgetId);
-          data.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,-1);
+          data.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,LockPatternUtils.ID_DEFAULT_STATUS_WIDGET);
         }
         onActivityResult(REQUEST_CREATE_APPWIDGET,Activity.RESULT_OK,data);
       }

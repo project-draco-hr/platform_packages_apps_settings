@@ -21,6 +21,7 @@
       return;
     }
  else {
+      mFinishPending=true;
       intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
       startActivity(intent);
     }
@@ -37,18 +38,23 @@
       return;
     }
  else {
+      mFinishPending=true;
       intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
       startActivity(intent);
     }
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK) {
     Intent intent=getBiometricSensorIntent();
+    mFinishPending=true;
     startActivity(intent);
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
     mChooseLockSettingsHelper.utils().clearLock(false);
     mChooseLockSettingsHelper.utils().setLockScreenDisabled(disabled);
     getActivity().setResult(Activity.RESULT_OK);
+    finish();
   }
-  finish();
+ else {
+    finish();
+  }
 }

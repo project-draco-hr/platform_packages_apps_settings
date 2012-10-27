@@ -2,19 +2,34 @@
   if (mDockAudioSettings != null) {
     int dockState=intent.getIntExtra(Intent.EXTRA_DOCK_STATE,0);
     boolean isBluetooth=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE) != null;
-    if (!isBluetooth) {
-      mDockAudioSettings.setEnabled(false);
-    }
- else {
-      mDockAudioSettings.setEnabled(true);
-      mDockIntent=intent;
-    }
+    mDockIntent=intent;
     if (dockState != Intent.EXTRA_DOCK_STATE_UNDOCKED) {
       try {
         removeDialog(DIALOG_NOT_DOCKED);
       }
  catch (      IllegalArgumentException iae) {
       }
+      if (isBluetooth) {
+        mDockAudioSettings.setEnabled(true);
+      }
+ else {
+        if (dockState == Intent.EXTRA_DOCK_STATE_LE_DESK) {
+          ContentResolver resolver=getContentResolver();
+          mDockAudioSettings.setEnabled(true);
+          if (Settings.Global.getInt(resolver,Settings.Global.DOCK_AUDIO_MEDIA_ENABLED,-1) == -1) {
+            Settings.Global.putInt(resolver,Settings.Global.DOCK_AUDIO_MEDIA_ENABLED,0);
+          }
+          mDockAudioMediaEnabled=(CheckBoxPreference)findPreference(KEY_DOCK_AUDIO_MEDIA_ENABLED);
+          mDockAudioMediaEnabled.setPersistent(false);
+          mDockAudioMediaEnabled.setChecked(Settings.Global.getInt(resolver,Settings.Global.DOCK_AUDIO_MEDIA_ENABLED,0) != 0);
+        }
+ else {
+          mDockAudioSettings.setEnabled(false);
+        }
+      }
+    }
+ else {
+      mDockAudioSettings.setEnabled(false);
     }
   }
 }

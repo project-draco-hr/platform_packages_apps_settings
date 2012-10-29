@@ -1,14 +1,16 @@
 {
+  ContentResolver resolver=getContentResolver();
   if (needsDockSettings()) {
-    ContentResolver resolver=getContentResolver();
-    mDockAudioSettings=findPreference(KEY_AUDIO_SETTINGS);
     mDockSounds=(CheckBoxPreference)findPreference(KEY_DOCK_SOUNDS);
     mDockSounds.setPersistent(false);
     mDockSounds.setChecked(Settings.Global.getInt(resolver,Settings.Global.DOCK_SOUNDS_ENABLED,0) != 0);
+    mDockAudioSettings=findPreference(KEY_DOCK_AUDIO_SETTINGS);
+    mDockAudioSettings.setEnabled(false);
   }
  else {
     getPreferenceScreen().removePreference(findPreference(KEY_DOCK_CATEGORY));
-    getPreferenceScreen().removePreference(findPreference(KEY_AUDIO_SETTINGS));
+    getPreferenceScreen().removePreference(findPreference(KEY_DOCK_AUDIO_SETTINGS));
     getPreferenceScreen().removePreference(findPreference(KEY_DOCK_SOUNDS));
+    Settings.Global.putInt(resolver,Settings.Global.DOCK_AUDIO_MEDIA_ENABLED,1);
   }
 }

@@ -7,6 +7,8 @@
   }
   mDevice=null;
   mPendingDevice=null;
-  CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(device);
-  cachedDevice.disconnect();
+  if (device != null) {
+    CachedBluetoothDevice cachedDevice=getCachedBluetoothDevice(device);
+    cachedDevice.disconnect();
+  }
 }

@@ -29,14 +29,26 @@
       showDialog(DIALOG_NOT_DOCKED);
     }
  else {
-      Intent i=new Intent(mDockIntent);
-      i.setAction(DockEventReceiver.ACTION_DOCK_SHOW_UI);
-      i.setClass(getActivity(),DockEventReceiver.class);
-      getActivity().sendBroadcast(i);
+      boolean isBluetooth=mDockIntent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE) != null;
+      if (isBluetooth) {
+        Intent i=new Intent(mDockIntent);
+        i.setAction(DockEventReceiver.ACTION_DOCK_SHOW_UI);
+        i.setClass(getActivity(),DockEventReceiver.class);
+        getActivity().sendBroadcast(i);
+      }
+ else {
+        PreferenceScreen ps=(PreferenceScreen)mDockAudioSettings;
+        Bundle extras=ps.getExtras();
+        extras.putBoolean("checked",Settings.Global.getInt(getContentResolver(),Settings.Global.DOCK_AUDIO_MEDIA_ENABLED,0) == 1);
+        super.onPreferenceTreeClick(ps,ps);
+      }
     }
   }
  else   if (preference == mDockSounds) {
     Settings.Global.putInt(getContentResolver(),Settings.Global.DOCK_SOUNDS_ENABLED,mDockSounds.isChecked() ? 1 : 0);
+  }
+ else   if (preference == mDockAudioMediaEnabled) {
+    Settings.Global.putInt(getContentResolver(),Settings.Global.DOCK_AUDIO_MEDIA_ENABLED,mDockAudioMediaEnabled.isChecked() ? 1 : 0);
   }
   return true;
 }

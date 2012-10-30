@@ -1,0 +1,29 @@
+{
+  Item item=mItems.get(position);
+  Intent intent=item.getIntent();
+  int result;
+  if (item.extras != null) {
+    result=RESULT_OK;
+    setResultData(result,intent);
+  }
+ else {
+    try {
+      Bundle options=null;
+      if (intent.getExtras() != null) {
+        options=intent.getExtras().getBundle(AppWidgetManager.EXTRA_APPWIDGET_OPTIONS);
+      }
+      mAppWidgetManager.bindAppWidgetId(mAppWidgetId,intent.getComponent(),options);
+      result=RESULT_OK;
+    }
+ catch (    IllegalArgumentException e) {
+      result=RESULT_CANCELED;
+    }
+    setResultData(result,null);
+  }
+  if (mAddingToKeyguard) {
+    onActivityResult(REQUEST_PICK_APPWIDGET,result,mResultData);
+  }
+ else {
+    finish();
+  }
+}

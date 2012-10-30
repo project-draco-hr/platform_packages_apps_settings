@@ -1,31 +1,4 @@
 {
-  final Intent intent=getIntent();
-  boolean sortCustomAppWidgets=intent.getBooleanExtra(AppWidgetManager.EXTRA_CUSTOM_SORT,true);
-  List<PickAdapter.Item> items=new ArrayList<PickAdapter.Item>();
-  int categoryFilter=AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN;
-  if (intent.getExtras().containsKey(AppWidgetManager.EXTRA_CATEGORY_FILTER)) {
-    categoryFilter=intent.getExtras().getInt(AppWidgetManager.EXTRA_CATEGORY_FILTER);
-  }
-  int featuresFilter=AppWidgetProviderInfo.WIDGET_FEATURES_NONE;
-  if (intent.getExtras().containsKey(AppWidgetManager.EXTRA_FEATURES_FILTER)) {
-    featuresFilter=intent.getExtras().getInt(AppWidgetManager.EXTRA_FEATURES_FILTER);
-  }
-  putInstalledAppWidgets(items,categoryFilter,featuresFilter);
-  if (sortCustomAppWidgets) {
-    putCustomAppWidgets(items);
-  }
-  Collections.sort(items,new Comparator<PickAdapter.Item>(){
-    Collator mCollator=Collator.getInstance();
-    public int compare(    PickAdapter.Item lhs,    PickAdapter.Item rhs){
-      return mCollator.compare(lhs.label,rhs.label);
-    }
-  }
-);
-  if (!sortCustomAppWidgets) {
-    List<PickAdapter.Item> customItems=new ArrayList<PickAdapter.Item>();
-    putCustomAppWidgets(customItems);
-    items.addAll(customItems);
-  }
-  mItems=items;
-  return items;
+  mItems=mAppWidgetLoader.getItems(getIntent());
+  return mItems;
 }

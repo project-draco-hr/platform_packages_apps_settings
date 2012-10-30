@@ -4,24 +4,28 @@
   if (DEBUG) {
     Log.d(TAG,"Action: " + intent.getAction() + " State:"+ state+ " Device: "+ (device == null ? "null" : device.getAliasName()));
   }
-  if (device == null) {
-    Log.w(TAG,"device is null");
-    return null;
-  }
   int msgType;
 switch (state) {
 case Intent.EXTRA_DOCK_STATE_UNDOCKED:
     msgType=MSG_TYPE_UNDOCKED_TEMPORARY;
   break;
 case Intent.EXTRA_DOCK_STATE_DESK:
-case Intent.EXTRA_DOCK_STATE_LE_DESK:
 case Intent.EXTRA_DOCK_STATE_HE_DESK:
 case Intent.EXTRA_DOCK_STATE_CAR:
+if (device == null) {
+  Log.w(TAG,"device is null");
+  return null;
+}
+case Intent.EXTRA_DOCK_STATE_LE_DESK:
 if (DockEventReceiver.ACTION_DOCK_SHOW_UI.equals(intent.getAction())) {
-  msgType=MSG_TYPE_SHOW_UI;
+if (device == null) {
+  Log.w(TAG,"device is null");
+  return null;
+}
+msgType=MSG_TYPE_SHOW_UI;
 }
  else {
-  msgType=MSG_TYPE_DOCKED;
+msgType=MSG_TYPE_DOCKED;
 }
 break;
 default :

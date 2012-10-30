@@ -6,24 +6,33 @@
   mServiceHandler.removeMessages(MSG_TYPE_UNDOCKED_PERMANENT);
   mServiceHandler.removeMessages(MSG_TYPE_DISABLE_BT);
   getPrefs().edit().remove(KEY_DISABLE_BT).apply();
-  if (device != null && !device.equals(mDevice)) {
-    if (mDevice != null) {
-      handleUndocked(mDevice);
-    }
-    mDevice=device;
-    mProfileManager.addServiceListener(this);
-    if (mProfileManager.isManagerReady()) {
-      handleDocked(device,state,startId);
-      mProfileManager.removeServiceListener(this);
-    }
- else {
-      final BluetoothDevice d=device;
-      mRunnable=new Runnable(){
-        public void run(){
-          handleDocked(d,state,startId);
-        }
+  if (device != null) {
+    if (!device.equals(mDevice)) {
+      if (mDevice != null) {
+        handleUndocked(mDevice);
       }
+      mDevice=device;
+      mProfileManager.addServiceListener(this);
+      if (mProfileManager.isManagerReady()) {
+        handleDocked(device,state,startId);
+        mProfileManager.removeServiceListener(this);
+      }
+ else {
+        final BluetoothDevice d=device;
+        mRunnable=new Runnable(){
+          public void run(){
+            handleDocked(d,state,startId);
+          }
+        }
 ;
+        return true;
+      }
+    }
+  }
+ else {
+    int dockAudioMediaEnabled=Settings.Global.getInt(getContentResolver(),Settings.Global.DOCK_AUDIO_MEDIA_ENABLED,-1);
+    if (dockAudioMediaEnabled == -1 && state == Intent.EXTRA_DOCK_STATE_LE_DESK) {
+      handleDocked(null,state,startId);
       return true;
     }
   }

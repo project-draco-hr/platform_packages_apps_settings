@@ -1,20 +1,22 @@
 {
   handleUndocked(device);
-  final SharedPreferences prefs=getPrefs();
-  if (DEBUG) {
-    Log.d(TAG,"DISABLE_BT_WHEN_UNDOCKED = " + prefs.getBoolean(KEY_DISABLE_BT_WHEN_UNDOCKED,false));
-  }
-  if (prefs.getBoolean(KEY_DISABLE_BT_WHEN_UNDOCKED,false)) {
-    if (hasOtherConnectedDevices(device)) {
-      prefs.edit().remove(KEY_DISABLE_BT_WHEN_UNDOCKED).apply();
+  if (device != null) {
+    final SharedPreferences prefs=getPrefs();
+    if (DEBUG) {
+      Log.d(TAG,"DISABLE_BT_WHEN_UNDOCKED = " + prefs.getBoolean(KEY_DISABLE_BT_WHEN_UNDOCKED,false));
     }
- else {
-      if (DEBUG) {
-        Log.d(TAG,"QUEUED BT DISABLE");
+    if (prefs.getBoolean(KEY_DISABLE_BT_WHEN_UNDOCKED,false)) {
+      if (hasOtherConnectedDevices(device)) {
+        prefs.edit().remove(KEY_DISABLE_BT_WHEN_UNDOCKED).apply();
       }
-      Message newMsg=mServiceHandler.obtainMessage(MSG_TYPE_DISABLE_BT,0,startId,null);
-      mServiceHandler.sendMessageDelayed(newMsg,DISABLE_BT_GRACE_PERIOD);
-      return true;
+ else {
+        if (DEBUG) {
+          Log.d(TAG,"QUEUED BT DISABLE");
+        }
+        Message newMsg=mServiceHandler.obtainMessage(MSG_TYPE_DISABLE_BT,0,startId,null);
+        mServiceHandler.sendMessageDelayed(newMsg,DISABLE_BT_GRACE_PERIOD);
+        return true;
+      }
     }
   }
   return false;

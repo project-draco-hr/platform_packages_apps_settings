@@ -10,7 +10,9 @@
   boolean deferFinishCall=false;
 switch (msgType) {
 case MSG_TYPE_SHOW_UI:
-    createDialog(device,state,startId);
+    if (device != null) {
+      createDialog(device,state,startId);
+    }
   break;
 case MSG_TYPE_DOCKED:
 deferFinishCall=msgTypeDocked(device,state,startId);

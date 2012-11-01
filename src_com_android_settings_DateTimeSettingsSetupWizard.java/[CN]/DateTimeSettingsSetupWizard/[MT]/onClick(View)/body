@@ -18,8 +18,8 @@ case R.id.next_button:
     if (mAutoDateTimeButton != null) {
       Settings.Global.putInt(getContentResolver(),Settings.Global.AUTO_TIME,mAutoDateTimeButton.isChecked() ? 1 : 0);
       if (!mAutoDateTimeButton.isChecked()) {
-        DateTimeSettings.setDate(mDatePicker.getYear(),mDatePicker.getMonth(),mDatePicker.getDayOfMonth());
-        DateTimeSettings.setTime(mTimePicker.getCurrentHour(),mTimePicker.getCurrentMinute());
+        DateTimeSettings.setDate(this,mDatePicker.getYear(),mDatePicker.getMonth(),mDatePicker.getDayOfMonth());
+        DateTimeSettings.setTime(this,mTimePicker.getCurrentHour(),mTimePicker.getCurrentMinute());
       }
     }
   }

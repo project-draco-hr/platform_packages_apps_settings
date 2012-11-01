@@ -1,0 +1,14 @@
+{
+  Intent intent=new Intent();
+  if (packageName != null && className != null) {
+    intent.setClassName(packageName,className);
+    if (extras != null) {
+      intent.putExtras(extras);
+    }
+  }
+ else {
+    intent.setAction(Intent.ACTION_CREATE_SHORTCUT);
+    intent.putExtra(Intent.EXTRA_SHORTCUT_NAME,label);
+  }
+  return intent;
+}

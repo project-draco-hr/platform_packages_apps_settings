@@ -1,0 +1,10 @@
+{
+  if (convertView == null) {
+    convertView=mInflater.inflate(R.layout.keyguard_appwidget_item,parent,false);
+  }
+  Item item=(Item)getItem(position);
+  TextView textView=(TextView)convertView.findViewById(R.id.icon_and_label);
+  textView.setText(item.label);
+  textView.setCompoundDrawablesWithIntrinsicBounds(item.icon,null,null,null);
+  return convertView;
+}

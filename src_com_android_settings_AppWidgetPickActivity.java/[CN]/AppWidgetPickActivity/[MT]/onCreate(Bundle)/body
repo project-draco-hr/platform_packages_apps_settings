@@ -1,6 +1,7 @@
 {
   mPackageManager=getPackageManager();
   mAppWidgetManager=AppWidgetManager.getInstance(this);
+  mAppWidgetLoader=new AppWidgetLoader<PickAdapter.Item>(this,mAppWidgetManager,this);
   super.onCreate(icicle);
   setResultData(RESULT_CANCELED,null);
   final Intent intent=getIntent();

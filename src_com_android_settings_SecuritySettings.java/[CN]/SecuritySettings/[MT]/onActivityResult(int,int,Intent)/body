@@ -9,42 +9,5 @@
     lockPatternUtils.setBiometricWeakLivelinessEnabled(false);
     return;
   }
- else   if (requestCode == REQUEST_PICK_APPWIDGET || requestCode == REQUEST_CREATE_APPWIDGET) {
-    int appWidgetId=(data == null) ? -1 : data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,-1);
-    if ((requestCode == REQUEST_PICK_APPWIDGET) && resultCode == Activity.RESULT_OK) {
-      AppWidgetManager appWidgetManager=AppWidgetManager.getInstance(getActivity());
-      boolean defaultWidget=data.getBooleanExtra(EXTRA_DEFAULT_WIDGET,false);
-      AppWidgetProviderInfo appWidget=null;
-      if (!defaultWidget) {
-        appWidget=appWidgetManager.getAppWidgetInfo(appWidgetId);
-      }
-      if (!defaultWidget && appWidget.configure != null) {
-        Intent intent=new Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
-        intent.setComponent(appWidget.configure);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
-        startActivityForResultSafely(intent,REQUEST_CREATE_APPWIDGET);
-      }
- else {
-        if (defaultWidget) {
-          AppWidgetHost.deleteAppWidgetIdForSystem(appWidgetId);
-          data.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,LockPatternUtils.ID_DEFAULT_STATUS_WIDGET);
-        }
-        onActivityResult(REQUEST_CREATE_APPWIDGET,Activity.RESULT_OK,data);
-      }
-    }
- else     if (requestCode == REQUEST_CREATE_APPWIDGET && resultCode == Activity.RESULT_OK) {
-      mLockPatternUtils.addAppWidget(appWidgetId,0);
-      IBinder b=ServiceManager.getService(Context.WINDOW_SERVICE);
-      IWindowManager iWm=IWindowManager.Stub.asInterface(b);
-      try {
-        iWm.lockNow(null);
-      }
- catch (      RemoteException e) {
-      }
-    }
- else {
-      AppWidgetHost.deleteAppWidgetIdForSystem(appWidgetId);
-    }
-  }
   createPreferenceHierarchy();
 }

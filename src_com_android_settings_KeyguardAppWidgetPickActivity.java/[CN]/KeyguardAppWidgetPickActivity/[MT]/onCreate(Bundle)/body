@@ -1,0 +1,20 @@
+{
+  setContentView(R.layout.keyguard_appwidget_pick_layout);
+  super.onCreate(savedInstanceState);
+  setResultData(RESULT_CANCELED,null);
+  final Intent intent=getIntent();
+  if (intent.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_ID)) {
+    mAppWidgetId=intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,AppWidgetManager.INVALID_APPWIDGET_ID);
+  }
+ else {
+    finish();
+  }
+  mGridView=(GridView)findViewById(R.id.widget_list);
+  mAppWidgetManager=AppWidgetManager.getInstance(this);
+  mAppWidgetLoader=new AppWidgetLoader<Item>(this,mAppWidgetManager,this);
+  mItems=mAppWidgetLoader.getItems(getIntent());
+  AppWidgetAdapter adapter=new AppWidgetAdapter(this,mItems);
+  mGridView.setAdapter(adapter);
+  mGridView.setOnItemClickListener(this);
+  mLockPatternUtils=new LockPatternUtils(this);
+}

@@ -1,0 +1,12 @@
+{
+  if (appWidgets == null)   return;
+  final int size=appWidgets.size();
+  for (int i=0; i < size; i++) {
+    AppWidgetProviderInfo info=appWidgets.get(i);
+    if (!ignoreFilter && (info.widgetCategory & categoryFilter) == 0) {
+      continue;
+    }
+    Item item=mItemConstructor.createItem(mContext,info,customExtras != null ? customExtras.get(i) : null);
+    items.add(item);
+  }
+}

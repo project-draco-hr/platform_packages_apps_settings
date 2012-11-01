@@ -1,0 +1,22 @@
+{
+  boolean sortCustomAppWidgets=intent.getBooleanExtra(AppWidgetManager.EXTRA_CUSTOM_SORT,true);
+  List<Item> items=new ArrayList<Item>();
+  int categoryFilter=intent.getIntExtra(AppWidgetManager.EXTRA_CATEGORY_FILTER,AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN);
+  putInstalledAppWidgets(items,categoryFilter);
+  if (sortCustomAppWidgets) {
+    putCustomAppWidgets(items,intent);
+  }
+  Collections.sort(items,new Comparator<Item>(){
+    Collator mCollator=Collator.getInstance();
+    public int compare(    Item lhs,    Item rhs){
+      return mCollator.compare(lhs.getLabel(),rhs.getLabel());
+    }
+  }
+);
+  if (!sortCustomAppWidgets) {
+    List<Item> customItems=new ArrayList<Item>();
+    putCustomAppWidgets(customItems,intent);
+    items.addAll(customItems);
+  }
+  return items;
+}

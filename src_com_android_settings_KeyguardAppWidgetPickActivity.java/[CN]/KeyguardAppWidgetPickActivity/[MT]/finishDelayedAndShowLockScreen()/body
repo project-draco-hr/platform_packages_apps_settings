@@ -1,0 +1,21 @@
+{
+  IBinder b=ServiceManager.getService(Context.WINDOW_SERVICE);
+  IWindowManager iWm=IWindowManager.Stub.asInterface(b);
+  try {
+    iWm.lockNow(null);
+  }
+ catch (  RemoteException e) {
+  }
+  ViewGroup root=(ViewGroup)findViewById(R.id.layout_root);
+  root.setBackgroundColor(0xFF000000);
+  final int childCount=root.getChildCount();
+  for (int i=0; i < childCount; i++) {
+    root.getChildAt(i).setVisibility(View.INVISIBLE);
+  }
+  mGridView.postDelayed(new Runnable(){
+    public void run(){
+      finish();
+    }
+  }
+,500);
+}

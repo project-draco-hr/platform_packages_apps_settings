@@ -17,6 +17,9 @@
   mBackgroundProcessText.setOnClickListener(new View.OnClickListener(){
     @Override public void onClick(    View v){
       mAdapter.setShowBackground(true);
+      if (mOwner != null) {
+        mOwner.getActivity().invalidateOptionsMenu();
+      }
     }
   }
 );
@@ -24,6 +27,9 @@
   mForegroundProcessText.setOnClickListener(new View.OnClickListener(){
     @Override public void onClick(    View v){
       mAdapter.setShowBackground(false);
+      if (mOwner != null) {
+        mOwner.getActivity().invalidateOptionsMenu();
+      }
     }
   }
 );

@@ -14,12 +14,7 @@
         }
       }
  else       if ((mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
-        try {
-          mPm.installExistingPackage(packageName);
-          refreshUi();
-        }
- catch (        NameNotFoundException e) {
-        }
+        uninstallPkg(packageName,true,false);
       }
  else {
         uninstallPkg(packageName,false,false);

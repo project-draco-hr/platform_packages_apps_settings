@@ -143,10 +143,12 @@
     mInitialized=true;
     mShowUninstalled=(mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0;
   }
- else   if (!mShowUninstalled) {
+ else {
     try {
       ApplicationInfo ainfo=getActivity().getPackageManager().getApplicationInfo(mAppEntry.info.packageName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
-      return (ainfo.flags & ApplicationInfo.FLAG_INSTALLED) != 0;
+      if (!mShowUninstalled) {
+        return (ainfo.flags & ApplicationInfo.FLAG_INSTALLED) != 0;
+      }
     }
  catch (    NameNotFoundException e) {
       return false;

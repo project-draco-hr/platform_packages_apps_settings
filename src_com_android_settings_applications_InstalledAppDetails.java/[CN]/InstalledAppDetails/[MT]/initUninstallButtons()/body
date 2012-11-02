@@ -15,7 +15,7 @@
     if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
       enabled=handleDisableable(mUninstallButton);
     }
- else     if ((mPackageInfo.applicationInfo.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
+ else     if ((mPackageInfo.applicationInfo.flags & ApplicationInfo.FLAG_INSTALLED) == 0 && mUserManager.getUsers().size() >= 2) {
       mUninstallButton.setText(R.string.uninstall_text);
       enabled=false;
     }

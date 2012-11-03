@@ -1,0 +1,73 @@
+{
+  String packageName=provider.getPackageName();
+  if (maxWidth < 0)   maxWidth=Integer.MAX_VALUE;
+  if (maxHeight < 0)   maxHeight=Integer.MAX_VALUE;
+  int appIconSize=mResources.getDimensionPixelSize(R.dimen.app_icon_size);
+  Drawable drawable=null;
+  if (previewImage != 0) {
+    drawable=mPackageManager.getDrawable(packageName,previewImage,null);
+    if (drawable == null) {
+      Log.w(TAG,"Can't load widget preview drawable 0x" + Integer.toHexString(previewImage) + " for provider: "+ provider);
+    }
+  }
+  int bitmapWidth;
+  int bitmapHeight;
+  Bitmap defaultPreview=null;
+  boolean widgetPreviewExists=(drawable != null);
+  if (widgetPreviewExists) {
+    bitmapWidth=drawable.getIntrinsicWidth();
+    bitmapHeight=drawable.getIntrinsicHeight();
+  }
+ else {
+    bitmapWidth=maxWidth;
+    bitmapHeight=maxHeight;
+    defaultPreview=Bitmap.createBitmap(bitmapWidth,bitmapHeight,Config.ARGB_8888);
+    final Canvas c=sCachedAppWidgetPreviewCanvas.get();
+    c.setBitmap(defaultPreview);
+    c.drawColor(0xFF2D2D2D);
+    c.setBitmap(null);
+    final float marginPercentage=0.125f;
+    final float finalIconSize=(bitmapHeight / 2);
+    float iconScale=finalIconSize / appIconSize;
+    try {
+      Drawable icon=null;
+      int hoffset=(int)(finalIconSize * marginPercentage);
+      int yoffset=(int)(finalIconSize * marginPercentage);
+      if (iconId > 0)       icon=getFullResIcon(packageName,iconId);
+      if (icon != null) {
+        renderDrawableToBitmap(icon,defaultPreview,hoffset,yoffset,(int)(appIconSize * iconScale),(int)(appIconSize * iconScale));
+      }
+    }
+ catch (    Resources.NotFoundException e) {
+    }
+  }
+  float scale=1f;
+  if (bitmapWidth > maxWidth) {
+    scale=maxWidth / (float)bitmapWidth;
+  }
+  int finalPreviewWidth=(int)(scale * bitmapWidth);
+  int finalPreviewHeight=(int)(scale * bitmapHeight);
+  bitmapWidth=finalPreviewWidth;
+  bitmapHeight=Math.min(finalPreviewHeight,maxHeight);
+  Bitmap preview=Bitmap.createBitmap(bitmapWidth,bitmapHeight,Config.ARGB_8888);
+  if (widgetPreviewExists) {
+    renderDrawableToBitmap(drawable,preview,0,0,finalPreviewWidth,finalPreviewHeight);
+  }
+ else {
+    final Canvas c=sCachedAppWidgetPreviewCanvas.get();
+    final Rect src=sCachedAppWidgetPreviewSrcRect.get();
+    final Rect dest=sCachedAppWidgetPreviewDestRect.get();
+    c.setBitmap(preview);
+    src.set(0,0,defaultPreview.getWidth(),defaultPreview.getHeight());
+    dest.set(0,0,finalPreviewWidth,finalPreviewHeight);
+    Paint p=sCachedAppWidgetPreviewPaint.get();
+    if (p == null) {
+      p=new Paint();
+      p.setFilterBitmap(true);
+      sCachedAppWidgetPreviewPaint.set(p);
+    }
+    c.drawBitmap(defaultPreview,src,dest,p);
+    c.setBitmap(null);
+  }
+  return preview;
+}

@@ -7,7 +7,10 @@
   root=getPreferenceScreen();
   int resid=0;
   if (!mLockPatternUtils.isSecure()) {
-    if (mLockPatternUtils.isLockScreenDisabled()) {
+    UserManager mUm=(UserManager)getSystemService(Context.USER_SERVICE);
+    List<UserInfo> users=mUm.getUsers(true);
+    final boolean singleUser=users.size() == 1;
+    if (singleUser && mLockPatternUtils.isLockScreenDisabled()) {
       resid=R.xml.security_settings_lockscreen;
     }
  else {

@@ -8,11 +8,7 @@
   }
  else {
     try {
-      Bundle options=null;
-      if (intent.getExtras() != null) {
-        options=intent.getExtras().getBundle(AppWidgetManager.EXTRA_APPWIDGET_OPTIONS);
-      }
-      mAppWidgetManager.bindAppWidgetId(mAppWidgetId,intent.getComponent(),options);
+      mAppWidgetManager.bindAppWidgetId(mAppWidgetId,intent.getComponent(),mExtraConfigureOptions);
       result=RESULT_OK;
     }
  catch (    IllegalArgumentException e) {

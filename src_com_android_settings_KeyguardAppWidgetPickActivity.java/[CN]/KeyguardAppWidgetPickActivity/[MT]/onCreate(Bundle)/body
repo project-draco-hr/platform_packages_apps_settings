@@ -9,6 +9,7 @@
  else {
     finish();
   }
+  mExtraConfigureOptions=intent.getBundleExtra(AppWidgetManager.EXTRA_APPWIDGET_OPTIONS);
   mGridView=(GridView)findViewById(R.id.widget_list);
   mAppWidgetManager=AppWidgetManager.getInstance(this);
   mAppWidgetLoader=new AppWidgetLoader<Item>(this,mAppWidgetManager,this);

@@ -27,10 +27,10 @@
  else     if (requestCode == REQUEST_CREATE_APPWIDGET && resultCode == Activity.RESULT_OK) {
       mSuccess=true;
       mLockPatternUtils.addAppWidget(appWidgetId,0);
-      finishDelayedAndShowLockScreen();
+      finishDelayedAndShowLockScreen(appWidgetId);
     }
  else {
-      finishDelayedAndShowLockScreen();
+      finishDelayedAndShowLockScreen(AppWidgetManager.INVALID_APPWIDGET_ID);
     }
   }
 }

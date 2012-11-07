@@ -14,8 +14,8 @@
   mAppWidgetManager=AppWidgetManager.getInstance(this);
   mAppWidgetLoader=new AppWidgetLoader<Item>(this,mAppWidgetManager,this);
   mItems=mAppWidgetLoader.getItems(getIntent());
-  AppWidgetAdapter adapter=new AppWidgetAdapter(this,mItems);
-  mGridView.setAdapter(adapter);
+  mAppWidgetAdapter=new AppWidgetAdapter(this,mItems);
+  mGridView.setAdapter(mAppWidgetAdapter);
   mGridView.setOnItemClickListener(this);
   mLockPatternUtils=new LockPatternUtils(this);
 }

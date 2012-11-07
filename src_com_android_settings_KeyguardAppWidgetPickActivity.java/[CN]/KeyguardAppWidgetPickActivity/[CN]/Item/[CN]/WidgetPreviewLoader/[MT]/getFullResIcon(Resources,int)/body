@@ -1,0 +1,10 @@
+{
+  Drawable d;
+  try {
+    d=resources.getDrawableForDensity(iconId,mIconDpi);
+  }
+ catch (  Resources.NotFoundException e) {
+    d=null;
+  }
+  return (d != null) ? d : getFullResDefaultActivityIcon();
+}

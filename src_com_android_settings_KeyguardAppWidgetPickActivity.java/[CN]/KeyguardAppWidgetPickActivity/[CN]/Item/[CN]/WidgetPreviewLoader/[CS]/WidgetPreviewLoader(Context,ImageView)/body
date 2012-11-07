@@ -1,0 +1,11 @@
+{
+  super();
+  mResources=context.getResources();
+  DisplayMetrics metrics=new DisplayMetrics();
+  ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+  mDensityScale=metrics.density;
+  mPackageManager=context.getPackageManager();
+  ActivityManager activityManager=(ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+  mIconDpi=activityManager.getLauncherLargeIconDensity();
+  mView=v;
+}

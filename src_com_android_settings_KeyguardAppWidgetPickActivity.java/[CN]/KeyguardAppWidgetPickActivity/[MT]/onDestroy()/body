@@ -2,5 +2,8 @@
   if (!mSuccess && mAddingToKeyguard && mAppWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
     AppWidgetHost.deleteAppWidgetIdForSystem(mAppWidgetId);
   }
+  if (mAppWidgetAdapter != null) {
+    mAppWidgetAdapter.cancelAllWidgetPreviewLoaders();
+  }
   super.onDestroy();
 }

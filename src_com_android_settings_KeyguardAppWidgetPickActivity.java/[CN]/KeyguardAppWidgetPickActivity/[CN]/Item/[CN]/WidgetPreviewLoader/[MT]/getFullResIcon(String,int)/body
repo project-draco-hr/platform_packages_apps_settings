@@ -1,0 +1,15 @@
+{
+  Resources resources;
+  try {
+    resources=mPackageManager.getResourcesForApplication(packageName);
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    resources=null;
+  }
+  if (resources != null) {
+    if (iconId != 0) {
+      return getFullResIcon(resources,iconId);
+    }
+  }
+  return getFullResDefaultActivityIcon();
+}

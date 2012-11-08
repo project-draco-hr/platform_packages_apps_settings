@@ -1,0 +1,9 @@
+{
+  if (!isCancelled()) {
+    int appWidgetPreviewWidth=mResources.getDimensionPixelSize(R.dimen.appwidget_preview_width);
+    int appWidgetPreviewHeight=mResources.getDimensionPixelSize(R.dimen.appwidget_preview_height);
+    Bitmap b=getWidgetPreview(new ComponentName(packageName,className),appWidgetPreviewId,iconId,appWidgetPreviewWidth,appWidgetPreviewHeight);
+    publishProgress(b);
+  }
+  return null;
+}

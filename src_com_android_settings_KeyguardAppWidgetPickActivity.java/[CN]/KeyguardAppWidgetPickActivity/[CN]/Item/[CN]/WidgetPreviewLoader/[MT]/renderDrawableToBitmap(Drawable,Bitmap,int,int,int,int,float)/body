@@ -1,0 +1,11 @@
+{
+  if (bitmap != null) {
+    Canvas c=new Canvas(bitmap);
+    c.scale(scale,scale);
+    Rect oldBounds=d.copyBounds();
+    d.setBounds(x,y,x + w,y + h);
+    d.draw(c);
+    d.setBounds(oldBounds);
+    c.setBitmap(null);
+  }
+}

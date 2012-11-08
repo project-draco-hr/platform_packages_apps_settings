@@ -1,38 +1,10 @@
 {
   CharSequence label=info.label;
-  Drawable icon=null;
-  if (info.icon != 0) {
-    try {
-      final Resources res=context.getResources();
-      final int density=res.getDisplayMetrics().densityDpi;
-      int iconDensity;
-switch (density) {
-case DisplayMetrics.DENSITY_MEDIUM:
-        iconDensity=DisplayMetrics.DENSITY_LOW;
-case DisplayMetrics.DENSITY_TV:
-      iconDensity=DisplayMetrics.DENSITY_MEDIUM;
-case DisplayMetrics.DENSITY_HIGH:
-    iconDensity=DisplayMetrics.DENSITY_MEDIUM;
-case DisplayMetrics.DENSITY_XHIGH:
-  iconDensity=DisplayMetrics.DENSITY_HIGH;
-case DisplayMetrics.DENSITY_XXHIGH:
-iconDensity=DisplayMetrics.DENSITY_XHIGH;
-default :
-iconDensity=(int)((density * 0.75f) + .5f);
-}
-Resources packageResources=getPackageManager().getResourcesForApplication(info.provider.getPackageName());
-icon=packageResources.getDrawableForDensity(info.icon,iconDensity);
-}
- catch (NameNotFoundException e) {
-Log.w(TAG,"Can't load icon drawable 0x" + Integer.toHexString(info.icon) + " for provider: "+ info.provider);
-}
-if (icon == null) {
-Log.w(TAG,"Can't load icon drawable 0x" + Integer.toHexString(info.icon) + " for provider: "+ info.provider);
-}
-}
-Item item=new Item(context,label,icon);
-item.packageName=info.provider.getPackageName();
-item.className=info.provider.getClassName();
-item.extras=extras;
-return item;
+  Item item=new Item(context,label);
+  item.appWidgetPreviewId=info.previewImage;
+  item.iconId=info.icon;
+  item.packageName=info.provider.getPackageName();
+  item.className=info.provider.getClassName();
+  item.extras=extras;
+  return item;
 }

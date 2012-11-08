@@ -1,8 +1,13 @@
 {
   IBinder b=ServiceManager.getService(Context.WINDOW_SERVICE);
   IWindowManager iWm=IWindowManager.Stub.asInterface(b);
+  Bundle opts=null;
+  if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+    opts=new Bundle();
+    opts.putInt(LockPatternUtils.KEYGUARD_SHOW_APPWIDGET,appWidgetId);
+  }
   try {
-    iWm.lockNow(null);
+    iWm.lockNow(opts);
   }
  catch (  RemoteException e) {
   }

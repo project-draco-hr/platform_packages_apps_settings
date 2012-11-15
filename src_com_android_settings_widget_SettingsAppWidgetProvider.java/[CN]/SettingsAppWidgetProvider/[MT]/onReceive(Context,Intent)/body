@@ -10,7 +10,7 @@
  else   if (LocationManager.PROVIDERS_CHANGED_ACTION.equals(action)) {
     sGpsState.onActualStateChange(context,intent);
   }
- else   if (SyncStorageEngine.SYNC_CONNECTION_SETTING_CHANGED_INTENT.getAction().equals(action)) {
+ else   if (ContentResolver.ACTION_SYNC_CONN_STATUS_CHANGED.equals(action)) {
     sSyncState.onActualStateChange(context,intent);
   }
  else   if (intent.hasCategory(Intent.CATEGORY_ALTERNATIVE)) {

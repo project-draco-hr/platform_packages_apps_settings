@@ -8,8 +8,8 @@
     finish();
     return;
   }
-  StatusBarManager sbm=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);
-  sbm.disable(StatusBarManager.DISABLE_EXPAND | StatusBarManager.DISABLE_NOTIFICATION_ICONS | StatusBarManager.DISABLE_NOTIFICATION_ALERTS| StatusBarManager.DISABLE_SYSTEM_INFO| StatusBarManager.DISABLE_HOME| StatusBarManager.DISABLE_RECENT);
+  mStatusBar=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);
+  mStatusBar.disable(sWidgetsToDisable);
   setAirplaneModeIfNecessary();
   mAudioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
   final Object lastInstance=getLastNonConfigurationInstance();

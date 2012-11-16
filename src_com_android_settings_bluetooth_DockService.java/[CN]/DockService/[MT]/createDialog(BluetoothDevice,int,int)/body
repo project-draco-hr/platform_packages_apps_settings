@@ -17,6 +17,7 @@ startForeground(0,new Notification());
 final AlertDialog.Builder ab=new AlertDialog.Builder(this);
 View view;
 LayoutInflater inflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+mAudioMediaCheckbox=null;
 if (device != null) {
 boolean firstTime=!LocalBluetoothPreferences.hasDockAutoConnectSetting(this,device.getAddress());
 CharSequence[] items=initBtSettings(device,state,firstTime);
@@ -34,10 +35,10 @@ if (DEBUG) {
  else {
 ab.setTitle(getString(R.string.bluetooth_dock_settings_title));
 view=inflater.inflate(R.layout.dock_audio_media_enable_dialog,null);
-CheckBox audioMediaCheckbox=(CheckBox)view.findViewById(R.id.dock_audio_media_enable_cb);
+mAudioMediaCheckbox=(CheckBox)view.findViewById(R.id.dock_audio_media_enable_cb);
 boolean checked=Settings.Global.getInt(getContentResolver(),Settings.Global.DOCK_AUDIO_MEDIA_ENABLED,0) == 1;
-audioMediaCheckbox.setChecked(checked);
-audioMediaCheckbox.setOnCheckedChangeListener(mCheckedChangeListener);
+mAudioMediaCheckbox.setChecked(checked);
+mAudioMediaCheckbox.setOnCheckedChangeListener(mCheckedChangeListener);
 }
 float pixelScaleFactor=getResources().getDisplayMetrics().density;
 int viewSpacingLeft=(int)(14 * pixelScaleFactor);

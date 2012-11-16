@@ -6,6 +6,6 @@
   c.set(Calendar.MILLISECOND,0);
   long when=c.getTimeInMillis();
   if (when / 1000 < Integer.MAX_VALUE) {
-    SystemClock.setCurrentTimeMillis(when);
+    ((AlarmManager)context.getSystemService(Context.ALARM_SERVICE)).setTime(when);
   }
 }

@@ -46,8 +46,8 @@
     }
   }
   final boolean isRemovable=mVolume != null ? mVolume.isRemovable() : false;
+  mMountTogglePreference=new Preference(context);
   if (isRemovable) {
-    mMountTogglePreference=new Preference(context);
     mMountTogglePreference.setTitle(R.string.sd_eject);
     mMountTogglePreference.setSummary(R.string.sd_eject_summary);
     addPreference(mMountTogglePreference);

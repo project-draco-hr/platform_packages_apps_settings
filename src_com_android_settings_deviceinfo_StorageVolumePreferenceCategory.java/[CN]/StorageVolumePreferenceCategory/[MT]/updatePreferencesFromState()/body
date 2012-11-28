@@ -3,13 +3,13 @@
   mMountTogglePreference.setEnabled(true);
   final String state=mStorageManager.getVolumeState(mVolume.getPath());
   if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-    mItemAvailable.setSummary(R.string.memory_available_read_only);
+    mItemAvailable.setTitle(R.string.memory_available_read_only);
     if (mFormatPreference != null) {
       removePreference(mFormatPreference);
     }
   }
  else {
-    mItemAvailable.setSummary(R.string.memory_available);
+    mItemAvailable.setTitle(R.string.memory_available);
   }
   if (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
     mMountTogglePreference.setEnabled(true);

@@ -1,0 +1,9 @@
+{
+  if (mSharedState.getCurrentChecked() != null) {
+    mSharedState.getCurrentChecked().setChecked(false);
+  }
+  mSharedState.setCurrentChecked(current);
+  mSharedState.setCurrentKey(getKey());
+  callChangeListener(mSharedState.getCurrentKey());
+  mSettingsIcon.setEnabled(true);
+}

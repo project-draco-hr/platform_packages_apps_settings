@@ -3,12 +3,24 @@
     return;
   }
   if (isChecked) {
-    if (mSharedState.getCurrentChecked() != null) {
-      mSharedState.getCurrentChecked().setChecked(false);
+    if (shouldDisplayDataAlert()) {
+      displayDataAlert(new DialogInterface.OnClickListener(){
+        @Override public void onClick(        DialogInterface dialog,        int which){
+          makeCurrentEngine(buttonView);
+        }
+      }
+,new DialogInterface.OnClickListener(){
+        @Override public void onClick(        DialogInterface dialog,        int which){
+          buttonView.setChecked(false);
+        }
+      }
+);
     }
-    mSharedState.setCurrentChecked(buttonView);
-    mSharedState.setCurrentKey(getKey());
-    callChangeListener(mSharedState.getCurrentKey());
+ else {
+      makeCurrentEngine(buttonView);
+    }
   }
-  mSettingsIcon.setEnabled(isChecked);
+ else {
+    mSettingsIcon.setEnabled(false);
+  }
 }

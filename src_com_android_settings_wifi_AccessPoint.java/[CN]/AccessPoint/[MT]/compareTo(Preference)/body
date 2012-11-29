@@ -3,15 +3,12 @@
     return 1;
   }
   AccessPoint other=(AccessPoint)preference;
-  if (mInfo != other.mInfo) {
-    return (mInfo != null) ? -1 : 1;
-  }
-  if ((mRssi ^ other.mRssi) < 0) {
-    return (mRssi != Integer.MAX_VALUE) ? -1 : 1;
-  }
-  if ((networkId ^ other.networkId) < 0) {
-    return (networkId != -1) ? -1 : 1;
-  }
+  if (mInfo != null && other.mInfo == null)   return -1;
+  if (mInfo == null && other.mInfo != null)   return 1;
+  if (mRssi != Integer.MAX_VALUE && other.mRssi == Integer.MAX_VALUE)   return -1;
+  if (mRssi == Integer.MAX_VALUE && other.mRssi != Integer.MAX_VALUE)   return 1;
+  if (networkId != WifiConfiguration.INVALID_NETWORK_ID && other.networkId == WifiConfiguration.INVALID_NETWORK_ID)   return -1;
+  if (networkId == WifiConfiguration.INVALID_NETWORK_ID && other.networkId != WifiConfiguration.INVALID_NETWORK_ID)   return 1;
   int difference=WifiManager.compareSignalLevel(other.mRssi,mRssi);
   if (difference != 0) {
     return difference;

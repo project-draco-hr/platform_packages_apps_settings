@@ -12,6 +12,10 @@
   mAllowMockLocation=findAndInitCheckboxPref(ALLOW_MOCK_LOCATION);
   mPassword=(PreferenceScreen)findPreference(LOCAL_BACKUP_PASSWORD);
   mAllPrefs.add(mPassword);
+  if (!android.os.Process.myUserHandle().equals(UserHandle.OWNER)) {
+    disableForUser(mEnableAdb);
+    disableForUser(mPassword);
+  }
   mDebugAppPref=findPreference(DEBUG_APP_KEY);
   mAllPrefs.add(mDebugAppPref);
   mWaitForDebugger=findAndInitCheckboxPref(WAIT_FOR_DEBUGGER_KEY);

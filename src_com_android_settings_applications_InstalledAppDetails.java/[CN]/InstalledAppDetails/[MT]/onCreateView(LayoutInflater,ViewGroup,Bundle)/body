@@ -1,5 +1,7 @@
 {
-  View view=mRootView=inflater.inflate(R.layout.installed_app_details,null);
+  final View view=inflater.inflate(R.layout.installed_app_details,container,false);
+  Utils.prepareCustomPreferencesList(container,view,view,false);
+  mRootView=view;
   mComputingStr=getActivity().getText(R.string.computing_size);
   mTotalSize=(TextView)view.findViewById(R.id.total_size_text);
   mAppSize=(TextView)view.findViewById(R.id.application_size_text);

@@ -1,8 +1,9 @@
 {
-  View view=mRootView=inflater.inflate(R.layout.running_service_details,null);
+  final View view=inflater.inflate(R.layout.running_service_details,container,false);
+  Utils.prepareCustomPreferencesList(container,view,view,false);
+  mRootView=view;
   mAllDetails=(ViewGroup)view.findViewById(R.id.all_details);
   mSnippet=(ViewGroup)view.findViewById(R.id.snippet);
-  mSnippet.setPadding(0,mSnippet.getPaddingTop(),0,mSnippet.getPaddingBottom());
   mSnippetViewHolder=new RunningProcessesView.ViewHolder(mSnippet);
   ensureData();
   return view;

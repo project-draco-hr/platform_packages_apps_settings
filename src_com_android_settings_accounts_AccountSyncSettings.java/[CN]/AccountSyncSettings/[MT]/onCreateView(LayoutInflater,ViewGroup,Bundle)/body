@@ -1,5 +1,7 @@
 {
   final View view=inflater.inflate(R.layout.account_sync_screen,container,false);
+  final ListView list=(ListView)view.findViewById(android.R.id.list);
+  Utils.prepareCustomPreferencesList(container,view,list,false);
   initializeUi(view);
   return view;
 }

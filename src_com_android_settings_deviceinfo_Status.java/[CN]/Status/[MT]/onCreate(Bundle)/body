@@ -1,6 +1,5 @@
 {
   super.onCreate(icicle);
-  Preference removablePref;
   mHandler=new MyHandler(this);
   mTelephonyManager=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
   addPreferencesFromResource(R.xml.device_info_status);
@@ -43,6 +42,9 @@
       removePreferenceFromScreen(KEY_MEID_NUMBER);
       removePreferenceFromScreen(KEY_MIN_NUMBER);
       removePreferenceFromScreen(KEY_ICC_ID);
+      if ("br".equals(mTelephonyManager.getSimCountryIso())) {
+        mShowLatestAreaInfo=true;
+      }
     }
     String rawNumber=mPhone.getLine1Number();
     String formattedNumber=null;
@@ -53,6 +55,9 @@
     mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
     mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
     mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
+    if (!mShowLatestAreaInfo) {
+      removePreferenceFromScreen(KEY_LATEST_AREA_INFO);
+    }
   }
   setWimaxStatus();
   setWifiStatus();

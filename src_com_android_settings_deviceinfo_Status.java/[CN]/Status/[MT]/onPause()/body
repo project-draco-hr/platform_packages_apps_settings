@@ -4,6 +4,9 @@
     mPhoneStateReceiver.unregisterIntent();
     mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
   }
+  if (mShowLatestAreaInfo) {
+    unregisterReceiver(mAreaInfoReceiver);
+  }
   unregisterReceiver(mBatteryInfoReceiver);
   mHandler.removeMessages(EVENT_UPDATE_STATS);
 }

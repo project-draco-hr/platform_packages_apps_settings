@@ -6,6 +6,11 @@
     updateServiceState(mPhone.getServiceState());
     updateDataState();
     mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
+    if (mShowLatestAreaInfo) {
+      registerReceiver(mAreaInfoReceiver,new IntentFilter(CB_AREA_INFO_RECEIVED_ACTION),CB_AREA_INFO_SENDER_PERMISSION,null);
+      Intent getLatestIntent=new Intent(GET_LATEST_CB_AREA_INFO_ACTION);
+      sendBroadcastAsUser(getLatestIntent,UserHandle.ALL,CB_AREA_INFO_SENDER_PERMISSION);
+    }
   }
   registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
   mHandler.sendEmptyMessage(EVENT_UPDATE_STATS);

@@ -1,0 +1,15 @@
+{
+  if (TextUtils.isEmpty(helpUrlString)) {
+    helpMenuItem.setVisible(false);
+    return false;
+  }
+ else {
+    final Uri fullUri=uriWithAddedParameters(context,Uri.parse(helpUrlString));
+    Intent intent=new Intent(Intent.ACTION_VIEW,fullUri);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+    helpMenuItem.setIntent(intent);
+    helpMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+    helpMenuItem.setVisible(true);
+    return true;
+  }
+}

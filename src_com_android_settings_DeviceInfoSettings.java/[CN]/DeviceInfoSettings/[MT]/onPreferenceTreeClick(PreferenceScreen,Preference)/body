@@ -14,6 +14,7 @@
     }
   }
  else   if (preference.getKey().equals(KEY_BUILD_NUMBER)) {
+    if (UserHandle.myUserId() != UserHandle.USER_OWNER)     return true;
     if (mDevHitCountdown > 0) {
       mDevHitCountdown--;
       if (mDevHitCountdown == 0) {

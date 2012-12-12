@@ -22,6 +22,9 @@
 );
   mSettingsIcon=view.findViewById(R.id.tts_engine_settings);
   mSettingsIcon.setEnabled(isChecked && mVoiceCheckData != null);
+  if (!isChecked) {
+    mSettingsIcon.setAlpha(Utils.DISABLED_ALPHA);
+  }
   mSettingsIcon.setOnClickListener(new View.OnClickListener(){
     @Override public void onClick(    View v){
       Bundle args=new Bundle();

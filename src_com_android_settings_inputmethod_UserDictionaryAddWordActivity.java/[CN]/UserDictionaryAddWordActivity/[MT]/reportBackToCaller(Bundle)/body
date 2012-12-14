@@ -1,0 +1,14 @@
+{
+  final Intent senderIntent=getIntent();
+  final Object listener=senderIntent.getExtras().get("listener");
+  if (!(listener instanceof Messenger))   return;
+  final Messenger messenger=(Messenger)listener;
+  final Message m=Message.obtain();
+  m.obj=result;
+  m.what=(null != result) ? CODE_WORD_ADDED : CODE_CANCEL;
+  try {
+    messenger.send(m);
+  }
+ catch (  RemoteException e) {
+  }
+}

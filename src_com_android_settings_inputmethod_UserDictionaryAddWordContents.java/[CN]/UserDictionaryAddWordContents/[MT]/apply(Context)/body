@@ -18,12 +18,15 @@
     }
   }
   if (TextUtils.isEmpty(newWord)) {
-    return;
+    return null;
   }
-  if (hasWord(newWord,context))   return;
+  if (hasWord(newWord,context))   return null;
   UserDictionarySettings.deleteWord(newWord,null,resolver);
   if (!TextUtils.isEmpty(newShortcut)) {
     UserDictionarySettings.deleteWord(newWord,newShortcut,resolver);
   }
   UserDictionary.Words.addWord(context,newWord.toString(),FREQUENCY_FOR_USER_DICTIONARY_ADDS,newShortcut,TextUtils.isEmpty(mLocale) ? null : Utils.createLocaleFromString(mLocale));
+  final Bundle returnValues=new Bundle();
+  saveStateIntoBundle(returnValues);
+  return returnValues;
 }

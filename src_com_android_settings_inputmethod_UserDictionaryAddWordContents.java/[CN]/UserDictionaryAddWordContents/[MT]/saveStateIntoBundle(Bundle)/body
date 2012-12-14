@@ -1,7 +1,11 @@
 {
   outState.putString(EXTRA_WORD,mWordEditText.getText().toString());
+  outState.putString(EXTRA_ORIGINAL_WORD,mOldWord);
   if (null != mShortcutEditText) {
     outState.putString(EXTRA_SHORTCUT,mShortcutEditText.getText().toString());
+  }
+  if (null != mOldShortcut) {
+    outState.putString(EXTRA_ORIGINAL_SHORTCUT,mOldShortcut);
   }
   outState.putString(EXTRA_LOCALE,mLocale);
 }

@@ -5,7 +5,7 @@
   final Messenger messenger=(Messenger)listener;
   final Message m=Message.obtain();
   m.obj=result;
-  m.what=(null != result) ? CODE_WORD_ADDED : CODE_CANCEL;
+  m.what=resultCode;
   try {
     messenger.send(m);
   }

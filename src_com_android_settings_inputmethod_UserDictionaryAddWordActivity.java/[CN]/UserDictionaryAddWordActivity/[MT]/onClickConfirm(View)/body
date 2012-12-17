@@ -1,4 +1,6 @@
 {
-  reportBackToCaller(mContents.apply(this));
+  final Bundle parameters=new Bundle();
+  final int resultCode=mContents.apply(this,parameters);
+  reportBackToCaller(resultCode,parameters);
   finish();
 }

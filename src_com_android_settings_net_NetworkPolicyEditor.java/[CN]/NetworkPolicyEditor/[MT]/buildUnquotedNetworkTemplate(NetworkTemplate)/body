@@ -1,0 +1,11 @@
+{
+  if (template == null)   return null;
+  final String networkId=template.getNetworkId();
+  final String strippedNetworkId=WifiInfo.removeDoubleQuotes(networkId);
+  if (!TextUtils.equals(strippedNetworkId,networkId)) {
+    return new NetworkTemplate(template.getMatchRule(),template.getSubscriberId(),strippedNetworkId);
+  }
+ else {
+    return null;
+  }
+}

@@ -24,14 +24,11 @@
       modified=true;
     }
   }
-  final String networkId=template.getNetworkId();
-  final String strippedNetworkId=WifiInfo.removeDoubleQuotes(networkId);
-  if (!TextUtils.equals(strippedNetworkId,networkId)) {
-    policy=getPolicy(new NetworkTemplate(template.getMatchRule(),template.getSubscriberId(),strippedNetworkId));
-    if (policy != null) {
-      mPolicies.remove(policy);
-      modified=true;
-    }
+  final NetworkTemplate unquoted=buildUnquotedNetworkTemplate(template);
+  final NetworkPolicy unquotedPolicy=getPolicy(unquoted);
+  if (unquotedPolicy != null) {
+    mPolicies.remove(unquotedPolicy);
+    modified=true;
   }
   if (modified)   writeAsync();
 }

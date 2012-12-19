@@ -1,9 +1,9 @@
 {
   NetworkPolicy policy=getPolicy(template);
   if (policy != null) {
-    return policy.metered;
+    return policy;
   }
  else {
-    return false;
+    return getPolicy(buildUnquotedNetworkTemplate(template));
   }
 }

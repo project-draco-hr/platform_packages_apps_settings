@@ -5,6 +5,13 @@
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   addPreferencesFromResource(R.xml.development_prefs);
   mEnableAdb=findAndInitCheckboxPref(ENABLE_ADB);
+  mClearAdbKeys=findPreference(CLEAR_ADB_KEYS);
+  if (!SystemProperties.getBoolean("ro.adb.secure",false)) {
+    PreferenceGroup debugDebuggingCategory=(PreferenceGroup)findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
+    if (debugDebuggingCategory != null) {
+      debugDebuggingCategory.removePreference(mClearAdbKeys);
+    }
+  }
   mBugreport=findPreference(BUGREPORT);
   mBugreportInPower=findAndInitCheckboxPref(BUGREPORT_IN_POWER_KEY);
   mKeepScreenOn=findAndInitCheckboxPref(KEEP_SCREEN_ON);
@@ -14,6 +21,7 @@
   mAllPrefs.add(mPassword);
   if (!android.os.Process.myUserHandle().equals(UserHandle.OWNER)) {
     disableForUser(mEnableAdb);
+    disableForUser(mClearAdbKeys);
     disableForUser(mPassword);
   }
   mDebugAppPref=findPreference(DEBUG_APP_KEY);

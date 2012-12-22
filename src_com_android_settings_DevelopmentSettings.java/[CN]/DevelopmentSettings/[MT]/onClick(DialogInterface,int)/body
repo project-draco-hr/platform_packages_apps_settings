@@ -11,6 +11,18 @@
       mEnableAdb.setChecked(false);
     }
   }
+ else   if (dialog == mAdbKeysDialog) {
+    if (which == DialogInterface.BUTTON_POSITIVE) {
+      try {
+        IBinder b=ServiceManager.getService(Context.USB_SERVICE);
+        IUsbManager service=IUsbManager.Stub.asInterface(b);
+        service.clearUsbDebuggingKeys();
+      }
+ catch (      RemoteException e) {
+        Log.e(TAG,"Unable to clear adb keys",e);
+      }
+    }
+  }
  else   if (dialog == mEnableDialog) {
     if (which == DialogInterface.BUTTON_POSITIVE) {
       mDialogClicked=true;

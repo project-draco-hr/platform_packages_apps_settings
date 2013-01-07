@@ -37,7 +37,9 @@
   mShowCpuUsage=findAndInitCheckboxPref(SHOW_CPU_USAGE_KEY);
   mForceHardwareUi=findAndInitCheckboxPref(FORCE_HARDWARE_UI_KEY);
   mForceMsaa=findAndInitCheckboxPref(FORCE_MSAA_KEY);
-  mTrackFrameTime=findAndInitCheckboxPref(TRACK_FRAME_TIME_KEY);
+  mTrackFrameTime=(ListPreference)findPreference(TRACK_FRAME_TIME_KEY);
+  mAllPrefs.add(mTrackFrameTime);
+  mTrackFrameTime.setOnPreferenceChangeListener(this);
   mShowHwScreenUpdates=findAndInitCheckboxPref(SHOW_HW_SCREEN_UPDATES_KEY);
   mShowHwLayersUpdates=findAndInitCheckboxPref(SHOW_HW_LAYERS_UPDATES_KEY);
   mShowHwOverdraw=findAndInitCheckboxPref(SHOW_HW_OVERDRAW_KEY);

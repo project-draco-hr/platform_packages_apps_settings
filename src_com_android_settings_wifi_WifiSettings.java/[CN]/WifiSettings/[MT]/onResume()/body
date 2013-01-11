@@ -4,9 +4,5 @@
     mWifiEnabler.resume();
   }
   getActivity().registerReceiver(mReceiver,mFilter);
-  if (mKeyStoreNetworkId != INVALID_NETWORK_ID && KeyStore.getInstance().state() == KeyStore.State.UNLOCKED) {
-    mWifiManager.connect(mKeyStoreNetworkId,mConnectListener);
-  }
-  mKeyStoreNetworkId=INVALID_NETWORK_ID;
   updateAccessPoints();
 }

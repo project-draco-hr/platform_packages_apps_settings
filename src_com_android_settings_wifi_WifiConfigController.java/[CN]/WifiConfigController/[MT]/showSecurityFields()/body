@@ -34,18 +34,12 @@
     loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY);
     if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
       WifiConfiguration config=mAccessPoint.getConfig();
-      setSelection(mEapMethodSpinner,config.eap.value());
-      final String phase2Method=config.phase2.value();
-      if (phase2Method != null && phase2Method.startsWith(PHASE2_PREFIX)) {
-        setSelection(mPhase2Spinner,phase2Method.substring(PHASE2_PREFIX.length()));
-      }
- else {
-        setSelection(mPhase2Spinner,phase2Method);
-      }
-      setCertificate(mEapCaCertSpinner,KEYSTORE_SPACE + Credentials.CA_CERTIFICATE,config.ca_cert.value());
-      setCertificate(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY,config.key_id.value());
-      mEapIdentityView.setText(config.identity.value());
-      mEapAnonymousView.setText(config.anonymous_identity.value());
+      mEapMethodSpinner.setSelection(config.enterpriseConfig.getEapMethod());
+      mPhase2Spinner.setSelection(config.enterpriseConfig.getPhase2Method());
+      setSelection(mEapCaCertSpinner,config.enterpriseConfig.getCaCertificate());
+      setSelection(mEapUserCertSpinner,config.enterpriseConfig.getClientCertificate());
+      mEapIdentityView.setText(config.enterpriseConfig.getIdentity());
+      mEapAnonymousView.setText(config.enterpriseConfig.getAnonymousIdentity());
     }
   }
   mView.findViewById(R.id.l_method).setVisibility(View.VISIBLE);

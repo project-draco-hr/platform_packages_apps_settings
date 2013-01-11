@@ -1,8 +1,0 @@
-{
-  if (WifiConfigController.requireKeyStore(config) && KeyStore.getInstance().state() != KeyStore.State.UNLOCKED) {
-    mKeyStoreNetworkId=config.networkId;
-    Credentials.getInstance().unlock(getActivity());
-    return true;
-  }
-  return false;
-}

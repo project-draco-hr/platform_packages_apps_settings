@@ -1,6 +1,6 @@
 {
-  if (getIntent().getBooleanExtra(EXTRA_CLEAR_UI_OPTIONS,false)) {
-    getWindow().setUiOptions(0);
+  if (getIntent().hasExtra(EXTRA_UI_OPTIONS)) {
+    getWindow().setUiOptions(getIntent().getIntExtra(EXTRA_UI_OPTIONS,0));
   }
   mAuthenticatorHelper=new AuthenticatorHelper();
   mAuthenticatorHelper.updateAuthDescriptions(this);

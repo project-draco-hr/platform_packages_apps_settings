@@ -6,9 +6,7 @@ switch (item.getItemId()) {
 case MENU_ID_CONNECT:
 {
       if (mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
-        if (!requireKeyStore(mSelectedAccessPoint.getConfig())) {
-          mWifiManager.connect(mSelectedAccessPoint.networkId,mConnectListener);
-        }
+        mWifiManager.connect(mSelectedAccessPoint.networkId,mConnectListener);
       }
  else       if (mSelectedAccessPoint.security == AccessPoint.SECURITY_NONE) {
         mSelectedAccessPoint.generateOpenNetworkConfig();

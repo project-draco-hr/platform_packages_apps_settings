@@ -1,0 +1,9 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  setEmptyText("No applications");
+  setHasOptionsMenu(true);
+  mAdapter=new AppListAdapter(getActivity());
+  setListAdapter(mAdapter);
+  setListShown(false);
+  getLoaderManager().initLoader(0,null,this);
+}

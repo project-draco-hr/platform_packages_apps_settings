@@ -1,0 +1,15 @@
+{
+  if (isReset()) {
+    if (apps != null) {
+      onReleaseResources(apps);
+    }
+  }
+  List<AppOpEntry> oldApps=apps;
+  mApps=apps;
+  if (isStarted()) {
+    super.deliverResult(apps);
+  }
+  if (oldApps != null) {
+    onReleaseResources(oldApps);
+  }
+}

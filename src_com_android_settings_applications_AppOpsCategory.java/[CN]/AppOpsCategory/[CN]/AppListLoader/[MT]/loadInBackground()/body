@@ -1,0 +1,27 @@
+{
+  final Context context=getContext();
+  List<AppOpsManager.PackageOps> pkgs=mAppOps.getPackagesForOps(mOps);
+  List<AppOpEntry> entries=new ArrayList<AppOpEntry>(pkgs.size());
+  for (int i=0; i < pkgs.size(); i++) {
+    AppOpsManager.PackageOps pkgOps=pkgs.get(i);
+    AppEntry appEntry=mAppEntries.get(pkgOps.getPackageName());
+    if (appEntry == null) {
+      ApplicationInfo appInfo=null;
+      try {
+        appInfo=mPm.getApplicationInfo(pkgOps.getPackageName(),PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES);
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+      }
+      appEntry=new AppEntry(this,appInfo);
+      appEntry.loadLabel(context);
+      mAppEntries.put(pkgOps.getPackageName(),appEntry);
+    }
+    for (int j=0; j < pkgOps.getOps().size(); j++) {
+      AppOpsManager.OpEntry opEntry=pkgOps.getOps().get(j);
+      AppOpEntry entry=new AppOpEntry(pkgOps,opEntry,appEntry);
+      entries.add(entry);
+    }
+  }
+  Collections.sort(entries,APP_OP_COMPARATOR);
+  return entries;
+}

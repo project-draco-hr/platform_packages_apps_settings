@@ -1,0 +1,13 @@
+{
+  if (mLabel == null || !mMounted) {
+    if (!mApkFile.exists()) {
+      mMounted=false;
+      mLabel=mInfo.packageName;
+    }
+ else {
+      mMounted=true;
+      CharSequence label=mInfo.loadLabel(context.getPackageManager());
+      mLabel=label != null ? label.toString() : mInfo.packageName;
+    }
+  }
+}

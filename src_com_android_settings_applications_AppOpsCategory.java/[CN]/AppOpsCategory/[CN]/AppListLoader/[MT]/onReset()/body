@@ -1,0 +1,12 @@
+{
+  super.onReset();
+  onStopLoading();
+  if (mApps != null) {
+    onReleaseResources(mApps);
+    mApps=null;
+  }
+  if (mPackageObserver != null) {
+    getContext().unregisterReceiver(mPackageObserver);
+    mPackageObserver=null;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  View view;
+  if (convertView == null) {
+    view=mInflater.inflate(R.layout.app_ops_item,parent,false);
+  }
+ else {
+    view=convertView;
+  }
+  AppOpEntry item=getItem(position);
+  ((ImageView)view.findViewById(R.id.app_icon)).setImageDrawable(item.getAppEntry().getIcon());
+  ((TextView)view.findViewById(R.id.app_name)).setText(item.getAppEntry().getLabel());
+  ((TextView)view.findViewById(R.id.op_name)).setText(mOpNames[item.getOpEntry().getOp()]);
+  ((TextView)view.findViewById(R.id.op_time)).setText(opTimeToString(item.getOpEntry()));
+  return view;
+}

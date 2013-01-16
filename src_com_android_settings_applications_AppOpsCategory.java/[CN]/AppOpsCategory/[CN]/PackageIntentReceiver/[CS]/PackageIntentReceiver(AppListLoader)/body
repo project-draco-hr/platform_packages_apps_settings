@@ -1,0 +1,12 @@
+{
+  mLoader=loader;
+  IntentFilter filter=new IntentFilter(Intent.ACTION_PACKAGE_ADDED);
+  filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+  filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
+  filter.addDataScheme("package");
+  mLoader.getContext().registerReceiver(this,filter);
+  IntentFilter sdFilter=new IntentFilter();
+  sdFilter.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE);
+  sdFilter.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE);
+  mLoader.getContext().registerReceiver(this,sdFilter);
+}

@@ -1,0 +1,12 @@
+{
+  if (mApps != null) {
+    deliverResult(mApps);
+  }
+  if (mPackageObserver == null) {
+    mPackageObserver=new PackageIntentReceiver(this);
+  }
+  boolean configChange=mLastConfig.applyNewConfig(getContext().getResources());
+  if (takeContentChanged() || mApps == null || configChange) {
+    forceLoad();
+  }
+}

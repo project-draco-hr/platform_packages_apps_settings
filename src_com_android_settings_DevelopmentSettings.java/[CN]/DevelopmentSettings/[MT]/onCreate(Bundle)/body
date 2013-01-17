@@ -59,15 +59,6 @@
   mOpenGLTraces=(ListPreference)findPreference(OPENGL_TRACES_KEY);
   mAllPrefs.add(mOpenGLTraces);
   mOpenGLTraces.setOnPreferenceChangeListener(this);
-  mEnableTracesPref=(MultiCheckPreference)findPreference(ENABLE_TRACES_KEY);
-  String[] traceValues=new String[Trace.TRACE_TAGS.length];
-  for (int i=Trace.TRACE_FLAGS_START_BIT; i < traceValues.length; i++) {
-    traceValues[i]=Integer.toString(1 << i);
-  }
-  mEnableTracesPref.setEntries(Trace.TRACE_TAGS);
-  mEnableTracesPref.setEntryValues(traceValues);
-  mAllPrefs.add(mEnableTracesPref);
-  mEnableTracesPref.setOnPreferenceChangeListener(this);
   mImmediatelyDestroyActivities=(CheckBoxPreference)findPreference(IMMEDIATELY_DESTROY_ACTIVITIES_KEY);
   mAllPrefs.add(mImmediatelyDestroyActivities);
   mResetCbPrefs.add(mImmediatelyDestroyActivities);

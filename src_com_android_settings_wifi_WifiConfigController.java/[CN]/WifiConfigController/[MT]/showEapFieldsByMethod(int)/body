@@ -1,0 +1,40 @@
+{
+  mView.findViewById(R.id.l_method).setVisibility(View.VISIBLE);
+  mView.findViewById(R.id.l_identity).setVisibility(View.VISIBLE);
+  mView.findViewById(R.id.l_ca_cert).setVisibility(View.VISIBLE);
+  mView.findViewById(R.id.password_layout).setVisibility(View.VISIBLE);
+  mView.findViewById(R.id.show_password_layout).setVisibility(View.VISIBLE);
+  Context context=mConfigUi.getContext();
+switch (eapMethod) {
+case WIFI_EAP_METHOD_PWD:
+    setPhase2Invisible();
+  setCaCertInvisible();
+setAnonymousIdentInvisible();
+setUserCertInvisible();
+break;
+case WIFI_EAP_METHOD_TLS:
+mView.findViewById(R.id.l_user_cert).setVisibility(View.VISIBLE);
+setPhase2Invisible();
+setAnonymousIdentInvisible();
+setPasswordInvisible();
+break;
+case WIFI_EAP_METHOD_PEAP:
+if (mPhase2Adapter != PHASE2_PEAP_ADAPTER) {
+mPhase2Adapter=PHASE2_PEAP_ADAPTER;
+mPhase2Spinner.setAdapter(mPhase2Adapter);
+}
+mView.findViewById(R.id.l_phase2).setVisibility(View.VISIBLE);
+mView.findViewById(R.id.l_anonymous).setVisibility(View.VISIBLE);
+setUserCertInvisible();
+break;
+case WIFI_EAP_METHOD_TTLS:
+if (mPhase2Adapter != PHASE2_FULL_ADAPTER) {
+mPhase2Adapter=PHASE2_FULL_ADAPTER;
+mPhase2Spinner.setAdapter(mPhase2Adapter);
+}
+mView.findViewById(R.id.l_phase2).setVisibility(View.VISIBLE);
+mView.findViewById(R.id.l_anonymous).setVisibility(View.VISIBLE);
+setUserCertInvisible();
+break;
+}
+}

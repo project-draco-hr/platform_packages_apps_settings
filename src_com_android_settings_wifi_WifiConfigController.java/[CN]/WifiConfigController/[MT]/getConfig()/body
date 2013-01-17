@@ -47,17 +47,47 @@ break;
 case AccessPoint.SECURITY_EAP:
 config.allowedKeyManagement.set(KeyMgmt.WPA_EAP);
 config.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
-config.enterpriseConfig.setEapMethod(mEapMethodSpinner.getSelectedItemPosition());
-config.enterpriseConfig.setPhase2Method(mPhase2Spinner.getSelectedItemPosition());
+config.enterpriseConfig=new WifiEnterpriseConfig();
+int eapMethod=mEapMethodSpinner.getSelectedItemPosition();
+int phase2Method=mPhase2Spinner.getSelectedItemPosition();
+config.enterpriseConfig.setEapMethod(eapMethod);
+switch (eapMethod) {
+case Eap.PEAP:
+switch (phase2Method) {
+case WIFI_PEAP_PHASE2_NONE:
+config.enterpriseConfig.setPhase2Method(Phase2.NONE);
+break;
+case WIFI_PEAP_PHASE2_MSCHAPV2:
+config.enterpriseConfig.setPhase2Method(Phase2.MSCHAPV2);
+break;
+case WIFI_PEAP_PHASE2_GTC:
+config.enterpriseConfig.setPhase2Method(Phase2.GTC);
+break;
+default :
+Log.e(TAG,"Unknown phase2 method" + phase2Method);
+break;
+}
+break;
+default :
+config.enterpriseConfig.setPhase2Method(phase2Method);
+break;
+}
 String caCert=(String)mEapCaCertSpinner.getSelectedItem();
 if (caCert.equals(unspecifiedCert)) caCert="";
+config.enterpriseConfig.setCaCertificate(caCert);
 String clientCert=(String)mEapUserCertSpinner.getSelectedItem();
 if (clientCert.equals(unspecifiedCert)) clientCert="";
-config.enterpriseConfig.setCaCertificate(caCert);
 config.enterpriseConfig.setClientCertificate(clientCert);
 config.enterpriseConfig.setIdentity(mEapIdentityView.getText().toString());
 config.enterpriseConfig.setAnonymousIdentity(mEapAnonymousView.getText().toString());
+if (mPasswordView.isShown()) {
+if (mPasswordView.length() > 0) {
 config.enterpriseConfig.setPassword(mPasswordView.getText().toString());
+}
+}
+ else {
+config.enterpriseConfig.setPassword(mPasswordView.getText().toString());
+}
 break;
 default :
 return null;

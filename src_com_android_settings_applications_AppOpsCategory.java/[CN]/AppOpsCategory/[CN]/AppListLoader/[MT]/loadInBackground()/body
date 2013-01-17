@@ -22,6 +22,24 @@
       entries.add(entry);
     }
   }
+  if (mPerms != null) {
+    List<PackageInfo> apps=mPm.getPackagesHoldingPermissions(mPerms,0);
+    for (int i=0; i < apps.size(); i++) {
+      PackageInfo appInfo=apps.get(i);
+      AppEntry appEntry=mAppEntries.get(appInfo.packageName);
+      if (appEntry == null) {
+        appEntry=new AppEntry(this,appInfo.applicationInfo);
+        appEntry.loadLabel(context);
+        mAppEntries.put(appInfo.packageName,appEntry);
+        List<AppOpsManager.OpEntry> dummyOps=new ArrayList<AppOpsManager.OpEntry>();
+        AppOpsManager.OpEntry opEntry=new AppOpsManager.OpEntry(0,0,0);
+        dummyOps.add(opEntry);
+        AppOpsManager.PackageOps pkgOps=new AppOpsManager.PackageOps(appInfo.packageName,appInfo.applicationInfo.uid,dummyOps);
+        AppOpEntry entry=new AppOpEntry(pkgOps,opEntry,appEntry);
+        entries.add(entry);
+      }
+    }
+  }
   Collections.sort(entries,APP_OP_COMPARATOR);
   return entries;
 }

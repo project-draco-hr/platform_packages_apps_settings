@@ -1,0 +1,19 @@
+{
+  Resources r=null;
+  if (pkg != null) {
+    try {
+      if (userId == UserHandle.USER_ALL) {
+        userId=UserHandle.USER_OWNER;
+      }
+      r=mContext.getPackageManager().getResourcesForApplicationAsUser(pkg,userId);
+    }
+ catch (    PackageManager.NameNotFoundException ex) {
+      Log.e(TAG,"Icon package not found: " + pkg);
+      return null;
+    }
+  }
+ else {
+    r=mContext.getResources();
+  }
+  return r;
+}

@@ -1,0 +1,12 @@
+{
+  logd("onResume()");
+  super.onResume();
+  refreshFromBackend();
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+  filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
+  filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+  filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+  filter.addDataScheme(PACKAGE_SCHEME);
+  mContext.registerReceiver(mPackageReceiver,filter);
+}

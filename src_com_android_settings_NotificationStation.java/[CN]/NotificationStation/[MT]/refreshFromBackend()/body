@@ -1,0 +1,8 @@
+{
+  List<HistoricalNotificationInfo> infos=loadNotifications();
+  if (infos != null) {
+    logd("adding %d infos",infos.size());
+    mAdapter.clear();
+    mAdapter.addAll(infos);
+  }
+}

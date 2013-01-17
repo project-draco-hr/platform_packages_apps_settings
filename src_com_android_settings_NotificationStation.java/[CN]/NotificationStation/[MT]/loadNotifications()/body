@@ -1,0 +1,28 @@
+{
+  final int currentUserId=ActivityManager.getCurrentUser();
+  try {
+    StatusBarNotification[] nions=mNoMan.getHistoricalNotifications(mContext.getPackageName(),100);
+    List<HistoricalNotificationInfo> list=new ArrayList<HistoricalNotificationInfo>(nions.length);
+    for (    StatusBarNotification sbn : nions) {
+      final HistoricalNotificationInfo info=new HistoricalNotificationInfo();
+      info.pkg=sbn.pkg;
+      info.user=sbn.getUserId();
+      info.icon=loadIconDrawable(info.pkg,info.user,sbn.notification.icon);
+      info.pkgicon=loadPackageIconDrawable(info.pkg,info.user);
+      if (sbn.notification.extras != null) {
+        info.title=sbn.notification.extras.getString(Notification.EXTRA_TITLE);
+      }
+      info.timestamp=sbn.postTime;
+      info.priority=sbn.notification.priority;
+      logd("   [%d] %s: %s",info.timestamp,info.pkg,info.title);
+      if (info.user == UserHandle.USER_ALL || info.user == currentUserId) {
+        list.add(info);
+      }
+    }
+    return list;
+  }
+ catch (  RemoteException e) {
+    e.printStackTrace();
+  }
+  return null;
+}

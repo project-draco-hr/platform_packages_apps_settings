@@ -1,0 +1,6 @@
+{
+  logd("onAttach(%s)",activity.getClass().getSimpleName());
+  super.onAttach(activity);
+  mContext=activity;
+  mNoMan=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+}

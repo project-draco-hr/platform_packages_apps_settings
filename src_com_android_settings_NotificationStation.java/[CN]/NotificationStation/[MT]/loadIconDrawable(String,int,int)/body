@@ -1,0 +1,13 @@
+{
+  Resources r=getResourcesForUserPackage(pkg,userId);
+  if (resId == 0) {
+    return null;
+  }
+  try {
+    return r.getDrawable(resId);
+  }
+ catch (  RuntimeException e) {
+    Log.w(TAG,"Icon not found in " + (pkg != null ? resId : "<system>") + ": "+ Integer.toHexString(resId));
+  }
+  return null;
+}

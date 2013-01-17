@@ -1,4 +1,10 @@
 {
   Bundle fargs=getArguments();
-  return new AppListLoader(getActivity(),fargs != null ? fargs.getIntArray("ops") : null);
+  int[] ops=null;
+  String[] perms=null;
+  if (fargs != null) {
+    ops=fargs.getIntArray("ops");
+    perms=fargs.getStringArray("perms");
+  }
+  return new AppListLoader(getActivity(),ops,perms);
 }

@@ -34,26 +34,38 @@
     loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY);
     if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
       WifiConfiguration config=mAccessPoint.getConfig();
-      mEapMethodSpinner.setSelection(config.enterpriseConfig.getEapMethod());
-      mPhase2Spinner.setSelection(config.enterpriseConfig.getPhase2Method());
-      setSelection(mEapCaCertSpinner,config.enterpriseConfig.getCaCertificate());
-      setSelection(mEapUserCertSpinner,config.enterpriseConfig.getClientCertificate());
-      mEapIdentityView.setText(config.enterpriseConfig.getIdentity());
-      mEapAnonymousView.setText(config.enterpriseConfig.getAnonymousIdentity());
-    }
-  }
-  mView.findViewById(R.id.l_method).setVisibility(View.VISIBLE);
-  mView.findViewById(R.id.l_identity).setVisibility(View.VISIBLE);
-  if (mEapMethodSpinner.getSelectedItemPosition() == WIFI_EAP_METHOD_PWD) {
-    mView.findViewById(R.id.l_phase2).setVisibility(View.GONE);
-    mView.findViewById(R.id.l_ca_cert).setVisibility(View.GONE);
-    mView.findViewById(R.id.l_user_cert).setVisibility(View.GONE);
-    mView.findViewById(R.id.l_anonymous).setVisibility(View.GONE);
-  }
+      int eapMethod=config.enterpriseConfig.getEapMethod();
+      int phase2Method=config.enterpriseConfig.getPhase2Method();
+      mEapMethodSpinner.setSelection(eapMethod);
+      showEapFieldsByMethod(eapMethod);
+switch (eapMethod) {
+case Eap.PEAP:
+switch (phase2Method) {
+case Phase2.NONE:
+          mPhase2Spinner.setSelection(WIFI_PEAP_PHASE2_NONE);
+        break;
+case Phase2.MSCHAPV2:
+      mPhase2Spinner.setSelection(WIFI_PEAP_PHASE2_MSCHAPV2);
+    break;
+case Phase2.GTC:
+  mPhase2Spinner.setSelection(WIFI_PEAP_PHASE2_GTC);
+break;
+default :
+Log.e(TAG,"Invalid phase 2 method " + phase2Method);
+break;
+}
+break;
+default :
+mPhase2Spinner.setSelection(phase2Method);
+break;
+}
+setSelection(mEapCaCertSpinner,config.enterpriseConfig.getCaCertificate());
+setSelection(mEapUserCertSpinner,config.enterpriseConfig.getClientCertificate());
+mEapIdentityView.setText(config.enterpriseConfig.getIdentity());
+mEapAnonymousView.setText(config.enterpriseConfig.getAnonymousIdentity());
+}
+}
  else {
-    mView.findViewById(R.id.l_phase2).setVisibility(View.VISIBLE);
-    mView.findViewById(R.id.l_ca_cert).setVisibility(View.VISIBLE);
-    mView.findViewById(R.id.l_user_cert).setVisibility(View.VISIBLE);
-    mView.findViewById(R.id.l_anonymous).setVisibility(View.VISIBLE);
-  }
+showEapFieldsByMethod(mEapMethodSpinner.getSelectedItemPosition());
+}
 }

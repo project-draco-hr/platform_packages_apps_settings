@@ -19,8 +19,11 @@ if (!emulated) {
 mWhichSize=SIZE_EXTERNAL;
 }
 break;
+case FILTER_APPS_DISABLED:
+filterObj=ApplicationsState.DISABLED_FILTER;
+break;
 default :
-filterObj=null;
+filterObj=ApplicationsState.ALL_ENABLED_FILTER;
 break;
 }
 switch (mLastSortMode) {

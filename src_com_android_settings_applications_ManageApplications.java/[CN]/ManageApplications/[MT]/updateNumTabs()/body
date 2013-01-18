@@ -1,0 +1,9 @@
+{
+  int newNum=mApplicationsState.haveDisabledApps() ? mTabs.size() : (mTabs.size() - 1);
+  if (newNum != mNumTabs) {
+    mNumTabs=newNum;
+    if (mViewPager != null) {
+      mViewPager.getAdapter().notifyDataSetChanged();
+    }
+  }
+}

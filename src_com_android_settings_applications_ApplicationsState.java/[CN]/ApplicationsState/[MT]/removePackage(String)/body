@@ -10,7 +10,17 @@ synchronized (mEntriesMap) {
         mEntriesMap.remove(pkgName);
         mAppEntries.remove(entry);
       }
+      ApplicationInfo info=mApplications.get(idx);
       mApplications.remove(idx);
+      if (!info.enabled) {
+        mHaveDisabledApps=false;
+        for (int i=0; i < mApplications.size(); i++) {
+          if (!mApplications.get(i).enabled) {
+            mHaveDisabledApps=true;
+            break;
+          }
+        }
+      }
       if (!mMainHandler.hasMessages(MainHandler.MSG_PACKAGE_LIST_CHANGED)) {
         mMainHandler.sendEmptyMessage(MainHandler.MSG_PACKAGE_LIST_CHANGED);
       }

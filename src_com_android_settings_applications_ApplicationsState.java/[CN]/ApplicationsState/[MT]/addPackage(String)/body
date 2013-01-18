@@ -13,6 +13,12 @@ synchronized (mEntriesMap) {
         return;
       }
       ApplicationInfo info=mPm.getApplicationInfo(pkgName,mRetrieveFlags);
+      if (!info.enabled) {
+        if (info.enabledSetting != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER) {
+          return;
+        }
+        mHaveDisabledApps=true;
+      }
       mApplications.add(info);
       if (!mBackgroundHandler.hasMessages(BackgroundHandler.MSG_LOAD_ENTRIES)) {
         mBackgroundHandler.sendEmptyMessage(BackgroundHandler.MSG_LOAD_ENTRIES);

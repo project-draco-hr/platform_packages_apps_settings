@@ -1,0 +1,15 @@
+{
+  if (getNumOpEntry() == 1) {
+    return opNames[getOpEntry(0).getOp()];
+  }
+ else {
+    StringBuilder builder=new StringBuilder();
+    for (int i=0; i < getNumOpEntry(); i++) {
+      if (i > 0) {
+        builder.append(", ");
+      }
+      builder.append(opNames[getOpEntry(i).getOp()]);
+    }
+    return builder.toString();
+  }
+}

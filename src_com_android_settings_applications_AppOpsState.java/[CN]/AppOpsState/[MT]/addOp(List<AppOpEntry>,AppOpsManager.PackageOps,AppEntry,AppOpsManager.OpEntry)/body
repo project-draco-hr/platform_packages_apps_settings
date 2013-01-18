@@ -1,0 +1,15 @@
+{
+  if (entries.size() > 0) {
+    AppOpEntry last=entries.get(entries.size() - 1);
+    if (last.getAppEntry() == appEntry) {
+      boolean lastExe=last.getTime() != 0;
+      boolean entryExe=opEntry.getTime() != 0;
+      if (lastExe == entryExe) {
+        last.addOp(opEntry);
+        return;
+      }
+    }
+  }
+  AppOpEntry entry=new AppOpEntry(pkgOps,opEntry,appEntry);
+  entries.add(entry);
+}

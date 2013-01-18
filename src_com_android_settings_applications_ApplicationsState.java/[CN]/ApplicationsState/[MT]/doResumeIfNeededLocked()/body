@@ -20,12 +20,16 @@
       mAppEntries.get(i).sizeStale=true;
     }
   }
+  mHaveDisabledApps=false;
   for (int i=0; i < mApplications.size(); i++) {
     final ApplicationInfo info=mApplications.get(i);
-    if (!info.enabled && info.enabledSetting != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER) {
-      mApplications.remove(i);
-      i--;
-      continue;
+    if (!info.enabled) {
+      if (info.enabledSetting != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER) {
+        mApplications.remove(i);
+        i--;
+        continue;
+      }
+      mHaveDisabledApps=true;
     }
     final AppEntry entry=mEntriesMap.get(info.packageName);
     if (entry != null) {

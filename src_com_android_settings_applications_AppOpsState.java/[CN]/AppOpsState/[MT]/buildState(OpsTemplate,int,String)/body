@@ -1,6 +1,16 @@
 {
   final Context context=mContext;
   final HashMap<String,AppEntry> appEntries=new HashMap<String,AppEntry>();
+  List<AppOpEntry> entries=new ArrayList<AppOpEntry>();
+  ArrayList<String> perms=new ArrayList<String>();
+  ArrayList<Integer> permOps=new ArrayList<Integer>();
+  for (int i=0; i < tpl.ops.length; i++) {
+    String perm=AppOpsManager.opToPermission(tpl.ops[i]);
+    if (!perms.contains(perm)) {
+      perms.add(perm);
+      permOps.add(tpl.ops[i]);
+    }
+  }
   List<AppOpsManager.PackageOps> pkgs;
   if (packageName != null) {
     pkgs=mAppOps.getOpsForPackage(uid,packageName,tpl.ops);
@@ -8,63 +18,65 @@
  else {
     pkgs=mAppOps.getPackagesForOps(tpl.ops);
   }
-  List<AppOpEntry> entries=new ArrayList<AppOpEntry>(pkgs.size());
-  for (int i=0; i < pkgs.size(); i++) {
-    AppOpsManager.PackageOps pkgOps=pkgs.get(i);
-    AppEntry appEntry=appEntries.get(pkgOps.getPackageName());
-    if (appEntry == null) {
-      ApplicationInfo appInfo=null;
-      try {
-        appInfo=mPm.getApplicationInfo(pkgOps.getPackageName(),PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES);
+  if (pkgs != null) {
+    for (int i=0; i < pkgs.size(); i++) {
+      AppOpsManager.PackageOps pkgOps=pkgs.get(i);
+      AppEntry appEntry=getAppEntry(context,appEntries,pkgOps.getPackageName(),null);
+      if (appEntry == null) {
+        continue;
       }
- catch (      PackageManager.NameNotFoundException e) {
+      for (int j=0; j < pkgOps.getOps().size(); j++) {
+        AppOpsManager.OpEntry opEntry=pkgOps.getOps().get(j);
+        addOp(entries,pkgOps,appEntry,opEntry);
       }
-      appEntry=new AppEntry(this,appInfo);
-      appEntry.loadLabel(context);
-      appEntries.put(pkgOps.getPackageName(),appEntry);
-    }
-    for (int j=0; j < pkgOps.getOps().size(); j++) {
-      AppOpsManager.OpEntry opEntry=pkgOps.getOps().get(j);
-      addOp(entries,pkgOps,appEntry,opEntry);
     }
   }
-  if (tpl.perms != null) {
-    List<PackageInfo> apps;
-    if (packageName != null) {
-      apps=new ArrayList<PackageInfo>();
-      try {
-        PackageInfo pi=mPm.getPackageInfo(packageName,PackageManager.GET_PERMISSIONS);
-        apps.add(pi);
-      }
- catch (      NameNotFoundException e) {
-      }
+  List<PackageInfo> apps;
+  if (packageName != null) {
+    apps=new ArrayList<PackageInfo>();
+    try {
+      PackageInfo pi=mPm.getPackageInfo(packageName,PackageManager.GET_PERMISSIONS);
+      apps.add(pi);
     }
+ catch (    NameNotFoundException e) {
+    }
+  }
  else {
-      apps=mPm.getPackagesHoldingPermissions(tpl.perms,0);
+    String[] permsArray=new String[perms.size()];
+    perms.toArray(permsArray);
+    apps=mPm.getPackagesHoldingPermissions(permsArray,0);
+  }
+  for (int i=0; i < apps.size(); i++) {
+    PackageInfo appInfo=apps.get(i);
+    AppEntry appEntry=getAppEntry(context,appEntries,appInfo.packageName,appInfo.applicationInfo);
+    if (appEntry == null) {
+      continue;
     }
-    for (int i=0; i < apps.size(); i++) {
-      PackageInfo appInfo=apps.get(i);
-      AppEntry appEntry=appEntries.get(appInfo.packageName);
-      if (appEntry == null) {
-        appEntry=new AppEntry(this,appInfo.applicationInfo);
-        appEntry.loadLabel(context);
-        appEntries.put(appInfo.packageName,appEntry);
-        List<AppOpsManager.OpEntry> dummyOps=new ArrayList<AppOpsManager.OpEntry>();
-        AppOpsManager.PackageOps pkgOps=new AppOpsManager.PackageOps(appInfo.packageName,appInfo.applicationInfo.uid,dummyOps);
-        for (int j=0; j < appInfo.requestedPermissions.length; j++) {
-          if (appInfo.requestedPermissionsFlags != null) {
-            if ((appInfo.requestedPermissionsFlags[j] & PackageInfo.REQUESTED_PERMISSION_GRANTED) == 0) {
-              break;
-            }
-          }
-          for (int k=0; k < tpl.perms.length; k++) {
-            if (tpl.perms[k].equals(appInfo.requestedPermissions[j])) {
-              AppOpsManager.OpEntry opEntry=new AppOpsManager.OpEntry(tpl.permOps[k],0,0);
-              dummyOps.add(opEntry);
-              addOp(entries,pkgOps,appEntry,opEntry);
-            }
-          }
+    List<AppOpsManager.OpEntry> dummyOps=null;
+    AppOpsManager.PackageOps pkgOps=null;
+    for (int j=0; j < appInfo.requestedPermissions.length; j++) {
+      if (appInfo.requestedPermissionsFlags != null) {
+        if ((appInfo.requestedPermissionsFlags[j] & PackageInfo.REQUESTED_PERMISSION_GRANTED) == 0) {
+          if (DEBUG)           Log.d(TAG,"Pkg " + appInfo.packageName + " perm "+ appInfo.requestedPermissions[j]+ " not granted; skipping");
+          break;
         }
+      }
+      if (DEBUG)       Log.d(TAG,"Pkg " + appInfo.packageName + ": requested perm "+ appInfo.requestedPermissions[j]);
+      for (int k=0; k < perms.size(); k++) {
+        if (!perms.get(k).equals(appInfo.requestedPermissions[j])) {
+          continue;
+        }
+        if (DEBUG)         Log.d(TAG,"Pkg " + appInfo.packageName + " perm "+ perms.get(k)+ " has op "+ permOps.get(k)+ ": "+ appEntry.hasOp(permOps.get(k)));
+        if (appEntry.hasOp(permOps.get(k))) {
+          continue;
+        }
+        if (dummyOps == null) {
+          dummyOps=new ArrayList<AppOpsManager.OpEntry>();
+          pkgOps=new AppOpsManager.PackageOps(appInfo.packageName,appInfo.applicationInfo.uid,dummyOps);
+        }
+        AppOpsManager.OpEntry opEntry=new AppOpsManager.OpEntry(permOps.get(k),AppOpsManager.MODE_ALLOWED,0,0,0);
+        dummyOps.add(opEntry);
+        addOp(entries,pkgOps,appEntry,opEntry);
       }
     }
   }

@@ -1,0 +1,9 @@
+{
+  super.onCreate(icicle);
+  mState=new AppOpsState(getActivity());
+  mPm=getActivity().getPackageManager();
+  mInflater=(LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  mAppOps=(AppOpsManager)getActivity().getSystemService(Context.APP_OPS_SERVICE);
+  retrieveAppEntry();
+  setHasOptionsMenu(true);
+}

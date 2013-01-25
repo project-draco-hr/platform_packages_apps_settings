@@ -1,4 +1,5 @@
 {
+  mApp.addOp(op);
   for (int i=0; i < mOps.size(); i++) {
     AppOpsManager.OpEntry pos=mOps.get(i);
     if (pos.isRunning() != op.isRunning()) {
@@ -6,8 +7,9 @@
         mOps.add(i,op);
         return;
       }
+      continue;
     }
-    if (pos.getTime() > op.getTime()) {
+    if (pos.getTime() < op.getTime()) {
       mOps.add(i,op);
       return;
     }

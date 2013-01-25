@@ -1,3 +1,7 @@
 {
-  Log.i("LoaderCustom","Item clicked: " + id);
+  AppOpEntry entry=mAdapter.getItem(position);
+  if (entry != null) {
+    mCurrentPkgName=entry.getAppEntry().getApplicationInfo().packageName;
+    startApplicationDetailsActivity();
+  }
 }

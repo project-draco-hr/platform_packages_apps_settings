@@ -1,0 +1,18 @@
+{
+  AppEntry appEntry=appEntries.get(packageName);
+  if (appEntry == null) {
+    if (appInfo == null) {
+      try {
+        appInfo=mPm.getApplicationInfo(packageName,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES);
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+        Log.w(TAG,"Unable to find info for package " + packageName);
+        return null;
+      }
+    }
+    appEntry=new AppEntry(this,appInfo);
+    appEntry.loadLabel(context);
+    appEntries.put(packageName,appEntry);
+  }
+  return appEntry;
+}

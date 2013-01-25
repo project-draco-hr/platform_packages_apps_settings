@@ -1,0 +1,18 @@
+{
+  final Bundle args=getArguments();
+  String packageName=(args != null) ? args.getString(ARG_PACKAGE_NAME) : null;
+  if (packageName == null) {
+    Intent intent=(args == null) ? getActivity().getIntent() : (Intent)args.getParcelable("intent");
+    if (intent != null) {
+      packageName=intent.getData().getSchemeSpecificPart();
+    }
+  }
+  try {
+    mPackageInfo=mPm.getPackageInfo(packageName,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES);
+  }
+ catch (  NameNotFoundException e) {
+    Log.e(TAG,"Exception when retrieving package:" + packageName,e);
+    mPackageInfo=null;
+  }
+  return packageName;
+}

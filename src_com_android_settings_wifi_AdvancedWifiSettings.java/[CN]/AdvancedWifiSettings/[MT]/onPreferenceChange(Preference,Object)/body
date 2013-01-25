@@ -2,7 +2,9 @@
   String key=preference.getKey();
   if (KEY_FREQUENCY_BAND.equals(key)) {
     try {
-      mWifiManager.setFrequencyBand(Integer.parseInt((String)newValue),true);
+      int value=Integer.parseInt((String)newValue);
+      mWifiManager.setFrequencyBand(value,true);
+      updateFrequencyBandSummary(preference,value);
     }
  catch (    NumberFormatException e) {
       Toast.makeText(getActivity(),R.string.wifi_setting_frequency_band_error,Toast.LENGTH_SHORT).show();

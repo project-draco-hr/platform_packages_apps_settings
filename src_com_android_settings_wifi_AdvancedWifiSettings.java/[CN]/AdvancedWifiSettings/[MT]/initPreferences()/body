@@ -19,6 +19,7 @@
     int value=mWifiManager.getFrequencyBand();
     if (value != -1) {
       frequencyPref.setValue(String.valueOf(value));
+      updateFrequencyBandSummary(frequencyPref,value);
     }
  else {
       Log.e(TAG,"Failed to fetch frequency band");

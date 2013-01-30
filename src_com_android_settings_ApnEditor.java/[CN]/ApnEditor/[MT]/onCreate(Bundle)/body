@@ -24,6 +24,9 @@
   mCarrierEnabled=(CheckBoxPreference)findPreference(KEY_CARRIER_ENABLED);
   mBearer=(ListPreference)findPreference(KEY_BEARER);
   mBearer.setOnPreferenceChangeListener(this);
+  mMvnoType=(ListPreference)findPreference(KEY_MVNO_TYPE);
+  mMvnoType.setOnPreferenceChangeListener(this);
+  mMvnoMatchData=(EditTextPreference)findPreference("mvno_match_data");
   mRes=getResources();
   final Intent intent=getIntent();
   final String action=intent.getAction();

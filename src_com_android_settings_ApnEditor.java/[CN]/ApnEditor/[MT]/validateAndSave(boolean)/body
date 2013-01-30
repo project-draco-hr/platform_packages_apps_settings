@@ -45,6 +45,8 @@
   if (bearerVal != null) {
     values.put(Telephony.Carriers.BEARER,Integer.parseInt(bearerVal));
   }
+  values.put(Telephony.Carriers.MVNO_TYPE,checkNotSet(mMvnoType.getValue()));
+  values.put(Telephony.Carriers.MVNO_MATCH_DATA,checkNotSet(mMvnoMatchData.getText()));
   getContentResolver().update(mUri,values,null,null);
   return true;
 }

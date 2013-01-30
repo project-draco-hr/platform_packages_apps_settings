@@ -2,7 +2,7 @@
   INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
   boolean enabled=true;
   try {
-    enabled=nm.areNotificationsEnabledForPackage(mAppEntry.info.packageName);
+    enabled=nm.areNotificationsEnabledForPackage(mAppEntry.info.packageName,mAppEntry.info.uid);
   }
  catch (  android.os.RemoteException ex) {
   }

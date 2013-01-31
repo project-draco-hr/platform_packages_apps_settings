@@ -1,17 +1,22 @@
 {
-  if (entries.size() > 0) {
+  if (allowMerge && entries.size() > 0) {
     AppOpEntry last=entries.get(entries.size() - 1);
     if (last.getAppEntry() == appEntry) {
       boolean lastExe=last.getTime() != 0;
       boolean entryExe=opEntry.getTime() != 0;
       if (lastExe == entryExe) {
         if (DEBUG)         Log.d(TAG,"Add op " + opEntry.getOp() + " to package "+ pkgOps.getPackageName()+ ": append to "+ last);
-        last.addOp(opEntry);
+        last.addOp(opEntry,brief);
         return;
       }
     }
   }
-  AppOpEntry entry=new AppOpEntry(pkgOps,opEntry,appEntry);
+  AppOpEntry entry=appEntry.getOpSwitch(opEntry.getOp());
+  if (entry != null) {
+    entry.addOp(opEntry,brief);
+    return;
+  }
+  entry=new AppOpEntry(pkgOps,opEntry,appEntry,brief);
   if (DEBUG)   Log.d(TAG,"Add op " + opEntry.getOp() + " to package "+ pkgOps.getPackageName()+ ": making new "+ entry);
   entries.add(entry);
 }

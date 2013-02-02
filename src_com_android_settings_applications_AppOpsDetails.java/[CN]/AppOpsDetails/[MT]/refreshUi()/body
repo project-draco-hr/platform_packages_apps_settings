@@ -27,8 +27,8 @@
  catch (        NameNotFoundException e) {
         }
       }
-      ((TextView)view.findViewById(R.id.op_name)).setText(entry.getBriefLabelText(mState));
-      ((TextView)view.findViewById(R.id.op_time)).setText(entry.getTimeText(res));
+      ((TextView)view.findViewById(R.id.op_name)).setText(entry.getSwitchText(mState));
+      ((TextView)view.findViewById(R.id.op_time)).setText(entry.getTimeText(res,true));
       Switch sw=(Switch)view.findViewById(R.id.switchWidget);
       final int switchOp=AppOpsManager.opToSwitch(firstOp.getOp());
       sw.setChecked(mAppOps.checkOp(switchOp,entry.getPackageOps().getUid(),entry.getPackageOps().getPackageName()) == AppOpsManager.MODE_ALLOWED);

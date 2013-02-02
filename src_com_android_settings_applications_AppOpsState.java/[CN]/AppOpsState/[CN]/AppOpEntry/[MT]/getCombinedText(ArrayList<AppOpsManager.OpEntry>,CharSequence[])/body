@@ -1,6 +1,6 @@
 {
   if (ops.size() == 1) {
-    return state.mOpNames[ops.get(0).getOp()];
+    return items[ops.get(0).getOp()];
   }
  else {
     StringBuilder builder=new StringBuilder();
@@ -8,7 +8,7 @@
       if (i > 0) {
         builder.append(", ");
       }
-      builder.append(state.mOpNames[ops.get(i).getOp()]);
+      builder.append(items[ops.get(i).getOp()]);
     }
     return builder.toString();
   }

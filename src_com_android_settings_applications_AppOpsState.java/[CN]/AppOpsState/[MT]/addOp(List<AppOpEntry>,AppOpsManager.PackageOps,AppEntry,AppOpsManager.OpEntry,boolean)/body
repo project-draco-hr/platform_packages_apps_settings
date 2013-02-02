@@ -6,17 +6,17 @@
       boolean entryExe=opEntry.getTime() != 0;
       if (lastExe == entryExe) {
         if (DEBUG)         Log.d(TAG,"Add op " + opEntry.getOp() + " to package "+ pkgOps.getPackageName()+ ": append to "+ last);
-        last.addOp(opEntry,brief);
+        last.addOp(opEntry);
         return;
       }
     }
   }
   AppOpEntry entry=appEntry.getOpSwitch(opEntry.getOp());
   if (entry != null) {
-    entry.addOp(opEntry,brief);
+    entry.addOp(opEntry);
     return;
   }
-  entry=new AppOpEntry(pkgOps,opEntry,appEntry,brief);
+  entry=new AppOpEntry(pkgOps,opEntry,appEntry);
   if (DEBUG)   Log.d(TAG,"Add op " + opEntry.getOp() + " to package "+ pkgOps.getPackageName()+ ": making new "+ entry);
   entries.add(entry);
 }

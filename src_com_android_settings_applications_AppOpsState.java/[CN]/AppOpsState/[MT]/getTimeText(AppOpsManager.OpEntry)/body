@@ -1,9 +1,0 @@
-{
-  if (op.isRunning()) {
-    return mContext.getResources().getText(R.string.app_ops_running);
-  }
-  if (op.getTime() > 0) {
-    return DateUtils.getRelativeTimeSpanString(op.getTime(),System.currentTimeMillis(),DateUtils.MINUTE_IN_MILLIS,DateUtils.FORMAT_ABBREV_RELATIVE);
-  }
-  return mContext.getResources().getText(R.string.app_ops_never_used);
-}

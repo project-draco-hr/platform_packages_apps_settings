@@ -4,9 +4,7 @@
   final List<AppOpEntry> entries=new ArrayList<AppOpEntry>();
   final ArrayList<String> perms=new ArrayList<String>();
   final ArrayList<Integer> permOps=new ArrayList<Integer>();
-  final boolean[] brief=new boolean[AppOpsManager._NUM_OP];
   for (int i=0; i < tpl.ops.length; i++) {
-    brief[tpl.ops[i]]=tpl.showPerms[i];
     if (tpl.showPerms[i]) {
       String perm=AppOpsManager.opToPermission(tpl.ops[i]);
       if (perm != null && !perms.contains(perm)) {
@@ -31,7 +29,7 @@
       }
       for (int j=0; j < pkgOps.getOps().size(); j++) {
         AppOpsManager.OpEntry opEntry=pkgOps.getOps().get(j);
-        addOp(entries,pkgOps,appEntry,opEntry,brief[opEntry.getOp()],packageName == null);
+        addOp(entries,pkgOps,appEntry,opEntry,packageName == null);
       }
     }
   }
@@ -81,7 +79,7 @@
           }
           AppOpsManager.OpEntry opEntry=new AppOpsManager.OpEntry(permOps.get(k),AppOpsManager.MODE_ALLOWED,0,0,0);
           dummyOps.add(opEntry);
-          addOp(entries,pkgOps,appEntry,opEntry,brief[opEntry.getOp()],packageName == null);
+          addOp(entries,pkgOps,appEntry,opEntry,packageName == null);
         }
       }
     }

@@ -5,5 +5,5 @@
   if (getTime() > 0) {
     return DateUtils.getRelativeTimeSpanString(getTime(),System.currentTimeMillis(),DateUtils.MINUTE_IN_MILLIS,DateUtils.FORMAT_ABBREV_RELATIVE);
   }
-  return "";
+  return showEmptyText ? res.getText(R.string.app_ops_never_used) : "";
 }

@@ -5,7 +5,7 @@
     if (mParentFragmentId > -1) {
       mParentFragment=getFragmentManager().findFragmentById(mParentFragmentId);
       if (!(mParentFragment instanceof DialogCreatable)) {
-        throw new IllegalArgumentException(KEY_PARENT_FRAGMENT_ID + " must implement " + DialogCreatable.class.getName());
+        throw new IllegalArgumentException((mParentFragment != null ? mParentFragment.getClass().getName() : mParentFragmentId) + " must implement " + DialogCreatable.class.getName());
       }
     }
     if (mParentFragment instanceof SettingsPreferenceFragment) {

@@ -29,7 +29,8 @@
     }
  else {
       if (mAddingToKeyguard && mAppWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-        AppWidgetHost.deleteAppWidgetIdForSystem(mAppWidgetId);
+        int userId=ActivityManager.getCurrentUser();
+        AppWidgetHost.deleteAppWidgetIdForSystem(mAppWidgetId,userId);
       }
       finishDelayedAndShowLockScreen(AppWidgetManager.INVALID_APPWIDGET_ID);
     }

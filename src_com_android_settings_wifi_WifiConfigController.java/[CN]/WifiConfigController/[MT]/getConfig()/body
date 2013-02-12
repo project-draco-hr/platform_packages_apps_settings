@@ -74,10 +74,10 @@ break;
 }
 String caCert=(String)mEapCaCertSpinner.getSelectedItem();
 if (caCert.equals(unspecifiedCert)) caCert="";
-config.enterpriseConfig.setCaCertificate(caCert);
+config.enterpriseConfig.setCaCertificateAlias(caCert);
 String clientCert=(String)mEapUserCertSpinner.getSelectedItem();
 if (clientCert.equals(unspecifiedCert)) clientCert="";
-config.enterpriseConfig.setClientCertificate(clientCert);
+config.enterpriseConfig.setClientCertificateAlias(clientCert);
 config.enterpriseConfig.setIdentity(mEapIdentityView.getText().toString());
 config.enterpriseConfig.setAnonymousIdentity(mEapAnonymousView.getText().toString());
 if (mPasswordView.isShown()) {

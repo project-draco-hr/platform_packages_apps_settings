@@ -1,6 +1,6 @@
 {
   super.onResume();
-  if (mKeyStore.state() != KeyStore.State.UNLOCKED) {
+  if (!mKeyStore.isUnlocked()) {
     if (!mUnlocking) {
       Credentials.getInstance().unlock(getActivity());
     }

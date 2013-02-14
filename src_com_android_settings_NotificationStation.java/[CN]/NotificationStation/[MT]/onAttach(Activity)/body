@@ -3,4 +3,9 @@
   super.onAttach(activity);
   mContext=activity;
   mNoMan=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+  try {
+    mNoMan.registerListener(mListener,UserHandle.USER_ALL);
+  }
+ catch (  RemoteException e) {
+  }
 }

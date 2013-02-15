@@ -47,18 +47,46 @@ break;
 case AccessPoint.SECURITY_EAP:
 config.allowedKeyManagement.set(KeyMgmt.WPA_EAP);
 config.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
-config.eap.setValue((String)mEapMethodSpinner.getSelectedItem());
-config.phase2.setValue((mPhase2Spinner.getSelectedItemPosition() == 0) ? "" : PHASE2_PREFIX + mPhase2Spinner.getSelectedItem());
-config.ca_cert.setValue((mEapCaCertSpinner.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.CA_CERTIFICATE + (String)mEapCaCertSpinner.getSelectedItem());
-config.client_cert.setValue((mEapUserCertSpinner.getSelectedItemPosition() == 0) ? "" : KEYSTORE_SPACE + Credentials.USER_CERTIFICATE + (String)mEapUserCertSpinner.getSelectedItem());
-final boolean isEmptyKeyId=(mEapUserCertSpinner.getSelectedItemPosition() == 0);
-config.key_id.setValue(isEmptyKeyId ? "" : Credentials.USER_PRIVATE_KEY + (String)mEapUserCertSpinner.getSelectedItem());
-config.engine.setValue(isEmptyKeyId ? WifiConfiguration.ENGINE_DISABLE : WifiConfiguration.ENGINE_ENABLE);
-config.engine_id.setValue(isEmptyKeyId ? "" : WifiConfiguration.KEYSTORE_ENGINE_ID);
-config.identity.setValue((mEapIdentityView.length() == 0) ? "" : mEapIdentityView.getText().toString());
-config.anonymous_identity.setValue((mEapAnonymousView.length() == 0) ? "" : mEapAnonymousView.getText().toString());
-if (mPasswordView.length() != 0) {
-config.password.setValue(mPasswordView.getText().toString());
+config.enterpriseConfig=new WifiEnterpriseConfig();
+int eapMethod=mEapMethodSpinner.getSelectedItemPosition();
+int phase2Method=mPhase2Spinner.getSelectedItemPosition();
+config.enterpriseConfig.setEapMethod(eapMethod);
+switch (eapMethod) {
+case Eap.PEAP:
+switch (phase2Method) {
+case WIFI_PEAP_PHASE2_NONE:
+config.enterpriseConfig.setPhase2Method(Phase2.NONE);
+break;
+case WIFI_PEAP_PHASE2_MSCHAPV2:
+config.enterpriseConfig.setPhase2Method(Phase2.MSCHAPV2);
+break;
+case WIFI_PEAP_PHASE2_GTC:
+config.enterpriseConfig.setPhase2Method(Phase2.GTC);
+break;
+default :
+Log.e(TAG,"Unknown phase2 method" + phase2Method);
+break;
+}
+break;
+default :
+config.enterpriseConfig.setPhase2Method(phase2Method);
+break;
+}
+String caCert=(String)mEapCaCertSpinner.getSelectedItem();
+if (caCert.equals(unspecifiedCert)) caCert="";
+config.enterpriseConfig.setCaCertificateAlias(caCert);
+String clientCert=(String)mEapUserCertSpinner.getSelectedItem();
+if (clientCert.equals(unspecifiedCert)) clientCert="";
+config.enterpriseConfig.setClientCertificateAlias(clientCert);
+config.enterpriseConfig.setIdentity(mEapIdentityView.getText().toString());
+config.enterpriseConfig.setAnonymousIdentity(mEapAnonymousView.getText().toString());
+if (mPasswordView.isShown()) {
+if (mPasswordView.length() > 0) {
+config.enterpriseConfig.setPassword(mPasswordView.getText().toString());
+}
+}
+ else {
+config.enterpriseConfig.setPassword(mPasswordView.getText().toString());
 }
 break;
 default :

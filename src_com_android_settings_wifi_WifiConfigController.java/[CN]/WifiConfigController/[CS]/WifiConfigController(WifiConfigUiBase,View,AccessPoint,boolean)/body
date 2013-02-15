@@ -8,6 +8,11 @@
   mTextViewChangedHandler=new Handler();
   final Context context=mConfigUi.getContext();
   final Resources resources=context.getResources();
+  PHASE2_PEAP_ADAPTER=new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,context.getResources().getStringArray(R.array.wifi_peap_phase2_entries));
+  PHASE2_PEAP_ADAPTER.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+  PHASE2_FULL_ADAPTER=new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,context.getResources().getStringArray(R.array.wifi_phase2_entries));
+  PHASE2_FULL_ADAPTER.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+  unspecifiedCert=context.getString(R.string.wifi_unspecified);
   mIpSettingsSpinner=(Spinner)mView.findViewById(R.id.ip_settings);
   mIpSettingsSpinner.setOnItemSelectedListener(this);
   mProxySettingsSpinner=(Spinner)mView.findViewById(R.id.proxy_settings);

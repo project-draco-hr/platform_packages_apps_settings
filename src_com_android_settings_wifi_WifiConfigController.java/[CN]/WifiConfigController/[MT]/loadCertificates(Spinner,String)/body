@@ -1,13 +1,12 @@
 {
   final Context context=mConfigUi.getContext();
-  final String unspecified=context.getString(R.string.wifi_unspecified);
   String[] certs=KeyStore.getInstance().saw(prefix);
   if (certs == null || certs.length == 0) {
-    certs=new String[]{unspecified};
+    certs=new String[]{unspecifiedCert};
   }
  else {
     final String[] array=new String[certs.length + 1];
-    array[0]=unspecified;
+    array[0]=unspecifiedCert;
     System.arraycopy(certs,0,array,1,certs.length);
     certs=array;
   }

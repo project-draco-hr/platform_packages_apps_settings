@@ -33,33 +33,43 @@
     loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE);
     loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY);
     if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
-      WifiConfiguration config=mAccessPoint.getConfig();
-      setSelection(mEapMethodSpinner,config.eap.value());
-      final String phase2Method=config.phase2.value();
-      if (phase2Method != null && phase2Method.startsWith(PHASE2_PREFIX)) {
-        setSelection(mPhase2Spinner,phase2Method.substring(PHASE2_PREFIX.length()));
-      }
+      WifiEnterpriseConfig enterpriseConfig=mAccessPoint.getConfig().enterpriseConfig;
+      int eapMethod=enterpriseConfig.getEapMethod();
+      int phase2Method=enterpriseConfig.getPhase2Method();
+      mEapMethodSpinner.setSelection(eapMethod);
+      showEapFieldsByMethod(eapMethod);
+switch (eapMethod) {
+case Eap.PEAP:
+switch (phase2Method) {
+case Phase2.NONE:
+          mPhase2Spinner.setSelection(WIFI_PEAP_PHASE2_NONE);
+        break;
+case Phase2.MSCHAPV2:
+      mPhase2Spinner.setSelection(WIFI_PEAP_PHASE2_MSCHAPV2);
+    break;
+case Phase2.GTC:
+  mPhase2Spinner.setSelection(WIFI_PEAP_PHASE2_GTC);
+break;
+default :
+Log.e(TAG,"Invalid phase 2 method " + phase2Method);
+break;
+}
+break;
+default :
+mPhase2Spinner.setSelection(phase2Method);
+break;
+}
+setSelection(mEapCaCertSpinner,enterpriseConfig.getCaCertificateAlias());
+setSelection(mEapUserCertSpinner,enterpriseConfig.getClientCertificateAlias());
+mEapIdentityView.setText(enterpriseConfig.getIdentity());
+mEapAnonymousView.setText(enterpriseConfig.getAnonymousIdentity());
+}
  else {
-        setSelection(mPhase2Spinner,phase2Method);
-      }
-      setCertificate(mEapCaCertSpinner,KEYSTORE_SPACE + Credentials.CA_CERTIFICATE,config.ca_cert.value());
-      setCertificate(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY,config.key_id.value());
-      mEapIdentityView.setText(config.identity.value());
-      mEapAnonymousView.setText(config.anonymous_identity.value());
-    }
-  }
-  mView.findViewById(R.id.l_method).setVisibility(View.VISIBLE);
-  mView.findViewById(R.id.l_identity).setVisibility(View.VISIBLE);
-  if (mEapMethodSpinner.getSelectedItemPosition() == WIFI_EAP_METHOD_PWD) {
-    mView.findViewById(R.id.l_phase2).setVisibility(View.GONE);
-    mView.findViewById(R.id.l_ca_cert).setVisibility(View.GONE);
-    mView.findViewById(R.id.l_user_cert).setVisibility(View.GONE);
-    mView.findViewById(R.id.l_anonymous).setVisibility(View.GONE);
-  }
+mEapMethodSpinner.setSelection(Eap.PEAP);
+showEapFieldsByMethod(Eap.PEAP);
+}
+}
  else {
-    mView.findViewById(R.id.l_phase2).setVisibility(View.VISIBLE);
-    mView.findViewById(R.id.l_ca_cert).setVisibility(View.VISIBLE);
-    mView.findViewById(R.id.l_user_cert).setVisibility(View.VISIBLE);
-    mView.findViewById(R.id.l_anonymous).setVisibility(View.VISIBLE);
-  }
+showEapFieldsByMethod(mEapMethodSpinner.getSelectedItemPosition());
+}
 }

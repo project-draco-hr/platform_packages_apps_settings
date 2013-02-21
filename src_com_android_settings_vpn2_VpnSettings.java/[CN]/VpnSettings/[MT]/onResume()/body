@@ -1,5 +1,9 @@
 {
   super.onResume();
+  final boolean pickLockdown=getActivity().getIntent().getBooleanExtra(EXTRA_PICK_LOCKDOWN,false);
+  if (pickLockdown) {
+    LockdownConfigFragment.show(this);
+  }
   if (!mKeyStore.isUnlocked()) {
     if (!mUnlocking) {
       Credentials.getInstance().unlock(getActivity());

@@ -1,13 +1,18 @@
 {
   final ContentResolver cr=getContentResolver();
+  final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   if (preference == mNetwork) {
-    Settings.Secure.setLocationProviderEnabled(cr,LocationManager.NETWORK_PROVIDER,mNetwork.isChecked());
+    if (um.isLocationSharingToggleAllowed()) {
+      Settings.Secure.setLocationProviderEnabled(cr,LocationManager.NETWORK_PROVIDER,mNetwork.isChecked());
+    }
   }
  else   if (preference == mGps) {
     boolean enabled=mGps.isChecked();
-    Settings.Secure.setLocationProviderEnabled(cr,LocationManager.GPS_PROVIDER,enabled);
-    if (mAssistedGps != null) {
-      mAssistedGps.setEnabled(enabled);
+    if (um.isLocationSharingToggleAllowed()) {
+      Settings.Secure.setLocationProviderEnabled(cr,LocationManager.GPS_PROVIDER,enabled);
+      if (mAssistedGps != null) {
+        mAssistedGps.setEnabled(enabled);
+      }
     }
   }
  else   if (preference == mAssistedGps) {

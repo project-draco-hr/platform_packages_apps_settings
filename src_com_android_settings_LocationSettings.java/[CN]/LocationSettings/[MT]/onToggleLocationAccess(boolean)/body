@@ -1,4 +1,8 @@
 {
+  final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+  if (!um.isLocationSharingToggleAllowed()) {
+    return;
+  }
   final ContentResolver cr=getContentResolver();
   Settings.Secure.setLocationProviderEnabled(cr,LocationManager.GPS_PROVIDER,checked);
   Settings.Secure.setLocationProviderEnabled(cr,LocationManager.NETWORK_PROVIDER,checked);

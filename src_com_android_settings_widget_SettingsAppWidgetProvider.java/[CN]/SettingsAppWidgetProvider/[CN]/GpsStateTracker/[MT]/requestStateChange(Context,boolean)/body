@@ -2,8 +2,12 @@
   final ContentResolver resolver=context.getContentResolver();
   new AsyncTask<Void,Void,Boolean>(){
     @Override protected Boolean doInBackground(    Void... args){
-      Settings.Secure.setLocationProviderEnabled(resolver,LocationManager.GPS_PROVIDER,desiredState);
-      return desiredState;
+      final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+      if (um.isLocationSharingToggleAllowed()) {
+        Settings.Secure.setLocationProviderEnabled(resolver,LocationManager.GPS_PROVIDER,desiredState);
+        return desiredState;
+      }
+      return Settings.Secure.isLocationProviderEnabled(resolver,LocationManager.GPS_PROVIDER);
     }
     @Override protected void onPostExecute(    Boolean result){
       setCurrentState(context,result ? STATE_ENABLED : STATE_DISABLED);

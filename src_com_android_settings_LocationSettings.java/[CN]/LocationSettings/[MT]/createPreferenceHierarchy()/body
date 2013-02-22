@@ -9,6 +9,12 @@
   mNetwork=(CheckBoxPreference)root.findPreference(KEY_LOCATION_NETWORK);
   mGps=(CheckBoxPreference)root.findPreference(KEY_LOCATION_GPS);
   mAssistedGps=(CheckBoxPreference)root.findPreference(KEY_ASSISTED_GPS);
+  final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+  boolean isToggleAllowed=um.isLocationSharingToggleAllowed();
+  if (mLocationAccess != null)   mLocationAccess.setEnabled(isToggleAllowed);
+  if (mNetwork != null)   mNetwork.setEnabled(isToggleAllowed);
+  if (mGps != null)   mGps.setEnabled(isToggleAllowed);
+  if (mAssistedGps != null)   mAssistedGps.setEnabled(isToggleAllowed);
   mLocationAccess.setOnPreferenceChangeListener(this);
   return root;
 }

@@ -12,7 +12,14 @@
   if (mPasswordView == null) {
     mPasswordView=(TextView)mView.findViewById(R.id.password);
     mPasswordView.addTextChangedListener(this);
-    ((CheckBox)mView.findViewById(R.id.show_password)).setOnClickListener(this);
+    mShowPassword=(CheckBox)mView.findViewById(R.id.show_password);
+    mShowPassword.setOnClickListener(this);
+    mShowPassword.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+      public void onCheckedChanged(      CompoundButton buttonView,      boolean isChecked){
+        updatePasswordVisibility(isChecked);
+      }
+    }
+);
     if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
       mPasswordView.setHint(R.string.wifi_unchanged);
     }

@@ -1,0 +1,7 @@
+{
+  int pos=mPasswordView.getSelectionEnd();
+  mPasswordView.setInputType(InputType.TYPE_CLASS_TEXT | (checked ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD : InputType.TYPE_TEXT_VARIATION_PASSWORD));
+  if (pos >= 0) {
+    ((EditText)mPasswordView).setSelection(pos);
+  }
+}

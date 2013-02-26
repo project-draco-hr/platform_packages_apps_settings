@@ -1,0 +1,16 @@
+{
+  String value=SystemProperties.get(HardwareRenderer.DEBUG_SHOW_NON_RECTANGULAR_CLIP_PROPERTY);
+  if (value == null) {
+    value="hide";
+  }
+  CharSequence[] values=mShowNonRectClip.getEntryValues();
+  for (int i=0; i < values.length; i++) {
+    if (value.contentEquals(values[i])) {
+      mShowNonRectClip.setValueIndex(i);
+      mShowNonRectClip.setSummary(mShowNonRectClip.getEntries()[i]);
+      return;
+    }
+  }
+  mShowNonRectClip.setValueIndex(0);
+  mShowNonRectClip.setSummary(mShowNonRectClip.getEntries()[0]);
+}

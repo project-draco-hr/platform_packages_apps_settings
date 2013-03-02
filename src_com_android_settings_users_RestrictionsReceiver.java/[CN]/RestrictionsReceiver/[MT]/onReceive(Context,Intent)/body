@@ -1,0 +1,11 @@
+{
+  final PendingResult result=goAsync();
+  final ArrayList<RestrictionEntry> oldRestrictions=intent.getParcelableArrayListExtra(Intent.EXTRA_RESTRICTIONS);
+  Log.i(TAG,"oldRestrictions = " + oldRestrictions);
+  new Thread(){
+    public void run(){
+      createRestrictions(context,result,oldRestrictions);
+    }
+  }
+.start();
+}

@@ -1,0 +1,51 @@
+{
+  String key=preference.getKey();
+  if (key != null && key.contains(DELIMITER)) {
+    StringTokenizer st=new StringTokenizer(key,DELIMITER);
+    final String packageName=st.nextToken();
+    final String restrictionKey=st.nextToken();
+    AppRestrictionsPreference appPref=(AppRestrictionsPreference)mAppList.findPreference(PKG_PREFIX + packageName);
+    ArrayList<RestrictionEntry> restrictions=appPref.getRestrictions();
+    if (restrictions != null) {
+      for (      RestrictionEntry entry : restrictions) {
+        if (entry.key.equals(restrictionKey)) {
+switch (entry.type) {
+case RestrictionEntry.TYPE_BOOLEAN:
+            entry.setValue((Boolean)newValue);
+          break;
+case RestrictionEntry.TYPE_CHOICE:
+case RestrictionEntry.TYPE_CHOICE_LEVEL:
+        ListPreference listPref=(ListPreference)preference;
+      entry.setValue((String)newValue);
+    for (int i=0; i < listPref.getEntryValues().length; i++) {
+      if (entry.values[i].equals(newValue)) {
+        listPref.setSummary(entry.choices[i]);
+        break;
+      }
+    }
+  break;
+case RestrictionEntry.TYPE_MULTI_SELECT:
+MultiSelectListPreference msListPref=(MultiSelectListPreference)preference;
+Set<String> set=(Set<String>)newValue;
+String[] selectedValues=new String[set.size()];
+set.toArray(selectedValues);
+entry.setMultipleValues(selectedValues);
+break;
+default :
+continue;
+}
+mUserManager.setApplicationRestrictions(packageName,restrictions,mUser);
+break;
+}
+}
+}
+}
+ else if (preference == mUserPreference) {
+String userName=((CharSequence)newValue).toString();
+if (!TextUtils.isEmpty(userName)) {
+mUserManager.setUserName(mUser.getIdentifier(),userName);
+mUserPreference.setTitle(userName);
+}
+}
+return true;
+}

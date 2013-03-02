@@ -1,0 +1,54 @@
+{
+  ArrayList<RestrictionEntry> restrictions=getResultExtras(true).getParcelableArrayList(Intent.EXTRA_RESTRICTIONS);
+  if (restrictions != null) {
+    int count=1;
+    for (    RestrictionEntry entry : restrictions) {
+      Preference p=null;
+switch (entry.type) {
+case RestrictionEntry.TYPE_BOOLEAN:
+        p=new CheckBoxPreference(context);
+      p.setTitle(entry.title);
+    p.setSummary(entry.description);
+  ((CheckBoxPreference)p).setChecked(entry.getBooleanValue());
+break;
+case RestrictionEntry.TYPE_CHOICE:
+case RestrictionEntry.TYPE_CHOICE_LEVEL:
+p=new ListPreference(context);
+p.setTitle(entry.title);
+String value=entry.getStringValue();
+if (value == null) {
+value=entry.description;
+}
+p.setSummary(value);
+((ListPreference)p).setEntryValues(entry.values);
+((ListPreference)p).setEntries(entry.choices);
+((ListPreference)p).setValue(entry.getStringValue());
+break;
+case RestrictionEntry.TYPE_MULTI_SELECT:
+p=new MultiSelectListPreference(context);
+p.setTitle(entry.title);
+((MultiSelectListPreference)p).setEntryValues(entry.values);
+((MultiSelectListPreference)p).setEntries(entry.choices);
+HashSet<String> set=new HashSet<String>();
+for (String s : entry.getMultipleValues()) {
+set.add(s);
+}
+((MultiSelectListPreference)p).setValues(set);
+break;
+case RestrictionEntry.TYPE_NULL:
+default :
+}
+if (p != null) {
+p.setPersistent(false);
+p.setOrder(preference.getOrder() + count);
+p.setKey(preference.getKey().substring(PKG_PREFIX.length()) + DELIMITER + entry.key);
+mAppList.addPreference(p);
+p.setOnPreferenceChangeListener(AppRestrictionsFragment.this);
+preference.childPreferences.add(p);
+count++;
+}
+}
+preference.setRestrictions(restrictions);
+}
+mUserManager.setApplicationRestrictions(packageName,restrictions,mUser);
+}

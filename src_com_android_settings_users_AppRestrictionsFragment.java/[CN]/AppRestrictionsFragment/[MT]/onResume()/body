@@ -1,0 +1,11 @@
+{
+  super.onResume();
+  if (mFirstTime) {
+    mFirstTime=false;
+    populateApps();
+  }
+  UserInfo info=mUserManager.getUserInfo(mUser.getIdentifier());
+  mUserPreference.setTitle(info.name);
+  mUserPreference.setIcon(new BitmapDrawable(mUserManager.getUserIcon(mUser.getIdentifier())));
+  mUserPreference.setText(info.name);
+}

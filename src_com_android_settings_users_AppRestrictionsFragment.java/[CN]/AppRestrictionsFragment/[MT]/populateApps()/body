@@ -1,0 +1,50 @@
+{
+  mAppList.setOrderingAsAdded(false);
+  final Context context=getActivity();
+  PackageManager pm=context.getPackageManager();
+  Intent launcherIntent=new Intent(Intent.ACTION_MAIN);
+  launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+  mApps=pm.queryIntentActivities(launcherIntent,0);
+  Collections.sort(mApps,new AppLabelComparator(pm));
+  Intent restrictionsIntent=new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);
+  final List<ResolveInfo> receivers=pm.queryBroadcastReceivers(restrictionsIntent,0);
+  final List<ResolveInfo> existingApps=pm.queryIntentActivitiesAsUser(launcherIntent,0,mUser.getIdentifier());
+  int i=0;
+  if (receivers != null && receivers.size() > 0) {
+    for (    ResolveInfo app : mApps) {
+      if (app.activityInfo == null || app.activityInfo.packageName == null)       continue;
+      String packageName=app.activityInfo.packageName;
+      Drawable icon=app.loadIcon(pm);
+      CharSequence label=app.loadLabel(pm);
+      AppRestrictionsPreference p=new AppRestrictionsPreference(context,this);
+      p.setIcon(icon);
+      p.setTitle(label);
+      p.setKey(PKG_PREFIX + packageName);
+      p.setSettingsEnabled(hasPackage(receivers,packageName));
+      p.setPersistent(false);
+      p.setOnPreferenceChangeListener(this);
+      p.setOnPreferenceClickListener(this);
+      try {
+        PackageInfo pi=pm.getPackageInfo(packageName,0);
+        if (pi.requiredForAllUsers) {
+          p.setChecked(true);
+          p.setRequired(true);
+        }
+ else         if (!mNewUser && hasPackage(existingApps,packageName)) {
+          p.setChecked(true);
+        }
+      }
+ catch (      NameNotFoundException re) {
+      }
+      mAppList.addPreference(p);
+      if (packageName.equals(getActivity().getPackageName())) {
+        p.setOrder(MAX_APP_RESTRICTIONS * 1);
+      }
+ else {
+        p.setOrder(MAX_APP_RESTRICTIONS * (i + 2));
+      }
+      mSelectedPackages.put(packageName,p.isChecked());
+      i++;
+    }
+  }
+}

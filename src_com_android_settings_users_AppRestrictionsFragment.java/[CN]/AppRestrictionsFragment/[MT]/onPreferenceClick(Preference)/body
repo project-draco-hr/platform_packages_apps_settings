@@ -1,0 +1,11 @@
+{
+  if (preference.getKey().startsWith(PKG_PREFIX)) {
+    AppRestrictionsPreference arp=(AppRestrictionsPreference)preference;
+    if (!arp.isRequired()) {
+      arp.setChecked(!arp.isChecked());
+      mSelectedPackages.put(arp.getKey().substring(PKG_PREFIX.length()),arp.isChecked());
+    }
+    return true;
+  }
+  return false;
+}

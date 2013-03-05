@@ -1,13 +1,7 @@
 {
   setTitle(ssid);
   Context context=getContext();
-  if (mState != null) {
-    setSummary(Summary.get(context,mState));
-  }
- else   if (mRssi == Integer.MAX_VALUE) {
-    setSummary(context.getString(R.string.wifi_not_in_range));
-  }
- else   if (mConfig != null && mConfig.status == WifiConfiguration.Status.DISABLED) {
+  if (mConfig != null && mConfig.status == WifiConfiguration.Status.DISABLED) {
 switch (mConfig.disableReason) {
 case WifiConfiguration.DISABLED_AUTH_FAILURE:
       setSummary(context.getString(R.string.wifi_disabled_password_failure));
@@ -19,6 +13,12 @@ break;
 case WifiConfiguration.DISABLED_UNKNOWN_REASON:
 setSummary(context.getString(R.string.wifi_disabled_generic));
 }
+}
+ else if (mRssi == Integer.MAX_VALUE) {
+setSummary(context.getString(R.string.wifi_not_in_range));
+}
+ else if (mState != null) {
+setSummary(Summary.get(context,mState));
 }
  else {
 StringBuilder summary=new StringBuilder();

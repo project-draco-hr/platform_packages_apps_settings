@@ -4,15 +4,19 @@
   mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   addPreferencesFromResource(R.xml.development_prefs);
+  final PreferenceGroup debugDebuggingCategory=(PreferenceGroup)findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
   mEnableAdb=findAndInitCheckboxPref(ENABLE_ADB);
   mClearAdbKeys=findPreference(CLEAR_ADB_KEYS);
   if (!SystemProperties.getBoolean("ro.adb.secure",false)) {
-    PreferenceGroup debugDebuggingCategory=(PreferenceGroup)findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
     if (debugDebuggingCategory != null) {
       debugDebuggingCategory.removePreference(mClearAdbKeys);
     }
   }
   mEnableTerminal=findAndInitCheckboxPref(ENABLE_TERMINAL);
+  if (!isPackageInstalled(getActivity(),TERMINAL_APP_PACKAGE)) {
+    debugDebuggingCategory.removePreference(mEnableTerminal);
+    mEnableTerminal=null;
+  }
   mBugreport=findPreference(BUGREPORT);
   mBugreportInPower=findAndInitCheckboxPref(BUGREPORT_IN_POWER_KEY);
   mKeepScreenOn=findAndInitCheckboxPref(KEEP_SCREEN_ON);
@@ -31,7 +35,6 @@
   mWaitForDebugger=findAndInitCheckboxPref(WAIT_FOR_DEBUGGER_KEY);
   mVerifyAppsOverUsb=findAndInitCheckboxPref(VERIFY_APPS_OVER_USB_KEY);
   if (!showVerifierSetting()) {
-    PreferenceGroup debugDebuggingCategory=(PreferenceGroup)findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
     if (debugDebuggingCategory != null) {
       debugDebuggingCategory.removePreference(mVerifyAppsOverUsb);
     }

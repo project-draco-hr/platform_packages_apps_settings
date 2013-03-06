@@ -20,6 +20,10 @@
     if (mAdbKeysDialog != null)     dismissDialogs();
     mAdbKeysDialog=new AlertDialog.Builder(getActivity()).setMessage(R.string.adb_keys_warning_message).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,null).show();
   }
+ else   if (preference == mEnableTerminal) {
+    final PackageManager pm=getActivity().getPackageManager();
+    pm.setApplicationEnabledSetting(TERMINAL_APP_PACKAGE,mEnableTerminal.isChecked() ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,0);
+  }
  else   if (preference == mBugreportInPower) {
     Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.BUGREPORT_IN_POWER_MENU,mBugreportInPower.isChecked() ? 1 : 0);
   }

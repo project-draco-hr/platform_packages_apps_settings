@@ -12,6 +12,7 @@
       debugDebuggingCategory.removePreference(mClearAdbKeys);
     }
   }
+  mEnableTerminal=findAndInitCheckboxPref(ENABLE_TERMINAL);
   mBugreport=findPreference(BUGREPORT);
   mBugreportInPower=findAndInitCheckboxPref(BUGREPORT_IN_POWER_KEY);
   mKeepScreenOn=findAndInitCheckboxPref(KEEP_SCREEN_ON);
@@ -22,6 +23,7 @@
   if (!android.os.Process.myUserHandle().equals(UserHandle.OWNER)) {
     disableForUser(mEnableAdb);
     disableForUser(mClearAdbKeys);
+    disableForUser(mEnableTerminal);
     disableForUser(mPassword);
   }
   mDebugAppPref=findPreference(DEBUG_APP_KEY);

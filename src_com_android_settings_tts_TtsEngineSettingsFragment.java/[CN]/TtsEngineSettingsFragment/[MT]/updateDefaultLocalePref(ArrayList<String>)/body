@@ -1,6 +1,6 @@
 {
   String currentLocale=mEnginesHelper.getLocalePrefForEngine(getEngineName());
-  ArrayList<Pair<String,String>> entryPairs=Lists.newArrayListWithCapacity(availableLangs.size());
+  ArrayList<Pair<String,String>> entryPairs=new ArrayList<Pair<String,String>>(availableLangs.size());
   for (int i=0; i < availableLangs.size(); i++) {
     String[] langCountryVariant=availableLangs.get(i).split("-");
     Locale loc=null;

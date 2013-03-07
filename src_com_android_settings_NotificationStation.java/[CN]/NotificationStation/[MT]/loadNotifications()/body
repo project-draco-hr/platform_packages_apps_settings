@@ -1,7 +1,8 @@
 {
   final int currentUserId=ActivityManager.getCurrentUser();
   try {
-    StatusBarNotification[] nions=mNoMan.getHistoricalNotifications(mContext.getPackageName(),50);
+    StatusBarNotification[] nions;
+    nions=SHOW_HISTORICAL_NOTIFICATIONS ? mNoMan.getHistoricalNotifications(mContext.getPackageName(),50) : mNoMan.getActiveNotifications(mContext.getPackageName());
     List<HistoricalNotificationInfo> list=new ArrayList<HistoricalNotificationInfo>(nions.length);
     for (    StatusBarNotification sbn : nions) {
       final HistoricalNotificationInfo info=new HistoricalNotificationInfo();

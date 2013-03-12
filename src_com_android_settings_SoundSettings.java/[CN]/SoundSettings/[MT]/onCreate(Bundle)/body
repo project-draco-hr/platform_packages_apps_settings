@@ -32,9 +32,6 @@
     removePreference(KEY_VIBRATE);
     removePreference(KEY_HAPTIC_FEEDBACK);
   }
-  if (!Utils.isVoiceCapable(getActivity())) {
-    removePreference(KEY_VIBRATE);
-  }
   if (TelephonyManager.PHONE_TYPE_CDMA == activePhoneType) {
     ListPreference emergencyTonePreference=(ListPreference)findPreference(KEY_EMERGENCY_TONE);
     emergencyTonePreference.setValue(String.valueOf(Settings.Global.getInt(resolver,Settings.Global.EMERGENCY_TONE,FALLBACK_EMERGENCY_TONE_VALUE)));

@@ -21,6 +21,7 @@
   settingsButton.setVisibility(showSettings ? View.VISIBLE : View.INVISIBLE);
   settingsButton.setAlpha(dreamInfo.isActive ? 1f : Utils.DISABLED_ALPHA);
   settingsButton.setEnabled(dreamInfo.isActive);
+  settingsButton.setFocusable(dreamInfo.isActive);
   settingsButton.setOnClickListener(new OnClickListener(){
     @Override public void onClick(    View v){
       mBackend.launchSettings((DreamInfo)row.getTag());

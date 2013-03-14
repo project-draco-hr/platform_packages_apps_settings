@@ -9,6 +9,9 @@
  else   if (KEY_SUSPEND_OPTIMIZATIONS.equals(key)) {
     Global.putInt(getContentResolver(),Global.WIFI_SUSPEND_OPTIMIZATIONS_ENABLED,((CheckBoxPreference)preference).isChecked() ? 1 : 0);
   }
+ else   if (KEY_SCAN_ALWAYS_AVAILABLE.equals(key)) {
+    Global.putInt(getContentResolver(),Global.WIFI_SCAN_ALWAYS_AVAILABLE,((CheckBoxPreference)preference).isChecked() ? 1 : 0);
+  }
  else {
     return super.onPreferenceTreeClick(screen,preference);
   }

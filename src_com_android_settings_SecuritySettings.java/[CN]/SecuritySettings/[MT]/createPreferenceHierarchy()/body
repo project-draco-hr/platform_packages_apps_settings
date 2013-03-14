@@ -85,8 +85,22 @@ mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
  else {
 removePreference(KEY_CREDENTIALS_MANAGER);
 }
+PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
 mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
 mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
+final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+boolean isSideloadingAllowed=!um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);
+if (isSideloadingAllowed) {
+mToggleAppInstallation.setEnabled(isSideloadingAllowed);
+}
+ else {
+if (deviceAdminCategory != null) {
+deviceAdminCategory.removePreference(mToggleAppInstallation);
+}
+ else {
+mToggleAppInstallation.setEnabled(false);
+}
+}
 mToggleVerifyApps=(CheckBoxPreference)findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
 if (mIsPrimary && showVerifierSetting()) {
 if (isVerifierInstalled()) {
@@ -98,7 +112,6 @@ mToggleVerifyApps.setEnabled(false);
 }
 }
  else {
-PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
 if (deviceAdminCategory != null) {
 deviceAdminCategory.removePreference(mToggleVerifyApps);
 }

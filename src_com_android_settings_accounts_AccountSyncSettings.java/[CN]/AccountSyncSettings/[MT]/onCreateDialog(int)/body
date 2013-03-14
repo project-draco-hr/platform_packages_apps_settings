@@ -2,9 +2,9 @@
   Dialog dialog=null;
   if (id == REALLY_REMOVE_DIALOG) {
     dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.really_remove_account_title).setMessage(R.string.really_remove_account_message).setNegativeButton(android.R.string.cancel,null).setPositiveButton(R.string.remove_account_label,new DialogInterface.OnClickListener(){
-      public void onClick(      DialogInterface dialog,      int which){
+      @Override public void onClick(      DialogInterface dialog,      int which){
         AccountManager.get(AccountSyncSettings.this.getActivity()).removeAccount(mAccount,new AccountManagerCallback<Boolean>(){
-          public void run(          AccountManagerFuture<Boolean> future){
+          @Override public void run(          AccountManagerFuture<Boolean> future){
             if (!AccountSyncSettings.this.isResumed()) {
               return;
             }

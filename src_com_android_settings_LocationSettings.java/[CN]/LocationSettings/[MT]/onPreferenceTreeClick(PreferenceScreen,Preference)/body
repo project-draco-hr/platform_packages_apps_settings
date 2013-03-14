@@ -2,13 +2,13 @@
   final ContentResolver cr=getContentResolver();
   final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   if (preference == mNetwork) {
-    if (um.isLocationSharingToggleAllowed()) {
+    if (!um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION)) {
       Settings.Secure.setLocationProviderEnabled(cr,LocationManager.NETWORK_PROVIDER,mNetwork.isChecked());
     }
   }
  else   if (preference == mGps) {
     boolean enabled=mGps.isChecked();
-    if (um.isLocationSharingToggleAllowed()) {
+    if (!um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION)) {
       Settings.Secure.setLocationProviderEnabled(cr,LocationManager.GPS_PROVIDER,enabled);
       if (mAssistedGps != null) {
         mAssistedGps.setEnabled(enabled);

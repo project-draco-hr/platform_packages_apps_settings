@@ -1,6 +1,6 @@
 {
   final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
-  if (!um.isLocationSharingToggleAllowed()) {
+  if (um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION)) {
     return;
   }
   final ContentResolver cr=getContentResolver();

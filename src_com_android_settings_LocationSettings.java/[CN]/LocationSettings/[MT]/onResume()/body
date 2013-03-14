@@ -4,7 +4,7 @@
   updateLocationToggles();
   if (mSettingsObserver == null) {
     mSettingsObserver=new Observer(){
-      public void update(      Observable o,      Object arg){
+      @Override public void update(      Observable o,      Object arg){
         updateLocationToggles();
       }
     }

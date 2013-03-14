@@ -1,6 +1,7 @@
 {
   final View row=mInflater.inflate(R.layout.dream_info_row,parent,false);
-  row.setOnClickListener(new OnClickListener(){
+  final View header=row.findViewById(android.R.id.widget_frame);
+  header.setOnClickListener(new OnClickListener(){
     @Override public void onClick(    View v){
       v.setPressed(true);
       activate((DreamInfo)row.getTag());

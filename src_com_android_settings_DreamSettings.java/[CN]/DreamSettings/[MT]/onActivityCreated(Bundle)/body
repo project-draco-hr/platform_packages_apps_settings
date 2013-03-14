@@ -2,6 +2,7 @@
   logd("onActivityCreated(%s)",savedInstanceState);
   super.onActivityCreated(savedInstanceState);
   ListView listView=getListView();
+  listView.setItemsCanFocus(true);
   TextView emptyView=(TextView)getView().findViewById(android.R.id.empty);
   emptyView.setText(R.string.screensaver_settings_disabled_prompt);
   listView.setEmptyView(emptyView);

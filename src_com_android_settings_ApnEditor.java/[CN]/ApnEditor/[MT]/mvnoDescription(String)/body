@@ -1,0 +1,22 @@
+{
+  int mvnoIndex=mMvnoType.findIndexOfValue(raw);
+  if (mvnoIndex == -1) {
+    return null;
+  }
+ else {
+    String[] values=mRes.getStringArray(R.array.mvno_type_entries);
+    if (values[mvnoIndex].equals("None")) {
+      mMvnoMatchData.setEnabled(false);
+      mMvnoMatchData.setText("");
+    }
+ else {
+      mMvnoMatchData.setEnabled(true);
+    }
+    try {
+      return values[mvnoIndex];
+    }
+ catch (    ArrayIndexOutOfBoundsException e) {
+      return null;
+    }
+  }
+}

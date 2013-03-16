@@ -36,6 +36,9 @@
     mRoamingProtocol.setValue(mCursor.getString(ROAMING_PROTOCOL_INDEX));
     mCarrierEnabled.setChecked(mCursor.getInt(CARRIER_ENABLED_INDEX) == 1);
     mBearer.setValue(mCursor.getString(BEARER_INDEX));
+    mMvnoType.setValue(mCursor.getString(MVNO_TYPE_INDEX));
+    mMvnoMatchData.setEnabled(false);
+    mMvnoMatchData.setText(mCursor.getString(MVNO_MATCH_DATA_INDEX));
   }
   mName.setSummary(checkNull(mName.getText()));
   mApn.setSummary(checkNull(mApn.getText()));
@@ -63,4 +66,6 @@
   mProtocol.setSummary(checkNull(protocolDescription(mProtocol.getValue(),mProtocol)));
   mRoamingProtocol.setSummary(checkNull(protocolDescription(mRoamingProtocol.getValue(),mRoamingProtocol)));
   mBearer.setSummary(checkNull(bearerDescription(mBearer.getValue())));
+  mMvnoType.setSummary(checkNull(mvnoDescription(mMvnoType.getValue())));
+  mMvnoMatchData.setSummary(checkNull(mMvnoMatchData.getText()));
 }

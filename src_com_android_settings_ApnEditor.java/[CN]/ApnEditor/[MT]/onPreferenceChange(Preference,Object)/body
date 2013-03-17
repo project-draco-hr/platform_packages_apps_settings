@@ -35,5 +35,13 @@
     mBearer.setValue((String)newValue);
     mBearer.setSummary(bearer);
   }
+ else   if (KEY_MVNO_TYPE.equals(key)) {
+    String mvno=mvnoDescription((String)newValue);
+    if (mvno == null) {
+      return false;
+    }
+    mMvnoType.setValue((String)newValue);
+    mMvnoType.setSummary(mvno);
+  }
   return true;
 }

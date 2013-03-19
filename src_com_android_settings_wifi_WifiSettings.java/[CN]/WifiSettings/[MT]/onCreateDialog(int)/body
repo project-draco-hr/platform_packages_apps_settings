@@ -18,7 +18,7 @@ return new WpsDialog(getActivity(),WpsInfo.DISPLAY);
 case WIFI_SKIPPED_DIALOG_ID:
 return new AlertDialog.Builder(getActivity()).setMessage(R.string.wifi_skipped_message).setCancelable(false).setNegativeButton(R.string.wifi_skip_anyway,new DialogInterface.OnClickListener(){
 @Override public void onClick(DialogInterface dialog,int id){
-getActivity().setResult(Activity.RESULT_CANCELED);
+getActivity().setResult(RESULT_SKIP);
 getActivity().finish();
 }
 }
@@ -30,7 +30,7 @@ getActivity().finish();
 case WIFI_AND_MOBILE_SKIPPED_DIALOG_ID:
 return new AlertDialog.Builder(getActivity()).setMessage(R.string.wifi_and_mobile_skipped_message).setCancelable(false).setNegativeButton(R.string.wifi_skip_anyway,new DialogInterface.OnClickListener(){
 @Override public void onClick(DialogInterface dialog,int id){
-getActivity().setResult(Activity.RESULT_CANCELED);
+getActivity().setResult(RESULT_SKIP);
 getActivity().finish();
 }
 }

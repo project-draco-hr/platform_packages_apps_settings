@@ -1,0 +1,9 @@
+{
+  try {
+    ApplicationInfo info=mPm.getApplicationInfo(pkg,PackageManager.GET_UNINSTALLED_PACKAGES);
+    if (info != null)     return mPm.getApplicationLabel(info);
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+  }
+  return pkg;
+}

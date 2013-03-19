@@ -3,9 +3,9 @@
   mP2pSupported=getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI_DIRECT);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   mConnectListener=new WifiManager.ActionListener(){
-    public void onSuccess(){
+    @Override public void onSuccess(){
     }
-    public void onFailure(    int reason){
+    @Override public void onFailure(    int reason){
       Activity activity=getActivity();
       if (activity != null) {
         Toast.makeText(activity,R.string.wifi_failed_connect_message,Toast.LENGTH_SHORT).show();
@@ -14,9 +14,9 @@
   }
 ;
   mSaveListener=new WifiManager.ActionListener(){
-    public void onSuccess(){
+    @Override public void onSuccess(){
     }
-    public void onFailure(    int reason){
+    @Override public void onFailure(    int reason){
       Activity activity=getActivity();
       if (activity != null) {
         Toast.makeText(activity,R.string.wifi_failed_save_message,Toast.LENGTH_SHORT).show();
@@ -25,9 +25,9 @@
   }
 ;
   mForgetListener=new WifiManager.ActionListener(){
-    public void onSuccess(){
+    @Override public void onSuccess(){
     }
-    public void onFailure(    int reason){
+    @Override public void onFailure(    int reason){
       Activity activity=getActivity();
       if (activity != null) {
         Toast.makeText(activity,R.string.wifi_failed_forget_message,Toast.LENGTH_SHORT).show();
@@ -65,7 +65,7 @@
   }
   addPreferencesFromResource(R.xml.wifi_settings);
   if (mSetupWizardMode) {
-    getView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_BACK | View.STATUS_BAR_DISABLE_HOME | View.STATUS_BAR_DISABLE_RECENT| View.STATUS_BAR_DISABLE_NOTIFICATION_ALERTS| View.STATUS_BAR_DISABLE_CLOCK);
+    getView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_HOME | View.STATUS_BAR_DISABLE_RECENT | View.STATUS_BAR_DISABLE_NOTIFICATION_ALERTS| View.STATUS_BAR_DISABLE_CLOCK);
   }
   if (!mSetupWizardMode) {
     Switch actionBarSwitch=new Switch(activity);

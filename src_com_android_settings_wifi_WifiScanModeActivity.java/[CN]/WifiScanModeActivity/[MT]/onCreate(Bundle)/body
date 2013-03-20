@@ -1,0 +1,17 @@
+{
+  super.onCreate(savedInstanceState);
+  Intent intent=getIntent();
+  if (savedInstanceState == null) {
+    if (intent != null && intent.getAction().equals(WifiManager.ACTION_REQUEST_SCAN_ALWAYS_AVAILABLE)) {
+      mApp=getCallingPackage();
+    }
+ else {
+      finish();
+      return;
+    }
+  }
+ else {
+    mApp=savedInstanceState.getString("app");
+  }
+  createDialog();
+}

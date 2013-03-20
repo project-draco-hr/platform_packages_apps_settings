@@ -8,11 +8,17 @@
   mPrefs=getActivity().getSharedPreferences(PREF_FILE,Context.MODE_PRIVATE);
   mPolicyEditor=new NetworkPolicyEditor(mPolicyManager);
   mPolicyEditor.read();
+  try {
+    mStatsSession=mStatsService.openSession();
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException(e);
+  }
   mShowWifi=mPrefs.getBoolean(PREF_SHOW_WIFI,false);
   mShowEthernet=mPrefs.getBoolean(PREF_SHOW_ETHERNET,false);
   if (!hasReadyMobileRadio(context)) {
-    mShowWifi=hasWifiRadio(context);
-    mShowEthernet=hasEthernet(context);
+    mShowWifi=true;
+    mShowEthernet=true;
   }
   setHasOptionsMenu(true);
 }

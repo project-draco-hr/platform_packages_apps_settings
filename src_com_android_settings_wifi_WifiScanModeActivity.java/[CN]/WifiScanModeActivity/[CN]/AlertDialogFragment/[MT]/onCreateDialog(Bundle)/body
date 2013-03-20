@@ -1,0 +1,13 @@
+{
+  return new AlertDialog.Builder(getActivity()).setMessage(getString(R.string.wifi_scan_always_turnon_message,mApp)).setPositiveButton(R.string.wifi_scan_always_confirm_allow,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int whichButton){
+      ((WifiScanModeActivity)getActivity()).doPositiveClick();
+    }
+  }
+).setNegativeButton(R.string.wifi_scan_always_confirm_deny,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int whichButton){
+      ((WifiScanModeActivity)getActivity()).doNegativeClick();
+    }
+  }
+).create();
+}

@@ -11,8 +11,18 @@
         info.user=sbn.getUserId();
         info.icon=loadIconDrawable(info.pkg,info.user,sbn.notification.icon);
         info.pkgicon=loadPackageIconDrawable(info.pkg,info.user);
+        info.pkgname=loadPackageName(info.pkg);
         if (sbn.notification.extras != null) {
           info.title=sbn.notification.extras.getString(Notification.EXTRA_TITLE);
+          if (info.title == null || "".equals(info.title)) {
+            info.title=sbn.notification.extras.getString(Notification.EXTRA_TEXT);
+          }
+        }
+        if (info.title == null || "".equals(info.title)) {
+          info.title=sbn.notification.tickerText;
+        }
+        if (info.title == null || "".equals(info.title)) {
+          info.title=info.pkgname;
         }
         info.timestamp=sbn.postTime;
         info.priority=sbn.notification.priority;

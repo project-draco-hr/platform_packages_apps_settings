@@ -1,5 +1,5 @@
 {
   Intent intent=new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.fromParts("package",packageName,null));
-  intent.setComponent(intent.resolveActivity(mContext.getPackageManager()));
+  intent.setComponent(intent.resolveActivity(mPm));
   startActivity(intent);
 }

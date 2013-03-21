@@ -1,7 +1,7 @@
 {
-  HistoricalNotificationInfo info=getItem(position);
+  final HistoricalNotificationInfo info=getItem(position);
   logd("getView(%s/%s)",info.pkg,info.title);
-  final View row=convertView != null ? convertView : createRow(parent,info.pkg);
+  final View row=convertView != null ? convertView : createRow(parent);
   row.setTag(info);
   if (info.icon != null) {
     ((ImageView)row.findViewById(android.R.id.icon)).setImageDrawable(info.icon);
@@ -11,6 +11,15 @@
   }
   ((DateTimeView)row.findViewById(R.id.timestamp)).setTime(info.timestamp);
   ((TextView)row.findViewById(android.R.id.title)).setText(info.title);
+  ((TextView)row.findViewById(R.id.pkgname)).setText(info.pkgname);
+  row.findViewById(R.id.extra).setVisibility(View.GONE);
   row.setAlpha(info.active ? 1.0f : 0.5f);
+  row.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      v.setPressed(true);
+      startApplicationDetailsActivity(info.pkg);
+    }
+  }
+);
   return row;
 }

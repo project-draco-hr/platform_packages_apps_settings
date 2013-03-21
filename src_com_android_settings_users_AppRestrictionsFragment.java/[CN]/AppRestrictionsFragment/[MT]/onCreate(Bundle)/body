@@ -1,0 +1,9 @@
+{
+  super.onCreate(icicle);
+  mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+  addPreferencesFromResource(R.xml.app_restrictions);
+  mAppList=getPreferenceScreen();
+  mUserPreference=(EditTextPreference)findPreference(KEY_USER_INFO);
+  mUserPreference.setOnPreferenceChangeListener(this);
+  setHasOptionsMenu(true);
+}

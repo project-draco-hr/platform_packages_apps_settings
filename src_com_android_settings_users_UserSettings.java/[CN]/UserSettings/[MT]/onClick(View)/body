@@ -1,6 +1,13 @@
 {
   if (v.getTag() instanceof UserPreference) {
     int userId=((UserPreference)v.getTag()).getUserId();
-    onRemoveUserClicked(userId);
-  }
+switch (v.getId()) {
+case UserPreference.DELETE_ID:
+      onRemoveUserClicked(userId);
+    break;
+case UserPreference.SETTINGS_ID:
+  onManageUserClicked(userId);
+break;
+}
+}
 }

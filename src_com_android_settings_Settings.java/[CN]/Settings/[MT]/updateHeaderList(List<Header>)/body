@@ -42,6 +42,15 @@
         target.remove(i);
       }
     }
+ else     if (id == R.id.application_settings) {
+      if (mAppRestrictions != null) {
+        for (        RestrictionEntry entry : mAppRestrictions) {
+          if (entry.key.equals(RestrictionsReceiver.KEY_ENABLE_APPS) && !entry.getBooleanValue()) {
+            target.remove(i);
+          }
+        }
+      }
+    }
     if (i < target.size() && target.get(i) == header && UserHandle.MU_ENABLED && UserHandle.myUserId() != 0 && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,id)) {
       target.remove(i);
     }

@@ -1,11 +1,5 @@
 {
-  if (mIsOwner) {
-    if (UserManager.getMaxSupportedUsers() > mUserManager.getUsers(false).size()) {
-      MenuItem addUserItem=menu.add(0,MENU_ADD_USER,0,R.string.user_add_user_menu);
-      addUserItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-    }
-  }
- else {
+  if (!mIsOwner) {
     String nickname=mUserManager.getUserName();
     MenuItem removeThisUser=menu.add(0,MENU_REMOVE_USER,0,getResources().getString(R.string.user_remove_user_menu,nickname));
     removeThisUser.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);

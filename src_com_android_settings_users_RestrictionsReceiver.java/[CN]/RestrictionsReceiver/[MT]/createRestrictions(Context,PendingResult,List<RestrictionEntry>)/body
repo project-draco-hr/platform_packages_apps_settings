@@ -1,0 +1,51 @@
+{
+  ArrayList<RestrictionEntry> newRestrictions=new ArrayList<RestrictionEntry>();
+  boolean oldEnableApps=false;
+  String oldContentRating="";
+  String[] oldEnabledSections=new String[0];
+  if (old != null) {
+    for (    RestrictionEntry r : old) {
+      if (r.key.equals(KEY_ENABLE_APPS)) {
+        oldEnableApps=r.getBooleanValue();
+      }
+ else       if (r.key.equals(KEY_CONTENT_RATING)) {
+        oldContentRating=r.getStringValue();
+      }
+ else       if (r.key.equals(KEY_SECTIONS_TO_SHOW)) {
+        oldEnabledSections=r.getMultipleValues();
+      }
+    }
+  }
+  RestrictionEntry r0=new RestrictionEntry(KEY_VERSION,"1");
+  newRestrictions.add(r0);
+  RestrictionEntry r1=new RestrictionEntry(KEY_ENABLE_APPS,Boolean.toString(oldEnableApps));
+  r1.title="Enable apps";
+  r1.description="Show the Apps section in Settings";
+  r1.type=RestrictionEntry.TYPE_BOOLEAN;
+  newRestrictions.add(r1);
+  RestrictionEntry r2=new RestrictionEntry(KEY_CONTENT_RATING,oldContentRating);
+  r2.title="Test: Content rating";
+  r2.description="Limit content to chosen rating and lower";
+  r2.type=RestrictionEntry.TYPE_CHOICE_LEVEL;
+  r2.values=new String[]{"G","PG","PG13","R","NR"};
+  r2.choices=new String[]{"G","PG","PG-13","Restricted","Not Rated"};
+  newRestrictions.add(r2);
+  String[] values=new String[SECTION_IDS.length];
+  String[] choices=new String[SECTION_IDS.length];
+  int i=0;
+  for (  int sectionId : SECTION_IDS) {
+    values[i]=Integer.toString(sectionId);
+    choices[i]=context.getString(SECTION_TITLE_IDS[i]);
+    i++;
+  }
+  RestrictionEntry r3=new RestrictionEntry(KEY_SECTIONS_TO_SHOW,oldEnabledSections);
+  r3.type=RestrictionEntry.TYPE_MULTI_SELECT;
+  r3.choices=choices;
+  r3.values=values;
+  r3.title="Test: Sections to show";
+  newRestrictions.add(r3);
+  Bundle extras=new Bundle();
+  extras.putParcelableArrayList(Intent.EXTRA_RESTRICTIONS,newRestrictions);
+  result.setResult(0,null,extras);
+  result.finish();
+}

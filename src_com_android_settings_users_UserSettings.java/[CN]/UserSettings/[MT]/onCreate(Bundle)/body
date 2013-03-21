@@ -24,6 +24,14 @@
   mNicknamePreference.setOnPreferenceChangeListener(this);
   mNicknamePreference.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
   mNicknamePreference.setInitialSelectionMode(SelectableEditTextPreference.SELECTION_SELECT_ALL);
+  mAddRestrictedUser=findPreference(KEY_ADD_RESTRICTED_USER);
+  mAddTrustedUser=findPreference(KEY_ADD_TRUSTED_USER);
+  mAddRestrictedUser.setOnPreferenceClickListener(this);
+  mAddTrustedUser.setOnPreferenceClickListener(this);
+  if (!mIsOwner || UserManager.getMaxSupportedUsers() < 2) {
+    removePreference(KEY_ADD_RESTRICTED_USER);
+    removePreference(KEY_ADD_TRUSTED_USER);
+  }
   loadProfile();
   setHasOptionsMenu(true);
   IntentFilter filter=new IntentFilter(Intent.ACTION_USER_REMOVED);

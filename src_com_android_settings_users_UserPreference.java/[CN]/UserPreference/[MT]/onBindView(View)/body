@@ -4,5 +4,15 @@
     deleteView.setOnClickListener(mDeleteClickListener);
     deleteView.setTag(this);
   }
+  View settingsView=view.findViewById(R.id.manage_user);
+  if (settingsView != null) {
+    if (mRestricted) {
+      settingsView.setOnClickListener(mSettingsClickListener);
+      settingsView.setTag(this);
+    }
+ else {
+      settingsView.setVisibility(View.INVISIBLE);
+    }
+  }
   super.onBindView(view);
 }

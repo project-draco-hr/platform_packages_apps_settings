@@ -1,0 +1,29 @@
+{
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.user_limits);
+  mBackButton=(Button)findViewById(R.id.back_button);
+  if (mBackButton != null) {
+    mBackButton.setOnClickListener(this);
+  }
+  mFinishButton=(Button)findViewById(R.id.next_button);
+  if (mFinishButton != null) {
+    mFinishButton.setOnClickListener(this);
+  }
+  mAppsFragment=(AppRestrictionsFragment)getFragmentManager().findFragmentById(R.id.user_limits_fragment);
+  UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
+  String name=getIntent().getStringExtra(EXTRA_USER_NAME);
+  int userId=getIntent().getIntExtra(EXTRA_USER_ID,-1);
+  if (userId == -1) {
+    mNewUser=true;
+    mUserInfo=um.createUser(name,UserInfo.FLAG_RESTRICTED);
+    um.setUserRestriction(UserManager.ALLOW_MODIFY_ACCOUNTS,false,new UserHandle(mUserInfo.id));
+    Bitmap bitmap=BitmapFactory.decodeResource(getResources(),UserSettings.USER_DRAWABLES[mUserInfo.id % UserSettings.USER_DRAWABLES.length]);
+    um.setUserIcon(mUserInfo.id,bitmap);
+  }
+ else {
+    mUserInfo=um.getUserInfo(userId);
+  }
+  if (mAppsFragment != null) {
+    mAppsFragment.setUser(new UserHandle(mUserInfo.id),mNewUser);
+  }
+}

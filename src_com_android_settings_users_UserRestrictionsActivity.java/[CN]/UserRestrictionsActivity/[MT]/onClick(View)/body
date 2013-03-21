@@ -1,0 +1,33 @@
+{
+  if (v == mFinishButton) {
+    if (mNewUser) {
+      AccountManager am=AccountManager.get(this);
+      Account[] accounts=am.getAccounts();
+      if (accounts != null) {
+        for (        Account account : accounts) {
+          am.addSharedAccount(account,new UserHandle(mUserInfo.id));
+        }
+      }
+    }
+    IPackageManager ipm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
+    for (    Map.Entry<String,Boolean> entry : mAppsFragment.mSelectedPackages.entrySet()) {
+      if (entry.getValue()) {
+        try {
+          ipm.installExistingPackageAsUser(entry.getKey(),mUserInfo.id);
+        }
+ catch (        RemoteException re) {
+        }
+      }
+ else {
+        try {
+          ipm.deletePackageAsUser(entry.getKey(),null,mUserInfo.id,PackageManager.DELETE_SYSTEM_APP);
+        }
+ catch (        RemoteException re) {
+        }
+      }
+    }
+    setResult(RESULT_OK);
+    mUserInfo=null;
+    finish();
+  }
+}

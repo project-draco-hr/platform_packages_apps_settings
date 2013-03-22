@@ -1,0 +1,22 @@
+{
+  View checkBoxView=View.inflate(getActivity(),R.layout.wifi_notify_scan_mode,null);
+  final CheckBox checkBox=(CheckBox)checkBoxView.findViewById(R.id.checkbox);
+  final String msg;
+  if (Settings.Secure.isLocationProviderEnabled(getActivity().getContentResolver(),LocationManager.NETWORK_PROVIDER)) {
+    msg=getString(R.string.wifi_scan_notify_text_location_on);
+  }
+ else {
+    msg=getString(R.string.wifi_scan_notify_text_location_off);
+  }
+  return new AlertDialog.Builder(getActivity()).setMessage(msg).setView(checkBoxView).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int whichButton){
+      ((WifiNotifyScanModeActivity)getActivity()).doPositiveButton(checkBox.isChecked());
+    }
+  }
+).setNegativeButton(R.string.dlg_cancel,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int whichButton){
+      ((WifiNotifyScanModeActivity)getActivity()).finish();
+    }
+  }
+).create();
+}

@@ -18,6 +18,7 @@
   mTabHost.setOnTabChangedListener(mTabListener);
   mHeader=(ViewGroup)inflater.inflate(R.layout.data_usage_header,mListView,false);
   mHeader.setClickable(true);
+  mListView.addHeaderView(new View(context),null,true);
   mListView.addHeaderView(mHeader,null,true);
   mListView.setItemsCanFocus(true);
   if (mInsetSide > 0) {

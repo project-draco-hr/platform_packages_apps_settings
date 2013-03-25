@@ -6,9 +6,8 @@
   mMenuDataRoaming.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
   mMenuDataRoaming.setChecked(getDataRoaming());
   mMenuRestrictBackground=menu.findItem(R.id.data_usage_menu_restrict_background);
-  mMenuRestrictBackground.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
+  mMenuRestrictBackground.setVisible(hasReadyMobileRadio(context) && isOwner && !appDetailMode);
   mMenuRestrictBackground.setChecked(mPolicyManager.getRestrictBackground());
-  mMenuRestrictBackground.setVisible(isOwner);
   mMenuAutoSync=menu.findItem(R.id.data_usage_menu_auto_sync);
   mMenuAutoSync.setChecked(ContentResolver.getMasterSyncAutomatically());
   mMenuAutoSync.setVisible(!appDetailMode);

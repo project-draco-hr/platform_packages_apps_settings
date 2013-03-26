@@ -1,3 +1,9 @@
 {
-  return true;
+  DeviceAdminInfo info=mAvailableAdmins.get(position);
+  if (mActiveAdmins.contains(info.getComponent()) && info.getPackageName().equals(mDeviceOwnerPkg)) {
+    return false;
+  }
+ else {
+    return true;
+  }
 }

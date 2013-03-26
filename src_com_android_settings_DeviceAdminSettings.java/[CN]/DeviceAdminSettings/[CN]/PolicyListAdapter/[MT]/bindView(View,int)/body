@@ -5,9 +5,14 @@
   vh.icon.setImageDrawable(item.loadIcon(activity.getPackageManager()));
   vh.name.setText(item.loadLabel(activity.getPackageManager()));
   vh.checkbox.setChecked(mActiveAdmins.contains(item.getComponent()));
+  final boolean activeOwner=vh.checkbox.isChecked() && item.getPackageName().equals(mDeviceOwnerPkg);
   try {
     vh.description.setText(item.loadDescription(activity.getPackageManager()));
   }
  catch (  Resources.NotFoundException e) {
   }
+  vh.checkbox.setEnabled(!activeOwner);
+  vh.name.setEnabled(!activeOwner);
+  vh.description.setEnabled(!activeOwner);
+  vh.icon.setEnabled(!activeOwner);
 }

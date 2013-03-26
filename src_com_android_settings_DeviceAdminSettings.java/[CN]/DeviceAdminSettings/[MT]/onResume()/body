@@ -1,4 +1,8 @@
 {
   super.onResume();
+  mDeviceOwnerPkg=mDPM.getDeviceOwner();
+  if (mDeviceOwnerPkg != null && !mDPM.isDeviceOwner(mDeviceOwnerPkg)) {
+    mDeviceOwnerPkg=null;
+  }
   updateList();
 }

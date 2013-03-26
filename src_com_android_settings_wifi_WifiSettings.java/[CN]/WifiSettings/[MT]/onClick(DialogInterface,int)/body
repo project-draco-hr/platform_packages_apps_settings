@@ -3,6 +3,8 @@
     forget();
   }
  else   if (button == WifiDialog.BUTTON_SUBMIT) {
-    submit(mDialog.getController());
+    if (mDialog != null) {
+      submit(mDialog.getController());
+    }
   }
 }

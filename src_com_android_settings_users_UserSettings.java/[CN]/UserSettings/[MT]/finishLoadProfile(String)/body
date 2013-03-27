@@ -3,8 +3,7 @@
   int myUserId=UserHandle.myUserId();
   Bitmap b=mUserManager.getUserIcon(myUserId);
   if (b != null) {
-    Drawable d=new BitmapDrawable(b);
-    mMePreference.setIcon(d);
-    mUserIcons.put(myUserId,d);
+    mMePreference.setIcon(encircle(b));
+    mUserIcons.put(myUserId,b);
   }
 }

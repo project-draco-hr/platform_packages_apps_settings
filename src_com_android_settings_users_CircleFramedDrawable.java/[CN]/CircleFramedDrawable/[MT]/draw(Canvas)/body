@@ -1,0 +1,22 @@
+{
+  final float outside=Math.min(canvas.getWidth(),canvas.getHeight());
+  final float inside=mScale * outside;
+  final float pad=(outside - inside) / 2f;
+  mDstRect.set(pad,pad,outside - pad,outside - pad);
+  canvas.drawBitmap(mBitmap,mSrcRect,mDstRect,null);
+  mFrameRect.set(mDstRect);
+  mFrameRect.inset(mStrokeWidth / 2f,mStrokeWidth / 2f);
+  mFrameRect.inset(mShadowRadius,mShadowRadius);
+  mFramePath.reset();
+  mFramePath.addArc(mFrameRect,0f,360f);
+  if (mPressed) {
+    mPaint.setStyle(Paint.Style.FILL);
+    mPaint.setColor(Color.argb((int)(0.33f * 255),Color.red(mHighlightColor),Color.green(mHighlightColor),Color.blue(mHighlightColor)));
+    canvas.drawPath(mFramePath,mPaint);
+  }
+  mPaint.setStrokeWidth(mStrokeWidth);
+  mPaint.setStyle(Paint.Style.STROKE);
+  mPaint.setColor(mPressed ? mHighlightColor : mFrameColor);
+  mPaint.setShadowLayer(mShadowRadius,0f,0f,mFrameShadowColor);
+  canvas.drawPath(mFramePath,mPaint);
+}

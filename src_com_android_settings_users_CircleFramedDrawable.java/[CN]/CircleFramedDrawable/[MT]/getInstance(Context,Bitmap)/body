@@ -1,0 +1,11 @@
+{
+  Resources res=context.getResources();
+  float iconSize=res.getDimension(R.dimen.circle_avatar_size);
+  float strokeWidth=res.getDimension(R.dimen.circle_avatar_frame_stroke_width);
+  float shadowRadius=res.getDimension(R.dimen.circle_avatar_frame_shadow_radius);
+  int frameColor=res.getColor(R.color.circle_avatar_frame_color);
+  int frameShadowColor=res.getColor(R.color.circle_avatar_frame_shadow_color);
+  int highlightColor=res.getColor(R.color.circle_avatar_frame_pressed_color);
+  CircleFramedDrawable instance=new CircleFramedDrawable(icon,(int)iconSize,frameColor,strokeWidth,frameShadowColor,shadowRadius,highlightColor);
+  return instance;
+}

@@ -7,8 +7,7 @@
     @Override protected Void doInBackground(    List<Integer>... values){
       for (      int userId : values[0]) {
         Bitmap bitmap=mUserManager.getUserIcon(userId);
-        Drawable d=new BitmapDrawable(resources,bitmap);
-        mUserIcons.append(userId,d);
+        mUserIcons.append(userId,bitmap);
       }
       return null;
     }

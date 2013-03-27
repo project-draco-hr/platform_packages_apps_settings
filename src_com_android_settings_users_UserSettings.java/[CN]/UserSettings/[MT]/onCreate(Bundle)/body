@@ -10,7 +10,8 @@
   }
   mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   addPreferencesFromResource(R.xml.user_settings);
-  mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
+  mTrustedUserListCategory=(PreferenceGroup)findPreference(KEY_TRUSTED_USER_LIST);
+  mLimitedUserListCategory=(PreferenceGroup)findPreference(KEY_LIMITED_USER_LIST);
   mMePreference=(Preference)findPreference(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
   if (!mIsOwner) {

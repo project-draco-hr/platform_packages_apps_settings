@@ -2,6 +2,10 @@
   if (Utils.isMonkeyRunning()) {
     return true;
   }
+  UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+  if (um.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
+    return true;
+  }
   String function="none";
   if (preference == mMtp && mMtp.isChecked()) {
     function=UsbManager.USB_FUNCTION_MTP;

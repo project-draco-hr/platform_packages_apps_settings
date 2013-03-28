@@ -4,7 +4,8 @@
     mAddAccountCalled=savedInstanceState.getBoolean(KEY_ADD_CALLED);
     if (Log.isLoggable(TAG,Log.VERBOSE))     Log.v(TAG,"restored");
   }
-  if (mAddAccountCalled) {
+  final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
+  if (mAddAccountCalled || um.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
     finish();
     return;
   }

@@ -10,7 +10,7 @@
   mGps=(CheckBoxPreference)root.findPreference(KEY_LOCATION_GPS);
   mAssistedGps=(CheckBoxPreference)root.findPreference(KEY_ASSISTED_GPS);
   final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
-  boolean isToggleAllowed=um.isLocationSharingToggleAllowed();
+  boolean isToggleAllowed=!um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION);
   if (mLocationAccess != null)   mLocationAccess.setEnabled(isToggleAllowed);
   if (mNetwork != null)   mNetwork.setEnabled(isToggleAllowed);
   if (mGps != null)   mGps.setEnabled(isToggleAllowed);

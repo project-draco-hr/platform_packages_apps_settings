@@ -13,6 +13,11 @@
   }
   CheckBoxPreference scanAlwaysAvailable=(CheckBoxPreference)findPreference(KEY_SCAN_ALWAYS_AVAILABLE);
   scanAlwaysAvailable.setChecked(Global.getInt(getContentResolver(),Global.WIFI_SCAN_ALWAYS_AVAILABLE,0) == 1);
+  Intent intent=new Intent(Credentials.INSTALL_AS_USER_ACTION);
+  intent.setClassName("com.android.certinstaller","com.android.certinstaller.CertInstallerMain");
+  intent.putExtra(Credentials.EXTRA_INSTALL_AS_UID,android.os.Process.WIFI_UID);
+  Preference pref=findPreference(KEY_INSTALL_CREDENTIALS);
+  pref.setIntent(intent);
   CheckBoxPreference suspendOptimizations=(CheckBoxPreference)findPreference(KEY_SUSPEND_OPTIMIZATIONS);
   suspendOptimizations.setChecked(Global.getInt(getContentResolver(),Global.WIFI_SUSPEND_OPTIMIZATIONS_ENABLED,1) == 1);
   ListPreference frequencyPref=(ListPreference)findPreference(KEY_FREQUENCY_BAND);

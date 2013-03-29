@@ -15,7 +15,6 @@
     mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0);
   }
   if (mResetCredentials != null) {
-    KeyStore keyStore=KeyStore.getInstance();
-    mResetCredentials.setEnabled(!keyStore.isUnlocked());
+    mResetCredentials.setEnabled(!mKeyStore.isUnlocked());
   }
 }

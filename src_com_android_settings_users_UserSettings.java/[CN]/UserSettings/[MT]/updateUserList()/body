@@ -55,4 +55,9 @@
   boolean moreUsers=mUserManager.getMaxSupportedUsers() > users.size();
   mAddRestrictedUser.setEnabled(moreUsers);
   mAddTrustedUser.setEnabled(moreUsers);
+  if (!mIsOwner) {
+    if (mLimitedUserListCategory.getPreferenceCount() == 0) {
+      removePreference(KEY_LIMITED_USER_LIST);
+    }
+  }
 }

@@ -1,0 +1,19 @@
+{
+  super.onActivityResult(requestCode,resultCode,data);
+  Log.i(TAG,"Got activity resultCode=" + resultCode + ", requestCode="+ requestCode+ ", data="+ data);
+  AppRestrictionsPreference pref=mCustomRequestMap.get(requestCode);
+  if (pref == null) {
+    Log.w(TAG,"Unknown requestCode " + requestCode);
+    return;
+  }
+  if (resultCode == Activity.RESULT_OK) {
+    ArrayList<RestrictionEntry> list=data.getParcelableArrayListExtra(Intent.EXTRA_RESTRICTIONS);
+    if (list != null) {
+      String packageName=pref.getKey().substring(PKG_PREFIX.length());
+      pref.setRestrictions(list);
+      mUserManager.setApplicationRestrictions(packageName,list,mUser);
+    }
+    toggleAppPanel(pref);
+  }
+  mCustomRequestMap.remove(requestCode);
+}

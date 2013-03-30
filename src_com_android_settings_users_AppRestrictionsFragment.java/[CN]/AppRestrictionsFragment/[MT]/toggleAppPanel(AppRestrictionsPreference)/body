@@ -10,6 +10,7 @@
       String packageName=preference.getKey().substring(PKG_PREFIX.length());
       List<RestrictionEntry> oldEntries=mUserManager.getApplicationRestrictions(packageName,mUser);
       Intent intent=new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);
+      intent.setPackage(packageName);
       intent.putParcelableArrayListExtra(Intent.EXTRA_RESTRICTIONS,new ArrayList<RestrictionEntry>(oldEntries));
       getActivity().sendOrderedBroadcast(intent,null,new RestrictionsResultReceiver(packageName,preference),null,Activity.RESULT_OK,null,null);
     }

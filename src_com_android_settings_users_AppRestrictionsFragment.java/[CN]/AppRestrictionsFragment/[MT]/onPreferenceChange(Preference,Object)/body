@@ -8,28 +8,24 @@
     ArrayList<RestrictionEntry> restrictions=appPref.getRestrictions();
     if (restrictions != null) {
       for (      RestrictionEntry entry : restrictions) {
-        if (entry.key.equals(restrictionKey)) {
-switch (entry.type) {
+        if (entry.getKey().equals(restrictionKey)) {
+switch (entry.getType()) {
 case RestrictionEntry.TYPE_BOOLEAN:
-            entry.setValue((Boolean)newValue);
+            entry.setSelectedState((Boolean)newValue);
           break;
 case RestrictionEntry.TYPE_CHOICE:
 case RestrictionEntry.TYPE_CHOICE_LEVEL:
         ListPreference listPref=(ListPreference)preference;
-      entry.setValue((String)newValue);
-    for (int i=0; i < listPref.getEntryValues().length; i++) {
-      if (entry.values[i].equals(newValue)) {
-        listPref.setSummary(entry.choices[i]);
-        break;
-      }
-    }
-  break;
+      entry.setSelectedString((String)newValue);
+    String readable=findInArray(entry.getChoiceEntries(),entry.getChoiceValues(),(String)newValue);
+  listPref.setSummary(readable);
+break;
 case RestrictionEntry.TYPE_MULTI_SELECT:
 MultiSelectListPreference msListPref=(MultiSelectListPreference)preference;
 Set<String> set=(Set<String>)newValue;
 String[] selectedValues=new String[set.size()];
 set.toArray(selectedValues);
-entry.setMultipleValues(selectedValues);
+entry.setAllSelectedStrings(selectedValues);
 break;
 default :
 continue;

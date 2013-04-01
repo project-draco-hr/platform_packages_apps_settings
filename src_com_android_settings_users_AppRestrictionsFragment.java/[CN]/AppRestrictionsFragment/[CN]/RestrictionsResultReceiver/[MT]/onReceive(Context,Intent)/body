@@ -3,73 +3,26 @@
   final ArrayList<RestrictionEntry> restrictions=results.getParcelableArrayList(Intent.EXTRA_RESTRICTIONS);
   Intent restrictionsIntent=(Intent)results.getParcelable(CUSTOM_RESTRICTIONS_INTENT);
   if (restrictions != null && restrictionsIntent == null) {
-    int count=1;
-    for (    RestrictionEntry entry : restrictions) {
-      Preference p=null;
-switch (entry.getType()) {
-case RestrictionEntry.TYPE_BOOLEAN:
-        p=new CheckBoxPreference(context);
-      p.setTitle(entry.getTitle());
-    p.setSummary(entry.getDescription());
-  ((CheckBoxPreference)p).setChecked(entry.getSelectedState());
-break;
-case RestrictionEntry.TYPE_CHOICE:
-case RestrictionEntry.TYPE_CHOICE_LEVEL:
-p=new ListPreference(context);
-p.setTitle(entry.getTitle());
-String value=entry.getSelectedString();
-if (value == null) {
-value=entry.getDescription();
-}
-p.setSummary(findInArray(entry.getChoiceEntries(),entry.getChoiceValues(),value));
-((ListPreference)p).setEntryValues(entry.getChoiceValues());
-((ListPreference)p).setEntries(entry.getChoiceEntries());
-((ListPreference)p).setValue(value);
-break;
-case RestrictionEntry.TYPE_MULTI_SELECT:
-p=new MultiSelectListPreference(context);
-p.setTitle(entry.getTitle());
-((MultiSelectListPreference)p).setEntryValues(entry.getChoiceValues());
-((MultiSelectListPreference)p).setEntries(entry.getChoiceEntries());
-HashSet<String> set=new HashSet<String>();
-for (String s : entry.getAllSelectedStrings()) {
-set.add(s);
-}
-((MultiSelectListPreference)p).setValues(set);
-break;
-case RestrictionEntry.TYPE_NULL:
-default :
-}
-if (p != null) {
-p.setPersistent(false);
-p.setOrder(preference.getOrder() + count);
-p.setKey(preference.getKey().substring(PKG_PREFIX.length()) + DELIMITER + entry.getKey());
-mAppList.addPreference(p);
-p.setOnPreferenceChangeListener(AppRestrictionsFragment.this);
-preference.childPreferences.add(p);
-count++;
-}
-}
-preference.setRestrictions(restrictions);
-mUserManager.setApplicationRestrictions(packageName,restrictions,mUser);
-}
- else if (restrictionsIntent != null) {
-final Intent customIntent=restrictionsIntent;
-customIntent.putParcelableArrayListExtra(Intent.EXTRA_RESTRICTIONS,restrictions);
-Preference p=new Preference(context);
-p.setTitle(R.string.app_restrictions_custom_label);
-p.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-@Override public boolean onPreferenceClick(Preference preference){
-int requestCode=generateCustomActivityRequestCode(RestrictionsResultReceiver.this.preference);
-AppRestrictionsFragment.this.startActivityForResult(customIntent,requestCode);
-return false;
-}
-}
+    onRestrictionsReceived(preference,packageName,restrictions);
+    mUserManager.setApplicationRestrictions(packageName,restrictions,mUser);
+  }
+ else   if (restrictionsIntent != null) {
+    final Intent customIntent=restrictionsIntent;
+    customIntent.putParcelableArrayListExtra(Intent.EXTRA_RESTRICTIONS,restrictions);
+    Preference p=new Preference(context);
+    p.setTitle(R.string.app_restrictions_custom_label);
+    p.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+      @Override public boolean onPreferenceClick(      Preference preference){
+        int requestCode=generateCustomActivityRequestCode(RestrictionsResultReceiver.this.preference);
+        AppRestrictionsFragment.this.startActivityForResult(customIntent,requestCode);
+        return false;
+      }
+    }
 );
-p.setPersistent(false);
-p.setOrder(preference.getOrder() + 1);
-preference.childPreferences.add(p);
-mAppList.addPreference(p);
-preference.setRestrictions(restrictions);
-}
+    p.setPersistent(false);
+    p.setOrder(preference.getOrder() + 1);
+    preference.childPreferences.add(p);
+    mAppList.addPreference(p);
+    preference.setRestrictions(restrictions);
+  }
 }

@@ -43,15 +43,6 @@
         target.remove(i);
       }
     }
- else     if (id == R.id.application_settings) {
-      if (mAppRestrictions != null) {
-        for (        RestrictionEntry entry : mAppRestrictions) {
-          if (entry.getKey().equals(RestrictionsReceiver.KEY_ENABLE_APPS) && !entry.getSelectedState()) {
-            target.remove(i);
-          }
-        }
-      }
-    }
  else     if (id == R.id.account_add) {
       if (um.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
         target.remove(i);

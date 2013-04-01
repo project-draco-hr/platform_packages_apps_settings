@@ -30,7 +30,12 @@ break;
 default :
 continue;
 }
+if (packageName.equals(getActivity().getPackageName())) {
+RestrictionUtils.setRestrictions(getActivity(),restrictions,mUser);
+}
+ else {
 mUserManager.setApplicationRestrictions(packageName,restrictions,mUser);
+}
 break;
 }
 }

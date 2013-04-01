@@ -1,0 +1,14 @@
+{
+  Resources res=context.getResources();
+  ArrayList<RestrictionEntry> entries=new ArrayList<RestrictionEntry>();
+  UserManager um=UserManager.get(context);
+  Bundle userRestrictions=um.getUserRestrictions(user);
+  for (int i=0; i < sRestrictionKeys.length; i++) {
+    RestrictionEntry entry=new RestrictionEntry(sRestrictionKeys[i],!userRestrictions.getBoolean(sRestrictionKeys[i],false));
+    entry.setTitle(res.getString(sRestrictionTitles[i]));
+    entry.setDescription(res.getString(sRestrictionDescriptions[i]));
+    entry.setType(RestrictionEntry.TYPE_BOOLEAN);
+    entries.add(entry);
+  }
+  return entries;
+}

@@ -11,7 +11,13 @@
     mMtp.setChecked(false);
     mPtp.setChecked(false);
   }
-  if (!mUsbAccessoryMode) {
+  UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+  if (um.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
+    Log.e(TAG,"USB is locked down");
+    mMtp.setEnabled(false);
+    mPtp.setEnabled(false);
+  }
+ else   if (!mUsbAccessoryMode) {
     Log.e(TAG,"USB Normal Mode");
     mMtp.setEnabled(true);
     mPtp.setEnabled(true);

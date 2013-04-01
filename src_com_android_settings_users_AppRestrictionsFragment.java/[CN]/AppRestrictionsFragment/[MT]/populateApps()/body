@@ -10,7 +10,7 @@
   final List<ResolveInfo> receivers=pm.queryBroadcastReceivers(restrictionsIntent,0);
   final List<ResolveInfo> existingApps=pm.queryIntentActivitiesAsUser(launcherIntent,0,mUser.getIdentifier());
   int i=0;
-  if (receivers != null && receivers.size() > 0) {
+  if (mApps != null && mApps.size() > 0) {
     for (    ResolveInfo app : mApps) {
       if (app.activityInfo == null || app.activityInfo.packageName == null)       continue;
       String packageName=app.activityInfo.packageName;
@@ -20,7 +20,7 @@
       p.setIcon(icon);
       p.setTitle(label);
       p.setKey(PKG_PREFIX + packageName);
-      p.setSettingsEnabled(hasPackage(receivers,packageName));
+      p.setSettingsEnabled(hasPackage(receivers,packageName) || packageName.equals(getActivity().getPackageName()));
       p.setPersistent(false);
       p.setOnPreferenceChangeListener(this);
       p.setOnPreferenceClickListener(this);

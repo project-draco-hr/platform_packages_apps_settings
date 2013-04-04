@@ -1,0 +1,13 @@
+{
+  mEnabledListeners.clear();
+  final String flat=Settings.Secure.getString(mCR,Settings.Secure.ENABLED_NOTIFICATION_LISTENERS);
+  if (flat != null && !"".equals(flat)) {
+    final String[] names=flat.split(":");
+    for (int i=0; i < names.length; i++) {
+      final ComponentName cn=ComponentName.unflattenFromString(names[i]);
+      if (cn != null) {
+        mEnabledListeners.add(cn);
+      }
+    }
+  }
+}

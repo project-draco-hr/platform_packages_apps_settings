@@ -123,5 +123,13 @@ deviceAdminCategory.removePreference(mToggleVerifyApps);
 mToggleVerifyApps.setEnabled(false);
 }
 }
+final int n=getNumEnabledNotificationListeners();
+mNotificationAccess=findPreference(KEY_NOTIFICATION_ACCESS);
+if (n == 0) {
+mNotificationAccess.setSummary(getResources().getString(R.string.manage_notification_access_summary_zero));
+}
+ else {
+mNotificationAccess.setSummary(String.format(getResources().getQuantityString(R.plurals.manage_notification_access_summary_nonzero,n,n)));
+}
 return root;
 }

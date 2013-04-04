@@ -1,0 +1,11 @@
+{
+  ServiceInfo info=mList.getItem(position);
+  final ComponentName cn=new ComponentName(info.packageName,info.name);
+  if (mEnabledListeners.contains(cn)) {
+    mEnabledListeners.remove(cn);
+    saveEnabledListeners();
+  }
+ else {
+    new ListenerWarningDialogFragment().setListenerInfo(cn,info.loadLabel(mPM).toString()).show(getFragmentManager(),"dialog");
+  }
+}

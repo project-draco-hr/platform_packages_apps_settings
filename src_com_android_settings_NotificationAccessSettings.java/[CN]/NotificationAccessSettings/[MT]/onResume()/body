@@ -1,0 +1,12 @@
+{
+  super.onResume();
+  updateList();
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+  filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
+  filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+  filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+  filter.addDataScheme("package");
+  getActivity().registerReceiver(mPackageReceiver,filter);
+  mCR.registerContentObserver(ENABLED_NOTIFICATION_LISTENERS_URI,false,mSettingsObserver);
+}

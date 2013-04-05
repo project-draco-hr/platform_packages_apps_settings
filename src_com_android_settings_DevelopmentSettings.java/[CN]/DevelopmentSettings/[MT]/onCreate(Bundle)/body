@@ -68,6 +68,15 @@
   mShowAllANRs=(CheckBoxPreference)findPreference(SHOW_ALL_ANRS_KEY);
   mAllPrefs.add(mShowAllANRs);
   mResetCbPrefs.add(mShowAllANRs);
+  if (WebViewFactory.isExperimentalWebViewAvailable()) {
+    mExperimentalWebView=findAndInitCheckboxPref(WEBVIEW_EXPERIMENTAL_KEY);
+  }
+ else {
+    Preference experimentalWebView=findPreference(WEBVIEW_EXPERIMENTAL_KEY);
+    if (experimentalWebView != null) {
+      getPreferenceScreen().removePreference(experimentalWebView);
+    }
+  }
   Preference hdcpChecking=findPreference(HDCP_CHECKING_KEY);
   if (hdcpChecking != null) {
     mAllPrefs.add(hdcpChecking);

@@ -5,7 +5,7 @@
   mPm=mContext.getPackageManager();
   mNoMan=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
   try {
-    mNoMan.registerListener(mListener,mContext.getPackageName(),ActivityManager.getCurrentUser());
+    mNoMan.registerListener(mListener,new ComponentName(mContext.getPackageName(),this.getClass().getCanonicalName()),ActivityManager.getCurrentUser());
   }
  catch (  RemoteException e) {
   }

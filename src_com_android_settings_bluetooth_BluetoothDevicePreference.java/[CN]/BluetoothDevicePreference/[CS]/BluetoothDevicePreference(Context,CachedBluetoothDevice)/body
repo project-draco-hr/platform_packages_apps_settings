@@ -7,7 +7,10 @@
   }
   mCachedDevice=cachedDevice;
   if (cachedDevice.getBondState() == BluetoothDevice.BOND_BONDED) {
-    setWidgetLayoutResource(R.layout.preference_bluetooth);
+    UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+    if (!um.hasUserRestriction(DISALLOW_CONFIG_BLUETOOTH)) {
+      setWidgetLayoutResource(R.layout.preference_bluetooth);
+    }
   }
   mCachedDevice.registerCallback(this);
   onDeviceAttributesChanged();

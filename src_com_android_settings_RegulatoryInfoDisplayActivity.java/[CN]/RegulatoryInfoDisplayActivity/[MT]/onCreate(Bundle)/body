@@ -1,0 +1,30 @@
+{
+  super.onCreate(savedInstanceState);
+  Resources resources=getResources();
+  if (!resources.getBoolean(R.bool.config_show_regulatory_info)) {
+    finish();
+  }
+  AlertDialog.Builder builder=new AlertDialog.Builder(this).setTitle(R.string.regulatory_information).setOnDismissListener(this);
+  boolean regulatoryInfoDrawableExists;
+  try {
+    Drawable d=resources.getDrawable(R.drawable.regulatory_info);
+    regulatoryInfoDrawableExists=(d.getIntrinsicWidth() > 2 && d.getIntrinsicHeight() > 2);
+  }
+ catch (  Resources.NotFoundException ignored) {
+    regulatoryInfoDrawableExists=false;
+  }
+  CharSequence regulatoryText=resources.getText(R.string.regulatory_info_text);
+  if (regulatoryInfoDrawableExists) {
+    builder.setView(getLayoutInflater().inflate(R.layout.regulatory_info,null));
+    builder.show();
+  }
+ else   if (regulatoryText.length() > 0) {
+    builder.setMessage(regulatoryText);
+    AlertDialog dialog=builder.show();
+    TextView messageText=(TextView)dialog.findViewById(android.R.id.message);
+    messageText.setGravity(Gravity.CENTER);
+  }
+ else {
+    finish();
+  }
+}

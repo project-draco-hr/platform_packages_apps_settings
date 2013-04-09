@@ -1,3 +1,7 @@
 {
-  return getActivity().getContentResolver();
+  Context context=getActivity();
+  if (context != null) {
+    mContentResolver=context.getContentResolver();
+  }
+  return mContentResolver;
 }

@@ -36,6 +36,8 @@
   preferredNetworkType.setOnItemSelectedListener(mPreferredNetworkHandler);
   radioPowerButton=(Button)findViewById(R.id.radio_power);
   radioPowerButton.setOnClickListener(mPowerButtonHandler);
+  cellInfoListRateButton=(Button)findViewById(R.id.cell_info_list_rate);
+  cellInfoListRateButton.setOnClickListener(mCellInfoListRateHandler);
   imsRegRequiredButton=(Button)findViewById(R.id.ims_reg_required);
   imsRegRequiredButton.setOnClickListener(mImsRegRequiredHandler);
   smsOverImsButton=(Button)findViewById(R.id.sms_over_ims);
@@ -66,5 +68,5 @@
   phone.getNeighboringCids(mHandler.obtainMessage(EVENT_QUERY_NEIGHBORING_CIDS_DONE));
   CellLocation.requestLocationUpdate();
   mCellInfoValue=mTelephonyManager.getAllCellInfo();
-  Log.d(TAG,"[RadioInfo] onCreate: mCellInfoValue=" + mCellInfoValue);
+  log("onCreate: mCellInfoValue=" + mCellInfoValue);
 }

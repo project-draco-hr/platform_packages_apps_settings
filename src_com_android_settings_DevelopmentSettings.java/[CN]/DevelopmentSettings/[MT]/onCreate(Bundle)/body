@@ -68,8 +68,9 @@
   }
  else {
     Preference experimentalWebView=findPreference(WEBVIEW_EXPERIMENTAL_KEY);
-    if (experimentalWebView != null) {
-      getPreferenceScreen().removePreference(experimentalWebView);
+    PreferenceGroup debugApplicationsCategory=(PreferenceGroup)findPreference(DEBUG_APPLICATIONS_CATEGORY_KEY);
+    if (debugApplicationsCategory != null) {
+      debugApplicationsCategory.removePreference(experimentalWebView);
     }
   }
   Preference hdcpChecking=findPreference(HDCP_CHECKING_KEY);

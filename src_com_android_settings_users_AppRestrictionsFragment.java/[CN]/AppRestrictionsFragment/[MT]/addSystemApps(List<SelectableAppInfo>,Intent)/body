@@ -5,7 +5,13 @@
     if (app.activityInfo != null && app.activityInfo.applicationInfo != null) {
       int flags=app.activityInfo.applicationInfo.flags;
       if ((flags & ApplicationInfo.FLAG_SYSTEM) != 0 || (flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
-        visibleApps.add(app.activityInfo.applicationInfo);
+        SelectableAppInfo info=new SelectableAppInfo();
+        info.packageName=app.activityInfo.packageName;
+        info.appName=app.activityInfo.applicationInfo.loadLabel(pm);
+        info.icon=app.activityInfo.loadIcon(pm);
+        info.activityName=app.activityInfo.loadLabel(pm);
+        if (info.activityName == null)         info.activityName=info.appName;
+        visibleApps.add(info);
       }
     }
   }

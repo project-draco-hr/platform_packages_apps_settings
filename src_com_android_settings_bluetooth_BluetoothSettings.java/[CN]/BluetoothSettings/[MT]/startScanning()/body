@@ -1,4 +1,5 @@
 {
+  if (mUserManager.hasUserRestriction(DISALLOW_CONFIG_BLUETOOTH))   return;
   if (!mAvailableDevicesCategoryIsPresent) {
     getPreferenceScreen().addPreference(mAvailableDevicesCategory);
   }

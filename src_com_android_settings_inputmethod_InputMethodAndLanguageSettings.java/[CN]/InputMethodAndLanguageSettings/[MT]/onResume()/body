@@ -7,7 +7,19 @@
       Configuration conf=getResources().getConfiguration();
       String language=conf.locale.getLanguage();
       String localeString;
-      if (hasOnlyOneLanguageInstance(language,Resources.getSystem().getAssets().getLocales())) {
+      if (language.equals("zz")) {
+        String country=conf.locale.getCountry();
+        if (country.equals("ZZ")) {
+          localeString="[Developer] Accented English (zz_ZZ)";
+        }
+ else         if (country.equals("ZY")) {
+          localeString="[Developer] Fake Bi-Directional (zz_ZY)";
+        }
+ else {
+          localeString="";
+        }
+      }
+ else       if (hasOnlyOneLanguageInstance(language,Resources.getSystem().getAssets().getLocales())) {
         localeString=conf.locale.getDisplayLanguage(conf.locale);
       }
  else {

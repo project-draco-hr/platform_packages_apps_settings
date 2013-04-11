@@ -1,5 +1,6 @@
 {
   super.onActivityCreated(savedInstanceState);
+  mUserManager=(UserManager)getSystemService(Context.USER_SERVICE);
   mActivityStarted=(savedInstanceState == null);
   mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
   getListView().setEmptyView(mEmptyView);

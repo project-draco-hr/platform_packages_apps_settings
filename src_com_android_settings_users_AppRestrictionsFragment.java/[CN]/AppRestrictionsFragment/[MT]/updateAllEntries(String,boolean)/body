@@ -1,0 +1,10 @@
+{
+  for (int i=0; i < mAppList.getPreferenceCount(); i++) {
+    Preference pref=mAppList.getPreference(i);
+    if (pref instanceof AppRestrictionsPreference) {
+      if (prefKey.equals(pref.getKey())) {
+        ((AppRestrictionsPreference)pref).setChecked(checked);
+      }
+    }
+  }
+}

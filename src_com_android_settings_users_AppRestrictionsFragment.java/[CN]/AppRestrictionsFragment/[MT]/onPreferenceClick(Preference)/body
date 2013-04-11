@@ -1,9 +1,10 @@
 {
   if (preference.getKey().startsWith(PKG_PREFIX)) {
     AppRestrictionsPreference arp=(AppRestrictionsPreference)preference;
-    if (!arp.isRequired()) {
+    if (!arp.isImmutable()) {
       arp.setChecked(!arp.isChecked());
       mSelectedPackages.put(arp.getKey().substring(PKG_PREFIX.length()),arp.isChecked());
+      updateAllEntries(arp.getKey(),arp.isChecked());
     }
     return true;
   }

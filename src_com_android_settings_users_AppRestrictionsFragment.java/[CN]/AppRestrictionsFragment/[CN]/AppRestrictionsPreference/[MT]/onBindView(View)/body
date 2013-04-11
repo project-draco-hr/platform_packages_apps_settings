@@ -9,10 +9,10 @@
   appRestrictionsPref.setOnClickListener(listener);
   appRestrictionsPref.setTag(this);
   ViewGroup widget=(ViewGroup)view.findViewById(android.R.id.widget_frame);
-  widget.setEnabled(!isRequired());
+  widget.setEnabled(!isImmutable());
   if (widget.getChildCount() > 0) {
     final Switch switchView=(Switch)widget.getChildAt(0);
-    switchView.setEnabled(!isRequired());
+    switchView.setEnabled(!isImmutable());
     switchView.setTag(this);
     switchView.setOnCheckedChangeListener(new OnCheckedChangeListener(){
       @Override public void onCheckedChanged(      CompoundButton buttonView,      boolean isChecked){

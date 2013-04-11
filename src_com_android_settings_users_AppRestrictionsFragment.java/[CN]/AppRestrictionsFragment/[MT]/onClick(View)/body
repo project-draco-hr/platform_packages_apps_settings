@@ -4,9 +4,10 @@
     if (v.getId() == R.id.app_restrictions_settings) {
       toggleAppPanel(pref);
     }
- else     if (!pref.isRequired()) {
+ else     if (!pref.isImmutable()) {
       pref.setChecked(!pref.isChecked());
       mSelectedPackages.put(pref.getKey().substring(PKG_PREFIX.length()),pref.isChecked());
+      updateAllEntries(pref.getKey(),pref.isChecked());
     }
   }
 }

@@ -1,5 +1,6 @@
 {
   super.onCreate(savedInstanceState);
   getActivity().setTitle(getString(R.string.device_picker));
-  mStartScanOnResume=(savedInstanceState == null);
+  UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
+  mStartScanOnResume=!um.hasUserRestriction(DISALLOW_CONFIG_BLUETOOTH) && (savedInstanceState == null);
 }

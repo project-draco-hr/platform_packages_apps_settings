@@ -7,6 +7,7 @@
  else     if (!pref.isImmutable()) {
       pref.setChecked(!pref.isChecked());
       mSelectedPackages.put(pref.getKey().substring(PKG_PREFIX.length()),pref.isChecked());
+      mAppListChanged=true;
       updateAllEntries(pref.getKey(),pref.isChecked());
     }
   }

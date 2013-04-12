@@ -24,14 +24,10 @@
     }
   }
  else   if (pref == mAddTrustedUser) {
-    onAddUserClicked();
+    onAddUserClicked(USER_TYPE_TRUSTED);
   }
  else   if (pref == mAddRestrictedUser) {
-    Account[] accounts=((AccountManager)getSystemService(Context.ACCOUNT_SERVICE)).getAccounts();
-    Intent intent=new Intent(getActivity(),UserRestrictionsActivity.class);
-    intent.putExtra(UserRestrictionsActivity.EXTRA_USER_NAME,getResources().getString(R.string.user_new_user_name));
-    intent.putExtra(UserRestrictionsActivity.EXTRA_ACCOUNTS,accounts);
-    startActivity(intent);
+    onAddUserClicked(USER_TYPE_LIMITED);
   }
   return false;
 }

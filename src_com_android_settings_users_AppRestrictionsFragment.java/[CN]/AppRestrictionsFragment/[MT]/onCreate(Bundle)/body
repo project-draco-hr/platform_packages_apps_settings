@@ -1,5 +1,16 @@
 {
   super.onCreate(icicle);
+  if (icicle != null) {
+    mNewUser=icicle.getBoolean(EXTRA_NEW_USER,false);
+    mUser=new UserHandle(icicle.getInt(EXTRA_USER_ID));
+  }
+ else {
+    Bundle args=getArguments();
+    if (args.containsKey(EXTRA_USER_ID)) {
+      mUser=new UserHandle(args.getInt(EXTRA_USER_ID));
+    }
+    mNewUser=args.getBoolean(EXTRA_NEW_USER,false);
+  }
   mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   addPreferencesFromResource(R.xml.app_restrictions);
   mAppList=getPreferenceScreen();

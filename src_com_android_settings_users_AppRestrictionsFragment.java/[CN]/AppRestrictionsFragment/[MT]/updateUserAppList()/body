@@ -1,0 +1,19 @@
+{
+  IPackageManager ipm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
+  for (  Map.Entry<String,Boolean> entry : mSelectedPackages.entrySet()) {
+    if (entry.getValue()) {
+      try {
+        ipm.installExistingPackageAsUser(entry.getKey(),mUser.getIdentifier());
+      }
+ catch (      RemoteException re) {
+      }
+    }
+ else {
+      try {
+        ipm.deletePackageAsUser(entry.getKey(),null,mUser.getIdentifier(),PackageManager.DELETE_SYSTEM_APP);
+      }
+ catch (      RemoteException re) {
+      }
+    }
+  }
+}

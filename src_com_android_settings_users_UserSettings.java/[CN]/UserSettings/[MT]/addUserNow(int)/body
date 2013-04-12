@@ -1,0 +1,28 @@
+{
+synchronized (mUserLock) {
+    mAddingUser=true;
+    updateUserList();
+    new Thread(){
+      public void run(){
+        UserInfo user=null;
+        if (userType == USER_TYPE_TRUSTED) {
+          user=createTrustedUser();
+        }
+ else {
+          user=createLimitedUser();
+        }
+synchronized (mUserLock) {
+          mAddingUser=false;
+          mHandler.sendEmptyMessage(MESSAGE_UPDATE_LIST);
+          if (userType == USER_TYPE_TRUSTED) {
+            mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SETUP_USER,user.id,user.serialNumber));
+          }
+ else {
+            mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_CONFIG_USER,user.id,user.serialNumber));
+          }
+        }
+      }
+    }
+.start();
+  }
+}

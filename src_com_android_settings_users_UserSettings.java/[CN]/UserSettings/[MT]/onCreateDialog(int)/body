@@ -12,14 +12,16 @@ case DIALOG_CONFIRM_REMOVE:
     }
 case DIALOG_USER_CANNOT_MANAGE:
   return new AlertDialog.Builder(getActivity()).setMessage(R.string.user_cannot_manage_message).setPositiveButton(android.R.string.ok,null).create();
-case DIALOG_ADD_USER:
+case DIALOG_ADD_USER_TRUSTED:
+case DIALOG_ADD_USER_LIMITED:
 {
   final SharedPreferences preferences=getActivity().getPreferences(Context.MODE_PRIVATE);
   final boolean longMessageDisplayed=preferences.getBoolean(KEY_ADD_USER_LONG_MESSAGE_DISPLAYED,false);
   final int messageResId=longMessageDisplayed ? R.string.user_add_user_message_short : R.string.user_add_user_message_long;
+  final int userType=dialogId == DIALOG_ADD_USER_TRUSTED ? USER_TYPE_TRUSTED : USER_TYPE_LIMITED;
   Dialog dlg=new AlertDialog.Builder(getActivity()).setTitle(R.string.user_add_user_title).setMessage(messageResId).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
-      addUserNow();
+      addUserNow(userType);
       if (!longMessageDisplayed) {
         preferences.edit().putBoolean(KEY_ADD_USER_LONG_MESSAGE_DISPLAYED,true).commit();
       }

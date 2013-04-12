@@ -19,6 +19,7 @@
   }
  else   if (id == DIALOG_RENAME) {
     mDeviceNameText=new EditText(getActivity());
+    mDeviceNameText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
     if (mSavedDeviceName != null) {
       mDeviceNameText.setText(mSavedDeviceName);
       mDeviceNameText.setSelection(mSavedDeviceName.length());

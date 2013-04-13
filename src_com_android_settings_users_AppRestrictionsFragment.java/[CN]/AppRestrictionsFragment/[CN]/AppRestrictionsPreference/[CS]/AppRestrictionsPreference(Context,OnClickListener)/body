@@ -2,4 +2,9 @@
   super(context);
   setLayoutResource(R.layout.preference_app_restrictions);
   this.listener=listener;
+  ColorMatrix colorMatrix=new ColorMatrix();
+  colorMatrix.setSaturation(0f);
+  float[] matrix=colorMatrix.getArray();
+  matrix[18]=0.5f;
+  grayscaleFilter=new ColorMatrixColorFilter(colorMatrix);
 }

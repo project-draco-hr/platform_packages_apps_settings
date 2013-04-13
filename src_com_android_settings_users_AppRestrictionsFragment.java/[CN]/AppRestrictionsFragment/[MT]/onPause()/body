@@ -1,6 +1,11 @@
 {
   super.onPause();
   if (mAppListChanged) {
-    updateUserAppList();
+    new Thread(){
+      public void run(){
+        updateUserAppList();
+      }
+    }
+.start();
   }
 }

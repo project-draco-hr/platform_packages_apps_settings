@@ -66,6 +66,7 @@
       AppRestrictionsPreference p=new AppRestrictionsPreference(context,this);
       final boolean hasSettings=resolveInfoListHasPackage(receivers,packageName);
       p.setIcon(app.icon);
+      p.setChecked(false);
       p.setTitle(app.activityName);
       if (app.masterEntry != null) {
         p.setSummary(getActivity().getString(R.string.user_restrictions_controlled_by,app.masterEntry.activityName));
@@ -94,6 +95,11 @@
  else       if (!mNewUser && appInfoListHasPackage(userApps,packageName)) {
         p.setChecked(true);
       }
+      if (pi.requiredAccountType != null && pi.restrictedAccountType == null) {
+        p.setChecked(false);
+        p.setImmutable(true);
+        p.setSummary(R.string.app_not_supported_in_limited);
+      }
       if (app.masterEntry != null) {
         p.setImmutable(true);
         p.setChecked(mSelectedPackages.get(packageName));
@@ -105,6 +111,7 @@
  else {
         p.setOrder(MAX_APP_RESTRICTIONS * (i + 2));
       }
+      p.setSelectableAppInfo(app);
       mSelectedPackages.put(packageName,p.isChecked());
       mAppListChanged=true;
       i++;

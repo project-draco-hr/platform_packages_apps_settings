@@ -4,5 +4,9 @@
   mEnabledSwitch=new Switch(activity);
   final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
   mEnabledSwitch.setPaddingRelative(0,0,padding,0);
+  if (mUnavailable) {
+    mEnabledSwitch.setEnabled(false);
+    return;
+  }
   mEnabledSwitch.setOnCheckedChangeListener(this);
 }

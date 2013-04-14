@@ -5,7 +5,12 @@
     if (Log.isLoggable(TAG,Log.VERBOSE))     Log.v(TAG,"restored");
   }
   final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
-  if (mAddAccountCalled || um.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
+  if (um.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
+    Toast.makeText(this,R.string.user_cannot_add_accounts_message,Toast.LENGTH_LONG).show();
+    finish();
+    return;
+  }
+  if (mAddAccountCalled) {
     finish();
     return;
   }

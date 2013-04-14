@@ -3,6 +3,11 @@
   mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
   mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+  if (android.os.Process.myUserHandle().getIdentifier() != UserHandle.USER_OWNER) {
+    mUnavailable=true;
+    setPreferenceScreen(new PreferenceScreen(getActivity(),null));
+    return;
+  }
   addPreferencesFromResource(R.xml.development_prefs);
   mEnableAdb=findAndInitCheckboxPref(ENABLE_ADB);
   mClearAdbKeys=findPreference(CLEAR_ADB_KEYS);

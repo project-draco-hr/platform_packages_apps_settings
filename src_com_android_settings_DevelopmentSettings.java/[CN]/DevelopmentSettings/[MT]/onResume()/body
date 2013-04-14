@@ -1,5 +1,13 @@
 {
   super.onResume();
+  if (mUnavailable) {
+    TextView emptyView=(TextView)getView().findViewById(android.R.id.empty);
+    getListView().setEmptyView(emptyView);
+    if (emptyView != null) {
+      emptyView.setText(R.string.development_settings_not_available);
+    }
+    return;
+  }
   if (mDpm.getMaximumTimeToLock(null) > 0) {
     mDisabledPrefs.add(mKeepScreenOn);
   }

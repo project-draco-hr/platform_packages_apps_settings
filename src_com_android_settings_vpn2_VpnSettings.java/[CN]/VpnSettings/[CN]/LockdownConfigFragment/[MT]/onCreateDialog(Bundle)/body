@@ -24,7 +24,7 @@
           Toast.makeText(context,R.string.vpn_lockdown_config_error,Toast.LENGTH_LONG).show();
           return;
         }
-        keyStore.put(Credentials.LOCKDOWN_VPN,profile.key.getBytes());
+        keyStore.put(Credentials.LOCKDOWN_VPN,profile.key.getBytes(),KeyStore.UID_SELF,KeyStore.FLAG_ENCRYPTED);
       }
       ConnectivityManager.from(getActivity()).updateLockdownVpn();
     }

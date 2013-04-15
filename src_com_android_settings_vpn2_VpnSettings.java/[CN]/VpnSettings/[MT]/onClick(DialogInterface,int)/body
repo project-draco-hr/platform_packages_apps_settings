@@ -1,7 +1,7 @@
 {
   if (button == DialogInterface.BUTTON_POSITIVE) {
     VpnProfile profile=mDialog.getProfile();
-    mKeyStore.put(Credentials.VPN + profile.key,profile.encode());
+    mKeyStore.put(Credentials.VPN + profile.key,profile.encode(),KeyStore.UID_SELF,KeyStore.FLAG_ENCRYPTED);
     VpnPreference preference=mPreferences.get(profile.key);
     if (preference != null) {
       disconnect(profile.key);

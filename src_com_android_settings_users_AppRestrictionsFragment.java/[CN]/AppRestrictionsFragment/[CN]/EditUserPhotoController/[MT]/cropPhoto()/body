@@ -1,0 +1,7 @@
+{
+  Intent intent=new Intent("com.android.camera.action.CROP");
+  intent.setDataAndType(mTakePictureUri,"image/*");
+  intent.putExtra(MediaStore.EXTRA_OUTPUT,mCropPictureUri);
+  appendCropExtras(intent);
+  mFragment.startActivityForResult(intent,REQUEST_CODE_CROP_PHOTO);
+}

@@ -1,0 +1,48 @@
+{
+  final boolean canTakePhoto=canTakePhoto();
+  final boolean canChoosePhoto=canChoosePhoto();
+  if (!canTakePhoto && !canChoosePhoto) {
+    return;
+  }
+  Context context=mImageView.getContext();
+  final List<AdapterItem> items=new ArrayList<AdapterItem>();
+  if (canTakePhoto()) {
+    String title=mImageView.getContext().getString(R.string.user_image_take_photo);
+    AdapterItem item=new AdapterItem(title,POPUP_LIST_ITEM_ID_TAKE_PHOTO);
+    items.add(item);
+  }
+  if (canChoosePhoto) {
+    String title=context.getString(R.string.user_image_choose_photo);
+    AdapterItem item=new AdapterItem(title,POPUP_LIST_ITEM_ID_CHOOSE_PHOTO);
+    items.add(item);
+  }
+  final ListPopupWindow listPopupWindow=new ListPopupWindow(context);
+  listPopupWindow.setAnchorView(mImageView);
+  listPopupWindow.setModal(true);
+  listPopupWindow.setInputMethodMode(ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
+  ListAdapter adapter=new ArrayAdapter<AdapterItem>(context,R.layout.edit_user_photo_popup_item,items);
+  listPopupWindow.setAdapter(adapter);
+  final int width=Math.max(mImageView.getWidth(),context.getResources().getDimensionPixelSize(R.dimen.update_user_photo_popup_min_width));
+  listPopupWindow.setWidth(width);
+  listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+    @Override public void onItemClick(    AdapterView<?> parent,    View view,    int position,    long id){
+      AdapterItem item=items.get(position);
+switch (item.id) {
+case POPUP_LIST_ITEM_ID_CHOOSE_PHOTO:
+{
+          choosePhoto();
+          listPopupWindow.dismiss();
+        }
+      break;
+case POPUP_LIST_ITEM_ID_TAKE_PHOTO:
+{
+      takePhoto();
+      listPopupWindow.dismiss();
+    }
+  break;
+}
+}
+}
+);
+listPopupWindow.show();
+}

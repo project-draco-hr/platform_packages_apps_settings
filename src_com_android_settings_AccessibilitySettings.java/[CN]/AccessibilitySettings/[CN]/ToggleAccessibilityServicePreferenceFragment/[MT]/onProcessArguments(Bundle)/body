@@ -10,9 +10,7 @@
       setHasOptionsMenu(true);
     }
   }
-  mEnableWarningTitle=arguments.getCharSequence(AccessibilitySettings.EXTRA_ENABLE_WARNING_TITLE);
-  mEnableWarningMessage=arguments.getCharSequence(AccessibilitySettings.EXTRA_ENABLE_WARNING_MESSAGE);
-  mDisableWarningTitle=arguments.getString(AccessibilitySettings.EXTRA_DISABLE_WARNING_TITLE);
-  mDisableWarningMessage=arguments.getString(AccessibilitySettings.EXTRA_DISABLE_WARNING_MESSAGE);
-  mComponentName=arguments.getString(EXTRA_SERVICE_COMPONENT_NAME);
+  mAccessibilityServiceInfo=arguments.getParcelable(EXTRA_ACCESSIBILITY_SERVICE_INFO);
+  ServiceInfo serviceInfo=mAccessibilityServiceInfo.getResolveInfo().serviceInfo;
+  mComponentName=new ComponentName(serviceInfo.packageName,serviceInfo.name).flattenToString();
 }

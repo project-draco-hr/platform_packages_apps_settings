@@ -31,17 +31,12 @@
       description=getString(R.string.accessibility_service_default_description);
     }
     extras.putString(EXTRA_SUMMARY,description);
-    CharSequence applicationLabel=info.getResolveInfo().loadLabel(getPackageManager());
-    extras.putString(EXTRA_ENABLE_WARNING_TITLE,getString(R.string.accessibility_service_security_warning_title,applicationLabel));
-    extras.putString(EXTRA_ENABLE_WARNING_MESSAGE,getString(R.string.accessibility_service_security_warning_summary,applicationLabel));
-    extras.putString(EXTRA_DISABLE_WARNING_TITLE,getString(R.string.accessibility_service_disable_warning_title,applicationLabel));
-    extras.putString(EXTRA_DISABLE_WARNING_MESSAGE,getString(R.string.accessibility_service_disable_warning_summary,applicationLabel));
     String settingsClassName=info.getSettingsActivityName();
     if (!TextUtils.isEmpty(settingsClassName)) {
       extras.putString(EXTRA_SETTINGS_TITLE,getString(R.string.accessibility_menu_item_settings));
       extras.putString(EXTRA_SETTINGS_COMPONENT_NAME,new ComponentName(info.getResolveInfo().serviceInfo.packageName,settingsClassName).flattenToString());
     }
-    extras.putString(EXTRA_SERVICE_COMPONENT_NAME,componentName.flattenToString());
+    extras.putParcelable(EXTRA_ACCESSIBILITY_SERVICE_INFO,info);
     mServicesCategory.addPreference(preference);
   }
   if (mServicesCategory.getPreferenceCount() == 0) {

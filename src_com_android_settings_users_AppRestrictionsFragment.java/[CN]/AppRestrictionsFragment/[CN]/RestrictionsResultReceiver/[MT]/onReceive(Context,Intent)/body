@@ -1,14 +1,14 @@
 {
   Bundle results=getResultExtras(true);
-  final ArrayList<RestrictionEntry> restrictions=results.getParcelableArrayList(Intent.EXTRA_RESTRICTIONS);
+  final ArrayList<RestrictionEntry> restrictions=results.getParcelableArrayList(Intent.EXTRA_RESTRICTIONS_LIST);
   Intent restrictionsIntent=(Intent)results.getParcelable(CUSTOM_RESTRICTIONS_INTENT);
   if (restrictions != null && restrictionsIntent == null) {
     onRestrictionsReceived(preference,packageName,restrictions);
-    mUserManager.setApplicationRestrictions(packageName,restrictions,mUser);
+    mUserManager.setApplicationRestrictions(packageName,RestrictionUtils.restrictionsToBundle(restrictions),mUser);
   }
  else   if (restrictionsIntent != null) {
     final Intent customIntent=restrictionsIntent;
-    customIntent.putParcelableArrayListExtra(Intent.EXTRA_RESTRICTIONS,restrictions);
+    customIntent.putExtra(Intent.EXTRA_RESTRICTIONS_BUNDLE,RestrictionUtils.restrictionsToBundle(restrictions));
     Preference p=new Preference(context);
     p.setTitle(R.string.app_restrictions_custom_label);
     p.setOnPreferenceClickListener(new OnPreferenceClickListener(){

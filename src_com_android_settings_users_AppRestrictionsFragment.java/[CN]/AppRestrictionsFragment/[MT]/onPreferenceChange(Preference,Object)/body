@@ -34,7 +34,7 @@ if (packageName.equals(getActivity().getPackageName())) {
 RestrictionUtils.setRestrictions(getActivity(),restrictions,mUser);
 }
  else {
-mUserManager.setApplicationRestrictions(packageName,restrictions,mUser);
+mUserManager.setApplicationRestrictions(packageName,RestrictionUtils.restrictionsToBundle(restrictions),mUser);
 }
 break;
 }

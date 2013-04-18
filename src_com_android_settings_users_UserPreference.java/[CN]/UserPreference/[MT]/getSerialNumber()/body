@@ -1,4 +1,5 @@
 {
+  if (mUserId == UserHandle.myUserId())   return Integer.MIN_VALUE;
   if (mSerialNumber < 0) {
     if (mUserId == USERID_UNKNOWN)     return Integer.MAX_VALUE;
     mSerialNumber=((UserManager)getContext().getSystemService(Context.USER_SERVICE)).getUserSerialNumber(mUserId);

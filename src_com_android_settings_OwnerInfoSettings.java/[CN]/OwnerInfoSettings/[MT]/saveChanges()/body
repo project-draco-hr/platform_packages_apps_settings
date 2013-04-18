@@ -1,0 +1,12 @@
+{
+  ContentResolver res=getActivity().getContentResolver();
+  String info=mOwnerInfo.getText().toString();
+  mLockPatternUtils.setOwnerInfo(info,mUserId);
+  if (mShowNickname) {
+    String oldName=UserManager.get(getActivity()).getUserName();
+    CharSequence newName=mNickname.getText();
+    if (!TextUtils.isEmpty(newName) && !newName.equals(oldName)) {
+      UserManager.get(getActivity()).setUserName(UserHandle.myUserId(),newName.toString());
+    }
+  }
+}

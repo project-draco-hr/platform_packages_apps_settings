@@ -9,7 +9,12 @@
       editProfile=new Intent(Intent.ACTION_EDIT,ContactsContract.Profile.CONTENT_URI);
     }
     editProfile.putExtra("finishActivityOnSaveCompleted",true);
-    startActivity(editProfile);
+    if (mUserManager.isLinkedUser()) {
+      onManageUserClicked(UserHandle.myUserId(),false);
+    }
+ else {
+      startActivity(editProfile);
+    }
   }
  else   if (pref instanceof UserPreference) {
     int userId=((UserPreference)pref).getUserId();
@@ -20,6 +25,9 @@
  else {
       if (!isInitialized(user)) {
         mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SETUP_USER,user.id,user.serialNumber));
+      }
+ else       if (user.isRestricted()) {
+        onManageUserClicked(user.id,false);
       }
     }
   }

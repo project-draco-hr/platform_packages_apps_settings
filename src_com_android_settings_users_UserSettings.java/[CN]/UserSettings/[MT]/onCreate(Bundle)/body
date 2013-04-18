@@ -12,19 +12,12 @@
   addPreferencesFromResource(R.xml.user_settings);
   mTrustedUserListCategory=(PreferenceGroup)findPreference(KEY_TRUSTED_USER_LIST);
   mLimitedUserListCategory=(PreferenceGroup)findPreference(KEY_LIMITED_USER_LIST);
-  mMePreference=(Preference)findPreference(KEY_USER_ME);
+  mMePreference=new UserPreference(getActivity(),null,UserHandle.myUserId(),mUserManager.isLinkedUser() ? null : this,null);
+  mMePreference.setKey(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
-  if (!mIsOwner) {
-    mMePreference.setSummary(null);
+  if (mIsOwner) {
+    mMePreference.setSummary(R.string.user_owner);
   }
-  Preference ownerInfo=findPreference("user_owner_info");
-  if (ownerInfo != null && !mIsOwner) {
-    ownerInfo.setTitle(R.string.user_info_settings_title);
-  }
-  mNicknamePreference=(SelectableEditTextPreference)findPreference(KEY_USER_NICKNAME);
-  mNicknamePreference.setOnPreferenceChangeListener(this);
-  mNicknamePreference.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-  mNicknamePreference.setInitialSelectionMode(SelectableEditTextPreference.SELECTION_SELECT_ALL);
   mAddRestrictedUser=findPreference(KEY_ADD_RESTRICTED_USER);
   mAddTrustedUser=findPreference(KEY_ADD_TRUSTED_USER);
   mAddRestrictedUser.setOnPreferenceClickListener(this);

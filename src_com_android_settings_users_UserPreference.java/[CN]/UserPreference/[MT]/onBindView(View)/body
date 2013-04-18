@@ -1,17 +1,29 @@
 {
+  View deleteDividerView=view.findViewById(R.id.divider_delete);
+  View manageDividerView=view.findViewById(R.id.divider_manage);
   View deleteView=view.findViewById(R.id.trash_user);
   if (deleteView != null) {
-    deleteView.setOnClickListener(mDeleteClickListener);
-    deleteView.setTag(this);
-  }
-  View settingsView=view.findViewById(R.id.manage_user);
-  if (settingsView != null) {
-    if (mRestricted) {
-      settingsView.setOnClickListener(mSettingsClickListener);
-      settingsView.setTag(this);
+    if (mDeleteClickListener != null) {
+      deleteView.setOnClickListener(mDeleteClickListener);
+      deleteView.setTag(this);
     }
  else {
-      settingsView.setVisibility(View.INVISIBLE);
+      deleteView.setVisibility(View.GONE);
+      deleteDividerView.setVisibility(View.GONE);
+    }
+  }
+  View manageView=view.findViewById(R.id.manage_user);
+  if (manageView != null) {
+    if (mSettingsClickListener != null) {
+      manageView.setOnClickListener(mSettingsClickListener);
+      manageView.setTag(this);
+      if (mDeleteClickListener != null) {
+        manageDividerView.setVisibility(View.GONE);
+      }
+    }
+ else {
+      manageView.setVisibility(View.GONE);
+      manageDividerView.setVisibility(View.GONE);
     }
   }
   super.onBindView(view);

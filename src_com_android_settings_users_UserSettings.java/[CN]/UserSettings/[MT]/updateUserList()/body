@@ -5,16 +5,15 @@
   mTrustedUserListCategory.setOrderingAsAdded(false);
   mLimitedUserListCategory.removeAll();
   mLimitedUserListCategory.setOrderingAsAdded(false);
+  mTrustedUserListCategory.addPreference(mMePreference);
   final ArrayList<Integer> missingIcons=new ArrayList<Integer>();
   for (  UserInfo user : users) {
     Preference pref;
     if (user.id == UserHandle.myUserId()) {
       pref=mMePreference;
-      mNicknamePreference.setText(user.name);
-      mNicknamePreference.setSummary(user.name);
     }
  else {
-      pref=new UserPreference(getActivity(),null,user.id,UserHandle.myUserId() == UserHandle.USER_OWNER,this,this);
+      pref=new UserPreference(getActivity(),null,user.id,mIsOwner && user.isRestricted() ? this : null,mIsOwner ? this : null);
       pref.setOnPreferenceClickListener(this);
       pref.setKey("id=" + user.id);
       if (user.isRestricted()) {
@@ -42,7 +41,7 @@
     }
   }
   if (mAddingUser) {
-    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,false,null,null);
+    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,null,null);
     pref.setEnabled(false);
     pref.setTitle(R.string.user_new_user_name);
     pref.setIcon(encircle(R.drawable.avatar_default_1));

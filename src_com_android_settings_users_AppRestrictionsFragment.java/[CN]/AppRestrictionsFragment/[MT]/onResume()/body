@@ -1,10 +1,7 @@
 {
   super.onResume();
   mAppListChanged=false;
-  if (mFirstTime) {
-    mFirstTime=false;
-    populateApps();
-  }
+  new AppLoadingTask().execute((Void[])null);
   UserInfo info=mUserManager.getUserInfo(mUser.getIdentifier());
   mUserPreference.setTitle(info.name);
   Bitmap userIcon=mUserManager.getUserIcon(mUser.getIdentifier());

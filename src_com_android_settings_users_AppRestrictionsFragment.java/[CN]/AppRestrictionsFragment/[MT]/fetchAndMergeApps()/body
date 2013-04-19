@@ -1,0 +1,63 @@
+{
+  mAppList.setOrderingAsAdded(false);
+  mVisibleApps=new ArrayList<SelectableAppInfo>();
+  final Context context=getActivity();
+  PackageManager pm=context.getPackageManager();
+  IPackageManager ipm=AppGlobals.getPackageManager();
+  Intent launcherIntent=new Intent(Intent.ACTION_MAIN);
+  launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+  addSystemApps(mVisibleApps,launcherIntent);
+  Intent widgetIntent=new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+  addSystemApps(mVisibleApps,widgetIntent);
+  List<ApplicationInfo> installedApps=pm.getInstalledApplications(0);
+  for (  ApplicationInfo app : installedApps) {
+    if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
+      SelectableAppInfo info=new SelectableAppInfo();
+      info.packageName=app.packageName;
+      info.appName=app.loadLabel(pm);
+      info.activityName=info.appName;
+      info.icon=app.loadIcon(pm);
+      mVisibleApps.add(info);
+    }
+  }
+  mUserApps=null;
+  try {
+    mUserApps=ipm.getInstalledApplications(0,mUser.getIdentifier()).getList();
+  }
+ catch (  RemoteException re) {
+  }
+  if (mUserApps != null) {
+    for (    ApplicationInfo app : mUserApps) {
+      if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
+        SelectableAppInfo info=new SelectableAppInfo();
+        info.packageName=app.packageName;
+        info.appName=app.loadLabel(pm);
+        info.activityName=info.appName;
+        info.icon=app.loadIcon(pm);
+        mVisibleApps.add(info);
+      }
+    }
+  }
+  Collections.sort(mVisibleApps,new AppLabelComparator());
+  Set<String> dedupPackageSet=new HashSet<String>();
+  for (int i=mVisibleApps.size() - 1; i >= 0; i--) {
+    SelectableAppInfo info=mVisibleApps.get(i);
+    if (DEBUG)     Log.i(TAG,info.toString());
+    String both=info.packageName + "+" + info.activityName;
+    if (!TextUtils.isEmpty(info.packageName) && !TextUtils.isEmpty(info.activityName) && dedupPackageSet.contains(both)) {
+      mVisibleApps.remove(i);
+    }
+ else {
+      dedupPackageSet.add(both);
+    }
+  }
+  HashMap<String,SelectableAppInfo> packageMap=new HashMap<String,SelectableAppInfo>();
+  for (  SelectableAppInfo info : mVisibleApps) {
+    if (packageMap.containsKey(info.packageName)) {
+      info.masterEntry=packageMap.get(info.packageName);
+    }
+ else {
+      packageMap.put(info.packageName,info);
+    }
+  }
+}

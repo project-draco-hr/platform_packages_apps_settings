@@ -1,19 +1,12 @@
 {
-  CharSequence title=null;
-  CharSequence message=null;
 switch (dialogId) {
 case DIALOG_ID_ENABLE_WARNING:
     mShownDialogId=DIALOG_ID_ENABLE_WARNING;
-  title=mEnableWarningTitle;
-message=mEnableWarningMessage;
-break;
+  return new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.enable_service_title,mAccessibilityServiceInfo.getResolveInfo().loadLabel(getPackageManager()))).setIconAttribute(android.R.attr.alertDialogIcon).setView(createEnableDialogContentView()).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
 case DIALOG_ID_DISABLE_WARNING:
 mShownDialogId=DIALOG_ID_DISABLE_WARNING;
-title=mDisableWarningTitle;
-message=mDisableWarningMessage;
-break;
+return new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.disable_service_title,mAccessibilityServiceInfo.getResolveInfo().loadLabel(getPackageManager()))).setIconAttribute(android.R.attr.alertDialogIcon).setMessage(getString(R.string.disable_service_message,mAccessibilityServiceInfo.getResolveInfo().loadLabel(getPackageManager()))).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
 default :
 throw new IllegalArgumentException();
 }
-return new AlertDialog.Builder(getActivity()).setTitle(title).setIconAttribute(android.R.attr.alertDialogIcon).setMessage(message).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
 }

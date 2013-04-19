@@ -1,0 +1,20 @@
+{
+  if (!(p instanceof InputMethodPreference)) {
+    return super.compareTo(p);
+  }
+  final InputMethodPreference imp=(InputMethodPreference)p;
+  final boolean priority0=mIsSystemIme && mAlwaysChecked;
+  final boolean priority1=imp.mIsSystemIme && imp.mAlwaysChecked;
+  if (priority0 == priority1) {
+    final CharSequence t0=getTitle();
+    final CharSequence t1=imp.getTitle();
+    if (TextUtils.isEmpty(t0)) {
+      return 1;
+    }
+    if (TextUtils.isEmpty(t1)) {
+      return -1;
+    }
+    return mCollator.compare(t0.toString(),t1.toString());
+  }
+  return priority0 ? -1 : 1;
+}

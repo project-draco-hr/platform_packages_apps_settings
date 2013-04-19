@@ -26,7 +26,7 @@ if (passkey == BluetoothDevice.ERROR) {
 Log.e(TAG,"Invalid Confirmation Passkey received, not showing any dialog");
 return;
 }
-mPairingKey=String.format("%06d",passkey);
+mPairingKey=String.format(Locale.US,"%06d",passkey);
 createConfirmationDialog(deviceManager);
 break;
 case BluetoothDevice.PAIRING_VARIANT_CONSENT:

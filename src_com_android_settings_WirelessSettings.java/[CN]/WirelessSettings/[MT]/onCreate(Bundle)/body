@@ -44,6 +44,9 @@
   if (isSecondaryUser || Utils.isWifiOnly(getActivity())) {
     removePreference(KEY_MOBILE_NETWORK_SETTINGS);
   }
+  if (getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEVISION)) {
+    removePreference(KEY_TOGGLE_AIRPLANE);
+  }
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
   DevicePolicyManager mDPM=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
   getPreferenceScreen().removePreference(mGlobalProxy);

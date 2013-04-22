@@ -1,4 +1,5 @@
 {
+  if (getActivity() == null)   return;
   final PackageManager pm=getActivity().getPackageManager();
   List<ResolveInfo> launchableApps=pm.queryIntentActivities(intent,0);
   for (  ResolveInfo app : launchableApps) {

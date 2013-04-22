@@ -3,6 +3,8 @@
   int userId=newUserInfo.id;
   UserHandle user=new UserHandle(userId);
   mUserManager.setUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS,true,user);
+  mUserManager.setUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,true,user);
+  Secure.putStringForUser(getContentResolver(),Secure.LOCATION_PROVIDERS_ALLOWED,"",userId);
   Bitmap bitmap=BitmapFactory.decodeResource(getResources(),UserSettings.USER_DRAWABLES[userId % UserSettings.USER_DRAWABLES.length]);
   mUserManager.setUserIcon(userId,bitmap);
   AccountManager am=AccountManager.get(getActivity());

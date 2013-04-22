@@ -1,7 +1,9 @@
 {
   final Context context=getActivity();
+  if (context == null)   return;
   PackageManager pm=context.getPackageManager();
   IPackageManager ipm=AppGlobals.getPackageManager();
+  mAppList.removeAll();
   Intent restrictionsIntent=new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);
   final List<ResolveInfo> receivers=pm.queryBroadcastReceivers(restrictionsIntent,0);
   int i=0;
@@ -9,14 +11,14 @@
     for (    SelectableAppInfo app : mVisibleApps) {
       String packageName=app.packageName;
       if (packageName == null)       continue;
-      final boolean isSettingsApp=packageName.equals(getActivity().getPackageName());
+      final boolean isSettingsApp=packageName.equals(context.getPackageName());
       AppRestrictionsPreference p=new AppRestrictionsPreference(context,this);
       final boolean hasSettings=resolveInfoListHasPackage(receivers,packageName);
       p.setIcon(app.icon);
       p.setChecked(false);
       p.setTitle(app.activityName);
       if (app.masterEntry != null) {
-        p.setSummary(getActivity().getString(R.string.user_restrictions_controlled_by,app.masterEntry.activityName));
+        p.setSummary(context.getString(R.string.user_restrictions_controlled_by,app.masterEntry.activityName));
       }
       p.setKey(PKG_PREFIX + packageName);
       p.setSettingsEnabled(hasSettings || isSettingsApp);

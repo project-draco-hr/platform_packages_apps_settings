@@ -2,6 +2,7 @@
   mAppList.setOrderingAsAdded(false);
   mVisibleApps=new ArrayList<SelectableAppInfo>();
   final Context context=getActivity();
+  if (context == null)   return;
   PackageManager pm=context.getPackageManager();
   IPackageManager ipm=AppGlobals.getPackageManager();
   Intent launcherIntent=new Intent(Intent.ACTION_MAIN);

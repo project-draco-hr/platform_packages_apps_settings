@@ -1,0 +1,45 @@
+{
+  if (dialogId == DIALOG_ID_EDIT_USER_INFO) {
+    if (mEditUserInfoDialog != null) {
+      return mEditUserInfoDialog;
+    }
+    LayoutInflater inflater=getActivity().getLayoutInflater();
+    View content=inflater.inflate(R.layout.edit_user_info_dialog_content,null);
+    UserInfo info=mUserManager.getUserInfo(mUser.getIdentifier());
+    final EditText userNameView=(EditText)content.findViewById(R.id.user_name);
+    userNameView.setText(info.name);
+    final ImageView userPhotoView=(ImageView)content.findViewById(R.id.user_photo);
+    userPhotoView.setImageDrawable(mUserPreference.getIcon());
+    mEditUserPhotoController=new EditUserPhotoController(this,userPhotoView);
+    mEditUserInfoDialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.user_info_settings_title).setIconAttribute(R.drawable.ic_settings_multiuser).setView(content).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+      @Override public void onClick(      DialogInterface dialog,      int which){
+        if (which == DialogInterface.BUTTON_POSITIVE) {
+          CharSequence userName=userNameView.getText();
+          if (!TextUtils.isEmpty(userName)) {
+            CharSequence oldUserName=mUserPreference.getTitle();
+            if (oldUserName == null || !userName.toString().equals(oldUserName.toString())) {
+              mUserPreference.setTitle(userName);
+              mUserManager.setUserName(mUser.getIdentifier(),userName.toString());
+            }
+          }
+          Drawable userPhoto=mEditUserPhotoController.getNewUserPhotoDrawable();
+          if (userPhoto != null && !userPhoto.equals(mUserPreference.getIcon())) {
+            mUserPreference.setIcon(userPhoto);
+            new AsyncTask<Void,Void,Void>(){
+              @Override protected Void doInBackground(              Void... params){
+                mUserManager.setUserIcon(mUser.getIdentifier(),mEditUserPhotoController.getNewUserPhotoBitmap());
+                return null;
+              }
+            }
+.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,(Void[])null);
+          }
+          removeDialog(DIALOG_ID_EDIT_USER_INFO);
+        }
+      }
+    }
+).setNegativeButton(android.R.string.cancel,null).create();
+    mEditUserInfoDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    return mEditUserInfoDialog;
+  }
+  return null;
+}

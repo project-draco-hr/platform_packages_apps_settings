@@ -1,0 +1,10 @@
+{
+  Cursor cursor=context.getContentResolver().query(DisplayPhoto.CONTENT_MAX_DIMENSIONS_URI,new String[]{DisplayPhoto.DISPLAY_MAX_DIM},null,null,null);
+  try {
+    cursor.moveToFirst();
+    return cursor.getInt(0);
+  }
+  finally {
+    cursor.close();
+  }
+}

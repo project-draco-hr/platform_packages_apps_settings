@@ -93,8 +93,7 @@ removePreference(KEY_CREDENTIALS_MANAGER);
 PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
 mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
 mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
-boolean isSideloadingAllowed=!um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);
-mToggleAppInstallation.setEnabled(isSideloadingAllowed);
+mToggleAppInstallation.setEnabled(mIsPrimary);
 mToggleVerifyApps=(CheckBoxPreference)findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
 if (mIsPrimary && showVerifierSetting()) {
 if (isVerifierInstalled()) {

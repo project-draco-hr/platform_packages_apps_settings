@@ -1,65 +1,12 @@
 {
-  mAppList.setOrderingAsAdded(false);
-  List<SelectableAppInfo> visibleApps=new ArrayList<SelectableAppInfo>();
   final Context context=getActivity();
   PackageManager pm=context.getPackageManager();
   IPackageManager ipm=AppGlobals.getPackageManager();
-  Intent launcherIntent=new Intent(Intent.ACTION_MAIN);
-  launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-  addSystemApps(visibleApps,launcherIntent);
-  Intent widgetIntent=new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-  addSystemApps(visibleApps,widgetIntent);
-  List<ApplicationInfo> installedApps=pm.getInstalledApplications(0);
-  for (  ApplicationInfo app : installedApps) {
-    if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
-      SelectableAppInfo info=new SelectableAppInfo();
-      info.packageName=app.packageName;
-      info.appName=app.loadLabel(pm);
-      info.activityName=info.appName;
-      info.icon=app.loadIcon(pm);
-      visibleApps.add(info);
-    }
-  }
-  List<ApplicationInfo> userApps=null;
-  try {
-    userApps=ipm.getInstalledApplications(0,mUser.getIdentifier()).getList();
-  }
- catch (  RemoteException re) {
-  }
-  if (userApps != null) {
-    for (    ApplicationInfo app : userApps) {
-      if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
-        SelectableAppInfo info=new SelectableAppInfo();
-        info.packageName=app.packageName;
-        info.appName=app.loadLabel(pm);
-        info.activityName=info.appName;
-        info.icon=app.loadIcon(pm);
-        visibleApps.add(info);
-      }
-    }
-  }
-  Collections.sort(visibleApps,new AppLabelComparator());
-  for (int i=visibleApps.size() - 1; i > 1; i--) {
-    SelectableAppInfo info=visibleApps.get(i);
-    if (DEBUG)     Log.i(TAG,info.toString());
-    if (info.packageName.equals(visibleApps.get(i - 1).packageName) && info.activityName.equals(visibleApps.get(i - 1).activityName)) {
-      visibleApps.remove(i);
-    }
-  }
-  HashMap<String,SelectableAppInfo> packageMap=new HashMap<String,SelectableAppInfo>();
-  for (  SelectableAppInfo info : visibleApps) {
-    if (packageMap.containsKey(info.packageName)) {
-      info.masterEntry=packageMap.get(info.packageName);
-    }
- else {
-      packageMap.put(info.packageName,info);
-    }
-  }
   Intent restrictionsIntent=new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);
   final List<ResolveInfo> receivers=pm.queryBroadcastReceivers(restrictionsIntent,0);
   int i=0;
-  if (visibleApps.size() > 0) {
-    for (    SelectableAppInfo app : visibleApps) {
+  if (mVisibleApps.size() > 0) {
+    for (    SelectableAppInfo app : mVisibleApps) {
       String packageName=app.packageName;
       if (packageName == null)       continue;
       final boolean isSettingsApp=packageName.equals(getActivity().getPackageName());
@@ -92,13 +39,16 @@
         p.setImmutable(true);
         if (!hasSettings && !isSettingsApp)         continue;
       }
- else       if (!mNewUser && appInfoListHasPackage(userApps,packageName)) {
+ else       if (!mNewUser && appInfoListHasPackage(mUserApps,packageName)) {
         p.setChecked(true);
       }
       if (pi.requiredAccountType != null && pi.restrictedAccountType == null) {
         p.setChecked(false);
         p.setImmutable(true);
         p.setSummary(R.string.app_not_supported_in_limited);
+      }
+      if (pi.restrictedAccountType != null) {
+        p.setSummary(R.string.app_sees_restricted_accounts);
       }
       if (app.masterEntry != null) {
         p.setImmutable(true);

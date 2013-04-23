@@ -1,16 +1,28 @@
 {
   IPackageManager ipm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
+  final int userId=mUser.getIdentifier();
+  if (!mUserManager.getUserInfo(userId).isRestricted()) {
+    Log.e(TAG,"Cannot apply application restrictions on a regular user!");
+    return;
+  }
   for (  Map.Entry<String,Boolean> entry : mSelectedPackages.entrySet()) {
+    String packageName=entry.getKey();
     if (entry.getValue()) {
       try {
-        ipm.installExistingPackageAsUser(entry.getKey(),mUser.getIdentifier());
+        ApplicationInfo info=ipm.getApplicationInfo(packageName,0,userId);
+        if (info == null || info.enabled == false) {
+          ipm.installExistingPackageAsUser(packageName,mUser.getIdentifier());
+        }
       }
  catch (      RemoteException re) {
       }
     }
  else {
       try {
-        ipm.deletePackageAsUser(entry.getKey(),null,mUser.getIdentifier(),PackageManager.DELETE_SYSTEM_APP);
+        ApplicationInfo info=ipm.getApplicationInfo(packageName,0,userId);
+        if (info != null) {
+          ipm.deletePackageAsUser(entry.getKey(),null,mUser.getIdentifier(),PackageManager.DELETE_SYSTEM_APP);
+        }
       }
  catch (      RemoteException re) {
       }

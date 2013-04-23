@@ -8,7 +8,9 @@
   }
  else   if (restrictionsIntent != null) {
     final Intent customIntent=restrictionsIntent;
-    customIntent.putExtra(Intent.EXTRA_RESTRICTIONS_BUNDLE,RestrictionUtils.restrictionsToBundle(restrictions));
+    if (restrictions != null) {
+      customIntent.putExtra(Intent.EXTRA_RESTRICTIONS_BUNDLE,RestrictionUtils.restrictionsToBundle(restrictions));
+    }
     Preference p=new Preference(context);
     p.setTitle(R.string.app_restrictions_custom_label);
     p.setOnPreferenceClickListener(new OnPreferenceClickListener(){

@@ -1,4 +1,9 @@
 {
   mAddedUserId=userId;
-  showDialog(DIALOG_SETUP_USER);
+  if (mUserManager.getUserInfo(userId).isRestricted()) {
+    showDialog(DIALOG_SETUP_PROFILE);
+  }
+ else {
+    showDialog(DIALOG_SETUP_USER);
+  }
 }

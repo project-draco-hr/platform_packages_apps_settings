@@ -2,11 +2,11 @@
 synchronized (mUserLock) {
     if (mRemovingUserId == -1 && !mAddingUser) {
 switch (userType) {
-case USER_TYPE_TRUSTED:
-        showDialog(DIALOG_ADD_USER_TRUSTED);
+case USER_TYPE_USER:
+        showDialog(DIALOG_ADD_USER);
       break;
-case USER_TYPE_LIMITED:
-    showDialog(DIALOG_ADD_USER_LIMITED);
+case USER_TYPE_RESTRICTED_PROFILE:
+    addUserNow(USER_TYPE_RESTRICTED_PROFILE);
   break;
 }
 }

@@ -1,0 +1,11 @@
+{
+  if (mHeaderView == null) {
+    mHeaderView=LayoutInflater.from(getActivity()).inflate(R.layout.user_info_header,null);
+    ((ViewGroup)getListView().getParent()).addView(mHeaderView,0);
+    mHeaderView.setOnClickListener(this);
+    mUserIconView=(ImageView)mHeaderView.findViewById(android.R.id.icon);
+    mUserNameView=(TextView)mHeaderView.findViewById(android.R.id.title);
+    getListView().setFastScrollEnabled(true);
+  }
+  super.onActivityCreated(savedInstanceState);
+}

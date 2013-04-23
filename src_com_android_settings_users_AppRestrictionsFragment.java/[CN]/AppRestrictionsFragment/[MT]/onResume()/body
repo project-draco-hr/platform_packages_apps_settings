@@ -3,9 +3,8 @@
   mAppListChanged=false;
   new AppLoadingTask().execute((Void[])null);
   UserInfo info=mUserManager.getUserInfo(mUser.getIdentifier());
-  mUserPreference.setTitle(info.name);
   Bitmap userIcon=mUserManager.getUserIcon(mUser.getIdentifier());
   CircleFramedDrawable circularIcon=CircleFramedDrawable.getInstance(this.getActivity(),userIcon);
-  mUserPreference.setIcon(circularIcon);
-  mUserPreference.setTitle(info.name);
+  ((TextView)mHeaderView.findViewById(android.R.id.title)).setText(info.name);
+  ((ImageView)mHeaderView.findViewById(android.R.id.icon)).setImageDrawable(circularIcon);
 }

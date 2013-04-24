@@ -10,21 +10,17 @@
   }
   mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   addPreferencesFromResource(R.xml.user_settings);
-  mTrustedUserListCategory=(PreferenceGroup)findPreference(KEY_TRUSTED_USER_LIST);
-  mLimitedUserListCategory=(PreferenceGroup)findPreference(KEY_LIMITED_USER_LIST);
+  mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
   mMePreference=new UserPreference(getActivity(),null,UserHandle.myUserId(),mUserManager.isLinkedUser() ? null : this,null);
   mMePreference.setKey(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
   if (mIsOwner) {
     mMePreference.setSummary(R.string.user_owner);
   }
-  mAddRestrictedUser=findPreference(KEY_ADD_RESTRICTED_USER);
-  mAddTrustedUser=findPreference(KEY_ADD_TRUSTED_USER);
-  mAddRestrictedUser.setOnPreferenceClickListener(this);
-  mAddTrustedUser.setOnPreferenceClickListener(this);
+  mAddUser=findPreference(KEY_ADD_USER);
+  mAddUser.setOnPreferenceClickListener(this);
   if (!mIsOwner || UserManager.getMaxSupportedUsers() < 2) {
-    removePreference(KEY_ADD_RESTRICTED_USER);
-    removePreference(KEY_ADD_TRUSTED_USER);
+    removePreference(KEY_ADD_USER);
   }
   loadProfile();
   setHasOptionsMenu(true);

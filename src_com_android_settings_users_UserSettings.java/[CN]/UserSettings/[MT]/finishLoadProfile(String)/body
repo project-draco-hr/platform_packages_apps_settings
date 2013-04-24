@@ -1,5 +1,6 @@
 {
-  mMePreference.setTitle(profileName);
+  if (getActivity() == null)   return;
+  mMePreference.setTitle(getString(R.string.user_you,profileName));
   int myUserId=UserHandle.myUserId();
   Bitmap b=mUserManager.getUserIcon(myUserId);
   if (b != null) {

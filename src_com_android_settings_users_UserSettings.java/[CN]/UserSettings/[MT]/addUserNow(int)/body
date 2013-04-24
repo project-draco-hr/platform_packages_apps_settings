@@ -4,7 +4,7 @@ synchronized (mUserLock) {
     new Thread(){
       public void run(){
         UserInfo user=null;
-        if (userType == USER_TYPE_TRUSTED) {
+        if (userType == USER_TYPE_USER) {
           user=createTrustedUser();
         }
  else {
@@ -12,7 +12,7 @@ synchronized (mUserLock) {
         }
 synchronized (mUserLock) {
           mAddingUser=false;
-          if (userType == USER_TYPE_TRUSTED) {
+          if (userType == USER_TYPE_USER) {
             mHandler.sendEmptyMessage(MESSAGE_UPDATE_LIST);
             mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SETUP_USER,user.id,user.serialNumber));
           }

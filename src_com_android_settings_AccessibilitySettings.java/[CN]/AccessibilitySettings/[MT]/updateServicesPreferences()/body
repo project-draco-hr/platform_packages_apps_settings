@@ -36,7 +36,7 @@
       extras.putString(EXTRA_SETTINGS_TITLE,getString(R.string.accessibility_menu_item_settings));
       extras.putString(EXTRA_SETTINGS_COMPONENT_NAME,new ComponentName(info.getResolveInfo().serviceInfo.packageName,settingsClassName).flattenToString());
     }
-    extras.putParcelable(EXTRA_ACCESSIBILITY_SERVICE_INFO,info);
+    extras.putParcelable(EXTRA_COMPONENT_NAME,componentName);
     mServicesCategory.addPreference(preference);
   }
   if (mServicesCategory.getPreferenceCount() == 0) {

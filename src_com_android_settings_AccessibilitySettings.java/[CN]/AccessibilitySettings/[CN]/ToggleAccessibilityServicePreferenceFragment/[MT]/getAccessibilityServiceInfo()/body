@@ -1,0 +1,12 @@
+{
+  List<AccessibilityServiceInfo> serviceInfos=AccessibilityManager.getInstance(getActivity()).getInstalledAccessibilityServiceList();
+  final int serviceInfoCount=serviceInfos.size();
+  for (int i=0; i < serviceInfoCount; i++) {
+    AccessibilityServiceInfo serviceInfo=serviceInfos.get(i);
+    ResolveInfo resolveInfo=serviceInfo.getResolveInfo();
+    if (mComponentName.getPackageName().equals(resolveInfo.serviceInfo.packageName) && mComponentName.getClassName().equals(resolveInfo.serviceInfo.name)) {
+      return serviceInfo;
+    }
+  }
+  return null;
+}

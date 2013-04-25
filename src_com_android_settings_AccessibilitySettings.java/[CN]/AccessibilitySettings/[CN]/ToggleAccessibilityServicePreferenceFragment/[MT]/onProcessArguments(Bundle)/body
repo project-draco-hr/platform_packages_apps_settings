@@ -10,7 +10,5 @@
       setHasOptionsMenu(true);
     }
   }
-  mAccessibilityServiceInfo=arguments.getParcelable(EXTRA_ACCESSIBILITY_SERVICE_INFO);
-  ServiceInfo serviceInfo=mAccessibilityServiceInfo.getResolveInfo().serviceInfo;
-  mComponentName=new ComponentName(serviceInfo.packageName,serviceInfo.name).flattenToString();
+  mComponentName=arguments.getParcelable(EXTRA_COMPONENT_NAME);
 }

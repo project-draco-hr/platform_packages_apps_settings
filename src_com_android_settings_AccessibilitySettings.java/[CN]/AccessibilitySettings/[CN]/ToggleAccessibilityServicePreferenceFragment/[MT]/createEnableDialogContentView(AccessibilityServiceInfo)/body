@@ -2,7 +2,7 @@
   LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   View content=inflater.inflate(R.layout.enable_accessibility_service_dialog_content,null);
   TextView capabilitiesHeaderView=(TextView)content.findViewById(R.id.capabilities_header);
-  capabilitiesHeaderView.setText(getString(R.string.capabilities_list_title,mAccessibilityServiceInfo.getResolveInfo().loadLabel(getPackageManager())));
+  capabilitiesHeaderView.setText(getString(R.string.capabilities_list_title,info.getResolveInfo().loadLabel(getPackageManager())));
   LinearLayout capabilitiesView=(LinearLayout)content.findViewById(R.id.capabilities);
   View capabilityView=inflater.inflate(com.android.internal.R.layout.app_permission_item_old,null);
   ImageView imageView=(ImageView)capabilityView.findViewById(com.android.internal.R.id.perm_icon);
@@ -11,7 +11,7 @@
   labelView.setText(getString(R.string.capability_title_receiveAccessibilityEvents));
   TextView descriptionView=(TextView)capabilityView.findViewById(com.android.internal.R.id.permission_list);
   descriptionView.setText(getString(R.string.capability_desc_receiveAccessibilityEvents));
-  List<AccessibilityServiceInfo.CapabilityInfo> capabilities=mAccessibilityServiceInfo.getCapabilityInfos();
+  List<AccessibilityServiceInfo.CapabilityInfo> capabilities=info.getCapabilityInfos();
   capabilitiesView.addView(capabilityView);
   final int capabilityCount=capabilities.size();
   for (int i=0; i < capabilityCount; i++) {

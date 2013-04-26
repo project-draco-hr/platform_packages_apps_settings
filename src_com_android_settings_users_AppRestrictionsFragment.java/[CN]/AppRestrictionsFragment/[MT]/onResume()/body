@@ -1,5 +1,6 @@
 {
   super.onResume();
+  getActivity().registerReceiver(mUserBackgrounding,new IntentFilter(Intent.ACTION_USER_BACKGROUND));
   mAppListChanged=false;
   new AppLoadingTask().execute((Void[])null);
   UserInfo info=mUserManager.getUserInfo(mUser.getIdentifier());

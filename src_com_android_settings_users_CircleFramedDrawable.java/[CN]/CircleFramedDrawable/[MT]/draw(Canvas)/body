@@ -1,8 +1,7 @@
 {
-  final float outside=Math.min(canvas.getWidth(),canvas.getHeight());
-  final float inside=mScale * outside;
-  final float pad=(outside - inside) / 2f;
-  mDstRect.set(pad,pad,outside - pad,outside - pad);
+  final float inside=mScale * mSize;
+  final float pad=(mSize - inside) / 2f;
+  mDstRect.set(pad,pad,mSize - pad,mSize - pad);
   canvas.drawBitmap(mBitmap,mSrcRect,mDstRect,null);
   mFrameRect.set(mDstRect);
   mFrameRect.inset(mStrokeWidth / 2f,mStrokeWidth / 2f);

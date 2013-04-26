@@ -1,7 +1,7 @@
 {
   final Context context=getActivity();
   if (context == null)   return;
-  PackageManager pm=context.getPackageManager();
+  final PackageManager pm=mPackageManager;
   IPackageManager ipm=AppGlobals.getPackageManager();
   mAppList.removeAll();
   Intent restrictionsIntent=new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);

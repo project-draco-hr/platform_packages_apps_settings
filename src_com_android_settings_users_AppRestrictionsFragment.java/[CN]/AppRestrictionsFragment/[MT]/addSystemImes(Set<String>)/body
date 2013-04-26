@@ -1,0 +1,15 @@
+{
+  final Context context=getActivity();
+  if (context == null)   return;
+  InputMethodManager imm=(InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+  List<InputMethodInfo> imis=imm.getInputMethodList();
+  for (  InputMethodInfo imi : imis) {
+    try {
+      if (imi.isDefault(context) && isSystemPackage(imi.getPackageName())) {
+        excludePackages.add(imi.getPackageName());
+      }
+    }
+ catch (    Resources.NotFoundException rnfe) {
+    }
+  }
+}

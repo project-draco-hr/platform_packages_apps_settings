@@ -1,0 +1,13 @@
+{
+  try {
+    final PackageInfo pi=mPackageManager.getPackageInfo(packageName,0);
+    if (pi.applicationInfo == null)     return false;
+    final int flags=pi.applicationInfo.flags;
+    if ((flags & ApplicationInfo.FLAG_SYSTEM) != 0 || (flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+      return true;
+    }
+  }
+ catch (  NameNotFoundException nnfe) {
+  }
+  return false;
+}

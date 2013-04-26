@@ -3,13 +3,15 @@
   mVisibleApps=new ArrayList<SelectableAppInfo>();
   final Context context=getActivity();
   if (context == null)   return;
-  PackageManager pm=context.getPackageManager();
+  final PackageManager pm=mPackageManager;
   IPackageManager ipm=AppGlobals.getPackageManager();
+  final HashSet<String> excludePackages=new HashSet<String>();
+  addSystemImes(excludePackages);
   Intent launcherIntent=new Intent(Intent.ACTION_MAIN);
   launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-  addSystemApps(mVisibleApps,launcherIntent);
+  addSystemApps(mVisibleApps,launcherIntent,excludePackages);
   Intent widgetIntent=new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-  addSystemApps(mVisibleApps,widgetIntent);
+  addSystemApps(mVisibleApps,widgetIntent,excludePackages);
   List<ApplicationInfo> installedApps=pm.getInstalledApplications(0);
   for (  ApplicationInfo app : installedApps) {
     if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {

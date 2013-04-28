@@ -12,6 +12,9 @@
         ApplicationInfo info=ipm.getApplicationInfo(packageName,0,userId);
         if (info == null || info.enabled == false) {
           ipm.installExistingPackageAsUser(packageName,mUser.getIdentifier());
+          if (DEBUG) {
+            Log.d(TAG,"Installing " + packageName);
+          }
         }
       }
  catch (      RemoteException re) {
@@ -22,6 +25,9 @@
         ApplicationInfo info=ipm.getApplicationInfo(packageName,0,userId);
         if (info != null) {
           ipm.deletePackageAsUser(entry.getKey(),null,mUser.getIdentifier(),PackageManager.DELETE_SYSTEM_APP);
+          if (DEBUG) {
+            Log.d(TAG,"Uninstalling " + packageName);
+          }
         }
       }
  catch (      RemoteException re) {

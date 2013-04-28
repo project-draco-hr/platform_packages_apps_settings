@@ -9,7 +9,11 @@
     }
  else     if (!pref.isImmutable()) {
       pref.setChecked(!pref.isChecked());
-      mSelectedPackages.put(pref.getKey().substring(PKG_PREFIX.length()),pref.isChecked());
+      final String packageName=pref.getKey().substring(PKG_PREFIX.length());
+      mSelectedPackages.put(packageName,pref.isChecked());
+      if (pref.isChecked() && pref.hasSettings && pref.restrictions == null) {
+        requestRestrictionsForApp(packageName,pref);
+      }
       mAppListChanged=true;
       updateAllEntries(pref.getKey(),pref.isChecked());
     }

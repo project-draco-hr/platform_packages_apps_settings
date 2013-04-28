@@ -1,5 +1,7 @@
 {
   super.onPause();
+  mNewUser=false;
+  getActivity().unregisterReceiver(mUserBackgrounding);
   if (mAppListChanged) {
     new Thread(){
       public void run(){

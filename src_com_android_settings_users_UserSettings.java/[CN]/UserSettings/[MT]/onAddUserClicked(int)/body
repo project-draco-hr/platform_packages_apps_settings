@@ -6,7 +6,12 @@ case USER_TYPE_USER:
         showDialog(DIALOG_ADD_USER);
       break;
 case USER_TYPE_RESTRICTED_PROFILE:
-    addUserNow(USER_TYPE_RESTRICTED_PROFILE);
+    if (hasLockscreenSecurity()) {
+      addUserNow(USER_TYPE_RESTRICTED_PROFILE);
+    }
+ else {
+      showDialog(DIALOG_NEED_LOCKSCREEN);
+    }
   break;
 }
 }

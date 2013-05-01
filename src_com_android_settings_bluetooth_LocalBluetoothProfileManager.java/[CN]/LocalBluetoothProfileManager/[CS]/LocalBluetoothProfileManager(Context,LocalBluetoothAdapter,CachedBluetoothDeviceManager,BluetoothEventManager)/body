@@ -9,7 +9,7 @@
   if (uuids != null) {
     updateLocalProfiles(uuids);
   }
-  mHidProfile=new HidProfile(context,mLocalAdapter);
+  mHidProfile=new HidProfile(context,mLocalAdapter,mDeviceManager,this);
   addProfile(mHidProfile,HidProfile.NAME,BluetoothInputDevice.ACTION_CONNECTION_STATE_CHANGED);
   mPanProfile=new PanProfile(context);
   addPanProfile(mPanProfile,PanProfile.NAME,BluetoothPan.ACTION_CONNECTION_STATE_CHANGED);

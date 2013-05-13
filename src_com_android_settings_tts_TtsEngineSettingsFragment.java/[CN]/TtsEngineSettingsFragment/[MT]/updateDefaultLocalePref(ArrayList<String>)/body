@@ -1,4 +1,8 @@
 {
+  if (availableLangs == null || availableLangs.size() == 0) {
+    mLocalePreference.setEnabled(false);
+    return;
+  }
   String currentLocale=mEnginesHelper.getLocalePrefForEngine(getEngineName());
   ArrayList<Pair<String,String>> entryPairs=new ArrayList<Pair<String,String>>(availableLangs.size());
   for (int i=0; i < availableLangs.size(); i++) {
@@ -23,24 +27,24 @@
     }
   }
 );
-  int selectedLanguageIndex=-1;
+  String defaultLocaleStr=mEnginesHelper.getDefaultLocale();
+  mSelectedLocaleIndex=-1;
+  mSystemLocaleIndex=-1;
   CharSequence[] entries=new CharSequence[availableLangs.size()];
   CharSequence[] entryValues=new CharSequence[availableLangs.size()];
   int i=0;
   for (  Pair<String,String> entry : entryPairs) {
     if (entry.second.equalsIgnoreCase(currentLocale)) {
-      selectedLanguageIndex=i;
+      mSelectedLocaleIndex=i;
+    }
+    if (entry.second.equalsIgnoreCase(defaultLocaleStr)) {
+      mSystemLocaleIndex=i;
     }
     entries[i]=entry.first;
     entryValues[i++]=entry.second;
   }
   mLocalePreference.setEntries(entries);
   mLocalePreference.setEntryValues(entryValues);
-  if (selectedLanguageIndex > -1) {
-    mLocalePreference.setValueIndex(selectedLanguageIndex);
-  }
- else {
-    mLocalePreference.setValueIndex(0);
-    updateLanguageTo(availableLangs.get(0));
-  }
+  mLocalePreference.setEnabled(true);
+  setLocalePreference(mSelectedLocaleIndex);
 }

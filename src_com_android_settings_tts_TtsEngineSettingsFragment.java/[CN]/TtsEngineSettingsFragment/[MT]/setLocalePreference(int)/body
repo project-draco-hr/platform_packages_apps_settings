@@ -1,0 +1,10 @@
+{
+  if (index < 0) {
+    mLocalePreference.setValue("");
+    mLocalePreference.setSummary(R.string.tts_lang_not_selected);
+  }
+ else {
+    mLocalePreference.setValueIndex(index);
+    mLocalePreference.setSummary(mLocalePreference.getEntries()[index]);
+  }
+}

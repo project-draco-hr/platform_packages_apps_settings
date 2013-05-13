@@ -10,12 +10,6 @@
   if (isChecked && ((wifiApState == WifiManager.WIFI_AP_STATE_ENABLING) || (wifiApState == WifiManager.WIFI_AP_STATE_ENABLED))) {
     mWifiManager.setWifiApEnabled(null,false);
   }
-  if (isChecked == false) {
-    if (mWifiManager.isScanAlwaysAvailable() && mNotifyScanMode.get()) {
-      Intent intent=new Intent(WifiManager.ACTION_NOTIFY_SCAN_ALWAYS_AVAILABLE);
-      mContext.startActivityAsUser(intent,null,UserHandle.CURRENT);
-    }
-  }
   if (mWifiManager.setWifiEnabled(isChecked)) {
     mSwitch.setEnabled(false);
   }

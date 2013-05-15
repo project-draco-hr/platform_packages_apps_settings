@@ -117,13 +117,23 @@ deviceAdminCategory.removePreference(mToggleVerifyApps);
 mToggleVerifyApps.setEnabled(false);
 }
 }
-final int n=getNumEnabledNotificationListeners();
 mNotificationAccess=findPreference(KEY_NOTIFICATION_ACCESS);
+if (mNotificationAccess != null) {
+final int total=NotificationAccessSettings.getListenersCount(mPM);
+if (total == 0) {
+if (deviceAdminCategory != null) {
+deviceAdminCategory.removePreference(mNotificationAccess);
+}
+}
+ else {
+final int n=getNumEnabledNotificationListeners();
 if (n == 0) {
 mNotificationAccess.setSummary(getResources().getString(R.string.manage_notification_access_summary_zero));
 }
  else {
 mNotificationAccess.setSummary(String.format(getResources().getQuantityString(R.plurals.manage_notification_access_summary_nonzero,n,n)));
+}
+}
 }
 return root;
 }

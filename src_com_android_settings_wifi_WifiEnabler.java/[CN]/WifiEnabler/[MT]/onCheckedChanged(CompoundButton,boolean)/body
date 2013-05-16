@@ -10,10 +10,9 @@
   if (isChecked && ((wifiApState == WifiManager.WIFI_AP_STATE_ENABLING) || (wifiApState == WifiManager.WIFI_AP_STATE_ENABLED))) {
     mWifiManager.setWifiApEnabled(null,false);
   }
-  if (mWifiManager.setWifiEnabled(isChecked)) {
-    mSwitch.setEnabled(false);
-  }
- else {
+  mSwitch.setEnabled(false);
+  if (!mWifiManager.setWifiEnabled(isChecked)) {
+    mSwitch.setEnabled(true);
     Toast.makeText(mContext,R.string.wifi_error,Toast.LENGTH_SHORT).show();
   }
 }

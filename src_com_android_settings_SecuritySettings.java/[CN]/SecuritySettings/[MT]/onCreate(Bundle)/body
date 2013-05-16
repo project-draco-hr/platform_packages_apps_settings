@@ -1,6 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   mLockPatternUtils=new LockPatternUtils(getActivity());
+  mPM=getActivity().getPackageManager();
   mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(getActivity());
 }

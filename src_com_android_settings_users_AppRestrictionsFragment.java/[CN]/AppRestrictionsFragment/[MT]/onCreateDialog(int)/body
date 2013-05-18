@@ -9,8 +9,18 @@
     final EditText userNameView=(EditText)content.findViewById(R.id.user_name);
     userNameView.setText(info.name);
     final ImageView userPhotoView=(ImageView)content.findViewById(R.id.user_photo);
-    userPhotoView.setImageDrawable(mUserIconView.getDrawable());
-    mEditUserPhotoController=new EditUserPhotoController(this,userPhotoView);
+    Drawable drawable=null;
+    if (mSavedPhoto != null) {
+      drawable=CircleFramedDrawable.getInstance(getActivity(),mSavedPhoto);
+    }
+ else {
+      drawable=mUserIconView.getDrawable();
+      if (drawable == null) {
+        drawable=getCircularUserIcon();
+      }
+    }
+    userPhotoView.setImageDrawable(drawable);
+    mEditUserPhotoController=new EditUserPhotoController(this,userPhotoView,mSavedPhoto,drawable);
     mEditUserInfoDialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.user_info_settings_title).setIconAttribute(R.drawable.ic_settings_multiuser).setView(content).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
       @Override public void onClick(      DialogInterface dialog,      int which){
         if (which == DialogInterface.BUTTON_POSITIVE) {
@@ -22,9 +32,10 @@
               mUserManager.setUserName(mUser.getIdentifier(),userName.toString());
             }
           }
-          Drawable userPhoto=mEditUserPhotoController.getNewUserPhotoDrawable();
-          if (userPhoto != null && !userPhoto.equals(mUserIconView.getDrawable())) {
-            mUserIconView.setImageDrawable(userPhoto);
+          Drawable drawable=mEditUserPhotoController.getNewUserPhotoDrawable();
+          Bitmap bitmap=mEditUserPhotoController.getNewUserPhotoBitmap();
+          if (drawable != null && bitmap != null && !drawable.equals(mUserIconView.getDrawable())) {
+            mUserIconView.setImageDrawable(drawable);
             new AsyncTask<Void,Void,Void>(){
               @Override protected Void doInBackground(              Void... params){
                 mUserManager.setUserIcon(mUser.getIdentifier(),mEditUserPhotoController.getNewUserPhotoBitmap());
@@ -35,9 +46,15 @@
           }
           removeDialog(DIALOG_ID_EDIT_USER_INFO);
         }
+        clearEditUserInfoDialog();
       }
     }
-).setNegativeButton(android.R.string.cancel,null).create();
+).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+      @Override public void onClick(      DialogInterface dialog,      int which){
+        clearEditUserInfoDialog();
+      }
+    }
+).create();
     mEditUserInfoDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     return mEditUserInfoDialog;
   }

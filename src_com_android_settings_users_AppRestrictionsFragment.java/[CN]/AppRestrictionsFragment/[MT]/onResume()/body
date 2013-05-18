@@ -4,8 +4,6 @@
   mAppListChanged=false;
   new AppLoadingTask().execute((Void[])null);
   UserInfo info=mUserManager.getUserInfo(mUser.getIdentifier());
-  Bitmap userIcon=mUserManager.getUserIcon(mUser.getIdentifier());
-  CircleFramedDrawable circularIcon=CircleFramedDrawable.getInstance(this.getActivity(),userIcon);
   ((TextView)mHeaderView.findViewById(android.R.id.title)).setText(info.name);
-  ((ImageView)mHeaderView.findViewById(android.R.id.icon)).setImageDrawable(circularIcon);
+  ((ImageView)mHeaderView.findViewById(android.R.id.icon)).setImageDrawable(getCircularUserIcon());
 }

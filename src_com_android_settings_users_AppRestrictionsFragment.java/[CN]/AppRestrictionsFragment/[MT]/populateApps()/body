@@ -40,6 +40,9 @@
         p.setChecked(true);
         p.setImmutable(true);
         if (!hasSettings && !isSettingsApp)         continue;
+        if (hasSettings) {
+          requestRestrictionsForApp(packageName,p);
+        }
       }
  else       if (!mNewUser && appInfoListHasPackage(mUserApps,packageName)) {
         p.setChecked(true);

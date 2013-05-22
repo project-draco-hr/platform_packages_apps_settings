@@ -50,4 +50,7 @@ count++;
 }
 }
 preference.setRestrictions(restrictions);
+if (count == 1 && preference.isImmutable() && preference.isChecked()) {
+mAppList.removePreference(preference);
+}
 }

@@ -29,7 +29,7 @@
     if (user.iconPath != null) {
       if (mUserIcons.get(user.id) == null) {
         missingIcons.add(user.id);
-        pref.setIcon(encircle(R.drawable.avatar_default_1));
+        pref.setIcon(getDefaultCircleAvatar());
       }
  else {
         setPhotoId(pref,user);
@@ -40,7 +40,7 @@
     Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,null,null);
     pref.setEnabled(false);
     pref.setTitle(R.string.user_new_user_name);
-    pref.setIcon(encircle(R.drawable.avatar_default_1));
+    pref.setIcon(getDefaultCircleAvatar());
     mUserListCategory.addPreference(pref);
   }
   getActivity().invalidateOptionsMenu();

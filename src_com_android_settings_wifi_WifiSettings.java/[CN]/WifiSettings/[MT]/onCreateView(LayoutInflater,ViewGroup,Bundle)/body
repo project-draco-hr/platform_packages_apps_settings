@@ -43,7 +43,14 @@
       customButton.setVisibility(View.VISIBLE);
       customButton.setOnClickListener(new OnClickListener(){
         @Override public void onClick(        View v){
-          if (isPhone() && !hasSimProblem()) {
+          boolean isConnected=false;
+          Activity activity=getActivity();
+          final ConnectivityManager connectivity=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+          if (connectivity != null) {
+            final NetworkInfo info=connectivity.getActiveNetworkInfo();
+            isConnected=(info != null) && info.isConnected();
+          }
+          if (isConnected) {
             showDialog(WIFI_SKIPPED_DIALOG_ID);
           }
  else {

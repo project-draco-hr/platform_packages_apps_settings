@@ -5,5 +5,7 @@
   offerInstallAccessibilitySerivceOnce();
   mSettingsPackageMonitor.register(getActivity(),getActivity().getMainLooper(),false);
   mSettingsContentObserver.register(getContentResolver());
-  RotationPolicy.registerRotationPolicyListener(getActivity(),mRotationPolicyListener);
+  if (RotationPolicy.isRotationSupported(getActivity())) {
+    RotationPolicy.registerRotationPolicyListener(getActivity(),mRotationPolicyListener);
+  }
 }

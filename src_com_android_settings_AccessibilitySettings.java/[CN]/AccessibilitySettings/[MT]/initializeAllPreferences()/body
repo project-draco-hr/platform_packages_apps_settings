@@ -7,6 +7,9 @@
     mSystemsCategory.removePreference(mTogglePowerButtonEndsCallPreference);
   }
   mToggleLockScreenRotationPreference=(CheckBoxPreference)findPreference(TOGGLE_LOCK_SCREEN_ROTATION_PREFERENCE);
+  if (!RotationPolicy.isRotationSupported(getActivity())) {
+    mSystemsCategory.removePreference(mToggleLockScreenRotationPreference);
+  }
   mToggleSpeakPasswordPreference=(CheckBoxPreference)findPreference(TOGGLE_SPEAK_PASSWORD_PREFERENCE);
   mSelectLongPressTimeoutPreference=(ListPreference)findPreference(SELECT_LONG_PRESS_TIMEOUT_PREFERENCE);
   mSelectLongPressTimeoutPreference.setOnPreferenceChangeListener(this);

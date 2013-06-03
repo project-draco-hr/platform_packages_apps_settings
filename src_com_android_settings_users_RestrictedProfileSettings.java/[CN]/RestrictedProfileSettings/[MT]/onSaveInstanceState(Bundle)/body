@@ -1,0 +1,6 @@
+{
+  super.onSaveInstanceState(outState);
+  if (mEditUserInfoDialog != null && mEditUserInfoDialog.isShowing() && mEditUserPhotoController != null) {
+    outState.putParcelable(KEY_SAVED_PHOTO,mEditUserPhotoController.getNewUserPhotoBitmap());
+  }
+}

@@ -2,9 +2,9 @@
   UserInfo info=mUserManager.getUserInfo(userId);
   if (info.isRestricted() && mIsOwner) {
     Bundle extras=new Bundle();
-    extras.putInt(AppRestrictionsFragment.EXTRA_USER_ID,userId);
-    extras.putBoolean(AppRestrictionsFragment.EXTRA_NEW_USER,newUser);
-    ((PreferenceActivity)getActivity()).startPreferencePanel(AppRestrictionsFragment.class.getName(),extras,R.string.user_restrictions_title,null,null,0);
+    extras.putInt(RestrictedProfileSettings.EXTRA_USER_ID,userId);
+    extras.putBoolean(RestrictedProfileSettings.EXTRA_NEW_USER,newUser);
+    ((PreferenceActivity)getActivity()).startPreferencePanel(RestrictedProfileSettings.class.getName(),extras,R.string.user_restrictions_title,null,null,0);
   }
  else   if (info.id == UserHandle.myUserId()) {
     Bundle extras=new Bundle();

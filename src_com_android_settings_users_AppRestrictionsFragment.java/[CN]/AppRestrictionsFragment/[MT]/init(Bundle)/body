@@ -1,0 +1,22 @@
+{
+  if (icicle != null) {
+    mUser=new UserHandle(icicle.getInt(EXTRA_USER_ID));
+  }
+ else {
+    Bundle args=getArguments();
+    if (args != null) {
+      if (args.containsKey(EXTRA_USER_ID)) {
+        mUser=new UserHandle(args.getInt(EXTRA_USER_ID));
+      }
+      mNewUser=args.getBoolean(EXTRA_NEW_USER,false);
+    }
+  }
+  if (mUser == null) {
+    mUser=android.os.Process.myUserHandle();
+  }
+  mPackageManager=getActivity().getPackageManager();
+  mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+  mRestrictedProfile=mUserManager.getUserInfo(mUser.getIdentifier()).isRestricted();
+  addPreferencesFromResource(R.xml.app_restrictions);
+  mAppList=getAppPreferenceGroup();
+}

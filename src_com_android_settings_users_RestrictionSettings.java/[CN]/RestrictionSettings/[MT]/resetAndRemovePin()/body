@@ -1,0 +1,14 @@
+{
+  final UserManager um=UserManager.get(getActivity());
+  final PackageManager pm=getActivity().getPackageManager();
+  List<ApplicationInfo> installedApps=pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
+  UserHandle user=android.os.Process.myUserHandle();
+  for (  ApplicationInfo info : installedApps) {
+    if ((info.flags & ApplicationInfo.FLAG_BLOCKED) != 0 && (info.flags & ApplicationInfo.FLAG_INSTALLED) != 0) {
+      pm.setApplicationBlockedSettingAsUser(info.packageName,false,user);
+    }
+  }
+  um.changeRestrictionsPin(null);
+  clearSelectedApps();
+  finishFragment();
+}

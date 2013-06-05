@@ -5,7 +5,7 @@
     if (display.equals(mWifiDisplayStatus.getActiveDisplay())) {
       showDisconnectDialog(display);
     }
- else {
+ else     if (display.canConnect()) {
       mDisplayManager.connectWifiDisplay(display.getDeviceAddress());
     }
   }

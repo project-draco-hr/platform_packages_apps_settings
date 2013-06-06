@@ -1,0 +1,16 @@
+{
+  if (DEBUG) {
+    Slog.d(TAG,"Setting wifi p2p channel: lc=" + lc + ", oc="+ oc);
+  }
+  mWifiP2pManager.setWifiP2pChannels(mWifiP2pChannel,lc,oc,new ActionListener(){
+    @Override public void onSuccess(){
+      if (DEBUG) {
+        Slog.d(TAG,"Successfully set wifi p2p channels.");
+      }
+    }
+    @Override public void onFailure(    int reason){
+      Slog.e(TAG,"Failed to set wifi p2p channels with reason " + reason + ".");
+    }
+  }
+);
+}

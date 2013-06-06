@@ -4,9 +4,6 @@
   final String state=mStorageManager.getVolumeState(mVolume.getPath());
   if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
     mItemAvailable.setTitle(R.string.memory_available_read_only);
-    if (mFormatPreference != null) {
-      removePreference(mFormatPreference);
-    }
   }
  else {
     mItemAvailable.setTitle(R.string.memory_available);
@@ -30,9 +27,6 @@
     removePreference(mUsageBarPreference);
     removePreference(mItemTotal);
     removePreference(mItemAvailable);
-    if (mFormatPreference != null) {
-      removePreference(mFormatPreference);
-    }
   }
   if (mUsbConnected && (UsbManager.USB_FUNCTION_MTP.equals(mUsbFunction) || UsbManager.USB_FUNCTION_PTP.equals(mUsbFunction))) {
     mMountTogglePreference.setEnabled(false);

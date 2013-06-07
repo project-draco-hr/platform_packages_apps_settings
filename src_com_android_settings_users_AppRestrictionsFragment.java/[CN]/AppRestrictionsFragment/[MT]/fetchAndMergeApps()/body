@@ -22,6 +22,16 @@
       info.icon=app.loadIcon(pm);
       mVisibleApps.add(info);
     }
+ else {
+      try {
+        PackageInfo pi=pm.getPackageInfo(app.packageName,0);
+        if (pi.requiredAccountType != null && pi.restrictedAccountType == null) {
+          mSelectedPackages.put(app.packageName,false);
+        }
+      }
+ catch (      NameNotFoundException re) {
+      }
+    }
   }
   mUserApps=null;
   try {

@@ -1,0 +1,5 @@
+{
+  final ConnectivityManager cm=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+  final boolean isSecondaryUser=UserHandle.myUserId() != UserHandle.USER_OWNER;
+  return !isSecondaryUser && cm.isTetheringSupported();
+}

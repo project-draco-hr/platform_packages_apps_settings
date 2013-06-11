@@ -2,6 +2,15 @@
   mPersistentGroup.removeAll();
   for (  WifiP2pGroup group : groups.getGroupList()) {
     if (DBG)     Log.d(TAG," group " + group);
-    mPersistentGroup.addPreference(new WifiP2pPersistentGroup(getActivity(),group));
+    WifiP2pPersistentGroup wppg=new WifiP2pPersistentGroup(getActivity(),group);
+    mPersistentGroup.addPreference(wppg);
+    if (wppg.getGroupName().equals(mSelectedGroupName)) {
+      if (DBG)       Log.d(TAG,"Selecting group " + wppg.getGroupName());
+      mSelectedGroup=wppg;
+      mSelectedGroupName=null;
+    }
+  }
+  if (mSelectedGroupName != null) {
+    Log.w(TAG," Selected group " + mSelectedGroupName + " disappered on next query ");
   }
 }

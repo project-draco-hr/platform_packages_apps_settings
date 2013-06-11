@@ -1,7 +1,7 @@
 {
   final Intent intent=batteryChangedIntent;
-  int plugType=intent.getIntExtra("plugged",0);
-  int status=intent.getIntExtra("status",BatteryManager.BATTERY_STATUS_UNKNOWN);
+  int plugType=intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,0);
+  int status=intent.getIntExtra(BatteryManager.EXTRA_STATUS,BatteryManager.BATTERY_STATUS_UNKNOWN);
   String statusString;
   if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
     statusString=res.getString(R.string.battery_info_status_charging);

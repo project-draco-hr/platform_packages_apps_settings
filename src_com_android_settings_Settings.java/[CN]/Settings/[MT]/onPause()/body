@@ -1,5 +1,6 @@
 {
   super.onPause();
+  unregisterReceiver(mBatteryInfoReceiver);
   ListAdapter listAdapter=getListAdapter();
   if (listAdapter instanceof HeaderAdapter) {
     ((HeaderAdapter)listAdapter).pause();

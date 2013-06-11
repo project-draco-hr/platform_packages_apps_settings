@@ -29,6 +29,11 @@
  catch (      RemoteException e) {
       }
     }
+ else     if (id == R.id.battery_settings) {
+      if (!mBatteryPresent) {
+        target.remove(i);
+      }
+    }
  else     if (id == R.id.account_settings) {
       int headerIndex=i + 1;
       i=insertAccountsHeaders(target,headerIndex);

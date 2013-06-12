@@ -1,0 +1,19 @@
+{
+  final boolean checked;
+switch (which) {
+case DialogInterface.BUTTON_POSITIVE:
+    checked=true;
+  mToggleSwitch.setCheckedInternal(checked);
+getArguments().putBoolean(EXTRA_CHECKED,checked);
+onPreferenceToggled(mPreferenceKey,checked);
+break;
+case DialogInterface.BUTTON_NEGATIVE:
+checked=false;
+mToggleSwitch.setCheckedInternal(checked);
+getArguments().putBoolean(EXTRA_CHECKED,checked);
+onPreferenceToggled(mPreferenceKey,checked);
+break;
+default :
+throw new IllegalArgumentException();
+}
+}

@@ -1,0 +1,9 @@
+{
+  sInstalledServicesList.clear();
+  List<ResolveInfo> resolveInfos=context.getPackageManager().queryIntentServices(new Intent(android.printservice.PrintService.SERVICE_INTERFACE),PackageManager.GET_SERVICES | PackageManager.GET_META_DATA);
+  final int resolveInfoCount=resolveInfos.size();
+  for (int i=0, count=resolveInfoCount; i < count; i++) {
+    ResolveInfo resolveInfo=resolveInfos.get(i);
+    sInstalledServicesList.add(resolveInfo);
+  }
+}

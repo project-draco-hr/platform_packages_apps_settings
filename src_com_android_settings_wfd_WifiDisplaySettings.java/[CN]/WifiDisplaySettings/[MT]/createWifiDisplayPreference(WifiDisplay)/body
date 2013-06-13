@@ -10,21 +10,16 @@ case WifiDisplayStatus.DISPLAY_STATE_CONNECTING:
 break;
 }
 }
- else if (paired && contains(mWifiDisplayStatus.getAvailableDisplays(),d.getDeviceAddress())) {
+ else if (d.isAvailable()) {
+if (!d.canConnect()) {
+p.setSummary(R.string.wifi_display_status_in_use);
+p.setEnabled(false);
+}
+ else if (d.isRemembered()) {
 p.setSummary(R.string.wifi_display_status_available);
-for (WifiDisplay display : mWifiDisplayStatus.getAvailableDisplays()) {
-if (display.getDeviceAddress().equals(d.getDeviceAddress()) && !display.canConnect()) {
-p.setSummary(R.string.wifi_display_status_in_use);
-p.setEnabled(false);
-break;
 }
 }
-}
- else if (!paired && !d.canConnect()) {
-p.setSummary(R.string.wifi_display_status_in_use);
-p.setEnabled(false);
-}
-if (paired) {
+if (d.isRemembered()) {
 p.setWidgetLayoutResource(R.layout.wifi_display_preference);
 }
 return p;

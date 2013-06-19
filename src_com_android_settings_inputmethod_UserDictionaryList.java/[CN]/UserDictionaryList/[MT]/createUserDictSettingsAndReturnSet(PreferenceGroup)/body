@@ -1,13 +1,17 @@
 {
   final Activity activity=getActivity();
   userDictGroup.removeAll();
-  final TreeSet<String> localeList=UserDictionaryList.getUserDictionaryLocalesSet(activity);
-  if (localeList.isEmpty()) {
+  final TreeSet<String> localeSet=UserDictionaryList.getUserDictionaryLocalesSet(activity);
+  if (mLocale != null) {
+    localeSet.add(mLocale);
+  }
+  if (localeSet.isEmpty()) {
     userDictGroup.addPreference(createUserDictionaryPreference(null,activity));
   }
  else {
-    for (    String locale : localeList) {
+    for (    String locale : localeSet) {
       userDictGroup.addPreference(createUserDictionaryPreference(locale,activity));
     }
   }
+  return localeSet;
 }

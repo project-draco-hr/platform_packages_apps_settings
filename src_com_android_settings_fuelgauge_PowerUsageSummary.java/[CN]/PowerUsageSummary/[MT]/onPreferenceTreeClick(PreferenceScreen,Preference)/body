@@ -37,12 +37,14 @@ case USER:
       values=new double[]{sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.gpsTime,sipper.wifiRunningTime,sipper.mobileRxBytes,sipper.mobileTxBytes,sipper.wifiRxBytes,sipper.wifiTxBytes,0,0};
       if (sipper.drainType == DrainType.APP) {
         Writer result=new StringWriter();
-        PrintWriter printWriter=new PrintWriter(result);
+        PrintWriter printWriter=new FastPrintWriter(result,false,1024);
         mStats.dumpLocked(printWriter,"",mStatsType,uid.getUid());
+        printWriter.flush();
         args.putString(PowerUsageDetail.EXTRA_REPORT_DETAILS,result.toString());
         result=new StringWriter();
-        printWriter=new PrintWriter(result);
+        printWriter=new FastPrintWriter(result,false,1024);
         mStats.dumpCheckinLocked(printWriter,mStatsType,uid.getUid());
+        printWriter.flush();
         args.putString(PowerUsageDetail.EXTRA_REPORT_CHECKIN_DETAILS,result.toString());
       }
     }

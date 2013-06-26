@@ -3,7 +3,4 @@
   getActivity().registerReceiver(mUserBackgrounding,new IntentFilter(Intent.ACTION_USER_BACKGROUND));
   mAppListChanged=false;
   new AppLoadingTask().execute((Void[])null);
-  UserInfo info=mUserManager.getUserInfo(mUser.getIdentifier());
-  ((TextView)mHeaderView.findViewById(android.R.id.title)).setText(info.name);
-  ((ImageView)mHeaderView.findViewById(android.R.id.icon)).setImageDrawable(getCircularUserIcon());
 }

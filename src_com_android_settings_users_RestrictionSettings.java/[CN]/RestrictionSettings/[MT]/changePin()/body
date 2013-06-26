@@ -1,0 +1,6 @@
+{
+  final UserManager um=UserManager.get(getActivity());
+  um.changeRestrictionsPin(null);
+  Intent requestPin=new Intent("android.intent.action.RESTRICTIONS_PIN_CREATE");
+  startActivityForResult(requestPin,REQUEST_PIN_CHALLENGE);
+}

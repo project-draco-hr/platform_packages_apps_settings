@@ -1,0 +1,6 @@
+{
+  super.onResume();
+  UserInfo info=mUserManager.getUserInfo(mUser.getIdentifier());
+  ((TextView)mHeaderView.findViewById(android.R.id.title)).setText(info.name);
+  ((ImageView)mHeaderView.findViewById(android.R.id.icon)).setImageDrawable(getCircularUserIcon());
+}

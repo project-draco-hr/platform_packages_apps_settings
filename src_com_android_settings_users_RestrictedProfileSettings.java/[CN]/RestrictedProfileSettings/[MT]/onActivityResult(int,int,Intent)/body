@@ -1,0 +1,6 @@
+{
+  super.onActivityResult(requestCode,resultCode,data);
+  if (mEditUserInfoDialog != null && mEditUserInfoDialog.isShowing() && mEditUserPhotoController.onActivityResult(requestCode,resultCode,data)) {
+    return;
+  }
+}

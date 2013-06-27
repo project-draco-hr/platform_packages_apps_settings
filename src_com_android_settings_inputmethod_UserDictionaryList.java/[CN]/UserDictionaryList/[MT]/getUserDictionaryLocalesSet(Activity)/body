@@ -7,15 +7,14 @@
  else   if (cursor.moveToFirst()) {
     final int columnIndex=cursor.getColumnIndex(UserDictionary.Words.LOCALE);
     do {
-      String locale=cursor.getString(columnIndex);
+      final String locale=cursor.getString(columnIndex);
       localeSet.add(null != locale ? locale : "");
     }
  while (cursor.moveToNext());
   }
-  localeSet.add(Locale.getDefault().toString());
   final InputMethodManager imm=(InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
   final List<InputMethodInfo> imis=imm.getEnabledInputMethodList();
-  for (  InputMethodInfo imi : imis) {
+  for (  final InputMethodInfo imi : imis) {
     final List<InputMethodSubtype> subtypes=imm.getEnabledInputMethodSubtypeList(imi,true);
     for (    InputMethodSubtype subtype : subtypes) {
       final String locale=subtype.getLocale();
@@ -23,6 +22,9 @@
         localeSet.add(locale);
       }
     }
+  }
+  if (!localeSet.contains(Locale.getDefault().getLanguage().toString())) {
+    localeSet.add(Locale.getDefault().toString());
   }
   return localeSet;
 }

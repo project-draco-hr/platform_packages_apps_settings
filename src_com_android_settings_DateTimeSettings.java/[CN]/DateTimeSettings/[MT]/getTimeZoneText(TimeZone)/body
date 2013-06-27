@@ -1,4 +1,5 @@
 {
-  Date now=new Date();
-  return formatOffset(new StringBuilder(),tz,now).append(", ").append(tz.getDisplayName(tz.inDaylightTime(now),TimeZone.LONG)).toString();
+  SimpleDateFormat sdf=new SimpleDateFormat("ZZZZ, zzzz");
+  sdf.setTimeZone(tz);
+  return sdf.format(new Date());
 }

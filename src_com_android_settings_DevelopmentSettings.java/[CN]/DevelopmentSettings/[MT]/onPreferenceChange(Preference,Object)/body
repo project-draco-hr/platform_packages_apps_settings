@@ -1,5 +1,31 @@
 {
-  if (HDCP_CHECKING_KEY.equals(preference.getKey())) {
+  if (SELECT_RUNTIME_KEY.equals(preference.getKey())) {
+    final String oldRuntimeValue=VMRuntime.getRuntime().vmLibrary();
+    final String newRuntimeValue=newValue.toString();
+    if (!newRuntimeValue.equals(oldRuntimeValue)) {
+      final Context context=getActivity();
+      final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+      builder.setMessage(context.getResources().getString(R.string.select_runtime_warning_message,oldRuntimeValue,newRuntimeValue));
+      builder.setPositiveButton(android.R.string.ok,new OnClickListener(){
+        @Override public void onClick(        DialogInterface dialog,        int which){
+          SystemProperties.set(SELECT_RUNTIME_PROPERTY,newRuntimeValue);
+          pokeSystemProperties();
+          PowerManager pm=(PowerManager)context.getSystemService(Context.POWER_SERVICE);
+          pm.reboot(null);
+        }
+      }
+);
+      builder.setNegativeButton(android.R.string.cancel,new OnClickListener(){
+        @Override public void onClick(        DialogInterface dialog,        int which){
+          updateRuntimeValue();
+        }
+      }
+);
+      builder.show();
+    }
+    return true;
+  }
+ else   if (HDCP_CHECKING_KEY.equals(preference.getKey())) {
     SystemProperties.set(HDCP_CHECKING_PROPERTY,newValue.toString());
     updateHdcpValues();
     pokeSystemProperties();

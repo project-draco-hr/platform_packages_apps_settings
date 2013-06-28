@@ -1,10 +1,10 @@
 {
-  int index=1;
   ListPreference hdcpChecking=(ListPreference)findPreference(HDCP_CHECKING_KEY);
   if (hdcpChecking != null) {
     String currentValue=SystemProperties.get(HDCP_CHECKING_PROPERTY);
     String[] values=getResources().getStringArray(R.array.hdcp_checking_values);
     String[] summaries=getResources().getStringArray(R.array.hdcp_checking_summaries);
+    int index=1;
     for (int i=0; i < values.length; i++) {
       if (currentValue.equals(values[i])) {
         index=i;

@@ -83,9 +83,16 @@
       debugApplicationsCategory.removePreference(experimentalWebView);
     }
   }
+  Preference selectRuntime=findPreference(SELECT_RUNTIME_KEY);
+  if (selectRuntime != null) {
+    mAllPrefs.add(selectRuntime);
+    if (!removePreferenceForProduction(selectRuntime)) {
+      filterRuntimeOptions(selectRuntime);
+    }
+  }
   Preference hdcpChecking=findPreference(HDCP_CHECKING_KEY);
   if (hdcpChecking != null) {
     mAllPrefs.add(hdcpChecking);
+    removePreferenceForProduction(hdcpChecking);
   }
-  removeHdcpOptionsForProduction();
 }

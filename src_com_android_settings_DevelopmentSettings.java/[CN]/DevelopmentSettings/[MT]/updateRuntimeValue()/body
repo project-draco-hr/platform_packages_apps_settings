@@ -1,0 +1,18 @@
+{
+  ListPreference selectRuntime=(ListPreference)findPreference(SELECT_RUNTIME_KEY);
+  if (selectRuntime != null) {
+    String currentValue=currentRuntimeValue();
+    String[] values=getResources().getStringArray(R.array.select_runtime_values);
+    String[] summaries=getResources().getStringArray(R.array.select_runtime_summaries);
+    int index=0;
+    for (int i=0; i < values.length; i++) {
+      if (currentValue.equals(values[i])) {
+        index=i;
+        break;
+      }
+    }
+    selectRuntime.setValue(values[index]);
+    selectRuntime.setSummary(summaries[index]);
+    selectRuntime.setOnPreferenceChangeListener(this);
+  }
+}

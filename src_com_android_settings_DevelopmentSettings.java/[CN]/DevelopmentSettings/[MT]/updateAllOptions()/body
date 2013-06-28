@@ -10,6 +10,7 @@
   updateCheckBox(mKeepScreenOn,Settings.Global.getInt(cr,Settings.Global.STAY_ON_WHILE_PLUGGED_IN,0) != 0);
   updateCheckBox(mEnforceReadExternal,isPermissionEnforced(READ_EXTERNAL_STORAGE));
   updateCheckBox(mAllowMockLocation,Settings.Secure.getInt(cr,Settings.Secure.ALLOW_MOCK_LOCATION,0) != 0);
+  updateRuntimeValue();
   updateHdcpValues();
   updatePasswordSummary();
   updateDebuggerOptions();

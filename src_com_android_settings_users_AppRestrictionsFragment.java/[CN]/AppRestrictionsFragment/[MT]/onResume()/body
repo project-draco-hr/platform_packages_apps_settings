@@ -2,5 +2,7 @@
   super.onResume();
   getActivity().registerReceiver(mUserBackgrounding,new IntentFilter(Intent.ACTION_USER_BACKGROUND));
   mAppListChanged=false;
-  new AppLoadingTask().execute((Void[])null);
+  if (mAppLoadingTask == null || mAppLoadingTask.getStatus() == AsyncTask.Status.FINISHED) {
+    mAppLoadingTask=new AppLoadingTask().execute((Void[])null);
+  }
 }

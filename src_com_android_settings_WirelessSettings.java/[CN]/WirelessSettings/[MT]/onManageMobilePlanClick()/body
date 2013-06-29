@@ -1,0 +1,40 @@
+{
+  log("onManageMobilePlanClick:");
+  mManageMobilePlanMessage=null;
+  Resources resources=getActivity().getResources();
+  NetworkInfo ni=mCm.getActiveNetworkInfo();
+  if (mTm.hasIccCard() && (ni != null)) {
+    String url=getProvisioningUrl();
+    if (!TextUtils.isEmpty(url)) {
+      Intent intent=new Intent(Intent.ACTION_VIEW);
+      intent.setData(Uri.parse(url));
+      startActivity(intent);
+      mManageMobilePlanMessage=null;
+    }
+ else {
+      String operatorName=mTm.getSimOperatorName();
+      if (TextUtils.isEmpty(operatorName)) {
+        operatorName=mTm.getNetworkOperatorName();
+        if (TextUtils.isEmpty(operatorName)) {
+          mManageMobilePlanMessage=resources.getString(R.string.mobile_unknown_sim_operator);
+        }
+ else {
+          mManageMobilePlanMessage=resources.getString(R.string.mobile_no_provisioning_url,operatorName);
+        }
+      }
+ else {
+        mManageMobilePlanMessage=resources.getString(R.string.mobile_no_provisioning_url,operatorName);
+      }
+    }
+  }
+ else   if (mTm.hasIccCard() == false) {
+    mManageMobilePlanMessage=resources.getString(R.string.mobile_insert_sim_card);
+  }
+ else {
+    mManageMobilePlanMessage=resources.getString(R.string.mobile_connect_to_internet);
+  }
+  if (!TextUtils.isEmpty(mManageMobilePlanMessage)) {
+    log("onManageMobilePlanClick: message=" + mManageMobilePlanMessage);
+    showDialog(MANAGE_MOBILE_PLAN_DIALOG_ID);
+  }
+}

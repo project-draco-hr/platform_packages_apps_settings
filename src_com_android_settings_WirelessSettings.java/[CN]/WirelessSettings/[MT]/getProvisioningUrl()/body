@@ -1,0 +1,10 @@
+{
+  String url=getActivity().getResources().getString(com.android.internal.R.string.mobile_provisioning_url);
+  log("getProvisioningUrl: mobile_provisioning_url=" + url);
+  if (!TextUtils.isEmpty(url)) {
+    log("getProvisioningUrl: iccid=" + mTm.getSimSerialNumber() + " imei="+ mTm.getDeviceId()+ " phone number="+ mTm.getLine1Number());
+    url=String.format(url,mTm.getSimSerialNumber(),mTm.getDeviceId(),mTm.getLine1Number());
+  }
+  log("getProvisioningUrl: url=" + url);
+  return url;
+}

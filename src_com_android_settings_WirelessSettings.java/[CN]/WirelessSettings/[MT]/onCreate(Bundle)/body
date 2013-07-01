@@ -1,5 +1,11 @@
 {
   super.onCreate(savedInstanceState);
+  if (savedInstanceState != null) {
+    mManageMobilePlanMessage=savedInstanceState.getString(SAVED_MANAGE_MOBILE_PLAN_MSG);
+  }
+  log("onCreate: mManageMobilePlanMessage=" + mManageMobilePlanMessage);
+  mCm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  mTm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
   addPreferencesFromResource(R.xml.wireless_settings);
   final boolean isSecondaryUser=UserHandle.myUserId() != UserHandle.USER_OWNER;
   final Activity activity=getActivity();
@@ -43,6 +49,7 @@
   }
   if (isSecondaryUser || Utils.isWifiOnly(getActivity())) {
     removePreference(KEY_MOBILE_NETWORK_SETTINGS);
+    removePreference(KEY_MANAGE_MOBILE_PLAN);
   }
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
   DevicePolicyManager mDPM=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);

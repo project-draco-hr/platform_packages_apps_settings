@@ -1,7 +1,11 @@
 {
+  log("onPreferenceTreeClick: preference=" + preference);
   if (preference == mAirplaneModePreference && Boolean.parseBoolean(SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE))) {
     startActivityForResult(new Intent(TelephonyIntents.ACTION_SHOW_NOTICE_ECM_BLOCK_OTHERS,null),REQUEST_CODE_EXIT_ECM);
     return true;
+  }
+ else   if (preference == findPreference(KEY_MANAGE_MOBILE_PLAN)) {
+    onManageMobilePlanClick();
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

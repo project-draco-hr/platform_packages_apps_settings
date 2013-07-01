@@ -1,0 +1,14 @@
+{
+  log("onCreateDialog: dialogId=" + dialogId);
+switch (dialogId) {
+case MANAGE_MOBILE_PLAN_DIALOG_ID:
+    return new AlertDialog.Builder(getActivity()).setMessage(mManageMobilePlanMessage).setCancelable(false).setPositiveButton(com.android.internal.R.string.ok,new DialogInterface.OnClickListener(){
+      @Override public void onClick(      DialogInterface dialog,      int id){
+        log("MANAGE_MOBILE_PLAN_DIALOG.onClickListener id=" + id);
+        mManageMobilePlanMessage=null;
+      }
+    }
+).create();
+}
+return super.onCreateDialog(dialogId);
+}

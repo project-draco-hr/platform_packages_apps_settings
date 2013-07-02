@@ -12,6 +12,9 @@
         requestRestrictionsForApp(packageName,pref);
       }
       mAppListChanged=true;
+      if (!mRestrictedProfile) {
+        applyUserAppState(packageName,pref.isChecked());
+      }
       updateAllEntries(pref.getKey(),pref.isChecked());
     }
   }

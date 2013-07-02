@@ -1,6 +1,12 @@
 {
   super.onActivityResult(requestCode,resultCode,data);
-  if (requestCode != KEYGUARD_REQUEST) {
+  if (requestCode == PIN_REQUEST) {
+    if (resultCode == Activity.RESULT_OK) {
+      mPinConfirmed=true;
+    }
+    return;
+  }
+ else   if (requestCode != KEYGUARD_REQUEST) {
     return;
   }
   if (resultCode == Activity.RESULT_OK) {

@@ -1,19 +1,4 @@
 {
   super.onResume();
-  if (!mChallengeSucceeded) {
-    getListView().setEnabled(false);
-    final UserManager um=UserManager.get(getActivity());
-    if (!mChallengeRequested) {
-      if (um.hasRestrictionsPin()) {
-        Intent requestPin=new Intent(Intent.ACTION_RESTRICTIONS_PIN_CHALLENGE);
-        startActivityForResult(requestPin,REQUEST_PIN_CHALLENGE);
-      }
- else {
-        Intent requestPin=new Intent("android.intent.action.RESTRICTIONS_PIN_CREATE");
-        startActivityForResult(requestPin,REQUEST_PIN_CHALLENGE);
-      }
-      mChallengeRequested=true;
-    }
-  }
-  mChallengeSucceeded=false;
+  ensurePin();
 }

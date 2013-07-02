@@ -2,10 +2,13 @@
   if (preference.getKey().startsWith(PKG_PREFIX)) {
     AppRestrictionsPreference arp=(AppRestrictionsPreference)preference;
     if (!arp.isImmutable()) {
-      arp.setChecked(!arp.isChecked());
-      mSelectedPackages.put(arp.getKey().substring(PKG_PREFIX.length()),arp.isChecked());
-      updateAllEntries(arp.getKey(),arp.isChecked());
+      final String packageName=arp.getKey().substring(PKG_PREFIX.length());
+      final boolean newEnabledState=!arp.isChecked();
+      arp.setChecked(newEnabledState);
+      mSelectedPackages.put(packageName,newEnabledState);
+      updateAllEntries(arp.getKey(),newEnabledState);
       mAppListChanged=true;
+      applyUserAppState(packageName,newEnabledState);
     }
     return true;
   }

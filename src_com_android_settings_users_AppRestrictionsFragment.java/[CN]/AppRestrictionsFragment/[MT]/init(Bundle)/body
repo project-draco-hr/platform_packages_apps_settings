@@ -15,8 +15,14 @@
     mUser=android.os.Process.myUserHandle();
   }
   mPackageManager=getActivity().getPackageManager();
+  mIPm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
   mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   mRestrictedProfile=mUserManager.getUserInfo(mUser.getIdentifier()).isRestricted();
+  try {
+    mSysPackageInfo=mPackageManager.getPackageInfo("android",PackageManager.GET_SIGNATURES);
+  }
+ catch (  NameNotFoundException nnfe) {
+  }
   addPreferencesFromResource(R.xml.app_restrictions);
   mAppList=getAppPreferenceGroup();
 }

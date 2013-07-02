@@ -1,0 +1,9 @@
+{
+  String action=intent.getAction();
+  String packageName=intent.getData().getSchemeSpecificPart();
+  AppRestrictionsPreference pref=(AppRestrictionsPreference)findPreference(getKeyForPackage(packageName));
+  if (pref == null)   return;
+  if ((Intent.ACTION_PACKAGE_ADDED.equals(action) && pref.isChecked()) || (Intent.ACTION_PACKAGE_REMOVED.equals(action) && !pref.isChecked())) {
+    pref.setEnabled(true);
+  }
+}

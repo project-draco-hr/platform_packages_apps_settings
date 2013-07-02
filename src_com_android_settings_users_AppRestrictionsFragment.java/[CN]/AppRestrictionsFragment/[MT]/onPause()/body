@@ -2,6 +2,7 @@
   super.onPause();
   mNewUser=false;
   getActivity().unregisterReceiver(mUserBackgrounding);
+  getActivity().unregisterReceiver(mPackageObserver);
   if (mAppListChanged) {
     new Thread(){
       public void run(){

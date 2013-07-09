@@ -35,7 +35,7 @@
         p.setChecked(true);
         p.setImmutable(true);
         if (!hasSettings && !isSettingsApp)         continue;
-        if (hasSettings) {
+        if (hasSettings && mRestrictedProfile) {
           requestRestrictionsForApp(packageName,p);
         }
       }

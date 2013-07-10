@@ -3,6 +3,7 @@
     BatterySipper bs;
 synchronized (mRequestQueue) {
       if (mRequestQueue.isEmpty() || mAbort) {
+        mHandler.sendEmptyMessage(MSG_REPORT_FULLY_DRAWN);
         mRequestThread=null;
         return;
       }

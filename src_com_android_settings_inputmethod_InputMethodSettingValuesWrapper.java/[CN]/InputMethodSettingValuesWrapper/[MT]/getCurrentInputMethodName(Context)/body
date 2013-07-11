@@ -1,0 +1,11 @@
+{
+synchronized (mMethodMap) {
+    final InputMethodInfo imi=mMethodMap.get(mSettings.getSelectedInputMethod());
+    if (imi == null) {
+      Log.w(TAG,"Invalid selected imi: " + mSettings.getSelectedInputMethod());
+      return "";
+    }
+    final InputMethodSubtype subtype=mImm.getCurrentInputMethodSubtype();
+    return InputMethodUtils.getImeAndSubtypeDisplayName(context,imi,subtype);
+  }
+}

@@ -1,0 +1,10 @@
+{
+  if (sInstance == null) {
+synchronized (TAG) {
+      if (sInstance == null) {
+        sInstance=new InputMethodSettingValuesWrapper(context);
+      }
+    }
+  }
+  return sInstance;
+}

@@ -1,0 +1,11 @@
+{
+synchronized (mMethodMap) {
+    mMethodList.clear();
+    mMethodMap.clear();
+    final List<InputMethodInfo> imms=mImm.getInputMethodList();
+    mMethodList.addAll(imms);
+    for (    InputMethodInfo imi : imms) {
+      mMethodMap.put(imi.getId(),imi);
+    }
+  }
+}

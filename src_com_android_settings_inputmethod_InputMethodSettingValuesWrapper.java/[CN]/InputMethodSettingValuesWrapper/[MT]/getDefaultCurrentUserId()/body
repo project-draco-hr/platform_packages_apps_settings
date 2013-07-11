@@ -1,0 +1,9 @@
+{
+  try {
+    return ActivityManagerNative.getDefault().getCurrentUser().id;
+  }
+ catch (  RemoteException e) {
+    Slog.w(TAG,"Couldn't get current user ID; guessing it's 0",e);
+  }
+  return 0;
+}

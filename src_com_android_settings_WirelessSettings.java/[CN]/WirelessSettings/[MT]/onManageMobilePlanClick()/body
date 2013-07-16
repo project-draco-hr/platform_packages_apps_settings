@@ -4,7 +4,7 @@
   Resources resources=getActivity().getResources();
   NetworkInfo ni=mCm.getActiveNetworkInfo();
   if (mTm.hasIccCard() && (ni != null)) {
-    String url=getProvisioningUrl();
+    String url=mCm.getMobileProvisioningUrl();
     if (!TextUtils.isEmpty(url)) {
       Intent intent=new Intent(Intent.ACTION_VIEW);
       intent.setData(Uri.parse(url));

@@ -1,0 +1,30 @@
+{
+  Set<ComponentName> enabledServices=AccessibilityUtils.getEnabledServicesFromSettings(getActivity());
+  ComponentName toggledService=ComponentName.unflattenFromString(preferenceKey);
+  boolean accessibilityEnabled=false;
+  if (enabled) {
+    enabledServices.add(toggledService);
+    accessibilityEnabled=true;
+  }
+ else {
+    enabledServices.remove(toggledService);
+    Set<ComponentName> installedServices=AccessibilitySettings.sInstalledServices;
+    for (    ComponentName enabledService : enabledServices) {
+      if (installedServices.contains(enabledService)) {
+        accessibilityEnabled=true;
+        break;
+      }
+    }
+  }
+  StringBuilder enabledServicesBuilder=new StringBuilder();
+  for (  ComponentName enabledService : enabledServices) {
+    enabledServicesBuilder.append(enabledService.flattenToString());
+    enabledServicesBuilder.append(AccessibilitySettings.ENABLED_ACCESSIBILITY_SERVICES_SEPARATOR);
+  }
+  final int enabledServicesBuilderLength=enabledServicesBuilder.length();
+  if (enabledServicesBuilderLength > 0) {
+    enabledServicesBuilder.deleteCharAt(enabledServicesBuilderLength - 1);
+  }
+  Settings.Secure.putString(getContentResolver(),Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,enabledServicesBuilder.toString());
+  Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,accessibilityEnabled ? 1 : 0);
+}

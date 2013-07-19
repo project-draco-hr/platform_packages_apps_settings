@@ -35,7 +35,7 @@
     showIpConfigFields();
     showProxyFields();
     mView.findViewById(R.id.wifi_advanced_toggle).setVisibility(View.VISIBLE);
-    mView.findViewById(R.id.wifi_advanced_togglebox).setOnClickListener(this);
+    ((CheckBox)mView.findViewById(R.id.wifi_advanced_togglebox)).setOnCheckedChangeListener(this);
     mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
   }
  else {
@@ -81,7 +81,7 @@
       showIpConfigFields();
       showProxyFields();
       mView.findViewById(R.id.wifi_advanced_toggle).setVisibility(View.VISIBLE);
-      mView.findViewById(R.id.wifi_advanced_togglebox).setOnClickListener(this);
+      ((CheckBox)mView.findViewById(R.id.wifi_advanced_togglebox)).setOnCheckedChangeListener(this);
       if (showAdvancedFields) {
         ((CheckBox)mView.findViewById(R.id.wifi_advanced_togglebox)).setChecked(true);
         mView.findViewById(R.id.wifi_advanced_fields).setVisibility(View.VISIBLE);

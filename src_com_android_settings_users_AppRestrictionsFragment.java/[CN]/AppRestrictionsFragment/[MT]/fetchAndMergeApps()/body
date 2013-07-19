@@ -4,7 +4,7 @@
   final Context context=getActivity();
   if (context == null)   return;
   final PackageManager pm=mPackageManager;
-  IPackageManager ipm=AppGlobals.getPackageManager();
+  final IPackageManager ipm=mIPm;
   final HashSet<String> excludePackages=new HashSet<String>();
   addSystemImes(excludePackages);
   Intent launcherIntent=new Intent(Intent.ACTION_MAIN);

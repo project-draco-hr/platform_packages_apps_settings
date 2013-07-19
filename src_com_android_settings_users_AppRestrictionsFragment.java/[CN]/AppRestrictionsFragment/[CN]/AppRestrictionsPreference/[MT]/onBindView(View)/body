@@ -11,12 +11,12 @@
   ViewGroup widget=(ViewGroup)view.findViewById(android.R.id.widget_frame);
   widget.setEnabled(!isImmutable());
   if (widget.getChildCount() > 0) {
-    final Switch switchView=(Switch)widget.getChildAt(0);
-    switchView.setEnabled(!isImmutable());
-    switchView.setTag(this);
-    switchView.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+    final Switch toggle=(Switch)widget.getChildAt(0);
+    toggle.setEnabled(!isImmutable());
+    toggle.setTag(this);
+    toggle.setOnCheckedChangeListener(new OnCheckedChangeListener(){
       @Override public void onCheckedChanged(      CompoundButton buttonView,      boolean isChecked){
-        listener.onClick(switchView);
+        listener.onClick(toggle);
       }
     }
 );

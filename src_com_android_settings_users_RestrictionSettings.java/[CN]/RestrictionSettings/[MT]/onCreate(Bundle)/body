@@ -1,7 +1,9 @@
 {
   super.onCreate(icicle);
   init(icicle);
-  mChallengeSucceeded=false;
-  mChallengeRequested=icicle != null ? icicle.getBoolean(KEY_CHALLENGE_REQUESTED,false) : false;
+  if (icicle != null) {
+    mChallengeSucceeded=icicle.getBoolean(KEY_CHALLENGE_SUCCEEDED,false);
+    mChallengeRequested=icicle.getBoolean(KEY_CHALLENGE_REQUESTED,false);
+  }
   setHasOptionsMenu(true);
 }

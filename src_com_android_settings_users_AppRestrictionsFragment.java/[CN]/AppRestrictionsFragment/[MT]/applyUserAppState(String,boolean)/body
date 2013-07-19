@@ -1,0 +1,45 @@
+{
+  final int userId=mUser.getIdentifier();
+  if (enabled) {
+    try {
+      ApplicationInfo info=mIPm.getApplicationInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES,userId);
+      if (info == null || info.enabled == false || (info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
+        mIPm.installExistingPackageAsUser(packageName,mUser.getIdentifier());
+        if (DEBUG) {
+          Log.d(TAG,"Installing " + packageName);
+        }
+      }
+      if (info != null && (info.flags & ApplicationInfo.FLAG_BLOCKED) != 0 && (info.flags & ApplicationInfo.FLAG_INSTALLED) != 0) {
+        disableUiForPackage(packageName);
+        mIPm.setApplicationBlockedSettingAsUser(packageName,false,userId);
+        if (DEBUG) {
+          Log.d(TAG,"Unblocking " + packageName);
+        }
+      }
+    }
+ catch (    RemoteException re) {
+    }
+  }
+ else {
+    try {
+      ApplicationInfo info=mIPm.getApplicationInfo(packageName,0,userId);
+      if (info != null) {
+        if (mRestrictedProfile) {
+          mIPm.deletePackageAsUser(packageName,null,mUser.getIdentifier(),PackageManager.DELETE_SYSTEM_APP);
+          if (DEBUG) {
+            Log.d(TAG,"Uninstalling " + packageName);
+          }
+        }
+ else {
+          disableUiForPackage(packageName);
+          mIPm.setApplicationBlockedSettingAsUser(packageName,true,userId);
+          if (DEBUG) {
+            Log.d(TAG,"Blocking " + packageName);
+          }
+        }
+      }
+    }
+ catch (    RemoteException re) {
+    }
+  }
+}

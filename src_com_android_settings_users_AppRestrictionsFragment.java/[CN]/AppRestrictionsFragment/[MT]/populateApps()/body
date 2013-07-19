@@ -2,7 +2,7 @@
   final Context context=getActivity();
   if (context == null)   return;
   final PackageManager pm=mPackageManager;
-  IPackageManager ipm=AppGlobals.getPackageManager();
+  final IPackageManager ipm=mIPm;
   mAppList.removeAll();
   Intent restrictionsIntent=new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);
   final List<ResolveInfo> receivers=pm.queryBroadcastReceivers(restrictionsIntent,0);
@@ -20,22 +20,22 @@
       if (app.masterEntry != null) {
         p.setSummary(context.getString(R.string.user_restrictions_controlled_by,app.masterEntry.activityName));
       }
-      p.setKey(PKG_PREFIX + packageName);
+      p.setKey(getKeyForPackage(packageName));
       p.setSettingsEnabled(hasSettings || isSettingsApp);
       p.setPersistent(false);
       p.setOnPreferenceChangeListener(this);
       p.setOnPreferenceClickListener(this);
       PackageInfo pi=null;
       try {
-        pi=ipm.getPackageInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES,mUser.getIdentifier());
+        pi=ipm.getPackageInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES,mUser.getIdentifier());
       }
  catch (      RemoteException e) {
       }
-      if (pi != null && pi.requiredForAllUsers) {
+      if (pi != null && (pi.requiredForAllUsers || isPlatformSigned(pi))) {
         p.setChecked(true);
         p.setImmutable(true);
         if (!hasSettings && !isSettingsApp)         continue;
-        if (hasSettings && mRestrictedProfile) {
+        if (hasSettings) {
           requestRestrictionsForApp(packageName,p);
         }
       }

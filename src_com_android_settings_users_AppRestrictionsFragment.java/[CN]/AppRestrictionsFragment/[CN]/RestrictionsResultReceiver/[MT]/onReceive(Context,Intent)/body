@@ -4,7 +4,9 @@
   Intent restrictionsIntent=(Intent)results.getParcelable(CUSTOM_RESTRICTIONS_INTENT);
   if (restrictions != null && restrictionsIntent == null) {
     onRestrictionsReceived(preference,packageName,restrictions);
-    mUserManager.setApplicationRestrictions(packageName,RestrictionUtils.restrictionsToBundle(restrictions),mUser);
+    if (mRestrictedProfile) {
+      mUserManager.setApplicationRestrictions(packageName,RestrictionUtils.restrictionsToBundle(restrictions),mUser);
+    }
   }
  else   if (restrictionsIntent != null) {
     final Intent customIntent=restrictionsIntent;
@@ -23,7 +25,7 @@
 );
     p.setPersistent(false);
     p.setOrder(preference.getOrder() + 1);
-    preference.childPreferences.add(p);
+    preference.mChildren.add(p);
     mAppList.addPreference(p);
     preference.setRestrictions(restrictions);
   }

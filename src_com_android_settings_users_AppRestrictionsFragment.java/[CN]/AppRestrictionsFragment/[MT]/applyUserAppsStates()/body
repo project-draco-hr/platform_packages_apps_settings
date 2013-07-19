@@ -1,5 +1,4 @@
 {
-  IPackageManager ipm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
   final int userId=mUser.getIdentifier();
   if (!mUserManager.getUserInfo(userId).isRestricted() && userId != UserHandle.myUserId()) {
     Log.e(TAG,"Cannot apply application restrictions on another user!");
@@ -7,45 +6,7 @@
   }
   for (  Map.Entry<String,Boolean> entry : mSelectedPackages.entrySet()) {
     String packageName=entry.getKey();
-    if (entry.getValue()) {
-      try {
-        ApplicationInfo info=ipm.getApplicationInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES,userId);
-        if (info == null || info.enabled == false) {
-          ipm.installExistingPackageAsUser(packageName,mUser.getIdentifier());
-          if (DEBUG) {
-            Log.d(TAG,"Installing " + packageName);
-          }
-        }
-        if (info != null && (info.flags & ApplicationInfo.FLAG_BLOCKED) != 0 && (info.flags & ApplicationInfo.FLAG_INSTALLED) != 0) {
-          ipm.setApplicationBlockedSettingAsUser(packageName,false,userId);
-          if (DEBUG) {
-            Log.d(TAG,"Unblocking " + packageName);
-          }
-        }
-      }
- catch (      RemoteException re) {
-      }
-    }
- else {
-      try {
-        ApplicationInfo info=ipm.getApplicationInfo(packageName,0,userId);
-        if (info != null) {
-          if (mRestrictedProfile) {
-            ipm.deletePackageAsUser(entry.getKey(),null,mUser.getIdentifier(),PackageManager.DELETE_SYSTEM_APP);
-            if (DEBUG) {
-              Log.d(TAG,"Uninstalling " + packageName);
-            }
-          }
- else {
-            ipm.setApplicationBlockedSettingAsUser(packageName,true,userId);
-            if (DEBUG) {
-              Log.d(TAG,"Blocking " + packageName);
-            }
-          }
-        }
-      }
- catch (      RemoteException re) {
-      }
-    }
+    boolean enabled=entry.getValue();
+    applyUserAppState(packageName,enabled);
   }
 }

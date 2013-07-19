@@ -12,7 +12,7 @@
   if (mPasswordView == null) {
     mPasswordView=(TextView)mView.findViewById(R.id.password);
     mPasswordView.addTextChangedListener(this);
-    ((CheckBox)mView.findViewById(R.id.show_password)).setOnClickListener(this);
+    ((CheckBox)mView.findViewById(R.id.show_password)).setOnCheckedChangeListener(this);
     if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
       mPasswordView.setHint(R.string.wifi_unchanged);
     }

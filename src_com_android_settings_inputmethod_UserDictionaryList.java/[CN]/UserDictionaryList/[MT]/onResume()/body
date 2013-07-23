@@ -1,12 +1,4 @@
 {
   super.onResume();
-  final TreeSet<String> localeSet=createUserDictSettingsAndReturnSet(getPreferenceScreen());
-  if (localeSet.size() <= 1) {
-    final Bundle extras=new Bundle();
-    if (!localeSet.isEmpty()) {
-      extras.putString("locale",localeSet.first());
-    }
-    startFragment(this,com.android.settings.UserDictionarySettings.class.getCanonicalName(),-1,extras);
-    finish();
-  }
+  createUserDictSettings(getPreferenceScreen());
 }

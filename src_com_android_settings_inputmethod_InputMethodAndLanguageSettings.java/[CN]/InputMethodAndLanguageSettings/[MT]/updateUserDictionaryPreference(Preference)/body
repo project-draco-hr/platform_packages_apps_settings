@@ -5,6 +5,23 @@
     getPreferenceScreen().removePreference(userDictionaryPreference);
   }
  else {
-    userDictionaryPreference.setFragment(UserDictionaryList.class.getName());
+    userDictionaryPreference.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+      @Override public boolean onPreferenceClick(      Preference arg0){
+        final Bundle extras=new Bundle();
+        final Class<? extends Fragment> targetFragment;
+        if (localeSet.size() <= 1) {
+          if (!localeSet.isEmpty()) {
+            extras.putString("locale",localeSet.first());
+          }
+          targetFragment=UserDictionarySettings.class;
+        }
+ else {
+          targetFragment=UserDictionaryList.class;
+        }
+        startFragment(InputMethodAndLanguageSettings.this,targetFragment.getCanonicalName(),-1,extras);
+        return true;
+      }
+    }
+);
   }
 }

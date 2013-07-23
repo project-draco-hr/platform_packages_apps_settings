@@ -5,6 +5,9 @@
   if (mLocale != null) {
     localeSet.add(mLocale);
   }
+  if (localeSet.size() > 1) {
+    localeSet.add("");
+  }
   if (localeSet.isEmpty()) {
     userDictGroup.addPreference(createUserDictionaryPreference(null,activity));
   }

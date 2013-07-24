@@ -21,6 +21,8 @@
   if (TextUtils.isEmpty(newWord)) {
     return UserDictionaryAddWordActivity.CODE_CANCEL;
   }
+  mSavedWord=newWord;
+  mSavedShortcut=newShortcut;
   if (hasWord(newWord,context))   return UserDictionaryAddWordActivity.CODE_ALREADY_PRESENT;
   UserDictionarySettings.deleteWord(newWord,null,resolver);
   if (!TextUtils.isEmpty(newShortcut)) {

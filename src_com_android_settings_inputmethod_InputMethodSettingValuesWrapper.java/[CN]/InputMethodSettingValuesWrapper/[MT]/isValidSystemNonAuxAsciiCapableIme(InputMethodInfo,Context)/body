@@ -1,0 +1,9 @@
+{
+  if (imi.isAuxiliaryIme()) {
+    return false;
+  }
+  if (InputMethodUtils.isValidSystemDefaultIme(true,imi,context)) {
+    return true;
+  }
+  return InputMethodUtils.containsSubtypeOf(imi,ENGLISH_LOCALE.getLanguage(),null);
+}

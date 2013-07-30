@@ -1,0 +1,9 @@
+{
+  if (getInputMethodList().size() <= 1) {
+    return true;
+  }
+  if (!InputMethodUtils.isSystemIme(imi)) {
+    return false;
+  }
+  return isValidSystemNonAuxAsciiCapableIme(imi,context);
+}

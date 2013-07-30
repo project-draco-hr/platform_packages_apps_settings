@@ -7,8 +7,8 @@
   mImm=imm;
   mImi=imi;
   updateSummary();
-  mAlwaysChecked=InputMethodAndSubtypeUtil.isAlwaysCheckedIme(imi,fragment.getActivity(),imiCount);
-  mIsSystemIme=InputMethodAndSubtypeUtil.isSystemIme(imi);
+  mAlwaysChecked=InputMethodSettingValuesWrapper.getInstance(fragment.getActivity()).isAlwaysCheckedIme(imi,fragment.getActivity());
+  mIsSystemIme=InputMethodUtils.isSystemIme(imi);
   if (mAlwaysChecked) {
     setEnabled(false);
   }

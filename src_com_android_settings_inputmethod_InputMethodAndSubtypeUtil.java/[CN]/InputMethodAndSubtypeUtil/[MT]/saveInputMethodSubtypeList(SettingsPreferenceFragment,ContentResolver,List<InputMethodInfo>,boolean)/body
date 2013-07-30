@@ -11,8 +11,8 @@
     if (pref == null)     continue;
     final boolean isImeChecked=(pref instanceof CheckBoxPreference) ? ((CheckBoxPreference)pref).isChecked() : enabledIMEAndSubtypesMap.containsKey(imiId);
     final boolean isCurrentInputMethod=imiId.equals(currentInputMethodId);
-    final boolean systemIme=isSystemIme(imi);
-    if ((!hasHardKeyboard && isAlwaysCheckedIme(imi,context.getActivity(),imiCount)) || isImeChecked) {
+    final boolean systemIme=InputMethodUtils.isSystemIme(imi);
+    if ((!hasHardKeyboard && InputMethodSettingValuesWrapper.getInstance(context.getActivity()).isAlwaysCheckedIme(imi,context.getActivity())) || isImeChecked) {
       if (!enabledIMEAndSubtypesMap.containsKey(imiId)) {
         enabledIMEAndSubtypesMap.put(imiId,new HashSet<String>());
       }

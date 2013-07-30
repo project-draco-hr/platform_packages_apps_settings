@@ -1,4 +1,7 @@
 {
+  if (TextUtils.isEmpty(localeStr)) {
+    return context.getResources().getString(R.string.user_dict_settings_all_languages);
+  }
   final Locale locale=Utils.createLocaleFromString(localeStr);
   final Locale systemLocale=context.getResources().getConfiguration().locale;
   return locale.getDisplayName(systemLocale);

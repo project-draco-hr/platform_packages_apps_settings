@@ -3,7 +3,15 @@
   Intent intent=getIntent();
   if (savedInstanceState == null) {
     if (intent != null && intent.getAction().equals(WifiManager.ACTION_REQUEST_SCAN_ALWAYS_AVAILABLE)) {
+      ApplicationInfo ai;
       mApp=getCallingPackage();
+      try {
+        PackageManager pm=getPackageManager();
+        ai=pm.getApplicationInfo(mApp,0);
+        mApp=(String)pm.getApplicationLabel(ai);
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+      }
     }
  else {
       finish();

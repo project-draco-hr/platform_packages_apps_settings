@@ -1,0 +1,16 @@
+{
+  int count=0;
+  final List<InputMethodInfo> enabledImis;
+synchronized (mMethodMap) {
+    enabledImis=mSettings.getEnabledInputMethodListLocked();
+  }
+  for (  final InputMethodInfo imi : enabledImis) {
+    if (isValidSystemNonAuxAsciiCapableIme(imi,context)) {
+      ++count;
+    }
+  }
+  if (count == 0) {
+    Log.w(TAG,"No \"enabledValidSystemNonAuxAsciiCapableIme\"s found.");
+  }
+  return count;
+}

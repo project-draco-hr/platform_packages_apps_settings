@@ -1,6 +1,15 @@
 {
-  if (getInputMethodList().size() <= 1) {
-    return true;
+synchronized (mMethodMap) {
+    if (mSettings.getEnabledInputMethodListLocked().size() <= 1) {
+      return true;
+    }
+  }
+  final int enabledValidSystemNonAuxAsciiCapableImeCount=getEnabledValidSystemNonAuxAsciiCapableImeCount(context);
+  if (enabledValidSystemNonAuxAsciiCapableImeCount > 1) {
+    return false;
+  }
+  if (enabledValidSystemNonAuxAsciiCapableImeCount == 1 && !isEnabledImi(imi)) {
+    return false;
   }
   if (!InputMethodUtils.isSystemIme(imi)) {
     return false;

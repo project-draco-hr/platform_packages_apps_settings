@@ -1,0 +1,12 @@
+{
+  final List<InputMethodInfo> enabledImis;
+synchronized (mMethodMap) {
+    enabledImis=mSettings.getEnabledInputMethodListLocked();
+  }
+  for (  final InputMethodInfo tempImi : enabledImis) {
+    if (tempImi.getId().equals(imi.getId())) {
+      return true;
+    }
+  }
+  return false;
+}

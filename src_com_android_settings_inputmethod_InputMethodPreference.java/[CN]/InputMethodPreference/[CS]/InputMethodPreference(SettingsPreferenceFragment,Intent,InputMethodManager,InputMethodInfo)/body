@@ -6,11 +6,9 @@
   mSettingsIntent=settingsIntent;
   mImm=imm;
   mImi=imi;
-  updateSummary();
-  mAlwaysChecked=InputMethodSettingValuesWrapper.getInstance(fragment.getActivity()).isAlwaysCheckedIme(imi,fragment.getActivity());
   mIsSystemIme=InputMethodUtils.isSystemIme(imi);
-  if (mAlwaysChecked) {
-    setEnabled(false);
-  }
   mCollator=Collator.getInstance(fragment.getResources().getConfiguration().locale);
+  final Context context=fragment.getActivity();
+  mIsValidSystemNonAuxAsciiCapableIme=InputMethodSettingValuesWrapper.getInstance(context).isValidSystemNonAuxAsciiCapableIme(imi,context);
+  updatePreferenceViews();
 }

@@ -1,4 +1,12 @@
 {
+  final boolean isAlwaysChecked=InputMethodSettingValuesWrapper.getInstance(getContext()).isAlwaysCheckedIme(mImi,getContext());
+  if (isAlwaysChecked) {
+    super.setChecked(true);
+    super.setEnabled(false);
+  }
+ else {
+    super.setEnabled(true);
+  }
   final boolean checked=isChecked();
   if (mInputMethodSettingsButton != null) {
     mInputMethodSettingsButton.setEnabled(checked);
@@ -23,4 +31,5 @@
       mInputMethodPref.setBackgroundColor(0);
     }
   }
+  updateSummary();
 }

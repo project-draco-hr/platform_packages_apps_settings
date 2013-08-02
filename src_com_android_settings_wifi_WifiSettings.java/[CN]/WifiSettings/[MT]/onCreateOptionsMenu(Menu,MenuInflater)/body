@@ -1,5 +1,5 @@
 {
-  if (mUserManager.hasUserRestriction(DISALLOW_CONFIG_WIFI))   return;
+  if (isRestrictedAndNotPinProtected())   return;
   final boolean wifiIsEnabled=mWifiManager.isWifiEnabled();
   if (mSetupWizardMode) {
     menu.add(Menu.NONE,MENU_ID_WPS_PBC,0,R.string.wifi_menu_wps_pbc).setIcon(R.drawable.ic_wps).setEnabled(wifiIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);

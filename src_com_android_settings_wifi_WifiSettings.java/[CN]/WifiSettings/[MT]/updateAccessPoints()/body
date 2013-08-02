@@ -1,6 +1,6 @@
 {
   if (getActivity() == null)   return;
-  if (mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_WIFI)) {
+  if (isRestrictedAndNotPinProtected()) {
     addMessagePreference(R.string.wifi_empty_list_user_restricted);
     return;
   }

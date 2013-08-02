@@ -1,0 +1,7 @@
+{
+  super.onSaveInstanceState(outState);
+  outState.putBoolean(KEY_CHALLENGE_REQUESTED,mChallengeRequested);
+  if (getActivity().isChangingConfigurations()) {
+    outState.putBoolean(KEY_CHALLENGE_SUCCEEDED,mChallengeSucceeded);
+  }
+}

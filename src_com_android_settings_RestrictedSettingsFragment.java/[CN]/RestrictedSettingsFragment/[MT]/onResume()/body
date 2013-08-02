@@ -1,0 +1,6 @@
+{
+  super.onResume();
+  if (mUserManager.hasUserRestriction(mRestrictionKey) && mUserManager.hasRestrictionsPin()) {
+    ensurePin();
+  }
+}

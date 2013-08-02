@@ -5,16 +5,30 @@
   }
   addPreferencesFromResource(R.xml.location_settings);
   root=getPreferenceScreen();
-  mLocationAccess=(SwitchPreference)root.findPreference(KEY_LOCATION_TOGGLE);
-  mNetwork=(CheckBoxPreference)root.findPreference(KEY_LOCATION_NETWORK);
-  mGps=(CheckBoxPreference)root.findPreference(KEY_LOCATION_GPS);
-  mAssistedGps=(CheckBoxPreference)root.findPreference(KEY_ASSISTED_GPS);
-  final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
-  boolean isToggleAllowed=!um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION);
-  if (mLocationAccess != null)   mLocationAccess.setEnabled(isToggleAllowed);
-  if (mNetwork != null)   mNetwork.setEnabled(isToggleAllowed);
-  if (mGps != null)   mGps.setEnabled(isToggleAllowed);
-  if (mAssistedGps != null)   mAssistedGps.setEnabled(isToggleAllowed);
-  mLocationAccess.setOnPreferenceChangeListener(this);
+  mLocationMode=(PreferenceScreen)root.findPreference((KEY_LOCATION_MODE));
+  mLocationMode.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      PreferenceActivity preferenceActivity=(PreferenceActivity)getActivity();
+      preferenceActivity.startPreferencePanel(LocationMode.class.getName(),null,R.string.location_mode_screen_title,null,LocationSettings.this,0);
+      return true;
+    }
+  }
+);
+  Activity activity=getActivity();
+  Switch actionBarSwitch=new Switch(activity);
+  if (activity instanceof PreferenceActivity) {
+    PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
+    if (preferenceActivity.onIsHidingHeaders() || !preferenceActivity.onIsMultiPane()) {
+      final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+      actionBarSwitch.setPaddingRelative(0,0,padding,0);
+      activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
+      activity.getActionBar().setCustomView(actionBarSwitch,new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.END));
+    }
+  }
+ else {
+    Log.wtf(TAG,"Current activity is not an instance of PreferenceActivity!");
+  }
+  mLocationEnabler=new LocationEnabler(activity,actionBarSwitch);
+  setHasOptionsMenu(true);
   return root;
 }

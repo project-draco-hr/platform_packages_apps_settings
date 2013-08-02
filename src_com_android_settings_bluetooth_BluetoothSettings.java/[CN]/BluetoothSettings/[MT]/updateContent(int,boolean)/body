@@ -19,7 +19,7 @@ mMyDevicePreference.setIcon(R.drawable.ic_bt_laptop);
 mMyDevicePreference.setPersistent(false);
 mMyDevicePreference.setEnabled(true);
 preferenceScreen.addPreference(mMyDevicePreference);
-if (!mUserManager.hasUserRestriction(DISALLOW_CONFIG_BLUETOOTH)) {
+if (!isRestrictedAndNotPinProtected()) {
 if (mDiscoverableEnabler == null) {
 mDiscoverableEnabler=new BluetoothDiscoverableEnabler(getActivity(),mLocalAdapter,mMyDevicePreference);
 mDiscoverableEnabler.resume();
@@ -43,7 +43,7 @@ mAvailableDevicesCategory=new BluetoothProgressCategory(getActivity(),null);
  else {
 mAvailableDevicesCategory.removeAll();
 }
-if (!mUserManager.hasUserRestriction(DISALLOW_CONFIG_BLUETOOTH)) {
+if (!isRestrictedAndNotPinProtected()) {
 addDeviceCategory(mAvailableDevicesCategory,R.string.bluetooth_preference_found_devices,BluetoothDeviceFilter.UNBONDED_DEVICE_FILTER);
 }
 int numberOfAvailableDevices=mAvailableDevicesCategory.getPreferenceCount();

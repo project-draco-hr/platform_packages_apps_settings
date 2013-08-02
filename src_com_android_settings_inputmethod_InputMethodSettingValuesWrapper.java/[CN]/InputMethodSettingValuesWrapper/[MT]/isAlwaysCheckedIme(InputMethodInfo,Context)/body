@@ -1,6 +1,7 @@
 {
+  final boolean isEnabled=isEnabledImi(imi);
 synchronized (mMethodMap) {
-    if (mSettings.getEnabledInputMethodListLocked().size() <= 1) {
+    if (mSettings.getEnabledInputMethodListLocked().size() <= 1 && isEnabled) {
       return true;
     }
   }
@@ -8,7 +9,7 @@ synchronized (mMethodMap) {
   if (enabledValidSystemNonAuxAsciiCapableImeCount > 1) {
     return false;
   }
-  if (enabledValidSystemNonAuxAsciiCapableImeCount == 1 && !isEnabledImi(imi)) {
+  if (enabledValidSystemNonAuxAsciiCapableImeCount == 1 && !isEnabled) {
     return false;
   }
   if (!InputMethodUtils.isSystemIme(imi)) {

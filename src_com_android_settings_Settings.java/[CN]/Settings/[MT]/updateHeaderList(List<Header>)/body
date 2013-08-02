@@ -43,6 +43,11 @@
         target.remove(i);
       }
     }
+ else     if (id == R.id.nfc_payment_settings) {
+      if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC_HCE)) {
+        target.remove(i);
+      }
+    }
  else     if (id == R.id.development_settings) {
       if (!showDev) {
         target.remove(i);

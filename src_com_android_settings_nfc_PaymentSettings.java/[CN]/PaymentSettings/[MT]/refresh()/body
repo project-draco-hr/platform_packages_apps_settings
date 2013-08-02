@@ -1,0 +1,26 @@
+{
+  PreferenceManager manager=getPreferenceManager();
+  PreferenceScreen screen=manager.createPreferenceScreen(getActivity());
+  boolean isAuto=mPaymentBackend.isAutoPaymentMode();
+  List<PaymentAppInfo> appInfos=mPaymentBackend.getPaymentAppInfos();
+  if (appInfos != null && appInfos.size() > 0) {
+    for (    PaymentAppInfo appInfo : appInfos) {
+      PaymentAppPreference preference=new PaymentAppPreference(getActivity(),appInfo,this);
+      appInfo.isDefault&=isAuto;
+      preference.setIcon(appInfo.icon);
+      preference.setTitle(appInfo.caption);
+      screen.addPreference(preference);
+    }
+    if (appInfos.size() > 1) {
+      PaymentAppInfo appInfo=new PaymentAppInfo();
+      appInfo.icon=null;
+      appInfo.componentName=null;
+      appInfo.isDefault=!isAuto;
+      PaymentAppPreference preference=new PaymentAppPreference(getActivity(),appInfo,this);
+      preference.setIcon(null);
+      preference.setTitle(R.string.nfc_payment_ask);
+      screen.addPreference(preference);
+    }
+  }
+  setPreferenceScreen(screen);
+}

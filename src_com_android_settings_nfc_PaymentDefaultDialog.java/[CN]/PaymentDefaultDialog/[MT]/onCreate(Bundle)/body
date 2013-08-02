@@ -1,0 +1,10 @@
+{
+  super.onCreate(savedInstanceState);
+  mBackend=new PaymentBackend(this);
+  Intent intent=getIntent();
+  ComponentName component=intent.getParcelableExtra(CardEmulationManager.EXTRA_SERVICE_COMPONENT);
+  String category=intent.getStringExtra(CardEmulationManager.EXTRA_CATEGORY);
+  if (!buildDialog(component,category)) {
+    finish();
+  }
+}

@@ -6,6 +6,7 @@
   mPlayExample.setOnPreferenceClickListener(this);
   mEnginePreferenceCategory=(PreferenceCategory)findPreference(KEY_ENGINE_PREFERENCE_SECTION);
   mDefaultRatePref=(ListPreference)findPreference(KEY_DEFAULT_RATE);
+  mEngineStatus=findPreference(KEY_STATUS);
   mTts=new TextToSpeech(getActivity().getApplicationContext(),mInitListener);
   mEnginesHelper=new TtsEngines(getActivity().getApplicationContext());
   setTtsUtteranceProgressListener();

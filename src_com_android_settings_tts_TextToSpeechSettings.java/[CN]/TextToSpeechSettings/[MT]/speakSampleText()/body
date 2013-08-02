@@ -1,0 +1,12 @@
+{
+  final boolean networkRequired=isNetworkRequiredForSynthesis();
+  if (!networkRequired || networkRequired && (mTts.isLanguageAvailable(mCurrentDefaultLocale) >= TextToSpeech.LANG_AVAILABLE)) {
+    HashMap<String,String> params=new HashMap<String,String>();
+    params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"Sample");
+    mTts.speak(mSampleText,TextToSpeech.QUEUE_FLUSH,params);
+  }
+ else {
+    Log.w(TAG,"Network required for sample synthesis for requested language");
+    displayNetworkAlert();
+  }
+}

@@ -4,6 +4,7 @@
     final IPackageManager mIPm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
     final INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
     final NetworkPolicyManager npm=NetworkPolicyManager.from(getActivity());
+    final AppOpsManager aom=(AppOpsManager)getActivity().getSystemService(Context.APP_OPS_SERVICE);
     final Handler handler=new Handler(getActivity().getMainLooper());
     (new AsyncTask<Void,Void,Void>(){
       @Override protected Void doInBackground(      Void... params){
@@ -28,6 +29,7 @@
         }
  catch (        RemoteException e) {
         }
+        aom.resetAllModes();
         final int[] restrictedUids=npm.getUidsWithPolicy(POLICY_REJECT_METERED_BACKGROUND);
         final int currentUserId=ActivityManager.getCurrentUser();
         for (        int uid : restrictedUids) {

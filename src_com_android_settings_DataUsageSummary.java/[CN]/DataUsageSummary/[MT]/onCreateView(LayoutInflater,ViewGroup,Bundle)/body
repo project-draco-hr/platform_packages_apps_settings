@@ -7,13 +7,8 @@
   mTabWidget=(TabWidget)view.findViewById(android.R.id.tabs);
   mListView=(ListView)view.findViewById(android.R.id.list);
   final boolean shouldInset=mListView.getScrollBarStyle() == View.SCROLLBARS_OUTSIDE_OVERLAY;
-  if (shouldInset) {
-    mInsetSide=view.getResources().getDimensionPixelOffset(com.android.internal.R.dimen.preference_fragment_padding_side);
-  }
- else {
-    mInsetSide=0;
-  }
-  prepareCustomPreferencesList(container,view,mListView,true);
+  mInsetSide=0;
+  prepareCustomPreferencesList(container,view,mListView,false);
   mTabHost.setup();
   mTabHost.setOnTabChangedListener(mTabListener);
   mHeader=(ViewGroup)inflater.inflate(R.layout.data_usage_header,mListView,false);

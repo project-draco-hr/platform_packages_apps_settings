@@ -1,5 +1,6 @@
 {
   super.onResume();
+  InputMethodSettingValuesWrapper.getInstance(getActivity()).refreshAllInputMethodAndSubtypes();
   InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,getContentResolver(),mInputMethodProperties,mInputMethodAndSubtypePrefsMap);
   updateAutoSelectionCB();
 }

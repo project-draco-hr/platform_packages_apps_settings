@@ -9,6 +9,8 @@
     return;
   }
   Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_SYNTH,engine);
+  mAvailableStrLocals=data.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_AVAILABLE_VOICES);
+  evaluateDefaultLocale();
   final int engineCount=mEnginePreferenceCategory.getPreferenceCount();
   for (int i=0; i < engineCount; ++i) {
     final Preference p=mEnginePreferenceCategory.getPreference(i);

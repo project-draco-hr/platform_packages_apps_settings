@@ -29,12 +29,14 @@
       ps.setDependency(KEY_TOGGLE_AIRPLANE);
     }
   }
+  protectByRestrictions(KEY_WIMAX_SETTINGS);
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_WIFI)) {
     findPreference(KEY_VPN_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
   }
   if (isSecondaryUser) {
     removePreference(KEY_VPN_SETTINGS);
   }
+  protectByRestrictions(KEY_VPN_SETTINGS);
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_BLUETOOTH)) {
   }
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_NFC)) {
@@ -51,6 +53,8 @@
     removePreference(KEY_MOBILE_NETWORK_SETTINGS);
     removePreference(KEY_MANAGE_MOBILE_PLAN);
   }
+  protectByRestrictions(KEY_MOBILE_NETWORK_SETTINGS);
+  protectByRestrictions(KEY_MANAGE_MOBILE_PLAN);
   if (getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEVISION)) {
     removePreference(KEY_TOGGLE_AIRPLANE);
   }
@@ -66,6 +70,7 @@
     Preference p=findPreference(KEY_TETHER_SETTINGS);
     p.setTitle(Utils.getTetheringLabel(cm));
   }
+  protectByRestrictions(KEY_TETHER_SETTINGS);
   boolean isCellBroadcastAppLinkEnabled=this.getResources().getBoolean(com.android.internal.R.bool.config_cellBroadcastAppLinks);
   try {
     if (isCellBroadcastAppLinkEnabled) {
@@ -83,4 +88,5 @@
     Preference ps=findPreference(KEY_CELL_BROADCAST_SETTINGS);
     if (ps != null)     root.removePreference(ps);
   }
+  protectByRestrictions(KEY_CELL_BROADCAST_SETTINGS);
 }

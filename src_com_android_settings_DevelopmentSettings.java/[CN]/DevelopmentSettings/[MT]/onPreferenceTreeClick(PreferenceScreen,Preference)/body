@@ -1,4 +1,7 @@
 {
+  if (mProtectedByRestrictionsPrefs.contains(preference) && !restrictionsPinCheck(RESTRICTIONS_PIN_SET)) {
+    return false;
+  }
   if (Utils.isMonkeyRunning()) {
     return false;
   }

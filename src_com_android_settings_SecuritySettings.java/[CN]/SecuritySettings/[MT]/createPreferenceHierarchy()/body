@@ -135,5 +135,9 @@ mNotificationAccess.setSummary(String.format(getResources().getQuantityString(R.
 }
 }
 }
+if (shouldBePinProtected(RESTRICTIONS_PIN_SET)) {
+protectByRestrictions(mToggleAppInstallation);
+protectByRestrictions(mToggleVerifyApps);
+}
 return root;
 }

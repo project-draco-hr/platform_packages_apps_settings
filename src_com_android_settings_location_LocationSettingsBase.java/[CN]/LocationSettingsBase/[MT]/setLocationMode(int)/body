@@ -1,0 +1,27 @@
+{
+  boolean gps=false;
+  boolean network=false;
+switch (mode) {
+case MODE_LOCATION_OFF:
+    break;
+case MODE_SENSORS_ONLY:
+  gps=true;
+break;
+case MODE_BATTERY_SAVING:
+network=true;
+break;
+case MODE_HIGH_ACCURACY:
+gps=true;
+network=true;
+break;
+default :
+Log.wtf(TAG,"Invalid location mode: " + mode);
+}
+final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+if (um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION)) {
+return;
+}
+Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.GPS_PROVIDER,gps);
+Settings.Secure.setLocationProviderEnabled(getContentResolver(),LocationManager.NETWORK_PROVIDER,network);
+refreshLocationMode();
+}

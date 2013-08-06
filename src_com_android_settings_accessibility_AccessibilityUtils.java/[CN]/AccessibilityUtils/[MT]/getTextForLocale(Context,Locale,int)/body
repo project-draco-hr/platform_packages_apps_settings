@@ -1,0 +1,14 @@
+{
+  final Resources res=context.getResources();
+  final Configuration config=res.getConfiguration();
+  final Locale prevLocale=config.locale;
+  try {
+    config.locale=locale;
+    res.updateConfiguration(config,null);
+    return res.getText(resId);
+  }
+  finally {
+    config.locale=prevLocale;
+    res.updateConfiguration(config,null);
+  }
+}

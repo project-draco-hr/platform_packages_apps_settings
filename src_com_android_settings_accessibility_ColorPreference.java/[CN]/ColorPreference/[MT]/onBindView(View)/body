@@ -1,0 +1,28 @@
+{
+  super.onBindView(view);
+  if (mPreviewEnabled) {
+    final ImageView previewImage=(ImageView)view.findViewById(R.id.color_preview);
+    final int argb=getValue();
+    if (Color.alpha(argb) < 255) {
+      previewImage.setBackgroundResource(R.drawable.transparency_tileable);
+    }
+ else {
+      previewImage.setBackground(null);
+    }
+    if (mPreviewColor == null) {
+      mPreviewColor=new ColorDrawable(argb);
+      previewImage.setImageDrawable(mPreviewColor);
+    }
+ else {
+      mPreviewColor.setColor(argb);
+    }
+    final CharSequence summary=getSummary();
+    if (!TextUtils.isEmpty(summary)) {
+      previewImage.setContentDescription(summary);
+    }
+ else {
+      previewImage.setContentDescription(null);
+    }
+    previewImage.setAlpha(isEnabled() ? 1f : 0.2f);
+  }
+}

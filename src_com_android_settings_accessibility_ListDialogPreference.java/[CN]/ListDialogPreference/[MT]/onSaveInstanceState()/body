@@ -1,0 +1,9 @@
+{
+  final Parcelable superState=super.onSaveInstanceState();
+  if (isPersistent()) {
+    return superState;
+  }
+  final SavedState myState=new SavedState(superState);
+  myState.value=getValue();
+  return myState;
+}

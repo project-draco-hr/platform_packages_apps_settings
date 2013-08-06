@@ -1,0 +1,27 @@
+{
+  super.onPrepareDialogBuilder(builder);
+  final Context context=getContext();
+  final int dialogLayout=getDialogLayoutResource();
+  final View picker=LayoutInflater.from(context).inflate(dialogLayout,null);
+  final ListPreferenceAdapter adapter=new ListPreferenceAdapter();
+  final AbsListView list=(AbsListView)picker.findViewById(android.R.id.list);
+  list.setAdapter(adapter);
+  list.setOnItemClickListener(new OnItemClickListener(){
+    @Override public void onItemClick(    AdapterView<?> adapter,    View v,    int position,    long id){
+      if (callChangeListener((int)id)) {
+        setValue((int)id);
+      }
+      final Dialog dialog=getDialog();
+      if (dialog != null) {
+        dialog.dismiss();
+      }
+    }
+  }
+);
+  final int selectedPosition=getIndexForValue(mValue);
+  if (selectedPosition != AbsListView.INVALID_POSITION) {
+    list.setSelection(selectedPosition);
+  }
+  builder.setView(picker);
+  builder.setPositiveButton(null,null);
+}

@@ -1,0 +1,28 @@
+{
+  final ContentResolver cr=getContentResolver();
+  final int preset=CaptionStyle.getRawPreset(cr);
+  mPreset.setValue(preset);
+  final float fontSize=CaptioningManager.getFontSize(cr);
+  mFontSize.setValue(Float.toString(fontSize));
+  final CaptionStyle attrs=CaptionStyle.getCustomStyle(cr);
+  mForegroundColor.setValue(attrs.foregroundColor);
+  mEdgeType.setValue(attrs.edgeType);
+  mEdgeColor.setValue(attrs.edgeColor);
+  final int backgroundColor=attrs.backgroundColor;
+  final int bgColor;
+  final int bgAlpha;
+  if (Color.alpha(backgroundColor) == 0) {
+    bgColor=Color.TRANSPARENT;
+    bgAlpha=(backgroundColor & 0xFF) << 24;
+  }
+ else {
+    bgColor=backgroundColor | 0xFF000000;
+    bgAlpha=backgroundColor & 0xFF000000;
+  }
+  mBackgroundColor.setValue(bgColor);
+  mBackgroundOpacity.setValue(bgAlpha | 0xFFFFFF);
+  final String rawTypeface=attrs.mRawTypeface;
+  mTypeface.setValue(rawTypeface == null ? "" : rawTypeface);
+  final String rawLocale=CaptioningManager.getRawLocale(cr);
+  mLocale.setValue(rawLocale == null ? "" : rawLocale);
+}

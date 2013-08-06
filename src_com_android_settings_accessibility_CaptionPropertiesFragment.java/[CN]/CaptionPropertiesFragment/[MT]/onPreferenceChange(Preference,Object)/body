@@ -1,0 +1,14 @@
+{
+  final ContentResolver cr=getActivity().getContentResolver();
+  if (mTypeface == preference) {
+    Settings.Secure.putString(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_TYPEFACE,(String)value);
+  }
+ else   if (mFontSize == preference) {
+    Settings.Secure.putFloat(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_FONT_SIZE,Float.parseFloat((String)value));
+  }
+ else   if (mLocale == preference) {
+    Settings.Secure.putString(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_LOCALE,(String)value);
+  }
+  refreshPreviewText();
+  return true;
+}

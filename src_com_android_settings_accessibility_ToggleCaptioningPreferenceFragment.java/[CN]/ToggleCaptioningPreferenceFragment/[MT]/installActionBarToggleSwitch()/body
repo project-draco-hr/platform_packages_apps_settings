@@ -1,0 +1,24 @@
+{
+  final Activity activity=getActivity();
+  final ToggleSwitch toggleSwitch=new ToggleSwitch(activity);
+  final int padding=getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+  toggleSwitch.setPaddingRelative(0,0,padding,0);
+  final ActionBar actionBar=activity.getActionBar();
+  actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
+  final ActionBar.LayoutParams params=new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.END);
+  actionBar.setCustomView(toggleSwitch,params);
+  final boolean enabled=CaptioningManager.isEnabled(getActivity().getContentResolver());
+  mPropsFragment.getPreferenceScreen().setEnabled(enabled);
+  mPreviewText.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
+  toggleSwitch.setCheckedInternal(enabled);
+  toggleSwitch.setOnBeforeCheckedChangeListener(new OnBeforeCheckedChangeListener(){
+    @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
+      toggleSwitch.setCheckedInternal(checked);
+      Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ACCESSIBILITY_CAPTIONING_ENABLED,checked ? 1 : 0);
+      mPropsFragment.getPreferenceScreen().setEnabled(checked);
+      mPreviewText.setVisibility(checked ? View.VISIBLE : View.INVISIBLE);
+      return false;
+    }
+  }
+);
+}

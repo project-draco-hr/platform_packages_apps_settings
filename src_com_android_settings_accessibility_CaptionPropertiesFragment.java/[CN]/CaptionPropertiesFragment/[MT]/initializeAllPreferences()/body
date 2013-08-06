@@ -1,0 +1,30 @@
+{
+  final Resources res=getResources();
+  final int[] presetValues=res.getIntArray(R.array.captioning_preset_selector_values);
+  final String[] presetTitles=res.getStringArray(R.array.captioning_preset_selector_titles);
+  mPreset=(PresetPreference)findPreference("captioning_preset");
+  mPreset.setValues(presetValues);
+  mPreset.setTitles(presetTitles);
+  final int[] colorValues=res.getIntArray(R.array.captioning_color_selector_values);
+  final String[] colorTitles=res.getStringArray(R.array.captioning_color_selector_titles);
+  mForegroundColor=(ColorPreference)findPreference("captioning_foreground_color");
+  mForegroundColor.setTitles(colorTitles);
+  mForegroundColor.setValues(colorValues);
+  mEdgeColor=(ColorPreference)findPreference("captioning_edge_color");
+  mEdgeColor.setTitles(colorTitles);
+  mEdgeColor.setValues(colorValues);
+  final int[] bgColorValues=res.getIntArray(R.array.captioning_background_color_selector_values);
+  final String[] bgColorTitles=res.getStringArray(R.array.captioning_background_color_selector_titles);
+  mBackgroundColor=(ColorPreference)findPreference("captioning_background_color");
+  mBackgroundColor.setTitles(bgColorTitles);
+  mBackgroundColor.setValues(bgColorValues);
+  final int[] opacityValues=res.getIntArray(R.array.captioning_opacity_selector_values);
+  final String[] opacityTitles=res.getStringArray(R.array.captioning_opacity_selector_titles);
+  mBackgroundOpacity=(ColorPreference)findPreference("captioning_background_opacity");
+  mBackgroundOpacity.setTitles(opacityTitles);
+  mBackgroundOpacity.setValues(opacityValues);
+  mEdgeType=(EdgeTypePreference)findPreference("captioning_edge_type");
+  mTypeface=(ListPreference)findPreference("captioning_typeface");
+  mFontSize=(ListPreference)findPreference("captioning_font_size");
+  mLocale=(LocalePreference)findPreference("captioning_locale");
+}

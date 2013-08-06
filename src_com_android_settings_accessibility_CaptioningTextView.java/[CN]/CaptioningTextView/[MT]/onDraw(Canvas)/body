@@ -1,0 +1,40 @@
+{
+  if (mOutlineWidth > 0 && Color.alpha(mOutlineColor) > 0) {
+    final TextPaint textPaint=getPaint();
+    final Paint.Style previousStyle=textPaint.getStyle();
+    final ColorStateList previousColors=getTextColors();
+    textPaint.setStyle(Style.STROKE);
+    textPaint.setStrokeWidth(mOutlineWidth);
+    textPaint.setStrokeCap(Cap.ROUND);
+    textPaint.setStrokeJoin(Join.ROUND);
+    setTextColor(mOutlineColorState);
+    final float shadowRadius=getShadowRadius();
+    final float shadowDx=getShadowDx();
+    final float shadowDy=getShadowDy();
+    final int shadowColor=getShadowColor();
+    if (shadowRadius > 0) {
+      setShadowLayer(0,0,0,0);
+    }
+    super.onDraw(c);
+    if (shadowRadius > 0) {
+      setShadowLayer(shadowRadius,shadowDx,shadowDy,shadowColor);
+    }
+    textPaint.setStyle(previousStyle);
+    setTextColor(previousColors);
+    final int color;
+    if (mBackgroundSpan != null) {
+      color=mBackgroundSpan.getBackgroundColor();
+      mBackgroundSpan.setColor(Color.TRANSPARENT);
+    }
+ else {
+      color=0;
+    }
+    super.onDraw(c);
+    if (mBackgroundSpan != null) {
+      mBackgroundSpan.setColor(color);
+    }
+  }
+ else {
+    super.onDraw(c);
+  }
+}

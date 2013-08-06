@@ -1,0 +1,14 @@
+{
+  final CaptioningTextView preview=mPreviewText;
+  if (preview != null) {
+    final Activity activity=getActivity();
+    final ContentResolver cr=activity.getContentResolver();
+    final int styleId=CaptionStyle.getRawPreset(cr);
+    applyCaptionProperties(preview,styleId);
+    final Locale locale=CaptioningManager.getLocale(cr);
+    if (locale != null) {
+      final CharSequence localizedText=AccessibilityUtils.getTextForLocale(activity,locale,R.string.captioning_preview_text);
+      preview.setText(localizedText);
+    }
+  }
+}

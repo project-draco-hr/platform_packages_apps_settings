@@ -1,0 +1,16 @@
+{
+  final boolean changed=mValue != value;
+  if (changed || !mValueSet) {
+    mValue=value;
+    mValueIndex=getIndexForValue(value);
+    mValueSet=true;
+    persistInt(value);
+    if (changed) {
+      notifyDependencyChange(shouldDisableDependents());
+      notifyChanged();
+    }
+    if (mOnValueChangedListener != null) {
+      mOnValueChangedListener.onValueChanged(this,value);
+    }
+  }
+}

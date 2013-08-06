@@ -1,0 +1,19 @@
+{
+  final Context context=mContext;
+  final ContentResolver cr=context.getContentResolver();
+  final CaptionStyle style;
+  if (styleId == CaptionStyle.PRESET_CUSTOM) {
+    style=CaptionStyle.getCustomStyle(cr);
+  }
+ else {
+    style=CaptionStyle.PRESETS[styleId];
+  }
+  setTextColor(style.foregroundColor);
+  setBackgroundColor(style.backgroundColor);
+  setTypeface(style.getTypeface());
+  applyEdge(style.edgeType,style.edgeColor,4.0f);
+  final float fontSize=CaptioningManager.getFontSize(cr);
+  if (fontSize != 0) {
+    setTextSize(fontSize);
+  }
+}

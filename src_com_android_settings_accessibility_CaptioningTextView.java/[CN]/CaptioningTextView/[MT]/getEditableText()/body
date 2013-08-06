@@ -1,0 +1,8 @@
+{
+  final CharSequence text=getText();
+  if (text instanceof Editable) {
+    return (Editable)text;
+  }
+  setText(text,BufferType.EDITABLE);
+  return (Editable)getText();
+}

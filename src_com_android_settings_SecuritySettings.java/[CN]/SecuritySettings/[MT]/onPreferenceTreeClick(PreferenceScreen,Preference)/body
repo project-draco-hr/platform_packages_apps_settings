@@ -1,6 +1,6 @@
 {
-  if (mProtectedByRestictionsPrefs.contains(preference) && !restrictionsPinCheck(RESTRICTIONS_PIN_SET)) {
-    return false;
+  if (ensurePinRestrictedPreference(preference)) {
+    return true;
   }
   final String key=preference.getKey();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();

@@ -1,0 +1,10 @@
+{
+  if (requestCode == REQUEST_PIN_CHALLENGE) {
+    mChallengeRequested=false;
+    if (resultCode == Activity.RESULT_OK) {
+      mChallengeSucceeded=true;
+    }
+    return;
+  }
+  super.onActivityResult(requestCode,resultCode,data);
+}

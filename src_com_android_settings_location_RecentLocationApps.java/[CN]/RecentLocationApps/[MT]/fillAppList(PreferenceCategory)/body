@@ -1,0 +1,9 @@
+{
+  AppOpsManager aoManager=(AppOpsManager)mContext.getSystemService(Context.APP_OPS_SERVICE);
+  List<AppOpsManager.PackageOps> appOps=aoManager.getPackagesForOps(new int[]{AppOpsManager.OP_MONITOR_LOCATION,AppOpsManager.OP_MONITOR_HIGH_POWER_LOCATION});
+  PreferenceManager preferenceManager=container.getPreferenceManager();
+  long now=System.currentTimeMillis();
+  for (  AppOpsManager.PackageOps ops : appOps) {
+    processPackageOps(now,container,preferenceManager,ops);
+  }
+}

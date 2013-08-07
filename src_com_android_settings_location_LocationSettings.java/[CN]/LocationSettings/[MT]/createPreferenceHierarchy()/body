@@ -17,6 +17,8 @@
   mRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
   mLocationServices=(PreferenceCategory)root.findPreference(KEY_LOCATION_SERVICES);
   Activity activity=getActivity();
+  RecentLocationApps recentApps=new RecentLocationApps(activity);
+  recentApps.fillAppList(mRecentLocationRequests);
   if (activity instanceof PreferenceActivity) {
     PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
     if (preferenceActivity.onIsHidingHeaders() || !preferenceActivity.onIsMultiPane()) {

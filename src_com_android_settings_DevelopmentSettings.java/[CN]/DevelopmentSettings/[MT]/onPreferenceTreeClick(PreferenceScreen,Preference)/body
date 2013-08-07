@@ -1,6 +1,6 @@
 {
-  if (mProtectedByRestrictionsPrefs.contains(preference) && !restrictionsPinCheck(RESTRICTIONS_PIN_SET)) {
-    return false;
+  if (super.onPreferenceTreeClick(preferenceScreen,preference)) {
+    return true;
   }
   if (Utils.isMonkeyRunning()) {
     return false;

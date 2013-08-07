@@ -1,0 +1,9 @@
+{
+  String componentString=Settings.Secure.getString(mContext.getContentResolver(),Settings.Secure.NFC_PAYMENT_DEFAULT_COMPONENT);
+  if (componentString != null) {
+    return ComponentName.unflattenFromString(componentString);
+  }
+ else {
+    return null;
+  }
+}

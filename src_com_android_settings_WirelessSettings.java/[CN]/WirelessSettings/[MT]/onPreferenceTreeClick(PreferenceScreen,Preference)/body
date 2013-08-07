@@ -1,7 +1,6 @@
 {
-  if (mProtectedByRestictionsPrefs.contains(preference) && !hasChallengeSucceeded()) {
-    restrictionsPinCheck(RESTRICTIONS_PIN_SET);
-    return false;
+  if (ensurePinRestrictedPreference(preference)) {
+    return true;
   }
   log("onPreferenceTreeClick: preference=" + preference);
   if (preference == mAirplaneModePreference && Boolean.parseBoolean(SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE))) {

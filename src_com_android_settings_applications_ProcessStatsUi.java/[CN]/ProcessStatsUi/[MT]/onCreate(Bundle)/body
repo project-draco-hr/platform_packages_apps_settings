@@ -1,0 +1,12 @@
+{
+  super.onCreate(icicle);
+  if (icicle != null) {
+    mStats=sStatsXfer;
+  }
+  addPreferencesFromResource(R.xml.process_stats_summary);
+  mProcessStats=IProcessStats.Stub.asInterface(ServiceManager.getService(ProcessStats.SERVICE_NAME));
+  mUm=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+  mAppListGroup=(PreferenceGroup)findPreference(KEY_APP_LIST);
+  mMemStatusPref=mAppListGroup.findPreference(KEY_MEM_STATUS);
+  setHasOptionsMenu(true);
+}

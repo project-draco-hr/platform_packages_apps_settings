@@ -1,5 +1,8 @@
 {
   Set<ComponentName> enabledServices=AccessibilityUtils.getEnabledServicesFromSettings(getActivity());
+  if (enabledServices == (Set<?>)Collections.emptySet()) {
+    enabledServices=new HashSet<ComponentName>();
+  }
   ComponentName toggledService=ComponentName.unflattenFromString(preferenceKey);
   boolean accessibilityEnabled=false;
   if (enabled) {

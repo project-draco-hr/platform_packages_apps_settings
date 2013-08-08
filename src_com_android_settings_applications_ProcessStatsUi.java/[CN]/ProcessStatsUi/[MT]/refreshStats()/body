@@ -1,0 +1,75 @@
+{
+  if (mStats == null) {
+    load();
+  }
+  mAppListGroup.removeAll();
+  mAppListGroup.setOrderingAsAdded(false);
+  mMemStatusPref.setOrder(-2);
+  mAppListGroup.addPreference(mMemStatusPref);
+  ProcessStats.ProcessDataCollection totals=new ProcessStats.ProcessDataCollection(ProcessStats.ALL_SCREEN_ADJ,ProcessStats.ALL_MEM_ADJ,ProcessStats.BACKGROUND_PROC_STATES);
+  long now=SystemClock.uptimeMillis();
+  mTotalTime=ProcessStats.dumpSingleTime(null,null,mStats.mMemFactorDurations,mStats.mMemFactor,mStats.mStartTime,now);
+  ArrayList<ProcessStats.ProcessState> procs=mStats.collectProcessesLocked(ProcessStats.ALL_SCREEN_ADJ,ProcessStats.ALL_MEM_ADJ,ProcessStats.BACKGROUND_PROC_STATES,now,null);
+  final PackageManager pm=getActivity().getPackageManager();
+  for (int i=0, N=(procs != null ? procs.size() : 0); i < N; i++) {
+    ProcessStats.ProcessState ps=procs.get(i);
+    final double percentOfTotal=(((double)ps.mTmpTotalTime) / mTotalTime) * 100;
+    if (percentOfTotal < 1)     continue;
+    ProcessStatsPreference pref=new ProcessStatsPreference(getActivity(),null);
+    ApplicationInfo targetApp=null;
+    String label=ps.mName;
+    if (ps.mCommonProcess == ps) {
+      try {
+        targetApp=pm.getApplicationInfo(ps.mPackage,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES);
+        String name=targetApp.loadLabel(pm).toString();
+        if (ps.mName.equals(ps.mPackage)) {
+          label=name;
+        }
+ else {
+          if (ps.mName.startsWith(ps.mPackage)) {
+            int off=ps.mPackage.length();
+            if (ps.mName.length() > off) {
+              off++;
+            }
+            label=name + " (" + ps.mName.substring(off)+ ")";
+          }
+ else {
+            label=name + " (" + ps.mName+ ")";
+          }
+        }
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+      }
+    }
+    if (targetApp == null) {
+      String[] packages=pm.getPackagesForUid(ps.mUid);
+      for (      String pkgName : packages) {
+        try {
+          final PackageInfo pi=pm.getPackageInfo(pkgName,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES);
+          if (pi.sharedUserLabel != 0) {
+            targetApp=pi.applicationInfo;
+            final CharSequence nm=pm.getText(pkgName,pi.sharedUserLabel,pi.applicationInfo);
+            if (nm != null) {
+              label=nm.toString() + " (" + ps.mName+ ")";
+            }
+ else {
+              label=targetApp.loadLabel(pm).toString() + " (" + ps.mName+ ")";
+            }
+            break;
+          }
+        }
+ catch (        PackageManager.NameNotFoundException e) {
+        }
+      }
+    }
+    pref.setTitle(label);
+    if (targetApp != null) {
+      pref.setIcon(targetApp.loadIcon(pm));
+    }
+    pref.setOrder(N + 100 - i);
+    ProcessStats.computeProcessData(ps,totals,now);
+    pref.setPercent(percentOfTotal,totals.avgPss * 1024);
+    mAppListGroup.addPreference(pref);
+    if (mAppListGroup.getPreferenceCount() > (MAX_ITEMS_TO_LIST + 1))     break;
+  }
+}

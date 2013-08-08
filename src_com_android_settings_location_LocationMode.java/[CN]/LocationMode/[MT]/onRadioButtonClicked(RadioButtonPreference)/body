@@ -1,0 +1,13 @@
+{
+  int mode=LocationSettingsBase.MODE_LOCATION_OFF;
+  if (emiter == mHighAccuracy) {
+    mode=LocationSettingsBase.MODE_HIGH_ACCURACY;
+  }
+ else   if (emiter == mBatterySaving) {
+    mode=LocationSettingsBase.MODE_BATTERY_SAVING;
+  }
+ else   if (emiter == mSensorsOnly) {
+    mode=LocationSettingsBase.MODE_SENSORS_ONLY;
+  }
+  setLocationMode(mode);
+}

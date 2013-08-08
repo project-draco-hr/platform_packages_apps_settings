@@ -5,5 +5,12 @@
   }
   addPreferencesFromResource(R.xml.location_mode);
   root=getPreferenceScreen();
+  mHighAccuracy=(RadioButtonPreference)root.findPreference(KEY_HIGH_ACCURACY);
+  mBatterySaving=(RadioButtonPreference)root.findPreference(KEY_BATTERY_SAVING);
+  mSensorsOnly=(RadioButtonPreference)root.findPreference(KEY_SENSORS_ONLY);
+  mHighAccuracy.setOnClickListener(this);
+  mBatterySaving.setOnClickListener(this);
+  mSensorsOnly.setOnClickListener(this);
+  refreshLocationMode();
   return root;
 }

@@ -1,0 +1,10 @@
+{
+  ProcessStats.computeProcessData(proc,tmpTotals,0);
+  mPackage=proc.mPackage;
+  mUid=proc.mUid;
+  mName=proc.mName;
+  mUnique=proc.mCommonProcess == proc;
+  mDuration=tmpTotals.totalTime;
+  mAvgPss=tmpTotals.avgPss;
+  mWeight=mDuration * mAvgPss;
+}

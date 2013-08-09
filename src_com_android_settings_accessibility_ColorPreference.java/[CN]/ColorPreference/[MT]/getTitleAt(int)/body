@@ -1,0 +1,11 @@
+{
+  final CharSequence title=super.getTitleAt(index);
+  if (title != null) {
+    return title;
+  }
+  final int value=getValueAt(index);
+  final int r=Color.red(value);
+  final int g=Color.green(value);
+  final int b=Color.blue(value);
+  return getContext().getString(R.string.color_custom,r,g,b);
+}

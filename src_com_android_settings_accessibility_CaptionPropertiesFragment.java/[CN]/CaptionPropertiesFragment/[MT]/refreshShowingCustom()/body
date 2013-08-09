@@ -1,0 +1,11 @@
+{
+  final boolean customPreset=mPreset.getValue() == CaptionStyle.PRESET_CUSTOM;
+  if (!customPreset && mShowingCustom) {
+    getPreferenceScreen().removePreference(mCustom);
+    mShowingCustom=false;
+  }
+ else   if (customPreset && !mShowingCustom) {
+    getPreferenceScreen().addPreference(mCustom);
+    mShowingCustom=true;
+  }
+}

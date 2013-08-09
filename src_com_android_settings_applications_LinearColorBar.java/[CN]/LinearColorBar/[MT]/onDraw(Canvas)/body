@@ -17,7 +17,7 @@
   if (mLastInterestingLeft != indicatorLeft || mLastInterestingRight != indicatorRight) {
     mColorPath.reset();
     mEdgePath.reset();
-    if (indicatorLeft < indicatorRight) {
+    if (mShowIndicator && indicatorLeft < indicatorRight) {
       final int midTopY=mRect.top;
       final int midBottomY=0;
       final int xoff=2;
@@ -42,7 +42,7 @@
   if (left < right) {
     mRect.left=left;
     mRect.right=right;
-    mPaint.setColor(LEFT_COLOR);
+    mPaint.setColor(mLeftColor);
     canvas.drawRect(mRect,mPaint);
     width-=(right - left);
     left=right;
@@ -51,7 +51,7 @@
   if (left < right) {
     mRect.left=left;
     mRect.right=right;
-    mPaint.setColor(MIDDLE_COLOR);
+    mPaint.setColor(mMiddleColor);
     canvas.drawRect(mRect,mPaint);
     width-=(right - left);
     left=right;
@@ -60,7 +60,7 @@
   if (left < right) {
     mRect.left=left;
     mRect.right=right;
-    mPaint.setColor(RIGHT_COLOR);
+    mPaint.setColor(mRightColor);
     canvas.drawRect(mRect,mPaint);
   }
 }

@@ -3,5 +3,8 @@
   mTabHost.setup();
   addTab(Tab.SYSTEM);
   addTab(Tab.USER);
+  if (getActivity().getIntent() != null && USER_ACTION.equals(getActivity().getIntent().getAction())) {
+    mTabHost.setCurrentTabByTag(Tab.USER.mTag);
+  }
   return mTabHost;
 }

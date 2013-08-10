@@ -10,15 +10,18 @@
   mDevice=i.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
   mReturnPackage=i.getStringExtra(BluetoothDevice.EXTRA_PACKAGE_NAME);
   mReturnClass=i.getStringExtra(BluetoothDevice.EXTRA_CLASS_NAME);
-  int requestType=i.getIntExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS);
-  if (requestType == BluetoothDevice.REQUEST_TYPE_PROFILE_CONNECTION) {
-    showConnectionDialog();
+  mRequestType=i.getIntExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS);
+  if (mRequestType == BluetoothDevice.REQUEST_TYPE_PROFILE_CONNECTION) {
+    showDialog(getString(R.string.bluetooth_connection_permission_request),mRequestType);
   }
- else   if (requestType == BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS) {
-    showPhonebookDialog();
+ else   if (mRequestType == BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS) {
+    showDialog(getString(R.string.bluetooth_phonebook_request),mRequestType);
+  }
+ else   if (mRequestType == BluetoothDevice.REQUEST_TYPE_MESSAGE_ACCESS) {
+    showDialog(getString(R.string.bluetooth_map_request),mRequestType);
   }
  else {
-    Log.e(TAG,"Error: bad request type: " + requestType);
+    Log.e(TAG,"Error: bad request type: " + mRequestType);
     finish();
     return;
   }

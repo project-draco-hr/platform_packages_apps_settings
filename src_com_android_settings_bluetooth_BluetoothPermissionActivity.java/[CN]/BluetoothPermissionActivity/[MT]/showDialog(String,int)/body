@@ -1,0 +1,22 @@
+{
+  final AlertController.AlertParams p=mAlertParams;
+  p.mIconId=android.R.drawable.ic_dialog_info;
+  p.mTitle=title;
+switch (requestType) {
+case BluetoothDevice.REQUEST_TYPE_PROFILE_CONNECTION:
+    p.mView=createConnectionDialogView();
+  break;
+case BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS:
+p.mView=createPhonebookDialogView();
+break;
+case BluetoothDevice.REQUEST_TYPE_MESSAGE_ACCESS:
+p.mView=createMapDialogView();
+break;
+}
+p.mPositiveButtonText=getString(R.string.yes);
+p.mPositiveButtonListener=this;
+p.mNegativeButtonText=getString(R.string.no);
+p.mNegativeButtonListener=this;
+mOkButton=mAlert.getButton(DialogInterface.BUTTON_POSITIVE);
+setupAlert();
+}

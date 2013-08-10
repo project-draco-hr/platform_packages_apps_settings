@@ -2,11 +2,14 @@
   LocalBluetoothManager bluetoothManager=LocalBluetoothManager.getInstance(this);
   CachedBluetoothDeviceManager cachedDeviceManager=bluetoothManager.getCachedDeviceManager();
   CachedBluetoothDevice cachedDevice=cachedDeviceManager.findDevice(mDevice);
-  if (cachedDevice != null) {
+  if (DEBUG)   Log.d(TAG,"savePermissionChoice permissionType: " + permissionType);
+  if (cachedDevice == null) {
+    cachedDevice=cachedDeviceManager.addDevice(bluetoothManager.getBluetoothAdapter(),bluetoothManager.getProfileManager(),mDevice);
+  }
+  if (permissionType == BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS) {
     cachedDevice.setPhonebookPermissionChoice(permissionChoice);
   }
- else {
-    cachedDevice=cachedDeviceManager.addDevice(bluetoothManager.getBluetoothAdapter(),bluetoothManager.getProfileManager(),mDevice);
-    cachedDevice.setPhonebookPermissionChoice(permissionChoice);
+ else   if (permissionType == BluetoothDevice.REQUEST_TYPE_MESSAGE_ACCESS) {
+    cachedDevice.setMessagePermissionChoice(permissionChoice);
   }
 }

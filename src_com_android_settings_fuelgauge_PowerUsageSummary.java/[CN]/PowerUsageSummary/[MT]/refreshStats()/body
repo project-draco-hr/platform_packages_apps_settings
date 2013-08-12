@@ -1,37 +1,23 @@
 {
-  if (mStats == null) {
-    load();
-  }
-  mMaxPower=0;
-  mTotalPower=0;
-  mWifiPower=0;
-  mBluetoothPower=0;
-  mAppWifiRunning=0;
   mAppListGroup.removeAll();
-  mUsageList.clear();
-  mWifiSippers.clear();
-  mBluetoothSippers.clear();
-  mUserSippers.clear();
-  mUserPower.clear();
   mAppListGroup.setOrderingAsAdded(false);
   mBatteryStatusPref.setOrder(-2);
   mAppListGroup.addPreference(mBatteryStatusPref);
-  BatteryHistoryPreference hist=new BatteryHistoryPreference(getActivity(),mStats);
+  BatteryHistoryPreference hist=new BatteryHistoryPreference(getActivity(),mStatsHelper.getStats());
   hist.setOrder(-1);
   mAppListGroup.addPreference(hist);
-  if (mPowerProfile.getAveragePower(PowerProfile.POWER_SCREEN_FULL) < 10) {
+  if (mStatsHelper.getPowerProfile().getAveragePower(PowerProfile.POWER_SCREEN_FULL) < 10) {
     addNotAvailableMessage();
     return;
   }
-  processAppUsage();
-  processMiscUsage();
-  Collections.sort(mUsageList);
-  for (  BatterySipper sipper : mUsageList) {
+  mStatsHelper.refreshStats();
+  List<BatterySipper> usageList=mStatsHelper.getUsageList();
+  for (  BatterySipper sipper : usageList) {
     if (sipper.getSortValue() < MIN_POWER_THRESHOLD)     continue;
-    final double percentOfTotal=((sipper.getSortValue() / mTotalPower) * 100);
+    final double percentOfTotal=((sipper.getSortValue() / mStatsHelper.getTotalPower()) * 100);
     if (percentOfTotal < 1)     continue;
     PowerGaugePreference pref=new PowerGaugePreference(getActivity(),sipper.getIcon(),sipper);
-    final double percentOfMax=(sipper.getSortValue() * 100) / mMaxPower;
+    final double percentOfMax=(sipper.getSortValue() * 100) / mStatsHelper.getMaxPower();
     sipper.percent=percentOfTotal;
     pref.setTitle(sipper.name);
     pref.setOrder(Integer.MAX_VALUE - (int)sipper.getSortValue());
@@ -41,15 +27,5 @@
     }
     mAppListGroup.addPreference(pref);
     if (mAppListGroup.getPreferenceCount() > (MAX_ITEMS_TO_LIST + 1))     break;
-  }
-synchronized (mRequestQueue) {
-    if (!mRequestQueue.isEmpty()) {
-      if (mRequestThread == null) {
-        mRequestThread=new Thread(this,"BatteryUsage Icon Loader");
-        mRequestThread.setPriority(Thread.MIN_PRIORITY);
-        mRequestThread.start();
-      }
-      mRequestQueue.notify();
-    }
   }
 }

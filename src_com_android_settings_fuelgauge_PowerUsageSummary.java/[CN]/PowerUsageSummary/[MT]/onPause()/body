@@ -1,8 +1,6 @@
 {
-synchronized (mRequestQueue) {
-    mAbort=true;
-  }
-  mHandler.removeMessages(MSG_UPDATE_NAME_ICON);
+  mStatsHelper.pause();
+  mHandler.removeMessages(BatteryStatsHelper.MSG_UPDATE_NAME_ICON);
   getActivity().unregisterReceiver(mBatteryInfoReceiver);
   super.onPause();
 }

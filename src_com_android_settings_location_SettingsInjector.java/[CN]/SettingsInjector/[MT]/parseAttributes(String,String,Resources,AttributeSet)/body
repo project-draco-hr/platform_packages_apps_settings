@@ -1,0 +1,19 @@
+{
+  TypedArray sa=res.obtainAttributes(attrs,R.styleable.InjectedLocationSetting);
+  try {
+    final int labelId=sa.getResourceId(R.styleable.InjectedLocationSetting_label,0);
+    final String label=sa.getString(R.styleable.InjectedLocationSetting_label);
+    final int iconId=sa.getResourceId(R.styleable.InjectedLocationSetting_icon,0);
+    final String settingsActivity=sa.getString(R.styleable.InjectedLocationSetting_settingsActivity);
+    if (Log.isLoggable(TAG,Log.DEBUG)) {
+      Log.d(TAG,"parsed labelId: " + labelId + ", label: "+ label+ ", iconId: "+ iconId);
+    }
+    if (labelId == 0 || TextUtils.isEmpty(label) || TextUtils.isEmpty(settingsActivity)) {
+      return null;
+    }
+    return new InjectedSetting(packageName,className,label,iconId,settingsActivity);
+  }
+  finally {
+    sa.recycle();
+  }
+}

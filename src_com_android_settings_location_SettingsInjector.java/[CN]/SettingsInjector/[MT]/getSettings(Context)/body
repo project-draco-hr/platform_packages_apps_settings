@@ -1,0 +1,30 @@
+{
+  PackageManager pm=context.getPackageManager();
+  Intent receiverIntent=new Intent(RECEIVER_INTENT);
+  List<ResolveInfo> resolveInfos=pm.queryIntentServices(receiverIntent,PackageManager.GET_META_DATA);
+  if (Log.isLoggable(TAG,Log.DEBUG)) {
+    Log.d(TAG,"Found services: " + resolveInfos);
+  }
+  List<InjectedSetting> settings=new ArrayList<InjectedSetting>(resolveInfos.size());
+  for (  ResolveInfo receiver : resolveInfos) {
+    try {
+      InjectedSetting info=parseServiceInfo(receiver,pm);
+      if (info == null) {
+        Log.w(TAG,"Unable to load service info " + receiver);
+      }
+ else {
+        if (Log.isLoggable(TAG,Log.INFO)) {
+          Log.i(TAG,"Loaded service info: " + info);
+        }
+        settings.add(info);
+      }
+    }
+ catch (    XmlPullParserException e) {
+      Log.w(TAG,"Unable to load service info " + receiver,e);
+    }
+catch (    IOException e) {
+      Log.w(TAG,"Unable to load service info " + receiver,e);
+    }
+  }
+  return settings;
+}

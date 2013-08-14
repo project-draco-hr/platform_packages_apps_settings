@@ -4,6 +4,7 @@
   Intent intent=getIntent();
   ComponentName component=intent.getParcelableExtra(CardEmulationManager.EXTRA_SERVICE_COMPONENT);
   String category=intent.getStringExtra(CardEmulationManager.EXTRA_CATEGORY);
+  setResult(RESULT_CANCELED);
   if (!buildDialog(component,category)) {
     finish();
   }

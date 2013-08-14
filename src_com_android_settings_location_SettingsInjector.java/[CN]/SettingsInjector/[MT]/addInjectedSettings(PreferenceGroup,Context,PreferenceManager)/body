@@ -1,0 +1,7 @@
+{
+  Iterable<InjectedSetting> settings=getSettings(context);
+  for (  InjectedSetting setting : settings) {
+    Preference pref=addServiceSetting(context,group,setting,preferenceManager);
+    updateSetting(context,pref,setting);
+  }
+}

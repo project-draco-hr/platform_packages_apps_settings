@@ -1,0 +1,22 @@
+{
+  Handler handler=new Handler(){
+    @Override public void handleMessage(    Message msg){
+      Bundle bundle=msg.getData();
+      String status=bundle.getString(SettingInjectorService.STATUS_KEY);
+      boolean enabled=bundle.getBoolean(SettingInjectorService.ENABLED_KEY,true);
+      if (Log.isLoggable(TAG,Log.DEBUG)) {
+        Log.d(TAG,info + ": received " + msg+ ", bundle: "+ bundle);
+      }
+      pref.setSummary(status);
+      pref.setEnabled(enabled);
+    }
+  }
+;
+  Messenger messenger=new Messenger(handler);
+  Intent receiverIntent=info.getServiceIntent();
+  receiverIntent.putExtra(SettingInjectorService.MESSENGER_KEY,messenger);
+  if (Log.isLoggable(TAG,Log.DEBUG)) {
+    Log.d(TAG,info + ": sending rcv-intent: " + receiverIntent+ ", handler: "+ handler);
+  }
+  context.startService(receiverIntent);
+}

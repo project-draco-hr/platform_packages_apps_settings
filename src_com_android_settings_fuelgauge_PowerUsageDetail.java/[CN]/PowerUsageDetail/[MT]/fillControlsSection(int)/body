@@ -8,11 +8,10 @@
  catch (  NameNotFoundException nnfe) {
   }
   ApplicationInfo ai=pi != null ? pi.applicationInfo : null;
-  boolean isSystem=ai != null ? (ai.flags & ApplicationInfo.FLAG_SYSTEM) != 0 : false;
   boolean removeHeader=true;
 switch (mDrainType) {
 case APP:
-    if (packages != null && !isSystem) {
+    if (packages != null && packages.length == 1) {
       addControl(R.string.battery_action_app_details,R.string.battery_sugg_apps_info,ACTION_APP_DETAILS);
       removeHeader=false;
     }

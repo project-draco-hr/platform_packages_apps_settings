@@ -1,7 +1,7 @@
 {
   if (preference instanceof BatteryHistoryPreference) {
     Parcel hist=Parcel.obtain();
-    mStats.writeToParcelWithoutUids(hist,0);
+    mStatsHelper.getStats().writeToParcelWithoutUids(hist,0);
     byte[] histData=hist.marshall();
     Bundle args=new Bundle();
     args.putByteArray(BatteryHistoryDetail.EXTRA_STATS,histData);
@@ -14,68 +14,6 @@
   }
   PowerGaugePreference pgp=(PowerGaugePreference)preference;
   BatterySipper sipper=pgp.getInfo();
-  Bundle args=new Bundle();
-  args.putString(PowerUsageDetail.EXTRA_TITLE,sipper.name);
-  args.putInt(PowerUsageDetail.EXTRA_PERCENT,(int)Math.ceil(sipper.getSortValue() * 100 / mTotalPower));
-  args.putInt(PowerUsageDetail.EXTRA_GAUGE,(int)Math.ceil(sipper.getSortValue() * 100 / mMaxPower));
-  args.putLong(PowerUsageDetail.EXTRA_USAGE_DURATION,mStatsPeriod);
-  args.putString(PowerUsageDetail.EXTRA_ICON_PACKAGE,sipper.defaultPackageName);
-  args.putInt(PowerUsageDetail.EXTRA_ICON_ID,sipper.iconId);
-  args.putDouble(PowerUsageDetail.EXTRA_NO_COVERAGE,sipper.noCoveragePercent);
-  if (sipper.uidObj != null) {
-    args.putInt(PowerUsageDetail.EXTRA_UID,sipper.uidObj.getUid());
-  }
-  args.putSerializable(PowerUsageDetail.EXTRA_DRAIN_TYPE,sipper.drainType);
-  int[] types;
-  double[] values;
-switch (sipper.drainType) {
-case APP:
-case USER:
-{
-      Uid uid=sipper.uidObj;
-      types=new int[]{R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_gps,R.string.usage_type_wifi_running,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send,R.string.usage_type_audio,R.string.usage_type_video};
-      values=new double[]{sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.gpsTime,sipper.wifiRunningTime,sipper.mobileRxBytes,sipper.mobileTxBytes,sipper.wifiRxBytes,sipper.wifiTxBytes,0,0};
-      if (sipper.drainType == DrainType.APP) {
-        Writer result=new StringWriter();
-        PrintWriter printWriter=new FastPrintWriter(result,false,1024);
-        mStats.dumpLocked(printWriter,"",mStatsType,uid.getUid());
-        printWriter.flush();
-        args.putString(PowerUsageDetail.EXTRA_REPORT_DETAILS,result.toString());
-        result=new StringWriter();
-        printWriter=new FastPrintWriter(result,false,1024);
-        mStats.dumpCheckinLocked(printWriter,mStatsType,uid.getUid());
-        printWriter.flush();
-        args.putString(PowerUsageDetail.EXTRA_REPORT_CHECKIN_DETAILS,result.toString());
-      }
-    }
-  break;
-case CELL:
-{
-  types=new int[]{R.string.usage_type_on_time,R.string.usage_type_no_coverage};
-  values=new double[]{sipper.usageTime,sipper.noCoveragePercent};
-}
-break;
-case WIFI:
-{
-types=new int[]{R.string.usage_type_wifi_running,R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send};
-values=new double[]{sipper.usageTime,sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.mobileRxBytes,sipper.mobileTxBytes,sipper.wifiRxBytes,sipper.wifiTxBytes};
-}
-break;
-case BLUETOOTH:
-{
-types=new int[]{R.string.usage_type_on_time,R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send};
-values=new double[]{sipper.usageTime,sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.mobileRxBytes,sipper.mobileTxBytes,sipper.wifiRxBytes,sipper.wifiTxBytes};
-}
-break;
-default :
-{
-types=new int[]{R.string.usage_type_on_time};
-values=new double[]{sipper.usageTime};
-}
-}
-args.putIntArray(PowerUsageDetail.EXTRA_DETAIL_TYPES,types);
-args.putDoubleArray(PowerUsageDetail.EXTRA_DETAIL_VALUES,values);
-PreferenceActivity pa=(PreferenceActivity)getActivity();
-pa.startPreferencePanel(PowerUsageDetail.class.getName(),args,R.string.details_title,null,null,0);
-return super.onPreferenceTreeClick(preferenceScreen,preference);
+  mStatsHelper.startBatteryDetailPage((PreferenceActivity)getActivity(),sipper);
+  return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

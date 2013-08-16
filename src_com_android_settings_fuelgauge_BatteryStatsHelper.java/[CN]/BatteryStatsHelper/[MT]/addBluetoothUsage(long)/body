@@ -1,0 +1,8 @@
+{
+  long btOnTimeMs=mStats.getBluetoothOnTime(uSecNow,mStatsType) / 1000;
+  double btPower=btOnTimeMs * mPowerProfile.getAveragePower(PowerProfile.POWER_BLUETOOTH_ON) / 1000;
+  int btPingCount=mStats.getBluetoothPingCount();
+  btPower+=(btPingCount * mPowerProfile.getAveragePower(PowerProfile.POWER_BLUETOOTH_AT_CMD)) / 1000;
+  BatterySipper bs=addEntry(mActivity.getString(R.string.power_bluetooth),DrainType.BLUETOOTH,btOnTimeMs,R.drawable.ic_settings_bluetooth,btPower + mBluetoothPower);
+  aggregateSippers(bs,mBluetoothSippers,"Bluetooth");
+}

@@ -1,0 +1,45 @@
+{
+  String packageName=ops.getPackageName();
+  List<AppOpsManager.OpEntry> entries=ops.getOps();
+  boolean highBattery=false;
+  boolean normalBattery=false;
+  for (  AppOpsManager.OpEntry entry : entries) {
+    if (now - entry.getTime() <= RECENT_TIME_INTERVAL_MILLIS) {
+switch (entry.getOp()) {
+case AppOpsManager.OP_MONITOR_LOCATION:
+        normalBattery=true;
+      break;
+case AppOpsManager.OP_MONITOR_HIGH_POWER_LOCATION:
+    highBattery=true;
+  break;
+default :
+break;
+}
+}
+}
+if (!highBattery && !normalBattery) {
+if (Log.isLoggable(TAG,Log.VERBOSE)) {
+Log.v(TAG,packageName + " hadn't used location within the time interval.");
+}
+return null;
+}
+PreferenceScreen screen=null;
+if (wrapper != null) {
+if (!wrapper.used()) {
+BatterySipper sipper=wrapper.batterySipper();
+sipper.loadNameAndIcon();
+screen=createRecentLocationEntry(preferenceManager,sipper.getIcon(),sipper.getLabel(),highBattery,new UidEntryClickedListener(sipper));
+wrapper.setUsed();
+}
+}
+ else {
+try {
+ApplicationInfo appInfo=mPackageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA);
+screen=createRecentLocationEntry(preferenceManager,mPackageManager.getApplicationIcon(appInfo),mPackageManager.getApplicationLabel(appInfo),highBattery,new PackageEntryClickedListener(packageName));
+}
+ catch (PackageManager.NameNotFoundException e) {
+Log.wtf(TAG,"Package not found: " + packageName);
+}
+}
+return screen;
+}

@@ -1,0 +1,19 @@
+{
+  final Context context=mContext;
+  final ContentResolver cr=context.getContentResolver();
+  final CaptionStyle style;
+  if (styleId == CaptionStyle.PRESET_CUSTOM) {
+    style=CaptionStyle.getCustomStyle(cr);
+  }
+ else {
+    style=CaptionStyle.PRESETS[styleId];
+  }
+  mForegroundColor=style.foregroundColor;
+  mBackgroundColor=style.backgroundColor;
+  mEdgeType=style.edgeType;
+  mEdgeColor=style.edgeColor;
+  mHasMeasurements=false;
+  final Typeface typeface=style.getTypeface();
+  setTypeface(typeface);
+  requestLayout();
+}

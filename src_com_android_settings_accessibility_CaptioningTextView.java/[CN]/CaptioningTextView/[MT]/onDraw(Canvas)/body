@@ -1,40 +1,47 @@
 {
-  if (mOutlineWidth > 0 && Color.alpha(mOutlineColor) > 0) {
-    final TextPaint textPaint=getPaint();
-    final Paint.Style previousStyle=textPaint.getStyle();
-    final ColorStateList previousColors=getTextColors();
-    textPaint.setStyle(Style.STROKE);
-    textPaint.setStrokeWidth(mOutlineWidth);
-    textPaint.setStrokeCap(Cap.ROUND);
-    textPaint.setStrokeJoin(Join.ROUND);
-    setTextColor(mOutlineColorState);
-    final float shadowRadius=getShadowRadius();
-    final float shadowDx=getShadowDx();
-    final float shadowDy=getShadowDy();
-    final int shadowColor=getShadowColor();
-    if (shadowRadius > 0) {
-      setShadowLayer(0,0,0,0);
-    }
-    super.onDraw(c);
-    if (shadowRadius > 0) {
-      setShadowLayer(shadowRadius,shadowDx,shadowDy,shadowColor);
-    }
-    textPaint.setStyle(previousStyle);
-    setTextColor(previousColors);
-    final int color;
-    if (mBackgroundSpan != null) {
-      color=mBackgroundSpan.getBackgroundColor();
-      mBackgroundSpan.setColor(Color.TRANSPARENT);
-    }
- else {
-      color=0;
-    }
-    super.onDraw(c);
-    if (mBackgroundSpan != null) {
-      mBackgroundSpan.setColor(color);
+  final StaticLayout layout=mLayout;
+  if (layout == null) {
+    return;
+  }
+  final int saveCount=c.save();
+  final int innerPaddingX=mInnerPaddingX;
+  c.translate(mPaddingLeft + innerPaddingX,mPaddingTop);
+  final RectF bounds=mLineBounds;
+  final int lineCount=layout.getLineCount();
+  final Paint paint=layout.getPaint();
+  paint.setShadowLayer(0,0,0,0);
+  final int backgroundColor=mBackgroundColor;
+  if (Color.alpha(backgroundColor) > 0) {
+    paint.setColor(backgroundColor);
+    paint.setStyle(Style.FILL);
+    final float cornerRadius=mCornerRadius;
+    float previousBottom=layout.getLineTop(0);
+    for (int i=0; i < lineCount; i++) {
+      bounds.left=layout.getLineLeft(i) - innerPaddingX;
+      bounds.right=layout.getLineRight(i) + innerPaddingX;
+      bounds.top=previousBottom;
+      bounds.bottom=layout.getLineBottom(i);
+      previousBottom=bounds.bottom;
+      c.drawRoundRect(bounds,cornerRadius,cornerRadius,paint);
     }
   }
- else {
-    super.onDraw(c);
+  final int edgeType=mEdgeType;
+  if (edgeType == CaptionStyle.EDGE_TYPE_OUTLINE) {
+    paint.setColor(mEdgeColor);
+    paint.setStyle(Style.FILL_AND_STROKE);
+    paint.setStrokeJoin(Join.ROUND);
+    paint.setStrokeWidth(mOutlineWidth);
+    for (int i=0; i < lineCount; i++) {
+      layout.drawText(c,i,i);
+    }
   }
+  if (edgeType == CaptionStyle.EDGE_TYPE_DROP_SHADOW) {
+    paint.setShadowLayer(mShadowRadius,mShadowOffsetX,mShadowOffsetY,mEdgeColor);
+  }
+  paint.setColor(mForegroundColor);
+  paint.setStyle(Style.FILL);
+  for (int i=0; i < lineCount; i++) {
+    layout.drawText(c,i,i);
+  }
+  c.restoreToCount(saveCount);
 }

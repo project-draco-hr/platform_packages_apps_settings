@@ -1,0 +1,13 @@
+{
+  final int widthSpec=MeasureSpec.getSize(widthMeasureSpec);
+  if (computeMeasurements(widthSpec)) {
+    final StaticLayout layout=mLayout;
+    final int paddingX=mPaddingLeft + mPaddingRight + mInnerPaddingX * 2;
+    final int width=layout.getWidth() + paddingX;
+    final int height=layout.getHeight() + mPaddingTop + mPaddingBottom;
+    setMeasuredDimension(width,height);
+  }
+ else {
+    setMeasuredDimension(MEASURED_STATE_TOO_SMALL,MEASURED_STATE_TOO_SMALL);
+  }
+}

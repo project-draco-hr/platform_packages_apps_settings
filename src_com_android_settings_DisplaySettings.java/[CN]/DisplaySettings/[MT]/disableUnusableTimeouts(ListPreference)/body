@@ -16,11 +16,14 @@
     }
   }
   if (revisedEntries.size() != entries.length || revisedValues.size() != values.length) {
+    final int userPreference=Integer.parseInt(screenTimeoutPreference.getValue());
     screenTimeoutPreference.setEntries(revisedEntries.toArray(new CharSequence[revisedEntries.size()]));
     screenTimeoutPreference.setEntryValues(revisedValues.toArray(new CharSequence[revisedValues.size()]));
-    final int userPreference=Integer.parseInt(screenTimeoutPreference.getValue());
     if (userPreference <= maxTimeout) {
       screenTimeoutPreference.setValue(String.valueOf(userPreference));
+    }
+ else     if (revisedValues.size() > 0 && Long.parseLong(revisedValues.get(revisedValues.size() - 1).toString()) == maxTimeout) {
+      screenTimeoutPreference.setValue(String.valueOf(maxTimeout));
     }
  else {
     }

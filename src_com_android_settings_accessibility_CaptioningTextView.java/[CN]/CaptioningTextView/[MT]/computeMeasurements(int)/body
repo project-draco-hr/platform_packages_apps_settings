@@ -1,0 +1,49 @@
+{
+  if (mHasMeasurements && maxWidth == mLastMeasuredWidth) {
+    return true;
+  }
+  final int paddingX=mPaddingLeft + mPaddingRight + mInnerPaddingX;
+  maxWidth-=paddingX;
+  if (maxWidth <= 0) {
+    return false;
+  }
+  final TextPaint paint=mPaint;
+  final CharSequence text=mText;
+  final int textLength=text.length();
+  if (mTextWidths == null || mTextWidths.length < textLength) {
+    mTextWidths=new float[textLength];
+  }
+  final float[] textWidths=mTextWidths;
+  paint.getTextWidths(text,0,textLength,textWidths);
+  float runLength=0;
+  for (int i=0; i < textLength; i++) {
+    runLength+=textWidths[i];
+  }
+  final int lineCount=(int)(runLength / maxWidth) + 1;
+  final int lineLength=(int)(runLength / lineCount);
+  final StringBuilder breakText=mBreakText;
+  breakText.setLength(0);
+  int line=0;
+  int lastBreak=0;
+  int maxRunLength=0;
+  runLength=0;
+  for (int i=0; i < textLength; i++) {
+    if (runLength > lineLength) {
+      final CharSequence sequence=text.subSequence(lastBreak,i);
+      final int trimmedLength=TextUtils.getTrimmedLength(sequence);
+      breakText.append(sequence,0,trimmedLength);
+      breakText.append('\n');
+      lastBreak=i;
+      runLength=0;
+    }
+    runLength+=textWidths[i];
+    if (runLength > maxRunLength) {
+      maxRunLength=(int)Math.ceil(runLength);
+    }
+  }
+  breakText.append(text.subSequence(lastBreak,textLength));
+  mHasMeasurements=true;
+  mLastMeasuredWidth=maxWidth;
+  mLayout=new StaticLayout(breakText,paint,maxRunLength,Alignment.ALIGN_LEFT,mSpacingMult,mSpacingAdd,true);
+  return true;
+}

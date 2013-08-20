@@ -1,0 +1,10 @@
+{
+  final DisplayMetrics metrics=getContext().getResources().getDisplayMetrics();
+  final float pixels=TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,size,metrics);
+  if (mPaint.getTextSize() != size) {
+    mHasMeasurements=false;
+    mInnerPaddingX=(int)(size * INNER_PADDING_RATIO + 0.5f);
+    mPaint.setTextSize(size);
+    requestLayout();
+  }
+}

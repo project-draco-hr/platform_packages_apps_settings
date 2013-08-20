@@ -1,4 +1,4 @@
 {
   ContentResolver resolver=context.getContentResolver();
-  return Settings.Secure.isLocationMasterSwitchEnabled(resolver) ? STATE_ENABLED : STATE_DISABLED;
+  return Settings.Secure.getLocationMode(resolver) != Settings.Secure.LOCATION_MODE_OFF ? STATE_ENABLED : STATE_DISABLED;
 }

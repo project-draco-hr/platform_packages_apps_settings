@@ -1,18 +1,5 @@
 {
   ContentResolver res=getContentResolver();
-  boolean gpsEnabled=Settings.Secure.isLocationProviderEnabled(res,LocationManager.GPS_PROVIDER);
-  boolean networkEnabled=Settings.Secure.isLocationProviderEnabled(res,LocationManager.NETWORK_PROVIDER);
-  boolean enabled=gpsEnabled || networkEnabled;
-  if (!enabled) {
-    onModeChanged(MODE_LOCATION_OFF);
-  }
- else   if (gpsEnabled && !networkEnabled) {
-    onModeChanged(MODE_SENSORS_ONLY);
-  }
- else   if (!gpsEnabled && networkEnabled) {
-    onModeChanged(MODE_BATTERY_SAVING);
-  }
- else {
-    onModeChanged(MODE_HIGH_ACCURACY);
-  }
+  int mode=Settings.Secure.getLocationMode(getContentResolver());
+  onModeChanged(mode);
 }

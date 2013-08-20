@@ -1,54 +1,41 @@
 {
-  HashMap<String,Boolean> packageMap=new HashMap<String,Boolean>();
+  mStatsHelper.refreshStats();
+  List<BatterySipper> usageList=mStatsHelper.getUsageList();
+  HashMap<Integer,BatterySipperWrapper> sipperMap=new HashMap<Integer,BatterySipperWrapper>(usageList.size());
+  for (  BatterySipper sipper : usageList) {
+    int uid=sipper.getUid();
+    if (uid != 0) {
+      sipperMap.put(uid,new BatterySipperWrapper(sipper));
+    }
+  }
   AppOpsManager aoManager=(AppOpsManager)mActivity.getSystemService(Context.APP_OPS_SERVICE);
   List<AppOpsManager.PackageOps> appOps=aoManager.getPackagesForOps(new int[]{AppOpsManager.OP_MONITOR_LOCATION,AppOpsManager.OP_MONITOR_HIGH_POWER_LOCATION});
   PreferenceManager preferenceManager=container.getPreferenceManager();
+  ArrayList<PreferenceScreen> prefs=new ArrayList<PreferenceScreen>();
   long now=System.currentTimeMillis();
   for (  AppOpsManager.PackageOps ops : appOps) {
-    processPackageOps(now,container,preferenceManager,ops,packageMap);
-  }
-  mStatsHelper.refreshStats();
-  List<BatterySipper> usageList=mStatsHelper.getUsageList();
-  for (  BatterySipper sipper : usageList) {
-    sipper.loadNameAndIcon();
-    String[] packages=sipper.getPackages();
-    if (packages == null) {
-      continue;
-    }
-    for (    String curPackage : packages) {
-      if (packageMap.containsKey(curPackage)) {
-        PreferenceScreen screen=preferenceManager.createPreferenceScreen(mActivity);
-        screen.setIcon(sipper.getIcon());
-        screen.setTitle(sipper.getLabel());
-        if (packageMap.get(curPackage)) {
-          screen.setSummary(R.string.location_high_battery_use);
-        }
- else {
-          screen.setSummary(R.string.location_low_battery_use);
-        }
-        container.addPreference(screen);
-        screen.setOnPreferenceClickListener(new UidEntryClickedListener(sipper));
-        packageMap.remove(curPackage);
-        break;
-      }
+    BatterySipperWrapper wrapper=sipperMap.get(ops.getUid());
+    PreferenceScreen screen=getScreenFromOps(preferenceManager,now,ops,wrapper);
+    if (screen != null) {
+      prefs.add(screen);
     }
   }
-  for (  Map.Entry<String,Boolean> entry : packageMap.entrySet()) {
-    try {
-      PreferenceScreen screen=preferenceManager.createPreferenceScreen(mActivity);
-      ApplicationInfo appInfo=mPackageManager.getApplicationInfo(entry.getKey(),PackageManager.GET_META_DATA);
-      screen.setIcon(mPackageManager.getApplicationIcon(appInfo));
-      screen.setTitle(mPackageManager.getApplicationLabel(appInfo));
-      if (entry.getValue()) {
-        screen.setSummary(R.string.location_high_battery_use);
+  if (prefs.size() > 0) {
+    Collections.sort(prefs,new Comparator<PreferenceScreen>(){
+      @Override public int compare(      PreferenceScreen lhs,      PreferenceScreen rhs){
+        return lhs.getTitle().toString().compareTo(rhs.getTitle().toString());
       }
+    }
+);
+    for (    PreferenceScreen entry : prefs) {
+      container.addPreference(entry);
+    }
+  }
  else {
-        screen.setSummary(R.string.location_low_battery_use);
-      }
-      screen.setOnPreferenceClickListener(new PackageEntryClickedListener(entry.getKey()));
-      container.addPreference(screen);
-    }
- catch (    PackageManager.NameNotFoundException e) {
-    }
+    PreferenceScreen screen=preferenceManager.createPreferenceScreen(mActivity);
+    screen.setTitle(R.string.location_no_recent_apps);
+    screen.setSelectable(false);
+    screen.setEnabled(false);
+    container.addPreference(screen);
   }
 }

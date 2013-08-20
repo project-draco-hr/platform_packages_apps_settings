@@ -1,0 +1,13 @@
+{
+  PreferenceScreen screen=preferenceManager.createPreferenceScreen(mActivity);
+  screen.setIcon(icon);
+  screen.setTitle(label);
+  if (isHighBattery) {
+    screen.setSummary(R.string.location_high_battery_use);
+  }
+ else {
+    screen.setSummary(R.string.location_low_battery_use);
+  }
+  screen.setOnPreferenceClickListener(listener);
+  return screen;
+}

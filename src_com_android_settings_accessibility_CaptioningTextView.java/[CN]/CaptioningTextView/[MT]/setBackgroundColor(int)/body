@@ -1,23 +1,4 @@
 {
-  if (Color.alpha(color) == 0) {
-    if (mHasBackground) {
-      mHasBackground=false;
-      getEditableText().removeSpan(mBackgroundSpan);
-    }
-  }
- else {
-    if (mBackgroundSpan == null) {
-      mBackgroundSpan=new MutableBackgroundColorSpan(color);
-    }
- else {
-      mBackgroundSpan.setColor(color);
-    }
-    if (mHasBackground) {
-      invalidate();
-    }
- else {
-      mHasBackground=true;
-      getEditableText().setSpan(mBackgroundSpan,0,length(),0);
-    }
-  }
+  mBackgroundColor=color;
+  invalidate();
 }

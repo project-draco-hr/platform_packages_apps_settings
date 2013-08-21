@@ -1,4 +1,5 @@
 {
+  final Intent receiverIntent=info.getServiceIntent();
   Handler handler=new Handler(){
     @Override public void handleMessage(    Message msg){
       Bundle bundle=msg.getData();
@@ -9,14 +10,16 @@
       }
       pref.setSummary(status);
       pref.setEnabled(enabled);
+      if (prev != null) {
+        prev.loadIfNotLoaded();
+      }
     }
   }
 ;
   Messenger messenger=new Messenger(handler);
-  Intent receiverIntent=info.getServiceIntent();
   receiverIntent.putExtra(SettingInjectorService.MESSENGER_KEY,messenger);
   if (Log.isLoggable(TAG,Log.DEBUG)) {
     Log.d(TAG,info + ": sending rcv-intent: " + receiverIntent+ ", handler: "+ handler);
   }
-  context.startService(receiverIntent);
+  return receiverIntent;
 }

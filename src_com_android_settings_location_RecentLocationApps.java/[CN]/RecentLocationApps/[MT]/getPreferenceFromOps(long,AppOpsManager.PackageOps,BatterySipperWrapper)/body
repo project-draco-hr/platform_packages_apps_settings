@@ -23,23 +23,23 @@ Log.v(TAG,packageName + " hadn't used location within the time interval.");
 }
 return null;
 }
-PreferenceScreen screen=null;
+Preference pref=null;
 if (wrapper != null) {
 if (!wrapper.used()) {
 BatterySipper sipper=wrapper.batterySipper();
 sipper.loadNameAndIcon();
-screen=createRecentLocationEntry(preferenceManager,sipper.getIcon(),sipper.getLabel(),highBattery,new UidEntryClickedListener(sipper));
+pref=createRecentLocationEntry(sipper.getIcon(),sipper.getLabel(),highBattery,new UidEntryClickedListener(sipper));
 wrapper.setUsed();
 }
 }
  else {
 try {
 ApplicationInfo appInfo=mPackageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA);
-screen=createRecentLocationEntry(preferenceManager,mPackageManager.getApplicationIcon(appInfo),mPackageManager.getApplicationLabel(appInfo),highBattery,new PackageEntryClickedListener(packageName));
+pref=createRecentLocationEntry(mPackageManager.getApplicationIcon(appInfo),mPackageManager.getApplicationLabel(appInfo),highBattery,new PackageEntryClickedListener(packageName));
 }
  catch (PackageManager.NameNotFoundException e) {
 Log.wtf(TAG,"Package not found: " + packageName);
 }
 }
-return screen;
+return pref;
 }

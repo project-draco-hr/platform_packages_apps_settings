@@ -1,12 +1,14 @@
 {
   LocalBluetoothManager manager=LocalBluetoothManager.getInstance(context);
   if (manager == null) {
+    if (DEBUG)     Log.v(TAG,"manager == null - do not show dialog.");
     return false;
   }
   if (manager.isForegroundActivity()) {
     return true;
   }
   if ((context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_TYPE_APPLIANCE) == Configuration.UI_MODE_TYPE_APPLIANCE) {
+    if (DEBUG)     Log.v(TAG,"in appliance mode - do not show dialog.");
     return false;
   }
   long currentTimeMillis=System.currentTimeMillis();
@@ -31,5 +33,6 @@
       }
     }
   }
+  if (DEBUG)   Log.v(TAG,"Found no reason to show the dialog - do not show dialog.");
   return false;
 }

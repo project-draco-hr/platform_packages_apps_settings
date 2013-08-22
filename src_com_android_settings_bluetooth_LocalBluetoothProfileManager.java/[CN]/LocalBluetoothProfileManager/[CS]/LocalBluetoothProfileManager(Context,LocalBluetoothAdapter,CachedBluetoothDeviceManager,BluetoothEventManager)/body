@@ -13,6 +13,9 @@
   addProfile(mHidProfile,HidProfile.NAME,BluetoothInputDevice.ACTION_CONNECTION_STATE_CHANGED);
   mPanProfile=new PanProfile(context);
   addPanProfile(mPanProfile,PanProfile.NAME,BluetoothPan.ACTION_CONNECTION_STATE_CHANGED);
+  if (DEBUG)   Log.d(TAG,"Adding local MAP profile");
+  mMapProfile=new MapProfile(mContext,mLocalAdapter,mDeviceManager,this);
+  addProfile(mMapProfile,MapProfile.NAME,BluetoothMap.ACTION_CONNECTION_STATE_CHANGED);
   mPbapProfile=new PbapServerProfile(context);
-  Log.d(TAG,"LocalBluetoothProfileManager construction complete");
+  if (DEBUG)   Log.d(TAG,"LocalBluetoothProfileManager construction complete");
 }

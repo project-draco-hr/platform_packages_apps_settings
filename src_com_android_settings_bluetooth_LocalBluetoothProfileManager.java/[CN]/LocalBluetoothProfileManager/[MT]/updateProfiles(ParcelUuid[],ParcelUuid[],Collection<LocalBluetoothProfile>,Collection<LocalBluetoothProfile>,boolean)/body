@@ -23,7 +23,7 @@
     profiles.add(mHidProfile);
     removedProfiles.remove(mHidProfile);
   }
-  if (isPanNapConnected)   Log.d(TAG,"Valid PAN-NAP connection exists.");
+  if (isPanNapConnected)   if (DEBUG)   Log.d(TAG,"Valid PAN-NAP connection exists.");
   if ((BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.NAP) && mPanProfile != null) || isPanNapConnected) {
     profiles.add(mPanProfile);
     removedProfiles.remove(mPanProfile);

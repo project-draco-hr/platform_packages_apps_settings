@@ -6,7 +6,7 @@
   }
   addPreferencesFromResource(R.xml.location_settings);
   root=getPreferenceScreen();
-  mLocationMode=(PreferenceScreen)root.findPreference(KEY_LOCATION_MODE);
+  mLocationMode=root.findPreference(KEY_LOCATION_MODE);
   mLocationMode.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
     @Override public boolean onPreferenceClick(    Preference preference){
       activity.startPreferencePanel(LocationMode.class.getName(),null,R.string.location_mode_screen_title,null,LocationSettings.this,0);
@@ -15,22 +15,28 @@
   }
 );
   final PreferenceManager preferenceManager=getPreferenceManager();
-  mRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
+  PreferenceCategory categoryRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
   RecentLocationApps recentApps=new RecentLocationApps(activity,mStatsHelper);
-  List<Preference> recentLocationRequests=recentApps.getAppList(preferenceManager);
+  List<Preference> recentLocationRequests=recentApps.getAppList();
   if (recentLocationRequests.size() > 0) {
-    addPreferencesSorted(recentLocationRequests,mRecentLocationRequests);
+    addPreferencesSorted(recentLocationRequests,categoryRecentLocationRequests);
   }
  else {
-    PreferenceScreen screen=preferenceManager.createPreferenceScreen(activity);
-    screen.setTitle(R.string.location_no_recent_apps);
-    screen.setSelectable(false);
-    screen.setEnabled(false);
-    mRecentLocationRequests.addPreference(screen);
+    Preference banner=new Preference(activity);
+    banner.setLayoutResource(R.layout.location_list_no_item);
+    banner.setTitle(R.string.location_no_recent_apps);
+    banner.setSelectable(false);
+    banner.setEnabled(false);
+    categoryRecentLocationRequests.addPreference(banner);
   }
-  mLocationServices=(PreferenceCategory)root.findPreference(KEY_LOCATION_SERVICES);
-  List<Preference> locationServices=SettingsInjector.getInjectedSettings(activity,preferenceManager);
-  addPreferencesSorted(locationServices,mLocationServices);
+  PreferenceCategory categoryLocationServices=(PreferenceCategory)root.findPreference(KEY_LOCATION_SERVICES);
+  List<Preference> locationServices=SettingsInjector.getInjectedSettings(activity);
+  if (locationServices.size() > 0) {
+    addPreferencesSorted(locationServices,categoryLocationServices);
+  }
+ else {
+    root.removePreference(categoryLocationServices);
+  }
   if (activity.onIsHidingHeaders() || !activity.onIsMultiPane()) {
     final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
     mSwitch.setPaddingRelative(0,0,padding,0);

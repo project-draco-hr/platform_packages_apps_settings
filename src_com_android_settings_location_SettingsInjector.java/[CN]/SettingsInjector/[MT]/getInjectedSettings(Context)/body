@@ -3,7 +3,7 @@
   ArrayList<Preference> prefs=new ArrayList<Preference>();
   StatusLoader loader=null;
   for (  InjectedSetting setting : settings) {
-    Preference pref=addServiceSetting(context,prefs,setting,preferenceManager);
+    Preference pref=addServiceSetting(context,prefs,setting);
     Intent intent=createUpdatingIntent(context,pref,setting,loader);
     loader=new StatusLoader(context,intent,loader);
   }

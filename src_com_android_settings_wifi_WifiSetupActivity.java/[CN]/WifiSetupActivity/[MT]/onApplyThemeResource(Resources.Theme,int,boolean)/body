@@ -1,0 +1,7 @@
+{
+  String themeName=getIntent().getStringExtra(EXTRA_THEME);
+  if (themeName != null && themeName.equalsIgnoreCase(THEME_HOLO_LIGHT)) {
+    resid=getResources().getIdentifier(RESOURCE_THEME_LIGHT,"style",getPackageName());
+  }
+  super.onApplyThemeResource(theme,resid,first);
+}

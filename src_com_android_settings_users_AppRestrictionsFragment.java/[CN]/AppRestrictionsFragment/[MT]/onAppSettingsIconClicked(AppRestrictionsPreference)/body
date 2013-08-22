@@ -1,10 +1,7 @@
 {
   if (preference.getKey().startsWith(PKG_PREFIX)) {
-    if (preference.mPanelOpen) {
-      for (      Preference p : preference.mChildren) {
-        mAppList.removePreference(p);
-      }
-      preference.mChildren.clear();
+    if (preference.isPanelOpen()) {
+      removeRestrictionsForApp(preference);
     }
  else {
       String packageName=preference.getKey().substring(PKG_PREFIX.length());
@@ -13,9 +10,9 @@
         onRestrictionsReceived(preference,packageName,restrictions);
       }
  else {
-        requestRestrictionsForApp(packageName,preference);
+        requestRestrictionsForApp(packageName,preference,true);
       }
     }
-    preference.mPanelOpen=!preference.mPanelOpen;
+    preference.setPanelOpen(!preference.isPanelOpen());
   }
 }

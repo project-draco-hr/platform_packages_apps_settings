@@ -1,4 +1,10 @@
 {
   ContentResolver resolver=context.getContentResolver();
-  return Settings.Secure.getLocationMode(resolver) != Settings.Secure.LOCATION_MODE_OFF ? STATE_ENABLED : STATE_DISABLED;
+  int currentLocationMode=Settings.Secure.getLocationMode(resolver);
+switch (currentLocationMode) {
+case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
+case Settings.Secure.LOCATION_MODE_OFF:
+    return STATE_DISABLED;
+}
+return STATE_ENABLED;
 }

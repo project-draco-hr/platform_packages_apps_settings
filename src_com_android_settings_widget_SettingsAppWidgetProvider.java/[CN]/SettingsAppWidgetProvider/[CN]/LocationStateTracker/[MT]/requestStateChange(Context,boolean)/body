@@ -4,11 +4,11 @@
     @Override protected Boolean doInBackground(    Void... args){
       final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
       if (!um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION)) {
-        int mode=desiredState ? Settings.Secure.LOCATION_MODE_HIGH_ACCURACY : Settings.Secure.LOCATION_MODE_OFF;
+        int mode=desiredState ? Settings.Secure.LOCATION_MODE_HIGH_ACCURACY : Settings.Secure.LOCATION_MODE_BATTERY_SAVING;
         Settings.Secure.setLocationMode(resolver,mode);
         return desiredState;
       }
-      return Settings.Secure.getLocationMode(resolver) != Settings.Secure.LOCATION_MODE_OFF;
+      return getActualState(context) == STATE_ENABLED;
     }
     @Override protected void onPostExecute(    Boolean result){
       setCurrentState(context,result ? STATE_ENABLED : STATE_DISABLED);

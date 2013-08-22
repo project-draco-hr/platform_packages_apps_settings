@@ -9,24 +9,10 @@
     }
   }
  else   if (restrictionsIntent != null) {
-    final Intent customIntent=restrictionsIntent;
-    if (restrictions != null) {
-      customIntent.putExtra(Intent.EXTRA_RESTRICTIONS_BUNDLE,RestrictionUtils.restrictionsToBundle(restrictions));
-    }
-    Preference p=new Preference(context);
-    p.setTitle(R.string.app_restrictions_custom_label);
-    p.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-      @Override public boolean onPreferenceClick(      Preference preference){
-        int requestCode=generateCustomActivityRequestCode(RestrictionsResultReceiver.this.preference);
-        AppRestrictionsFragment.this.startActivityForResult(customIntent,requestCode);
-        return false;
-      }
-    }
-);
-    p.setPersistent(false);
-    p.setOrder(preference.getOrder() + 1);
-    preference.mChildren.add(p);
-    mAppList.addPreference(p);
     preference.setRestrictions(restrictions);
+    if (invokeIfCustom && AppRestrictionsFragment.this.isResumed()) {
+      int requestCode=generateCustomActivityRequestCode(RestrictionsResultReceiver.this.preference);
+      AppRestrictionsFragment.this.startActivityForResult(restrictionsIntent,requestCode);
+    }
   }
 }

@@ -4,5 +4,5 @@
   intent.setPackage(packageName);
   intent.putExtra(Intent.EXTRA_RESTRICTIONS_BUNDLE,oldEntries);
   intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-  getActivity().sendOrderedBroadcast(intent,null,new RestrictionsResultReceiver(packageName,preference),null,Activity.RESULT_OK,null,null);
+  getActivity().sendOrderedBroadcast(intent,null,new RestrictionsResultReceiver(packageName,preference,invokeIfCustom),null,Activity.RESULT_OK,null,null);
 }

@@ -1,0 +1,13 @@
+{
+  Preference pref=new Preference(mActivity);
+  pref.setIcon(icon);
+  pref.setTitle(label);
+  if (isHighBattery) {
+    pref.setSummary(R.string.location_high_battery_use);
+  }
+ else {
+    pref.setSummary(R.string.location_low_battery_use);
+  }
+  pref.setOnPreferenceClickListener(listener);
+  return pref;
+}

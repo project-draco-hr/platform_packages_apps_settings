@@ -14,9 +14,9 @@
   long now=System.currentTimeMillis();
   for (  AppOpsManager.PackageOps ops : appOps) {
     BatterySipperWrapper wrapper=sipperMap.get(ops.getUid());
-    PreferenceScreen screen=getScreenFromOps(preferenceManager,now,ops,wrapper);
-    if (screen != null) {
-      prefs.add(screen);
+    Preference pref=getPreferenceFromOps(now,ops,wrapper);
+    if (pref != null) {
+      prefs.add(pref);
     }
   }
   return prefs;

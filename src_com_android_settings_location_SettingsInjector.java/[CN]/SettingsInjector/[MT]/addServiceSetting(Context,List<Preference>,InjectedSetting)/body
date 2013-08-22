@@ -1,0 +1,13 @@
+{
+  Preference pref=new Preference(context);
+  pref.setTitle(info.title);
+  pref.setSummary(R.string.location_loading_injected_setting);
+  PackageManager pm=context.getPackageManager();
+  Drawable icon=pm.getDrawable(info.packageName,info.iconId,null);
+  pref.setIcon(icon);
+  Intent settingIntent=new Intent();
+  settingIntent.setClassName(info.packageName,info.settingsActivity);
+  pref.setIntent(settingIntent);
+  prefs.add(pref);
+  return pref;
+}

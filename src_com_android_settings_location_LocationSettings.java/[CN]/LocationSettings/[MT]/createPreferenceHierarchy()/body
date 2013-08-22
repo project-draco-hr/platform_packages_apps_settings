@@ -1,4 +1,5 @@
 {
+  final PreferenceActivity activity=(PreferenceActivity)getActivity();
   PreferenceScreen root=getPreferenceScreen();
   if (root != null) {
     root.removeAll();
@@ -8,18 +9,28 @@
   mLocationMode=(PreferenceScreen)root.findPreference(KEY_LOCATION_MODE);
   mLocationMode.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
     @Override public boolean onPreferenceClick(    Preference preference){
-      PreferenceActivity activity=(PreferenceActivity)getActivity();
       activity.startPreferencePanel(LocationMode.class.getName(),null,R.string.location_mode_screen_title,null,LocationSettings.this,0);
       return true;
     }
   }
 );
+  final PreferenceManager preferenceManager=getPreferenceManager();
   mRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
-  mLocationServices=(PreferenceCategory)root.findPreference(KEY_LOCATION_SERVICES);
-  PreferenceActivity activity=(PreferenceActivity)getActivity();
   RecentLocationApps recentApps=new RecentLocationApps(activity,mStatsHelper);
-  recentApps.fillAppList(mRecentLocationRequests);
-  SettingsInjector.addInjectedSettings(mLocationServices,activity,getPreferenceManager());
+  List<Preference> recentLocationRequests=recentApps.getAppList(preferenceManager);
+  if (recentLocationRequests.size() > 0) {
+    addPreferencesSorted(recentLocationRequests,mRecentLocationRequests);
+  }
+ else {
+    PreferenceScreen screen=preferenceManager.createPreferenceScreen(activity);
+    screen.setTitle(R.string.location_no_recent_apps);
+    screen.setSelectable(false);
+    screen.setEnabled(false);
+    mRecentLocationRequests.addPreference(screen);
+  }
+  mLocationServices=(PreferenceCategory)root.findPreference(KEY_LOCATION_SERVICES);
+  List<Preference> locationServices=SettingsInjector.getInjectedSettings(activity,preferenceManager);
+  addPreferencesSorted(locationServices,mLocationServices);
   if (activity.onIsHidingHeaders() || !activity.onIsMultiPane()) {
     final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
     mSwitch.setPaddingRelative(0,0,padding,0);

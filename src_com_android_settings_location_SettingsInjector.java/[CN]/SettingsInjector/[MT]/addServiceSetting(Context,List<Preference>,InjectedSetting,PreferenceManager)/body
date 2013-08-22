@@ -1,13 +1,13 @@
 {
   PreferenceScreen screen=preferenceManager.createPreferenceScreen(context);
   screen.setTitle(info.title);
-  screen.setSummary("Loading...");
+  screen.setSummary(R.string.location_loading_injected_setting);
   PackageManager pm=context.getPackageManager();
   Drawable icon=pm.getDrawable(info.packageName,info.iconId,null);
   screen.setIcon(icon);
   Intent settingIntent=new Intent();
   settingIntent.setClassName(info.packageName,info.settingsActivity);
   screen.setIntent(settingIntent);
-  group.addPreference(screen);
+  prefs.add(screen);
   return screen;
 }

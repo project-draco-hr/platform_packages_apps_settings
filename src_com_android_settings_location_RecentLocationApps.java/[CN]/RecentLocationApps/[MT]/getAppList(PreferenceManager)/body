@@ -10,8 +10,7 @@
   }
   AppOpsManager aoManager=(AppOpsManager)mActivity.getSystemService(Context.APP_OPS_SERVICE);
   List<AppOpsManager.PackageOps> appOps=aoManager.getPackagesForOps(new int[]{AppOpsManager.OP_MONITOR_LOCATION,AppOpsManager.OP_MONITOR_HIGH_POWER_LOCATION});
-  PreferenceManager preferenceManager=container.getPreferenceManager();
-  ArrayList<PreferenceScreen> prefs=new ArrayList<PreferenceScreen>();
+  ArrayList<Preference> prefs=new ArrayList<Preference>();
   long now=System.currentTimeMillis();
   for (  AppOpsManager.PackageOps ops : appOps) {
     BatterySipperWrapper wrapper=sipperMap.get(ops.getUid());
@@ -20,22 +19,5 @@
       prefs.add(screen);
     }
   }
-  if (prefs.size() > 0) {
-    Collections.sort(prefs,new Comparator<PreferenceScreen>(){
-      @Override public int compare(      PreferenceScreen lhs,      PreferenceScreen rhs){
-        return lhs.getTitle().toString().compareTo(rhs.getTitle().toString());
-      }
-    }
-);
-    for (    PreferenceScreen entry : prefs) {
-      container.addPreference(entry);
-    }
-  }
- else {
-    PreferenceScreen screen=preferenceManager.createPreferenceScreen(mActivity);
-    screen.setTitle(R.string.location_no_recent_apps);
-    screen.setSelectable(false);
-    screen.setEnabled(false);
-    container.addPreference(screen);
-  }
+  return prefs;
 }

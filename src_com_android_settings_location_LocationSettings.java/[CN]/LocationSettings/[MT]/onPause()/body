@@ -1,4 +1,9 @@
 {
+  try {
+    getActivity().unregisterReceiver(mReceiver);
+  }
+ catch (  RuntimeException e) {
+  }
   super.onPause();
   mValidListener=false;
   mSwitch.setOnCheckedChangeListener(null);

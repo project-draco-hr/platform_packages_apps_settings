@@ -1,0 +1,14 @@
+{
+  Iterable<InjectedSetting> settings=getSettings();
+  ArrayList<Preference> prefs=new ArrayList<Preference>();
+  mLoader=null;
+  for (  InjectedSetting setting : settings) {
+    Preference pref=addServiceSetting(prefs,setting);
+    Intent intent=createUpdatingIntent(pref,setting,mLoader);
+    mLoader=new StatusLoader(intent,mLoader);
+  }
+  if (mLoader != null) {
+    mLoader.loadIfNotLoaded();
+  }
+  return prefs;
+}

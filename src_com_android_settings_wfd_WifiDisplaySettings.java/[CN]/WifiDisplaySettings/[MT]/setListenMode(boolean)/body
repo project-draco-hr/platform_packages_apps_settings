@@ -1,0 +1,16 @@
+{
+  if (DEBUG) {
+    Slog.d(TAG,"Setting listen mode to: " + enable);
+  }
+  mWifiP2pManager.listen(mWifiP2pChannel,enable,new ActionListener(){
+    @Override public void onSuccess(){
+      if (DEBUG) {
+        Slog.d(TAG,"Successfully " + (enable ? "entered" : "exited") + " listen mode.");
+      }
+    }
+    @Override public void onFailure(    int reason){
+      Slog.e(TAG,"Failed to " + (enable ? "entered" : "exited") + " listen mode with reason "+ reason+ ".");
+    }
+  }
+);
+}

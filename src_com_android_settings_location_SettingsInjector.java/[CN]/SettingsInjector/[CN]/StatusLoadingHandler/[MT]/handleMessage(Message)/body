@@ -1,0 +1,45 @@
+{
+  if (Log.isLoggable(TAG,Log.DEBUG)) {
+    Log.d(TAG,"handleMessage start: " + msg + ", mSettingsToLoad: "+ mSettingsToLoad);
+  }
+switch (msg.what) {
+case WHAT_RELOAD:
+    mSettingsToLoad.addAll(mSettings);
+  if (mLoading) {
+    return;
+  }
+mLoading=true;
+break;
+case WHAT_TIMEOUT:
+if (Log.isLoggable(TAG,Log.WARN)) {
+final Setting setting=(Setting)msg.obj;
+setting.timedOut=true;
+Log.w(TAG,"Timed out trying to get status for: " + setting);
+}
+break;
+case WHAT_RECEIVED_STATUS:
+final Setting setting=(Setting)msg.obj;
+if (setting.timedOut) {
+return;
+}
+setting.timedOut=false;
+break;
+default :
+throw new IllegalArgumentException("Unexpected what: " + msg);
+}
+Iterator<Setting> iter=mSettingsToLoad.iterator();
+if (!iter.hasNext()) {
+mLoading=false;
+return;
+}
+Setting setting=iter.next();
+iter.remove();
+Intent intent=setting.createUpdatingIntent();
+mContext.startService(intent);
+Message timeoutMsg=obtainMessage(WHAT_TIMEOUT,setting);
+removeMessages(WHAT_TIMEOUT);
+sendMessageDelayed(timeoutMsg,INJECTED_STATUS_UPDATE_TIMEOUT_MILLIS);
+if (Log.isLoggable(TAG,Log.DEBUG)) {
+Log.d(TAG,"handleMessage end: " + msg + ", mSettingsToLoad: "+ mSettingsToLoad);
+}
+}

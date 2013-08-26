@@ -14,7 +14,6 @@
     }
   }
 );
-  final PreferenceManager preferenceManager=getPreferenceManager();
   PreferenceCategory categoryRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
   RecentLocationApps recentApps=new RecentLocationApps(activity,mStatsHelper);
   List<Preference> recentLocationRequests=recentApps.getAppList();
@@ -34,6 +33,9 @@
   List<Preference> locationServices=injector.getInjectedSettings();
   mReceiver=new BroadcastReceiver(){
     @Override public void onReceive(    Context context,    Intent intent){
+      if (Log.isLoggable(TAG,Log.DEBUG)) {
+        Log.d(TAG,"Received settings change intent: " + intent);
+      }
       injector.reloadStatusMessages();
     }
   }

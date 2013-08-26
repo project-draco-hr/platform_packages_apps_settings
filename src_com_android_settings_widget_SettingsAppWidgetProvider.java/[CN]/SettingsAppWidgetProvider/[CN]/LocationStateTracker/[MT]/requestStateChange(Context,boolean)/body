@@ -5,7 +5,7 @@
       final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
       if (!um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION)) {
         int mode=desiredState ? Settings.Secure.LOCATION_MODE_HIGH_ACCURACY : Settings.Secure.LOCATION_MODE_BATTERY_SAVING;
-        Settings.Secure.setLocationMode(resolver,mode);
+        Settings.Secure.putInt(resolver,Settings.Secure.LOCATION_MODE,mode);
         return desiredState;
       }
       return getActualState(context) == STATE_ENABLED;

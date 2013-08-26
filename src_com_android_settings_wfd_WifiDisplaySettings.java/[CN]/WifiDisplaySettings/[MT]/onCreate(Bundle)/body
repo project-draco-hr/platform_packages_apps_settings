@@ -1,6 +1,8 @@
 {
   super.onCreate(icicle);
   mDisplayManager=(DisplayManager)getActivity().getSystemService(Context.DISPLAY_SERVICE);
+  mWifiP2pManager=(WifiP2pManager)getActivity().getSystemService(Context.WIFI_P2P_SERVICE);
+  mWifiP2pChannel=mWifiP2pManager.initialize(getActivity(),Looper.getMainLooper(),null);
   addPreferencesFromResource(R.xml.wifi_display_settings);
   setHasOptionsMenu(true);
 }

@@ -6,6 +6,9 @@
   preferenceScreen.removeAll();
   if (featureState == WifiDisplayStatus.FEATURE_STATE_ON) {
     final WifiDisplay[] displays=mWifiDisplayStatus.getDisplays();
+    if (mWifiDisplayCertificationOn) {
+      buildCertificationMenu(preferenceScreen);
+    }
     if (mPairedDevicesCategory == null) {
       mPairedDevicesCategory=new PreferenceCategory(getActivity());
       mPairedDevicesCategory.setTitle(R.string.wifi_display_paired_devices);

@@ -1,0 +1,8 @@
+{
+  if (mCurrentHome != null) {
+    mCurrentHome.setChecked(false);
+  }
+  newHome.setChecked(true);
+  mCurrentHome=newHome;
+  mPm.replacePreferredActivity(mHomeFilter,IntentFilter.MATCH_CATEGORY_EMPTY,mHomeComponentSet,newHome.activityName);
+}

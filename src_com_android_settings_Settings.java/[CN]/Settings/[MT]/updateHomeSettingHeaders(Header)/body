@@ -1,0 +1,39 @@
+{
+  final PackageManager pm=getPackageManager();
+  final ArrayList<ResolveInfo> homeApps=new ArrayList<ResolveInfo>();
+  try {
+    ComponentName currentHome=pm.getHomeActivities(homeApps);
+    ResolveInfo iconSource=null;
+    if (currentHome == null) {
+      for (int which=0; which < homeApps.size(); which++) {
+        ResolveInfo ri=homeApps.get(which);
+        if (isSystemApp(ri)) {
+          iconSource=ri;
+          break;
+        }
+      }
+    }
+ else {
+      for (int which=0; which < homeApps.size(); which++) {
+        ResolveInfo ri=homeApps.get(which);
+        ComponentName riName=new ComponentName(ri.activityInfo.packageName,ri.activityInfo.name);
+        if (riName.equals(currentHome)) {
+          iconSource=ri;
+          break;
+        }
+      }
+    }
+    if (iconSource != null) {
+      if (header.extras == null) {
+        header.extras=new Bundle();
+      }
+      header.extras.putParcelable(HomeSettings.CURRENT_HOME,iconSource.activityInfo);
+    }
+ else {
+      Log.v(LOG_TAG,"No home app icon found");
+    }
+  }
+ catch (  Exception e) {
+    Log.w(LOG_TAG,"Problem looking up home activity!",e);
+  }
+}

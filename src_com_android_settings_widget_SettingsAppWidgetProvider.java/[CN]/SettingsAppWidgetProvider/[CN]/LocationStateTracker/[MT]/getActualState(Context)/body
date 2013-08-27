@@ -1,6 +1,6 @@
 {
   ContentResolver resolver=context.getContentResolver();
-  int currentLocationMode=Settings.Secure.getLocationMode(resolver);
+  int currentLocationMode=Settings.Secure.getInt(resolver,Settings.Secure.LOCATION_MODE,Settings.Secure.LOCATION_MODE_OFF);
 switch (currentLocationMode) {
 case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
 case Settings.Secure.LOCATION_MODE_OFF:

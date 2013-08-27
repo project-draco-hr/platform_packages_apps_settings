@@ -3,6 +3,6 @@
   if (um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION)) {
     return;
   }
-  Settings.Secure.setLocationMode(getContentResolver(),mode);
+  Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCATION_MODE,mode);
   refreshLocationMode();
 }

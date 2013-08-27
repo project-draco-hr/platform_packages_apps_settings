@@ -1,5 +1,4 @@
 {
-  ContentResolver res=getContentResolver();
-  int mode=Settings.Secure.getLocationMode(getContentResolver());
+  int mode=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCATION_MODE,Settings.Secure.LOCATION_MODE_OFF);
   onModeChanged(mode);
 }

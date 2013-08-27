@@ -1,0 +1,9 @@
+{
+  try {
+    ApplicationInfo targetUserAppInfo=mIPm.getApplicationInfo(packageName,flags,user.getIdentifier());
+    return targetUserAppInfo;
+  }
+ catch (  RemoteException re) {
+    return null;
+  }
+}

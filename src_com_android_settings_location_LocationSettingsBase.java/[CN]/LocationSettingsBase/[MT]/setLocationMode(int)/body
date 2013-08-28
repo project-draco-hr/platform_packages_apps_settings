@@ -1,6 +1,7 @@
 {
-  final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
-  if (um.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION)) {
+  if (isRestricted()) {
+    mode=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCATION_MODE,Settings.Secure.LOCATION_MODE_OFF);
+    onModeChanged(mode,true);
     return;
   }
   Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCATION_MODE,mode);

@@ -17,7 +17,7 @@ break;
 default :
 break;
 }
-boolean enabled=(mode != Settings.Secure.LOCATION_MODE_OFF);
+boolean enabled=(mode != Settings.Secure.LOCATION_MODE_OFF) && !restricted;
 mHighAccuracy.setEnabled(enabled);
 mBatterySaving.setEnabled(enabled);
 mSensorsOnly.setEnabled(enabled);

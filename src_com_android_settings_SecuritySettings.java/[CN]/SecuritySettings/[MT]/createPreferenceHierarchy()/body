@@ -36,7 +36,6 @@ break;
 }
 }
 addPreferencesFromResource(resid);
-DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
 mIsPrimary=UserHandle.myUserId() == UserHandle.USER_OWNER;
 if (!mIsPrimary) {
 Preference ownerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
@@ -50,7 +49,7 @@ ownerInfoPref.setTitle(R.string.user_info_settings_title);
 }
 }
 if (mIsPrimary) {
-switch (dpm.getStorageEncryptionStatus()) {
+switch (mDPM.getStorageEncryptionStatus()) {
 case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
 addPreferencesFromResource(R.xml.security_settings_encrypted);
 break;
@@ -97,8 +96,8 @@ mEnableKeyguardWidgets.setEnabled(!disabled);
 mShowPassword=(CheckBoxPreference)root.findPreference(KEY_SHOW_PASSWORD);
 mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
 final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
-if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
 mKeyStore=KeyStore.getInstance();
+if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
 Preference credentialStorageType=root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE);
 final int storageSummaryRes=mKeyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware : R.string.credential_storage_type_software;
 credentialStorageType.setSummary(storageSummaryRes);

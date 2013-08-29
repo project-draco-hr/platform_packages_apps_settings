@@ -1,5 +1,8 @@
 {
   if (isRestricted()) {
+    if (Log.isLoggable(TAG,Log.INFO)) {
+      Log.i(TAG,"Restricted user, not setting location mode");
+    }
     mode=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCATION_MODE,Settings.Secure.LOCATION_MODE_OFF);
     onModeChanged(mode,true);
     return;

@@ -2,13 +2,14 @@
   log("onManageMobilePlanClick:");
   mManageMobilePlanMessage=null;
   Resources resources=getActivity().getResources();
-  NetworkInfo ni=mCm.getActiveNetworkInfo();
+  NetworkInfo ni=mCm.getProvisioningOrActiveNetworkInfo();
   if (mTm.hasIccCard() && (ni != null)) {
     String url=mCm.getMobileProvisioningUrl();
     if (!TextUtils.isEmpty(url)) {
-      Intent intent=new Intent(Intent.ACTION_VIEW);
-      intent.setData(Uri.parse(url));
-      startActivity(intent);
+      Intent intent=new Intent(MOBILE_PROVISIONING_ACTION);
+      intent.putExtra("EXTRA_URL",url);
+      Context context=getActivity().getBaseContext();
+      context.sendBroadcast(intent);
       mManageMobilePlanMessage=null;
     }
  else {

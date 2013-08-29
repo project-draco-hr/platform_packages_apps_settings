@@ -3,11 +3,9 @@
     PaymentAppInfo appInfo=(PaymentAppInfo)v.getTag();
     if (appInfo.componentName != null) {
       mPaymentBackend.setDefaultPaymentApp(appInfo.componentName);
-      mPaymentBackend.setAutoPaymentMode(true);
     }
  else {
       mPaymentBackend.setDefaultPaymentApp(null);
-      mPaymentBackend.setAutoPaymentMode(false);
     }
     refresh();
   }

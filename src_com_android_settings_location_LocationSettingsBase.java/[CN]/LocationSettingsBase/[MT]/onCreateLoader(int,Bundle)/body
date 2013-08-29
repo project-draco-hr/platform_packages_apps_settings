@@ -1,0 +1,8 @@
+{
+switch (id) {
+case LOADER_ID_LOCATION_MODE:
+    return new CursorLoader(getActivity(),Settings.Secure.CONTENT_URI,null,"(" + Settings.System.NAME + "=?)",new String[]{Settings.Secure.LOCATION_MODE},null);
+default :
+  return null;
+}
+}

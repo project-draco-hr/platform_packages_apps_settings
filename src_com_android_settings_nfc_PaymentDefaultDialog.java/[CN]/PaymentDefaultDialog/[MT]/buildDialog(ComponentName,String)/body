@@ -19,7 +19,6 @@
     Log.e(TAG,"Component " + component + " is not a registered payment service.");
     return false;
   }
-  boolean isAuto=mBackend.isAutoPaymentMode();
   ComponentName defaultComponent=mBackend.getDefaultPaymentApp();
   if (defaultComponent != null && defaultComponent.equals(component)) {
     Log.e(TAG,"Component " + component + " is already default.");
@@ -46,7 +45,7 @@
   mNewDefault=component;
   final AlertController.AlertParams p=mAlertParams;
   p.mTitle=getString(R.string.nfc_payment_set_default);
-  if (defaultAppInfo == null || !isAuto) {
+  if (defaultAppInfo == null) {
     p.mMessage="Always use " + newAppInfo.loadLabel(pm) + " when you tap and pay?";
   }
  else {

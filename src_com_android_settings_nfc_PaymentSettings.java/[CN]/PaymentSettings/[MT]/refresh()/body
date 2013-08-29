@@ -1,12 +1,10 @@
 {
   PreferenceManager manager=getPreferenceManager();
   PreferenceScreen screen=manager.createPreferenceScreen(getActivity());
-  boolean isAuto=mPaymentBackend.isAutoPaymentMode();
   List<PaymentAppInfo> appInfos=mPaymentBackend.getPaymentAppInfos();
   if (appInfos != null && appInfos.size() > 0) {
     for (    PaymentAppInfo appInfo : appInfos) {
       PaymentAppPreference preference=new PaymentAppPreference(getActivity(),appInfo,this);
-      appInfo.isDefault&=isAuto;
       preference.setIcon(appInfo.icon);
       preference.setTitle(appInfo.caption);
       screen.addPreference(preference);
@@ -15,7 +13,7 @@
       PaymentAppInfo appInfo=new PaymentAppInfo();
       appInfo.icon=null;
       appInfo.componentName=null;
-      appInfo.isDefault=!isAuto;
+      appInfo.isDefault=!(mPaymentBackend.getDefaultPaymentApp() != null);
       PaymentAppPreference preference=new PaymentAppPreference(getActivity(),appInfo,this);
       preference.setIcon(null);
       preference.setTitle(R.string.nfc_payment_ask);

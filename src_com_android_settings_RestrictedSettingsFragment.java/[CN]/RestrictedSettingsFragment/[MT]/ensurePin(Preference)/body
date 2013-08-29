@@ -3,6 +3,13 @@
     final UserManager um=UserManager.get(getActivity());
     if (!mChallengeRequested) {
       if (um.hasRestrictionsPin()) {
+        mResumeActionBundle=new Bundle();
+        if (preference != null) {
+          mResumeActionBundle.putString(EXTRA_PREFERENCE,preference.getKey());
+          if (preference instanceof CheckBoxPreference) {
+            mResumeActionBundle.putBoolean(EXTRA_CHECKBOX_STATE,((CheckBoxPreference)preference).isChecked());
+          }
+        }
         Intent requestPin=new Intent(Intent.ACTION_RESTRICTIONS_PIN_CHALLENGE);
         startActivityForResult(requestPin,REQUEST_PIN_CHALLENGE);
         mChallengeRequested=true;

@@ -1,5 +1,4 @@
 {
-  final Intent receiverIntent=setting.getServiceIntent();
   Handler handler=new Handler(){
     @Override public void handleMessage(    Message msg){
       Bundle bundle=msg.getData();
@@ -15,9 +14,14 @@
   }
 ;
   Messenger messenger=new Messenger(handler);
-  receiverIntent.putExtra(SettingInjectorService.MESSENGER_KEY,messenger);
+  Intent intent=setting.getServiceIntent();
+  intent.putExtra(SettingInjectorService.MESSENGER_KEY,messenger);
   if (Log.isLoggable(TAG,Log.DEBUG)) {
-    Log.d(TAG,setting + ": sending rcv-intent: " + receiverIntent+ ", handler: "+ handler);
+    Log.d(TAG,setting + ": sending update intent: " + intent+ ", handler: "+ handler);
+    startMillis=SystemClock.elapsedRealtime();
   }
-  return receiverIntent;
+ else {
+    startMillis=0;
+  }
+  mContext.startService(intent);
 }

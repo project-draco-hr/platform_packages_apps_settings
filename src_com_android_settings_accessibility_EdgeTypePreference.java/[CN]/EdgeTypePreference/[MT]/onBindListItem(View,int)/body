@@ -1,12 +1,11 @@
 {
-  final float fontSize=CaptioningManager.getFontSize(getContext().getContentResolver());
   final SubtitleView preview=(SubtitleView)view.findViewById(R.id.preview);
-  preview.setForegroundColor(Color.WHITE);
-  preview.setBackgroundColor(Color.TRANSPARENT);
-  preview.setTextSize(fontSize);
+  preview.setForegroundColor(DEFAULT_FOREGROUND_COLOR);
+  preview.setBackgroundColor(DEFAULT_BACKGROUND_COLOR);
+  preview.setTextSize(DEFAULT_FONT_SIZE);
   final int value=getValueAt(index);
   preview.setEdgeType(value);
-  preview.setEdgeColor(Color.BLACK);
+  preview.setEdgeColor(DEFAULT_EDGE_COLOR);
   final CharSequence title=getTitleAt(index);
   if (title != null) {
     final TextView summary=(TextView)view.findViewById(R.id.summary);

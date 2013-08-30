@@ -1,7 +1,8 @@
 {
   final SubtitleView previewText=(SubtitleView)view.findViewById(R.id.preview);
   final int value=getValueAt(index);
-  ToggleCaptioningPreferenceFragment.applyCaptionProperties(previewText,value);
+  ToggleCaptioningPreferenceFragment.applyCaptionProperties(mCaptioningManager,previewText,value);
+  previewText.setTextSize(DEFAULT_FONT_SIZE);
   final CharSequence title=getTitleAt(index);
   if (title != null) {
     final TextView summary=(TextView)view.findViewById(R.id.summary);

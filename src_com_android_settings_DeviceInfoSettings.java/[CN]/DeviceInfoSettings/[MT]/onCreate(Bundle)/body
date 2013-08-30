@@ -1,6 +1,7 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.device_info_settings);
+  protectByRestrictions(KEY_BUILD_NUMBER);
   setStringSummary(KEY_FIRMWARE_VERSION,Build.VERSION.RELEASE);
   findPreference(KEY_FIRMWARE_VERSION).setEnabled(true);
   setValueSummary(KEY_BASEBAND_VERSION,"gsm.version.baseband");

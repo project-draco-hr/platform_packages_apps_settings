@@ -36,12 +36,6 @@
     disableForUser(mEnableTerminal);
     disableForUser(mPassword);
   }
-  if (shouldBePinProtected(RESTRICTIONS_PIN_SET)) {
-    protectByRestrictions(mEnableAdb);
-    protectByRestrictions(mClearAdbKeys);
-    protectByRestrictions(mEnableTerminal);
-    protectByRestrictions(mPassword);
-  }
   mDebugAppPref=findPreference(DEBUG_APP_KEY);
   mAllPrefs.add(mDebugAppPref);
   mWaitForDebugger=findAndInitCheckboxPref(WAIT_FOR_DEBUGGER_KEY);

@@ -1,9 +1,9 @@
 {
-  final ContentResolver cr=getContentResolver();
-  final int preset=CaptionStyle.getRawPreset(cr);
+  final int preset=mCaptioningManager.getRawUserStyle();
   mPreset.setValue(preset);
-  final float fontSize=CaptioningManager.getFontSize(cr);
+  final float fontSize=mCaptioningManager.getFontScale();
   mFontSize.setValue(Float.toString(fontSize));
+  final ContentResolver cr=getContentResolver();
   final CaptionStyle attrs=CaptionStyle.getCustomStyle(cr);
   mForegroundColor.setValue(attrs.foregroundColor);
   mEdgeType.setValue(attrs.edgeType);
@@ -23,6 +23,6 @@
   mBackgroundOpacity.setValue(bgAlpha | 0xFFFFFF);
   final String rawTypeface=attrs.mRawTypeface;
   mTypeface.setValue(rawTypeface == null ? "" : rawTypeface);
-  final String rawLocale=CaptioningManager.getRawLocale(cr);
+  final String rawLocale=mCaptioningManager.getRawLocale();
   mLocale.setValue(rawLocale == null ? "" : rawLocale);
 }

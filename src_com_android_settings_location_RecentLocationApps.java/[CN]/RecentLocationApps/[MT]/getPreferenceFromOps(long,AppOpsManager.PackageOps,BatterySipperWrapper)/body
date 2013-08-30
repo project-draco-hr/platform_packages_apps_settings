@@ -35,7 +35,12 @@ wrapper.setUsed();
  else {
 try {
 ApplicationInfo appInfo=mPackageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA);
+if (appInfo.uid == ops.getUid()) {
 pref=createRecentLocationEntry(mPackageManager.getApplicationIcon(appInfo),mPackageManager.getApplicationLabel(appInfo),highBattery,new PackageEntryClickedListener(packageName));
+}
+ else if (Log.isLoggable(TAG,Log.VERBOSE)) {
+Log.v(TAG,"package " + packageName + " with Uid "+ ops.getUid()+ " belongs to another inactive account, ignored.");
+}
 }
  catch (PackageManager.NameNotFoundException e) {
 Log.wtf(TAG,"Package not found: " + packageName);

@@ -1,6 +1,12 @@
 {
   super.onResume();
   if (shouldBePinProtected(mRestrictionKey)) {
-    ensurePin();
+    ensurePin(null);
   }
+ else {
+    mChallengeSucceeded=false;
+  }
+  IntentFilter filter=new IntentFilter(Intent.ACTION_SCREEN_OFF);
+  filter.addAction(Intent.ACTION_USER_PRESENT);
+  getActivity().registerReceiver(mScreenOffReceiver,filter);
 }

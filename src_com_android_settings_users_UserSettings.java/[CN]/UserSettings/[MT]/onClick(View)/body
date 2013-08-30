@@ -3,9 +3,7 @@
     int userId=((UserPreference)v.getTag()).getUserId();
 switch (v.getId()) {
 case UserPreference.DELETE_ID:
-      if (restrictionsPinCheck(RESTRICTIONS_PIN_SET)) {
-        onRemoveUserClicked(userId);
-      }
+      onRemoveUserClicked(userId);
     break;
 case UserPreference.SETTINGS_ID:
   onManageUserClicked(userId,false);

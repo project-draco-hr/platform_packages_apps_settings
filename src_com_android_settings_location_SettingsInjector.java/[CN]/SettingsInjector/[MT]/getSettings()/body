@@ -1,30 +1,30 @@
 {
   PackageManager pm=mContext.getPackageManager();
-  Intent receiverIntent=new Intent(RECEIVER_INTENT);
-  List<ResolveInfo> resolveInfos=pm.queryIntentServices(receiverIntent,PackageManager.GET_META_DATA);
+  Intent intent=new Intent(SettingInjectorService.ACTION_SERVICE_INTENT);
+  List<ResolveInfo> resolveInfos=pm.queryIntentServices(intent,PackageManager.GET_META_DATA);
   if (Log.isLoggable(TAG,Log.DEBUG)) {
     Log.d(TAG,"Found services: " + resolveInfos);
   }
   List<InjectedSetting> settings=new ArrayList<InjectedSetting>(resolveInfos.size());
-  for (  ResolveInfo receiver : resolveInfos) {
+  for (  ResolveInfo resolveInfo : resolveInfos) {
     try {
-      InjectedSetting info=parseServiceInfo(receiver,pm);
-      if (info == null) {
-        Log.w(TAG,"Unable to load service info " + receiver);
+      InjectedSetting setting=parseServiceInfo(resolveInfo,pm);
+      if (setting == null) {
+        Log.w(TAG,"Unable to load service info " + resolveInfo);
       }
  else {
-        if (Log.isLoggable(TAG,Log.INFO)) {
-          Log.i(TAG,"Loaded service info: " + info);
-        }
-        settings.add(info);
+        settings.add(setting);
       }
     }
  catch (    XmlPullParserException e) {
-      Log.w(TAG,"Unable to load service info " + receiver,e);
+      Log.w(TAG,"Unable to load service info " + resolveInfo,e);
     }
 catch (    IOException e) {
-      Log.w(TAG,"Unable to load service info " + receiver,e);
+      Log.w(TAG,"Unable to load service info " + resolveInfo,e);
     }
+  }
+  if (Log.isLoggable(TAG,Log.DEBUG)) {
+    Log.d(TAG,"Loaded settings: " + settings);
   }
   return settings;
 }

@@ -4,7 +4,9 @@
       Log.i(TAG,"Restricted user, not setting location mode");
     }
     mode=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCATION_MODE,Settings.Secure.LOCATION_MODE_OFF);
-    onModeChanged(mode,true);
+    if (mActive) {
+      onModeChanged(mode,true);
+    }
     return;
   }
   Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCATION_MODE,mode);

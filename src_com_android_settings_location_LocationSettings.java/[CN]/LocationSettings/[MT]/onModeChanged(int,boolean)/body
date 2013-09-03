@@ -15,9 +15,9 @@ break;
 default :
 break;
 }
-boolean enabled=(mode != Settings.Secure.LOCATION_MODE_OFF) && !restricted;
+boolean enabled=(mode != Settings.Secure.LOCATION_MODE_OFF);
 mSwitch.setEnabled(!restricted);
-mLocationMode.setEnabled(enabled);
+mLocationMode.setEnabled(enabled && !restricted);
 if (enabled != mSwitch.isChecked()) {
 if (mValidListener) {
 mSwitch.setOnCheckedChangeListener(null);

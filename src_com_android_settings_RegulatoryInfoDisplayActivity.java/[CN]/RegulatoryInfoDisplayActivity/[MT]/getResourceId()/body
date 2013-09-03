@@ -1,0 +1,12 @@
+{
+  int resId=getResources().getIdentifier(REGULATORY_INFO_RESOURCE,"drawable",getPackageName());
+  String sku=SystemProperties.get("ro.boot.hardware.sku","");
+  if (!TextUtils.isEmpty(sku)) {
+    String regulatory_info_res=REGULATORY_INFO_RESOURCE + "_" + sku.toLowerCase();
+    int id=getResources().getIdentifier(regulatory_info_res,"drawable",getPackageName());
+    if (id != 0) {
+      resId=id;
+    }
+  }
+  return resId;
+}

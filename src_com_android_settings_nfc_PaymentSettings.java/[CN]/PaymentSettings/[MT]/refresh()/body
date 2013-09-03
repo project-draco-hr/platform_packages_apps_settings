@@ -9,16 +9,6 @@
       preference.setTitle(appInfo.caption);
       screen.addPreference(preference);
     }
-    if (appInfos.size() > 1) {
-      PaymentAppInfo appInfo=new PaymentAppInfo();
-      appInfo.icon=null;
-      appInfo.componentName=null;
-      appInfo.isDefault=!(mPaymentBackend.getDefaultPaymentApp() != null);
-      PaymentAppPreference preference=new PaymentAppPreference(getActivity(),appInfo,this);
-      preference.setIcon(null);
-      preference.setTitle(R.string.nfc_payment_ask);
-      screen.addPreference(preference);
-    }
   }
   setPreferenceScreen(screen);
 }

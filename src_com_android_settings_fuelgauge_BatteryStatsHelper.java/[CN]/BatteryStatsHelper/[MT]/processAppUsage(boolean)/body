@@ -131,7 +131,7 @@ Log.i(TAG,String.format("sensor %s power=%.2f",sensor.toString(),p));
 if (DEBUG) Log.i(TAG,String.format("UID %d total power=%.2f",u.getUid(),power));
 boolean isOtherUser=false;
 final int userId=UserHandle.getUserId(u.getUid());
-if (power != 0 || u.getUid() == 0) {
+if (power != 0 || includeZeroConsumption || u.getUid() == 0) {
 BatterySipper app=new BatterySipper(mActivity,mRequestQueue,mHandler,packageWithHighestDrain,DrainType.APP,0,u,new double[]{power});
 app.cpuTime=cpuTime;
 app.gpsTime=gpsTime;

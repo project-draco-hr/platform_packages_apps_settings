@@ -2,17 +2,17 @@
   ServiceInfo si=service.serviceInfo;
   XmlResourceParser parser=null;
   try {
-    parser=si.loadXmlMetaData(pm,META_DATA_NAME);
+    parser=si.loadXmlMetaData(pm,SettingInjectorService.META_DATA_NAME);
     if (parser == null) {
-      throw new XmlPullParserException("No " + META_DATA_NAME + " meta-data for "+ service+ ": "+ si);
+      throw new XmlPullParserException("No " + SettingInjectorService.META_DATA_NAME + " meta-data for "+ service+ ": "+ si);
     }
     AttributeSet attrs=Xml.asAttributeSet(parser);
     int type;
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && type != XmlPullParser.START_TAG) {
     }
     String nodeName=parser.getName();
-    if (!ATTRIBUTES_NAME.equals(nodeName)) {
-      throw new XmlPullParserException("Meta-data does not start with " + ATTRIBUTES_NAME + " tag");
+    if (!SettingInjectorService.ATTRIBUTES_NAME.equals(nodeName)) {
+      throw new XmlPullParserException("Meta-data does not start with " + SettingInjectorService.ATTRIBUTES_NAME + " tag");
     }
     Resources res=pm.getResourcesForApplication(si.applicationInfo);
     return parseAttributes(si.packageName,si.name,res,attrs);

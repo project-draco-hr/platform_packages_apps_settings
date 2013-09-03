@@ -1,6 +1,6 @@
 {
   PackageManager pm=mContext.getPackageManager();
-  List<ApduServiceInfo> serviceInfos=mCardEmuManager.getServices(CardEmulationManager.CATEGORY_PAYMENT);
+  List<ApduServiceInfo> serviceInfos=mCardEmuManager.getServices(CardEmulation.CATEGORY_PAYMENT);
   List<PaymentAppInfo> appInfos=new ArrayList<PaymentAppInfo>();
   if (serviceInfos == null)   return appInfos;
   ComponentName defaultApp=getDefaultPaymentApp();

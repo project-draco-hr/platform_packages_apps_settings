@@ -8,6 +8,7 @@ case WHAT_RELOAD:
   break;
 case WHAT_RECEIVED_STATUS:
 final Setting receivedSetting=(Setting)msg.obj;
+receivedSetting.maybeLogElapsedTime();
 mSettingsBeingLoaded.remove(receivedSetting);
 mTimedOutSettings.remove(receivedSetting);
 removeMessages(WHAT_TIMEOUT,receivedSetting);
@@ -45,8 +46,7 @@ return;
 }
 Setting setting=iter.next();
 iter.remove();
-Intent intent=setting.createUpdatingIntent();
-mContext.startService(intent);
+setting.startService();
 mSettingsBeingLoaded.add(setting);
 Message timeoutMsg=obtainMessage(WHAT_TIMEOUT,setting);
 sendMessageDelayed(timeoutMsg,INJECTED_STATUS_UPDATE_TIMEOUT_MILLIS);

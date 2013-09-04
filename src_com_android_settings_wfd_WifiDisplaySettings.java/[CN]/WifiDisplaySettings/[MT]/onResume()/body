@@ -6,6 +6,7 @@
   context.registerReceiver(mReceiver,filter);
   getContentResolver().registerContentObserver(Settings.Global.getUriFor(Settings.Global.WIFI_DISPLAY_ON),false,mSettingsObserver);
   getContentResolver().registerContentObserver(Settings.Global.getUriFor(Settings.Global.WIFI_DISPLAY_CERTIFICATION_ON),false,mSettingsObserver);
+  getContentResolver().registerContentObserver(Settings.Global.getUriFor(Settings.Global.WIFI_DISPLAY_WPS_CONFIG),false,mSettingsObserver);
   mDisplayManager.scanWifiDisplays();
   update();
 }

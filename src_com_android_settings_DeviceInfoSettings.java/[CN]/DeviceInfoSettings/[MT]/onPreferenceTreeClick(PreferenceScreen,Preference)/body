@@ -16,6 +16,11 @@
  else   if (preference.getKey().equals(KEY_BUILD_NUMBER)) {
     if (UserHandle.myUserId() != UserHandle.USER_OWNER)     return true;
     if (mDevHitCountdown > 0) {
+      if (mDevHitCountdown == 1) {
+        if (super.ensurePinRestrictedPreference(preference)) {
+          return true;
+        }
+      }
       mDevHitCountdown--;
       if (mDevHitCountdown == 0) {
         getActivity().getSharedPreferences(DevelopmentSettings.PREF_FILE,Context.MODE_PRIVATE).edit().putBoolean(DevelopmentSettings.PREF_SHOW,true).apply();

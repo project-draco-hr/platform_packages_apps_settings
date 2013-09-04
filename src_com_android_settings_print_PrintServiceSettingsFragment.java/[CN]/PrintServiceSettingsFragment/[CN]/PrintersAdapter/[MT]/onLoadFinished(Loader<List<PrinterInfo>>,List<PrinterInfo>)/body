@@ -1,0 +1,11 @@
+{
+  mPrinters.clear();
+  final int printerCount=printers.size();
+  for (int i=0; i < printerCount; i++) {
+    PrinterInfo printer=printers.get(i);
+    if (printer.getId().getServiceName().equals(mComponentName)) {
+      mPrinters.add(printer);
+    }
+  }
+  notifyDataSetChanged();
+}

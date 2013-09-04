@@ -1,0 +1,34 @@
+{
+  mPreferenceKey=arguments.getString(PrintSettingsFragment.EXTRA_PREFERENCE_KEY);
+  final boolean enabled=arguments.getBoolean(PrintSettingsFragment.EXTRA_CHECKED);
+  mToggleSwitch.setCheckedInternal(enabled);
+  PreferenceActivity activity=(PreferenceActivity)getActivity();
+  if (!activity.onIsMultiPane() || activity.onIsHidingHeaders()) {
+    mOldActivityTitle=getActivity().getTitle();
+    String title=arguments.getString(PrintSettingsFragment.EXTRA_TITLE);
+    getActivity().getActionBar().setTitle(title);
+  }
+  String settingsTitle=arguments.getString(PrintSettingsFragment.EXTRA_SETTINGS_TITLE);
+  String settingsComponentName=arguments.getString(PrintSettingsFragment.EXTRA_SETTINGS_COMPONENT_NAME);
+  if (!TextUtils.isEmpty(settingsTitle) && !TextUtils.isEmpty(settingsComponentName)) {
+    Intent settingsIntent=new Intent(Intent.ACTION_MAIN).setComponent(ComponentName.unflattenFromString(settingsComponentName.toString()));
+    if (!getPackageManager().queryIntentActivities(settingsIntent,0).isEmpty()) {
+      mSettingsTitle=settingsTitle;
+      mSettingsIntent=settingsIntent;
+      setHasOptionsMenu(true);
+    }
+  }
+  String addPrintersTitle=arguments.getString(PrintSettingsFragment.EXTRA_ADD_PRINTERS_TITLE);
+  String addPrintersComponentName=arguments.getString(PrintSettingsFragment.EXTRA_ADD_PRINTERS_COMPONENT_NAME);
+  if (!TextUtils.isEmpty(addPrintersTitle) && !TextUtils.isEmpty(addPrintersComponentName)) {
+    Intent addPritnersIntent=new Intent(Intent.ACTION_MAIN).setComponent(ComponentName.unflattenFromString(addPrintersComponentName.toString()));
+    if (!getPackageManager().queryIntentActivities(addPritnersIntent,0).isEmpty()) {
+      mAddPrintersTitle=addPrintersTitle;
+      mAddPrintersIntent=addPritnersIntent;
+      setHasOptionsMenu(true);
+    }
+  }
+  mEnableWarningTitle=arguments.getCharSequence(PrintSettingsFragment.EXTRA_ENABLE_WARNING_TITLE);
+  mEnableWarningMessage=arguments.getCharSequence(PrintSettingsFragment.EXTRA_ENABLE_WARNING_MESSAGE);
+  mComponentName=ComponentName.unflattenFromString(arguments.getString(PrintSettingsFragment.EXTRA_SERVICE_COMPONENT_NAME));
+}

@@ -1,0 +1,11 @@
+{
+  if (DEBUG) {
+    Log.i(LOG_TAG,"onReset()");
+  }
+  onStopLoading();
+  mPrinters.clear();
+  if (mDiscoverySession != null) {
+    mDiscoverySession.destroy();
+    mDiscoverySession=null;
+  }
+}

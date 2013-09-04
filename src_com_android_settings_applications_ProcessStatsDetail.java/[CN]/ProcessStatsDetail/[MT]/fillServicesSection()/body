@@ -1,0 +1,18 @@
+{
+  LayoutInflater inflater=getActivity().getLayoutInflater();
+  if (mEntry.mServices.size() > 0) {
+    ArrayList<ProcStatsEntry.Service> services=(ArrayList<ProcStatsEntry.Service>)mEntry.mServices.clone();
+    Collections.sort(services,sServiceCompare);
+    for (int i=0; i < services.size(); i++) {
+      ProcStatsEntry.Service service=services.get(i);
+      String label=service.mName;
+      int tail=label.lastIndexOf('.');
+      if (tail >= 0 && tail < (label.length() - 1)) {
+        label=label.substring(tail + 1);
+      }
+      long duration=service.mDuration;
+      final double percentOfTime=(((double)duration) / mTotalTime) * 100;
+      addDetailsItem(mServicesParent,label,getActivity().getResources().getString(R.string.percentage,(int)Math.ceil(percentOfTime)));
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  final double percentOfWeight=(((double)mEntry.mWeight) / mMaxWeight) * 100;
+  int appLevel=(int)Math.ceil(percentOfWeight);
+  String appLevelText=makePercentString(getResources(),mEntry.mDuration,mTotalTime);
+  final TextView summary=(TextView)mRootView.findViewById(android.R.id.summary);
+  summary.setText(mEntry.mName);
+  summary.setVisibility(View.VISIBLE);
+  mTitleView=(TextView)mRootView.findViewById(android.R.id.title);
+  mTitleView.setText(mEntry.mUiBaseLabel);
+  final TextView text1=(TextView)mRootView.findViewById(android.R.id.text1);
+  text1.setText(appLevelText);
+  final ProgressBar progress=(ProgressBar)mRootView.findViewById(android.R.id.progress);
+  progress.setProgress(appLevel);
+  final ImageView icon=(ImageView)mRootView.findViewById(android.R.id.icon);
+  if (mEntry.mUiTargetApp != null) {
+    icon.setImageDrawable(mEntry.mUiTargetApp.loadIcon(mPm));
+  }
+  mTwoButtonsPanel=(ViewGroup)mRootView.findViewById(R.id.two_buttons_panel);
+  mForceStopButton=(Button)mRootView.findViewById(R.id.right_button);
+  mReportButton=(Button)mRootView.findViewById(R.id.left_button);
+  mForceStopButton.setEnabled(false);
+  mReportButton.setVisibility(View.INVISIBLE);
+  mDetailsParent=(ViewGroup)mRootView.findViewById(R.id.details);
+  mServicesParent=(ViewGroup)mRootView.findViewById(R.id.services);
+  fillDetailsSection();
+  fillServicesSection();
+  if (mEntry.mUid >= android.os.Process.FIRST_APPLICATION_UID) {
+    mForceStopButton.setText(R.string.force_stop);
+    mForceStopButton.setTag(ACTION_FORCE_STOP);
+    mForceStopButton.setOnClickListener(this);
+    mTwoButtonsPanel.setVisibility(View.VISIBLE);
+  }
+ else {
+    mTwoButtonsPanel.setVisibility(View.GONE);
+  }
+}

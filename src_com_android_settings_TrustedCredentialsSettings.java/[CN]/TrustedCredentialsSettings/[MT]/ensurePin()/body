@@ -2,8 +2,8 @@
   if (!mChallengeSucceeded) {
     final UserManager um=UserManager.get(getActivity());
     if (!mChallengeRequested) {
-      if (um.hasRestrictionsPin()) {
-        Intent requestPin=new Intent(Intent.ACTION_RESTRICTIONS_PIN_CHALLENGE);
+      if (um.hasRestrictionsChallenge()) {
+        Intent requestPin=new Intent(Intent.ACTION_RESTRICTIONS_CHALLENGE);
         startActivityForResult(requestPin,REQUEST_PIN_CHALLENGE);
         mChallengeRequested=true;
       }

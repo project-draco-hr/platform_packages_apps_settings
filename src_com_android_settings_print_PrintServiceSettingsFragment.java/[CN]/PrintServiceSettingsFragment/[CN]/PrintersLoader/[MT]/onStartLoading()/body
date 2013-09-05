@@ -1,0 +1,9 @@
+{
+  if (DEBUG) {
+    Log.i(LOG_TAG,"onStartLoading()");
+  }
+  if (!mPrinters.isEmpty()) {
+    deliverResult(new ArrayList<PrinterInfo>(mPrinters.values()));
+  }
+  onForceLoad();
+}

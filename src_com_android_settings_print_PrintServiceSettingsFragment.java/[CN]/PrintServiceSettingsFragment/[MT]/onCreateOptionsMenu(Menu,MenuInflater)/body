@@ -1,0 +1,21 @@
+{
+  super.onCreateOptionsMenu(menu,inflater);
+  inflater.inflate(R.menu.print_service_settings,menu);
+  MenuItem addPrinters=menu.findItem(R.id.print_menu_item_add_printer);
+  if (!TextUtils.isEmpty(mAddPrintersTitle) && mAddPrintersIntent != null) {
+    addPrinters.setIntent(mAddPrintersIntent);
+  }
+ else {
+    menu.removeItem(R.id.print_menu_item_add_printer);
+  }
+  MenuItem settings=menu.findItem(R.id.print_menu_item_settings);
+  if (!TextUtils.isEmpty(mSettingsTitle) && mSettingsIntent != null) {
+    settings.setIntent(mSettingsIntent);
+  }
+ else {
+    menu.removeItem(R.id.print_menu_item_settings);
+  }
+  MenuItem uninstall=menu.findItem(R.id.print_menu_item_uninstall);
+  Intent uninstallIntent=new Intent(Intent.ACTION_UNINSTALL_PACKAGE,Uri.parse("package:" + mComponentName.getPackageName()));
+  uninstall.setIntent(uninstallIntent);
+}

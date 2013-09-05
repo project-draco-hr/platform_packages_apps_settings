@@ -1,0 +1,56 @@
+{
+  mUiTargetApp=null;
+  mUiLabel=mUiBaseLabel=mName;
+  mUiPackage=mBestTargetPackage;
+  if (mUiPackage != null) {
+    try {
+      mUiTargetApp=pm.getApplicationInfo(mUiPackage,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES);
+      String name=mUiBaseLabel=mUiTargetApp.loadLabel(pm).toString();
+      if (mName.equals(mUiPackage)) {
+        mUiLabel=name;
+      }
+ else {
+        if (mName.startsWith(mUiPackage)) {
+          int off=mUiPackage.length();
+          if (mName.length() > off) {
+            off++;
+          }
+          mUiLabel=name + " (" + mName.substring(off)+ ")";
+        }
+ else {
+          mUiLabel=name + " (" + mName+ ")";
+        }
+      }
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+    }
+  }
+  if (mUiTargetApp == null) {
+    String[] packages=pm.getPackagesForUid(mUid);
+    if (packages != null) {
+      for (      String curPkg : packages) {
+        try {
+          final PackageInfo pi=pm.getPackageInfo(curPkg,PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS | PackageManager.GET_UNINSTALLED_PACKAGES);
+          if (pi.sharedUserLabel != 0) {
+            mUiTargetApp=pi.applicationInfo;
+            final CharSequence nm=pm.getText(curPkg,pi.sharedUserLabel,pi.applicationInfo);
+            if (nm != null) {
+              mUiBaseLabel=nm.toString();
+              mUiLabel=mUiBaseLabel + " (" + mName+ ")";
+            }
+ else {
+              mUiBaseLabel=mUiTargetApp.loadLabel(pm).toString();
+              mUiLabel=mUiBaseLabel + " (" + mName+ ")";
+            }
+            break;
+          }
+        }
+ catch (        PackageManager.NameNotFoundException e) {
+        }
+      }
+    }
+ else {
+      Log.i(TAG,"No package for uid " + mUid);
+    }
+  }
+}

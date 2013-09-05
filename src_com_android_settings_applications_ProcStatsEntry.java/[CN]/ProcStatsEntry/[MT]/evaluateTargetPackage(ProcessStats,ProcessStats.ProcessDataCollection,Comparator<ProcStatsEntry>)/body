@@ -1,0 +1,36 @@
+{
+  mBestTargetPackage=null;
+  if (mUnique) {
+    mBestTargetPackage=mPackage;
+    addServices(stats.getPackageStateLocked(mPackage,mUid));
+  }
+ else {
+    ArrayList<ProcStatsEntry> subProcs=new ArrayList<ProcStatsEntry>();
+    for (int ipkg=0, NPKG=stats.mPackages.getMap().size(); ipkg < NPKG; ipkg++) {
+      SparseArray<ProcessStats.PackageState> uids=stats.mPackages.getMap().valueAt(ipkg);
+      for (int iu=0, NU=uids.size(); iu < NU; iu++) {
+        if (uids.keyAt(iu) != mUid) {
+          continue;
+        }
+        ProcessStats.PackageState pkgState=uids.valueAt(iu);
+        boolean match=false;
+        for (int iproc=0, NPROC=pkgState.mProcesses.size(); iproc < NPROC; iproc++) {
+          ProcessStats.ProcessState subProc=pkgState.mProcesses.valueAt(iproc);
+          if (subProc.mName.equals(mName)) {
+            match=true;
+            subProcs.add(new ProcStatsEntry(subProc,totals));
+          }
+        }
+        if (match) {
+          addServices(stats.getPackageStateLocked(mPackage,mUid));
+        }
+      }
+    }
+    if (subProcs.size() > 1) {
+      Collections.sort(subProcs,compare);
+      if (subProcs.get(0).mWeight > (subProcs.get(1).mWeight * 3)) {
+        mBestTargetPackage=subProcs.get(0).mPackage;
+      }
+    }
+  }
+}

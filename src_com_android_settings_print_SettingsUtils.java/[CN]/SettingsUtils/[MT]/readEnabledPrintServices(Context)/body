@@ -1,0 +1,15 @@
+{
+  List<ComponentName> enabledServices=new ArrayList<ComponentName>();
+  String enabledServicesSetting=Settings.Secure.getString(context.getContentResolver(),Settings.Secure.ENABLED_PRINT_SERVICES);
+  if (enabledServicesSetting == null) {
+    return enabledServices;
+  }
+  SimpleStringSplitter colonSplitter=new SimpleStringSplitter(ENABLED_PRINT_SERVICES_SEPARATOR);
+  colonSplitter.setString(enabledServicesSetting);
+  while (colonSplitter.hasNext()) {
+    String componentNameString=colonSplitter.next();
+    ComponentName enabledService=ComponentName.unflattenFromString(componentNameString);
+    enabledServices.add(enabledService);
+  }
+  return enabledServices;
+}

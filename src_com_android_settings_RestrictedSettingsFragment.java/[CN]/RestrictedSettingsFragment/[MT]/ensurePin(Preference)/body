@@ -2,7 +2,7 @@
   if (!mChallengeSucceeded) {
     final UserManager um=UserManager.get(getActivity());
     if (!mChallengeRequested) {
-      if (um.hasRestrictionsPin()) {
+      if (um.hasRestrictionsChallenge()) {
         mResumeActionBundle=new Bundle();
         if (preference != null) {
           mResumeActionBundle.putString(EXTRA_PREFERENCE,preference.getKey());
@@ -10,7 +10,7 @@
             mResumeActionBundle.putBoolean(EXTRA_CHECKBOX_STATE,((CheckBoxPreference)preference).isChecked());
           }
         }
-        Intent requestPin=new Intent(Intent.ACTION_RESTRICTIONS_PIN_CHALLENGE);
+        Intent requestPin=new Intent(Intent.ACTION_RESTRICTIONS_CHALLENGE);
         startActivityForResult(requestPin,REQUEST_PIN_CHALLENGE);
         mChallengeRequested=true;
       }

@@ -1,3 +1,5 @@
 {
-  return mPrinters.get(position);
+synchronized (mLock) {
+    return mFilteredPrinters.get(position);
+  }
 }

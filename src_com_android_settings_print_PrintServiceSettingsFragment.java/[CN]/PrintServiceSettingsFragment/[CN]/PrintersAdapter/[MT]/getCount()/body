@@ -1,3 +1,5 @@
 {
-  return mPrinters.size();
+synchronized (mLock) {
+    return mFilteredPrinters.size();
+  }
 }

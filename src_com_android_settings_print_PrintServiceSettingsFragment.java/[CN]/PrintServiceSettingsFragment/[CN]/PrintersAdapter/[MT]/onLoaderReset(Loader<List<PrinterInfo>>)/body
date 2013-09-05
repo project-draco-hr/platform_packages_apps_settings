@@ -1,4 +1,7 @@
 {
-  mPrinters.clear();
+synchronized (mLock) {
+    mPrinters.clear();
+    mFilteredPrinters.clear();
+  }
   notifyDataSetInvalidated();
 }

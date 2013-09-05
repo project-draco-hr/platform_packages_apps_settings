@@ -1,0 +1,11 @@
+{
+  mPackage=in.readString();
+  mUid=in.readInt();
+  mName=in.readString();
+  mUnique=in.readInt() != 0;
+  mDuration=in.readLong();
+  mAvgPss=in.readLong();
+  mWeight=in.readLong();
+  mBestTargetPackage=in.readString();
+  in.readTypedList(mServices,Service.CREATOR);
+}

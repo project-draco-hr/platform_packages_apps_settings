@@ -28,25 +28,7 @@
     banner.setEnabled(false);
     categoryRecentLocationRequests.addPreference(banner);
   }
-  PreferenceCategory categoryAppSettings=(PreferenceCategory)root.findPreference(KEY_APP_SETTINGS);
-  final SettingsInjector injector=new SettingsInjector(activity);
-  List<Preference> appSettings=injector.getInjectedSettings();
-  mReceiver=new BroadcastReceiver(){
-    @Override public void onReceive(    Context context,    Intent intent){
-      if (Log.isLoggable(TAG,Log.DEBUG)) {
-        Log.d(TAG,"Received settings change intent: " + intent);
-      }
-      injector.reloadStatusMessages();
-    }
-  }
-;
-  activity.registerReceiver(mReceiver,new IntentFilter(SettingInjectorService.ACTION_INJECTED_SETTING_CHANGED));
-  if (appSettings.size() > 0) {
-    addPreferencesSorted(appSettings,categoryAppSettings);
-  }
- else {
-    root.removePreference(categoryAppSettings);
-  }
+  addAppSettings(activity,root);
   if (activity.onIsHidingHeaders() || !activity.onIsMultiPane()) {
     final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
     mSwitch.setPaddingRelative(0,0,padding,0);

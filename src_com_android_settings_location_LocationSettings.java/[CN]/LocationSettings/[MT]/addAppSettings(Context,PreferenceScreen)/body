@@ -1,0 +1,24 @@
+{
+  PreferenceCategory categoryAppSettings=(PreferenceCategory)root.findPreference(KEY_APP_SETTINGS);
+  final SettingsInjector injector=new SettingsInjector(context);
+  List<Preference> appSettings=injector.getInjectedSettings();
+  mReceiver=new BroadcastReceiver(){
+    @Override public void onReceive(    Context context,    Intent intent){
+      if (Log.isLoggable(TAG,Log.DEBUG)) {
+        Log.d(TAG,"Received settings change intent: " + intent);
+      }
+      injector.reloadStatusMessages();
+    }
+  }
+;
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(SettingInjectorService.ACTION_INJECTED_SETTING_CHANGED);
+  filter.addAction(LocationManager.MODE_CHANGED_ACTION);
+  context.registerReceiver(mReceiver,filter);
+  if (appSettings.size() > 0) {
+    addPreferencesSorted(appSettings,categoryAppSettings);
+  }
+ else {
+    root.removePreference(categoryAppSettings);
+  }
+}

@@ -12,6 +12,7 @@
       sendBroadcastAsUser(getLatestIntent,UserHandle.ALL,CB_AREA_INFO_SENDER_PERMISSION);
     }
   }
+  registerReceiver(mConnectivityReceiver,mConnectivityIntentFilter,android.Manifest.permission.CHANGE_NETWORK_STATE,null);
   registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
   mHandler.sendEmptyMessage(EVENT_UPDATE_STATS);
 }

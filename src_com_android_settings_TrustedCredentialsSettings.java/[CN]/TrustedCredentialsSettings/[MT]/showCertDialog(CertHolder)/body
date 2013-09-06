@@ -17,7 +17,7 @@
   removeButton.setText(certHolder.mTab.getButtonLabel(certHolder));
   removeButton.setOnClickListener(new View.OnClickListener(){
     @Override public void onClick(    View v){
-      if (mUserManager.hasRestrictionsPin() && !mChallengeSucceeded) {
+      if (mUserManager.hasRestrictionsChallenge() && !mChallengeSucceeded) {
         ensurePin();
         return;
       }

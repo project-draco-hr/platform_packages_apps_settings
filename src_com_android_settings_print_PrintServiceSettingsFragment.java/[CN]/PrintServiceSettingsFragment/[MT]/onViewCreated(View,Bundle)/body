@@ -1,6 +1,9 @@
 {
   super.onViewCreated(view,savedInstanceState);
-  onInstallActionBarToggleSwitch();
+  installActionBarToggleSwitch();
   processArguments(getArguments());
-  getListView().setAdapter(new PrintersAdapter());
+  mPrintersAdapter=new PrintersAdapter();
+  mPrintersAdapter.registerDataSetObserver(mDataObserver);
+  getListView().setAdapter(mPrintersAdapter);
+  updateForServiceEnabledState();
 }

@@ -1,5 +1,6 @@
 {
   super.onResume();
   initPreferences();
+  getActivity().registerReceiver(mReceiver,mFilter,android.Manifest.permission.CHANGE_NETWORK_STATE,null);
   refreshWifiInfo();
 }

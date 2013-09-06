@@ -74,6 +74,10 @@
     getPreferenceScreen().removePreference(mWimaxMacAddress);
     mWimaxMacAddress=null;
   }
+  mConnectivityIntentFilter=new IntentFilter();
+  for (  String intent : CONNECTIVITY_INTENTS) {
+    mConnectivityIntentFilter.addAction(intent);
+  }
   updateConnectivity();
   String serial=Build.SERIAL;
   if (serial != null && !serial.equals("")) {

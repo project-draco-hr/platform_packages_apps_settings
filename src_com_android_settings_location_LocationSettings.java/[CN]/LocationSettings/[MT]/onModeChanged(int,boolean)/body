@@ -18,6 +18,7 @@ break;
 boolean enabled=(mode != Settings.Secure.LOCATION_MODE_OFF);
 mSwitch.setEnabled(!restricted);
 mLocationMode.setEnabled(enabled && !restricted);
+mCategoryRecentLocationRequests.setEnabled(enabled);
 if (enabled != mSwitch.isChecked()) {
 if (mValidListener) {
 mSwitch.setOnCheckedChangeListener(null);

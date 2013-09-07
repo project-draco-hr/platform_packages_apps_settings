@@ -1,0 +1,13 @@
+{
+  List<ComponentName> services=SettingsUtils.readEnabledPrintServices(getActivity());
+  mServiceEnabled=services.contains(mComponentName);
+  if (mServiceEnabled) {
+    mToggleSwitch.setCheckedInternal(true);
+    mPrintersAdapter.enable();
+  }
+ else {
+    mToggleSwitch.setCheckedInternal(false);
+    mPrintersAdapter.disable();
+  }
+  getActivity().invalidateOptionsMenu();
+}

@@ -15,7 +15,6 @@
     if (!getPackageManager().queryIntentActivities(settingsIntent,0).isEmpty()) {
       mSettingsTitle=settingsTitle;
       mSettingsIntent=settingsIntent;
-      setHasOptionsMenu(true);
     }
   }
   String addPrintersTitle=arguments.getString(PrintSettingsFragment.EXTRA_ADD_PRINTERS_TITLE);
@@ -25,10 +24,10 @@
     if (!getPackageManager().queryIntentActivities(addPritnersIntent,0).isEmpty()) {
       mAddPrintersTitle=addPrintersTitle;
       mAddPrintersIntent=addPritnersIntent;
-      setHasOptionsMenu(true);
     }
   }
   mEnableWarningTitle=arguments.getCharSequence(PrintSettingsFragment.EXTRA_ENABLE_WARNING_TITLE);
   mEnableWarningMessage=arguments.getCharSequence(PrintSettingsFragment.EXTRA_ENABLE_WARNING_MESSAGE);
   mComponentName=ComponentName.unflattenFromString(arguments.getString(PrintSettingsFragment.EXTRA_SERVICE_COMPONENT_NAME));
+  setHasOptionsMenu(true);
 }

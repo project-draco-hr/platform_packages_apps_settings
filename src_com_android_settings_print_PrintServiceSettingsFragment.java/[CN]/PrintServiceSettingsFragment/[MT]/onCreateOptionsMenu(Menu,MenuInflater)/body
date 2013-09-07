@@ -2,29 +2,34 @@
   super.onCreateOptionsMenu(menu,inflater);
   inflater.inflate(R.menu.print_service_settings,menu);
   MenuItem addPrinters=menu.findItem(R.id.print_menu_item_add_printer);
-  if (!TextUtils.isEmpty(mAddPrintersTitle) && mAddPrintersIntent != null) {
+  if (mServiceEnabled && !TextUtils.isEmpty(mAddPrintersTitle) && mAddPrintersIntent != null) {
     addPrinters.setIntent(mAddPrintersIntent);
   }
  else {
     menu.removeItem(R.id.print_menu_item_add_printer);
   }
   MenuItem settings=menu.findItem(R.id.print_menu_item_settings);
-  if (!TextUtils.isEmpty(mSettingsTitle) && mSettingsIntent != null) {
+  if (mServiceEnabled && !TextUtils.isEmpty(mSettingsTitle) && mSettingsIntent != null) {
     settings.setIntent(mSettingsIntent);
   }
  else {
     menu.removeItem(R.id.print_menu_item_settings);
   }
   MenuItem searchItem=menu.findItem(R.id.print_menu_item_search);
-  SearchView searchView=(SearchView)searchItem.getActionView();
-  searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-    @Override public boolean onQueryTextSubmit(    String query){
-      return true;
+  if (mServiceEnabled && mPrintersAdapter.getUnfilteredCount() > 0) {
+    SearchView searchView=(SearchView)searchItem.getActionView();
+    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+      @Override public boolean onQueryTextSubmit(      String query){
+        return true;
+      }
+      @Override public boolean onQueryTextChange(      String searchString){
+        ((Filterable)getListView().getAdapter()).getFilter().filter(searchString);
+        return true;
+      }
     }
-    @Override public boolean onQueryTextChange(    String searchString){
-      ((Filterable)getListView().getAdapter()).getFilter().filter(searchString);
-      return true;
-    }
-  }
 );
+  }
+ else {
+    menu.removeItem(R.id.print_menu_item_search);
+  }
 }

@@ -14,18 +14,18 @@
     }
   }
 );
-  PreferenceCategory categoryRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
+  mCategoryRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
   RecentLocationApps recentApps=new RecentLocationApps(activity,mStatsHelper);
   List<Preference> recentLocationRequests=recentApps.getAppList();
   if (recentLocationRequests.size() > 0) {
-    addPreferencesSorted(recentLocationRequests,categoryRecentLocationRequests);
+    addPreferencesSorted(recentLocationRequests,mCategoryRecentLocationRequests);
   }
  else {
     Preference banner=new Preference(activity);
     banner.setLayoutResource(R.layout.location_list_no_item);
     banner.setTitle(R.string.location_no_recent_apps);
     banner.setSelectable(false);
-    categoryRecentLocationRequests.addPreference(banner);
+    mCategoryRecentLocationRequests.addPreference(banner);
   }
   addAppSettings(activity,root);
   if (activity.onIsHidingHeaders() || !activity.onIsMultiPane()) {

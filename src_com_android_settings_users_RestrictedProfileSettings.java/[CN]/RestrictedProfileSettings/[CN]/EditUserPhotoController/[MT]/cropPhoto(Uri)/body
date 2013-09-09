@@ -1,0 +1,12 @@
+{
+  Intent intent=new Intent("com.android.camera.action.CROP");
+  intent.setDataAndType(pictureUri,"image/*");
+  appendOutputExtra(intent,mCropPictureUri);
+  appendCropExtras(intent);
+  if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+    mFragment.startActivityForResult(intent,REQUEST_CODE_CROP_PHOTO);
+  }
+ else {
+    onPhotoCropped(pictureUri,false);
+  }
+}

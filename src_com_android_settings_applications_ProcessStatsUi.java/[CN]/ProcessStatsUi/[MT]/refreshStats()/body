@@ -33,10 +33,13 @@
   }
   colors.setRatios(memTimes[ProcessStats.ADJ_MEM_FACTOR_CRITICAL] / (float)mTotalTime,(memTimes[ProcessStats.ADJ_MEM_FACTOR_LOW] + memTimes[ProcessStats.ADJ_MEM_FACTOR_MODERATE]) / (float)mTotalTime,memTimes[ProcessStats.ADJ_MEM_FACTOR_NORMAL] / (float)mTotalTime);
   ArrayList<ProcStatsEntry> procs=new ArrayList<ProcStatsEntry>();
+  ArrayMap<String,ProcStatsEntry> processes=new ArrayMap<String,ProcStatsEntry>(mStats.mProcesses.getMap().size());
   for (int ip=0, N=mStats.mProcesses.getMap().size(); ip < N; ip++) {
     SparseArray<ProcessStats.ProcessState> uids=mStats.mProcesses.getMap().valueAt(ip);
     for (int iu=0; iu < uids.size(); iu++) {
-      procs.add(new ProcStatsEntry(uids.valueAt(iu),totals));
+      ProcStatsEntry ent=new ProcStatsEntry(uids.valueAt(iu),totals);
+      procs.add(ent);
+      processes.put(ent.mName,ent);
     }
   }
   Collections.sort(procs,sEntryCompare);
@@ -67,5 +70,18 @@
     pref.setPercent(percentOfWeight,percentOfTime);
     mAppListGroup.addPreference(pref);
     if (mAppListGroup.getPreferenceCount() > (MAX_ITEMS_TO_LIST + 1))     break;
+  }
+  for (int ip=0, N=mStats.mPackages.getMap().size(); ip < N; ip++) {
+    SparseArray<ProcessStats.PackageState> uids=mStats.mPackages.getMap().valueAt(ip);
+    for (int iu=0; iu < uids.size(); iu++) {
+      ProcessStats.PackageState ps=uids.valueAt(iu);
+      for (int is=0, NS=ps.mServices.size(); is < NS; is++) {
+        ProcessStats.ServiceState ss=ps.mServices.valueAt(is);
+        if (ss.mProcessName != null) {
+          ProcStatsEntry ent=processes.get(ss.mProcessName);
+          ent.addService(ss);
+        }
+      }
+    }
   }
 }

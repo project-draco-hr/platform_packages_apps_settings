@@ -18,7 +18,7 @@ final Setting timedOutSetting=(Setting)msg.obj;
 mSettingsBeingLoaded.remove(timedOutSetting);
 mTimedOutSettings.add(timedOutSetting);
 if (Log.isLoggable(TAG,Log.WARN)) {
-Log.w(TAG,"Timed out trying to get status for: " + timedOutSetting);
+Log.w(TAG,"Timed out after " + timedOutSetting.getElapsedTime() + " millis trying to get status for: "+ timedOutSetting);
 }
 break;
 default :

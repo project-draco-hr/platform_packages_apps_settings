@@ -1,14 +1,6 @@
 {
   mPackage=service.mPackage;
   mName=service.mName;
-  long startDuration=ProcessStats.dumpSingleServiceTime(null,null,service,ProcessStats.ServiceState.SERVICE_STARTED,ProcessStats.STATE_NOTHING,0,0);
-  long bindDuration=ProcessStats.dumpSingleServiceTime(null,null,service,ProcessStats.ServiceState.SERVICE_BOUND,ProcessStats.STATE_NOTHING,0,0);
-  long execDuration=ProcessStats.dumpSingleServiceTime(null,null,service,ProcessStats.ServiceState.SERVICE_EXEC,ProcessStats.STATE_NOTHING,0,0);
-  if (bindDuration > startDuration) {
-    startDuration=bindDuration;
-  }
-  if (execDuration > startDuration) {
-    startDuration=execDuration;
-  }
-  mDuration=startDuration;
+  mProcess=service.mProcessName;
+  mDuration=ProcessStats.dumpSingleServiceTime(null,null,service,ProcessStats.ServiceState.SERVICE_RUN,ProcessStats.STATE_NOTHING,0,0);
 }

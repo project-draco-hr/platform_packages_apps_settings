@@ -2,7 +2,6 @@
   mBestTargetPackage=null;
   if (mUnique) {
     mBestTargetPackage=mPackage;
-    addServices(stats.getPackageStateLocked(mPackage,mUid));
   }
  else {
     ArrayList<ProcStatsEntry> subProcs=new ArrayList<ProcStatsEntry>();
@@ -13,16 +12,11 @@
           continue;
         }
         ProcessStats.PackageState pkgState=uids.valueAt(iu);
-        boolean match=false;
         for (int iproc=0, NPROC=pkgState.mProcesses.size(); iproc < NPROC; iproc++) {
           ProcessStats.ProcessState subProc=pkgState.mProcesses.valueAt(iproc);
           if (subProc.mName.equals(mName)) {
-            match=true;
             subProcs.add(new ProcStatsEntry(subProc,totals));
           }
-        }
-        if (match) {
-          addServices(stats.getPackageStateLocked(mPackage,mUid));
         }
       }
     }

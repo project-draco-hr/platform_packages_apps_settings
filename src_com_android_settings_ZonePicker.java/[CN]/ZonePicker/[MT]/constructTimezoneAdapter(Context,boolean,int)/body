@@ -3,7 +3,8 @@
   final int[] to=new int[]{android.R.id.text1,android.R.id.text2};
   final String sortKey=(sortedByName ? KEY_DISPLAYNAME : KEY_OFFSET);
   final MyComparator comparator=new MyComparator(sortKey);
-  final List<HashMap<String,Object>> sortedList=getZones(context);
+  ZoneGetter zoneGetter=new ZoneGetter();
+  final List<HashMap<String,Object>> sortedList=zoneGetter.getZones(context);
   Collections.sort(sortedList,comparator);
   final SimpleAdapter adapter=new SimpleAdapter(context,sortedList,layoutId,from,to);
   return adapter;

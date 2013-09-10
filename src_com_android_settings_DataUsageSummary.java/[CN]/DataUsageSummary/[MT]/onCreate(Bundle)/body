@@ -9,6 +9,16 @@
   mPolicyEditor=new NetworkPolicyEditor(mPolicyManager);
   mPolicyEditor.read();
   try {
+    if (!mNetworkService.isBandwidthControlEnabled()) {
+      Log.w(TAG,"No bandwidth control; leaving");
+      getActivity().finish();
+    }
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"No bandwidth control; leaving");
+    getActivity().finish();
+  }
+  try {
     mStatsSession=mStatsService.openSession();
   }
  catch (  RemoteException e) {

@@ -1,7 +1,8 @@
 {
-  File folder=context.getExternalCacheDir();
+  final File folder=context.getCacheDir();
   folder.mkdirs();
-  File fullPath=new File(folder,fileName);
+  final File fullPath=new File(folder,fileName);
   fullPath.delete();
-  return Uri.fromFile(fullPath.getAbsoluteFile());
+  final Uri fileUri=FileProvider.getUriForFile(context,FILE_PROVIDER_AUTHORITY,fullPath);
+  return fileUri;
 }

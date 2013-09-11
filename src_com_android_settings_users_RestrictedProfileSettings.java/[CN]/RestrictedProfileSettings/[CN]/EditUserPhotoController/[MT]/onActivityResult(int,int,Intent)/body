@@ -2,30 +2,15 @@
   if (resultCode != Activity.RESULT_OK) {
     return false;
   }
+  final Uri pictureUri=data != null && data.getData() != null ? data.getData() : mTakePictureUri;
 switch (requestCode) {
-case REQUEST_CODE_CHOOSE_PHOTO:
 case REQUEST_CODE_CROP_PHOTO:
-{
-      new AsyncTask<Void,Void,Bitmap>(){
-        @Override protected Bitmap doInBackground(        Void... params){
-          return BitmapFactory.decodeFile(mCropPictureUri.getPath());
-        }
-        @Override protected void onPostExecute(        Bitmap bitmap){
-          mNewUserPhotoBitmap=bitmap;
-          mNewUserPhotoDrawable=CircleFramedDrawable.getInstance(mImageView.getContext(),mNewUserPhotoBitmap);
-          mImageView.setImageDrawable(mNewUserPhotoDrawable);
-          new File(mCropPictureUri.getPath()).delete();
-          new File(mTakePictureUri.getPath()).delete();
-        }
-      }
-.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,(Void[])null);
-    }
+    onPhotoCropped(pictureUri,true);
   return true;
 case REQUEST_CODE_TAKE_PHOTO:
-{
-  cropPhoto();
-}
-break;
+case REQUEST_CODE_CHOOSE_PHOTO:
+cropPhoto(pictureUri);
+return true;
 }
 return false;
 }

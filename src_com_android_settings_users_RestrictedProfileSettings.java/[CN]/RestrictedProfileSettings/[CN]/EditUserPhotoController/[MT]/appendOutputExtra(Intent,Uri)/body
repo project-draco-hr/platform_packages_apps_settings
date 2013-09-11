@@ -1,0 +1,5 @@
+{
+  intent.putExtra(MediaStore.EXTRA_OUTPUT,pictureUri);
+  intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+  intent.setClipData(ClipData.newRawUri(MediaStore.EXTRA_OUTPUT,pictureUri));
+}

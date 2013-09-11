@@ -5,10 +5,24 @@
   if (appInfos != null && appInfos.size() > 0) {
     for (    PaymentAppInfo appInfo : appInfos) {
       PaymentAppPreference preference=new PaymentAppPreference(getActivity(),appInfo,this);
-      preference.setIcon(appInfo.icon);
       preference.setTitle(appInfo.caption);
-      screen.addPreference(preference);
+      if (appInfo.banner != null) {
+        screen.addPreference(preference);
+      }
+ else {
+        Log.e(TAG,"Couldn't load banner drawable of service " + appInfo.componentName);
+      }
     }
   }
-  setPreferenceScreen(screen);
+  TextView emptyText=(TextView)getView().findViewById(R.id.nfc_payment_empty_text);
+  ImageView emptyImage=(ImageView)getView().findViewById(R.id.nfc_payment_tap_image);
+  if (screen.getPreferenceCount() == 0) {
+    emptyText.setVisibility(View.VISIBLE);
+    emptyImage.setVisibility(View.VISIBLE);
+  }
+ else {
+    emptyText.setVisibility(View.GONE);
+    emptyImage.setVisibility(View.GONE);
+    setPreferenceScreen(screen);
+  }
 }

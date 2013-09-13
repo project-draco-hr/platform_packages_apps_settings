@@ -1,5 +1,5 @@
 {
-  if ((mAppEntry.info.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_ALLOW_CLEAR_USER_DATA)) == ApplicationInfo.FLAG_SYSTEM || mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
+  if (mAppEntry.info.manageSpaceActivityName == null && ((mAppEntry.info.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_ALLOW_CLEAR_USER_DATA)) == ApplicationInfo.FLAG_SYSTEM || mDpm.packageHasActiveAdmins(mPackageInfo.packageName))) {
     mClearDataButton.setText(R.string.clear_user_data_text);
     mClearDataButton.setEnabled(false);
     mCanClearData=false;

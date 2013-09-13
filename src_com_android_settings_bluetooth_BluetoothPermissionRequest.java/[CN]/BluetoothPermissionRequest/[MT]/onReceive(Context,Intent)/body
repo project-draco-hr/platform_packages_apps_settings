@@ -1,23 +1,27 @@
 {
   mContext=context;
   String action=intent.getAction();
-  if (DEBUG)   Log.d(TAG,"onReceive");
+  if (DEBUG)   Log.d(TAG,"onReceive" + action);
   if (action.equals(BluetoothDevice.ACTION_CONNECTION_ACCESS_REQUEST)) {
     mDevice=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
     mRequestType=intent.getIntExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,BluetoothDevice.REQUEST_TYPE_PROFILE_CONNECTION);
     mReturnPackage=intent.getStringExtra(BluetoothDevice.EXTRA_PACKAGE_NAME);
     mReturnClass=intent.getStringExtra(BluetoothDevice.EXTRA_CLASS_NAME);
+    if (DEBUG)     Log.d(TAG,"onReceive request type: " + mRequestType + " return "+ mReturnPackage+ ","+ mReturnClass);
+    if (checkUserChoice()) {
+      return;
+    }
     Intent connectionAccessIntent=new Intent(action);
     connectionAccessIntent.setClass(context,BluetoothPermissionActivity.class);
-    connectionAccessIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    connectionAccessIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+    connectionAccessIntent.setType(Integer.toString(mRequestType));
     connectionAccessIntent.putExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,mRequestType);
     connectionAccessIntent.putExtra(BluetoothDevice.EXTRA_DEVICE,mDevice);
     connectionAccessIntent.putExtra(BluetoothDevice.EXTRA_PACKAGE_NAME,mReturnPackage);
     connectionAccessIntent.putExtra(BluetoothDevice.EXTRA_CLASS_NAME,mReturnClass);
-    if (checkUserChoice()) {
-      return;
-    }
     String deviceAddress=mDevice != null ? mDevice.getAddress() : null;
+    String title=null;
+    String message=null;
     PowerManager powerManager=(PowerManager)context.getSystemService(Context.POWER_SERVICE);
     if (powerManager.isScreenOn() && LocalBluetoothPreferences.shouldShowDialogInForeground(context,deviceAddress)) {
       context.startActivity(connectionAccessIntent);
@@ -26,18 +30,31 @@
       Intent deleteIntent=new Intent(BluetoothDevice.ACTION_CONNECTION_ACCESS_REPLY);
       deleteIntent.putExtra(BluetoothDevice.EXTRA_DEVICE,mDevice);
       deleteIntent.putExtra(BluetoothDevice.EXTRA_CONNECTION_ACCESS_RESULT,BluetoothDevice.CONNECTION_ACCESS_NO);
-      Notification notification=new Notification(android.R.drawable.stat_sys_data_bluetooth,context.getString(R.string.bluetooth_connection_permission_request),System.currentTimeMillis());
+      deleteIntent.putExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,mRequestType);
       String deviceName=mDevice != null ? mDevice.getAliasName() : null;
-      notification.setLatestEventInfo(context,context.getString(R.string.bluetooth_connection_permission_request),context.getString(R.string.bluetooth_connection_notif_message,deviceName),PendingIntent.getActivity(context,0,connectionAccessIntent,0));
-      notification.flags=Notification.FLAG_AUTO_CANCEL | Notification.FLAG_ONLY_ALERT_ONCE;
-      notification.defaults=Notification.DEFAULT_SOUND;
-      notification.deleteIntent=PendingIntent.getBroadcast(context,0,deleteIntent,0);
-      NotificationManager notificationManager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-      notificationManager.notify(NOTIFICATION_ID,notification);
-    }
-  }
- else   if (action.equals(BluetoothDevice.ACTION_CONNECTION_ACCESS_CANCEL)) {
-    NotificationManager manager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-    manager.cancel(NOTIFICATION_ID);
-  }
+switch (mRequestType) {
+case BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS:
+        title=context.getString(R.string.bluetooth_phonebook_request);
+      message=context.getString(R.string.bluetooth_pb_acceptance_dialog_text,deviceName,deviceName);
+    break;
+case BluetoothDevice.REQUEST_TYPE_MESSAGE_ACCESS:
+  title=context.getString(R.string.bluetooth_map_request);
+message=context.getString(R.string.bluetooth_map_acceptance_dialog_text,deviceName,deviceName);
+break;
+default :
+title=context.getString(R.string.bluetooth_connection_permission_request);
+message=context.getString(R.string.bluetooth_connection_dialog_text,deviceName,deviceName);
+break;
+}
+Notification notification=new Notification.Builder(context).setContentTitle(title).setTicker(message).setContentText(message).setSmallIcon(android.R.drawable.stat_sys_data_bluetooth).setAutoCancel(true).setPriority(Notification.PRIORITY_MAX).setOnlyAlertOnce(false).setDefaults(Notification.DEFAULT_ALL).setContentIntent(PendingIntent.getActivity(context,0,connectionAccessIntent,0)).setDeleteIntent(PendingIntent.getBroadcast(context,0,deleteIntent,0)).build();
+notification.flags|=Notification.FLAG_NO_CLEAR;
+NotificationManager notificationManager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+notificationManager.notify(getNotificationTag(mRequestType),NOTIFICATION_ID,notification);
+}
+}
+ else if (action.equals(BluetoothDevice.ACTION_CONNECTION_ACCESS_CANCEL)) {
+NotificationManager manager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+mRequestType=intent.getIntExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS);
+manager.cancel(getNotificationTag(mRequestType),NOTIFICATION_ID);
+}
 }

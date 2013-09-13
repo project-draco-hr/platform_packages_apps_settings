@@ -11,6 +11,7 @@
   mReturnPackage=i.getStringExtra(BluetoothDevice.EXTRA_PACKAGE_NAME);
   mReturnClass=i.getStringExtra(BluetoothDevice.EXTRA_CLASS_NAME);
   mRequestType=i.getIntExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS);
+  if (DEBUG)   Log.i(TAG,"onCreate() Request type: " + mRequestType);
   if (mRequestType == BluetoothDevice.REQUEST_TYPE_PROFILE_CONNECTION) {
     showDialog(getString(R.string.bluetooth_connection_permission_request),mRequestType);
   }

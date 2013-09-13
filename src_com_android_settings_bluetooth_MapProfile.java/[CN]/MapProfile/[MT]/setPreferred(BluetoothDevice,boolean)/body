@@ -1,0 +1,11 @@
+{
+  if (mService == null)   return;
+  if (preferred) {
+    if (mService.getPriority(device) < BluetoothProfile.PRIORITY_ON) {
+      mService.setPriority(device,BluetoothProfile.PRIORITY_ON);
+    }
+  }
+ else {
+    mService.setPriority(device,BluetoothProfile.PRIORITY_OFF);
+  }
+}

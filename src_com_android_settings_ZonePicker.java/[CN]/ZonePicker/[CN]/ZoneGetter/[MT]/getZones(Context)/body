@@ -1,21 +1,23 @@
 {
-  final List<HashMap<String,Object>> myData=new ArrayList<HashMap<String,Object>>();
-  final long date=Calendar.getInstance().getTimeInMillis();
+  for (  String olsonId : TimeZoneNames.forLocale(Locale.getDefault())) {
+    mLocalZones.add(olsonId);
+  }
   try {
     XmlResourceParser xrp=context.getResources().getXml(R.xml.timezones);
-    while (xrp.next() != XmlResourceParser.START_TAG)     continue;
+    while (xrp.next() != XmlResourceParser.START_TAG) {
+      continue;
+    }
     xrp.next();
     while (xrp.getEventType() != XmlResourceParser.END_TAG) {
       while (xrp.getEventType() != XmlResourceParser.START_TAG) {
         if (xrp.getEventType() == XmlResourceParser.END_DOCUMENT) {
-          return myData;
+          return mZones;
         }
         xrp.next();
       }
       if (xrp.getName().equals(XMLTAG_TIMEZONE)) {
-        String id=xrp.getAttributeValue(0);
-        String displayName=xrp.nextText();
-        addItem(myData,id,displayName,date);
+        String olsonId=xrp.getAttributeValue(0);
+        addTimeZone(olsonId);
       }
       while (xrp.getEventType() != XmlResourceParser.END_TAG) {
         xrp.next();
@@ -30,5 +32,5 @@
 catch (  java.io.IOException ioe) {
     Log.e(TAG,"Unable to read timezones.xml file");
   }
-  return myData;
+  return mZones;
 }

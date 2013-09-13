@@ -2,7 +2,9 @@
   final File folder=context.getCacheDir();
   folder.mkdirs();
   final File fullPath=new File(folder,fileName);
-  fullPath.delete();
+  if (purge) {
+    fullPath.delete();
+  }
   final Uri fileUri=FileProvider.getUriForFile(context,FILE_PROVIDER_AUTHORITY,fullPath);
   return fileUri;
 }

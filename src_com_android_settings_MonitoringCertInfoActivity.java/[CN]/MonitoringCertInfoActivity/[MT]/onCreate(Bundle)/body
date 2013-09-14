@@ -1,0 +1,34 @@
+{
+  super.onCreate(savedStates);
+  DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+  builder.setTitle(R.string.ssl_ca_cert_dialog_title);
+  builder.setCancelable(true);
+  hasDeviceOwner=dpm.getDeviceOwner() != null;
+  int buttonLabel;
+  if (hasDeviceOwner) {
+    String message=this.getResources().getString(R.string.ssl_ca_cert_info_message,dpm.getDeviceOwnerName());
+    builder.setMessage(message);
+    buttonLabel=R.string.done_button;
+  }
+ else {
+    builder.setIcon(android.R.drawable.stat_notify_error);
+    builder.setMessage(R.string.ssl_ca_cert_warning_message);
+    buttonLabel=R.string.ssl_ca_cert_settings_button;
+  }
+  builder.setPositiveButton(buttonLabel,this);
+  final Dialog dialog=builder.create();
+  dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+  try {
+    WindowManagerGlobal.getWindowManagerService().dismissKeyguard();
+  }
+ catch (  RemoteException e) {
+  }
+  dialog.setOnCancelListener(new DialogInterface.OnCancelListener(){
+    @Override public void onCancel(    DialogInterface dialog){
+      finish();
+    }
+  }
+);
+  dialog.show();
+}

@@ -1,0 +1,24 @@
+{
+  if (header.extras != null && header.extras.containsKey(ManageAccountsSettings.KEY_ACCOUNT_TYPE)) {
+    String accType=header.extras.getString(ManageAccountsSettings.KEY_ACCOUNT_TYPE);
+    Drawable icon=mAuthHelper.getDrawableForType(getContext(),accType);
+    setHeaderIcon(holder,icon);
+  }
+ else   if (header.extras != null && header.extras.containsKey(HomeSettings.CURRENT_HOME)) {
+    ActivityInfo ai=header.extras.getParcelable(HomeSettings.CURRENT_HOME);
+    Drawable icon=ai.loadIcon(getContext().getPackageManager());
+    setHeaderIcon(holder,icon);
+  }
+ else {
+    holder.icon.setImageResource(header.iconRes);
+  }
+  holder.title.setText(header.getTitle(getContext().getResources()));
+  CharSequence summary=header.getSummary(getContext().getResources());
+  if (!TextUtils.isEmpty(summary)) {
+    holder.summary.setVisibility(View.VISIBLE);
+    holder.summary.setText(summary);
+  }
+ else {
+    holder.summary.setVisibility(View.GONE);
+  }
+}

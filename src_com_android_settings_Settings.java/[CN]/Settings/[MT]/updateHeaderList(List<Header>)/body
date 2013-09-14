@@ -38,6 +38,9 @@
       int headerIndex=i + 1;
       i=insertAccountsHeaders(target,headerIndex);
     }
+ else     if (id == R.id.home_settings) {
+      updateHomeSettingHeaders(header);
+    }
  else     if (id == R.id.user_settings) {
       if (!UserHandle.MU_ENABLED || !UserManager.supportsMultipleUsers() || Utils.isMonkeyRunning()) {
         target.remove(i);

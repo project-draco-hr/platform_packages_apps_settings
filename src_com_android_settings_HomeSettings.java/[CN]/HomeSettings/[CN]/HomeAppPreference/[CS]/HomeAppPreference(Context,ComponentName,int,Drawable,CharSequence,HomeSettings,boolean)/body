@@ -1,0 +1,15 @@
+{
+  super(context);
+  setLayoutResource(R.layout.preference_home_app);
+  setIcon(icon);
+  setTitle(title);
+  activityName=activity;
+  fragment=parent;
+  index=i;
+  isSystem=sys;
+  ColorMatrix colorMatrix=new ColorMatrix();
+  colorMatrix.setSaturation(0f);
+  float[] matrix=colorMatrix.getArray();
+  matrix[18]=0.5f;
+  grayscaleFilter=new ColorMatrixColorFilter(colorMatrix);
+}

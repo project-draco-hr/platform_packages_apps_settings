@@ -3,10 +3,12 @@
   if (mReturnPackage != null && mReturnClass != null) {
     intent.setClassName(mReturnPackage,mReturnClass);
   }
+  if (DEBUG)   Log.i(TAG,"sendIntentToReceiver() Request type: " + mRequestType + " mReturnPackage"+ mReturnPackage+ " mReturnClass"+ mReturnClass);
   intent.putExtra(BluetoothDevice.EXTRA_CONNECTION_ACCESS_RESULT,allowed ? BluetoothDevice.CONNECTION_ACCESS_YES : BluetoothDevice.CONNECTION_ACCESS_NO);
   if (extraName != null) {
     intent.putExtra(extraName,extraValue);
   }
   intent.putExtra(BluetoothDevice.EXTRA_DEVICE,mDevice);
+  intent.putExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,mRequestType);
   sendBroadcast(intent,android.Manifest.permission.BLUETOOTH_ADMIN);
 }

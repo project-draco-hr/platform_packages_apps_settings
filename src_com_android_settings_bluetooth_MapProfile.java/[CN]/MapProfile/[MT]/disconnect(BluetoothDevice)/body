@@ -1,0 +1,13 @@
+{
+  if (mService == null)   return false;
+  List<BluetoothDevice> deviceList=mService.getConnectedDevices();
+  if (!deviceList.isEmpty() && deviceList.get(0).equals(device)) {
+    if (mService.getPriority(device) > BluetoothProfile.PRIORITY_ON) {
+      mService.setPriority(device,BluetoothProfile.PRIORITY_ON);
+    }
+    return mService.disconnect(device);
+  }
+ else {
+    return false;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  super.onActivityResult(requestCode,resultCode,data);
+  buildHomeActivitiesList();
+  if (requestCode > REQUESTING_UNINSTALL) {
+    if (mCurrentHome == null) {
+      for (int i=0; i < mPrefs.size(); i++) {
+        HomeAppPreference pref=mPrefs.get(i);
+        if (pref.isSystem) {
+          makeCurrentHome(pref);
+          break;
+        }
+      }
+    }
+  }
+}

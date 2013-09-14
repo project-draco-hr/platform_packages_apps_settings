@@ -1,7 +1,7 @@
 {
   if (BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.AudioSource)) {
     if (mA2dpProfile == null) {
-      Log.d(TAG,"Adding local A2DP profile");
+      if (DEBUG)       Log.d(TAG,"Adding local A2DP profile");
       mA2dpProfile=new A2dpProfile(mContext,mLocalAdapter,mDeviceManager,this);
       addProfile(mA2dpProfile,A2dpProfile.NAME,BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED);
     }
@@ -11,7 +11,7 @@
   }
   if (BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.Handsfree_AG) || BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.HSP_AG)) {
     if (mHeadsetProfile == null) {
-      Log.d(TAG,"Adding local HEADSET profile");
+      if (DEBUG)       Log.d(TAG,"Adding local HEADSET profile");
       mHeadsetProfile=new HeadsetProfile(mContext,mLocalAdapter,mDeviceManager,this);
       addProfile(mHeadsetProfile,HeadsetProfile.NAME,BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED);
     }
@@ -21,7 +21,7 @@
   }
   if (BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.ObexObjectPush)) {
     if (mOppProfile == null) {
-      Log.d(TAG,"Adding local OPP profile");
+      if (DEBUG)       Log.d(TAG,"Adding local OPP profile");
       mOppProfile=new OppProfile();
       mProfileNameMap.put(OppProfile.NAME,mOppProfile);
     }

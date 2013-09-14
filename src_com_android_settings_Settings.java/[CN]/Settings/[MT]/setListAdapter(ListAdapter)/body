@@ -3,6 +3,7 @@
     super.setListAdapter(null);
   }
  else {
-    super.setListAdapter(new HeaderAdapter(this,getHeaders(),mAuthenticatorHelper));
+    DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+    super.setListAdapter(new HeaderAdapter(this,getHeaders(),mAuthenticatorHelper,dpm));
   }
 }

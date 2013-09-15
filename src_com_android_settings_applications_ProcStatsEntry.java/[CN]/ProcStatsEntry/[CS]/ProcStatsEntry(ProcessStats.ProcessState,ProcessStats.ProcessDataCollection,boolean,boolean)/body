@@ -6,5 +6,8 @@
   mUnique=proc.mCommonProcess == proc;
   mDuration=tmpTotals.totalTime;
   mAvgPss=tmpTotals.avgPss;
-  mWeight=mDuration * mAvgPss;
+  mMaxPss=tmpTotals.maxPss;
+  mAvgUss=tmpTotals.avgUss;
+  mMaxUss=tmpTotals.maxUss;
+  mWeight=(weightWithTime ? mDuration : 1) * (useUss ? mAvgUss : mAvgPss);
 }

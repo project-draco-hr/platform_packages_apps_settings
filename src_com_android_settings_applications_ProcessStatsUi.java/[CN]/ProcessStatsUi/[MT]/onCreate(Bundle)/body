@@ -8,5 +8,8 @@
   mUm=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   mAppListGroup=(PreferenceGroup)findPreference(KEY_APP_LIST);
   mMemStatusPref=mAppListGroup.findPreference(KEY_MEM_STATUS);
+  mShowSystem=icicle != null ? icicle.getBoolean("show_system") : false;
+  mUseUss=icicle != null ? icicle.getBoolean("use_uss") : false;
+  mStatsType=icicle != null ? icicle.getInt("stats_type",MENU_TYPE_BACKGROUND) : MENU_TYPE_BACKGROUND;
   setHasOptionsMenu(true);
 }

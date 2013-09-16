@@ -12,18 +12,24 @@
   String settingsComponentName=arguments.getString(PrintSettingsFragment.EXTRA_SETTINGS_COMPONENT_NAME);
   if (!TextUtils.isEmpty(settingsTitle) && !TextUtils.isEmpty(settingsComponentName)) {
     Intent settingsIntent=new Intent(Intent.ACTION_MAIN).setComponent(ComponentName.unflattenFromString(settingsComponentName.toString()));
-    if (!getPackageManager().queryIntentActivities(settingsIntent,0).isEmpty()) {
-      mSettingsTitle=settingsTitle;
-      mSettingsIntent=settingsIntent;
+    List<ResolveInfo> resolvedActivities=getPackageManager().queryIntentActivities(settingsIntent,0);
+    if (!resolvedActivities.isEmpty()) {
+      if (resolvedActivities.get(0).activityInfo.exported) {
+        mSettingsTitle=settingsTitle;
+        mSettingsIntent=settingsIntent;
+      }
     }
   }
   String addPrintersTitle=arguments.getString(PrintSettingsFragment.EXTRA_ADD_PRINTERS_TITLE);
   String addPrintersComponentName=arguments.getString(PrintSettingsFragment.EXTRA_ADD_PRINTERS_COMPONENT_NAME);
   if (!TextUtils.isEmpty(addPrintersTitle) && !TextUtils.isEmpty(addPrintersComponentName)) {
     Intent addPritnersIntent=new Intent(Intent.ACTION_MAIN).setComponent(ComponentName.unflattenFromString(addPrintersComponentName.toString()));
-    if (!getPackageManager().queryIntentActivities(addPritnersIntent,0).isEmpty()) {
-      mAddPrintersTitle=addPrintersTitle;
-      mAddPrintersIntent=addPritnersIntent;
+    List<ResolveInfo> resolvedActivities=getPackageManager().queryIntentActivities(addPritnersIntent,0);
+    if (!resolvedActivities.isEmpty()) {
+      if (resolvedActivities.get(0).activityInfo.exported) {
+        mAddPrintersTitle=addPrintersTitle;
+        mAddPrintersIntent=addPritnersIntent;
+      }
     }
   }
   mEnableWarningTitle=arguments.getCharSequence(PrintSettingsFragment.EXTRA_ENABLE_WARNING_TITLE);

@@ -1,0 +1,46 @@
+{
+  StringBuilder sb=new StringBuilder();
+  int seconds=(int)Math.floor(millis / 1000);
+  if (!inclSeconds) {
+    seconds+=30;
+  }
+  int days=0, hours=0, minutes=0;
+  if (seconds > SECONDS_PER_DAY) {
+    days=seconds / SECONDS_PER_DAY;
+    seconds-=days * SECONDS_PER_DAY;
+  }
+  if (seconds > SECONDS_PER_HOUR) {
+    hours=seconds / SECONDS_PER_HOUR;
+    seconds-=hours * SECONDS_PER_HOUR;
+  }
+  if (seconds > SECONDS_PER_MINUTE) {
+    minutes=seconds / SECONDS_PER_MINUTE;
+    seconds-=minutes * SECONDS_PER_MINUTE;
+  }
+  if (inclSeconds) {
+    if (days > 0) {
+      sb.append(context.getString(R.string.battery_history_days,days,hours,minutes,seconds));
+    }
+ else     if (hours > 0) {
+      sb.append(context.getString(R.string.battery_history_hours,hours,minutes,seconds));
+    }
+ else     if (minutes > 0) {
+      sb.append(context.getString(R.string.battery_history_minutes,minutes,seconds));
+    }
+ else {
+      sb.append(context.getString(R.string.battery_history_seconds,seconds));
+    }
+  }
+ else {
+    if (days > 0) {
+      sb.append(context.getString(R.string.battery_history_days_no_seconds,days,hours,minutes));
+    }
+ else     if (hours > 0) {
+      sb.append(context.getString(R.string.battery_history_hours_no_seconds,hours,minutes));
+    }
+ else {
+      sb.append(context.getString(R.string.battery_history_minutes_no_seconds,minutes));
+    }
+  }
+  return sb.toString();
+}

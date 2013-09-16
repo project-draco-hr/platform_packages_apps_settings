@@ -4,6 +4,20 @@ case MENU_STATS_REFRESH:
     mStats=null;
   refreshStats();
 return true;
+case MENU_SHOW_SYSTEM:
+mShowSystem=!mShowSystem;
+refreshStats();
+return true;
+case MENU_USE_USS:
+mUseUss=!mUseUss;
+refreshStats();
+return true;
+case MENU_TYPE_BACKGROUND:
+case MENU_TYPE_FOREGROUND:
+case MENU_TYPE_CACHED:
+mStatsType=item.getItemId();
+refreshStats();
+return true;
 default :
 return false;
 }

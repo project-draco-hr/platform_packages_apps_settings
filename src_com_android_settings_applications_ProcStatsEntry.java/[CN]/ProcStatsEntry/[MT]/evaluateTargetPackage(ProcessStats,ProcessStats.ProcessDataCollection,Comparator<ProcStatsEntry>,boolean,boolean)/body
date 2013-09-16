@@ -15,7 +15,7 @@
         for (int iproc=0, NPROC=pkgState.mProcesses.size(); iproc < NPROC; iproc++) {
           ProcessStats.ProcessState subProc=pkgState.mProcesses.valueAt(iproc);
           if (subProc.mName.equals(mName)) {
-            subProcs.add(new ProcStatsEntry(subProc,totals));
+            subProcs.add(new ProcStatsEntry(subProc,totals,useUss,weightWithTime));
           }
         }
       }

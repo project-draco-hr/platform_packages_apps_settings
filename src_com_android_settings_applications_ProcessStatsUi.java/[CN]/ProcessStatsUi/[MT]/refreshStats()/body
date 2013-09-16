@@ -2,11 +2,41 @@
   if (mStats == null) {
     load();
   }
+  if (mShowSystemMenu != null) {
+    mShowSystemMenu.setChecked(mShowSystem);
+    mShowSystemMenu.setEnabled(mStatsType == MENU_TYPE_BACKGROUND);
+  }
+  if (mUseUssMenu != null) {
+    mUseUssMenu.setChecked(mUseUss);
+  }
+  if (mTypeBackgroundMenu != null) {
+    mTypeBackgroundMenu.setChecked(mStatsType == MENU_TYPE_BACKGROUND);
+  }
+  if (mTypeForegroundMenu != null) {
+    mTypeForegroundMenu.setChecked(mStatsType == MENU_TYPE_FOREGROUND);
+  }
+  if (mTypeCachedMenu != null) {
+    mTypeCachedMenu.setChecked(mStatsType == MENU_TYPE_CACHED);
+  }
+  int[] stats;
+  int statsLabel;
+  if (mStatsType == MENU_TYPE_FOREGROUND) {
+    stats=FOREGROUND_PROC_STATES;
+    statsLabel=R.string.process_stats_type_foreground;
+  }
+ else   if (mStatsType == MENU_TYPE_CACHED) {
+    stats=CACHED_PROC_STATES;
+    statsLabel=R.string.process_stats_type_cached;
+  }
+ else {
+    stats=mShowSystem ? BACKGROUND_AND_SYSTEM_PROC_STATES : ProcessStats.BACKGROUND_PROC_STATES;
+    statsLabel=R.string.process_stats_type_background;
+  }
   mAppListGroup.removeAll();
   mAppListGroup.setOrderingAsAdded(false);
   mMemStatusPref.setOrder(-2);
   mAppListGroup.addPreference(mMemStatusPref);
-  String durationString=Utils.formatElapsedTime(getActivity(),mStats.mTimePeriodEndRealtime - mStats.mTimePeriodStartRealtime);
+  String durationString=Utils.formatElapsedTime(getActivity(),mStats.mTimePeriodEndRealtime - mStats.mTimePeriodStartRealtime,false);
   CharSequence memString;
   CharSequence[] memStates=getResources().getTextArray(R.array.ram_states);
   if (mMemState >= 0 && mMemState < memStates.length) {
@@ -15,9 +45,9 @@
  else {
     memString="?";
   }
-  mMemStatusPref.setTitle(getActivity().getString(R.string.process_stats_total_duration,durationString));
+  mMemStatusPref.setTitle(getActivity().getString(R.string.process_stats_total_duration,getActivity().getString(statsLabel),durationString));
   mMemStatusPref.setSummary(getActivity().getString(R.string.process_stats_memory_status,memString));
-  ProcessStats.ProcessDataCollection totals=new ProcessStats.ProcessDataCollection(ProcessStats.ALL_SCREEN_ADJ,ProcessStats.ALL_MEM_ADJ,ProcessStats.BACKGROUND_PROC_STATES);
+  ProcessStats.ProcessDataCollection totals=new ProcessStats.ProcessDataCollection(ProcessStats.ALL_SCREEN_ADJ,ProcessStats.ALL_MEM_ADJ,stats);
   long now=SystemClock.uptimeMillis();
   final PackageManager pm=getActivity().getPackageManager();
   mTotalTime=ProcessStats.dumpSingleTime(null,null,mStats.mMemFactorDurations,mStats.mMemFactor,mStats.mStartTime,now);
@@ -37,7 +67,7 @@
   for (int ip=0, N=mStats.mProcesses.getMap().size(); ip < N; ip++) {
     SparseArray<ProcessStats.ProcessState> uids=mStats.mProcesses.getMap().valueAt(ip);
     for (int iu=0; iu < uids.size(); iu++) {
-      ProcStatsEntry ent=new ProcStatsEntry(uids.valueAt(iu),totals);
+      ProcStatsEntry ent=new ProcStatsEntry(uids.valueAt(iu),totals,mUseUss,mStatsType == MENU_TYPE_BACKGROUND);
       procs.add(ent);
       processes.put(ent.mName,ent);
     }
@@ -58,9 +88,9 @@
     ProcStatsEntry proc=procs.get(i);
     final double percentOfWeight=(((double)proc.mWeight) / maxWeight) * 100;
     final double percentOfTime=(((double)proc.mDuration) / mTotalTime) * 100;
-    if (percentOfWeight < 1)     continue;
+    if (percentOfWeight < 2)     break;
     ProcessStatsPreference pref=new ProcessStatsPreference(getActivity(),null,proc);
-    proc.evaluateTargetPackage(mStats,totals,sEntryCompare);
+    proc.evaluateTargetPackage(mStats,totals,sEntryCompare,mUseUss,mStatsType == MENU_TYPE_BACKGROUND);
     proc.retrieveUiData(pm);
     pref.setTitle(proc.mUiLabel);
     if (proc.mUiTargetApp != null) {
@@ -71,15 +101,17 @@
     mAppListGroup.addPreference(pref);
     if (mAppListGroup.getPreferenceCount() > (MAX_ITEMS_TO_LIST + 1))     break;
   }
-  for (int ip=0, N=mStats.mPackages.getMap().size(); ip < N; ip++) {
-    SparseArray<ProcessStats.PackageState> uids=mStats.mPackages.getMap().valueAt(ip);
-    for (int iu=0; iu < uids.size(); iu++) {
-      ProcessStats.PackageState ps=uids.valueAt(iu);
-      for (int is=0, NS=ps.mServices.size(); is < NS; is++) {
-        ProcessStats.ServiceState ss=ps.mServices.valueAt(is);
-        if (ss.mProcessName != null) {
-          ProcStatsEntry ent=processes.get(ss.mProcessName);
-          ent.addService(ss);
+  if (mStatsType == MENU_TYPE_BACKGROUND) {
+    for (int ip=0, N=mStats.mPackages.getMap().size(); ip < N; ip++) {
+      SparseArray<ProcessStats.PackageState> uids=mStats.mPackages.getMap().valueAt(ip);
+      for (int iu=0; iu < uids.size(); iu++) {
+        ProcessStats.PackageState ps=uids.valueAt(iu);
+        for (int is=0, NS=ps.mServices.size(); is < NS; is++) {
+          ProcessStats.ServiceState ss=ps.mServices.valueAt(is);
+          if (ss.mProcessName != null) {
+            ProcStatsEntry ent=processes.get(ss.mProcessName);
+            ent.addService(ss);
+          }
         }
       }
     }

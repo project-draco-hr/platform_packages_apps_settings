@@ -1,0 +1,20 @@
+{
+  mNewSmsApplicationData=SmsApplication.getSmsApplicationData(packageName,this);
+  if (mNewSmsApplicationData == null) {
+    return false;
+  }
+  ComponentName oldSmsComponent=SmsApplication.getDefaultSmsApplication(this,true);
+  SmsApplicationData oldSmsApplicationData=SmsApplication.getSmsApplicationData(oldSmsComponent.getPackageName(),this);
+  if (oldSmsApplicationData.mPackageName.equals(mNewSmsApplicationData.mPackageName)) {
+    return false;
+  }
+  final AlertController.AlertParams p=mAlertParams;
+  p.mTitle=getString(R.string.sms_change_default_dialog_title);
+  p.mMessage=getString(R.string.sms_change_default_dialog_text,mNewSmsApplicationData.mApplicationName,oldSmsApplicationData.mApplicationName);
+  p.mPositiveButtonText=getString(R.string.yes);
+  p.mNegativeButtonText=getString(R.string.no);
+  p.mPositiveButtonListener=this;
+  p.mNegativeButtonListener=this;
+  setupAlert();
+  return true;
+}

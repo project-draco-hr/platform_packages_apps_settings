@@ -3,4 +3,7 @@
   if (mEditUserInfoDialog != null && mEditUserInfoDialog.isShowing() && mEditUserPhotoController != null) {
     outState.putParcelable(KEY_SAVED_PHOTO,mEditUserPhotoController.getNewUserPhotoBitmap());
   }
+  if (mWaitingForActivityResult) {
+    outState.putBoolean(KEY_AWAITING_RESULT,mWaitingForActivityResult);
+  }
 }

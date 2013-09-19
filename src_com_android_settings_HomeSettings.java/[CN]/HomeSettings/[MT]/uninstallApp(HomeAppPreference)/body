@@ -1,5 +1,5 @@
 {
-  Uri packageURI=Uri.parse("package:" + pref.activityName.getPackageName());
+  Uri packageURI=Uri.parse("package:" + pref.uninstallTarget);
   Intent uninstallIntent=new Intent(Intent.ACTION_UNINSTALL_PACKAGE,packageURI);
   uninstallIntent.putExtra(Intent.EXTRA_UNINSTALL_ALL_USERS,false);
   int requestCode=REQUESTING_UNINSTALL + (pref.isChecked ? 1 : 0);

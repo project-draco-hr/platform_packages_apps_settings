@@ -15,8 +15,7 @@
     try {
       Drawable icon=info.loadIcon(mPm);
       CharSequence name=info.loadLabel(mPm);
-      boolean isSystem=(info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
-      HomeAppPreference pref=new HomeAppPreference(context,activityName,prefIndex,icon,name,this,isSystem);
+      HomeAppPreference pref=new HomeAppPreference(context,activityName,prefIndex,icon,name,this,info);
       mPrefs.add(pref);
       mPrefGroup.addPreference(pref);
       pref.setEnabled(true);

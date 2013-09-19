@@ -1,0 +1,13 @@
+{
+  if (pkg1 != null && pkg2 != null) {
+    try {
+      final int match=mPm.checkSignatures(pkg1,pkg2);
+      if (match >= PackageManager.SIGNATURE_MATCH) {
+        return true;
+      }
+    }
+ catch (    Exception e) {
+    }
+  }
+  return false;
+}

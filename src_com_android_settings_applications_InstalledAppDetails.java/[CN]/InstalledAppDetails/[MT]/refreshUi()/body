@@ -9,6 +9,21 @@
   if (mPackageInfo == null) {
     return false;
   }
+  List<ResolveInfo> homeActivities=new ArrayList<ResolveInfo>();
+  mPm.getHomeActivities(homeActivities);
+  mHomePackages.clear();
+  for (int i=0; i < homeActivities.size(); i++) {
+    ResolveInfo ri=homeActivities.get(i);
+    final String activityPkg=ri.activityInfo.packageName;
+    mHomePackages.add(activityPkg);
+    final Bundle metadata=ri.activityInfo.metaData;
+    if (metadata != null) {
+      final String metaPkg=metadata.getString(ActivityManager.META_HOME_ALTERNATE);
+      if (signaturesMatch(metaPkg,activityPkg)) {
+        mHomePackages.add(metaPkg);
+      }
+    }
+  }
   List<ComponentName> prefActList=new ArrayList<ComponentName>();
   List<IntentFilter> intentList=new ArrayList<IntentFilter>();
   mPm.getPreferredActivities(intentList,prefActList,packageName);

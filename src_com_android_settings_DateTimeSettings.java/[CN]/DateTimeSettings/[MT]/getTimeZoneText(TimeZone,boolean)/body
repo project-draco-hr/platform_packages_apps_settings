@@ -1,0 +1,17 @@
+{
+  Date now=new Date();
+  SimpleDateFormat gmtFormatter=new SimpleDateFormat("ZZZZ");
+  gmtFormatter.setTimeZone(tz);
+  String gmtString=gmtFormatter.format(now);
+  BidiFormatter bidiFormatter=BidiFormatter.getInstance();
+  Locale l=Locale.getDefault();
+  boolean isRtl=TextUtils.getLayoutDirectionFromLocale(l) == View.LAYOUT_DIRECTION_RTL;
+  gmtString=bidiFormatter.unicodeWrap(gmtString,isRtl ? TextDirectionHeuristics.RTL : TextDirectionHeuristics.LTR);
+  if (!includeName) {
+    return gmtString;
+  }
+  SimpleDateFormat zoneNameFormatter=new SimpleDateFormat("zzzz");
+  zoneNameFormatter.setTimeZone(tz);
+  String zoneNameString=zoneNameFormatter.format(now);
+  return gmtString + " " + zoneNameString;
+}

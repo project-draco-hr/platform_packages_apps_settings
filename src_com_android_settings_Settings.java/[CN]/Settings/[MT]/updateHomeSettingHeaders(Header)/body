@@ -3,6 +3,9 @@
   final ArrayList<ResolveInfo> homeApps=new ArrayList<ResolveInfo>();
   try {
     ComponentName currentHome=pm.getHomeActivities(homeApps);
+    if (homeApps.size() < 2) {
+      return false;
+    }
     ResolveInfo iconSource=null;
     if (currentHome == null) {
       for (int which=0; which < homeApps.size(); which++) {
@@ -36,4 +39,5 @@
  catch (  Exception e) {
     Log.w(LOG_TAG,"Problem looking up home activity!",e);
   }
+  return true;
 }

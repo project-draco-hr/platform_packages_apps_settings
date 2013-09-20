@@ -17,6 +17,7 @@
   mNfcEnabler=new NfcEnabler(activity,nfc,androidBeam);
   mSmsApplicationPreference=(SmsListPreference)findPreference(KEY_SMS_APPLICATION);
   mSmsApplicationPreference.setOnPreferenceChangeListener(this);
+  initSmsApplicationSetting();
   getPreferenceScreen().removePreference(nsd);
   String toggleable=Settings.Global.getString(activity.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   boolean isWimaxEnabled=!isSecondaryUser && this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);

@@ -5,7 +5,7 @@
   mDummyDate.set(now.get(Calendar.YEAR),11,31,13,0,0);
   Date dummyDate=mDummyDate.getTime();
   mTimePref.setSummary(DateFormat.getTimeFormat(getActivity()).format(now.getTime()));
-  mTimeZone.setSummary(getTimeZoneText(now.getTimeZone()));
+  mTimeZone.setSummary(getTimeZoneText(now.getTimeZone(),true));
   mDatePref.setSummary(shortDateFormat.format(now.getTime()));
   mDateFormat.setSummary(shortDateFormat.format(dummyDate));
   mTime24Pref.setSummary(DateFormat.getTimeFormat(getActivity()).format(dummyDate));

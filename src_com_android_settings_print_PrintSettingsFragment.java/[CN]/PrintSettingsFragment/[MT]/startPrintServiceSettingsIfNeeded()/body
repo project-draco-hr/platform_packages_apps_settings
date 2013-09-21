@@ -1,0 +1,13 @@
+{
+  if (getArguments() == null) {
+    return;
+  }
+  String componentName=getArguments().getString(EXTRA_PRINT_SERVICE_COMPONENT_NAME);
+  if (componentName != null) {
+    getArguments().remove(EXTRA_PRINT_SERVICE_COMPONENT_NAME);
+    Preference prereference=findPreference(componentName);
+    if (prereference != null) {
+      prereference.performClick(getPreferenceScreen());
+    }
+  }
+}

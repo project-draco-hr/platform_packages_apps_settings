@@ -1,0 +1,20 @@
+{
+  if (DEBUG) {
+    Log.i(LOG_TAG,"onStartLoading()");
+  }
+  if (!mPrintJobs.isEmpty()) {
+    deliverResult(new ArrayList<PrintJobInfo>(mPrintJobs));
+  }
+  if (mPrintJobStateChangeListener == null) {
+    mPrintJobStateChangeListener=new PrintJobStateChangeListener(){
+      @Override public void onPrintJobsStateChanged(      PrintJobId printJobId){
+        onForceLoad();
+      }
+    }
+;
+    mPrintManager.addPrintJobStateChangeListener(mPrintJobStateChangeListener);
+  }
+  if (mPrintJobs.isEmpty()) {
+    onForceLoad();
+  }
+}

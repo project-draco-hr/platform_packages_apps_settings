@@ -1,0 +1,29 @@
+{
+  ListView listView=getListView();
+  ViewGroup contentRoot=(ViewGroup)listView.getParent();
+  View emptyView=listView.getEmptyView();
+  if (!mToggleSwitch.isChecked()) {
+    if (emptyView != null && emptyView.getId() != R.id.empty_printers_list_service_disabled) {
+      contentRoot.removeView(emptyView);
+      emptyView=null;
+    }
+    if (emptyView == null) {
+      emptyView=getActivity().getLayoutInflater().inflate(R.layout.empty_print_state,contentRoot,false);
+      TextView textView=(TextView)emptyView.findViewById(R.id.message);
+      textView.setText(R.string.print_service_disabled);
+      contentRoot.addView(emptyView);
+      listView.setEmptyView(emptyView);
+    }
+  }
+ else   if (mPrintersAdapter.getUnfilteredCount() <= 0) {
+    if (emptyView != null && emptyView.getId() != R.id.empty_printers_list_service_enabled) {
+      contentRoot.removeView(emptyView);
+      emptyView=null;
+    }
+    if (emptyView == null) {
+      emptyView=getActivity().getLayoutInflater().inflate(R.layout.empty_printers_list_service_enabled,contentRoot,false);
+      contentRoot.addView(emptyView);
+      listView.setEmptyView(emptyView);
+    }
+  }
+}

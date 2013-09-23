@@ -1,0 +1,17 @@
+{
+switch (item.getItemId()) {
+case MENU_ITEM_ID_CANCEL:
+{
+      mPrintJob.cancel();
+      finish();
+      return true;
+    }
+case MENU_ITEM_ID_RESTART:
+{
+    mPrintJob.restart();
+    finish();
+    return true;
+  }
+}
+return super.onOptionsItemSelected(item);
+}

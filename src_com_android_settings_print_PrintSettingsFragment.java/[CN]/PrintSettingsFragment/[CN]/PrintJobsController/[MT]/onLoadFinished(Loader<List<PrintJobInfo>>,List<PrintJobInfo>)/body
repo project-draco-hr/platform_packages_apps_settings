@@ -1,0 +1,62 @@
+{
+  if (printJobs == null || printJobs.isEmpty()) {
+    getPreferenceScreen().removePreference(mActivePrintJobsCategory);
+  }
+ else {
+    if (getPreferenceScreen().findPreference(PRINT_JOBS_CATEGORY) == null) {
+      getPreferenceScreen().addPreference(mActivePrintJobsCategory);
+    }
+    mActivePrintJobsCategory.removeAll();
+    final int printJobCount=printJobs.size();
+    for (int i=0; i < printJobCount; i++) {
+      PrintJobInfo printJob=printJobs.get(i);
+      PreferenceScreen preference=getPreferenceManager().createPreferenceScreen(getActivity());
+      preference.setPersistent(false);
+      preference.setFragment(PrintJobSettingsFragment.class.getName());
+      preference.setKey(printJob.getId().flattenToString());
+switch (printJob.getState()) {
+case PrintJobInfo.STATE_QUEUED:
+case PrintJobInfo.STATE_STARTED:
+{
+          preference.setTitle(getString(R.string.print_printing_state_title_template,printJob.getLabel()));
+        }
+      break;
+case PrintJobInfo.STATE_FAILED:
+{
+      preference.setTitle(getString(R.string.print_failed_state_title_template,printJob.getLabel()));
+    }
+  break;
+case PrintJobInfo.STATE_BLOCKED:
+{
+  preference.setTitle(getString(R.string.print_blocked_state_title_template,printJob.getLabel()));
+}
+break;
+}
+preference.setSummary(getString(R.string.print_job_summary,printJob.getPrinterName(),DateUtils.formatSameDayTime(printJob.getCreationTime(),printJob.getCreationTime(),DateFormat.SHORT,DateFormat.SHORT)));
+switch (printJob.getState()) {
+case PrintJobInfo.STATE_QUEUED:
+case PrintJobInfo.STATE_STARTED:
+{
+preference.setIcon(com.android.internal.R.drawable.ic_print);
+}
+break;
+case PrintJobInfo.STATE_FAILED:
+case PrintJobInfo.STATE_BLOCKED:
+{
+preference.setIcon(com.android.internal.R.drawable.ic_print_error);
+}
+break;
+}
+Bundle extras=preference.getExtras();
+extras.putParcelable(EXTRA_PRINT_JOB_ID,printJob.getId());
+mActivePrintJobsCategory.addPreference(preference);
+}
+if (mPrintJobPreferenceToActivate != null) {
+Preference preference=findPreference(mPrintJobPreferenceToActivate);
+mPrintJobPreferenceToActivate=null;
+if (preference != null) {
+preference.performClick(getPreferenceScreen());
+}
+}
+}
+}

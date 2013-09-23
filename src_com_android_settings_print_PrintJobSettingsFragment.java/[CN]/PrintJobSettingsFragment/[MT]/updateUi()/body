@@ -1,0 +1,56 @@
+{
+  mPrintJob=mPrintManager.getPrintJob(mPrintJobId);
+  if (mPrintJob == null) {
+    finish();
+  }
+  if (mPrintJob.isCancelled() || mPrintJob.isCompleted()) {
+    finish();
+  }
+  PrintJobInfo info=mPrintJob.getInfo();
+switch (info.getState()) {
+case PrintJobInfo.STATE_QUEUED:
+case PrintJobInfo.STATE_STARTED:
+{
+      mPrintJobPreference.setTitle(getString(R.string.print_printing_state_title_template,info.getLabel()));
+    }
+  break;
+case PrintJobInfo.STATE_FAILED:
+{
+  mPrintJobPreference.setTitle(getString(R.string.print_failed_state_title_template,info.getLabel()));
+}
+break;
+case PrintJobInfo.STATE_BLOCKED:
+{
+mPrintJobPreference.setTitle(getString(R.string.print_blocked_state_title_template,info.getLabel()));
+}
+break;
+}
+mPrintJobPreference.setSummary(getString(R.string.print_job_summary,info.getPrinterName(),DateUtils.formatSameDayTime(info.getCreationTime(),info.getCreationTime(),DateFormat.SHORT,DateFormat.SHORT)));
+switch (info.getState()) {
+case PrintJobInfo.STATE_QUEUED:
+case PrintJobInfo.STATE_STARTED:
+{
+mPrintJobPreference.setIcon(com.android.internal.R.drawable.ic_print);
+}
+break;
+case PrintJobInfo.STATE_FAILED:
+case PrintJobInfo.STATE_BLOCKED:
+{
+mPrintJobPreference.setIcon(com.android.internal.R.drawable.ic_print_error);
+}
+break;
+}
+String stateReason=info.getStateReason();
+if (!TextUtils.isEmpty(stateReason)) {
+if (getPreferenceScreen().findPreference(PRINT_JOB_MESSAGE_PREFERENCE) == null) {
+getPreferenceScreen().addPreference(mMessagePreference);
+}
+mMessagePreference.setSummary(stateReason);
+getListView().setDivider(null);
+}
+ else {
+getPreferenceScreen().removePreference(mMessagePreference);
+getListView().setDivider(mListDivider);
+}
+getActivity().invalidateOptionsMenu();
+}

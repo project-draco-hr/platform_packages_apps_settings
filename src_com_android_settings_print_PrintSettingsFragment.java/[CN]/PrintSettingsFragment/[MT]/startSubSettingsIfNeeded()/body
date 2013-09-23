@@ -10,4 +10,17 @@
       prereference.performClick(getPreferenceScreen());
     }
   }
+ else {
+    String printJobId=getArguments().getString(EXTRA_PRINT_JOB_ID);
+    if (printJobId != null) {
+      getArguments().remove(EXTRA_PRINT_JOB_ID);
+      Preference preference=findPreference(printJobId);
+      if (preference != null) {
+        preference.performClick(getPreferenceScreen());
+      }
+ else {
+        mPrintJobPreferenceToActivate=printJobId;
+      }
+    }
+  }
 }

@@ -1,5 +1,10 @@
 {
-  getPreferenceScreen().removeAll();
+  if (getPreferenceScreen().findPreference(PRINT_SERVICES_CATEGORY) == null) {
+    getPreferenceScreen().addPreference(mPrintServicesCategory);
+  }
+ else {
+    mPrintServicesCategory.removeAll();
+  }
   List<ComponentName> enabledServices=SettingsUtils.readEnabledPrintServices(getActivity());
   List<ResolveInfo> installedServices=getActivity().getPackageManager().queryIntentServices(new Intent(android.printservice.PrintService.SERVICE_INTERFACE),PackageManager.GET_SERVICES | PackageManager.GET_META_DATA);
   final int installedServiceCount=installedServices.size();
@@ -39,23 +44,9 @@
       extras.putString(EXTRA_ADD_PRINTERS_COMPONENT_NAME,new ComponentName(installedService.serviceInfo.packageName,addPrinterClassName).flattenToString());
     }
     extras.putString(EXTRA_SERVICE_COMPONENT_NAME,componentName.flattenToString());
-    getPreferenceScreen().addPreference(preference);
+    mPrintServicesCategory.addPreference(preference);
   }
-  if (getPreferenceScreen().getPreferenceCount() == 0) {
-    if (mNoServicesMessagePreference == null) {
-      mNoServicesMessagePreference=new Preference(getActivity()){
-        @Override protected void onBindView(        View view){
-          super.onBindView(view);
-          TextView summaryView=(TextView)view.findViewById(R.id.summary);
-          String title=getString(R.string.print_no_services_installed);
-          summaryView.setText(title);
-        }
-      }
-;
-      mNoServicesMessagePreference.setPersistent(false);
-      mNoServicesMessagePreference.setLayoutResource(R.layout.text_description_preference);
-      mNoServicesMessagePreference.setSelectable(false);
-    }
-    getPreferenceScreen().addPreference(mNoServicesMessagePreference);
+  if (mPrintServicesCategory.getPreferenceCount() == 0) {
+    getPreferenceScreen().removePreference(mPrintServicesCategory);
   }
 }

@@ -1,6 +1,6 @@
 {
-  if (DEBUG)   Log.d(TAG,"onNegative mRememberChoiceValue: " + mRememberChoiceValue);
-  if (mRememberChoiceValue)   savePermissionChoice(mRequestType,CachedBluetoothDevice.ACCESS_REJECTED);
+  if (DEBUG)   Log.d(TAG,"onNegative");
+  savePermissionChoice(mRequestType,CachedBluetoothDevice.ACCESS_UNKNOWN);
   sendIntentToReceiver(BluetoothDevice.ACTION_CONNECTION_ACCESS_REPLY,false,null,false);
   finish();
 }

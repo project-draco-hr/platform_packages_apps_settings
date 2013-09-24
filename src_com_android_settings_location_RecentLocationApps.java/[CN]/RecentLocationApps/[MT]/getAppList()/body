@@ -13,8 +13,10 @@
   ArrayList<Preference> prefs=new ArrayList<Preference>();
   long now=System.currentTimeMillis();
   for (  AppOpsManager.PackageOps ops : appOps) {
-    if (ops.getUid() != Process.SYSTEM_UID || !ANDROID_SYSTEM_PACKAGE_NAME.equals(ops.getPackageName())) {
-      BatterySipperWrapper wrapper=sipperMap.get(ops.getUid());
+    int uid=ops.getUid();
+    boolean isAndroidOs=(uid == Process.SYSTEM_UID) && ANDROID_SYSTEM_PACKAGE_NAME.equals(ops.getPackageName());
+    if (!isAndroidOs && ActivityManager.getCurrentUser() == UserHandle.getUserId(uid)) {
+      BatterySipperWrapper wrapper=sipperMap.get(uid);
       Preference pref=getPreferenceFromOps(now,ops,wrapper);
       if (pref != null) {
         prefs.add(pref);

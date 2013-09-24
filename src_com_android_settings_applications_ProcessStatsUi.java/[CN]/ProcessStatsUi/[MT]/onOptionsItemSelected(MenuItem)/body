@@ -1,5 +1,6 @@
 {
-switch (item.getItemId()) {
+  final int id=item.getItemId();
+switch (id) {
 case MENU_STATS_REFRESH:
     mStats=null;
   refreshStats();
@@ -19,6 +20,10 @@ mStatsType=item.getItemId();
 refreshStats();
 return true;
 default :
+if (id >= MENU_DURATION && id < (MENU_DURATION + NUM_DURATIONS)) {
+mDuration=sDurations[id - MENU_DURATION];
+refreshStats();
+}
 return false;
 }
 }

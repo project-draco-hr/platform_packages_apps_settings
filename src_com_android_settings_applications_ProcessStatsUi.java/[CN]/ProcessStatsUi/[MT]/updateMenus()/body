@@ -1,0 +1,33 @@
+{
+  int closestIndex=0;
+  long closestDelta=Math.abs(sDurations[0] - mDuration);
+  for (int i=1; i < NUM_DURATIONS; i++) {
+    long delta=Math.abs(sDurations[i] - mDuration);
+    if (delta < closestDelta) {
+      closestDelta=delta;
+      closestIndex=i;
+    }
+  }
+  for (int i=0; i < NUM_DURATIONS; i++) {
+    if (mDurationMenus[i] != null) {
+      mDurationMenus[i].setChecked(i == closestIndex);
+    }
+  }
+  mDuration=sDurations[closestIndex];
+  if (mShowSystemMenu != null) {
+    mShowSystemMenu.setChecked(mShowSystem);
+    mShowSystemMenu.setEnabled(mStatsType == MENU_TYPE_BACKGROUND);
+  }
+  if (mUseUssMenu != null) {
+    mUseUssMenu.setChecked(mUseUss);
+  }
+  if (mTypeBackgroundMenu != null) {
+    mTypeBackgroundMenu.setChecked(mStatsType == MENU_TYPE_BACKGROUND);
+  }
+  if (mTypeForegroundMenu != null) {
+    mTypeForegroundMenu.setChecked(mStatsType == MENU_TYPE_FOREGROUND);
+  }
+  if (mTypeCachedMenu != null) {
+    mTypeCachedMenu.setChecked(mStatsType == MENU_TYPE_CACHED);
+  }
+}

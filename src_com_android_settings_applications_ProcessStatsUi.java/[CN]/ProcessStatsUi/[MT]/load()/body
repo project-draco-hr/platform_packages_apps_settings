@@ -1,44 +1,18 @@
 {
   try {
+    mLastDuration=mDuration;
     mMemState=mProcessStats.getCurrentMemoryState();
-    ArrayList<ParcelFileDescriptor> fds=new ArrayList<ParcelFileDescriptor>();
-    byte[] data=mProcessStats.getCurrentStats(fds);
-    Parcel parcel=Parcel.obtain();
-    parcel.unmarshall(data,0,data.length);
-    parcel.setDataPosition(0);
-    mStats=ProcessStats.CREATOR.createFromParcel(parcel);
-    int i=fds.size() - 1;
-    while (i >= 0 && (mStats.mTimePeriodEndRealtime - mStats.mTimePeriodStartRealtime) < (24 * 60 * 60* 1000)) {
-      Log.i(TAG,"Not enough data, loading next file @ " + i);
-      ProcessStats stats=new ProcessStats(false);
-      InputStream stream=new ParcelFileDescriptor.AutoCloseInputStream(fds.get(i));
-      stats.read(stream);
-      try {
-        stream.close();
-      }
- catch (      IOException e) {
-      }
-      if (stats.mReadError == null) {
-        mStats.add(stats);
-        StringBuilder sb=new StringBuilder();
-        sb.append("Added stats: ");
-        sb.append(stats.mTimePeriodStartClockStr);
-        sb.append(", over ");
-        TimeUtils.formatDuration(stats.mTimePeriodEndRealtime - stats.mTimePeriodStartRealtime,sb);
-        Log.i(TAG,sb.toString());
-      }
- else {
-        Log.w(TAG,"Read error: " + stats.mReadError);
-      }
-      i--;
+    ParcelFileDescriptor pfd=mProcessStats.getStatsOverTime(mDuration);
+    mStats=new ProcessStats(false);
+    InputStream is=new ParcelFileDescriptor.AutoCloseInputStream(pfd);
+    mStats.read(is);
+    try {
+      is.close();
     }
-    while (i >= 0) {
-      try {
-        fds.get(i).close();
-      }
- catch (      IOException e) {
-      }
-      i--;
+ catch (    IOException e) {
+    }
+    if (mStats.mReadError != null) {
+      Log.w(TAG,"Failure reading process stats: " + mStats.mReadError);
     }
   }
  catch (  RemoteException e) {

@@ -1,6 +1,6 @@
 {
-  if (DEBUG)   Log.d(TAG,"onPositive mRememberChoiceValue: " + mRememberChoiceValue);
-  if (mRememberChoiceValue)   savePermissionChoice(mRequestType,CachedBluetoothDevice.ACCESS_ALLOWED);
-  sendIntentToReceiver(BluetoothDevice.ACTION_CONNECTION_ACCESS_REPLY,true,BluetoothDevice.EXTRA_ALWAYS_ALLOWED,mRememberChoiceValue);
+  if (DEBUG)   Log.d(TAG,"onPositive");
+  savePermissionChoice(mRequestType,CachedBluetoothDevice.ACCESS_ALLOWED);
+  sendIntentToReceiver(BluetoothDevice.ACTION_CONNECTION_ACCESS_REPLY,true,BluetoothDevice.EXTRA_ALWAYS_ALLOWED,true);
   finish();
 }

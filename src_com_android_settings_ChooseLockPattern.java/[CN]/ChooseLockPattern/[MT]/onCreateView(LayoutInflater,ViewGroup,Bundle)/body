@@ -11,7 +11,7 @@
   mFooterRightButton.setOnClickListener(this);
   final LinearLayoutWithDefaultTouchRecepient topLayout=(LinearLayoutWithDefaultTouchRecepient)view.findViewById(R.id.topLayout);
   topLayout.setDefaultTouchRecepient(mLockPatternView);
-  final boolean confirmCredentials=getActivity().getIntent().getBooleanExtra("confirm_credentials",false);
+  final boolean confirmCredentials=getActivity().getIntent().getBooleanExtra("confirm_credentials",true);
   if (savedInstanceState == null) {
     if (confirmCredentials) {
       updateStage(Stage.NeedToConfirm);

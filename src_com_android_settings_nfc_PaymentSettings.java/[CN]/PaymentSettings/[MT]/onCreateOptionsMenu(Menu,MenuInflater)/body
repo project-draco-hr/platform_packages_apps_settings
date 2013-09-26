@@ -1,0 +1,6 @@
+{
+  super.onCreateOptionsMenu(menu,inflater);
+  inflater.inflate(R.menu.nfc_payment_settings,menu);
+  MenuItem menuItem=menu.findItem(R.id.nfc_payment_menu_item_add_service);
+  menuItem.setIntent(new Intent(Intent.ACTION_VIEW,Uri.parse(getString(R.string.download_nfc_payment_service_query))));
+}

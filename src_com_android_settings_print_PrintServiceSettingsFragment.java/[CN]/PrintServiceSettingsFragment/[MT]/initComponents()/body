@@ -1,4 +1,6 @@
 {
+  mPrintersAdapter=new PrintersAdapter();
+  mPrintersAdapter.registerDataSetObserver(mDataObserver);
   mToggleSwitch=createAndAddActionBarToggleSwitch(getActivity());
   mToggleSwitch.setOnBeforeCheckedChangeListener(new OnBeforeCheckedChangeListener(){
     @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
@@ -18,4 +20,12 @@
     }
   }
 );
+  mToggleSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      updateEmptyView();
+    }
+  }
+);
+  getListView().setEnabled(false);
+  getListView().setAdapter(mPrintersAdapter);
 }

@@ -1,0 +1,15 @@
+{
+  List<PrintJobInfo> printJobInfos=null;
+  List<PrintJob> printJobs=mPrintManager.getPrintJobs();
+  final int printJobCount=printJobs.size();
+  for (int i=0; i < printJobCount; i++) {
+    PrintJobInfo printJob=printJobs.get(i).getInfo();
+    if (shouldShowToUser(printJob)) {
+      if (printJobInfos == null) {
+        printJobInfos=new ArrayList<PrintJobInfo>();
+      }
+      printJobInfos.add(printJob);
+    }
+  }
+  return printJobInfos;
+}

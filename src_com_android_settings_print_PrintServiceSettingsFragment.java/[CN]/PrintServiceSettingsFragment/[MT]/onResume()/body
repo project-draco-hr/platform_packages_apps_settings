@@ -1,5 +1,6 @@
 {
-  mSettingsContentObserver.register(getContentResolver());
   super.onResume();
-  updateForServiceEnabledState();
+  mSettingsContentObserver.register(getContentResolver());
+  updateEmptyView();
+  updateUiForServiceState();
 }

@@ -1,0 +1,11 @@
+{
+  if (DEBUG) {
+    Log.i(LOG_TAG,"onReset()");
+  }
+  onStopLoading();
+  mPrintJobs.clear();
+  if (mPrintJobStateChangeListener != null) {
+    mPrintManager.removePrintJobStateChangeListener(mPrintJobStateChangeListener);
+    mPrintJobStateChangeListener=null;
+  }
+}

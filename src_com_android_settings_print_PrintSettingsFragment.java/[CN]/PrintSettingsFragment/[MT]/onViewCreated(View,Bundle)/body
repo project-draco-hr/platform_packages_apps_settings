@@ -1,0 +1,9 @@
+{
+  super.onViewCreated(view,savedInstanceState);
+  ViewGroup contentRoot=(ViewGroup)getListView().getParent();
+  View emptyView=getActivity().getLayoutInflater().inflate(R.layout.empty_print_state,contentRoot,false);
+  TextView textView=(TextView)emptyView.findViewById(R.id.message);
+  textView.setText(R.string.print_no_services_installed);
+  contentRoot.addView(emptyView);
+  getListView().setEmptyView(emptyView);
+}

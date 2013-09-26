@@ -1,0 +1,23 @@
+{
+  Drawable icon=null;
+  if (mGCoreIcon != null) {
+    try {
+      PackageInfo info=mPackageManager.getPackageInfo(ops.getPackageName(),PackageManager.GET_META_DATA);
+      if (info != null && GOOGLE_SERVICES_SHARED_UID.equals(info.sharedUserId)) {
+        if (Log.isLoggable(TAG,Log.VERBOSE)) {
+          Log.v(TAG,"shareUserId matches GCore, force using puzzle icon");
+        }
+        icon=mGCoreIcon;
+      }
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+      if (Log.isLoggable(TAG,Log.VERBOSE)) {
+        Log.v(TAG,e.toString());
+      }
+    }
+  }
+  if (icon == null) {
+    icon=sipper.getIcon();
+  }
+  return icon;
+}

@@ -29,7 +29,7 @@ if (wrapper != null) {
 if (!wrapper.used()) {
 BatterySipper sipper=wrapper.batterySipper();
 sipper.loadNameAndIcon();
-pref=createRecentLocationEntry(sipper.getIcon(),sipper.getLabel(),highBattery,new UidEntryClickedListener(sipper));
+pref=createRecentLocationEntry(getIcon(sipper,ops),sipper.getLabel(),highBattery,new UidEntryClickedListener(sipper));
 wrapper.setUsed();
 }
 }

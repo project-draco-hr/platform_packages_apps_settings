@@ -1,19 +1,21 @@
 {
   if (convertView == null) {
-    convertView=getActivity().getLayoutInflater().inflate(R.layout.preference,parent,false);
+    convertView=getActivity().getLayoutInflater().inflate(R.layout.printer_dropdown_item,parent,false);
   }
   PrinterInfo printer=(PrinterInfo)getItem(position);
   CharSequence title=printer.getName();
   CharSequence subtitle=null;
+  Drawable icon=null;
   try {
     PackageInfo packageInfo=getPackageManager().getPackageInfo(printer.getId().getServiceName().getPackageName(),0);
     subtitle=packageInfo.applicationInfo.loadLabel(getPackageManager());
+    icon=packageInfo.applicationInfo.loadIcon(getPackageManager());
   }
  catch (  NameNotFoundException nnfe) {
   }
-  TextView titleView=(TextView)convertView.findViewById(android.R.id.title);
+  TextView titleView=(TextView)convertView.findViewById(R.id.title);
   titleView.setText(title);
-  TextView subtitleView=(TextView)convertView.findViewById(android.R.id.summary);
+  TextView subtitleView=(TextView)convertView.findViewById(R.id.subtitle);
   if (!TextUtils.isEmpty(subtitle)) {
     subtitleView.setText(subtitle);
     subtitleView.setVisibility(View.VISIBLE);
@@ -21,6 +23,14 @@
  else {
     subtitleView.setText(null);
     subtitleView.setVisibility(View.GONE);
+  }
+  ImageView iconView=(ImageView)convertView.findViewById(R.id.icon);
+  if (icon != null) {
+    iconView.setImageDrawable(icon);
+    iconView.setVisibility(View.VISIBLE);
+  }
+ else {
+    iconView.setVisibility(View.GONE);
   }
   return convertView;
 }

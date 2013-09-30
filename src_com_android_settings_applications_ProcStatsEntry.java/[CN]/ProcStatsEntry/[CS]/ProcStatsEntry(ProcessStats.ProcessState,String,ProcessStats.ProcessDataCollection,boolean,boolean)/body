@@ -3,11 +3,12 @@
   mPackage=proc.mPackage;
   mUid=proc.mUid;
   mName=proc.mName;
-  mUnique=proc.mCommonProcess == proc;
+  mPackages.add(packageName);
   mDuration=tmpTotals.totalTime;
   mAvgPss=tmpTotals.avgPss;
   mMaxPss=tmpTotals.maxPss;
   mAvgUss=tmpTotals.avgUss;
   mMaxUss=tmpTotals.maxUss;
   mWeight=(weightWithTime ? mDuration : 1) * (useUss ? mAvgUss : mAvgPss);
+  if (DEBUG)   Log.d(TAG,"New proc entry " + proc.mName + ": dur="+ mDuration+ " avgpss="+ mAvgPss+ " weight="+ mWeight);
 }

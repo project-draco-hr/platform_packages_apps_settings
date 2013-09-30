@@ -1,0 +1,16 @@
+{
+  LayoutInflater inflater=getActivity().getLayoutInflater();
+  ViewGroup item=(ViewGroup)inflater.inflate(R.layout.running_processes_item,null);
+  parent.addView(item);
+  final ImageView icon=(ImageView)item.findViewById(R.id.icon);
+  TextView nameView=(TextView)item.findViewById(R.id.name);
+  TextView descriptionView=(TextView)item.findViewById(R.id.description);
+  try {
+    ApplicationInfo ai=mPm.getApplicationInfo(packageName,0);
+    icon.setImageDrawable(ai.loadIcon(mPm));
+    nameView.setText(ai.loadLabel(mPm));
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+  }
+  descriptionView.setText(packageName);
+}

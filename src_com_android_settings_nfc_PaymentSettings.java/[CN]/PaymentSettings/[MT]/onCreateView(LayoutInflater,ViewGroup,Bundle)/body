@@ -1,5 +1,21 @@
 {
   super.onCreateView(inflater,container,savedInstanceState);
   View v=mInflater.inflate(R.layout.nfc_payment,container,false);
+  TextView learnMore=(TextView)v.findViewById(R.id.nfc_payment_learn_more);
+  learnMore.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      String helpUrl;
+      if (!TextUtils.isEmpty(helpUrl=getResources().getString(R.string.help_url_nfc_payment))) {
+        final Uri fullUri=HelpUtils.uriWithAddedParameters(PaymentSettings.this.getActivity(),Uri.parse(helpUrl));
+        Intent intent=new Intent(Intent.ACTION_VIEW,fullUri);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        startActivity(intent);
+      }
+ else {
+        Log.e(TAG,"Help url not set.");
+      }
+    }
+  }
+);
   return v;
 }

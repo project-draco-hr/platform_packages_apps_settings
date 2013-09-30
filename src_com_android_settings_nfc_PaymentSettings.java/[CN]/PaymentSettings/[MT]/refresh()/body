@@ -15,14 +15,19 @@
     }
   }
   TextView emptyText=(TextView)getView().findViewById(R.id.nfc_payment_empty_text);
+  TextView learnMore=(TextView)getView().findViewById(R.id.nfc_payment_learn_more);
   ImageView emptyImage=(ImageView)getView().findViewById(R.id.nfc_payment_tap_image);
   if (screen.getPreferenceCount() == 0) {
     emptyText.setVisibility(View.VISIBLE);
+    learnMore.setVisibility(View.VISIBLE);
     emptyImage.setVisibility(View.VISIBLE);
+    getListView().setVisibility(View.GONE);
   }
  else {
     emptyText.setVisibility(View.GONE);
+    learnMore.setVisibility(View.GONE);
     emptyImage.setVisibility(View.GONE);
+    getListView().setVisibility(View.VISIBLE);
   }
   setPreferenceScreen(screen);
 }

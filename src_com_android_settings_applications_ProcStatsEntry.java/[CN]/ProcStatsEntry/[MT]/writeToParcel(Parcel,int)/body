@@ -2,7 +2,7 @@
   dest.writeString(mPackage);
   dest.writeInt(mUid);
   dest.writeString(mName);
-  dest.writeInt(mUnique ? 1 : 0);
+  dest.writeStringList(mPackages);
   dest.writeLong(mDuration);
   dest.writeLong(mAvgPss);
   dest.writeLong(mMaxPss);
@@ -10,5 +10,10 @@
   dest.writeLong(mMaxUss);
   dest.writeLong(mWeight);
   dest.writeString(mBestTargetPackage);
-  dest.writeTypedList(mServices);
+  final int N=mServices.size();
+  dest.writeInt(N);
+  for (int i=0; i < N; i++) {
+    dest.writeString(mServices.keyAt(i));
+    dest.writeTypedList(mServices.valueAt(i));
+  }
 }

@@ -1,0 +1,81 @@
+{
+  mBestTargetPackage=null;
+  if (mPackages.size() == 1) {
+    if (DEBUG)     Log.d(TAG,"Eval pkg of " + mName + ": single pkg "+ mPackages.get(0));
+    mBestTargetPackage=mPackages.get(0);
+  }
+ else {
+    ArrayList<ProcStatsEntry> subProcs=new ArrayList<ProcStatsEntry>();
+    for (int ipkg=0; ipkg < mPackages.size(); ipkg++) {
+      ProcessStats.PackageState pkgState=stats.mPackages.get(mPackages.get(ipkg),mUid);
+      if (DEBUG)       Log.d(TAG,"Eval pkg of " + mName + ", pkg "+ mPackages.get(ipkg)+ ":");
+      if (pkgState == null) {
+        Log.w(TAG,"No package state found for " + mPackages.get(ipkg) + "/"+ mUid+ " in process "+ mName);
+        continue;
+      }
+      ProcessStats.ProcessState pkgProc=pkgState.mProcesses.get(mName);
+      if (pkgProc == null) {
+        Log.w(TAG,"No process " + mName + " found in package state "+ mPackages.get(ipkg)+ "/"+ mUid);
+        continue;
+      }
+      subProcs.add(new ProcStatsEntry(pkgProc,pkgState.mPackageName,totals,useUss,weightWithTime));
+    }
+    if (subProcs.size() > 1) {
+      Collections.sort(subProcs,compare);
+      if (subProcs.get(0).mWeight > (subProcs.get(1).mWeight * 3)) {
+        if (DEBUG)         Log.d(TAG,"Eval pkg of " + mName + ": best pkg "+ subProcs.get(0).mPackage+ " weight "+ subProcs.get(0).mWeight+ " better than "+ subProcs.get(1).mPackage+ " weight "+ subProcs.get(1).mWeight);
+        mBestTargetPackage=subProcs.get(0).mPackage;
+        return;
+      }
+      long maxWeight=subProcs.get(0).mWeight;
+      long bestRunTime=-1;
+      for (int i=0; i < subProcs.size(); i++) {
+        if (subProcs.get(i).mWeight < (maxWeight / 2)) {
+          if (DEBUG)           Log.d(TAG,"Eval pkg of " + mName + ": pkg "+ subProcs.get(i).mPackage+ " weight "+ subProcs.get(i).mWeight+ " too small");
+          continue;
+        }
+        try {
+          ApplicationInfo ai=pm.getApplicationInfo(subProcs.get(i).mPackage,0);
+          if (ai.icon == 0) {
+            if (DEBUG)             Log.d(TAG,"Eval pkg of " + mName + ": pkg "+ subProcs.get(i).mPackage+ " has no icon");
+            continue;
+          }
+        }
+ catch (        PackageManager.NameNotFoundException e) {
+          if (DEBUG)           Log.d(TAG,"Eval pkg of " + mName + ": pkg "+ subProcs.get(i).mPackage+ " failed finding app info");
+          continue;
+        }
+        ArrayList<Service> subProcServices=null;
+        for (int isp=0, NSP=mServices.size(); isp < NSP; isp++) {
+          ArrayList<Service> subServices=mServices.valueAt(isp);
+          if (subServices.get(0).mPackage.equals(subProcs.get(i).mPackage)) {
+            subProcServices=subServices;
+            break;
+          }
+        }
+        long thisRunTime=0;
+        if (subProcServices != null) {
+          for (int iss=0, NSS=subProcServices.size(); iss < NSS; iss++) {
+            Service service=subProcServices.get(iss);
+            if (service.mDuration > thisRunTime) {
+              if (DEBUG)               Log.d(TAG,"Eval pkg of " + mName + ": pkg "+ subProcs.get(i).mPackage+ " service "+ service.mName+ " run time is "+ service.mDuration);
+              thisRunTime=service.mDuration;
+              break;
+            }
+          }
+        }
+        if (thisRunTime > bestRunTime) {
+          if (DEBUG)           Log.d(TAG,"Eval pkg of " + mName + ": pkg "+ subProcs.get(i).mPackage+ " new best run time "+ thisRunTime);
+          mBestTargetPackage=subProcs.get(i).mPackage;
+          bestRunTime=thisRunTime;
+        }
+ else {
+          if (DEBUG)           Log.d(TAG,"Eval pkg of " + mName + ": pkg "+ subProcs.get(i).mPackage+ " run time "+ thisRunTime+ " not as good as last "+ bestRunTime);
+        }
+      }
+    }
+ else     if (subProcs.size() == 1) {
+      mBestTargetPackage=subProcs.get(0).mPackage;
+    }
+  }
+}

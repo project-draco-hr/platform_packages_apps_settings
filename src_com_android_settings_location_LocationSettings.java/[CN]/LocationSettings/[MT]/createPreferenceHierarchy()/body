@@ -15,7 +15,7 @@
   }
 );
   mCategoryRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
-  RecentLocationApps recentApps=new RecentLocationApps(activity,mStatsHelper);
+  RecentLocationApps recentApps=new RecentLocationApps(activity);
   List<Preference> recentLocationRequests=recentApps.getAppList();
   if (recentLocationRequests.size() > 0) {
     addPreferencesSorted(recentLocationRequests,mCategoryRecentLocationRequests);

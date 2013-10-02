@@ -1,0 +1,18 @@
+{
+  final ContentResolver cr=getContentResolver();
+  final boolean enabled=Settings.Secure.getInt(cr,Settings.Secure.ACCESSIBILITY_DISPLAY_DALTONIZER_ENABLED,0) != 0;
+  if (enabled) {
+    final String mode=Integer.toString(Settings.Secure.getInt(cr,Settings.Secure.ACCESSIBILITY_DISPLAY_DALTONIZER,AccessibilityManager.DALTONIZER_DISABLED));
+    mSimulateColorSpace.setValue(mode);
+    final int index=mSimulateColorSpace.findIndexOfValue(mode);
+    if (index < 0) {
+      mSimulateColorSpace.setSummary(getString(R.string.daltonizer_type_overridden,getString(R.string.accessibility_display_daltonizer_preference_title)));
+    }
+ else {
+      mSimulateColorSpace.setSummary("%s");
+    }
+  }
+ else {
+    mSimulateColorSpace.setValue(Integer.toString(AccessibilityManager.DALTONIZER_DISABLED));
+  }
+}

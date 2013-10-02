@@ -1,0 +1,16 @@
+{
+  if (preference == mEnableQuickSetting) {
+    Settings.Secure.putInt(getContentResolver(),QUICK_SETTING_ENABLED,((Boolean)newValue) ? 1 : 0);
+  }
+ else   if (preference == mBrightness) {
+    final int progress=(Integer)newValue;
+    final float value=progress / 1000f - 0.5f;
+    Settings.Secure.putFloat(getContentResolver(),Settings.Secure.ACCESSIBILITY_DISPLAY_BRIGHTNESS,value);
+  }
+ else   if (preference == mContrast) {
+    final int progress=(Integer)newValue;
+    final float value=progress / 1000f * 10f + 1f;
+    Settings.Secure.putFloat(getContentResolver(),Settings.Secure.ACCESSIBILITY_DISPLAY_CONTRAST,value);
+  }
+  return true;
+}

@@ -1,13 +1,23 @@
 {
-  mPreferenceKey=arguments.getString(AccessibilitySettings.EXTRA_PREFERENCE_KEY);
-  final boolean enabled=arguments.getBoolean(AccessibilitySettings.EXTRA_CHECKED);
-  mToggleSwitch.setCheckedInternal(enabled);
-  PreferenceActivity activity=(PreferenceActivity)getActivity();
-  if (!activity.onIsMultiPane() || activity.onIsHidingHeaders()) {
-    mOldActivityTitle=getActivity().getTitle();
-    String title=arguments.getString(AccessibilitySettings.EXTRA_TITLE);
-    getActivity().getActionBar().setTitle(title);
+  if (arguments == null) {
+    getPreferenceScreen().removePreference(mSummaryPreference);
+    return;
   }
-  CharSequence summary=arguments.getCharSequence(AccessibilitySettings.EXTRA_SUMMARY);
-  mSummaryPreference.setSummary(summary);
+  mPreferenceKey=arguments.getString(AccessibilitySettings.EXTRA_PREFERENCE_KEY);
+  if (arguments.containsKey(AccessibilitySettings.EXTRA_CHECKED)) {
+    final boolean enabled=arguments.getBoolean(AccessibilitySettings.EXTRA_CHECKED);
+    mToggleSwitch.setCheckedInternal(enabled);
+  }
+  if (arguments.containsKey(AccessibilitySettings.EXTRA_TITLE)) {
+    setTitle(arguments.getString(AccessibilitySettings.EXTRA_TITLE));
+  }
+  if (arguments.containsKey(AccessibilitySettings.EXTRA_SUMMARY)) {
+    final CharSequence summary=arguments.getCharSequence(AccessibilitySettings.EXTRA_SUMMARY);
+    mSummaryPreference.setSummary(summary);
+    getListView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+    getListView().setDivider(null);
+  }
+ else {
+    getPreferenceScreen().removePreference(mSummaryPreference);
+  }
 }

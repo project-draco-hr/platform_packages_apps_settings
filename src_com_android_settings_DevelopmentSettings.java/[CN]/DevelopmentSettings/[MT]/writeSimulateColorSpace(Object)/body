@@ -1,0 +1,11 @@
+{
+  final ContentResolver cr=getContentResolver();
+  final int newMode=Integer.parseInt(value.toString());
+  if (newMode < 0) {
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_DISPLAY_DALTONIZER_ENABLED,0);
+  }
+ else {
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_DISPLAY_DALTONIZER_ENABLED,1);
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_DISPLAY_DALTONIZER,newMode);
+  }
+}

@@ -1,0 +1,6 @@
+{
+  mEnableQuickSetting.setChecked(Settings.Secure.getInt(getContentResolver(),QUICK_SETTING_ENABLED,0) == 1);
+  mEnableQuickSetting.setOnPreferenceChangeListener(this);
+  mType.setValue(Integer.toString(Settings.Secure.getInt(getContentResolver(),TYPE,DEFAULT_TYPE)));
+  mType.setOnPreferenceChangeListener(this);
+}

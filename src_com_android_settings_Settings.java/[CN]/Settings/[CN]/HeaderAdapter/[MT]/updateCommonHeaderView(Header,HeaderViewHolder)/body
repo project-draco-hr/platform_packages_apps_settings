@@ -4,11 +4,6 @@
     Drawable icon=mAuthHelper.getDrawableForType(getContext(),accType);
     setHeaderIcon(holder,icon);
   }
- else   if (header.extras != null && header.extras.containsKey(HomeSettings.CURRENT_HOME)) {
-    ActivityInfo ai=header.extras.getParcelable(HomeSettings.CURRENT_HOME);
-    Drawable icon=ai.loadIcon(getContext().getPackageManager());
-    setHeaderIcon(holder,icon);
-  }
  else {
     holder.icon.setImageResource(header.iconRes);
   }

@@ -3,4 +3,6 @@
   addPreferencesFromResource(R.xml.home_selection);
   mPm=getPackageManager();
   mPrefGroup=(PreferenceGroup)findPreference("home");
+  Bundle args=getArguments();
+  mShowNotice=(args != null) && args.getBoolean(HOME_SHOW_NOTICE,false);
 }

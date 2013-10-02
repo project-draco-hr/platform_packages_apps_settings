@@ -3,7 +3,17 @@
     final ArrayList<ResolveInfo> homeApps=new ArrayList<ResolveInfo>();
     getPackageManager().getHomeActivities(homeApps);
     if (homeApps.size() < 2) {
+      if (sShowNoHomeNotice) {
+        sShowNoHomeNotice=false;
+        NoHomeDialogFragment.show(this);
+      }
       return false;
+    }
+ else {
+      if (header.fragmentArguments == null) {
+        header.fragmentArguments=new Bundle();
+      }
+      header.fragmentArguments.putBoolean(HomeSettings.HOME_SHOW_NOTICE,true);
     }
   }
  catch (  Exception e) {

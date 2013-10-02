@@ -1,7 +1,3 @@
 {
-  if (mTm.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE) {
-    return false;
-  }
-  int simState=mTm.getSimState();
-  return simState != TelephonyManager.SIM_STATE_ABSENT && simState != TelephonyManager.SIM_STATE_UNKNOWN;
+  return (mTm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE);
 }

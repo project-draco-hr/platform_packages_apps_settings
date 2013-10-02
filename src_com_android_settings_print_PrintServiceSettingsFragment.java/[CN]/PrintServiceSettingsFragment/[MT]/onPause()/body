@@ -1,4 +1,7 @@
 {
   mSettingsContentObserver.unregister(getContentResolver());
+  if (mAnnounceFilterResult != null) {
+    mAnnounceFilterResult.remove();
+  }
   super.onPause();
 }

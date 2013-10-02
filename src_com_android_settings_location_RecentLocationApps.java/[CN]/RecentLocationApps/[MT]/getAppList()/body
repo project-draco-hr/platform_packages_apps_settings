@@ -1,13 +1,4 @@
 {
-  mStatsHelper.refreshStats(true);
-  List<BatterySipper> usageList=mStatsHelper.getUsageList();
-  HashMap<Integer,BatterySipperWrapper> sipperMap=new HashMap<Integer,BatterySipperWrapper>(usageList.size());
-  for (  BatterySipper sipper : usageList) {
-    int uid=sipper.getUid();
-    if (uid != 0) {
-      sipperMap.put(uid,new BatterySipperWrapper(sipper));
-    }
-  }
   AppOpsManager aoManager=(AppOpsManager)mActivity.getSystemService(Context.APP_OPS_SERVICE);
   List<AppOpsManager.PackageOps> appOps=aoManager.getPackagesForOps(new int[]{AppOpsManager.OP_MONITOR_LOCATION,AppOpsManager.OP_MONITOR_HIGH_POWER_LOCATION});
   ArrayList<Preference> prefs=new ArrayList<Preference>();
@@ -16,8 +7,7 @@
     int uid=ops.getUid();
     boolean isAndroidOs=(uid == Process.SYSTEM_UID) && ANDROID_SYSTEM_PACKAGE_NAME.equals(ops.getPackageName());
     if (!isAndroidOs && ActivityManager.getCurrentUser() == UserHandle.getUserId(uid)) {
-      BatterySipperWrapper wrapper=sipperMap.get(uid);
-      Preference pref=getPreferenceFromOps(now,ops,wrapper);
+      Preference pref=getPreferenceFromOps(now,ops);
       if (pref != null) {
         prefs.add(pref);
       }

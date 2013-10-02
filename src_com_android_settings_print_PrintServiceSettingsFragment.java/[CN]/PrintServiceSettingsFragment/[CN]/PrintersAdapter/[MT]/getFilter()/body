@@ -21,7 +21,9 @@ synchronized (mLock) {
       }
     }
     @Override @SuppressWarnings("unchecked") protected void publishResults(    CharSequence constraint,    FilterResults results){
+      final boolean resultCountChanged;
 synchronized (mLock) {
+        final int oldPrinterCount=mFilteredPrinters.size();
         mLastSearchString=constraint;
         mFilteredPrinters.clear();
         if (results == null) {
@@ -31,6 +33,10 @@ synchronized (mLock) {
           List<PrinterInfo> printers=(List<PrinterInfo>)results.values;
           mFilteredPrinters.addAll(printers);
         }
+        resultCountChanged=(oldPrinterCount != mFilteredPrinters.size());
+      }
+      if (resultCountChanged) {
+        announceSearchResult();
       }
       notifyDataSetChanged();
     }

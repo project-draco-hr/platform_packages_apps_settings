@@ -1,0 +1,10 @@
+{
+  super.onInstallActionBarToggleSwitch();
+  mToggleSwitch.setCheckedInternal(Settings.Secure.getInt(getContentResolver(),ENABLED,0) == 1);
+  mToggleSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton button,    boolean checked){
+      onPreferenceToggled(mPreferenceKey,checked);
+    }
+  }
+);
+}

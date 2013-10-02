@@ -1,0 +1,9 @@
+{
+  if (preference == mEnableQuickSetting) {
+    Settings.Secure.putInt(getContentResolver(),QUICK_SETTING_ENABLED,((Boolean)newValue) ? 1 : 0);
+  }
+ else   if (preference == mType) {
+    Settings.Secure.putInt(getContentResolver(),TYPE,Integer.parseInt((String)newValue));
+  }
+  return true;
+}

@@ -1,0 +1,11 @@
+{
+  mEnableQuickSetting.setChecked(Settings.Secure.getInt(getContentResolver(),QUICK_SETTING_ENABLED,0) == 1);
+  mEnableQuickSetting.setOnPreferenceChangeListener(this);
+  final String value=Integer.toString(Settings.Secure.getInt(getContentResolver(),TYPE,DEFAULT_TYPE));
+  mType.setValue(value);
+  mType.setOnPreferenceChangeListener(this);
+  final int index=mType.findIndexOfValue(value);
+  if (index < 0) {
+    mType.setSummary(getString(R.string.daltonizer_type_overridden,getString(R.string.simulate_color_space)));
+  }
+}

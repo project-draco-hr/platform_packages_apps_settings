@@ -17,20 +17,11 @@
   String value=String.valueOf(longPressTimeout);
   mSelectLongPressTimeoutPreference.setValue(value);
   mSelectLongPressTimeoutPreference.setSummary(mLongPressTimeoutValuetoTitleMap.get(value));
-  final boolean captioningEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_CAPTIONING_ENABLED,0) == 1;
-  if (captioningEnabled) {
-    mCaptioningPreferenceScreen.setSummary(R.string.accessibility_feature_state_on);
-  }
- else {
-    mCaptioningPreferenceScreen.setSummary(R.string.accessibility_feature_state_off);
-  }
-  final boolean magnificationEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_DISPLAY_MAGNIFICATION_ENABLED,0) == 1;
-  if (magnificationEnabled) {
-    mDisplayMagnificationPreferenceScreen.setSummary(R.string.accessibility_feature_state_on);
-  }
- else {
-    mDisplayMagnificationPreferenceScreen.setSummary(R.string.accessibility_feature_state_off);
-  }
+  updateFeatureSummary(Settings.Secure.ACCESSIBILITY_CAPTIONING_ENABLED,mCaptioningPreferenceScreen);
+  updateFeatureSummary(Settings.Secure.ACCESSIBILITY_DISPLAY_MAGNIFICATION_ENABLED,mDisplayMagnificationPreferenceScreen);
+  updateFeatureSummary(Settings.Secure.ACCESSIBILITY_DISPLAY_INVERSION_ENABLED,mDisplayInversionPreferenceScreen);
+  updateFeatureSummary(Settings.Secure.ACCESSIBILITY_DISPLAY_CONTRAST_ENABLED,mDisplayContrastPreferenceScreen);
+  updateFeatureSummary(Settings.Secure.ACCESSIBILITY_DISPLAY_DALTONIZER_ENABLED,mDisplayDaltonizerPreferenceScreen);
   final boolean globalGestureEnabled=Settings.Global.getInt(getContentResolver(),Settings.Global.ENABLE_ACCESSIBILITY_GLOBAL_GESTURE_ENABLED,0) == 1;
   if (globalGestureEnabled) {
     mGlobalGesturePreferenceScreen.setSummary(R.string.accessibility_global_gesture_preference_summary_on);

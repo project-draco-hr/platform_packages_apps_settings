@@ -1,0 +1,7 @@
+{
+  final PreferenceActivity activity=(PreferenceActivity)getActivity();
+  if (!activity.onIsMultiPane() || activity.onIsHidingHeaders()) {
+    mOldActivityTitle=getActivity().getTitle();
+    getActivity().getActionBar().setTitle(title);
+  }
+}

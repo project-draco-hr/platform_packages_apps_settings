@@ -25,15 +25,6 @@ Log.v(TAG,packageName + " hadn't used location within the time interval.");
 return null;
 }
 Preference pref=null;
-if (wrapper != null) {
-if (!wrapper.used()) {
-BatterySipper sipper=wrapper.batterySipper();
-sipper.loadNameAndIcon();
-pref=createRecentLocationEntry(getIcon(sipper,ops),sipper.getLabel(),highBattery,new UidEntryClickedListener(sipper));
-wrapper.setUsed();
-}
-}
- else {
 try {
 ApplicationInfo appInfo=mPackageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA);
 if (appInfo.uid == ops.getUid()) {
@@ -45,7 +36,6 @@ Log.v(TAG,"package " + packageName + " with Uid "+ ops.getUid()+ " belongs to an
 }
  catch (PackageManager.NameNotFoundException e) {
 Log.wtf(TAG,"Package not found: " + packageName,e);
-}
 }
 return pref;
 }

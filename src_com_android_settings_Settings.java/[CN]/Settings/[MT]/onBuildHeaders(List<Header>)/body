@@ -1,4 +1,6 @@
 {
-  loadHeadersFromResource(R.xml.settings_headers,headers);
-  updateHeaderList(headers);
+  if (!onIsHidingHeaders()) {
+    loadHeadersFromResource(R.xml.settings_headers,headers);
+    updateHeaderList(headers);
+  }
 }

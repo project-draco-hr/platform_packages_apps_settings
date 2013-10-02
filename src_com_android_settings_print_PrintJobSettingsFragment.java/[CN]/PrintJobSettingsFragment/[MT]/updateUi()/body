@@ -2,9 +2,11 @@
   mPrintJob=mPrintManager.getPrintJob(mPrintJobId);
   if (mPrintJob == null) {
     finish();
+    return;
   }
   if (mPrintJob.isCancelled() || mPrintJob.isCompleted()) {
     finish();
+    return;
   }
   PrintJobInfo info=mPrintJob.getInfo();
 switch (info.getState()) {

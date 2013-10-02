@@ -1,7 +1,7 @@
 {
-  PreferenceCategory categoryAppSettings=(PreferenceCategory)root.findPreference(KEY_APP_SETTINGS);
+  PreferenceCategory categoryLocationServices=(PreferenceCategory)root.findPreference(KEY_LOCATION_SERVICES);
   final SettingsInjector injector=new SettingsInjector(context);
-  List<Preference> appSettings=injector.getInjectedSettings();
+  List<Preference> locationServices=injector.getInjectedSettings();
   mReceiver=new BroadcastReceiver(){
     @Override public void onReceive(    Context context,    Intent intent){
       if (Log.isLoggable(TAG,Log.DEBUG)) {
@@ -15,10 +15,10 @@
   filter.addAction(SettingInjectorService.ACTION_INJECTED_SETTING_CHANGED);
   filter.addAction(LocationManager.MODE_CHANGED_ACTION);
   context.registerReceiver(mReceiver,filter);
-  if (appSettings.size() > 0) {
-    addPreferencesSorted(appSettings,categoryAppSettings);
+  if (locationServices.size() > 0) {
+    addPreferencesSorted(locationServices,categoryLocationServices);
   }
  else {
-    root.removePreference(categoryAppSettings);
+    root.removePreference(categoryLocationServices);
   }
 }

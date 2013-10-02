@@ -1,14 +1,18 @@
 {
   Drawable icon=null;
-  if (mAccTypeIconCache.containsKey(accountType)) {
-    return mAccTypeIconCache.get(accountType);
+synchronized (mAccTypeIconCache) {
+    if (mAccTypeIconCache.containsKey(accountType)) {
+      return mAccTypeIconCache.get(accountType);
+    }
   }
   if (mTypeToAuthDescription.containsKey(accountType)) {
     try {
       AuthenticatorDescription desc=mTypeToAuthDescription.get(accountType);
       Context authContext=context.createPackageContext(desc.packageName,0);
       icon=authContext.getResources().getDrawable(desc.iconId);
-      mAccTypeIconCache.put(accountType,icon);
+synchronized (mAccTypeIconCache) {
+        mAccTypeIconCache.put(accountType,icon);
+      }
     }
  catch (    PackageManager.NameNotFoundException e) {
     }

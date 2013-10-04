@@ -20,7 +20,7 @@
  else   if (pref == mItemDcim) {
     intent=new Intent(Intent.ACTION_VIEW);
     intent.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
-    intent.setType("vnd.android.cursor.dir/image");
+    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
   }
  else   if (pref == mItemMisc) {
     Context context=getContext().getApplicationContext();

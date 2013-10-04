@@ -7,7 +7,12 @@
     Intent intent=category.intentForClick(preference);
     if (intent != null) {
       if (!Utils.isMonkeyRunning()) {
-        startActivity(intent);
+        try {
+          startActivity(intent);
+        }
+ catch (        ActivityNotFoundException anfe) {
+          Log.w(TAG,"No activity found for intent " + intent);
+        }
       }
       return true;
     }

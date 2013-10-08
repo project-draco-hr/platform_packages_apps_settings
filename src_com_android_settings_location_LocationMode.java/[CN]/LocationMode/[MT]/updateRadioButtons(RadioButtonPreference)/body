@@ -1,5 +1,10 @@
 {
-  if (activated == mHighAccuracy) {
+  if (activated == null) {
+    mHighAccuracy.setChecked(false);
+    mBatterySaving.setChecked(false);
+    mSensorsOnly.setChecked(false);
+  }
+ else   if (activated == mHighAccuracy) {
     mHighAccuracy.setChecked(true);
     mBatterySaving.setChecked(false);
     mSensorsOnly.setChecked(false);

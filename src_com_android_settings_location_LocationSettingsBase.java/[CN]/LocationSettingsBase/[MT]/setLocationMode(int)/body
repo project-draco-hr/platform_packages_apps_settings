@@ -9,6 +9,10 @@
     }
     return;
   }
+  Intent intent=new Intent(MODE_CHANGING_ACTION);
+  intent.putExtra(CURRENT_MODE_KEY,mCurrentMode);
+  intent.putExtra(NEW_MODE_KEY,mode);
+  getActivity().sendBroadcast(intent);
   Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCATION_MODE,mode);
   refreshLocationMode();
 }

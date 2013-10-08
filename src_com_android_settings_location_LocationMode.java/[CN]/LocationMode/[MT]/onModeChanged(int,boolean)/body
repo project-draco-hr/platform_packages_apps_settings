@@ -1,10 +1,8 @@
 {
 switch (mode) {
 case Settings.Secure.LOCATION_MODE_OFF:
-    Intent intent=new Intent();
-  PreferenceActivity pa=(PreferenceActivity)getActivity();
-pa.finishPreferencePanel(LocationMode.this,Activity.RESULT_OK,intent);
-break;
+    updateRadioButtons(null);
+  break;
 case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
 updateRadioButtons(mSensorsOnly);
 break;

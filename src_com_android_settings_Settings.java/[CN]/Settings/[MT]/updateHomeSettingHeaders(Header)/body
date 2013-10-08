@@ -1,4 +1,8 @@
 {
+  SharedPreferences sp=getSharedPreferences(HomeSettings.HOME_PREFS,Context.MODE_PRIVATE);
+  if (sp.getBoolean(HomeSettings.HOME_PREFS_DO_SHOW,false)) {
+    return true;
+  }
   try {
     final ArrayList<ResolveInfo> homeApps=new ArrayList<ResolveInfo>();
     getPackageManager().getHomeActivities(homeApps);
@@ -19,5 +23,6 @@
  catch (  Exception e) {
     Log.w(LOG_TAG,"Problem looking up home activity!",e);
   }
+  sp.edit().putBoolean(HomeSettings.HOME_PREFS_DO_SHOW,true).apply();
   return true;
 }

@@ -28,6 +28,20 @@
       }
     }
 );
+    searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener(){
+      @Override public void onViewAttachedToWindow(      View view){
+        if (AccessibilityManager.getInstance(getActivity()).isEnabled()) {
+          view.announceForAccessibility(getString(R.string.print_search_box_shown_utterance));
+        }
+      }
+      @Override public void onViewDetachedFromWindow(      View view){
+        Activity activity=getActivity();
+        if (activity != null && !activity.isFinishing() && AccessibilityManager.getInstance(activity).isEnabled()) {
+          view.announceForAccessibility(getString(R.string.print_search_box_hidden_utterance));
+        }
+      }
+    }
+);
   }
  else {
     menu.removeItem(R.id.print_menu_item_search);

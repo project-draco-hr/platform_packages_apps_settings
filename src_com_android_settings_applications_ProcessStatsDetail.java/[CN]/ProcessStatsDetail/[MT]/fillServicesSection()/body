@@ -1,12 +1,18 @@
 {
   if (mEntry.mServices.size() > 0) {
     boolean addPackageSections=false;
-    if (mEntry.mServices.size() > 1 || !mEntry.mServices.valueAt(0).get(0).mPackage.equals(mEntry.mPackage)) {
-      addPackageSections=true;
-    }
+    ArrayList<ArrayList<ProcStatsEntry.Service>> servicePkgs=new ArrayList<ArrayList<ProcStatsEntry.Service>>();
     for (int ip=0; ip < mEntry.mServices.size(); ip++) {
       ArrayList<ProcStatsEntry.Service> services=(ArrayList<ProcStatsEntry.Service>)mEntry.mServices.valueAt(ip).clone();
       Collections.sort(services,sServiceCompare);
+      servicePkgs.add(services);
+    }
+    if (mEntry.mServices.size() > 1 || !mEntry.mServices.valueAt(0).get(0).mPackage.equals(mEntry.mPackage)) {
+      addPackageSections=true;
+      Collections.sort(servicePkgs,sServicePkgCompare);
+    }
+    for (int ip=0; ip < servicePkgs.size(); ip++) {
+      ArrayList<ProcStatsEntry.Service> services=servicePkgs.get(ip);
       if (addPackageSections) {
         addPackageHeaderItem(mServicesParent,services.get(0).mPackage);
       }

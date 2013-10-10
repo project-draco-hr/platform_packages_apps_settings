@@ -118,6 +118,8 @@
   preferenceScreen.removeAll();
   preferenceScreen.setOrderingAsAdded(true);
   mThisDevicePref=new Preference(getActivity());
+  mThisDevicePref.setPersistent(false);
+  mThisDevicePref.setSelectable(false);
   preferenceScreen.addPreference(mThisDevicePref);
   mPeersGroup=new PreferenceCategory(getActivity());
   mPeersGroup.setTitle(R.string.wifi_p2p_peer_devices);

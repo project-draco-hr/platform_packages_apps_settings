@@ -48,15 +48,8 @@ preference.setIcon(com.android.internal.R.drawable.ic_print_error);
 break;
 }
 Bundle extras=preference.getExtras();
-extras.putParcelable(EXTRA_PRINT_JOB_ID,printJob.getId());
+extras.putString(EXTRA_PRINT_JOB_ID,printJob.getId().flattenToString());
 mActivePrintJobsCategory.addPreference(preference);
-}
-if (mPrintJobPreferenceToActivate != null) {
-Preference preference=findPreference(mPrintJobPreferenceToActivate);
-mPrintJobPreferenceToActivate=null;
-if (preference != null) {
-preference.performClick(getPreferenceScreen());
-}
 }
 }
 }

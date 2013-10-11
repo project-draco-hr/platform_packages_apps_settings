@@ -5,16 +5,15 @@
   CharSequence[] entries=new CharSequence[count];
   CharSequence[] entryValues=new CharSequence[count];
   Drawable[] entryImages=new Drawable[count];
-  PackageManager packageManager=getPackageManager();
   int i=0;
   for (  SmsApplicationData smsApplicationData : smsApplications) {
     entries[i]=smsApplicationData.mApplicationName;
     entryValues[i]=smsApplicationData.mPackageName;
     try {
-      entryImages[i]=packageManager.getApplicationIcon(smsApplicationData.mPackageName);
+      entryImages[i]=mPm.getApplicationIcon(smsApplicationData.mPackageName);
     }
  catch (    NameNotFoundException e) {
-      entryImages[i]=packageManager.getDefaultActivityIcon();
+      entryImages[i]=mPm.getDefaultActivityIcon();
     }
     i++;
   }

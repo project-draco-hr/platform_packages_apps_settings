@@ -1,0 +1,22 @@
+{
+  if (mOnRegionTappedListener != null) {
+switch (event.getAction()) {
+case MotionEvent.ACTION_DOWN:
+{
+        final int x=(int)event.getX();
+        if (x < mLastLeftDiv) {
+          mLastRegion=REGION_RED;
+        }
+ else         if (x < mLastRightDiv) {
+          mLastRegion=REGION_YELLOW;
+        }
+ else {
+          mLastRegion=REGION_GREEN;
+        }
+        invalidate();
+      }
+    break;
+}
+}
+return super.onTouchEvent(event);
+}

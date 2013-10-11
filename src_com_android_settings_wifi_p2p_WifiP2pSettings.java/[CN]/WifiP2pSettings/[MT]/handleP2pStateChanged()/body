@@ -1,13 +1,6 @@
 {
   updateSearchMenu(false);
-  if (mWifiP2pEnabled) {
-    final PreferenceScreen preferenceScreen=getPreferenceScreen();
-    preferenceScreen.removeAll();
-    preferenceScreen.setOrderingAsAdded(true);
-    preferenceScreen.addPreference(mThisDevicePref);
-    mPeersGroup.setEnabled(true);
-    preferenceScreen.addPreference(mPeersGroup);
-    mPersistentGroup.setEnabled(true);
-    preferenceScreen.addPreference(mPersistentGroup);
-  }
+  mThisDevicePref.setEnabled(mWifiP2pEnabled);
+  mPeersGroup.setEnabled(mWifiP2pEnabled);
+  mPersistentGroup.setEnabled(mWifiP2pEnabled);
 }

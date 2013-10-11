@@ -42,16 +42,18 @@
   if (left < right) {
     mRect.left=left;
     mRect.right=right;
-    mPaint.setColor(mLeftColor);
+    mPaint.setColor(pickColor(mLeftColor,REGION_RED));
     canvas.drawRect(mRect,mPaint);
     width-=(right - left);
     left=right;
   }
+  mLastLeftDiv=right;
+  mLastRightDiv=right2;
   right=right2;
   if (left < right) {
     mRect.left=left;
     mRect.right=right;
-    mPaint.setColor(mMiddleColor);
+    mPaint.setColor(pickColor(mMiddleColor,REGION_YELLOW));
     canvas.drawRect(mRect,mPaint);
     width-=(right - left);
     left=right;
@@ -60,7 +62,7 @@
   if (left < right) {
     mRect.left=left;
     mRect.right=right;
-    mPaint.setColor(mRightColor);
+    mPaint.setColor(pickColor(mRightColor,REGION_GREEN));
     canvas.drawRect(mRect,mPaint);
   }
 }

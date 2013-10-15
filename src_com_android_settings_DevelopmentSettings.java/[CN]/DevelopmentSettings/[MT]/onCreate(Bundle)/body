@@ -76,16 +76,6 @@
   mShowAllANRs=(CheckBoxPreference)findPreference(SHOW_ALL_ANRS_KEY);
   mAllPrefs.add(mShowAllANRs);
   mResetCbPrefs.add(mShowAllANRs);
-  if (WebViewFactory.isExperimentalWebViewAvailable()) {
-    mExperimentalWebView=findAndInitCheckboxPref(WEBVIEW_EXPERIMENTAL_KEY);
-  }
- else {
-    Preference experimentalWebView=findPreference(WEBVIEW_EXPERIMENTAL_KEY);
-    PreferenceGroup debugApplicationsCategory=(PreferenceGroup)findPreference(DEBUG_APPLICATIONS_CATEGORY_KEY);
-    if (debugApplicationsCategory != null) {
-      debugApplicationsCategory.removePreference(experimentalWebView);
-    }
-  }
   Preference selectRuntime=findPreference(SELECT_RUNTIME_KEY);
   if (selectRuntime != null) {
     mAllPrefs.add(selectRuntime);

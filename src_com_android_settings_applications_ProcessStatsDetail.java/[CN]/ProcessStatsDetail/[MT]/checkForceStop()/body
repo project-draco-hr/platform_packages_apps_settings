@@ -18,6 +18,6 @@
   Intent intent=new Intent(Intent.ACTION_QUERY_PACKAGE_RESTART,Uri.fromParts("package",mEntry.mUiPackage,null));
   intent.putExtra(Intent.EXTRA_PACKAGES,new String[]{mEntry.mUiPackage});
   intent.putExtra(Intent.EXTRA_UID,mEntry.mUid);
-  intent.putExtra(Intent.EXTRA_USER_HANDLE,mEntry.mUid);
+  intent.putExtra(Intent.EXTRA_USER_HANDLE,UserHandle.getUserId(mEntry.mUid));
   getActivity().sendOrderedBroadcast(intent,null,mCheckKillProcessesReceiver,null,Activity.RESULT_CANCELED,null,null);
 }

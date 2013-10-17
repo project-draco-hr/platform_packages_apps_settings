@@ -7,19 +7,6 @@
     return;
   }
   mProfileConnectionState.put(profile,newProfileState);
-  if (newProfileState == BluetoothProfile.STATE_DISCONNECTED) {
-    boolean isDisconnected=true;
-    for (    LocalBluetoothProfile pf : mProfileConnectionState.keySet()) {
-      if (mProfileConnectionState.get(pf) != BluetoothProfile.STATE_DISCONNECTED) {
-        isDisconnected=false;
-        break;
-      }
-    }
-    if (isDisconnected) {
-      fetchPhonebookPermissionChoice();
-      fetchMessagePermissionChoice();
-    }
-  }
   if (newProfileState == BluetoothProfile.STATE_CONNECTED) {
     if (!mProfiles.contains(profile)) {
       mRemovedProfiles.remove(profile);

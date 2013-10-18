@@ -1,6 +1,7 @@
 {
   if (permissionChoice == ACCESS_REJECTED) {
     mMessageRejectedTimes++;
+    saveMessageRejectTimes();
     if (mMessageRejectedTimes < PERSIST_REJECTED_TIMES_LIMIT) {
       return;
     }

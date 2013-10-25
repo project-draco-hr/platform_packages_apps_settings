@@ -1,0 +1,14 @@
+{
+  String displayMessage;
+  if (attemptsRemaining == 0) {
+    displayMessage=mRes.getString(R.string.wrong_pin_code_pukked);
+  }
+ else   if (attemptsRemaining > 0) {
+    displayMessage=mRes.getQuantityString(R.plurals.wrong_pin_code,attemptsRemaining,attemptsRemaining);
+  }
+ else {
+    displayMessage=mRes.getString(R.string.pin_failed);
+  }
+  if (DBG)   Log.d(TAG,"getPinPasswordErrorMessage:" + " attemptsRemaining=" + attemptsRemaining + " displayMessage="+ displayMessage);
+  return displayMessage;
+}

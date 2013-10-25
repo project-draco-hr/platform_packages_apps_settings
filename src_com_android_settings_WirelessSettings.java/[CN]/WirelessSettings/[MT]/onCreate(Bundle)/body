@@ -6,6 +6,7 @@
   log("onCreate: mManageMobilePlanMessage=" + mManageMobilePlanMessage);
   mCm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   mTm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+  mPm=getPackageManager();
   addPreferencesFromResource(R.xml.wireless_settings);
   final boolean isSecondaryUser=UserHandle.myUserId() != UserHandle.USER_OWNER;
   final Activity activity=getActivity();
@@ -68,7 +69,7 @@
   if (!isSmsSupported()) {
     removePreference(KEY_SMS_APPLICATION);
   }
-  if (getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEVISION)) {
+  if (mPm.hasSystemFeature(PackageManager.FEATURE_TELEVISION)) {
     removePreference(KEY_TOGGLE_AIRPLANE);
   }
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
@@ -87,8 +88,7 @@
   boolean isCellBroadcastAppLinkEnabled=this.getResources().getBoolean(com.android.internal.R.bool.config_cellBroadcastAppLinks);
   try {
     if (isCellBroadcastAppLinkEnabled) {
-      PackageManager pm=getPackageManager();
-      if (pm.getApplicationEnabledSetting("com.android.cellbroadcastreceiver") == PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {
+      if (mPm.getApplicationEnabledSetting("com.android.cellbroadcastreceiver") == PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {
         isCellBroadcastAppLinkEnabled=false;
       }
     }

@@ -4,6 +4,12 @@
   Resources resources=getActivity().getResources();
   NetworkInfo ni=mCm.getProvisioningOrActiveNetworkInfo();
   if (mTm.hasIccCard() && (ni != null)) {
+    Intent provisioningIntent=new Intent(TelephonyIntents.ACTION_CARRIER_SETUP);
+    provisioningIntent.addCategory(TelephonyIntents.CATEGORY_MCCMNC_PREFIX + mTm.getSimOperator());
+    if (mPm.resolveActivity(provisioningIntent,0) != null) {
+      startActivity(provisioningIntent);
+      return;
+    }
     String url=mCm.getMobileProvisioningUrl();
     if (!TextUtils.isEmpty(url)) {
       Intent intent=new Intent(CONNECTED_TO_PROVISIONING_NETWORK_ACTION);

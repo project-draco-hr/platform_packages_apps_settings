@@ -17,7 +17,6 @@
     }
     if (profile instanceof MapProfile) {
       profile.setPreferred(mDevice,true);
-      refresh();
     }
   }
  else   if (profile instanceof MapProfile && newProfileState == BluetoothProfile.STATE_DISCONNECTED) {
@@ -26,7 +25,6 @@
       mProfiles.remove(profile);
     }
     profile.setPreferred(mDevice,false);
-    refresh();
   }
  else   if (mLocalNapRoleConnected && profile instanceof PanProfile && ((PanProfile)profile).isLocalRoleNap(mDevice)&& newProfileState == BluetoothProfile.STATE_DISCONNECTED) {
     Log.d(TAG,"Removing PanProfile from device after NAP disconnect");

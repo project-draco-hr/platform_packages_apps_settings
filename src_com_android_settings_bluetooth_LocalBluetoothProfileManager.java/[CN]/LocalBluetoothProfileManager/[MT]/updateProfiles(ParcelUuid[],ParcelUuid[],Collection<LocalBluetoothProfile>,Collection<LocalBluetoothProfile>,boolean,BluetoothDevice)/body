@@ -28,4 +28,9 @@
     profiles.add(mPanProfile);
     removedProfiles.remove(mPanProfile);
   }
+  if ((mMapProfile != null) && (mMapProfile.getConnectionStatus(device) == BluetoothProfile.STATE_CONNECTED)) {
+    profiles.add(mMapProfile);
+    removedProfiles.remove(mMapProfile);
+    mMapProfile.setPreferred(device,true);
+  }
 }

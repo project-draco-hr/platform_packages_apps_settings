@@ -7,7 +7,9 @@ case DIALOG_ID_ENABLE_WARNING:
       if (info == null) {
         return null;
       }
-      return new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.enable_service_title,info.getResolveInfo().loadLabel(getPackageManager()))).setIconAttribute(android.R.attr.alertDialogIcon).setView(createEnableDialogContentView(info)).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
+      AlertDialog ad=new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.enable_service_title,info.getResolveInfo().loadLabel(getPackageManager()))).setIconAttribute(android.R.attr.alertDialogIcon).setView(createEnableDialogContentView(info)).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
+      ad.getButton(AlertDialog.BUTTON_POSITIVE).setFilterTouchesWhenObscured(true);
+      return ad;
     }
 case DIALOG_ID_DISABLE_WARNING:
 {

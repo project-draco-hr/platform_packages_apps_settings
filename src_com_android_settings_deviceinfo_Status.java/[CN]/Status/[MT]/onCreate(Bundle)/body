@@ -1,12 +1,19 @@
 {
   super.onCreate(icicle);
   mHandler=new MyHandler(this);
+  mCM=(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
   mTelephonyManager=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+  mWifiManager=(WifiManager)getSystemService(WIFI_SERVICE);
   addPreferencesFromResource(R.xml.device_info_status);
   mBatteryLevel=findPreference(KEY_BATTERY_LEVEL);
   mBatteryStatus=findPreference(KEY_BATTERY_STATUS);
+  mBtAddress=findPreference(KEY_BT_ADDRESS);
+  mWifiMacAddress=findPreference(KEY_WIFI_MAC_ADDRESS);
+  mWimaxMacAddress=findPreference(KEY_WIMAX_MAC_ADDRESS);
+  mIpAddress=findPreference(KEY_IP_ADDRESS);
   mRes=getResources();
-  sUnknown=mRes.getString(R.string.device_info_default);
+  mUnknown=mRes.getString(R.string.device_info_default);
+  mUnavailable=mRes.getString(R.string.status_unavailable);
   if (UserHandle.myUserId() == UserHandle.USER_OWNER) {
     mPhone=PhoneFactory.getDefaultPhone();
   }
@@ -59,10 +66,15 @@
       removePreferenceFromScreen(KEY_LATEST_AREA_INFO);
     }
   }
-  setWimaxStatus();
-  setWifiStatus();
-  setBtStatus();
-  setIpAddressStatus();
+  if (!hasBluetooth()) {
+    getPreferenceScreen().removePreference(mBtAddress);
+    mBtAddress=null;
+  }
+  if (!hasWimax()) {
+    getPreferenceScreen().removePreference(mWimaxMacAddress);
+    mWimaxMacAddress=null;
+  }
+  updateConnectivity();
   String serial=Build.SERIAL;
   if (serial != null && !serial.equals("")) {
     setSummaryText(KEY_SERIAL_NUMBER,serial);

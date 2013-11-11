@@ -1,0 +1,35 @@
+{
+  boolean invalidateOptions=false;
+  if ((changes & CHANGE_SETTINGS) != 0) {
+    mWifiDisplayOnSetting=Settings.Global.getInt(getContentResolver(),Settings.Global.WIFI_DISPLAY_ON,0) != 0;
+    mWifiDisplayCertificationOn=Settings.Global.getInt(getContentResolver(),Settings.Global.WIFI_DISPLAY_CERTIFICATION_ON,0) != 0;
+    mWpsConfig=Settings.Global.getInt(getContentResolver(),Settings.Global.WIFI_DISPLAY_WPS_CONFIG,WpsInfo.INVALID);
+    invalidateOptions=true;
+  }
+  if ((changes & CHANGE_WIFI_DISPLAY_STATUS) != 0) {
+    mWifiDisplayStatus=mDisplayManager.getWifiDisplayStatus();
+    invalidateOptions=true;
+  }
+  final PreferenceScreen preferenceScreen=getPreferenceScreen();
+  preferenceScreen.removeAll();
+  final int routeCount=mRouter.getRouteCount();
+  for (int i=0; i < routeCount; i++) {
+    MediaRouter.RouteInfo route=mRouter.getRouteAt(i);
+    if (route.matchesTypes(MediaRouter.ROUTE_TYPE_REMOTE_DISPLAY)) {
+      preferenceScreen.addPreference(createRoutePreference(route));
+    }
+  }
+  if (mWifiDisplayStatus != null && mWifiDisplayStatus.getFeatureState() == WifiDisplayStatus.FEATURE_STATE_ON) {
+    for (    WifiDisplay display : mWifiDisplayStatus.getDisplays()) {
+      if (!display.isRemembered() && display.isAvailable() && !display.equals(mWifiDisplayStatus.getActiveDisplay())) {
+        preferenceScreen.addPreference(new UnpairedWifiDisplayPreference(getActivity(),display));
+      }
+    }
+    if (mWifiDisplayCertificationOn) {
+      buildCertificationMenu(preferenceScreen);
+    }
+  }
+  if (invalidateOptions) {
+    getActivity().invalidateOptionsMenu();
+  }
+}

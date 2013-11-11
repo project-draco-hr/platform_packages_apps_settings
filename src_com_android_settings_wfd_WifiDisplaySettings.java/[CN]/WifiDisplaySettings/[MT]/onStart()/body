@@ -1,0 +1,13 @@
+{
+  super.onStart();
+  mStarted=true;
+  final Context context=getActivity();
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(DisplayManager.ACTION_WIFI_DISPLAY_STATUS_CHANGED);
+  context.registerReceiver(mReceiver,filter);
+  getContentResolver().registerContentObserver(Settings.Global.getUriFor(Settings.Global.WIFI_DISPLAY_ON),false,mSettingsObserver);
+  getContentResolver().registerContentObserver(Settings.Global.getUriFor(Settings.Global.WIFI_DISPLAY_CERTIFICATION_ON),false,mSettingsObserver);
+  getContentResolver().registerContentObserver(Settings.Global.getUriFor(Settings.Global.WIFI_DISPLAY_WPS_CONFIG),false,mSettingsObserver);
+  mRouter.addCallback(MediaRouter.ROUTE_TYPE_REMOTE_DISPLAY,mRouterCallback,MediaRouter.CALLBACK_FLAG_PERFORM_ACTIVE_SCAN);
+  update(CHANGE_ALL);
+}

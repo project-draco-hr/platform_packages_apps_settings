@@ -1,0 +1,8 @@
+{
+  if (mStarted) {
+    if (mPendingChanges == 0) {
+      mHandler.post(mUpdateRunnable);
+    }
+    mPendingChanges|=changes;
+  }
+}

@@ -1,0 +1,10 @@
+{
+  if (mWifiDisplayStatus != null && deviceAddress != null) {
+    for (    WifiDisplay display : mWifiDisplayStatus.getDisplays()) {
+      if (display.getDeviceAddress().equals(deviceAddress)) {
+        return display;
+      }
+    }
+  }
+  return null;
+}

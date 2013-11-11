@@ -1,10 +1,10 @@
 {
 switch (item.getItemId()) {
-case MENU_ID_SCAN:
-    if (mWifiDisplayStatus.getFeatureState() == WifiDisplayStatus.FEATURE_STATE_ON) {
-      mDisplayManager.scanWifiDisplays();
-    }
-  return true;
+case MENU_ID_ENABLE_WIFI_DISPLAY:
+    mWifiDisplayOnSetting=!item.isChecked();
+  item.setChecked(mWifiDisplayOnSetting);
+Settings.Global.putInt(getContentResolver(),Settings.Global.WIFI_DISPLAY_ON,mWifiDisplayOnSetting ? 1 : 0);
+return true;
 }
 return super.onOptionsItemSelected(item);
 }

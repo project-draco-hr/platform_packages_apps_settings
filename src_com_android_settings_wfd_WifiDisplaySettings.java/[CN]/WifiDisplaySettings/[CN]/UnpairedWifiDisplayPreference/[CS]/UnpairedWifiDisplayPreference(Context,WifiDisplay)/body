@@ -1,0 +1,15 @@
+{
+  super(context);
+  mDisplay=display;
+  setTitle(display.getFriendlyDisplayName());
+  setSummary(com.android.internal.R.string.wireless_display_route_description);
+  setEnabled(display.canConnect());
+  if (isEnabled()) {
+    setOrder(ORDER_AVAILABLE);
+  }
+ else {
+    setOrder(ORDER_UNAVAILABLE);
+    setSummary(R.string.wifi_display_status_in_use);
+  }
+  setOnPreferenceClickListener(this);
+}

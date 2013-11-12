@@ -1,0 +1,9 @@
+{
+  super.onStop();
+  mStarted=false;
+  final Context context=getActivity();
+  context.unregisterReceiver(mReceiver);
+  getContentResolver().unregisterContentObserver(mSettingsObserver);
+  mRouter.removeCallback(mRouterCallback);
+  unscheduleUpdate();
+}

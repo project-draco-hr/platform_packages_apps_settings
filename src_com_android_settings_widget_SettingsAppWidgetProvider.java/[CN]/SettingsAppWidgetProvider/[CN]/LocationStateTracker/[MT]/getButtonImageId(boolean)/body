@@ -1,3 +1,12 @@
 {
-  return on ? R.drawable.ic_appwidget_settings_location_on_holo : R.drawable.ic_appwidget_settings_location_off_holo;
+  if (on) {
+switch (mCurrentLocationMode) {
+case Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
+case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
+      return R.drawable.ic_appwidget_settings_location_on_holo;
+default :
+    return R.drawable.ic_appwidget_settings_location_saving_holo;
+}
+}
+return R.drawable.ic_appwidget_settings_location_off_holo;
 }

@@ -1,7 +1,5 @@
 {
-  WifiManager wifiManager=(WifiManager)getSystemService(WIFI_SERVICE);
-  WifiInfo wifiInfo=wifiManager.getConnectionInfo();
-  Preference wifiMacAddressPref=findPreference(KEY_WIFI_MAC_ADDRESS);
+  WifiInfo wifiInfo=mWifiManager.getConnectionInfo();
   String macAddress=wifiInfo == null ? null : wifiInfo.getMacAddress();
-  wifiMacAddressPref.setSummary(!TextUtils.isEmpty(macAddress) ? macAddress : getString(R.string.status_unavailable));
+  mWifiMacAddress.setSummary(!TextUtils.isEmpty(macAddress) ? macAddress : mUnavailable);
 }

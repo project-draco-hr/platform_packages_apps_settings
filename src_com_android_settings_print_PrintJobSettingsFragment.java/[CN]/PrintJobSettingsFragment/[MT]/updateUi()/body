@@ -13,7 +13,12 @@ switch (info.getState()) {
 case PrintJobInfo.STATE_QUEUED:
 case PrintJobInfo.STATE_STARTED:
 {
-      mPrintJobPreference.setTitle(getString(R.string.print_printing_state_title_template,info.getLabel()));
+      if (!mPrintJob.getInfo().isCancelling()) {
+        mPrintJobPreference.setTitle(getString(R.string.print_printing_state_title_template,info.getLabel()));
+      }
+ else {
+        mPrintJobPreference.setTitle(getString(R.string.print_cancelling_state_title_template,info.getLabel()));
+      }
     }
   break;
 case PrintJobInfo.STATE_FAILED:
@@ -23,7 +28,12 @@ case PrintJobInfo.STATE_FAILED:
 break;
 case PrintJobInfo.STATE_BLOCKED:
 {
+if (!mPrintJob.getInfo().isCancelling()) {
 mPrintJobPreference.setTitle(getString(R.string.print_blocked_state_title_template,info.getLabel()));
+}
+ else {
+mPrintJobPreference.setTitle(getString(R.string.print_cancelling_state_title_template,info.getLabel()));
+}
 }
 break;
 }

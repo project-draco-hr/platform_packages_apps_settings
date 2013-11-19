@@ -1,0 +1,11 @@
+{
+  final PackageManager pm=activity.getApplicationContext().getPackageManager();
+  ApplicationInfo applicationInfo;
+  try {
+    applicationInfo=pm.getApplicationInfo(activity.getCallingPackage(),0);
+  }
+ catch (  final NameNotFoundException e) {
+    applicationInfo=null;
+  }
+  return (applicationInfo == null) ? "" : pm.getApplicationLabel(applicationInfo).toString();
+}

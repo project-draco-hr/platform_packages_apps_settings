@@ -1,0 +1,12 @@
+{
+  if (mVisibilityTimeoutPreference == null) {
+    return;
+  }
+  int index=getDiscoverableTimeoutIndex();
+  String visibilitySummary="";
+  CharSequence[] timeoutChoices=mContext.getResources().getTextArray(R.array.bluetooth_visibility_timeout_entries);
+  if (index >= 0 && index < timeoutChoices.length) {
+    visibilitySummary=timeoutChoices[index].toString();
+  }
+  mVisibilityTimeoutPreference.setSummary(visibilitySummary);
+}

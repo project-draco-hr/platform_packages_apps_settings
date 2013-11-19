@@ -1,5 +1,6 @@
 {
   super.onCreate(savedInstanceState);
+  mContext=getApplicationContext();
   if (parseIntent()) {
     finish();
     return;
@@ -15,19 +16,24 @@ intent.setClass(this,RequestPermissionHelperActivity.class);
 if (mEnableOnly) {
 intent.setAction(RequestPermissionHelperActivity.ACTION_INTERNAL_REQUEST_BT_ON);
 }
- else {
+ else if (mExtraIntent == EXTRA_INTENT_DISCOVERY) {
 intent.setAction(RequestPermissionHelperActivity.ACTION_INTERNAL_REQUEST_BT_ON_AND_DISCOVERABLE);
 intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,mTimeout);
+}
+ else if (mExtraIntent == EXTRA_INTENT_START_ADVERTISING) {
+intent.setAction(RequestPermissionHelperActivity.ACTION_INTERNAL_REQUEST_BT_ON_AND_START_ADVERTISE);
+}
+ else if (mExtraIntent == EXTRA_INTENT_STOP_ADVERTISING) {
 }
 startActivityForResult(intent,REQUEST_CODE_START_BT);
 mNeededToEnableBluetooth=true;
 break;
 case BluetoothAdapter.STATE_ON:
-if (mEnableOnly) {
-proceedAndFinish();
+if (needAskUserPermission()) {
+createDialog();
 }
  else {
-createDialog();
+proceedAndFinish();
 }
 break;
 default :

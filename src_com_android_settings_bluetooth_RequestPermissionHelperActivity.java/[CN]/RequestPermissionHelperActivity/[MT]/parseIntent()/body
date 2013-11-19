@@ -5,7 +5,12 @@
   }
  else   if (intent != null && intent.getAction().equals(ACTION_INTERNAL_REQUEST_BT_ON_AND_DISCOVERABLE)) {
     mEnableOnly=false;
+    mDiscovery=true;
     mTimeout=intent.getIntExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,BluetoothDiscoverableEnabler.DEFAULT_DISCOVERABLE_TIMEOUT);
+  }
+ else   if (intent != null && intent.getAction().equals(ACTION_INTERNAL_REQUEST_BT_ON_AND_START_ADVERTISE)) {
+    mEnableOnly=false;
+    mDiscovery=false;
   }
  else {
     setResult(RESULT_CANCELED);

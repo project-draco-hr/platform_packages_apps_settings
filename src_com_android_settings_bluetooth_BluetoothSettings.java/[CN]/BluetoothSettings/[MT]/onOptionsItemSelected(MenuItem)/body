@@ -5,12 +5,6 @@ case MENU_ID_SCAN:
       startScanning();
     }
   return true;
-case MENU_ID_RENAME_DEVICE:
-new BluetoothNameDialogFragment().show(getFragmentManager(),"rename device");
-return true;
-case MENU_ID_VISIBILITY_TIMEOUT:
-new BluetoothVisibilityTimeoutFragment().show(getFragmentManager(),"visibility timeout");
-return true;
 case MENU_ID_SHOW_RECEIVED:
 Intent intent=new Intent(BTOPP_ACTION_OPEN_RECEIVED_FILES);
 getActivity().sendBroadcast(intent);

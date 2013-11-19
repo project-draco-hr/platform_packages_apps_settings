@@ -1,0 +1,12 @@
+{
+  if (mEnableOnly) {
+    return false;
+  }
+  if (mExtraIntent == EXTRA_INTENT_STOP_ADVERTISING) {
+    return false;
+  }
+  if (mExtraIntent == EXTRA_INTENT_START_ADVERTISING) {
+    return !LocalBluetoothPreferences.isAdvertisingEnabled(mContext);
+  }
+  return true;
+}

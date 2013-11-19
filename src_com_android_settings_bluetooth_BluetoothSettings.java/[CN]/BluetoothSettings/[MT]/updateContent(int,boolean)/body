@@ -7,7 +7,7 @@ case BluetoothAdapter.STATE_ON:
   preferenceScreen.setOrderingAsAdded(true);
 mDevicePreferenceMap.clear();
 if (mMyDevicePreference == null) {
-mMyDevicePreference=new Preference(getActivity());
+mMyDevicePreference=new BluetoothLocalDevicePreference(getActivity(),mLocalDeviceProfilesListener);
 }
 mMyDevicePreference.setTitle(mLocalAdapter.getName());
 if (getResources().getBoolean(com.android.internal.R.bool.config_voice_capable)) {

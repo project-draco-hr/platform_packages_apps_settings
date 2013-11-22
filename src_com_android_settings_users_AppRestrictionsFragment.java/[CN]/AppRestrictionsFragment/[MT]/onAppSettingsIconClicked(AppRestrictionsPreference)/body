@@ -1,0 +1,18 @@
+{
+  if (preference.getKey().startsWith(PKG_PREFIX)) {
+    if (preference.isPanelOpen()) {
+      removeRestrictionsForApp(preference);
+    }
+ else {
+      String packageName=preference.getKey().substring(PKG_PREFIX.length());
+      if (packageName.equals(getActivity().getPackageName())) {
+        ArrayList<RestrictionEntry> restrictions=RestrictionUtils.getRestrictions(getActivity(),mUser);
+        onRestrictionsReceived(preference,packageName,restrictions);
+      }
+ else {
+        requestRestrictionsForApp(packageName,preference,true);
+      }
+    }
+    preference.setPanelOpen(!preference.isPanelOpen());
+  }
+}

@@ -20,19 +20,18 @@
     if (mAdbKeysDialog != null)     dismissDialogs();
     mAdbKeysDialog=new AlertDialog.Builder(getActivity()).setMessage(R.string.adb_keys_warning_message).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,null).show();
   }
+ else   if (preference == mEnableTerminal) {
+    final PackageManager pm=getActivity().getPackageManager();
+    pm.setApplicationEnabledSetting(TERMINAL_APP_PACKAGE,mEnableTerminal.isChecked() ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,0);
+  }
  else   if (preference == mBugreportInPower) {
     Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.BUGREPORT_IN_POWER_MENU,mBugreportInPower.isChecked() ? 1 : 0);
   }
  else   if (preference == mKeepScreenOn) {
     Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.STAY_ON_WHILE_PLUGGED_IN,mKeepScreenOn.isChecked() ? (BatteryManager.BATTERY_PLUGGED_AC | BatteryManager.BATTERY_PLUGGED_USB) : 0);
   }
- else   if (preference == mEnforceReadExternal) {
-    if (mEnforceReadExternal.isChecked()) {
-      ConfirmEnforceFragment.show(this);
-    }
- else {
-      setPermissionEnforced(getActivity(),READ_EXTERNAL_STORAGE,false);
-    }
+ else   if (preference == mBtHciSnoopLog) {
+    writeBtHciSnoopLogOptions();
   }
  else   if (preference == mAllowMockLocation) {
     Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,mAllowMockLocation.isChecked() ? 1 : 0);
@@ -70,9 +69,6 @@
  else   if (preference == mShowAllANRs) {
     writeShowAllANRsOptions();
   }
- else   if (preference == mExperimentalWebView) {
-    writeExperimentalWebViewOptions();
-  }
  else   if (preference == mForceHardwareUi) {
     writeHardwareUiOptions();
   }
@@ -85,11 +81,17 @@
  else   if (preference == mShowHwLayersUpdates) {
     writeShowHwLayersUpdatesOptions();
   }
- else   if (preference == mShowHwOverdraw) {
-    writeShowHwOverdrawOptions();
-  }
  else   if (preference == mDebugLayout) {
     writeDebugLayoutOptions();
+  }
+ else   if (preference == mForceRtlLayout) {
+    writeForceRtlOptions();
+  }
+ else   if (preference == mWifiDisplayCertification) {
+    writeWifiDisplayCertificationOptions();
+  }
+ else {
+    return super.onPreferenceTreeClick(preferenceScreen,preference);
   }
   return false;
 }

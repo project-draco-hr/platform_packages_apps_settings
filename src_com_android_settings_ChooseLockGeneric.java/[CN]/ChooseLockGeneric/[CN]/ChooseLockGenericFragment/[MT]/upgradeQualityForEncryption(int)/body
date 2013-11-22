@@ -1,4 +1,5 @@
 {
+  if (!Process.myUserHandle().equals(UserHandle.OWNER))   return quality;
   int encryptionStatus=mDPM.getStorageEncryptionStatus();
   boolean encrypted=(encryptionStatus == DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE) || (encryptionStatus == DevicePolicyManager.ENCRYPTION_STATUS_ACTIVATING);
   if (encrypted) {

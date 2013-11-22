@@ -3,10 +3,14 @@
   final ContentResolver cr=context.getContentResolver();
   mHaveDebugSettings=false;
   updateCheckBox(mEnableAdb,Settings.Global.getInt(cr,Settings.Global.ADB_ENABLED,0) != 0);
+  if (mEnableTerminal != null) {
+    updateCheckBox(mEnableTerminal,context.getPackageManager().getApplicationEnabledSetting(TERMINAL_APP_PACKAGE) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+  }
   updateCheckBox(mBugreportInPower,Settings.Secure.getInt(cr,Settings.Secure.BUGREPORT_IN_POWER_MENU,0) != 0);
   updateCheckBox(mKeepScreenOn,Settings.Global.getInt(cr,Settings.Global.STAY_ON_WHILE_PLUGGED_IN,0) != 0);
-  updateCheckBox(mEnforceReadExternal,isPermissionEnforced(READ_EXTERNAL_STORAGE));
+  updateCheckBox(mBtHciSnoopLog,Settings.Secure.getInt(cr,Settings.Secure.BLUETOOTH_HCI_LOG,0) != 0);
   updateCheckBox(mAllowMockLocation,Settings.Secure.getInt(cr,Settings.Secure.ALLOW_MOCK_LOCATION,0) != 0);
+  updateRuntimeValue();
   updateHdcpValues();
   updatePasswordSummary();
   updateDebuggerOptions();
@@ -21,7 +25,7 @@
   updateShowNonRectClipOptions();
   updateShowHwScreenUpdatesOptions();
   updateShowHwLayersUpdatesOptions();
-  updateShowHwOverdrawOptions();
+  updateDebugHwOverdrawOptions();
   updateDebugLayoutOptions();
   updateAnimationScaleOptions();
   updateOverlayDisplayDevicesOptions();
@@ -29,7 +33,8 @@
   updateImmediatelyDestroyActivitiesOptions();
   updateAppProcessLimitOptions();
   updateShowAllANRsOptions();
-  updateExperimentalWebViewOptions();
   updateVerifyAppsOverUsbOptions();
   updateBugreportOptions();
+  updateForceRtlOptions();
+  updateWifiDisplayCertificationOptions();
 }

@@ -1,0 +1,11 @@
+{
+  Collections.sort(prefs,new Comparator<Preference>(){
+    @Override public int compare(    Preference lhs,    Preference rhs){
+      return lhs.getTitle().toString().compareTo(rhs.getTitle().toString());
+    }
+  }
+);
+  for (  Preference entry : prefs) {
+    container.addPreference(entry);
+  }
+}

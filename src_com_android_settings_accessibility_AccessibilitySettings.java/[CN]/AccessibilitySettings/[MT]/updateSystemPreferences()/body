@@ -1,0 +1,41 @@
+{
+  try {
+    mCurConfig.updateFrom(ActivityManagerNative.getDefault().getConfiguration());
+  }
+ catch (  RemoteException re) {
+  }
+  mToggleLargeTextPreference.setChecked(mCurConfig.fontScale == LARGE_FONT_SCALE);
+  if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER) && Utils.isVoiceCapable(getActivity())) {
+    final int incallPowerBehavior=Settings.Secure.getInt(getContentResolver(),Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT);
+    final boolean powerButtonEndsCall=(incallPowerBehavior == Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP);
+    mTogglePowerButtonEndsCallPreference.setChecked(powerButtonEndsCall);
+  }
+  updateLockScreenRotationCheckbox();
+  final boolean speakPasswordEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SPEAK_PASSWORD,0) != 0;
+  mToggleSpeakPasswordPreference.setChecked(speakPasswordEnabled);
+  final int longPressTimeout=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,mLongPressTimeoutDefault);
+  String value=String.valueOf(longPressTimeout);
+  mSelectLongPressTimeoutPreference.setValue(value);
+  mSelectLongPressTimeoutPreference.setSummary(mLongPressTimeoutValuetoTitleMap.get(value));
+  final boolean captioningEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_CAPTIONING_ENABLED,0) == 1;
+  if (captioningEnabled) {
+    mCaptioningPreferenceScreen.setSummary(R.string.accessibility_feature_state_on);
+  }
+ else {
+    mCaptioningPreferenceScreen.setSummary(R.string.accessibility_feature_state_off);
+  }
+  final boolean magnificationEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_DISPLAY_MAGNIFICATION_ENABLED,0) == 1;
+  if (magnificationEnabled) {
+    mDisplayMagnificationPreferenceScreen.setSummary(R.string.accessibility_feature_state_on);
+  }
+ else {
+    mDisplayMagnificationPreferenceScreen.setSummary(R.string.accessibility_feature_state_off);
+  }
+  final boolean globalGestureEnabled=Settings.Global.getInt(getContentResolver(),Settings.Global.ENABLE_ACCESSIBILITY_GLOBAL_GESTURE_ENABLED,0) == 1;
+  if (globalGestureEnabled) {
+    mGlobalGesturePreferenceScreen.setSummary(R.string.accessibility_global_gesture_preference_summary_on);
+  }
+ else {
+    mGlobalGesturePreferenceScreen.setSummary(R.string.accessibility_global_gesture_preference_summary_off);
+  }
+}

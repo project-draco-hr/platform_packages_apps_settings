@@ -1,0 +1,21 @@
+{
+  try {
+    mLastDuration=mDuration;
+    mMemState=mProcessStats.getCurrentMemoryState();
+    ParcelFileDescriptor pfd=mProcessStats.getStatsOverTime(mDuration);
+    mStats=new ProcessStats(false);
+    InputStream is=new ParcelFileDescriptor.AutoCloseInputStream(pfd);
+    mStats.read(is);
+    try {
+      is.close();
+    }
+ catch (    IOException e) {
+    }
+    if (mStats.mReadError != null) {
+      Log.w(TAG,"Failure reading process stats: " + mStats.mReadError);
+    }
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"RemoteException:",e);
+  }
+}

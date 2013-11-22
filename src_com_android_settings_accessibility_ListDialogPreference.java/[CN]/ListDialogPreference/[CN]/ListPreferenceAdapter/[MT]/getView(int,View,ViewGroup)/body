@@ -1,0 +1,10 @@
+{
+  if (convertView == null) {
+    if (mInflater == null) {
+      mInflater=LayoutInflater.from(parent.getContext());
+    }
+    convertView=mInflater.inflate(mListItemLayout,parent,false);
+  }
+  onBindListItem(convertView,position);
+  return convertView;
+}

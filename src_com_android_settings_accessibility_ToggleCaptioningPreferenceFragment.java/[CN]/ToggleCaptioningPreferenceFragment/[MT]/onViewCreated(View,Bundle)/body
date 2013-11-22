@@ -1,0 +1,8 @@
+{
+  super.onViewCreated(view,savedInstanceState);
+  mPropsFragment=((CaptionPropertiesFragment)getFragmentManager().findFragmentById(R.id.properties_fragment));
+  mPropsFragment.setParent(this);
+  mPreviewText=(SubtitleView)view.findViewById(R.id.preview_text);
+  installActionBarToggleSwitch();
+  refreshPreviewText();
+}

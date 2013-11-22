@@ -1,0 +1,23 @@
+{
+  final Bundle meta=info.metaData;
+  if (meta != null) {
+    final String altHomePackage=meta.getString(ActivityManager.META_HOME_ALTERNATE);
+    if (altHomePackage != null) {
+      try {
+        final int match=mPm.checkSignatures(info.packageName,altHomePackage);
+        if (match >= PackageManager.SIGNATURE_MATCH) {
+          PackageInfo altInfo=mPm.getPackageInfo(altHomePackage,0);
+          final int altFlags=altInfo.applicationInfo.flags;
+          isSystem=(altFlags & ApplicationInfo.FLAG_SYSTEM) != 0;
+          uninstallTarget=altInfo.packageName;
+          return;
+        }
+      }
+ catch (      Exception e) {
+        Log.w(TAG,"Unable to compare/resolve alternate",e);
+      }
+    }
+  }
+  isSystem=(info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+  uninstallTarget=info.packageName;
+}

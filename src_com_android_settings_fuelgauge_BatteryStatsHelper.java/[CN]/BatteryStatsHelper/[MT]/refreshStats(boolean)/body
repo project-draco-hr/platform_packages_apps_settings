@@ -1,0 +1,29 @@
+{
+  getStats();
+  mMaxPower=0;
+  mTotalPower=0;
+  mWifiPower=0;
+  mBluetoothPower=0;
+  mAppWifiRunning=0;
+  mUsageList.clear();
+  mWifiSippers.clear();
+  mBluetoothSippers.clear();
+  mUserSippers.clear();
+  mUserPower.clear();
+  processAppUsage(includeZeroConsumption);
+  processMiscUsage();
+  Collections.sort(mUsageList);
+  if (mHandler != null) {
+synchronized (mRequestQueue) {
+      if (!mRequestQueue.isEmpty()) {
+        if (mRequestThread != null) {
+          mRequestThread.abort();
+        }
+        mRequestThread=new NameAndIconLoader();
+        mRequestThread.setPriority(Thread.MIN_PRIORITY);
+        mRequestThread.start();
+        mRequestQueue.notify();
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  int mode=Settings.Secure.LOCATION_MODE_OFF;
+  if (emiter == mHighAccuracy) {
+    mode=Settings.Secure.LOCATION_MODE_HIGH_ACCURACY;
+  }
+ else   if (emiter == mBatterySaving) {
+    mode=Settings.Secure.LOCATION_MODE_BATTERY_SAVING;
+  }
+ else   if (emiter == mSensorsOnly) {
+    mode=Settings.Secure.LOCATION_MODE_SENSORS_ONLY;
+  }
+  setLocationMode(mode);
+}

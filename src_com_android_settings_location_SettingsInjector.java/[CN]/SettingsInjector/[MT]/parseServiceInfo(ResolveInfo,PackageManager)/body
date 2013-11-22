@@ -1,0 +1,35 @@
+{
+  ServiceInfo si=service.serviceInfo;
+  ApplicationInfo ai=si.applicationInfo;
+  if ((ai.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+    if (Log.isLoggable(TAG,Log.WARN)) {
+      Log.w(TAG,"Ignoring attempt to inject setting from app not in system image: " + service);
+      return null;
+    }
+  }
+  XmlResourceParser parser=null;
+  try {
+    parser=si.loadXmlMetaData(pm,SettingInjectorService.META_DATA_NAME);
+    if (parser == null) {
+      throw new XmlPullParserException("No " + SettingInjectorService.META_DATA_NAME + " meta-data for "+ service+ ": "+ si);
+    }
+    AttributeSet attrs=Xml.asAttributeSet(parser);
+    int type;
+    while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && type != XmlPullParser.START_TAG) {
+    }
+    String nodeName=parser.getName();
+    if (!SettingInjectorService.ATTRIBUTES_NAME.equals(nodeName)) {
+      throw new XmlPullParserException("Meta-data does not start with " + SettingInjectorService.ATTRIBUTES_NAME + " tag");
+    }
+    Resources res=pm.getResourcesForApplication(ai);
+    return parseAttributes(si.packageName,si.name,res,attrs);
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    throw new XmlPullParserException("Unable to load resources for package " + si.packageName);
+  }
+ finally {
+    if (parser != null) {
+      parser.close();
+    }
+  }
+}

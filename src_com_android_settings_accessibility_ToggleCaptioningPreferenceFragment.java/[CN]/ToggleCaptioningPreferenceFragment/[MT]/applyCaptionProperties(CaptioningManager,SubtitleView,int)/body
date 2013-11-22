@@ -1,0 +1,15 @@
+{
+  previewText.setStyle(styleId);
+  final Context context=previewText.getContext();
+  final ContentResolver cr=context.getContentResolver();
+  final float fontScale=manager.getFontScale();
+  previewText.setTextSize(fontScale * DEFAULT_FONT_SIZE);
+  final Locale locale=manager.getLocale();
+  if (locale != null) {
+    final CharSequence localizedText=AccessibilityUtils.getTextForLocale(context,locale,R.string.captioning_preview_characters);
+    previewText.setText(localizedText);
+  }
+ else {
+    previewText.setText(R.string.captioning_preview_characters);
+  }
+}

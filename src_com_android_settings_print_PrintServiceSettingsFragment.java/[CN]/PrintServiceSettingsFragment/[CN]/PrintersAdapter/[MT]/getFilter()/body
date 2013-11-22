@@ -1,0 +1,45 @@
+{
+  return new Filter(){
+    @Override protected FilterResults performFiltering(    CharSequence constraint){
+synchronized (mLock) {
+        if (TextUtils.isEmpty(constraint)) {
+          return null;
+        }
+        FilterResults results=new FilterResults();
+        List<PrinterInfo> filteredPrinters=new ArrayList<PrinterInfo>();
+        String constraintLowerCase=constraint.toString().toLowerCase();
+        final int printerCount=mPrinters.size();
+        for (int i=0; i < printerCount; i++) {
+          PrinterInfo printer=mPrinters.get(i);
+          if (printer.getName().toLowerCase().contains(constraintLowerCase)) {
+            filteredPrinters.add(printer);
+          }
+        }
+        results.values=filteredPrinters;
+        results.count=filteredPrinters.size();
+        return results;
+      }
+    }
+    @Override @SuppressWarnings("unchecked") protected void publishResults(    CharSequence constraint,    FilterResults results){
+      final boolean resultCountChanged;
+synchronized (mLock) {
+        final int oldPrinterCount=mFilteredPrinters.size();
+        mLastSearchString=constraint;
+        mFilteredPrinters.clear();
+        if (results == null) {
+          mFilteredPrinters.addAll(mPrinters);
+        }
+ else {
+          List<PrinterInfo> printers=(List<PrinterInfo>)results.values;
+          mFilteredPrinters.addAll(printers);
+        }
+        resultCountChanged=(oldPrinterCount != mFilteredPrinters.size());
+      }
+      if (resultCountChanged) {
+        announceSearchResult();
+      }
+      notifyDataSetChanged();
+    }
+  }
+;
+}

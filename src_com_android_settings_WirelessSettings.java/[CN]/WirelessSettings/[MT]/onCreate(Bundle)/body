@@ -15,6 +15,9 @@
   CheckBoxPreference nsd=(CheckBoxPreference)findPreference(KEY_TOGGLE_NSD);
   mAirplaneModeEnabler=new AirplaneModeEnabler(activity,mAirplaneModePreference);
   mNfcEnabler=new NfcEnabler(activity,nfc,androidBeam);
+  mSmsApplicationPreference=(SmsListPreference)findPreference(KEY_SMS_APPLICATION);
+  mSmsApplicationPreference.setOnPreferenceChangeListener(this);
+  initSmsApplicationSetting();
   getPreferenceScreen().removePreference(nsd);
   String toggleable=Settings.Global.getString(activity.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   boolean isWimaxEnabled=!isSecondaryUser && this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);
@@ -29,12 +32,14 @@
       ps.setDependency(KEY_TOGGLE_AIRPLANE);
     }
   }
+  protectByRestrictions(KEY_WIMAX_SETTINGS);
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_WIFI)) {
     findPreference(KEY_VPN_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
   }
   if (isSecondaryUser) {
     removePreference(KEY_VPN_SETTINGS);
   }
+  protectByRestrictions(KEY_VPN_SETTINGS);
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_BLUETOOTH)) {
   }
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_NFC)) {
@@ -51,6 +56,14 @@
     removePreference(KEY_MOBILE_NETWORK_SETTINGS);
     removePreference(KEY_MANAGE_MOBILE_PLAN);
   }
+  protectByRestrictions(KEY_MOBILE_NETWORK_SETTINGS);
+  protectByRestrictions(KEY_MANAGE_MOBILE_PLAN);
+  if (!isSmsSupported()) {
+    removePreference(KEY_SMS_APPLICATION);
+  }
+  if (getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEVISION)) {
+    removePreference(KEY_TOGGLE_AIRPLANE);
+  }
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
   DevicePolicyManager mDPM=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
   getPreferenceScreen().removePreference(mGlobalProxy);
@@ -63,6 +76,7 @@
     Preference p=findPreference(KEY_TETHER_SETTINGS);
     p.setTitle(Utils.getTetheringLabel(cm));
   }
+  protectByRestrictions(KEY_TETHER_SETTINGS);
   boolean isCellBroadcastAppLinkEnabled=this.getResources().getBoolean(com.android.internal.R.bool.config_cellBroadcastAppLinks);
   try {
     if (isCellBroadcastAppLinkEnabled) {
@@ -80,4 +94,5 @@
     Preference ps=findPreference(KEY_CELL_BROADCAST_SETTINGS);
     if (ps != null)     root.removePreference(ps);
   }
+  protectByRestrictions(KEY_CELL_BROADCAST_SETTINGS);
 }

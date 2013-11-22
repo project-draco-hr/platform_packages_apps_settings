@@ -1,0 +1,40 @@
+{
+  final PreferenceActivity activity=(PreferenceActivity)getActivity();
+  PreferenceScreen root=getPreferenceScreen();
+  if (root != null) {
+    root.removeAll();
+  }
+  addPreferencesFromResource(R.xml.location_settings);
+  root=getPreferenceScreen();
+  mLocationMode=root.findPreference(KEY_LOCATION_MODE);
+  mLocationMode.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      activity.startPreferencePanel(LocationMode.class.getName(),null,R.string.location_mode_screen_title,null,LocationSettings.this,0);
+      return true;
+    }
+  }
+);
+  mCategoryRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
+  RecentLocationApps recentApps=new RecentLocationApps(activity);
+  List<Preference> recentLocationRequests=recentApps.getAppList();
+  if (recentLocationRequests.size() > 0) {
+    addPreferencesSorted(recentLocationRequests,mCategoryRecentLocationRequests);
+  }
+ else {
+    Preference banner=new Preference(activity);
+    banner.setLayoutResource(R.layout.location_list_no_item);
+    banner.setTitle(R.string.location_no_recent_apps);
+    banner.setSelectable(false);
+    mCategoryRecentLocationRequests.addPreference(banner);
+  }
+  addLocationServices(activity,root);
+  if (activity.onIsHidingHeaders() || !activity.onIsMultiPane()) {
+    final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+    mSwitch.setPaddingRelative(0,0,padding,0);
+    activity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,ActionBar.DISPLAY_SHOW_CUSTOM);
+    activity.getActionBar().setCustomView(mSwitch,new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.END));
+  }
+  setHasOptionsMenu(true);
+  refreshLocationMode();
+  return root;
+}

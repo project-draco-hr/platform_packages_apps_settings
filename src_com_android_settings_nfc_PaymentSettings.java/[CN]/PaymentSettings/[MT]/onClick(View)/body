@@ -1,0 +1,9 @@
+{
+  if (v.getTag() instanceof PaymentAppInfo) {
+    PaymentAppInfo appInfo=(PaymentAppInfo)v.getTag();
+    if (appInfo.componentName != null) {
+      mPaymentBackend.setDefaultPaymentApp(appInfo.componentName);
+    }
+    refresh();
+  }
+}

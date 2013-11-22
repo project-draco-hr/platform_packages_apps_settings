@@ -1,9 +1,0 @@
-{
-  super.onResume();
-  loadInstalledServices();
-  updateAllPreferences();
-  offerInstallAccessibilitySerivceOnce();
-  mSettingsPackageMonitor.register(getActivity(),getActivity().getMainLooper(),false);
-  mSettingsContentObserver.register(getContentResolver());
-  RotationPolicy.registerRotationPolicyListener(getActivity(),mRotationPolicyListener);
-}

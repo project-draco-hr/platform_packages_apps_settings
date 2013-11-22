@@ -1,0 +1,13 @@
+{
+  if (!mChallengeSucceeded) {
+    final UserManager um=UserManager.get(getActivity());
+    if (!mChallengeRequested) {
+      if (um.hasRestrictionsChallenge()) {
+        Intent requestPin=new Intent(Intent.ACTION_RESTRICTIONS_CHALLENGE);
+        startActivityForResult(requestPin,REQUEST_PIN_CHALLENGE);
+        mChallengeRequested=true;
+      }
+    }
+  }
+  mChallengeSucceeded=false;
+}

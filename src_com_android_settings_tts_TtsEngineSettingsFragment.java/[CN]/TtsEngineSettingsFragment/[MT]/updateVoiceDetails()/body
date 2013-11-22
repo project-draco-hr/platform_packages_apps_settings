@@ -2,26 +2,18 @@
   if (DBG)   Log.d(TAG,"Parsing voice data details, data: " + mVoiceDataDetails.toUri(0));
   final ArrayList<String> available=mVoiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_AVAILABLE_VOICES);
   final ArrayList<String> unavailable=mVoiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_UNAVAILABLE_VOICES);
+  if (unavailable != null && unavailable.size() > 0) {
+    mInstallVoicesPreference.setEnabled(true);
+  }
+ else {
+    mInstallVoicesPreference.setEnabled(false);
+  }
   if (available == null) {
     Log.e(TAG,"TTS data check failed (available == null).");
     mLocalePreference.setEnabled(false);
-    getPreferenceScreen().removePreference(mLocalePreference);
     return;
   }
-  if (unavailable != null && unavailable.size() > 0) {
-    mInstallVoicesPreference.setEnabled(true);
-    getPreferenceScreen().addPreference(mInstallVoicesPreference);
-  }
  else {
-    getPreferenceScreen().removePreference(mInstallVoicesPreference);
-  }
-  if (available.size() > 0) {
-    mLocalePreference.setEnabled(true);
-    getPreferenceScreen().addPreference(mLocalePreference);
     updateDefaultLocalePref(available);
-  }
- else {
-    mLocalePreference.setEnabled(false);
-    getPreferenceScreen().removePreference(mLocalePreference);
   }
 }

@@ -1,0 +1,16 @@
+{
+  mContext=view.getContext();
+  mFragment=fragment;
+  mImageView=view;
+  mCropPictureUri=createTempImageUri(mContext,CROP_PICTURE_FILE_NAME,!waiting);
+  mTakePictureUri=createTempImageUri(mContext,TAKE_PICTURE_FILE_NAME,!waiting);
+  mPhotoSize=getPhotoSize(mContext);
+  mImageView.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      showUpdatePhotoPopup();
+    }
+  }
+);
+  mNewUserPhotoBitmap=bitmap;
+  mNewUserPhotoDrawable=drawable;
+}

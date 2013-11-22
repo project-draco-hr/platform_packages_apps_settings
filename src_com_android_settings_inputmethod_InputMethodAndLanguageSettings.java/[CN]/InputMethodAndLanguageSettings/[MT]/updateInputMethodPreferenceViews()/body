@@ -1,0 +1,10 @@
+{
+synchronized (mInputMethodPreferenceList) {
+    for (    Preference pref : mInputMethodPreferenceList) {
+      if (pref instanceof InputMethodPreference) {
+        ((InputMethodPreference)pref).updatePreferenceViews();
+      }
+    }
+  }
+  updateCurrentImeName();
+}

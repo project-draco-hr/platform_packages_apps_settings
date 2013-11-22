@@ -3,7 +3,7 @@
   if (context == null || mImm == null)   return;
   final Preference curPref=getPreferenceScreen().findPreference(KEY_CURRENT_INPUT_METHOD);
   if (curPref != null) {
-    final CharSequence curIme=InputMethodAndSubtypeUtil.getCurrentInputMethodName(context,getContentResolver(),mImm,mImis,getPackageManager());
+    final CharSequence curIme=mInputMethodSettingValues.getCurrentInputMethodName(context);
     if (!TextUtils.isEmpty(curIme)) {
 synchronized (this) {
         curPref.setSummary(curIme);

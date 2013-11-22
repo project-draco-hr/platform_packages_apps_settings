@@ -42,6 +42,7 @@
     }
   }
   updateInputDevices();
-  InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,getContentResolver(),mImis,null);
-  updateActiveInputMethodsSummary();
+  mInputMethodSettingValues.refreshAllInputMethodAndSubtypes();
+  InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,getContentResolver(),mInputMethodSettingValues.getInputMethodList(),null);
+  updateInputMethodPreferenceViews();
 }

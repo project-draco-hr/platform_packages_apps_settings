@@ -1,5 +1,23 @@
 {
-  mEnginesHelper.updateLocalePrefForEngine(getEngineName(),locale);
+  int selectedLocaleIndex=-1;
+  for (int i=0; i < mLocalePreference.getEntryValues().length; i++) {
+    if (locale.equalsIgnoreCase(mLocalePreference.getEntryValues()[i].toString())) {
+      selectedLocaleIndex=i;
+      break;
+    }
+  }
+  if (selectedLocaleIndex == -1) {
+    Log.w(TAG,"updateLanguageTo called with unknown locale argument");
+    return;
+  }
+  mLocalePreference.setSummary(mLocalePreference.getEntries()[selectedLocaleIndex]);
+  mSelectedLocaleIndex=selectedLocaleIndex;
+  if (mSelectedLocaleIndex == mSystemLocaleIndex) {
+    mEnginesHelper.updateLocalePrefForEngine(getEngineName(),"");
+  }
+ else {
+    mEnginesHelper.updateLocalePrefForEngine(getEngineName(),locale);
+  }
   if (getEngineName().equals(mTts.getCurrentEngine())) {
     String[] localeArray=TtsEngines.parseLocalePref(locale);
     if (localeArray != null) {

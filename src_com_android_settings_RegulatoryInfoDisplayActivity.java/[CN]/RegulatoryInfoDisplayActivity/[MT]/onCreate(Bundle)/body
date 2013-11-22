@@ -5,17 +5,23 @@
     finish();
   }
   AlertDialog.Builder builder=new AlertDialog.Builder(this).setTitle(R.string.regulatory_information).setOnDismissListener(this);
-  boolean regulatoryInfoDrawableExists;
-  try {
-    Drawable d=resources.getDrawable(R.drawable.regulatory_info);
-    regulatoryInfoDrawableExists=(d.getIntrinsicWidth() > 2 && d.getIntrinsicHeight() > 2);
-  }
- catch (  Resources.NotFoundException ignored) {
-    regulatoryInfoDrawableExists=false;
+  boolean regulatoryInfoDrawableExists=false;
+  int resId=getResourceId();
+  if (resId != 0) {
+    try {
+      Drawable d=resources.getDrawable(resId);
+      regulatoryInfoDrawableExists=(d.getIntrinsicWidth() > 2 && d.getIntrinsicHeight() > 2);
+    }
+ catch (    Resources.NotFoundException ignored) {
+      regulatoryInfoDrawableExists=false;
+    }
   }
   CharSequence regulatoryText=resources.getText(R.string.regulatory_info_text);
   if (regulatoryInfoDrawableExists) {
-    builder.setView(getLayoutInflater().inflate(R.layout.regulatory_info,null));
+    View view=getLayoutInflater().inflate(R.layout.regulatory_info,null);
+    ImageView image=(ImageView)view.findViewById(R.id.regulatoryInfo);
+    image.setImageResource(resId);
+    builder.setView(view);
     builder.show();
   }
  else   if (regulatoryText.length() > 0) {

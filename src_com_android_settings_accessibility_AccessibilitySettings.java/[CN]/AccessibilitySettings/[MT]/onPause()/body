@@ -1,0 +1,8 @@
+{
+  mSettingsPackageMonitor.unregister();
+  mSettingsContentObserver.unregister(getContentResolver());
+  if (RotationPolicy.isRotationSupported(getActivity())) {
+    RotationPolicy.unregisterRotationPolicyListener(getActivity(),mRotationPolicyListener);
+  }
+  super.onPause();
+}

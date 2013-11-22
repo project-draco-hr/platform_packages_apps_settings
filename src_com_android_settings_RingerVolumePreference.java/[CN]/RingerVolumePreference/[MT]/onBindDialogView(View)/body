@@ -29,13 +29,30 @@
 ;
     getContext().registerReceiver(mRingModeChangedReceiver,filter);
   }
-  int id;
-  if (!Utils.isVoiceCapable(getContext())) {
-    id=R.id.ringer_section;
+  boolean useMasterVolume=getContext().getResources().getBoolean(com.android.internal.R.bool.config_useMasterVolume);
+  if (useMasterVolume) {
+    int id;
+    if (Utils.isVoiceCapable(getContext())) {
+      id=R.id.ringer_section;
+    }
+ else {
+      id=R.id.media_section;
+    }
+    for (int i=0; i < SEEKBAR_SECTION_ID.length; i++) {
+      if (SEEKBAR_SECTION_ID[i] != id) {
+        view.findViewById(SEEKBAR_SECTION_ID[i]).setVisibility(View.GONE);
+      }
+    }
   }
  else {
-    id=R.id.notification_section;
+    int id;
+    if (!Utils.isVoiceCapable(getContext())) {
+      id=R.id.ringer_section;
+    }
+ else {
+      id=R.id.notification_section;
+    }
+    View hideSection=view.findViewById(id);
+    hideSection.setVisibility(View.GONE);
   }
-  View hideSection=view.findViewById(id);
-  hideSection.setVisibility(View.GONE);
 }

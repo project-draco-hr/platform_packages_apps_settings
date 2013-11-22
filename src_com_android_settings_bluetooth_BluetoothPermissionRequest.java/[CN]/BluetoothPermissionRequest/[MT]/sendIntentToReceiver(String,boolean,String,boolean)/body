@@ -8,5 +8,6 @@
     intent.putExtra(extraName,extraValue);
   }
   intent.putExtra(BluetoothDevice.EXTRA_DEVICE,mDevice);
+  intent.putExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,mRequestType);
   mContext.sendBroadcast(intent,android.Manifest.permission.BLUETOOTH_ADMIN);
 }

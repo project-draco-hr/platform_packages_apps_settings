@@ -12,4 +12,5 @@
     ((HeaderAdapter)listAdapter).resume();
   }
   invalidateHeaders();
+  registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 }

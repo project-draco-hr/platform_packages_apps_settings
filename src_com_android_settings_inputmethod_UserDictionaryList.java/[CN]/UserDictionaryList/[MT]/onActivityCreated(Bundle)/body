@@ -1,0 +1,18 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  final Intent intent=getActivity().getIntent();
+  final String localeFromIntent=null == intent ? null : intent.getStringExtra("locale");
+  final Bundle arguments=getArguments();
+  final String localeFromArguments=null == arguments ? null : arguments.getString("locale");
+  final String locale;
+  if (null != localeFromArguments) {
+    locale=localeFromArguments;
+  }
+ else   if (null != localeFromIntent) {
+    locale=localeFromIntent;
+  }
+ else {
+    locale=null;
+  }
+  mLocale=locale;
+}

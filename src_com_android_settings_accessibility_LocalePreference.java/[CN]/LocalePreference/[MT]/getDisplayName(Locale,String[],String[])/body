@@ -1,0 +1,9 @@
+{
+  String code=l.toString();
+  for (int i=0; i < specialLocaleCodes.length; i++) {
+    if (specialLocaleCodes[i].equals(code)) {
+      return specialLocaleNames[i];
+    }
+  }
+  return l.getDisplayName(l);
+}

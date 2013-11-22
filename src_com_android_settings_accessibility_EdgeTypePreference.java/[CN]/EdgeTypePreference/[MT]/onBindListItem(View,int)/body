@@ -1,0 +1,14 @@
+{
+  final SubtitleView preview=(SubtitleView)view.findViewById(R.id.preview);
+  preview.setForegroundColor(DEFAULT_FOREGROUND_COLOR);
+  preview.setBackgroundColor(DEFAULT_BACKGROUND_COLOR);
+  preview.setTextSize(DEFAULT_FONT_SIZE);
+  final int value=getValueAt(index);
+  preview.setEdgeType(value);
+  preview.setEdgeColor(DEFAULT_EDGE_COLOR);
+  final CharSequence title=getTitleAt(index);
+  if (title != null) {
+    final TextView summary=(TextView)view.findViewById(R.id.summary);
+    summary.setText(title);
+  }
+}

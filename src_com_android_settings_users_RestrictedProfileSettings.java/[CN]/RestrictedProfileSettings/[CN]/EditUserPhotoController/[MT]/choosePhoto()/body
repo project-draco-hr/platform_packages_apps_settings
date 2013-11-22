@@ -1,0 +1,6 @@
+{
+  Intent intent=new Intent(Intent.ACTION_GET_CONTENT,null);
+  intent.setType("image/*");
+  appendOutputExtra(intent,mTakePictureUri);
+  mFragment.startActivityForResult(intent,REQUEST_CODE_CHOOSE_PHOTO);
+}

@@ -1,17 +1,30 @@
 {
   @SuppressWarnings("deprecation") final Cursor cursor=activity.managedQuery(UserDictionary.Words.CONTENT_URI,new String[]{UserDictionary.Words.LOCALE},null,null,null);
-  final TreeSet<String> localeList=new TreeSet<String>();
+  final TreeSet<String> localeSet=new TreeSet<String>();
   if (null == cursor) {
     return null;
   }
  else   if (cursor.moveToFirst()) {
     final int columnIndex=cursor.getColumnIndex(UserDictionary.Words.LOCALE);
     do {
-      String locale=cursor.getString(columnIndex);
-      localeList.add(null != locale ? locale : "");
+      final String locale=cursor.getString(columnIndex);
+      localeSet.add(null != locale ? locale : "");
     }
  while (cursor.moveToNext());
   }
-  localeList.add(Locale.getDefault().toString());
-  return localeList;
+  final InputMethodManager imm=(InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+  final List<InputMethodInfo> imis=imm.getEnabledInputMethodList();
+  for (  final InputMethodInfo imi : imis) {
+    final List<InputMethodSubtype> subtypes=imm.getEnabledInputMethodSubtypeList(imi,true);
+    for (    InputMethodSubtype subtype : subtypes) {
+      final String locale=subtype.getLocale();
+      if (!TextUtils.isEmpty(locale)) {
+        localeSet.add(locale);
+      }
+    }
+  }
+  if (!localeSet.contains(Locale.getDefault().getLanguage().toString())) {
+    localeSet.add(Locale.getDefault().toString());
+  }
+  return localeSet;
 }

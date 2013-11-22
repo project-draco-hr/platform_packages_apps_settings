@@ -1,0 +1,16 @@
+{
+  if (resultCode != Activity.RESULT_OK) {
+    return false;
+  }
+  final Uri pictureUri=data != null && data.getData() != null ? data.getData() : mTakePictureUri;
+switch (requestCode) {
+case REQUEST_CODE_CROP_PHOTO:
+    onPhotoCropped(pictureUri,true);
+  return true;
+case REQUEST_CODE_TAKE_PHOTO:
+case REQUEST_CODE_CHOOSE_PHOTO:
+cropPhoto(pictureUri);
+return true;
+}
+return false;
+}

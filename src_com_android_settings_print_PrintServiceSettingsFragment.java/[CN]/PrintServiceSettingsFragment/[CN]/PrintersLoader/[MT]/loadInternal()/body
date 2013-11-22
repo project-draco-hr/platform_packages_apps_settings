@@ -1,0 +1,13 @@
+{
+  if (mDiscoverySession == null) {
+    PrintManager printManager=(PrintManager)getContext().getSystemService(Context.PRINT_SERVICE);
+    mDiscoverySession=printManager.createPrinterDiscoverySession();
+    mDiscoverySession.setOnPrintersChangeListener(new OnPrintersChangeListener(){
+      @Override public void onPrintersChanged(){
+        deliverResult(new ArrayList<PrinterInfo>(mDiscoverySession.getPrinters()));
+      }
+    }
+);
+  }
+  mDiscoverySession.startPrinterDisovery(null);
+}

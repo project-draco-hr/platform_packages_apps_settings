@@ -1,0 +1,27 @@
+{
+  Handler handler=new Handler(){
+    @Override public void handleMessage(    Message msg){
+      Bundle bundle=msg.getData();
+      String summary=bundle.getString(SettingInjectorService.SUMMARY_KEY);
+      boolean enabled=bundle.getBoolean(SettingInjectorService.ENABLED_KEY,true);
+      if (Log.isLoggable(TAG,Log.DEBUG)) {
+        Log.d(TAG,setting + ": received " + msg+ ", bundle: "+ bundle);
+      }
+      preference.setSummary(summary);
+      preference.setEnabled(enabled);
+      mHandler.sendMessage(mHandler.obtainMessage(WHAT_RECEIVED_STATUS,Setting.this));
+    }
+  }
+;
+  Messenger messenger=new Messenger(handler);
+  Intent intent=setting.getServiceIntent();
+  intent.putExtra(SettingInjectorService.MESSENGER_KEY,messenger);
+  if (Log.isLoggable(TAG,Log.DEBUG)) {
+    Log.d(TAG,setting + ": sending update intent: " + intent+ ", handler: "+ handler);
+    startMillis=SystemClock.elapsedRealtime();
+  }
+ else {
+    startMillis=0;
+  }
+  mContext.startServiceAsUser(intent,android.os.Process.myUserHandle());
+}

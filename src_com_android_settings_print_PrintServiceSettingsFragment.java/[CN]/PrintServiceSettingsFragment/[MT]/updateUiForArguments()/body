@@ -1,0 +1,39 @@
+{
+  Bundle arguments=getArguments();
+  mPreferenceKey=arguments.getString(PrintSettingsFragment.EXTRA_PREFERENCE_KEY);
+  final boolean enabled=arguments.getBoolean(PrintSettingsFragment.EXTRA_CHECKED);
+  mToggleSwitch.setCheckedInternal(enabled);
+  PreferenceActivity activity=(PreferenceActivity)getActivity();
+  if (!activity.onIsMultiPane() || activity.onIsHidingHeaders()) {
+    String title=arguments.getString(PrintSettingsFragment.EXTRA_TITLE);
+    getActivity().setTitle(title);
+  }
+  String settingsTitle=arguments.getString(PrintSettingsFragment.EXTRA_SETTINGS_TITLE);
+  String settingsComponentName=arguments.getString(PrintSettingsFragment.EXTRA_SETTINGS_COMPONENT_NAME);
+  if (!TextUtils.isEmpty(settingsTitle) && !TextUtils.isEmpty(settingsComponentName)) {
+    Intent settingsIntent=new Intent(Intent.ACTION_MAIN).setComponent(ComponentName.unflattenFromString(settingsComponentName.toString()));
+    List<ResolveInfo> resolvedActivities=getPackageManager().queryIntentActivities(settingsIntent,0);
+    if (!resolvedActivities.isEmpty()) {
+      if (resolvedActivities.get(0).activityInfo.exported) {
+        mSettingsTitle=settingsTitle;
+        mSettingsIntent=settingsIntent;
+      }
+    }
+  }
+  String addPrintersTitle=arguments.getString(PrintSettingsFragment.EXTRA_ADD_PRINTERS_TITLE);
+  String addPrintersComponentName=arguments.getString(PrintSettingsFragment.EXTRA_ADD_PRINTERS_COMPONENT_NAME);
+  if (!TextUtils.isEmpty(addPrintersTitle) && !TextUtils.isEmpty(addPrintersComponentName)) {
+    Intent addPritnersIntent=new Intent(Intent.ACTION_MAIN).setComponent(ComponentName.unflattenFromString(addPrintersComponentName.toString()));
+    List<ResolveInfo> resolvedActivities=getPackageManager().queryIntentActivities(addPritnersIntent,0);
+    if (!resolvedActivities.isEmpty()) {
+      if (resolvedActivities.get(0).activityInfo.exported) {
+        mAddPrintersTitle=addPrintersTitle;
+        mAddPrintersIntent=addPritnersIntent;
+      }
+    }
+  }
+  mEnableWarningTitle=arguments.getCharSequence(PrintSettingsFragment.EXTRA_ENABLE_WARNING_TITLE);
+  mEnableWarningMessage=arguments.getCharSequence(PrintSettingsFragment.EXTRA_ENABLE_WARNING_MESSAGE);
+  mComponentName=ComponentName.unflattenFromString(arguments.getString(PrintSettingsFragment.EXTRA_SERVICE_COMPONENT_NAME));
+  setHasOptionsMenu(true);
+}

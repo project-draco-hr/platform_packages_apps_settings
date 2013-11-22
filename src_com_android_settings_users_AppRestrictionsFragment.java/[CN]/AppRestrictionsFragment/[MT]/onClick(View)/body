@@ -1,20 +1,20 @@
 {
-  if (v == mHeaderView) {
-    showDialog(DIALOG_ID_EDIT_USER_INFO);
-  }
- else   if (v.getTag() instanceof AppRestrictionsPreference) {
+  if (v.getTag() instanceof AppRestrictionsPreference) {
     AppRestrictionsPreference pref=(AppRestrictionsPreference)v.getTag();
     if (v.getId() == R.id.app_restrictions_settings) {
-      toggleAppPanel(pref);
+      onAppSettingsIconClicked(pref);
     }
  else     if (!pref.isImmutable()) {
       pref.setChecked(!pref.isChecked());
       final String packageName=pref.getKey().substring(PKG_PREFIX.length());
       mSelectedPackages.put(packageName,pref.isChecked());
       if (pref.isChecked() && pref.hasSettings && pref.restrictions == null) {
-        requestRestrictionsForApp(packageName,pref);
+        requestRestrictionsForApp(packageName,pref,false);
       }
       mAppListChanged=true;
+      if (!mRestrictedProfile) {
+        applyUserAppState(packageName,pref.isChecked());
+      }
       updateAllEntries(pref.getKey(),pref.isChecked());
     }
   }

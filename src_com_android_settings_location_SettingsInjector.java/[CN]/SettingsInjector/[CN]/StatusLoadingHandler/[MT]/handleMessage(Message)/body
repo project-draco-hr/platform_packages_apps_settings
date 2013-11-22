@@ -1,0 +1,56 @@
+{
+  if (Log.isLoggable(TAG,Log.DEBUG)) {
+    Log.d(TAG,"handleMessage start: " + msg + ", "+ this);
+  }
+switch (msg.what) {
+case WHAT_RELOAD:
+    mReloadRequested=true;
+  break;
+case WHAT_RECEIVED_STATUS:
+final Setting receivedSetting=(Setting)msg.obj;
+receivedSetting.maybeLogElapsedTime();
+mSettingsBeingLoaded.remove(receivedSetting);
+mTimedOutSettings.remove(receivedSetting);
+removeMessages(WHAT_TIMEOUT,receivedSetting);
+break;
+case WHAT_TIMEOUT:
+final Setting timedOutSetting=(Setting)msg.obj;
+mSettingsBeingLoaded.remove(timedOutSetting);
+mTimedOutSettings.add(timedOutSetting);
+if (Log.isLoggable(TAG,Log.WARN)) {
+Log.w(TAG,"Timed out after " + timedOutSetting.getElapsedTime() + " millis trying to get status for: "+ timedOutSetting);
+}
+break;
+default :
+Log.wtf(TAG,"Unexpected what: " + msg);
+}
+if (mSettingsBeingLoaded.size() > 0 || mTimedOutSettings.size() > 1) {
+if (Log.isLoggable(TAG,Log.VERBOSE)) {
+Log.v(TAG,"too many services already live for " + msg + ", "+ this);
+}
+return;
+}
+if (mReloadRequested && mSettingsToLoad.isEmpty() && mSettingsBeingLoaded.isEmpty()&& mTimedOutSettings.isEmpty()) {
+if (Log.isLoggable(TAG,Log.VERBOSE)) {
+Log.v(TAG,"reloading because idle and reload requesteed " + msg + ", "+ this);
+}
+mSettingsToLoad.addAll(mSettings);
+mReloadRequested=false;
+}
+Iterator<Setting> iter=mSettingsToLoad.iterator();
+if (!iter.hasNext()) {
+if (Log.isLoggable(TAG,Log.VERBOSE)) {
+Log.v(TAG,"nothing left to do for " + msg + ", "+ this);
+}
+return;
+}
+Setting setting=iter.next();
+iter.remove();
+setting.startService();
+mSettingsBeingLoaded.add(setting);
+Message timeoutMsg=obtainMessage(WHAT_TIMEOUT,setting);
+sendMessageDelayed(timeoutMsg,INJECTED_STATUS_UPDATE_TIMEOUT_MILLIS);
+if (Log.isLoggable(TAG,Log.DEBUG)) {
+Log.d(TAG,"handleMessage end " + msg + ", "+ this+ ", started loading "+ setting);
+}
+}

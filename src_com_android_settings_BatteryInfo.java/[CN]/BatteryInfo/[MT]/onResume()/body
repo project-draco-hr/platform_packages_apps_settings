@@ -9,7 +9,7 @@
   mVoltage=(TextView)findViewById(R.id.voltage);
   mTemperature=(TextView)findViewById(R.id.temperature);
   mUptime=(TextView)findViewById(R.id.uptime);
-  mBatteryStats=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
+  mBatteryStats=IBatteryStats.Stub.asInterface(ServiceManager.getService(BatteryStats.SERVICE_NAME));
   mScreenStats=IPowerManager.Stub.asInterface(ServiceManager.getService(POWER_SERVICE));
   mHandler.sendEmptyMessageDelayed(EVENT_TICK,1000);
   registerReceiver(mIntentReceiver,mIntentFilter);

@@ -1,0 +1,18 @@
+{
+  super.onBindView(view);
+  RadioButton radio=(RadioButton)view.findViewById(R.id.home_radio);
+  radio.setChecked(isChecked);
+  Integer indexObj=new Integer(index);
+  ImageView icon=(ImageView)view.findViewById(R.id.home_app_uninstall);
+  if (isSystem) {
+    icon.setEnabled(false);
+    icon.setColorFilter(grayscaleFilter);
+  }
+ else {
+    icon.setOnClickListener(mDeleteClickListener);
+    icon.setTag(indexObj);
+  }
+  View v=view.findViewById(R.id.home_app_pref);
+  v.setOnClickListener(mHomeClickListener);
+  v.setTag(indexObj);
+}

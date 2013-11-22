@@ -4,7 +4,7 @@
   final Context context=getActivity();
   if (context == null)   return;
   final PackageManager pm=mPackageManager;
-  IPackageManager ipm=AppGlobals.getPackageManager();
+  final IPackageManager ipm=mIPm;
   final HashSet<String> excludePackages=new HashSet<String>();
   addSystemImes(excludePackages);
   Intent launcherIntent=new Intent(Intent.ACTION_MAIN);
@@ -12,8 +12,9 @@
   addSystemApps(mVisibleApps,launcherIntent,excludePackages);
   Intent widgetIntent=new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
   addSystemApps(mVisibleApps,widgetIntent,excludePackages);
-  List<ApplicationInfo> installedApps=pm.getInstalledApplications(0);
+  List<ApplicationInfo> installedApps=pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
   for (  ApplicationInfo app : installedApps) {
+    if ((app.flags & ApplicationInfo.FLAG_INSTALLED) == 0)     continue;
     if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
       SelectableAppInfo info=new SelectableAppInfo();
       info.packageName=app.packageName;
@@ -25,7 +26,7 @@
  else {
       try {
         PackageInfo pi=pm.getPackageInfo(app.packageName,0);
-        if (pi.requiredAccountType != null && pi.restrictedAccountType == null) {
+        if (mRestrictedProfile && pi.requiredAccountType != null && pi.restrictedAccountType == null) {
           mSelectedPackages.put(app.packageName,false);
         }
       }
@@ -35,12 +36,13 @@
   }
   mUserApps=null;
   try {
-    mUserApps=ipm.getInstalledApplications(0,mUser.getIdentifier()).getList();
+    mUserApps=ipm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES,mUser.getIdentifier()).getList();
   }
  catch (  RemoteException re) {
   }
   if (mUserApps != null) {
     for (    ApplicationInfo app : mUserApps) {
+      if ((app.flags & ApplicationInfo.FLAG_INSTALLED) == 0)       continue;
       if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
         SelectableAppInfo info=new SelectableAppInfo();
         info.packageName=app.packageName;

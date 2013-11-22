@@ -4,8 +4,11 @@
   getActivity().setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
   mPlayExample=findPreference(KEY_PLAY_EXAMPLE);
   mPlayExample.setOnPreferenceClickListener(this);
+  mPlayExample.setEnabled(false);
   mEnginePreferenceCategory=(PreferenceCategory)findPreference(KEY_ENGINE_PREFERENCE_SECTION);
   mDefaultRatePref=(ListPreference)findPreference(KEY_DEFAULT_RATE);
+  mEngineStatus=findPreference(KEY_STATUS);
+  updateEngineStatus(R.string.tts_status_checking);
   mTts=new TextToSpeech(getActivity().getApplicationContext(),mInitListener);
   mEnginesHelper=new TtsEngines(getActivity().getApplicationContext());
   setTtsUtteranceProgressListener();

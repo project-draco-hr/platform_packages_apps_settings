@@ -1,21 +1,27 @@
 {
   final Activity activity=getActivity();
-  final TreeSet<String> localeList=UserDictionaryList.getUserDictionaryLocalesSet(activity);
-  if (null == localeList) {
+  final TreeSet<String> localeSet=UserDictionaryList.getUserDictionaryLocalesSet(activity);
+  if (null == localeSet) {
     getPreferenceScreen().removePreference(userDictionaryPreference);
   }
- else   if (localeList.size() <= 1) {
-    final Intent intent=new Intent(UserDictionaryList.USER_DICTIONARY_SETTINGS_INTENT_ACTION);
-    userDictionaryPreference.setTitle(R.string.user_dict_single_settings_title);
-    userDictionaryPreference.setIntent(intent);
-    userDictionaryPreference.setFragment(com.android.settings.UserDictionarySettings.class.getName());
-    if (localeList.size() == 1) {
-      final String locale=(String)localeList.toArray()[0];
-      userDictionaryPreference.getExtras().putString("locale",locale);
-    }
-  }
  else {
-    userDictionaryPreference.setTitle(R.string.user_dict_multiple_settings_title);
-    userDictionaryPreference.setFragment(UserDictionaryList.class.getName());
+    userDictionaryPreference.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+      @Override public boolean onPreferenceClick(      Preference arg0){
+        final Bundle extras=new Bundle();
+        final Class<? extends Fragment> targetFragment;
+        if (localeSet.size() <= 1) {
+          if (!localeSet.isEmpty()) {
+            extras.putString("locale",localeSet.first());
+          }
+          targetFragment=UserDictionarySettings.class;
+        }
+ else {
+          targetFragment=UserDictionaryList.class;
+        }
+        startFragment(InputMethodAndLanguageSettings.this,targetFragment.getCanonicalName(),-1,extras);
+        return true;
+      }
+    }
+);
   }
 }

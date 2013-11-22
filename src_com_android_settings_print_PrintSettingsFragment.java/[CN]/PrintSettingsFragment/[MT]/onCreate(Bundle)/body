@@ -1,0 +1,9 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.print_settings);
+  mActivePrintJobsCategory=(PreferenceCategory)findPreference(PRINT_JOBS_CATEGORY);
+  mPrintServicesCategory=(PreferenceCategory)findPreference(PRINT_SERVICES_CATEGORY);
+  getPreferenceScreen().removePreference(mActivePrintJobsCategory);
+  mPrintJobsController=new PrintJobsController();
+  getActivity().getLoaderManager().initLoader(LOADER_ID_PRINT_JOBS_LOADER,null,mPrintJobsController);
+}

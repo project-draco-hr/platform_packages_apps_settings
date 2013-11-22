@@ -1,0 +1,31 @@
+{
+  if (requestCode == REQUEST_PIN_CHALLENGE) {
+    Bundle resumeActionBundle=mResumeActionBundle;
+    mResumeActionBundle=null;
+    mChallengeRequested=false;
+    if (resultCode == Activity.RESULT_OK) {
+      mChallengeSucceeded=true;
+      String prefKey=resumeActionBundle == null ? null : resumeActionBundle.getString(EXTRA_PREFERENCE);
+      if (prefKey != null) {
+        Preference pref=findPreference(prefKey);
+        if (pref != null) {
+          if (pref instanceof CheckBoxPreference && resumeActionBundle.containsKey(EXTRA_CHECKBOX_STATE)) {
+            boolean isChecked=resumeActionBundle.getBoolean(EXTRA_CHECKBOX_STATE,false);
+            ((CheckBoxPreference)pref).setChecked(isChecked);
+          }
+          if (!onPreferenceTreeClick(getPreferenceScreen(),pref)) {
+            Intent prefIntent=pref.getIntent();
+            if (prefIntent != null) {
+              pref.getContext().startActivity(prefIntent);
+            }
+          }
+        }
+      }
+    }
+ else     if (!isDetached()) {
+      finishFragment();
+    }
+    return;
+  }
+  super.onActivityResult(requestCode,resultCode,data);
+}

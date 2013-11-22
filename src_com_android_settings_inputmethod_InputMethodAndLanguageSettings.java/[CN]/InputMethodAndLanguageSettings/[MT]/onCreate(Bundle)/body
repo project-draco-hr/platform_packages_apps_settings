@@ -32,7 +32,7 @@
     getPreferenceScreen().addPreference(mKeyboardSettingsCategory);
   }
   mImm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-  mImis=mImm.getInputMethodList();
+  mInputMethodSettingValues=InputMethodSettingValuesWrapper.getInstance(getActivity());
   mKeyboardSettingsCategory.removeAll();
   if (!mIsOnlyImeSettings) {
     final PreferenceScreen currentIme=new PreferenceScreen(getActivity(),null);
@@ -40,17 +40,21 @@
     currentIme.setTitle(getResources().getString(R.string.current_input_method));
     mKeyboardSettingsCategory.addPreference(currentIme);
   }
-  mInputMethodPreferenceList.clear();
-  final int N=(mImis == null ? 0 : mImis.size());
-  for (int i=0; i < N; ++i) {
-    final InputMethodInfo imi=mImis.get(i);
-    final InputMethodPreference pref=getInputMethodPreference(imi,N);
-    mInputMethodPreferenceList.add(pref);
-  }
-  if (!mInputMethodPreferenceList.isEmpty()) {
-    Collections.sort(mInputMethodPreferenceList);
+synchronized (mInputMethodPreferenceList) {
+    mInputMethodPreferenceList.clear();
+    final List<InputMethodInfo> imis=mInputMethodSettingValues.getInputMethodList();
+    final int N=(imis == null ? 0 : imis.size());
     for (int i=0; i < N; ++i) {
-      mKeyboardSettingsCategory.addPreference(mInputMethodPreferenceList.get(i));
+      final InputMethodInfo imi=imis.get(i);
+      final InputMethodPreference pref=getInputMethodPreference(imi);
+      pref.setOnImePreferenceChangeListener(mOnImePreferenceChangedListener);
+      mInputMethodPreferenceList.add(pref);
+    }
+    if (!mInputMethodPreferenceList.isEmpty()) {
+      Collections.sort(mInputMethodPreferenceList);
+      for (int i=0; i < N; ++i) {
+        mKeyboardSettingsCategory.addPreference(mInputMethodPreferenceList.get(i));
+      }
     }
   }
   mIm=(InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);

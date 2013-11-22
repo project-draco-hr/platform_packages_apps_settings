@@ -1,0 +1,11 @@
+{
+  int state=getConnectionStatus(device);
+switch (state) {
+case BluetoothProfile.STATE_DISCONNECTED:
+    return R.string.bluetooth_map_profile_summary_use_for;
+case BluetoothProfile.STATE_CONNECTED:
+  return R.string.bluetooth_map_profile_summary_connected;
+default :
+return Utils.getConnectionStateSummary(state);
+}
+}

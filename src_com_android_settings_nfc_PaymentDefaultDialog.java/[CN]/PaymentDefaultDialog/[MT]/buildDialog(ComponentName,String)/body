@@ -1,0 +1,49 @@
+{
+  if (component == null || category == null) {
+    Log.e(TAG,"Component or category are null");
+    return false;
+  }
+  if (!CardEmulation.CATEGORY_PAYMENT.equals(category)) {
+    Log.e(TAG,"Don't support defaults for category " + category);
+    return false;
+  }
+  PaymentAppInfo requestedPaymentApp=null;
+  PaymentAppInfo defaultPaymentApp=null;
+  List<PaymentAppInfo> services=mBackend.getPaymentAppInfos();
+  for (  PaymentAppInfo service : services) {
+    if (component.equals(service.componentName)) {
+      requestedPaymentApp=service;
+    }
+    if (service.isDefault) {
+      defaultPaymentApp=service;
+    }
+  }
+  if (requestedPaymentApp == null) {
+    Log.e(TAG,"Component " + component + " is not a registered payment service.");
+    return false;
+  }
+  ComponentName defaultComponent=mBackend.getDefaultPaymentApp();
+  if (defaultComponent != null && defaultComponent.equals(component)) {
+    Log.e(TAG,"Component " + component + " is already default.");
+    return false;
+  }
+  mNewDefault=component;
+  final AlertController.AlertParams p=mAlertParams;
+  p.mTitle=getString(R.string.nfc_payment_set_default_label);
+  if (defaultPaymentApp == null) {
+    String formatString=getString(R.string.nfc_payment_set_default);
+    String msg=String.format(formatString,requestedPaymentApp.caption);
+    p.mMessage=msg;
+  }
+ else {
+    String formatString=getString(R.string.nfc_payment_set_default_instead_of);
+    String msg=String.format(formatString,requestedPaymentApp.caption,defaultPaymentApp.caption);
+    p.mMessage=msg;
+  }
+  p.mPositiveButtonText=getString(R.string.yes);
+  p.mNegativeButtonText=getString(R.string.no);
+  p.mPositiveButtonListener=this;
+  p.mNegativeButtonListener=this;
+  setupAlert();
+  return true;
+}

@@ -1,0 +1,11 @@
+{
+  super.onCreate(icicle);
+  mPm=getActivity().getPackageManager();
+  mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+  final Bundle args=getArguments();
+  mEntry=(ProcStatsEntry)args.getParcelable(EXTRA_ENTRY);
+  mEntry.retrieveUiData(mPm);
+  mUseUss=args.getBoolean(EXTRA_USE_USS);
+  mMaxWeight=args.getLong(EXTRA_MAX_WEIGHT);
+  mTotalTime=args.getLong(EXTRA_TOTAL_TIME);
+}

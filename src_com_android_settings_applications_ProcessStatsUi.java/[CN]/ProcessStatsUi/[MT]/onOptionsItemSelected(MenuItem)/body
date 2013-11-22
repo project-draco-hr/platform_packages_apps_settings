@@ -1,0 +1,29 @@
+{
+  final int id=item.getItemId();
+switch (id) {
+case MENU_STATS_REFRESH:
+    mStats=null;
+  refreshStats();
+return true;
+case MENU_SHOW_SYSTEM:
+mShowSystem=!mShowSystem;
+refreshStats();
+return true;
+case MENU_USE_USS:
+mUseUss=!mUseUss;
+refreshStats();
+return true;
+case MENU_TYPE_BACKGROUND:
+case MENU_TYPE_FOREGROUND:
+case MENU_TYPE_CACHED:
+mStatsType=item.getItemId();
+refreshStats();
+return true;
+default :
+if (id >= MENU_DURATION && id < (MENU_DURATION + NUM_DURATIONS)) {
+mDuration=sDurations[id - MENU_DURATION];
+refreshStats();
+}
+return false;
+}
+}

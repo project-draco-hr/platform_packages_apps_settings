@@ -1,0 +1,12 @@
+{
+  mPreferenceKey=arguments.getString(AccessibilitySettings.EXTRA_PREFERENCE_KEY);
+  final boolean enabled=arguments.getBoolean(AccessibilitySettings.EXTRA_CHECKED);
+  mToggleSwitch.setCheckedInternal(enabled);
+  PreferenceActivity activity=(PreferenceActivity)getActivity();
+  if (!activity.onIsMultiPane() || activity.onIsHidingHeaders()) {
+    String title=arguments.getString(AccessibilitySettings.EXTRA_TITLE);
+    getActivity().setTitle(title);
+  }
+  CharSequence summary=arguments.getCharSequence(AccessibilitySettings.EXTRA_SUMMARY);
+  mSummaryPreference.setSummary(summary);
+}

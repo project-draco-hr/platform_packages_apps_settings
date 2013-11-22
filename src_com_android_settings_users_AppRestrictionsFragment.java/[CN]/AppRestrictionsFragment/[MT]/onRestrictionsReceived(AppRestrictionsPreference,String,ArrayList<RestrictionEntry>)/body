@@ -1,4 +1,5 @@
 {
+  removeRestrictionsForApp(preference);
   final Context context=preference.getContext();
   int count=1;
   for (  RestrictionEntry entry : restrictions) {
@@ -45,7 +46,7 @@ p.setOrder(preference.getOrder() + count);
 p.setKey(preference.getKey().substring(PKG_PREFIX.length()) + DELIMITER + entry.getKey());
 mAppList.addPreference(p);
 p.setOnPreferenceChangeListener(AppRestrictionsFragment.this);
-preference.childPreferences.add(p);
+preference.mChildren.add(p);
 count++;
 }
 }

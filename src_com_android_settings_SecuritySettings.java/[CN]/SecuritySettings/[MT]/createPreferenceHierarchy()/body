@@ -36,7 +36,6 @@ break;
 }
 }
 addPreferencesFromResource(resid);
-DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
 mIsPrimary=UserHandle.myUserId() == UserHandle.USER_OWNER;
 if (!mIsPrimary) {
 Preference ownerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
@@ -50,7 +49,7 @@ ownerInfoPref.setTitle(R.string.user_info_settings_title);
 }
 }
 if (mIsPrimary) {
-switch (dpm.getStorageEncryptionStatus()) {
+switch (mDPM.getStorageEncryptionStatus()) {
 case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
 addPreferencesFromResource(R.xml.security_settings_encrypted);
 break;
@@ -83,14 +82,34 @@ if ((TelephonyManager.getDefault().getSimState() == TelephonyManager.SIM_STATE_A
 root.findPreference(KEY_SIM_LOCK).setEnabled(false);
 }
 }
+mEnableKeyguardWidgets=(CheckBoxPreference)root.findPreference(KEY_ENABLE_WIDGETS);
+if (mEnableKeyguardWidgets != null) {
+if (ActivityManager.isLowRamDeviceStatic()) {
+PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
+if (securityCategory != null) {
+securityCategory.removePreference(root.findPreference(KEY_ENABLE_WIDGETS));
+mEnableKeyguardWidgets=null;
+}
+}
+ else {
+final boolean disabled=(0 != (mDPM.getKeyguardDisabledFeatures(null) & DevicePolicyManager.KEYGUARD_DISABLE_WIDGETS_ALL));
+if (disabled) {
+mEnableKeyguardWidgets.setSummary(R.string.security_enable_widgets_disabled_summary);
+}
+ else {
+mEnableKeyguardWidgets.setSummary("");
+}
+mEnableKeyguardWidgets.setEnabled(!disabled);
+}
+}
 mShowPassword=(CheckBoxPreference)root.findPreference(KEY_SHOW_PASSWORD);
+mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
 final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
-if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
 mKeyStore=KeyStore.getInstance();
+if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
 Preference credentialStorageType=root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE);
 final int storageSummaryRes=mKeyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware : R.string.credential_storage_type_software;
 credentialStorageType.setSummary(storageSummaryRes);
-mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
 }
  else {
 removePreference(KEY_CREDENTIALS_MANAGER);
@@ -134,6 +153,12 @@ mNotificationAccess.setSummary(getResources().getString(R.string.manage_notifica
 mNotificationAccess.setSummary(String.format(getResources().getQuantityString(R.plurals.manage_notification_access_summary_nonzero,n,n)));
 }
 }
+}
+if (shouldBePinProtected(RESTRICTIONS_PIN_SET)) {
+protectByRestrictions(mToggleAppInstallation);
+protectByRestrictions(mToggleVerifyApps);
+protectByRestrictions(mResetCredentials);
+protectByRestrictions(root.findPreference(KEY_CREDENTIALS_INSTALL));
 }
 return root;
 }

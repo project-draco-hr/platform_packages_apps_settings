@@ -1,0 +1,12 @@
+{
+  final int userId=mUser.getIdentifier();
+  if (!mUserManager.getUserInfo(userId).isRestricted() && userId != UserHandle.myUserId()) {
+    Log.e(TAG,"Cannot apply application restrictions on another user!");
+    return;
+  }
+  for (  Map.Entry<String,Boolean> entry : mSelectedPackages.entrySet()) {
+    String packageName=entry.getKey();
+    boolean enabled=entry.getValue();
+    applyUserAppState(packageName,enabled);
+  }
+}

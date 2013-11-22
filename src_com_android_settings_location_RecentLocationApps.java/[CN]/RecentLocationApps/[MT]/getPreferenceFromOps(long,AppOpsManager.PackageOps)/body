@@ -1,0 +1,41 @@
+{
+  String packageName=ops.getPackageName();
+  List<AppOpsManager.OpEntry> entries=ops.getOps();
+  boolean highBattery=false;
+  boolean normalBattery=false;
+  long recentLocationCutoffTime=now - RECENT_TIME_INTERVAL_MILLIS;
+  for (  AppOpsManager.OpEntry entry : entries) {
+    if (entry.isRunning() || entry.getTime() >= recentLocationCutoffTime) {
+switch (entry.getOp()) {
+case AppOpsManager.OP_MONITOR_LOCATION:
+        normalBattery=true;
+      break;
+case AppOpsManager.OP_MONITOR_HIGH_POWER_LOCATION:
+    highBattery=true;
+  break;
+default :
+break;
+}
+}
+}
+if (!highBattery && !normalBattery) {
+if (Log.isLoggable(TAG,Log.VERBOSE)) {
+Log.v(TAG,packageName + " hadn't used location within the time interval.");
+}
+return null;
+}
+Preference pref=null;
+try {
+ApplicationInfo appInfo=mPackageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA);
+if (appInfo.uid == ops.getUid()) {
+pref=createRecentLocationEntry(mPackageManager.getApplicationIcon(appInfo),mPackageManager.getApplicationLabel(appInfo),highBattery,new PackageEntryClickedListener(packageName));
+}
+ else if (Log.isLoggable(TAG,Log.VERBOSE)) {
+Log.v(TAG,"package " + packageName + " with Uid "+ ops.getUid()+ " belongs to another inactive account, ignored.");
+}
+}
+ catch (PackageManager.NameNotFoundException e) {
+Log.wtf(TAG,"Package not found: " + packageName,e);
+}
+return pref;
+}

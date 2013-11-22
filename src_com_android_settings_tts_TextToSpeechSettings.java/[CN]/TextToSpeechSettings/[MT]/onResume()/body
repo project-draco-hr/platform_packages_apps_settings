@@ -1,0 +1,11 @@
+{
+  super.onResume();
+  if (mTts == null || mCurrentDefaultLocale == null) {
+    return;
+  }
+  Locale ttsDefaultLocale=mTts.getDefaultLanguage();
+  if (mCurrentDefaultLocale != null && !mCurrentDefaultLocale.equals(ttsDefaultLocale)) {
+    updateWidgetState(false);
+    checkDefaultLocale();
+  }
+}

@@ -1,0 +1,15 @@
+{
+  TypedArray sa=res.obtainAttributes(attrs,android.R.styleable.SettingInjectorService);
+  try {
+    final String title=sa.getString(android.R.styleable.SettingInjectorService_title);
+    final int iconId=sa.getResourceId(android.R.styleable.SettingInjectorService_icon,0);
+    final String settingsActivity=sa.getString(android.R.styleable.SettingInjectorService_settingsActivity);
+    if (Log.isLoggable(TAG,Log.DEBUG)) {
+      Log.d(TAG,"parsed title: " + title + ", iconId: "+ iconId+ ", settingsActivity: "+ settingsActivity);
+    }
+    return InjectedSetting.newInstance(packageName,className,title,iconId,settingsActivity);
+  }
+  finally {
+    sa.recycle();
+  }
+}

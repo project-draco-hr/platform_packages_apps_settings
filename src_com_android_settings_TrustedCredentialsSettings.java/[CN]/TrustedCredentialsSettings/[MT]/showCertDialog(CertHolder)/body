@@ -17,6 +17,10 @@
   removeButton.setText(certHolder.mTab.getButtonLabel(certHolder));
   removeButton.setOnClickListener(new View.OnClickListener(){
     @Override public void onClick(    View v){
+      if (mUserManager.hasRestrictionsChallenge() && !mChallengeSucceeded) {
+        ensurePin();
+        return;
+      }
       AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
       builder.setMessage(certHolder.mTab.getButtonConfirmation(certHolder));
       builder.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){

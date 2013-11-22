@@ -1,0 +1,23 @@
+{
+  final int argb=getValueAt(index);
+  final int alpha=Color.alpha(argb);
+  final ImageView swatch=(ImageView)view.findViewById(R.id.color_swatch);
+  if (alpha < 255) {
+    swatch.setBackgroundResource(R.drawable.transparency_tileable);
+  }
+ else {
+    swatch.setBackground(null);
+  }
+  final Drawable foreground=swatch.getDrawable();
+  if (foreground instanceof ColorDrawable) {
+    ((ColorDrawable)foreground).setColor(argb);
+  }
+ else {
+    swatch.setImageDrawable(new ColorDrawable(argb));
+  }
+  final CharSequence title=getTitleAt(index);
+  if (title != null) {
+    final TextView summary=(TextView)view.findViewById(R.id.summary);
+    summary.setText(title);
+  }
+}

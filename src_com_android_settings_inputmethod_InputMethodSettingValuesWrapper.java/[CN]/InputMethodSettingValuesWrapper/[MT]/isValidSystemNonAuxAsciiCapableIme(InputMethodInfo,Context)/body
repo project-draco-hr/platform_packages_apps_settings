@@ -1,0 +1,13 @@
+{
+  if (imi.isAuxiliaryIme()) {
+    return false;
+  }
+  if (InputMethodUtils.isValidSystemDefaultIme(true,imi,context)) {
+    return true;
+  }
+  if (mAsciiCapableEnabledImis.isEmpty()) {
+    Log.w(TAG,"ascii capable subtype enabled imi not found. Fall back to English" + " Keyboard subtype.");
+    return InputMethodUtils.containsSubtypeOf(imi,ENGLISH_LOCALE.getLanguage(),InputMethodUtils.SUBTYPE_MODE_KEYBOARD);
+  }
+  return mAsciiCapableEnabledImis.contains(imi);
+}

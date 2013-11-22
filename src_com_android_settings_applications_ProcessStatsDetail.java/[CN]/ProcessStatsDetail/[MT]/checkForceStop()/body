@@ -1,0 +1,23 @@
+{
+  if (mEntry.mUiPackage == null || mEntry.mUid < Process.FIRST_APPLICATION_UID) {
+    mForceStopButton.setEnabled(false);
+    return;
+  }
+  if (mDpm.packageHasActiveAdmins(mEntry.mUiPackage)) {
+    mForceStopButton.setEnabled(false);
+    return;
+  }
+  try {
+    ApplicationInfo info=mPm.getApplicationInfo(mEntry.mUiPackage,0);
+    if ((info.flags & ApplicationInfo.FLAG_STOPPED) == 0) {
+      mForceStopButton.setEnabled(true);
+    }
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+  }
+  Intent intent=new Intent(Intent.ACTION_QUERY_PACKAGE_RESTART,Uri.fromParts("package",mEntry.mUiPackage,null));
+  intent.putExtra(Intent.EXTRA_PACKAGES,new String[]{mEntry.mUiPackage});
+  intent.putExtra(Intent.EXTRA_UID,mEntry.mUid);
+  intent.putExtra(Intent.EXTRA_USER_HANDLE,UserHandle.getUserId(mEntry.mUid));
+  getActivity().sendOrderedBroadcast(intent,null,mCheckKillProcessesReceiver,null,Activity.RESULT_CANCELED,null,null);
+}

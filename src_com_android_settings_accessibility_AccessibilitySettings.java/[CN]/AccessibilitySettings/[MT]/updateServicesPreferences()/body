@@ -1,0 +1,59 @@
+{
+  mServicesCategory.removeAll();
+  AccessibilityManager accessibilityManager=AccessibilityManager.getInstance(getActivity());
+  List<AccessibilityServiceInfo> installedServices=accessibilityManager.getInstalledAccessibilityServiceList();
+  Set<ComponentName> enabledServices=AccessibilityUtils.getEnabledServicesFromSettings(getActivity());
+  final boolean accessibilityEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0) == 1;
+  for (int i=0, count=installedServices.size(); i < count; ++i) {
+    AccessibilityServiceInfo info=installedServices.get(i);
+    PreferenceScreen preference=getPreferenceManager().createPreferenceScreen(getActivity());
+    String title=info.getResolveInfo().loadLabel(getPackageManager()).toString();
+    ServiceInfo serviceInfo=info.getResolveInfo().serviceInfo;
+    ComponentName componentName=new ComponentName(serviceInfo.packageName,serviceInfo.name);
+    preference.setKey(componentName.flattenToString());
+    preference.setTitle(title);
+    final boolean serviceEnabled=accessibilityEnabled && enabledServices.contains(componentName);
+    if (serviceEnabled) {
+      preference.setSummary(getString(R.string.accessibility_feature_state_on));
+    }
+ else {
+      preference.setSummary(getString(R.string.accessibility_feature_state_off));
+    }
+    preference.setOrder(i);
+    preference.setFragment(ToggleAccessibilityServicePreferenceFragment.class.getName());
+    preference.setPersistent(true);
+    Bundle extras=preference.getExtras();
+    extras.putString(EXTRA_PREFERENCE_KEY,preference.getKey());
+    extras.putBoolean(EXTRA_CHECKED,serviceEnabled);
+    extras.putString(EXTRA_TITLE,title);
+    String description=info.loadDescription(getPackageManager());
+    if (TextUtils.isEmpty(description)) {
+      description=getString(R.string.accessibility_service_default_description);
+    }
+    extras.putString(EXTRA_SUMMARY,description);
+    String settingsClassName=info.getSettingsActivityName();
+    if (!TextUtils.isEmpty(settingsClassName)) {
+      extras.putString(EXTRA_SETTINGS_TITLE,getString(R.string.accessibility_menu_item_settings));
+      extras.putString(EXTRA_SETTINGS_COMPONENT_NAME,new ComponentName(info.getResolveInfo().serviceInfo.packageName,settingsClassName).flattenToString());
+    }
+    extras.putParcelable(EXTRA_COMPONENT_NAME,componentName);
+    mServicesCategory.addPreference(preference);
+  }
+  if (mServicesCategory.getPreferenceCount() == 0) {
+    if (mNoServicesMessagePreference == null) {
+      mNoServicesMessagePreference=new Preference(getActivity()){
+        @Override protected void onBindView(        View view){
+          super.onBindView(view);
+          TextView summaryView=(TextView)view.findViewById(R.id.summary);
+          String title=getString(R.string.accessibility_no_services_installed);
+          summaryView.setText(title);
+        }
+      }
+;
+      mNoServicesMessagePreference.setPersistent(false);
+      mNoServicesMessagePreference.setLayoutResource(R.layout.text_description_preference);
+      mNoServicesMessagePreference.setSelectable(false);
+    }
+    mServicesCategory.addPreference(mNoServicesMessagePreference);
+  }
+}

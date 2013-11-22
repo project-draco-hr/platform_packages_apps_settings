@@ -1,0 +1,29 @@
+{
+  final ContentResolver cr=getActivity().getContentResolver();
+  if (mForegroundColor == preference) {
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_FOREGROUND_COLOR,value);
+  }
+ else   if (mBackgroundColor == preference || mBackgroundOpacity == preference) {
+    final int bgColor=mBackgroundColor.getValue();
+    final int bgAlpha=mBackgroundOpacity.getValue();
+    final int argb;
+    if (Color.alpha(bgColor) == 0) {
+      argb=Color.alpha(bgAlpha);
+    }
+ else {
+      argb=bgColor & 0x00FFFFFF | bgAlpha & 0xFF000000;
+    }
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_BACKGROUND_COLOR,argb);
+  }
+ else   if (mEdgeColor == preference) {
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_EDGE_COLOR,value);
+  }
+ else   if (mPreset == preference) {
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_PRESET,value);
+    refreshShowingCustom();
+  }
+ else   if (mEdgeType == preference) {
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_EDGE_TYPE,value);
+  }
+  refreshPreviewText();
+}

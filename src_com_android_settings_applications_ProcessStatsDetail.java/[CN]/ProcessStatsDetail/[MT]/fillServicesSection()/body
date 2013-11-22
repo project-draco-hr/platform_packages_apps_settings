@@ -1,0 +1,32 @@
+{
+  if (mEntry.mServices.size() > 0) {
+    boolean addPackageSections=false;
+    ArrayList<ArrayList<ProcStatsEntry.Service>> servicePkgs=new ArrayList<ArrayList<ProcStatsEntry.Service>>();
+    for (int ip=0; ip < mEntry.mServices.size(); ip++) {
+      ArrayList<ProcStatsEntry.Service> services=(ArrayList<ProcStatsEntry.Service>)mEntry.mServices.valueAt(ip).clone();
+      Collections.sort(services,sServiceCompare);
+      servicePkgs.add(services);
+    }
+    if (mEntry.mServices.size() > 1 || !mEntry.mServices.valueAt(0).get(0).mPackage.equals(mEntry.mPackage)) {
+      addPackageSections=true;
+      Collections.sort(servicePkgs,sServicePkgCompare);
+    }
+    for (int ip=0; ip < servicePkgs.size(); ip++) {
+      ArrayList<ProcStatsEntry.Service> services=servicePkgs.get(ip);
+      if (addPackageSections) {
+        addPackageHeaderItem(mServicesParent,services.get(0).mPackage);
+      }
+      for (int is=0; is < services.size(); is++) {
+        ProcStatsEntry.Service service=services.get(is);
+        String label=service.mName;
+        int tail=label.lastIndexOf('.');
+        if (tail >= 0 && tail < (label.length() - 1)) {
+          label=label.substring(tail + 1);
+        }
+        long duration=service.mDuration;
+        final double percentOfTime=(((double)duration) / mTotalTime) * 100;
+        addDetailsItem(mServicesParent,label,getActivity().getResources().getString(R.string.percentage,(int)Math.ceil(percentOfTime)));
+      }
+    }
+  }
+}

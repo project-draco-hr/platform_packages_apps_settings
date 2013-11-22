@@ -9,24 +9,30 @@
     return;
   }
   addPreferencesFromResource(R.xml.development_prefs);
+  final PreferenceGroup debugDebuggingCategory=(PreferenceGroup)findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
   mEnableAdb=findAndInitCheckboxPref(ENABLE_ADB);
   mClearAdbKeys=findPreference(CLEAR_ADB_KEYS);
   if (!SystemProperties.getBoolean("ro.adb.secure",false)) {
-    PreferenceGroup debugDebuggingCategory=(PreferenceGroup)findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
     if (debugDebuggingCategory != null) {
       debugDebuggingCategory.removePreference(mClearAdbKeys);
     }
   }
+  mEnableTerminal=findAndInitCheckboxPref(ENABLE_TERMINAL);
+  if (!isPackageInstalled(getActivity(),TERMINAL_APP_PACKAGE)) {
+    debugDebuggingCategory.removePreference(mEnableTerminal);
+    mEnableTerminal=null;
+  }
   mBugreport=findPreference(BUGREPORT);
   mBugreportInPower=findAndInitCheckboxPref(BUGREPORT_IN_POWER_KEY);
   mKeepScreenOn=findAndInitCheckboxPref(KEEP_SCREEN_ON);
-  mEnforceReadExternal=findAndInitCheckboxPref(ENFORCE_READ_EXTERNAL);
+  mBtHciSnoopLog=findAndInitCheckboxPref(BT_HCI_SNOOP_LOG);
   mAllowMockLocation=findAndInitCheckboxPref(ALLOW_MOCK_LOCATION);
   mPassword=(PreferenceScreen)findPreference(LOCAL_BACKUP_PASSWORD);
   mAllPrefs.add(mPassword);
   if (!android.os.Process.myUserHandle().equals(UserHandle.OWNER)) {
     disableForUser(mEnableAdb);
     disableForUser(mClearAdbKeys);
+    disableForUser(mEnableTerminal);
     disableForUser(mPassword);
   }
   mDebugAppPref=findPreference(DEBUG_APP_KEY);
@@ -34,7 +40,6 @@
   mWaitForDebugger=findAndInitCheckboxPref(WAIT_FOR_DEBUGGER_KEY);
   mVerifyAppsOverUsb=findAndInitCheckboxPref(VERIFY_APPS_OVER_USB_KEY);
   if (!showVerifierSetting()) {
-    PreferenceGroup debugDebuggingCategory=(PreferenceGroup)findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
     if (debugDebuggingCategory != null) {
       debugDebuggingCategory.removePreference(mVerifyAppsOverUsb);
     }
@@ -54,8 +59,10 @@
   mShowNonRectClip=addListPreference(SHOW_NON_RECTANGULAR_CLIP_KEY);
   mShowHwScreenUpdates=findAndInitCheckboxPref(SHOW_HW_SCREEN_UPDATES_KEY);
   mShowHwLayersUpdates=findAndInitCheckboxPref(SHOW_HW_LAYERS_UPDATES_KEY);
-  mShowHwOverdraw=findAndInitCheckboxPref(SHOW_HW_OVERDRAW_KEY);
   mDebugLayout=findAndInitCheckboxPref(DEBUG_LAYOUT_KEY);
+  mForceRtlLayout=findAndInitCheckboxPref(FORCE_RTL_LAYOUT_KEY);
+  mDebugHwOverdraw=addListPreference(DEBUG_HW_OVERDRAW_KEY);
+  mWifiDisplayCertification=findAndInitCheckboxPref(WIFI_DISPLAY_CERTIFICATION_KEY);
   mWindowAnimationScale=addListPreference(WINDOW_ANIMATION_SCALE_KEY);
   mTransitionAnimationScale=addListPreference(TRANSITION_ANIMATION_SCALE_KEY);
   mAnimatorDurationScale=addListPreference(ANIMATOR_DURATION_SCALE_KEY);
@@ -68,19 +75,14 @@
   mShowAllANRs=(CheckBoxPreference)findPreference(SHOW_ALL_ANRS_KEY);
   mAllPrefs.add(mShowAllANRs);
   mResetCbPrefs.add(mShowAllANRs);
-  if (WebViewFactory.isExperimentalWebViewAvailable()) {
-    mExperimentalWebView=findAndInitCheckboxPref(WEBVIEW_EXPERIMENTAL_KEY);
-  }
- else {
-    Preference experimentalWebView=findPreference(WEBVIEW_EXPERIMENTAL_KEY);
-    PreferenceGroup debugApplicationsCategory=(PreferenceGroup)findPreference(DEBUG_APPLICATIONS_CATEGORY_KEY);
-    if (debugApplicationsCategory != null) {
-      debugApplicationsCategory.removePreference(experimentalWebView);
-    }
+  Preference selectRuntime=findPreference(SELECT_RUNTIME_KEY);
+  if (selectRuntime != null) {
+    mAllPrefs.add(selectRuntime);
+    filterRuntimeOptions(selectRuntime);
   }
   Preference hdcpChecking=findPreference(HDCP_CHECKING_KEY);
   if (hdcpChecking != null) {
     mAllPrefs.add(hdcpChecking);
+    removePreferenceForProduction(hdcpChecking);
   }
-  removeHdcpOptionsForProduction();
 }

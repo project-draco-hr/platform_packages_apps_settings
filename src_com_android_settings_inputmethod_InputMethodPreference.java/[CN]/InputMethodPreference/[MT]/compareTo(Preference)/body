@@ -3,8 +3,8 @@
     return super.compareTo(p);
   }
   final InputMethodPreference imp=(InputMethodPreference)p;
-  final boolean priority0=mIsSystemIme && mAlwaysChecked;
-  final boolean priority1=imp.mIsSystemIme && imp.mAlwaysChecked;
+  final boolean priority0=mIsSystemIme && mIsValidSystemNonAuxAsciiCapableIme;
+  final boolean priority1=imp.mIsSystemIme && imp.mIsValidSystemNonAuxAsciiCapableIme;
   if (priority0 == priority1) {
     final CharSequence t0=getTitle();
     final CharSequence t1=imp.getTitle();

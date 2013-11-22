@@ -1,0 +1,19 @@
+{
+  dest.writeString(mPackage);
+  dest.writeInt(mUid);
+  dest.writeString(mName);
+  dest.writeStringList(mPackages);
+  dest.writeLong(mDuration);
+  dest.writeLong(mAvgPss);
+  dest.writeLong(mMaxPss);
+  dest.writeLong(mAvgUss);
+  dest.writeLong(mMaxUss);
+  dest.writeLong(mWeight);
+  dest.writeString(mBestTargetPackage);
+  final int N=mServices.size();
+  dest.writeInt(N);
+  for (int i=0; i < N; i++) {
+    dest.writeString(mServices.keyAt(i));
+    dest.writeTypedList(mServices.valueAt(i));
+  }
+}

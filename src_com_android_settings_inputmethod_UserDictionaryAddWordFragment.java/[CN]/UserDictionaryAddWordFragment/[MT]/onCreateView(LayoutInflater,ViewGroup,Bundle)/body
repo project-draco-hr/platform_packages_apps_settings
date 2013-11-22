@@ -4,5 +4,9 @@
   if (null == mContents) {
     mContents=new UserDictionaryAddWordContents(mRootView,getArguments());
   }
+ else {
+    mContents=new UserDictionaryAddWordContents(mRootView,mContents);
+  }
+  getActivity().getActionBar().setSubtitle(UserDictionarySettingsUtils.getLocaleDisplayName(getActivity(),mContents.getCurrentUserDictionaryLocale()));
   return mRootView;
 }

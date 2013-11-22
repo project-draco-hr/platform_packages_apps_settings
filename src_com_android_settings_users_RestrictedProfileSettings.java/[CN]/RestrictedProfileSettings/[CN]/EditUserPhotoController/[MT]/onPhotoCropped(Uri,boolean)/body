@@ -1,0 +1,50 @@
+{
+  new AsyncTask<Void,Void,Bitmap>(){
+    @Override protected Bitmap doInBackground(    Void... params){
+      if (cropped) {
+        try {
+          InputStream imageStream=mContext.getContentResolver().openInputStream(data);
+          return BitmapFactory.decodeStream(imageStream);
+        }
+ catch (        FileNotFoundException fe) {
+          return null;
+        }
+      }
+ else {
+        Bitmap croppedImage=Bitmap.createBitmap(mPhotoSize,mPhotoSize,Config.ARGB_8888);
+        Canvas canvas=new Canvas(croppedImage);
+        Bitmap fullImage=null;
+        try {
+          InputStream imageStream=mContext.getContentResolver().openInputStream(data);
+          fullImage=BitmapFactory.decodeStream(imageStream);
+        }
+ catch (        FileNotFoundException fe) {
+          return null;
+        }
+        if (fullImage != null) {
+          final int squareSize=Math.min(fullImage.getWidth(),fullImage.getHeight());
+          final int left=(fullImage.getWidth() - squareSize) / 2;
+          final int top=(fullImage.getHeight() - squareSize) / 2;
+          Rect rectSource=new Rect(left,top,left + squareSize,top + squareSize);
+          Rect rectDest=new Rect(0,0,mPhotoSize,mPhotoSize);
+          Paint paint=new Paint();
+          canvas.drawBitmap(fullImage,rectSource,rectDest,paint);
+          return croppedImage;
+        }
+ else {
+          return null;
+        }
+      }
+    }
+    @Override protected void onPostExecute(    Bitmap bitmap){
+      if (bitmap != null) {
+        mNewUserPhotoBitmap=bitmap;
+        mNewUserPhotoDrawable=CircleFramedDrawable.getInstance(mImageView.getContext(),mNewUserPhotoBitmap);
+        mImageView.setImageDrawable(mNewUserPhotoDrawable);
+      }
+      new File(mContext.getCacheDir(),TAKE_PICTURE_FILE_NAME).delete();
+      new File(mContext.getCacheDir(),CROP_PICTURE_FILE_NAME).delete();
+    }
+  }
+.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,(Void[])null);
+}

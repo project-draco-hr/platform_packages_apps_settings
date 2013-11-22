@@ -8,6 +8,8 @@
 switch (mTypes[i]) {
 case R.string.usage_type_data_recv:
 case R.string.usage_type_data_send:
+case R.string.usage_type_data_wifi_recv:
+case R.string.usage_type_data_wifi_send:
         final long bytes=(long)(mValues[i]);
       value=Formatter.formatFileSize(getActivity(),bytes);
     break;
@@ -18,7 +20,7 @@ break;
 case R.string.usage_type_gps:
 mUsesGps=true;
 default :
-value=Utils.formatElapsedTime(getActivity(),mValues[i]);
+value=Utils.formatElapsedTime(getActivity(),mValues[i],true);
 }
 ViewGroup item=(ViewGroup)inflater.inflate(R.layout.power_usage_detail_item_text,null);
 mDetailsParent.addView(item);

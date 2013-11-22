@@ -7,8 +7,8 @@
  else   if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
     sBluetoothState.onActualStateChange(context,intent);
   }
- else   if (LocationManager.PROVIDERS_CHANGED_ACTION.equals(action)) {
-    sGpsState.onActualStateChange(context,intent);
+ else   if (LocationManager.MODE_CHANGED_ACTION.equals(action)) {
+    sLocationState.onActualStateChange(context,intent);
   }
  else   if (ContentResolver.ACTION_SYNC_CONN_STATUS_CHANGED.equals(action)) {
     sSyncState.onActualStateChange(context,intent);
@@ -25,8 +25,8 @@
  else     if (buttonId == BUTTON_SYNC) {
       sSyncState.toggleState(context);
     }
- else     if (buttonId == BUTTON_GPS) {
-      sGpsState.toggleState(context);
+ else     if (buttonId == BUTTON_LOCATION) {
+      sLocationState.toggleState(context);
     }
  else     if (buttonId == BUTTON_BLUETOOTH) {
       sBluetoothState.toggleState(context);

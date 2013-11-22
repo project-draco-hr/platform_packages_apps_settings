@@ -1,0 +1,9 @@
+{
+  super.onResume();
+  if (mPinConfirmed) {
+    mPinConfirmed=false;
+    if (!runKeyguardConfirmation(KEYGUARD_REQUEST)) {
+      showFinalConfirmation();
+    }
+  }
+}

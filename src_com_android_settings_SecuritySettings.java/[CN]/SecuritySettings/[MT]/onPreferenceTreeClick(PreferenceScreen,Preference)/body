@@ -1,4 +1,7 @@
 {
+  if (ensurePinRestrictedPreference(preference)) {
+    return true;
+  }
   final String key=preference.getKey();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (KEY_UNLOCK_SET_OR_CHANGE.equals(key)) {
@@ -31,6 +34,9 @@
   }
  else   if (KEY_POWER_INSTANTLY_LOCKS.equals(key)) {
     lockPatternUtils.setPowerButtonInstantlyLocks(isToggled(preference));
+  }
+ else   if (KEY_ENABLE_WIDGETS.equals(key)) {
+    lockPatternUtils.setWidgetsEnabled(mEnableKeyguardWidgets.isChecked());
   }
  else   if (preference == mShowPassword) {
     Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,mShowPassword.isChecked() ? 1 : 0);

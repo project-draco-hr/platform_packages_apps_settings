@@ -1,0 +1,136 @@
+{
+  if (mCertCategory == null) {
+    mCertCategory=new PreferenceCategory(getActivity());
+    mCertCategory.setTitle(R.string.wifi_display_certification_heading);
+  }
+ else {
+    mCertCategory.removeAll();
+  }
+  preferenceScreen.addPreference(mCertCategory);
+  if (!mWifiDisplayStatus.getSessionInfo().getGroupId().isEmpty()) {
+    Preference p=new Preference(getActivity());
+    p.setTitle(R.string.wifi_display_session_info);
+    p.setSummary(mWifiDisplayStatus.getSessionInfo().toString());
+    mCertCategory.addPreference(p);
+    if (mWifiDisplayStatus.getSessionInfo().getSessionId() != 0) {
+      mCertCategory.addPreference(new Preference(getActivity()){
+        @Override public View getView(        View convertView,        ViewGroup parent){
+          final View v;
+          if (convertView == null) {
+            LayoutInflater li=(LayoutInflater)getActivity().getSystemService(Service.LAYOUT_INFLATER_SERVICE);
+            v=li.inflate(R.layout.two_buttons_panel,null);
+          }
+ else {
+            v=convertView;
+          }
+          Button b=(Button)v.findViewById(R.id.left_button);
+          b.setText(R.string.wifi_display_pause);
+          b.setOnClickListener(new OnClickListener(){
+            @Override public void onClick(            View v){
+              mDisplayManager.pauseWifiDisplay();
+            }
+          }
+);
+          b=(Button)v.findViewById(R.id.right_button);
+          b.setText(R.string.wifi_display_resume);
+          b.setOnClickListener(new OnClickListener(){
+            @Override public void onClick(            View v){
+              mDisplayManager.resumeWifiDisplay();
+            }
+          }
+);
+          return v;
+        }
+      }
+);
+    }
+  }
+  CheckBoxPreference cbp=new CheckBoxPreference(getActivity()){
+    @Override protected void onClick(){
+      mListen=!mListen;
+      setListenMode(mListen);
+      setChecked(mListen);
+    }
+  }
+;
+  cbp.setTitle(R.string.wifi_display_listen_mode);
+  cbp.setChecked(mListen);
+  mCertCategory.addPreference(cbp);
+  cbp=new CheckBoxPreference(getActivity()){
+    @Override protected void onClick(){
+      mAutoGO=!mAutoGO;
+      if (mAutoGO) {
+        startAutoGO();
+      }
+ else {
+        stopAutoGO();
+      }
+      setChecked(mAutoGO);
+    }
+  }
+;
+  cbp.setTitle(R.string.wifi_display_autonomous_go);
+  cbp.setChecked(mAutoGO);
+  mCertCategory.addPreference(cbp);
+  ListPreference lp=new ListPreference(getActivity()){
+    @Override protected void onDialogClosed(    boolean positiveResult){
+      super.onDialogClosed(positiveResult);
+      if (positiveResult) {
+        mWpsConfig=Integer.parseInt(getValue());
+        setSummary("%1$s");
+        getActivity().invalidateOptionsMenu();
+        Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.WIFI_DISPLAY_WPS_CONFIG,mWpsConfig);
+      }
+    }
+  }
+;
+  mWpsConfig=Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.WIFI_DISPLAY_WPS_CONFIG,WpsInfo.INVALID);
+  String[] wpsEntries={"Default","PBC","KEYPAD","DISPLAY"};
+  String[] wpsValues={"" + WpsInfo.INVALID,"" + WpsInfo.PBC,"" + WpsInfo.KEYPAD,"" + WpsInfo.DISPLAY};
+  lp.setTitle(R.string.wifi_display_wps_config);
+  lp.setEntries(wpsEntries);
+  lp.setEntryValues(wpsValues);
+  lp.setValue("" + mWpsConfig);
+  lp.setSummary("%1$s");
+  mCertCategory.addPreference(lp);
+  lp=new ListPreference(getActivity()){
+    @Override protected void onDialogClosed(    boolean positiveResult){
+      super.onDialogClosed(positiveResult);
+      if (positiveResult) {
+        mListenChannel=Integer.parseInt(getValue());
+        setSummary("%1$s");
+        getActivity().invalidateOptionsMenu();
+        setWifiP2pChannels(mListenChannel,mOperatingChannel);
+      }
+    }
+  }
+;
+  String[] lcEntries={"Auto","1","6","11"};
+  String[] lcValues={"0","1","6","11"};
+  lp.setTitle(R.string.wifi_display_listen_channel);
+  lp.setEntries(lcEntries);
+  lp.setEntryValues(lcValues);
+  lp.setValue("" + mListenChannel);
+  lp.setSummary("%1$s");
+  mCertCategory.addPreference(lp);
+  lp=new ListPreference(getActivity()){
+    @Override protected void onDialogClosed(    boolean positiveResult){
+      super.onDialogClosed(positiveResult);
+      if (positiveResult) {
+        mOperatingChannel=Integer.parseInt(getValue());
+        setSummary("%1$s");
+        getActivity().invalidateOptionsMenu();
+        setWifiP2pChannels(mListenChannel,mOperatingChannel);
+      }
+    }
+  }
+;
+  String[] ocEntries={"Auto","1","6","11","36"};
+  String[] ocValues={"0","1","6","11","36"};
+  lp.setTitle(R.string.wifi_display_operating_channel);
+  lp.setEntries(ocEntries);
+  lp.setEntryValues(ocValues);
+  lp.setValue("" + mOperatingChannel);
+  lp.setSummary("%1$s");
+  mCertCategory.addPreference(lp);
+}

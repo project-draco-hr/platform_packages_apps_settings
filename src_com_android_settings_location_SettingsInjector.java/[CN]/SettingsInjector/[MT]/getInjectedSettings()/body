@@ -1,0 +1,10 @@
+{
+  Iterable<InjectedSetting> settings=getSettings();
+  ArrayList<Preference> prefs=new ArrayList<Preference>();
+  for (  InjectedSetting setting : settings) {
+    Preference pref=addServiceSetting(prefs,setting);
+    mSettings.add(new Setting(setting,pref));
+  }
+  reloadStatusMessages();
+  return prefs;
+}

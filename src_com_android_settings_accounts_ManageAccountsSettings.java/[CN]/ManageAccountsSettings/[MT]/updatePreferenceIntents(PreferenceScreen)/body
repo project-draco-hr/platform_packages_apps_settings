@@ -1,16 +1,22 @@
 {
   PackageManager pm=getActivity().getPackageManager();
   for (int i=0; i < prefs.getPreferenceCount(); ) {
-    Intent intent=prefs.getPreference(i).getIntent();
+    Preference pref=prefs.getPreference(i);
+    Intent intent=pref.getIntent();
     if (intent != null) {
-      ResolveInfo ri=pm.resolveActivity(intent,PackageManager.MATCH_DEFAULT_ONLY);
-      if (ri == null) {
-        prefs.removePreference(prefs.getPreference(i));
-        continue;
+      if (intent.getAction().equals(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)) {
+        pref.setOnPreferenceClickListener(new FragmentStarter(LocationSettings.class.getName(),R.string.location_settings_title));
       }
  else {
-        intent.putExtra(ACCOUNT_KEY,mFirstAccount);
-        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+        ResolveInfo ri=pm.resolveActivity(intent,PackageManager.MATCH_DEFAULT_ONLY);
+        if (ri == null) {
+          prefs.removePreference(pref);
+          continue;
+        }
+ else {
+          intent.putExtra(ACCOUNT_KEY,mFirstAccount);
+          intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
       }
     }
     i++;

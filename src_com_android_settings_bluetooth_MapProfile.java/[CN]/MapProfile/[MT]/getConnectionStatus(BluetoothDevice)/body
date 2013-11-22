@@ -1,0 +1,6 @@
+{
+  if (mService == null)   return BluetoothProfile.STATE_DISCONNECTED;
+  List<BluetoothDevice> deviceList=mService.getConnectedDevices();
+  if (V)   Log.d(TAG,"getConnectionStatus: status is: " + mService.getConnectionState(device));
+  return !deviceList.isEmpty() && deviceList.get(0).equals(device) ? mService.getConnectionState(device) : BluetoothProfile.STATE_DISCONNECTED;
+}

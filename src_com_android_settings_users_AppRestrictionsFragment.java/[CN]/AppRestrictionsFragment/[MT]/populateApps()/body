@@ -2,7 +2,7 @@
   final Context context=getActivity();
   if (context == null)   return;
   final PackageManager pm=mPackageManager;
-  IPackageManager ipm=AppGlobals.getPackageManager();
+  final IPackageManager ipm=mIPm;
   mAppList.removeAll();
   Intent restrictionsIntent=new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);
   final List<ResolveInfo> receivers=pm.queryBroadcastReceivers(restrictionsIntent,0);
@@ -20,39 +20,34 @@
       if (app.masterEntry != null) {
         p.setSummary(context.getString(R.string.user_restrictions_controlled_by,app.masterEntry.activityName));
       }
-      p.setKey(PKG_PREFIX + packageName);
+      p.setKey(getKeyForPackage(packageName));
       p.setSettingsEnabled(hasSettings || isSettingsApp);
       p.setPersistent(false);
       p.setOnPreferenceChangeListener(this);
       p.setOnPreferenceClickListener(this);
       PackageInfo pi=null;
       try {
-        pi=pm.getPackageInfo(packageName,0);
+        pi=ipm.getPackageInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES,mUser.getIdentifier());
       }
- catch (      NameNotFoundException re) {
-        try {
-          pi=ipm.getPackageInfo(packageName,0,mUser.getIdentifier());
-        }
- catch (        RemoteException e) {
-        }
+ catch (      RemoteException e) {
       }
-      if (pi != null && pi.requiredForAllUsers) {
+      if (pi != null && (pi.requiredForAllUsers || isPlatformSigned(pi))) {
         p.setChecked(true);
         p.setImmutable(true);
         if (!hasSettings && !isSettingsApp)         continue;
         if (hasSettings) {
-          requestRestrictionsForApp(packageName,p);
+          requestRestrictionsForApp(packageName,p,false);
         }
       }
- else       if (!mNewUser && appInfoListHasPackage(mUserApps,packageName)) {
+ else       if (!mNewUser && isAppEnabledForUser(pi)) {
         p.setChecked(true);
       }
-      if (pi.requiredAccountType != null && pi.restrictedAccountType == null) {
+      if (mRestrictedProfile && pi.requiredAccountType != null && pi.restrictedAccountType == null) {
         p.setChecked(false);
         p.setImmutable(true);
         p.setSummary(R.string.app_not_supported_in_limited);
       }
-      if (pi.restrictedAccountType != null) {
+      if (mRestrictedProfile && pi.restrictedAccountType != null) {
         p.setSummary(R.string.app_sees_restricted_accounts);
       }
       if (app.masterEntry != null) {
@@ -66,7 +61,6 @@
  else {
         p.setOrder(MAX_APP_RESTRICTIONS * (i + 2));
       }
-      p.setSelectableAppInfo(app);
       mSelectedPackages.put(packageName,p.isChecked());
       mAppListChanged=true;
       i++;
@@ -74,6 +68,6 @@
   }
   if (mNewUser && mFirstTime) {
     mFirstTime=false;
-    updateUserAppList();
+    applyUserAppsStates();
   }
 }

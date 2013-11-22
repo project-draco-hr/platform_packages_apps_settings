@@ -1,8 +1,5 @@
 {
   super.onActivityResult(requestCode,resultCode,data);
-  if (mEditUserInfoDialog != null && mEditUserInfoDialog.isShowing() && mEditUserPhotoController.onActivityResult(requestCode,resultCode,data)) {
-    return;
-  }
   AppRestrictionsPreference pref=mCustomRequestMap.get(requestCode);
   if (pref == null) {
     Log.w(TAG,"Unknown requestCode " + requestCode);
@@ -19,7 +16,6 @@
  else     if (bundle != null) {
       mUserManager.setApplicationRestrictions(packageName,bundle,mUser);
     }
-    toggleAppPanel(pref);
   }
   mCustomRequestMap.remove(requestCode);
 }

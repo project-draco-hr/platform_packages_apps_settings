@@ -1,0 +1,18 @@
+{
+  if (isRestricted()) {
+    if (Log.isLoggable(TAG,Log.INFO)) {
+      Log.i(TAG,"Restricted user, not setting location mode");
+    }
+    mode=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCATION_MODE,Settings.Secure.LOCATION_MODE_OFF);
+    if (mActive) {
+      onModeChanged(mode,true);
+    }
+    return;
+  }
+  Intent intent=new Intent(MODE_CHANGING_ACTION);
+  intent.putExtra(CURRENT_MODE_KEY,mCurrentMode);
+  intent.putExtra(NEW_MODE_KEY,mode);
+  getActivity().sendBroadcast(intent,android.Manifest.permission.WRITE_SECURE_SETTINGS);
+  Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCATION_MODE,mode);
+  refreshLocationMode();
+}

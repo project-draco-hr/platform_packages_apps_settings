@@ -1,0 +1,15 @@
+{
+  MenuItem refresh=menu.add(0,MENU_STATS_REFRESH,0,R.string.menu_stats_refresh).setIcon(R.drawable.ic_menu_refresh_holo_dark).setAlphabeticShortcut('r');
+  refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+  SubMenu subMenu=menu.addSubMenu(R.string.menu_proc_stats_duration);
+  for (int i=0; i < NUM_DURATIONS; i++) {
+    mDurationMenus[i]=subMenu.add(0,MENU_DURATION + i,0,sDurationLabels[i]).setCheckable(true);
+  }
+  mShowSystemMenu=menu.add(0,MENU_SHOW_SYSTEM,0,R.string.menu_show_system).setAlphabeticShortcut('s').setCheckable(true);
+  mUseUssMenu=menu.add(0,MENU_USE_USS,0,R.string.menu_use_uss).setAlphabeticShortcut('u').setCheckable(true);
+  subMenu=menu.addSubMenu(R.string.menu_proc_stats_type);
+  mTypeBackgroundMenu=subMenu.add(0,MENU_TYPE_BACKGROUND,0,R.string.menu_proc_stats_type_background).setAlphabeticShortcut('b').setCheckable(true);
+  mTypeForegroundMenu=subMenu.add(0,MENU_TYPE_FOREGROUND,0,R.string.menu_proc_stats_type_foreground).setAlphabeticShortcut('f').setCheckable(true);
+  mTypeCachedMenu=subMenu.add(0,MENU_TYPE_CACHED,0,R.string.menu_proc_stats_type_cached).setCheckable(true);
+  updateMenus();
+}

@@ -1,0 +1,30 @@
+{
+  PackageManager pm=mContext.getPackageManager();
+  Intent intent=new Intent(SettingInjectorService.ACTION_SERVICE_INTENT);
+  List<ResolveInfo> resolveInfos=pm.queryIntentServices(intent,PackageManager.GET_META_DATA);
+  if (Log.isLoggable(TAG,Log.DEBUG)) {
+    Log.d(TAG,"Found services: " + resolveInfos);
+  }
+  List<InjectedSetting> settings=new ArrayList<InjectedSetting>(resolveInfos.size());
+  for (  ResolveInfo resolveInfo : resolveInfos) {
+    try {
+      InjectedSetting setting=parseServiceInfo(resolveInfo,pm);
+      if (setting == null) {
+        Log.w(TAG,"Unable to load service info " + resolveInfo);
+      }
+ else {
+        settings.add(setting);
+      }
+    }
+ catch (    XmlPullParserException e) {
+      Log.w(TAG,"Unable to load service info " + resolveInfo,e);
+    }
+catch (    IOException e) {
+      Log.w(TAG,"Unable to load service info " + resolveInfo,e);
+    }
+  }
+  if (Log.isLoggable(TAG,Log.DEBUG)) {
+    Log.d(TAG,"Loaded settings: " + settings);
+  }
+  return settings;
+}

@@ -1,0 +1,16 @@
+{
+synchronized (mMethodMap) {
+    mAsciiCapableEnabledImis.clear();
+    final List<InputMethodInfo> enabledImis=mSettings.getEnabledInputMethodListLocked();
+    for (    final InputMethodInfo imi : enabledImis) {
+      final int subtypeCount=imi.getSubtypeCount();
+      for (int i=0; i < subtypeCount; ++i) {
+        final InputMethodSubtype subtype=imi.getSubtypeAt(i);
+        if (InputMethodUtils.SUBTYPE_MODE_KEYBOARD.equalsIgnoreCase(subtype.getMode()) && subtype.isAsciiCapable()) {
+          mAsciiCapableEnabledImis.add(imi);
+          break;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  try {
+    ASN1InputStream bIn=new ASN1InputStream(new ByteArrayInputStream(keyData));
+    PrivateKeyInfo pki=PrivateKeyInfo.getInstance(bIn.readObject());
+    String algId=pki.getAlgorithmId().getAlgorithm().getId();
+    String algName=AlgNameMapper.map2AlgName(algId);
+    return KeyChain.isBoundKeyAlgorithm(algName);
+  }
+ catch (  IOException e) {
+    Log.e(TAG,"Failed to parse key data");
+    return false;
+  }
+}

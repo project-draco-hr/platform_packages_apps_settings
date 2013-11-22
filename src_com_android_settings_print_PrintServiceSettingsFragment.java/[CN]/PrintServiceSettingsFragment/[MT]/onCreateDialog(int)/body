@@ -1,0 +1,13 @@
+{
+  CharSequence title=null;
+  CharSequence message=null;
+switch (dialogId) {
+case DIALOG_ID_ENABLE_WARNING:
+    title=mEnableWarningTitle;
+  message=mEnableWarningMessage;
+break;
+default :
+throw new IllegalArgumentException();
+}
+return new AlertDialog.Builder(getActivity()).setTitle(title).setIconAttribute(android.R.attr.alertDialogIcon).setMessage(message).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
+}

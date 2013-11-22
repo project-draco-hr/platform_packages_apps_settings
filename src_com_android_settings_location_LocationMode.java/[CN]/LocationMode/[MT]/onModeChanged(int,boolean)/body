@@ -1,0 +1,22 @@
+{
+switch (mode) {
+case Settings.Secure.LOCATION_MODE_OFF:
+    updateRadioButtons(null);
+  break;
+case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
+updateRadioButtons(mSensorsOnly);
+break;
+case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
+updateRadioButtons(mBatterySaving);
+break;
+case Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
+updateRadioButtons(mHighAccuracy);
+break;
+default :
+break;
+}
+boolean enabled=(mode != Settings.Secure.LOCATION_MODE_OFF) && !restricted;
+mHighAccuracy.setEnabled(enabled);
+mBatterySaving.setEnabled(enabled);
+mSensorsOnly.setEnabled(enabled);
+}

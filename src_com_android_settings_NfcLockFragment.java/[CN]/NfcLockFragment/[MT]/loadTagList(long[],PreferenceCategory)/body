@@ -1,0 +1,29 @@
+{
+  pairedTags.removeAll();
+  for (int i=0; i < tagRegistryTimes.length; i++) {
+    final Preference thisPreference=new Preference(getActivity());
+    final long timestamp=tagRegistryTimes[i];
+    thisPreference.setTitle(String.format(TAG_FORMAT,i));
+    thisPreference.setSummary(DateFormat.getDateTimeInstance().format(new Date(tagRegistryTimes[i])));
+    thisPreference.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+      @Override public boolean onPreferenceClick(      Preference preference){
+        AlertDialog.Builder deleteDialogBuilder=new AlertDialog.Builder(getActivity());
+        deleteDialogBuilder.setTitle(thisPreference.getTitle());
+        deleteDialogBuilder.setItems(new String[]{"Delete"},new DialogInterface.OnClickListener(){
+          @Override public void onClick(          DialogInterface dialog,          int which){
+            if (which == 0) {
+              if (mNfcUnlock.deregisterTag(timestamp)) {
+                loadTagList(mNfcUnlock.getTagRegistryTimes(),pairedTags);
+              }
+            }
+          }
+        }
+);
+        deleteDialogBuilder.show();
+        return true;
+      }
+    }
+);
+    pairedTags.addPreference(thisPreference);
+  }
+}

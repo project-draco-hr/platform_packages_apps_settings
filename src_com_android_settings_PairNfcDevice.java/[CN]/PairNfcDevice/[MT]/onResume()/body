@@ -1,0 +1,20 @@
+{
+  super.onResume();
+  if (!mAdapter.isEnabled()) {
+    AlertDialog.Builder dialogBuilder=new AlertDialog.Builder(this);
+    dialogBuilder.setMessage(R.string.enable_nfc);
+    dialogBuilder.setPositiveButton(R.string.ok,new DialogInterface.OnClickListener(){
+      public void onClick(      DialogInterface dialog,      int id){
+        startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+      }
+    }
+);
+    dialogBuilder.show();
+  }
+  mAdapter.enableForegroundDispatch(this,mPendingIntent,null,null);
+  if (mWakeLock == null) {
+    PowerManager pm=(PowerManager)getSystemService(POWER_SERVICE);
+    mWakeLock=pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK,TAG);
+  }
+  mWakeLock.acquire();
+}

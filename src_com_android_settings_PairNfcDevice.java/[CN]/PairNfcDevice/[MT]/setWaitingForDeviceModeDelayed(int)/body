@@ -1,0 +1,10 @@
+{
+  mWaitingForDeviceDelayed=true;
+  mHandler.postDelayed(new Runnable(){
+    @Override public void run(){
+      mWaitingForDeviceDelayed=false;
+      setWaitingForDeviceMode();
+    }
+  }
+,delayInMs);
+}

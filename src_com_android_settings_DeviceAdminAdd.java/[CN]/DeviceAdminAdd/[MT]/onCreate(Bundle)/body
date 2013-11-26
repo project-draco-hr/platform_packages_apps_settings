@@ -101,6 +101,7 @@ catch (  IOException e) {
   mCancelButton=(Button)findViewById(R.id.cancel_button);
   mCancelButton.setOnClickListener(new View.OnClickListener(){
     public void onClick(    View v){
+      EventLog.writeEvent(EventLogTags.EXP_DET_DEVICE_ADMIN_DECLINED_BY_USER,mDeviceAdmin.getActivityInfo().applicationInfo.uid);
       finish();
     }
   }
@@ -112,6 +113,7 @@ catch (  IOException e) {
         try {
           mDPM.setActiveAdmin(mDeviceAdmin.getComponent(),mRefreshing);
           setResult(Activity.RESULT_OK);
+          EventLog.writeEvent(EventLogTags.EXP_DET_DEVICE_ADMIN_ACTIVATED_BY_USER,mDeviceAdmin.getActivityInfo().applicationInfo.uid);
         }
  catch (        RuntimeException e) {
           Log.w(TAG,"Exception trying to activate admin " + mDeviceAdmin.getComponent(),e);

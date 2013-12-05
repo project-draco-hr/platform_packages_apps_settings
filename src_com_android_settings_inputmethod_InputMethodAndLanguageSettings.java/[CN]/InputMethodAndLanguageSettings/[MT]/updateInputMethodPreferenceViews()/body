@@ -1,5 +1,23 @@
 {
 synchronized (mInputMethodPreferenceList) {
+    for (    final InputMethodPreference imp : mInputMethodPreferenceList) {
+      mKeyboardSettingsCategory.removePreference(imp);
+    }
+    mInputMethodPreferenceList.clear();
+    final List<InputMethodInfo> imis=mInputMethodSettingValues.getInputMethodList();
+    final int N=(imis == null ? 0 : imis.size());
+    for (int i=0; i < N; ++i) {
+      final InputMethodInfo imi=imis.get(i);
+      final InputMethodPreference pref=getInputMethodPreference(imi);
+      pref.setOnImePreferenceChangeListener(mOnImePreferenceChangedListener);
+      mInputMethodPreferenceList.add(pref);
+    }
+    if (!mInputMethodPreferenceList.isEmpty()) {
+      Collections.sort(mInputMethodPreferenceList);
+      for (int i=0; i < N; ++i) {
+        mKeyboardSettingsCategory.addPreference(mInputMethodPreferenceList.get(i));
+      }
+    }
     for (    Preference pref : mInputMethodPreferenceList) {
       if (pref instanceof InputMethodPreference) {
         ((InputMethodPreference)pref).updatePreferenceViews();
@@ -7,4 +25,5 @@ synchronized (mInputMethodPreferenceList) {
     }
   }
   updateCurrentImeName();
+  InputMethodAndSubtypeUtil.loadInputMethodSubtypeList(this,getContentResolver(),mInputMethodSettingValues.getInputMethodList(),null);
 }

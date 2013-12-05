@@ -1,7 +1,9 @@
 {
   super.onCreateOptionsMenu(menu,inflater);
-  MenuItem cancel=menu.add(0,MENU_ITEM_ID_CANCEL,Menu.NONE,getString(R.string.print_cancel));
-  cancel.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+  if (!mPrintJob.getInfo().isCancelling()) {
+    MenuItem cancel=menu.add(0,MENU_ITEM_ID_CANCEL,Menu.NONE,getString(R.string.print_cancel));
+    cancel.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+  }
   if (mPrintJob.isFailed()) {
     MenuItem restart=menu.add(0,MENU_ITEM_ID_RESTART,Menu.NONE,getString(R.string.print_restart));
     restart.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);

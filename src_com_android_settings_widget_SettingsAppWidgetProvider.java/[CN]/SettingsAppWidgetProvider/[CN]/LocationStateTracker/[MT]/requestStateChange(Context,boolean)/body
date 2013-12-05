@@ -21,7 +21,7 @@ mode=Settings.Secure.LOCATION_MODE_HIGH_ACCURACY;
 break;
 }
 Settings.Secure.putInt(resolver,Settings.Secure.LOCATION_MODE,mode);
-return desiredState;
+return mode != Settings.Secure.LOCATION_MODE_OFF;
 }
 return getActualState(context) == STATE_ENABLED;
 }

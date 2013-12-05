@@ -1,6 +1,12 @@
 {
+  if (permissionChoice == ACCESS_REJECTED) {
+    mPhonebookRejectedTimes++;
+    savePhonebookRejectTimes();
+    if (mPhonebookRejectedTimes < PERSIST_REJECTED_TIMES_LIMIT) {
+      return;
+    }
+  }
   mPhonebookPermissionChoice=permissionChoice;
-  if (permissionChoice == ACCESS_REJECTED)   return;
   SharedPreferences.Editor editor=mContext.getSharedPreferences(PHONEBOOK_PREFS_NAME,Context.MODE_PRIVATE).edit();
   if (permissionChoice == ACCESS_UNKNOWN) {
     editor.remove(mDevice.getAddress());

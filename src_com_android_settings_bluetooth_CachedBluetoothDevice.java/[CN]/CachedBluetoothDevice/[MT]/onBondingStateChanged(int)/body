@@ -4,6 +4,10 @@
     mConnectAfterPairing=false;
     setPhonebookPermissionChoice(ACCESS_UNKNOWN);
     setMessagePermissionChoice(ACCESS_UNKNOWN);
+    mPhonebookRejectedTimes=0;
+    savePhonebookRejectTimes();
+    mMessageRejectedTimes=0;
+    saveMessageRejectTimes();
   }
   refresh();
   if (bondState == BluetoothDevice.BOND_BONDED) {

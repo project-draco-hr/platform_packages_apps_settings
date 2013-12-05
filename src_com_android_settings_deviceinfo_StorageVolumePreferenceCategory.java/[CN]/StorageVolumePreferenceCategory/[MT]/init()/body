@@ -53,7 +53,7 @@
     mMountTogglePreference.setSummary(R.string.sd_eject_summary);
     addPreference(mMountTogglePreference);
   }
-  final boolean allowFormat=mVolume != null ? mVolume.isPrimary() : false;
+  final boolean allowFormat=mVolume != null;
   if (allowFormat) {
     mFormatPreference=new Preference(context);
     mFormatPreference.setTitle(R.string.sd_format);

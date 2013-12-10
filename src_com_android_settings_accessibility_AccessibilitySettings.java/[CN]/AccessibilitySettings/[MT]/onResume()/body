@@ -2,7 +2,6 @@
   super.onResume();
   loadInstalledServices();
   updateAllPreferences();
-  offerInstallAccessibilitySerivceOnce();
   mSettingsPackageMonitor.register(getActivity(),getActivity().getMainLooper(),false);
   mSettingsContentObserver.register(getContentResolver());
   if (RotationPolicy.isRotationSupported(getActivity())) {

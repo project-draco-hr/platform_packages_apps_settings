@@ -72,6 +72,12 @@ if (securityCategory != null && mVisiblePattern != null) {
 securityCategory.removePreference(root.findPreference(KEY_VISIBLE_PATTERN));
 }
 }
+if (!NfcUnlock.getPropertyEnabled()) {
+PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
+if (securityCategory != null) {
+securityCategory.removePreference(root.findPreference(KEY_NFC_UNLOCK_SET_OR_CHANGE));
+}
+}
 addPreferencesFromResource(R.xml.security_settings_misc);
 TelephonyManager tm=TelephonyManager.getDefault();
 if (!mIsPrimary || !tm.hasIccCard()) {

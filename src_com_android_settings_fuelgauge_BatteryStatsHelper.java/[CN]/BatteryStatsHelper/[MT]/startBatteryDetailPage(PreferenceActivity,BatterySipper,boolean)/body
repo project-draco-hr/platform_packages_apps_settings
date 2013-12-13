@@ -21,7 +21,7 @@ case USER:
 {
       Uid uid=sipper.uidObj;
       types=new int[]{R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_gps,R.string.usage_type_wifi_running,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send,R.string.usage_type_audio,R.string.usage_type_video};
-      values=new double[]{sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.gpsTime,sipper.wifiRunningTime,sipper.mobileRxBytes,sipper.mobileTxBytes,sipper.wifiRxBytes,sipper.wifiTxBytes,0,0};
+      values=new double[]{sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.gpsTime,sipper.wifiRunningTime,sipper.mobileRxPackets,sipper.mobileTxPackets,sipper.wifiRxPackets,sipper.wifiTxPackets,0,0};
       if (sipper.drainType == DrainType.APP) {
         Writer result=new StringWriter();
         PrintWriter printWriter=new FastPrintWriter(result,false,1024);
@@ -45,13 +45,13 @@ break;
 case WIFI:
 {
 types=new int[]{R.string.usage_type_wifi_running,R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send};
-values=new double[]{sipper.usageTime,sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.mobileRxBytes,sipper.mobileTxBytes,sipper.wifiRxBytes,sipper.wifiTxBytes};
+values=new double[]{sipper.usageTime,sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.mobileRxPackets,sipper.mobileTxPackets,sipper.wifiRxPackets,sipper.wifiTxPackets};
 }
 break;
 case BLUETOOTH:
 {
 types=new int[]{R.string.usage_type_on_time,R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send};
-values=new double[]{sipper.usageTime,sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.mobileRxBytes,sipper.mobileTxBytes,sipper.wifiRxBytes,sipper.wifiTxBytes};
+values=new double[]{sipper.usageTime,sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.mobileRxPackets,sipper.mobileTxPackets,sipper.wifiRxPackets,sipper.wifiTxPackets};
 }
 break;
 default :

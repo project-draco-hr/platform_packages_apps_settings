@@ -82,7 +82,7 @@
   if (mStats.startIteratingHistoryLocked()) {
     final HistoryItem rec=new HistoryItem();
     while (mStats.getNextHistoryLocked(rec) && i < N) {
-      if (rec.cmd == BatteryStats.HistoryItem.CMD_UPDATE) {
+      if (rec.isDeltaData()) {
         x=(int)(((rec.time - timeStart) * w) / timeChange);
         y=mLevelTop + levelh - ((rec.batteryLevel - batLow) * (levelh - 1)) / batChange;
         if (lastX != x) {

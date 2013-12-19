@@ -8,6 +8,10 @@
     final int merged=mergeColorOpacity(mBackgroundColor,mBackgroundOpacity);
     Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_BACKGROUND_COLOR,merged);
   }
+ else   if (mWindowColor == preference || mWindowOpacity == preference) {
+    final int merged=mergeColorOpacity(mWindowColor,mWindowOpacity);
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_WINDOW_COLOR,merged);
+  }
  else   if (mEdgeColor == preference) {
     Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_EDGE_COLOR,value);
   }

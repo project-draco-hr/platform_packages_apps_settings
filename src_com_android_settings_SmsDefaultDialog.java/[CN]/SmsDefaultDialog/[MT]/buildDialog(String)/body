@@ -1,6 +1,6 @@
 {
   TelephonyManager tm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-  if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE) {
+  if (!tm.isSmsCapable()) {
     return false;
   }
   mNewSmsApplicationData=SmsApplication.getSmsApplicationData(packageName,this);

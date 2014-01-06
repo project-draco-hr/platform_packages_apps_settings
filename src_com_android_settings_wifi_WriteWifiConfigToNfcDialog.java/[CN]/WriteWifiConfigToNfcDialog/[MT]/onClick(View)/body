@@ -1,0 +1,30 @@
+{
+  mWakeLock.acquire();
+  String password=mPasswordView.getText().toString();
+  String wpsNfcConfigurationToken=mWifiManager.getWpsNfcConfigurationToken(mAccessPoint.networkId);
+  String passwordHex=byteArrayToHexString(password.getBytes());
+  String passwordLength=password.length() >= 16 ? "" + Character.forDigit(password.length(),16) : "0" + Character.forDigit(password.length(),16);
+  passwordHex=String.format(PASSWORD_FORMAT,passwordLength,passwordHex).toUpperCase();
+  if (wpsNfcConfigurationToken.contains(passwordHex)) {
+    mWpsNfcConfigurationToken=wpsNfcConfigurationToken;
+    Activity activity=getOwnerActivity();
+    NfcAdapter nfcAdapter=NfcAdapter.getDefaultAdapter(activity);
+    nfcAdapter.enableReaderMode(activity,new NfcAdapter.ReaderCallback(){
+      @Override public void onTagDiscovered(      Tag tag){
+        handleWriteNfcEvent(tag);
+      }
+    }
+,NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_NFC_B | NfcAdapter.FLAG_READER_NFC_BARCODE| NfcAdapter.FLAG_READER_NFC_F| NfcAdapter.FLAG_READER_NFC_V,null);
+    mPasswordView.setVisibility(View.GONE);
+    mPasswordCheckBox.setVisibility(View.GONE);
+    mSubmitButton.setVisibility(View.GONE);
+    InputMethodManager imm=(InputMethodManager)getOwnerActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+    imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(),0);
+    mLabelView.setText(R.string.status_awaiting_tap);
+    mView.findViewById(R.id.password_layout).setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+    mProgressBar.setVisibility(View.VISIBLE);
+  }
+ else {
+    mLabelView.setText(R.string.status_invalid_password);
+  }
+}

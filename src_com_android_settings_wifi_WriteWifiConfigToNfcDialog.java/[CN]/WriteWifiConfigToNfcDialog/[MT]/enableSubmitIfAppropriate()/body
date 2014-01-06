@@ -1,0 +1,13 @@
+{
+  if (mPasswordView != null) {
+    if (mAccessPoint.security == AccessPoint.SECURITY_WEP) {
+      mSubmitButton.setEnabled(mPasswordView.length() > 0);
+    }
+ else     if (mAccessPoint.security == AccessPoint.SECURITY_PSK) {
+      mSubmitButton.setEnabled(mPasswordView.length() >= 8);
+    }
+  }
+ else {
+    mSubmitButton.setEnabled(false);
+  }
+}

@@ -1,7 +1,7 @@
 {
   Keyboards keyboards=new Keyboards();
   InputManager im=(InputManager)getContext().getSystemService(Context.INPUT_SERVICE);
-  String[] keyboardLayoutDescriptors=im.getKeyboardLayoutsForInputDevice(mInputDeviceDescriptor);
+  String[] keyboardLayoutDescriptors=im.getKeyboardLayoutsForInputDevice(mInputDeviceIdentifier);
   for (  String keyboardLayoutDescriptor : keyboardLayoutDescriptors) {
     KeyboardLayout keyboardLayout=im.getKeyboardLayout(keyboardLayoutDescriptor);
     if (keyboardLayout != null) {
@@ -9,7 +9,7 @@
     }
   }
   Collections.sort(keyboards.keyboardLayouts);
-  String currentKeyboardLayoutDescriptor=im.getCurrentKeyboardLayoutForInputDevice(mInputDeviceDescriptor);
+  String currentKeyboardLayoutDescriptor=im.getCurrentKeyboardLayoutForInputDevice(mInputDeviceIdentifier);
   if (currentKeyboardLayoutDescriptor != null) {
     final int numKeyboardLayouts=keyboards.keyboardLayouts.size();
     for (int i=0; i < numKeyboardLayouts; i++) {

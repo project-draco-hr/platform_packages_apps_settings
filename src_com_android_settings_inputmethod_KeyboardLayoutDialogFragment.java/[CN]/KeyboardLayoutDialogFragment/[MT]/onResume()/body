@@ -1,7 +1,7 @@
 {
   super.onResume();
   mIm.registerInputDeviceListener(this,null);
-  InputDevice inputDevice=mIm.getInputDeviceByDescriptor(mInputDeviceDescriptor);
+  InputDevice inputDevice=mIm.getInputDeviceByDescriptor(mInputDeviceIdentifier.getDescriptor());
   if (inputDevice == null) {
     dismiss();
     return;

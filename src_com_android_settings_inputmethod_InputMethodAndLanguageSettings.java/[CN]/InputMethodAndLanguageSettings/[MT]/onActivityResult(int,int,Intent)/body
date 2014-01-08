@@ -1,8 +1,8 @@
 {
   super.onActivityResult(requestCode,resultCode,data);
   if (mIntentWaitingForResult != null) {
-    String inputDeviceDescriptor=mIntentWaitingForResult.getStringExtra(KeyboardLayoutPickerFragment.EXTRA_INPUT_DEVICE_DESCRIPTOR);
+    InputDeviceIdentifier inputDeviceIdentifier=mIntentWaitingForResult.getParcelableExtra(KeyboardLayoutPickerFragment.EXTRA_INPUT_DEVICE_IDENTIFIER);
     mIntentWaitingForResult=null;
-    showKeyboardLayoutDialog(inputDeviceDescriptor);
+    showKeyboardLayoutDialog(inputDeviceIdentifier);
   }
 }

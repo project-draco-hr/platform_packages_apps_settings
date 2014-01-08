@@ -5,10 +5,10 @@
     if (layout != null) {
       boolean checked=checkboxPref.isChecked();
       if (checked) {
-        mIm.addKeyboardLayoutForInputDevice(mInputDeviceDescriptor,layout.getDescriptor());
+        mIm.addKeyboardLayoutForInputDevice(mInputDeviceIdentifier,layout.getDescriptor());
       }
  else {
-        mIm.removeKeyboardLayoutForInputDevice(mInputDeviceDescriptor,layout.getDescriptor());
+        mIm.removeKeyboardLayoutForInputDevice(mInputDeviceIdentifier,layout.getDescriptor());
       }
       return true;
     }

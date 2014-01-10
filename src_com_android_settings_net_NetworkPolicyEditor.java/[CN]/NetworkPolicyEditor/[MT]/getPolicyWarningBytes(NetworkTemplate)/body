@@ -1,3 +1,4 @@
 {
-  return getPolicy(template).warningBytes;
+  final NetworkPolicy policy=getPolicy(template);
+  return (policy != null) ? policy.warningBytes : WARNING_DISABLED;
 }

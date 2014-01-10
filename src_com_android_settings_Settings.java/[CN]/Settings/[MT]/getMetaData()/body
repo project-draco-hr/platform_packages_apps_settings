@@ -4,15 +4,6 @@
     if (ai == null || ai.metaData == null)     return;
     mTopLevelHeaderId=ai.metaData.getInt(META_DATA_KEY_HEADER_ID);
     mFragmentClass=ai.metaData.getString(META_DATA_KEY_FRAGMENT_CLASS);
-    final int parentHeaderTitleRes=ai.metaData.getInt(META_DATA_KEY_PARENT_TITLE);
-    String parentFragmentClass=ai.metaData.getString(META_DATA_KEY_PARENT_FRAGMENT_CLASS);
-    if (parentFragmentClass != null) {
-      mParentHeader=new Header();
-      mParentHeader.fragment=parentFragmentClass;
-      if (parentHeaderTitleRes != 0) {
-        mParentHeader.title=getResources().getString(parentHeaderTitleRes);
-      }
-    }
   }
  catch (  NameNotFoundException nnfe) {
   }

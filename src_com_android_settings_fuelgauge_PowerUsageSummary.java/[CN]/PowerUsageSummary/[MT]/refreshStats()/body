@@ -2,6 +2,10 @@
   mAppListGroup.removeAll();
   mAppListGroup.setOrderingAsAdded(false);
   mBatteryStatusPref.setOrder(-2);
+  if (mBatteryLevel != null && mBatteryStatus != null) {
+    String batterySummary=getActivity().getResources().getString(R.string.power_usage_level_and_status,mBatteryLevel,mBatteryStatus);
+    mBatteryStatusPref.setTitle(batterySummary);
+  }
   mAppListGroup.addPreference(mBatteryStatusPref);
   BatteryHistoryPreference hist=new BatteryHistoryPreference(getActivity(),mStatsHelper.getStats());
   hist.setOrder(-1);

@@ -1,5 +1,5 @@
 {
   super.onResume();
-  getActivity().registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+  updateBatteryStatus(getActivity().registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED)));
   refreshStats();
 }

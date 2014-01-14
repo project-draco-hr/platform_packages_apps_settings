@@ -1,0 +1,12 @@
+{
+  if (intent != null) {
+    String batteryLevel=com.android.settings.Utils.getBatteryPercentage(intent);
+    String batteryStatus=com.android.settings.Utils.getBatteryStatus(getResources(),intent);
+    if (!batteryLevel.equals(mBatteryLevel) || !batteryStatus.equals(mBatteryStatus)) {
+      mBatteryLevel=batteryLevel;
+      mBatteryStatus=batteryStatus;
+      return true;
+    }
+  }
+  return false;
+}

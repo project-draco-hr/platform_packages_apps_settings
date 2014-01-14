@@ -54,6 +54,13 @@ types=new int[]{R.string.usage_type_on_time,R.string.usage_type_cpu,R.string.usa
 values=new double[]{sipper.usageTime,sipper.cpuTime,sipper.cpuFgTime,sipper.wakeLockTime,sipper.mobileRxPackets,sipper.mobileTxPackets,sipper.wifiRxPackets,sipper.wifiTxPackets};
 }
 break;
+case UNACCOUNTED:
+case OVERCOUNTED:
+{
+types=new int[]{R.string.usage_type_total_battery_capacity,R.string.usage_type_computed_power,R.string.usage_type_min_actual_power,R.string.usage_type_max_actual_power};
+values=new double[]{mPowerProfile.getBatteryCapacity(),mTotalPowermAh,mMinDrainedPower,mMaxDrainedPower};
+}
+break;
 default :
 {
 types=new int[]{R.string.usage_type_on_time};

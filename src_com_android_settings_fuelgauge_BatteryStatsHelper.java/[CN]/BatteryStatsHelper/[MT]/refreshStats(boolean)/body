@@ -10,8 +10,27 @@
   mBluetoothSippers.clear();
   mUserSippers.clear();
   mUserPower.clear();
+  mMinDrainedPower=(mStats.getLowDischargeAmountSinceCharge() * mPowerProfile.getBatteryCapacity()) / 100;
+  mMaxDrainedPower=(mStats.getHighDischargeAmountSinceCharge() * mPowerProfile.getBatteryCapacity()) / 100;
   processAppUsage(includeZeroConsumption);
   processMiscUsage();
+  mTotalPowermAh=mTotalPower / 3600;
+  if (true || mStats.getLowDischargeAmountSinceCharge() > 10) {
+    if (mMinDrainedPower > mTotalPowermAh) {
+      double amount=mMinDrainedPower - mTotalPowermAh;
+      if (mMaxPower < amount) {
+        mMaxPower=amount;
+      }
+      addEntryNoTotal(mActivity.getString(R.string.power_unaccounted),DrainType.UNACCOUNTED,0,R.drawable.ic_power_system,amount * 3600);
+    }
+ else     if (mMaxDrainedPower < mTotalPowermAh) {
+      double amount=mTotalPowermAh - mMaxDrainedPower;
+      if (mMaxPower < amount) {
+        mMaxPower=amount;
+      }
+      addEntryNoTotal(mActivity.getString(R.string.power_overcounted),DrainType.OVERCOUNTED,0,R.drawable.ic_power_system,amount * 3600);
+    }
+  }
   Collections.sort(mUsageList);
   if (mHandler != null) {
 synchronized (mRequestQueue) {

@@ -22,8 +22,8 @@ view=mInflater.inflate(R.layout.preference_header_button_item,parent,false);
 holder.icon=(ImageView)view.findViewById(R.id.icon);
 holder.title=(TextView)view.findViewById(com.android.internal.R.id.title);
 holder.summary=(TextView)view.findViewById(com.android.internal.R.id.summary);
-holder.button_=(ImageButton)view.findViewById(R.id.buttonWidget);
-holder.divider_=view.findViewById(R.id.divider);
+holder.button=(ImageButton)view.findViewById(R.id.buttonWidget);
+holder.divider=view.findViewById(R.id.divider);
 break;
 case HEADER_TYPE_NORMAL:
 view=mInflater.inflate(R.layout.preference_header_item,parent,false);
@@ -55,16 +55,16 @@ case HEADER_TYPE_BUTTON:
 if (header.id == R.id.security_settings) {
 boolean hasCert=DevicePolicyManager.hasAnyCaCertsInstalled();
 if (hasCert) {
-holder.button_.setVisibility(View.VISIBLE);
-holder.divider_.setVisibility(View.VISIBLE);
+holder.button.setVisibility(View.VISIBLE);
+holder.divider.setVisibility(View.VISIBLE);
 boolean isManaged=mDevicePolicyManager.getDeviceOwner() != null;
 if (isManaged) {
-holder.button_.setImageResource(R.drawable.ic_settings_about);
+holder.button.setImageResource(R.drawable.ic_settings_about);
 }
  else {
-holder.button_.setImageResource(android.R.drawable.stat_notify_error);
+holder.button.setImageResource(android.R.drawable.stat_notify_error);
 }
-holder.button_.setOnClickListener(new OnClickListener(){
+holder.button.setOnClickListener(new OnClickListener(){
 @Override public void onClick(View v){
 Intent intent=new Intent(android.provider.Settings.ACTION_MONITORING_CERT_INFO);
 getContext().startActivity(intent);
@@ -73,8 +73,8 @@ getContext().startActivity(intent);
 );
 }
  else {
-holder.button_.setVisibility(View.GONE);
-holder.divider_.setVisibility(View.GONE);
+holder.button.setVisibility(View.GONE);
+holder.divider.setVisibility(View.GONE);
 }
 }
 updateCommonHeaderView(header,holder);

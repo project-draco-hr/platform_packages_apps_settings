@@ -5,15 +5,15 @@
     setHeaderIcon(holder,icon);
   }
  else {
-    holder.icon.setImageResource(header.iconRes);
+    holder.mIcon.setImageResource(header.iconRes);
   }
-  holder.title.setText(header.getTitle(getContext().getResources()));
+  holder.mTitle.setText(header.getTitle(getContext().getResources()));
   CharSequence summary=header.getSummary(getContext().getResources());
   if (!TextUtils.isEmpty(summary)) {
-    holder.summary.setVisibility(View.VISIBLE);
-    holder.summary.setText(summary);
+    holder.mSummary.setVisibility(View.VISIBLE);
+    holder.mSummary.setText(summary);
   }
  else {
-    holder.summary.setVisibility(View.GONE);
+    holder.mSummary.setVisibility(View.GONE);
   }
 }

@@ -5,4 +5,7 @@
   mUiHandler.removeCallbacks(mUpdateCountdownSummaryRunnable);
   mContext.unregisterReceiver(mReceiver);
   mDiscoveryPreference.setOnPreferenceClickListener(null);
+  if (mVisibilityTimeoutPreference != null) {
+    mVisibilityTimeoutPreference.setOnPreferenceClickListener(null);
+  }
 }

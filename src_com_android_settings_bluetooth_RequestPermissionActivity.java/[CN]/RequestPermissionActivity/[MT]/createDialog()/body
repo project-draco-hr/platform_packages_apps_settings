@@ -4,13 +4,18 @@
     builder.setMessage(getString(R.string.bluetooth_turning_on));
     builder.setCancelable(false);
   }
- else {
+ else   if (mExtraIntent == EXTRA_INTENT_DISCOVERY) {
     if (mTimeout == BluetoothDiscoverableEnabler.DISCOVERABLE_TIMEOUT_NEVER) {
       builder.setMessage(getString(R.string.bluetooth_ask_lasting_discovery));
     }
  else {
       builder.setMessage(getString(R.string.bluetooth_ask_discovery,mTimeout));
     }
+    builder.setPositiveButton(getString(R.string.allow),this);
+    builder.setNegativeButton(getString(R.string.deny),this);
+  }
+ else   if (mExtraIntent == EXTRA_INTENT_START_ADVERTISING) {
+    builder.setMessage(getString(R.string.bluetooth_ask_start_broadcast,Utils.getCallingApp(this)));
     builder.setPositiveButton(getString(R.string.allow),this);
     builder.setNegativeButton(getString(R.string.deny),this);
   }

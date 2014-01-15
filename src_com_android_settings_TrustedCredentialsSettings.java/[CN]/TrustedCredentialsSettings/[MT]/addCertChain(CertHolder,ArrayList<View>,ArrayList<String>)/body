@@ -1,0 +1,12 @@
+{
+  List<X509Certificate> certificates=null;
+  try {
+    certificates=mStore.getCertificateChain(certHolder.mX509Cert);
+  }
+ catch (  CertificateException ex) {
+    return;
+  }
+  for (  X509Certificate certificate : certificates) {
+    addCertDetails(certificate,views,titles);
+  }
+}

@@ -13,7 +13,7 @@
     return false;
   }
   PowerGaugePreference pgp=(PowerGaugePreference)preference;
-  BatterySipper sipper=pgp.getInfo();
-  mStatsHelper.startBatteryDetailPage((PreferenceActivity)getActivity(),sipper,true);
+  BatteryEntry entry=pgp.getInfo();
+  PowerUsageDetail.startBatteryDetailPage((PreferenceActivity)getActivity(),mStatsHelper,entry,true);
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

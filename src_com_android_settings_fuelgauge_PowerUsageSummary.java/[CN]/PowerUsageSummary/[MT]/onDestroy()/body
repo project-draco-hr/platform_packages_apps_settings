@@ -1,4 +1,7 @@
 {
   super.onDestroy();
-  mStatsHelper.destroy();
+  if (getActivity().isChangingConfigurations()) {
+    mStatsHelper.storeState();
+    BatteryEntry.clearUidCache();
+  }
 }

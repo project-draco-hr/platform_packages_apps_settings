@@ -1,0 +1,65 @@
+{
+  mHandler=handler;
+  this.context=context;
+  this.sipper=sipper;
+switch (sipper.drainType) {
+case IDLE:
+    name=context.getResources().getString(R.string.power_idle);
+  iconId=R.drawable.ic_settings_phone_idle;
+break;
+case CELL:
+name=context.getResources().getString(R.string.power_cell);
+iconId=R.drawable.ic_settings_cell_standby;
+break;
+case PHONE:
+name=context.getResources().getString(R.string.power_phone);
+iconId=R.drawable.ic_settings_voice_calls;
+break;
+case WIFI:
+name=context.getResources().getString(R.string.power_wifi);
+iconId=R.drawable.ic_settings_wifi;
+break;
+case BLUETOOTH:
+name=context.getResources().getString(R.string.power_bluetooth);
+iconId=R.drawable.ic_settings_bluetooth;
+break;
+case SCREEN:
+name=context.getResources().getString(R.string.power_screen);
+iconId=R.drawable.ic_settings_display;
+break;
+case APP:
+name=sipper.packageWithHighestDrain;
+break;
+case USER:
+{
+UserInfo info=um.getUserInfo(sipper.userId);
+if (info != null) {
+icon=UserUtils.getUserIcon(context,um,info,context.getResources());
+name=info != null ? info.name : null;
+if (name == null) {
+name=Integer.toString(info.id);
+}
+name=context.getResources().getString(R.string.running_process_item_user_label,name);
+}
+ else {
+icon=null;
+name=context.getResources().getString(R.string.running_process_item_removed_user_label);
+}
+}
+break;
+case UNACCOUNTED:
+name=context.getResources().getString(R.string.power_unaccounted);
+iconId=R.drawable.ic_power_system;
+break;
+case OVERCOUNTED:
+name=context.getResources().getString(R.string.power_overcounted);
+iconId=R.drawable.ic_power_system;
+break;
+}
+if (iconId > 0) {
+icon=context.getResources().getDrawable(iconId);
+}
+if ((name == null || iconId == 0) && this.sipper.uidObj != null) {
+getQuickNameIconForUid(this.sipper.uidObj);
+}
+}

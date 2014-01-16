@@ -14,17 +14,19 @@
     addNotAvailableMessage();
     return;
   }
-  mStatsHelper.refreshStats(false);
+  mStatsHelper.refreshStats(BatteryStats.STATS_SINCE_CHARGED,UserHandle.myUserId());
   List<BatterySipper> usageList=mStatsHelper.getUsageList();
-  for (  BatterySipper sipper : usageList) {
-    if (sipper.getSortValue() < MIN_POWER_THRESHOLD)     continue;
-    final double percentOfTotal=((sipper.getSortValue() / mStatsHelper.getTotalPower()) * 100);
+  for (int i=0; i < usageList.size(); i++) {
+    BatterySipper sipper=usageList.get(i);
+    if ((sipper.value * 60 * 60) < MIN_POWER_THRESHOLD)     continue;
+    final double percentOfTotal=((sipper.value / mStatsHelper.getTotalPower()) * 100);
     if (percentOfTotal < 1)     continue;
-    PowerGaugePreference pref=new PowerGaugePreference(getActivity(),sipper.getIcon(),sipper);
-    final double percentOfMax=(sipper.getSortValue() * 100) / mStatsHelper.getMaxPower();
+    BatteryEntry entry=new BatteryEntry(getActivity(),mHandler,mUm,sipper);
+    PowerGaugePreference pref=new PowerGaugePreference(getActivity(),entry.getIcon(),entry);
+    final double percentOfMax=(sipper.value * 100) / mStatsHelper.getMaxPower();
     sipper.percent=percentOfTotal;
-    pref.setTitle(sipper.name);
-    pref.setOrder(Integer.MAX_VALUE - (int)sipper.getSortValue());
+    pref.setTitle(entry.getLabel());
+    pref.setOrder(i + 1);
     pref.setPercent(percentOfMax,percentOfTotal);
     if (sipper.uidObj != null) {
       pref.setKey(Integer.toString(sipper.uidObj.getUid()));
@@ -32,4 +34,5 @@
     mAppListGroup.addPreference(pref);
     if (mAppListGroup.getPreferenceCount() > (MAX_ITEMS_TO_LIST + 1))     break;
   }
+  BatteryEntry.startRequestQueue();
 }

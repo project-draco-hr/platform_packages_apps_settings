@@ -1,5 +1,0 @@
-{
-  long idleTimeMs=(uSecNow - mStats.getScreenOnTime(uSecNow,mStatsType)) / 1000;
-  double idlePower=(idleTimeMs * mPowerProfile.getAveragePower(PowerProfile.POWER_CPU_IDLE)) / 1000;
-  addEntry(mActivity.getString(R.string.power_idle),DrainType.IDLE,idleTimeMs,R.drawable.ic_settings_phone_idle,idlePower);
-}

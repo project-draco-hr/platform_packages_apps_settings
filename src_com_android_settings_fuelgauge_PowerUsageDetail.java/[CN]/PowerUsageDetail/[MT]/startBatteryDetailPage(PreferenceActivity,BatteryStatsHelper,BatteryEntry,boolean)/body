@@ -1,0 +1,73 @@
+{
+  helper.getStats();
+  Bundle args=new Bundle();
+  args.putString(PowerUsageDetail.EXTRA_TITLE,entry.name);
+  args.putInt(PowerUsageDetail.EXTRA_PERCENT,(int)Math.ceil(entry.sipper.value * 100 / helper.getTotalPower()));
+  args.putInt(PowerUsageDetail.EXTRA_GAUGE,(int)Math.ceil(entry.sipper.value * 100 / helper.getMaxPower()));
+  args.putLong(PowerUsageDetail.EXTRA_USAGE_DURATION,helper.getStatsPeriod());
+  args.putString(PowerUsageDetail.EXTRA_ICON_PACKAGE,entry.defaultPackageName);
+  args.putInt(PowerUsageDetail.EXTRA_ICON_ID,entry.iconId);
+  args.putDouble(PowerUsageDetail.EXTRA_NO_COVERAGE,entry.sipper.noCoveragePercent);
+  if (entry.sipper.uidObj != null) {
+    args.putInt(PowerUsageDetail.EXTRA_UID,entry.sipper.uidObj.getUid());
+  }
+  args.putSerializable(PowerUsageDetail.EXTRA_DRAIN_TYPE,entry.sipper.drainType);
+  args.putBoolean(PowerUsageDetail.EXTRA_SHOW_LOCATION_BUTTON,showLocationButton);
+  int[] types;
+  double[] values;
+switch (entry.sipper.drainType) {
+case APP:
+case USER:
+{
+      BatteryStats.Uid uid=entry.sipper.uidObj;
+      types=new int[]{R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_gps,R.string.usage_type_wifi_running,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send,R.string.usage_type_audio,R.string.usage_type_video};
+      values=new double[]{entry.sipper.cpuTime,entry.sipper.cpuFgTime,entry.sipper.wakeLockTime,entry.sipper.gpsTime,entry.sipper.wifiRunningTime,entry.sipper.mobileRxPackets,entry.sipper.mobileTxPackets,entry.sipper.wifiRxPackets,entry.sipper.wifiTxPackets,0,0};
+      if (entry.sipper.drainType == BatterySipper.DrainType.APP) {
+        Writer result=new StringWriter();
+        PrintWriter printWriter=new FastPrintWriter(result,false,1024);
+        helper.getStats().dumpLocked(caller,printWriter,"",helper.getStatsType(),uid.getUid());
+        printWriter.flush();
+        args.putString(PowerUsageDetail.EXTRA_REPORT_DETAILS,result.toString());
+        result=new StringWriter();
+        printWriter=new FastPrintWriter(result,false,1024);
+        helper.getStats().dumpCheckinLocked(caller,printWriter,helper.getStatsType(),uid.getUid());
+        printWriter.flush();
+        args.putString(PowerUsageDetail.EXTRA_REPORT_CHECKIN_DETAILS,result.toString());
+      }
+    }
+  break;
+case CELL:
+{
+  types=new int[]{R.string.usage_type_on_time,R.string.usage_type_no_coverage};
+  values=new double[]{entry.sipper.usageTime,entry.sipper.noCoveragePercent};
+}
+break;
+case WIFI:
+{
+types=new int[]{R.string.usage_type_wifi_running,R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send};
+values=new double[]{entry.sipper.usageTime,entry.sipper.cpuTime,entry.sipper.cpuFgTime,entry.sipper.wakeLockTime,entry.sipper.mobileRxPackets,entry.sipper.mobileTxPackets,entry.sipper.wifiRxPackets,entry.sipper.wifiTxPackets};
+}
+break;
+case BLUETOOTH:
+{
+types=new int[]{R.string.usage_type_on_time,R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send};
+values=new double[]{entry.sipper.usageTime,entry.sipper.cpuTime,entry.sipper.cpuFgTime,entry.sipper.wakeLockTime,entry.sipper.mobileRxPackets,entry.sipper.mobileTxPackets,entry.sipper.wifiRxPackets,entry.sipper.wifiTxPackets};
+}
+break;
+case UNACCOUNTED:
+case OVERCOUNTED:
+{
+types=new int[]{R.string.usage_type_total_battery_capacity,R.string.usage_type_computed_power,R.string.usage_type_min_actual_power,R.string.usage_type_max_actual_power};
+values=new double[]{helper.getPowerProfile().getBatteryCapacity(),helper.getTotalPower(),helper.getMinDrainedPower(),helper.getMaxDrainedPower()};
+}
+break;
+default :
+{
+types=new int[]{R.string.usage_type_on_time};
+values=new double[]{entry.sipper.usageTime};
+}
+}
+args.putIntArray(PowerUsageDetail.EXTRA_DETAIL_TYPES,types);
+args.putDoubleArray(PowerUsageDetail.EXTRA_DETAIL_VALUES,values);
+caller.startPreferencePanel(PowerUsageDetail.class.getName(),args,R.string.details_title,null,null,0);
+}

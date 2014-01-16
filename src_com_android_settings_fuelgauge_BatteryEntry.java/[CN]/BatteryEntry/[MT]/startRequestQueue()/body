@@ -1,0 +1,15 @@
+{
+  if (mHandler != null) {
+synchronized (mRequestQueue) {
+      if (!mRequestQueue.isEmpty()) {
+        if (mRequestThread != null) {
+          mRequestThread.abort();
+        }
+        mRequestThread=new NameAndIconLoader();
+        mRequestThread.setPriority(Thread.MIN_PRIORITY);
+        mRequestThread.start();
+        mRequestQueue.notify();
+      }
+    }
+  }
+}

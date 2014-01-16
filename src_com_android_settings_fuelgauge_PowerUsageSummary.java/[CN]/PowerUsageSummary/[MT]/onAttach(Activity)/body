@@ -1,4 +1,5 @@
 {
   super.onAttach(activity);
-  mStatsHelper=new BatteryStatsHelper(activity,mHandler);
+  mUm=(UserManager)activity.getSystemService(Context.USER_SERVICE);
+  mStatsHelper=new BatteryStatsHelper(activity);
 }

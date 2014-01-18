@@ -56,7 +56,7 @@
     mReportButton.setText(com.android.internal.R.string.report);
     mReportButton.setTag(ACTION_REPORT);
     mReportButton.setOnClickListener(this);
-    int enabled=Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.SEND_ACTION_APP_ERROR,0);
+    int enabled=android.provider.Settings.Global.getInt(getActivity().getContentResolver(),android.provider.Settings.Global.SEND_ACTION_APP_ERROR,0);
     if (enabled != 0) {
       if (mPackages != null && mPackages.length > 0) {
         try {

@@ -1,0 +1,45 @@
+{
+  ArrayList<Header> matches=new ArrayList<Header>();
+  for (int j=0; j < from.size(); j++) {
+    Header oh=from.get(j);
+    if (cur == oh || (cur.id != HEADER_ID_UNDEFINED && cur.id == oh.id)) {
+      matches.clear();
+      matches.add(oh);
+      break;
+    }
+    if (cur.fragment != null) {
+      if (cur.fragment.equals(oh.fragment)) {
+        matches.add(oh);
+      }
+    }
+ else     if (cur.intent != null) {
+      if (cur.intent.equals(oh.intent)) {
+        matches.add(oh);
+      }
+    }
+ else     if (cur.title != null) {
+      if (cur.title.equals(oh.title)) {
+        matches.add(oh);
+      }
+    }
+  }
+  final int NM=matches.size();
+  if (NM == 1) {
+    return matches.get(0);
+  }
+ else   if (NM > 1) {
+    for (int j=0; j < NM; j++) {
+      Header oh=matches.get(j);
+      if (cur.fragmentArguments != null && cur.fragmentArguments.equals(oh.fragmentArguments)) {
+        return oh;
+      }
+      if (cur.extras != null && cur.extras.equals(oh.extras)) {
+        return oh;
+      }
+      if (cur.title != null && cur.title.equals(oh.title)) {
+        return oh;
+      }
+    }
+  }
+  return null;
+}

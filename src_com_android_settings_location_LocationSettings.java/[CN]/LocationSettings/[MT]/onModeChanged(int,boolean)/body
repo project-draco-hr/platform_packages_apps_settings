@@ -1,21 +1,21 @@
 {
 switch (mode) {
-case Settings.Secure.LOCATION_MODE_OFF:
+case android.provider.Settings.Secure.LOCATION_MODE_OFF:
     mLocationMode.setSummary(R.string.location_mode_location_off_title);
   break;
-case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
+case android.provider.Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
 mLocationMode.setSummary(R.string.location_mode_sensors_only_title);
 break;
-case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
+case android.provider.Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
 mLocationMode.setSummary(R.string.location_mode_battery_saving_title);
 break;
-case Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
+case android.provider.Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
 mLocationMode.setSummary(R.string.location_mode_high_accuracy_title);
 break;
 default :
 break;
 }
-boolean enabled=(mode != Settings.Secure.LOCATION_MODE_OFF);
+boolean enabled=(mode != android.provider.Settings.Secure.LOCATION_MODE_OFF);
 mSwitch.setEnabled(!restricted);
 mLocationMode.setEnabled(enabled && !restricted);
 mCategoryRecentLocationRequests.setEnabled(enabled);

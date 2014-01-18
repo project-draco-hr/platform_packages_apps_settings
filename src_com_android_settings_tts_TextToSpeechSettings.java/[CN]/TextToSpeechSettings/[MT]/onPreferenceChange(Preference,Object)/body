@@ -2,7 +2,7 @@
   if (KEY_DEFAULT_RATE.equals(preference.getKey())) {
     mDefaultRate=Integer.parseInt((String)objValue);
     try {
-      Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_RATE,mDefaultRate);
+      android.provider.Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_RATE,mDefaultRate);
       if (mTts != null) {
         mTts.setSpeechRate(mDefaultRate / 100.0f);
       }

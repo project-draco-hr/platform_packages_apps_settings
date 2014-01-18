@@ -1,7 +1,7 @@
 {
   if (!(preference instanceof ShortcutPreference))   return false;
   ShortcutPreference pref=(ShortcutPreference)preference;
-  Intent intent=new Intent(this,BookmarkPicker.class);
+  Intent intent=new Intent(getActivity(),BookmarkPicker.class);
   intent.putExtra(BookmarkPicker.EXTRA_SHORTCUT,pref.getShortcut());
   startActivityForResult(intent,REQUEST_PICK_BOOKMARK);
   return true;

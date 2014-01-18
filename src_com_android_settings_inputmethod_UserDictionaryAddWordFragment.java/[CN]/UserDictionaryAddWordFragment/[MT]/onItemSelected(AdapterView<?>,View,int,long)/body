@@ -1,8 +1,8 @@
 {
   final LocaleRenderer locale=(LocaleRenderer)parent.getItemAtPosition(pos);
   if (locale.isMoreLanguages()) {
-    PreferenceActivity preferenceActivity=(PreferenceActivity)getActivity();
-    preferenceActivity.startPreferenceFragment(new UserDictionaryLocalePicker(this),true);
+    SettingsActivity sa=(SettingsActivity)getActivity();
+    sa.startPreferenceFragment(new UserDictionaryLocalePicker(this),true);
   }
  else {
     mContents.updateLocale(locale.getLocaleString());

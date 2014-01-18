@@ -1,0 +1,52 @@
+{
+  for (int i=0; i < mAuthDescs.length; i++) {
+    String accountType=mAuthDescs[i].type;
+    CharSequence providerName=getLabelForType(accountType);
+    ArrayList<String> accountAuths=getAuthoritiesForAccountType(accountType);
+    boolean addAccountPref=true;
+    if (mAuthorities != null && mAuthorities.length > 0 && accountAuths != null) {
+      addAccountPref=false;
+      for (int k=0; k < mAuthorities.length; k++) {
+        if (accountAuths.contains(mAuthorities[k])) {
+          addAccountPref=true;
+          break;
+        }
+      }
+    }
+    if (addAccountPref && mAccountTypesFilter != null && !mAccountTypesFilter.contains(accountType)) {
+      addAccountPref=false;
+    }
+    if (addAccountPref) {
+      mProviderList.add(new ProviderEntry(providerName,accountType));
+    }
+ else {
+      if (Log.isLoggable(TAG,Log.VERBOSE)) {
+        Log.v(TAG,"Skipped pref " + providerName + ": has no authority we need");
+      }
+    }
+  }
+  if (mProviderList.size() == 1) {
+    finishWithAccountType(mProviderList.get(0).type);
+  }
+ else   if (mProviderList.size() > 0) {
+    Collections.sort(mProviderList);
+    mAddAccountGroup.removeAll();
+    for (    ProviderEntry pref : mProviderList) {
+      Drawable drawable=getDrawableForType(pref.type);
+      ProviderPreference p=new ProviderPreference(getActivity(),pref.type,drawable,pref.name);
+      mAddAccountGroup.addPreference(p);
+    }
+  }
+ else {
+    if (Log.isLoggable(TAG,Log.VERBOSE)) {
+      final StringBuilder auths=new StringBuilder();
+      for (      String a : mAuthorities) {
+        auths.append(a);
+        auths.append(' ');
+      }
+      Log.v(TAG,"No providers found for authorities: " + auths);
+    }
+    getActivity().setResult(Activity.RESULT_CANCELED);
+    finish();
+  }
+}

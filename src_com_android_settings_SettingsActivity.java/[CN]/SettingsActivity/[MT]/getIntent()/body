@@ -1,0 +1,19 @@
+{
+  Intent superIntent=super.getIntent();
+  String startingFragment=getStartingFragmentClass(superIntent);
+  if (startingFragment != null) {
+    Intent modIntent=new Intent(superIntent);
+    modIntent.putExtra(EXTRA_SHOW_FRAGMENT,startingFragment);
+    Bundle args=superIntent.getExtras();
+    if (args != null) {
+      args=new Bundle(args);
+    }
+ else {
+      args=new Bundle();
+    }
+    args.putParcelable("intent",superIntent);
+    modIntent.putExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS,superIntent.getExtras());
+    return modIntent;
+  }
+  return superIntent;
+}

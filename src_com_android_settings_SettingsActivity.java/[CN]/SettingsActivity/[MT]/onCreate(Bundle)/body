@@ -1,0 +1,118 @@
+{
+  if (getIntent().hasExtra(EXTRA_UI_OPTIONS)) {
+    getWindow().setUiOptions(getIntent().getIntExtra(EXTRA_UI_OPTIONS,0));
+  }
+  mAuthenticatorHelper=new AuthenticatorHelper();
+  mAuthenticatorHelper.updateAuthDescriptions(this);
+  mAuthenticatorHelper.onAccountsUpdated(this,null);
+  DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  mHeaderAdapter=new HeaderAdapter(this,getHeaders(),mAuthenticatorHelper,dpm);
+  mDevelopmentPreferences=getSharedPreferences(DevelopmentSettings.PREF_FILE,Context.MODE_PRIVATE);
+  getMetaData();
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.settings_main);
+  getFragmentManager().addOnBackStackChangedListener(this);
+  mActionBar=getActionBar();
+  if (mActionBar != null) {
+    mActionBar.setDisplayHomeAsUpEnabled(true);
+    mActionBar.setHomeButtonEnabled(true);
+    mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+    mDrawerLayout.setDrawerListener(new DrawerListener());
+    mDrawer=(ListView)findViewById(R.id.headers_drawer);
+    mDrawer.setAdapter(mHeaderAdapter);
+    mDrawer.setOnItemClickListener(new DrawerItemClickListener());
+    mDrawer.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+    mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.drawable.ic_drawer,R.string.drawer_open,R.string.drawer_close);
+  }
+  String initialFragment=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
+  Bundle initialArguments=getIntent().getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
+  if (savedInstanceState != null) {
+    ArrayList<Header> headers=savedInstanceState.getParcelableArrayList(HEADERS_TAG);
+    if (headers != null) {
+      mHeaders.addAll(headers);
+      int curHeader=savedInstanceState.getInt(CUR_HEADER_TAG,(int)HEADER_ID_UNDEFINED);
+      if (curHeader >= 0 && curHeader < mHeaders.size()) {
+        setSelectedHeader(mHeaders.get(curHeader));
+      }
+    }
+  }
+ else {
+    if (initialFragment != null) {
+      switchToHeader(initialFragment,initialArguments,true);
+      final int initialTitle=getIntent().getIntExtra(EXTRA_SHOW_FRAGMENT_TITLE,0);
+      if (initialTitle != 0) {
+        setTitle(getText(initialTitle));
+      }
+    }
+ else {
+      onBuildHeaders(mHeaders);
+      if (mHeaders.size() > 0) {
+        if (initialFragment == null) {
+          Header h=onGetInitialHeader();
+          switchToHeader(h,false);
+        }
+ else {
+          switchToHeader(initialFragment,initialArguments,false);
+        }
+      }
+    }
+  }
+  Intent intent=getIntent();
+  if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_BUTTON_BAR,false)) {
+    View buttonBar=findViewById(com.android.internal.R.id.button_bar);
+    if (buttonBar != null) {
+      buttonBar.setVisibility(View.VISIBLE);
+      Button backButton=(Button)findViewById(com.android.internal.R.id.back_button);
+      backButton.setOnClickListener(new OnClickListener(){
+        public void onClick(        View v){
+          setResult(RESULT_CANCELED);
+          finish();
+        }
+      }
+);
+      Button skipButton=(Button)findViewById(com.android.internal.R.id.skip_button);
+      skipButton.setOnClickListener(new OnClickListener(){
+        public void onClick(        View v){
+          setResult(RESULT_OK);
+          finish();
+        }
+      }
+);
+      mNextButton=(Button)findViewById(com.android.internal.R.id.next_button);
+      mNextButton.setOnClickListener(new OnClickListener(){
+        public void onClick(        View v){
+          setResult(RESULT_OK);
+          finish();
+        }
+      }
+);
+      if (intent.hasExtra(EXTRA_PREFS_SET_NEXT_TEXT)) {
+        String buttonText=intent.getStringExtra(EXTRA_PREFS_SET_NEXT_TEXT);
+        if (TextUtils.isEmpty(buttonText)) {
+          mNextButton.setVisibility(View.GONE);
+        }
+ else {
+          mNextButton.setText(buttonText);
+        }
+      }
+      if (intent.hasExtra(EXTRA_PREFS_SET_BACK_TEXT)) {
+        String buttonText=intent.getStringExtra(EXTRA_PREFS_SET_BACK_TEXT);
+        if (TextUtils.isEmpty(buttonText)) {
+          backButton.setVisibility(View.GONE);
+        }
+ else {
+          backButton.setText(buttonText);
+        }
+      }
+      if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_SKIP,false)) {
+        skipButton.setVisibility(View.VISIBLE);
+      }
+    }
+  }
+  if (!onIsHidingHeaders()) {
+    highlightHeader(mTopLevelHeaderId);
+  }
+  if (savedInstanceState != null) {
+    mCurrentHeader=savedInstanceState.getParcelable(SAVE_KEY_CURRENT_HEADER);
+  }
+}

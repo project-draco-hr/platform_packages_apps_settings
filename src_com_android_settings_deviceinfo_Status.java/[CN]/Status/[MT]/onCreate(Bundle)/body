@@ -1,9 +1,9 @@
 {
   super.onCreate(icicle);
   mHandler=new MyHandler(this);
-  mCM=(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
-  mTelephonyManager=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-  mWifiManager=(WifiManager)getSystemService(WIFI_SERVICE);
+  mCM=(ConnectivityManager)getSystemService(Activity.CONNECTIVITY_SERVICE);
+  mTelephonyManager=(TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE);
+  mWifiManager=(WifiManager)getSystemService(Activity.WIFI_SERVICE);
   addPreferencesFromResource(R.xml.device_info_status);
   mBatteryLevel=findPreference(KEY_BATTERY_LEVEL);
   mBatteryStatus=findPreference(KEY_BATTERY_STATUS);
@@ -15,11 +15,12 @@
   mUnknown=mRes.getString(R.string.device_info_default);
   mUnavailable=mRes.getString(R.string.status_unavailable);
   if (UserHandle.myUserId() == UserHandle.USER_OWNER) {
+    PhoneFactory.makeDefaultPhone(getActivity());
     mPhone=PhoneFactory.getDefaultPhone();
   }
   mSignalStrength=findPreference(KEY_SIGNAL_STRENGTH);
   mUptime=findPreference("up_time");
-  if (mPhone == null || Utils.isWifiOnly(getApplicationContext())) {
+  if (mPhone == null || Utils.isWifiOnly(getActivity())) {
     for (    String key : PHONE_RELATED_ENTRIES) {
       removePreferenceFromScreen(key);
     }
@@ -44,7 +45,7 @@
     }
  else {
       setSummaryText(KEY_IMEI,mPhone.getDeviceId());
-      setSummaryText(KEY_IMEI_SV,((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
+      setSummaryText(KEY_IMEI_SV,((TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
       removePreferenceFromScreen(KEY_PRL_VERSION);
       removePreferenceFromScreen(KEY_MEID_NUMBER);
       removePreferenceFromScreen(KEY_MIN_NUMBER);
@@ -59,7 +60,7 @@
       formattedNumber=PhoneNumberUtils.formatNumber(rawNumber);
     }
     setSummaryText(KEY_PHONE_NUMBER,formattedNumber);
-    mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
+    mPhoneStateReceiver=new PhoneStateIntentReceiver(getActivity(),mHandler);
     mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
     mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
     if (!mShowLatestAreaInfo) {
@@ -86,15 +87,4 @@
  else {
     removePreferenceFromScreen(KEY_SERIAL_NUMBER);
   }
-  getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
-    @Override public boolean onItemLongClick(    AdapterView<?> parent,    View view,    int position,    long id){
-      ListAdapter listAdapter=(ListAdapter)parent.getAdapter();
-      Preference pref=(Preference)listAdapter.getItem(position);
-      ClipboardManager cm=(ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-      cm.setText(pref.getSummary());
-      Toast.makeText(Status.this,com.android.internal.R.string.text_copied,Toast.LENGTH_SHORT).show();
-      return true;
-    }
-  }
-);
 }

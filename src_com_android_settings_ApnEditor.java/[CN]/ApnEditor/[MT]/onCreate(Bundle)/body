@@ -28,7 +28,7 @@
   mMvnoType.setOnPreferenceChangeListener(this);
   mMvnoMatchData=(EditTextPreference)findPreference("mvno_match_data");
   mRes=getResources();
-  final Intent intent=getIntent();
+  final Intent intent=getActivity().getIntent();
   final String action=intent.getAction();
   mFirstTime=icicle == null;
   if (action.equals(Intent.ACTION_EDIT)) {
@@ -43,18 +43,18 @@
     }
     mNewApn=true;
     if (mUri == null) {
-      Log.w(TAG,"Failed to insert new telephony provider into " + getIntent().getData());
+      Log.w(TAG,"Failed to insert new telephony provider into " + getActivity().getIntent().getData());
       finish();
       return;
     }
-    setResult(RESULT_OK,(new Intent()).setAction(mUri.toString()));
+    getActivity().setResult(Activity.RESULT_OK,(new Intent()).setAction(mUri.toString()));
   }
  else {
     finish();
     return;
   }
-  mCursor=managedQuery(mUri,sProjection,null,null);
+  mCursor=getActivity().getContentResolver().query(mUri,sProjection,null,null,null);
   mCursor.moveToFirst();
-  mTelephonyManager=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+  mTelephonyManager=(TelephonyManager)getSystemService(Activity.TELEPHONY_SERVICE);
   fillUi();
 }

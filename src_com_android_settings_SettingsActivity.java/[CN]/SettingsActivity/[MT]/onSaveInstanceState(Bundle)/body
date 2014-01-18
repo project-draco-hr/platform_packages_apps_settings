@@ -1,0 +1,15 @@
+{
+  super.onSaveInstanceState(outState);
+  if (mHeaders.size() > 0) {
+    outState.putParcelableArrayList(HEADERS_TAG,mHeaders);
+    if (mCurHeader != null) {
+      int index=mHeaders.indexOf(mCurHeader);
+      if (index >= 0) {
+        outState.putInt(CUR_HEADER_TAG,index);
+      }
+    }
+  }
+  if (mCurrentHeader != null) {
+    outState.putParcelable(SAVE_KEY_CURRENT_HEADER,mCurrentHeader);
+  }
+}

@@ -1,0 +1,26 @@
+{
+  final int count=getFragmentManager().getBackStackEntryCount() + 1;
+  TitlePair pair=null;
+  int last;
+  while (mTitleStack.size() > count) {
+    last=mTitleStack.size() - 1;
+    pair=mTitleStack.remove(last);
+  }
+  if (pair != null) {
+    int size=mTitleStack.size();
+    if (size > 0) {
+      last=mTitleStack.size() - 1;
+      pair=mTitleStack.get(last);
+      if (pair != null) {
+        final CharSequence title;
+        if (pair.first > 0) {
+          title=getText(pair.first);
+        }
+ else {
+          title=pair.second;
+        }
+        setTitle(title);
+      }
+    }
+  }
+}

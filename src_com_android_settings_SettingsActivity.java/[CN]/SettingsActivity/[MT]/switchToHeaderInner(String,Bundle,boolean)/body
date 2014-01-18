@@ -1,0 +1,11 @@
+{
+  getFragmentManager().popBackStack(BACK_STACK_PREFS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+  if (validate && !isValidFragment(fragmentName)) {
+    throw new IllegalArgumentException("Invalid fragment for this activity: " + fragmentName);
+  }
+  Fragment f=Fragment.instantiate(this,fragmentName,args);
+  FragmentTransaction transaction=getFragmentManager().beginTransaction();
+  transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+  transaction.replace(R.id.prefs,f);
+  transaction.commitAllowingStateLoss();
+}

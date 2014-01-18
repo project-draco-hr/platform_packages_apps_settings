@@ -1,0 +1,14 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+    @Override public boolean onItemLongClick(    AdapterView<?> parent,    View view,    int position,    long id){
+      ListAdapter listAdapter=(ListAdapter)parent.getAdapter();
+      Preference pref=(Preference)listAdapter.getItem(position);
+      ClipboardManager cm=(ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+      cm.setText(pref.getSummary());
+      Toast.makeText(getActivity(),com.android.internal.R.string.text_copied,Toast.LENGTH_SHORT).show();
+      return true;
+    }
+  }
+);
+}

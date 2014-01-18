@@ -2,6 +2,6 @@
   if (localLOGV)   Log.i(TAG,"appChanged=" + appChanged);
   Intent intent=new Intent();
   intent.putExtra(ManageApplications.APP_CHG,appChanged);
-  PreferenceActivity pa=(PreferenceActivity)getActivity();
-  pa.finishPreferencePanel(this,Activity.RESULT_OK,intent);
+  SettingsActivity sa=(SettingsActivity)getActivity();
+  sa.finishPreferencePanel(this,Activity.RESULT_OK,intent);
 }

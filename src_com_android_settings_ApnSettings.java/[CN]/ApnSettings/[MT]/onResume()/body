@@ -1,6 +1,6 @@
 {
   super.onResume();
-  registerReceiver(mMobileStateReceiver,mMobileStateFilter);
+  getActivity().registerReceiver(mMobileStateReceiver,mMobileStateFilter);
   if (!mRestoreDefaultApnMode) {
     fillList();
   }

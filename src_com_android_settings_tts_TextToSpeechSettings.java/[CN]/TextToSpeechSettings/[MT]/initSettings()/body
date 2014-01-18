@@ -1,7 +1,7 @@
 {
   final ContentResolver resolver=getContentResolver();
   try {
-    mDefaultRate=Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
+    mDefaultRate=android.provider.Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
   }
  catch (  SettingNotFoundException e) {
     mDefaultRate=TextToSpeech.Engine.DEFAULT_RATE;
@@ -9,17 +9,17 @@
   mDefaultRatePref.setValue(String.valueOf(mDefaultRate));
   mDefaultRatePref.setOnPreferenceChangeListener(this);
   mCurrentEngine=mTts.getCurrentEngine();
-  PreferenceActivity preferenceActivity=null;
-  if (getActivity() instanceof PreferenceActivity) {
-    preferenceActivity=(PreferenceActivity)getActivity();
+  SettingsActivity activity=null;
+  if (getActivity() instanceof SettingsActivity) {
+    activity=(SettingsActivity)getActivity();
   }
  else {
-    throw new IllegalStateException("TextToSpeechSettings used outside a " + "PreferenceActivity");
+    throw new IllegalStateException("TextToSpeechSettings used outside a " + "Settings");
   }
   mEnginePreferenceCategory.removeAll();
   List<EngineInfo> engines=mEnginesHelper.getEngines();
   for (  EngineInfo engine : engines) {
-    TtsEnginePreference enginePref=new TtsEnginePreference(getActivity(),engine,this,preferenceActivity);
+    TtsEnginePreference enginePref=new TtsEnginePreference(getActivity(),engine,this,activity);
     mEnginePreferenceCategory.addPreference(enginePref);
   }
   checkVoiceData(mCurrentEngine);

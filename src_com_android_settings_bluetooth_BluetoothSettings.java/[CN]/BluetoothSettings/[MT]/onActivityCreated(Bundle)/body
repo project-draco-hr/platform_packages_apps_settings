@@ -3,4 +3,9 @@
   mActivityStarted=(savedInstanceState == null);
   mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
   getListView().setEmptyView(mEmptyView);
+  final Activity activity=getActivity();
+  final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+  mSwitch=new Switch(activity);
+  mSwitch.setPaddingRelative(0,0,padding,0);
+  mBluetoothEnabler=new BluetoothEnabler(activity,mSwitch);
 }

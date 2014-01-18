@@ -8,7 +8,7 @@
     Log.e(TAG,"Engine failed voice data integrity check (null return)" + mTts.getCurrentEngine());
     return;
   }
-  Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_SYNTH,engine);
+  android.provider.Settings.Secure.putString(getContentResolver(),TTS_DEFAULT_SYNTH,engine);
   mAvailableStrLocals=data.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_AVAILABLE_VOICES);
   if (mAvailableStrLocals == null) {
     Log.e(TAG,"Voice data check complete, but no available voices found");

@@ -11,7 +11,7 @@
     mInputMethodPref.setOnLongClickListener(new OnLongClickListener(){
       @Override public boolean onLongClick(      View arg0){
         final Bundle bundle=new Bundle();
-        bundle.putString(Settings.EXTRA_INPUT_METHOD_ID,imiId);
+        bundle.putString(android.provider.Settings.EXTRA_INPUT_METHOD_ID,imiId);
         startFragment(mFragment,InputMethodAndSubtypeEnabler.class.getName(),0,bundle);
         return true;
       }
@@ -37,7 +37,7 @@
     final OnLongClickListener listener=new OnLongClickListener(){
       @Override public boolean onLongClick(      View arg0){
         final Bundle bundle=new Bundle();
-        bundle.putString(Settings.EXTRA_INPUT_METHOD_ID,imiId);
+        bundle.putString(android.provider.Settings.EXTRA_INPUT_METHOD_ID,imiId);
         startFragment(mFragment,InputMethodAndSubtypeEnabler.class.getName(),0,bundle);
         return true;
       }

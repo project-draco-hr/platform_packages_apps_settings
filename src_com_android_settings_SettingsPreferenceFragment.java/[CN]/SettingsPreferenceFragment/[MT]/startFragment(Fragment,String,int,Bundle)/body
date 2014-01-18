@@ -1,11 +1,11 @@
 {
-  if (getActivity() instanceof PreferenceActivity) {
-    PreferenceActivity preferenceActivity=(PreferenceActivity)getActivity();
-    preferenceActivity.startPreferencePanel(fragmentClass,extras,R.string.lock_settings_picker_title,null,caller,requestCode);
+  if (getActivity() instanceof SettingsActivity) {
+    SettingsActivity sa=(SettingsActivity)getActivity();
+    sa.startPreferencePanel(fragmentClass,extras,R.string.lock_settings_picker_title,null,caller,requestCode);
     return true;
   }
  else {
-    Log.w(TAG,"Parent isn't PreferenceActivity, thus there's no way to launch the " + "given Fragment (name: " + fragmentClass + ", requestCode: "+ requestCode+ ")");
+    Log.w(TAG,"Parent isn't Settings activity, thus there's no way to launch the " + "given Fragment (name: " + fragmentClass + ", requestCode: "+ requestCode+ ")");
     return false;
   }
 }

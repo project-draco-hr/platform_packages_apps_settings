@@ -1,0 +1,8 @@
+{
+  super.onStop();
+  final SettingsActivity activity=(SettingsActivity)getActivity();
+  if (!activity.onIsHidingHeaders()) {
+    activity.getActionBar().setDisplayOptions(0,ActionBar.DISPLAY_SHOW_CUSTOM);
+    activity.getActionBar().setCustomView(null);
+  }
+}

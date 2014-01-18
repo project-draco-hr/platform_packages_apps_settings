@@ -1,0 +1,11 @@
+{
+  if (id != 0) {
+    Integer index=mHeaderIndexMap.get(id);
+    if (index != null && mDrawer != null) {
+      mDrawer.setItemChecked(index,true);
+      if (mDrawer.getVisibility() == View.VISIBLE) {
+        mDrawer.smoothScrollToPosition(index);
+      }
+    }
+  }
+}

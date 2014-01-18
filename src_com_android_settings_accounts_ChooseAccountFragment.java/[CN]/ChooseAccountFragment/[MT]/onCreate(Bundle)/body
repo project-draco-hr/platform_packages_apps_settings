@@ -1,0 +1,14 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.add_account_settings);
+  mAuthorities=getActivity().getIntent().getStringArrayExtra(AccountPreferenceBase.AUTHORITIES_FILTER_KEY);
+  String[] accountTypesFilter=getActivity().getIntent().getStringArrayExtra(AccountPreferenceBase.ACCOUNT_TYPES_FILTER_KEY);
+  if (accountTypesFilter != null) {
+    mAccountTypesFilter=new HashSet<String>();
+    for (    String accountType : accountTypesFilter) {
+      mAccountTypesFilter.add(accountType);
+    }
+  }
+  mAddAccountGroup=getPreferenceScreen();
+  updateAuthDescriptions();
+}

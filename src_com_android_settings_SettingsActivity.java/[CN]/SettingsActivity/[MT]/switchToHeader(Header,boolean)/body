@@ -1,0 +1,23 @@
+{
+  if (mCurHeader == header) {
+    getFragmentManager().popBackStack(BACK_STACK_PREFS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+  }
+ else {
+    mTitleStack.clear();
+    if (header.fragment == null) {
+      throw new IllegalStateException("can't switch to header that has no fragment");
+    }
+    switchToHeaderInner(header.fragment,header.fragmentArguments,validate);
+    setSelectedHeader(header);
+    final CharSequence title;
+    if (header.fragment.equals("com.android.settings.dashboard.DashboardSummary")) {
+      title=getResources().getString(R.string.settings_label);
+    }
+ else {
+      title=header.getTitle(getResources());
+    }
+    final TitlePair pair=new TitlePair(0,title);
+    mTitleStack.add(pair);
+    setTitle(title);
+  }
+}

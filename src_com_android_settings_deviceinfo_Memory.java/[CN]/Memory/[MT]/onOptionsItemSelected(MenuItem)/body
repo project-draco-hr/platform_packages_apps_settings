@@ -1,8 +1,8 @@
 {
 switch (item.getItemId()) {
 case R.id.storage_usb:
-    if (getActivity() instanceof PreferenceActivity) {
-      ((PreferenceActivity)getActivity()).startPreferencePanel(UsbSettings.class.getCanonicalName(),null,R.string.storage_title_usb,null,this,0);
+    if (getActivity() instanceof SettingsActivity) {
+      ((SettingsActivity)getActivity()).startPreferencePanel(UsbSettings.class.getCanonicalName(),null,R.string.storage_title_usb,null,this,0);
     }
  else {
       startFragment(this,UsbSettings.class.getCanonicalName(),-1,null);

@@ -13,7 +13,7 @@
     char shortcut=Character.toLowerCase((char)c.getInt(COLUMN_SHORTCUT));
     if (shortcut == 0)     continue;
     ShortcutPreference pref=getOrCreatePreference(shortcut);
-    CharSequence title=Bookmarks.getTitle(this,c);
+    CharSequence title=Bookmarks.getTitle(getActivity(),c);
     int intentColumn=c.getColumnIndex(Bookmarks.INTENT);
     String intentUri=c.getString(intentColumn);
     PackageManager packageManager=getPackageManager();

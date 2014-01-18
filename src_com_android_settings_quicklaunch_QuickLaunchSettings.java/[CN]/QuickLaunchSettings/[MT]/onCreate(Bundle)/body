@@ -5,6 +5,6 @@
   mShortcutToPreference=new SparseArray<ShortcutPreference>();
   mBookmarksObserver=new BookmarksObserver(mUiHandler);
   initShortcutPreferences();
-  mBookmarksCursor=managedQuery(Bookmarks.CONTENT_URI,sProjection,null,null);
+  mBookmarksCursor=getActivity().getContentResolver().query(Bookmarks.CONTENT_URI,sProjection,null,null,null);
   getListView().setOnItemLongClickListener(this);
 }

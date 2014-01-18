@@ -1,0 +1,47 @@
+{
+  String[] accountTypes=mAuthenticatorHelper.getEnabledAccountTypes();
+  List<Header> accountHeaders=new ArrayList<Header>(accountTypes.length);
+  for (  String accountType : accountTypes) {
+    CharSequence label=mAuthenticatorHelper.getLabelForType(this,accountType);
+    if (label == null) {
+      continue;
+    }
+    Account[] accounts=AccountManager.get(this).getAccountsByType(accountType);
+    boolean skipToAccount=accounts.length == 1 && !mAuthenticatorHelper.hasAccountPreferences(accountType);
+    Header accHeader=new Header();
+    accHeader.title=label;
+    if (accHeader.extras == null) {
+      accHeader.extras=new Bundle();
+    }
+    if (skipToAccount) {
+      accHeader.fragment=AccountSyncSettings.class.getName();
+      accHeader.fragmentArguments=new Bundle();
+      accHeader.extras.putString(ManageAccountsSettings.KEY_ACCOUNT_TYPE,accountType);
+      accHeader.extras.putParcelable(AccountSyncSettings.ACCOUNT_KEY,accounts[0]);
+      accHeader.fragmentArguments.putParcelable(AccountSyncSettings.ACCOUNT_KEY,accounts[0]);
+    }
+ else {
+      accHeader.fragment=ManageAccountsSettings.class.getName();
+      accHeader.fragmentArguments=new Bundle();
+      accHeader.extras.putString(ManageAccountsSettings.KEY_ACCOUNT_TYPE,accountType);
+      accHeader.fragmentArguments.putString(ManageAccountsSettings.KEY_ACCOUNT_TYPE,accountType);
+      accHeader.fragmentArguments.putString(ManageAccountsSettings.KEY_ACCOUNT_LABEL,label.toString());
+    }
+    accountHeaders.add(accHeader);
+    mAuthenticatorHelper.preloadDrawableForType(this,accountType);
+  }
+  Collections.sort(accountHeaders,new Comparator<Header>(){
+    @Override public int compare(    Header h1,    Header h2){
+      return h1.title.toString().compareTo(h2.title.toString());
+    }
+  }
+);
+  for (  Header header : accountHeaders) {
+    target.add(headerIndex++,header);
+  }
+  if (!mListeningToAccountUpdates) {
+    AccountManager.get(this).addOnAccountsUpdatedListener(this,null,true);
+    mListeningToAccountUpdates=true;
+  }
+  return headerIndex;
+}

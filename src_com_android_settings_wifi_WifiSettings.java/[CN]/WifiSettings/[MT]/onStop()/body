@@ -1,0 +1,17 @@
+{
+  super.onStop();
+  Activity activity=getActivity();
+  boolean onIsHidingHeaders=true;
+  if (activity instanceof SettingsActivity) {
+    SettingsActivity sa=(SettingsActivity)activity;
+    onIsHidingHeaders=sa.onIsHidingHeaders();
+  }
+ else   if (activity instanceof PreferenceActivity) {
+    PreferenceActivity pa=(PreferenceActivity)activity;
+    onIsHidingHeaders=pa.onIsHidingHeaders();
+  }
+  if (!onIsHidingHeaders) {
+    activity.getActionBar().setDisplayOptions(0,ActionBar.DISPLAY_SHOW_CUSTOM);
+    activity.getActionBar().setCustomView(null);
+  }
+}

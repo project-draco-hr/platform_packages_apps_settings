@@ -1,5 +1,6 @@
 {
   super.onResume();
+  mBookmarksCursor=getActivity().getContentResolver().query(Bookmarks.CONTENT_URI,sProjection,null,null,null);
   getContentResolver().registerContentObserver(Bookmarks.CONTENT_URI,true,mBookmarksObserver);
   refreshShortcuts();
 }

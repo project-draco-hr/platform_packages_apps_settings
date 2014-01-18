@@ -32,11 +32,11 @@
       updateStage(mUiStage);
     }
   }
-  if (activity instanceof PreferenceActivity) {
-    final PreferenceActivity preferenceActivity=(PreferenceActivity)activity;
+  if (activity instanceof SettingsActivity) {
+    final SettingsActivity sa=(SettingsActivity)activity;
     int id=mIsAlphaMode ? R.string.lockpassword_choose_your_password_header : R.string.lockpassword_choose_your_pin_header;
     CharSequence title=getText(id);
-    preferenceActivity.showBreadCrumbs(title,title);
+    sa.setTitle(title);
   }
   return view;
 }

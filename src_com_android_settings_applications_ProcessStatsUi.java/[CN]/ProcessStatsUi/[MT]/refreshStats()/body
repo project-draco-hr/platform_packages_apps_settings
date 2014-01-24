@@ -72,9 +72,11 @@ ArrayList<ProcStatsEntry> entries=new ArrayList<ProcStatsEntry>();
 if (DEBUG) Log.d(TAG,"-------------------- PULLING PROCESSES");
 final ProcessMap<ProcStatsEntry> entriesMap=new ProcessMap<ProcStatsEntry>();
 for (int ipkg=0, N=mStats.mPackages.getMap().size(); ipkg < N; ipkg++) {
-final SparseArray<ProcessStats.PackageState> pkgUids=mStats.mPackages.getMap().valueAt(ipkg);
+final SparseArray<SparseArray<ProcessStats.PackageState>> pkgUids=mStats.mPackages.getMap().valueAt(ipkg);
 for (int iu=0; iu < pkgUids.size(); iu++) {
-final ProcessStats.PackageState st=pkgUids.valueAt(iu);
+final SparseArray<ProcessStats.PackageState> vpkgs=pkgUids.valueAt(iu);
+for (int iv=0; iv < vpkgs.size(); iv++) {
+final ProcessStats.PackageState st=vpkgs.valueAt(iv);
 for (int iproc=0; iproc < st.mProcesses.size(); iproc++) {
 final ProcessStats.ProcessState pkgProc=st.mProcesses.valueAt(iproc);
 final ProcessStats.ProcessState proc=mStats.mProcesses.get(pkgProc.mName,pkgProc.mUid);
@@ -97,12 +99,15 @@ ent.addPackage(st.mPackageName);
 }
 }
 }
+}
 if (DEBUG) Log.d(TAG,"-------------------- MAPPING SERVICES");
 if (mStatsType == MENU_TYPE_BACKGROUND) {
 for (int ip=0, N=mStats.mPackages.getMap().size(); ip < N; ip++) {
-SparseArray<ProcessStats.PackageState> uids=mStats.mPackages.getMap().valueAt(ip);
+SparseArray<SparseArray<ProcessStats.PackageState>> uids=mStats.mPackages.getMap().valueAt(ip);
 for (int iu=0; iu < uids.size(); iu++) {
-ProcessStats.PackageState ps=uids.valueAt(iu);
+SparseArray<ProcessStats.PackageState> vpkgs=uids.valueAt(iu);
+for (int iv=0; iv < vpkgs.size(); iv++) {
+ProcessStats.PackageState ps=vpkgs.valueAt(iv);
 for (int is=0, NS=ps.mServices.size(); is < NS; is++) {
 ProcessStats.ServiceState ss=ps.mServices.valueAt(is);
 if (ss.mProcessName != null) {
@@ -113,6 +118,7 @@ ent.addService(ss);
 }
  else {
 Log.w(TAG,"No process " + ss.mProcessName + "/"+ uids.keyAt(iu)+ " for service "+ ss.mName);
+}
 }
 }
 }

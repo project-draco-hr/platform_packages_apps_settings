@@ -1,4 +1,12 @@
 {
   super.onCreate(icicle);
-  getLoaderManager().initLoader(LOADER_ID_LOCATION_MODE,null,this);
+  mReceiver=new BroadcastReceiver(){
+    @Override public void onReceive(    Context context,    Intent intent){
+      if (Log.isLoggable(TAG,Log.DEBUG)) {
+        Log.d(TAG,"Received location mode change intent: " + intent);
+      }
+      refreshLocationMode();
+    }
+  }
+;
 }

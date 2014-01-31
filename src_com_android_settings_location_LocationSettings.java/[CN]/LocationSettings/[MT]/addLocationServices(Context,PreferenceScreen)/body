@@ -1,6 +1,6 @@
 {
   PreferenceCategory categoryLocationServices=(PreferenceCategory)root.findPreference(KEY_LOCATION_SERVICES);
-  final SettingsInjector injector=new SettingsInjector(context);
+  injector=new SettingsInjector(context);
   List<Preference> locationServices=injector.getInjectedSettings();
   mReceiver=new BroadcastReceiver(){
     @Override public void onReceive(    Context context,    Intent intent){
@@ -13,7 +13,6 @@
 ;
   IntentFilter filter=new IntentFilter();
   filter.addAction(SettingInjectorService.ACTION_INJECTED_SETTING_CHANGED);
-  filter.addAction(LocationManager.MODE_CHANGED_ACTION);
   context.registerReceiver(mReceiver,filter);
   if (locationServices.size() > 0) {
     addPreferencesSorted(locationServices,categoryLocationServices);

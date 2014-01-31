@@ -1,4 +1,7 @@
 {
   super.onResume();
   mActive=true;
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(LocationManager.MODE_CHANGED_ACTION);
+  getActivity().registerReceiver(mReceiver,filter);
 }

@@ -2,6 +2,9 @@
   if (mActive) {
     int mode=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCATION_MODE,Settings.Secure.LOCATION_MODE_OFF);
     mCurrentMode=mode;
+    if (Log.isLoggable(TAG,Log.INFO)) {
+      Log.i(TAG,"Location mode has been changed");
+    }
     onModeChanged(mode,isRestricted());
   }
 }

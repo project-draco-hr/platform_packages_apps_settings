@@ -8,8 +8,16 @@
   transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
   transaction.addToBackStack(BACK_STACK_PREFS);
   transaction.commitAllowingStateLoss();
-  final CharSequence title=getText(titleRes);
-  final TitlePair pair=new TitlePair(titleRes,null);
+  final TitlePair pair;
+  final CharSequence cs;
+  if (titleRes != 0) {
+    pair=new TitlePair(titleRes,null);
+    cs=getText(titleRes);
+  }
+ else {
+    pair=new TitlePair(0,titleText);
+    cs=titleText;
+  }
+  setTitle(cs);
   mTitleStack.add(pair);
-  setTitle(title);
 }

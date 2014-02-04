@@ -1,0 +1,19 @@
+{
+  String version=null;
+  Cursor cursor=null;
+  try {
+    cursor=db.rawQuery(SELECT_BUILD_VERSION,null);
+    if (cursor.moveToFirst()) {
+      version=cursor.getString(0);
+    }
+  }
+ catch (  Exception e) {
+    Log.e(TAG,"Cannot get build version from Index metadata");
+  }
+ finally {
+    if (cursor != null) {
+      cursor.close();
+    }
+  }
+  return version;
+}

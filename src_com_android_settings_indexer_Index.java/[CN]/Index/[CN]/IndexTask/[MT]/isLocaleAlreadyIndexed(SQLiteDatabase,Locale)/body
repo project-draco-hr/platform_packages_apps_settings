@@ -1,0 +1,18 @@
+{
+  Cursor cursor=null;
+  boolean result=false;
+  final StringBuilder sb=new StringBuilder(IndexColumns.LOCALE);
+  sb.append(" = ");
+  DatabaseUtils.appendEscapedSQLString(sb,locale.toString());
+  try {
+    cursor=database.query(Tables.TABLE_PREFS_INDEX,null,sb.toString(),null,null,null,null,"1");
+    final int count=cursor.getCount();
+    result=(count >= 1);
+  }
+  finally {
+    if (cursor != null) {
+      cursor.close();
+    }
+  }
+  return result;
+}

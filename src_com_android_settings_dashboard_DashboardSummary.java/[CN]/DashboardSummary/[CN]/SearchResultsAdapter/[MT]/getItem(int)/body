@@ -1,0 +1,10 @@
+{
+  if (mDataValid && mCursor.moveToPosition(position)) {
+    final String title=mCursor.getString(Index.COLUMN_INDEX_TITLE);
+    final String summary=mCursor.getString(Index.COLUMN_INDEX_SUMMARY);
+    final String iconResStr=mCursor.getString(Index.COLUMN_INDEX_ICON);
+    final int iconResId=TextUtils.isEmpty(iconResStr) ? 0 : Integer.parseInt(iconResStr);
+    return new SearchResult(title,summary,iconResId);
+  }
+  return null;
+}

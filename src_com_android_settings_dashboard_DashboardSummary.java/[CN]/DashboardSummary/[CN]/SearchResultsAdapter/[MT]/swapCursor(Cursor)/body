@@ -1,0 +1,16 @@
+{
+  if (newCursor == mCursor) {
+    return null;
+  }
+  Cursor oldCursor=mCursor;
+  mCursor=newCursor;
+  if (newCursor != null) {
+    mDataValid=true;
+    notifyDataSetChanged();
+  }
+ else {
+    mDataValid=false;
+    notifyDataSetInvalidated();
+  }
+  return oldCursor;
+}

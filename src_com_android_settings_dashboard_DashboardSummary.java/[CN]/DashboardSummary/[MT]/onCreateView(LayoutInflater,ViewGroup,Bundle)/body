@@ -1,4 +1,36 @@
 {
   final View view=inflater.inflate(R.layout.dashboard,container,false);
+  mEditText=(EditText)view.findViewById(R.id.edittext_query);
+  mEditText.addTextChangedListener(new TextWatcher(){
+    @Override public void beforeTextChanged(    CharSequence s,    int start,    int count,    int after){
+    }
+    @Override public void onTextChanged(    CharSequence s,    int start,    int before,    int count){
+      updateSearchResults();
+    }
+    @Override public void afterTextChanged(    Editable s){
+    }
+  }
+);
+  mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+    @Override public void onFocusChange(    View v,    boolean hasFocus){
+      if (!hasFocus) {
+        closeSoftKeyboard();
+      }
+    }
+  }
+);
+  mListView=(ListView)view.findViewById(R.id.list_results);
+  mListView.setAdapter(mAdapter);
+  mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+    @Override public void onItemClick(    AdapterView<?> parent,    View view,    int position,    long id){
+      closeSoftKeyboard();
+      final Cursor cursor=mAdapter.mCursor;
+      cursor.moveToPosition(position);
+      final String fragmentName=cursor.getString(Index.COLUMN_INDEX_FRAGMENT_NAME);
+      final String fragmentTitle=cursor.getString(Index.COLUMN_INDEX_FRAGMENT_TITLE);
+      ((SettingsActivity)getActivity()).startPreferencePanel(fragmentName,null,0,fragmentTitle,null,0);
+    }
+  }
+);
   return view;
 }

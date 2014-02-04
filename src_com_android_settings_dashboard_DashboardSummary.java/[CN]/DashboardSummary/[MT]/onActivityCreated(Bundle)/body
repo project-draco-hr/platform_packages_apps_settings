@@ -1,0 +1,9 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  if (savedInstanceState != null) {
+    final String query=savedInstanceState.getString(SAVE_KEY_QUERY);
+    if (query != null && !TextUtils.isEmpty(query)) {
+      mEditText.setText(query);
+    }
+  }
+}

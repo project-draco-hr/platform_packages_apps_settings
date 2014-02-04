@@ -1,0 +1,33 @@
+{
+  if (!mDataValid && convertView == null) {
+    throw new IllegalStateException("this should only be called when the cursor is valid");
+  }
+  if (!mCursor.moveToPosition(position)) {
+    throw new IllegalStateException("couldn't move cursor to position " + position);
+  }
+  View view;
+  TextView textTitle;
+  TextView textSummary;
+  ImageView imageView;
+  if (convertView == null) {
+    view=mInflater.inflate(R.layout.search_result,parent,false);
+  }
+ else {
+    view=convertView;
+  }
+  textTitle=(TextView)view.findViewById(R.id.title);
+  textSummary=(TextView)view.findViewById(R.id.summary);
+  imageView=(ImageView)view.findViewById(R.id.icon);
+  SearchResult result=(SearchResult)getItem(position);
+  textTitle.setText(result.title);
+  textSummary.setText(result.summary);
+  if (result.iconResId != R.drawable.empty_icon) {
+    imageView.setImageResource(result.iconResId);
+    imageView.setBackgroundResource(R.color.background_search_result_icon);
+  }
+ else {
+    imageView.setImageDrawable(null);
+    imageView.setBackgroundResource(R.drawable.empty_icon);
+  }
+  return view;
+}

@@ -1,0 +1,14 @@
+{
+  if (mUpdateSearchResultsTask != null) {
+    mUpdateSearchResultsTask.cancel(false);
+    mUpdateSearchResultsTask=null;
+  }
+  final String query=mEditText.getText().toString();
+  if (TextUtils.isEmpty(query)) {
+    setCursor(null);
+  }
+ else {
+    mUpdateSearchResultsTask=new UpdateSearchResultsTask();
+    mUpdateSearchResultsTask.execute(query);
+  }
+}

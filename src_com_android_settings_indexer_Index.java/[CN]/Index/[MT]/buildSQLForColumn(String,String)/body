@@ -1,0 +1,15 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append("SELECT ");
+  for (int n=0; n < SELECT_COLUMNS.length; n++) {
+    sb.append(SELECT_COLUMNS[n]);
+    if (n < SELECT_COLUMNS.length - 1) {
+      sb.append(", ");
+    }
+  }
+  sb.append(" FROM ");
+  sb.append(Tables.TABLE_PREFS_INDEX);
+  sb.append(" WHERE ");
+  sb.append(buildWhereStringForColumn(query,columnName));
+  return sb.toString();
+}

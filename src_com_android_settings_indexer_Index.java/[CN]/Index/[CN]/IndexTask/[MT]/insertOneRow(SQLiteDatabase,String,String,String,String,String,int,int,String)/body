@@ -1,0 +1,16 @@
+{
+  if (TextUtils.isEmpty(title)) {
+    return;
+  }
+  ContentValues values=new ContentValues();
+  values.put(IndexColumns.LOCALE,locale);
+  values.put(IndexColumns.DATA_RANK,rank);
+  values.put(IndexColumns.DATA_TITLE,title);
+  values.put(IndexColumns.DATA_SUMMARY,summary);
+  values.put(IndexColumns.DATA_KEYWORDS,keywords);
+  values.put(IndexColumns.FRAGMENT_NAME,fragmentName);
+  values.put(IndexColumns.FRAGMENT_TITLE,fragmentTitle);
+  values.put(IndexColumns.INTENT,"");
+  values.put(IndexColumns.ICON,iconResId);
+  database.insertOrThrow(Tables.TABLE_PREFS_INDEX,null,values);
+}

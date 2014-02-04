@@ -1,0 +1,27 @@
+{
+  final SQLiteDatabase database=getWritableDatabase();
+  boolean result=false;
+  final Locale locale=Locale.getDefault();
+  final String localeStr=locale.toString();
+  if (isLocaleAlreadyIndexed(database,locale)) {
+    Log.d(LOG_TAG,"Locale '" + localeStr + "' is already indexed");
+    return true;
+  }
+  final long current=System.currentTimeMillis();
+  try {
+    database.beginTransaction();
+    final int count=mDataToIndex.size();
+    for (int n=0; n < count; n++) {
+      final IndexableData data=mDataToIndex.get(n);
+      indexFromResource(database,locale,data.xmlResId,data.fragmentName,data.iconResId,data.rank);
+    }
+    database.setTransactionSuccessful();
+    result=true;
+  }
+  finally {
+    database.endTransaction();
+  }
+  final long now=System.currentTimeMillis();
+  Log.d(LOG_TAG,"Indexing locale '" + localeStr + "' took "+ (now - current)+ " millis");
+  return result;
+}

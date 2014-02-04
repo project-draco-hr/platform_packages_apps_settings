@@ -1,0 +1,17 @@
+{
+  String updatedTitle;
+  String updateSummary;
+  if (title != null && title.contains(seq)) {
+    updatedTitle=title.replaceAll(seq,replacement);
+  }
+ else {
+    updatedTitle=title;
+  }
+  if (summary != null && summary.contains(seq)) {
+    updateSummary=summary.replaceAll(seq,replacement);
+  }
+ else {
+    updateSummary=summary;
+  }
+  insertOneRow(database,locale,updatedTitle,updateSummary,fragmentName,fragmentTitle,iconResId,rank,keywords);
+}

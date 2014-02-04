@@ -1,0 +1,15 @@
+{
+  final IndexTask task=new IndexTask();
+  task.execute();
+  try {
+    return task.get();
+  }
+ catch (  InterruptedException e) {
+    Log.e(LOG_TAG,"Cannot update index: " + e.getMessage());
+    return false;
+  }
+catch (  ExecutionException e) {
+    Log.e(LOG_TAG,"Cannot update index: " + e.getMessage());
+    return false;
+  }
+}

@@ -21,8 +21,6 @@
   mManager=LocalBluetoothManager.getInstance(getActivity());
   mDiscoverableEnabler=mManager.getDiscoverableEnabler();
   mDiscoverableEnabler.setVisibilityPreference(mVisibilityPref);
-  PreferenceActivity mActivity=(PreferenceActivity)getActivity();
-  mActivity.showBreadCrumbs(mManager.getBluetoothAdapter().getName(),"");
   PreferenceScreen bluetoothBroadcast=(PreferenceScreen)findPreference(KEY_BROADCASTING);
   mAdvertisingEnabler=new BluetoothAdvertisingEnabler(getActivity(),bluetoothBroadcast);
   mManager.setBluetoothAdvertisingEnabler(mAdvertisingEnabler);

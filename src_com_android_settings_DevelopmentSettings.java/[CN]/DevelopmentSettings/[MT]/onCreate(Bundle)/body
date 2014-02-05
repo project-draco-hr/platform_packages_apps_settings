@@ -17,6 +17,7 @@
       debugDebuggingCategory.removePreference(mClearAdbKeys);
     }
   }
+  mAllPrefs.add(mClearAdbKeys);
   mEnableTerminal=findAndInitCheckboxPref(ENABLE_TERMINAL);
   if (!isPackageInstalled(getActivity(),TERMINAL_APP_PACKAGE)) {
     debugDebuggingCategory.removePreference(mEnableTerminal);
@@ -86,4 +87,6 @@
     mAllPrefs.add(hdcpChecking);
     removePreferenceForProduction(hdcpChecking);
   }
+  mProcessStats=(PreferenceScreen)findPreference(PROCESS_STATS);
+  mAllPrefs.add(mProcessStats);
 }

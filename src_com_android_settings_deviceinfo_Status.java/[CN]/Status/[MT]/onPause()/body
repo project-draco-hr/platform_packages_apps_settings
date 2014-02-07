@@ -1,13 +1,13 @@
 {
   super.onPause();
-  if (mPhone != null && !Utils.isWifiOnly(getActivity())) {
+  if (mPhone != null && !Utils.isWifiOnly(getApplicationContext())) {
     mPhoneStateReceiver.unregisterIntent();
     mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
   }
   if (mShowLatestAreaInfo) {
-    getActivity().unregisterReceiver(mAreaInfoReceiver);
+    unregisterReceiver(mAreaInfoReceiver);
   }
-  getActivity().unregisterReceiver(mBatteryInfoReceiver);
-  getActivity().unregisterReceiver(mConnectivityReceiver);
+  unregisterReceiver(mBatteryInfoReceiver);
+  unregisterReceiver(mConnectivityReceiver);
   mHandler.removeMessages(EVENT_UPDATE_STATS);
 }

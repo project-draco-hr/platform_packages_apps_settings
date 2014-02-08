@@ -1,13 +1,11 @@
 {
-  if (mCurHeader == header) {
-    getFragmentManager().popBackStack(BACK_STACK_PREFS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
-  }
- else {
-    mTitleStack.clear();
+  if (mCurHeader != header) {
     if (header.fragment == null) {
       throw new IllegalStateException("can't switch to header that has no fragment");
     }
-    switchToHeaderInner(header.fragment,header.fragmentArguments,validate);
+    getFragmentManager().popBackStackImmediate(BACK_STACK_PREFS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    mTitleStack.clear();
+    switchToHeaderInner(header.fragment,header.fragmentArguments,validate,!initial);
     setSelectedHeader(header);
     final CharSequence title;
     if (header.fragment.equals("com.android.settings.dashboard.DashboardSummary")) {

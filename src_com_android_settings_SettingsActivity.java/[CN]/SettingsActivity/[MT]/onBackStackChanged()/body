@@ -1,5 +1,5 @@
 {
-  final int count=getFragmentManager().getBackStackEntryCount() + 1;
+  final int count=getFragmentManager().getBackStackEntryCount();
   TitlePair pair=null;
   int last;
   while (mTitleStack.size() > count) {
@@ -21,6 +21,10 @@
         }
         setTitle(title);
       }
+    }
+ else {
+      final String title=getResources().getString(R.string.settings_label);
+      setTitle(title);
     }
   }
 }

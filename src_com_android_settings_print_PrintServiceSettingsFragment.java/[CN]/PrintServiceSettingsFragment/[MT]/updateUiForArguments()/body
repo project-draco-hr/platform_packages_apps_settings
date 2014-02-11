@@ -3,12 +3,6 @@
   mPreferenceKey=arguments.getString(PrintSettingsFragment.EXTRA_PREFERENCE_KEY);
   final boolean enabled=arguments.getBoolean(PrintSettingsFragment.EXTRA_CHECKED);
   mToggleSwitch.setCheckedInternal(enabled);
-  SettingsActivity activity=(SettingsActivity)getActivity();
-  if (!activity.onIsHidingHeaders()) {
-    mOldActivityTitle=getActivity().getTitle();
-    String title=arguments.getString(PrintSettingsFragment.EXTRA_TITLE);
-    getActivity().getActionBar().setTitle(title);
-  }
   String settingsTitle=arguments.getString(PrintSettingsFragment.EXTRA_SETTINGS_TITLE);
   String settingsComponentName=arguments.getString(PrintSettingsFragment.EXTRA_SETTINGS_COMPONENT_NAME);
   if (!TextUtils.isEmpty(settingsTitle) && !TextUtils.isEmpty(settingsComponentName)) {

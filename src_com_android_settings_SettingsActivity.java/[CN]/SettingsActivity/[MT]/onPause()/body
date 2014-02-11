@@ -1,5 +1,6 @@
 {
   super.onPause();
+  mDrawerLayout.setDrawerListener(null);
   unregisterReceiver(mBatteryInfoReceiver);
   mHeaderAdapter.pause();
   mDevelopmentPreferences.unregisterOnSharedPreferenceChangeListener(mDevelopmentPreferencesListener);

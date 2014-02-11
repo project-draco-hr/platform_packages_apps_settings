@@ -3,7 +3,9 @@
     BatteryEntry be;
 synchronized (mRequestQueue) {
       if (mRequestQueue.isEmpty() || mAbort) {
-        mHandler.sendEmptyMessage(MSG_REPORT_FULLY_DRAWN);
+        if (sHandler != null) {
+          sHandler.sendEmptyMessage(MSG_REPORT_FULLY_DRAWN);
+        }
         mRequestQueue.clear();
         return;
       }

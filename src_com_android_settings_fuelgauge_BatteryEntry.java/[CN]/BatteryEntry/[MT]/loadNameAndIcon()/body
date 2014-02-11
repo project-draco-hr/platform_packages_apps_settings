@@ -12,9 +12,7 @@
   }
   String[] packageLabels=new String[sipper.mPackages.length];
   System.arraycopy(sipper.mPackages,0,packageLabels,0,sipper.mPackages.length);
-  int preferredIndex=-1;
   for (int i=0; i < packageLabels.length; i++) {
-    if (packageLabels[i].equals(name))     preferredIndex=i;
     try {
       ApplicationInfo ai=pm.getApplicationInfo(packageLabels[i],0);
       CharSequence label=ai.loadLabel(pm);
@@ -60,7 +58,7 @@
   utd.icon=icon;
   utd.packageName=defaultPackageName;
   sUidCache.put(uidString,utd);
-  if (mHandler != null) {
-    mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_NAME_ICON,this));
+  if (sHandler != null) {
+    sHandler.sendMessage(sHandler.obtainMessage(MSG_UPDATE_NAME_ICON,this));
   }
 }

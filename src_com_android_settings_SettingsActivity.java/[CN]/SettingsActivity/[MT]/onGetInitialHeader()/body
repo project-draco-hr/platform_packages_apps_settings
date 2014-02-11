@@ -3,9 +3,8 @@
   if (fragmentClass != null) {
     Header header=new Header();
     header.fragment=fragmentClass;
-    header.title=title;
-    header.titleRes=titleRes;
-    header.fragmentArguments=args;
+    header.title=getTitle();
+    header.fragmentArguments=getIntent().getExtras();
     mCurrentHeader=header;
     return header;
   }

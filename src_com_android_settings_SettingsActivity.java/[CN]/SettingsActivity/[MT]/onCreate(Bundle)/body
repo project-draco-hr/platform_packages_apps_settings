@@ -21,6 +21,7 @@
     mDrawer=(ListView)findViewById(R.id.headers_drawer);
     mDrawer.setAdapter(mHeaderAdapter);
     mDrawer.setOnItemClickListener(new DrawerItemClickListener());
+    mDrawer.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
     mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.drawable.ic_drawer,R.string.drawer_open,R.string.drawer_close);
   }
   String initialFragment=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
@@ -36,15 +37,24 @@
     }
   }
  else {
-    onBuildHeaders(mHeaders);
-    final CharSequence initialTitle=getTitle();
-    if (mHeaders.size() > 0) {
-      switchToHeader(mFirstHeader,false,true);
-    }
     if (initialFragment != null) {
-      final int initialTitleRes=getIntent().getIntExtra(EXTRA_SHOW_FRAGMENT_TITLE,0);
-      final Header h=onGetInitialHeader(initialTitle,initialTitleRes,initialArguments);
-      switchToHeader(h,false,false);
+      switchToHeader(initialFragment,initialArguments,true);
+      final int initialTitle=getIntent().getIntExtra(EXTRA_SHOW_FRAGMENT_TITLE,0);
+      if (initialTitle != 0) {
+        setTitle(getText(initialTitle));
+      }
+    }
+ else {
+      onBuildHeaders(mHeaders);
+      if (mHeaders.size() > 0) {
+        if (initialFragment == null) {
+          Header h=onGetInitialHeader();
+          switchToHeader(h,false);
+        }
+ else {
+          switchToHeader(initialFragment,initialArguments,false);
+        }
+      }
     }
   }
   Intent intent=getIntent();

@@ -26,6 +26,15 @@
   String initialFragment=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
   Bundle initialArguments=getIntent().getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
   if (savedInstanceState != null) {
+    ArrayList<TitlePair> titles=savedInstanceState.getParcelableArrayList(SAVE_KEY_TITLES_TAG);
+    if (titles != null) {
+      mTitleStack.addAll(titles);
+    }
+    final int lastTitle=mTitleStack.size() - 1;
+    if (lastTitle >= 0) {
+      final TitlePair last=mTitleStack.get(lastTitle);
+      setTitleFromPair(last);
+    }
     ArrayList<Header> headers=savedInstanceState.getParcelableArrayList(SAVE_KEY_HEADERS_TAG);
     if (headers != null) {
       mHeaders.addAll(headers);

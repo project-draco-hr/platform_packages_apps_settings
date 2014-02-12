@@ -4,8 +4,8 @@ case EVENT_RESTORE_DEFAULTAPN_COMPLETE:
     fillList();
   getPreferenceScreen().setEnabled(true);
 mRestoreDefaultApnMode=false;
-removeDialog(DIALOG_RESTORE_DEFAULTAPN);
-Toast.makeText(getActivity(),getResources().getString(R.string.restore_default_apn_completed),Toast.LENGTH_LONG).show();
+dismissDialog(DIALOG_RESTORE_DEFAULTAPN);
+Toast.makeText(ApnSettings.this,getResources().getString(R.string.restore_default_apn_completed),Toast.LENGTH_LONG).show();
 break;
 }
 }

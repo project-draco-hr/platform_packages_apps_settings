@@ -11,16 +11,7 @@
     if (size > 0) {
       last=mTitleStack.size() - 1;
       pair=mTitleStack.get(last);
-      if (pair != null) {
-        final CharSequence title;
-        if (pair.first > 0) {
-          title=getText(pair.first);
-        }
- else {
-          title=pair.second;
-        }
-        setTitle(title);
-      }
+      setTitleFromPair(pair);
     }
   }
 }

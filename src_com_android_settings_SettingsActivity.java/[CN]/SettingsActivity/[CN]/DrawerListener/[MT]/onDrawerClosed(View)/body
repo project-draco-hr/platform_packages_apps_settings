@@ -1,5 +1,8 @@
 {
   mDrawerToggle.onDrawerClosed(drawerView);
-  if (isFinishing())   return;
-  onHeaderClick(mSelectedHeader);
+  if (isFinishing() || mSelectedHeader == null) {
+    return;
+  }
+  switchToHeader(mSelectedHeader,false);
+  mSelectedHeader=null;
 }

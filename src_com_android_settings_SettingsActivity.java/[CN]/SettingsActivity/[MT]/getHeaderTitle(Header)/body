@@ -1,0 +1,10 @@
+{
+  final CharSequence title;
+  if (header.fragment.equals(DashboardSummary.class.getName())) {
+    title=getResources().getString(R.string.settings_label);
+  }
+ else {
+    title=header.getTitle(getResources());
+  }
+  return title;
+}

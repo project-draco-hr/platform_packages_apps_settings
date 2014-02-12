@@ -1,23 +1,26 @@
 {
-  if (mCurrentHeader == header) {
+  if (header == null) {
+    return;
+  }
+  if (header != null && mCurrentHeader != null && header.id == mCurrentHeader.id && header.id != R.id.account_add) {
     getFragmentManager().popBackStack(BACK_STACK_PREFS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
   }
  else {
-    mTitleStack.clear();
-    if (header.fragment == null) {
-      throw new IllegalStateException("can't switch to header that has no fragment");
+    if (header.fragment != null) {
+      mTitleStack.clear();
+      switchToHeaderInner(header.fragment,header.fragmentArguments,validate);
+      setSelectedHeader(header);
+      final TitlePair pair=new TitlePair(0,getHeaderTitle(header));
+      mTitleStack.add(pair);
+      setTitle(pair.second);
     }
-    switchToHeaderInner(header.fragment,header.fragmentArguments,validate);
-    setSelectedHeader(header);
-    final CharSequence title;
-    if (header.fragment.equals("com.android.settings.dashboard.DashboardSummary")) {
-      title=getResources().getString(R.string.settings_label);
+ else     if (header.intent != null) {
+      setSelectedHeader(header);
+      mTitleStack.clear();
+      startActivity(header.intent);
     }
  else {
-      title=header.getTitle(getResources());
+      throw new IllegalStateException("Can't switch to header that has no Fragment nor Intent");
     }
-    final TitlePair pair=new TitlePair(0,title);
-    mTitleStack.add(pair);
-    setTitle(title);
   }
 }

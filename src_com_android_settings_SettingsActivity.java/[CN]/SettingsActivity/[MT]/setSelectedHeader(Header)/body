@@ -1,4 +1,12 @@
 {
+  if (header == null) {
+    mCurrentHeader=null;
+    return;
+  }
+  if (header.id == R.id.account_add) {
+    mDrawer.clearChoices();
+    return;
+  }
   mCurrentHeader=header;
   int index=mHeaders.indexOf(header);
   if (mDrawer != null) {

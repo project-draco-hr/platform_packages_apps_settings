@@ -55,13 +55,8 @@
  else {
       onBuildHeaders(mHeaders);
       if (mHeaders.size() > 0) {
-        if (initialFragment == null) {
-          Header h=onGetInitialHeader();
-          switchToHeader(h,false);
-        }
- else {
-          switchToHeader(initialFragment,initialArguments,false);
-        }
+        Header h=onGetInitialHeader();
+        switchToHeader(h,false);
       }
     }
   }

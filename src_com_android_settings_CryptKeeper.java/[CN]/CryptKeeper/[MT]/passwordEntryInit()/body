@@ -1,10 +1,16 @@
 {
   mPasswordEntry=(EditText)findViewById(R.id.passwordEntry);
-  mPasswordEntry.setOnEditorActionListener(this);
-  mPasswordEntry.requestFocus();
-  mPasswordEntry.setOnKeyListener(this);
-  mPasswordEntry.setOnTouchListener(this);
-  mPasswordEntry.addTextChangedListener(this);
+  if (mPasswordEntry != null) {
+    mPasswordEntry.setOnEditorActionListener(this);
+    mPasswordEntry.requestFocus();
+    mPasswordEntry.setOnKeyListener(this);
+    mPasswordEntry.setOnTouchListener(this);
+    mPasswordEntry.addTextChangedListener(this);
+  }
+  mLockPatternView=(LockPatternView)findViewById(R.id.lockPattern);
+  if (mLockPatternView != null) {
+    mLockPatternView.setOnPatternListener(mChooseNewLockPatternListener);
+  }
   final TelephonyManager tm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
   if (!tm.isVoiceCapable()) {
     final View emergencyCall=findViewById(R.id.emergencyCallButton);

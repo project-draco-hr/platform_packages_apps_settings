@@ -10,7 +10,23 @@
     encryptionProgressInit();
   }
  else   if (mValidationComplete || isDebugView(FORCE_VIEW_PASSWORD)) {
-    setContentView(R.layout.crypt_keeper_password_entry);
+    final IMountService service=getMountService();
+    int type=StorageManager.CRYPT_TYPE_PASSWORD;
+    try {
+      type=service.getPasswordType();
+    }
+ catch (    Exception e) {
+      Log.e(TAG,"Error while getting type - showing default dialog" + e);
+    }
+    if (type == StorageManager.CRYPT_TYPE_PIN) {
+      setContentView(R.layout.crypt_keeper_pin_entry);
+    }
+ else     if (type == StorageManager.CRYPT_TYPE_PATTERN) {
+      setContentView(R.layout.crypt_keeper_pattern_entry);
+    }
+ else {
+      setContentView(R.layout.crypt_keeper_password_entry);
+    }
     passwordEntryInit();
   }
  else   if (!mValidationRequested) {

@@ -21,8 +21,8 @@ mMyDevicePreference.setEnabled(true);
 preferenceScreen.addPreference(mMyDevicePreference);
 if (!isRestrictedAndNotPinProtected()) {
 if (mDiscoverableEnabler == null) {
-mDiscoverableEnabler=new BluetoothDiscoverableEnabler(getActivity(),mLocalAdapter,mMyDevicePreference);
-mDiscoverableEnabler.resume();
+mDiscoverableEnabler=new BluetoothDiscoverableEnabler(mLocalAdapter,mMyDevicePreference);
+mDiscoverableEnabler.resume(getActivity());
 LocalBluetoothManager.getInstance(getActivity()).setDiscoverableEnabler(mDiscoverableEnabler);
 }
 }

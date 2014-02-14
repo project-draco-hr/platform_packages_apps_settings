@@ -2,6 +2,9 @@
   if (mLocalAdapter == null) {
     return;
   }
+  if (mContext != context) {
+    mContext=context;
+  }
   IntentFilter filter=new IntentFilter(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
   mContext.registerReceiver(mReceiver,filter);
   mDiscoveryPreference.setOnPreferenceClickListener(this);

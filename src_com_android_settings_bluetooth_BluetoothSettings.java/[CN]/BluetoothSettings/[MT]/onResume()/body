@@ -4,7 +4,7 @@
   }
   super.onResume();
   if (mDiscoverableEnabler != null) {
-    mDiscoverableEnabler.resume();
+    mDiscoverableEnabler.resume(getActivity());
   }
   getActivity().registerReceiver(mReceiver,mIntentFilter);
   if (mLocalAdapter != null) {

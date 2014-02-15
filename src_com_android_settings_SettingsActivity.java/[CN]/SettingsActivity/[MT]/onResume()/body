@@ -7,7 +7,7 @@
   }
 ;
   mDevelopmentPreferences.registerOnSharedPreferenceChangeListener(mDevelopmentPreferencesListener);
-  mHeaderAdapter.resume();
+  mHeaderAdapter.resume(this);
   invalidateHeaders();
   registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
   mDrawerLayout.setDrawerListener(new DrawerListener());

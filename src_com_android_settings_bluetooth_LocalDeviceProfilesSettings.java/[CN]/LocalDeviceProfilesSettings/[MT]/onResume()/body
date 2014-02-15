@@ -1,6 +1,7 @@
 {
   super.onResume();
-  mManager.setForegroundActivity(getActivity());
-  mAdvertisingEnabler.resume();
-  mDiscoverableEnabler.resume(getActivity());
+  final Activity activity=getActivity();
+  mManager.setForegroundActivity(activity);
+  mAdvertisingEnabler.resume(activity);
+  mDiscoverableEnabler.resume(activity);
 }

@@ -2,7 +2,8 @@
   final SubtitleView preview=(SubtitleView)view.findViewById(R.id.preview);
   preview.setForegroundColor(DEFAULT_FOREGROUND_COLOR);
   preview.setBackgroundColor(DEFAULT_BACKGROUND_COLOR);
-  preview.setTextSize(DEFAULT_FONT_SIZE);
+  final float density=getContext().getResources().getDisplayMetrics().density;
+  preview.setTextSize(DEFAULT_FONT_SIZE * density);
   final int value=getValueAt(index);
   preview.setEdgeType(value);
   preview.setEdgeColor(DEFAULT_EDGE_COLOR);

@@ -2,7 +2,7 @@
   if (header == null) {
     return;
   }
-  if (header != null && mCurrentHeader != null && header.id == mCurrentHeader.id && header.id != R.id.account_add) {
+  if (header != null && mCurrentHeader != null && header.id == mCurrentHeader.id && header.id != R.id.account_add && !header.fragment.equals(ManageAccountsSettings.class.getName())) {
     getFragmentManager().popBackStack(BACK_STACK_PREFS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
   }
  else {

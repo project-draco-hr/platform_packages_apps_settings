@@ -1,4 +1,9 @@
 {
+  if (data == null) {
+    Log.e(TAG,"Engine failed voice data integrity check (null return)" + mTts.getCurrentEngine());
+    return;
+  }
+  mVoiceDataDetails=data;
   if (DBG)   Log.d(TAG,"Parsing voice data details, data: " + mVoiceDataDetails.toUri(0));
   final ArrayList<String> available=mVoiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_AVAILABLE_VOICES);
   final ArrayList<String> unavailable=mVoiceDataDetails.getStringArrayListExtra(TextToSpeech.Engine.EXTRA_UNAVAILABLE_VOICES);

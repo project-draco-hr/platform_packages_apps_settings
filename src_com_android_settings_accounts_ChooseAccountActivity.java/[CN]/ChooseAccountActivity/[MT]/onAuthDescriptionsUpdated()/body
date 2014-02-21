@@ -33,7 +33,7 @@
     mAddAccountGroup.removeAll();
     for (    ProviderEntry pref : mProviderList) {
       Drawable drawable=getDrawableForType(pref.type);
-      ProviderPreference p=new ProviderPreference(getActivity(),pref.type,drawable,pref.name);
+      ProviderPreference p=new ProviderPreference(this,pref.type,drawable,pref.name);
       mAddAccountGroup.addPreference(p);
     }
   }
@@ -46,7 +46,7 @@
       }
       Log.v(TAG,"No providers found for authorities: " + auths);
     }
-    getActivity().setResult(Activity.RESULT_CANCELED);
+    setResult(RESULT_CANCELED);
     finish();
   }
 }

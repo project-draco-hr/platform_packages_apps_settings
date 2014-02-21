@@ -3,7 +3,7 @@
   if (mTypeToAuthDescription.containsKey(accountType)) {
     try {
       AuthenticatorDescription desc=mTypeToAuthDescription.get(accountType);
-      Context authContext=getActivity().createPackageContext(desc.packageName,0);
+      Context authContext=createPackageContext(desc.packageName,0);
       label=authContext.getResources().getText(desc.labelId);
     }
  catch (    PackageManager.NameNotFoundException e) {

@@ -1,8 +1,9 @@
 {
   super.onCreate(icicle);
+  setContentView(R.layout.add_account_screen);
   addPreferencesFromResource(R.xml.add_account_settings);
-  mAuthorities=getActivity().getIntent().getStringArrayExtra(AccountPreferenceBase.AUTHORITIES_FILTER_KEY);
-  String[] accountTypesFilter=getActivity().getIntent().getStringArrayExtra(AccountPreferenceBase.ACCOUNT_TYPES_FILTER_KEY);
+  mAuthorities=getIntent().getStringArrayExtra(AccountPreferenceBase.AUTHORITIES_FILTER_KEY);
+  String[] accountTypesFilter=getIntent().getStringArrayExtra(AccountPreferenceBase.ACCOUNT_TYPES_FILTER_KEY);
   if (accountTypesFilter != null) {
     mAccountTypesFilter=new HashSet<String>();
     for (    String accountType : accountTypesFilter) {

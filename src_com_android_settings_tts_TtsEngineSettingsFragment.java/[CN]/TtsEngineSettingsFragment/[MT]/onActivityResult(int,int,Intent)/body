@@ -1,6 +1,10 @@
 {
   if (requestCode == VOICE_DATA_INTEGRITY_CHECK) {
-    mVoiceDataDetails=data;
-    updateVoiceDetails();
+    if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+      updateVoiceDetails(data);
+    }
+ else {
+      Log.e(TAG,"CheckVoiceData activity failed");
+    }
   }
 }

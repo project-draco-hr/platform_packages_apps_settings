@@ -56,6 +56,9 @@
  else   if (KEY_TOGGLE_VERIFY_APPLICATIONS.equals(key)) {
     Settings.Global.putInt(getContentResolver(),Settings.Global.PACKAGE_VERIFIER_ENABLE,mToggleVerifyApps.isChecked() ? 1 : 0);
   }
+ else   if (KEY_LOCK_SCREEN_NOTIFICATIONS.equals(key)) {
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,mLockscreenNotifications.isChecked() ? 1 : 0);
+  }
  else {
     return super.onPreferenceTreeClick(preferenceScreen,preference);
   }

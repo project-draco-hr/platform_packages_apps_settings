@@ -169,5 +169,17 @@ protectByRestrictions(mToggleVerifyApps);
 protectByRestrictions(mResetCredentials);
 protectByRestrictions(root.findPreference(KEY_CREDENTIALS_INSTALL));
 }
+mLockscreenNotifications=(CheckBoxPreference)root.findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
+if (mLockscreenNotifications != null) {
+if (!getDeviceLockscreenNotificationsEnabled()) {
+final PreferenceGroup lockscreenCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
+if (lockscreenCategory != null) {
+lockscreenCategory.removePreference(mLockscreenNotifications);
+}
+}
+ else {
+mLockscreenNotifications.setChecked(getLockscreenAllowPrivateNotifications());
+}
+}
 return root;
 }

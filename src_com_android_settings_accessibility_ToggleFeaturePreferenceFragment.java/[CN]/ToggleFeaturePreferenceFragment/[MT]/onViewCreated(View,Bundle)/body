@@ -1,5 +1,8 @@
 {
   super.onViewCreated(view,savedInstanceState);
-  onInstallActionBarToggleSwitch();
+  final Context context=view.getContext();
+  final int padding=context.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
+  mToggleSwitch=new ToggleSwitch(context);
+  mToggleSwitch.setPaddingRelative(0,0,padding,0);
   onProcessArguments(getArguments());
 }

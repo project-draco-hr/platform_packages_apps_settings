@@ -25,7 +25,7 @@ default :
 Log.e(TAG,"Incorrect pairing type for createPinEntryView: " + mType);
 return null;
 }
-String messageText=getString(messageId1,deviceName);
+String messageText=getString(messageId1,Html.escapeHtml(deviceName));
 messageView.setText(Html.fromHtml(messageText));
 messageView2.setText(messageId2);
 mPairingView.setInputType(InputType.TYPE_CLASS_NUMBER);

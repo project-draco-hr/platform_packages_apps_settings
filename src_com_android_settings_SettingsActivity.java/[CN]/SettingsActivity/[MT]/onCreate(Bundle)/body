@@ -6,8 +6,7 @@
   mAuthenticatorHelper.updateAuthDescriptions(this);
   mAuthenticatorHelper.onAccountsUpdated(this,null);
   DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-  Context headersContext=new ContextThemeWrapper(this,com.android.internal.R.style.Theme_Holo);
-  mHeaderAdapter=new HeaderAdapter(headersContext,getHeaders(),mAuthenticatorHelper,dpm);
+  mHeaderAdapter=new HeaderAdapter(this,getHeaders(),mAuthenticatorHelper,dpm);
   mDevelopmentPreferences=getSharedPreferences(DevelopmentSettings.PREF_FILE,Context.MODE_PRIVATE);
   getMetaData();
   super.onCreate(savedInstanceState);

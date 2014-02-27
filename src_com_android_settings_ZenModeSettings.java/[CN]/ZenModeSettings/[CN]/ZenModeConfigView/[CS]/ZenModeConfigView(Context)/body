@@ -1,0 +1,12 @@
+{
+  super(context);
+  mContext=context;
+  setOrientation(VERTICAL);
+  int p=getResources().getDimensionPixelSize(R.dimen.content_margin_left);
+  TextView tv=addHeader("When on");
+  tv.setPadding(0,p / 2,0,p / 4);
+  addBuckets();
+  tv=addHeader("Automatically turn on");
+  tv.setPadding(0,p / 2,0,p / 4);
+  addTriggers();
+}

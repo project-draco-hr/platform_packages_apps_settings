@@ -1,0 +1,13 @@
+{
+  if (DEBUG)   Log.d(TAG,"init");
+  loadZenModeSetting("init");
+  setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      if (DEBUG)       Log.d(TAG,"onPreferenceChange " + newValue);
+      final boolean updateWithNewValue=saveZenModeSetting((String)newValue);
+      return updateWithNewValue;
+    }
+  }
+);
+  mResolver.registerContentObserver(Settings.Global.getUriFor(Settings.Global.ZEN_MODE),false,new SettingsObserver());
+}

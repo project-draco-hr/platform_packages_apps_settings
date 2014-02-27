@@ -1,0 +1,12 @@
+{
+  if (DEBUG)   Log.d(TAG,"saveZenModeSetting " + value);
+  try {
+    final int v=Integer.valueOf(value);
+    checkZenMode(v);
+    return Settings.Global.putInt(mResolver,Settings.Global.ZEN_MODE,v);
+  }
+ catch (  Throwable t) {
+    Log.w(TAG,"Failed to update zen mode with value: " + value,t);
+    return false;
+  }
+}

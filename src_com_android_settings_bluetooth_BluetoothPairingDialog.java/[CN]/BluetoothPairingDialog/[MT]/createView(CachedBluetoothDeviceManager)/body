@@ -1,6 +1,6 @@
 {
   View view=getLayoutInflater().inflate(R.layout.bluetooth_pin_confirm,null);
-  String name=deviceManager.getName(mDevice);
+  String name=Html.escapeHtml(deviceManager.getName(mDevice));
   TextView messageView=(TextView)view.findViewById(R.id.message);
   String messageText;
 switch (mType) {

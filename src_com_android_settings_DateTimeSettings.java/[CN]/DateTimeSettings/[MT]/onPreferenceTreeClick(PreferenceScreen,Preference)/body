@@ -7,9 +7,10 @@
     showDialog(DIALOG_TIMEPICKER);
   }
  else   if (preference == mTime24Pref) {
-    set24Hour(((CheckBoxPreference)mTime24Pref).isChecked());
+    final boolean is24Hour=((CheckBoxPreference)mTime24Pref).isChecked();
+    set24Hour(is24Hour);
     updateTimeAndDateDisplay(getActivity());
-    timeUpdated();
+    timeUpdated(is24Hour);
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

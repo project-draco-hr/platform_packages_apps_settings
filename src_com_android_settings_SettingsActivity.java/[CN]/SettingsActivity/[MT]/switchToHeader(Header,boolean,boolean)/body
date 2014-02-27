@@ -7,16 +7,11 @@
   }
  else {
     if (header.fragment != null) {
-      mTitleStack.clear();
-      switchToHeaderInner(header.fragment,header.fragmentArguments,validate);
+      switchToHeaderInner(header.fragment,header.fragmentArguments,validate,!initial,getHeaderTitle(header));
       setSelectedHeader(header);
-      final TitlePair pair=new TitlePair(0,getHeaderTitle(header));
-      mTitleStack.add(pair);
-      setTitle(pair.second);
     }
  else     if (header.intent != null) {
       setSelectedHeader(header);
-      mTitleStack.clear();
       startActivity(header.intent);
     }
  else {

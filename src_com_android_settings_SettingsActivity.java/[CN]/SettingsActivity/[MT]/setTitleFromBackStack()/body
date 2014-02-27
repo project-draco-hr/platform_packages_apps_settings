@@ -1,0 +1,9 @@
+{
+  final int count=getFragmentManager().getBackStackEntryCount();
+  if (count == 0) {
+    setTitle(mInitialTitle);
+    return;
+  }
+  FragmentManager.BackStackEntry bse=getFragmentManager().getBackStackEntryAt(count - 1);
+  setTitleFromBackStackEntry(bse);
+}

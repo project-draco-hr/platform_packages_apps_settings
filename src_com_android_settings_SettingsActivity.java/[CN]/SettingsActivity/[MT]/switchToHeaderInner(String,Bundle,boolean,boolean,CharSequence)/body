@@ -5,7 +5,13 @@
   }
   Fragment f=Fragment.instantiate(this,fragmentName,args);
   FragmentTransaction transaction=getFragmentManager().beginTransaction();
-  transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
   transaction.replace(R.id.prefs,f);
+  transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+  if (addToBackStack) {
+    transaction.addToBackStack(BACK_STACK_PREFS);
+  }
+  if (title != null) {
+    transaction.setBreadCrumbTitle(title);
+  }
   transaction.commitAllowingStateLoss();
 }

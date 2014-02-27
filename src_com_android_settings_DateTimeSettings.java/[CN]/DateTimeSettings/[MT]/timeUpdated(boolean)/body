@@ -1,4 +1,5 @@
 {
   Intent timeChanged=new Intent(Intent.ACTION_TIME_CHANGED);
+  timeChanged.putExtra(Intent.EXTRA_TIME_PREF_24_HOUR_FORMAT,is24Hour);
   getActivity().sendBroadcast(timeChanged);
 }

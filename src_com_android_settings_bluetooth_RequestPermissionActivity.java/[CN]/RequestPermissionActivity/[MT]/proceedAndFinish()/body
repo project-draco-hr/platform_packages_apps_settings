@@ -3,7 +3,7 @@
   if (mEnableOnly) {
     returnCode=RESULT_OK;
   }
- else   if (mExtraIntent == EXTRA_INTENT_DISCOVERY && mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,mTimeout)) {
+ else   if (mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,mTimeout)) {
     long endTime=System.currentTimeMillis() + (long)mTimeout * 1000;
     LocalBluetoothPreferences.persistDiscoverableEndTimestamp(this,endTime);
     if (0 < mTimeout) {
@@ -13,22 +13,6 @@
     if (returnCode < RESULT_FIRST_USER) {
       returnCode=RESULT_FIRST_USER;
     }
-  }
- else   if (mExtraIntent == EXTRA_INTENT_START_ADVERTISING) {
-    LocalBluetoothPreferences.setAdvertisingEnabled(mContext,true);
-    if (mLocalAdapter.startAdvertising()) {
-      returnCode=RESULT_OK;
-      Intent intent=new Intent(BluetoothAdapter.ACTION_BLUETOOTH_ADVERTISING_STARTED);
-      mContext.sendBroadcastAsUser(intent,UserHandle.ALL);
-    }
- else {
-      returnCode=RESULT_CANCELED;
-    }
-  }
- else   if (mExtraIntent == EXTRA_INTENT_STOP_ADVERTISING && mLocalAdapter.isAdvertising() && mLocalAdapter.stopAdvertising()) {
-    Intent intent=new Intent(BluetoothAdapter.ACTION_BLUETOOTH_ADVERTISING_STOPPED);
-    mContext.sendBroadcastAsUser(intent,UserHandle.ALL);
-    returnCode=RESULT_OK;
   }
  else {
     returnCode=RESULT_CANCELED;

@@ -1,0 +1,16 @@
+{
+  if (DEBUG)   Log.d(TAG,"onBindView");
+  super.onBindView(view);
+  mConfigure=(ImageView)view.findViewById(R.id.configure_zen_mode);
+  updateConfigureVisibility();
+  mConfigure.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      if (mMode != Settings.Global.ZEN_MODE_LIMITED)       return;
+      if (mContext instanceof SettingsActivity) {
+        SettingsActivity sa=(SettingsActivity)mContext;
+        sa.startPreferencePanel(ZenModeSettings.class.getName(),null,R.string.zen_mode_settings_title,null,null,0);
+      }
+    }
+  }
+);
+}

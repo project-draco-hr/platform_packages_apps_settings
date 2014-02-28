@@ -4,18 +4,11 @@
     mEnableOnly=true;
   }
  else   if (intent != null && intent.getAction().equals(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE)) {
-    mExtraIntent=EXTRA_INTENT_DISCOVERY;
     mTimeout=intent.getIntExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,BluetoothDiscoverableEnabler.DEFAULT_DISCOVERABLE_TIMEOUT);
     Log.d(TAG,"Setting Bluetooth Discoverable Timeout = " + mTimeout);
     if (mTimeout < 0 || mTimeout > MAX_DISCOVERABLE_TIMEOUT) {
       mTimeout=BluetoothDiscoverableEnabler.DEFAULT_DISCOVERABLE_TIMEOUT;
     }
-  }
- else   if (intent != null && intent.getAction().equals(BluetoothAdapter.ACTION_START_ADVERTISING)) {
-    mExtraIntent=EXTRA_INTENT_START_ADVERTISING;
-  }
- else   if (intent != null && intent.getAction().equals(BluetoothAdapter.ACTION_STOP_ADVERTISING)) {
-    mExtraIntent=EXTRA_INTENT_STOP_ADVERTISING;
   }
  else {
     Log.e(TAG,"Error: this activity may be started only with intent " + BluetoothAdapter.ACTION_REQUEST_ENABLE + " or "+ BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);

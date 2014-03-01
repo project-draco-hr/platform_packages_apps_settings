@@ -4,7 +4,7 @@
   String exclList=mExclusionListField.getText().toString().trim();
   int port=0;
   int result=validate(hostname,portStr,exclList);
-  if (result > 0) {
+  if (result != 0) {
     showDialog(ERROR_DIALOG_ID);
     return false;
   }

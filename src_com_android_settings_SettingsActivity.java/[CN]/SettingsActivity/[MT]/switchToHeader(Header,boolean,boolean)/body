@@ -2,12 +2,10 @@
   if (header == null) {
     return;
   }
-  if (header != null && mCurrentHeader != null && header.id == mCurrentHeader.id && header.id != R.id.account_add && !header.fragment.equals(ManageAccountsSettings.class.getName())) {
-    getFragmentManager().popBackStack(BACK_STACK_PREFS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
-  }
- else {
+  if (mCurrentHeader == null || header.id != mCurrentHeader.id) {
     if (header.fragment != null) {
-      switchToHeaderInner(header.fragment,header.fragmentArguments,validate,!initial,getHeaderTitle(header));
+      boolean addToBackStack=!initial && header.id != mInitialHeader.id;
+      switchToHeaderInner(header.fragment,header.fragmentArguments,validate,addToBackStack,getHeaderTitle(header));
       setSelectedHeader(header);
     }
  else     if (header.intent != null) {

@@ -32,7 +32,7 @@
   if (mHeadsUp != null) {
     updateHeadsUpMode(resolver);
     mHeadsUp.setOnPreferenceChangeListener(this);
-    resolver.registerContentObserver(Settings.Global.getUriFor(Settings.Global.HEADS_UP),false,new ContentObserver(mHandler){
+    resolver.registerContentObserver(Settings.Global.getUriFor(Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED),false,new ContentObserver(mHandler){
       @Override public void onChange(      boolean selfChange){
         updateHeadsUpMode(resolver);
       }

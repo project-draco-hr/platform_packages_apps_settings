@@ -2,12 +2,11 @@
   Handler handler=new Handler(){
     @Override public void handleMessage(    Message msg){
       Bundle bundle=msg.getData();
-      String summary=bundle.getString(SettingInjectorService.SUMMARY_KEY);
       boolean enabled=bundle.getBoolean(SettingInjectorService.ENABLED_KEY,true);
       if (Log.isLoggable(TAG,Log.DEBUG)) {
         Log.d(TAG,setting + ": received " + msg+ ", bundle: "+ bundle);
       }
-      preference.setSummary(summary);
+      preference.setSummary(null);
       preference.setEnabled(enabled);
       mHandler.sendMessage(mHandler.obtainMessage(WHAT_RECEIVED_STATUS,Setting.this));
     }

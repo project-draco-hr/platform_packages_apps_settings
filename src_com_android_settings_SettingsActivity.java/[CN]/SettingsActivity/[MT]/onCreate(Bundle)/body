@@ -6,25 +6,21 @@
   mAuthenticatorHelper.updateAuthDescriptions(this);
   mAuthenticatorHelper.onAccountsUpdated(this,null);
   DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-  mHeaderAdapter=new HeaderAdapter(this,getHeaders(),mAuthenticatorHelper,dpm);
+  mHeaderAdapter=new HeaderAdapter(this,mHeaders,mAuthenticatorHelper,dpm);
   mDevelopmentPreferences=getSharedPreferences(DevelopmentSettings.PREF_FILE,Context.MODE_PRIVATE);
   getMetaData();
   super.onCreate(savedInstanceState);
   setContentView(R.layout.settings_main);
   getFragmentManager().addOnBackStackChangedListener(this);
   mActionBar=getActionBar();
-  if (mActionBar != null) {
-    mActionBar.setDisplayHomeAsUpEnabled(true);
-    mActionBar.setHomeButtonEnabled(true);
-    mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-    mDrawer=(ListView)findViewById(R.id.headers_drawer);
-    mDrawer.setAdapter(mHeaderAdapter);
-    mDrawer.setOnItemClickListener(new DrawerItemClickListener());
-    mDrawer.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-    mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.drawable.ic_drawer,R.string.drawer_open,R.string.drawer_close);
-  }
-  String initialFragment=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
-  Bundle initialArguments=getIntent().getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
+  mActionBar.setDisplayHomeAsUpEnabled(true);
+  mActionBar.setHomeButtonEnabled(true);
+  mDrawer=(ListView)findViewById(R.id.headers_drawer);
+  mDrawer.setAdapter(mHeaderAdapter);
+  mDrawer.setOnItemClickListener(new DrawerItemClickListener());
+  mDrawer.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+  mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+  mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.drawable.ic_drawer,R.string.drawer_open,R.string.drawer_close);
   if (savedInstanceState != null) {
     mInitialTitle=getTitle();
     setTitleFromBackStack();
@@ -34,21 +30,26 @@
       int curHeader=savedInstanceState.getInt(SAVE_KEY_CURRENT_HEADER_TAG,(int)HEADER_ID_UNDEFINED);
       if (curHeader >= 0 && curHeader < mHeaders.size()) {
         setSelectedHeader(mHeaders.get(curHeader));
+        mInitialHeader=mCurrentHeader;
       }
     }
   }
  else {
+    String initialFragment=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
+    Bundle initialArguments=getIntent().getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
+    onBuildHeaders(mHeaders);
     if (initialFragment != null) {
       final int initialTitleResId=getIntent().getIntExtra(EXTRA_SHOW_FRAGMENT_TITLE,0);
       mInitialTitle=(initialTitleResId > 0) ? getText(initialTitleResId) : getTitle();
       switchToHeader(initialFragment,initialArguments,true,mInitialTitle);
+      setSelectedHeaderByFragmentName(initialFragment);
+      mInitialHeader=mCurrentHeader;
     }
  else {
-      onBuildHeaders(mHeaders);
       if (mHeaders.size() > 0) {
-        Header h=onGetInitialHeader();
-        mInitialTitle=getHeaderTitle(h);
-        switchToHeader(h,false,true);
+        mInitialHeader=onGetInitialHeader();
+        mInitialTitle=getHeaderTitle(mInitialHeader);
+        switchToHeader(mInitialHeader,false,true);
       }
     }
   }

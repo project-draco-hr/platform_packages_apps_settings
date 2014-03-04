@@ -1,28 +1,19 @@
 {
-  Matcher match=HOSTNAME_PATTERN.matcher(hostname);
-  String exclListArray[]=exclList.split(",");
-  if (!match.matches())   return R.string.proxy_error_invalid_host;
-  for (  String excl : exclListArray) {
-    Matcher m=EXCLUSION_PATTERN.matcher(excl);
-    if (!m.matches())     return R.string.proxy_error_invalid_exclusion_list;
-  }
-  if (hostname.length() > 0 && port.length() == 0) {
-    return R.string.proxy_error_empty_port;
-  }
-  if (port.length() > 0) {
-    if (hostname.length() == 0) {
-      return R.string.proxy_error_empty_host_set_port;
-    }
-    int portVal=-1;
-    try {
-      portVal=Integer.parseInt(port);
-    }
- catch (    NumberFormatException ex) {
-      return R.string.proxy_error_invalid_port;
-    }
-    if (portVal <= 0 || portVal > 0xFFFF) {
-      return R.string.proxy_error_invalid_port;
-    }
-  }
-  return 0;
+switch (Proxy.validate(hostname,port,exclList)) {
+case Proxy.PROXY_VALID:
+    return 0;
+case Proxy.PROXY_HOSTNAME_EMPTY:
+  return R.string.proxy_error_empty_host_set_port;
+case Proxy.PROXY_HOSTNAME_INVALID:
+return R.string.proxy_error_invalid_host;
+case Proxy.PROXY_PORT_EMPTY:
+return R.string.proxy_error_empty_port;
+case Proxy.PROXY_PORT_INVALID:
+return R.string.proxy_error_invalid_port;
+case Proxy.PROXY_EXCLLIST_INVALID:
+return R.string.proxy_error_invalid_exclusion_list;
+default :
+Log.e(TAG,"Unknown proxy settings error");
+return -1;
+}
 }

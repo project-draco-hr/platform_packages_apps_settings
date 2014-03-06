@@ -1,3 +1,5 @@
 {
-  return getReadableDatabase().rawQuery(buildSQL(query),null);
+  final String sql=buildSQL(query);
+  Log.d(LOG_TAG,"Query: " + sql);
+  return getReadableDatabase().rawQuery(sql,null);
 }

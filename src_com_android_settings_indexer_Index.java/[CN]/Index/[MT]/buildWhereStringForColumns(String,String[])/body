@@ -1,7 +1,7 @@
 {
-  final StringBuilder sb=new StringBuilder(columnName);
+  final StringBuilder sb=new StringBuilder(Tables.TABLE_PREFS_INDEX);
   sb.append(" MATCH ");
-  DatabaseUtils.appendEscapedSQLString(sb,query + "*");
+  DatabaseUtils.appendEscapedSQLString(sb,buildMatchStringForColumns(query,columnNames));
   sb.append(" AND ");
   sb.append(IndexColumns.LOCALE);
   sb.append(" = ");

@@ -1,0 +1,14 @@
+{
+  final String value=query + "*";
+  StringBuilder sb=new StringBuilder();
+  final int count=columnNames.length;
+  for (int n=0; n < count; n++) {
+    sb.append(columnNames[n]);
+    sb.append(":");
+    sb.append(value);
+    if (n < count - 1) {
+      sb.append(" OR ");
+    }
+  }
+  return sb.toString();
+}

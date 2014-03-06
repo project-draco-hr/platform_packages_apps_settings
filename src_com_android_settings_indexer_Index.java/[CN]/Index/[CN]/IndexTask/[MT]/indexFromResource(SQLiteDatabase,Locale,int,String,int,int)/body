@@ -16,8 +16,8 @@
     String title=getDataTitle(attrs);
     String summary=getDataSummary(attrs);
     String keywords=getDataKeywords(attrs);
-    inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords,"\u2011","");
-    inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords,"\u2011","-");
+    inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords,NON_BREAKING_HYPHEN,EMPTY);
+    inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords,NON_BREAKING_HYPHEN,HYPHEN);
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
       if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
         continue;

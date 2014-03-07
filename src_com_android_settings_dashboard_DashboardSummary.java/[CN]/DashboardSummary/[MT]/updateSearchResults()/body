@@ -3,7 +3,7 @@
     mUpdateSearchResultsTask.cancel(false);
     mUpdateSearchResultsTask=null;
   }
-  final String query=mEditText.getText().toString();
+  final String query=getFilteredQueryString();
   if (TextUtils.isEmpty(query)) {
     setCursor(null);
   }

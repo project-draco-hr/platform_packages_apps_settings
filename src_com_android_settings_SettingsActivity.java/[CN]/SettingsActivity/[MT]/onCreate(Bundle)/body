@@ -43,8 +43,9 @@
     if (initialFragment != null) {
       final int initialTitleResId=getIntent().getIntExtra(EXTRA_SHOW_FRAGMENT_TITLE,0);
       mInitialTitle=(initialTitleResId > 0) ? getText(initialTitleResId) : getTitle();
-      switchToHeader(initialFragment,initialArguments,true,mInitialTitle);
-      setSelectedHeaderByFragmentName(initialFragment);
+      setTitle(mInitialTitle);
+      switchToHeaderInner(initialFragment,initialArguments,true,false,mInitialTitle);
+      setSelectedHeaderByTopLevelId(mTopLevelHeaderId);
       mInitialHeader=mCurrentHeader;
     }
  else {

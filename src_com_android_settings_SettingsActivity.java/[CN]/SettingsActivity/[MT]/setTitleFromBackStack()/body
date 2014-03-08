@@ -2,6 +2,7 @@
   final int count=getFragmentManager().getBackStackEntryCount();
   if (count == 0) {
     setTitle(mInitialTitle);
+    setSelectedHeaderById(mInitialHeader.id);
     return;
   }
   FragmentManager.BackStackEntry bse=getFragmentManager().getBackStackEntryAt(count - 1);

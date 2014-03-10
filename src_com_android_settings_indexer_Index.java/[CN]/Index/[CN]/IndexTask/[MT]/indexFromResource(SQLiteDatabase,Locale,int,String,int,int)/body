@@ -12,12 +12,11 @@
     }
     final int outerDepth=parser.getDepth();
     final AttributeSet attrs=Xml.asAttributeSet(parser);
-    final String fragmentTitle=getData(attrs,com.android.internal.R.styleable.Preference,com.android.internal.R.styleable.Preference_title);
+    final String fragmentTitle=getDataTitle(attrs);
     String title=getDataTitle(attrs);
     String summary=getDataSummary(attrs);
     String keywords=getDataKeywords(attrs);
-    inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords,NON_BREAKING_HYPHEN,EMPTY);
-    inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords,NON_BREAKING_HYPHEN,HYPHEN);
+    inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords);
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
       if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
         continue;
@@ -25,8 +24,7 @@
       title=getDataTitle(attrs);
       summary=getDataSummary(attrs);
       keywords=getDataKeywords(attrs);
-      inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords,NON_BREAKING_HYPHEN,EMPTY);
-      inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords,NON_BREAKING_HYPHEN,HYPHEN);
+      inserOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,fragmentTitle,iconResId,rank,keywords);
     }
   }
  catch (  XmlPullParserException e) {

@@ -1,12 +1,14 @@
 {
-  if (TextUtils.isEmpty(title)) {
+  if (TextUtils.isEmpty(updatedTitle)) {
     return;
   }
   ContentValues values=new ContentValues();
   values.put(IndexColumns.LOCALE,locale);
   values.put(IndexColumns.DATA_RANK,rank);
-  values.put(IndexColumns.DATA_TITLE,title);
-  values.put(IndexColumns.DATA_SUMMARY,summary);
+  values.put(IndexColumns.DATA_TITLE,updatedTitle);
+  values.put(IndexColumns.DATA_TITLE_NORMALIZED,normalizedTitle);
+  values.put(IndexColumns.DATA_SUMMARY,updatedSummary);
+  values.put(IndexColumns.DATA_SUMMARY_NORMALIZED,normalizedSummary);
   values.put(IndexColumns.DATA_KEYWORDS,keywords);
   values.put(IndexColumns.FRAGMENT_NAME,fragmentName);
   values.put(IndexColumns.FRAGMENT_TITLE,fragmentTitle);

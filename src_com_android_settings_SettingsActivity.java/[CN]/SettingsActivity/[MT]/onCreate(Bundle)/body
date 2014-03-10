@@ -25,7 +25,6 @@
   mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.drawable.ic_drawer,R.string.drawer_open,R.string.drawer_close);
   if (savedInstanceState != null) {
     mInitialTitle=getTitle();
-    setTitleFromBackStack();
     ArrayList<Header> headers=savedInstanceState.getParcelableArrayList(SAVE_KEY_HEADERS_TAG);
     if (headers != null) {
       mHeaders.addAll(headers);
@@ -34,6 +33,7 @@
         setSelectedHeader(mHeaders.get(curHeader));
         mInitialHeader=mCurrentHeader;
       }
+      setTitleFromBackStack();
     }
   }
  else {

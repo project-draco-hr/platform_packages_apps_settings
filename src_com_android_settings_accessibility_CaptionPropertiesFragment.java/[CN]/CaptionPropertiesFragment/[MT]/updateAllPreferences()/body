@@ -5,22 +5,10 @@
   mFontSize.setValue(Float.toString(fontSize));
   final ContentResolver cr=getContentResolver();
   final CaptionStyle attrs=CaptionStyle.getCustomStyle(cr);
-  mForegroundColor.setValue(attrs.foregroundColor);
   mEdgeType.setValue(attrs.edgeType);
   mEdgeColor.setValue(attrs.edgeColor);
-  final int backgroundColor=attrs.backgroundColor;
-  final int bgColor;
-  final int bgAlpha;
-  if (Color.alpha(backgroundColor) == 0) {
-    bgColor=Color.TRANSPARENT;
-    bgAlpha=(backgroundColor & 0xFF) << 24;
-  }
- else {
-    bgColor=backgroundColor | 0xFF000000;
-    bgAlpha=backgroundColor & 0xFF000000;
-  }
-  mBackgroundColor.setValue(bgColor);
-  mBackgroundOpacity.setValue(bgAlpha | 0xFFFFFF);
+  parseColorOpacity(mForegroundColor,mForegroundOpacity,attrs.foregroundColor);
+  parseColorOpacity(mBackgroundColor,mBackgroundOpacity,attrs.backgroundColor);
   final String rawTypeface=attrs.mRawTypeface;
   mTypeface.setValue(rawTypeface == null ? "" : rawTypeface);
   final String rawLocale=mCaptioningManager.getRawLocale();

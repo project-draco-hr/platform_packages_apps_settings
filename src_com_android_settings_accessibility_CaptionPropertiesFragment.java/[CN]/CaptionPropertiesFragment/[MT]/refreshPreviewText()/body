@@ -1,5 +1,19 @@
 {
-  if (mParent != null) {
-    mParent.refreshPreviewText();
+  final Context context=getActivity();
+  if (context == null) {
+    return;
+  }
+  final SubtitleView preview=mPreviewText;
+  if (preview != null) {
+    final int styleId=mCaptioningManager.getRawUserStyle();
+    applyCaptionProperties(mCaptioningManager,preview,styleId);
+    final Locale locale=mCaptioningManager.getLocale();
+    if (locale != null) {
+      final CharSequence localizedText=AccessibilityUtils.getTextForLocale(context,locale,R.string.captioning_preview_text);
+      preview.setText(localizedText);
+    }
+ else {
+      preview.setText(R.string.captioning_preview_text);
+    }
   }
 }

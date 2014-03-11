@@ -1,0 +1,8 @@
+{
+  if (ref.xmlResId > 0) {
+    indexFromResource(database,localeStr,ref.xmlResId,ref.fragmentName,ref.iconResId,ref.rank);
+  }
+ else   if (!TextUtils.isEmpty(ref.fragmentName)) {
+    indexRawData(database,localeStr,ref);
+  }
+}

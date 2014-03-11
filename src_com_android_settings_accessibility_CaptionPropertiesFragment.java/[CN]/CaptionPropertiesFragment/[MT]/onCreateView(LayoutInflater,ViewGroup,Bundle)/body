@@ -3,5 +3,7 @@
   if (container instanceof PreferenceFrameLayout) {
     ((PreferenceFrameLayout.LayoutParams)rootView.getLayoutParams()).removeBorders=true;
   }
+  final View content=super.onCreateView(inflater,container,savedInstanceState);
+  ((ViewGroup)rootView.findViewById(R.id.properties_fragment)).addView(content,LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
   return rootView;
 }

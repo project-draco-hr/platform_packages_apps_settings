@@ -145,41 +145,11 @@ deviceAdminCategory.removePreference(mToggleVerifyApps);
 mToggleVerifyApps.setEnabled(false);
 }
 }
-mNotificationAccess=findPreference(KEY_NOTIFICATION_ACCESS);
-if (mNotificationAccess != null) {
-final int total=NotificationAccessSettings.getListenersCount(mPM);
-if (total == 0) {
-if (deviceAdminCategory != null) {
-deviceAdminCategory.removePreference(mNotificationAccess);
-}
-}
- else {
-final int n=getNumEnabledNotificationListeners();
-if (n == 0) {
-mNotificationAccess.setSummary(getResources().getString(R.string.manage_notification_access_summary_zero));
-}
- else {
-mNotificationAccess.setSummary(String.format(getResources().getQuantityString(R.plurals.manage_notification_access_summary_nonzero,n,n)));
-}
-}
-}
 if (shouldBePinProtected(RESTRICTIONS_PIN_SET)) {
 protectByRestrictions(mToggleAppInstallation);
 protectByRestrictions(mToggleVerifyApps);
 protectByRestrictions(mResetCredentials);
 protectByRestrictions(root.findPreference(KEY_CREDENTIALS_INSTALL));
-}
-mLockscreenNotifications=(CheckBoxPreference)root.findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
-if (mLockscreenNotifications != null) {
-if (!getDeviceLockscreenNotificationsEnabled()) {
-final PreferenceGroup lockscreenCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
-if (lockscreenCategory != null) {
-lockscreenCategory.removePreference(mLockscreenNotifications);
-}
-}
- else {
-mLockscreenNotifications.setChecked(getLockscreenAllowPrivateNotifications());
-}
 }
 return root;
 }

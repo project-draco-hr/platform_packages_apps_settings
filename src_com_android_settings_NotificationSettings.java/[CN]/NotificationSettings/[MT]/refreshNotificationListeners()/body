@@ -1,0 +1,20 @@
+{
+  if (mNotificationAccess != null) {
+    final PreferenceGroup securityCategory=(PreferenceGroup)getPreferenceScreen().findPreference(KEY_SECURITY_CATEGORY);
+    final int total=NotificationAccessSettings.getListenersCount(mPM);
+    if (total == 0) {
+      if (securityCategory != null) {
+        securityCategory.removePreference(mNotificationAccess);
+      }
+    }
+ else {
+      final int n=getNumEnabledNotificationListeners();
+      if (n == 0) {
+        mNotificationAccess.setSummary(getResources().getString(R.string.manage_notification_access_summary_zero));
+      }
+ else {
+        mNotificationAccess.setSummary(String.format(getResources().getQuantityString(R.plurals.manage_notification_access_summary_nonzero,n,n)));
+      }
+    }
+  }
+}

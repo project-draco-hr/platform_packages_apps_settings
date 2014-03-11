@@ -1,14 +1,3 @@
 {
-  if (preference == mNotificationPulse) {
-    boolean value=mNotificationPulse.isChecked();
-    Settings.System.putInt(getContentResolver(),Settings.System.NOTIFICATION_LIGHT_PULSE,value ? 1 : 0);
-    return true;
-  }
-  if (preference == mHeadsUp) {
-    final boolean value=mHeadsUp.isChecked();
-    Log.d(TAG,"onPreferenceTreeClick mHeadsUp: " + value);
-    setHeadsUpMode(getContentResolver(),value);
-    return true;
-  }
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

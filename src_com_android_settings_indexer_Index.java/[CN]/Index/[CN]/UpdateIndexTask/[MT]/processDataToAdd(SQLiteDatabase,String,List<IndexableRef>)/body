@@ -1,0 +1,16 @@
+{
+  if (isLocaleAlreadyIndexed(database,localeStr)) {
+    Log.d(LOG_TAG,"Locale '" + localeStr + "' is already indexed");
+    return true;
+  }
+  boolean result=false;
+  final long current=System.currentTimeMillis();
+  final int count=dataToAdd.size();
+  for (int n=0; n < count; n++) {
+    final IndexableRef ref=dataToAdd.get(n);
+    indexOneRef(database,localeStr,ref);
+  }
+  final long now=System.currentTimeMillis();
+  Log.d(LOG_TAG,"Indexing locale '" + localeStr + "' took "+ (now - current)+ " millis");
+  return result;
+}

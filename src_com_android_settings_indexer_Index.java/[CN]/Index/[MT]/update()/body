@@ -1,9 +1,11 @@
 {
-synchronized (mDataToIndex) {
-    final IndexTask task=new IndexTask();
-    task.execute(mDataToIndex);
+synchronized (mUpdateData) {
+    final UpdateIndexTask task=new UpdateIndexTask();
+    task.execute(mUpdateData);
     try {
-      return task.get();
+      final boolean result=task.get();
+      mUpdateData.clear();
+      return result;
     }
  catch (    InterruptedException e) {
       Log.e(LOG_TAG,"Cannot update index: " + e.getMessage());

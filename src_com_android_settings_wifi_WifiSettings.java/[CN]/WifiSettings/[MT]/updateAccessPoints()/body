@@ -7,7 +7,7 @@
   final int wifiState=mWifiManager.getWifiState();
 switch (wifiState) {
 case WifiManager.WIFI_STATE_ENABLED:
-    final Collection<AccessPoint> accessPoints=constructAccessPoints();
+    final Collection<AccessPoint> accessPoints=constructAccessPoints(getActivity(),mWifiManager,mLastInfo,mLastState);
   getPreferenceScreen().removeAll();
 if (accessPoints.size() == 0) {
   addMessagePreference(R.string.wifi_empty_list_wifi_on);

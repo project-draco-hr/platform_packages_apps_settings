@@ -1,0 +1,34 @@
+{
+  ArrayList<AccessPoint> accessPoints=new ArrayList<AccessPoint>();
+  Multimap<String,AccessPoint> apMap=new Multimap<String,AccessPoint>();
+  final List<WifiConfiguration> configs=wifiManager.getConfiguredNetworks();
+  if (configs != null) {
+    for (    WifiConfiguration config : configs) {
+      AccessPoint accessPoint=new AccessPoint(context,config);
+      if (lastInfo != null && lastState != null) {
+        accessPoint.update(lastInfo,lastState);
+      }
+      accessPoints.add(accessPoint);
+      apMap.put(accessPoint.ssid,accessPoint);
+    }
+  }
+  final List<ScanResult> results=wifiManager.getScanResults();
+  if (results != null) {
+    for (    ScanResult result : results) {
+      if (result.SSID == null || result.SSID.length() == 0 || result.capabilities.contains("[IBSS]")) {
+        continue;
+      }
+      boolean found=false;
+      for (      AccessPoint accessPoint : apMap.getAll(result.SSID)) {
+        if (accessPoint.update(result))         found=true;
+      }
+      if (!found) {
+        AccessPoint accessPoint=new AccessPoint(context,result);
+        accessPoints.add(accessPoint);
+        apMap.put(accessPoint.ssid,accessPoint);
+      }
+    }
+  }
+  Collections.sort(accessPoints);
+  return accessPoints;
+}

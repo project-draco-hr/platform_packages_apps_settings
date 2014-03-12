@@ -1,6 +1,10 @@
 {
-  final SQLiteDatabase database=getWritableDatabase();
   boolean result=false;
+  final List<IndexableData> dataToIndex=params[0];
+  if (null == dataToIndex || dataToIndex.size() == 0) {
+    return result;
+  }
+  final SQLiteDatabase database=getWritableDatabase();
   final Locale locale=Locale.getDefault();
   final String localeStr=locale.toString();
   if (isLocaleAlreadyIndexed(database,locale)) {

@@ -1,5 +1,5 @@
 {
-  String[] enabledKeyboardLayouts=mIm.getKeyboardLayoutsForInputDevice(mInputDeviceDescriptor);
+  String[] enabledKeyboardLayouts=mIm.getKeyboardLayoutsForInputDevice(mInputDeviceIdentifier);
   Arrays.sort(enabledKeyboardLayouts);
   for (  Map.Entry<CheckBoxPreference,KeyboardLayout> entry : mPreferenceMap.entrySet()) {
     entry.getKey().setChecked(Arrays.binarySearch(enabledKeyboardLayouts,entry.getValue().getDescriptor()) >= 0);

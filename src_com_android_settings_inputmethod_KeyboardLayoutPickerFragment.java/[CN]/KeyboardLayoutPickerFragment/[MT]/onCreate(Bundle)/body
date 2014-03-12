@@ -1,7 +1,7 @@
 {
   super.onCreate(icicle);
-  mInputDeviceDescriptor=getActivity().getIntent().getStringExtra(EXTRA_INPUT_DEVICE_DESCRIPTOR);
-  if (mInputDeviceDescriptor == null) {
+  mInputDeviceIdentifier=getActivity().getIntent().getParcelableExtra(EXTRA_INPUT_DEVICE_IDENTIFIER);
+  if (mInputDeviceIdentifier == null) {
     getActivity().finish();
   }
   mIm=(InputManager)getSystemService(Context.INPUT_SERVICE);

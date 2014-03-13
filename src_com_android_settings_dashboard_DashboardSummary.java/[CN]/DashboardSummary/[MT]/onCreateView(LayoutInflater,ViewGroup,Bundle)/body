@@ -26,9 +26,22 @@
       closeSoftKeyboard();
       final Cursor cursor=mAdapter.mCursor;
       cursor.moveToPosition(position);
-      final String fragmentName=cursor.getString(Index.COLUMN_INDEX_FRAGMENT_NAME);
-      final String fragmentTitle=cursor.getString(Index.COLUMN_INDEX_FRAGMENT_TITLE);
-      ((SettingsActivity)getActivity()).startPreferencePanel(fragmentName,null,0,fragmentTitle,null,0);
+      final String className=cursor.getString(Index.COLUMN_INDEX_CLASS_NAME);
+      final String screenTitle=cursor.getString(Index.COLUMN_INDEX_SCREEN_TITLE);
+      final String action=cursor.getString(Index.COLUMN_INDEX_INTENT_ACTION);
+      if (TextUtils.isEmpty(action)) {
+        ((SettingsActivity)getActivity()).startPreferencePanel(className,null,0,screenTitle,null,0);
+      }
+ else {
+        final Intent intent=new Intent(action);
+        final String targetPackage=cursor.getString(Index.COLUMN_INDEX_INTENT_ACTION_TARGET_PACKAGE);
+        final String targetClass=cursor.getString(Index.COLUMN_INDEX_INTENT_ACTION_TARGET_CLASS);
+        if (!TextUtils.isEmpty(targetPackage) && !TextUtils.isEmpty(targetClass)) {
+          final ComponentName component=new ComponentName(targetPackage,targetClass);
+          intent.setComponent(component);
+        }
+        getActivity().startActivity(intent);
+      }
     }
   }
 );

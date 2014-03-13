@@ -1,0 +1,22 @@
+{
+  boolean result=false;
+  final List<SearchIndexableData> dataToAdd=params[0].dataToAdd;
+  final List<String> dataToDelete=params[0].dataToDelete;
+  final SQLiteDatabase database=getWritableDatabase();
+  final String localeStr=Locale.getDefault().toString();
+  try {
+    database.beginTransaction();
+    if (dataToAdd.size() > 0) {
+      processDataToAdd(database,localeStr,dataToAdd);
+    }
+    if (dataToDelete.size() > 0) {
+      processDataToDelete(database,localeStr,dataToDelete);
+    }
+    database.setTransactionSuccessful();
+    result=true;
+  }
+  finally {
+    database.endTransaction();
+  }
+  return result;
+}

@@ -1,0 +1,23 @@
+{
+  final Intent intent=new Intent(SearchIndexablesContract.PROVIDER_INTERFACE);
+  List<ResolveInfo> list=mContext.getPackageManager().queryIntentContentProviders(intent,0);
+  final int size=list.size();
+  for (int n=0; n < size; n++) {
+    final ResolveInfo info=list.get(n);
+    final String authority=info.providerInfo.authority;
+    final String packageName=info.providerInfo.packageName;
+    final Context packageContext;
+    try {
+      packageContext=mContext.createPackageContext(packageName,0);
+      final Uri uriForResources=buildUriForXmlResources(authority);
+      addIndexablesForXmlResourceUri(packageContext,packageName,uriForResources,SearchIndexablesContract.INDEXABLES_XML_RES_COLUMNS);
+      final Uri uriForRawData=buildUriForRawData(authority);
+      addIndexablesForRawDataUri(packageContext,packageName,uriForRawData,SearchIndexablesContract.INDEXABLES_RAW_COLUMNS);
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+      Log.w(LOG_TAG,"Could not create context for " + packageName + ": "+ Log.getStackTraceString(e));
+      continue;
+    }
+  }
+  return updateInternal();
+}

@@ -1,0 +1,7 @@
+{
+  if (oldVersion == 100 || oldVersion == 101) {
+    Log.w(TAG,"Detected schema version 100 or 101. " + "Index needs to be rebuilt for schema version 102");
+    dropTables(db);
+    bootstrapDB(db);
+  }
+}

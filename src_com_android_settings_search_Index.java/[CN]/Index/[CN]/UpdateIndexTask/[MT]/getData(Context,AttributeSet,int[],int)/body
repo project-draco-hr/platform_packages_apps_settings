@@ -1,0 +1,14 @@
+{
+  final TypedArray sa=context.obtainStyledAttributes(set,attrs);
+  final TypedValue tv=sa.peekValue(resId);
+  CharSequence data=null;
+  if (tv != null && tv.type == TypedValue.TYPE_STRING) {
+    if (tv.resourceId != 0) {
+      data=context.getText(tv.resourceId);
+    }
+ else {
+      data=tv.string;
+    }
+  }
+  return (data != null) ? data.toString() : null;
+}

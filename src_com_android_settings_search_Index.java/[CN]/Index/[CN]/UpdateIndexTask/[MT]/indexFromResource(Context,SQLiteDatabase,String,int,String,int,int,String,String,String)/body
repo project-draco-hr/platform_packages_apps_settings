@@ -1,0 +1,38 @@
+{
+  XmlResourceParser parser=null;
+  try {
+    parser=context.getResources().getXml(xmlResId);
+    int type;
+    while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && type != XmlPullParser.START_TAG) {
+    }
+    String nodeName=parser.getName();
+    if (!"PreferenceScreen".equals(nodeName)) {
+      throw new RuntimeException("XML document must start with <PreferenceScreen> tag; found" + nodeName + " at "+ parser.getPositionDescription());
+    }
+    final int outerDepth=parser.getDepth();
+    final AttributeSet attrs=Xml.asAttributeSet(parser);
+    final String screenTitle=getDataTitle(context,attrs);
+    String title=getDataTitle(context,attrs);
+    String summary=getDataSummary(context,attrs);
+    String keywords=getDataKeywords(context,attrs);
+    insertOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass);
+    while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
+      if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
+        continue;
+      }
+      title=getDataTitle(context,attrs);
+      summary=getDataSummary(context,attrs);
+      keywords=getDataKeywords(context,attrs);
+      insertOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass);
+    }
+  }
+ catch (  XmlPullParserException e) {
+    throw new RuntimeException("Error parsing PreferenceScreen",e);
+  }
+catch (  IOException e) {
+    throw new RuntimeException("Error parsing PreferenceScreen",e);
+  }
+ finally {
+    if (parser != null)     parser.close();
+  }
+}

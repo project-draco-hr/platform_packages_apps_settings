@@ -38,12 +38,14 @@
       mWakeLock.acquire();
     }
   }
-  mHandler.postDelayed(new Runnable(){
-    @Override public void run(){
-      imm.showSoftInputUnchecked(0,null);
+  if (mLockPatternView == null) {
+    mHandler.postDelayed(new Runnable(){
+      @Override public void run(){
+        imm.showSoftInputUnchecked(0,null);
+      }
     }
-  }
 ,0);
+  }
   updateEmergencyCallButtonState();
   mHandler.removeMessages(MESSAGE_NOTIFY);
   mHandler.sendEmptyMessageDelayed(MESSAGE_NOTIFY,120 * 1000);

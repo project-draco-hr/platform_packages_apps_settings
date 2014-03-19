@@ -7,6 +7,7 @@
   pref.setIcon(icon);
   Intent settingIntent=new Intent();
   settingIntent.setClassName(info.packageName,info.settingsActivity);
+  settingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
   pref.setIntent(settingIntent);
   prefs.add(pref);
   return pref;

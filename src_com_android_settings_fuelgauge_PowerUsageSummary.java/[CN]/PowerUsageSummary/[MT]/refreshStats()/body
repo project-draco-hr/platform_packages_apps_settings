@@ -14,10 +14,7 @@
     addNotAvailableMessage();
     return;
   }
-  int dischargeAmount=mStatsType == BatteryStats.STATS_SINCE_CHARGED ? mStatsHelper.getStats().getHighDischargeAmountSinceCharge() : (mStatsHelper.getStats().getDischargeStartLevel() - mStatsHelper.getStats().getDischargeCurrentLevel());
-  if (dischargeAmount < 0) {
-    dischargeAmount=0;
-  }
+  final int dischargeAmount=mStatsHelper.getStats().getDischargeAmount(mStatsType);
   mStatsHelper.refreshStats(BatteryStats.STATS_SINCE_CHARGED,UserHandle.myUserId());
   List<BatterySipper> usageList=mStatsHelper.getUsageList();
   for (int i=0; i < usageList.size(); i++) {

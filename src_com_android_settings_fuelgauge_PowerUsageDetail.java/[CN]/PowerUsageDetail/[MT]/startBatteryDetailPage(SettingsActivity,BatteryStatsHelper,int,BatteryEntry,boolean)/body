@@ -1,8 +1,9 @@
 {
   helper.getStats();
+  final int dischargeAmount=helper.getStats().getDischargeAmount(statsType);
   Bundle args=new Bundle();
   args.putString(PowerUsageDetail.EXTRA_TITLE,entry.name);
-  args.putInt(PowerUsageDetail.EXTRA_PERCENT,(int)Math.ceil(entry.sipper.value * 100 / helper.getTotalPower()));
+  args.putInt(PowerUsageDetail.EXTRA_PERCENT,(int)((entry.sipper.value * dischargeAmount / helper.getTotalPower()) + .5));
   args.putInt(PowerUsageDetail.EXTRA_GAUGE,(int)Math.ceil(entry.sipper.value * 100 / helper.getMaxPower()));
   args.putLong(PowerUsageDetail.EXTRA_USAGE_DURATION,helper.getStatsPeriod());
   args.putString(PowerUsageDetail.EXTRA_ICON_PACKAGE,entry.defaultPackageName);

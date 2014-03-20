@@ -8,6 +8,9 @@
     sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
   }
  else   if ((failedAttempts % COOL_DOWN_ATTEMPTS) == 0) {
+    if (mLockPatternView != null) {
+      mLockPatternView.clearPattern();
+    }
     mCooldown=COOL_DOWN_INTERVAL;
     cooldown();
   }
@@ -16,6 +19,9 @@
     status.setText(R.string.try_again);
     if (mPasswordEntry != null) {
       mPasswordEntry.setEnabled(true);
+    }
+    if (mLockPatternView != null) {
+      mLockPatternView.setEnabled(true);
     }
   }
 }

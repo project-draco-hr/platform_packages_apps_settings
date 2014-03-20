@@ -1,8 +1,13 @@
 {
   final TextView status=(TextView)findViewById(R.id.status);
   if (mCooldown <= 0) {
-    mPasswordEntry.setEnabled(true);
-    setBackFunctionality(true);
+    if (mPasswordEntry != null) {
+      mPasswordEntry.setEnabled(true);
+      setBackFunctionality(true);
+    }
+    if (mLockPatternView != null) {
+      mLockPatternView.setEnabled(true);
+    }
     status.setText(R.string.enter_password);
   }
  else {

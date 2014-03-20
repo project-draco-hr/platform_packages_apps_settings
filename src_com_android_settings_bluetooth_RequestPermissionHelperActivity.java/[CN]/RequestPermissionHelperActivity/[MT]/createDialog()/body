@@ -3,16 +3,13 @@
   if (mEnableOnly) {
     p.mMessage=getString(R.string.bluetooth_ask_enablement);
   }
- else   if (mDiscovery) {
+ else {
     if (mTimeout == BluetoothDiscoverableEnabler.DISCOVERABLE_TIMEOUT_NEVER) {
       p.mMessage=getString(R.string.bluetooth_ask_enablement_and_lasting_discovery);
     }
  else {
       p.mMessage=getString(R.string.bluetooth_ask_enablement_and_discovery,mTimeout);
     }
-  }
- else {
-    p.mMessage=getString(R.string.bluetooth_ask_enablement_and_start_broadcast,Utils.getCallingApp(this));
   }
   p.mPositiveButtonText=getString(R.string.allow);
   p.mPositiveButtonListener=this;

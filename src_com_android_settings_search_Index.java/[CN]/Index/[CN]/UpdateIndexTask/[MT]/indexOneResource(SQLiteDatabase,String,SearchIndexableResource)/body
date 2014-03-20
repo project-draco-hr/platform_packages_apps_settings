@@ -1,0 +1,8 @@
+{
+  if (sir.xmlResId > 0) {
+    indexFromResource(sir.context,database,localeStr,sir.xmlResId,sir.className,sir.iconResId,sir.rank,sir.intentAction,sir.intentTargetPackage,sir.intentTargetClass);
+  }
+ else   if (!TextUtils.isEmpty(sir.className)) {
+    indexFromLocalProvider(database,localeStr,sir);
+  }
+}

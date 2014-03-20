@@ -3,8 +3,27 @@
     final String title=mCursor.getString(Index.COLUMN_INDEX_TITLE);
     final String summary=mCursor.getString(Index.COLUMN_INDEX_SUMMARY);
     final String iconResStr=mCursor.getString(Index.COLUMN_INDEX_ICON);
-    final int iconResId=TextUtils.isEmpty(iconResStr) ? 0 : Integer.parseInt(iconResStr);
-    return new SearchResult(title,summary,iconResId);
+    final String className=mCursor.getString(Index.COLUMN_INDEX_CLASS_NAME);
+    final String packageName=mCursor.getString(Index.COLUMN_INDEX_INTENT_ACTION_TARGET_PACKAGE);
+    Context packageContext;
+    if (TextUtils.isEmpty(className) && !TextUtils.isEmpty(packageName)) {
+      packageContext=mContextMap.get(packageName);
+      if (packageContext == null) {
+        try {
+          packageContext=mContext.createPackageContext(packageName,0);
+        }
+ catch (        PackageManager.NameNotFoundException e) {
+          Log.e(LOG_TAG,"Cannot create Context for package: " + packageName);
+          return null;
+        }
+        mContextMap.put(packageName,packageContext);
+      }
+    }
+ else {
+      packageContext=mContext;
+    }
+    final int iconResId=TextUtils.isEmpty(iconResStr) ? R.drawable.empty_icon : Integer.parseInt(iconResStr);
+    return new SearchResult(packageContext,title,summary,iconResId);
   }
   return null;
 }

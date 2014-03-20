@@ -1,0 +1,35 @@
+{
+  final ContentResolver resolver=context.getContentResolver();
+  final Cursor cursor=resolver.query(uri,projection,null,null,null);
+  if (cursor == null) {
+    Log.w(LOG_TAG,"Cannot add index data for Uri: " + uri.toString());
+    return;
+  }
+  try {
+    final int count=cursor.getCount();
+    if (count > 0) {
+      while (cursor.moveToNext()) {
+        final int rank=cursor.getInt(0);
+        final int xmlResId=cursor.getInt(1);
+        final String className=cursor.getString(2);
+        final int iconResId=cursor.getInt(3);
+        final String action=cursor.getString(4);
+        final String targetPackage=cursor.getString(5);
+        final String targetClass=cursor.getString(6);
+        SearchIndexableResource sir=new SearchIndexableResource(context);
+        sir.rank=rank;
+        sir.xmlResId=xmlResId;
+        sir.className=className;
+        sir.packageName=packageName;
+        sir.iconResId=iconResId;
+        sir.intentAction=action;
+        sir.intentTargetPackage=targetPackage;
+        sir.intentTargetClass=targetClass;
+        addIndexableData(sir);
+      }
+    }
+  }
+  finally {
+    cursor.close();
+  }
+}

@@ -1,5 +1,5 @@
 {
-  final ContentResolver resolver=context.getContentResolver();
+  final ContentResolver resolver=packageContext.getContentResolver();
   final Cursor cursor=resolver.query(uri,projection,null,null,null);
   if (cursor == null) {
     Log.w(LOG_TAG,"Cannot add index data for Uri: " + uri.toString());
@@ -16,7 +16,7 @@
         final String action=cursor.getString(4);
         final String targetPackage=cursor.getString(5);
         final String targetClass=cursor.getString(6);
-        SearchIndexableResource sir=new SearchIndexableResource(context);
+        SearchIndexableResource sir=new SearchIndexableResource(packageContext);
         sir.rank=rank;
         sir.xmlResId=xmlResId;
         sir.className=className;

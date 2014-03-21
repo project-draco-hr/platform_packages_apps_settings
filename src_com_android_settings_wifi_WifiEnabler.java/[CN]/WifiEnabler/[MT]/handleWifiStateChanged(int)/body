@@ -6,6 +6,7 @@ case WifiManager.WIFI_STATE_ENABLING:
 case WifiManager.WIFI_STATE_ENABLED:
 setSwitchChecked(true);
 mSwitch.setEnabled(true);
+updateSearchIndex(true);
 break;
 case WifiManager.WIFI_STATE_DISABLING:
 mSwitch.setEnabled(false);
@@ -13,10 +14,11 @@ break;
 case WifiManager.WIFI_STATE_DISABLED:
 setSwitchChecked(false);
 mSwitch.setEnabled(true);
+updateSearchIndex(false);
 break;
 default :
 setSwitchChecked(false);
 mSwitch.setEnabled(true);
-break;
+updateSearchIndex(false);
 }
 }

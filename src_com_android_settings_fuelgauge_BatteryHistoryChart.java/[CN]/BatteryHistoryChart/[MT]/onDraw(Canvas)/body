@@ -46,8 +46,8 @@
       canvas.drawPath(mWifiRunningPath,mWifiRunningPaint);
     }
   }
-  if (!mWakeLockPath.isEmpty()) {
-    canvas.drawPath(mWakeLockPath,mWakeLockPaint);
+  if (!mCpuRunningPath.isEmpty()) {
+    canvas.drawPath(mCpuRunningPath,mCpuRunningPaint);
   }
   if (mLargeMode) {
     if (mHavePhoneSignal) {
@@ -59,7 +59,7 @@
     if (mHaveWifi) {
       canvas.drawText(mWifiRunningLabel,textStartX,height - mWifiRunningOffset - mTextDescent,mTextPaint);
     }
-    canvas.drawText(mWakeLockLabel,textStartX,height - mWakeLockOffset - mTextDescent,mTextPaint);
+    canvas.drawText(mCpuRunningLabel,textStartX,height - mCpuRunningOffset - mTextDescent,mTextPaint);
     canvas.drawText(mChargingLabel,textStartX,height - mChargingOffset - mTextDescent,mTextPaint);
     canvas.drawText(mScreenOnLabel,textStartX,height - mScreenOnOffset - mTextDescent,mTextPaint);
     canvas.drawLine(0,mLevelBottom + (mThinLineWidth / 2),width,mLevelBottom + (mThinLineWidth / 2),mTextPaint);

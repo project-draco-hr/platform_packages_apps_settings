@@ -14,7 +14,7 @@
     mScreenOnPaint.setARGB(255,32,64,255);
     mGpsOnPaint.setARGB(255,32,64,255);
     mWifiRunningPaint.setARGB(255,32,64,255);
-    mWakeLockPaint.setARGB(255,32,64,255);
+    mCpuRunningPaint.setARGB(255,32,64,255);
   }
  else {
     mLargeMode=false;
@@ -23,7 +23,7 @@
     mScreenOnPaint.setARGB(255,0,0,255);
     mGpsOnPaint.setARGB(255,0,0,255);
     mWifiRunningPaint.setARGB(255,0,0,255);
-    mWakeLockPaint.setARGB(255,0,0,255);
+    mCpuRunningPaint.setARGB(255,0,0,255);
   }
   if (mLineWidth <= 0)   mLineWidth=1;
   mTextPaint.setStrokeWidth(mThinLineWidth);
@@ -34,13 +34,13 @@
   mScreenOnPaint.setStrokeWidth(mLineWidth);
   mGpsOnPaint.setStrokeWidth(mLineWidth);
   mWifiRunningPaint.setStrokeWidth(mLineWidth);
-  mWakeLockPaint.setStrokeWidth(mLineWidth);
+  mCpuRunningPaint.setStrokeWidth(mLineWidth);
   if (mLargeMode) {
     int barOffset=textHeight + mLineWidth;
     mChargingOffset=mLineWidth;
     mScreenOnOffset=mChargingOffset + barOffset;
-    mWakeLockOffset=mScreenOnOffset + barOffset;
-    mWifiRunningOffset=mWakeLockOffset + barOffset;
+    mCpuRunningOffset=mScreenOnOffset + barOffset;
+    mWifiRunningOffset=mCpuRunningOffset + barOffset;
     mGpsOnOffset=mWifiRunningOffset + (mHaveWifi ? barOffset : 0);
     mPhoneSignalOffset=mGpsOnOffset + (mHaveGps ? barOffset : 0);
     mLevelOffset=mPhoneSignalOffset + (mHavePhoneSignal ? barOffset : 0) + ((mLineWidth * 3) / 2);
@@ -49,7 +49,7 @@
     }
   }
  else {
-    mScreenOnOffset=mGpsOnOffset=mWifiRunningOffset=mWakeLockOffset=mLineWidth;
+    mScreenOnOffset=mGpsOnOffset=mWifiRunningOffset=mCpuRunningOffset=mLineWidth;
     mChargingOffset=mLineWidth * 2;
     mPhoneSignalOffset=0;
     mLevelOffset=mLineWidth * 3;
@@ -64,7 +64,7 @@
   mScreenOnPath.reset();
   mGpsOnPath.reset();
   mWifiRunningPath.reset();
-  mWakeLockPath.reset();
+  mCpuRunningPath.reset();
   mChargingPath.reset();
   final long timeStart=mHistStart;
   final long timeChange=mHistEnd - mHistStart;
@@ -77,7 +77,7 @@
   Path curLevelPath=null;
   Path lastLinePath=null;
   boolean lastCharging=false, lastScreenOn=false, lastGpsOn=false;
-  boolean lastWifiRunning=false, lastWakeLock=false;
+  boolean lastWifiRunning=false, lastCpuRunning=false;
   final int N=mNumHist;
   if (mStats.startIteratingHistoryLocked()) {
     final HistoryItem rec=new HistoryItem();
@@ -154,15 +154,15 @@
           }
           lastWifiRunning=wifiRunning;
         }
-        final boolean wakeLock=(rec.states & HistoryItem.STATE_WAKE_LOCK_FLAG) != 0;
-        if (wakeLock != lastWakeLock) {
-          if (wakeLock) {
-            mWakeLockPath.moveTo(x,h - mWakeLockOffset);
+        final boolean cpuRunning=(rec.states & HistoryItem.STATE_CPU_RUNNING_FLAG) != 0;
+        if (cpuRunning != lastCpuRunning) {
+          if (cpuRunning) {
+            mCpuRunningPath.moveTo(x,h - mCpuRunningOffset);
           }
  else {
-            mWakeLockPath.lineTo(x,h - mWakeLockOffset);
+            mCpuRunningPath.lineTo(x,h - mCpuRunningOffset);
           }
-          lastWakeLock=wakeLock;
+          lastCpuRunning=cpuRunning;
         }
         if (mLargeMode && mHavePhoneSignal) {
           int bin;
@@ -181,15 +181,15 @@
       }
  else       if (rec.cmd != BatteryStats.HistoryItem.CMD_OVERFLOW) {
         if (curLevelPath != null) {
-          finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastWakeLock,lastLinePath);
+          finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
           lastX=lastY=-1;
           curLevelPath=null;
           lastLinePath=null;
-          lastCharging=lastScreenOn=lastGpsOn=lastWakeLock=false;
+          lastCharging=lastScreenOn=lastGpsOn=lastCpuRunning=false;
         }
       }
       i++;
     }
   }
-  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastWakeLock,lastLinePath);
+  finishPaths(w,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
 }

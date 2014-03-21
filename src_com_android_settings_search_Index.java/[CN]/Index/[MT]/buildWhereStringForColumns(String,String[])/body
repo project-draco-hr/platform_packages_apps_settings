@@ -6,5 +6,8 @@
   sb.append(IndexColumns.LOCALE);
   sb.append(" = ");
   DatabaseUtils.appendEscapedSQLString(sb,Locale.getDefault().toString());
+  sb.append(" AND ");
+  sb.append(IndexColumns.ENABLED);
+  sb.append(" = 1");
   return sb.toString();
 }

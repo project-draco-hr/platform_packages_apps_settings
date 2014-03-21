@@ -15,7 +15,7 @@
     String title=getDataTitle(context,attrs);
     String summary=getDataSummary(context,attrs);
     String keywords=getDataKeywords(context,attrs);
-    insertOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass);
+    updateOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true);
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
       if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
         continue;
@@ -23,7 +23,7 @@
       title=getDataTitle(context,attrs);
       summary=getDataSummary(context,attrs);
       keywords=getDataKeywords(context,attrs);
-      insertOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass);
+      updateOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true);
     }
   }
  catch (  XmlPullParserException e) {

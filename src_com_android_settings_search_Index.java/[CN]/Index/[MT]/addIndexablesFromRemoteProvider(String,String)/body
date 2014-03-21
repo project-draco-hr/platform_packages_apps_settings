@@ -1,0 +1,15 @@
+{
+  final Context packageContext;
+  try {
+    packageContext=mContext.createPackageContext(packageName,0);
+    final Uri uriForResources=buildUriForXmlResources(authority);
+    addIndexablesForXmlResourceUri(packageContext,packageName,uriForResources,SearchIndexablesContract.INDEXABLES_XML_RES_COLUMNS);
+    final Uri uriForRawData=buildUriForRawData(authority);
+    addIndexablesForRawDataUri(packageContext,packageName,uriForRawData,SearchIndexablesContract.INDEXABLES_RAW_COLUMNS);
+    return true;
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    Log.w(LOG_TAG,"Could not create context for " + packageName + ": "+ Log.getStackTraceString(e));
+    return false;
+  }
+}

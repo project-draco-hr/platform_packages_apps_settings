@@ -6,6 +6,7 @@ case BluetoothAdapter.STATE_TURNING_ON:
 case BluetoothAdapter.STATE_ON:
 setChecked(true);
 mSwitch.setEnabled(true);
+updateSearchIndex(true);
 break;
 case BluetoothAdapter.STATE_TURNING_OFF:
 mSwitch.setEnabled(false);
@@ -13,9 +14,11 @@ break;
 case BluetoothAdapter.STATE_OFF:
 setChecked(false);
 mSwitch.setEnabled(true);
+updateSearchIndex(false);
 break;
 default :
 setChecked(false);
 mSwitch.setEnabled(true);
+updateSearchIndex(false);
 }
 }

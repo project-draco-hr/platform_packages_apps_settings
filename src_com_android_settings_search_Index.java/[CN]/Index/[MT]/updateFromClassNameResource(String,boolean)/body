@@ -1,0 +1,16 @@
+{
+  if (className == null) {
+    throw new IllegalArgumentException("class name cannot be null!");
+  }
+  final SearchIndexableResource res=SearchIndexableResources.getResourceByName(className);
+  if (res == null) {
+    Log.e(LOG_TAG,"Cannot find SearchIndexableResources for class name: " + className);
+    return false;
+  }
+  res.enabled=includeInSearchResults;
+  addIndexableData(res);
+  mDataToProcess.forceUpdate=true;
+  boolean result=updateInternal();
+  res.enabled=false;
+  return result;
+}

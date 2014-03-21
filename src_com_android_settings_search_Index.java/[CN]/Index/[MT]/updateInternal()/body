@@ -1,10 +1,10 @@
 {
-synchronized (mUpdateData) {
+synchronized (mDataToProcess) {
     final UpdateIndexTask task=new UpdateIndexTask();
-    task.execute(mUpdateData);
+    task.execute(mDataToProcess);
     try {
       final boolean result=task.get();
-      mUpdateData.clear();
+      mDataToProcess.clear();
       return result;
     }
  catch (    InterruptedException e) {

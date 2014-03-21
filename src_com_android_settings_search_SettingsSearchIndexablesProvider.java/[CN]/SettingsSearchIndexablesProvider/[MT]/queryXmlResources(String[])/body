@@ -1,12 +1,12 @@
 {
   MatrixCursor cursor=new MatrixCursor(INDEXABLES_XML_RES_COLUMNS);
-  final int count=INDEXABLE_REFS.length;
-  for (int n=0; n < count; n++) {
+  Collection<SearchIndexableResource> values=SearchIndexableResources.values();
+  for (  SearchIndexableResource val : values) {
     Object[] ref=new Object[7];
-    ref[0]=INDEXABLE_REFS[n].rank;
-    ref[1]=INDEXABLE_REFS[n].xmlResId;
-    ref[2]=INDEXABLE_REFS[n].className;
-    ref[3]=INDEXABLE_REFS[n].iconResId;
+    ref[0]=val.rank;
+    ref[1]=val.xmlResId;
+    ref[2]=val.className;
+    ref[3]=val.iconResId;
     ref[4]=null;
     ref[5]=null;
     ref[6]=null;

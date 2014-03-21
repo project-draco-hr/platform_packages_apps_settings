@@ -3,6 +3,7 @@
     return;
   }
   ContentValues values=new ContentValues();
+  values.put(IndexColumns.DOCID,updatedTitle.hashCode());
   values.put(IndexColumns.LOCALE,locale);
   values.put(IndexColumns.DATA_RANK,rank);
   values.put(IndexColumns.DATA_TITLE,updatedTitle);
@@ -16,5 +17,6 @@
   values.put(IndexColumns.INTENT_TARGET_PACKAGE,intentTargetPackage);
   values.put(IndexColumns.INTENT_TARGET_CLASS,intentTargetClass);
   values.put(IndexColumns.ICON,iconResId);
-  database.insertOrThrow(Tables.TABLE_PREFS_INDEX,null,values);
+  values.put(IndexColumns.ENABLED,enabled);
+  database.replaceOrThrow(Tables.TABLE_PREFS_INDEX,null,values);
 }

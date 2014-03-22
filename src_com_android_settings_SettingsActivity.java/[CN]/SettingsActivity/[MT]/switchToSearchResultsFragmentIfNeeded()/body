@@ -1,0 +1,13 @@
+{
+  if (!mIsShowingSearchResults) {
+    Fragment current=getFragmentManager().findFragmentById(R.id.prefs);
+    if (current != null && current instanceof SearchResultsSummary) {
+      mSearchResultsFragment=(SearchResultsSummary)current;
+    }
+ else {
+      String title=getString(R.string.search_results_title);
+      mSearchResultsFragment=(SearchResultsSummary)switchToFragment(SearchResultsSummary.class.getName(),null,false,true,title,true);
+    }
+    mIsShowingSearchResults=true;
+  }
+}

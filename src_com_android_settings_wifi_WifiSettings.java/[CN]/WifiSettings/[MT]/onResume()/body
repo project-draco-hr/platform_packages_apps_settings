@@ -1,8 +1,9 @@
 {
+  final Activity activity=getActivity();
   super.onResume();
   if (mWifiEnabler != null) {
-    mWifiEnabler.resume();
+    mWifiEnabler.resume(activity);
   }
-  getActivity().registerReceiver(mReceiver,mFilter);
+  activity.registerReceiver(mReceiver,mFilter);
   updateAccessPoints();
 }

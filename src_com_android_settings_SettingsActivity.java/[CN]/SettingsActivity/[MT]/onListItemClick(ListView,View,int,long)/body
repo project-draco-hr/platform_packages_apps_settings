@@ -5,5 +5,7 @@
   Object item=mHeaderAdapter.getItem(position);
   if (item instanceof Header) {
     mSelectedHeader=(Header)item;
+    onHeaderClick(mSelectedHeader);
+    revertToInitialFragment();
   }
 }

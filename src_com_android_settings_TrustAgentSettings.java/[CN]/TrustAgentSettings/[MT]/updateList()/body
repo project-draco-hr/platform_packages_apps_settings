@@ -1,0 +1,25 @@
+{
+  Context context=getActivity();
+  if (context == null) {
+    return;
+  }
+  loadActiveAgents();
+  PackageManager pm=getActivity().getPackageManager();
+  Intent trustAgentIntent=new Intent(SERVICE_INTERFACE);
+  List<ResolveInfo> resolveInfos=pm.queryIntentServices(trustAgentIntent,PackageManager.GET_META_DATA);
+  mAvailableAgents.clear();
+  mAvailableAgents.ensureCapacity(resolveInfos.size());
+  for (  ResolveInfo resolveInfo : resolveInfos) {
+    if (resolveInfo.serviceInfo == null)     continue;
+    ComponentName name=getComponentName(resolveInfo);
+    if (!mAvailableAgents.containsKey(name)) {
+      AgentInfo agentInfo=new AgentInfo();
+      agentInfo.label=resolveInfo.loadLabel(pm);
+      agentInfo.icon=resolveInfo.loadIcon(pm);
+      agentInfo.component=name;
+      agentInfo.settings=getSettingsComponentName(pm,resolveInfo);
+      mAvailableAgents.put(name,agentInfo);
+    }
+  }
+  ((BaseAdapter)getListAdapter()).notifyDataSetChanged();
+}

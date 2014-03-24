@@ -1,0 +1,8 @@
+{
+  ViewHolder vh=(ViewHolder)view.getTag();
+  AgentInfo item=mAvailableAgents.valueAt(position);
+  vh.name.setText(item.label);
+  vh.checkbox.setChecked(mActiveAgents.contains(item.component));
+  vh.agentInfo=item;
+  vh.settings.setVisibility(item.settings != null ? View.VISIBLE : View.INVISIBLE);
+}

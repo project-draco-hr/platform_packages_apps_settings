@@ -1,0 +1,24 @@
+{
+  ViewHolder h=(ViewHolder)view.getTag();
+  AgentInfo agentInfo=h.agentInfo;
+  if (view.getId() == R.id.settings) {
+    if (agentInfo.settings != null) {
+      Intent intent=new Intent();
+      intent.setComponent(agentInfo.settings);
+      intent.setAction("TODO");
+      startActivity(intent);
+    }
+  }
+ else   if (view.getId() == R.id.clickable) {
+    boolean wasActive=mActiveAgents.contains(h.agentInfo.component);
+    loadActiveAgents();
+    if (!wasActive) {
+      mActiveAgents.add(h.agentInfo.component);
+    }
+ else {
+      mActiveAgents.remove(h.agentInfo.component);
+    }
+    saveActiveAgents();
+    ((BaseAdapter)getListAdapter()).notifyDataSetChanged();
+  }
+}

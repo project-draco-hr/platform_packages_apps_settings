@@ -1,0 +1,32 @@
+{
+  int foundPackages=0;
+  PackageManager pm=getContext().getPackageManager();
+  ApplicationInfo[] appInfos=new ApplicationInfo[packageNames.length];
+  for (int i=0; i < packageNames.length; i++) {
+    try {
+      appInfos[i]=pm.getApplicationInfo(packageNames[i],0);
+      foundPackages++;
+    }
+ catch (    NameNotFoundException e) {
+    }
+  }
+  CharSequence[] applicationNames=new CharSequence[foundPackages];
+  mEntryDrawables=new Drawable[foundPackages];
+  int index=0;
+  int selectedIndex=-1;
+  for (  ApplicationInfo appInfo : appInfos) {
+    if (appInfo != null) {
+      applicationNames[index]=appInfo.loadLabel(pm);
+      mEntryDrawables[index]=appInfo.loadIcon(pm);
+      if (appInfo.packageName.contentEquals(defaultPackageName)) {
+        selectedIndex=index;
+      }
+      index++;
+    }
+  }
+  setEntries(applicationNames);
+  setEntryValues(packageNames);
+  if (selectedIndex != -1) {
+    setValueIndex(selectedIndex);
+  }
+}

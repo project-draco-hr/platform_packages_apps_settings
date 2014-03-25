@@ -1,12 +1,12 @@
 {
   LayoutInflater inflater=((Activity)getContext()).getLayoutInflater();
-  View view=inflater.inflate(R.layout.sms_preference_item,parent,false);
-  CheckedTextView checkedTextView=(CheckedTextView)view.findViewById(R.id.sms_text);
+  View view=inflater.inflate(R.layout.app_preference_item,parent,false);
+  CheckedTextView checkedTextView=(CheckedTextView)view.findViewById(R.id.app_label);
   checkedTextView.setText(getItem(position));
   if (position == mSelectedIndex) {
     checkedTextView.setChecked(true);
   }
-  ImageView imageView=(ImageView)view.findViewById(R.id.sms_image);
+  ImageView imageView=(ImageView)view.findViewById(R.id.app_image);
   imageView.setImageDrawable(mImageDrawables[position]);
   return view;
 }

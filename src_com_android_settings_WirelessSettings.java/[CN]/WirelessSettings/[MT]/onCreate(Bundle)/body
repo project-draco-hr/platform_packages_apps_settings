@@ -16,7 +16,7 @@
   CheckBoxPreference nsd=(CheckBoxPreference)findPreference(KEY_TOGGLE_NSD);
   mAirplaneModeEnabler=new AirplaneModeEnabler(activity,mAirplaneModePreference);
   mNfcEnabler=new NfcEnabler(activity,nfc,androidBeam);
-  mSmsApplicationPreference=(SmsListPreference)findPreference(KEY_SMS_APPLICATION);
+  mSmsApplicationPreference=(AppListPreference)findPreference(KEY_SMS_APPLICATION);
   mSmsApplicationPreference.setOnPreferenceChangeListener(this);
   initSmsApplicationSetting();
   getPreferenceScreen().removePreference(nsd);

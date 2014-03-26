@@ -9,6 +9,10 @@
     }
   }
   mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+  if (!mUserManager.supportsMultipleUsers() || Utils.isMonkeyRunning()) {
+    mEnabled=false;
+    return;
+  }
   addPreferencesFromResource(R.xml.user_settings);
   mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
   mMePreference=new UserPreference(getActivity(),null,UserHandle.myUserId(),mUserManager.isLinkedUser() ? null : this,null);

@@ -1,0 +1,14 @@
+{
+  super.onBindView(view);
+  ImageView icon=(ImageView)view.findViewById(android.R.id.icon);
+  icon.setImageDrawable(getIcon());
+  TextView title=(TextView)view.findViewById(android.R.id.title);
+  title.setText(getTitle());
+  ImageView settingsButton=(ImageView)view.findViewById(android.R.id.button2);
+  settingsButton.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      getContext().startActivity(mIntent);
+    }
+  }
+);
+}

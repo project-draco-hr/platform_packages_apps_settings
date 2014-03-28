@@ -1,0 +1,87 @@
+{
+  HeaderViewHolder holder;
+  Header header=getItem(position);
+  int headerType=getHeaderType(header);
+  View view=null;
+  if (convertView == null) {
+    holder=new HeaderViewHolder();
+switch (headerType) {
+case HEADER_TYPE_CATEGORY:
+      view=new TextView(getContext(),null,android.R.attr.listSeparatorTextViewStyle);
+    holder.mTitle=(TextView)view;
+  break;
+case HEADER_TYPE_SWITCH:
+view=mInflater.inflate(R.layout.preference_header_switch_item,parent,false);
+holder.mIcon=(ImageView)view.findViewById(R.id.icon);
+holder.mTitle=(TextView)view.findViewById(com.android.internal.R.id.title);
+holder.mSummary=(TextView)view.findViewById(com.android.internal.R.id.summary);
+holder.mSwitch=(Switch)view.findViewById(R.id.switchWidget);
+break;
+case HEADER_TYPE_BUTTON:
+view=mInflater.inflate(R.layout.preference_header_button_item,parent,false);
+holder.mIcon=(ImageView)view.findViewById(R.id.icon);
+holder.mTitle=(TextView)view.findViewById(com.android.internal.R.id.title);
+holder.mSummary=(TextView)view.findViewById(com.android.internal.R.id.summary);
+holder.mButton=(ImageButton)view.findViewById(R.id.buttonWidget);
+holder.mDivider=view.findViewById(R.id.divider);
+break;
+case HEADER_TYPE_NORMAL:
+view=mInflater.inflate(R.layout.preference_header_item,parent,false);
+holder.mIcon=(ImageView)view.findViewById(R.id.icon);
+holder.mTitle=(TextView)view.findViewById(com.android.internal.R.id.title);
+holder.mSummary=(TextView)view.findViewById(com.android.internal.R.id.summary);
+break;
+}
+view.setTag(holder);
+}
+ else {
+view=convertView;
+holder=(HeaderViewHolder)view.getTag();
+}
+switch (headerType) {
+case HEADER_TYPE_CATEGORY:
+holder.mTitle.setText(header.getTitle(getContext().getResources()));
+break;
+case HEADER_TYPE_SWITCH:
+if (header.id == R.id.wifi_settings) {
+mWifiEnabler.setSwitch(holder.mSwitch);
+}
+ else {
+mBluetoothEnabler.setSwitch(holder.mSwitch);
+}
+updateCommonHeaderView(header,holder);
+break;
+case HEADER_TYPE_BUTTON:
+if (header.id == R.id.security_settings) {
+boolean hasCert=DevicePolicyManager.hasAnyCaCertsInstalled();
+if (hasCert) {
+holder.mButton.setVisibility(View.VISIBLE);
+holder.mDivider.setVisibility(View.VISIBLE);
+boolean isManaged=mDevicePolicyManager.getDeviceOwner() != null;
+if (isManaged) {
+holder.mButton.setImageResource(R.drawable.ic_settings_about);
+}
+ else {
+holder.mButton.setImageResource(android.R.drawable.stat_notify_error);
+}
+holder.mButton.setOnClickListener(new View.OnClickListener(){
+@Override public void onClick(View v){
+Intent intent=new Intent(android.provider.Settings.ACTION_MONITORING_CERT_INFO);
+getContext().startActivity(intent);
+}
+}
+);
+}
+ else {
+holder.mButton.setVisibility(View.GONE);
+holder.mDivider.setVisibility(View.GONE);
+}
+}
+updateCommonHeaderView(header,holder);
+break;
+case HEADER_TYPE_NORMAL:
+updateCommonHeaderView(header,holder);
+break;
+}
+return view;
+}

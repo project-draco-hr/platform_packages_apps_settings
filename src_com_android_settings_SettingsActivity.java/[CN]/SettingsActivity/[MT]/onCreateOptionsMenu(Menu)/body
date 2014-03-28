@@ -1,0 +1,16 @@
+{
+  MenuInflater inflater=getMenuInflater();
+  inflater.inflate(R.menu.options_menu,menu);
+  final String query=mSearchQuery;
+  SearchManager searchManager=(SearchManager)getSystemService(Context.SEARCH_SERVICE);
+  mSearchView=(SearchView)menu.findItem(R.id.search).getActionView();
+  mSearchView.setOnQueryTextListener(this);
+  mSearchView.setOnCloseListener(this);
+  mSearchMenuItem=menu.findItem(R.id.search);
+  mSearchMenuItem.setOnActionExpandListener(this);
+  if (mSearchMenuItemExpanded) {
+    mSearchMenuItem.expandActionView();
+  }
+  mSearchView.setQuery(query,true);
+  return true;
+}

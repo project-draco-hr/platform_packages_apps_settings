@@ -1,0 +1,19 @@
+{
+  if (validate && !isValidFragment(fragmentName)) {
+    throw new IllegalArgumentException("Invalid fragment for this activity: " + fragmentName);
+  }
+  Fragment f=Fragment.instantiate(this,fragmentName,args);
+  FragmentTransaction transaction=getFragmentManager().beginTransaction();
+  transaction.replace(R.id.prefs,f);
+  if (withTransition) {
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+  }
+  if (addToBackStack) {
+    transaction.addToBackStack(SettingsActivity.BACK_STACK_PREFS);
+  }
+  if (title != null) {
+    transaction.setBreadCrumbTitle(title);
+  }
+  transaction.commitAllowingStateLoss();
+  return f;
+}

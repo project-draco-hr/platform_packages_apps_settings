@@ -10,51 +10,45 @@
   mHeaderAdapter=new HeaderAdapter(this,mHeaders,mAuthenticatorHelper,dpm);
   mDevelopmentPreferences=getSharedPreferences(DevelopmentSettings.PREF_FILE,Context.MODE_PRIVATE);
   getMetaData();
-  super.onCreate(savedInstanceState);
+  super.onCreate(savedState);
   setContentView(R.layout.settings_main);
   getFragmentManager().addOnBackStackChangedListener(this);
-  mActionBar=getActionBar();
-  mActionBar.setDisplayHomeAsUpEnabled(true);
-  mActionBar.setHomeButtonEnabled(true);
-  mDrawer=(ListView)findViewById(R.id.headers_drawer);
-  mDrawer.setAdapter(mHeaderAdapter);
-  mDrawer.setOnItemClickListener(new DrawerItemClickListener());
-  mDrawer.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-  mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-  mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.drawable.ic_drawer,R.string.drawer_open,R.string.drawer_close);
-  if (savedInstanceState != null) {
+  boolean displayHomeAsUpEnabled=true;
+  String initialFragmentName=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
+  Bundle initialArguments=getIntent().getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
+  if (savedState != null) {
+    mSearchMenuItemExpanded=savedState.getBoolean(SAVE_KEY_SEARCH_MENU_EXPANDED);
+    mSearchQuery=savedState.getString(SAVE_KEY_SEARCH_QUERY);
     mInitialTitle=getTitle();
-    ArrayList<Header> headers=savedInstanceState.getParcelableArrayList(SAVE_KEY_HEADERS_TAG);
+    ArrayList<Header> headers=savedState.getParcelableArrayList(SAVE_KEY_HEADERS);
     if (headers != null) {
       mHeaders.addAll(headers);
-      int curHeader=savedInstanceState.getInt(SAVE_KEY_CURRENT_HEADER_TAG,(int)HEADER_ID_UNDEFINED);
-      if (curHeader >= 0 && curHeader < mHeaders.size()) {
-        setSelectedHeader(mHeaders.get(curHeader));
-        mInitialHeader=mCurrentHeader;
-      }
       setTitleFromBackStack();
     }
   }
  else {
-    String initialFragment=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
-    Bundle initialArguments=getIntent().getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
     onBuildHeaders(mHeaders);
-    if (initialFragment != null) {
-      final int initialTitleResId=getIntent().getIntExtra(EXTRA_SHOW_FRAGMENT_TITLE,0);
-      mInitialTitle=(initialTitleResId > 0) ? getText(initialTitleResId) : getTitle();
+    if (initialFragmentName != null) {
+      final ComponentName cn=getIntent().getComponent();
+      if (!cn.getClassName().equals(SubSettings.class.getName())) {
+        displayHomeAsUpEnabled=false;
+      }
+      final String initialTitle=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT_TITLE);
+      mInitialTitle=(initialTitle != null) ? initialTitle : getTitle();
       setTitle(mInitialTitle);
-      switchToHeaderInner(initialFragment,initialArguments,true,false,mInitialTitle);
-      setSelectedHeaderById(mTopLevelHeaderId);
-      mInitialHeader=mCurrentHeader;
+      switchToFragment(initialFragmentName,initialArguments,true,false,mInitialTitle,false);
     }
  else {
+      displayHomeAsUpEnabled=false;
       if (mHeaders.size() > 0) {
-        mInitialHeader=onGetInitialHeader();
-        mInitialTitle=getHeaderTitle(mInitialHeader);
-        switchToHeader(mInitialHeader,false,true);
+        mInitialTitle=getText(R.string.dashboard_title);
+        switchToFragment(DashboardSummary.class.getName(),null,false,false,mInitialTitle,false);
       }
     }
   }
+  mActionBar=getActionBar();
+  mActionBar.setHomeButtonEnabled(true);
+  mActionBar.setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled);
   Intent intent=getIntent();
   if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_BUTTON_BAR,false)) {
     View buttonBar=findViewById(com.android.internal.R.id.button_bar);
@@ -106,8 +100,5 @@
         skipButton.setVisibility(View.VISIBLE);
       }
     }
-  }
-  if (!onIsHidingHeaders()) {
-    highlightHeader(mTopLevelHeaderId);
   }
 }

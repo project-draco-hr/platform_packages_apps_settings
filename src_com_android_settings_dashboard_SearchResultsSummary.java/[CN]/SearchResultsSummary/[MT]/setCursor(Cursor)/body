@@ -1,0 +1,9 @@
+{
+  if (mAdapter == null) {
+    return;
+  }
+  Cursor oldCursor=mAdapter.swapCursor(cursor);
+  if (oldCursor != null) {
+    oldCursor.close();
+  }
+}

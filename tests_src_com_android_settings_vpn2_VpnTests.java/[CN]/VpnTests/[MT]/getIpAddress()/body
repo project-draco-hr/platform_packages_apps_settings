@@ -1,0 +1,23 @@
+{
+  String ip=null;
+  try {
+    HttpClient httpClient=new DefaultHttpClient();
+    HttpGet httpGet=new HttpGet(EXTERNAL_SERVER);
+    HttpResponse httpResponse=httpClient.execute(httpGet);
+    Log.i(TAG,"Response from httpget: " + httpResponse.getStatusLine().toString());
+    String entityStr=EntityUtils.toString(httpResponse.getEntity());
+    JSONObject json_data=new JSONObject(entityStr);
+    ip=json_data.getString("ip");
+    Log.v(TAG,"json_data: " + ip);
+  }
+ catch (  IllegalArgumentException e) {
+    Log.e(TAG,"exception while getting external IP: " + e.toString());
+  }
+catch (  IOException e) {
+    Log.e(TAG,"IOException while getting IP: " + e.toString());
+  }
+catch (  JSONException e) {
+    Log.e(TAG,"exception while creating JSONObject: " + e.toString());
+  }
+  return ip;
+}

@@ -1,0 +1,7 @@
+{
+  mPreviousIpAddress=getIpAddress();
+  VpnInfo curVpnInfo=mVpnInfoPool.get(VpnProfile.TYPE_PPTP);
+  VpnProfile vpnProfile=curVpnInfo.getVpnProfile();
+  connect(vpnProfile);
+  validateVpnConnection(vpnProfile);
+}

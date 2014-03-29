@@ -1,0 +1,27 @@
+{
+  final long PING_TIMER=3 * 60 * 1000;
+  if (server == null || server.isEmpty()) {
+    return false;
+  }
+  long startTime=System.currentTimeMillis();
+  while ((System.currentTimeMillis() - startTime) < PING_TIMER) {
+    try {
+      Log.v(TAG,"Start ping test, ping " + server);
+      Process p=Runtime.getRuntime().exec("ping -c 10 -w 100 " + server);
+      int status=p.waitFor();
+      if (status == 0) {
+        return true;
+      }
+    }
+ catch (    UnknownHostException e) {
+      Log.e(TAG,"Ping test Fail: Unknown Host");
+    }
+catch (    IOException e) {
+      Log.e(TAG,"Ping test Fail:  IOException");
+    }
+catch (    InterruptedException e) {
+      Log.e(TAG,"Ping test Fail: InterruptedException");
+    }
+  }
+  return false;
+}

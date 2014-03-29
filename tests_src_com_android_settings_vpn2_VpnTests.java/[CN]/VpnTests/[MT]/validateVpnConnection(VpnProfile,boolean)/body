@@ -1,0 +1,18 @@
+{
+  LegacyVpnInfo legacyVpnInfo=mService.getLegacyVpnInfo();
+  Assert.assertTrue(legacyVpnInfo != null);
+  long start=System.currentTimeMillis();
+  while (((System.currentTimeMillis() - start) < MAX_CONNECTION_TIME) && (legacyVpnInfo.state != LegacyVpnInfo.STATE_CONNECTED)) {
+    Log.v(TAG,"vpn state: " + legacyVpnInfo.state);
+    sleep(10 * 1000);
+    legacyVpnInfo=mService.getLegacyVpnInfo();
+  }
+  Assert.assertTrue(legacyVpnInfo.state == LegacyVpnInfo.STATE_CONNECTED);
+  if (pingTestFlag) {
+    Assert.assertTrue(pingTest(profile.server));
+  }
+ else {
+    String curIpAddress=getIpAddress();
+    Assert.assertEquals(profile.server,curIpAddress);
+  }
+}

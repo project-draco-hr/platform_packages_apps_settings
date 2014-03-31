@@ -1,4 +1,6 @@
 {
   super.onPause();
   mSettingsObserver.unregister();
+  mActivity.getActionBar().setDisplayOptions(0,ActionBar.DISPLAY_SHOW_CUSTOM);
+  if (mSearch != null)   mSearch.setVisible(true);
 }

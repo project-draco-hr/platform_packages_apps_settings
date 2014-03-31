@@ -2,31 +2,15 @@
   super(ZenModeConfigView.this.mContext);
   setBackgroundColor(0xffffffff);
   final int p=getResources().getDimensionPixelSize(R.dimen.content_margin_left);
-  final int p2=p / 4;
-  setPadding(p2,p2,p2,p2);
-  final CheckBox cb=new CheckBox(mContext);
-  cb.setId(android.R.id.checkbox);
-  cb.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
-      if (isChecked) {
-        cb.setChecked(false);
-        notImplemented();
-      }
-    }
-  }
-);
-  LayoutParams lp=new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-  lp.addRule(ALIGN_PARENT_RIGHT);
-  addView(cb,lp);
   final TextView tv=new TextView(mContext);
   tv.setText(text);
   tv.setTypeface(LIGHT);
   tv.setTextColor(0xff000000);
   tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,tv.getTextSize() * 1.5f);
-  final int p3=p / 2;
-  tv.setPadding(p3,0,p3,0);
-  lp=new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-  lp.addRule(LEFT_OF,cb.getId());
+  LayoutParams lp=new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
   lp.addRule(CENTER_VERTICAL);
+  lp.bottomMargin=p / 2;
+  lp.topMargin=p / 2;
+  lp.leftMargin=p * 3 / 4;
   addView(tv,lp);
 }

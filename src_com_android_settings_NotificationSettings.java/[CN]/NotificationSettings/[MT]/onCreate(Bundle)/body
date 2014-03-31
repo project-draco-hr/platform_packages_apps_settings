@@ -1,7 +1,8 @@
 {
   super.onCreate(savedInstanceState);
-  final ContentResolver resolver=getActivity().getContentResolver();
-  mPM=getActivity().getPackageManager();
+  mContext=getActivity();
+  final ContentResolver resolver=mContext.getContentResolver();
+  mPM=mContext.getPackageManager();
   addPreferencesFromResource(R.xml.notification_settings);
   final PreferenceScreen root=getPreferenceScreen();
   final PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
@@ -48,4 +49,6 @@
       Log.e(TAG,Settings.System.NOTIFICATION_LIGHT_PULSE + " not found");
     }
   }
+  mAppsPreference=(PreferenceGroup)root.findPreference(KEY_APPS_CATEGORY);
+  root.removePreference(mAppsPreference);
 }

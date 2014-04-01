@@ -6,7 +6,7 @@
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && type != XmlPullParser.START_TAG) {
     }
     String nodeName=parser.getName();
-    if (!"PreferenceScreen".equals(nodeName)) {
+    if (!NODE_NAME_PREFERENCE_SCREEN.equals(nodeName)) {
       throw new RuntimeException("XML document must start with <PreferenceScreen> tag; found" + nodeName + " at "+ parser.getPositionDescription());
     }
     final int outerDepth=parser.getDepth();
@@ -15,15 +15,23 @@
     String title=getDataTitle(context,attrs);
     String summary=getDataSummary(context,attrs);
     String keywords=getDataKeywords(context,attrs);
-    updateOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true);
+    updateOneRowWithFilteredData(database,localeStr,title,summary,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true);
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
       if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
         continue;
       }
+      nodeName=parser.getName();
       title=getDataTitle(context,attrs);
-      summary=getDataSummary(context,attrs);
       keywords=getDataKeywords(context,attrs);
-      updateOneRowWithFilteredData(database,localeStr,title,summary,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true);
+      if (!nodeName.equals(NODE_NAME_CHECK_BOX_PREFERENCE)) {
+        summary=getDataSummary(context,attrs);
+        updateOneRowWithFilteredData(database,localeStr,title,summary,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true);
+      }
+ else {
+        final String summaryOn=getDataSummaryOn(context,attrs);
+        final String summaryOff=getDataSummaryOff(context,attrs);
+        updateOneRowWithFilteredData(database,localeStr,title,summaryOn,summaryOff,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true);
+      }
     }
   }
  catch (  XmlPullParserException e) {

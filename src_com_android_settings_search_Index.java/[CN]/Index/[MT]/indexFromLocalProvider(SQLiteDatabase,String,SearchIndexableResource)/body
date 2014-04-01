@@ -2,7 +2,7 @@
   try {
     final Class<?> clazz=Class.forName(sir.className);
     if (Indexable.class.isAssignableFrom(clazz)) {
-      final Field f=clazz.getField("SEARCH_INDEX_DATA_PROVIDER");
+      final Field f=clazz.getField(FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER);
       final Indexable.SearchIndexProvider provider=(Indexable.SearchIndexProvider)f.get(null);
       final List<SearchIndexableRaw> rawList=provider.getRawDataToIndex(sir.context,sir.enabled);
       if (rawList != null) {
@@ -12,7 +12,7 @@
           if (!raw.locale.toString().equalsIgnoreCase(localeStr)) {
             continue;
           }
-          updateOneRowWithFilteredData(database,localeStr,raw.title,raw.summary,sir.className,raw.screenTitle,sir.iconResId,sir.rank,raw.keywords,raw.intentAction,raw.intentTargetPackage,raw.intentTargetClass,raw.enabled);
+          updateOneRowWithFilteredData(database,localeStr,raw.title,raw.summaryOn,raw.summaryOff,sir.className,raw.screenTitle,sir.iconResId,sir.rank,raw.keywords,raw.intentAction,raw.intentTargetPackage,raw.intentTargetClass,raw.enabled);
         }
       }
       final List<SearchIndexableResource> resList=provider.getXmlResourcesToIndex(sir.context,sir.enabled);
@@ -32,9 +32,9 @@
     Log.e(LOG_TAG,"Cannot find class: " + sir.className,e);
   }
 catch (  NoSuchFieldException e) {
-    Log.e(LOG_TAG,"Cannot find field 'SEARCH_INDEX_DATA_PROVIDER'",e);
+    Log.e(LOG_TAG,"Cannot find field '" + FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER + "'",e);
   }
 catch (  IllegalAccessException e) {
-    Log.e(LOG_TAG,"Illegal access to field 'SEARCH_INDEX_DATA_PROVIDER'",e);
+    Log.e(LOG_TAG,"Illegal access to field '" + FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER + "'",e);
   }
 }

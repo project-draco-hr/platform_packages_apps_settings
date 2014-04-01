@@ -20,7 +20,12 @@
   imageView=(ImageView)view.findViewById(R.id.icon);
   SearchResult result=(SearchResult)getItem(position);
   textTitle.setText(result.title);
-  textSummary.setText(result.summary);
+  final StringBuilder sb=new StringBuilder(result.summaryOn);
+  if (!TextUtils.isEmpty(result.summaryOff)) {
+    sb.append(" | ");
+    sb.append(result.summaryOff);
+  }
+  textSummary.setText(sb.toString());
   if (result.iconResId != R.drawable.empty_icon) {
     final Context packageContext=result.context;
     final Drawable drawable;

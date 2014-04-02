@@ -1,0 +1,8 @@
+{
+  try {
+    mService.startLegacyVpn(profile);
+  }
+ catch (  IllegalStateException e) {
+    fail(String.format("start legacy vpn: %s failed: %s",profile.name,e.toString()));
+  }
+}

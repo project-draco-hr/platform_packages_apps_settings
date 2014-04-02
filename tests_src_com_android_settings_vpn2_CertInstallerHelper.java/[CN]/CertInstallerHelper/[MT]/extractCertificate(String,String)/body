@@ -1,0 +1,49 @@
+{
+  InputStream in=null;
+  final byte[] raw;
+  java.security.KeyStore keystore=null;
+  try {
+    in=new FileInputStream(new File(Environment.getExternalStorageDirectory(),certFile));
+    raw=Streams.readFully(in);
+    keystore=java.security.KeyStore.getInstance("PKCS12");
+    PasswordProtection passwordProtection=new PasswordProtection(password.toCharArray());
+    keystore.load(new ByteArrayInputStream(raw),passwordProtection.getPassword());
+    Enumeration<String> aliases=keystore.aliases();
+    if (!aliases.hasMoreElements()) {
+      Assert.fail("key store failed to put in keychain");
+    }
+    ArrayList<String> aliasesList=Collections.list(aliases);
+    Assert.assertEquals(1,aliasesList.size());
+    String alias=aliasesList.get(0);
+    java.security.KeyStore.Entry entry=keystore.getEntry(alias,passwordProtection);
+    Log.d(TAG,"extracted alias = " + alias + ", entry="+ entry.getClass());
+    if (entry instanceof PrivateKeyEntry) {
+      Assert.assertTrue(installFrom((PrivateKeyEntry)entry));
+    }
+  }
+ catch (  IOException e) {
+    Assert.fail("Failed to read certficate: " + e);
+  }
+catch (  KeyStoreException e) {
+    Log.e(TAG,"failed to extract certificate" + e);
+  }
+catch (  NoSuchAlgorithmException e) {
+    Log.e(TAG,"failed to extract certificate" + e);
+  }
+catch (  CertificateException e) {
+    Log.e(TAG,"failed to extract certificate" + e);
+  }
+catch (  UnrecoverableEntryException e) {
+    Log.e(TAG,"failed to extract certificate" + e);
+  }
+ finally {
+    if (in != null) {
+      try {
+        in.close();
+      }
+ catch (      IOException e) {
+        Log.e(TAG,"close FileInputStream error: " + e);
+      }
+    }
+  }
+}

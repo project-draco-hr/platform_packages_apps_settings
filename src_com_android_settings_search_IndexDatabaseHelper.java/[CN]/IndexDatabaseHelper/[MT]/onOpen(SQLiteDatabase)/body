@@ -3,8 +3,7 @@
   Log.i(TAG,"Using schema version: " + db.getVersion());
   if (!Build.VERSION.INCREMENTAL.equals(getBuildVersion(db))) {
     Log.w(TAG,"Index needs to be rebuilt as build-version is not the same");
-    dropTables(db);
-    bootstrapDB(db);
+    reconstruct(db);
   }
  else {
     Log.i(TAG,"Index is fine");

@@ -1,7 +1,6 @@
 {
   if (oldVersion == 100 || oldVersion == 101 || oldVersion == 102 || oldVersion == 103) {
-    Log.w(TAG,"Detected schema version 100, 101, 102 or 103. " + "Index needs to be rebuilt for schema version 104");
-    dropTables(db);
-    bootstrapDB(db);
+    Log.w(TAG,"Detected schema version '" + oldVersion + "'. "+ "Index needs to be rebuilt for schema version '"+ newVersion+ "'.");
+    reconstruct(db);
   }
 }

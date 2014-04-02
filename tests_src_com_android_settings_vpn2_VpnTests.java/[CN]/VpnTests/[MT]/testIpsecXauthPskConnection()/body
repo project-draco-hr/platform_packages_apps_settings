@@ -1,0 +1,9 @@
+{
+  VpnInfo curVpnInfo=mVpnInfoPool.get(VpnProfile.TYPE_IPSEC_XAUTH_PSK);
+  VpnProfile vpnProfile=curVpnInfo.getVpnProfile();
+  if (DEBUG) {
+    printVpnProfile(vpnProfile);
+  }
+  connect(vpnProfile);
+  validateVpnConnection(vpnProfile,true);
+}

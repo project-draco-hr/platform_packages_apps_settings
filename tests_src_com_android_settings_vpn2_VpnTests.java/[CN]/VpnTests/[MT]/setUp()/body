@@ -1,0 +1,40 @@
+{
+  super.setUp();
+  InputStream in=null;
+  InstrumentationTestRunner mRunner=(InstrumentationTestRunner)getInstrumentation();
+  mContext=mRunner.getContext();
+  Bundle arguments=mRunner.getArguments();
+  String PROFILE_NAME=arguments.getString("profile");
+  Assert.assertNotNull("Push profile to external storage and load with" + "'-e profile <filename>'",PROFILE_NAME);
+  File profileFile=new File(Environment.getExternalStorageDirectory(),PROFILE_NAME);
+  in=new FileInputStream(profileFile);
+  mVpnInfoPool=VpnProfileParser.parse(in);
+  Assert.assertNotNull("no VPN profiles are parsed",mVpnInfoPool);
+  if (DEBUG) {
+    Log.v(TAG,"print out the vpn profiles");
+    for (    Map.Entry<Integer,VpnInfo> profileEntrySet : mVpnInfoPool.entrySet()) {
+      VpnInfo vpnInfo=profileEntrySet.getValue();
+      printVpnProfile(vpnInfo.getVpnProfile());
+      if (vpnInfo.getCertificateFile() != null) {
+        Log.d(TAG,"certificate file for this vpn is " + vpnInfo.getCertificateFile());
+      }
+      if (vpnInfo.getPassword() != null) {
+        Log.d(TAG,"password for the certificate file is: " + vpnInfo.getPassword());
+      }
+    }
+  }
+  LegacyVpnInfo oldVpn=mService.getLegacyVpnInfo();
+  if (oldVpn != null) {
+    Log.v(TAG,"disconnect legacy VPN");
+    disconnect();
+    int tries=0;
+    while (tries < MAX_DISCONNECTION_TRIES && mService.getLegacyVpnInfo() != null) {
+      tries++;
+      Thread.sleep(10 * 1000);
+      Log.v(TAG,"Wait for legacy VPN to be disconnected.");
+    }
+    Assert.assertNull("Failed to disconect VPN",mService.getLegacyVpnInfo());
+    sleep(30 * 1000);
+  }
+  mCertHelper=new CertInstallerHelper();
+}

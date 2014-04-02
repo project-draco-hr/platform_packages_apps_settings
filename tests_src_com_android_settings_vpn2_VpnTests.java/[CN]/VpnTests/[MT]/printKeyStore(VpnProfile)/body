@@ -1,0 +1,23 @@
+{
+  String privateKey="";
+  String userCert="";
+  String caCert="";
+  String serverCert="";
+  if (!profile.ipsecUserCert.isEmpty()) {
+    privateKey=Credentials.USER_PRIVATE_KEY + profile.ipsecUserCert;
+    byte[] value=mKeyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecUserCert);
+    userCert=(value == null) ? null : new String(value,StandardCharsets.UTF_8);
+  }
+  if (!profile.ipsecCaCert.isEmpty()) {
+    byte[] value=mKeyStore.get(Credentials.CA_CERTIFICATE + profile.ipsecCaCert);
+    caCert=(value == null) ? null : new String(value,StandardCharsets.UTF_8);
+  }
+  if (!profile.ipsecServerCert.isEmpty()) {
+    byte[] value=mKeyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecServerCert);
+    serverCert=(value == null) ? null : new String(value,StandardCharsets.UTF_8);
+  }
+  Log.v(TAG,"privateKey: \n" + ((privateKey == null) ? "" : privateKey));
+  Log.v(TAG,"userCert: \n" + ((userCert == null) ? "" : userCert));
+  Log.v(TAG,"caCert: \n" + ((caCert == null) ? "" : caCert));
+  Log.v(TAG,"serverCert: \n" + ((serverCert == null) ? "" : serverCert));
+}

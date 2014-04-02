@@ -1,0 +1,15 @@
+{
+  try {
+    byte[] asn1EncodedBytes=cert.getExtensionValue("2.5.29.19");
+    if (asn1EncodedBytes == null) {
+      return false;
+    }
+    DEROctetString derOctetString=(DEROctetString)new ASN1InputStream(asn1EncodedBytes).readObject();
+    byte[] octets=derOctetString.getOctets();
+    ASN1Sequence sequence=(ASN1Sequence)new ASN1InputStream(octets).readObject();
+    return BasicConstraints.getInstance(sequence).isCA();
+  }
+ catch (  IOException e) {
+    return false;
+  }
+}

@@ -1,0 +1,13 @@
+{
+  mPreviousIpAddress=getIpAddress();
+  VpnInfo curVpnInfo=mVpnInfoPool.get(VpnProfile.TYPE_IPSEC_XAUTH_RSA);
+  VpnProfile vpnProfile=curVpnInfo.getVpnProfile();
+  if (DEBUG) {
+    printVpnProfile(vpnProfile);
+  }
+  String certFile=curVpnInfo.getCertificateFile();
+  String password=curVpnInfo.getPassword();
+  installCertificatesFromFile(vpnProfile,certFile,password);
+  connect(vpnProfile);
+  validateVpnConnection(vpnProfile);
+}

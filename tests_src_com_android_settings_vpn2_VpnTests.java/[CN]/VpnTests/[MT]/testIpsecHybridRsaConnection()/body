@@ -1,0 +1,10 @@
+{
+  mPreviousIpAddress=getIpAddress();
+  VpnInfo curVpnInfo=mVpnInfoPool.get(VpnProfile.TYPE_IPSEC_HYBRID_RSA);
+  VpnProfile vpnProfile=curVpnInfo.getVpnProfile();
+  if (DEBUG) {
+    printVpnProfile(vpnProfile);
+  }
+  connect(vpnProfile);
+  validateVpnConnection(vpnProfile);
+}

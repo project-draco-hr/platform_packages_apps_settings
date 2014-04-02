@@ -1,0 +1,10 @@
+{
+  if (profile == null || fileName == null || password == null) {
+    throw new Exception("vpn profile, certificate file name and password can not be null");
+  }
+  int curUid=mContext.getUserId();
+  mCertHelper.installCertificate(profile,fileName,password);
+  if (DEBUG) {
+    printKeyStore(profile);
+  }
+}

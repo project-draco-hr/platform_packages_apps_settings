@@ -3,6 +3,7 @@
     final String title=mCursor.getString(Index.COLUMN_INDEX_TITLE);
     final String summaryOn=mCursor.getString(Index.COLUMN_INDEX_SUMMARY_ON);
     final String summaryOff=mCursor.getString(Index.COLUMN_INDEX_SUMMARY_OFF);
+    final String entries=mCursor.getString(Index.COLUMN_INDEX_ENTRIES);
     final String iconResStr=mCursor.getString(Index.COLUMN_INDEX_ICON);
     final String className=mCursor.getString(Index.COLUMN_INDEX_CLASS_NAME);
     final String packageName=mCursor.getString(Index.COLUMN_INDEX_INTENT_ACTION_TARGET_PACKAGE);
@@ -24,7 +25,7 @@
       packageContext=mContext;
     }
     final int iconResId=TextUtils.isEmpty(iconResStr) ? R.drawable.empty_icon : Integer.parseInt(iconResStr);
-    return new SearchResult(packageContext,title,summaryOn,summaryOff,iconResId);
+    return new SearchResult(packageContext,title,summaryOn,summaryOff,entries,iconResId);
   }
   return null;
 }

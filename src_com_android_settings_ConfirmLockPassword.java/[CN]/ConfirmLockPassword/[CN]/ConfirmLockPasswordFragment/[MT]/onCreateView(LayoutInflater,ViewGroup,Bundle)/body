@@ -10,17 +10,17 @@
   mPasswordEntry.addTextChangedListener(this);
   mKeyboardView=(PasswordEntryKeyboardView)view.findViewById(R.id.keyboard);
   mHeaderText=(TextView)view.findViewById(R.id.headerText);
-  final boolean isAlpha=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_COMPLEX == storedQuality;
-  mHeaderText.setText(isAlpha ? R.string.lockpassword_confirm_your_password_header : R.string.lockpassword_confirm_your_pin_header);
+  mIsAlpha=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_COMPLEX == storedQuality;
+  mHeaderText.setText(getDefaultHeader());
   final Activity activity=getActivity();
   mKeyboardHelper=new PasswordEntryKeyboardHelper(activity,mKeyboardView,mPasswordEntry);
-  mKeyboardHelper.setKeyboardMode(isAlpha ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
+  mKeyboardHelper.setKeyboardMode(mIsAlpha ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
   mKeyboardView.requestFocus();
   int currentType=mPasswordEntry.getInputType();
-  mPasswordEntry.setInputType(isAlpha ? currentType : (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD));
+  mPasswordEntry.setInputType(mIsAlpha ? currentType : (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD));
   if (activity instanceof SettingsActivity) {
     final SettingsActivity sa=(SettingsActivity)activity;
-    int id=isAlpha ? R.string.lockpassword_confirm_your_password_header : R.string.lockpassword_confirm_your_pin_header;
+    int id=getDefaultHeader();
     CharSequence title=getText(id);
     sa.setTitle(title);
   }

@@ -1,5 +1,5 @@
 {
-  if (oldVersion == 100 || oldVersion == 101 || oldVersion == 102 || oldVersion == 103) {
+  if (oldVersion < DATABASE_VERSION) {
     Log.w(TAG,"Detected schema version '" + oldVersion + "'. "+ "Index needs to be rebuilt for schema version '"+ newVersion+ "'.");
     reconstruct(db);
   }

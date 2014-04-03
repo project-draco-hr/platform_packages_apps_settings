@@ -1,0 +1,17 @@
+{
+  long elapsedRealtime=SystemClock.elapsedRealtime();
+  showError(R.string.lockpattern_too_many_failed_confirmation_attempts_header,0);
+  mPasswordEntry.setEnabled(false);
+  mCountdownTimer=new CountDownTimer(elapsedRealtimeDeadline - elapsedRealtime,LockPatternUtils.FAILED_ATTEMPT_COUNTDOWN_INTERVAL_MS){
+    @Override public void onTick(    long millisUntilFinished){
+      final int secondsCountdown=(int)(millisUntilFinished / 1000);
+      mHeaderText.setText(getString(R.string.lockpattern_too_many_failed_confirmation_attempts_footer,secondsCountdown));
+    }
+    @Override public void onFinish(){
+      mPasswordEntry.setEnabled(true);
+      mHeaderText.setText(getDefaultHeader());
+      mNumWrongConfirmAttempts=0;
+    }
+  }
+.start();
+}

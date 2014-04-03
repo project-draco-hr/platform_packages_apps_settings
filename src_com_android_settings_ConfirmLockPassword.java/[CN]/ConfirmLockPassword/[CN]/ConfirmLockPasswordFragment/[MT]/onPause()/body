@@ -1,4 +1,8 @@
 {
   super.onPause();
   mKeyboardView.requestFocus();
+  if (mCountdownTimer != null) {
+    mCountdownTimer.cancel();
+    mCountdownTimer=null;
+  }
 }

@@ -1,0 +1,8 @@
+{
+  mHeaderText.setText(msg);
+  mPasswordEntry.setText(null);
+  mHandler.removeCallbacks(mResetErrorRunnable);
+  if (timeout != 0) {
+    mHandler.postDelayed(mResetErrorRunnable,timeout);
+  }
+}

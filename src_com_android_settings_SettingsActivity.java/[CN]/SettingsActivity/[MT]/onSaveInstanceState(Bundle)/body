@@ -9,6 +9,8 @@
       }
     }
   }
-  outState.putBoolean(SAVE_KEY_SEARCH_MENU_EXPANDED,mSearchMenuItem.isActionViewExpanded());
-  outState.putString(SAVE_KEY_SEARCH_QUERY,mSearchView.getQuery().toString());
+  boolean isExpanded=(mSearchMenuItem != null) && mSearchMenuItem.isActionViewExpanded();
+  outState.putBoolean(SAVE_KEY_SEARCH_MENU_EXPANDED,isExpanded);
+  String query=(mSearchView != null) ? mSearchView.getQuery().toString() : EMPTY_QUERY;
+  outState.putString(SAVE_KEY_SEARCH_QUERY,query);
 }

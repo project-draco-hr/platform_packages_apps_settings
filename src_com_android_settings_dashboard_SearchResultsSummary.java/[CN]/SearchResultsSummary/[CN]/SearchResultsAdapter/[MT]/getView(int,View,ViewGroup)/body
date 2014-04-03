@@ -20,10 +20,20 @@
   imageView=(ImageView)view.findViewById(R.id.icon);
   SearchResult result=(SearchResult)getItem(position);
   textTitle.setText(result.title);
-  final StringBuilder sb=new StringBuilder(result.summaryOn);
-  if (!TextUtils.isEmpty(result.summaryOff)) {
-    sb.append(" | ");
-    sb.append(result.summaryOff);
+  String summaryOn=result.summaryOn;
+  String summaryOff=result.summaryOff;
+  String entries=result.entries;
+  final StringBuilder sb=new StringBuilder();
+  if (!TextUtils.isEmpty(summaryOn) && !summaryOn.contains(PERCENT_RECLACE) && !summaryOn.contains(DOLLAR_REPLACE)) {
+    sb.append(summaryOn);
+    if (!TextUtils.isEmpty(summaryOff) && !summaryOff.contains(PERCENT_RECLACE) && !summaryOff.contains(DOLLAR_REPLACE)) {
+      sb.append(" \n ");
+      sb.append(summaryOff);
+    }
+  }
+  if (!TextUtils.isEmpty(entries)) {
+    sb.append(" \n ");
+    sb.append(entries);
   }
   textSummary.setText(sb.toString());
   if (result.iconResId != R.drawable.empty_icon) {

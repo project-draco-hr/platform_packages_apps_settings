@@ -1,0 +1,20 @@
+{
+  final TypedArray sa=context.obtainStyledAttributes(set,attrs);
+  final TypedValue tv=sa.peekValue(resId);
+  String[] data=null;
+  if (tv != null && tv.type == TypedValue.TYPE_REFERENCE) {
+    if (tv.resourceId != 0) {
+      data=context.getResources().getStringArray(tv.resourceId);
+    }
+  }
+  final int count=(data == null) ? 0 : data.length;
+  if (count == 0) {
+    return null;
+  }
+  final StringBuilder result=new StringBuilder();
+  for (int n=0; n < count; n++) {
+    result.append(data[n]);
+    result.append(" ");
+  }
+  return result.toString();
+}

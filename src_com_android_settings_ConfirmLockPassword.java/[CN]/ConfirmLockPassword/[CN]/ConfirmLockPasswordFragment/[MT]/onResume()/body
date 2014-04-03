@@ -1,4 +1,8 @@
 {
   super.onResume();
   mKeyboardView.requestFocus();
+  long deadline=mLockPatternUtils.getLockoutAttemptDeadline();
+  if (deadline != 0) {
+    handleAttemptLockout(deadline);
+  }
 }

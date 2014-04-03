@@ -1,12 +1,9 @@
 {
-  LockPatternUtils lockPatternUtils=new LockPatternUtils(getActivity());
-  int quality=lockPatternUtils.getActivePasswordQuality();
-  if (quality == DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK && lockPatternUtils.isLockPasswordEnabled()) {
-    quality=lockPatternUtils.getKeyguardStoredPasswordQuality();
-  }
-  if (quality < MIN_PASSWORD_QUALITY) {
-    return false;
-  }
   Resources res=getActivity().getResources();
-  return new ChooseLockSettingsHelper(getActivity(),this).launchConfirmationActivity(request,res.getText(R.string.master_clear_gesture_prompt),res.getText(R.string.master_clear_gesture_explanation));
+  ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(getActivity(),this);
+  if (helper.utils().getKeyguardStoredPasswordQuality() == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
+    showFinalConfirmation(StorageManager.CRYPT_TYPE_DEFAULT,"");
+    return true;
+  }
+  return helper.launchConfirmationActivity(request,res.getText(R.string.master_clear_gesture_prompt),res.getText(R.string.master_clear_gesture_explanation));
 }

@@ -13,7 +13,7 @@
   super.onCreate(savedState);
   setContentView(R.layout.settings_main);
   getFragmentManager().addOnBackStackChangedListener(this);
-  boolean displayHomeAsUpEnabled=true;
+  mDisplayHomeAsUpEnabled=true;
   String initialFragmentName=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
   Bundle initialArguments=getIntent().getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
   if (savedState != null) {
@@ -25,13 +25,14 @@
       mHeaders.addAll(headers);
       setTitleFromBackStack();
     }
+    mDisplayHomeAsUpEnabled=savedState.getBoolean(SAVE_KEY_SHOW_HOME_AS_UP);
   }
  else {
     onBuildHeaders(mHeaders);
     if (initialFragmentName != null) {
       final ComponentName cn=getIntent().getComponent();
       if (!cn.getClassName().equals(SubSettings.class.getName())) {
-        displayHomeAsUpEnabled=false;
+        mDisplayHomeAsUpEnabled=false;
       }
       final String initialTitle=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT_TITLE);
       mInitialTitle=(initialTitle != null) ? initialTitle : getTitle();
@@ -39,7 +40,7 @@
       switchToFragment(initialFragmentName,initialArguments,true,false,mInitialTitle,false);
     }
  else {
-      displayHomeAsUpEnabled=false;
+      mDisplayHomeAsUpEnabled=false;
       if (mHeaders.size() > 0) {
         mInitialTitle=getText(R.string.dashboard_title);
         switchToFragment(DashboardSummary.class.getName(),null,false,false,mInitialTitle,false);
@@ -48,7 +49,7 @@
   }
   mActionBar=getActionBar();
   mActionBar.setHomeButtonEnabled(true);
-  mActionBar.setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled);
+  mActionBar.setDisplayHomeAsUpEnabled(mDisplayHomeAsUpEnabled);
   Intent intent=getIntent();
   if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_BUTTON_BAR,false)) {
     View buttonBar=findViewById(com.android.internal.R.id.button_bar);

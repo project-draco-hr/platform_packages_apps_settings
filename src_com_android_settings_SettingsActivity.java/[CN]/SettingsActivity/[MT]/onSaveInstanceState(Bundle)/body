@@ -2,12 +2,6 @@
   super.onSaveInstanceState(outState);
   if (mHeaders.size() > 0) {
     outState.putParcelableArrayList(SAVE_KEY_HEADERS,mHeaders);
-    if (mCurrentHeader != null) {
-      int index=mHeaders.indexOf(mCurrentHeader);
-      if (index >= 0) {
-        outState.putInt(SAVE_KEY_CURRENT_HEADER,index);
-      }
-    }
   }
   boolean isExpanded=(mSearchMenuItem != null) && mSearchMenuItem.isActionViewExpanded();
   outState.putBoolean(SAVE_KEY_SEARCH_MENU_EXPANDED,isExpanded);

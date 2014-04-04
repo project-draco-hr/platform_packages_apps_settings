@@ -19,7 +19,9 @@
   if (savedState != null) {
     mSearchMenuItemExpanded=savedState.getBoolean(SAVE_KEY_SEARCH_MENU_EXPANDED);
     mSearchQuery=savedState.getString(SAVE_KEY_SEARCH_QUERY);
-    mInitialTitle=getTitle();
+    final String initialTitle=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT_TITLE);
+    mInitialTitle=(initialTitle != null) ? initialTitle : getTitle();
+    setTitle(mInitialTitle);
     ArrayList<Header> headers=savedState.getParcelableArrayList(SAVE_KEY_HEADERS);
     if (headers != null) {
       mHeaders.addAll(headers);

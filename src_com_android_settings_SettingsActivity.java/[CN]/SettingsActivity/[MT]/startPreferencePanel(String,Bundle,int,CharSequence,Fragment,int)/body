@@ -1,3 +1,10 @@
 {
-  switchToFragment(fragmentClass,args,resultTo,resultRequestCode,titleRes,titleText);
+  String title;
+  if (titleRes > 0) {
+    title=getString(titleRes);
+  }
+ else {
+    title=titleText.toString();
+  }
+  startWithFragment(fragmentClass,args,resultTo,resultRequestCode,title);
 }

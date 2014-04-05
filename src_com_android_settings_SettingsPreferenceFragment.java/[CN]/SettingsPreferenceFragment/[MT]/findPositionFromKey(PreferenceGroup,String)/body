@@ -1,0 +1,20 @@
+{
+  if (group != null) {
+    int count=group.getPreferenceCount();
+    for (int n=0; n < count; n++) {
+      final Preference preference=group.getPreference(n);
+      final String preferenceKey=preference.getKey();
+      if (preferenceKey != null && preferenceKey.equals(key)) {
+        return n;
+      }
+      if (preference instanceof PreferenceGroup) {
+        PreferenceGroup nestedGroup=(PreferenceGroup)preference;
+        final int nestedPosition=findPositionFromKey(nestedGroup,key);
+        if (nestedPosition >= 0) {
+          return n + 1 + nestedPosition;
+        }
+      }
+    }
+  }
+  return -1;
+}

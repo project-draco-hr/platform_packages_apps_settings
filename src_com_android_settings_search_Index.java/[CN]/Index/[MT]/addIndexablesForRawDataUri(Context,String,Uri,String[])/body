@@ -23,6 +23,7 @@
         final String action=cursor.getString(11);
         final String targetPackage=cursor.getString(12);
         final String targetClass=cursor.getString(13);
+        final String key=cursor.getString(15);
         SearchIndexableRaw data=new SearchIndexableRaw(packageContext);
         data.rank=rank;
         data.title=title;
@@ -39,6 +40,7 @@
         data.intentAction=action;
         data.intentTargetPackage=targetPackage;
         data.intentTargetClass=targetClass;
+        data.key=key;
         addIndexableData(data);
       }
     }

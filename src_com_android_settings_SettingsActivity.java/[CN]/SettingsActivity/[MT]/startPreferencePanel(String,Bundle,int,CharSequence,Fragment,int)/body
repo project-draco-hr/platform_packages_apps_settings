@@ -3,8 +3,11 @@
   if (titleRes > 0) {
     title=getString(titleRes);
   }
- else {
+ else   if (titleText != null) {
     title=titleText.toString();
+  }
+ else {
+    title="";
   }
   startWithFragment(fragmentClass,args,resultTo,resultRequestCode,title);
 }

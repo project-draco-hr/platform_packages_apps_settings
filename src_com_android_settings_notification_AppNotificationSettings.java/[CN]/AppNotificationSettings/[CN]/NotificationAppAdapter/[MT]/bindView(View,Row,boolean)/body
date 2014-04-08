@@ -1,0 +1,33 @@
+{
+  if (!(r instanceof AppRow)) {
+    TextView tv=(TextView)view;
+    tv.setText(r.section);
+    return;
+  }
+  final AppRow row=(AppRow)r;
+  final ViewHolder vh=(ViewHolder)view.getTag();
+  enableLayoutTransitions(vh.row,animate);
+  vh.rowDivider.setVisibility(row.first ? View.GONE : View.VISIBLE);
+  vh.appButton.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      showDialog(view,row);
+    }
+  }
+);
+  enableLayoutTransitions(vh.appButton,animate);
+  vh.icon.setImageDrawable(row.icon);
+  vh.banBadge.setVisibility(row.banned ? View.VISIBLE : View.GONE);
+  vh.priBadge.setVisibility(row.priority ? View.VISIBLE : View.GONE);
+  vh.title.setText(row.label);
+  final boolean showSettings=!row.banned && row.settingsIntent != null;
+  vh.settingsDivider.setVisibility(showSettings ? View.VISIBLE : View.GONE);
+  vh.settingsButton.setVisibility(showSettings ? View.VISIBLE : View.GONE);
+  vh.settingsButton.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      if (row.settingsIntent != null) {
+        getContext().startActivity(row.settingsIntent);
+      }
+    }
+  }
+);
+}

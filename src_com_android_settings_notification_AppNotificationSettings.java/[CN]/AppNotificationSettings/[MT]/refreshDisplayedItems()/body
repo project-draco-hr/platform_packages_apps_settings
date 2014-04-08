@@ -1,0 +1,28 @@
+{
+  if (DEBUG)   Log.d(TAG,"Refreshing apps...");
+  mAdapter.clear();
+synchronized (mSortedRows) {
+    String section=null;
+    final int N=mSortedRows.size();
+    boolean first=true;
+    for (int i=0; i < N; i++) {
+      final AppRow row=mSortedRows.get(i);
+      if (!row.section.equals(section)) {
+        section=row.section;
+        Row r=new Row();
+        r.section=section;
+        mAdapter.add(r);
+        first=true;
+      }
+      row.first=first;
+      mAdapter.add(row);
+      first=false;
+    }
+  }
+  if (mListViewState != null) {
+    if (DEBUG)     Log.d(TAG,"Restoring listView state");
+    getListView().onRestoreInstanceState(mListViewState);
+    mListViewState=null;
+  }
+  if (DEBUG)   Log.d(TAG,"Refreshed " + mSortedRows.size() + " displayed items");
+}

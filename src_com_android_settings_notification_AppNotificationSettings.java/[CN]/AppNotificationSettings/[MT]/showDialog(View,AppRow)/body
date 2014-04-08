@@ -1,0 +1,27 @@
+{
+  final RelativeLayout layout=(RelativeLayout)mInflater.inflate(R.layout.notification_app_dialog,null);
+  final ImageView icon=(ImageView)layout.findViewById(android.R.id.icon);
+  icon.setImageDrawable(row.icon);
+  final TextView title=(TextView)layout.findViewById(android.R.id.title);
+  title.setText(row.label);
+  final CheckBox showBox=(CheckBox)layout.findViewById(android.R.id.button1);
+  showBox.setChecked(!row.banned);
+  final OnCheckedChangeListener showListener=new OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      boolean success=mBackend.setNotificationsBanned(row.pkg,row.uid,!isChecked);
+      if (success) {
+        row.banned=!isChecked;
+        mAdapter.bindView(v,row,true);
+      }
+ else {
+        showBox.setOnCheckedChangeListener(null);
+        showBox.setChecked(!isChecked);
+        showBox.setOnCheckedChangeListener(this);
+      }
+    }
+  }
+;
+  showBox.setOnCheckedChangeListener(showListener);
+  final AlertDialog d=new AlertDialog.Builder(mContext).setView(layout).setPositiveButton(R.string.app_notifications_dialog_done,null).create();
+  d.show();
+}

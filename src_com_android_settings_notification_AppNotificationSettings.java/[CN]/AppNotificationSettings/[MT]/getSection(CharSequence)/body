@@ -1,0 +1,7 @@
+{
+  if (label == null || label.length() == 0)   return SECTION_BEFORE_A;
+  final char c=Character.toUpperCase(label.charAt(0));
+  if (c < 'A')   return SECTION_BEFORE_A;
+  if (c > 'Z')   return SECTION_AFTER_Z;
+  return Character.toString(c);
+}

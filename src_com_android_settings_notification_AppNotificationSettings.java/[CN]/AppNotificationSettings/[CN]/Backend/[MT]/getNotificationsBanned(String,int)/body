@@ -1,0 +1,11 @@
+{
+  INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+  try {
+    final boolean enabled=nm.areNotificationsEnabledForPackage(pkg,uid);
+    return !enabled;
+  }
+ catch (  Exception e) {
+    Log.w(TAG,"Error calling NoMan",e);
+    return false;
+  }
+}

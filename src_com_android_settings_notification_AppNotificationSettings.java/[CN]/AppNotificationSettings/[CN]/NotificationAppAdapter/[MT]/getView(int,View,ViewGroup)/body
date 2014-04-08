@@ -1,0 +1,12 @@
+{
+  Row r=getItem(position);
+  View v;
+  if (convertView == null) {
+    v=newView(parent,r);
+  }
+ else {
+    v=convertView;
+  }
+  bindView(v,r,false);
+  return v;
+}

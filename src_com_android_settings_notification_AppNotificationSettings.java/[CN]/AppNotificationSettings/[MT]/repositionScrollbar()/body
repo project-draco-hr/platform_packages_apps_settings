@@ -1,0 +1,8 @@
+{
+  final int sbWidthPx=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,getListView().getScrollBarSize(),getResources().getDisplayMetrics());
+  final View parent=(View)getView().getParent();
+  final int eat=Math.min(sbWidthPx,parent.getPaddingEnd());
+  if (eat <= 0)   return;
+  if (DEBUG)   Log.d(TAG,String.format("Eating %dpx into %dpx padding for %dpx scroll, ld=%d",eat,parent.getPaddingEnd(),sbWidthPx,getListView().getLayoutDirection()));
+  parent.setPaddingRelative(parent.getPaddingStart(),parent.getPaddingTop(),parent.getPaddingEnd() - eat,parent.getPaddingBottom());
+}

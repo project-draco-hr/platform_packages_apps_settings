@@ -9,13 +9,13 @@
     final int count=cursor.getCount();
     if (count > 0) {
       while (cursor.moveToNext()) {
-        final int rank=cursor.getInt(0);
-        final int xmlResId=cursor.getInt(1);
-        final String className=cursor.getString(2);
-        final int iconResId=cursor.getInt(3);
-        final String action=cursor.getString(4);
-        final String targetPackage=cursor.getString(5);
-        final String targetClass=cursor.getString(6);
+        final int rank=cursor.getInt(COLUMN_INDEX_XML_RES_RANK);
+        final int xmlResId=cursor.getInt(COLUMN_INDEX_XML_RES_RESID);
+        final String className=cursor.getString(COLUMN_INDEX_XML_RES_CLASS_NAME);
+        final int iconResId=cursor.getInt(COLUMN_INDEX_XML_RES_ICON_RESID);
+        final String action=cursor.getString(COLUMN_INDEX_XML_RES_INTENT_ACTION);
+        final String targetPackage=cursor.getString(COLUMN_INDEX_XML_RES_INTENT_TARGET_PACKAGE);
+        final String targetClass=cursor.getString(COLUMN_INDEX_XML_RES_INTENT_TARGET_CLASS);
         SearchIndexableResource sir=new SearchIndexableResource(packageContext);
         sir.rank=rank;
         sir.xmlResId=xmlResId;

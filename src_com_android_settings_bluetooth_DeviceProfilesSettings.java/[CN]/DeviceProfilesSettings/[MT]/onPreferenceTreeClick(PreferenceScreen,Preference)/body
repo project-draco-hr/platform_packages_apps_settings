@@ -3,6 +3,12 @@
   if (key.equals(KEY_UNPAIR)) {
     unpairDevice();
     finish();
+    final Context context=preference.getContext();
+    SearchIndexableRaw data=new SearchIndexableRaw(context);
+    data.title=mCachedDevice.getName();
+    data.screenTitle=context.getResources().getString(R.string.bluetooth_settings);
+    data.enabled=false;
+    Index.getInstance(context).updateFromSearchIndexableData(data);
     return true;
   }
   return super.onPreferenceTreeClick(screen,preference);

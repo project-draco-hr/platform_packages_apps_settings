@@ -16,7 +16,7 @@
     String summary=getDataSummary(context,attrs);
     String keywords=getDataKeywords(context,attrs);
     String key=getDataKey(context,attrs);
-    updateOneRowWithFilteredData(database,localeStr,title,summary,null,null,null,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
+    updateOneRowWithFilteredData(database,localeStr,title,summary,null,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
       if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
         continue;
@@ -28,21 +28,15 @@
       if (!nodeName.equals(NODE_NAME_CHECK_BOX_PREFERENCE)) {
         summary=getDataSummary(context,attrs);
         String entries=null;
-        String switchOn=null;
-        String switchOff=null;
         if (nodeName.endsWith(NODE_NAME_LIST_PREFERENCE)) {
           entries=getDataEntries(context,attrs);
         }
- else         if (nodeName.endsWith(NODE_NAME_SWITCH_PREFERENCE)) {
-          switchOn=getDataSwitchOn(context,attrs);
-          switchOff=getDataSwitchOff(context,attrs);
-        }
-        updateOneRowWithFilteredData(database,localeStr,title,summary,null,entries,switchOn,switchOff,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
+        updateOneRowWithFilteredData(database,localeStr,title,summary,null,entries,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
       }
  else {
         final String summaryOn=getDataSummaryOn(context,attrs);
         final String summaryOff=getDataSummaryOff(context,attrs);
-        updateOneRowWithFilteredData(database,localeStr,title,summaryOn,summaryOff,null,null,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
+        updateOneRowWithFilteredData(database,localeStr,title,summaryOn,summaryOff,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
       }
     }
   }

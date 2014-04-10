@@ -4,9 +4,10 @@
     return;
   }
   if (resultCode == Activity.RESULT_OK && data != null) {
+    int type=data.getIntExtra(ChooseLockSettingsHelper.EXTRA_KEY_TYPE,-1);
     String password=data.getStringExtra(ChooseLockSettingsHelper.EXTRA_KEY_PASSWORD);
     if (!TextUtils.isEmpty(password)) {
-      showFinalConfirmation(password);
+      showFinalConfirmation(type,password);
     }
   }
 }

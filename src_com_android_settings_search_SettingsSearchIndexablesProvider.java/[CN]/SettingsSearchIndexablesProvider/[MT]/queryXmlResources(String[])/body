@@ -3,13 +3,13 @@
   Collection<SearchIndexableResource> values=SearchIndexableResources.values();
   for (  SearchIndexableResource val : values) {
     Object[] ref=new Object[7];
-    ref[0]=val.rank;
-    ref[1]=val.xmlResId;
-    ref[2]=val.className;
-    ref[3]=val.iconResId;
-    ref[4]=null;
-    ref[5]=null;
-    ref[6]=null;
+    ref[COLUMN_INDEX_XML_RES_RANK]=val.rank;
+    ref[COLUMN_INDEX_XML_RES_RESID]=val.xmlResId;
+    ref[COLUMN_INDEX_XML_RES_CLASS_NAME]=val.className;
+    ref[COLUMN_INDEX_XML_RES_ICON_RESID]=val.iconResId;
+    ref[COLUMN_INDEX_XML_RES_INTENT_ACTION]=null;
+    ref[COLUMN_INDEX_XML_RES_INTENT_TARGET_PACKAGE]=null;
+    ref[COLUMN_INDEX_XML_RES_INTENT_TARGET_CLASS]=null;
     cursor.addRow(ref);
   }
   return cursor;

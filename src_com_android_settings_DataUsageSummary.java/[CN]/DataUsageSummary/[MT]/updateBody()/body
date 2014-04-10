@@ -12,11 +12,9 @@
  else {
     mListView.setVisibility(View.VISIBLE);
   }
-  final boolean tabChanged=!currentTab.equals(mCurrentTab);
   mCurrentTab=currentTab;
   if (LOGD)   Log.d(TAG,"updateBody() with currentTab=" + currentTab);
   mDataEnabledView.setVisibility(isOwner ? View.VISIBLE : View.GONE);
-  final TelephonyManager tele=TelephonyManager.from(context);
   if (TAB_MOBILE.equals(currentTab)) {
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_mobile);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_mobile_limit);

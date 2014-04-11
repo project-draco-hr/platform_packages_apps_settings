@@ -1,0 +1,34 @@
+{
+  final List<SearchIndexableRaw> result=new ArrayList<SearchIndexableRaw>();
+  final Resources res=context.getResources();
+  final String screenTitle=res.getString(R.string.security_settings_title);
+  SearchIndexableRaw data;
+  if (!mIsPrimary) {
+    int resId=(UserManager.get(context).isLinkedUser()) ? R.string.profile_info_settings_title : R.string.user_info_settings_title;
+    data=new SearchIndexableRaw(context);
+    data.title=res.getString(resId);
+    data.screenTitle=screenTitle;
+    result.add(data);
+  }
+  LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
+  if (!ActivityManager.isLowRamDeviceStatic() && !lockPatternUtils.isLockScreenDisabled()) {
+    DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+    final boolean disabled=(0 != (dpm.getKeyguardDisabledFeatures(null) & DevicePolicyManager.KEYGUARD_DISABLE_WIDGETS_ALL));
+    if (disabled) {
+      data=new SearchIndexableRaw(context);
+      data.title=res.getString(R.string.security_enable_widgets_disabled_summary);
+      data.screenTitle=screenTitle;
+      result.add(data);
+    }
+  }
+  final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
+    KeyStore keyStore=KeyStore.getInstance();
+    final int storageSummaryRes=keyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware : R.string.credential_storage_type_software;
+    data=new SearchIndexableRaw(context);
+    data.title=res.getString(storageSummaryRes);
+    data.screenTitle=screenTitle;
+    result.add(data);
+  }
+  return result;
+}

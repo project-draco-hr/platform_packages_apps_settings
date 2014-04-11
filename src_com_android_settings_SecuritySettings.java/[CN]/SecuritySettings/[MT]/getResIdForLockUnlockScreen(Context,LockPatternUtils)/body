@@ -1,0 +1,33 @@
+{
+  int resid=0;
+  if (!lockPatternUtils.isSecure()) {
+    UserManager mUm=(UserManager)context.getSystemService(Context.USER_SERVICE);
+    List<UserInfo> users=mUm.getUsers(true);
+    final boolean singleUser=users.size() == 1;
+    if (singleUser && lockPatternUtils.isLockScreenDisabled()) {
+      resid=R.xml.security_settings_lockscreen;
+    }
+ else {
+      resid=R.xml.security_settings_chooser;
+    }
+  }
+ else   if (lockPatternUtils.usingBiometricWeak() && lockPatternUtils.isBiometricWeakInstalled()) {
+    resid=R.xml.security_settings_biometric_weak;
+  }
+ else {
+switch (lockPatternUtils.getKeyguardStoredPasswordQuality()) {
+case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
+      resid=R.xml.security_settings_pattern;
+    break;
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+  resid=R.xml.security_settings_pin;
+break;
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
+resid=R.xml.security_settings_password;
+break;
+}
+}
+return resid;
+}

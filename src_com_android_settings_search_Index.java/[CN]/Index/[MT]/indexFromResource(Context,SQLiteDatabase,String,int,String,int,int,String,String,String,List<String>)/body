@@ -12,19 +12,27 @@
     final int outerDepth=parser.getDepth();
     final AttributeSet attrs=Xml.asAttributeSet(parser);
     final String screenTitle=getDataTitle(context,attrs);
-    String title=getDataTitle(context,attrs);
-    String summary=getDataSummary(context,attrs);
-    String keywords=getDataKeywords(context,attrs);
     String key=getDataKey(context,attrs);
-    updateOneRowWithFilteredData(database,localeStr,title,summary,null,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
+    String title;
+    String summary;
+    String keywords;
+    if (!doNotIndexKeys.contains(key)) {
+      title=getDataTitle(context,attrs);
+      summary=getDataSummary(context,attrs);
+      keywords=getDataKeywords(context,attrs);
+      updateOneRowWithFilteredData(database,localeStr,title,summary,null,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
+    }
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
       if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
         continue;
       }
       nodeName=parser.getName();
+      key=getDataKey(context,attrs);
+      if (doNotIndexKeys.contains(key)) {
+        continue;
+      }
       title=getDataTitle(context,attrs);
       keywords=getDataKeywords(context,attrs);
-      key=getDataKey(context,attrs);
       if (!nodeName.equals(NODE_NAME_CHECK_BOX_PREFERENCE)) {
         summary=getDataSummary(context,attrs);
         String entries=null;

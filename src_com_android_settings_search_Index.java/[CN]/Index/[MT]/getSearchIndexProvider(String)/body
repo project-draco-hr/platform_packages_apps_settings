@@ -1,0 +1,19 @@
+{
+  try {
+    final Class<?> clazz=Class.forName(className);
+    if (Indexable.class.isAssignableFrom(clazz)) {
+      final Field f=clazz.getField(FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER);
+      return (Indexable.SearchIndexProvider)f.get(null);
+    }
+  }
+ catch (  ClassNotFoundException e) {
+    Log.e(LOG_TAG,"Cannot find class: " + className,e);
+  }
+catch (  NoSuchFieldException e) {
+    Log.e(LOG_TAG,"Cannot find field '" + FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER + "'",e);
+  }
+catch (  IllegalAccessException e) {
+    Log.e(LOG_TAG,"Illegal access to field '" + FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER + "'",e);
+  }
+  return null;
+}

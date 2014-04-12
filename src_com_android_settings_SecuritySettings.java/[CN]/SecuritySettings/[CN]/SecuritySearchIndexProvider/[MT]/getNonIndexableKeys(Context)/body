@@ -1,0 +1,20 @@
+{
+  final List<String> keys=new ArrayList<String>();
+  LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
+  int resId=getResIdForLockUnlockScreen(context,lockPatternUtils);
+  if (resId == R.xml.security_settings_biometric_weak && lockPatternUtils.getKeyguardStoredPasswordQuality() != DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
+    keys.add(KEY_VISIBLE_PATTERN);
+  }
+  TelephonyManager tm=TelephonyManager.getDefault();
+  if (!mIsPrimary || !tm.hasIccCard()) {
+    keys.add(KEY_SIM_LOCK);
+  }
+  if (ActivityManager.isLowRamDeviceStatic() || lockPatternUtils.isLockScreenDisabled()) {
+    keys.add(KEY_ENABLE_WIDGETS);
+  }
+  final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  if (um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
+    keys.add(KEY_CREDENTIALS_MANAGER);
+  }
+  return keys;
+}

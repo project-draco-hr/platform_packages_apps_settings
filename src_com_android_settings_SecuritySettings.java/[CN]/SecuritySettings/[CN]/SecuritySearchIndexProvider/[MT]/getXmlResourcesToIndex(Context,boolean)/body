@@ -1,0 +1,26 @@
+{
+  List<SearchIndexableResource> result=new ArrayList<SearchIndexableResource>();
+  LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
+  int resId=getResIdForLockUnlockScreen(context,lockPatternUtils);
+  SearchIndexableResource sir=new SearchIndexableResource(context);
+  sir.xmlResId=resId;
+  result.add(sir);
+  if (mIsPrimary) {
+    DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+switch (dpm.getStorageEncryptionStatus()) {
+case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
+      resId=R.xml.security_settings_encrypted;
+    break;
+case DevicePolicyManager.ENCRYPTION_STATUS_INACTIVE:
+  resId=R.xml.security_settings_unencrypted;
+break;
+}
+sir=new SearchIndexableResource(context);
+sir.xmlResId=resId;
+result.add(sir);
+}
+sir=new SearchIndexableResource(context);
+sir.xmlResId=R.xml.security_settings_misc;
+result.add(sir);
+return result;
+}

@@ -1,0 +1,22 @@
+{
+  final ContentResolver resolver=packageContext.getContentResolver();
+  final Cursor cursor=resolver.query(uri,projection,null,null,null);
+  if (cursor == null) {
+    Log.w(LOG_TAG,"Cannot add index data for Uri: " + uri.toString());
+    return EMPTY_LIST;
+  }
+  List<String> result=new ArrayList<String>();
+  try {
+    final int count=cursor.getCount();
+    if (count > 0) {
+      while (cursor.moveToNext()) {
+        final String key=cursor.getString(COLUMN_INDEX_NON_INDEXABLE_KEYS_KEY_VALUE);
+        result.add(key);
+      }
+    }
+    return result;
+  }
+  finally {
+    cursor.close();
+  }
+}

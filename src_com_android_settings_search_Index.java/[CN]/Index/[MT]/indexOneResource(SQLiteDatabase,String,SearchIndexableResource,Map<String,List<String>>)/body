@@ -1,0 +1,24 @@
+{
+  if (sir == null) {
+    Log.e(LOG_TAG,"Cannot index a null resource!");
+    return;
+  }
+  final Indexable.SearchIndexProvider provider=TextUtils.isEmpty(sir.className) ? null : getSearchIndexProvider(sir.className);
+  List<String> nonIndexableKeys=new ArrayList<String>();
+  if (sir.xmlResId > SearchIndexableResources.NO_DATA_RES_ID) {
+    List<String> resNonIndxableKeys=nonIndexableKeysFromResource.get(sir.packageName);
+    if (resNonIndxableKeys != null && resNonIndxableKeys.size() > 0) {
+      nonIndexableKeys.addAll(resNonIndxableKeys);
+    }
+    indexFromResource(sir.context,database,localeStr,sir.xmlResId,sir.className,sir.iconResId,sir.rank,sir.intentAction,sir.intentTargetPackage,sir.intentTargetClass,nonIndexableKeys);
+  }
+ else   if (!TextUtils.isEmpty(sir.className)) {
+    if (provider != null) {
+      List<String> providerNonIndexableKeys=provider.getNonIndexableKeys(sir.context);
+      if (providerNonIndexableKeys != null && providerNonIndexableKeys.size() > 0) {
+        nonIndexableKeys.addAll(providerNonIndexableKeys);
+      }
+    }
+    indexFromLocalProvider(mContext,database,localeStr,provider,sir.className,sir.iconResId,sir.rank,sir.enabled,nonIndexableKeys);
+  }
+}

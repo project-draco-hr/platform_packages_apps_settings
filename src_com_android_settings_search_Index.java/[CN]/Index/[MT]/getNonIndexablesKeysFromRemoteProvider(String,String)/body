@@ -1,0 +1,11 @@
+{
+  try {
+    final Context packageContext=mContext.createPackageContext(packageName,0);
+    final Uri uriForNonIndexableKeys=buildUriForNonIndexableKeys(authority);
+    return getNonIndexablesKeys(packageContext,uriForNonIndexableKeys,SearchIndexablesContract.NON_INDEXABLES_KEYS_COLUMNS);
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    Log.w(LOG_TAG,"Could not create context for " + packageName + ": "+ Log.getStackTraceString(e));
+    return EMPTY_LIST;
+  }
+}

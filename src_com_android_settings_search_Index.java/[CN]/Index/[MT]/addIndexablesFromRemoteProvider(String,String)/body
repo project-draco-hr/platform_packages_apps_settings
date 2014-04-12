@@ -1,7 +1,6 @@
 {
-  final Context packageContext;
   try {
-    packageContext=mContext.createPackageContext(packageName,0);
+    final Context packageContext=mContext.createPackageContext(packageName,0);
     final Uri uriForResources=buildUriForXmlResources(authority);
     addIndexablesForXmlResourceUri(packageContext,packageName,uriForResources,SearchIndexablesContract.INDEXABLES_XML_RES_COLUMNS);
     final Uri uriForRawData=buildUriForRawData(authority);

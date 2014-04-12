@@ -3,7 +3,6 @@
     Log.w(LOG_TAG,"Cannot find provider: " + className);
     return;
   }
-  final List<String> doNotIndexKeys=provider.getNonIndexableKeys(context);
   final List<SearchIndexableRaw> rawList=provider.getRawDataToIndex(context,enabled);
   if (rawList != null) {
     final int rawSize=rawList.size();
@@ -12,7 +11,7 @@
       if (!raw.locale.toString().equalsIgnoreCase(localeStr)) {
         continue;
       }
-      if (doNotIndexKeys.contains(raw.key)) {
+      if (nonIndexableKeys.contains(raw.key)) {
         continue;
       }
       updateOneRowWithFilteredData(database,localeStr,raw.title,raw.summaryOn,raw.summaryOff,raw.entries,className,raw.screenTitle,iconResId,rank,raw.keywords,raw.intentAction,raw.intentTargetPackage,raw.intentTargetClass,raw.enabled,raw.key);
@@ -29,7 +28,7 @@
       final int itemIconResId=(item.iconResId == 0) ? iconResId : item.iconResId;
       final int itemRank=(item.rank == 0) ? rank : item.rank;
       String itemClassName=(TextUtils.isEmpty(item.className)) ? className : item.className;
-      indexFromResource(context,database,localeStr,item.xmlResId,itemClassName,itemIconResId,itemRank,item.intentAction,item.intentTargetPackage,item.intentTargetClass,doNotIndexKeys);
+      indexFromResource(context,database,localeStr,item.xmlResId,itemClassName,itemIconResId,itemRank,item.intentAction,item.intentTargetPackage,item.intentTargetClass,nonIndexableKeys);
     }
   }
 }

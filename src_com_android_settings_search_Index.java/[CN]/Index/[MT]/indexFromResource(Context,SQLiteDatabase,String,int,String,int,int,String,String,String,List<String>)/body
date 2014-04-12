@@ -16,7 +16,7 @@
     String title;
     String summary;
     String keywords;
-    if (!doNotIndexKeys.contains(key)) {
+    if (!nonIndexableKeys.contains(key)) {
       title=getDataTitle(context,attrs);
       summary=getDataSummary(context,attrs);
       keywords=getDataKeywords(context,attrs);
@@ -28,7 +28,7 @@
       }
       nodeName=parser.getName();
       key=getDataKey(context,attrs);
-      if (doNotIndexKeys.contains(key)) {
+      if (nonIndexableKeys.contains(key)) {
         continue;
       }
       title=getDataTitle(context,attrs);

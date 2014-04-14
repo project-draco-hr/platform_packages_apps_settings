@@ -1,0 +1,20 @@
+{
+  if (!mAccessibilityServices.contains(packageName)) {
+    Intent intent=ACCESSIBILITY_SERVICE_INTENT;
+    intent.setPackage(packageName);
+    if (!mContext.getPackageManager().queryIntentServices(intent,0).isEmpty()) {
+      mAccessibilityServices.add(packageName);
+      Index.getInstance(mContext).updateFromClassNameResource(AccessibilitySettings.class.getName(),false,true);
+    }
+    intent.setPackage(null);
+  }
+  if (!mPrintServices.contains(packageName)) {
+    Intent intent=PRINT_SERVICE_INTENT;
+    intent.setPackage(packageName);
+    if (!mContext.getPackageManager().queryIntentServices(intent,0).isEmpty()) {
+      mPrintServices.add(packageName);
+      Index.getInstance(mContext).updateFromClassNameResource(PrintSettingsFragment.class.getName(),false,true);
+    }
+    intent.setPackage(null);
+  }
+}

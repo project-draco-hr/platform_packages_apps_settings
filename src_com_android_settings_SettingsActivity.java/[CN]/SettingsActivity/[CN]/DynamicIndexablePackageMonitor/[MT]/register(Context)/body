@@ -1,0 +1,18 @@
+{
+  mContext=context;
+  AccessibilityManager accessibilityManager=(AccessibilityManager)mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
+  List<AccessibilityServiceInfo> accessibilityServices=accessibilityManager.getInstalledAccessibilityServiceList();
+  final int accessibilityServiceCount=accessibilityServices.size();
+  for (int i=0; i < accessibilityServiceCount; i++) {
+    AccessibilityServiceInfo accessibilityService=accessibilityServices.get(i);
+    mAccessibilityServices.add(accessibilityService.getResolveInfo().serviceInfo.packageName);
+  }
+  PrintManager printManager=(PrintManager)mContext.getSystemService(Context.PRINT_SERVICE);
+  List<PrintServiceInfo> printServices=printManager.getInstalledPrintServices();
+  final int serviceCount=printServices.size();
+  for (int i=0; i < serviceCount; i++) {
+    PrintServiceInfo printService=printServices.get(i);
+    mPrintServices.add(printService.getResolveInfo().serviceInfo.packageName);
+  }
+  register(context,Looper.getMainLooper(),UserHandle.CURRENT,false);
+}

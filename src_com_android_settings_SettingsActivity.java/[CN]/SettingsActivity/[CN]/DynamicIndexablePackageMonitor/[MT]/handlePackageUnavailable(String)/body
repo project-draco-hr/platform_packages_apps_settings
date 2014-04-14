@@ -1,0 +1,12 @@
+{
+  final int accessibilityIndex=mAccessibilityServices.indexOf(packageName);
+  if (accessibilityIndex >= 0) {
+    mAccessibilityServices.remove(accessibilityIndex);
+    Index.getInstance(mContext).updateFromClassNameResource(AccessibilitySettings.class.getName(),true,true);
+  }
+  final int printIndex=mPrintServices.indexOf(packageName);
+  if (printIndex >= 0) {
+    mPrintServices.remove(printIndex);
+    Index.getInstance(mContext).updateFromClassNameResource(PrintSettingsFragment.class.getName(),true,true);
+  }
+}

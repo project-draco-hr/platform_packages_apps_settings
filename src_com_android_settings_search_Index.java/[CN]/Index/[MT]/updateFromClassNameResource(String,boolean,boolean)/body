@@ -8,6 +8,9 @@
     return false;
   }
   res.enabled=includeInSearchResults;
+  if (rebuild) {
+    deleteIndexableData(res);
+  }
   addIndexableData(res);
   mDataToProcess.forceUpdate=true;
   boolean result=updateInternal();

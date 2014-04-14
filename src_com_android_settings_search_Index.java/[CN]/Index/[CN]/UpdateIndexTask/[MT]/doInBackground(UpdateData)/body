@@ -8,11 +8,11 @@
   final String localeStr=Locale.getDefault().toString();
   try {
     database.beginTransaction();
-    if (dataToUpdate.size() > 0) {
-      processDataToUpdate(database,localeStr,dataToUpdate,nonIndexableKeys,forceUpdate);
-    }
     if (dataToDelete.size() > 0) {
       processDataToDelete(database,localeStr,dataToDelete);
+    }
+    if (dataToUpdate.size() > 0) {
+      processDataToUpdate(database,localeStr,dataToUpdate,nonIndexableKeys,forceUpdate);
     }
     database.setTransactionSuccessful();
     result=true;

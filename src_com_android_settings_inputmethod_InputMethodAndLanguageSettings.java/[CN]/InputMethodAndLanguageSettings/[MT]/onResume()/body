@@ -4,31 +4,8 @@
   mIm.registerInputDeviceListener(this,null);
   if (!mIsOnlyImeSettings) {
     if (mLanguagePref != null) {
-      Configuration conf=getResources().getConfiguration();
-      String language=conf.locale.getLanguage();
-      String localeString;
-      if (language.equals("zz")) {
-        String country=conf.locale.getCountry();
-        if (country.equals("ZZ")) {
-          localeString="[Developer] Accented English (zz_ZZ)";
-        }
- else         if (country.equals("ZY")) {
-          localeString="[Developer] Fake Bi-Directional (zz_ZY)";
-        }
- else {
-          localeString="";
-        }
-      }
- else       if (hasOnlyOneLanguageInstance(language,Resources.getSystem().getAssets().getLocales())) {
-        localeString=conf.locale.getDisplayLanguage(conf.locale);
-      }
- else {
-        localeString=conf.locale.getDisplayName(conf.locale);
-      }
-      if (localeString.length() > 1) {
-        localeString=Character.toUpperCase(localeString.charAt(0)) + localeString.substring(1);
-        mLanguagePref.setSummary(localeString);
-      }
+      String localeName=getLocaleName(getResources());
+      mLanguagePref.setSummary(localeName);
     }
     updateUserDictionaryPreference(findPreference(KEY_USER_DICTIONARY_SETTINGS));
     if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {

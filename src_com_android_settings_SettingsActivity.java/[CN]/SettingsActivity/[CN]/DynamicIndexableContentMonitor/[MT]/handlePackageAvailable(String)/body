@@ -17,4 +17,13 @@
     }
     intent.setPackage(null);
   }
+  if (!mImeServices.contains(packageName)) {
+    Intent intent=IME_SERVICE_INTENT;
+    intent.setPackage(packageName);
+    if (!mContext.getPackageManager().queryIntentServices(intent,0).isEmpty()) {
+      mImeServices.add(packageName);
+      Index.getInstance(mContext).updateFromClassNameResource(InputMethodAndLanguageSettings.class.getName(),false,true);
+    }
+    intent.setPackage(null);
+  }
 }

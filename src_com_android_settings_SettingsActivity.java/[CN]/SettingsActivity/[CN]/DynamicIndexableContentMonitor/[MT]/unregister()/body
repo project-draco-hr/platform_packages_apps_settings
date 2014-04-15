@@ -1,0 +1,9 @@
+{
+  super.unregister();
+  InputManager inputManager=(InputManager)mContext.getSystemService(Context.INPUT_SERVICE);
+  inputManager.unregisterInputDeviceListener(this);
+  mContext.getContentResolver().unregisterContentObserver(mContentObserver);
+  mAccessibilityServices.clear();
+  mPrintServices.clear();
+  mImeServices.clear();
+}

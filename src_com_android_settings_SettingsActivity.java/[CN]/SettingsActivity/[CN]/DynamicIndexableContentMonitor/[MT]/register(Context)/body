@@ -14,5 +14,15 @@
     PrintServiceInfo printService=printServices.get(i);
     mPrintServices.add(printService.getResolveInfo().serviceInfo.packageName);
   }
+  InputMethodManager imeManager=(InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+  List<InputMethodInfo> inputMethods=imeManager.getInputMethodList();
+  final int inputMethodCount=inputMethods.size();
+  for (int i=0; i < inputMethodCount; i++) {
+    InputMethodInfo inputMethod=inputMethods.get(i);
+    mImeServices.add(inputMethod.getServiceInfo().packageName);
+  }
+  mContext.getContentResolver().registerContentObserver(UserDictionary.Words.CONTENT_URI,true,mContentObserver);
+  InputManager inputManager=(InputManager)context.getSystemService(Context.INPUT_SERVICE);
+  inputManager.registerInputDeviceListener(this,mHandler);
   register(context,Looper.getMainLooper(),UserHandle.CURRENT,false);
 }

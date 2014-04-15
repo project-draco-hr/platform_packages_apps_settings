@@ -1,0 +1,27 @@
+{
+  Configuration conf=resources.getConfiguration();
+  String language=conf.locale.getLanguage();
+  String localeName;
+  if (language.equals("zz")) {
+    String country=conf.locale.getCountry();
+    if (country.equals("ZZ")) {
+      localeName="[Developer] Accented English (zz_ZZ)";
+    }
+ else     if (country.equals("ZY")) {
+      localeName="[Developer] Fake Bi-Directional (zz_ZY)";
+    }
+ else {
+      localeName="";
+    }
+  }
+ else   if (hasOnlyOneLanguageInstance(language,Resources.getSystem().getAssets().getLocales())) {
+    localeName=conf.locale.getDisplayLanguage(conf.locale);
+  }
+ else {
+    localeName=conf.locale.getDisplayName(conf.locale);
+  }
+  if (localeName.length() > 1) {
+    localeName=Character.toUpperCase(localeName.charAt(0)) + localeName.substring(1);
+  }
+  return localeName;
+}

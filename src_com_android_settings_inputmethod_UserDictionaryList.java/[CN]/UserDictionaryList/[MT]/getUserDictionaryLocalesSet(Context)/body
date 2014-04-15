@@ -1,18 +1,23 @@
 {
-  @SuppressWarnings("deprecation") final Cursor cursor=activity.managedQuery(UserDictionary.Words.CONTENT_URI,new String[]{UserDictionary.Words.LOCALE},null,null,null);
+  final Cursor cursor=context.getContentResolver().query(UserDictionary.Words.CONTENT_URI,new String[]{UserDictionary.Words.LOCALE},null,null,null);
   final TreeSet<String> localeSet=new TreeSet<String>();
   if (null == cursor) {
     return null;
   }
- else   if (cursor.moveToFirst()) {
-    final int columnIndex=cursor.getColumnIndex(UserDictionary.Words.LOCALE);
-    do {
-      final String locale=cursor.getString(columnIndex);
-      localeSet.add(null != locale ? locale : "");
-    }
+  try {
+    if (cursor.moveToFirst()) {
+      final int columnIndex=cursor.getColumnIndex(UserDictionary.Words.LOCALE);
+      do {
+        final String locale=cursor.getString(columnIndex);
+        localeSet.add(null != locale ? locale : "");
+      }
  while (cursor.moveToNext());
+    }
   }
-  final InputMethodManager imm=(InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+  finally {
+    cursor.close();
+  }
+  final InputMethodManager imm=(InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
   final List<InputMethodInfo> imis=imm.getEnabledInputMethodList();
   for (  final InputMethodInfo imi : imis) {
     final List<InputMethodSubtype> subtypes=imm.getEnabledInputMethodSubtypeList(imi,true);

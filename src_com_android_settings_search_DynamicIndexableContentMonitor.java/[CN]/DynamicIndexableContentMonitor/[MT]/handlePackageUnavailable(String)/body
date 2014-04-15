@@ -9,4 +9,9 @@
     mPrintServices.remove(printIndex);
     Index.getInstance(mContext).updateFromClassNameResource(PrintSettingsFragment.class.getName(),true,true);
   }
+  final int imeIndex=mImeServices.indexOf(packageName);
+  if (imeIndex >= 0) {
+    mImeServices.remove(imeIndex);
+    Index.getInstance(mContext).updateFromClassNameResource(InputMethodAndLanguageSettings.class.getName(),true,true);
+  }
 }

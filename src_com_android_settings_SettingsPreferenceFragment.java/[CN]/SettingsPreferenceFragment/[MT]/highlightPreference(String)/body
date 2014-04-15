@@ -1,0 +1,31 @@
+{
+  final int position=findPositionFromKey(key);
+  if (position >= 0) {
+    final ListView listView=getListView();
+    final ListAdapter adapter=listView.getAdapter();
+    if (adapter instanceof PreferenceGroupAdapter) {
+      final Drawable drawable=getHighlightDrawable();
+      ((PreferenceGroupAdapter)adapter).setHighlightedDrawable(drawable);
+      ((PreferenceGroupAdapter)adapter).setHighlighted(position);
+      listView.post(new Runnable(){
+        @Override public void run(){
+          listView.setSelection(position);
+          if (!mPreferenceHighlighted) {
+            listView.postDelayed(new Runnable(){
+              @Override public void run(){
+                final int centerX=listView.getWidth() / 2;
+                final int centerY=listView.getChildAt(0).getHeight() / 2;
+                drawable.setHotspot(0,centerX,centerY);
+                drawable.clearHotspots();
+                ((PreferenceGroupAdapter)adapter).setHighlighted(-1);
+              }
+            }
+,HIGHLIGHT_DURATION_MILLIS);
+            mPreferenceHighlighted=true;
+          }
+        }
+      }
+);
+    }
+  }
+}

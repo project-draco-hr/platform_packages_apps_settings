@@ -21,15 +21,11 @@
   SearchResult result=(SearchResult)getItem(position);
   textTitle.setText(result.title);
   String summaryOn=result.summaryOn;
-  String summaryOff=result.summaryOff;
   String entries=result.entries;
   final StringBuilder sb=new StringBuilder();
   if (!TextUtils.isEmpty(summaryOn) && !summaryOn.contains(PERCENT_RECLACE) && !summaryOn.contains(DOLLAR_REPLACE)) {
     sb.append(summaryOn);
-    if (!TextUtils.isEmpty(summaryOff) && !summaryOff.contains(PERCENT_RECLACE) && !summaryOff.contains(DOLLAR_REPLACE)) {
-      sb.append(" \n ");
-      sb.append(summaryOff);
-    }
+    sb.append(ELLIPSIS);
   }
   if (!TextUtils.isEmpty(entries)) {
     sb.append(" \n ");

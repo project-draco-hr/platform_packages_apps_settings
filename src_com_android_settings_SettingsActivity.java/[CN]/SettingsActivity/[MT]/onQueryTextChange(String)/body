@@ -1,4 +1,7 @@
 {
   mSearchQuery=newText;
-  return false;
+  if (TextUtils.isEmpty(newText) && mSearchResultsFragment == null) {
+    return false;
+  }
+  return mSearchResultsFragment.onQueryTextChange(newText);
 }

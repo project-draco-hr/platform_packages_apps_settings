@@ -3,10 +3,11 @@
   final boolean enabled=mCaptioningManager.isEnabled();
   mPreviewText=(SubtitleView)view.findViewById(R.id.preview_text);
   mPreviewText.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
-  final Context context=view.getContext();
+  final Context context=getActivity().getActionBar().getThemedContext();
   final int padding=context.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
   mToggleSwitch=new ToggleSwitch(context);
   mToggleSwitch.setPaddingRelative(0,0,padding,0);
+  mToggleSwitch.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT,Gravity.CENTER_VERTICAL | Gravity.END));
   mToggleSwitch.setCheckedInternal(enabled);
   mPreviewWindow=view.findViewById(R.id.preview_window);
   getPreferenceScreen().setEnabled(enabled);

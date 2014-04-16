@@ -1,0 +1,38 @@
+{
+  Ndef ndef=Ndef.get(tag);
+  if (ndef != null) {
+    if (ndef.isWritable()) {
+      NdefRecord record=NdefRecord.createMime(NFC_TOKEN_MIME_TYPE,hexStringToByteArray(mWpsNfcConfigurationToken));
+      try {
+        ndef.connect();
+        ndef.writeNdefMessage(new NdefMessage(record));
+        getOwnerActivity().runOnUiThread(new Runnable(){
+          @Override public void run(){
+            mProgressBar.setVisibility(View.GONE);
+          }
+        }
+);
+        setViewText(mLabelView,R.string.status_write_success);
+        setViewText(mCancelButton,com.android.internal.R.string.done_label);
+      }
+ catch (      IOException e) {
+        setViewText(mLabelView,R.string.status_failed_to_write);
+        Log.e(TAG,"Unable to write WiFi config to NFC tag.",e);
+        return;
+      }
+catch (      FormatException e) {
+        setViewText(mLabelView,R.string.status_failed_to_write);
+        Log.e(TAG,"Unable to write WiFi config to NFC tag.",e);
+        return;
+      }
+    }
+ else {
+      setViewText(mLabelView,R.string.status_tag_not_writable);
+      Log.e(TAG,"Tag is not writable");
+    }
+  }
+ else {
+    setViewText(mLabelView,R.string.status_tag_not_writable);
+    Log.e(TAG,"Tag does not support NDEF");
+  }
+}

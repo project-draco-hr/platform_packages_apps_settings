@@ -1,0 +1,20 @@
+{
+  mView=getLayoutInflater().inflate(R.layout.write_wifi_config_to_nfc,null);
+  setView(mView);
+  setInverseBackgroundForced(true);
+  setTitle(R.string.setup_wifi_nfc_tag);
+  setCancelable(true);
+  setButton(DialogInterface.BUTTON_NEUTRAL,mContext.getResources().getString(R.string.write_tag),(OnClickListener)null);
+  setButton(DialogInterface.BUTTON_NEGATIVE,mContext.getResources().getString(com.android.internal.R.string.cancel),(OnClickListener)null);
+  mPasswordView=(TextView)mView.findViewById(R.id.password);
+  mLabelView=(TextView)mView.findViewById(R.id.password_label);
+  mPasswordView.addTextChangedListener(this);
+  mPasswordCheckBox=(CheckBox)mView.findViewById(R.id.show_password);
+  mPasswordCheckBox.setOnCheckedChangeListener(this);
+  mProgressBar=(ProgressBar)mView.findViewById(R.id.progress_bar);
+  super.onCreate(savedInstanceState);
+  mSubmitButton=getButton(DialogInterface.BUTTON_NEUTRAL);
+  mSubmitButton.setOnClickListener(this);
+  mSubmitButton.setEnabled(false);
+  mCancelButton=getButton(DialogInterface.BUTTON_NEGATIVE);
+}

@@ -1,5 +1,8 @@
 {
   super.onCreate(icicle);
+  if (icicle != null) {
+    mPreferenceHighlighted=icicle.getBoolean(SAVE_HIGHLIGHTED_KEY);
+  }
   int helpResource=getHelpResource();
   if (helpResource != 0) {
     mHelpUrl=getResources().getString(helpResource);

@@ -6,19 +6,8 @@
   final Bundle args=getArguments();
   if (args != null) {
     final String key=args.getString(SettingsActivity.EXTRA_FRAGMENT_ARG_KEY);
-    final int position=findPositionFromKey(getPreferenceScreen(),key);
-    if (position >= 0) {
-      final ListAdapter adapter=getListView().getAdapter();
-      if (adapter instanceof PreferenceGroupAdapter) {
-        ((PreferenceGroupAdapter)adapter).setActivated(position);
-        getListView().postDelayed(new Runnable(){
-          @Override public void run(){
-            ((PreferenceGroupAdapter)adapter).setActivated(-1);
-            ((PreferenceGroupAdapter)adapter).notifyDataSetChanged();
-          }
-        }
-,HIGHLIGHT_DURATION_MILLIS);
-      }
+    if (hasListView() && !TextUtils.isEmpty(key)) {
+      highlightPreference(key);
     }
   }
 }

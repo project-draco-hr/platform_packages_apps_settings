@@ -1,0 +1,12 @@
+{
+switch (which) {
+case BUTTON_POSITIVE:
+    NetworkScoreManager nsm=(NetworkScoreManager)getSystemService(Context.NETWORK_SCORE_SERVICE);
+  if (nsm.setActiveScorer(mNewPackageName)) {
+    setResult(RESULT_OK);
+  }
+break;
+case BUTTON_NEGATIVE:
+break;
+}
+}

@@ -1,0 +1,8 @@
+{
+  super.onCreate(savedInstanceState);
+  Intent intent=getIntent();
+  mNewPackageName=intent.getStringExtra(NetworkScoreManager.EXTRA_PACKAGE_NAME);
+  if (!buildDialog()) {
+    finish();
+  }
+}

@@ -1,0 +1,39 @@
+{
+  if (!NetworkScorerAppManager.isPackageValidScorer(this,mNewPackageName)) {
+    Log.e(TAG,"New package " + mNewPackageName + " is not a valid scorer.");
+    return false;
+  }
+  String oldPackageName=NetworkScorerAppManager.getActiveScorer(this);
+  if (TextUtils.equals(oldPackageName,mNewPackageName)) {
+    Log.i(TAG,"New package " + mNewPackageName + " is already the active scorer.");
+    setResult(RESULT_OK);
+    return false;
+  }
+  PackageManager pm=getPackageManager();
+  CharSequence oldName=null;
+  CharSequence newName;
+  try {
+    if (oldPackageName != null) {
+      oldName=pm.getApplicationInfo(oldPackageName,0).loadLabel(pm);
+    }
+    newName=pm.getApplicationInfo(mNewPackageName,0).loadLabel(pm);
+  }
+ catch (  NameNotFoundException e) {
+    Log.e(TAG,"Unable to look up package info for scorers",e);
+    return false;
+  }
+  final AlertController.AlertParams p=mAlertParams;
+  p.mTitle=getString(R.string.network_scorer_change_active_dialog_title);
+  if (oldPackageName != null) {
+    p.mMessage=getString(R.string.network_scorer_change_active_dialog_text,newName,oldName);
+  }
+ else {
+    p.mMessage=getString(R.string.network_scorer_change_active_no_previous_dialog_text,newName);
+  }
+  p.mPositiveButtonText=getString(R.string.yes);
+  p.mNegativeButtonText=getString(R.string.no);
+  p.mPositiveButtonListener=this;
+  p.mNegativeButtonListener=this;
+  setupAlert();
+  return true;
+}

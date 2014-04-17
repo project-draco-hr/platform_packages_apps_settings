@@ -10,17 +10,6 @@
     data.screenTitle=screenTitle;
     result.add(data);
   }
-  LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
-  if (!ActivityManager.isLowRamDeviceStatic() && !lockPatternUtils.isLockScreenDisabled()) {
-    DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-    final boolean disabled=(0 != (dpm.getKeyguardDisabledFeatures(null) & DevicePolicyManager.KEYGUARD_DISABLE_WIDGETS_ALL));
-    if (disabled) {
-      data=new SearchIndexableRaw(context);
-      data.title=res.getString(R.string.security_enable_widgets_disabled_summary);
-      data.screenTitle=screenTitle;
-      result.add(data);
-    }
-  }
   final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
   if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
     KeyStore keyStore=KeyStore.getInstance();

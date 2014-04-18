@@ -1,7 +1,7 @@
 {
   mPrintersAdapter=new PrintersAdapter();
   mPrintersAdapter.registerDataSetObserver(mDataObserver);
-  mToggleSwitch=createActionBarToggleSwitch(getActivity());
+  mToggleSwitch=createActionBarToggleSwitch(getActivity().getActionBar().getThemedContext());
   mToggleSwitch.setOnBeforeCheckedChangeListener(new OnBeforeCheckedChangeListener(){
     @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
       if (checked) {

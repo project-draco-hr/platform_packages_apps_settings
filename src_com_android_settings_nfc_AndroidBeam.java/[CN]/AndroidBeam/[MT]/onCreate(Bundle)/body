@@ -1,7 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   Activity activity=getActivity();
-  mActionBarSwitch=new Switch(activity);
+  mActionBarSwitch=new Switch(activity.getActionBar().getThemedContext());
   if (activity instanceof SettingsActivity) {
     final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
     mActionBarSwitch.setPaddingRelative(0,0,padding,0);

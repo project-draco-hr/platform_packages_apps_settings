@@ -1,7 +1,8 @@
 {
+  boolean hasVoiceInteractionPrefs=populateOrRemoveVoiceInteractionPrefs();
   boolean hasRecognizerPrefs=populateOrRemoveRecognizerPrefs();
   boolean hasTtsPrefs=populateOrRemoveTtsPrefs();
-  if (!hasRecognizerPrefs && !hasTtsPrefs) {
+  if (!hasVoiceInteractionPrefs && !hasRecognizerPrefs && !hasTtsPrefs) {
     mFragment.getPreferenceScreen().removePreference(mVoiceCategory);
   }
 }

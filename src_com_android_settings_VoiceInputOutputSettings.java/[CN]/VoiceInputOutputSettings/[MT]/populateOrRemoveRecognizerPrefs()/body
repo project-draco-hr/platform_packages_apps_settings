@@ -12,7 +12,7 @@
     String recognizerComponent=new ComponentName(resolveInfo.serviceInfo.packageName,resolveInfo.serviceInfo.name).flattenToShortString();
     mAvailableRecognizersMap.put(recognizerComponent,resolveInfo);
     String currentSetting=Settings.Secure.getString(mFragment.getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE);
-    updateSettingsLink(currentSetting);
+    updateRecognizerSettingsLink(currentSetting);
   }
  else {
     populateRecognizerPreference(availableRecognitionServices);

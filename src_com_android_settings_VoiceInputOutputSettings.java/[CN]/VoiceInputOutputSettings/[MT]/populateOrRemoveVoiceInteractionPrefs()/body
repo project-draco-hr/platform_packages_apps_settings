@@ -1,0 +1,17 @@
+{
+  List<ResolveInfo> availableVoiceServices=mFragment.getPackageManager().queryIntentServices(new Intent(VoiceInteractionService.SERVICE_INTERFACE),PackageManager.GET_META_DATA);
+  for (int i=0; i < availableVoiceServices.size(); i++) {
+    ResolveInfo ri=availableVoiceServices.get(i);
+    if (!Manifest.permission.BIND_VOICE_INTERACTION.equals(ri.serviceInfo.permission)) {
+      availableVoiceServices.remove(i);
+    }
+  }
+  int numAvailable=availableVoiceServices.size();
+  if (numAvailable == 0) {
+    mVoiceCategory.removePreference(mVoiceInteractionPref);
+    mVoiceCategory.removePreference(mVoiceInteractionSettingsPref);
+    return false;
+  }
+  populateVoiceInteractionPreference(availableVoiceServices);
+  return true;
+}

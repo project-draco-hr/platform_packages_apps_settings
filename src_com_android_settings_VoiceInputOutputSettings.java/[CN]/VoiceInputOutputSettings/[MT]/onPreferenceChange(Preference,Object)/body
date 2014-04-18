@@ -1,8 +1,13 @@
 {
-  if (preference == mRecognizerPref) {
+  if (preference == mVoiceInteractionPref) {
+    String setting=(String)newValue;
+    Settings.Secure.putString(mFragment.getContentResolver(),Settings.Secure.VOICE_INTERACTION_SERVICE,setting);
+    updateVoiceInteractionSettingsLink(setting);
+  }
+ else   if (preference == mRecognizerPref) {
     String setting=(String)newValue;
     Settings.Secure.putString(mFragment.getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE,setting);
-    updateSettingsLink(setting);
+    updateRecognizerSettingsLink(setting);
   }
   return true;
 }

@@ -1,0 +1,11 @@
+{
+  if (!hasListView()) {
+    return -1;
+  }
+  ListView listView=getListView();
+  ListAdapter adapter=listView.getAdapter();
+  if (adapter != null && adapter instanceof PreferenceGroupAdapter) {
+    return findListPositionFromKey(adapter,key);
+  }
+  return -1;
+}

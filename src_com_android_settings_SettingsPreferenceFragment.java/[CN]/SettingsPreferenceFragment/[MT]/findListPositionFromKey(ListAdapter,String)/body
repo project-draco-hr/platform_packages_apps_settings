@@ -1,0 +1,14 @@
+{
+  final int count=adapter.getCount();
+  for (int n=0; n < count; n++) {
+    final Object item=adapter.getItem(n);
+    if (item instanceof Preference) {
+      Preference preference=(Preference)item;
+      final String preferenceKey=preference.getKey();
+      if (preferenceKey != null && preferenceKey.equals(key)) {
+        return n;
+      }
+    }
+  }
+  return -1;
+}

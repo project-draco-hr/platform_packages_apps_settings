@@ -25,18 +25,21 @@
     mNetworkSwitches=(LinearLayout)mHeader.findViewById(R.id.network_switches);
     mDataEnabled=new Switch(inflater.getContext());
     mDataEnabledView=inflatePreference(inflater,mNetworkSwitches,mDataEnabled);
+    mDataEnabledView.setTag("data_usage_enable_mobile");
     mDataEnabled.setOnCheckedChangeListener(mDataEnabledListener);
     mNetworkSwitches.addView(mDataEnabledView);
     mDisableAtLimit=new CheckBox(inflater.getContext());
     mDisableAtLimit.setClickable(false);
     mDisableAtLimit.setFocusable(false);
     mDisableAtLimitView=inflatePreference(inflater,mNetworkSwitches,mDisableAtLimit);
+    mDisableAtLimitView.setTag("data_usage_disable_mobile_limit");
     mDisableAtLimitView.setClickable(true);
     mDisableAtLimitView.setFocusable(true);
     mDisableAtLimitView.setOnClickListener(mDisableAtLimitListener);
     mNetworkSwitches.addView(mDisableAtLimitView);
   }
   mCycleView=mHeader.findViewById(R.id.cycles);
+  mCycleView.setTag("data_usage_cycle");
   mCycleSpinner=(Spinner)mCycleView.findViewById(R.id.cycles_spinner);
   mCycleAdapter=new CycleAdapter(context);
   mCycleSpinner.setAdapter(mCycleAdapter);

@@ -1,0 +1,8 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  final Bundle args=getArguments();
+  if (args != null) {
+    mViewKey=args.getString(SettingsActivity.EXTRA_FRAGMENT_ARG_KEY);
+    highlightViewIfNeeded();
+  }
+}

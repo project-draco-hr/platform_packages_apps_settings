@@ -1,0 +1,17 @@
+{
+  if (checkTag(root,key)) {
+    return root;
+  }
+  if (root instanceof ViewGroup) {
+    final ViewGroup group=(ViewGroup)root;
+    final int count=group.getChildCount();
+    for (int n=0; n < count; n++) {
+      final View child=group.getChildAt(n);
+      final View view=findViewForKey(child,key);
+      if (view != null) {
+        return view;
+      }
+    }
+  }
+  return null;
+}

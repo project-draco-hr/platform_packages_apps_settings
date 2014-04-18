@@ -5,9 +5,7 @@
   }
   final Bundle args=getArguments();
   if (args != null) {
-    final String key=args.getString(SettingsActivity.EXTRA_FRAGMENT_ARG_KEY);
-    if (hasListView() && !TextUtils.isEmpty(key)) {
-      highlightPreference(key);
-    }
+    mPreferenceKey=args.getString(SettingsActivity.EXTRA_FRAGMENT_ARG_KEY);
+    highlightPreferenceIfNeeded();
   }
 }

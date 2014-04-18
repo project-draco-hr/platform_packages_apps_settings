@@ -1,8 +1,11 @@
 {
   super.onResume();
-  final Intent intent=getActivity().getIntent();
-  mIntentTab=computeTabFromIntent(intent);
-  updateTabs();
+  getView().post(new Runnable(){
+    @Override public void run(){
+      highlightViewIfNeeded();
+    }
+  }
+);
   new AsyncTask<Void,Void,Void>(){
     @Override protected Void doInBackground(    Void... params){
       try {

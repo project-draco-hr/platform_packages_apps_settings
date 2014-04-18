@@ -6,6 +6,7 @@
   final LayoutInflater dialogInflater=LayoutInflater.from(builder.getContext());
   final View view=dialogInflater.inflate(R.layout.data_usage_cycle_editor,null,false);
   final NumberPicker cycleDayPicker=(NumberPicker)view.findViewById(R.id.cycle_day);
+  cycleDayPicker.setTag("data_usage_cycle");
   final NetworkTemplate template=getArguments().getParcelable(EXTRA_TEMPLATE);
   final int cycleDay=editor.getPolicyCycleDay(template);
   cycleDayPicker.setMinValue(1);

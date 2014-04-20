@@ -1,0 +1,10 @@
+{
+  final Calendar c=Calendar.getInstance();
+  c.set(Calendar.HOUR_OF_DAY,mHourOfDay);
+  c.set(Calendar.MINUTE,mMinute);
+  String time=DateFormat.getTimeFormat(mContext).format(c.getTime());
+  if (mSummaryFormat != 0) {
+    time=mContext.getResources().getString(mSummaryFormat,time);
+  }
+  setSummary(time);
+}

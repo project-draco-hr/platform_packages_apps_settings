@@ -1,0 +1,9 @@
+{
+  if (mCallback != null && !mCallback.onItemSelected(position)) {
+    return;
+  }
+  mSpinner.setSelection(position);
+  setSummary(mAdapter.getItem(position));
+  final boolean disableDependents=position == 0;
+  notifyDependencyChange(disableDependents);
+}

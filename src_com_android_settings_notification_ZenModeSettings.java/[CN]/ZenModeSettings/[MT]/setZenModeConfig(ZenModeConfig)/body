@@ -1,0 +1,15 @@
+{
+  final INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+  try {
+    final boolean success=nm.setZenModeConfig(config);
+    if (success) {
+      mConfig=config;
+      if (DEBUG)       Log.d(TAG,"Saved mConfig=" + mConfig);
+    }
+    return success;
+  }
+ catch (  Exception e) {
+    Log.w(TAG,"Error calling NoMan",e);
+    return false;
+  }
+}

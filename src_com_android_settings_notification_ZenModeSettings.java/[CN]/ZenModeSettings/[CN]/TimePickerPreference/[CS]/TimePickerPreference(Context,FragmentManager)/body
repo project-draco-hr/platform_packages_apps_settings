@@ -1,0 +1,14 @@
+{
+  super(context);
+  mContext=context;
+  setPersistent(false);
+  setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      final TimePickerFragment frag=new TimePickerFragment();
+      frag.pref=TimePickerPreference.this;
+      frag.show(mgr,TimePickerPreference.class.getName());
+      return true;
+    }
+  }
+);
+}

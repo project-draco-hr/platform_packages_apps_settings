@@ -1,0 +1,12 @@
+{
+  super.onBindView(view);
+  if (view.equals(mSpinner.getParent()))   return;
+  if (mSpinner.getParent() != null) {
+    ((ViewGroup)mSpinner.getParent()).removeView(mSpinner);
+  }
+  final ViewGroup vg=(ViewGroup)view;
+  vg.addView(mSpinner,0);
+  final ViewGroup.LayoutParams lp=mSpinner.getLayoutParams();
+  lp.width=0;
+  mSpinner.setLayoutParams(lp);
+}

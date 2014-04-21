@@ -5,7 +5,7 @@
  else {
     mPrintServicesCategory.removeAll();
   }
-  List<ComponentName> enabledServices=SettingsUtils.readEnabledPrintServices(getActivity());
+  List<ComponentName> enabledServices=PrintSettingsUtils.readEnabledPrintServices(getActivity());
   List<ResolveInfo> installedServices=getActivity().getPackageManager().queryIntentServices(new Intent(android.printservice.PrintService.SERVICE_INTERFACE),PackageManager.GET_SERVICES | PackageManager.GET_META_DATA);
   final int installedServiceCount=installedServices.size();
   for (int i=0; i < installedServiceCount; i++) {

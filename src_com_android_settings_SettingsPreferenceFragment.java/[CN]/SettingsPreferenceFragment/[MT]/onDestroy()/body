@@ -1,4 +1,7 @@
 {
   super.onDestroy();
-  getPreferenceScreen().getRootAdapter().unregisterDataSetObserver(mDataSetObserver);
+  if (mIsDataSetObserverRegistered) {
+    getPreferenceScreen().getRootAdapter().unregisterDataSetObserver(mDataSetObserver);
+    mIsDataSetObserverRegistered=false;
+  }
 }

@@ -4,6 +4,9 @@
   final String query=mSearchQuery;
   mSearchMenuItem=menu.findItem(R.id.search);
   mSearchView=(SearchView)mSearchMenuItem.getActionView();
+  if (mSearchMenuItem == null || mSearchView == null) {
+    return false;
+  }
   mSearchMenuItem.setOnActionExpandListener(this);
   mSearchView.setOnQueryTextListener(this);
   mSearchView.setOnCloseListener(this);

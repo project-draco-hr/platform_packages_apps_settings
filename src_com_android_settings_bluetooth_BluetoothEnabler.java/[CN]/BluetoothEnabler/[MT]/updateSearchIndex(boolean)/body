@@ -1,3 +1,7 @@
 {
-  Index.getInstance(mContext).updateFromClassNameResource(BluetoothSettings.class.getName(),false,isBluetoothOn);
+  mHandler.removeMessages(EVENT_UPDATE_INDEX);
+  Message msg=new Message();
+  msg.what=EVENT_UPDATE_INDEX;
+  msg.getData().putBoolean(EVENT_DATA_IS_BT_ON,isBluetoothOn);
+  mHandler.sendMessage(msg);
 }

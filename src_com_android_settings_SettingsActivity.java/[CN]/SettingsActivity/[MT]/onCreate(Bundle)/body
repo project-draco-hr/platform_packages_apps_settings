@@ -2,10 +2,6 @@
   if (getIntent().hasExtra(EXTRA_UI_OPTIONS)) {
     getWindow().setUiOptions(getIntent().getIntExtra(EXTRA_UI_OPTIONS,0));
   }
-  final String initialFragmentName=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
-  if (initialFragmentName == null) {
-    Index.getInstance(this).update();
-  }
   mAuthenticatorHelper=new AuthenticatorHelper();
   mAuthenticatorHelper.updateAuthDescriptions(this);
   mAuthenticatorHelper.onAccountsUpdated(this,null);
@@ -17,6 +13,10 @@
   setContentView(R.layout.settings_main);
   getFragmentManager().addOnBackStackChangedListener(this);
   mDisplayHomeAsUpEnabled=true;
+  final String initialFragmentName=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
+  if (initialFragmentName == null) {
+    Index.getInstance(this).update();
+  }
   if (savedState != null) {
     mSearchMenuItemExpanded=savedState.getBoolean(SAVE_KEY_SEARCH_MENU_EXPANDED);
     mSearchQuery=savedState.getString(SAVE_KEY_SEARCH_QUERY);

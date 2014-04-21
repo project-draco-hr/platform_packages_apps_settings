@@ -1,3 +1,7 @@
 {
-  Index.getInstance(mContext).updateFromClassNameResource(WifiSettings.class.getName(),false,isWiFiOn);
+  mHandler.removeMessages(EVENT_UPDATE_INDEX);
+  Message msg=new Message();
+  msg.what=EVENT_UPDATE_INDEX;
+  msg.getData().putBoolean(EVENT_DATA_IS_WIFI_ON,isWiFiOn);
+  mHandler.sendMessage(msg);
 }

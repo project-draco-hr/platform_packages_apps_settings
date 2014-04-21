@@ -3,5 +3,7 @@
   mSearchResultsFragment=null;
   mSearchMenuItemExpanded=false;
   getFragmentManager().popBackStackImmediate(SettingsActivity.BACK_STACK_PREFS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
-  mSearchMenuItem.collapseActionView();
+  if (mSearchMenuItem != null) {
+    mSearchMenuItem.collapseActionView();
+  }
 }

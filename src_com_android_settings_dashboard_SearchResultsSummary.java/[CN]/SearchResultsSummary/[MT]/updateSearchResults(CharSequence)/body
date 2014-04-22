@@ -3,12 +3,12 @@
     mUpdateSearchResultsTask.cancel(false);
     mUpdateSearchResultsTask=null;
   }
-  final String query=getFilteredQueryString(cs);
-  if (TextUtils.isEmpty(query)) {
+  mQuery=getFilteredQueryString(cs);
+  if (TextUtils.isEmpty(mQuery)) {
     setCursor(null);
   }
  else {
     mUpdateSearchResultsTask=new UpdateSearchResultsTask();
-    mUpdateSearchResultsTask.execute(query);
+    mUpdateSearchResultsTask.execute(mQuery);
   }
 }

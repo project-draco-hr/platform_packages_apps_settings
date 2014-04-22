@@ -1,0 +1,10 @@
+{
+  if (mSaveSearchQueryTask != null) {
+    mSaveSearchQueryTask.cancel(false);
+    mSaveSearchQueryTask=null;
+  }
+  if (!TextUtils.isEmpty(mQuery)) {
+    mSaveSearchQueryTask=new SaveSearchQueryTask();
+    mSaveSearchQueryTask.execute(mQuery);
+  }
+}

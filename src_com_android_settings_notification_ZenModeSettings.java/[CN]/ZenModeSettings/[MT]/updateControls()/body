@@ -1,0 +1,10 @@
+{
+  mDisableListeners=true;
+  mCalls.setChecked(mConfig.allowCalls);
+  mMessages.setChecked(mConfig.allowMessages);
+  mStarred.setSelectedItem(0);
+  mWhen.setSelectedItem(ZenModeConfig.SLEEP_MODE_NIGHTS.equals(mConfig.sleepMode) ? 1 : ZenModeConfig.SLEEP_MODE_WEEKNIGHTS.equals(mConfig.sleepMode) ? 2 : 0);
+  mStart.setTime(mConfig.sleepStartHour,mConfig.sleepStartMinute);
+  mEnd.setTime(mConfig.sleepEndHour,mConfig.sleepEndMinute);
+  mDisableListeners=false;
+}

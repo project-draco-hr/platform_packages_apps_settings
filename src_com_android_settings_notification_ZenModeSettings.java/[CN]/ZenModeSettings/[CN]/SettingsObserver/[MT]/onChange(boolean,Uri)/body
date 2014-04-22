@@ -1,6 +1,9 @@
 {
   super.onChange(selfChange,uri);
   if (ZEN_MODE_URI.equals(uri)) {
-    updateState();
+    updateZenMode();
+  }
+  if (ZEN_MODE_CONFIG_ETAG_URI.equals(uri)) {
+    updateZenModeConfig();
   }
 }

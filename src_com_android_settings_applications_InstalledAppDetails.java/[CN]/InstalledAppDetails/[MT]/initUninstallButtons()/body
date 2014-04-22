@@ -26,6 +26,16 @@
   if (mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
     enabled=false;
   }
+  if (enabled && mHomePackages.contains(mPackageInfo.packageName)) {
+    ArrayList<ResolveInfo> homeActivities=new ArrayList<ResolveInfo>();
+    ComponentName currentDefaultHome=mPm.getHomeActivities(homeActivities);
+    if (currentDefaultHome == null) {
+      enabled=(mHomePackages.size() > 1);
+    }
+ else {
+      enabled=!mPackageInfo.packageName.equals(currentDefaultHome.getPackageName());
+    }
+  }
   mUninstallButton.setEnabled(enabled);
   if (enabled) {
     mUninstallButton.setOnClickListener(this);

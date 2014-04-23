@@ -1,0 +1,19 @@
+{
+  if (!mDataValid && convertView == null) {
+    throw new IllegalStateException("this should only be called when the cursor is valid");
+  }
+  if (!mCursor.moveToPosition(position)) {
+    throw new IllegalStateException("couldn't move cursor to position " + position);
+  }
+  View view;
+  if (convertView == null) {
+    view=mInflater.inflate(R.layout.search_suggestion_item,parent,false);
+  }
+ else {
+    view=convertView;
+  }
+  TextView query=(TextView)view.findViewById(R.id.title);
+  SuggestionItem item=(SuggestionItem)getItem(position);
+  query.setText(item.query);
+  return view;
+}

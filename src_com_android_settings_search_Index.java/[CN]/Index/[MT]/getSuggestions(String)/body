@@ -1,0 +1,5 @@
+{
+  final String sql=buildSuggestionsSQL(query);
+  Log.d(LOG_TAG,"Suggestions query: " + sql);
+  return getReadableDatabase().rawQuery(sql,null);
+}

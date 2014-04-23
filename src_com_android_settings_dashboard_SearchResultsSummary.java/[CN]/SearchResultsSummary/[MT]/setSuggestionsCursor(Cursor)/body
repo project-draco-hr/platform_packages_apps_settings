@@ -1,0 +1,9 @@
+{
+  if (mSuggestionsAdapter == null) {
+    return;
+  }
+  Cursor oldCursor=mSuggestionsAdapter.swapCursor(cursor);
+  if (oldCursor != null) {
+    oldCursor.close();
+  }
+}

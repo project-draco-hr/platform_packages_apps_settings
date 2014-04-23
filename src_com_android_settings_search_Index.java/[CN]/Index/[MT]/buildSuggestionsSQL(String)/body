@@ -1,0 +1,22 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append("SELECT ");
+  sb.append(IndexDatabaseHelper.SavedQueriesColums.QUERY);
+  sb.append(" FROM ");
+  sb.append(Tables.TABLE_SAVED_QUERIES);
+  if (TextUtils.isEmpty(query)) {
+    sb.append(" ORDER BY rowId DESC");
+  }
+ else {
+    sb.append(" WHERE ");
+    sb.append(IndexDatabaseHelper.SavedQueriesColums.QUERY);
+    sb.append(" LIKE ");
+    sb.append("'");
+    sb.append(query);
+    sb.append("%");
+    sb.append("'");
+  }
+  sb.append(" LIMIT ");
+  sb.append(MAX_PROPOSED_SUGGESTIONS);
+  return sb.toString();
+}

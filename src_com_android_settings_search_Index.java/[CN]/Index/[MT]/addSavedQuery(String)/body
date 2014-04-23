@@ -1,0 +1,15 @@
+{
+  final SaveSearchQueryTask task=new SaveSearchQueryTask();
+  task.execute(query);
+  try {
+    return task.get();
+  }
+ catch (  InterruptedException e) {
+    Log.e(LOG_TAG,"Cannot insert saved query: " + query,e);
+    return -1;
+  }
+catch (  ExecutionException e) {
+    Log.e(LOG_TAG,"Cannot insert saved query: " + query,e);
+    return -1;
+  }
+}

@@ -1,0 +1,7 @@
+{
+  if (mDataValid && mCursor.moveToPosition(position)) {
+    final String query=mCursor.getString(COLUMN_SUGGESTION_QUERY);
+    return new SuggestionItem(query);
+  }
+  return null;
+}

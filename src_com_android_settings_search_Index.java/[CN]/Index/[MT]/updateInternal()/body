@@ -8,11 +8,11 @@ synchronized (mDataToProcess) {
       return result;
     }
  catch (    InterruptedException e) {
-      Log.e(LOG_TAG,"Cannot update index: " + e.getMessage());
+      Log.e(LOG_TAG,"Cannot update index",e);
       return false;
     }
 catch (    ExecutionException e) {
-      Log.e(LOG_TAG,"Cannot update index: " + e.getMessage());
+      Log.e(LOG_TAG,"Cannot update index",e);
       return false;
     }
   }

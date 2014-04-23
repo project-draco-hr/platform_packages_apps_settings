@@ -1,0 +1,20 @@
+{
+  final long now=new Date().getTime();
+  final ContentValues values=new ContentValues();
+  values.put(IndexDatabaseHelper.SavedQueriesColums.QUERY,params[0]);
+  values.put(IndexDatabaseHelper.SavedQueriesColums.TIME_STAMP,now);
+  final SQLiteDatabase database=getWritableDatabase();
+  long lastInsertedRowId=-1;
+  try {
+    lastInsertedRowId=database.replaceOrThrow(Tables.TABLE_SAVED_QUERIES,null,values);
+    final long delta=lastInsertedRowId - MAX_SAVED_SEARCH_QUERY;
+    if (delta > 0) {
+      int count=database.delete(Tables.TABLE_SAVED_QUERIES,"rowId <= ?",new String[]{Long.toString(delta)});
+      Log.d(LOG_TAG,"Deleted '" + count + "' saved Search query(ies)");
+    }
+  }
+ catch (  Exception e) {
+    Log.d(LOG_TAG,"Cannot update saved Search queries",e);
+  }
+  return lastInsertedRowId;
+}

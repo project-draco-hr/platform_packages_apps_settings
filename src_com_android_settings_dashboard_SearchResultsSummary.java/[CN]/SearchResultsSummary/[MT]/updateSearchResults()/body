@@ -1,0 +1,15 @@
+{
+  if (mUpdateSearchResultsTask != null) {
+    mUpdateSearchResultsTask.cancel(false);
+    mUpdateSearchResultsTask=null;
+  }
+  if (TextUtils.isEmpty(mQuery)) {
+    setResultsVisibility(false);
+    setResultsCursor(null);
+  }
+ else {
+    setResultsVisibility(true);
+    mUpdateSearchResultsTask=new UpdateSearchResultsTask();
+    mUpdateSearchResultsTask.execute(mQuery);
+  }
+}

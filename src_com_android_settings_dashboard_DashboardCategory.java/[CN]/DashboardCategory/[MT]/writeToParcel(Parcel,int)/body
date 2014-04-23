@@ -1,0 +1,10 @@
+{
+  dest.writeInt(titleRes);
+  TextUtils.writeToParcel(title,dest,flags);
+  final int count=tiles.size();
+  dest.writeInt(count);
+  for (int n=0; n < count; n++) {
+    DashboardTile tile=tiles.get(n);
+    tile.writeToParcel(dest,flags);
+  }
+}

@@ -13,13 +13,24 @@
   mNotificationSoundPreference=findPreference(KEY_NOTIFICATION_SOUND);
   mNotificationAccess=findPreference(KEY_NOTIFICATION_ACCESS);
   refreshNotificationListeners();
-  mLockscreenNotifications=(TwoStatePreference)root.findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
+  mLockscreenNotifications=(DropDownPreference)root.findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
   if (mLockscreenNotifications != null) {
     if (!getDeviceLockscreenNotificationsEnabled()) {
       root.removePreference(mLockscreenNotifications);
     }
  else {
-      mLockscreenNotifications.setChecked(getLockscreenAllowPrivateNotifications());
+      mLockscreenNotifications.addItem(R.string.lock_screen_notifications_summary_show);
+      mLockscreenNotifications.addItem(R.string.lock_screen_notifications_summary_hide);
+      final int pos=getLockscreenAllowPrivateNotifications() ? 0 : 1;
+      mLockscreenNotifications.setSelectedItem(pos);
+      mLockscreenNotifications.setCallback(new DropDownPreference.Callback(){
+        @Override public boolean onItemSelected(        int pos){
+          final int val=pos == 0 ? 1 : 0;
+          Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,val);
+          return true;
+        }
+      }
+);
     }
   }
   mHeadsUp=(TwoStatePreference)findPreference(KEY_HEADS_UP);

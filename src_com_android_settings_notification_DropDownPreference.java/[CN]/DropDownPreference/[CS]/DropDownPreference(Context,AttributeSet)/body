@@ -1,9 +1,8 @@
 {
-  super(context);
+  super(context,attrs);
   mContext=context;
   mAdapter=new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_dropdown_item);
   mSpinner=new Spinner(mContext);
-  mSpinner.setDropDownWidth(mContext.getResources().getDimensionPixelSize(R.dimen.zen_mode_dropdown_width));
   mSpinner.setVisibility(View.INVISIBLE);
   mSpinner.setAdapter(mAdapter);
   mSpinner.setOnItemSelectedListener(new OnItemSelectedListener(){

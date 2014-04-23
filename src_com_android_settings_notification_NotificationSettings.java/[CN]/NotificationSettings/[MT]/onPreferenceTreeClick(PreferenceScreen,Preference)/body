@@ -1,9 +1,6 @@
 {
   final String key=preference.getKey();
-  if (KEY_LOCK_SCREEN_NOTIFICATIONS.equals(key)) {
-    Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,mLockscreenNotifications.isChecked() ? 1 : 0);
-  }
- else   if (KEY_HEADS_UP.equals(key)) {
+  if (KEY_HEADS_UP.equals(key)) {
     setHeadsUpMode(getContentResolver(),mHeadsUp.isChecked());
   }
  else   if (KEY_NOTIFICATION_PULSE.equals(key)) {

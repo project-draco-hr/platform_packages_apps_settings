@@ -1,8 +1,9 @@
 {
   super.onSizeChanged(w,h,oldw,oldh);
   int textHeight=mTextDescent - mTextAscent;
+  int headerTextHeight=mHeaderTextDescent - mHeaderTextAscent;
   mThinLineWidth=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2,getResources().getDisplayMetrics());
-  if (h > (textHeight * 6)) {
+  if (h > (textHeight * 12)) {
     mLargeMode=true;
     if (h > (textHeight * 15)) {
       mLineWidth=textHeight / 2;
@@ -10,7 +11,7 @@
  else {
       mLineWidth=textHeight / 3;
     }
-    mLevelTop=textHeight + mLineWidth;
+    mLevelTop=headerTextHeight * 2 + mLineWidth;
     mScreenOnPaint.setARGB(255,32,64,255);
     mGpsOnPaint.setARGB(255,32,64,255);
     mWifiRunningPaint.setARGB(255,32,64,255);
@@ -19,7 +20,7 @@
  else {
     mLargeMode=false;
     mLineWidth=mThinLineWidth;
-    mLevelTop=0;
+    mLevelTop=headerTextHeight * 2 + mLineWidth;
     mScreenOnPaint.setARGB(255,0,0,255);
     mGpsOnPaint.setARGB(255,0,0,255);
     mWifiRunningPaint.setARGB(255,0,0,255);

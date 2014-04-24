@@ -5,4 +5,5 @@
   parcel.unmarshall(data,0,data.length);
   parcel.setDataPosition(0);
   mStats=com.android.internal.os.BatteryStatsImpl.CREATOR.createFromParcel(parcel);
+  mBatteryBroadcast=getArguments().getParcelable(EXTRA_BROADCAST);
 }

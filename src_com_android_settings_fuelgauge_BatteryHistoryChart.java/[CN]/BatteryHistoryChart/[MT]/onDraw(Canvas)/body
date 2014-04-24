@@ -4,19 +4,28 @@
   final int height=getHeight();
   final boolean layoutRtl=isLayoutRtl();
   final int textStartX=layoutRtl ? width : 0;
-  mTextPaint.setTextAlign(layoutRtl ? Paint.Align.RIGHT : Paint.Align.LEFT);
+  final int textEndX=layoutRtl ? 0 : width;
+  final Paint.Align textAlignLeft=layoutRtl ? Paint.Align.RIGHT : Paint.Align.LEFT;
+  final Paint.Align textAlignRight=layoutRtl ? Paint.Align.LEFT : Paint.Align.RIGHT;
+  mTextPaint.setTextAlign(textAlignLeft);
   canvas.drawPath(mBatLevelPath,mBatteryBackgroundPaint);
+  int durationHalfWidth=mDurationStringWidth / 2;
+  if (layoutRtl)   durationHalfWidth=-durationHalfWidth;
   if (mLargeMode) {
-    int durationHalfWidth=mTotalDurationStringWidth / 2;
-    if (layoutRtl)     durationHalfWidth=-durationHalfWidth;
-    canvas.drawText(mDurationString,textStartX,-mTextAscent + (mLineWidth / 2),mTextPaint);
-    canvas.drawText(mTotalDurationString,(width / 2) - durationHalfWidth,mLevelBottom - mTextAscent + mThinLineWidth,mTextPaint);
+    canvas.drawText(mDurationString,(width / 2) - durationHalfWidth,mLevelBottom - mTextAscent + mThinLineWidth,mTextPaint);
   }
  else {
-    int durationHalfWidth=mDurationStringWidth / 2;
-    if (layoutRtl)     durationHalfWidth=-durationHalfWidth;
-    canvas.drawText(mDurationString,(width / 2) - durationHalfWidth,(height / 2) - ((mTextDescent - mTextAscent) / 2) - mTextAscent,mTextPaint);
+    canvas.drawText(mDurationString,(width / 2) - durationHalfWidth,mLevelTop + ((height - mLevelTop) / 2) - ((mTextDescent - mTextAscent) / 2) - mTextAscent,mTextPaint);
   }
+  int headerTop=mLevelTop / 2 + (mHeaderTextDescent - mHeaderTextAscent) / 2;
+  mHeaderTextPaint.setTextAlign(textAlignLeft);
+  canvas.drawText(mChargeLabelString,textStartX,headerTop,mHeaderTextPaint);
+  durationHalfWidth=mChargeDurationStringWidth / 2;
+  if (layoutRtl)   durationHalfWidth=-durationHalfWidth;
+  int headerCenter=((width - mChargeDurationStringWidth - mDrainStringWidth) / 2) + (layoutRtl ? mDrainStringWidth : mChargeLabelStringWidth);
+  canvas.drawText(mChargeDurationString,headerCenter - durationHalfWidth,headerTop,mHeaderTextPaint);
+  mHeaderTextPaint.setTextAlign(textAlignRight);
+  canvas.drawText(mDrainString,textEndX,headerTop,mHeaderTextPaint);
   if (!mBatGoodPath.isEmpty()) {
     canvas.drawPath(mBatGoodPath,mBatteryGoodPaint);
   }

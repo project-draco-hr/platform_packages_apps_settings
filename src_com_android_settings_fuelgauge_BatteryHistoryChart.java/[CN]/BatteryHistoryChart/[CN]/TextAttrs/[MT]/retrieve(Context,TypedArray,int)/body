@@ -1,0 +1,28 @@
+{
+  TypedArray appearance=null;
+  int ap=from.getResourceId(index,-1);
+  if (ap != -1) {
+    appearance=context.obtainStyledAttributes(ap,com.android.internal.R.styleable.TextAppearance);
+  }
+  if (appearance != null) {
+    int n=appearance.getIndexCount();
+    for (int i=0; i < n; i++) {
+      int attr=appearance.getIndex(i);
+switch (attr) {
+case com.android.internal.R.styleable.TextAppearance_textColor:
+        textColor=appearance.getColorStateList(attr);
+      break;
+case com.android.internal.R.styleable.TextAppearance_textSize:
+    textSize=appearance.getDimensionPixelSize(attr,textSize);
+  break;
+case com.android.internal.R.styleable.TextAppearance_typeface:
+typefaceIndex=appearance.getInt(attr,-1);
+break;
+case com.android.internal.R.styleable.TextAppearance_textStyle:
+styleIndex=appearance.getInt(attr,-1);
+break;
+}
+}
+appearance.recycle();
+}
+}

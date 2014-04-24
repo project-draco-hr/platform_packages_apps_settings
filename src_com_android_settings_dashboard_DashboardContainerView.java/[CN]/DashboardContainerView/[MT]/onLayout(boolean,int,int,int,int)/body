@@ -1,0 +1,38 @@
+{
+  final int N=getChildCount();
+  final boolean isLayoutRtl=isLayoutRtl();
+  final int width=getWidth();
+  int x=getPaddingStart();
+  int y=getPaddingTop();
+  int cursor=0;
+  for (int i=0; i < N; ++i) {
+    final DashboardTileView child=(DashboardTileView)getChildAt(i);
+    final ViewGroup.LayoutParams lp=child.getLayoutParams();
+    if (child.getVisibility() == GONE) {
+      continue;
+    }
+    final int col=cursor % mNumColumns;
+    final int colSpan=child.getColumnSpan();
+    final int childWidth=lp.width;
+    final int childHeight=lp.height;
+    int row=cursor / mNumColumns;
+    if ((col + colSpan) > mNumColumns) {
+      x=getPaddingStart();
+      y+=childHeight + mCellGap;
+      row++;
+    }
+    final int childLeft=(isLayoutRtl) ? width - x - childWidth : x;
+    final int childRight=childLeft + childWidth;
+    final int childTop=y;
+    final int childBottom=childTop + childHeight;
+    child.layout(childLeft,childTop,childRight,childBottom);
+    cursor+=child.getColumnSpan();
+    if (cursor < (((row + 1) * mNumColumns))) {
+      x+=childWidth + mCellGap;
+    }
+ else {
+      x=getPaddingStart();
+      y+=childHeight + mCellGap;
+    }
+  }
+}

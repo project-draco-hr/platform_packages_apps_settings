@@ -5,13 +5,19 @@
   mAudioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
   addPreferencesFromResource(R.xml.sound_settings);
   if (TelephonyManager.PHONE_TYPE_CDMA != activePhoneType) {
-    getPreferenceScreen().removePreference(findPreference(KEY_EMERGENCY_TONE));
+    Preference pref=findPreference(KEY_EMERGENCY_TONE);
+    if (pref != null) {
+      getPreferenceScreen().removePreference(pref);
+    }
   }
   if (!getResources().getBoolean(R.bool.has_silent_mode)) {
     findPreference(KEY_RING_VOLUME).setDependency(null);
   }
   if (getResources().getBoolean(com.android.internal.R.bool.config_useFixedVolume)) {
-    getPreferenceScreen().removePreference(findPreference(KEY_RING_VOLUME));
+    Preference pref=findPreference(KEY_RING_VOLUME);
+    if (pref != null) {
+      getPreferenceScreen().removePreference(pref);
+    }
   }
   mVibrateWhenRinging=(CheckBoxPreference)findPreference(KEY_VIBRATE);
   mVibrateWhenRinging.setPersistent(false);

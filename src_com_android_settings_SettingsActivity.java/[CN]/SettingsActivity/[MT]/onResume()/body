@@ -2,12 +2,12 @@
   super.onResume();
   mDevelopmentPreferencesListener=new SharedPreferences.OnSharedPreferenceChangeListener(){
     @Override public void onSharedPreferenceChanged(    SharedPreferences sharedPreferences,    String key){
-      invalidateHeaders();
+      invalidateCategories();
     }
   }
 ;
   mDevelopmentPreferences.registerOnSharedPreferenceChangeListener(mDevelopmentPreferencesListener);
-  invalidateHeaders();
+  invalidateCategories();
   registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
   mDynamicIndexableContentMonitor.register(this);
   if (!TextUtils.isEmpty(mSearchQuery)) {

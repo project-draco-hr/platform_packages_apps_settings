@@ -5,8 +5,6 @@
   mAuthenticatorHelper=new AuthenticatorHelper();
   mAuthenticatorHelper.updateAuthDescriptions(this);
   mAuthenticatorHelper.onAccountsUpdated(this,null);
-  DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-  mHeaderAdapter=new HeaderAdapter(this,mHeaders,mAuthenticatorHelper,dpm);
   mDevelopmentPreferences=getSharedPreferences(DevelopmentSettings.PREF_FILE,Context.MODE_PRIVATE);
   getMetaData();
   super.onCreate(savedState);
@@ -23,15 +21,15 @@
     final String initialTitle=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT_TITLE);
     mInitialTitle=(initialTitle != null) ? initialTitle : getTitle();
     setTitle(mInitialTitle);
-    ArrayList<Header> headers=savedState.getParcelableArrayList(SAVE_KEY_HEADERS);
-    if (headers != null) {
-      mHeaders.addAll(headers);
+    ArrayList<DashboardCategory> categories=savedState.getParcelableArrayList(SAVE_KEY_CATEGORIES);
+    if (categories != null) {
+      mCategories.addAll(categories);
       setTitleFromBackStack();
     }
     mDisplayHomeAsUpEnabled=savedState.getBoolean(SAVE_KEY_SHOW_HOME_AS_UP);
   }
  else {
-    onBuildHeaders(mHeaders);
+    buildDashboardCategories(mCategories);
     if (initialFragmentName != null) {
       final ComponentName cn=getIntent().getComponent();
       if (!cn.getClassName().equals(SubSettings.class.getName())) {
@@ -45,7 +43,7 @@
     }
  else {
       mDisplayHomeAsUpEnabled=false;
-      if (mHeaders.size() > 0) {
+      if (mCategories.size() > 0) {
         mInitialTitle=getText(R.string.dashboard_title);
         switchToFragment(DashboardSummary.class.getName(),null,false,false,mInitialTitle,false);
       }

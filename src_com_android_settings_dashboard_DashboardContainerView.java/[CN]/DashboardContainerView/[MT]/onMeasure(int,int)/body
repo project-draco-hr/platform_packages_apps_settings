@@ -1,0 +1,28 @@
+{
+  final int width=MeasureSpec.getSize(widthMeasureSpec);
+  final int availableWidth=(int)(width - getPaddingLeft() - getPaddingRight()- (mNumColumns - 1) * mCellGap);
+  float cellWidth=(float)Math.ceil(((float)availableWidth) / mNumColumns);
+  final int N=getChildCount();
+  int cellHeight=0;
+  int cursor=0;
+  for (int i=0; i < N; ++i) {
+    DashboardTileView v=(DashboardTileView)getChildAt(i);
+    if (v.getVisibility() == View.GONE) {
+      continue;
+    }
+    ViewGroup.LayoutParams lp=v.getLayoutParams();
+    int colSpan=v.getColumnSpan();
+    lp.width=(int)((colSpan * cellWidth) + (colSpan - 1) * mCellGap);
+    int newWidthSpec=getChildMeasureSpec(widthMeasureSpec,0,lp.width);
+    int newHeightSpec=getChildMeasureSpec(heightMeasureSpec,0,lp.height);
+    v.measure(newWidthSpec,newHeightSpec);
+    if (cellHeight <= 0) {
+      cellHeight=v.getMeasuredHeight();
+    }
+    lp.height=cellHeight;
+    cursor+=colSpan;
+  }
+  final int numRows=(int)Math.ceil((float)cursor / mNumColumns);
+  final int newHeight=(int)((numRows * cellHeight) + ((numRows - 1) * mCellGap)) + getPaddingTop() + getPaddingBottom();
+  setMeasuredDimension(width,newHeight);
+}

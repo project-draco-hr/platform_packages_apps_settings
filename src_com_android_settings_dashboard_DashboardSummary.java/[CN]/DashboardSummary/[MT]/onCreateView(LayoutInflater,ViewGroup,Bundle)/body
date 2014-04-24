@@ -1,7 +1,10 @@
 {
-  final View view=inflater.inflate(R.layout.dashboard,container,false);
-  ListView listView=(ListView)view.findViewById(android.R.id.list);
-  ListAdapter adapter=((SettingsActivity)getActivity()).getHeaderAdapter();
-  listView.setAdapter(adapter);
-  return view;
+  final Context context=getActivity();
+  mLayoutInflater=inflater;
+  mContainer=container;
+  final View rootView=inflater.inflate(R.layout.dashboard,container,false);
+  mDashboard=(ViewGroup)rootView.findViewById(R.id.dashboard_container);
+  mAuthHelper=((SettingsActivity)context).getAuthenticatorHelper();
+  rebuildUI(getActivity());
+  return rootView;
 }

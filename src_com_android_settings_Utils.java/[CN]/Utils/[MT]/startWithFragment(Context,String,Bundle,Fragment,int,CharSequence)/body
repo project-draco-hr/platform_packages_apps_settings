@@ -1,0 +1,9 @@
+{
+  Intent intent=onBuildStartFragmentIntent(context,fragmentName,args,title);
+  if (resultTo == null) {
+    context.startActivity(intent);
+  }
+ else {
+    resultTo.startActivityForResult(intent,resultRequestCode);
+  }
+}

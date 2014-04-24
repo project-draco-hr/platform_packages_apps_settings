@@ -1,0 +1,22 @@
+{
+  final Resources res=getResources();
+  mDashboard.removeAllViews();
+  List<DashboardCategory> categories=((SettingsActivity)context).getDashboardCategories();
+  final int count=categories.size();
+  for (int n=0; n < count; n++) {
+    DashboardCategory category=categories.get(n);
+    View categoryView=mLayoutInflater.inflate(R.layout.dashboard_category,mContainer,false);
+    TextView categoryLabel=(TextView)categoryView.findViewById(R.id.category_title);
+    categoryLabel.setText(category.getTitle(res));
+    ViewGroup categoryContent=(ViewGroup)categoryView.findViewById(R.id.category_content);
+    final int tilesCount=category.getTilesCount();
+    for (int i=0; i < tilesCount; i++) {
+      DashboardTile tile=category.getTile(i);
+      DashboardTileView tileView=new DashboardTileView(context);
+      updateTileView(context,res,tile,tileView.getImageView(),tileView.getTitleTextView(),tileView.getStatusTextView());
+      tileView.setTile(tile);
+      categoryContent.addView(tileView);
+    }
+    mDashboard.addView(categoryView);
+  }
+}

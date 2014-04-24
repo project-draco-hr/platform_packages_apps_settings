@@ -2,23 +2,16 @@
   log("initSmsApplicationSetting:");
   Collection<SmsApplicationData> smsApplications=SmsApplication.getApplicationCollection(getActivity());
   int count=smsApplications.size();
-  CharSequence[] entries=new CharSequence[count];
-  CharSequence[] entryValues=new CharSequence[count];
-  Drawable[] entryImages=new Drawable[count];
+  String[] packageNames=new String[count];
   int i=0;
   for (  SmsApplicationData smsApplicationData : smsApplications) {
-    entries[i]=smsApplicationData.mApplicationName;
-    entryValues[i]=smsApplicationData.mPackageName;
-    try {
-      entryImages[i]=mPm.getApplicationIcon(smsApplicationData.mPackageName);
-    }
- catch (    NameNotFoundException e) {
-      entryImages[i]=mPm.getDefaultActivityIcon();
-    }
+    packageNames[i]=smsApplicationData.mPackageName;
     i++;
   }
-  mSmsApplicationPreference.setEntries(entries);
-  mSmsApplicationPreference.setEntryValues(entryValues);
-  mSmsApplicationPreference.setEntryDrawables(entryImages);
-  updateSmsApplicationSetting();
+  String defaultPackageName=null;
+  ComponentName appName=SmsApplication.getDefaultSmsApplication(getActivity(),true);
+  if (appName != null) {
+    defaultPackageName=appName.getPackageName();
+  }
+  mSmsApplicationPreference.setPackageNames(packageNames,defaultPackageName);
 }

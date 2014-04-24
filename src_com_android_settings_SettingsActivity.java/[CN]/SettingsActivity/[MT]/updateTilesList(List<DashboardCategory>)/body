@@ -1,0 +1,81 @@
+{
+  final boolean showDev=mDevelopmentPreferences.getBoolean(DevelopmentSettings.PREF_SHOW,android.os.Build.TYPE.equals("eng"));
+  final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
+  final int size=target.size();
+  for (int i=0; i < size; i++) {
+    DashboardCategory category=target.get(i);
+    int id=(int)category.id;
+    if (id == R.id.account_settings) {
+      insertAccountsTiles(category);
+      continue;
+    }
+    int n=category.getTilesCount() - 1;
+    while (n >= 0) {
+      DashboardTile tile=category.getTile(n);
+      id=(int)tile.id;
+      if (id == R.id.operator_settings || id == R.id.manufacturer_settings) {
+        Utils.updateTileToSpecificActivityFromMetaDataOrRemove(this,category,tile);
+      }
+ else       if (id == R.id.wifi_settings) {
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
+          category.removeTile(n);
+        }
+      }
+ else       if (id == R.id.bluetooth_settings) {
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
+          category.removeTile(n);
+        }
+      }
+ else       if (id == R.id.data_usage_settings) {
+        final INetworkManagementService netManager=INetworkManagementService.Stub.asInterface(ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
+        try {
+          if (!netManager.isBandwidthControlEnabled()) {
+            category.removeTile(n);
+          }
+        }
+ catch (        RemoteException e) {
+        }
+      }
+ else       if (id == R.id.battery_settings) {
+        if (!mBatteryPresent) {
+          category.removeTile(n);
+        }
+      }
+ else       if (id == R.id.home_settings) {
+        if (!updateHomeSettingTiles(tile)) {
+          category.removeTile(n);
+        }
+      }
+ else       if (id == R.id.user_settings) {
+        if (!UserHandle.MU_ENABLED || !UserManager.supportsMultipleUsers() || Utils.isMonkeyRunning()) {
+          category.removeTile(n);
+        }
+      }
+ else       if (id == R.id.nfc_payment_settings) {
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC)) {
+          category.removeTile(n);
+        }
+ else {
+          NfcAdapter adapter=NfcAdapter.getDefaultAdapter(this);
+          if (!adapter.isEnabled() || !getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)) {
+            category.removeTile(n);
+          }
+        }
+      }
+ else       if (id == R.id.development_settings) {
+        if (!showDev) {
+          category.removeTile(n);
+        }
+      }
+ else       if (id == R.id.account_add) {
+        if (um.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
+          category.removeTile(n);
+        }
+      }
+      if (UserHandle.MU_ENABLED && UserHandle.myUserId() != 0 && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,id)) {
+        category.removeTile(n);
+      }
+      n--;
+    }
+  }
+}

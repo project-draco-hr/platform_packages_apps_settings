@@ -1,0 +1,48 @@
+{
+  String[] accountTypes=mAuthenticatorHelper.getEnabledAccountTypes();
+  List<DashboardTile> dashboardTiles=new ArrayList<DashboardTile>(accountTypes.length);
+  for (  String accountType : accountTypes) {
+    CharSequence label=mAuthenticatorHelper.getLabelForType(this,accountType);
+    if (label == null) {
+      continue;
+    }
+    Account[] accounts=AccountManager.get(this).getAccountsByType(accountType);
+    boolean skipToAccount=accounts.length == 1 && !mAuthenticatorHelper.hasAccountPreferences(accountType);
+    DashboardTile accountTile=new DashboardTile();
+    accountTile.title=label;
+    if (accountTile.extras == null) {
+      accountTile.extras=new Bundle();
+    }
+    if (skipToAccount) {
+      accountTile.fragment=AccountSyncSettings.class.getName();
+      accountTile.fragmentArguments=new Bundle();
+      accountTile.extras.putString(ManageAccountsSettings.KEY_ACCOUNT_TYPE,accountType);
+      accountTile.extras.putParcelable(AccountSyncSettings.ACCOUNT_KEY,accounts[0]);
+      accountTile.fragmentArguments.putParcelable(AccountSyncSettings.ACCOUNT_KEY,accounts[0]);
+    }
+ else {
+      accountTile.fragment=ManageAccountsSettings.class.getName();
+      accountTile.fragmentArguments=new Bundle();
+      accountTile.extras.putString(ManageAccountsSettings.KEY_ACCOUNT_TYPE,accountType);
+      accountTile.fragmentArguments.putString(ManageAccountsSettings.KEY_ACCOUNT_TYPE,accountType);
+      accountTile.fragmentArguments.putString(ManageAccountsSettings.KEY_ACCOUNT_LABEL,label.toString());
+    }
+    dashboardTiles.add(accountTile);
+    mAuthenticatorHelper.preloadDrawableForType(this,accountType);
+  }
+  Collections.sort(dashboardTiles,new Comparator<DashboardTile>(){
+    @Override public int compare(    DashboardTile t1,    DashboardTile t2){
+      return t1.title.toString().compareTo(t2.title.toString());
+    }
+  }
+);
+  int index=0;
+  for (  DashboardTile tile : dashboardTiles) {
+    target.addTile(index,tile);
+    index++;
+  }
+  if (!mListeningToAccountUpdates) {
+    AccountManager.get(this).addOnAccountsUpdatedListener(this,null,true);
+    mListeningToAccountUpdates=true;
+  }
+}

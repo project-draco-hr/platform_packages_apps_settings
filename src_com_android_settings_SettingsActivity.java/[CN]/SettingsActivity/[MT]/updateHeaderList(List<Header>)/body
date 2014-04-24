@@ -2,7 +2,6 @@
   final boolean showDev=mDevelopmentPreferences.getBoolean(DevelopmentSettings.PREF_SHOW,android.os.Build.TYPE.equals("eng"));
   int i=0;
   final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
-  mHeaderIndexMap.clear();
   while (i < target.size()) {
     Header header=target.get(i);
     int id=(int)header.id;
@@ -73,7 +72,6 @@
       target.remove(i);
     }
     if (i < target.size() && target.get(i) == header) {
-      mHeaderIndexMap.put(id,i);
       i++;
     }
   }

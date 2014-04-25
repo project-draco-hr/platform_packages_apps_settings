@@ -24,6 +24,13 @@
     getListView().setVisibility(View.GONE);
   }
  else {
+    CheckBoxPreference foreground=new CheckBoxPreference(getActivity());
+    boolean foregroundMode=mPaymentBackend.isForegroundMode();
+    foreground.setPersistent(false);
+    foreground.setTitle(getString(R.string.nfc_payment_favor_foreground));
+    foreground.setChecked(foregroundMode);
+    foreground.setOnPreferenceChangeListener(this);
+    screen.addPreference(foreground);
     emptyText.setVisibility(View.GONE);
     learnMore.setVisibility(View.GONE);
     emptyImage.setVisibility(View.GONE);

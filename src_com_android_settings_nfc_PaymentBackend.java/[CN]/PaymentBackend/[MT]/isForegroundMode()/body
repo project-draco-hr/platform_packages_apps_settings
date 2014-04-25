@@ -1,0 +1,8 @@
+{
+  try {
+    return Settings.Secure.getInt(mContext.getContentResolver(),Settings.Secure.NFC_PAYMENT_FOREGROUND) != 0;
+  }
+ catch (  SettingNotFoundException e) {
+    return false;
+  }
+}

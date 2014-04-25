@@ -5,6 +5,7 @@
     byte[] histData=hist.marshall();
     Bundle args=new Bundle();
     args.putByteArray(BatteryHistoryDetail.EXTRA_STATS,histData);
+    args.putParcelable(BatteryHistoryDetail.EXTRA_BROADCAST,mStatsHelper.getBatteryBroadcast());
     SettingsActivity sa=(SettingsActivity)getActivity();
     sa.startPreferencePanel(BatteryHistoryDetail.class.getName(),args,R.string.history_details_title,null,null,0);
     return super.onPreferenceTreeClick(preferenceScreen,preference);

@@ -1,9 +1,9 @@
 {
   mStats=stats;
-  long uSecTime=mStats.computeBatteryRealtime(SystemClock.elapsedRealtime() * 1000,BatteryStats.STATS_SINCE_CHARGED);
+  mBatteryBroadcast=broadcast;
+  final long elapsedRealtimeUs=SystemClock.elapsedRealtime() * 1000;
+  long uSecTime=mStats.computeBatteryRealtime(elapsedRealtimeUs,BatteryStats.STATS_SINCE_CHARGED);
   mStatsPeriod=uSecTime;
-  String durationString=Utils.formatElapsedTime(getContext(),mStatsPeriod / 1000,true);
-  mDurationString=getContext().getString(R.string.battery_stats_on_battery,durationString);
   mChargingLabel=getContext().getString(R.string.battery_stats_charging_label);
   mScreenOnLabel=getContext().getString(R.string.battery_stats_screen_on_label);
   mGpsOnLabel=getContext().getString(R.string.battery_stats_gps_on_label);
@@ -42,5 +42,21 @@
     mHavePhoneSignal=true;
   }
   if (mHistEnd <= mHistStart)   mHistEnd=mHistStart + 1;
-  mTotalDurationString=Utils.formatElapsedTime(getContext(),mHistEnd - mHistStart,true);
+  mDurationString=Utils.formatElapsedTime(getContext(),mHistEnd - mHistStart,true);
+  mDrainString=com.android.settings.Utils.getBatteryPercentage(mBatteryBroadcast);
+  mChargeLabelString=com.android.settings.Utils.getBatteryStatus(getResources(),mBatteryBroadcast);
+  final long drainTime=mStats.computeBatteryTimeRemaining(elapsedRealtimeUs);
+  final long chargeTime=mStats.computeChargeTimeRemaining(elapsedRealtimeUs);
+  final int status=mBatteryBroadcast.getIntExtra(BatteryManager.EXTRA_STATUS,BatteryManager.BATTERY_STATUS_UNKNOWN);
+  if (drainTime > 0) {
+    String timeString=Utils.formatShortElapsedTime(getContext(),drainTime / 1000);
+    mChargeDurationString=getContext().getResources().getString(R.string.power_discharge_remaining,timeString);
+  }
+ else   if (chargeTime > 0 && status != BatteryManager.BATTERY_STATUS_FULL) {
+    String timeString=Utils.formatShortElapsedTime(getContext(),chargeTime / 1000);
+    mChargeDurationString=getContext().getResources().getString(R.string.power_charge_remaining,timeString);
+  }
+ else {
+    mChargeDurationString="";
+  }
 }

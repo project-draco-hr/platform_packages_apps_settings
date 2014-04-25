@@ -1,0 +1,19 @@
+{
+  paint.density=context.getResources().getDisplayMetrics().density;
+  paint.setCompatibilityScaling(context.getResources().getCompatibilityInfo().applicationScale);
+  paint.setColor(textColor.getDefaultColor());
+  paint.setTextSize(textSize);
+  Typeface tf=null;
+switch (typefaceIndex) {
+case SANS:
+    tf=Typeface.SANS_SERIF;
+  break;
+case SERIF:
+tf=Typeface.SERIF;
+break;
+case MONOSPACE:
+tf=Typeface.MONOSPACE;
+break;
+}
+setTypeface(paint,tf,styleIndex);
+}

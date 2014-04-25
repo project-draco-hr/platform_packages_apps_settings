@@ -1,7 +1,11 @@
 {
   super.onMeasure(widthMeasureSpec,heightMeasureSpec);
   mDurationStringWidth=(int)mTextPaint.measureText(mDurationString);
-  mTotalDurationStringWidth=(int)mTextPaint.measureText(mTotalDurationString);
+  mDrainStringWidth=(int)mHeaderTextPaint.measureText(mDrainString);
+  mChargeLabelStringWidth=(int)mHeaderTextPaint.measureText(mChargeLabelString);
+  mChargeDurationStringWidth=(int)mHeaderTextPaint.measureText(mChargeDurationString);
   mTextAscent=(int)mTextPaint.ascent();
   mTextDescent=(int)mTextPaint.descent();
+  mHeaderTextAscent=(int)mHeaderTextPaint.ascent();
+  mHeaderTextDescent=(int)mHeaderTextPaint.descent();
 }

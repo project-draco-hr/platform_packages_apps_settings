@@ -1,11 +1,14 @@
 {
   mParent=mFragment.getPreferenceScreen();
   mVoiceCategory=(PreferenceCategory)mParent.findPreference(KEY_VOICE_CATEGORY);
+  mVoiceInteractionPref=(ListPreference)mVoiceCategory.findPreference(KEY_VOICE_INTERACTOR);
+  mVoiceInteractionPref.setOnPreferenceChangeListener(this);
+  mVoiceInteractionSettingsPref=(PreferenceScreen)mVoiceCategory.findPreference(KEY_VOICE_INTERACTOR_SETTINGS);
   mRecognizerPref=(ListPreference)mVoiceCategory.findPreference(KEY_RECOGNIZER);
-  mRecognizerSettingsPref=mVoiceCategory.findPreference(KEY_RECOGNIZER_SETTINGS);
-  mTtsSettingsPref=mVoiceCategory.findPreference(KEY_TTS_SETTINGS);
+  mRecognizerSettingsPref=(PreferenceScreen)mVoiceCategory.findPreference(KEY_RECOGNIZER_SETTINGS);
   mRecognizerPref.setOnPreferenceChangeListener(this);
-  mSettingsPref=(PreferenceScreen)mVoiceCategory.findPreference(KEY_RECOGNIZER_SETTINGS);
+  mTtsSettingsPref=mVoiceCategory.findPreference(KEY_TTS_SETTINGS);
+  mAvailableVoiceInteractionsMap=new HashMap<String,ResolveInfo>();
   mAvailableRecognizersMap=new HashMap<String,ResolveInfo>();
   populateOrRemovePreferences();
 }

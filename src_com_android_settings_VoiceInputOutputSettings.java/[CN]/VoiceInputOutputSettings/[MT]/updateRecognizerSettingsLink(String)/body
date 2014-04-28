@@ -36,13 +36,13 @@ catch (  NameNotFoundException e) {
   }
   if (settingsActivity == null) {
     Log.w(TAG,"no recognizer settings available for " + si.packageName);
-    mSettingsPref.setIntent(null);
-    mVoiceCategory.removePreference(mSettingsPref);
+    mRecognizerSettingsPref.setIntent(null);
+    mVoiceCategory.removePreference(mRecognizerSettingsPref);
   }
  else {
     Intent i=new Intent(Intent.ACTION_MAIN);
     i.setComponent(new ComponentName(si.packageName,settingsActivity));
-    mSettingsPref.setIntent(i);
+    mRecognizerSettingsPref.setIntent(i);
     mRecognizerPref.setSummary(currentRecognizer.loadLabel(mFragment.getPackageManager()));
   }
 }

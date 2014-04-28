@@ -1,15 +1,13 @@
 {
   super.onCreate(icicle);
-  mContext=mActivity=getActivity();
-  mSwitch=new Switch(mActivity.getActionBar().getThemedContext());
+  mContext=getActivity();
   final Resources res=mContext.getResources();
   final int p=res.getDimensionPixelSize(R.dimen.content_margin_left);
-  mSwitch.setPadding(0,0,p,0);
-  setHasOptionsMenu(true);
   addPreferencesFromResource(R.xml.zen_mode_settings);
   final PreferenceScreen root=getPreferenceScreen();
   mConfig=getZenModeConfig();
   if (DEBUG)   Log.d(TAG,"Loaded mConfig=" + mConfig);
+  mSwitch=(SwitchPreference)root.findPreference(KEY_ZEN_MODE);
   final PreferenceCategory general=(PreferenceCategory)root.findPreference(KEY_GENERAL);
   mCalls=(SwitchPreference)root.findPreference(KEY_CALLS);
   mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
@@ -63,9 +61,9 @@
   mWhen.setKey(KEY_WHEN);
   mWhen.setTitle(R.string.zen_mode_when);
   mWhen.setDropDownWidth(R.dimen.zen_mode_dropdown_width);
-  mWhen.addItem(R.string.zen_mode_when_never);
   mWhen.addItem(R.string.zen_mode_when_every_night);
   mWhen.addItem(R.string.zen_mode_when_weeknights);
+  mWhen.addItem(R.string.zen_mode_when_never);
   mWhen.setCallback(new DropDownPreference.Callback(){
     @Override public boolean onItemSelected(    int pos){
       if (mDisableListeners)       return true;
@@ -121,5 +119,6 @@
   auto.addPreference(mEnd);
   mStart.setDependency(mWhen.getKey());
   mEnd.setDependency(mWhen.getKey());
+  updateZenMode();
   updateControls();
 }

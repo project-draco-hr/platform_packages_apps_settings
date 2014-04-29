@@ -1,19 +1,12 @@
 {
   final ContentResolver cr=getActivity().getContentResolver();
-  if (mForegroundColor == preference) {
-    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_FOREGROUND_COLOR,value);
+  if (mForegroundColor == preference || mForegroundOpacity == preference) {
+    final int merged=mergeColorOpacity(mForegroundColor,mForegroundOpacity);
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_FOREGROUND_COLOR,merged);
   }
  else   if (mBackgroundColor == preference || mBackgroundOpacity == preference) {
-    final int bgColor=mBackgroundColor.getValue();
-    final int bgAlpha=mBackgroundOpacity.getValue();
-    final int argb;
-    if (Color.alpha(bgColor) == 0) {
-      argb=Color.alpha(bgAlpha);
-    }
- else {
-      argb=bgColor & 0x00FFFFFF | bgAlpha & 0xFF000000;
-    }
-    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_BACKGROUND_COLOR,argb);
+    final int merged=mergeColorOpacity(mBackgroundColor,mBackgroundOpacity);
+    Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_BACKGROUND_COLOR,merged);
   }
  else   if (mEdgeColor == preference) {
     Settings.Secure.putInt(cr,Settings.Secure.ACCESSIBILITY_CAPTIONING_EDGE_COLOR,value);

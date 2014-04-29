@@ -1,0 +1,11 @@
+{
+  super(context);
+  mContext=context;
+  setLayoutTransition(new LayoutTransition());
+  final int p=mContext.getResources().getDimensionPixelSize(R.dimen.content_margin_left);
+  setPadding(p,p,p,0);
+  mNoMan=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+  final RadioButton b=newRadioButton(null);
+  b.setText(R.string.zen_mode_default_option);
+  b.setChecked(true);
+}

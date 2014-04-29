@@ -1,0 +1,14 @@
+{
+  ViewHolder vh=(ViewHolder)view.getTag();
+  ServiceInfo info=getItem(position);
+  vh.icon.setImageDrawable(info.loadIcon(mPM));
+  vh.name.setText(info.loadLabel(mPM));
+  if (SHOW_PACKAGE_NAME) {
+    vh.description.setText(info.packageName);
+    vh.description.setVisibility(View.VISIBLE);
+  }
+ else {
+    vh.description.setVisibility(View.GONE);
+  }
+  vh.checkbox.setChecked(isServiceEnabled(info));
+}

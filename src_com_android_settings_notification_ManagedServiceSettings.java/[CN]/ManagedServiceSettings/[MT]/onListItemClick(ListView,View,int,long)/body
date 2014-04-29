@@ -1,0 +1,11 @@
+{
+  ServiceInfo info=mList.getItem(position);
+  final ComponentName cn=new ComponentName(info.packageName,info.name);
+  if (mEnabledServices.contains(cn)) {
+    mEnabledServices.remove(cn);
+    saveEnabledServices();
+  }
+ else {
+    new ScaryWarningDialogFragment().setServiceInfo(cn,info.loadLabel(mPM).toString()).show(getFragmentManager(),"dialog");
+  }
+}

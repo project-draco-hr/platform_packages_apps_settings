@@ -1,6 +1,7 @@
 {
   super.onCreate(icicle);
   mContext=getActivity();
+  mPM=mContext.getPackageManager();
   final Resources res=mContext.getResources();
   final int p=res.getDimensionPixelSize(R.dimen.content_margin_left);
   addPreferencesFromResource(R.xml.zen_mode_settings);
@@ -119,6 +120,9 @@
   auto.addPreference(mEnd);
   mStart.setDependency(mWhen.getKey());
   mEnd.setDependency(mWhen.getKey());
+  mSecurityCategory=(PreferenceCategory)findPreference(KEY_SECURITY);
+  mConditionProviders=findPreference(KEY_CONDITION_PROVIDERS);
+  refreshConditionProviders();
   updateZenMode();
   updateControls();
 }

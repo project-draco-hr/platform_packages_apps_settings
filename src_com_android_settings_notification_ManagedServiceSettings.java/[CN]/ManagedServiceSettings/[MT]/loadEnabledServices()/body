@@ -1,0 +1,13 @@
+{
+  mEnabledServices.clear();
+  final String flat=Settings.Secure.getString(mCR,mConfig.setting);
+  if (flat != null && !"".equals(flat)) {
+    final String[] names=flat.split(":");
+    for (int i=0; i < names.length; i++) {
+      final ComponentName cn=ComponentName.unflattenFromString(names[i]);
+      if (cn != null) {
+        mEnabledServices.add(cn);
+      }
+    }
+  }
+}

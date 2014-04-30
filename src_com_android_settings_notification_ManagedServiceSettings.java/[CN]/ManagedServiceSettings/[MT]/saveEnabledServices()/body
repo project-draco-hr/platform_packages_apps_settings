@@ -1,0 +1,13 @@
+{
+  StringBuilder sb=null;
+  for (  ComponentName cn : mEnabledServices) {
+    if (sb == null) {
+      sb=new StringBuilder();
+    }
+ else {
+      sb.append(':');
+    }
+    sb.append(cn.flattenToString());
+  }
+  Settings.Secure.putString(mCR,mConfig.setting,sb != null ? sb.toString() : "");
+}

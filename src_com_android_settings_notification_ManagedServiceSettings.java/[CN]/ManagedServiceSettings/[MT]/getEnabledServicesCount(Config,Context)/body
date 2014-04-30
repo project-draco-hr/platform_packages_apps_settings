@@ -1,0 +1,6 @@
+{
+  final String flat=Settings.Secure.getString(context.getContentResolver(),config.setting);
+  if (flat == null || "".equals(flat))   return 0;
+  final String[] components=flat.split(":");
+  return components.length;
+}

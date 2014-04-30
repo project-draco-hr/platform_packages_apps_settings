@@ -25,6 +25,9 @@
   if (Utils.isWifiOnly(getActivity())) {
     getPreferenceScreen().removePreference(findPreference(KEY_BASEBAND_VERSION));
   }
+  if (TextUtils.isEmpty(getFeedbackReporterPackage(getActivity()))) {
+    getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_FEEDBACK));
+  }
   final Activity act=getActivity();
   PreferenceGroup parentPreference=(PreferenceGroup)findPreference(KEY_CONTAINER);
   Utils.updatePreferenceToSpecificActivityOrRemove(act,parentPreference,KEY_TERMS,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);

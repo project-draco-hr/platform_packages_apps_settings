@@ -1,0 +1,26 @@
+{
+  String feedbackReporter=context.getResources().getString(R.string.oem_preferred_feedback_reporter);
+  if (TextUtils.isEmpty(feedbackReporter)) {
+    return feedbackReporter;
+  }
+  Intent intent=new Intent(Intent.ACTION_BUG_REPORT);
+  PackageManager pm=context.getPackageManager();
+  List<ResolveInfo> resolvedPackages=pm.queryIntentActivities(intent,PackageManager.GET_RESOLVED_FILTER);
+  for (  ResolveInfo info : resolvedPackages) {
+    if (info.activityInfo != null) {
+      if (!TextUtils.isEmpty(info.activityInfo.packageName)) {
+        try {
+          ApplicationInfo ai=pm.getApplicationInfo(info.activityInfo.packageName,0);
+          if ((ai.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+            if (TextUtils.equals(info.activityInfo.packageName,feedbackReporter)) {
+              return feedbackReporter;
+            }
+          }
+        }
+ catch (        PackageManager.NameNotFoundException e) {
+        }
+      }
+    }
+  }
+  return null;
+}

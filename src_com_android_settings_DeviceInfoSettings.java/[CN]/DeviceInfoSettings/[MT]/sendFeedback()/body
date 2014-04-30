@@ -1,0 +1,9 @@
+{
+  String reporterPackage=getFeedbackReporterPackage(getActivity());
+  if (TextUtils.isEmpty(reporterPackage)) {
+    return;
+  }
+  Intent intent=new Intent(Intent.ACTION_BUG_REPORT);
+  intent.setPackage(reporterPackage);
+  startActivityForResult(intent,0);
+}

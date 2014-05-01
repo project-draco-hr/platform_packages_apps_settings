@@ -1,0 +1,15 @@
+{
+  for (  final Condition c : conditions) {
+    CheckBox v=(CheckBox)findViewWithTag(c.id);
+    if (c.state != Condition.STATE_ERROR) {
+      if (v == null) {
+        v=newCheckBox(c.id);
+      }
+    }
+    if (v != null) {
+      v.setText(c.caption);
+      v.setEnabled(c.state != Condition.STATE_ERROR);
+      v.setChecked(mSelectedConditions.contains(c.id));
+    }
+  }
+}

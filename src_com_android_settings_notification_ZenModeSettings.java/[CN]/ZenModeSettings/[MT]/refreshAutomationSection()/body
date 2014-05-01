@@ -2,7 +2,7 @@
   if (mConditionProviders != null) {
     final int total=ConditionProviderSettings.getProviderCount(mPM);
     if (total == 0) {
-      getPreferenceScreen().removePreference(mSecurityCategory);
+      getPreferenceScreen().removePreference(mAutomationCategory);
     }
  else {
       final int n=ConditionProviderSettings.getEnabledProviderCount(mContext);
@@ -11,6 +11,13 @@
       }
  else {
         mConditionProviders.setSummary(String.format(getResources().getQuantityString(R.plurals.manage_condition_providers_summary_nonzero,n,n)));
+      }
+      final String entrySummary=getEntryConditionSummary();
+      if (n == 0 || entrySummary == null) {
+        mEntry.setSummary(R.string.zen_mode_entry_conditions_summary_none);
+      }
+ else {
+        mEntry.setSummary(entrySummary);
       }
     }
   }

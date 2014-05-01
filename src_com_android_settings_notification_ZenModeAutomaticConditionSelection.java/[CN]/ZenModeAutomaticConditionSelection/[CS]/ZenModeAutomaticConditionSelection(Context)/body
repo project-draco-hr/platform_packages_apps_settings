@@ -1,0 +1,10 @@
+{
+  super(context);
+  mContext=context;
+  setOrientation(VERTICAL);
+  setLayoutTransition(new LayoutTransition());
+  final int p=mContext.getResources().getDimensionPixelSize(R.dimen.content_margin_left);
+  setPadding(p,p,p,0);
+  mNoMan=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+  refreshSelectedConditions();
+}

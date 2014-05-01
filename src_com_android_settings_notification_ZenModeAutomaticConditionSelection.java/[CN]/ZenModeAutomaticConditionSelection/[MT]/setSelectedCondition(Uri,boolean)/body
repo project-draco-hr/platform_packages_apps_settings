@@ -1,0 +1,19 @@
+{
+  if (DEBUG)   Log.d(TAG,"setSelectedCondition conditionId=" + conditionId + " selected="+ selected);
+  if (selected) {
+    mSelectedConditions.add(conditionId);
+  }
+ else {
+    mSelectedConditions.remove(conditionId);
+  }
+  final Uri[] automatic=new Uri[mSelectedConditions.size()];
+  for (int i=0; i < automatic.length; i++) {
+    automatic[i]=mSelectedConditions.valueAt(i);
+  }
+  try {
+    mNoMan.setAutomaticZenModeConditions(automatic);
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"Error calling setAutomaticZenModeConditions",e);
+  }
+}

@@ -1,0 +1,14 @@
+{
+  try {
+    final Condition[] automatic=mNoMan.getAutomaticZenModeConditions();
+    mSelectedConditions.clear();
+    if (automatic != null) {
+      for (      Condition c : automatic) {
+        mSelectedConditions.add(c.id);
+      }
+    }
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"Error calling getAutomaticZenModeConditions",e);
+  }
+}

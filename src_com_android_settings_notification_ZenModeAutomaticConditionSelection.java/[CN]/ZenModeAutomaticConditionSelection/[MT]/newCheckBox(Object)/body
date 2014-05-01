@@ -1,0 +1,12 @@
+{
+  final CheckBox button=new CheckBox(mContext);
+  button.setTag(tag);
+  button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      setSelectedCondition((Uri)button.getTag(),isChecked);
+    }
+  }
+);
+  addView(button);
+  return button;
+}

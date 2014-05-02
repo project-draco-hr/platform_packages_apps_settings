@@ -1,7 +1,8 @@
 {
-  mSwitch.setOnPreferenceChangeListener(null);
   final boolean zenMode=Global.getInt(getContentResolver(),Global.ZEN_MODE,Global.ZEN_MODE_OFF) != Global.ZEN_MODE_OFF;
-  mSwitch.setChecked(zenMode);
+  if (mSwitch.isChecked() != zenMode) {
+    mSwitch.setChecked(zenMode);
+    mIgnoreNext=true;
+  }
   mSwitch.setTitle(zenMode ? R.string.zen_mode_option_on : R.string.zen_mode_option_off);
-  mSwitch.setOnPreferenceChangeListener(mSwitchListener);
 }

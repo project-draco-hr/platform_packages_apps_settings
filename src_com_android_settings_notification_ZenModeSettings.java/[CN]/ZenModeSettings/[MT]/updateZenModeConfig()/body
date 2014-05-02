@@ -1,6 +1,7 @@
 {
   final ZenModeConfig config=getZenModeConfig();
   if (Objects.equals(config,mConfig))   return;
-  if (DEBUG)   Log.d(TAG,"updateZenModeConfig");
+  mConfig=config;
+  if (DEBUG)   Log.d(TAG,"updateZenModeConfig mConfig=" + mConfig);
   updateControls();
 }

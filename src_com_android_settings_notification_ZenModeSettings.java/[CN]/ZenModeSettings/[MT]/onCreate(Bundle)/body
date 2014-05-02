@@ -9,6 +9,7 @@
   mConfig=getZenModeConfig();
   if (DEBUG)   Log.d(TAG,"Loaded mConfig=" + mConfig);
   mSwitch=(SwitchPreference)root.findPreference(KEY_ZEN_MODE);
+  mSwitch.setOnPreferenceChangeListener(mSwitchListener);
   final PreferenceCategory general=(PreferenceCategory)root.findPreference(KEY_GENERAL);
   mCalls=(SwitchPreference)root.findPreference(KEY_CALLS);
   mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
@@ -40,9 +41,9 @@
   mStarred.setEnabled(false);
   mStarred.setTitle(R.string.zen_mode_from);
   mStarred.setDropDownWidth(R.dimen.zen_mode_dropdown_width);
-  mStarred.addItem(R.string.zen_mode_from_anyone);
-  mStarred.addItem(R.string.zen_mode_from_starred);
-  mStarred.addItem(R.string.zen_mode_from_contacts);
+  mStarred.addItem(R.string.zen_mode_from_anyone,null);
+  mStarred.addItem(R.string.zen_mode_from_starred,null);
+  mStarred.addItem(R.string.zen_mode_from_contacts,null);
   general.addPreference(mStarred);
   final Preference alarmInfo=new Preference(mContext){
     @Override public View getView(    View convertView,    ViewGroup parent){
@@ -62,13 +63,13 @@
   mWhen.setKey(KEY_WHEN);
   mWhen.setTitle(R.string.zen_mode_when);
   mWhen.setDropDownWidth(R.dimen.zen_mode_dropdown_width);
-  mWhen.addItem(R.string.zen_mode_when_every_night);
-  mWhen.addItem(R.string.zen_mode_when_weeknights);
-  mWhen.addItem(R.string.zen_mode_when_never);
+  mWhen.addItem(R.string.zen_mode_when_every_night,ZenModeConfig.SLEEP_MODE_NIGHTS);
+  mWhen.addItem(R.string.zen_mode_when_weeknights,ZenModeConfig.SLEEP_MODE_WEEKNIGHTS);
+  mWhen.addItem(R.string.zen_mode_when_never,null);
   mWhen.setCallback(new DropDownPreference.Callback(){
-    @Override public boolean onItemSelected(    int pos){
+    @Override public boolean onItemSelected(    int pos,    Object value){
       if (mDisableListeners)       return true;
-      final String mode=pos == 1 ? ZenModeConfig.SLEEP_MODE_NIGHTS : pos == 2 ? ZenModeConfig.SLEEP_MODE_WEEKNIGHTS : null;
+      final String mode=(String)value;
       if (Objects.equals(mode,mConfig.sleepMode))       return true;
       if (DEBUG)       Log.d(TAG,"onPrefChange sleepMode=" + mode);
       final ZenModeConfig newConfig=mConfig.copy();
@@ -98,6 +99,7 @@
   }
 );
   auto.addPreference(mStart);
+  mStart.setDependency(mWhen.getKey());
   mEnd=new TimePickerPreference(mContext,mgr);
   mEnd.setTitle(R.string.zen_mode_end_time);
   mEnd.setSummaryFormat(R.string.zen_mode_end_time_summary_format);
@@ -118,7 +120,6 @@
   }
 );
   auto.addPreference(mEnd);
-  mStart.setDependency(mWhen.getKey());
   mEnd.setDependency(mWhen.getKey());
   mAutomationCategory=(PreferenceCategory)findPreference(KEY_AUTOMATION);
   mEntry=findPreference(KEY_ENTRY);
@@ -135,7 +136,6 @@
   }
 );
   mConditionProviders=findPreference(KEY_CONDITION_PROVIDERS);
-  refreshAutomationSection();
   updateZenMode();
   updateControls();
 }

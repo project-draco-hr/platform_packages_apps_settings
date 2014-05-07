@@ -16,7 +16,7 @@
       return false;
     }
   }
-  ProxyProperties p=new ProxyProperties(hostname,port,exclList);
+  ProxyInfo p=new ProxyInfo(hostname,port,exclList);
   ConnectivityManager cm=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
   cm.setGlobalProxy(p);
   return true;

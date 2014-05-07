@@ -4,11 +4,11 @@
   int port=-1;
   String exclList="";
   ConnectivityManager cm=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-  ProxyProperties proxy=cm.getGlobalProxy();
+  ProxyInfo proxy=cm.getGlobalProxy();
   if (proxy != null) {
     hostname=proxy.getHost();
     port=proxy.getPort();
-    exclList=proxy.getExclusionList();
+    exclList=proxy.getExclusionListAsList();
   }
   if (hostname == null) {
     hostname="";

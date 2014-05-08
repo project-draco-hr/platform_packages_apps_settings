@@ -1,9 +1,9 @@
 {
-  mUsageStats=new ArrayList<PkgUsageStats>();
+  mUsageStats=new ArrayList<android.app.UsageStats.PackageStats>();
   mAppLabelMap=new HashMap<String,CharSequence>();
-  PkgUsageStats[] stats;
+  android.app.UsageStats.PackageStats[] stats;
   try {
-    stats=mUsageStatsService.getAllPkgUsageStats();
+    stats=mUsageStatsService.getAllPkgUsageStats(getPackageName());
   }
  catch (  RemoteException e) {
     Log.e(TAG,"Failed initializing usage stats service");
@@ -12,17 +12,17 @@
   if (stats == null) {
     return;
   }
-  for (  PkgUsageStats ps : stats) {
+  for (  android.app.UsageStats.PackageStats ps : stats) {
     mUsageStats.add(ps);
     CharSequence label;
     try {
-      ApplicationInfo appInfo=mPm.getApplicationInfo(ps.packageName,0);
+      ApplicationInfo appInfo=mPm.getApplicationInfo(ps.getPackageName(),0);
       label=appInfo.loadLabel(mPm);
     }
  catch (    NameNotFoundException e) {
-      label=ps.packageName;
+      label=ps.getPackageName();
     }
-    mAppLabelMap.put(ps.packageName,label);
+    mAppLabelMap.put(ps.getPackageName(),label);
   }
   mLaunchCountComparator=new LaunchCountComparator();
   mUsageTimeComparator=new UsageTimeComparator();

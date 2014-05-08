@@ -11,12 +11,12 @@
  else {
     holder=(AppViewHolder)convertView.getTag();
   }
-  PkgUsageStats pkgStats=mUsageStats.get(position);
+  android.app.UsageStats.PackageStats pkgStats=mUsageStats.get(position);
   if (pkgStats != null) {
-    CharSequence label=mAppLabelMap.get(pkgStats.packageName);
+    CharSequence label=mAppLabelMap.get(pkgStats.getPackageName());
     holder.pkgName.setText(label);
-    holder.launchCount.setText(String.valueOf(pkgStats.launchCount));
-    holder.usageTime.setText(String.valueOf(pkgStats.usageTime) + " ms");
+    holder.launchCount.setText(String.valueOf(pkgStats.getLaunchCount()));
+    holder.usageTime.setText(String.valueOf(pkgStats.getUsageTime(0)) + " ms");
   }
  else {
     Log.w(TAG,"No usage stats info for package:" + position);

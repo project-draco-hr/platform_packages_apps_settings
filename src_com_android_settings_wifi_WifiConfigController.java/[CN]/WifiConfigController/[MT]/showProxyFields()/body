@@ -5,8 +5,9 @@
     config=mAccessPoint.getConfig();
   }
   if (mProxySettingsSpinner.getSelectedItemPosition() == PROXY_STATIC) {
-    mView.findViewById(R.id.proxy_warning_limited_support).setVisibility(View.VISIBLE);
-    mView.findViewById(R.id.proxy_fields).setVisibility(View.VISIBLE);
+    setVisibility(R.id.proxy_warning_limited_support,View.VISIBLE);
+    setVisibility(R.id.proxy_fields,View.VISIBLE);
+    setVisibility(R.id.proxy_pac_field,View.GONE);
     if (mProxyHostView == null) {
       mProxyHostView=(TextView)mView.findViewById(R.id.proxy_hostname);
       mProxyHostView.addTextChangedListener(this);
@@ -24,8 +25,24 @@
       }
     }
   }
+ else   if (mProxySettingsSpinner.getSelectedItemPosition() == PROXY_PAC) {
+    setVisibility(R.id.proxy_warning_limited_support,View.GONE);
+    setVisibility(R.id.proxy_fields,View.GONE);
+    setVisibility(R.id.proxy_pac_field,View.VISIBLE);
+    if (mProxyPacView == null) {
+      mProxyPacView=(TextView)mView.findViewById(R.id.proxy_pac);
+      mProxyPacView.addTextChangedListener(this);
+    }
+    if (config != null) {
+      ProxyInfo proxyInfo=config.getLinkProperties().getHttpProxy();
+      if (proxyInfo != null) {
+        mProxyPacView.setText(proxyInfo.getPacFileUrl().toString());
+      }
+    }
+  }
  else {
-    mView.findViewById(R.id.proxy_warning_limited_support).setVisibility(View.GONE);
-    mView.findViewById(R.id.proxy_fields).setVisibility(View.GONE);
+    setVisibility(R.id.proxy_warning_limited_support,View.GONE);
+    setVisibility(R.id.proxy_fields,View.GONE);
+    setVisibility(R.id.proxy_pac_field,View.GONE);
   }
 }

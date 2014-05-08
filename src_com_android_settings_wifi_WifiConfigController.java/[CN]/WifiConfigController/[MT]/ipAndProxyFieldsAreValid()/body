@@ -7,8 +7,10 @@
       return false;
     }
   }
-  mProxySettings=(mProxySettingsSpinner != null && mProxySettingsSpinner.getSelectedItemPosition() == PROXY_STATIC) ? ProxySettings.STATIC : ProxySettings.NONE;
-  if (mProxySettings == ProxySettings.STATIC && mProxyHostView != null) {
+  final int selectedPosition=mProxySettingsSpinner.getSelectedItemPosition();
+  mProxySettings=ProxySettings.NONE;
+  if (selectedPosition == PROXY_STATIC && mProxyHostView != null) {
+    mProxySettings=ProxySettings.STATIC;
     String host=mProxyHostView.getText().toString();
     String portStr=mProxyPortView.getText().toString();
     String exclusionList=mProxyExclusionListView.getText().toString();
@@ -28,6 +30,19 @@
  else {
       return false;
     }
+  }
+ else   if (selectedPosition == PROXY_PAC && mProxyPacView != null) {
+    mProxySettings=ProxySettings.PAC;
+    CharSequence uriSequence=mProxyPacView.getText();
+    if (TextUtils.isEmpty(uriSequence)) {
+      return false;
+    }
+    Uri uri=Uri.parse(uriSequence.toString());
+    if (uri == null) {
+      return false;
+    }
+    ProxyInfo proxyInfo=new ProxyInfo(uri);
+    mLinkProperties.setHttpProxy(proxyInfo);
   }
   return true;
 }

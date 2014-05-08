@@ -1,5 +1,7 @@
 {
   mContext=context;
+  mHasFeturePrinting=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_PRINTING);
+  mHasFetureIme=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_INPUT_METHODS);
   AccessibilityManager accessibilityManager=(AccessibilityManager)mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
   List<AccessibilityServiceInfo> accessibilityServices=accessibilityManager.getInstalledAccessibilityServiceList();
   final int accessibilityServiceCount=accessibilityServices.size();
@@ -11,27 +13,31 @@
     }
     mAccessibilityServices.add(resolveInfo.serviceInfo.packageName);
   }
-  PrintManager printManager=(PrintManager)mContext.getSystemService(Context.PRINT_SERVICE);
-  List<PrintServiceInfo> printServices=printManager.getInstalledPrintServices();
-  final int serviceCount=printServices.size();
-  for (int i=0; i < serviceCount; i++) {
-    PrintServiceInfo printService=printServices.get(i);
-    ResolveInfo resolveInfo=printService.getResolveInfo();
-    if (resolveInfo == null || resolveInfo.serviceInfo == null) {
-      continue;
+  if (mHasFeturePrinting) {
+    PrintManager printManager=(PrintManager)mContext.getSystemService(Context.PRINT_SERVICE);
+    List<PrintServiceInfo> printServices=printManager.getInstalledPrintServices();
+    final int serviceCount=printServices.size();
+    for (int i=0; i < serviceCount; i++) {
+      PrintServiceInfo printService=printServices.get(i);
+      ResolveInfo resolveInfo=printService.getResolveInfo();
+      if (resolveInfo == null || resolveInfo.serviceInfo == null) {
+        continue;
+      }
+      mPrintServices.add(resolveInfo.serviceInfo.packageName);
     }
-    mPrintServices.add(resolveInfo.serviceInfo.packageName);
   }
-  InputMethodManager imeManager=(InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-  List<InputMethodInfo> inputMethods=imeManager.getInputMethodList();
-  final int inputMethodCount=inputMethods.size();
-  for (int i=0; i < inputMethodCount; i++) {
-    InputMethodInfo inputMethod=inputMethods.get(i);
-    ServiceInfo serviceInfo=inputMethod.getServiceInfo();
-    if (serviceInfo == null)     continue;
-    mImeServices.add(serviceInfo.packageName);
+  if (mHasFetureIme) {
+    InputMethodManager imeManager=(InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+    List<InputMethodInfo> inputMethods=imeManager.getInputMethodList();
+    final int inputMethodCount=inputMethods.size();
+    for (int i=0; i < inputMethodCount; i++) {
+      InputMethodInfo inputMethod=inputMethods.get(i);
+      ServiceInfo serviceInfo=inputMethod.getServiceInfo();
+      if (serviceInfo == null)       continue;
+      mImeServices.add(serviceInfo.packageName);
+    }
+    mContext.getContentResolver().registerContentObserver(UserDictionary.Words.CONTENT_URI,true,mUserDictionaryContentObserver);
   }
-  mContext.getContentResolver().registerContentObserver(UserDictionary.Words.CONTENT_URI,true,mContentObserver);
   InputManager inputManager=(InputManager)context.getSystemService(Context.INPUT_SERVICE);
   inputManager.registerInputDeviceListener(this,mHandler);
   register(context,Looper.getMainLooper(),UserHandle.CURRENT,false);

@@ -2,7 +2,9 @@
   super.unregister();
   InputManager inputManager=(InputManager)mContext.getSystemService(Context.INPUT_SERVICE);
   inputManager.unregisterInputDeviceListener(this);
-  mContext.getContentResolver().unregisterContentObserver(mContentObserver);
+  if (mHasFetureIme) {
+    mContext.getContentResolver().unregisterContentObserver(mUserDictionaryContentObserver);
+  }
   mAccessibilityServices.clear();
   mPrintServices.clear();
   mImeServices.clear();

@@ -6,18 +6,22 @@
       Index.getInstance(mContext).updateFromClassNameResource(AccessibilitySettings.class.getName(),false,true);
     }
   }
-  if (!mPrintServices.contains(packageName)) {
-    final Intent intent=getPrintServiceIntent(packageName);
-    if (!mContext.getPackageManager().queryIntentServices(intent,0).isEmpty()) {
-      mPrintServices.add(packageName);
-      Index.getInstance(mContext).updateFromClassNameResource(PrintSettingsFragment.class.getName(),false,true);
+  if (mHasFeturePrinting) {
+    if (!mPrintServices.contains(packageName)) {
+      final Intent intent=getPrintServiceIntent(packageName);
+      if (!mContext.getPackageManager().queryIntentServices(intent,0).isEmpty()) {
+        mPrintServices.add(packageName);
+        Index.getInstance(mContext).updateFromClassNameResource(PrintSettingsFragment.class.getName(),false,true);
+      }
     }
   }
-  if (!mImeServices.contains(packageName)) {
-    Intent intent=getIMEServiceIntent(packageName);
-    if (!mContext.getPackageManager().queryIntentServices(intent,0).isEmpty()) {
-      mImeServices.add(packageName);
-      Index.getInstance(mContext).updateFromClassNameResource(InputMethodAndLanguageSettings.class.getName(),false,true);
+  if (mHasFetureIme) {
+    if (!mImeServices.contains(packageName)) {
+      Intent intent=getIMEServiceIntent(packageName);
+      if (!mContext.getPackageManager().queryIntentServices(intent,0).isEmpty()) {
+        mImeServices.add(packageName);
+        Index.getInstance(mContext).updateFromClassNameResource(InputMethodAndLanguageSettings.class.getName(),false,true);
+      }
     }
   }
 }

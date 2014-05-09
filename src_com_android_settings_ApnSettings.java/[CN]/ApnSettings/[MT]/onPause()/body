@@ -1,4 +1,7 @@
 {
   super.onPause();
+  if (mUnavailable) {
+    return;
+  }
   unregisterReceiver(mMobileStateReceiver);
 }

@@ -1,5 +1,11 @@
 {
   super.onCreate(icicle);
+  mUm=(UserManager)getSystemService(Context.USER_SERVICE);
+  if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS)) {
+    mUnavailable=true;
+    setContentView(R.layout.apn_disallowed_preference_screen);
+    return;
+  }
   addPreferencesFromResource(R.xml.apn_settings);
   getListView().setItemsCanFocus(true);
   mMobileStateFilter=new IntentFilter(TelephonyIntents.ACTION_ANY_DATA_CONNECTION_STATE_CHANGED);

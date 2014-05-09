@@ -1,5 +1,8 @@
 {
   super.onPause();
+  if (mUnavailable) {
+    return;
+  }
   if (mDialog != null) {
     mDialog.setOnDismissListener(null);
     mDialog.dismiss();

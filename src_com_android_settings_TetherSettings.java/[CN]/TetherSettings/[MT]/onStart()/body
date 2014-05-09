@@ -1,5 +1,13 @@
 {
   super.onStart();
+  if (mUnavailable) {
+    TextView emptyView=(TextView)getView().findViewById(android.R.id.empty);
+    getListView().setEmptyView(emptyView);
+    if (emptyView != null) {
+      emptyView.setText(R.string.tethering_settings_not_available);
+    }
+    return;
+  }
   final Activity activity=getActivity();
   mMassStorageActive=Environment.MEDIA_SHARED.equals(Environment.getExternalStorageState());
   mTetherChangeReceiver=new TetherChangeReceiver();

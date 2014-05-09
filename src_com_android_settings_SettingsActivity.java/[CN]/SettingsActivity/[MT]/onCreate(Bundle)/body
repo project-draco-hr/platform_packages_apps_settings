@@ -50,8 +50,8 @@
     }
   }
   mActionBar=getActionBar();
-  mActionBar.setHomeButtonEnabled(true);
   mActionBar.setDisplayHomeAsUpEnabled(mDisplayHomeAsUpEnabled);
+  mActionBar.setHomeButtonEnabled(mDisplayHomeAsUpEnabled);
   Intent intent=getIntent();
   if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_BUTTON_BAR,false)) {
     View buttonBar=findViewById(com.android.internal.R.id.button_bar);

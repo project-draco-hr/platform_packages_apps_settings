@@ -3,7 +3,8 @@
   mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
   mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
-  if (android.os.Process.myUserHandle().getIdentifier() != UserHandle.USER_OWNER) {
+  mUm=(UserManager)getSystemService(Context.USER_SERVICE);
+  if (android.os.Process.myUserHandle().getIdentifier() != UserHandle.USER_OWNER || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getActivity(),null));
     return;

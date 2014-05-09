@@ -11,13 +11,14 @@
   mAvailableAgents.ensureCapacity(resolveInfos.size());
   for (  ResolveInfo resolveInfo : resolveInfos) {
     if (resolveInfo.serviceInfo == null)     continue;
-    ComponentName name=getComponentName(resolveInfo);
+    ComponentName name=TrustAgentUtils.getComponentName(resolveInfo);
     if (!mAvailableAgents.containsKey(name)) {
       AgentInfo agentInfo=new AgentInfo();
       agentInfo.label=resolveInfo.loadLabel(pm);
       agentInfo.icon=resolveInfo.loadIcon(pm);
       agentInfo.component=name;
-      agentInfo.settings=getSettingsComponentName(pm,resolveInfo);
+      TrustAgentUtils.TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
+      agentInfo.settings=trustAgentComponentInfo.componentName;
       mAvailableAgents.put(name,agentInfo);
     }
   }

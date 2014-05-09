@@ -9,5 +9,14 @@
     lockPatternUtils.setBiometricWeakLivelinessEnabled(false);
     return;
   }
+ else   if (requestCode == CHANGE_TRUST_AGENT_SETTINGS && resultCode == Activity.RESULT_OK) {
+    Preference preference=getPreferenceScreen().findPreference(KEY_TRUST_AGENT);
+    if (preference != null) {
+      Intent intent=preference.getIntent();
+      if (intent != null) {
+        startActivity(intent);
+      }
+    }
+  }
   createPreferenceHierarchy();
 }

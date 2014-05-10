@@ -1,4 +1,7 @@
 {
   super.onStart();
-  AccountManager.get(getActivity()).addOnAccountsUpdatedListener(this,null,false);
+  if (!mAccountListenerAdded) {
+    AccountManager.get(getActivity()).addOnAccountsUpdatedListener(this,null,false);
+    mAccountListenerAdded=true;
+  }
 }

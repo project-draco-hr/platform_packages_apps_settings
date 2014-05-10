@@ -1,4 +1,7 @@
 {
   super.onStop();
-  AccountManager.get(getActivity()).removeOnAccountsUpdatedListener(this);
+  if (mAccountListenerAdded) {
+    AccountManager.get(getActivity()).removeOnAccountsUpdatedListener(this);
+    mAccountListenerAdded=false;
+  }
 }

@@ -17,9 +17,20 @@
     mEngineSettingsPreference.setEnabled(false);
   }
   mInstallVoicesPreference.setEnabled(false);
-  mLocalePreference.setEnabled(false);
-  mLocalePreference.setEntries(new CharSequence[0]);
-  mLocalePreference.setEntryValues(new CharSequence[0]);
+  if (savedInstanceState == null) {
+    mLocalePreference.setEnabled(false);
+    mLocalePreference.setEntries(new CharSequence[0]);
+    mLocalePreference.setEntryValues(new CharSequence[0]);
+  }
+ else {
+    final CharSequence[] entries=savedInstanceState.getCharSequenceArray(STATE_KEY_LOCALE_ENTRIES);
+    final CharSequence[] entryValues=savedInstanceState.getCharSequenceArray(STATE_KEY_LOCALE_ENTRY_VALUES);
+    final CharSequence value=savedInstanceState.getCharSequence(STATE_KEY_LOCALE_VALUE);
+    mLocalePreference.setEntries(entries);
+    mLocalePreference.setEntryValues(entryValues);
+    mLocalePreference.setValue(value.toString());
+    mLocalePreference.setEnabled(entries.length > 0);
+  }
   mVoiceDataDetails=getArguments().getParcelable(TtsEnginePreference.FRAGMENT_ARGS_VOICES);
   mTts=new TextToSpeech(getActivity().getApplicationContext(),mTtsInitListener,getEngineName());
   checkTtsData();

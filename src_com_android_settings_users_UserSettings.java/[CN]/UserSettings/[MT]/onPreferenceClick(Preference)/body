@@ -32,7 +32,12 @@
     }
   }
  else   if (pref == mAddUser) {
-    showDialog(DIALOG_CHOOSE_USER_TYPE);
+    if (mCanAddRestrictedProfile) {
+      showDialog(DIALOG_CHOOSE_USER_TYPE);
+    }
+ else {
+      onAddUserClicked(USER_TYPE_USER);
+    }
   }
   return false;
 }

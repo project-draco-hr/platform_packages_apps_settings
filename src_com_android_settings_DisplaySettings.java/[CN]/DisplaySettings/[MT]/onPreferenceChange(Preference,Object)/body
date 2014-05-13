@@ -13,5 +13,9 @@
   if (KEY_FONT_SIZE.equals(key)) {
     writeFontSizePreference(objValue);
   }
+  if (preference == mAutoBrightnessPreference) {
+    boolean auto=(Boolean)objValue;
+    Settings.System.putInt(getContentResolver(),SCREEN_BRIGHTNESS_MODE,auto ? SCREEN_BRIGHTNESS_MODE_AUTOMATIC : SCREEN_BRIGHTNESS_MODE_MANUAL);
+  }
   return true;
 }

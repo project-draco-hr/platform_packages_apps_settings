@@ -1,4 +1,8 @@
 {
   readFontSizePreference(mFontSizePref);
   updateScreenSaverSummary();
+  if (mAutoBrightnessPreference != null) {
+    int brightnessMode=Settings.System.getInt(getContentResolver(),SCREEN_BRIGHTNESS_MODE,SCREEN_BRIGHTNESS_MODE_MANUAL);
+    mAutoBrightnessPreference.setChecked(brightnessMode != SCREEN_BRIGHTNESS_MODE_MANUAL);
+  }
 }

@@ -15,4 +15,12 @@
   mFontSizePref=(WarnedListPreference)findPreference(KEY_FONT_SIZE);
   mFontSizePref.setOnPreferenceChangeListener(this);
   mFontSizePref.setOnPreferenceClickListener(this);
+  boolean automaticBrightnessAvailable=getResources().getBoolean(com.android.internal.R.bool.config_automatic_brightness_available);
+  if (automaticBrightnessAvailable) {
+    mAutoBrightnessPreference=(CheckBoxPreference)findPreference(KEY_AUTO_BRIGHTNESS);
+    mAutoBrightnessPreference.setOnPreferenceChangeListener(this);
+  }
+ else {
+    removePreference(KEY_AUTO_BRIGHTNESS);
+  }
 }

@@ -1,6 +1,19 @@
 {
-  mQuery=getFilteredQueryString(query);
-  updateSuggestions();
+  final String newQuery=getFilteredQueryString(query);
+  boolean isNewQuery;
+  if (!TextUtils.isEmpty(mQuery)) {
+    isNewQuery=!mQuery.equals(query);
+  }
+ else {
+    isNewQuery=!TextUtils.isEmpty(query);
+  }
+  mQuery=newQuery;
+  if (isNewQuery) {
+    mShowOnlyResults=false;
+  }
+  if (!mShowOnlyResults) {
+    updateSuggestions();
+  }
   updateSearchResults();
   return true;
 }

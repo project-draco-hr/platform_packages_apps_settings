@@ -7,6 +7,9 @@
   if (mSearchMenuItem == null || mSearchView == null) {
     return false;
   }
+  if (mSearchResultsFragment != null) {
+    mSearchResultsFragment.setSearchView(mSearchView);
+  }
   mSearchMenuItem.setOnActionExpandListener(this);
   mSearchView.setOnQueryTextListener(this);
   mSearchView.setOnCloseListener(this);

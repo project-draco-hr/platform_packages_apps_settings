@@ -2,4 +2,7 @@
   super.onCreate(savedInstanceState);
   mResultsAdapter=new SearchResultsAdapter(getActivity());
   mSuggestionsAdapter=new SuggestionsAdapter(getActivity());
+  if (savedInstanceState != null) {
+    mShowOnlyResults=savedInstanceState.getBoolean(SAVE_KEY_SHOW_ONLY_RESULTS);
+  }
 }

@@ -1,0 +1,17 @@
+{
+  super(context,attrs,defStyleAttr,defStyleRes);
+  LayoutInflater.from(context).inflate(R.layout.switch_bar,this);
+  mTextView=(TextView)findViewById(R.id.switch_text);
+  mTextView.setText(R.string.switch_off_text);
+  mSwitch=(Switch)findViewById(R.id.switch_widget);
+  mSwitch.setOnCheckedChangeListener(this);
+  addOnSwitchChangeListener(new OnSwitchChangeListener(){
+    @Override public void onSwitchChanged(    Switch switchView,    boolean isChecked){
+      mTextView.setText(isChecked ? R.string.switch_on_text : R.string.switch_off_text);
+    }
+  }
+);
+  mSwitch.setTrackResource(R.drawable.switch_track);
+  mSwitch.setThumbResource(R.drawable.switch_inner);
+  setVisibility(View.GONE);
+}

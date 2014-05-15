@@ -21,11 +21,11 @@ mLocationMode.setEnabled(enabled && !restricted);
 mCategoryRecentLocationRequests.setEnabled(enabled);
 if (enabled != mSwitch.isChecked()) {
 if (mValidListener) {
-mSwitch.setOnCheckedChangeListener(null);
+mSwitchBar.removeOnSwitchChangeListener(this);
 }
 mSwitch.setChecked(enabled);
 if (mValidListener) {
-mSwitch.setOnCheckedChangeListener(this);
+mSwitchBar.addOnSwitchChangeListener(this);
 }
 }
 injector.reloadStatusMessages();

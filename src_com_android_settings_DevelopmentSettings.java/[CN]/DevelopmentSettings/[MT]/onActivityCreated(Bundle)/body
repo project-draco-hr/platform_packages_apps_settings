@@ -1,12 +1,11 @@
 {
   super.onActivityCreated(savedInstanceState);
-  final Activity activity=getActivity();
-  mEnabledSwitch=new Switch(activity.getActionBar().getThemedContext());
-  final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
-  mEnabledSwitch.setPaddingRelative(0,0,padding,0);
+  final SettingsActivity activity=(SettingsActivity)getActivity();
+  mSwitchBar=activity.getSwitchBar();
+  mEnabledSwitch=mSwitchBar.getSwitch();
   if (mUnavailable) {
     mEnabledSwitch.setEnabled(false);
     return;
   }
-  mEnabledSwitch.setOnCheckedChangeListener(this);
+  mSwitchBar.addOnSwitchChangeListener(this);
 }

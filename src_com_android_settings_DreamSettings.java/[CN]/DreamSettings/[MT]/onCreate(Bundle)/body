@@ -1,19 +1,10 @@
 {
   logd("onCreate(%s)",icicle);
   super.onCreate(icicle);
-  final Activity activity=getActivity();
+  final SettingsActivity activity=(SettingsActivity)getActivity();
   mBackend=new DreamBackend(activity);
-  mSwitch=new Switch(activity.getActionBar().getThemedContext());
-  mSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
-      if (!mRefreshing) {
-        mBackend.setEnabled(isChecked);
-        refreshFromBackend();
-      }
-    }
-  }
-);
-  final int padding=activity.getResources().getDimensionPixelSize(R.dimen.action_bar_switch_padding);
-  mSwitch.setPaddingRelative(0,0,padding,0);
+  mSwitchBar=activity.getSwitchBar();
+  mSwitchBar.addOnSwitchChangeListener(this);
+  mSwitch=mSwitchBar.getSwitch();
   setHasOptionsMenu(true);
 }

@@ -1,5 +1,6 @@
 {
   logd("onDestroyView()");
-  getActivity().getActionBar().setCustomView(null);
+  mSwitchBar.removeOnSwitchChangeListener(this);
+  mSwitchBar.hide();
   super.onDestroyView();
 }

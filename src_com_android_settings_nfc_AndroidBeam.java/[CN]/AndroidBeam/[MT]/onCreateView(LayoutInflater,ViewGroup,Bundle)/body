@@ -1,5 +1,7 @@
 {
   mView=inflater.inflate(R.layout.android_beam,container,false);
-  initView(mView);
+  mSwitchBar.addOnSwitchChangeListener(this);
+  mSwitchBar.show();
+  mSwitch.setChecked(mNfcAdapter.isNdefPushEnabled());
   return mView;
 }

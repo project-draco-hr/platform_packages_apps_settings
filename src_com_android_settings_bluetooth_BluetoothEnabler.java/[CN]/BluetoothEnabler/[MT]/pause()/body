@@ -3,6 +3,7 @@
     return;
   }
   mContext.unregisterReceiver(mReceiver);
-  mSwitch.setOnCheckedChangeListener(null);
+  mSwitchBar.removeOnSwitchChangeListener(this);
+  mSwitchBar.hide();
   mValidListener=false;
 }

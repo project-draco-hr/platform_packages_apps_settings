@@ -1,11 +1,11 @@
 {
   if (isChecked != mSwitch.isChecked()) {
     if (mValidListener) {
-      mSwitch.setOnCheckedChangeListener(null);
+      mSwitchBar.removeOnSwitchChangeListener(this);
     }
     mSwitch.setChecked(isChecked);
     if (mValidListener) {
-      mSwitch.setOnCheckedChangeListener(this);
+      mSwitchBar.addOnSwitchChangeListener(this);
     }
   }
 }

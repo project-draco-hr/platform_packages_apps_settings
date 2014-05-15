@@ -2,4 +2,6 @@
   logd("onPause()");
   super.onPause();
   mContext.unregisterReceiver(mPackageReceiver);
+  mSwitchBar.removeOnSwitchChangeListener(this);
+  mSwitchBar.hide();
 }

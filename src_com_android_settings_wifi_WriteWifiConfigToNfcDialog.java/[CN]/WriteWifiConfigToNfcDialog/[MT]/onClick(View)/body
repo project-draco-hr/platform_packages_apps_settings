@@ -3,7 +3,7 @@
   String password=mPasswordView.getText().toString();
   String wpsNfcConfigurationToken=mWifiManager.getWpsNfcConfigurationToken(mAccessPoint.networkId);
   String passwordHex=byteArrayToHexString(password.getBytes());
-  String passwordLength=password.length() >= 16 ? "" + Character.forDigit(password.length(),16) : "0" + Character.forDigit(password.length(),16);
+  String passwordLength=password.length() >= HEX_RADIX ? "" + Character.forDigit(password.length(),HEX_RADIX) : "0" + Character.forDigit(password.length(),HEX_RADIX);
   passwordHex=String.format(PASSWORD_FORMAT,passwordLength,passwordHex).toUpperCase();
   if (wpsNfcConfigurationToken.contains(passwordHex)) {
     mWpsNfcConfigurationToken=wpsNfcConfigurationToken;

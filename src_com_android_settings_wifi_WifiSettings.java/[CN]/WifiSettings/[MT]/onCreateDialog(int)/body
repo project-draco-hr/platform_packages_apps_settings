@@ -41,8 +41,10 @@ getActivity().finish();
 }
 ).create();
 case WRITE_NFC_DIALOG_ID:
+if (mSelectedAccessPoint != null) {
 mWifiToNfcDialog=new WriteWifiConfigToNfcDialog(getActivity(),mSelectedAccessPoint,mWifiManager);
 return mWifiToNfcDialog;
+}
 }
 return super.onCreateDialog(dialogId);
 }

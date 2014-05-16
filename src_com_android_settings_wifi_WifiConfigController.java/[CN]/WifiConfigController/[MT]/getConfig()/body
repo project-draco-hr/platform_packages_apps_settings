@@ -92,8 +92,6 @@ break;
 default :
 return null;
 }
-config.proxySettings=mProxySettings;
-config.ipAssignment=mIpAssignment;
-config.linkProperties=new LinkProperties(mLinkProperties);
+config.setIpConfiguration(new IpConfiguration(mIpAssignment,mProxySettings,mLinkProperties));
 return config;
 }

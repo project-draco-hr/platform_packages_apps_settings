@@ -1,0 +1,17 @@
+{
+  if (DEBUG)   Log.d(TAG,"onPreferenceChange isChecked=" + isChecked + " mIgnoreNext="+ mIgnoreNext);
+  if (mIgnoreNext) {
+    mIgnoreNext=false;
+  }
+  AsyncTask.execute(new Runnable(){
+    @Override public void run(){
+      final int v=isChecked ? Global.ZEN_MODE_ON : Global.ZEN_MODE_OFF;
+      putZenModeSetting(v);
+      final int n=ConditionProviderSettings.getEnabledProviderCount(mContext);
+      if (n > 0) {
+        mHandler.post(isChecked ? mShowDialog : mHideDialog);
+      }
+    }
+  }
+);
+}

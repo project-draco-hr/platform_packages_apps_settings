@@ -1,8 +1,10 @@
 {
   mPrintersAdapter=new PrintersAdapter();
   mPrintersAdapter.registerDataSetObserver(mDataObserver);
-  mToggleSwitch=createActionBarToggleSwitch(getActivity().getActionBar().getThemedContext());
-  mToggleSwitch.setOnBeforeCheckedChangeListener(new OnBeforeCheckedChangeListener(){
+  final SettingsActivity activity=(SettingsActivity)getActivity();
+  mSwitchBar=activity.getSwitchBar();
+  mToggleSwitch=mSwitchBar.getSwitch();
+  mToggleSwitch.setOnBeforeCheckedChangeListener(new ToggleSwitch.OnBeforeCheckedChangeListener(){
     @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
       if (checked) {
         if (!TextUtils.isEmpty(mEnableWarningMessage)) {
@@ -17,12 +19,6 @@
         onPreferenceToggled(mPreferenceKey,false);
       }
       return false;
-    }
-  }
-);
-  mToggleSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
-      updateEmptyView();
     }
   }
 );

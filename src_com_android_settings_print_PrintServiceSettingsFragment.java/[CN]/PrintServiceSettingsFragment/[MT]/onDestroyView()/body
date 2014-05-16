@@ -1,8 +1,8 @@
 {
-  removeActionBarToggleSwitch(getActivity());
   if (mOldActivityTitle != null) {
     getActivity().getActionBar().setTitle(mOldActivityTitle);
   }
-  mToggleSwitch.setOnBeforeCheckedChangeListener(null);
+  mSwitchBar.removeOnSwitchChangeListener(this);
+  mSwitchBar.hide();
   super.onDestroyView();
 }

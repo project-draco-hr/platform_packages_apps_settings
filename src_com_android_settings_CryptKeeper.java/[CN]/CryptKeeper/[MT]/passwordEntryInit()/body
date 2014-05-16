@@ -36,6 +36,7 @@
     if (pm != null) {
       mWakeLock=pm.newWakeLock(PowerManager.FULL_WAKE_LOCK,TAG);
       mWakeLock.acquire();
+      mReleaseWakeLockCountdown=96;
     }
   }
   if (mLockPatternView == null) {

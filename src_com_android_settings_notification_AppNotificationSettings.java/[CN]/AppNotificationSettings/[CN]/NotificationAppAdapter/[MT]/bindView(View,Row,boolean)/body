@@ -16,9 +16,10 @@
 );
   enableLayoutTransitions(vh.appButton,animate);
   vh.icon.setImageDrawable(row.icon);
-  vh.banBadge.setVisibility(row.banned ? View.VISIBLE : View.GONE);
-  vh.priBadge.setVisibility(row.priority ? View.VISIBLE : View.GONE);
   vh.title.setText(row.label);
+  final String sub=getSubtitle(row);
+  vh.subtitle.setText(sub);
+  vh.subtitle.setVisibility(!sub.isEmpty() ? View.VISIBLE : View.GONE);
   final boolean showSettings=!row.banned && row.settingsIntent != null;
   vh.settingsDivider.setVisibility(showSettings ? View.VISIBLE : View.GONE);
   vh.settingsButton.setVisibility(showSettings ? View.VISIBLE : View.GONE);

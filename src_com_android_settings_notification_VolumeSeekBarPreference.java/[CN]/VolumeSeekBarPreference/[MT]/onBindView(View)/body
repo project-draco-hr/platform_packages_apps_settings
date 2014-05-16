@@ -1,0 +1,21 @@
+{
+  super.onBindView(view);
+  if (mStream == 0) {
+    Log.w(TAG,"No stream found, not binding volumizer");
+    return;
+  }
+  getPreferenceManager().registerOnActivityStopListener(this);
+  final SeekBar seekBar=(SeekBar)view.findViewById(com.android.internal.R.id.seekbar);
+  if (seekBar == mSeekBar)   return;
+  mSeekBar=seekBar;
+  final SeekBarVolumizer.Callback sbvc=new SeekBarVolumizer.Callback(){
+    @Override public void onSampleStarting(    SeekBarVolumizer sbv){
+      if (mCallback != null) {
+        mCallback.onSampleStarting(sbv);
+      }
+    }
+  }
+;
+  final Uri sampleUri=mStream == AudioManager.STREAM_MUSIC ? getMediaVolumeUri() : null;
+  mVolumizer=new SeekBarVolumizer(mContext,seekBar,mStream,sampleUri,sbvc);
+}

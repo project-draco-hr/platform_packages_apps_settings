@@ -1,0 +1,13 @@
+{
+  mVibrateWhenRinging=(TwoStatePreference)findPreference(KEY_VIBRATE_WHEN_RINGING);
+  if (mVibrateWhenRinging == null)   return;
+  mVibrateWhenRinging.setPersistent(false);
+  updateVibrateWhenRinging();
+  mVibrateWhenRinging.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final boolean val=(Boolean)newValue;
+      return Settings.System.putInt(getContentResolver(),Settings.System.VIBRATE_WHEN_RINGING,val ? 1 : 0);
+    }
+  }
+);
+}

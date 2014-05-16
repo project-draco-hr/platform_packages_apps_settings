@@ -1,0 +1,15 @@
+{
+  mSetting=setting;
+  mUri=System.getUriFor(mSetting);
+  if (!applicable)   removePreference(key);
+  mPref=(TwoStatePreference)getPreferenceScreen().findPreference(key);
+  if (mPref == null)   return;
+  update();
+  mPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      setSetting((Boolean)newValue);
+      return true;
+    }
+  }
+);
+}

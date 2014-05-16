@@ -1,0 +1,10 @@
+{
+  if (row.banned)   return mContext.getString(R.string.app_notification_row_banned);
+  if (!row.priority && !row.sensitive)   return "";
+  final String priString=mContext.getString(R.string.app_notification_row_priority);
+  final String senString=mContext.getString(R.string.app_notification_row_sensitive);
+  if (row.priority != row.sensitive) {
+    return row.priority ? priString : senString;
+  }
+  return priString + mContext.getString(R.string.summary_divider_text) + senString;
+}

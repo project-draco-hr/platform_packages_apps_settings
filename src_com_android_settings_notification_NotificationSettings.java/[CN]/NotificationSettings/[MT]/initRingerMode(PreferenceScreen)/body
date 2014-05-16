@@ -1,0 +1,17 @@
+{
+  mRingerMode=(DropDownPreference)root.findPreference(KEY_RINGER_MODE);
+  if (mRingerMode == null)   return;
+  final AudioManager am=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+  mRingerMode.addItem(R.string.ringer_mode_audible,AudioManager.RINGER_MODE_NORMAL);
+  mRingerMode.addItem(R.string.ringer_mode_vibrate,AudioManager.RINGER_MODE_VIBRATE);
+  mRingerMode.addItem(R.string.ringer_mode_silent,AudioManager.RINGER_MODE_SILENT);
+  updateRingerMode();
+  mRingerMode.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object value){
+      final int val=(Integer)value;
+      am.setRingerMode(val);
+      return true;
+    }
+  }
+);
+}

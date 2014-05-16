@@ -1,0 +1,10 @@
+{
+  if (mCurrent != null && mCurrent != sbv) {
+    mCurrent.stopSample();
+  }
+  mCurrent=sbv;
+  if (mCurrent != null) {
+    mHandler.removeMessages(H.STOP_SAMPLE);
+    mHandler.sendEmptyMessageDelayed(H.STOP_SAMPLE,SAMPLE_CUTOFF);
+  }
+}

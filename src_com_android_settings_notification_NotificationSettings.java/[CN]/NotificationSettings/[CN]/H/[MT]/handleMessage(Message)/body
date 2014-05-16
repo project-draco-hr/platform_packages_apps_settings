@@ -1,0 +1,13 @@
+{
+switch (msg.what) {
+case UPDATE_PHONE_RINGTONE:
+    mPhoneRingtonePreference.setSummary((CharSequence)msg.obj);
+  break;
+case UPDATE_NOTIFICATION_RINGTONE:
+mNotificationRingtonePreference.setSummary((CharSequence)msg.obj);
+break;
+case STOP_SAMPLE:
+mVolumeCallback.stopSample();
+break;
+}
+}

@@ -5,6 +5,8 @@
   final TextView title=(TextView)layout.findViewById(android.R.id.title);
   title.setText(row.label);
   final CheckBox showBox=(CheckBox)layout.findViewById(android.R.id.button1);
+  final CheckBox priBox=(CheckBox)layout.findViewById(android.R.id.button2);
+  final CheckBox senBox=(CheckBox)layout.findViewById(android.R.id.button3);
   showBox.setChecked(!row.banned);
   final OnCheckedChangeListener showListener=new OnCheckedChangeListener(){
     @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
@@ -12,6 +14,8 @@
       if (success) {
         row.banned=!isChecked;
         mAdapter.bindView(v,row,true);
+        priBox.setEnabled(!row.banned);
+        senBox.setEnabled(!row.banned);
       }
  else {
         showBox.setOnCheckedChangeListener(null);
@@ -22,6 +26,42 @@
   }
 ;
   showBox.setOnCheckedChangeListener(showListener);
+  priBox.setChecked(row.priority);
+  final OnCheckedChangeListener priListener=new OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      boolean success=mBackend.setHighPriority(row.pkg,row.uid,isChecked);
+      if (success) {
+        row.priority=isChecked;
+        mAdapter.bindView(v,row,true);
+      }
+ else {
+        priBox.setOnCheckedChangeListener(null);
+        priBox.setChecked(!isChecked);
+        priBox.setOnCheckedChangeListener(this);
+      }
+    }
+  }
+;
+  priBox.setOnCheckedChangeListener(priListener);
+  senBox.setChecked(row.sensitive);
+  final OnCheckedChangeListener senListener=new OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      boolean success=mBackend.setSensitive(row.pkg,row.uid,isChecked);
+      if (success) {
+        row.sensitive=isChecked;
+        mAdapter.bindView(v,row,true);
+      }
+ else {
+        senBox.setOnCheckedChangeListener(null);
+        senBox.setChecked(!isChecked);
+        senBox.setOnCheckedChangeListener(this);
+      }
+    }
+  }
+;
+  senBox.setOnCheckedChangeListener(senListener);
+  priBox.setEnabled(!row.banned);
+  senBox.setEnabled(!row.banned);
   final AlertDialog d=new AlertDialog.Builder(mContext).setView(layout).setPositiveButton(R.string.app_notifications_dialog_done,null).create();
   d.show();
 }

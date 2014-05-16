@@ -1,0 +1,15 @@
+{
+  mZenModeNotifications=(DropDownPreference)parent.findPreference(KEY_ZEN_MODE_NOTIFICATIONS);
+  if (mZenModeNotifications == null)   return;
+  mZenModeNotifications.addItem(R.string.zen_mode_notifications_summary_hide,0);
+  mZenModeNotifications.addItem(R.string.zen_mode_notifications_summary_show,1);
+  updateZenModeNotifications();
+  mZenModeNotifications.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object value){
+      final int val=(Integer)value;
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.DISPLAY_INTERCEPTED_NOTIFICATIONS,val);
+      return true;
+    }
+  }
+);
+}

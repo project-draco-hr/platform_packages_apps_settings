@@ -1,0 +1,12 @@
+{
+  super.onChange(selfChange,uri);
+  if (NOTIFICATION_LIGHT_PULSE_URI.equals(uri)) {
+    updatePulse();
+  }
+  if (LOCK_SCREEN_PRIVATE_URI.equals(uri) || LOCK_SCREEN_SHOW_URI.equals(uri)) {
+    updateLockscreenNotifications();
+  }
+  if (DISPLAY_INTERCEPTED_NOTIFICATIONS_URI.equals(uri)) {
+    updateZenModeNotifications();
+  }
+}

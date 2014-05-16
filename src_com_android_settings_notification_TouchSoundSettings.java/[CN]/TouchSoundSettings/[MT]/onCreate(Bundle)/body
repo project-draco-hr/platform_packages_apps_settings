@@ -1,0 +1,23 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.touch_sound_settings);
+  mAudioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+  final boolean hasVoice=Utils.isVoiceCapable(getActivity());
+  final Vibrator vibrator=(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+  final boolean hasHaptic=vibrator != null && vibrator.hasVibrator();
+  mDialPadTones=new SystemSettingPref(hasVoice,KEY_DIAL_PAD_TONES,System.DTMF_TONE_WHEN_DIALING);
+  mScreenLockingSounds=new SystemSettingPref(true,KEY_SCREEN_LOCKING_SOUNDS,System.LOCKSCREEN_SOUNDS_ENABLED);
+  mOtherTouchSounds=new SystemSettingPref(true,KEY_OTHER_TOUCH_SOUNDS,System.SOUND_EFFECTS_ENABLED){
+    @Override protected void setSetting(    boolean value){
+      if (value) {
+        mAudioManager.loadSoundEffects();
+      }
+ else {
+        mAudioManager.unloadSoundEffects();
+      }
+      super.setSetting(value);
+    }
+  }
+;
+  mVibrateOnTouch=new SystemSettingPref(hasHaptic,KEY_VIBRATE_ON_TOUCH,System.HAPTIC_FEEDBACK_ENABLED);
+}

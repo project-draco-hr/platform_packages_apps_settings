@@ -1,6 +1,7 @@
 {
   super(context,attrs);
-  mBatteryBackgroundPaint.setARGB(255,128,128,128);
+  mThinLineWidth=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2,getResources().getDisplayMetrics());
+  mBatteryBackgroundPaint.setColor(0xff263238);
   mBatteryBackgroundPaint.setStyle(Paint.Style.FILL);
   mBatteryGoodPaint.setARGB(128,0,255,0);
   mBatteryGoodPaint.setStyle(Paint.Style.STROKE);
@@ -8,6 +9,8 @@
   mBatteryWarnPaint.setStyle(Paint.Style.STROKE);
   mBatteryCriticalPaint.setARGB(192,255,0,0);
   mBatteryCriticalPaint.setStyle(Paint.Style.STROKE);
+  mTimeRemainPaint.setColor(0xffA5B1B7);
+  mTimeRemainPaint.setStyle(Paint.Style.FILL);
   mChargingPaint.setARGB(255,0,128,0);
   mChargingPaint.setStyle(Paint.Style.STROKE);
   mScreenOnPaint.setStyle(Paint.Style.STROKE);
@@ -15,6 +18,8 @@
   mWifiRunningPaint.setStyle(Paint.Style.STROKE);
   mCpuRunningPaint.setStyle(Paint.Style.STROKE);
   mPhoneSignalChart.setColors(new int[]{0x00000000,0xffa00000,0xffa07000,0xffa0a000,0xff80a000,0xff409000,0xff008000});
+  mDebugRectPaint.setARGB(255,255,0,0);
+  mDebugRectPaint.setStyle(Paint.Style.STROKE);
   TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.BatteryHistoryChart,0,0);
   final TextAttrs mainTextAttrs=new TextAttrs();
   final TextAttrs headTextAttrs=new TextAttrs();
@@ -59,6 +64,14 @@ break;
 a.recycle();
 mainTextAttrs.apply(context,mTextPaint);
 headTextAttrs.apply(context,mHeaderTextPaint);
+mDateLinePaint.set(mTextPaint);
+mDateLinePaint.setStyle(Paint.Style.STROKE);
+int hairlineWidth=mThinLineWidth / 2;
+if (hairlineWidth < 1) {
+hairlineWidth=1;
+}
+mDateLinePaint.setStrokeWidth(hairlineWidth);
+mDateLinePaint.setPathEffect(new DashPathEffect(new float[]{mThinLineWidth * 2,mThinLineWidth * 2},0));
 if (shadowcolor != 0) {
 mTextPaint.setShadowLayer(r,dx,dy,shadowcolor);
 mHeaderTextPaint.setShadowLayer(r,dx,dy,shadowcolor);

@@ -1,0 +1,19 @@
+{
+  this.x=x;
+  if (use24hr) {
+    label=context.getString(R.string.battery_stats_hour_24_label,cal.get(Calendar.HOUR_OF_DAY));
+  }
+ else {
+    int hour=cal.get(Calendar.HOUR);
+    if (hour == 0) {
+      hour=12;
+    }
+    if (cal.get(Calendar.AM_PM) == Calendar.AM) {
+      label=context.getString(R.string.battery_stats_hour_am_label,hour);
+    }
+ else {
+      label=context.getString(R.string.battery_stats_hour_pm_label,hour);
+    }
+  }
+  width=(int)paint.measureText(label);
+}

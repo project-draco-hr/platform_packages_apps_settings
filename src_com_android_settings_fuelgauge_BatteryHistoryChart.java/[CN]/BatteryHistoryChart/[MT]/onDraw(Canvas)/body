@@ -2,63 +2,129 @@
   super.onDraw(canvas);
   final int width=getWidth();
   final int height=getHeight();
+  if (DEBUG)   Log.d(TAG,"onDraw: " + width + "x"+ height);
   final boolean layoutRtl=isLayoutRtl();
   final int textStartX=layoutRtl ? width : 0;
   final int textEndX=layoutRtl ? 0 : width;
   final Paint.Align textAlignLeft=layoutRtl ? Paint.Align.RIGHT : Paint.Align.LEFT;
   final Paint.Align textAlignRight=layoutRtl ? Paint.Align.LEFT : Paint.Align.RIGHT;
-  mTextPaint.setTextAlign(textAlignLeft);
+  if (DEBUG) {
+    canvas.drawRect(1,1,width,height,mDebugRectPaint);
+  }
+  if (DEBUG)   Log.d(TAG,"Drawing level path.");
   canvas.drawPath(mBatLevelPath,mBatteryBackgroundPaint);
+  if (!mTimeRemainPath.isEmpty()) {
+    if (DEBUG)     Log.d(TAG,"Drawing time remain path.");
+    canvas.drawPath(mTimeRemainPath,mTimeRemainPaint);
+  }
   int durationHalfWidth=mDurationStringWidth / 2;
   if (layoutRtl)   durationHalfWidth=-durationHalfWidth;
-  if (mLargeMode) {
-    canvas.drawText(mDurationString,(width / 2) - durationHalfWidth,mLevelBottom - mTextAscent + mThinLineWidth,mTextPaint);
-  }
+  if (mTimeLabels.size() > 0) {
+    int y=mLevelBottom - mTextAscent + (mThinLineWidth * 4);
+    int ytick=mLevelBottom + mThinLineWidth + (mThinLineWidth / 2);
+    mTextPaint.setTextAlign(Paint.Align.LEFT);
+    int lastX=0;
+    for (int i=0; i < mTimeLabels.size(); i++) {
+      TimeLabel label=mTimeLabels.get(i);
+      if (i == 0) {
+        int x=label.x - label.width / 2;
+        if (x < 0) {
+          x=0;
+        }
+        if (DEBUG)         Log.d(TAG,"Drawing left label: " + label.label + " @ "+ x);
+        canvas.drawText(label.label,x,y,mTextPaint);
+        canvas.drawLine(label.x,ytick,label.x,ytick + mThinLineWidth,mTextPaint);
+        lastX=x + label.width;
+      }
+ else       if (i < (mTimeLabels.size() - 1)) {
+        int x=label.x - label.width / 2;
+        if (x < (lastX + mTextAscent)) {
+          continue;
+        }
+        TimeLabel nextLabel=mTimeLabels.get(i + 1);
+        if (x > (width - nextLabel.width - mTextAscent)) {
+          continue;
+        }
+        if (DEBUG)         Log.d(TAG,"Drawing middle label: " + label.label + " @ "+ x);
+        canvas.drawText(label.label,x,y,mTextPaint);
+        canvas.drawLine(label.x,ytick,label.x,ytick + mThinLineWidth,mTextPaint);
+        lastX=x + label.width;
+      }
  else {
-    canvas.drawText(mDurationString,(width / 2) - durationHalfWidth,mLevelTop + ((height - mLevelTop) / 2) - ((mTextDescent - mTextAscent) / 2) - mTextAscent,mTextPaint);
+        int x=label.x - label.width / 2;
+        if ((x + label.width) >= width) {
+          x=width - 1 - label.width;
+        }
+        if (DEBUG)         Log.d(TAG,"Drawing right label: " + label.label + " @ "+ x);
+        canvas.drawText(label.label,x,y,mTextPaint);
+        canvas.drawLine(label.x,ytick,label.x,ytick + mThinLineWidth,mTextPaint);
+      }
+    }
   }
-  int headerTop=mLevelTop / 2 + (mHeaderTextDescent - mHeaderTextAscent) / 2;
+  if (false) {
+    mTextPaint.setTextAlign(textAlignLeft);
+    if (mLargeMode) {
+      canvas.drawText(mDurationString,(width / 2) - durationHalfWidth,mLevelBottom - mTextAscent + mThinLineWidth,mTextPaint);
+    }
+ else {
+      canvas.drawText(mDurationString,(width / 2) - durationHalfWidth,mLevelTop + ((height - mLevelTop) / 2) - ((mTextDescent - mTextAscent) / 2) - mTextAscent,mTextPaint);
+    }
+  }
+  int headerTop=-mHeaderTextAscent + (mHeaderTextDescent - mHeaderTextAscent) / 3;
   mHeaderTextPaint.setTextAlign(textAlignLeft);
+  if (DEBUG)   Log.d(TAG,"Drawing charge label string: " + mChargeLabelString);
   canvas.drawText(mChargeLabelString,textStartX,headerTop,mHeaderTextPaint);
   durationHalfWidth=mChargeDurationStringWidth / 2;
   if (layoutRtl)   durationHalfWidth=-durationHalfWidth;
   int headerCenter=((width - mChargeDurationStringWidth - mDrainStringWidth) / 2) + (layoutRtl ? mDrainStringWidth : mChargeLabelStringWidth);
+  if (DEBUG)   Log.d(TAG,"Drawing charge duration string: " + mChargeDurationString);
   canvas.drawText(mChargeDurationString,headerCenter - durationHalfWidth,headerTop,mHeaderTextPaint);
   mHeaderTextPaint.setTextAlign(textAlignRight);
+  if (DEBUG)   Log.d(TAG,"Drawing drain string: " + mDrainString);
   canvas.drawText(mDrainString,textEndX,headerTop,mHeaderTextPaint);
   if (!mBatGoodPath.isEmpty()) {
+    if (DEBUG)     Log.d(TAG,"Drawing good battery path");
     canvas.drawPath(mBatGoodPath,mBatteryGoodPaint);
   }
   if (!mBatWarnPath.isEmpty()) {
+    if (DEBUG)     Log.d(TAG,"Drawing warn battery path");
     canvas.drawPath(mBatWarnPath,mBatteryWarnPaint);
   }
   if (!mBatCriticalPath.isEmpty()) {
+    if (DEBUG)     Log.d(TAG,"Drawing critical battery path");
     canvas.drawPath(mBatCriticalPath,mBatteryCriticalPaint);
   }
   if (mHavePhoneSignal) {
+    if (DEBUG)     Log.d(TAG,"Drawing phone signal path");
     int top=height - mPhoneSignalOffset - (mLineWidth / 2);
     mPhoneSignalChart.draw(canvas,top,mLineWidth);
   }
   if (!mScreenOnPath.isEmpty()) {
+    if (DEBUG)     Log.d(TAG,"Drawing screen on path");
     canvas.drawPath(mScreenOnPath,mScreenOnPaint);
   }
   if (!mChargingPath.isEmpty()) {
+    if (DEBUG)     Log.d(TAG,"Drawing charging path");
     canvas.drawPath(mChargingPath,mChargingPaint);
   }
   if (mHaveGps) {
     if (!mGpsOnPath.isEmpty()) {
+      if (DEBUG)       Log.d(TAG,"Drawing gps path");
       canvas.drawPath(mGpsOnPath,mGpsOnPaint);
     }
   }
   if (mHaveWifi) {
     if (!mWifiRunningPath.isEmpty()) {
+      if (DEBUG)       Log.d(TAG,"Drawing wifi path");
       canvas.drawPath(mWifiRunningPath,mWifiRunningPaint);
     }
   }
   if (!mCpuRunningPath.isEmpty()) {
+    if (DEBUG)     Log.d(TAG,"Drawing running path");
     canvas.drawPath(mCpuRunningPath,mCpuRunningPaint);
   }
   if (mLargeMode) {
+    if (DEBUG)     Log.d(TAG,"Drawing large mode labels");
     if (mHavePhoneSignal) {
       canvas.drawText(mPhoneSignalLabel,textStartX,height - mPhoneSignalOffset - mTextDescent,mTextPaint);
     }
@@ -71,11 +137,42 @@
     canvas.drawText(mCpuRunningLabel,textStartX,height - mCpuRunningOffset - mTextDescent,mTextPaint);
     canvas.drawText(mChargingLabel,textStartX,height - mChargingOffset - mTextDescent,mTextPaint);
     canvas.drawText(mScreenOnLabel,textStartX,height - mScreenOnOffset - mTextDescent,mTextPaint);
-    canvas.drawLine(0,mLevelBottom + (mThinLineWidth / 2),width,mLevelBottom + (mThinLineWidth / 2),mTextPaint);
-    canvas.drawLine(0,mLevelTop,0,mLevelBottom + (mThinLineWidth / 2),mTextPaint);
+  }
+  canvas.drawLine(mLevelLeft - mThinLineWidth,mLevelTop,mLevelLeft - mThinLineWidth,mLevelBottom + (mThinLineWidth / 2),mTextPaint);
+  if (mLargeMode) {
     for (int i=0; i < 10; i++) {
-      int y=mLevelTop + ((mLevelBottom - mLevelTop) * i) / 10;
-      canvas.drawLine(0,y,mThinLineWidth * 2,y,mTextPaint);
+      int y=mLevelTop + mThinLineWidth / 2 + ((mLevelBottom - mLevelTop) * i) / 10;
+      canvas.drawLine(mLevelLeft - mThinLineWidth * 2 - mThinLineWidth / 2,y,mLevelLeft - mThinLineWidth - mThinLineWidth / 2,y,mTextPaint);
+    }
+  }
+  if (DEBUG)   Log.d(TAG,"Drawing max percent, origw=" + mMaxPercentLabelStringWidth + ", noww="+ (int)mTextPaint.measureText(mMaxPercentLabelString));
+  canvas.drawText(mMaxPercentLabelString,0,mLevelTop,mTextPaint);
+  canvas.drawText(mMinPercentLabelString,mMaxPercentLabelStringWidth - mMinPercentLabelStringWidth,mLevelBottom - mThinLineWidth,mTextPaint);
+  canvas.drawLine(0,mLevelBottom + mThinLineWidth,width,mLevelBottom + mThinLineWidth,mTextPaint);
+  if (mDateLabels.size() > 0) {
+    int ytop=mLevelTop + mTextAscent;
+    int ybottom=mLevelBottom;
+    int lastLeft=mLevelRight;
+    mTextPaint.setTextAlign(Paint.Align.LEFT);
+    for (int i=mDateLabels.size() - 1; i >= 0; i--) {
+      DateLabel label=mDateLabels.get(i);
+      int left=label.x - mThinLineWidth;
+      int x=label.x + mThinLineWidth * 2;
+      if ((x + label.width) >= lastLeft) {
+        x=label.x - mThinLineWidth * 2 - label.width;
+        left=x - mThinLineWidth;
+        if (left >= lastLeft) {
+          continue;
+        }
+      }
+      if (left < mLevelLeft) {
+        continue;
+      }
+      mDateLinePath.reset();
+      mDateLinePath.moveTo(label.x,ytop);
+      mDateLinePath.lineTo(label.x,ybottom);
+      canvas.drawPath(mDateLinePath,mDateLinePaint);
+      canvas.drawText(label.label,x,ytop - mTextAscent,mTextPaint);
     }
   }
 }

@@ -1,9 +1,11 @@
 {
   super.onBindView(view);
-  view.setOnClickListener(listener);
-  view.setTag(appInfo);
   RadioButton radioButton=(RadioButton)view.findViewById(android.R.id.button1);
   radioButton.setChecked(appInfo.isDefault);
+  radioButton.setOnClickListener(listener);
+  radioButton.setTag(appInfo);
   ImageView banner=(ImageView)view.findViewById(R.id.banner);
   banner.setImageDrawable(appInfo.banner);
+  banner.setOnClickListener(listener);
+  banner.setTag(appInfo);
 }

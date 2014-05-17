@@ -1,8 +1,9 @@
 {
   Intent intent=new Intent(Intent.ACTION_MAIN);
   intent.setClass(this,getClass());
-  intent.putExtra(EXTRA_SHOW_FRAGMENT,fragmentClass);
+  intent.putExtra(EXTRA_SHOW_FRAGMENT,fragmentName);
   intent.putExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS,args);
+  intent.putExtra(EXTRA_NO_HEADERS,true);
   final Intent orgIntent=getIntent();
   if (orgIntent.hasExtra(EXTRA_PREFS_SHOW_BUTTON_BAR)) {
     intent.putExtra(EXTRA_PREFS_SHOW_BUTTON_BAR,orgIntent.getBooleanExtra(EXTRA_PREFS_SHOW_BUTTON_BAR,false));
@@ -19,5 +20,10 @@
   if (orgIntent.hasExtra(EXTRA_WIFI_SHOW_MENUS)) {
     intent.putExtra(EXTRA_WIFI_SHOW_MENUS,orgIntent.getBooleanExtra(EXTRA_WIFI_SHOW_MENUS,true));
   }
-  super.startPreferencePanel(fragmentClass,args,titleRes,titleText,resultTo,resultRequestCode);
+  if (resultTo == null) {
+    startActivity(intent);
+  }
+ else {
+    resultTo.startActivityForResult(intent,resultRequestCode);
+  }
 }

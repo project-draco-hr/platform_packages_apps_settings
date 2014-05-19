@@ -81,6 +81,7 @@
   auto.addPreference(mWhen);
   final FragmentManager mgr=getFragmentManager();
   mStart=new TimePickerPreference(mContext,mgr);
+  mStart.setKey(KEY_START_TIME);
   mStart.setTitle(R.string.zen_mode_start_time);
   mStart.setCallback(new TimePickerPreference.Callback(){
     @Override public boolean onSetTime(    int hour,    int minute){
@@ -101,6 +102,7 @@
   auto.addPreference(mStart);
   mStart.setDependency(mWhen.getKey());
   mEnd=new TimePickerPreference(mContext,mgr);
+  mEnd.setKey(KEY_END_TIME);
   mEnd.setTitle(R.string.zen_mode_end_time);
   mEnd.setSummaryFormat(R.string.zen_mode_end_time_summary_format);
   mEnd.setCallback(new TimePickerPreference.Callback(){

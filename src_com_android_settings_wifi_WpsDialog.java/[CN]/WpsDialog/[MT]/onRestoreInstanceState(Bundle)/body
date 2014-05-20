@@ -1,0 +1,8 @@
+{
+  if (savedInstanceState != null) {
+    super.onRestoreInstanceState(savedInstanceState);
+    DialogState dialogState=mDialogState.valueOf(savedInstanceState.getString(DIALOG_STATE));
+    String msg=savedInstanceState.getString(DIALOG_MSG_STRING);
+    updateDialog(dialogState,msg);
+  }
+}

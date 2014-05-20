@@ -1,9 +1,6 @@
 {
   logd("onCreate(%s)",icicle);
   super.onCreate(icicle);
-  final SettingsActivity activity=(SettingsActivity)getActivity();
-  mBackend=new DreamBackend(activity);
-  mSwitchBar=activity.getSwitchBar();
-  mSwitch=mSwitchBar.getSwitch();
+  mBackend=new DreamBackend(getActivity());
   setHasOptionsMenu(true);
 }

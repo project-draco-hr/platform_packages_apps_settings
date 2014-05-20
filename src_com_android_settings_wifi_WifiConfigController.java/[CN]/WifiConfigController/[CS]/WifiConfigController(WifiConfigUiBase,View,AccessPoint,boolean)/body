@@ -74,25 +74,25 @@
     boolean showAdvancedFields=false;
     if (mAccessPoint.networkId != INVALID_NETWORK_ID) {
       WifiConfiguration config=mAccessPoint.getConfig();
-      if (config.ipAssignment == IpAssignment.STATIC) {
+      if (config.getIpAssignment() == IpAssignment.STATIC) {
         mIpSettingsSpinner.setSelection(STATIC_IP);
         showAdvancedFields=true;
       }
  else {
         mIpSettingsSpinner.setSelection(DHCP);
       }
-      for (      InetAddress a : config.linkProperties.getAddresses()) {
+      for (      InetAddress a : config.getLinkProperties().getAddresses()) {
         addRow(group,R.string.wifi_ip_address,a.getHostAddress());
       }
-      if (config.proxySettings == ProxySettings.STATIC) {
+      if (config.getProxySettings() == ProxySettings.STATIC) {
         mProxySettingsSpinner.setSelection(PROXY_STATIC);
         showAdvancedFields=true;
       }
- else       if (config.proxySettings == ProxySettings.PAC) {
+ else       if (config.getProxySettings() == ProxySettings.PAC) {
         mProxySettingsSpinner.setVisibility(View.GONE);
         TextView textView=(TextView)mView.findViewById(R.id.proxy_pac_info);
         textView.setVisibility(View.VISIBLE);
-        textView.setText(context.getString(R.string.proxy_url) + config.linkProperties.getHttpProxy().getPacFileUrl());
+        textView.setText(context.getString(R.string.proxy_url) + config.getLinkProperties().getHttpProxy().getPacFileUrl());
         showAdvancedFields=true;
       }
  else {

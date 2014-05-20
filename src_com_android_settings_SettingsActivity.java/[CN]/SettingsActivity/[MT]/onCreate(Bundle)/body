@@ -24,6 +24,7 @@
     setTitle(mInitialTitle);
     ArrayList<DashboardCategory> categories=savedState.getParcelableArrayList(SAVE_KEY_CATEGORIES);
     if (categories != null) {
+      mCategories.clear();
       mCategories.addAll(categories);
       setTitleFromBackStack();
     }

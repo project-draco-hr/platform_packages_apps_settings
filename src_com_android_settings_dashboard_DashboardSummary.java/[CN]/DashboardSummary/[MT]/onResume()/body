@@ -1,7 +1,8 @@
 {
-  super.onStart();
+  super.onResume();
   if (!mAccountListenerAdded) {
     AccountManager.get(getActivity()).addOnAccountsUpdatedListener(this,null,false);
     mAccountListenerAdded=true;
   }
+  rebuildCategories();
 }

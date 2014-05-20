@@ -52,8 +52,10 @@
     }
   }
   mActionBar=getActionBar();
-  mActionBar.setDisplayHomeAsUpEnabled(mDisplayHomeAsUpEnabled);
-  mActionBar.setHomeButtonEnabled(mDisplayHomeAsUpEnabled);
+  if (mActionBar != null) {
+    mActionBar.setDisplayHomeAsUpEnabled(mDisplayHomeAsUpEnabled);
+    mActionBar.setHomeButtonEnabled(mDisplayHomeAsUpEnabled);
+  }
   mSwitchBar=(SwitchBar)findViewById(R.id.switch_bar);
   Intent intent=getIntent();
   if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_BUTTON_BAR,false)) {

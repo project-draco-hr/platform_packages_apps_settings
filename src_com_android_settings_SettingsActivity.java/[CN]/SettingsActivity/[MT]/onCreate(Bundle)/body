@@ -31,7 +31,6 @@
     mDisplayHomeAsUpEnabled=savedState.getBoolean(SAVE_KEY_SHOW_HOME_AS_UP);
   }
  else {
-    buildDashboardCategories(mCategories);
     if (!mIsShowingDashboard) {
       final ComponentName cn=getIntent().getComponent();
       if (!cn.getClassName().equals(SubSettings.class.getName())) {
@@ -44,6 +43,7 @@
       switchToFragment(initialFragmentName,initialArguments,true,false,mInitialTitle,false);
     }
  else {
+      buildDashboardCategories(mCategories);
       mDisplayHomeAsUpEnabled=false;
       if (mCategories.size() > 0) {
         mInitialTitle=getText(R.string.dashboard_title);

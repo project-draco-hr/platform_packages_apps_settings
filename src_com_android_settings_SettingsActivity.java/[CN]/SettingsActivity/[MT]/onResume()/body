@@ -7,7 +7,6 @@
   }
 ;
   mDevelopmentPreferences.registerOnSharedPreferenceChangeListener(mDevelopmentPreferencesListener);
-  invalidateCategories();
   registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
   mDynamicIndexableContentMonitor.register(this);
   if (!TextUtils.isEmpty(mSearchQuery)) {

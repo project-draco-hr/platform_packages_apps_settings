@@ -1,4 +1,7 @@
 {
+  if (result.seen > mSeen) {
+    mSeen=result.seen;
+  }
   if (ssid.equals(result.SSID) && security == getSecurity(result)) {
     if (WifiManager.compareSignalLevel(result.level,mRssi) > 0) {
       int oldLevel=getLevel();

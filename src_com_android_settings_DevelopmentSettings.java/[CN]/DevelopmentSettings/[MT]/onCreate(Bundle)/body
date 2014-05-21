@@ -4,6 +4,7 @@
   mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
+  mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   if (android.os.Process.myUserHandle().getIdentifier() != UserHandle.USER_OWNER || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getActivity(),null));
@@ -66,6 +67,7 @@
   mForceRtlLayout=findAndInitCheckboxPref(FORCE_RTL_LAYOUT_KEY);
   mDebugHwOverdraw=addListPreference(DEBUG_HW_OVERDRAW_KEY);
   mWifiDisplayCertification=findAndInitCheckboxPref(WIFI_DISPLAY_CERTIFICATION_KEY);
+  mWifiVerboseLogging=findAndInitCheckboxPref(WIFI_VERBOSE_LOGGING_KEY);
   mWindowAnimationScale=addListPreference(WINDOW_ANIMATION_SCALE_KEY);
   mTransitionAnimationScale=addListPreference(TRANSITION_ANIMATION_SCALE_KEY);
   mAnimatorDurationScale=addListPreference(ANIMATOR_DURATION_SCALE_KEY);

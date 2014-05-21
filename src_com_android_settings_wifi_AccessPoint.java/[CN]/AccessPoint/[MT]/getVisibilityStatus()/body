@@ -1,0 +1,15 @@
+{
+  String visibility;
+  long now=System.currentTimeMillis();
+  long age=(now - mSeen);
+  if (age < 1000000) {
+    visibility=Long.toString((age / 1000) % 1000);
+  }
+ else {
+    visibility="!";
+  }
+  if (mRssi != Integer.MAX_VALUE) {
+    visibility=visibility + ", " + Integer.toString(mRssi);
+  }
+  return visibility;
+}

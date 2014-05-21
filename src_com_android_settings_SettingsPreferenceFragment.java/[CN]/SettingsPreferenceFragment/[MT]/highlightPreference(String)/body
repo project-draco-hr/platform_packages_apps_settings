@@ -2,6 +2,7 @@
   final Drawable highlight=getHighlightDrawable();
   final int position=canUseListViewForHighLighting(key);
   if (position >= 0) {
+    mPreferenceHighlighted=true;
     final ListView listView=getListView();
     final ListAdapter adapter=listView.getAdapter();
     ((PreferenceGroupAdapter)adapter).setHighlightedDrawable(highlight);
@@ -17,11 +18,9 @@
             highlight.setHotspot(centerX,centerY);
             v.setPressed(true);
             v.setPressed(false);
-            ((PreferenceGroupAdapter)adapter).setHighlighted(-1);
           }
         }
 ,DELAY_HIGHLIGHT_DURATION_MILLIS);
-        mPreferenceHighlighted=true;
       }
     }
 );
@@ -29,6 +28,7 @@
  else {
     View preferenceView=findPreferenceViewForKey(getView(),key);
     if (preferenceView != null) {
+      mPreferenceHighlighted=true;
       preferenceView.setBackground(highlight);
       final int centerX=preferenceView.getWidth() / 2;
       final int centerY=preferenceView.getHeight() / 2;

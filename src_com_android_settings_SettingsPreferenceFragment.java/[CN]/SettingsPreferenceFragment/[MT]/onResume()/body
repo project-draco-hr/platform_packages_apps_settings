@@ -1,0 +1,8 @@
+{
+  super.onResume();
+  final Bundle args=getArguments();
+  if (args != null) {
+    mPreferenceKey=args.getString(SettingsActivity.EXTRA_FRAGMENT_ARG_KEY);
+    highlightPreferenceIfNeeded();
+  }
+}

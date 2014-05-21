@@ -10,44 +10,16 @@
   mWifiRunningLabel=getContext().getString(R.string.battery_stats_wifi_running_label);
   mCpuRunningLabel=getContext().getString(R.string.battery_stats_wake_lock_label);
   mPhoneSignalLabel=getContext().getString(R.string.battery_stats_phone_signal_label);
-  int pos=0;
-  int lastInteresting=0;
-  byte lastLevel=-1;
-  mBatLow=0;
-  mBatHigh=100;
-  int aggrStates=0;
-  boolean first=true;
-  if (stats.startIteratingHistoryLocked()) {
-    final HistoryItem rec=new HistoryItem();
-    while (stats.getNextHistoryLocked(rec)) {
-      pos++;
-      if (rec.isDeltaData()) {
-        if (first) {
-          first=false;
-          mHistStart=rec.time;
-        }
-        if (rec.batteryLevel != lastLevel || pos == 1) {
-          lastLevel=rec.batteryLevel;
-        }
-        lastInteresting=pos;
-        mHistEnd=rec.time;
-        aggrStates|=rec.states;
-      }
-    }
-  }
-  mNumHist=lastInteresting;
-  mHaveGps=(aggrStates & HistoryItem.STATE_GPS_ON_FLAG) != 0;
-  mHaveWifi=(aggrStates & HistoryItem.STATE_WIFI_RUNNING_FLAG) != 0;
-  if (!com.android.settings.Utils.isWifiOnly(getContext())) {
-    mHavePhoneSignal=true;
-  }
-  if (mHistEnd <= mHistStart)   mHistEnd=mHistStart + 1;
-  mDurationString=Utils.formatElapsedTime(getContext(),mHistEnd - mHistStart,true);
+  mMaxPercentLabelString=getContext().getResources().getString(R.string.percentage,100);
+  mMinPercentLabelString=getContext().getResources().getString(R.string.percentage,0);
   int batteryLevel=com.android.settings.Utils.getBatteryLevel(mBatteryBroadcast);
   final int status=mBatteryBroadcast.getIntExtra(BatteryManager.EXTRA_STATUS,BatteryManager.BATTERY_STATUS_UNKNOWN);
+  long remainingTimeUs=0;
+  mDischarging=true;
   if (status == BatteryManager.BATTERY_STATUS_DISCHARGING) {
     final long drainTime=mStats.computeBatteryTimeRemaining(elapsedRealtimeUs);
     if (drainTime > 0) {
+      remainingTimeUs=drainTime;
       String timeString=Formatter.formatShortElapsedTime(getContext(),drainTime / 1000);
       mChargeLabelString=getContext().getResources().getString(R.string.power_discharging_duration,batteryLevel,timeString);
     }
@@ -59,6 +31,8 @@
     final long chargeTime=mStats.computeChargeTimeRemaining(elapsedRealtimeUs);
     final String statusLabel=com.android.settings.Utils.getBatteryStatus(getResources(),mBatteryBroadcast);
     if (chargeTime > 0 && status != BatteryManager.BATTERY_STATUS_FULL) {
+      mDischarging=false;
+      remainingTimeUs=chargeTime;
       String timeString=Formatter.formatShortElapsedTime(getContext(),chargeTime / 1000);
       mChargeLabelString=getContext().getResources().getString(R.string.power_charging_duration,batteryLevel,statusLabel,timeString);
     }
@@ -68,4 +42,54 @@
   }
   mDrainString="";
   mChargeDurationString="";
+  int pos=0;
+  int lastInteresting=0;
+  byte lastLevel=-1;
+  mBatLow=0;
+  mBatHigh=100;
+  mStartWallTime=0;
+  mEndDataWallTime=0;
+  mEndWallTime=0;
+  mHistStart=0;
+  mHistEnd=0;
+  long lastWallTime=0;
+  long lastRealtime=0;
+  int aggrStates=0;
+  boolean first=true;
+  if (stats.startIteratingHistoryLocked()) {
+    final HistoryItem rec=new HistoryItem();
+    while (stats.getNextHistoryLocked(rec)) {
+      pos++;
+      if (first) {
+        first=false;
+        mHistStart=rec.time;
+      }
+      if (rec.cmd == HistoryItem.CMD_CURRENT_TIME || rec.cmd == HistoryItem.CMD_RESET) {
+        lastWallTime=rec.currentTime;
+        lastRealtime=rec.time;
+        if (mStartWallTime == 0) {
+          mStartWallTime=lastWallTime;
+        }
+      }
+      if (rec.isDeltaData()) {
+        if (rec.batteryLevel != lastLevel || pos == 1) {
+          lastLevel=rec.batteryLevel;
+        }
+        lastInteresting=pos;
+        mHistDataEnd=rec.time;
+        aggrStates|=rec.states;
+      }
+    }
+  }
+  mHistEnd=mHistDataEnd + (remainingTimeUs / 1000);
+  mEndDataWallTime=lastWallTime + mHistDataEnd - lastRealtime;
+  mEndWallTime=mEndDataWallTime + (remainingTimeUs / 1000);
+  mNumHist=lastInteresting;
+  mHaveGps=(aggrStates & HistoryItem.STATE_GPS_ON_FLAG) != 0;
+  mHaveWifi=(aggrStates & HistoryItem.STATE_WIFI_RUNNING_FLAG) != 0;
+  if (!com.android.settings.Utils.isWifiOnly(getContext())) {
+    mHavePhoneSignal=true;
+  }
+  if (mHistEnd <= mHistStart)   mHistEnd=mHistStart + 1;
+  mDurationString=Utils.formatElapsedTime(getContext(),mHistEnd - mHistStart,true);
 }

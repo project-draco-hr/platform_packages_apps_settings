@@ -1,4 +1,5 @@
 {
+  long start=System.currentTimeMillis();
   final Resources res=getResources();
   mDashboard.removeAllViews();
   List<DashboardCategory> categories=((SettingsActivity)context).getDashboardCategories();
@@ -19,4 +20,6 @@
     }
     mDashboard.addView(categoryView);
   }
+  long delta=System.currentTimeMillis() - start;
+  Log.d(LOG_TAG,"rebuildUI took: " + delta + " ms");
 }

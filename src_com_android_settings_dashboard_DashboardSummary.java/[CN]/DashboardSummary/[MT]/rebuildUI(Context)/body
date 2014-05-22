@@ -1,4 +1,8 @@
 {
+  if (!isAdded()) {
+    Log.w(LOG_TAG,"Cannot build the DashboardSummary UI yet as the Fragment is not added");
+    return;
+  }
   long start=System.currentTimeMillis();
   final Resources res=getResources();
   mDashboard.removeAllViews();

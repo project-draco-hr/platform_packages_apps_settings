@@ -89,10 +89,7 @@
         showAdvancedFields=true;
       }
  else       if (config.getProxySettings() == ProxySettings.PAC) {
-        mProxySettingsSpinner.setVisibility(View.GONE);
-        TextView textView=(TextView)mView.findViewById(R.id.proxy_pac_info);
-        textView.setVisibility(View.VISIBLE);
-        textView.setText(context.getString(R.string.proxy_url) + config.getLinkProperties().getHttpProxy().getPacFileUrl());
+        mProxySettingsSpinner.setSelection(PROXY_PAC);
         showAdvancedFields=true;
       }
  else {

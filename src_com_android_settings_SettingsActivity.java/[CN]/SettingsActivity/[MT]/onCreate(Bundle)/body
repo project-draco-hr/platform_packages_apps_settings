@@ -43,12 +43,9 @@
       switchToFragment(initialFragmentName,initialArguments,true,false,mInitialTitle,false);
     }
  else {
-      buildDashboardCategories(mCategories);
       mDisplayHomeAsUpEnabled=false;
-      if (mCategories.size() > 0) {
-        mInitialTitle=getText(R.string.dashboard_title);
-        switchToFragment(DashboardSummary.class.getName(),null,false,false,mInitialTitle,false);
-      }
+      mInitialTitle=getText(R.string.dashboard_title);
+      switchToFragment(DashboardSummary.class.getName(),null,false,false,mInitialTitle,false);
     }
   }
   mActionBar=getActionBar();

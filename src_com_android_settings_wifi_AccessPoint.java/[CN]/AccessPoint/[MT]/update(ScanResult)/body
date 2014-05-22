@@ -2,6 +2,12 @@
   if (result.seen > mSeen) {
     mSeen=result.seen;
   }
+  if (WifiSettings.mVerboseLogging > 0) {
+    if (scanResultCache == null) {
+      scanResultCache=new LruCache<String,ScanResult>(32);
+    }
+    scanResultCache.put(result.BSSID,result);
+  }
   if (ssid.equals(result.SSID) && security == getSecurity(result)) {
     if (WifiManager.compareSignalLevel(result.level,mRssi) > 0) {
       int oldLevel=getLevel();

@@ -1,15 +1,62 @@
 {
-  String visibility;
+  StringBuilder visibility=new StringBuilder();
   long now=System.currentTimeMillis();
   long age=(now - mSeen);
-  if (age < 1000000) {
-    visibility=Long.toString((age / 1000) % 1000);
+  if (age < VISIBILITY_MAX_AGE_IN_MILLI) {
+    visibility.append(Long.toString((age / SECOND_TO_MILLI) % SECOND_TO_MILLI));
   }
  else {
-    visibility="!";
+    visibility.append("!");
   }
-  if (mRssi != Integer.MAX_VALUE) {
-    visibility=visibility + ", " + Integer.toString(mRssi);
+  if (scanResultCache != null) {
+    int rssi5=WifiConfiguration.INVALID_RSSI;
+    int rssi24=WifiConfiguration.INVALID_RSSI;
+    int num5=0;
+    int num24=0;
+    Map<String,ScanResult> list=scanResultCache.snapshot();
+    for (    ScanResult result : list.values()) {
+      if (result.seen == 0)       continue;
+      if (result.frequency > LOWER_FREQ_5GHZ && result.frequency < HIGHER_FREQ_5GHZ) {
+        num5=num5 + 1;
+      }
+ else       if (result.frequency > LOWER_FREQ_24GHZ && result.frequency < HIGHER_FREQ_24GHZ) {
+        num24=num24 + 1;
+      }
+      if (now - result.seen > VISIBILITY_OUTDATED_AGE_IN_MILLI)       continue;
+      if (result.frequency > LOWER_FREQ_5GHZ && result.frequency < HIGHER_FREQ_5GHZ) {
+        if (result.level > rssi5) {
+          rssi5=result.level;
+        }
+      }
+ else       if (result.frequency > LOWER_FREQ_24GHZ && result.frequency < HIGHER_FREQ_24GHZ) {
+        if (result.level > rssi24) {
+          rssi24=result.level;
+        }
+      }
+    }
+    visibility.append(" [");
+    if (num24 > 0 || rssi24 > WifiConfiguration.INVALID_RSSI) {
+      visibility.append(Integer.toString(rssi24));
+      visibility.append(",");
+      visibility.append(Integer.toString(num24));
+    }
+    visibility.append(";");
+    if (num5 > 0 || rssi5 > WifiConfiguration.INVALID_RSSI) {
+      visibility.append(Integer.toString(rssi5));
+      visibility.append(",");
+      visibility.append(Integer.toString(num5));
+    }
+    visibility.append("]");
   }
-  return visibility;
+ else {
+    if (mRssi != Integer.MAX_VALUE) {
+      visibility.append(", ");
+      visibility.append(Integer.toString(mRssi));
+      if (mScanResult != null) {
+        visibility.append(", ");
+        visibility.append(Integer.toString(mScanResult.frequency));
+      }
+    }
+  }
+  return visibility.toString();
 }

@@ -5,6 +5,7 @@
     return;
   }
   final int wifiState=mWifiManager.getWifiState();
+  mVerboseLogging=mWifiManager.getVerboseLoggingLevel();
 switch (wifiState) {
 case WifiManager.WIFI_STATE_ENABLED:
     final Collection<AccessPoint> accessPoints=constructAccessPoints(getActivity(),mWifiManager,mLastInfo,mLastState);

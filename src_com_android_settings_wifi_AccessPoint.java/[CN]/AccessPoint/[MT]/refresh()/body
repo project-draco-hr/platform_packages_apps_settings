@@ -1,27 +1,32 @@
 {
   setTitle(ssid);
+  StringBuilder summary=new StringBuilder();
   Context context=getContext();
-  if (mConfig != null && mConfig.status == WifiConfiguration.Status.DISABLED) {
+  if (mConfig != null && (mConfig.status == WifiConfiguration.Status.DISABLED || mConfig.autoJoinStatus != WifiConfiguration.AUTO_JOIN_ENABLED)) {
+    if (mConfig.autoJoinStatus != WifiConfiguration.AUTO_JOIN_ENABLED) {
+      summary.append(context.getString(R.string.wifi_disabled_password_failure));
+    }
+ else {
 switch (mConfig.disableReason) {
 case WifiConfiguration.DISABLED_AUTH_FAILURE:
-      setSummary(context.getString(R.string.wifi_disabled_password_failure));
-    break;
+        summary.append(context.getString(R.string.wifi_disabled_password_failure));
+      break;
 case WifiConfiguration.DISABLED_DHCP_FAILURE:
 case WifiConfiguration.DISABLED_DNS_FAILURE:
-  setSummary(context.getString(R.string.wifi_disabled_network_failure));
-break;
+    summary.append(context.getString(R.string.wifi_disabled_network_failure));
+  break;
 case WifiConfiguration.DISABLED_UNKNOWN_REASON:
-setSummary(context.getString(R.string.wifi_disabled_generic));
+summary.append(context.getString(R.string.wifi_disabled_generic));
+}
 }
 }
  else if (mRssi == Integer.MAX_VALUE) {
-setSummary(context.getString(R.string.wifi_not_in_range));
+summary.append(context.getString(R.string.wifi_not_in_range));
 }
  else if (mState != null) {
-setSummary(Summary.get(context,mState));
+summary.append(Summary.get(context,mState));
 }
  else {
-StringBuilder summary=new StringBuilder();
 if (mConfig != null) {
 summary.append(context.getString(R.string.wifi_remembered));
 }
@@ -43,6 +48,9 @@ summary.append(context.getString(R.string.wifi_wps_available_first_item));
 summary.append(context.getString(R.string.wifi_wps_available_second_item));
 }
 }
-setSummary(summary.toString());
 }
+if (WifiSettings.mVerboseLogging > 0) {
+summary.append(" " + getVisibilityStatus());
+}
+setSummary(summary.toString());
 }

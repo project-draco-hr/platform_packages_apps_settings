@@ -1,13 +1,9 @@
 {
-  if (mUpdateSuggestionsTask != null) {
-    mUpdateSuggestionsTask.cancel(false);
-    mUpdateSuggestionsTask=null;
-  }
+  clearAllTasks();
   if (mQuery == null) {
     setSuggestionsCursor(null);
   }
  else {
-    setSuggestionsVisibility(true);
     mUpdateSuggestionsTask=new UpdateSuggestionsTask();
     mUpdateSuggestionsTask.execute(mQuery);
   }

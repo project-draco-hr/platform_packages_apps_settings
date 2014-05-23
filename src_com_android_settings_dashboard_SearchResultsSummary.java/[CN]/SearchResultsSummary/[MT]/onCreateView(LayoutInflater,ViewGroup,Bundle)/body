@@ -40,10 +40,9 @@
     @Override public void onItemClick(    AdapterView<?> parent,    View view,    int position,    long id){
       final Cursor cursor=mSuggestionsAdapter.mCursor;
       cursor.moveToPosition(position);
+      mShowResults=true;
       mQuery=cursor.getString(0);
       mSearchView.setQuery(mQuery,false);
-      setSuggestionsVisibility(false);
-      mShowOnlyResults=true;
     }
   }
 );

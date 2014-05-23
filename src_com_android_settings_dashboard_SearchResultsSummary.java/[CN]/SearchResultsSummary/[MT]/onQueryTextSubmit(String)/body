@@ -1,6 +1,8 @@
 {
   mQuery=getFilteredQueryString(query);
-  setSuggestionsVisibility(!mShowOnlyResults);
+  mShowResults=true;
+  setSuggestionsVisibility(false);
   updateSearchResults();
+  saveQueryToDatabase();
   return true;
 }

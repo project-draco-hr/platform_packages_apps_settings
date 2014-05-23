@@ -12,6 +12,7 @@ return true;
 case MENU_STATS_REFRESH:
 mStatsHelper.clearStats();
 refreshStats();
+mHandler.removeMessages(MSG_REFRESH_STATS);
 return true;
 default :
 return false;

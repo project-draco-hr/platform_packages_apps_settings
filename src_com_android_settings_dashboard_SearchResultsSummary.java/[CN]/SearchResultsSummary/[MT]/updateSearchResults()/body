@@ -1,14 +1,10 @@
 {
-  if (mUpdateSearchResultsTask != null) {
-    mUpdateSearchResultsTask.cancel(false);
-    mUpdateSearchResultsTask=null;
-  }
+  clearAllTasks();
   if (TextUtils.isEmpty(mQuery)) {
     setResultsVisibility(false);
     setResultsCursor(null);
   }
  else {
-    setResultsVisibility(true);
     mUpdateSearchResultsTask=new UpdateSearchResultsTask();
     mUpdateSearchResultsTask.execute(mQuery);
   }

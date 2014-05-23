@@ -1,19 +1,15 @@
 {
   final String newQuery=getFilteredQueryString(query);
-  boolean isNewQuery;
-  if (!TextUtils.isEmpty(mQuery)) {
-    isNewQuery=!mQuery.equals(query);
-  }
- else {
-    isNewQuery=!TextUtils.isEmpty(query);
-  }
   mQuery=newQuery;
-  if (isNewQuery) {
-    mShowOnlyResults=false;
-  }
-  if (!mShowOnlyResults) {
+  if (TextUtils.isEmpty(mQuery)) {
+    mShowResults=false;
+    setResultsVisibility(false);
     updateSuggestions();
   }
-  updateSearchResults();
+ else {
+    mShowResults=true;
+    setSuggestionsVisibility(false);
+    updateSearchResults();
+  }
   return true;
 }

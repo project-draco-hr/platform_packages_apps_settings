@@ -1,10 +1,7 @@
 {
   super.onCreate(savedInstanceState);
-  SettingsActivity activity=(SettingsActivity)getActivity();
-  mOldActivityTitle=activity.getActionBar().getTitle();
-  activity.getActionBar().setTitle(R.string.android_beam_settings_title);
+  final ActionBar actionBar=getActivity().getActionBar();
+  mOldActivityTitle=actionBar.getTitle();
+  actionBar.setTitle(R.string.android_beam_settings_title);
   mNfcAdapter=NfcAdapter.getDefaultAdapter(getActivity());
-  mSwitchBar=activity.getSwitchBar();
-  mSwitch=mSwitchBar.getSwitch();
-  mSwitch.setChecked(mNfcAdapter.isNdefPushEnabled());
 }

@@ -9,6 +9,7 @@
   getMetaData();
   super.onCreate(savedState);
   setContentView(R.layout.settings_main);
+  mContent=(ViewGroup)findViewById(R.id.prefs);
   getFragmentManager().addOnBackStackChangedListener(this);
   mDisplayHomeAsUpEnabled=true;
   final String initialFragmentName=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);

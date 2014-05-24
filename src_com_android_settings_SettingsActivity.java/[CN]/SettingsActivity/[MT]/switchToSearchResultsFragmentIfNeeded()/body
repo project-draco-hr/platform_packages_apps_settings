@@ -7,9 +7,8 @@
     mSearchResultsFragment=(SearchResultsSummary)current;
   }
  else {
-    final boolean isShowingSwitchBar=(mSwitchBar != null) ? mSwitchBar.isShowing() : false;
     String title=getString(R.string.search_results_title);
-    mSearchResultsFragment=(SearchResultsSummary)switchToFragment(SearchResultsSummary.class.getName(),null,false,true,title,!isShowingSwitchBar);
+    mSearchResultsFragment=(SearchResultsSummary)switchToFragment(SearchResultsSummary.class.getName(),null,false,true,title,true);
   }
   mSearchResultsFragment.setSearchView(mSearchView);
   mSearchMenuItemExpanded=true;

@@ -6,7 +6,7 @@
   FragmentTransaction transaction=getFragmentManager().beginTransaction();
   transaction.replace(R.id.prefs,f);
   if (withTransition) {
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    TransitionManager.beginDelayedTransition(mContent);
   }
   if (addToBackStack) {
     transaction.addToBackStack(SettingsActivity.BACK_STACK_PREFS);
@@ -15,5 +15,6 @@
     transaction.setBreadCrumbTitle(title);
   }
   transaction.commitAllowingStateLoss();
+  getFragmentManager().executePendingTransactions();
   return f;
 }

@@ -2,11 +2,19 @@
   super.onCreate(savedInstanceState);
   mContext=getActivity();
   mPM=mContext.getPackageManager();
+  mVoiceCapable=Utils.isVoiceCapable(mContext);
   addPreferencesFromResource(R.xml.notification_settings);
   final PreferenceScreen root=getPreferenceScreen();
   initVolumePreference(KEY_MEDIA_VOLUME,AudioManager.STREAM_MUSIC);
   initVolumePreference(KEY_ALARM_VOLUME,AudioManager.STREAM_ALARM);
-  initVolumePreference(KEY_RING_VOLUME,AudioManager.STREAM_RING);
+  if (mVoiceCapable) {
+    initVolumePreference(KEY_RING_VOLUME,AudioManager.STREAM_RING);
+    removePreference(KEY_NOTIFICATION_VOLUME);
+  }
+ else {
+    initVolumePreference(KEY_NOTIFICATION_VOLUME,AudioManager.STREAM_NOTIFICATION);
+    removePreference(KEY_RING_VOLUME);
+  }
   initRingerMode(root);
   initRingtones(root);
   initVibrateWhenRinging(root);

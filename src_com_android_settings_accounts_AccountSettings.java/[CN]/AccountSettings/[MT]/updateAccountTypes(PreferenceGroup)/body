@@ -1,0 +1,10 @@
+{
+  preferenceGroup.removeAll();
+  preferenceGroup.setOrderingAsAdded(true);
+  for (  AccountPreference preference : getAccountTypePreferences()) {
+    preferenceGroup.addPreference(preference);
+  }
+  if (mAddAccountForUser != null) {
+    preferenceGroup.addPreference(mAddAccountForUser);
+  }
+}

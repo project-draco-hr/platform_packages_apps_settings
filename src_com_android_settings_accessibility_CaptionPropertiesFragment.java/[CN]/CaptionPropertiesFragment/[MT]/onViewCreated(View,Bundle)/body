@@ -5,8 +5,7 @@
   mPreviewText.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
   SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
-  mToggleSwitch=mSwitchBar.getSwitch();
-  mToggleSwitch.setCheckedInternal(enabled);
+  mSwitchBar.setSwitchChecked(enabled);
   mPreviewWindow=view.findViewById(R.id.preview_window);
   getPreferenceScreen().setEnabled(enabled);
   refreshPreviewText();

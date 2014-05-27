@@ -3,13 +3,13 @@
 switch (which) {
 case DialogInterface.BUTTON_POSITIVE:
     checked=true;
-  mToggleSwitch.setCheckedInternal(checked);
+  mSwitchBar.setSwitchChecked(checked);
 getArguments().putBoolean(PrintSettingsFragment.EXTRA_CHECKED,checked);
 onPreferenceToggled(mPreferenceKey,checked);
 break;
 case DialogInterface.BUTTON_NEGATIVE:
 checked=false;
-mToggleSwitch.setCheckedInternal(checked);
+mSwitchBar.setSwitchChecked(checked);
 getArguments().putBoolean(PrintSettingsFragment.EXTRA_CHECKED,checked);
 onPreferenceToggled(mPreferenceKey,checked);
 break;

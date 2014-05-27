@@ -1,7 +1,9 @@
 {
   final SparseArray<String> rt=new SparseArray<String>();
   rt.put(R.string.zen_mode_general_category,KEY_GENERAL);
-  rt.put(R.string.zen_mode_phone_calls,KEY_CALLS);
+  if (Utils.isVoiceCapable(context)) {
+    rt.put(R.string.zen_mode_phone_calls,KEY_CALLS);
+  }
   rt.put(R.string.zen_mode_messages,KEY_MESSAGES);
   rt.put(R.string.zen_mode_automatic_category,KEY_AUTOMATIC);
   rt.put(R.string.zen_mode_when,KEY_WHEN);

@@ -1,6 +1,11 @@
 {
-  mVibrateWhenRinging=(TwoStatePreference)findPreference(KEY_VIBRATE_WHEN_RINGING);
+  mVibrateWhenRinging=(TwoStatePreference)root.findPreference(KEY_VIBRATE_WHEN_RINGING);
   if (mVibrateWhenRinging == null)   return;
+  if (!mVoiceCapable) {
+    root.removePreference(mVibrateWhenRinging);
+    mVibrateWhenRinging=null;
+    return;
+  }
   mVibrateWhenRinging.setPersistent(false);
   updateVibrateWhenRinging();
   mVibrateWhenRinging.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){

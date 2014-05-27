@@ -1,6 +1,8 @@
 {
   mDisableListeners=true;
-  mCalls.setChecked(mConfig.allowCalls);
+  if (mCalls != null) {
+    mCalls.setChecked(mConfig.allowCalls);
+  }
   mMessages.setChecked(mConfig.allowMessages);
   mStarred.setSelectedItem(0);
   mWhen.setSelectedValue(mConfig.sleepMode);

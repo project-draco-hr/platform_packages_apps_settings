@@ -11,20 +11,26 @@
   mSwitchBar=((SettingsActivity)mContext).getSwitchBar();
   mSwitch=mSwitchBar.getSwitch();
   final PreferenceCategory general=(PreferenceCategory)root.findPreference(KEY_GENERAL);
-  mCalls=(SwitchPreference)root.findPreference(KEY_CALLS);
-  mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
-    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
-      if (mDisableListeners)       return true;
-      final boolean val=(Boolean)newValue;
-      if (val == mConfig.allowCalls)       return true;
-      if (DEBUG)       Log.d(TAG,"onPrefChange allowCalls=" + val);
-      final ZenModeConfig newConfig=mConfig.copy();
-      newConfig.allowCalls=val;
-      return setZenModeConfig(newConfig);
+  mCalls=(SwitchPreference)general.findPreference(KEY_CALLS);
+  if (Utils.isVoiceCapable(mContext)) {
+    mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        if (mDisableListeners)         return true;
+        final boolean val=(Boolean)newValue;
+        if (val == mConfig.allowCalls)         return true;
+        if (DEBUG)         Log.d(TAG,"onPrefChange allowCalls=" + val);
+        final ZenModeConfig newConfig=mConfig.copy();
+        newConfig.allowCalls=val;
+        return setZenModeConfig(newConfig);
+      }
     }
-  }
 );
-  mMessages=(SwitchPreference)root.findPreference(KEY_MESSAGES);
+  }
+ else {
+    general.removePreference(mCalls);
+    mCalls=null;
+  }
+  mMessages=(SwitchPreference)general.findPreference(KEY_MESSAGES);
   mMessages.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
       if (mDisableListeners)       return true;

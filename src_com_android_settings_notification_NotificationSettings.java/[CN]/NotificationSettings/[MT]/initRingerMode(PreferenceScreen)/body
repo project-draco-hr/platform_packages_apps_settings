@@ -1,6 +1,9 @@
 {
   mRingerMode=(DropDownPreference)root.findPreference(KEY_RINGER_MODE);
   if (mRingerMode == null)   return;
+  if (!mVoiceCapable) {
+    mRingerMode.setTitle(R.string.ringer_mode_title_novoice);
+  }
   final AudioManager am=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
   mRingerMode.addItem(R.string.ringer_mode_audible,AudioManager.RINGER_MODE_NORMAL);
   mRingerMode.addItem(R.string.ringer_mode_vibrate,AudioManager.RINGER_MODE_VIBRATE);

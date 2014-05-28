@@ -1,14 +1,14 @@
 {
   super.onInstallSwitchBarToggleSwitch();
-  mToggleSwitch.setOnBeforeCheckedChangeListener(new OnBeforeCheckedChangeListener(){
+  mSwitchBar.setSwitchOnBeforeCheckedChangeListener(new OnBeforeCheckedChangeListener(){
     @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
       if (checked) {
-        toggleSwitch.setCheckedInternal(false);
+        mSwitchBar.setSwitchChecked(false);
         getArguments().putBoolean(AccessibilitySettings.EXTRA_CHECKED,false);
         showDialog(DIALOG_ID_ENABLE_WARNING);
       }
  else {
-        toggleSwitch.setCheckedInternal(true);
+        mSwitchBar.setSwitchChecked(true);
         getArguments().putBoolean(AccessibilitySettings.EXTRA_CHECKED,true);
         showDialog(DIALOG_ID_DISABLE_WARNING);
       }

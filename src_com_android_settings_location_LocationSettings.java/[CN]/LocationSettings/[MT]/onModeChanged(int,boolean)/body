@@ -16,14 +16,14 @@ default :
 break;
 }
 boolean enabled=(mode != android.provider.Settings.Secure.LOCATION_MODE_OFF);
-mSwitch.setEnabled(!restricted);
+mSwitchBar.setSwitchEnabled(!restricted);
 mLocationMode.setEnabled(enabled && !restricted);
 mCategoryRecentLocationRequests.setEnabled(enabled);
-if (enabled != mSwitch.isChecked()) {
+if (enabled != mSwitchBar.isSwitchChecked()) {
 if (mValidListener) {
 mSwitchBar.removeOnSwitchChangeListener(this);
 }
-mSwitch.setChecked(enabled);
+mSwitchBar.setSwitchChecked(enabled);
 if (mValidListener) {
 mSwitchBar.addOnSwitchChangeListener(this);
 }

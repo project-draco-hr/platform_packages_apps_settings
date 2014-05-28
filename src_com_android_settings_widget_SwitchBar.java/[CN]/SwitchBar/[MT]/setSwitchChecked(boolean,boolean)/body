@@ -1,0 +1,12 @@
+{
+  if (checkBefore) {
+    ToggleSwitch.OnBeforeCheckedChangeListener listener=mSwitch.getOnBeforeCheckedChangeListener();
+    if (listener != null && listener.onBeforeCheckedChanged(mSwitch,checked)) {
+      return;
+    }
+  }
+  mSwitch.setCheckedInternal(checked);
+  if (mSwitch.getVisibility() == View.GONE) {
+    mSwitch.setVisibility(View.VISIBLE);
+  }
+}

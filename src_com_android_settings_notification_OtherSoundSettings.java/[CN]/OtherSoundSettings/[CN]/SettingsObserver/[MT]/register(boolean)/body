@@ -1,0 +1,11 @@
+{
+  final ContentResolver cr=getContentResolver();
+  if (register) {
+    for (    SettingPref pref : PREFS) {
+      cr.registerContentObserver(pref.getUri(),false,this);
+    }
+  }
+ else {
+    cr.unregisterContentObserver(this);
+  }
+}

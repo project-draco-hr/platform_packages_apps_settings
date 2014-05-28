@@ -1,0 +1,9 @@
+{
+  final int val=getInt(mType,context.getContentResolver(),mSetting,mDefault);
+  if (mTwoState != null) {
+    mTwoState.setChecked(val != 0);
+  }
+ else   if (mDropDown != null) {
+    mDropDown.setSelectedValue(val);
+  }
+}

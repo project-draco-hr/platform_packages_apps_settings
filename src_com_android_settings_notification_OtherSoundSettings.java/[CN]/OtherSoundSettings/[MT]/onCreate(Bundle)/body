@@ -1,0 +1,8 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.other_sound_settings);
+  mContext=getActivity();
+  for (  SettingPref pref : PREFS) {
+    pref.init(this);
+  }
+}

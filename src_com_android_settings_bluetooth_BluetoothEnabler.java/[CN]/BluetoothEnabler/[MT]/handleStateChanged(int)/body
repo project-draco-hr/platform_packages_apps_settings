@@ -1,24 +1,24 @@
 {
 switch (state) {
 case BluetoothAdapter.STATE_TURNING_ON:
-    mSwitchBar.setSwitchEnabled(false);
+    mSwitch.setEnabled(false);
   break;
 case BluetoothAdapter.STATE_ON:
 setChecked(true);
-mSwitchBar.setSwitchEnabled(true);
+mSwitch.setEnabled(true);
 updateSearchIndex(true);
 break;
 case BluetoothAdapter.STATE_TURNING_OFF:
-mSwitchBar.setSwitchEnabled(false);
+mSwitch.setEnabled(false);
 break;
 case BluetoothAdapter.STATE_OFF:
 setChecked(false);
-mSwitchBar.setSwitchEnabled(true);
+mSwitch.setEnabled(true);
 updateSearchIndex(false);
 break;
 default :
 setChecked(false);
-mSwitchBar.setSwitchEnabled(true);
+mSwitch.setEnabled(true);
 updateSearchIndex(false);
 }
 }

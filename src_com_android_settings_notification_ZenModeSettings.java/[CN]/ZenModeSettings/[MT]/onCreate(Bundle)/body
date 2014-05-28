@@ -9,6 +9,7 @@
   mConfig=getZenModeConfig();
   if (DEBUG)   Log.d(TAG,"Loaded mConfig=" + mConfig);
   mSwitchBar=((SettingsActivity)mContext).getSwitchBar();
+  mSwitch=mSwitchBar.getSwitch();
   final PreferenceCategory general=(PreferenceCategory)root.findPreference(KEY_GENERAL);
   mCalls=(SwitchPreference)root.findPreference(KEY_CALLS);
   mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){

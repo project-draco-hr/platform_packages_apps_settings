@@ -1,5 +1,5 @@
 {
   super.onInstallSwitchBarToggleSwitch();
-  mSwitchBar.setSwitchChecked(Settings.Secure.getInt(getContentResolver(),ENABLED,0) == 1);
+  mToggleSwitch.setCheckedInternal(Settings.Secure.getInt(getContentResolver(),ENABLED,0) == 1);
   mSwitchBar.addOnSwitchChangeListener(this);
 }

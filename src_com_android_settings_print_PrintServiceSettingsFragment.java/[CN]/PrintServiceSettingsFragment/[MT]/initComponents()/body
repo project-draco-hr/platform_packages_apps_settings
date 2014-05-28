@@ -3,11 +3,12 @@
   mPrintersAdapter.registerDataSetObserver(mDataObserver);
   final SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
-  mSwitchBar.setSwitchOnBeforeCheckedChangeListener(new ToggleSwitch.OnBeforeCheckedChangeListener(){
+  mToggleSwitch=mSwitchBar.getSwitch();
+  mToggleSwitch.setOnBeforeCheckedChangeListener(new ToggleSwitch.OnBeforeCheckedChangeListener(){
     @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
       if (checked) {
         if (!TextUtils.isEmpty(mEnableWarningMessage)) {
-          mSwitchBar.setSwitchChecked(false);
+          toggleSwitch.setCheckedInternal(false);
           getArguments().putBoolean(PrintSettingsFragment.EXTRA_CHECKED,false);
           showDialog(DIALOG_ID_ENABLE_WARNING);
           return true;

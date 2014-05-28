@@ -2,7 +2,7 @@
   logd("refreshFromBackend()");
   mRefreshing=true;
   boolean dreamsEnabled=mBackend.isEnabled();
-  if (mSwitchBar.isSwitchChecked() != dreamsEnabled)   mSwitchBar.setSwitchChecked(dreamsEnabled);
+  if (mSwitch.isChecked() != dreamsEnabled)   mSwitch.setChecked(dreamsEnabled);
   mAdapter.clear();
   if (dreamsEnabled) {
     List<DreamInfo> dreamInfos=mBackend.getDreamInfos();

@@ -1,0 +1,9 @@
+{
+switch (type) {
+case TYPE_GLOBAL:
+    return Global.getInt(cr,setting,def);
+case TYPE_SYSTEM:
+  return System.getInt(cr,setting,def);
+}
+throw new IllegalArgumentException();
+}

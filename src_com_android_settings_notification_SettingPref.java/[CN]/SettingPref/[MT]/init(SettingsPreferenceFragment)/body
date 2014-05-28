@@ -1,0 +1,35 @@
+{
+  final Context context=settings.getActivity();
+  Preference p=settings.getPreferenceScreen().findPreference(mKey);
+  if (p != null && !isApplicable(context)) {
+    settings.getPreferenceScreen().removePreference(p);
+    p=null;
+  }
+  if (p instanceof TwoStatePreference) {
+    mTwoState=(TwoStatePreference)p;
+  }
+ else   if (p instanceof DropDownPreference) {
+    mDropDown=(DropDownPreference)p;
+    for (    int value : mValues) {
+      mDropDown.addItem(getResId(context,value),value);
+    }
+  }
+  update(context);
+  if (mTwoState != null) {
+    p.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        setSetting(context,(Boolean)newValue ? 1 : 0);
+        return true;
+      }
+    }
+);
+  }
+ else   if (mDropDown != null) {
+    mDropDown.setCallback(new DropDownPreference.Callback(){
+      @Override public boolean onItemSelected(      int pos,      Object value){
+        return setSetting(context,(Integer)value);
+      }
+    }
+);
+  }
+}

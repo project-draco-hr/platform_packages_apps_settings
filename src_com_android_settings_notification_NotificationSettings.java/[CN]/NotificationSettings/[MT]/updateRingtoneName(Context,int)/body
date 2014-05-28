@@ -1,0 +1,27 @@
+{
+  if (context == null)   return null;
+  Uri ringtoneUri=RingtoneManager.getActualDefaultRingtoneUri(context,type);
+  CharSequence summary=context.getString(com.android.internal.R.string.ringtone_unknown);
+  if (ringtoneUri == null) {
+    summary=context.getString(com.android.internal.R.string.ringtone_silent);
+  }
+ else {
+    Cursor cursor=null;
+    try {
+      cursor=context.getContentResolver().query(ringtoneUri,new String[]{MediaStore.Audio.Media.TITLE},null,null,null);
+      if (cursor != null) {
+        if (cursor.moveToFirst()) {
+          summary=cursor.getString(0);
+        }
+      }
+    }
+ catch (    SQLiteException sqle) {
+    }
+ finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+  }
+  return summary;
+}

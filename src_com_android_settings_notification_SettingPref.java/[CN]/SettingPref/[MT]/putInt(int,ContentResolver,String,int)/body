@@ -1,0 +1,9 @@
+{
+switch (type) {
+case TYPE_GLOBAL:
+    return Global.putInt(cr,setting,value);
+case TYPE_SYSTEM:
+  return System.putInt(cr,setting,value);
+}
+throw new IllegalArgumentException();
+}

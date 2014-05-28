@@ -1,0 +1,9 @@
+{
+  super.onChange(selfChange,uri);
+  for (  SettingPref pref : PREFS) {
+    if (pref.getUri().equals(uri)) {
+      pref.update(mContext);
+      return;
+    }
+  }
+}

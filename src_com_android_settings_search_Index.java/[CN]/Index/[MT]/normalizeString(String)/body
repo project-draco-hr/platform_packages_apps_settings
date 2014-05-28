@@ -1,3 +1,5 @@
 {
-  return (input != null) ? input.replaceAll(HYPHEN,EMPTY) : EMPTY;
+  final String nohyphen=(input != null) ? input.replaceAll(HYPHEN,EMPTY) : EMPTY;
+  final String normalized=Normalizer.normalize(nohyphen,Normalizer.Form.NFD);
+  return REMOVE_DIACRITICALS_PATTERN.matcher(normalized).replaceAll("").toLowerCase();
 }

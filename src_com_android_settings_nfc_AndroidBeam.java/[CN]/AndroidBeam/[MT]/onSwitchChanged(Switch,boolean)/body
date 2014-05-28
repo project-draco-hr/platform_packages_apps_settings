@@ -1,6 +1,6 @@
 {
   boolean success=false;
-  mSwitchBar.setSwitchEnabled(false);
+  mSwitch.setEnabled(false);
   if (desiredState) {
     success=mNfcAdapter.enableNdefPush();
   }
@@ -8,7 +8,7 @@
     success=mNfcAdapter.disableNdefPush();
   }
   if (success) {
-    mSwitchBar.setSwitchChecked(desiredState);
+    mSwitch.setChecked(desiredState);
   }
-  mSwitchBar.setSwitchEnabled(true);
+  mSwitch.setEnabled(true);
 }

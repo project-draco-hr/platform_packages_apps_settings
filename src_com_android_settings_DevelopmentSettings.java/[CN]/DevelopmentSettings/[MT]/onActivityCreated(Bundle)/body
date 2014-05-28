@@ -2,8 +2,9 @@
   super.onActivityCreated(savedInstanceState);
   final SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
+  mEnabledSwitch=mSwitchBar.getSwitch();
   if (mUnavailable) {
-    mSwitchBar.setSwitchEnabled(false);
+    mEnabledSwitch.setEnabled(false);
     return;
   }
 }

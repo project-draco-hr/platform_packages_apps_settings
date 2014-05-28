@@ -2,5 +2,6 @@
   super.onActivityCreated(savedInstanceState);
   SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
-  mSwitchBar.setSwitchChecked(mNfcAdapter.isNdefPushEnabled());
+  mSwitch=mSwitchBar.getSwitch();
+  mSwitch.setChecked(mNfcAdapter.isNdefPushEnabled());
 }

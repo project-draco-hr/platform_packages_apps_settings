@@ -1,6 +1,7 @@
 {
   if (resolveInfo == null || resolveInfo.serviceInfo == null || resolveInfo.serviceInfo.metaData == null)   return null;
   String cn=null;
+  TrustAgentComponentInfo trustAgentComponentInfo=new TrustAgentComponentInfo();
   XmlResourceParser parser=null;
   Exception caughtException=null;
   try {
@@ -20,6 +21,8 @@
       return null;
     }
     TypedArray sa=res.obtainAttributes(attrs,com.android.internal.R.styleable.TrustAgent);
+    trustAgentComponentInfo.summary=sa.getString(com.android.internal.R.styleable.TrustAgent_summary);
+    trustAgentComponentInfo.title=sa.getString(com.android.internal.R.styleable.TrustAgent_title);
     cn=sa.getString(com.android.internal.R.styleable.TrustAgent_settingsActivity);
     sa.recycle();
   }
@@ -42,5 +45,6 @@ catch (  XmlPullParserException e) {
   if (cn != null && cn.indexOf('/') < 0) {
     cn=resolveInfo.serviceInfo.packageName + "/" + cn;
   }
-  return cn == null ? null : ComponentName.unflattenFromString(cn);
+  trustAgentComponentInfo.componentName=(cn == null) ? null : ComponentName.unflattenFromString(cn);
+  return trustAgentComponentInfo;
 }

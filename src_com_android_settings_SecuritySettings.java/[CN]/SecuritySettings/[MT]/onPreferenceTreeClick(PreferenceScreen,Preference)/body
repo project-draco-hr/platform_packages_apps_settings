@@ -50,6 +50,12 @@
  else   if (KEY_TOGGLE_VERIFY_APPLICATIONS.equals(key)) {
     Settings.Global.putInt(getContentResolver(),Settings.Global.PACKAGE_VERIFIER_ENABLE,mToggleVerifyApps.isChecked() ? 1 : 0);
   }
+ else   if (KEY_TRUST_AGENT.equals(key)) {
+    ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
+    if (!helper.launchConfirmationActivity(CHANGE_TRUST_AGENT_SETTINGS,null,null)) {
+      startActivity(preference.getIntent());
+    }
+  }
  else {
     return super.onPreferenceTreeClick(preferenceScreen,preference);
   }

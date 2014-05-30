@@ -9,7 +9,8 @@
     final int count=cursor.getCount();
     if (count > 0) {
       while (cursor.moveToNext()) {
-        final int rank=cursor.getInt(COLUMN_INDEX_RAW_RANK);
+        final int providerRank=cursor.getInt(COLUMN_INDEX_RAW_RANK);
+        final int rank=(providerRank > 0) ? baseRank + providerRank : baseRank;
         final String title=cursor.getString(COLUMN_INDEX_RAW_TITLE);
         final String summaryOn=cursor.getString(COLUMN_INDEX_RAW_SUMMARY_ON);
         final String summaryOff=cursor.getString(COLUMN_INDEX_RAW_SUMMARY_OFF);

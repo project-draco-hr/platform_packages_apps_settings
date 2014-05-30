@@ -9,7 +9,8 @@
     final int count=cursor.getCount();
     if (count > 0) {
       while (cursor.moveToNext()) {
-        final int rank=cursor.getInt(COLUMN_INDEX_XML_RES_RANK);
+        final int providerRank=cursor.getInt(COLUMN_INDEX_XML_RES_RANK);
+        final int rank=(providerRank > 0) ? baseRank + providerRank : baseRank;
         final int xmlResId=cursor.getInt(COLUMN_INDEX_XML_RES_RESID);
         final String className=cursor.getString(COLUMN_INDEX_XML_RES_CLASS_NAME);
         final int iconResId=cursor.getInt(COLUMN_INDEX_XML_RES_ICON_RESID);

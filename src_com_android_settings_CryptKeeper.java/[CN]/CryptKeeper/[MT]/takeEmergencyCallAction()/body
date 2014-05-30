@@ -1,6 +1,7 @@
 {
-  if (TelephonyManager.getDefault().getCallState() == TelephonyManager.CALL_STATE_OFFHOOK) {
-    resumeCall();
+  TelephonyManager telephonyManager=getTelephonyManager();
+  if (telephonyManager.getCallState() == TelephonyManager.CALL_STATE_OFFHOOK) {
+    telephonyManager.showCallScreen();
   }
  else {
     launchEmergencyDialer();

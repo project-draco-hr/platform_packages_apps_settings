@@ -14,7 +14,7 @@
     emergencyCall.setVisibility(View.GONE);
     return;
   }
-  final int newState=TelephonyManager.getDefault().getCallState();
+  final int newState=getTelephonyManager().getCallState();
   int textId;
   if (newState == TelephonyManager.CALL_STATE_OFFHOOK) {
     textId=R.string.cryptkeeper_return_to_call;

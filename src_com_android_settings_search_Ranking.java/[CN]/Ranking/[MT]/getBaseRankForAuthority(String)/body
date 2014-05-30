@@ -1,0 +1,11 @@
+{
+synchronized (sBaseRankMap) {
+    Integer base=sBaseRankMap.get(authority);
+    if (base != null) {
+      return base;
+    }
+    sCurrentBaseRank++;
+    sBaseRankMap.put(authority,sCurrentBaseRank);
+    return sCurrentBaseRank;
+  }
+}

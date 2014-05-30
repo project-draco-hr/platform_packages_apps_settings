@@ -44,12 +44,24 @@
   }
 );
   mStarred=new DropDownPreference(mContext);
-  mStarred.setEnabled(false);
+  mStarred.setKey(KEY_STARRED);
   mStarred.setTitle(R.string.zen_mode_from);
   mStarred.setDropDownWidth(R.dimen.zen_mode_dropdown_width);
-  mStarred.addItem(R.string.zen_mode_from_anyone,null);
-  mStarred.addItem(R.string.zen_mode_from_starred,null);
-  mStarred.addItem(R.string.zen_mode_from_contacts,null);
+  mStarred.addItem(R.string.zen_mode_from_anyone,ZenModeConfig.SOURCE_ANYONE);
+  mStarred.addItem(R.string.zen_mode_from_starred,ZenModeConfig.SOURCE_STAR);
+  mStarred.addItem(R.string.zen_mode_from_contacts,ZenModeConfig.SOURCE_CONTACT);
+  mStarred.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object newValue){
+      if (mDisableListeners)       return true;
+      final int val=(Integer)newValue;
+      if (val == mConfig.allowFrom)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange allowFrom=" + ZenModeConfig.sourceToString(val));
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.allowFrom=val;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
   general.addPreference(mStarred);
   final Preference alarmInfo=new Preference(mContext){
     @Override public View getView(    View convertView,    ViewGroup parent){

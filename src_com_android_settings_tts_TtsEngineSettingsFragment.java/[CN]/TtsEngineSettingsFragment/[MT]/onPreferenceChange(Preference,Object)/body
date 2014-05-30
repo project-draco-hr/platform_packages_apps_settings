@@ -1,6 +1,7 @@
 {
   if (preference == mLocalePreference) {
-    updateLanguageTo((String)newValue);
+    String localeString=(String)newValue;
+    updateLanguageTo((!TextUtils.isEmpty(localeString) ? mEnginesHelper.parseLocaleString(localeString) : null));
     return true;
   }
   return false;

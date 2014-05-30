@@ -11,8 +11,7 @@
   if (mLockPatternView != null) {
     mLockPatternView.setOnPatternListener(mChooseNewLockPatternListener);
   }
-  final TelephonyManager tm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-  if (!tm.isVoiceCapable()) {
+  if (!getTelephonyManager().isVoiceCapable()) {
     final View emergencyCall=findViewById(R.id.emergencyCallButton);
     if (emergencyCall != null) {
       Log.d(TAG,"Removing the emergency Call button");

@@ -1,0 +1,6 @@
+{
+  final int startMin=60 * mConfig.sleepStartHour + mConfig.sleepStartMinute;
+  final int endMin=60 * mConfig.sleepEndHour + mConfig.sleepEndMinute;
+  final boolean nextDay=startMin >= endMin;
+  mEnd.setSummaryFormat(nextDay ? R.string.zen_mode_end_time_summary_format : 0);
+}

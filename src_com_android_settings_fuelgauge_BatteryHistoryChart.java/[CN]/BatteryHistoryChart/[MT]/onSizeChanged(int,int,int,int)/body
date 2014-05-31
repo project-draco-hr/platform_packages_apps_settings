@@ -10,8 +10,7 @@
   mLastWidth=w;
   mLastHeight=h;
   int textHeight=mTextDescent - mTextAscent;
-  int headerTextHeight=mHeaderTextDescent - mHeaderTextAscent;
-  if (h > (textHeight * 12)) {
+  if (h > ((textHeight * 10) + mChartMinHeight)) {
     mLargeMode=true;
     if (h > (textHeight * 15)) {
       mLineWidth=textHeight / 2;
@@ -33,7 +32,7 @@
     mCpuRunningPaint.setARGB(255,0,0,255);
   }
   if (mLineWidth <= 0)   mLineWidth=1;
-  mLevelTop=headerTextHeight * 2 - mTextAscent;
+  mLevelTop=mHeaderHeight;
   mLevelLeft=mMaxPercentLabelStringWidth + mThinLineWidth * 3;
   mLevelRight=w;
   int levelWidth=mLevelRight - mLevelLeft;
@@ -125,17 +124,19 @@
           if (lastY != y) {
             Path path;
             byte value=rec.batteryLevel;
-            if (value <= BATTERY_CRITICAL)             path=mBatCriticalPath;
- else             if (value <= BATTERY_WARN)             path=mBatWarnPath;
- else             path=mBatGoodPath;
+            if (value <= mBatteryCriticalLevel)             path=mBatCriticalPath;
+ else             if (value <= mBatteryWarnLevel)             path=mBatWarnPath;
+ else             path=null;
             if (path != lastLinePath) {
               if (lastLinePath != null) {
                 lastLinePath.lineTo(x,y);
               }
-              path.moveTo(x,y);
+              if (path != null) {
+                path.moveTo(x,y);
+              }
               lastLinePath=path;
             }
- else {
+ else             if (path != null) {
               path.lineTo(x,y);
             }
             if (curLevelPath == null) {
@@ -245,49 +246,59 @@
     mTimeRemainPath.lineTo(x,emptyY);
     mTimeRemainPath.close();
   }
-  boolean is24hr=is24Hour();
-  Calendar calStart=Calendar.getInstance();
-  calStart.setTimeInMillis(mStartWallTime);
-  calStart.set(Calendar.MILLISECOND,0);
-  calStart.set(Calendar.SECOND,0);
-  calStart.set(Calendar.MINUTE,0);
-  long startRoundTime=calStart.getTimeInMillis();
-  if (startRoundTime < mStartWallTime) {
-    calStart.set(Calendar.HOUR_OF_DAY,calStart.get(Calendar.HOUR_OF_DAY) + 1);
-    startRoundTime=calStart.getTimeInMillis();
-  }
-  Calendar calEnd=Calendar.getInstance();
-  calEnd.setTimeInMillis(mEndWallTime);
-  calEnd.set(Calendar.MILLISECOND,0);
-  calEnd.set(Calendar.SECOND,0);
-  calEnd.set(Calendar.MINUTE,0);
-  long endRoundTime=calEnd.getTimeInMillis();
-  if (startRoundTime < endRoundTime) {
-    addTimeLabel(calStart,mLevelLeft,mLevelRight,is24hr);
-    Calendar calMid=Calendar.getInstance();
-    calMid.setTimeInMillis(mStartWallTime + ((mEndWallTime - mStartWallTime) / 2));
-    calMid.set(Calendar.MILLISECOND,0);
-    calMid.set(Calendar.SECOND,0);
-    calMid.set(Calendar.MINUTE,0);
-    long calMidMillis=calMid.getTimeInMillis();
-    if (calMidMillis > startRoundTime && calMidMillis < endRoundTime) {
-      addTimeLabel(calMid,mLevelLeft,mLevelRight,is24hr);
-    }
-    addTimeLabel(calEnd,mLevelLeft,mLevelRight,is24hr);
-  }
-  if (calStart.get(Calendar.DAY_OF_YEAR) != calEnd.get(Calendar.DAY_OF_YEAR) || calStart.get(Calendar.YEAR) != calEnd.get(Calendar.YEAR)) {
-    boolean isDayFirst=isDayFirst();
-    calStart.set(Calendar.HOUR_OF_DAY,0);
-    startRoundTime=calStart.getTimeInMillis();
+  if (mStartWallTime > 0) {
+    boolean is24hr=is24Hour();
+    Calendar calStart=Calendar.getInstance();
+    calStart.setTimeInMillis(mStartWallTime);
+    calStart.set(Calendar.MILLISECOND,0);
+    calStart.set(Calendar.SECOND,0);
+    calStart.set(Calendar.MINUTE,0);
+    long startRoundTime=calStart.getTimeInMillis();
     if (startRoundTime < mStartWallTime) {
-      calStart.set(Calendar.DAY_OF_YEAR,calStart.get(Calendar.DAY_OF_YEAR) + 1);
+      calStart.set(Calendar.HOUR_OF_DAY,calStart.get(Calendar.HOUR_OF_DAY) + 1);
       startRoundTime=calStart.getTimeInMillis();
     }
-    calEnd.set(Calendar.HOUR_OF_DAY,0);
-    endRoundTime=calEnd.getTimeInMillis();
+    Calendar calEnd=Calendar.getInstance();
+    calEnd.setTimeInMillis(mEndWallTime);
+    calEnd.set(Calendar.MILLISECOND,0);
+    calEnd.set(Calendar.SECOND,0);
+    calEnd.set(Calendar.MINUTE,0);
+    long endRoundTime=calEnd.getTimeInMillis();
     if (startRoundTime < endRoundTime) {
-      addDateLabel(calStart,mLevelLeft,mLevelRight,isDayFirst);
+      addTimeLabel(calStart,mLevelLeft,mLevelRight,is24hr);
+      Calendar calMid=Calendar.getInstance();
+      calMid.setTimeInMillis(mStartWallTime + ((mEndWallTime - mStartWallTime) / 2));
+      calMid.set(Calendar.MILLISECOND,0);
+      calMid.set(Calendar.SECOND,0);
+      calMid.set(Calendar.MINUTE,0);
+      long calMidMillis=calMid.getTimeInMillis();
+      if (calMidMillis > startRoundTime && calMidMillis < endRoundTime) {
+        addTimeLabel(calMid,mLevelLeft,mLevelRight,is24hr);
+      }
+      addTimeLabel(calEnd,mLevelLeft,mLevelRight,is24hr);
     }
-    addDateLabel(calEnd,mLevelLeft,mLevelRight,isDayFirst);
+    if (calStart.get(Calendar.DAY_OF_YEAR) != calEnd.get(Calendar.DAY_OF_YEAR) || calStart.get(Calendar.YEAR) != calEnd.get(Calendar.YEAR)) {
+      boolean isDayFirst=isDayFirst();
+      calStart.set(Calendar.HOUR_OF_DAY,0);
+      startRoundTime=calStart.getTimeInMillis();
+      if (startRoundTime < mStartWallTime) {
+        calStart.set(Calendar.DAY_OF_YEAR,calStart.get(Calendar.DAY_OF_YEAR) + 1);
+        startRoundTime=calStart.getTimeInMillis();
+      }
+      calEnd.set(Calendar.HOUR_OF_DAY,0);
+      endRoundTime=calEnd.getTimeInMillis();
+      if (startRoundTime < endRoundTime) {
+        addDateLabel(calStart,mLevelLeft,mLevelRight,isDayFirst);
+      }
+      addDateLabel(calEnd,mLevelLeft,mLevelRight,isDayFirst);
+    }
+  }
+  if (mTimeLabels.size() < 2) {
+    mDurationString=Formatter.formatShortElapsedTime(getContext(),mEndWallTime - mStartWallTime);
+    mDurationStringWidth=(int)mTextPaint.measureText(mDurationString);
+  }
+ else {
+    mDurationString=null;
+    mDurationStringWidth=0;
   }
 }

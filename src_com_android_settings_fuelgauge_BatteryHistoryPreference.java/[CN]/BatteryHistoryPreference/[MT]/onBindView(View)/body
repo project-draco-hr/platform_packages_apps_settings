@@ -2,4 +2,6 @@
   super.onBindView(view);
   BatteryHistoryChart chart=(BatteryHistoryChart)view.findViewById(R.id.battery_history_chart);
   chart.setStats(mStats,mBatteryBroadcast);
+  mLabelHeader=view.findViewById(R.id.labelsHeader);
+  mLabelHeader.setVisibility(mHideLabels ? View.GONE : View.VISIBLE);
 }

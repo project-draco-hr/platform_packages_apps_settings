@@ -1,8 +1,6 @@
 {
-  super.onMeasure(widthMeasureSpec,heightMeasureSpec);
   mMaxPercentLabelStringWidth=(int)mTextPaint.measureText(mMaxPercentLabelString);
   mMinPercentLabelStringWidth=(int)mTextPaint.measureText(mMinPercentLabelString);
-  mDurationStringWidth=(int)mTextPaint.measureText(mDurationString);
   mDrainStringWidth=(int)mHeaderTextPaint.measureText(mDrainString);
   mChargeLabelStringWidth=(int)mHeaderTextPaint.measureText(mChargeLabelString);
   mChargeDurationStringWidth=(int)mHeaderTextPaint.measureText(mChargeDurationString);
@@ -10,4 +8,7 @@
   mTextDescent=(int)mTextPaint.descent();
   mHeaderTextAscent=(int)mHeaderTextPaint.ascent();
   mHeaderTextDescent=(int)mHeaderTextPaint.descent();
+  int headerTextHeight=mHeaderTextDescent - mHeaderTextAscent;
+  mHeaderHeight=headerTextHeight * 2 - mTextAscent;
+  setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(),widthMeasureSpec),getDefaultSize(mChartMinHeight + mHeaderHeight,heightMeasureSpec));
 }

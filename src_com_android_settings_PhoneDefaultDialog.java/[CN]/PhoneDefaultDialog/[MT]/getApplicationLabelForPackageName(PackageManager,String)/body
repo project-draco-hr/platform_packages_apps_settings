@@ -1,0 +1,15 @@
+{
+  ApplicationInfo info=null;
+  try {
+    info=pm.getApplicationInfo(packageName,0);
+  }
+ catch (  NameNotFoundException e) {
+    Log.w(TAG,"Application info not found for packageName " + packageName);
+  }
+  if (info == null) {
+    return packageName;
+  }
+ else {
+    return info.loadLabel(pm).toString();
+  }
+}

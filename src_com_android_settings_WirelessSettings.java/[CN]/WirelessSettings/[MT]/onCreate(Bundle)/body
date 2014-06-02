@@ -20,6 +20,9 @@
   mSmsApplicationPreference=(AppListPreference)findPreference(KEY_SMS_APPLICATION);
   mSmsApplicationPreference.setOnPreferenceChangeListener(this);
   initSmsApplicationSetting();
+  mDialerApplicationPreference=(AppListPreference)findPreference(KEY_PHONE_APPLICATION);
+  mDialerApplicationPreference.setOnPreferenceChangeListener(this);
+  initDialerApplicationSetting();
   getPreferenceScreen().removePreference(nsd);
   String toggleable=Settings.Global.getString(activity.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   final boolean isWimaxEnabled=!isSecondaryUser && this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);
@@ -66,6 +69,9 @@
   }
   if (!isSmsSupported()) {
     removePreference(KEY_SMS_APPLICATION);
+  }
+  if (!isVoiceCapable()) {
+    removePreference(KEY_PHONE_APPLICATION);
   }
   if (mPm.hasSystemFeature(PackageManager.FEATURE_TELEVISION)) {
     removePreference(KEY_TOGGLE_AIRPLANE);

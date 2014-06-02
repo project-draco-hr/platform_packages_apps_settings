@@ -3,5 +3,9 @@
     SmsApplication.setDefaultApplication(newValue.toString(),getActivity());
     return true;
   }
+ else   if (preference == mDialerApplicationPreference && newValue != null) {
+    PhoneApplication.setDefaultPhoneApplication(newValue.toString(),getActivity());
+    return true;
+  }
   return false;
 }

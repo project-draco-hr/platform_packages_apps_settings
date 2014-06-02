@@ -1,0 +1,8 @@
+{
+  super.onCreate(savedInstanceState);
+  final String packageName=getIntent().getStringExtra(Intents.EXTRA_PACKAGE_NAME);
+  setResult(RESULT_CANCELED);
+  if (!buildDialog(packageName)) {
+    finish();
+  }
+}

@@ -1,0 +1,27 @@
+{
+switch (dialogId) {
+case WIFI_SKIPPED_DIALOG_ID:
+    return new AlertDialog.Builder(getActivity()).setMessage(R.string.wifi_skipped_message).setCancelable(false).setNegativeButton(R.string.wifi_skip_anyway,new DialogInterface.OnClickListener(){
+      @Override public void onClick(      DialogInterface dialog,      int id){
+        finishOrNext(RESULT_SKIP);
+      }
+    }
+).setPositiveButton(R.string.wifi_dont_skip,new DialogInterface.OnClickListener(){
+      @Override public void onClick(      DialogInterface dialog,      int id){
+      }
+    }
+).create();
+case WIFI_AND_MOBILE_SKIPPED_DIALOG_ID:
+  return new AlertDialog.Builder(getActivity()).setMessage(R.string.wifi_and_mobile_skipped_message).setCancelable(false).setNegativeButton(R.string.wifi_skip_anyway,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int id){
+      finishOrNext(RESULT_SKIP);
+    }
+  }
+).setPositiveButton(R.string.wifi_dont_skip,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int id){
+    }
+  }
+).create();
+}
+return super.onCreateDialog(dialogId);
+}

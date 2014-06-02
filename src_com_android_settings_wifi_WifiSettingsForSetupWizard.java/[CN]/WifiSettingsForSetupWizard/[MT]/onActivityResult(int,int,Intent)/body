@@ -1,0 +1,12 @@
+{
+  if (resultCode == Activity.RESULT_CANCELED) {
+    final WifiInfo info=mWifiManager.getConnectionInfo();
+    if (null != info) {
+      int netId=info.getNetworkId();
+      if (netId != WifiConfiguration.INVALID_NETWORK_ID) {
+        mWifiManager.forget(netId,null);
+      }
+    }
+  }
+  super.onActivityResult(requestCode,resultCode,data);
+}

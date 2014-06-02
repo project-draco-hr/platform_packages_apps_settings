@@ -1,0 +1,11 @@
+{
+  Log.d(TAG,"finishOrNext resultCode=" + resultCode + " isUsingWizardManager="+ isUsingWizardManager());
+  if (isUsingWizardManager()) {
+    sendResultsToSetupWizard(resultCode);
+  }
+ else {
+    Activity activity=getActivity();
+    activity.setResult(resultCode);
+    activity.finish();
+  }
+}

@@ -8,7 +8,7 @@
       final int v=isChecked ? Global.ZEN_MODE_ON : Global.ZEN_MODE_OFF;
       putZenModeSetting(v);
       final int n=ConditionProviderSettings.getEnabledProviderCount(mContext);
-      if (n > 0) {
+      if (SHOW_CONDITION_DIALOG && n > 0) {
         mHandler.post(isChecked ? mShowDialog : mHideDialog);
       }
     }

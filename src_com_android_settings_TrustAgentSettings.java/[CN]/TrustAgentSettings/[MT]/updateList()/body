@@ -11,6 +11,11 @@
   mAvailableAgents.ensureCapacity(resolveInfos.size());
   for (  ResolveInfo resolveInfo : resolveInfos) {
     if (resolveInfo.serviceInfo == null)     continue;
+    String packageName=resolveInfo.serviceInfo.packageName;
+    if (pm.checkPermission(PERMISSION_PROVIDE_AGENT,packageName) != PackageManager.PERMISSION_GRANTED) {
+      Log.w(TAG,"Skipping agent because package " + packageName + " does not have permission "+ PERMISSION_PROVIDE_AGENT+ ".");
+      continue;
+    }
     ComponentName name=getComponentName(resolveInfo);
     if (!mAvailableAgents.containsKey(name)) {
       AgentInfo agentInfo=new AgentInfo();

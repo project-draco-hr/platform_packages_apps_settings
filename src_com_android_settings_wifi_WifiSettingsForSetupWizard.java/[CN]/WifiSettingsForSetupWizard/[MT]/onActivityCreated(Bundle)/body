@@ -4,12 +4,13 @@
   final Activity activity=getActivity();
   final Intent intent=activity.getIntent();
   mAutoFinishOnConnection=intent.getBooleanExtra(EXTRA_AUTO_FINISH_ON_CONNECT,false);
-  if (mAutoFinishOnConnection) {
+  if (mAutoFinishOnConnection && null == savedInstanceState) {
     if (hasNextButton()) {
       getNextButton().setVisibility(View.GONE);
     }
     final ConnectivityManager connectivity=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
     if (connectivity != null && connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
+      Log.d(TAG,"onActivityCreated Auto-finishing");
       finishOrNext(Activity.RESULT_OK);
       return;
     }

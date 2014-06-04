@@ -23,7 +23,9 @@
   }
   mSavedWord=newWord;
   mSavedShortcut=newShortcut;
-  if (hasWord(newWord,context))   return UserDictionaryAddWordActivity.CODE_ALREADY_PRESENT;
+  if (TextUtils.isEmpty(newShortcut) && hasWord(newWord,context)) {
+    return UserDictionaryAddWordActivity.CODE_ALREADY_PRESENT;
+  }
   UserDictionarySettings.deleteWord(newWord,null,resolver);
   if (!TextUtils.isEmpty(newShortcut)) {
     UserDictionarySettings.deleteWord(newWord,newShortcut,resolver);

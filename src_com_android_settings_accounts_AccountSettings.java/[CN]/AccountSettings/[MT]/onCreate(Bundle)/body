@@ -1,0 +1,28 @@
+{
+  super.onCreate(savedInstanceState);
+  mUm=(UserManager)getSystemService(Context.USER_SERVICE);
+  mAuthenticatorHelper=new AuthenticatorHelper();
+  mAuthenticatorHelper.updateAuthDescriptions(getActivity());
+  mAuthenticatorHelper.onAccountsUpdated(getActivity(),null);
+  addPreferencesFromResource(R.xml.account_settings);
+  if (mUm.isLinkedUser()) {
+    mAccountTypesForUser=(PreferenceGroup)findPreference(KEY_ACCOUNT);
+    if (mUm.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
+      removePreference(KEY_ADD_ACCOUNT);
+    }
+ else {
+      mAddAccountForUser=findPreference(KEY_ADD_ACCOUNT);
+      mAddAccountForUser.setOnPreferenceClickListener(this);
+    }
+    removePreference(KEY_CATEGORY_PERSONAL);
+    removePreference(KEY_CATEGORY_WORK);
+  }
+ else {
+    mAccountTypesForUser=(PreferenceGroup)findPreference(KEY_CATEGORY_PERSONAL);
+    mAddAccountForUser=findPreference(KEY_ADD_ACCOUNT_PERSONAL);
+    mAddAccountForUser.setOnPreferenceClickListener(this);
+    removePreference(KEY_CATEGORY_WORK);
+    removePreference(KEY_ADD_ACCOUNT);
+  }
+  updateAccountTypes(mAccountTypesForUser);
+}

@@ -14,6 +14,10 @@ mStatsHelper.clearStats();
 refreshStats();
 mHandler.removeMessages(MSG_REFRESH_STATS);
 return true;
+case MENU_BATTERY_SAVER:
+final SettingsActivity sa=(SettingsActivity)getActivity();
+sa.startPreferencePanel(BatterySaverSettings.class.getName(),null,R.string.battery_saver,null,null,0);
+return true;
 default :
 return false;
 }

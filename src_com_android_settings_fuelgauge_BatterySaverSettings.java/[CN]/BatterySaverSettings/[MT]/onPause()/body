@@ -1,0 +1,8 @@
+{
+  super.onPause();
+  mSettingsObserver.setListening(false);
+  if (mSwitchBarListenerAdded) {
+    mSwitchBar.removeOnSwitchChangeListener(this);
+  }
+  mSwitchBar.hide();
+}

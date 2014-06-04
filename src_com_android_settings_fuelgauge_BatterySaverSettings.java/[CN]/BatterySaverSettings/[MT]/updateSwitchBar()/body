@@ -1,0 +1,10 @@
+{
+  final boolean mode=Global.getInt(getContentResolver(),Global.LOW_POWER_MODE,0) != 0;
+  if (mSwitchBarListenerAdded) {
+    mSwitchBar.removeOnSwitchChangeListener(this);
+  }
+  mSwitchBar.getSwitch().setChecked(mode);
+  if (mSwitchBarListenerAdded) {
+    mSwitchBar.addOnSwitchChangeListener(this);
+  }
+}

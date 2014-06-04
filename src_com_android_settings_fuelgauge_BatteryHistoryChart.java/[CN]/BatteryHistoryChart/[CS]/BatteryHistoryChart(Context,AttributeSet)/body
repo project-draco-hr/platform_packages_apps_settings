@@ -1,15 +1,17 @@
 {
   super(context,attrs);
+  mBatteryWarnLevel=mContext.getResources().getInteger(com.android.internal.R.integer.config_lowBatteryWarningLevel);
+  mBatteryCriticalLevel=mContext.getResources().getInteger(com.android.internal.R.integer.config_criticalBatteryWarningLevel);
   mThinLineWidth=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2,getResources().getDisplayMetrics());
-  mBatteryBackgroundPaint.setColor(0xff263238);
+  mBatteryBackgroundPaint.setColor(0xFF009688);
   mBatteryBackgroundPaint.setStyle(Paint.Style.FILL);
-  mBatteryGoodPaint.setARGB(128,0,255,0);
+  mBatteryGoodPaint.setARGB(128,0,128,0);
   mBatteryGoodPaint.setStyle(Paint.Style.STROKE);
-  mBatteryWarnPaint.setARGB(128,255,255,0);
+  mBatteryWarnPaint.setARGB(128,128,128,0);
   mBatteryWarnPaint.setStyle(Paint.Style.STROKE);
-  mBatteryCriticalPaint.setARGB(192,255,0,0);
+  mBatteryCriticalPaint.setARGB(192,128,0,0);
   mBatteryCriticalPaint.setStyle(Paint.Style.STROKE);
-  mTimeRemainPaint.setColor(0xffA5B1B7);
+  mTimeRemainPaint.setColor(0xFFCED7BB);
   mTimeRemainPaint.setStyle(Paint.Style.FILL);
   mChargingPaint.setARGB(255,0,128,0);
   mChargingPaint.setStyle(Paint.Style.STROKE);
@@ -58,6 +60,15 @@ break;
 case R.styleable.BatteryHistoryChart_android_textStyle:
 mainTextAttrs.styleIndex=a.getInt(attr,mainTextAttrs.styleIndex);
 headTextAttrs.styleIndex=a.getInt(attr,headTextAttrs.styleIndex);
+break;
+case R.styleable.BatteryHistoryChart_barPrimaryColor:
+mBatteryBackgroundPaint.setColor(a.getInt(attr,0));
+break;
+case R.styleable.BatteryHistoryChart_barPredictionColor:
+mTimeRemainPaint.setColor(a.getInt(attr,0));
+break;
+case R.styleable.BatteryHistoryChart_chartMinHeight:
+mChartMinHeight=a.getDimensionPixelSize(attr,0);
 break;
 }
 }

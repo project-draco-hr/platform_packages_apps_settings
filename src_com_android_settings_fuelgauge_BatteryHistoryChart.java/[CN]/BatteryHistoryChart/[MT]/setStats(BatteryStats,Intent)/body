@@ -34,7 +34,21 @@
       mDischarging=false;
       remainingTimeUs=chargeTime;
       String timeString=Formatter.formatShortElapsedTime(getContext(),chargeTime / 1000);
-      mChargeLabelString=getContext().getResources().getString(R.string.power_charging_duration,batteryLevel,statusLabel,timeString);
+      int plugType=mBatteryBroadcast.getIntExtra(BatteryManager.EXTRA_PLUGGED,0);
+      int resId;
+      if (plugType == BatteryManager.BATTERY_PLUGGED_AC) {
+        resId=R.string.power_charging_duration_ac;
+      }
+ else       if (plugType == BatteryManager.BATTERY_PLUGGED_USB) {
+        resId=R.string.power_charging_duration_usb;
+      }
+ else       if (plugType == BatteryManager.BATTERY_PLUGGED_WIRELESS) {
+        resId=R.string.power_charging_duration_wireless;
+      }
+ else {
+        resId=R.string.power_charging_duration;
+      }
+      mChargeLabelString=getContext().getResources().getString(resId,batteryLevel,timeString);
     }
  else {
       mChargeLabelString=getContext().getResources().getString(R.string.power_charging,batteryLevel,statusLabel);
@@ -91,5 +105,4 @@
     mHavePhoneSignal=true;
   }
   if (mHistEnd <= mHistStart)   mHistEnd=mHistStart + 1;
-  mDurationString=Utils.formatElapsedTime(getContext(),mHistEnd - mHistStart,true);
 }

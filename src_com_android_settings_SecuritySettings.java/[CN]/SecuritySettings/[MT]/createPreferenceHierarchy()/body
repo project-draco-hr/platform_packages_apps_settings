@@ -99,6 +99,7 @@ PackageManager pm=getPackageManager();
 List<ResolveInfo> resolveInfos=pm.queryIntentServices(TRUST_AGENT_INTENT,PackageManager.GET_META_DATA);
 for (ResolveInfo resolveInfo : resolveInfos) {
 if (resolveInfo.serviceInfo == null) continue;
+if (!TrustAgentUtils.checkProvidePermission(resolveInfo,pm)) continue;
 TrustAgentUtils.TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
 if (trustAgentComponentInfo.componentName == null || trustAgentComponentInfo.title == null || trustAgentComponentInfo.title == "") continue;
 Preference trustAgentPreference=new Preference(securityCategory.getContext());

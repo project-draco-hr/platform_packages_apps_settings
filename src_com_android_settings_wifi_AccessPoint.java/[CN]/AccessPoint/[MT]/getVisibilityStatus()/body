@@ -3,10 +3,18 @@
   long now=System.currentTimeMillis();
   long age=(now - mSeen);
   if (age < VISIBILITY_MAX_AGE_IN_MILLI) {
-    visibility.append(Long.toString((age / SECOND_TO_MILLI) % SECOND_TO_MILLI));
+    visibility.append(Long.toString((age / SECOND_TO_MILLI) % SECOND_TO_MILLI)).append("s");
   }
  else {
     visibility.append("!");
+  }
+  if (mInfo != null) {
+    visibility.append(" sc=").append(Integer.toString(mInfo.score));
+    visibility.append(" ");
+    visibility.append(String.format("tx=%.1f,",mInfo.txSuccessRate));
+    visibility.append(String.format("%.1f,",mInfo.txRetriesRate));
+    visibility.append(String.format("%.1f ",mInfo.txBadRate));
+    visibility.append(String.format("rx=%.1f",mInfo.rxSuccessRate));
   }
   if (scanResultCache != null) {
     int rssi5=WifiConfiguration.INVALID_RSSI;
@@ -50,7 +58,7 @@
   }
  else {
     if (mRssi != Integer.MAX_VALUE) {
-      visibility.append(", ");
+      visibility.append(", ss=");
       visibility.append(Integer.toString(mRssi));
       if (mScanResult != null) {
         visibility.append(", ");

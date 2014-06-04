@@ -1,0 +1,9 @@
+{
+  if (!listeningToManagedProfileEvents) {
+    IntentFilter intentFilter=new IntentFilter();
+    intentFilter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
+    intentFilter.addAction(Intent.ACTION_MANAGED_PROFILE_ADDED);
+    context.registerReceiver(this,intentFilter);
+    listeningToManagedProfileEvents=true;
+  }
+}

@@ -1,0 +1,9 @@
+{
+  if (!mListeningToAccountUpdates) {
+    IntentFilter intentFilter=new IntentFilter();
+    intentFilter.addAction(AccountManager.LOGIN_ACCOUNTS_CHANGED_ACTION);
+    intentFilter.addAction(Intent.ACTION_DEVICE_STORAGE_OK);
+    mContext.registerReceiverAsUser(this,mUserHandle,intentFilter,null,null);
+    mListeningToAccountUpdates=true;
+  }
+}

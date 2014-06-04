@@ -1,0 +1,15 @@
+{
+  List<UserHandle> userProfiles=userManager.getUserProfiles();
+  final int count=userProfiles.size();
+  for (int i=0; i < count; i++) {
+    final UserHandle profile=userProfiles.get(i);
+    if (profile.getIdentifier() == userManager.getUserHandle()) {
+      continue;
+    }
+    final UserInfo userInfo=userManager.getUserInfo(profile.getIdentifier());
+    if (userInfo.isManagedProfile()) {
+      return profile;
+    }
+  }
+  return null;
+}

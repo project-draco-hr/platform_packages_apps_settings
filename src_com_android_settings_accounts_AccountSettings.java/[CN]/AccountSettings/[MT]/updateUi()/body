@@ -1,0 +1,29 @@
+{
+  addPreferencesFromResource(R.xml.account_settings);
+  if (mUm.isLinkedUser()) {
+    updateSingleProfileUi();
+  }
+ else {
+    if (Utils.isManagedProfile(mUm)) {
+      Log.w(TAG,"We should not be showing settings for a managed profile");
+      updateSingleProfileUi();
+    }
+    final UserHandle currentProfile=UserHandle.getCallingUserHandle();
+    final UserHandle managedProfile=Utils.getManagedProfile(mUm);
+    if (managedProfile == null) {
+      updateSingleProfileUi();
+    }
+ else {
+      updateProfileUi(currentProfile,KEY_CATEGORY_PERSONAL,KEY_ADD_ACCOUNT_PERSONAL,new ArrayList<String>());
+      final ArrayList<String> unusedPreferences=new ArrayList<String>(1);
+      unusedPreferences.add(KEY_ADD_ACCOUNT);
+      updateProfileUi(managedProfile,KEY_CATEGORY_WORK,KEY_ADD_ACCOUNT_WORK,unusedPreferences);
+      mManagedProfileBroadcastReceiver=new ManagedProfileBroadcastReceiver();
+      mManagedProfileBroadcastReceiver.register(getActivity());
+    }
+  }
+  final int count=mProfiles.size();
+  for (int i=0; i < count; i++) {
+    updateAccountTypes(mProfiles.valueAt(i));
+  }
+}

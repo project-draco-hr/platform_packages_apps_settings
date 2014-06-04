@@ -1,0 +1,9 @@
+{
+  if (intent.getAction().equals(Intent.ACTION_MANAGED_PROFILE_REMOVED) || intent.getAction().equals(Intent.ACTION_MANAGED_PROFILE_ADDED)) {
+    Log.v(TAG,"Received broadcast: " + intent.getAction());
+    cleanUp();
+    updateUi();
+    return;
+  }
+  Log.w(TAG,"Cannot handle received broadcast: " + intent.getAction());
+}

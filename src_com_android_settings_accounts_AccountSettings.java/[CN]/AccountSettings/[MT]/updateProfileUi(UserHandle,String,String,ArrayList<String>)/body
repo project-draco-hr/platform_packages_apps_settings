@@ -1,0 +1,19 @@
+{
+  final int count=unusedPreferences.size();
+  for (int i=0; i < count; i++) {
+    removePreference(unusedPreferences.get(i));
+  }
+  final ProfileData profileData=new ProfileData();
+  profileData.preferenceGroup=(PreferenceGroup)findPreference(categoryKey);
+  if (mUm.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
+    removePreference(addAccountKey);
+  }
+ else {
+    profileData.addAccountPreference=findPreference(addAccountKey);
+    profileData.addAccountPreference.setOnPreferenceClickListener(this);
+  }
+  profileData.userHandle=userHandle;
+  profileData.authenticatorHelper=new AuthenticatorHelper(getActivity(),userHandle,mUm,this);
+  mProfiles.put(userHandle.getIdentifier(),profileData);
+  profileData.authenticatorHelper.listenToAccountUpdates();
+}

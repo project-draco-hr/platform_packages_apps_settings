@@ -1,0 +1,9 @@
+{
+  final ProfileData profileData=mProfiles.get(userHandle.getIdentifier());
+  if (profileData != null) {
+    updateAccountTypes(profileData);
+  }
+ else {
+    Log.w(TAG,"Missing Settings screen for: " + userHandle.getIdentifier());
+  }
+}

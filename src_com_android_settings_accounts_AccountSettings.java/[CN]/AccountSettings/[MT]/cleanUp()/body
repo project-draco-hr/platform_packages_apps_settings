@@ -1,0 +1,9 @@
+{
+  if (mManagedProfileBroadcastReceiver != null) {
+    mManagedProfileBroadcastReceiver.unregister(getActivity());
+  }
+  final int count=mProfiles.size();
+  for (int i=0; i < count; i++) {
+    mProfiles.valueAt(i).authenticatorHelper.stopListeningToAccountUpdates();
+  }
+}

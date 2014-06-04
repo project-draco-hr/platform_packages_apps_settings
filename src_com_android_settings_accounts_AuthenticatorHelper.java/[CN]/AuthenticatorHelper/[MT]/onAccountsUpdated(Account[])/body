@@ -1,0 +1,17 @@
+{
+  updateAuthDescriptions(mContext);
+  if (accounts == null) {
+    accounts=AccountManager.get(mContext).getAccounts();
+  }
+  mEnabledAccountTypes.clear();
+  mAccTypeIconCache.clear();
+  for (int i=0; i < accounts.length; i++) {
+    final Account account=accounts[i];
+    if (!mEnabledAccountTypes.contains(account.type)) {
+      mEnabledAccountTypes.add(account.type);
+    }
+  }
+  if (mListeningToAccountUpdates) {
+    mListener.onAccountsUpdate(mUserHandle);
+  }
+}

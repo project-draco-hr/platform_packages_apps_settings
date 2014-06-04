@@ -1,0 +1,11 @@
+{
+  profileData.preferenceGroup.removeAll();
+  final ArrayList<AccountPreference> preferences=getAccountTypePreferences(profileData.authenticatorHelper);
+  final int count=preferences.size();
+  for (int i=0; i < count; i++) {
+    profileData.preferenceGroup.addPreference(preferences.get(i));
+  }
+  if (profileData.addAccountPreference != null) {
+    profileData.preferenceGroup.addPreference(profileData.addAccountPreference);
+  }
+}

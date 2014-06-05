@@ -3,7 +3,13 @@
   final Context context=previewText.getContext();
   final ContentResolver cr=context.getContentResolver();
   final float fontScale=manager.getFontScale();
-  previewText.setTextSize(fontScale * DEFAULT_FONT_SIZE);
+  if (previewWindow != null) {
+    previewText.setTextSize(previewWindow.getHeight() * LINE_HEIGHT_RATIO * fontScale);
+  }
+ else {
+    final float textSize=context.getResources().getDimension(R.dimen.caption_preview_text_size);
+    previewText.setTextSize(textSize * fontScale);
+  }
   final Locale locale=manager.getLocale();
   if (locale != null) {
     final CharSequence localizedText=AccessibilityUtils.getTextForLocale(context,locale,R.string.captioning_preview_characters);

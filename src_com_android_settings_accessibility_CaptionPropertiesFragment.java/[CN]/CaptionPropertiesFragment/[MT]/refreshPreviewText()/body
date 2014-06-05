@@ -6,7 +6,7 @@
   final SubtitleView preview=mPreviewText;
   if (preview != null) {
     final int styleId=mCaptioningManager.getRawUserStyle();
-    applyCaptionProperties(mCaptioningManager,preview,styleId);
+    applyCaptionProperties(mCaptioningManager,preview,mPreviewViewport,styleId);
     final Locale locale=mCaptioningManager.getLocale();
     if (locale != null) {
       final CharSequence localizedText=AccessibilityUtils.getTextForLocale(context,locale,R.string.captioning_preview_text);
@@ -16,6 +16,12 @@
       preview.setText(R.string.captioning_preview_text);
     }
     final CaptionStyle style=mCaptioningManager.getUserStyle();
-    mPreviewWindow.setBackgroundColor(style.windowColor);
+    if (style.hasWindowColor()) {
+      mPreviewWindow.setBackgroundColor(style.windowColor);
+    }
+ else {
+      final CaptionStyle defStyle=CaptionStyle.DEFAULT;
+      mPreviewWindow.setBackgroundColor(defStyle.windowColor);
+    }
   }
 }

@@ -3,7 +3,7 @@
   final int opacityValue=opacity.getValue();
   final int value;
   if (Color.alpha(colorValue) == 0) {
-    value=Color.alpha(opacityValue);
+    value=colorValue & 0x00FFFF00 | Color.alpha(opacityValue);
   }
  else {
     value=colorValue & 0x00FFFFFF | opacityValue & 0xFF000000;

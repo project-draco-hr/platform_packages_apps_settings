@@ -7,6 +7,7 @@
       NetworkInfo info=(NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
       changeNextButtonState(info.isConnected());
       if (mAutoFinishOnConnection && info.isConnected()) {
+        Log.d(TAG,"mReceiver.onReceive context=" + context + " intent="+ intent);
         finishOrNext(Activity.RESULT_OK);
       }
     }

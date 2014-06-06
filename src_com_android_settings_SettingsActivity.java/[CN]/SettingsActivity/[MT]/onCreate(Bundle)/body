@@ -12,6 +12,7 @@
   mContent=(ViewGroup)findViewById(R.id.prefs);
   getFragmentManager().addOnBackStackChangedListener(this);
   mDisplayHomeAsUpEnabled=true;
+  mDisplaySearch=true;
   final String initialFragmentName=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
   mIsShowingDashboard=(initialFragmentName == null);
   if (mIsShowingDashboard) {
@@ -30,12 +31,14 @@
       setTitleFromBackStack();
     }
     mDisplayHomeAsUpEnabled=savedState.getBoolean(SAVE_KEY_SHOW_HOME_AS_UP);
+    mDisplaySearch=savedState.getBoolean(SAVE_KEY_SHOW_SEARCH);
   }
  else {
     if (!mIsShowingDashboard) {
       final ComponentName cn=getIntent().getComponent();
       if (!cn.getClassName().equals(SubSettings.class.getName())) {
         mDisplayHomeAsUpEnabled=false;
+        mDisplaySearch=false;
       }
       final String initialTitle=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT_TITLE);
       mInitialTitle=(initialTitle != null) ? initialTitle : getTitle();

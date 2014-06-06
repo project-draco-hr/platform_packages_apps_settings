@@ -21,7 +21,7 @@
   initSmsApplicationSetting();
   getPreferenceScreen().removePreference(nsd);
   String toggleable=Settings.Global.getString(activity.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
-  boolean isWimaxEnabled=!isSecondaryUser && this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);
+  final boolean isWimaxEnabled=!isSecondaryUser && this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);
   if (!isWimaxEnabled) {
     PreferenceScreen root=getPreferenceScreen();
     Preference ps=(Preference)findPreference(KEY_WIMAX_SETTINGS);
@@ -57,7 +57,7 @@
     removePreference(KEY_MOBILE_NETWORK_SETTINGS);
     removePreference(KEY_MANAGE_MOBILE_PLAN);
   }
-  boolean isMobilePlanEnabled=this.getResources().getBoolean(R.bool.config_show_mobile_plan);
+  final boolean isMobilePlanEnabled=this.getResources().getBoolean(R.bool.config_show_mobile_plan);
   if (!isMobilePlanEnabled) {
     Preference pref=findPreference(KEY_MANAGE_MOBILE_PLAN);
     if (pref != null) {
@@ -73,10 +73,10 @@
     removePreference(KEY_TOGGLE_AIRPLANE);
   }
   Preference mGlobalProxy=findPreference(KEY_PROXY_SETTINGS);
-  DevicePolicyManager mDPM=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
+  final DevicePolicyManager mDPM=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
   getPreferenceScreen().removePreference(mGlobalProxy);
   mGlobalProxy.setEnabled(mDPM.getGlobalProxyAdmin() == null);
-  ConnectivityManager cm=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+  final ConnectivityManager cm=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
   if (isSecondaryUser || !cm.isTetheringSupported()) {
     getPreferenceScreen().removePreference(findPreference(KEY_TETHER_SETTINGS));
   }

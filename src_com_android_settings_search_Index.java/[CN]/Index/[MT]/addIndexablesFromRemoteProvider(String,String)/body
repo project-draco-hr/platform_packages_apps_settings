@@ -1,11 +1,11 @@
 {
   try {
     final int baseRank=Ranking.getBaseRankForAuthority(authority);
-    final Context packageContext=mContext.createPackageContext(packageName,0);
+    final Context context=mBaseAuthority.equals(authority) ? mContext : mContext.createPackageContext(packageName,0);
     final Uri uriForResources=buildUriForXmlResources(authority);
-    addIndexablesForXmlResourceUri(packageContext,packageName,uriForResources,SearchIndexablesContract.INDEXABLES_XML_RES_COLUMNS,baseRank);
+    addIndexablesForXmlResourceUri(context,packageName,uriForResources,SearchIndexablesContract.INDEXABLES_XML_RES_COLUMNS,baseRank);
     final Uri uriForRawData=buildUriForRawData(authority);
-    addIndexablesForRawDataUri(packageContext,packageName,uriForRawData,SearchIndexablesContract.INDEXABLES_RAW_COLUMNS,baseRank);
+    addIndexablesForRawDataUri(context,packageName,uriForRawData,SearchIndexablesContract.INDEXABLES_RAW_COLUMNS,baseRank);
     return true;
   }
  catch (  PackageManager.NameNotFoundException e) {

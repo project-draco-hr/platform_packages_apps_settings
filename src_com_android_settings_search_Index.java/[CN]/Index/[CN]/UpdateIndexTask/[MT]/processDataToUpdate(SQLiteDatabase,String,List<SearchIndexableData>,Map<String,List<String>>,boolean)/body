@@ -8,7 +8,12 @@
   final int count=dataToUpdate.size();
   for (int n=0; n < count; n++) {
     final SearchIndexableData data=dataToUpdate.get(n);
-    indexOneSearchIndexableData(database,localeStr,data,nonIndexableKeys);
+    try {
+      indexOneSearchIndexableData(database,localeStr,data,nonIndexableKeys);
+    }
+ catch (    Exception e) {
+      Log.e(LOG_TAG,"Cannot index: " + data.className + " for locale: "+ localeStr,e);
+    }
   }
   final long now=System.currentTimeMillis();
   Log.d(LOG_TAG,"Indexing locale '" + localeStr + "' took "+ (now - current)+ " millis");

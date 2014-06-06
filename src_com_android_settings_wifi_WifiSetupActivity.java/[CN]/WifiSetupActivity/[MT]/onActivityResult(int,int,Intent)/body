@@ -1,0 +1,15 @@
+{
+  if (resultCode == Activity.RESULT_CANCELED) {
+    final WifiManager wifiManager=(WifiManager)(getSystemService(Context.WIFI_SERVICE));
+    if (wifiManager != null) {
+      final WifiInfo info=wifiManager.getConnectionInfo();
+      if (info != null) {
+        int netId=info.getNetworkId();
+        if (netId != WifiConfiguration.INVALID_NETWORK_ID) {
+          wifiManager.forget(netId,null);
+        }
+      }
+    }
+  }
+  super.onActivityResult(requestCode,resultCode,data);
+}

@@ -16,7 +16,7 @@
   final String initialFragmentName=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
   mIsShowingDashboard=(initialFragmentName == null);
   if (mIsShowingDashboard) {
-    Index.getInstance(this).update();
+    Index.getInstance(getApplicationContext()).update();
   }
   if (savedState != null) {
     mSearchMenuItemExpanded=savedState.getBoolean(SAVE_KEY_SEARCH_MENU_EXPANDED);

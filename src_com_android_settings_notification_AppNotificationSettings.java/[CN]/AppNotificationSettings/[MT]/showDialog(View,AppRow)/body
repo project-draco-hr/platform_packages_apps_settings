@@ -7,6 +7,12 @@
   final CheckBox showBox=(CheckBox)layout.findViewById(android.R.id.button1);
   final CheckBox priBox=(CheckBox)layout.findViewById(android.R.id.button2);
   final CheckBox senBox=(CheckBox)layout.findViewById(android.R.id.button3);
+  if (!ENABLE_APP_NOTIFICATION_PRIORITY_OPTION) {
+    priBox.setVisibility(View.GONE);
+  }
+  if (!ENABLE_APP_NOTIFICATION_PRIVACY_OPTION) {
+    senBox.setVisibility(View.GONE);
+  }
   showBox.setChecked(!row.banned);
   final OnCheckedChangeListener showListener=new OnCheckedChangeListener(){
     @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){

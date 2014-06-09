@@ -2,8 +2,11 @@
   setTitle(ssid);
   StringBuilder summary=new StringBuilder();
   Context context=getContext();
-  if (mConfig != null && (mConfig.status == WifiConfiguration.Status.DISABLED || mConfig.autoJoinStatus != WifiConfiguration.AUTO_JOIN_ENABLED)) {
-    if (mConfig.autoJoinStatus != WifiConfiguration.AUTO_JOIN_ENABLED) {
+  if (mState != null) {
+    summary.append(Summary.get(context,mState));
+  }
+ else   if (mConfig != null && (mConfig.status == WifiConfiguration.Status.DISABLED || mConfig.autoJoinStatus >= WifiConfiguration.AUTO_JOIN_DISABLED_ON_AUTH_FAILURE)) {
+    if (mConfig.autoJoinStatus >= WifiConfiguration.AUTO_JOIN_DISABLED_ON_AUTH_FAILURE) {
       summary.append(context.getString(R.string.wifi_disabled_password_failure));
     }
  else {
@@ -22,9 +25,6 @@ summary.append(context.getString(R.string.wifi_disabled_generic));
 }
  else if (mRssi == Integer.MAX_VALUE) {
 summary.append(context.getString(R.string.wifi_not_in_range));
-}
- else if (mState != null) {
-summary.append(Summary.get(context,mState));
 }
  else {
 if (mConfig != null) {
@@ -51,6 +51,21 @@ summary.append(context.getString(R.string.wifi_wps_available_second_item));
 }
 if (WifiSettings.mVerboseLogging > 0) {
 summary.append(" " + getVisibilityStatus());
+if (mConfig != null && mConfig.autoJoinStatus > 0) {
+summary.append(" (" + mConfig.autoJoinStatus);
+if (mConfig.blackListTimestamp > 0) {
+long now=System.currentTimeMillis();
+long diff=(now - mConfig.blackListTimestamp) / 1000;
+long sec=diff % 60;
+long min=(diff / 60) % 60;
+long hour=(min / 60) % 60;
+summary.append(", ");
+if (hour > 0) summary.append(Long.toString(hour) + "h ");
+summary.append(Long.toString(min) + "m ");
+summary.append(Long.toString(sec) + "s ");
+}
+summary.append(")");
+}
 }
 setSummary(summary.toString());
 }

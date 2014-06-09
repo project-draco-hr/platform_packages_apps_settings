@@ -1,5 +1,11 @@
 {
   super.onCreate(savedState);
+  mUm=(UserManager)getSystemService(Context.USER_SERVICE);
+  if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_VPN)) {
+    mUnavailable=true;
+    setPreferenceScreen(new PreferenceScreen(getActivity(),null));
+    return;
+  }
   setHasOptionsMenu(true);
   addPreferencesFromResource(R.xml.vpn_settings2);
   if (savedState != null) {

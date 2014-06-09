@@ -1,5 +1,8 @@
 {
   super.onStop();
+  if (mUnavailable) {
+    return;
+  }
   getActivity().unregisterReceiver(mTetherChangeReceiver);
   mTetherChangeReceiver=null;
   if (mWifiApEnabler != null) {

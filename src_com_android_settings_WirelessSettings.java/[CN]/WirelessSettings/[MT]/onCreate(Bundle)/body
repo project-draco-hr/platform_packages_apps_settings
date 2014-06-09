@@ -7,6 +7,7 @@
   mCm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   mTm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
   mPm=getPackageManager();
+  mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   addPreferencesFromResource(R.xml.wireless_settings);
   final boolean isSecondaryUser=UserHandle.myUserId() != UserHandle.USER_OWNER;
   final Activity activity=getActivity();
@@ -37,10 +38,9 @@
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_WIFI)) {
     findPreference(KEY_VPN_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
   }
-  if (isSecondaryUser) {
+  if (isSecondaryUser || mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_VPN)) {
     removePreference(KEY_VPN_SETTINGS);
   }
-  protectByRestrictions(KEY_VPN_SETTINGS);
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_BLUETOOTH)) {
   }
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_NFC)) {
@@ -53,7 +53,7 @@
     getPreferenceScreen().removePreference(androidBeam);
     mNfcEnabler=null;
   }
-  if (isSecondaryUser || Utils.isWifiOnly(getActivity())) {
+  if (isSecondaryUser || Utils.isWifiOnly(getActivity()) || mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS)) {
     removePreference(KEY_MOBILE_NETWORK_SETTINGS);
     removePreference(KEY_MANAGE_MOBILE_PLAN);
   }
@@ -64,8 +64,6 @@
       removePreference(KEY_MANAGE_MOBILE_PLAN);
     }
   }
-  protectByRestrictions(KEY_MOBILE_NETWORK_SETTINGS);
-  protectByRestrictions(KEY_MANAGE_MOBILE_PLAN);
   if (!isSmsSupported()) {
     removePreference(KEY_SMS_APPLICATION);
   }
@@ -77,14 +75,13 @@
   getPreferenceScreen().removePreference(mGlobalProxy);
   mGlobalProxy.setEnabled(mDPM.getGlobalProxyAdmin() == null);
   final ConnectivityManager cm=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-  if (isSecondaryUser || !cm.isTetheringSupported()) {
+  if (isSecondaryUser || !cm.isTetheringSupported() || mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING)) {
     getPreferenceScreen().removePreference(findPreference(KEY_TETHER_SETTINGS));
   }
  else {
     Preference p=findPreference(KEY_TETHER_SETTINGS);
     p.setTitle(Utils.getTetheringLabel(cm));
   }
-  protectByRestrictions(KEY_TETHER_SETTINGS);
   boolean isCellBroadcastAppLinkEnabled=this.getResources().getBoolean(com.android.internal.R.bool.config_cellBroadcastAppLinks);
   try {
     if (isCellBroadcastAppLinkEnabled) {
@@ -96,10 +93,9 @@
  catch (  IllegalArgumentException ignored) {
     isCellBroadcastAppLinkEnabled=false;
   }
-  if (isSecondaryUser || !isCellBroadcastAppLinkEnabled) {
+  if (isSecondaryUser || !isCellBroadcastAppLinkEnabled || mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_CELL_BROADCASTS)) {
     PreferenceScreen root=getPreferenceScreen();
     Preference ps=findPreference(KEY_CELL_BROADCAST_SETTINGS);
     if (ps != null)     root.removePreference(ps);
   }
-  protectByRestrictions(KEY_CELL_BROADCAST_SETTINGS);
 }

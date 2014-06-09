@@ -21,9 +21,7 @@
   if (savedState != null) {
     mSearchMenuItemExpanded=savedState.getBoolean(SAVE_KEY_SEARCH_MENU_EXPANDED);
     mSearchQuery=savedState.getString(SAVE_KEY_SEARCH_QUERY);
-    final String initialTitle=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT_TITLE);
-    mInitialTitle=(initialTitle != null) ? initialTitle : getTitle();
-    setTitle(mInitialTitle);
+    setTitleFromIntent(getIntent());
     ArrayList<DashboardCategory> categories=savedState.getParcelableArrayList(SAVE_KEY_CATEGORIES);
     if (categories != null) {
       mCategories.clear();
@@ -40,16 +38,14 @@
         mDisplayHomeAsUpEnabled=false;
         mDisplaySearch=false;
       }
-      final String initialTitle=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT_TITLE);
-      mInitialTitle=(initialTitle != null) ? initialTitle : getTitle();
-      setTitle(mInitialTitle);
+      setTitleFromIntent(getIntent());
       Bundle initialArguments=getIntent().getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
-      switchToFragment(initialFragmentName,initialArguments,true,false,mInitialTitle,false);
+      switchToFragment(initialFragmentName,initialArguments,true,false,mInitialTitleResId,mInitialTitle,false);
     }
  else {
       mDisplayHomeAsUpEnabled=false;
-      mInitialTitle=getText(R.string.dashboard_title);
-      switchToFragment(DashboardSummary.class.getName(),null,false,false,mInitialTitle,false);
+      mInitialTitleResId=R.string.dashboard_title;
+      switchToFragment(DashboardSummary.class.getName(),null,false,false,mInitialTitleResId,mInitialTitle,false);
     }
   }
   mActionBar=getActionBar();

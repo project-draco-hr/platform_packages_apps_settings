@@ -11,7 +11,10 @@
   if (addToBackStack) {
     transaction.addToBackStack(SettingsActivity.BACK_STACK_PREFS);
   }
-  if (title != null) {
+  if (titleResId > 0) {
+    transaction.setBreadCrumbTitle(titleResId);
+  }
+ else   if (title != null) {
     transaction.setBreadCrumbTitle(title);
   }
   transaction.commitAllowingStateLoss();

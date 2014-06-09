@@ -1,13 +1,12 @@
 {
-  String title;
-  if (titleRes > 0) {
-    title=getString(titleRes);
-  }
- else   if (titleText != null) {
-    title=titleText.toString();
-  }
+  String title=null;
+  if (titleRes < 0) {
+    if (titleText != null) {
+      title=titleText.toString();
+    }
  else {
-    title="";
+      title="";
+    }
   }
-  Utils.startWithFragment(this,fragmentClass,args,resultTo,resultRequestCode,title);
+  Utils.startWithFragment(this,fragmentClass,args,resultTo,resultRequestCode,titleRes,title);
 }

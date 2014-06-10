@@ -1,0 +1,14 @@
+{
+  final int initialTitleResId=intent.getIntExtra(EXTRA_SHOW_FRAGMENT_TITLE_RESID,-1);
+  if (initialTitleResId > 0) {
+    mInitialTitle=null;
+    mInitialTitleResId=initialTitleResId;
+    setTitle(mInitialTitleResId);
+  }
+ else {
+    mInitialTitleResId=-1;
+    final String initialTitle=intent.getStringExtra(EXTRA_SHOW_FRAGMENT_TITLE);
+    mInitialTitle=(initialTitle != null) ? initialTitle : getTitle();
+    setTitle(mInitialTitle);
+  }
+}

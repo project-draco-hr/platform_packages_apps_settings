@@ -11,7 +11,7 @@
  else   if (p instanceof DropDownPreference) {
     mDropDown=(DropDownPreference)p;
     for (    int value : mValues) {
-      mDropDown.addItem(getResId(context,value),value);
+      mDropDown.addItem(getCaption(context.getResources(),value),value);
     }
   }
   update(context);

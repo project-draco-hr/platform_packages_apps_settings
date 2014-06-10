@@ -3,6 +3,7 @@
   Bundle arguments=getArguments();
   if (arguments == null) {
     Log.e(TAG,"No arguments provided when starting intent. ACCOUNT_KEY needed.");
+    finish();
     return;
   }
   mAccount=(Account)arguments.getParcelable(ACCOUNT_KEY);

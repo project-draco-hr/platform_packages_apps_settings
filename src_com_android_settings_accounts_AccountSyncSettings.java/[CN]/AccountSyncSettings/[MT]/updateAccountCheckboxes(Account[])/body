@@ -1,6 +1,6 @@
 {
   mInvisibleAdapters.clear();
-  SyncAdapterType[] syncAdapters=ContentResolver.getSyncAdapterTypes();
+  SyncAdapterType[] syncAdapters=ContentResolver.getSyncAdapterTypesAsUser(mUserHandle.getIdentifier());
   HashMap<String,ArrayList<String>> accountTypeToAuthorities=Maps.newHashMap();
   for (int i=0, n=syncAdapters.length; i < n; i++) {
     final SyncAdapterType sa=syncAdapters[i];
@@ -32,7 +32,7 @@
     if (authorities != null && (mAccount == null || mAccount.equals(account))) {
       for (int j=0, m=authorities.size(); j < m; j++) {
         final String authority=authorities.get(j);
-        int syncState=ContentResolver.getIsSyncable(account,authority);
+        int syncState=ContentResolver.getIsSyncableAsUser(account,authority,mUserHandle.getIdentifier());
         if (Log.isLoggable(TAG,Log.VERBOSE)) {
           Log.d(TAG,"  found authority " + authority + " "+ syncState);
         }

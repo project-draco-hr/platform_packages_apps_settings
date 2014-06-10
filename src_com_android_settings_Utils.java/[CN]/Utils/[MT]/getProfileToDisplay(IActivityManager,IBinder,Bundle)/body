@@ -1,0 +1,13 @@
+{
+  int currentUser=UserHandle.getCallingUserId();
+  try {
+    int launchedFromUser=UserHandle.getUserId(am.getLaunchedFromUid(activityToken));
+    if (launchedFromUser != currentUser) {
+      return new UserHandle(launchedFromUser);
+    }
+  }
+ catch (  RemoteException e) {
+    Log.v(TAG,"Could not get launching user.");
+  }
+  return new UserHandle(currentUser);
+}

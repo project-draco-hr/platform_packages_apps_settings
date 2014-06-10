@@ -1,6 +1,7 @@
 {
   Date date=new Date();
-  List<SyncInfo> currentSyncs=ContentResolver.getCurrentSyncs();
+  final int userId=mUserHandle.getIdentifier();
+  List<SyncInfo> currentSyncs=ContentResolver.getCurrentSyncsAsUser(userId);
   boolean syncIsFailing=false;
   updateAccountCheckboxes(mAccounts);
   for (int i=0, count=getPreferenceScreen().getPreferenceCount(); i < count; i++) {
@@ -11,8 +12,8 @@
     SyncStateCheckBoxPreference syncPref=(SyncStateCheckBoxPreference)pref;
     String authority=syncPref.getAuthority();
     Account account=syncPref.getAccount();
-    SyncStatusInfo status=ContentResolver.getSyncStatus(account,authority);
-    boolean syncEnabled=ContentResolver.getSyncAutomatically(account,authority);
+    SyncStatusInfo status=ContentResolver.getSyncStatusAsUser(account,authority,userId);
+    boolean syncEnabled=ContentResolver.getSyncAutomaticallyAsUser(account,authority,userId);
     boolean authorityIsPending=status == null ? false : status.pending;
     boolean initialSync=status == null ? false : status.initialize;
     boolean activelySyncing=isSyncing(currentSyncs,account,authority);
@@ -39,12 +40,12 @@
  else {
       syncPref.setSummary("");
     }
-    int syncState=ContentResolver.getIsSyncable(account,authority);
+    int syncState=ContentResolver.getIsSyncableAsUser(account,authority,userId);
     syncPref.setActive(activelySyncing && (syncState >= 0) && !initialSync);
     syncPref.setPending(authorityIsPending && (syncState >= 0) && !initialSync);
     syncPref.setFailed(lastSyncFailed);
     ConnectivityManager connManager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-    final boolean masterSyncAutomatically=ContentResolver.getMasterSyncAutomatically();
+    final boolean masterSyncAutomatically=ContentResolver.getMasterSyncAutomaticallyAsUser(userId);
     final boolean backgroundDataEnabled=connManager.getBackgroundDataSetting();
     final boolean oneTimeSyncMode=!masterSyncAutomatically || !backgroundDataEnabled;
     syncPref.setOneTimeSyncMode(oneTimeSyncMode);

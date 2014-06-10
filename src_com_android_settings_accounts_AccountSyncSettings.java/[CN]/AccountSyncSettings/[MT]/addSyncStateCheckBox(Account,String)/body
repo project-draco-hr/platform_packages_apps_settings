@@ -1,7 +1,7 @@
 {
   SyncStateCheckBoxPreference item=new SyncStateCheckBoxPreference(getActivity(),account,authority);
   item.setPersistent(false);
-  final ProviderInfo providerInfo=getPackageManager().resolveContentProvider(authority,0);
+  final ProviderInfo providerInfo=getPackageManager().resolveContentProviderAsUser(authority,0,mUserHandle.getIdentifier());
   if (providerInfo == null) {
     return;
   }

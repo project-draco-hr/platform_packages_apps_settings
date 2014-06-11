@@ -4,7 +4,7 @@
   mContext=getActivity();
   mSwitchBar=((SettingsActivity)mContext).getSwitchBar();
   updateSwitchBar();
-  mTriggerPref=new SettingPref(SettingPref.TYPE_GLOBAL,KEY_TURN_ON_AUTOMATICALLY,Global.LOW_POWER_MODE_TRIGGER_LEVEL,0,getResources().getIntArray(R.array.battery_saver_trigger_values)){
+  mTriggerPref=new SettingPref(SettingPref.TYPE_GLOBAL,KEY_TURN_ON_AUTOMATICALLY,Global.LOW_POWER_MODE_TRIGGER_LEVEL,mContext.getResources().getInteger(com.android.internal.R.integer.config_lowBatteryWarningLevel),getResources().getIntArray(R.array.battery_saver_trigger_values)){
     @Override protected String getCaption(    Resources res,    int value){
       if (value > 0 && value < 100) {
         return res.getString(R.string.battery_saver_turn_on_automatically_pct,value);

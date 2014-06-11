@@ -6,6 +6,9 @@
   mBackup=(CheckBoxPreference)screen.findPreference(BACKUP_DATA);
   mAutoRestore=(CheckBoxPreference)screen.findPreference(AUTO_RESTORE);
   mConfigure=(PreferenceScreen)screen.findPreference(CONFIGURE_ACCOUNT);
+  if (UserManager.get(getActivity()).hasUserRestriction(UserManager.DISALLOW_FACTORY_RESET)) {
+    screen.removePreference(findPreference(PERSONAL_DATA_CATEGORY));
+  }
   if (getActivity().getPackageManager().resolveContentProvider(GSETTINGS_PROVIDER,0) == null) {
     screen.removePreference(findPreference(BACKUP_CATEGORY));
   }

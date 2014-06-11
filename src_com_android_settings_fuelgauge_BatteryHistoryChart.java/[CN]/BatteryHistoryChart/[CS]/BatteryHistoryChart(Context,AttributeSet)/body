@@ -13,15 +13,19 @@
   mBatteryCriticalPaint.setStyle(Paint.Style.STROKE);
   mTimeRemainPaint.setColor(0xFFCED7BB);
   mTimeRemainPaint.setStyle(Paint.Style.FILL);
-  mChargingPaint.setARGB(255,0,128,0);
   mChargingPaint.setStyle(Paint.Style.STROKE);
   mScreenOnPaint.setStyle(Paint.Style.STROKE);
   mGpsOnPaint.setStyle(Paint.Style.STROKE);
   mWifiRunningPaint.setStyle(Paint.Style.STROKE);
   mCpuRunningPaint.setStyle(Paint.Style.STROKE);
-  mPhoneSignalChart.setColors(new int[]{0x00000000,0xffa00000,0xffa07000,0xffa0a000,0xff80a000,0xff409000,0xff008000});
+  mPhoneSignalChart.setColors(new int[]{0x00000000,0xffc43828,0xffe54918,0xfff47b00,0xfffabf2c,0xff679e37,0xff0a7f42});
   mDebugRectPaint.setARGB(255,255,0,0);
   mDebugRectPaint.setStyle(Paint.Style.STROKE);
+  mScreenOnPaint.setColor(0xFF009688);
+  mGpsOnPaint.setColor(0xFF009688);
+  mWifiRunningPaint.setColor(0xFF009688);
+  mCpuRunningPaint.setColor(0xFF009688);
+  mChargingPaint.setColor(0xFF009688);
   TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.BatteryHistoryChart,0,0);
   final TextAttrs mainTextAttrs=new TextAttrs();
   final TextAttrs headTextAttrs=new TextAttrs();
@@ -63,6 +67,11 @@ headTextAttrs.styleIndex=a.getInt(attr,headTextAttrs.styleIndex);
 break;
 case R.styleable.BatteryHistoryChart_barPrimaryColor:
 mBatteryBackgroundPaint.setColor(a.getInt(attr,0));
+mScreenOnPaint.setColor(a.getInt(attr,0));
+mGpsOnPaint.setColor(a.getInt(attr,0));
+mWifiRunningPaint.setColor(a.getInt(attr,0));
+mCpuRunningPaint.setColor(a.getInt(attr,0));
+mChargingPaint.setColor(a.getInt(attr,0));
 break;
 case R.styleable.BatteryHistoryChart_barPredictionColor:
 mTimeRemainPaint.setColor(a.getInt(attr,0));

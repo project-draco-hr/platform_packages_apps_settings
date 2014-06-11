@@ -21,7 +21,7 @@
     }
     userPhotoView.setImageDrawable(drawable);
     mEditUserPhotoController=new EditUserPhotoController(this,userPhotoView,mSavedPhoto,drawable,mWaitingForActivityResult);
-    mEditUserInfoDialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.profile_info_settings_title).setIconAttribute(R.drawable.ic_settings_multiuser).setView(content).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    mEditUserInfoDialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.profile_info_settings_title).setView(content).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
       @Override public void onClick(      DialogInterface dialog,      int which){
         if (which == DialogInterface.BUTTON_POSITIVE) {
           CharSequence userName=userNameView.getText();

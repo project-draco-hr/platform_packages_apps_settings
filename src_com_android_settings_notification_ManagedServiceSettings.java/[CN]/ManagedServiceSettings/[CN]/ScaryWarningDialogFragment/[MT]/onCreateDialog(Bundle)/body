@@ -5,7 +5,7 @@
   final ComponentName cn=ComponentName.unflattenFromString(args.getString(KEY_COMPONENT));
   final String title=getResources().getString(mConfig.warningDialogTitle,label);
   final String summary=getResources().getString(mConfig.warningDialogSummary,label);
-  return new AlertDialog.Builder(getActivity()).setMessage(summary).setTitle(title).setIconAttribute(android.R.attr.alertDialogIcon).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+  return new AlertDialog.Builder(getActivity()).setMessage(summary).setTitle(title).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int id){
       mEnabledServices.add(cn);
       saveEnabledServices();

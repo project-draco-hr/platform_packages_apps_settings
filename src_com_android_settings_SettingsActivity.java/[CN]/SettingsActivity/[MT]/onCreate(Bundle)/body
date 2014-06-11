@@ -8,13 +8,18 @@
   mDevelopmentPreferences=getSharedPreferences(DevelopmentSettings.PREF_FILE,Context.MODE_PRIVATE);
   getMetaData();
   super.onCreate(savedState);
+  final String initialFragmentName=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
+  mIsShowingDashboard=(initialFragmentName == null);
+  final ComponentName cn=getIntent().getComponent();
+  final boolean isShortcut=!cn.getClassName().equals(SubSettings.class.getName());
+  if (!mIsShowingDashboard && !isShortcut) {
+    setTheme(R.style.Theme_SubSettings);
+  }
   setContentView(R.layout.settings_main);
   mContent=(ViewGroup)findViewById(R.id.prefs);
   getFragmentManager().addOnBackStackChangedListener(this);
   mDisplayHomeAsUpEnabled=true;
   mDisplaySearch=true;
-  final String initialFragmentName=getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
-  mIsShowingDashboard=(initialFragmentName == null);
   if (mIsShowingDashboard) {
     Index.getInstance(getApplicationContext()).update();
   }
@@ -33,8 +38,7 @@
   }
  else {
     if (!mIsShowingDashboard) {
-      final ComponentName cn=getIntent().getComponent();
-      if (!cn.getClassName().equals(SubSettings.class.getName())) {
+      if (isShortcut) {
         mDisplayHomeAsUpEnabled=false;
         mDisplaySearch=false;
       }

@@ -1,0 +1,10 @@
+{
+  final ContentResolver cr=getContentResolver();
+  if (listening) {
+    cr.registerContentObserver(LOW_POWER_MODE_URI,false,this);
+    cr.registerContentObserver(LOW_POWER_MODE_TRIGGER_LEVEL_URI,false,this);
+  }
+ else {
+    cr.unregisterContentObserver(this);
+  }
+}

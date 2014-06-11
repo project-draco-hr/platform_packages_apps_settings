@@ -5,7 +5,7 @@
   if (mState != null) {
     summary.append(Summary.get(context,mState));
   }
- else   if (mConfig != null && (mConfig.status == WifiConfiguration.Status.DISABLED || mConfig.autoJoinStatus >= WifiConfiguration.AUTO_JOIN_DISABLED_ON_AUTH_FAILURE)) {
+ else   if (mConfig != null && ((mConfig.status == WifiConfiguration.Status.DISABLED && mConfig.disableReason != WifiConfiguration.DISABLED_UNKNOWN_REASON) || mConfig.autoJoinStatus >= WifiConfiguration.AUTO_JOIN_DISABLED_ON_AUTH_FAILURE)) {
     if (mConfig.autoJoinStatus >= WifiConfiguration.AUTO_JOIN_DISABLED_ON_AUTH_FAILURE) {
       summary.append(context.getString(R.string.wifi_disabled_password_failure));
     }

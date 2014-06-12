@@ -1,5 +1,7 @@
 {
   super.onActivityCreated(savedInstanceState);
+  if (mCreated)   return;
+  mCreated=true;
   addPreferencesFromResource(R.xml.battery_saver_settings);
   mContext=getActivity();
   mAlwaysOnPref=new SettingPref(SettingPref.TYPE_GLOBAL,KEY_ALWAYS_ON,Global.LOW_POWER_MODE,0){

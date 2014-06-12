@@ -7,21 +7,28 @@
  else   if (failedAttempts == MAX_FAILED_ATTEMPTS) {
     sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
   }
- else   if ((failedAttempts % COOL_DOWN_ATTEMPTS) == 0) {
-    if (mLockPatternView != null) {
-      mLockPatternView.clearPattern();
-    }
-    mCooldown=COOL_DOWN_INTERVAL;
-    cooldown();
-  }
  else {
-    final TextView status=(TextView)findViewById(R.id.status);
-    status.setText(R.string.try_again);
-    if (mPasswordEntry != null) {
-      mPasswordEntry.setEnabled(true);
-    }
     if (mLockPatternView != null) {
-      mLockPatternView.setEnabled(true);
+      mLockPatternView.setDisplayMode(DisplayMode.Wrong);
+      mLockPatternView.removeCallbacks(mClearPatternRunnable);
+      mLockPatternView.postDelayed(mClearPatternRunnable,WRONG_PATTERN_CLEAR_TIMEOUT_MS);
+    }
+    if ((failedAttempts % COOL_DOWN_ATTEMPTS) == 0) {
+      mCooldown=COOL_DOWN_INTERVAL;
+      cooldown();
+    }
+ else {
+      final TextView status=(TextView)findViewById(R.id.status);
+      status.setText(R.string.try_again);
+      if (mLockPatternView != null) {
+        mLockPatternView.setDisplayMode(DisplayMode.Wrong);
+      }
+      if (mPasswordEntry != null) {
+        mPasswordEntry.setEnabled(true);
+      }
+      if (mLockPatternView != null) {
+        mLockPatternView.setEnabled(true);
+      }
     }
   }
 }

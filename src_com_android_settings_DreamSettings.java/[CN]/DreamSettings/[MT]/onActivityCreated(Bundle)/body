@@ -10,5 +10,6 @@
   listView.setAdapter(mAdapter);
   final SettingsActivity sa=(SettingsActivity)getActivity();
   mSwitchBar=sa.getSwitchBar();
-  mSwitch=mSwitchBar.getSwitch();
+  mSwitchBar.addOnSwitchChangeListener(this);
+  mSwitchBar.show();
 }

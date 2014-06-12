@@ -1,4 +1,6 @@
 {
-  TransitionManager.beginDelayedTransition((ViewGroup)getParent());
-  setVisibility(View.VISIBLE);
+  if (!isShowing()) {
+    setVisibility(View.VISIBLE);
+    mSwitch.setOnCheckedChangeListener(this);
+  }
 }

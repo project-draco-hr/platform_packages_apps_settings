@@ -1,0 +1,8 @@
+{
+  SavedState ss=(SavedState)state;
+  super.onRestoreInstanceState(ss.getSuperState());
+  mSwitch.setChecked(ss.checked);
+  setTextViewLabel(ss.checked);
+  setVisibility(ss.visible ? View.VISIBLE : View.GONE);
+  requestLayout();
+}

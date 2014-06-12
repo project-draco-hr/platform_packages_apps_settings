@@ -16,14 +16,13 @@
   }
   final ContentResolver cr=getActivity().getContentResolver();
   mLastEnabledState=Settings.Global.getInt(cr,Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,0) != 0;
-  mEnabledSwitch.setChecked(mLastEnabledState);
+  mSwitchBar.setChecked(mLastEnabledState);
   setPrefsEnabledState(mLastEnabledState);
   if (mHaveDebugSettings && !mLastEnabledState) {
     Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,1);
     mLastEnabledState=true;
-    mEnabledSwitch.setChecked(mLastEnabledState);
+    mSwitchBar.setChecked(mLastEnabledState);
     setPrefsEnabledState(mLastEnabledState);
   }
-  mSwitchBar.addOnSwitchChangeListener(this);
   mSwitchBar.show();
 }

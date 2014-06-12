@@ -3,6 +3,8 @@
   mPrintersAdapter.registerDataSetObserver(mDataObserver);
   final SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
+  mSwitchBar.addOnSwitchChangeListener(this);
+  mSwitchBar.show();
   mToggleSwitch=mSwitchBar.getSwitch();
   mToggleSwitch.setOnBeforeCheckedChangeListener(new ToggleSwitch.OnBeforeCheckedChangeListener(){
     @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){

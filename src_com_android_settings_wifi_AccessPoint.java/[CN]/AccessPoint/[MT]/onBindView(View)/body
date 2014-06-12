@@ -1,12 +1,5 @@
 {
   super.onBindView(view);
-  ImageView signal=(ImageView)view.findViewById(R.id.signal);
-  if (mRssi == Integer.MAX_VALUE) {
-    signal.setImageDrawable(null);
-  }
- else {
-    signal.setImageLevel(getLevel());
-    signal.setImageDrawable(getContext().getTheme().obtainStyledAttributes(new int[]{R.attr.wifi_signal}).getDrawable(0));
-    signal.setImageState((security != SECURITY_NONE) ? STATE_SECURED : STATE_NONE,true);
-  }
+  updateIcon(getLevel());
+  notifyChanged();
 }

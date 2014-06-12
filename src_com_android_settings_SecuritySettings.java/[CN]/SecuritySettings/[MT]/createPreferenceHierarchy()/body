@@ -97,11 +97,13 @@ PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURI
 if (securityCategory != null) {
 PackageManager pm=getPackageManager();
 List<ResolveInfo> resolveInfos=pm.queryIntentServices(TRUST_AGENT_INTENT,PackageManager.GET_META_DATA);
+List<ComponentName> enabledTrustAgents=mLockPatternUtils.getEnabledTrustAgents();
+if (enabledTrustAgents != null && !enabledTrustAgents.isEmpty()) {
 for (ResolveInfo resolveInfo : resolveInfos) {
 if (resolveInfo.serviceInfo == null) continue;
 if (!TrustAgentUtils.checkProvidePermission(resolveInfo,pm)) continue;
 TrustAgentUtils.TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
-if (trustAgentComponentInfo.componentName == null || trustAgentComponentInfo.title == null || trustAgentComponentInfo.title == "") continue;
+if (trustAgentComponentInfo.componentName == null || !enabledTrustAgents.contains(trustAgentComponentInfo.componentName) || TextUtils.isEmpty(trustAgentComponentInfo.title)) continue;
 Preference trustAgentPreference=new Preference(securityCategory.getContext());
 trustAgentPreference.setKey(KEY_TRUST_AGENT);
 trustAgentPreference.setTitle(trustAgentComponentInfo.title);
@@ -112,6 +114,7 @@ intent.setAction(Intent.ACTION_MAIN);
 trustAgentPreference.setIntent(intent);
 securityCategory.addPreference(trustAgentPreference);
 break;
+}
 }
 }
 return root;

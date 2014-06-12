@@ -2,8 +2,19 @@
   super.onActivityCreated(savedInstanceState);
   addPreferencesFromResource(R.xml.battery_saver_settings);
   mContext=getActivity();
-  mSwitchBar=((SettingsActivity)mContext).getSwitchBar();
-  updateSwitchBar();
+  mAlwaysOnPref=new SettingPref(SettingPref.TYPE_GLOBAL,KEY_ALWAYS_ON,Global.LOW_POWER_MODE,0){
+    @Override protected boolean setSetting(    Context context,    int value){
+      mHandler.removeCallbacks(mStartMode);
+      if (value == 0) {
+        return super.setSetting(context,value);
+      }
+ else {
+        mHandler.postDelayed(mStartMode,WAIT_FOR_SWITCH_ANIM);
+        return true;
+      }
+    }
+  }
+;
   mTriggerPref=new SettingPref(SettingPref.TYPE_GLOBAL,KEY_TURN_ON_AUTOMATICALLY,Global.LOW_POWER_MODE_TRIGGER_LEVEL,mContext.getResources().getInteger(com.android.internal.R.integer.config_lowBatteryWarningLevel),getResources().getIntArray(R.array.battery_saver_trigger_values)){
     @Override protected String getCaption(    Resources res,    int value){
       if (value > 0 && value < 100) {
@@ -13,5 +24,6 @@
     }
   }
 ;
+  mAlwaysOnPref.init(this);
   mTriggerPref.init(this);
 }

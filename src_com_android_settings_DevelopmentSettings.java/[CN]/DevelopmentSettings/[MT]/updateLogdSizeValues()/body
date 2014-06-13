@@ -1,0 +1,24 @@
+{
+  if (mLogdSize != null) {
+    String currentValue=SystemProperties.get(SELECT_LOGD_SIZE_PROPERTY);
+    if (currentValue == null) {
+      currentValue=SystemProperties.get(SELECT_LOGD_DEFAULT_SIZE_PROPERTY);
+      if (currentValue == null) {
+        currentValue="256K";
+      }
+    }
+    String[] values=getResources().getStringArray(R.array.select_logd_size_values);
+    String[] titles=getResources().getStringArray(R.array.select_logd_size_titles);
+    String[] summaries=getResources().getStringArray(R.array.select_logd_size_summaries);
+    int index=1;
+    for (int i=0; i < values.length; i++) {
+      if (currentValue.equals(values[i]) || currentValue.equals(titles[i])) {
+        index=i;
+        break;
+      }
+    }
+    mLogdSize.setValue(values[index]);
+    mLogdSize.setSummary(summaries[index]);
+    mLogdSize.setOnPreferenceChangeListener(this);
+  }
+}

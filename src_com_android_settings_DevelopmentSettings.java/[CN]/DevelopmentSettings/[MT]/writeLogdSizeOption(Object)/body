@@ -1,0 +1,11 @@
+{
+  SystemProperties.set(SELECT_LOGD_SIZE_PROPERTY,newValue.toString());
+  pokeSystemProperties();
+  try {
+    Process p=Runtime.getRuntime().exec("logcat -b all -G " + newValue.toString());
+    int status=p.waitFor();
+  }
+ catch (  Exception e) {
+  }
+  updateLogdSizeValues();
+}

@@ -25,6 +25,8 @@
       }
       if (mPasswordEntry != null) {
         mPasswordEntry.setEnabled(true);
+        final InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mPasswordEntry,0);
       }
       if (mLockPatternView != null) {
         mLockPatternView.setEnabled(true);

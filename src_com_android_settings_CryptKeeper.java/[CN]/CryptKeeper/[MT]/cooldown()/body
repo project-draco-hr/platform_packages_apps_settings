@@ -3,14 +3,22 @@
   if (mCooldown <= 0) {
     if (mPasswordEntry != null) {
       mPasswordEntry.setEnabled(true);
+      final InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.showSoftInput(mPasswordEntry,0);
       setBackFunctionality(true);
     }
     if (mLockPatternView != null) {
       mLockPatternView.setEnabled(true);
     }
-    status.setText(R.string.enter_password);
+    status.setText(mStatusString);
   }
  else {
+    if (mPasswordEntry != null) {
+      mPasswordEntry.setEnabled(false);
+    }
+    if (mLockPatternView != null) {
+      mLockPatternView.setEnabled(false);
+    }
     CharSequence template=getText(R.string.crypt_keeper_cooldown);
     status.setText(TextUtils.expandTemplate(template,Integer.toString(mCooldown)));
     mCooldown--;

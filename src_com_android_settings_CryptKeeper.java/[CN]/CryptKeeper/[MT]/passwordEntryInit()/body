@@ -38,7 +38,7 @@
       mReleaseWakeLockCountdown=96;
     }
   }
-  if (mLockPatternView == null) {
+  if (mLockPatternView == null && mCooldown <= 0) {
     mHandler.postDelayed(new Runnable(){
       @Override public void run(){
         imm.showSoftInputUnchecked(0,null);

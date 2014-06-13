@@ -27,20 +27,27 @@
       @Override public void onPostExecute(      java.lang.Void v){
         if (type == StorageManager.CRYPT_TYPE_PIN) {
           setContentView(R.layout.crypt_keeper_pin_entry);
-          ((TextView)findViewById(R.id.status)).setText(R.string.enter_pin);
+          mStatusString=R.string.enter_pin;
         }
  else         if (type == StorageManager.CRYPT_TYPE_PATTERN) {
           setContentView(R.layout.crypt_keeper_pattern_entry);
           setBackFunctionality(false);
-          ((TextView)findViewById(R.id.status)).setText(R.string.enter_pattern);
+          mStatusString=R.string.enter_pattern;
         }
  else {
           setContentView(R.layout.crypt_keeper_password_entry);
+          mStatusString=R.string.enter_password;
         }
-        final TextView status=(TextView)findViewById(R.id.owner_info);
-        status.setText(owner_info);
-        status.setSelected(true);
+        final TextView status=(TextView)findViewById(R.id.status);
+        status.setText(mStatusString);
+        final TextView ownerInfo=(TextView)findViewById(R.id.owner_info);
+        ownerInfo.setText(owner_info);
+        ownerInfo.setSelected(true);
         passwordEntryInit();
+        if (mCooldown > 0) {
+          setBackFunctionality(false);
+          cooldown();
+        }
       }
     }
 .execute();

@@ -1,5 +1,6 @@
 {
   super.onResume();
+  mAppControlRestricted=mUserManager.hasUserRestriction(UserManager.DISALLOW_APPS_CONTROL);
   mSession.resume();
   if (!refreshUi()) {
     setIntentAndFinish(true,true);

@@ -36,6 +36,9 @@
       enabled=!mPackageInfo.packageName.equals(currentDefaultHome.getPackageName());
     }
   }
+  if (mAppControlRestricted) {
+    enabled=false;
+  }
   mUninstallButton.setEnabled(enabled);
   if (enabled) {
     mUninstallButton.setOnClickListener(this);

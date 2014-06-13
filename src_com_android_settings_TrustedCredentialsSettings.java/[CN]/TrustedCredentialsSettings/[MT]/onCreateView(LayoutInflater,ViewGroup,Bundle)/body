@@ -1,4 +1,7 @@
 {
+  if (mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
+    return inflater.inflate(R.layout.credentials_disallowed_preference_screen,parent,false);
+  }
   mTabHost=(TabHost)inflater.inflate(R.layout.trusted_credentials,parent,false);
   mTabHost.setup();
   addTab(Tab.SYSTEM);

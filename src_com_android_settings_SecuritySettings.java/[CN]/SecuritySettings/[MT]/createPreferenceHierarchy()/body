@@ -64,11 +64,15 @@ credentialStorageType.setSummary(storageSummaryRes);
 }
  else {
 removePreference(KEY_CREDENTIALS_MANAGER);
+removePreference(KEY_CREDENTIALS_INSTALL);
 }
 PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
 mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
 mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
 mToggleAppInstallation.setEnabled(mIsPrimary);
+if (um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES) || um.hasUserRestriction(UserManager.DISALLOW_INSTALL_APPS)) {
+mToggleAppInstallation.setEnabled(false);
+}
 mToggleVerifyApps=(CheckBoxPreference)findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
 if (mIsPrimary && showVerifierSetting()) {
 if (isVerifierInstalled()) {
@@ -87,11 +91,8 @@ deviceAdminCategory.removePreference(mToggleVerifyApps);
 mToggleVerifyApps.setEnabled(false);
 }
 }
-if (shouldBePinProtected(RESTRICTIONS_PIN_SET)) {
-protectByRestrictions(mToggleAppInstallation);
-protectByRestrictions(mToggleVerifyApps);
-protectByRestrictions(mResetCredentials);
-protectByRestrictions(root.findPreference(KEY_CREDENTIALS_INSTALL));
+if (um.hasUserRestriction(UserManager.ENSURE_VERIFY_APPS)) {
+mToggleVerifyApps.setEnabled(false);
 }
 PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
 if (securityCategory != null) {

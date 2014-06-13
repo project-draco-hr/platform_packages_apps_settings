@@ -1,7 +1,8 @@
 {
   int selectedLocaleIndex=-1;
+  String localeString=(locale != null) ? locale.toString() : "";
   for (int i=0; i < mLocalePreference.getEntryValues().length; i++) {
-    if (locale.equalsIgnoreCase(mLocalePreference.getEntryValues()[i].toString())) {
+    if (localeString.equalsIgnoreCase(mLocalePreference.getEntryValues()[i].toString())) {
       selectedLocaleIndex=i;
       break;
     }
@@ -14,14 +15,6 @@
   mSelectedLocaleIndex=selectedLocaleIndex;
   mEnginesHelper.updateLocalePrefForEngine(getEngineName(),locale);
   if (getEngineName().equals(mTts.getCurrentEngine())) {
-    if (!locale.isEmpty()) {
-      String[] localeArray=TtsEngines.parseLocalePref(locale);
-      if (localeArray != null) {
-        mTts.setLanguage(new Locale(localeArray[0],localeArray[1],localeArray[2]));
-      }
-    }
- else {
-      mTts.setLanguage(Locale.getDefault());
-    }
+    mTts.setLanguage((locale != null) ? locale : Locale.getDefault());
   }
 }

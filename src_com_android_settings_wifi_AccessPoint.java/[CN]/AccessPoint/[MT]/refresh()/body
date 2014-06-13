@@ -51,6 +51,9 @@ summary.append(context.getString(R.string.wifi_wps_available_second_item));
 }
 }
 if (WifiSettings.mVerboseLogging > 0) {
+if (mInfo != null && mState != null) {
+summary.append(" (f=" + Integer.toString(mInfo.getFrequency()) + ")");
+}
 summary.append(" " + getVisibilityStatus());
 if (mConfig != null && mConfig.autoJoinStatus > 0) {
 summary.append(" (" + mConfig.autoJoinStatus);

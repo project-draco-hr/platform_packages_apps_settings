@@ -4,19 +4,31 @@
     showFactoryReset();
     return;
   }
-  int progress=0;
+  CharSequence status=getText(R.string.crypt_keeper_setup_description);
+  int percent=0;
   try {
-    progress=isDebugView() ? 50 : Integer.parseInt(state);
+    percent=isDebugView() ? 50 : Integer.parseInt(state);
   }
  catch (  Exception e) {
     Log.w(TAG,"Error parsing progress: " + e.toString());
   }
-  final CharSequence status=getText(R.string.crypt_keeper_setup_description);
+  String progress=Integer.toString(percent);
   Log.v(TAG,"Encryption progress: " + progress);
+  try {
+    final String timeProperty=SystemProperties.get("vold.encrypt_time_remaining");
+    int time=Integer.parseInt(timeProperty);
+    if (time >= 0) {
+      time=(time + 9) / 10 * 10;
+      progress=DateUtils.formatElapsedTime(time);
+      status=getText(R.string.crypt_keeper_setup_time_remaining);
+    }
+  }
+ catch (  Exception e) {
+  }
   final TextView tv=(TextView)findViewById(R.id.status);
   if (tv != null) {
-    tv.setText(TextUtils.expandTemplate(status,Integer.toString(progress)));
+    tv.setText(TextUtils.expandTemplate(status,progress));
   }
   mHandler.removeMessages(MESSAGE_UPDATE_PROGRESS);
-  mHandler.sendEmptyMessageDelayed(MESSAGE_UPDATE_PROGRESS,5000);
+  mHandler.sendEmptyMessageDelayed(MESSAGE_UPDATE_PROGRESS,1000);
 }

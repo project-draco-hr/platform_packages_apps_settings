@@ -24,18 +24,17 @@ Log.v(TAG,packageName + " hadn't used location within the time interval.");
 }
 return null;
 }
-Preference pref=null;
+int uid=ops.getUid();
+int userId=UserHandle.getUserId(uid);
+Preference preference=null;
 try {
-ApplicationInfo appInfo=mPackageManager.getApplicationInfo(packageName,PackageManager.GET_META_DATA);
-if (appInfo.uid == ops.getUid()) {
-pref=createRecentLocationEntry(mPackageManager.getApplicationIcon(appInfo),mPackageManager.getApplicationLabel(appInfo),highBattery,new PackageEntryClickedListener(packageName));
+IPackageManager ipm=AppGlobals.getPackageManager();
+ApplicationInfo appInfo=ipm.getApplicationInfo(packageName,PackageManager.GET_META_DATA,userId);
+Drawable icon=um.getBadgedDrawableForUser(mPackageManager.getApplicationIcon(appInfo),new UserHandle(userId));
+preference=createRecentLocationEntry(icon,mPackageManager.getApplicationLabel(appInfo),highBattery,new PackageEntryClickedListener(packageName));
 }
- else if (Log.isLoggable(TAG,Log.VERBOSE)) {
-Log.v(TAG,"package " + packageName + " with Uid "+ ops.getUid()+ " belongs to another inactive account, ignored.");
+ catch (RemoteException e) {
+Log.w(TAG,"Error while retrieving application info",e);
 }
-}
- catch (PackageManager.NameNotFoundException e) {
-Log.wtf(TAG,"Package not found: " + packageName,e);
-}
-return pref;
+return preference;
 }

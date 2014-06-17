@@ -1,10 +1,10 @@
 {
   String themeName=getIntent().getStringExtra(EXTRA_THEME);
-  if (THEME_HOLO_LIGHT.equalsIgnoreCase(themeName)) {
-    resid=getResources().getIdentifier(RESOURCE_THEME_LIGHT,"style",getPackageName());
+  if (THEME_HOLO_LIGHT.equalsIgnoreCase(themeName) || THEME_MATERIAL_LIGHT.equalsIgnoreCase(themeName)) {
+    resid=R.style.SetupWizardWifiTheme_Light;
   }
- else   if (THEME_HOLO.equalsIgnoreCase(themeName)) {
-    resid=getResources().getIdentifier(RESOURCE_THEME_DARK,"style",getPackageName());
+ else   if (THEME_HOLO.equalsIgnoreCase(themeName) || THEME_MATERIAL.equalsIgnoreCase(themeName)) {
+    resid=R.style.SetupWizardWifiTheme;
   }
   super.onApplyThemeResource(theme,resid,first);
 }

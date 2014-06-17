@@ -8,7 +8,8 @@
       changeNextButtonState(info.isConnected());
       if (mAutoFinishOnConnection && info.isConnected()) {
         Log.d(TAG,"mReceiver.onReceive context=" + context + " intent="+ intent);
-        finishOrNext(Activity.RESULT_OK);
+        WifiSetupActivity activity=(WifiSetupActivity)getActivity();
+        activity.finishOrNext(Activity.RESULT_OK);
       }
     }
   }

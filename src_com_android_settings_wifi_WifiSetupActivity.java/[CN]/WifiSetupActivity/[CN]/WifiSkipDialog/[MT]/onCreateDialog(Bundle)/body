@@ -1,0 +1,14 @@
+{
+  int messageRes=getArguments().getInt("messageRes");
+  return new AlertDialog.Builder(getActivity()).setMessage(messageRes).setCancelable(false).setNegativeButton(R.string.wifi_skip_anyway,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int id){
+      WifiSetupActivity activity=(WifiSetupActivity)getActivity();
+      activity.finishOrNext(RESULT_SKIP);
+    }
+  }
+).setPositiveButton(R.string.wifi_dont_skip,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int id){
+    }
+  }
+).create();
+}

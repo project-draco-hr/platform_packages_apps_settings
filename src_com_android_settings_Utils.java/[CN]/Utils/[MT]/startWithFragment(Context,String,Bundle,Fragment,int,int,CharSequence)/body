@@ -1,9 +1,3 @@
 {
-  Intent intent=onBuildStartFragmentIntent(context,fragmentName,args,titleResId,title);
-  if (resultTo == null) {
-    context.startActivity(intent);
-  }
- else {
-    resultTo.startActivityForResult(intent,resultRequestCode);
-  }
+  startWithFragment(context,fragmentName,args,resultTo,resultRequestCode,titleResId,title,false);
 }

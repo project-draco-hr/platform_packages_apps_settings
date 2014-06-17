@@ -18,7 +18,7 @@
 ;
   final Uri sampleUri=mStream == AudioManager.STREAM_MUSIC ? getMediaVolumeUri() : null;
   if (mVolumizer == null) {
-    mVolumizer=new SeekBarVolumizer(mContext,mStream,sampleUri,sbvc);
+    mVolumizer=new SeekBarVolumizer(getContext(),mStream,sampleUri,sbvc);
   }
   mVolumizer.setSeekBar(mSeekBar);
 }

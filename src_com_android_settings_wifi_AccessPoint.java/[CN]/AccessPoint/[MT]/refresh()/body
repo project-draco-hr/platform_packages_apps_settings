@@ -39,15 +39,6 @@ securityStrFormat=context.getString(R.string.wifi_secured_first_item);
  else {
 securityStrFormat=context.getString(R.string.wifi_secured_second_item);
 }
-summary.append(String.format(securityStrFormat,getSecurityString(true)));
-}
-if (mConfig == null && wpsAvailable) {
-if (summary.length() == 0) {
-summary.append(context.getString(R.string.wifi_wps_available_first_item));
-}
- else {
-summary.append(context.getString(R.string.wifi_wps_available_second_item));
-}
 }
 }
 if (WifiSettings.mVerboseLogging > 0) {

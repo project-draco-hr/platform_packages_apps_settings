@@ -6,13 +6,14 @@
   mAccessPointSecurity=(accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.security;
   mEdit=edit;
   mTextViewChangedHandler=new Handler();
-  final Context context=mConfigUi.getContext();
-  final Resources resources=context.getResources();
-  PHASE2_PEAP_ADAPTER=new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,context.getResources().getStringArray(R.array.wifi_peap_phase2_entries));
+  mContext=mConfigUi.getContext();
+  final Resources res=mContext.getResources();
+  mLevels=res.getStringArray(R.array.wifi_signal);
+  PHASE2_PEAP_ADAPTER=new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item,res.getStringArray(R.array.wifi_peap_phase2_entries));
   PHASE2_PEAP_ADAPTER.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-  PHASE2_FULL_ADAPTER=new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,context.getResources().getStringArray(R.array.wifi_phase2_entries));
+  PHASE2_FULL_ADAPTER=new ArrayAdapter<String>(mContext,android.R.layout.simple_spinner_item,res.getStringArray(R.array.wifi_phase2_entries));
   PHASE2_FULL_ADAPTER.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-  unspecifiedCert=context.getString(R.string.wifi_unspecified);
+  unspecifiedCert=mContext.getString(R.string.wifi_unspecified);
   mIpSettingsSpinner=(Spinner)mView.findViewById(R.id.ip_settings);
   mIpSettingsSpinner.setOnItemSelectedListener(this);
   mProxySettingsSpinner=(Spinner)mView.findViewById(R.id.proxy_settings);
@@ -26,7 +27,7 @@
     if (mInXlSetupWizard) {
       mView.findViewById(R.id.type_ssid).setVisibility(View.VISIBLE);
       mView.findViewById(R.id.type_security).setVisibility(View.VISIBLE);
-      ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.wifi_setup_custom_list_item_1,android.R.id.text1,context.getResources().getStringArray(R.array.wifi_security_no_eap));
+      ArrayAdapter<String> adapter=new ArrayAdapter<String>(mContext,R.layout.wifi_setup_custom_list_item_1,android.R.id.text1,res.getStringArray(R.array.wifi_security_no_eap));
       mSecuritySpinner.setAdapter(adapter);
     }
  else {
@@ -36,41 +37,11 @@
     showProxyFields();
     mView.findViewById(R.id.wifi_advanced_toggle).setVisibility(View.VISIBLE);
     ((CheckBox)mView.findViewById(R.id.wifi_advanced_togglebox)).setOnCheckedChangeListener(this);
-    mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
+    mConfigUi.setSubmitButton(res.getString(R.string.wifi_save));
   }
  else {
     mConfigUi.setTitle(mAccessPoint.ssid);
     ViewGroup group=(ViewGroup)mView.findViewById(R.id.info);
-    DetailedState state=mAccessPoint.getState();
-    if (state != null) {
-      addRow(group,R.string.wifi_status,Summary.get(mConfigUi.getContext(),state));
-    }
-    int level=mAccessPoint.getLevel();
-    if (level != -1) {
-      String[] signal=resources.getStringArray(R.array.wifi_signal);
-      addRow(group,R.string.wifi_signal,signal[level]);
-    }
-    WifiInfo info=mAccessPoint.getInfo();
-    if (info != null && info.getLinkSpeed() != -1) {
-      addRow(group,R.string.wifi_speed,info.getLinkSpeed() + WifiInfo.LINK_SPEED_UNITS);
-    }
-    if (info != null && info.getFrequency() != -1) {
-      int frequency=info.getFrequency();
-      String band=null;
-      if (frequency >= 2400 && frequency < 2500) {
-        band="2.4GHz";
-      }
- else       if (frequency >= 5000 && frequency < 6000) {
-        band="5GHz";
-      }
- else {
-        Log.e(TAG,"Unexpected frequency " + frequency);
-      }
-      if (band != null) {
-        addRow(group,R.string.wifi_frequency,band);
-      }
-    }
-    addRow(group,R.string.wifi_security,mAccessPoint.getSecurityString(false));
     boolean showAdvancedFields=false;
     if (mAccessPoint.networkId != INVALID_NETWORK_ID) {
       WifiConfiguration config=mAccessPoint.getConfig();
@@ -108,21 +79,55 @@
       }
     }
     if (mEdit) {
-      mConfigUi.setSubmitButton(context.getString(R.string.wifi_save));
+      mConfigUi.setSubmitButton(res.getString(R.string.wifi_save));
     }
  else {
-      if (state == null && level != -1) {
-        mConfigUi.setSubmitButton(context.getString(R.string.wifi_connect));
+      final DetailedState state=mAccessPoint.getState();
+      final String signalLevel=getSignalString();
+      if (state == null && signalLevel != null) {
+        mConfigUi.setSubmitButton(res.getString(R.string.wifi_connect));
       }
  else {
+        if (state != null) {
+          addRow(group,R.string.wifi_status,Summary.get(mConfigUi.getContext(),state));
+        }
+        if (signalLevel != null) {
+          addRow(group,R.string.wifi_signal,signalLevel);
+        }
+        WifiInfo info=mAccessPoint.getInfo();
+        if (info != null && info.getLinkSpeed() != -1) {
+          addRow(group,R.string.wifi_speed,info.getLinkSpeed() + WifiInfo.LINK_SPEED_UNITS);
+        }
+        if (info != null && info.getFrequency() != -1) {
+          final int frequency=info.getFrequency();
+          String band=null;
+          if (frequency >= AccessPoint.LOWER_FREQ_24GHZ && frequency < AccessPoint.HIGHER_FREQ_24GHZ) {
+            band=res.getString(R.string.wifi_band_24ghz);
+          }
+ else           if (frequency >= AccessPoint.LOWER_FREQ_5GHZ && frequency < AccessPoint.HIGHER_FREQ_5GHZ) {
+            band=res.getString(R.string.wifi_band_5ghz);
+          }
+ else {
+            Log.e(TAG,"Unexpected frequency " + frequency);
+          }
+          if (band != null) {
+            addRow(group,R.string.wifi_frequency,band);
+          }
+        }
+        addRow(group,R.string.wifi_security,mAccessPoint.getSecurityString(false));
         mView.findViewById(R.id.ip_fields).setVisibility(View.GONE);
       }
       if (mAccessPoint.networkId != INVALID_NETWORK_ID) {
-        mConfigUi.setForgetButton(context.getString(R.string.wifi_forget));
+        mConfigUi.setForgetButton(res.getString(R.string.wifi_forget));
       }
     }
   }
-  mConfigUi.setCancelButton(context.getString(R.string.wifi_cancel));
+  if (mEdit || (mAccessPoint.getState() == null && mAccessPoint.getLevel() != -1)) {
+    mConfigUi.setCancelButton(res.getString(R.string.wifi_cancel));
+  }
+ else {
+    mConfigUi.setCancelButton(res.getString(R.string.wifi_display_options_done));
+  }
   if (mConfigUi.getSubmitButton() != null) {
     enableSubmitIfAppropriate();
   }

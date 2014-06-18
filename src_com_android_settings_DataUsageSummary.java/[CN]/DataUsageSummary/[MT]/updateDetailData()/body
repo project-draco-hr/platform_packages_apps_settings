@@ -12,8 +12,8 @@
     final long foregroundBytes=entry.rxBytes + entry.txBytes;
     mAppPieChart.setOriginAngle(175);
     mAppPieChart.removeAllSlices();
-    mAppPieChart.addSlice(foregroundBytes,Color.parseColor("#d88d3a"));
-    mAppPieChart.addSlice(defaultBytes,Color.parseColor("#666666"));
+    mAppPieChart.addSlice(foregroundBytes,FOREGROUND_BYTES_COLOR);
+    mAppPieChart.addSlice(defaultBytes,DEFAULT_BYTES_COLOR);
     mAppPieChart.generatePath();
     mAppBackground.setText(Formatter.formatFileSize(context,defaultBytes));
     mAppForeground.setText(Formatter.formatFileSize(context,foregroundBytes));

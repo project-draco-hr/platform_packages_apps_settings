@@ -1,10 +1,7 @@
 {
   super.onSaveInstanceState(outState);
-  outState.putBoolean(KEY_CHALLENGE_REQUESTED,mChallengeRequested);
-  if (mResumeActionBundle != null) {
-    outState.putBundle(KEY_RESUME_ACTION_BUNDLE,mResumeActionBundle);
-  }
   if (getActivity().isChangingConfigurations()) {
+    outState.putBoolean(KEY_CHALLENGE_REQUESTED,mChallengeRequested);
     outState.putBoolean(KEY_CHALLENGE_SUCCEEDED,mChallengeSucceeded);
   }
 }

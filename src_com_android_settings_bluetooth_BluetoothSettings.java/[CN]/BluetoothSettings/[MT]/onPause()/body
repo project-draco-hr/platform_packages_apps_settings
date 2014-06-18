@@ -3,6 +3,9 @@
   if (mBluetoothEnabler != null) {
     mBluetoothEnabler.pause();
   }
+  if (isUiRestricted()) {
+    return;
+  }
   getActivity().unregisterReceiver(mReceiver);
   mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE);
 }

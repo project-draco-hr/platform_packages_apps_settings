@@ -1,6 +1,6 @@
 {
   super.onResume();
-  if (mLocalManager == null)   return;
+  if (mLocalManager == null || isUiRestricted())   return;
   mLocalManager.setForegroundActivity(getActivity());
   mLocalManager.getEventManager().registerCallback(this);
   updateProgressUi(mLocalAdapter.isDiscovering());

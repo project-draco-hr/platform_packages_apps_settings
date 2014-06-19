@@ -6,7 +6,7 @@
     updateEngineStatus(R.string.tts_status_not_supported);
     return;
   }
-  mCurrentDefaultLocale=defaultLocale;
+  mCurrentDefaultLocale=mEnginesHelper.parseLocaleString(defaultLocale.toString());
   int defaultAvailable=mTts.setLanguage(defaultLocale);
   if (evaluateDefaultLocale()) {
     getSampleText();

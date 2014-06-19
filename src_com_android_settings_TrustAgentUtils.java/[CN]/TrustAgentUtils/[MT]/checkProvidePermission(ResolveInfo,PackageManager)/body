@@ -1,3 +1,8 @@
 {
+  String packageName=resolveInfo.serviceInfo.packageName;
+  if (pm.checkPermission(PERMISSION_PROVIDE_AGENT,packageName) != PackageManager.PERMISSION_GRANTED) {
+    Log.w(TAG,"Skipping agent because package " + packageName + " does not have permission "+ PERMISSION_PROVIDE_AGENT+ ".");
+    return false;
+  }
   return true;
 }

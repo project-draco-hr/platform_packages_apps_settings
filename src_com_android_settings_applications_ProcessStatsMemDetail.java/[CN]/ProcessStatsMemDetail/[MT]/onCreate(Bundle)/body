@@ -1,0 +1,14 @@
+{
+  super.onCreate(icicle);
+  final Bundle args=getArguments();
+  mMemTimes=args.getLongArray(EXTRA_MEM_TIMES);
+  mMemStateWeights=args.getDoubleArray(EXTRA_MEM_STATE_WEIGHTS);
+  mMemCachedWeight=args.getDouble(EXTRA_MEM_CACHED_WEIGHT);
+  mMemFreeWeight=args.getDouble(EXTRA_MEM_FREE_WEIGHT);
+  mMemZRamWeight=args.getDouble(EXTRA_MEM_ZRAM_WEIGHT);
+  mMemKernelWeight=args.getDouble(EXTRA_MEM_KERNEL_WEIGHT);
+  mMemNativeWeight=args.getDouble(EXTRA_MEM_NATIVE_WEIGHT);
+  mMemTotalWeight=args.getDouble(EXTRA_MEM_TOTAL_WEIGHT);
+  mUseUss=args.getBoolean(EXTRA_USE_USS);
+  mTotalTime=args.getLong(EXTRA_TOTAL_TIME);
+}

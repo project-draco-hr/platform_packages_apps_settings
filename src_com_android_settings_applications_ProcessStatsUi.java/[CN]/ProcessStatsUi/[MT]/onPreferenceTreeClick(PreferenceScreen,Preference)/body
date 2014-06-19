@@ -1,4 +1,19 @@
 {
+  if (preference instanceof LinearColorPreference) {
+    Bundle args=new Bundle();
+    args.putLongArray(ProcessStatsMemDetail.EXTRA_MEM_TIMES,mMemTimes);
+    args.putDoubleArray(ProcessStatsMemDetail.EXTRA_MEM_STATE_WEIGHTS,mMemStateWeights);
+    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_CACHED_WEIGHT,mMemCachedWeight);
+    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_FREE_WEIGHT,mMemFreeWeight);
+    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_ZRAM_WEIGHT,mMemZRamWeight);
+    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_KERNEL_WEIGHT,mMemKernelWeight);
+    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_NATIVE_WEIGHT,mMemNativeWeight);
+    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_TOTAL_WEIGHT,mMemTotalWeight);
+    args.putBoolean(ProcessStatsMemDetail.EXTRA_USE_USS,mUseUss);
+    args.putLong(ProcessStatsMemDetail.EXTRA_TOTAL_TIME,mTotalTime);
+    ((SettingsActivity)getActivity()).startPreferencePanel(ProcessStatsMemDetail.class.getName(),args,R.string.mem_details_title,null,null,0);
+    return true;
+  }
   if (!(preference instanceof ProcessStatsPreference)) {
     return false;
   }

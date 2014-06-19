@@ -1,0 +1,12 @@
+{
+  LayoutInflater inflater=getActivity().getLayoutInflater();
+  ViewGroup item=(ViewGroup)inflater.inflate(R.layout.app_percentage_item,null);
+  parent.addView(item);
+  item.findViewById(android.R.id.icon).setVisibility(View.GONE);
+  TextView titleView=(TextView)item.findViewById(android.R.id.title);
+  TextView valueView=(TextView)item.findViewById(android.R.id.text1);
+  titleView.setText(title);
+  valueView.setText(value);
+  ProgressBar progress=(ProgressBar)item.findViewById(android.R.id.progress);
+  progress.setProgress(Math.round(level * 100));
+}

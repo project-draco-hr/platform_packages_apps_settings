@@ -1,0 +1,9 @@
+{
+  CharSequence[] labels=getResources().getTextArray(R.array.proc_stats_memory_states);
+  for (int i=0; i < ProcessStats.ADJ_MEM_FACTOR_COUNT; i++) {
+    if (mMemTimes[i] > 0) {
+      float level=((float)mMemTimes[i]) / mTotalTime;
+      addDetailsItem(mMemStateParent,labels[i],level,Formatter.formatShortElapsedTime(getActivity(),mMemTimes[i]));
+    }
+  }
+}

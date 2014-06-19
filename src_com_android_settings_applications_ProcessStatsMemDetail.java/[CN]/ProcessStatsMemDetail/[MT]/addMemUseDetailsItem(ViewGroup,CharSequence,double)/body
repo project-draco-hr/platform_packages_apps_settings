@@ -1,0 +1,7 @@
+{
+  if (weight > 0) {
+    float level=(float)(weight / mMemTotalWeight);
+    String value=Formatter.formatShortFileSize(getActivity(),(long)((weight * 1024) / mTotalTime));
+    addDetailsItem(parent,title,level,value);
+  }
+}

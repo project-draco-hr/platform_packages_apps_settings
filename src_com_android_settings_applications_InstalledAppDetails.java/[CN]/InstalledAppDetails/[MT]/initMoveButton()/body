@@ -18,7 +18,7 @@
     mCanBeOnSdCardChecker.init();
     moveDisable=!mCanBeOnSdCardChecker.check(mAppEntry.info);
   }
-  if (moveDisable) {
+  if (moveDisable || mAppControlRestricted) {
     mMoveAppButton.setEnabled(false);
   }
  else {

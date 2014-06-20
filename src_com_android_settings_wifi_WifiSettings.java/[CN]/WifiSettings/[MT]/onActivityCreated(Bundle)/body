@@ -39,6 +39,17 @@
     mDlgEdit=savedInstanceState.getBoolean(SAVE_DIALOG_EDIT_MODE);
     mAccessPointSavedState=savedInstanceState.getBundle(SAVE_DIALOG_ACCESS_POINT_STATE);
   }
+  Intent intent=getActivity().getIntent();
+  mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
+  if (mEnableNextOnConnection) {
+    if (hasNextButton()) {
+      final ConnectivityManager connectivity=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+      if (connectivity != null) {
+        NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        changeNextButtonState(info.isConnected());
+      }
+    }
+  }
   addPreferencesFromResource(R.xml.wifi_settings);
   mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
   getListView().setEmptyView(mEmptyView);

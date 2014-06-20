@@ -17,14 +17,4 @@
       }
     }
   }
-  mEnableNextOnConnection=intent.getBooleanExtra(EXTRA_ENABLE_NEXT_ON_CONNECT,false);
-  if (mEnableNextOnConnection) {
-    if (hasNextButton()) {
-      final ConnectivityManager connectivity=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-      if (connectivity != null) {
-        NetworkInfo info=connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        changeNextButtonState(info.isConnected());
-      }
-    }
-  }
 }

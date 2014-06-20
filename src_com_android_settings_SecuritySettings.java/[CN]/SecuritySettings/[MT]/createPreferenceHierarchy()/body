@@ -104,7 +104,7 @@ for (ResolveInfo resolveInfo : resolveInfos) {
 if (resolveInfo.serviceInfo == null) continue;
 if (!TrustAgentUtils.checkProvidePermission(resolveInfo,pm)) continue;
 TrustAgentUtils.TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
-if (trustAgentComponentInfo.componentName == null || !enabledTrustAgents.contains(trustAgentComponentInfo.componentName) || TextUtils.isEmpty(trustAgentComponentInfo.title)) continue;
+if (trustAgentComponentInfo.componentName == null || !enabledTrustAgents.contains(TrustAgentUtils.getComponentName(resolveInfo)) || TextUtils.isEmpty(trustAgentComponentInfo.title)) continue;
 Preference trustAgentPreference=new Preference(securityCategory.getContext());
 trustAgentPreference.setKey(KEY_TRUST_AGENT);
 trustAgentPreference.setTitle(trustAgentComponentInfo.title);

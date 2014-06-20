@@ -86,7 +86,8 @@
   Path curLevelPath=null;
   Path lastLinePath=null;
   boolean lastCharging=false, lastScreenOn=false, lastGpsOn=false;
-  boolean lastWifiRunning=false, lastCpuRunning=false;
+  boolean lastWifiRunning=false, lastWifiSupplRunning=false, lastCpuRunning=false;
+  int lastWifiSupplState=BatteryStats.WIFI_SUPPL_STATE_INVALID;
   final int N=mNumHist;
   if (mStats.startIteratingHistoryLocked()) {
     final HistoryItem rec=new HistoryItem();
@@ -174,123 +175,146 @@
             }
             lastGpsOn=gpsOn;
           }
-          final boolean wifiRunning=(rec.states & HistoryItem.STATE_WIFI_RUNNING_FLAG) != 0;
-          if (wifiRunning != lastWifiRunning) {
-            if (wifiRunning) {
-              mWifiRunningPath.moveTo(x,h - mWifiRunningOffset);
-            }
- else {
-              mWifiRunningPath.lineTo(x,h - mWifiRunningOffset);
-            }
-            lastWifiRunning=wifiRunning;
-          }
-          final boolean cpuRunning=(rec.states & HistoryItem.STATE_CPU_RUNNING_FLAG) != 0;
-          if (cpuRunning != lastCpuRunning) {
-            if (cpuRunning) {
-              mCpuRunningPath.moveTo(x,h - mCpuRunningOffset);
-            }
- else {
-              mCpuRunningPath.lineTo(x,h - mCpuRunningOffset);
-            }
-            lastCpuRunning=cpuRunning;
-          }
-          if (mLargeMode && mHavePhoneSignal) {
-            int bin;
-            if (((rec.states & HistoryItem.STATE_PHONE_STATE_MASK) >> HistoryItem.STATE_PHONE_STATE_SHIFT) == ServiceState.STATE_POWER_OFF) {
-              bin=0;
-            }
- else             if ((rec.states & HistoryItem.STATE_PHONE_SCANNING_FLAG) != 0) {
-              bin=1;
-            }
- else {
-              bin=(rec.states & HistoryItem.STATE_SIGNAL_STRENGTH_MASK) >> HistoryItem.STATE_SIGNAL_STRENGTH_SHIFT;
-              bin+=2;
-            }
-            mPhoneSignalChart.addTick(x,bin);
-          }
-        }
-      }
- else       if (rec.cmd != HistoryItem.CMD_OVERFLOW && rec.cmd != HistoryItem.CMD_CURRENT_TIME) {
-        if (curLevelPath != null) {
-          finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
-          lastX=lastY=-1;
-          curLevelPath=null;
-          lastLinePath=null;
-          lastCharging=lastScreenOn=lastGpsOn=lastCpuRunning=false;
-        }
-      }
-      i++;
+          final int wifiSupplState=((rec.states2 & HistoryItem.STATE2_WIFI_SUPPL_STATE_MASK) >> HistoryItem.STATE2_WIFI_SUPPL_STATE_SHIFT);
+          boolean wifiRunning;
+          if (lastWifiSupplState != wifiSupplState) {
+            lastWifiSupplState=wifiSupplState;
+switch (wifiSupplState) {
+case BatteryStats.WIFI_SUPPL_STATE_DISCONNECTED:
+case BatteryStats.WIFI_SUPPL_STATE_DORMANT:
+case BatteryStats.WIFI_SUPPL_STATE_INACTIVE:
+case BatteryStats.WIFI_SUPPL_STATE_INTERFACE_DISABLED:
+case BatteryStats.WIFI_SUPPL_STATE_INVALID:
+case BatteryStats.WIFI_SUPPL_STATE_UNINITIALIZED:
+              wifiRunning=lastWifiSupplRunning=false;
+            break;
+default :
+          wifiRunning=lastWifiSupplRunning=true;
+        break;
     }
   }
-  x=mLevelLeft + (int)(((mEndDataWallTime - walltimeStart) * levelWidth) / walltimeChange);
-  finishPaths(x,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
-  if (x < w) {
-    mTimeRemainPath.moveTo(x,lastY);
-    int fullY=mLevelTop + levelh - ((100 - batLow) * (levelh - 1)) / batChange;
-    int emptyY=mLevelTop + levelh - ((0 - batLow) * (levelh - 1)) / batChange;
-    if (mDischarging) {
-      mTimeRemainPath.lineTo(mLevelRight,emptyY);
+ else {
+    wifiRunning=lastWifiSupplRunning;
+  }
+  if ((rec.states & (HistoryItem.STATE_WIFI_FULL_LOCK_FLAG | HistoryItem.STATE_WIFI_MULTICAST_ON_FLAG | HistoryItem.STATE_WIFI_SCAN_FLAG)) != 0) {
+    wifiRunning=true;
+  }
+  if (wifiRunning != lastWifiRunning) {
+    if (wifiRunning) {
+      mWifiRunningPath.moveTo(x,h - mWifiRunningOffset);
     }
  else {
-      mTimeRemainPath.lineTo(mLevelRight,fullY);
-      mTimeRemainPath.lineTo(mLevelRight,emptyY);
+      mWifiRunningPath.lineTo(x,h - mWifiRunningOffset);
     }
-    mTimeRemainPath.lineTo(x,emptyY);
-    mTimeRemainPath.close();
+    lastWifiRunning=wifiRunning;
   }
-  if (mStartWallTime > 0) {
-    boolean is24hr=is24Hour();
-    Calendar calStart=Calendar.getInstance();
-    calStart.setTimeInMillis(mStartWallTime);
-    calStart.set(Calendar.MILLISECOND,0);
-    calStart.set(Calendar.SECOND,0);
-    calStart.set(Calendar.MINUTE,0);
-    long startRoundTime=calStart.getTimeInMillis();
-    if (startRoundTime < mStartWallTime) {
-      calStart.set(Calendar.HOUR_OF_DAY,calStart.get(Calendar.HOUR_OF_DAY) + 1);
-      startRoundTime=calStart.getTimeInMillis();
+  final boolean cpuRunning=(rec.states & HistoryItem.STATE_CPU_RUNNING_FLAG) != 0;
+  if (cpuRunning != lastCpuRunning) {
+    if (cpuRunning) {
+      mCpuRunningPath.moveTo(x,h - mCpuRunningOffset);
     }
-    Calendar calEnd=Calendar.getInstance();
-    calEnd.setTimeInMillis(mEndWallTime);
-    calEnd.set(Calendar.MILLISECOND,0);
-    calEnd.set(Calendar.SECOND,0);
-    calEnd.set(Calendar.MINUTE,0);
-    long endRoundTime=calEnd.getTimeInMillis();
-    if (startRoundTime < endRoundTime) {
-      addTimeLabel(calStart,mLevelLeft,mLevelRight,is24hr);
-      Calendar calMid=Calendar.getInstance();
-      calMid.setTimeInMillis(mStartWallTime + ((mEndWallTime - mStartWallTime) / 2));
-      calMid.set(Calendar.MILLISECOND,0);
-      calMid.set(Calendar.SECOND,0);
-      calMid.set(Calendar.MINUTE,0);
-      long calMidMillis=calMid.getTimeInMillis();
-      if (calMidMillis > startRoundTime && calMidMillis < endRoundTime) {
-        addTimeLabel(calMid,mLevelLeft,mLevelRight,is24hr);
-      }
-      addTimeLabel(calEnd,mLevelLeft,mLevelRight,is24hr);
-    }
-    if (calStart.get(Calendar.DAY_OF_YEAR) != calEnd.get(Calendar.DAY_OF_YEAR) || calStart.get(Calendar.YEAR) != calEnd.get(Calendar.YEAR)) {
-      boolean isDayFirst=isDayFirst();
-      calStart.set(Calendar.HOUR_OF_DAY,0);
-      startRoundTime=calStart.getTimeInMillis();
-      if (startRoundTime < mStartWallTime) {
-        calStart.set(Calendar.DAY_OF_YEAR,calStart.get(Calendar.DAY_OF_YEAR) + 1);
-        startRoundTime=calStart.getTimeInMillis();
-      }
-      calEnd.set(Calendar.HOUR_OF_DAY,0);
-      endRoundTime=calEnd.getTimeInMillis();
-      if (startRoundTime < endRoundTime) {
-        addDateLabel(calStart,mLevelLeft,mLevelRight,isDayFirst);
-      }
-      addDateLabel(calEnd,mLevelLeft,mLevelRight,isDayFirst);
-    }
-  }
-  if (mTimeLabels.size() < 2) {
-    mDurationString=Formatter.formatShortElapsedTime(getContext(),mEndWallTime - mStartWallTime);
-    mDurationStringWidth=(int)mTextPaint.measureText(mDurationString);
-  }
  else {
-    mDurationString=null;
-    mDurationStringWidth=0;
+      mCpuRunningPath.lineTo(x,h - mCpuRunningOffset);
+    }
+    lastCpuRunning=cpuRunning;
   }
+  if (mLargeMode && mHavePhoneSignal) {
+    int bin;
+    if (((rec.states & HistoryItem.STATE_PHONE_STATE_MASK) >> HistoryItem.STATE_PHONE_STATE_SHIFT) == ServiceState.STATE_POWER_OFF) {
+      bin=0;
+    }
+ else     if ((rec.states & HistoryItem.STATE_PHONE_SCANNING_FLAG) != 0) {
+      bin=1;
+    }
+ else {
+      bin=(rec.states & HistoryItem.STATE_PHONE_SIGNAL_STRENGTH_MASK) >> HistoryItem.STATE_PHONE_SIGNAL_STRENGTH_SHIFT;
+      bin+=2;
+    }
+    mPhoneSignalChart.addTick(x,bin);
+  }
+}
+}
+ else if (rec.cmd != HistoryItem.CMD_OVERFLOW && rec.cmd != HistoryItem.CMD_CURRENT_TIME) {
+if (curLevelPath != null) {
+  finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
+  lastX=lastY=-1;
+  curLevelPath=null;
+  lastLinePath=null;
+  lastCharging=lastScreenOn=lastGpsOn=lastCpuRunning=false;
+}
+}
+i++;
+}
+}
+x=mLevelLeft + (int)(((mEndDataWallTime - walltimeStart) * levelWidth) / walltimeChange);
+finishPaths(x,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
+if (x < w) {
+mTimeRemainPath.moveTo(x,lastY);
+int fullY=mLevelTop + levelh - ((100 - batLow) * (levelh - 1)) / batChange;
+int emptyY=mLevelTop + levelh - ((0 - batLow) * (levelh - 1)) / batChange;
+if (mDischarging) {
+mTimeRemainPath.lineTo(mLevelRight,emptyY);
+}
+ else {
+mTimeRemainPath.lineTo(mLevelRight,fullY);
+mTimeRemainPath.lineTo(mLevelRight,emptyY);
+}
+mTimeRemainPath.lineTo(x,emptyY);
+mTimeRemainPath.close();
+}
+if (mStartWallTime > 0) {
+boolean is24hr=is24Hour();
+Calendar calStart=Calendar.getInstance();
+calStart.setTimeInMillis(mStartWallTime);
+calStart.set(Calendar.MILLISECOND,0);
+calStart.set(Calendar.SECOND,0);
+calStart.set(Calendar.MINUTE,0);
+long startRoundTime=calStart.getTimeInMillis();
+if (startRoundTime < mStartWallTime) {
+calStart.set(Calendar.HOUR_OF_DAY,calStart.get(Calendar.HOUR_OF_DAY) + 1);
+startRoundTime=calStart.getTimeInMillis();
+}
+Calendar calEnd=Calendar.getInstance();
+calEnd.setTimeInMillis(mEndWallTime);
+calEnd.set(Calendar.MILLISECOND,0);
+calEnd.set(Calendar.SECOND,0);
+calEnd.set(Calendar.MINUTE,0);
+long endRoundTime=calEnd.getTimeInMillis();
+if (startRoundTime < endRoundTime) {
+addTimeLabel(calStart,mLevelLeft,mLevelRight,is24hr);
+Calendar calMid=Calendar.getInstance();
+calMid.setTimeInMillis(mStartWallTime + ((mEndWallTime - mStartWallTime) / 2));
+calMid.set(Calendar.MILLISECOND,0);
+calMid.set(Calendar.SECOND,0);
+calMid.set(Calendar.MINUTE,0);
+long calMidMillis=calMid.getTimeInMillis();
+if (calMidMillis > startRoundTime && calMidMillis < endRoundTime) {
+addTimeLabel(calMid,mLevelLeft,mLevelRight,is24hr);
+}
+addTimeLabel(calEnd,mLevelLeft,mLevelRight,is24hr);
+}
+if (calStart.get(Calendar.DAY_OF_YEAR) != calEnd.get(Calendar.DAY_OF_YEAR) || calStart.get(Calendar.YEAR) != calEnd.get(Calendar.YEAR)) {
+boolean isDayFirst=isDayFirst();
+calStart.set(Calendar.HOUR_OF_DAY,0);
+startRoundTime=calStart.getTimeInMillis();
+if (startRoundTime < mStartWallTime) {
+calStart.set(Calendar.DAY_OF_YEAR,calStart.get(Calendar.DAY_OF_YEAR) + 1);
+startRoundTime=calStart.getTimeInMillis();
+}
+calEnd.set(Calendar.HOUR_OF_DAY,0);
+endRoundTime=calEnd.getTimeInMillis();
+if (startRoundTime < endRoundTime) {
+addDateLabel(calStart,mLevelLeft,mLevelRight,isDayFirst);
+}
+addDateLabel(calEnd,mLevelLeft,mLevelRight,isDayFirst);
+}
+}
+if (mTimeLabels.size() < 2) {
+mDurationString=Formatter.formatShortElapsedTime(getContext(),mEndWallTime - mStartWallTime);
+mDurationStringWidth=(int)mTextPaint.measureText(mDurationString);
+}
+ else {
+mDurationString=null;
+mDurationStringWidth=0;
+}
 }

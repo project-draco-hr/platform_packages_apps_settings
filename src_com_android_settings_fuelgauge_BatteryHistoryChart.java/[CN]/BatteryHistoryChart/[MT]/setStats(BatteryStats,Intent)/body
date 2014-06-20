@@ -69,6 +69,7 @@
   long lastWallTime=0;
   long lastRealtime=0;
   int aggrStates=0;
+  int aggrStates2=0;
   boolean first=true;
   if (stats.startIteratingHistoryLocked()) {
     final HistoryItem rec=new HistoryItem();
@@ -92,6 +93,7 @@
         lastInteresting=pos;
         mHistDataEnd=rec.time;
         aggrStates|=rec.states;
+        aggrStates2|=rec.states2;
       }
     }
   }
@@ -100,7 +102,7 @@
   mEndWallTime=mEndDataWallTime + (remainingTimeUs / 1000);
   mNumHist=lastInteresting;
   mHaveGps=(aggrStates & HistoryItem.STATE_GPS_ON_FLAG) != 0;
-  mHaveWifi=(aggrStates & HistoryItem.STATE_WIFI_RUNNING_FLAG) != 0;
+  mHaveWifi=(aggrStates2 & HistoryItem.STATE2_WIFI_RUNNING_FLAG) != 0 || (aggrStates & (HistoryItem.STATE_WIFI_FULL_LOCK_FLAG | HistoryItem.STATE_WIFI_MULTICAST_ON_FLAG | HistoryItem.STATE_WIFI_SCAN_FLAG)) != 0;
   if (!com.android.settings.Utils.isWifiOnly(getContext())) {
     mHavePhoneSignal=true;
   }

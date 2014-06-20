@@ -1,6 +1,6 @@
 {
   final int width=MeasureSpec.getSize(widthMeasureSpec);
-  final int availableWidth=(int)(width - getPaddingLeft() - getPaddingRight()- (mNumColumns - 1) * mCellGap);
+  final int availableWidth=(int)(width - getPaddingLeft() - getPaddingRight()- (mNumColumns - 1) * mCellGapX);
   float cellWidth=(float)Math.ceil(((float)availableWidth) / mNumColumns);
   final int N=getChildCount();
   int cellHeight=0;
@@ -12,7 +12,7 @@
     }
     ViewGroup.LayoutParams lp=v.getLayoutParams();
     int colSpan=v.getColumnSpan();
-    lp.width=(int)((colSpan * cellWidth) + (colSpan - 1) * mCellGap);
+    lp.width=(int)((colSpan * cellWidth) + (colSpan - 1) * mCellGapX);
     int newWidthSpec=getChildMeasureSpec(widthMeasureSpec,0,lp.width);
     int newHeightSpec=getChildMeasureSpec(heightMeasureSpec,0,lp.height);
     v.measure(newWidthSpec,newHeightSpec);
@@ -22,7 +22,7 @@
     lp.height=cellHeight;
     cursor+=colSpan;
   }
-  final int numRows=(int)Math.ceil((float)cursor / mNumColumns);
-  final int newHeight=(int)((numRows * cellHeight) + ((numRows - 1) * mCellGap)) + getPaddingTop() + getPaddingBottom();
+  mNumRows=(int)Math.ceil((float)cursor / mNumColumns);
+  final int newHeight=(int)((mNumRows * cellHeight) + ((mNumRows - 1) * mCellGapY)) + getPaddingTop() + getPaddingBottom();
   setMeasuredDimension(width,newHeight);
 }

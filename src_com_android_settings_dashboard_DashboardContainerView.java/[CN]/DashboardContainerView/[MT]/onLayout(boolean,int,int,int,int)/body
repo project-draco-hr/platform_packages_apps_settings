@@ -16,9 +16,12 @@
     final int childWidth=lp.width;
     final int childHeight=lp.height;
     int row=cursor / mNumColumns;
+    if (row == mNumRows - 1) {
+      child.setDividerVisibility(false);
+    }
     if ((col + colSpan) > mNumColumns) {
       x=getPaddingStart();
-      y+=childHeight + mCellGap;
+      y+=childHeight + mCellGapY;
       row++;
     }
     final int childLeft=(isLayoutRtl) ? width - x - childWidth : x;
@@ -28,11 +31,11 @@
     child.layout(childLeft,childTop,childRight,childBottom);
     cursor+=child.getColumnSpan();
     if (cursor < (((row + 1) * mNumColumns))) {
-      x+=childWidth + mCellGap;
+      x+=childWidth + mCellGapX;
     }
  else {
       x=getPaddingStart();
-      y+=childHeight + mCellGap;
+      y+=childHeight + mCellGapY;
     }
   }
 }

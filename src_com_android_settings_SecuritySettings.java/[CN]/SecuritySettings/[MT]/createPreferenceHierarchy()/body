@@ -63,8 +63,10 @@ final int storageSummaryRes=mKeyStore.isHardwareBacked() ? R.string.credential_s
 credentialStorageType.setSummary(storageSummaryRes);
 }
  else {
-removePreference(KEY_CREDENTIALS_MANAGER);
-removePreference(KEY_CREDENTIALS_INSTALL);
+PreferenceGroup credentialsManager=(PreferenceGroup)root.findPreference(KEY_CREDENTIALS_MANAGER);
+credentialsManager.removePreference(root.findPreference(KEY_RESET_CREDENTIALS));
+credentialsManager.removePreference(root.findPreference(KEY_CREDENTIALS_INSTALL));
+credentialsManager.removePreference(root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE));
 }
 PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
 mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);

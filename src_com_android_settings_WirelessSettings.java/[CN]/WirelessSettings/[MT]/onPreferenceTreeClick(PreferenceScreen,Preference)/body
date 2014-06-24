@@ -1,7 +1,4 @@
 {
-  if (ensurePinRestrictedPreference(preference)) {
-    return true;
-  }
   log("onPreferenceTreeClick: preference=" + preference);
   if (preference == mAirplaneModePreference && Boolean.parseBoolean(SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE))) {
     startActivityForResult(new Intent(TelephonyIntents.ACTION_SHOW_NOTICE_ECM_BLOCK_OTHERS,null),REQUEST_CODE_EXIT_ECM);

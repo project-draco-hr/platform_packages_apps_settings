@@ -30,6 +30,15 @@
     }
   }
 );
+  Preference wpsPinPref=findPreference(KEY_WPS_PIN);
+  wpsPinPref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    public boolean onPreferenceClick(    Preference arg0){
+      WpsDialog wpsDialog=new WpsDialog(getActivity(),WpsInfo.DISPLAY);
+      wpsDialog.show();
+      return true;
+    }
+  }
+);
   CheckBoxPreference suspendOptimizations=(CheckBoxPreference)findPreference(KEY_SUSPEND_OPTIMIZATIONS);
   suspendOptimizations.setChecked(Global.getInt(getContentResolver(),Global.WIFI_SUSPEND_OPTIMIZATIONS_ENABLED,1) == 1);
   ListPreference frequencyPref=(ListPreference)findPreference(KEY_FREQUENCY_BAND);

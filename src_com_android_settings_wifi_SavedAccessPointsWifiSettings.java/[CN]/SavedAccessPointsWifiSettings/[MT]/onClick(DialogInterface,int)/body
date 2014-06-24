@@ -1,0 +1,7 @@
+{
+  if (button == WifiDialog.BUTTON_FORGET && mSelectedAccessPoint != null) {
+    mWifiManager.forget(mSelectedAccessPoint.networkId,null);
+    getPreferenceScreen().removePreference(mSelectedAccessPoint);
+    mSelectedAccessPoint=null;
+  }
+}

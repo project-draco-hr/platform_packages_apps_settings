@@ -3,6 +3,10 @@
     mSelectedAccessPoint=(AccessPoint)preference;
     if (mSelectedAccessPoint.security == AccessPoint.SECURITY_NONE && mSelectedAccessPoint.networkId == INVALID_NETWORK_ID) {
       mSelectedAccessPoint.generateOpenNetworkConfig();
+      if (!savedNetworksExist) {
+        savedNetworksExist=true;
+        getActivity().invalidateOptionsMenu();
+      }
       mWifiManager.connect(mSelectedAccessPoint.getConfig(),mConnectListener);
     }
  else {

@@ -1,0 +1,32 @@
+{
+  List<AccessPoint> accessPoints=new ArrayList<AccessPoint>();
+  Map<String,List<ScanResult>> resultsMap=new HashMap<String,List<ScanResult>>();
+  final List<WifiConfiguration> configs=wifiManager.getConfiguredNetworks();
+  final List<ScanResult> scanResults=wifiManager.getScanResults();
+  if (configs != null) {
+    final int scanResultsSize=scanResults.size();
+    for (int i=0; i < scanResultsSize; ++i) {
+      final ScanResult result=scanResults.get(i);
+      List<ScanResult> res=resultsMap.get(result.SSID);
+      if (res == null) {
+        res=new ArrayList<ScanResult>();
+        resultsMap.put(result.SSID,res);
+      }
+      res.add(result);
+    }
+    final int configsSize=configs.size();
+    for (int i=0; i < configsSize; ++i) {
+      AccessPoint accessPoint=new AccessPoint(context,configs.get(i));
+      final List<ScanResult> results=resultsMap.get(accessPoint.ssid);
+      accessPoint.setShowSummary(false);
+      if (results != null) {
+        final int resultsSize=results.size();
+        for (int j=0; j < resultsSize; ++j) {
+          accessPoint.update(results.get(j));
+        }
+      }
+      accessPoints.add(accessPoint);
+    }
+  }
+  return accessPoints;
+}

@@ -1,0 +1,14 @@
+{
+  PreferenceScreen preferenceScreen=getPreferenceScreen();
+  final Context context=getActivity();
+  mWifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+  final List<AccessPoint> accessPoints=constructSavedAccessPoints(context,mWifiManager);
+  preferenceScreen.removeAll();
+  final int accessPointsSize=accessPoints.size();
+  for (int i=0; i < accessPointsSize; ++i) {
+    preferenceScreen.addPreference(accessPoints.get(i));
+  }
+  if (getPreferenceScreen().getPreferenceCount() < 1) {
+    Log.w(TAG,"Saved networks activity loaded, but there are no saved networks!");
+  }
+}

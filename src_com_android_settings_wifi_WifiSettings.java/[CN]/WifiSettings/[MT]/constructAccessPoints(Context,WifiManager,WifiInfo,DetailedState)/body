@@ -3,6 +3,7 @@
   Multimap<String,AccessPoint> apMap=new Multimap<String,AccessPoint>();
   final List<WifiConfiguration> configs=wifiManager.getConfiguredNetworks();
   if (configs != null) {
+    savedNetworksExist=(configs.size() > 0);
     for (    WifiConfiguration config : configs) {
       AccessPoint accessPoint=new AccessPoint(context,config);
       if (lastInfo != null && lastState != null) {

@@ -2,8 +2,10 @@
   final boolean wifiIsEnabled=mWifiManager.isWifiEnabled();
   TypedArray ta=getActivity().getTheme().obtainStyledAttributes(new int[]{R.attr.ic_menu_add,R.attr.ic_wps});
   menu.add(Menu.NONE,MENU_ID_ADD_NETWORK,0,R.string.wifi_add_network).setIcon(ta.getDrawable(0)).setEnabled(wifiIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-  menu.add(Menu.NONE,MENU_ID_SCAN,0,R.string.wifi_menu_scan).setEnabled(wifiIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-  menu.add(Menu.NONE,MENU_ID_WPS_PIN,0,R.string.wifi_menu_wps_pin).setEnabled(wifiIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+  if (savedNetworksExist) {
+    menu.add(Menu.NONE,MENU_ID_SAVED_NETWORK,0,R.string.wifi_saved_access_points_label).setIcon(ta.getDrawable(0)).setEnabled(wifiIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+  }
+  menu.add(Menu.NONE,MENU_ID_SCAN,0,R.string.menu_stats_refresh).setEnabled(wifiIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
   menu.add(Menu.NONE,MENU_ID_ADVANCED,0,R.string.wifi_menu_advanced).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
   ta.recycle();
 }

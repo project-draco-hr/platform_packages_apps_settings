@@ -23,7 +23,7 @@
   getPreferenceScreen().removePreference(nsd);
   String toggleable=Settings.Global.getString(activity.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   final boolean isWimaxEnabled=!isSecondaryUser && this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);
-  if (!isWimaxEnabled) {
+  if (!isWimaxEnabled || mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS)) {
     PreferenceScreen root=getPreferenceScreen();
     Preference ps=(Preference)findPreference(KEY_WIMAX_SETTINGS);
     if (ps != null)     root.removePreference(ps);
@@ -34,7 +34,6 @@
       ps.setDependency(KEY_TOGGLE_AIRPLANE);
     }
   }
-  protectByRestrictions(KEY_WIMAX_SETTINGS);
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_WIFI)) {
     findPreference(KEY_VPN_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
   }

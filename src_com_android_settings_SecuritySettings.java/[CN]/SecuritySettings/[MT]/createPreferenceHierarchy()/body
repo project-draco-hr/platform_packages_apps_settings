@@ -29,6 +29,30 @@ case DevicePolicyManager.ENCRYPTION_STATUS_INACTIVE:
 break;
 }
 }
+PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
+if (securityCategory != null) {
+PackageManager pm=getPackageManager();
+List<ResolveInfo> resolveInfos=pm.queryIntentServices(TRUST_AGENT_INTENT,PackageManager.GET_META_DATA);
+List<ComponentName> enabledTrustAgents=mLockPatternUtils.getEnabledTrustAgents();
+if (enabledTrustAgents != null && !enabledTrustAgents.isEmpty()) {
+for (ResolveInfo resolveInfo : resolveInfos) {
+if (resolveInfo.serviceInfo == null) continue;
+if (!TrustAgentUtils.checkProvidePermission(resolveInfo,pm)) continue;
+TrustAgentUtils.TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
+if (trustAgentComponentInfo.componentName == null || !enabledTrustAgents.contains(TrustAgentUtils.getComponentName(resolveInfo)) || TextUtils.isEmpty(trustAgentComponentInfo.title)) continue;
+Preference trustAgentPreference=new Preference(securityCategory.getContext());
+trustAgentPreference.setKey(KEY_TRUST_AGENT);
+trustAgentPreference.setTitle(trustAgentComponentInfo.title);
+trustAgentPreference.setSummary(trustAgentComponentInfo.summary);
+Intent intent=new Intent();
+intent.setComponent(trustAgentComponentInfo.componentName);
+intent.setAction(Intent.ACTION_MAIN);
+trustAgentPreference.setIntent(intent);
+securityCategory.addPreference(trustAgentPreference);
+break;
+}
+}
+}
 mLockAfter=(ListPreference)root.findPreference(KEY_LOCK_AFTER_TIMEOUT);
 if (mLockAfter != null) {
 setupLockAfterPreference();
@@ -37,8 +61,11 @@ updateLockAfterPreferenceSummary();
 mBiometricWeakLiveliness=(CheckBoxPreference)root.findPreference(KEY_BIOMETRIC_WEAK_LIVELINESS);
 mVisiblePattern=(CheckBoxPreference)root.findPreference(KEY_VISIBLE_PATTERN);
 mPowerButtonInstantlyLocks=(CheckBoxPreference)root.findPreference(KEY_POWER_INSTANTLY_LOCKS);
+Preference trustAgentPreference=root.findPreference(KEY_TRUST_AGENT);
+if (mPowerButtonInstantlyLocks != null && trustAgentPreference != null && trustAgentPreference.getTitle().length() > 0) {
+mPowerButtonInstantlyLocks.setSummary(getString(R.string.lockpattern_settings_power_button_instantly_locks_summary,trustAgentPreference.getTitle()));
+}
 if (resid == R.xml.security_settings_biometric_weak && mLockPatternUtils.getKeyguardStoredPasswordQuality() != DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
-PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
 if (securityCategory != null && mVisiblePattern != null) {
 securityCategory.removePreference(root.findPreference(KEY_VISIBLE_PATTERN));
 }
@@ -95,30 +122,6 @@ mToggleVerifyApps.setEnabled(false);
 }
 if (um.hasUserRestriction(UserManager.ENSURE_VERIFY_APPS)) {
 mToggleVerifyApps.setEnabled(false);
-}
-PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
-if (securityCategory != null) {
-PackageManager pm=getPackageManager();
-List<ResolveInfo> resolveInfos=pm.queryIntentServices(TRUST_AGENT_INTENT,PackageManager.GET_META_DATA);
-List<ComponentName> enabledTrustAgents=mLockPatternUtils.getEnabledTrustAgents();
-if (enabledTrustAgents != null && !enabledTrustAgents.isEmpty()) {
-for (ResolveInfo resolveInfo : resolveInfos) {
-if (resolveInfo.serviceInfo == null) continue;
-if (!TrustAgentUtils.checkProvidePermission(resolveInfo,pm)) continue;
-TrustAgentUtils.TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
-if (trustAgentComponentInfo.componentName == null || !enabledTrustAgents.contains(TrustAgentUtils.getComponentName(resolveInfo)) || TextUtils.isEmpty(trustAgentComponentInfo.title)) continue;
-Preference trustAgentPreference=new Preference(securityCategory.getContext());
-trustAgentPreference.setKey(KEY_TRUST_AGENT);
-trustAgentPreference.setTitle(trustAgentComponentInfo.title);
-trustAgentPreference.setSummary(trustAgentComponentInfo.summary);
-Intent intent=new Intent();
-intent.setComponent(trustAgentComponentInfo.componentName);
-intent.setAction(Intent.ACTION_MAIN);
-trustAgentPreference.setIntent(intent);
-securityCategory.addPreference(trustAgentPreference);
-break;
-}
-}
 }
 return root;
 }

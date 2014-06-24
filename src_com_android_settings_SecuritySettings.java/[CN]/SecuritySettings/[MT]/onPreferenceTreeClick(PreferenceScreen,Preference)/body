@@ -49,8 +49,10 @@
   }
  else   if (KEY_TRUST_AGENT.equals(key)) {
     ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
-    if (!helper.launchConfirmationActivity(CHANGE_TRUST_AGENT_SETTINGS,null,null)) {
+    mClickedTrustAgentPreference=preference;
+    if (!helper.launchConfirmationActivity(CHANGE_TRUST_AGENT_SETTINGS,null,null) && preference.getIntent() != null) {
       startActivity(preference.getIntent());
+      mClickedTrustAgentPreference=null;
     }
   }
  else {

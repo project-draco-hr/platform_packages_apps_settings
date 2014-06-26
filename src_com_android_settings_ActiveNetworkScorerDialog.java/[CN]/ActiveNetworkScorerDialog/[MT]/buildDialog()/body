@@ -1,31 +1,20 @@
 {
-  if (!NetworkScorerAppManager.isPackageValidScorer(this,mNewPackageName)) {
+  NetworkScorerAppData newScorer=NetworkScorerAppManager.getScorer(this,mNewPackageName);
+  if (newScorer == null) {
     Log.e(TAG,"New package " + mNewPackageName + " is not a valid scorer.");
     return false;
   }
-  String oldPackageName=NetworkScorerAppManager.getActiveScorer(this);
-  if (TextUtils.equals(oldPackageName,mNewPackageName)) {
+  NetworkScorerAppData oldScorer=NetworkScorerAppManager.getActiveScorer(this);
+  if (oldScorer != null && TextUtils.equals(oldScorer.mPackageName,mNewPackageName)) {
     Log.i(TAG,"New package " + mNewPackageName + " is already the active scorer.");
     setResult(RESULT_OK);
     return false;
   }
-  PackageManager pm=getPackageManager();
-  CharSequence oldName=null;
-  CharSequence newName;
-  try {
-    if (oldPackageName != null) {
-      oldName=pm.getApplicationInfo(oldPackageName,0).loadLabel(pm);
-    }
-    newName=pm.getApplicationInfo(mNewPackageName,0).loadLabel(pm);
-  }
- catch (  NameNotFoundException e) {
-    Log.e(TAG,"Unable to find package info for scorers",e);
-    return false;
-  }
+  CharSequence newName=newScorer.mScorerName;
   final AlertController.AlertParams p=mAlertParams;
   p.mTitle=getString(R.string.network_scorer_change_active_dialog_title);
-  if (oldPackageName != null) {
-    p.mMessage=getString(R.string.network_scorer_change_active_dialog_text,newName,oldName);
+  if (oldScorer != null) {
+    p.mMessage=getString(R.string.network_scorer_change_active_dialog_text,newName,oldScorer.mScorerName);
   }
  else {
     p.mMessage=getString(R.string.network_scorer_change_active_no_previous_dialog_text,newName);

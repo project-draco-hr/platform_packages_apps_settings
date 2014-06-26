@@ -1,4 +1,7 @@
 {
+  if (UserManager.get(getActivity()).hasUserRestriction(UserManager.DISALLOW_FACTORY_RESET)) {
+    return inflater.inflate(R.layout.master_clear_disallowed_screen,null);
+  }
   mContentView=inflater.inflate(R.layout.master_clear_confirm,null);
   establishFinalConfirmationState();
   return mContentView;

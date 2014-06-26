@@ -1,0 +1,16 @@
+{
+  if (level == -1) {
+    setIcon(null);
+  }
+ else {
+    Drawable drawable=getIcon();
+    if (drawable == null) {
+      drawable=context.getTheme().obtainStyledAttributes(wifi_signal_attributes).getDrawable(0);
+      setIcon(drawable);
+    }
+    if (drawable != null) {
+      drawable.setLevel(level);
+      drawable.setState((security != SECURITY_NONE) ? STATE_SECURED : STATE_NONE);
+    }
+  }
+}

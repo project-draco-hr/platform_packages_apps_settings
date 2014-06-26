@@ -1,8 +1,8 @@
 {
   setTitle(ssid);
-  updateIcon(getLevel());
+  final Context context=getContext();
+  updateIcon(getLevel(),context);
   StringBuilder summary=new StringBuilder();
-  Context context=getContext();
   if (mState != null) {
     summary.append(Summary.get(context,mState));
   }

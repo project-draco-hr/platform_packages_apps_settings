@@ -1,0 +1,8 @@
+{
+  try {
+    return Settings.System.getInt(getContentResolver(),Settings.System.LOCK_TO_APP_EXIT_LOCKED) != 0;
+  }
+ catch (  SettingNotFoundException e) {
+    return false;
+  }
+}

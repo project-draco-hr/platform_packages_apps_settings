@@ -1,0 +1,11 @@
+{
+  super.onResume();
+  if (isLockToAppEnabled()) {
+    mSwitchBar.setChecked(true);
+    createPreferenceHierarchy();
+  }
+ else {
+    mSwitchBar.setChecked(false);
+    createSetupInstructions();
+  }
+}

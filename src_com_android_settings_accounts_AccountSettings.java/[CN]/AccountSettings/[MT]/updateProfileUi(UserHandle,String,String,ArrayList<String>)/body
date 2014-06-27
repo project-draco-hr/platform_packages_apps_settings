@@ -5,7 +5,7 @@
   }
   final ProfileData profileData=new ProfileData();
   profileData.preferenceGroup=(PreferenceGroup)findPreference(categoryKey);
-  if (mUm.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
+  if (mUm.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS,userHandle)) {
     removePreference(addAccountKey);
   }
  else {

@@ -3,9 +3,8 @@
   final boolean enabled=mCaptioningManager.isEnabled();
   SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
-  mSwitchBar.setTextViewLabel(enabled);
+  mSwitchBar.setCheckedInternal(enabled);
   mToggleSwitch=mSwitchBar.getSwitch();
-  mToggleSwitch.setCheckedInternal(enabled);
   getPreferenceScreen().setEnabled(enabled);
   refreshPreviewText();
   installSwitchBarToggleSwitch();

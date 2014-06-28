@@ -4,6 +4,7 @@
   mTextView=(TextView)findViewById(R.id.switch_text);
   mTextView.setText(R.string.switch_off_text);
   mSwitch=(ToggleSwitch)findViewById(R.id.switch_widget);
+  mSwitch.setSaveEnabled(false);
   addOnSwitchChangeListener(new OnSwitchChangeListener(){
     @Override public void onSwitchChanged(    Switch switchView,    boolean isChecked){
       setTextViewLabel(isChecked);

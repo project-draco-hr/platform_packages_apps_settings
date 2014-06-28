@@ -1,6 +1,13 @@
 {
   final View view=inflater.inflate(R.layout.setup_preference,container,false);
-  final View other=view.findViewById(R.id.other_network);
+  final ListView list=(ListView)view.findViewById(android.R.id.list);
+  final View title=view.findViewById(R.id.title);
+  if (title == null) {
+    final View header=inflater.inflate(R.layout.setup_wizard_header,list,false);
+    list.addHeaderView(header);
+  }
+  final View other=inflater.inflate(R.layout.setup_wifi_add_network,list,false);
+  list.addFooterView(other,null,true);
   other.setOnClickListener(new OnClickListener(){
     @Override public void onClick(    View v){
       if (mWifiManager.isWifiEnabled()) {
@@ -9,29 +16,6 @@
     }
   }
 );
-  final ImageButton b=(ImageButton)view.findViewById(R.id.more);
-  if (b != null) {
-    b.setOnClickListener(new OnClickListener(){
-      @Override public void onClick(      View v){
-        if (mWifiManager.isWifiEnabled()) {
-          PopupMenu pm=new PopupMenu(inflater.getContext(),b);
-          pm.inflate(R.menu.wifi_setup);
-          pm.setOnMenuItemClickListener(new OnMenuItemClickListener(){
-            @Override public boolean onMenuItemClick(            MenuItem item){
-              if (R.id.wifi_wps == item.getItemId()) {
-                showDialog(WPS_PBC_DIALOG_ID);
-                return true;
-              }
-              return false;
-            }
-          }
-);
-          pm.show();
-        }
-      }
-    }
-);
-  }
   final Intent intent=getActivity().getIntent();
   if (intent.getBooleanExtra(EXTRA_SHOW_WIFI_REQUIRED_INFO,false)) {
     view.findViewById(R.id.wifi_required_info).setVisibility(View.VISIBLE);

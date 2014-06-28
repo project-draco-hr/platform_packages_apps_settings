@@ -1,0 +1,22 @@
+{
+  mDrawScrollBar=false;
+  super.draw(canvas);
+  if (mSticky != null) {
+    final int saveCount=canvas.save();
+    final View drawTarget=mStickyContainer != null ? mStickyContainer : mSticky;
+    final int drawOffset=mStickyContainer != null ? mSticky.getTop() : 0;
+    final int drawTop=drawTarget.getTop();
+    if (drawTop + drawOffset < mStatusBarInset || !drawTarget.isShown()) {
+      canvas.translate(0,-drawOffset + mStatusBarInset);
+      canvas.clipRect(0,0,drawTarget.getWidth(),drawTarget.getHeight());
+      drawTarget.draw(canvas);
+      mStickyRect.set(0,-drawOffset + mStatusBarInset,drawTarget.getWidth(),drawTarget.getHeight() - drawOffset + mStatusBarInset);
+    }
+ else {
+      mStickyRect.setEmpty();
+    }
+    canvas.restoreToCount(saveCount);
+  }
+  mDrawScrollBar=true;
+  onDrawScrollBars(canvas);
+}

@@ -21,7 +21,7 @@
         p.setSummary(context.getString(R.string.user_restrictions_controlled_by,app.masterEntry.activityName));
       }
       p.setKey(getKeyForPackage(packageName));
-      p.setSettingsEnabled(hasSettings || isSettingsApp);
+      p.setSettingsEnabled((hasSettings || isSettingsApp) && app.masterEntry == null);
       p.setPersistent(false);
       p.setOnPreferenceChangeListener(this);
       p.setOnPreferenceClickListener(this);
@@ -35,7 +35,7 @@
         p.setChecked(true);
         p.setImmutable(true);
         if (!hasSettings && !isSettingsApp)         continue;
-        if (hasSettings) {
+        if (hasSettings && app.masterEntry == null) {
           requestRestrictionsForApp(packageName,p,false);
         }
       }

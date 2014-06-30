@@ -1,0 +1,19 @@
+{
+  Context context=getActivity();
+  if (context == null)   return null;
+switch (dialogId) {
+case DIALOG_CONFIRM_REMOVE:
+{
+      Dialog dlg=RemoveUserUtil.createConfirmationDialog(getActivity(),mUserInfo.id,new DialogInterface.OnClickListener(){
+        public void onClick(        DialogInterface dialog,        int which){
+          removeUser();
+        }
+      }
+);
+      return dlg;
+    }
+case DIALOG_CONFIRM_ENABLE_CALLING:
+case DIALOG_CONFIRM_ENABLE_CALLING_SMS:
+}
+return null;
+}

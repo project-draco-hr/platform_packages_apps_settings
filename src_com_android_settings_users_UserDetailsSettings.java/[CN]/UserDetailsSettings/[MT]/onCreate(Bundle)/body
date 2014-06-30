@@ -1,0 +1,25 @@
+{
+  super.onCreate(icicle);
+  final Context context=getActivity();
+  mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  addPreferencesFromResource(R.xml.user_details_settings);
+  mPhonePref=(SwitchPreference)findPreference(KEY_ENABLE_TELEPHONY);
+  mRemoveUserPref=findPreference(KEY_REMOVE_USER);
+  mGuestUser=getArguments().getBoolean(EXTRA_USER_GUEST,false);
+  if (!mGuestUser) {
+    final int userId=getArguments().getInt(EXTRA_USER_ID,-1);
+    if (userId == -1) {
+      throw new RuntimeException("Arguments to this fragment must contain the user id");
+    }
+    mUserInfo=mUserManager.getUserInfo(userId);
+    mPhonePref.setChecked(!mUserManager.hasUserRestriction(UserManager.DISALLOW_TELEPHONY,new UserHandle(userId)));
+    mRemoveUserPref.setOnPreferenceClickListener(this);
+  }
+ else {
+    removePreference(KEY_REMOVE_USER);
+    mPhonePref.setTitle(R.string.user_enable_calling);
+    mDefaultGuestRestrictions=mUserManager.getDefaultGuestRestrictions();
+    mPhonePref.setChecked(!mDefaultGuestRestrictions.getBoolean(UserManager.DISALLOW_TELEPHONY));
+  }
+  mPhonePref.setOnPreferenceChangeListener(this);
+}

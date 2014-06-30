@@ -15,9 +15,11 @@
     mEnabled=false;
     return;
   }
+  final int myUserId=UserHandle.myUserId();
+  mIsGuest=mUserManager.getUserInfo(myUserId).isGuest();
   addPreferencesFromResource(R.xml.user_settings);
   mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
-  mMePreference=new UserPreference(context,null,UserHandle.myUserId(),mUserManager.isLinkedUser() ? null : this,null);
+  mMePreference=new UserPreference(context,null,myUserId,mUserManager.isLinkedUser() ? null : this,null);
   mMePreference.setKey(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
   if (mIsOwner) {
@@ -30,7 +32,7 @@
  else {
     mAddUser.setOnPreferenceClickListener(this);
     DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-    if (dpm.getDeviceOwner() != null) {
+    if (dpm.getDeviceOwner() != null || Utils.isVoiceCapable(context)) {
       mCanAddRestrictedProfile=false;
       mAddUser.setTitle(R.string.user_add_user_menu);
     }
@@ -39,5 +41,5 @@
   setHasOptionsMenu(true);
   IntentFilter filter=new IntentFilter(Intent.ACTION_USER_REMOVED);
   filter.addAction(Intent.ACTION_USER_INFO_CHANGED);
-  getActivity().registerReceiverAsUser(mUserChangeReceiver,UserHandle.ALL,filter,null,mHandler);
+  context.registerReceiverAsUser(mUserChangeReceiver,UserHandle.ALL,filter,null,mHandler);
 }

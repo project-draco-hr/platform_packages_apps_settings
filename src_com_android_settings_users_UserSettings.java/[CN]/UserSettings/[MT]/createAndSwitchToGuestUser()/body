@@ -1,0 +1,13 @@
+{
+  List<UserInfo> users=mUserManager.getUsers();
+  for (  UserInfo user : users) {
+    if (user.isGuest()) {
+      switchUserNow(user.id);
+      return;
+    }
+  }
+  UserInfo guestUser=mUserManager.createGuest(getActivity(),getResources().getString(R.string.user_guest));
+  if (guestUser != null) {
+    switchUserNow(guestUser.id);
+  }
+}

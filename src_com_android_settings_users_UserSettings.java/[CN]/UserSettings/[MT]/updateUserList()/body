@@ -1,17 +1,24 @@
 {
   if (getActivity() == null)   return;
   List<UserInfo> users=mUserManager.getUsers(true);
+  final Context context=getActivity();
   mUserListCategory.removeAll();
   mUserListCategory.setOrderingAsAdded(false);
   mUserListCategory.addPreference(mMePreference);
+  final boolean voiceCapable=Utils.isVoiceCapable(context);
   final ArrayList<Integer> missingIcons=new ArrayList<Integer>();
   for (  UserInfo user : users) {
     Preference pref;
     if (user.id == UserHandle.myUserId()) {
       pref=mMePreference;
     }
+ else     if (user.isGuest()) {
+      continue;
+    }
  else {
-      pref=new UserPreference(getActivity(),null,user.id,mIsOwner && user.isRestricted() ? this : null,mIsOwner ? this : null);
+      final boolean showSettings=mIsOwner && (voiceCapable || user.isRestricted());
+      final boolean showDelete=mIsOwner && (!voiceCapable && !user.isRestricted() && !user.isGuest());
+      pref=new UserPreference(context,null,user.id,showSettings ? this : null,showDelete ? this : null);
       pref.setOnPreferenceClickListener(this);
       pref.setKey("id=" + user.id);
       mUserListCategory.addPreference(pref);
@@ -57,6 +64,13 @@
     pref.setEnabled(false);
     pref.setTitle(R.string.user_new_user_name);
     pref.setIcon(encircle(R.drawable.avatar_default_1));
+    mUserListCategory.addPreference(pref);
+  }
+  if (!mIsGuest) {
+    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mIsOwner ? this : null,null);
+    pref.setTitle(R.string.user_guest);
+    pref.setIcon(encircle(R.drawable.ic_settings_accounts));
+    pref.setOnPreferenceClickListener(this);
     mUserListCategory.addPreference(pref);
   }
   getActivity().invalidateOptionsMenu();

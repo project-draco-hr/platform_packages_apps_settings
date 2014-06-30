@@ -1,0 +1,10 @@
+{
+  if (mGuestUser) {
+    mDefaultGuestRestrictions.putBoolean(UserManager.DISALLOW_TELEPHONY,!((Boolean)newValue));
+    mUserManager.setDefaultGuestRestrictions(mDefaultGuestRestrictions);
+  }
+ else {
+    mUserManager.setUserRestriction(UserManager.DISALLOW_TELEPHONY,!((Boolean)newValue),new UserHandle(mUserInfo.id));
+  }
+  return true;
+}

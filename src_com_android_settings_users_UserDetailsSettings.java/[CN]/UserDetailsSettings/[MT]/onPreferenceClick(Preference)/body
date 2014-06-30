@@ -1,0 +1,10 @@
+{
+  if (preference == mRemoveUserPref) {
+    if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
+      throw new RuntimeException("Only the owner can remove a user");
+    }
+    showDialog(DIALOG_CONFIRM_REMOVE);
+    return true;
+  }
+  return false;
+}

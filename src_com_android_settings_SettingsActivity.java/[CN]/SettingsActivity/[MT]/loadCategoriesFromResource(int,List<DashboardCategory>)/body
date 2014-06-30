@@ -86,7 +86,9 @@
               tile.fragmentArguments=curBundle;
               curBundle=null;
             }
-            category.addTile(tile);
+            if (tile.id != R.id.sim_settings || SimSettings.showSimCardScreen(this)) {
+              category.addTile(tile);
+            }
           }
  else {
             XmlUtils.skipCurrentTag(parser);

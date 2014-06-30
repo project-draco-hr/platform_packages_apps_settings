@@ -11,7 +11,7 @@
   mAuthenticatorHelper.onAccountsUpdated(null);
   mDevelopmentPreferences=getSharedPreferences(DevelopmentSettings.PREF_FILE,Context.MODE_PRIVATE);
   final String initialFragmentName=intent.getStringExtra(EXTRA_SHOW_FRAGMENT);
-  mIsShortcut=isShortCutIntent(intent) || isAppInfoIntent(intent) || intent.getBooleanExtra(EXTRA_SHOW_FRAGMENT_AS_SHORTCUT,false);
+  mIsShortcut=isShortCutIntent(intent) || isLikeShortCutIntent(intent) || intent.getBooleanExtra(EXTRA_SHOW_FRAGMENT_AS_SHORTCUT,false);
   mIsShowingDashboard=(initialFragmentName == null) && !mIsShortcut;
   final ComponentName cn=getIntent().getComponent();
   final boolean isSubSettings=cn.getClassName().equals(SubSettings.class.getName());

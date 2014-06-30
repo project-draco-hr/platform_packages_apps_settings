@@ -36,18 +36,15 @@
   }
 );
   final Dialog certDialog=builder.create();
-  View view=views.get(0);
-  ViewGroup body=(ViewGroup)view.findViewById(com.android.internal.R.id.body);
+  ViewGroup body=(ViewGroup)container.findViewById(com.android.internal.R.id.body);
   LayoutInflater inflater=LayoutInflater.from(getActivity());
   Button removeButton=(Button)inflater.inflate(R.layout.trusted_credential_details,body,false);
-  body.addView(removeButton);
+  if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
+    body.addView(removeButton);
+  }
   removeButton.setText(certHolder.mTab.getButtonLabel(certHolder));
   removeButton.setOnClickListener(new View.OnClickListener(){
     @Override public void onClick(    View v){
-      if (mUserManager.hasRestrictionsChallenge() && !mChallengeSucceeded) {
-        ensurePin();
-        return;
-      }
       AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
       builder.setMessage(certHolder.mTab.getButtonConfirmation(certHolder));
       builder.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){

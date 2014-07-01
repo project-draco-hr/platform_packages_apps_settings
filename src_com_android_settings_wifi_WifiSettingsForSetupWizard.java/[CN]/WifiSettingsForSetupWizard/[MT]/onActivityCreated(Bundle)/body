@@ -1,20 +1,7 @@
 {
   super.onActivityCreated(savedInstanceState);
   getView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_HOME | View.STATUS_BAR_DISABLE_RECENT | View.STATUS_BAR_DISABLE_NOTIFICATION_ALERTS| View.STATUS_BAR_DISABLE_CLOCK);
-  final WifiSetupActivity activity=(WifiSetupActivity)getActivity();
-  final Intent intent=activity.getIntent();
-  mAutoFinishOnConnection=intent.getBooleanExtra(EXTRA_AUTO_FINISH_ON_CONNECT,false);
-  if (mAutoFinishOnConnection) {
-    if (hasNextButton()) {
-      getNextButton().setVisibility(View.GONE);
-    }
-    if (savedInstanceState == null) {
-      final ConnectivityManager connectivity=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-      if (connectivity != null && connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
-        Log.d(TAG,"onActivityCreated Auto-finishing");
-        activity.finishOrNext(Activity.RESULT_OK);
-        return;
-      }
-    }
+  if (hasNextButton()) {
+    getNextButton().setVisibility(View.GONE);
   }
 }

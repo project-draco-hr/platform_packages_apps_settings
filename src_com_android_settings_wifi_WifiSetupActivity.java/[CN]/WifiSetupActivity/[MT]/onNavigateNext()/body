@@ -1,14 +1,9 @@
 {
-  boolean isConnected=false;
-  final ConnectivityManager connectivity=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-  if (connectivity != null) {
-    final NetworkInfo info=connectivity.getActiveNetworkInfo();
-    isConnected=(info != null) && info.isConnected();
-  }
-  if (isConnected) {
-    WifiSkipDialog.newInstance(R.string.wifi_skipped_message).show(getFragmentManager(),"dialog");
+  if (mWifiConnected) {
+    finishOrNext(RESULT_OK);
   }
  else {
-    WifiSkipDialog.newInstance(R.string.wifi_and_mobile_skipped_message).show(getFragmentManager(),"dialog");
+    final int message=isNetworkConnected() ? R.string.wifi_skipped_message : R.string.wifi_and_mobile_skipped_message;
+    WifiSkipDialog.newInstance(message).show(getFragmentManager(),"dialog");
   }
 }

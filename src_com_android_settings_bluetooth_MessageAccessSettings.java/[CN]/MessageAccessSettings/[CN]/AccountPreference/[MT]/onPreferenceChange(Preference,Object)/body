@@ -1,0 +1,12 @@
+{
+  if (preference instanceof AccountPreference) {
+    final AccountPreference accountPref=(AccountPreference)preference;
+    if (((Boolean)val).booleanValue()) {
+      Log.w(TAG,String.format("User has turned on '%s' for Bluetooth message access.",accountPref.account.name));
+    }
+ else {
+      Log.w(TAG,String.format("User has turned off '%s' for Bluetooth message access.",accountPref.account.name));
+    }
+  }
+  return true;
+}

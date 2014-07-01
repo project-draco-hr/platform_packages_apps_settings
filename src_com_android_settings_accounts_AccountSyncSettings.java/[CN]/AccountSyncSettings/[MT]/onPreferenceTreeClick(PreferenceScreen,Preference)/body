@@ -3,7 +3,8 @@
     SyncStateCheckBoxPreference syncPref=(SyncStateCheckBoxPreference)preference;
     String authority=syncPref.getAuthority();
     Account account=syncPref.getAccount();
-    boolean syncAutomatically=ContentResolver.getSyncAutomatically(account,authority);
+    final int userId=mUserHandle.getIdentifier();
+    boolean syncAutomatically=ContentResolver.getSyncAutomaticallyAsUser(account,authority,userId);
     if (syncPref.isOneTimeSyncMode()) {
       requestOrCancelSync(account,authority,true);
     }
@@ -11,8 +12,8 @@
       boolean syncOn=syncPref.isChecked();
       boolean oldSyncState=syncAutomatically;
       if (syncOn != oldSyncState) {
-        ContentResolver.setSyncAutomatically(account,authority,syncOn);
-        if (!ContentResolver.getMasterSyncAutomatically() || !syncOn) {
+        ContentResolver.setSyncAutomaticallyAsUser(account,authority,syncOn,userId);
+        if (!ContentResolver.getMasterSyncAutomaticallyAsUser(userId) || !syncOn) {
           requestOrCancelSync(account,authority,syncOn);
         }
       }

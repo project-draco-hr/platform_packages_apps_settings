@@ -1,5 +1,6 @@
 {
   Bundle args=new Bundle();
   args.putParcelable(AccountSyncSettings.ACCOUNT_KEY,acctPref.getAccount());
+  args.putParcelable(EXTRA_USER,mUserHandle);
   ((SettingsActivity)getActivity()).startPreferencePanel(AccountSyncSettings.class.getCanonicalName(),args,R.string.account_sync_settings_title,acctPref.getAccount().name,this,REQUEST_SHOW_SYNC_SETTINGS);
 }

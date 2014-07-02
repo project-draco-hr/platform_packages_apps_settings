@@ -1,7 +1,7 @@
 {
   updateAuthDescriptions(mContext);
   if (accounts == null) {
-    accounts=AccountManager.get(mContext).getAccounts();
+    accounts=AccountManager.get(mContext).getAccountsAsUser(mUserHandle.getIdentifier());
   }
   mEnabledAccountTypes.clear();
   mAccTypeIconCache.clear();

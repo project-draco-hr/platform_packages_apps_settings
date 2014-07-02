@@ -12,17 +12,16 @@
   mDevelopmentPreferences=getSharedPreferences(DevelopmentSettings.PREF_FILE,Context.MODE_PRIVATE);
   final String initialFragmentName=intent.getStringExtra(EXTRA_SHOW_FRAGMENT);
   mIsShortcut=isShortCutIntent(intent) || isLikeShortCutIntent(intent) || intent.getBooleanExtra(EXTRA_SHOW_FRAGMENT_AS_SHORTCUT,false);
-  mIsShowingDashboard=(initialFragmentName == null) && !mIsShortcut;
   final ComponentName cn=getIntent().getComponent();
-  final boolean isSubSettings=cn.getClassName().equals(SubSettings.class.getName());
-  if (isSubSettings || (!mIsShowingDashboard && !mIsShortcut)) {
+  final String className=cn.getClassName();
+  mIsShowingDashboard=className.equals(Settings.class.getName());
+  final boolean isSubSettings=className.equals(SubSettings.class.getName());
+  if (isSubSettings || (!mIsShowingDashboard && !mIsShortcut && (initialFragmentName == null))) {
     setTheme(R.style.Theme_SubSettings);
   }
   setContentView(R.layout.settings_main);
   mContent=(ViewGroup)findViewById(R.id.prefs);
   getFragmentManager().addOnBackStackChangedListener(this);
-  mDisplayHomeAsUpEnabled=true;
-  mDisplaySearch=true;
   if (mIsShowingDashboard) {
     Index.getInstance(getApplicationContext()).update();
   }
@@ -45,12 +44,17 @@
         mDisplayHomeAsUpEnabled=isSubSettings;
         mDisplaySearch=false;
       }
+ else       if (isSubSettings) {
+        mDisplayHomeAsUpEnabled=true;
+        mDisplaySearch=true;
+      }
       setTitleFromIntent(intent);
       Bundle initialArguments=intent.getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
       switchToFragment(initialFragmentName,initialArguments,true,false,mInitialTitleResId,mInitialTitle,false);
     }
  else {
       mDisplayHomeAsUpEnabled=false;
+      mDisplaySearch=true;
       mInitialTitleResId=R.string.dashboard_title;
       switchToFragment(DashboardSummary.class.getName(),null,false,false,mInitialTitleResId,mInitialTitle,false);
     }

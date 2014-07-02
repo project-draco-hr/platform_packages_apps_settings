@@ -1,0 +1,25 @@
+{
+  final PackageManager pm=getActivity().getPackageManager();
+  List<ResolveInfo> enabledForProfile=pm.queryBroadcastReceivers(new Intent(DeviceAdminReceiver.ACTION_DEVICE_ADMIN_ENABLED),PackageManager.GET_META_DATA | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS,profileId);
+  if (enabledForProfile == null) {
+    enabledForProfile=Collections.emptyList();
+  }
+  final int n=enabledForProfile.size();
+  ArrayList<DeviceAdminInfo> deviceAdmins=mAdminsByProfile.get(profileId);
+  if (deviceAdmins == null) {
+    deviceAdmins=new ArrayList<DeviceAdminInfo>(n);
+  }
+  for (int i=0; i < n; ++i) {
+    ResolveInfo resolveInfo=enabledForProfile.get(i);
+    ComponentName riComponentName=new ComponentName(resolveInfo.activityInfo.packageName,resolveInfo.activityInfo.name);
+    if (alreadyAddedComponents == null || !alreadyAddedComponents.contains(riComponentName)) {
+      DeviceAdminInfo deviceAdminInfo=createDeviceAdminInfo(resolveInfo);
+      if (deviceAdminInfo != null && deviceAdminInfo.isVisible()) {
+        deviceAdmins.add(deviceAdminInfo);
+      }
+    }
+  }
+  if (!deviceAdmins.isEmpty()) {
+    mAdminsByProfile.put(profileId,deviceAdmins);
+  }
+}

@@ -1,4 +1,10 @@
 {
   String action=intent.getAction();
-  return (action != null) && (action.equals("android.settings.APPLICATION_DETAILS_SETTINGS") || action.equals("android.settings.SYNC_SETTINGS"));
+  if (action == null) {
+    return false;
+  }
+  for (int i=0; i < LIKE_SHORTCUT_INTENT_ACTION_ARRAY.length; i++) {
+    if (LIKE_SHORTCUT_INTENT_ACTION_ARRAY[i].equals(action))     return true;
+  }
+  return false;
 }

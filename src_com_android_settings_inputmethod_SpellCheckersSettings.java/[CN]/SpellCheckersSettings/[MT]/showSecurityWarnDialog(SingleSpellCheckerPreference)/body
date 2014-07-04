@@ -2,16 +2,22 @@
   if (mDialog != null && mDialog.isShowing()) {
     mDialog.dismiss();
   }
-  mDialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-    @Override public void onClick(    DialogInterface dialog,    int which){
+  final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+  builder.setTitle(android.R.string.dialog_alert_title);
+  final PackageManager pm=getPackageManager();
+  builder.setMessage(getString(R.string.spellchecker_security_warning,scp.getSpellCheckerInfo().getServiceInfo().applicationInfo.loadLabel(pm)));
+  builder.setCancelable(true);
+  builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    final DialogInterface dialog,    final int which){
       changeCurrentSpellChecker(scp);
     }
   }
-).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-    @Override public void onClick(    DialogInterface dialog,    int which){
+);
+  builder.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    final DialogInterface dialog,    final int which){
     }
   }
-).create();
-  mDialog.setMessage(getResources().getString(R.string.spellchecker_security_warning,scp.getSpellCheckerInfo().getServiceInfo().applicationInfo.loadLabel(getActivity().getPackageManager())));
+);
+  mDialog=builder.create();
   mDialog.show();
 }

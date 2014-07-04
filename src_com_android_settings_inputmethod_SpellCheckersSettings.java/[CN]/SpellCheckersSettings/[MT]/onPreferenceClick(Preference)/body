@@ -1,16 +1,13 @@
 {
-  SingleSpellCheckerPreference targetScp=null;
-  for (  SingleSpellCheckerPreference scp : mSpellCheckers) {
+  for (  final SingleSpellCheckerPreference scp : mSpellCheckers) {
     if (pref.equals(scp)) {
-      targetScp=scp;
-    }
-  }
-  if (targetScp != null) {
-    if (!isSystemApp(targetScp.getSpellCheckerInfo())) {
-      showSecurityWarnDialog(targetScp);
-    }
+      if (isSystemApp(scp.getSpellCheckerInfo())) {
+        changeCurrentSpellChecker(scp);
+      }
  else {
-      changeCurrentSpellChecker(targetScp);
+        showSecurityWarnDialog(scp);
+      }
+      return true;
     }
   }
   return true;

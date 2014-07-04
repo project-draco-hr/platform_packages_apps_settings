@@ -1,10 +1,10 @@
 {
-  final PackageManager pm=getPackageManager();
-  mCurrentSci=SpellCheckerUtils.getCurrentSpellChecker(mTsm);
-  mEnabledScis=SpellCheckerUtils.getEnabledSpellCheckers(mTsm);
+  mCurrentSci=mTsm.getCurrentSpellChecker();
+  mEnabledScis=mTsm.getEnabledSpellCheckers();
   if (mCurrentSci == null || mEnabledScis == null) {
     return;
   }
+  final PackageManager pm=getPackageManager();
   mSpellCheckers.clear();
   for (int i=0; i < mEnabledScis.length; ++i) {
     final SpellCheckerInfo sci=mEnabledScis[i];

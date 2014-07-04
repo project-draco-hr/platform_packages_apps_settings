@@ -5,10 +5,6 @@
   for (int i=0; i < size; i++) {
     DashboardCategory category=target.get(i);
     int id=(int)category.id;
-    if (id == R.id.account_settings) {
-      insertAccountsTiles(category);
-      continue;
-    }
     int n=category.getTilesCount() - 1;
     while (n >= 0) {
       DashboardTile tile=category.getTile(n);
@@ -71,11 +67,6 @@
       }
  else       if (id == R.id.development_settings) {
         if (!showDev || um.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {
-          category.removeTile(n);
-        }
-      }
- else       if (id == R.id.account_add) {
-        if (um.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
           category.removeTile(n);
         }
       }

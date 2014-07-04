@@ -2,7 +2,4 @@
   super.onDestroy();
   mDevelopmentPreferences.unregisterOnSharedPreferenceChangeListener(mDevelopmentPreferencesListener);
   mDevelopmentPreferencesListener=null;
-  if (mListeningToAccountUpdates) {
-    AccountManager.get(this).removeOnAccountsUpdatedListener(this);
-  }
 }

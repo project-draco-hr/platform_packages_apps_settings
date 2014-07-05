@@ -6,26 +6,6 @@ case BluetoothAdapter.STATE_ON:
     preferenceScreen.removeAll();
   preferenceScreen.setOrderingAsAdded(true);
 mDevicePreferenceMap.clear();
-if (mMyDevicePreference == null) {
-mMyDevicePreference=new Preference(getActivity());
-}
-mMyDevicePreference.setTitle(mLocalAdapter.getName());
-if (getResources().getBoolean(com.android.internal.R.bool.config_voice_capable)) {
-mMyDevicePreference.setIcon(R.drawable.ic_bt_cellphone);
-}
- else {
-mMyDevicePreference.setIcon(R.drawable.ic_bt_laptop);
-}
-mMyDevicePreference.setPersistent(false);
-mMyDevicePreference.setEnabled(true);
-preferenceScreen.addPreference(mMyDevicePreference);
-if (!isRestrictedAndNotPinProtected()) {
-if (mDiscoverableEnabler == null) {
-mDiscoverableEnabler=new BluetoothDiscoverableEnabler(mLocalAdapter,mMyDevicePreference);
-mDiscoverableEnabler.resume(getActivity());
-LocalBluetoothManager.getInstance(getActivity()).setDiscoverableEnabler(mDiscoverableEnabler);
-}
-}
 if (mPairedDevicesCategory == null) {
 mPairedDevicesCategory=new PreferenceCategory(getActivity());
 }
@@ -34,11 +14,9 @@ mPairedDevicesCategory.removeAll();
 }
 addDeviceCategory(mPairedDevicesCategory,R.string.bluetooth_preference_paired_devices,BluetoothDeviceFilter.BONDED_DEVICE_FILTER);
 int numberOfPairedDevices=mPairedDevicesCategory.getPreferenceCount();
-if (mDiscoverableEnabler != null) {
-mDiscoverableEnabler.setNumberOfPairedDevices(numberOfPairedDevices);
-}
 if (mAvailableDevicesCategory == null) {
 mAvailableDevicesCategory=new BluetoothProgressCategory(getActivity());
+mAvailableDevicesCategory.setSelectable(false);
 }
  else {
 mAvailableDevicesCategory.removeAll();
@@ -64,6 +42,13 @@ getPreferenceScreen().addPreference(mAvailableDevicesCategory);
 }
 }
 }
+if (mMyDevicePreference == null) {
+mMyDevicePreference=new Preference(getActivity());
+}
+mMyDevicePreference.setSummary(getResources().getString(R.string.bluetooth_is_visible_message,mLocalAdapter.getName()));
+mMyDevicePreference.setSelectable(false);
+mMyDevicePreference.setEnabled(false);
+preferenceScreen.addPreference(mMyDevicePreference);
 getActivity().invalidateOptionsMenu();
 return;
 case BluetoothAdapter.STATE_TURNING_OFF:

@@ -1,10 +1,10 @@
 {
-  if (mWifiManager.startScan()) {
+  if (mWifiSettings.mWifiManager.startScan()) {
     mRetry=0;
   }
  else   if (++mRetry >= 3) {
     mRetry=0;
-    Activity activity=getActivity();
+    Activity activity=mWifiSettings.getActivity();
     if (activity != null) {
       Toast.makeText(activity,R.string.wifi_fail_to_scan,Toast.LENGTH_LONG).show();
     }

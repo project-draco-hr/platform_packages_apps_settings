@@ -23,13 +23,16 @@
       }
     }
 );
+    return mTwoState;
   }
- else   if (mDropDown != null) {
+  if (mDropDown != null) {
     mDropDown.setCallback(new DropDownPreference.Callback(){
       @Override public boolean onItemSelected(      int pos,      Object value){
         return setSetting(context,(Integer)value);
       }
     }
 );
+    return mDropDown;
   }
+  return null;
 }

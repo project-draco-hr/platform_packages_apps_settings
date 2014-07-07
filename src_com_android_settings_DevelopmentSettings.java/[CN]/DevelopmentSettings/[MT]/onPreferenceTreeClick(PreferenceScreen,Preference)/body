@@ -33,6 +33,9 @@
  else   if (preference == mBtHciSnoopLog) {
     writeBtHciSnoopLogOptions();
   }
+ else   if (preference == mEnableOemUnlock) {
+    Utils.setOemUnlockEnabled(getActivity(),mEnableOemUnlock.isChecked());
+  }
  else   if (preference == mAllowMockLocation) {
     Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,mAllowMockLocation.isChecked() ? 1 : 0);
   }

@@ -1,7 +1,7 @@
 {
-  TelephonyManager telephonyManager=getTelephonyManager();
-  if (telephonyManager.getCallState() == TelephonyManager.CALL_STATE_OFFHOOK) {
-    telephonyManager.showCallScreen();
+  PhoneManager phoneManager=getPhoneManager();
+  if (phoneManager.isInAPhoneCall()) {
+    phoneManager.showCallScreen(false);
   }
  else {
     launchEmergencyDialer();

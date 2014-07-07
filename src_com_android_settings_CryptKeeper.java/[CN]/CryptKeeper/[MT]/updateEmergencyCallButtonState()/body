@@ -14,9 +14,8 @@
     emergencyCall.setVisibility(View.GONE);
     return;
   }
-  final int newState=getTelephonyManager().getCallState();
   int textId;
-  if (newState == TelephonyManager.CALL_STATE_OFFHOOK) {
+  if (getPhoneManager().isInAPhoneCall()) {
     textId=R.string.cryptkeeper_return_to_call;
     final int phoneCallIcon=R.drawable.stat_sys_phone_call;
     emergencyCall.setCompoundDrawablesWithIntrinsicBounds(phoneCallIcon,0,0,0);

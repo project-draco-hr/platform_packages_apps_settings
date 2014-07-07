@@ -1,0 +1,16 @@
+{
+  final StringBuilder sb=new StringBuilder(ZenModeConfig.SLEEP_MODE_DAYS_PREFIX);
+  boolean empty=true;
+  for (int i=0; i < mDays.size(); i++) {
+    final int day=mDays.keyAt(i);
+    if (!mDays.valueAt(i))     continue;
+    if (empty) {
+      empty=false;
+    }
+ else {
+      sb.append(',');
+    }
+    sb.append(day);
+  }
+  return empty ? null : sb.toString();
+}

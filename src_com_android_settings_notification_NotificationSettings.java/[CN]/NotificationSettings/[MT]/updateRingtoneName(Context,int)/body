@@ -1,5 +1,8 @@
 {
-  if (context == null)   return null;
+  if (context == null) {
+    Log.e(TAG,"Unable to update ringtone name, no context provided");
+    return null;
+  }
   Uri ringtoneUri=RingtoneManager.getActualDefaultRingtoneUri(context,type);
   CharSequence summary=context.getString(com.android.internal.R.string.ringtone_unknown);
   if (ringtoneUri == null) {

@@ -2,7 +2,5 @@
   super.onResume();
   refreshNotificationListeners();
   lookupRingtoneNames();
-  final IntentFilter filter=new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
-  mContext.registerReceiver(mReceiver,filter);
   mSettingsObserver.register(true);
 }

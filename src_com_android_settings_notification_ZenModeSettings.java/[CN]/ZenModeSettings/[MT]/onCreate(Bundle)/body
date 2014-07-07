@@ -1,0 +1,164 @@
+{
+  super.onCreate(savedInstanceState);
+  mContext=getActivity();
+  mPM=mContext.getPackageManager();
+  final Resources res=mContext.getResources();
+  final int padding=res.getDimensionPixelSize(R.dimen.content_margin_left);
+  addPreferencesFromResource(R.xml.zen_mode_settings);
+  final PreferenceScreen root=getPreferenceScreen();
+  mConfig=getZenModeConfig();
+  if (DEBUG)   Log.d(TAG,"Loaded mConfig=" + mConfig);
+  final Preference zenMode=PREF_ZEN_MODE.init(this);
+  if (!Utils.isVoiceCapable(mContext)) {
+    zenMode.setTitle(R.string.zen_mode_option_title_novoice);
+  }
+  final PreferenceCategory important=(PreferenceCategory)root.findPreference(KEY_IMPORTANT);
+  mCalls=(SwitchPreference)important.findPreference(KEY_CALLS);
+  if (Utils.isVoiceCapable(mContext)) {
+    mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        if (mDisableListeners)         return true;
+        final boolean val=(Boolean)newValue;
+        if (val == mConfig.allowCalls)         return true;
+        if (DEBUG)         Log.d(TAG,"onPrefChange allowCalls=" + val);
+        final ZenModeConfig newConfig=mConfig.copy();
+        newConfig.allowCalls=val;
+        return setZenModeConfig(newConfig);
+      }
+    }
+);
+  }
+ else {
+    important.removePreference(mCalls);
+    mCalls=null;
+  }
+  mMessages=(SwitchPreference)important.findPreference(KEY_MESSAGES);
+  mMessages.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      if (mDisableListeners)       return true;
+      final boolean val=(Boolean)newValue;
+      if (val == mConfig.allowMessages)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange allowMessages=" + val);
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.allowMessages=val;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  mStarred=new DropDownPreference(mContext);
+  mStarred.setKey(KEY_STARRED);
+  mStarred.setTitle(R.string.zen_mode_from);
+  mStarred.setDropDownWidth(R.dimen.zen_mode_dropdown_width);
+  mStarred.addItem(R.string.zen_mode_from_anyone,ZenModeConfig.SOURCE_ANYONE);
+  mStarred.addItem(R.string.zen_mode_from_starred,ZenModeConfig.SOURCE_STAR);
+  mStarred.addItem(R.string.zen_mode_from_contacts,ZenModeConfig.SOURCE_CONTACT);
+  mStarred.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object newValue){
+      if (mDisableListeners)       return true;
+      final int val=(Integer)newValue;
+      if (val == mConfig.allowFrom)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange allowFrom=" + ZenModeConfig.sourceToString(val));
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.allowFrom=val;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  important.addPreference(mStarred);
+  final Preference alarmInfo=new Preference(mContext){
+    @Override public View getView(    View convertView,    ViewGroup parent){
+      final TextView tv=new TextView(mContext);
+      tv.setTypeface(Typeface.create(Typeface.DEFAULT,Typeface.ITALIC));
+      tv.setPadding(padding,padding,padding,padding);
+      tv.setText(R.string.zen_mode_alarm_info);
+      return tv;
+    }
+  }
+;
+  alarmInfo.setPersistent(false);
+  alarmInfo.setSelectable(false);
+  important.addPreference(alarmInfo);
+  final PreferenceCategory downtime=(PreferenceCategory)root.findPreference(KEY_DOWNTIME);
+  mDays=downtime.findPreference(KEY_DAYS);
+  mDays.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      new AlertDialog.Builder(mContext).setTitle(R.string.zen_mode_downtime_days).setView(new ZenModeDowntimeDaysSelection(mContext,mConfig.sleepMode){
+        @Override protected void onChanged(        String mode){
+          if (mDisableListeners)           return;
+          if (Objects.equals(mode,mConfig.sleepMode))           return;
+          if (DEBUG)           Log.d(TAG,"days.onChanged sleepMode=" + mode);
+          final ZenModeConfig newConfig=mConfig.copy();
+          newConfig.sleepMode=mode;
+          setZenModeConfig(newConfig);
+        }
+      }
+).setOnDismissListener(new OnDismissListener(){
+        @Override public void onDismiss(        DialogInterface dialog){
+          updateDays();
+        }
+      }
+).setPositiveButton(R.string.done_button,null).show();
+      return true;
+    }
+  }
+);
+  final FragmentManager mgr=getFragmentManager();
+  mStart=new TimePickerPreference(mContext,mgr);
+  mStart.setKey(KEY_START_TIME);
+  mStart.setTitle(R.string.zen_mode_start_time);
+  mStart.setCallback(new TimePickerPreference.Callback(){
+    @Override public boolean onSetTime(    int hour,    int minute){
+      if (mDisableListeners)       return true;
+      if (!ZenModeConfig.isValidHour(hour))       return false;
+      if (!ZenModeConfig.isValidMinute(minute))       return false;
+      if (hour == mConfig.sleepStartHour && minute == mConfig.sleepStartMinute) {
+        return true;
+      }
+      if (DEBUG)       Log.d(TAG,"onPrefChange sleepStart h=" + hour + " m="+ minute);
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.sleepStartHour=hour;
+      newConfig.sleepStartMinute=minute;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  downtime.addPreference(mStart);
+  mStart.setDependency(mDays.getKey());
+  mEnd=new TimePickerPreference(mContext,mgr);
+  mEnd.setKey(KEY_END_TIME);
+  mEnd.setTitle(R.string.zen_mode_end_time);
+  mEnd.setCallback(new TimePickerPreference.Callback(){
+    @Override public boolean onSetTime(    int hour,    int minute){
+      if (mDisableListeners)       return true;
+      if (!ZenModeConfig.isValidHour(hour))       return false;
+      if (!ZenModeConfig.isValidMinute(minute))       return false;
+      if (hour == mConfig.sleepEndHour && minute == mConfig.sleepEndMinute) {
+        return true;
+      }
+      if (DEBUG)       Log.d(TAG,"onPrefChange sleepEnd h=" + hour + " m="+ minute);
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.sleepEndHour=hour;
+      newConfig.sleepEndMinute=minute;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  downtime.addPreference(mEnd);
+  mEnd.setDependency(mDays.getKey());
+  mAutomationCategory=(PreferenceCategory)findPreference(KEY_AUTOMATION);
+  mEntry=findPreference(KEY_ENTRY);
+  mEntry.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      new AlertDialog.Builder(mContext).setTitle(R.string.zen_mode_entry_conditions_title).setView(new ZenModeAutomaticConditionSelection(mContext)).setOnDismissListener(new OnDismissListener(){
+        @Override public void onDismiss(        DialogInterface dialog){
+          refreshAutomationSection();
+        }
+      }
+).setPositiveButton(R.string.dlg_ok,null).show();
+      return true;
+    }
+  }
+);
+  mConditionProviders=findPreference(KEY_CONDITION_PROVIDERS);
+  updateControls();
+}

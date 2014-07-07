@@ -1,0 +1,21 @@
+{
+  mVibrateWhenRinging=(TwoStatePreference)root.findPreference(KEY_VIBRATE_WHEN_RINGING);
+  if (mVibrateWhenRinging == null) {
+    Log.i(TAG,"Preference not found: " + KEY_VIBRATE_WHEN_RINGING);
+    return;
+  }
+  if (!mVoiceCapable) {
+    root.removePreference(mVibrateWhenRinging);
+    mVibrateWhenRinging=null;
+    return;
+  }
+  mVibrateWhenRinging.setPersistent(false);
+  updateVibrateWhenRinging();
+  mVibrateWhenRinging.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final boolean val=(Boolean)newValue;
+      return Settings.System.putInt(getContentResolver(),Settings.System.VIBRATE_WHEN_RINGING,val ? 1 : 0);
+    }
+  }
+);
+}

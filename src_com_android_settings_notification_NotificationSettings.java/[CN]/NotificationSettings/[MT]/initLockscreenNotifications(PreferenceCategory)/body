@@ -1,0 +1,22 @@
+{
+  mLockscreen=(DropDownPreference)parent.findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
+  if (mLockscreen == null) {
+    Log.i(TAG,"Preference not found: " + KEY_LOCK_SCREEN_NOTIFICATIONS);
+    return;
+  }
+  mLockscreen.addItem(R.string.lock_screen_notifications_summary_show,R.string.lock_screen_notifications_summary_show);
+  mLockscreen.addItem(R.string.lock_screen_notifications_summary_hide,R.string.lock_screen_notifications_summary_hide);
+  mLockscreen.addItem(R.string.lock_screen_notifications_summary_disable,R.string.lock_screen_notifications_summary_disable);
+  updateLockscreenNotifications();
+  mLockscreen.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object value){
+      final int val=(Integer)value;
+      final boolean enabled=val != R.string.lock_screen_notifications_summary_disable;
+      final boolean show=val == R.string.lock_screen_notifications_summary_show;
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,show ? 1 : 0);
+      Settings.Global.putInt(getContentResolver(),Settings.Global.LOCK_SCREEN_SHOW_NOTIFICATIONS,enabled ? 1 : 0);
+      return true;
+    }
+  }
+);
+}

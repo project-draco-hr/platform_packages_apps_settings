@@ -16,10 +16,7 @@
     if (!mAvailableAgents.containsKey(name)) {
       AgentInfo agentInfo=new AgentInfo();
       agentInfo.label=resolveInfo.loadLabel(pm);
-      agentInfo.icon=resolveInfo.loadIcon(pm);
       agentInfo.component=name;
-      TrustAgentUtils.TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
-      agentInfo.settings=trustAgentComponentInfo.componentName;
       mAvailableAgents.put(name,agentInfo);
     }
   }

@@ -1,5 +1,14 @@
 {
-  final String sql=buildSearchSQL(query);
-  Log.d(LOG_TAG,"Search query: " + sql);
-  return getReadableDatabase().rawQuery(sql,null);
+  final SQLiteDatabase database=getReadableDatabase();
+  final Cursor[] cursors=new Cursor[2];
+  final String primarySql=buildSearchSQL(query,MATCH_COLUMNS_PRIMARY,true);
+  Log.d(LOG_TAG,"Search primary query: " + primarySql);
+  cursors[0]=database.rawQuery(primarySql,null);
+  StringBuilder sql=new StringBuilder(buildSearchSQL(query,MATCH_COLUMNS_SECONDARY,false));
+  sql.append(" EXCEPT ");
+  sql.append(primarySql);
+  final String secondarySql=sql.toString();
+  Log.d(LOG_TAG,"Search secondary query: " + secondarySql);
+  cursors[1]=database.rawQuery(secondarySql,null);
+  return new MergeCursor(cursors);
 }

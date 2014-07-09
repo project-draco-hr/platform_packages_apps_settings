@@ -1,35 +1,6 @@
 {
-  final boolean isAlwaysChecked=InputMethodSettingValuesWrapper.getInstance(getContext()).isAlwaysCheckedIme(mImi,getContext());
-  if (isAlwaysChecked) {
-    super.setChecked(true);
-    super.setEnabled(false);
-  }
- else {
-    super.setEnabled(true);
-  }
-  final boolean checked=isChecked();
-  if (mInputMethodSettingsButton != null) {
-    mInputMethodSettingsButton.setEnabled(checked);
-    mInputMethodSettingsButton.setClickable(checked);
-    mInputMethodSettingsButton.setFocusable(checked);
-    if (!checked) {
-      mInputMethodSettingsButton.setAlpha(Utils.DISABLED_ALPHA);
-    }
-  }
-  if (mTitleText != null) {
-    mTitleText.setEnabled(true);
-  }
-  if (mSummaryText != null) {
-    mSummaryText.setEnabled(checked);
-  }
-  if (mInputMethodPref != null) {
-    mInputMethodPref.setEnabled(true);
-    mInputMethodPref.setLongClickable(checked);
-    final boolean enabled=isEnabled();
-    mInputMethodPref.setOnClickListener(enabled ? mPrefOnclickListener : null);
-    if (!enabled) {
-      mInputMethodPref.setBackgroundColor(0);
-    }
-  }
-  updateSummary();
+  final boolean isAlwaysChecked=mInputMethodSettingValues.isAlwaysCheckedIme(mImi,getContext());
+  setEnabled(!(isAlwaysChecked && isImeEnabler()));
+  setChecked(mInputMethodSettingValues.isEnabledImi(mImi));
+  setSummary(getSummaryString());
 }

@@ -1,0 +1,17 @@
+{
+  if (!isImeEnabler()) {
+    return false;
+  }
+  if (isChecked()) {
+    setChecked(false);
+    mOnSaveListener.onSaveInputMethodPreference(this);
+    return false;
+  }
+  if (InputMethodUtils.isSystemIme(mImi)) {
+    setChecked(true);
+    mOnSaveListener.onSaveInputMethodPreference(this);
+    return false;
+  }
+  showSecurityWarnDialog(mImi);
+  return false;
+}

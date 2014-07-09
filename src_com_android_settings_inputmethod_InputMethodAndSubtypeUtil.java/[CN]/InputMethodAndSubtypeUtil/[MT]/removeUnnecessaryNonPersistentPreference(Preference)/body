@@ -1,0 +1,10 @@
+{
+  final String key=pref.getKey();
+  if (pref.isPersistent() || key == null) {
+    return;
+  }
+  final SharedPreferences prefs=pref.getSharedPreferences();
+  if (prefs != null && prefs.contains(key)) {
+    prefs.edit().remove(key).apply();
+  }
+}

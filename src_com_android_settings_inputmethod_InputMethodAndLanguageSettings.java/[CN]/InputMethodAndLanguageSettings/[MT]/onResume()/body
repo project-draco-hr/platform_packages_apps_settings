@@ -2,7 +2,7 @@
   super.onResume();
   mSettingsObserver.resume();
   mIm.registerInputDeviceListener(this,null);
-  if (!mIsOnlyImeSettings) {
+  if (!mShowsOnlyFullImeAndKeyboardList) {
     if (mLanguagePref != null) {
       String localeName=getLocaleName(getResources());
       mLanguagePref.setSummary(localeName);

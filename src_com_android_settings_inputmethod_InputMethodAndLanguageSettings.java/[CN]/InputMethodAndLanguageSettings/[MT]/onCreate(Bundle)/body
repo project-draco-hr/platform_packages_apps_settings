@@ -1,12 +1,15 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.language_settings);
+  final Activity activity=getActivity();
+  mImm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+  mInputMethodSettingValues=InputMethodSettingValuesWrapper.getInstance(activity);
   try {
     mDefaultInputMethodSelectorVisibility=Integer.valueOf(getString(R.string.input_method_selector_visibility_default_value));
   }
  catch (  NumberFormatException e) {
   }
-  if (getActivity().getAssets().getLocales().length == 1) {
+  if (activity.getAssets().getLocales().length == 1) {
     getPreferenceScreen().removePreference(findPreference(KEY_PHONE_LANGUAGE));
   }
  else {
@@ -21,33 +24,33 @@
   mHardKeyboardCategory=(PreferenceCategory)findPreference("hard_keyboard");
   mKeyboardSettingsCategory=(PreferenceCategory)findPreference("keyboard_settings_category");
   mGameControllerCategory=(PreferenceCategory)findPreference("game_controller_settings_category");
-  mIsOnlyImeSettings=Settings.ACTION_INPUT_METHOD_SETTINGS.equals(getActivity().getIntent().getAction());
-  getActivity().getIntent().setAction(null);
-  if (mIsOnlyImeSettings) {
+  mShowsOnlyFullImeAndKeyboardList=Settings.ACTION_INPUT_METHOD_SETTINGS.equals(activity.getIntent().getAction());
+  activity.getIntent().setAction(null);
+  if (mShowsOnlyFullImeAndKeyboardList) {
     getPreferenceScreen().removeAll();
     getPreferenceScreen().addPreference(mHardKeyboardCategory);
     if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {
       getPreferenceScreen().addPreference(mShowInputMethodSelectorPref);
     }
+    mKeyboardSettingsCategory.removeAll();
     getPreferenceScreen().addPreference(mKeyboardSettingsCategory);
   }
-  mImm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-  mInputMethodSettingValues=InputMethodSettingValuesWrapper.getInstance(getActivity());
-  mKeyboardSettingsCategory.removeAll();
-  if (!mIsOnlyImeSettings) {
-    final PreferenceScreen currentIme=new PreferenceScreen(getActivity(),null);
-    currentIme.setKey(KEY_CURRENT_INPUT_METHOD);
-    currentIme.setTitle(getResources().getString(R.string.current_input_method));
-    mKeyboardSettingsCategory.addPreference(currentIme);
+ else {
+    final Preference pref=findPreference(KEY_CHOOSE_INPUT_METHODS);
+    final Intent intent=new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
+    intent.setClass(activity,SubSettings.class);
+    intent.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT,getClass().getName());
+    intent.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT_TITLE_RESID,R.string.choose_input_methods);
+    pref.setIntent(intent);
   }
-  mIm=(InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
+  mIm=(InputManager)activity.getSystemService(Context.INPUT_SERVICE);
   updateInputDevices();
-  final Intent intent=new Intent(Intent.ACTION_MAIN);
-  intent.setClass(getActivity(),SpellCheckersSettingsActivity.class);
   final SpellCheckersPreference scp=((SpellCheckersPreference)findPreference("spellcheckers_settings"));
   if (scp != null) {
+    final Intent intent=new Intent(Intent.ACTION_MAIN);
+    intent.setClass(activity,SpellCheckersSettingsActivity.class);
     scp.setFragmentIntent(this,intent);
   }
   mHandler=new Handler();
-  mSettingsObserver=new SettingsObserver(mHandler,getActivity());
+  mSettingsObserver=new SettingsObserver(mHandler,activity);
 }

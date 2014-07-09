@@ -8,7 +8,7 @@
     final String imiId=imi.getId();
     Preference pref=context.findPreference(imiId);
     if (pref == null)     continue;
-    final boolean isImeChecked=(pref instanceof CheckBoxPreference) ? ((CheckBoxPreference)pref).isChecked() : enabledIMEAndSubtypesMap.containsKey(imiId);
+    final boolean isImeChecked=(pref instanceof TwoStatePreference) ? ((TwoStatePreference)pref).isChecked() : enabledIMEAndSubtypesMap.containsKey(imiId);
     final boolean isCurrentInputMethod=imiId.equals(currentInputMethodId);
     final boolean systemIme=InputMethodUtils.isSystemIme(imi);
     if ((!hasHardKeyboard && InputMethodSettingValuesWrapper.getInstance(context.getActivity()).isAlwaysCheckedIme(imi,context.getActivity())) || isImeChecked) {

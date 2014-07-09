@@ -1,0 +1,29 @@
+{
+  if (mDialog != null && mDialog.isShowing()) {
+    mDialog.dismiss();
+  }
+  final Context context=getContext();
+  final AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  builder.setCancelable(true);
+  builder.setTitle(android.R.string.dialog_alert_title);
+  final CharSequence label=imi.getServiceInfo().applicationInfo.loadLabel(context.getPackageManager());
+  builder.setMessage(context.getString(R.string.ime_security_warning,label));
+  builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    final DialogInterface dialog,    final int which){
+      setChecked(true);
+      mOnSaveListener.onSaveInputMethodPreference(InputMethodPreference.this);
+      notifyChanged();
+    }
+  }
+);
+  builder.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    final DialogInterface dialog,    final int which){
+      setChecked(false);
+      mOnSaveListener.onSaveInputMethodPreference(InputMethodPreference.this);
+      notifyChanged();
+    }
+  }
+);
+  mDialog=builder.create();
+  mDialog.show();
+}

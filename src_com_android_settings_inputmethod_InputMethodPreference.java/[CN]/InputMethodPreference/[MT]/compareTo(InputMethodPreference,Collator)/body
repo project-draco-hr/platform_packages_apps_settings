@@ -1,0 +1,14 @@
+{
+  if (mHasPriorityInSorting == rhs.mHasPriorityInSorting) {
+    final CharSequence t0=getTitle();
+    final CharSequence t1=rhs.getTitle();
+    if (TextUtils.isEmpty(t0)) {
+      return 1;
+    }
+    if (TextUtils.isEmpty(t1)) {
+      return -1;
+    }
+    return collator.compare(t0.toString(),t1.toString());
+  }
+  return mHasPriorityInSorting ? -1 : 1;
+}

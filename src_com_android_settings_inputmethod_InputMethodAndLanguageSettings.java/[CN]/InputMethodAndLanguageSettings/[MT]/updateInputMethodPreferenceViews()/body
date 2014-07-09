@@ -1,27 +1,29 @@
 {
 synchronized (mInputMethodPreferenceList) {
-    for (    final InputMethodPreference imp : mInputMethodPreferenceList) {
-      mKeyboardSettingsCategory.removePreference(imp);
+    for (    final InputMethodPreference pref : mInputMethodPreferenceList) {
+      mKeyboardSettingsCategory.removePreference(pref);
     }
     mInputMethodPreferenceList.clear();
-    final List<InputMethodInfo> imis=mInputMethodSettingValues.getInputMethodList();
+    final Context context=getActivity();
+    final List<InputMethodInfo> imis=mShowsOnlyFullImeAndKeyboardList ? mInputMethodSettingValues.getInputMethodList() : mImm.getEnabledInputMethodList();
     final int N=(imis == null ? 0 : imis.size());
     for (int i=0; i < N; ++i) {
       final InputMethodInfo imi=imis.get(i);
-      final InputMethodPreference pref=getInputMethodPreference(imi);
-      pref.setOnImePreferenceChangeListener(mOnImePreferenceChangedListener);
+      final InputMethodPreference pref=new InputMethodPreference(context,imi,mShowsOnlyFullImeAndKeyboardList,this);
       mInputMethodPreferenceList.add(pref);
     }
-    if (!mInputMethodPreferenceList.isEmpty()) {
-      Collections.sort(mInputMethodPreferenceList);
-      for (int i=0; i < N; ++i) {
-        mKeyboardSettingsCategory.addPreference(mInputMethodPreferenceList.get(i));
+    final Collator collator=Collator.getInstance();
+    Collections.sort(mInputMethodPreferenceList,new Comparator<InputMethodPreference>(){
+      @Override public int compare(      InputMethodPreference lhs,      InputMethodPreference rhs){
+        return lhs.compareTo(rhs,collator);
       }
     }
-    for (    Preference pref : mInputMethodPreferenceList) {
-      if (pref instanceof InputMethodPreference) {
-        ((InputMethodPreference)pref).updatePreferenceViews();
-      }
+);
+    for (int i=0; i < N; ++i) {
+      final InputMethodPreference pref=mInputMethodPreferenceList.get(i);
+      mKeyboardSettingsCategory.addPreference(pref);
+      InputMethodAndSubtypeUtil.removeUnnecessaryNonPersistentPreference(pref);
+      pref.updatePreferenceViews();
     }
   }
   updateCurrentImeName();

@@ -1,0 +1,18 @@
+{
+  if (isImeEnabler()) {
+    return true;
+  }
+  final Context context=getContext();
+  try {
+    final Intent intent=getIntent();
+    if (intent != null) {
+      context.startActivity(intent);
+    }
+  }
+ catch (  final ActivityNotFoundException e) {
+    Log.d(TAG,"IME's Settings Activity Not Found",e);
+    final String message=context.getString(R.string.failed_to_open_app_settings_toast,mImi.loadLabel(context.getPackageManager()));
+    Toast.makeText(context,message,Toast.LENGTH_LONG).show();
+  }
+  return true;
+}

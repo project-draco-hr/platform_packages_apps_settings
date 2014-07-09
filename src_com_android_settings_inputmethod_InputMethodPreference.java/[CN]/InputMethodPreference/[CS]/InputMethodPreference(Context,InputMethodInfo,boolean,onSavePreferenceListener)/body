@@ -1,0 +1,26 @@
+{
+  super(context);
+  setPersistent(false);
+  mImi=imi;
+  mOnSaveListener=onSaveListener;
+  if (!isImeEnabler) {
+    setWidgetLayoutResource(0);
+  }
+  setSwitchTextOn(EMPTY_TEXT);
+  setSwitchTextOff(EMPTY_TEXT);
+  setKey(imi.getId());
+  setTitle(imi.loadLabel(context.getPackageManager()));
+  final String settingsActivity=imi.getSettingsActivity();
+  if (TextUtils.isEmpty(settingsActivity)) {
+    setIntent(null);
+  }
+ else {
+    final Intent intent=new Intent(Intent.ACTION_MAIN);
+    intent.setClassName(imi.getPackageName(),settingsActivity);
+    setIntent(intent);
+  }
+  mInputMethodSettingValues=InputMethodSettingValuesWrapper.getInstance(context);
+  mHasPriorityInSorting=InputMethodUtils.isSystemIme(imi) && mInputMethodSettingValues.isValidSystemNonAuxAsciiCapableIme(imi,context);
+  setOnPreferenceClickListener(this);
+  setOnPreferenceChangeListener(this);
+}

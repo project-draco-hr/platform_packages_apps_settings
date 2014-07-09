@@ -1,6 +1,6 @@
 {
   final String enabledInputMethodsStr=Settings.Secure.getString(resolver,Settings.Secure.ENABLED_INPUT_METHODS);
-  HashMap<String,HashSet<String>> imsList=new HashMap<String,HashSet<String>>();
+  HashMap<String,HashSet<String>> imsList=new HashMap<>();
   if (DEBUG) {
     Log.d(TAG,"--- Load enabled input methods: " + enabledInputMethodsStr);
   }
@@ -12,7 +12,7 @@
     String nextImsStr=sStringInputMethodSplitter.next();
     sStringInputMethodSubtypeSplitter.setString(nextImsStr);
     if (sStringInputMethodSubtypeSplitter.hasNext()) {
-      HashSet<String> subtypeHashes=new HashSet<String>();
+      HashSet<String> subtypeHashes=new HashSet<>();
       String imeId=sStringInputMethodSubtypeSplitter.next();
       while (sStringInputMethodSubtypeSplitter.hasNext()) {
         subtypeHashes.add(sStringInputMethodSubtypeSplitter.next());

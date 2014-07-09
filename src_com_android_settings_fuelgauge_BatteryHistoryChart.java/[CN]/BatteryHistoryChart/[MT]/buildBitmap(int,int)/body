@@ -1,0 +1,9 @@
+{
+  if (mBitmap != null && width == mBitmap.getWidth() && height == mBitmap.getHeight()) {
+    return;
+  }
+  if (DEBUG)   Log.d(TAG,"buildBitmap: " + width + "x"+ height);
+  mBitmap=Bitmap.createBitmap(getResources().getDisplayMetrics(),width,height,Bitmap.Config.ARGB_8888);
+  mCanvas=new Canvas(mBitmap);
+  drawChart(mCanvas,width,height);
+}

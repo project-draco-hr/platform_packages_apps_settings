@@ -1,5 +1,6 @@
 {
   super(context,attrs);
+  if (DEBUG)   Log.d(TAG,"New BatteryHistoryChart!");
   mBatteryWarnLevel=mContext.getResources().getInteger(com.android.internal.R.integer.config_lowBatteryWarningLevel);
   mBatteryCriticalLevel=mContext.getResources().getInteger(com.android.internal.R.integer.config_criticalBatteryWarningLevel);
   mThinLineWidth=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,2,getResources().getDisplayMetrics());

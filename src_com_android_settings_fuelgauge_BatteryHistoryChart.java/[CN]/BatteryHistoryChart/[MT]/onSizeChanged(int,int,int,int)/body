@@ -7,8 +7,11 @@
   if (mLastWidth == 0 || mLastHeight == 0) {
     return;
   }
+  if (DEBUG)   Log.d(TAG,"Rebuilding chart for: " + w + "x"+ h);
   mLastWidth=w;
   mLastHeight=h;
+  mBitmap=null;
+  mCanvas=null;
   int textHeight=mTextDescent - mTextAscent;
   if (h > ((textHeight * 10) + mChartMinHeight)) {
     mLargeMode=true;
@@ -305,6 +308,13 @@ calEnd.set(Calendar.HOUR_OF_DAY,0);
 endRoundTime=calEnd.getTimeInMillis();
 if (startRoundTime < endRoundTime) {
 addDateLabel(calStart,mLevelLeft,mLevelRight,isDayFirst);
+Calendar calMid=Calendar.getInstance();
+calMid.setTimeInMillis(startRoundTime + ((endRoundTime - startRoundTime) / 2));
+calMid.set(Calendar.HOUR_OF_DAY,0);
+long calMidMillis=calMid.getTimeInMillis();
+if (calMidMillis > startRoundTime && calMidMillis < endRoundTime) {
+  addDateLabel(calMid,mLevelLeft,mLevelRight,isDayFirst);
+}
 }
 addDateLabel(calEnd,mLevelLeft,mLevelRight,isDayFirst);
 }

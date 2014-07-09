@@ -1,6 +1,7 @@
 {
   mStats=stats;
   mBatteryBroadcast=broadcast;
+  if (DEBUG)   Log.d(TAG,"Setting stats...");
   final long elapsedRealtimeUs=SystemClock.elapsedRealtime() * 1000;
   long uSecTime=mStats.computeBatteryRealtime(elapsedRealtimeUs,BatteryStats.STATS_SINCE_CHARGED);
   mStatsPeriod=uSecTime;

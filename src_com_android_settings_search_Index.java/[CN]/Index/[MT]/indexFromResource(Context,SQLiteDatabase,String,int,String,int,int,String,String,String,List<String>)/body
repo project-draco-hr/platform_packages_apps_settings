@@ -20,7 +20,7 @@
       title=getDataTitle(context,attrs);
       summary=getDataSummary(context,attrs);
       keywords=getDataKeywords(context,attrs);
-      updateOneRowWithFilteredData(database,localeStr,title,summary,null,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
+      updateOneRowWithFilteredData(database,localeStr,title,summary,null,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key,-1);
     }
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
       if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
@@ -39,7 +39,7 @@
         if (nodeName.endsWith(NODE_NAME_LIST_PREFERENCE)) {
           entries=getDataEntries(context,attrs);
         }
-        updateOneRowWithFilteredData(database,localeStr,title,summary,null,entries,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
+        updateOneRowWithFilteredData(database,localeStr,title,summary,null,entries,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key,-1);
       }
  else {
         String summaryOn=getDataSummaryOn(context,attrs);
@@ -47,7 +47,7 @@
         if (TextUtils.isEmpty(summaryOn) && TextUtils.isEmpty(summaryOff)) {
           summaryOn=getDataSummary(context,attrs);
         }
-        updateOneRowWithFilteredData(database,localeStr,title,summaryOn,summaryOff,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key);
+        updateOneRowWithFilteredData(database,localeStr,title,summaryOn,summaryOff,null,fragmentName,screenTitle,iconResId,rank,keywords,intentAction,intentTargetPackage,intentTargetClass,true,key,-1);
       }
     }
   }

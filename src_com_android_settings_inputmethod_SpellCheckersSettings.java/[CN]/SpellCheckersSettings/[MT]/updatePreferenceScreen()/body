@@ -1,0 +1,18 @@
+{
+  mCurrentSci=mTsm.getCurrentSpellChecker();
+  final boolean isSpellCheckerEnabled=mTsm.isSpellCheckerEnabled();
+  mSwitchBar.setChecked(isSpellCheckerEnabled);
+  final SpellCheckerSubtype currentScs=mTsm.getCurrentSpellCheckerSubtype(false);
+  mSpellCheckerLanaguagePref.setSummary(getSpellCheckerSubtypeLabel(mCurrentSci,currentScs));
+  final PreferenceScreen screen=getPreferenceScreen();
+  final int count=screen.getPreferenceCount();
+  for (int index=0; index < count; index++) {
+    final Preference preference=screen.getPreference(index);
+    preference.setEnabled(isSpellCheckerEnabled);
+    if (preference instanceof SpellCheckerPreference) {
+      final SpellCheckerPreference pref=(SpellCheckerPreference)preference;
+      final SpellCheckerInfo sci=pref.getSpellCheckerInfo();
+      pref.setSelected(mCurrentSci != null && mCurrentSci.getId().equals(sci.getId()));
+    }
+  }
+}

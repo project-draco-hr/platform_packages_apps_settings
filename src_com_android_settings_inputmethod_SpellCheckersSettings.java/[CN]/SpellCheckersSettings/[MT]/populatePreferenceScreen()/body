@@ -1,0 +1,11 @@
+{
+  final PreferenceScreen screen=getPreferenceScreen();
+  final Context context=getActivity();
+  final int count=(mEnabledScis == null) ? 0 : mEnabledScis.length;
+  for (int index=0; index < count; ++index) {
+    final SpellCheckerInfo sci=mEnabledScis[index];
+    final SpellCheckerPreference pref=new SpellCheckerPreference(context,sci,this);
+    screen.addPreference(pref);
+    InputMethodAndSubtypeUtil.removeUnnecessaryNonPersistentPreference(pref);
+  }
+}

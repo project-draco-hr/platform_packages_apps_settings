@@ -1,6 +1,10 @@
 {
   super.onCreate(icicle);
-  mTsm=(TextServicesManager)getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE);
   addPreferencesFromResource(R.xml.spellchecker_prefs);
-  updateScreen();
+  mSpellCheckerLanaguagePref=findPreference(KEY_SPELL_CHECKER_LANGUAGE);
+  mSpellCheckerLanaguagePref.setOnPreferenceClickListener(this);
+  mTsm=(TextServicesManager)getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE);
+  mCurrentSci=mTsm.getCurrentSpellChecker();
+  mEnabledScis=mTsm.getEnabledSpellCheckers();
+  populatePreferenceScreen();
 }

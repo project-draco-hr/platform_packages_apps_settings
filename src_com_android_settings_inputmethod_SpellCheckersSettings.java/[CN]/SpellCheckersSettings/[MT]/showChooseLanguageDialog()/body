@@ -1,0 +1,41 @@
+{
+  if (mDialog != null && mDialog.isShowing()) {
+    mDialog.dismiss();
+  }
+  final SpellCheckerInfo currentSci=mTsm.getCurrentSpellChecker();
+  final SpellCheckerSubtype currentScs=mTsm.getCurrentSpellCheckerSubtype(false);
+  final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+  builder.setTitle(R.string.phone_language);
+  final int subtypeCount=currentSci.getSubtypeCount();
+  final CharSequence[] items=new CharSequence[subtypeCount + 1];
+  items[ITEM_ID_USE_SYSTEM_LANGUAGE]=getSpellCheckerSubtypeLabel(currentSci,null);
+  int checkedItemId=ITEM_ID_USE_SYSTEM_LANGUAGE;
+  for (int index=0; index < subtypeCount; ++index) {
+    final SpellCheckerSubtype subtype=currentSci.getSubtypeAt(index);
+    final int itemId=convertSubtypeIndexToDialogItemId(index);
+    items[itemId]=getSpellCheckerSubtypeLabel(currentSci,subtype);
+    if (subtype.equals(currentScs)) {
+      checkedItemId=itemId;
+    }
+  }
+  builder.setSingleChoiceItems(items,checkedItemId,new AlertDialog.OnClickListener(){
+    @Override public void onClick(    final DialogInterface dialog,    final int item){
+      if (item == ITEM_ID_USE_SYSTEM_LANGUAGE) {
+        mTsm.setSpellCheckerSubtype(null);
+      }
+ else {
+        final int index=convertDialogItemIdToSubtypeIndex(item);
+        mTsm.setSpellCheckerSubtype(currentSci.getSubtypeAt(index));
+      }
+      if (DBG) {
+        final SpellCheckerSubtype subtype=mTsm.getCurrentSpellCheckerSubtype(true);
+        Log.d(TAG,"Current spell check locale is " + subtype == null ? "null" : subtype.getLocale());
+      }
+      dialog.dismiss();
+      updatePreferenceScreen();
+    }
+  }
+);
+  mDialog=builder.create();
+  mDialog.show();
+}

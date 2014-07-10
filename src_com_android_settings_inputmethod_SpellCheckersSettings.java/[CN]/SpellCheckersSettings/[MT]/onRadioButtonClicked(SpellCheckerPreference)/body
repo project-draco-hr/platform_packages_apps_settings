@@ -1,0 +1,10 @@
+{
+  final SpellCheckerInfo sci=pref.getSpellCheckerInfo();
+  final boolean isSystemApp=(sci.getServiceInfo().applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+  if (isSystemApp) {
+    changeCurrentSpellChecker(sci);
+  }
+ else {
+    showSecurityWarnDialog(pref);
+  }
+}

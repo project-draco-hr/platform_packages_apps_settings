@@ -1,4 +1,7 @@
 {
   super.onResume();
-  updateScreen();
+  mSwitchBar=((SettingsActivity)getActivity()).getSwitchBar();
+  mSwitchBar.show();
+  mSwitchBar.addOnSwitchChangeListener(this);
+  updatePreferenceScreen();
 }

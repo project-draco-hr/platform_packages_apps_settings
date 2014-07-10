@@ -45,11 +45,14 @@
   }
   mIm=(InputManager)activity.getSystemService(Context.INPUT_SERVICE);
   updateInputDevices();
-  final SpellCheckersPreference scp=((SpellCheckersPreference)findPreference("spellcheckers_settings"));
-  if (scp != null) {
+  final Preference spellChecker=findPreference(KEY_SPELL_CHECKERS);
+  if (spellChecker != null) {
+    InputMethodAndSubtypeUtil.removeUnnecessaryNonPersistentPreference(spellChecker);
     final Intent intent=new Intent(Intent.ACTION_MAIN);
-    intent.setClass(activity,SpellCheckersSettingsActivity.class);
-    scp.setFragmentIntent(this,intent);
+    intent.setClass(activity,SubSettings.class);
+    intent.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT,SpellCheckersSettings.class.getName());
+    intent.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT_TITLE_RESID,R.string.spellcheckers_settings_title);
+    spellChecker.setIntent(intent);
   }
   mHandler=new Handler();
   mSettingsObserver=new SettingsObserver(mHandler,activity);

@@ -2,6 +2,17 @@
   super.onResume();
   mSettingsObserver.resume();
   mIm.registerInputDeviceListener(this,null);
+  final Preference spellChecker=findPreference(KEY_SPELL_CHECKERS);
+  if (spellChecker != null) {
+    final TextServicesManager tsm=(TextServicesManager)getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE);
+    if (tsm.isSpellCheckerEnabled()) {
+      final SpellCheckerInfo sci=tsm.getCurrentSpellChecker();
+      spellChecker.setSummary(sci.loadLabel(getPackageManager()));
+    }
+ else {
+      spellChecker.setSummary(R.string.switch_off_text);
+    }
+  }
   if (!mShowsOnlyFullImeAndKeyboardList) {
     if (mLanguagePref != null) {
       String localeName=getLocaleName(getResources());

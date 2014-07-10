@@ -1,14 +1,7 @@
 {
-  for (  final SingleSpellCheckerPreference scp : mSpellCheckers) {
-    if (pref.equals(scp)) {
-      if (isSystemApp(scp.getSpellCheckerInfo())) {
-        changeCurrentSpellChecker(scp);
-      }
- else {
-        showSecurityWarnDialog(scp);
-      }
-      return true;
-    }
+  if (pref == mSpellCheckerLanaguagePref) {
+    showChooseLanguageDialog();
+    return true;
   }
-  return true;
+  return false;
 }

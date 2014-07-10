@@ -1,0 +1,23 @@
+{
+  if (mDialog != null && mDialog.isShowing()) {
+    mDialog.dismiss();
+  }
+  final SpellCheckerInfo sci=pref.getSpellCheckerInfo();
+  final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+  builder.setTitle(android.R.string.dialog_alert_title);
+  builder.setMessage(getString(R.string.spellchecker_security_warning,pref.getTitle()));
+  builder.setCancelable(true);
+  builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    final DialogInterface dialog,    final int which){
+      changeCurrentSpellChecker(sci);
+    }
+  }
+);
+  builder.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    final DialogInterface dialog,    final int which){
+    }
+  }
+);
+  mDialog=builder.create();
+  mDialog.show();
+}

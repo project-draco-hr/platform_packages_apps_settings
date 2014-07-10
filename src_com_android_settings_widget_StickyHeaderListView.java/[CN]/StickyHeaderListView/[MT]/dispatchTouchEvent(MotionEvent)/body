@@ -1,0 +1,9 @@
+{
+  if (mStickyRect.contains(ev.getX(),ev.getY())) {
+    ev.offsetLocation(-mStickyRect.left,-mStickyRect.top);
+    return mStickyContainer.dispatchTouchEvent(ev);
+  }
+ else {
+    return super.dispatchTouchEvent(ev);
+  }
+}

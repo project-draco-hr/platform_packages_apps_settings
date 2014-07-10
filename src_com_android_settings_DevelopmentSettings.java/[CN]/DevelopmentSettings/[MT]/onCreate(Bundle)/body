@@ -32,6 +32,7 @@
   mEnableOemUnlock=findAndInitCheckboxPref(ENABLE_OEM_UNLOCK);
   if (!showEnableOemUnlockPreference()) {
     removePreference(mEnableOemUnlock);
+    mEnableOemUnlock=null;
   }
   mAllowMockLocation=findAndInitCheckboxPref(ALLOW_MOCK_LOCATION);
   mPassword=(PreferenceScreen)findPreference(LOCAL_BACKUP_PASSWORD);

@@ -23,6 +23,7 @@
         final String targetPackage=cursor.getString(COLUMN_INDEX_RAW_INTENT_TARGET_PACKAGE);
         final String targetClass=cursor.getString(COLUMN_INDEX_RAW_INTENT_TARGET_CLASS);
         final String key=cursor.getString(COLUMN_INDEX_RAW_KEY);
+        final int userId=cursor.getInt(COLUMN_INDEX_RAW_USER_ID);
         SearchIndexableRaw data=new SearchIndexableRaw(packageContext);
         data.rank=rank;
         data.title=title;
@@ -38,6 +39,7 @@
         data.intentTargetPackage=targetPackage;
         data.intentTargetClass=targetClass;
         data.key=key;
+        data.userId=userId;
         addIndexableData(data);
       }
     }

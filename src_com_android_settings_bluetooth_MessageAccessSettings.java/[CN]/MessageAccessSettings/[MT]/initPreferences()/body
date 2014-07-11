@@ -1,0 +1,14 @@
+{
+  final PreferenceScreen preferenceScreen=getPreferenceScreen();
+  mAvailableAccounts=(PreferenceGroup)preferenceScreen.findPreference("accounts");
+  mAccounts=AccountManager.get(getActivity()).getAccountsAsUser(mUserHandle.getIdentifier());
+  final int mAccountsSize=mAccounts.length;
+  for (int i=0; i < mAccountsSize; ++i) {
+    AccountPreference accountPref=new AccountPreference(getActivity(),mAccounts[i]);
+    Drawable icon=getIcon(accountPref);
+    if (icon != null) {
+      accountPref.setIcon(icon);
+    }
+    mAvailableAccounts.addPreference(accountPref);
+  }
+}

@@ -1,0 +1,7 @@
+{
+  mAccounts=AccountManager.get(getActivity()).getAccountsAsUser(mUserHandle.getIdentifier());
+  final int mAccountsSize=mAccounts.length;
+  for (int i=0; i < mAccountsSize; ++i) {
+    Log.d(TAG,String.format("account.type = %s\n",mAccounts[i].type));
+  }
+}

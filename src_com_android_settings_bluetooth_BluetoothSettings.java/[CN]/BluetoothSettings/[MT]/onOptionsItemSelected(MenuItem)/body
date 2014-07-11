@@ -15,6 +15,11 @@ case MENU_ID_SHOW_RECEIVED:
 Intent intent=new Intent(BTOPP_ACTION_OPEN_RECEIVED_FILES);
 getActivity().sendBroadcast(intent);
 return true;
+case MENU_ID_MESSAGE_ACCESS:
+if (getActivity() instanceof SettingsActivity) {
+((SettingsActivity)getActivity()).startPreferencePanel(MessageAccessSettings.class.getCanonicalName(),null,R.string.bluetooth_show_message_access,null,this,0);
+}
+return true;
 }
 return super.onOptionsItemSelected(item);
 }

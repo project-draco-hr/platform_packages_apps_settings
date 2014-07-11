@@ -1,0 +1,11 @@
+{
+  Drawable icon=null;
+  final String packageName=accountPref.account.type.equals("com.google") ? GMAIL_PACKAGE_NAME : EMAIL_PACKAGE_NAME;
+  try {
+    icon=getPackageManager().getApplicationIcon(packageName);
+  }
+ catch (  NameNotFoundException nnfe) {
+    icon=null;
+  }
+  return icon;
+}

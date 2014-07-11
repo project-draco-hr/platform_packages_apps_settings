@@ -17,13 +17,9 @@
   int textId;
   if (getPhoneManager().isInAPhoneCall()) {
     textId=R.string.cryptkeeper_return_to_call;
-    final int phoneCallIcon=R.drawable.stat_sys_phone_call;
-    emergencyCall.setCompoundDrawablesWithIntrinsicBounds(phoneCallIcon,0,0,0);
   }
  else {
     textId=R.string.cryptkeeper_emergency_call;
-    final int emergencyIcon=R.drawable.ic_emergency;
-    emergencyCall.setCompoundDrawablesWithIntrinsicBounds(emergencyIcon,0,0,0);
   }
   emergencyCall.setText(textId);
 }

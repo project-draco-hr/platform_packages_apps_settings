@@ -1,9 +1,14 @@
 {
   updateProfiles();
+  ParcelUuid[] uuids=mDevice.getUuids();
+  long timeout=MAX_UUID_DELAY_FOR_AUTO_CONNECT;
   if (DEBUG) {
-    Log.e(TAG,"onUuidChanged: Time since last connect" + (SystemClock.elapsedRealtime() - mConnectAttempted));
+    Log.d(TAG,"onUuidChanged: Time since last connect" + (SystemClock.elapsedRealtime() - mConnectAttempted));
   }
-  if (!mProfiles.isEmpty() && (mConnectAttempted + MAX_UUID_DELAY_FOR_AUTO_CONNECT) > SystemClock.elapsedRealtime()) {
+  if (BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.Hogp)) {
+    timeout=MAX_HOGP_DELAY_FOR_AUTO_CONNECT;
+  }
+  if (!mProfiles.isEmpty() && (mConnectAttempted + timeout) > SystemClock.elapsedRealtime()) {
     connectWithoutResettingTimer(false);
   }
   dispatchAttributesChanged();

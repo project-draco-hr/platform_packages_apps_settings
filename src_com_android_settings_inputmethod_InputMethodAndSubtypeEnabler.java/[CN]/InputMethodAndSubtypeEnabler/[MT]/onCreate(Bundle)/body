@@ -3,21 +3,7 @@
   mImm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
   final Configuration config=getResources().getConfiguration();
   mHaveHardKeyboard=(config.keyboard == Configuration.KEYBOARD_QWERTY);
-  final Bundle arguments=getArguments();
-  mInputMethodId=getActivity().getIntent().getStringExtra(android.provider.Settings.EXTRA_INPUT_METHOD_ID);
-  if (mInputMethodId == null && (arguments != null)) {
-    final String inputMethodId=arguments.getString(android.provider.Settings.EXTRA_INPUT_METHOD_ID);
-    if (inputMethodId != null) {
-      mInputMethodId=inputMethodId;
-    }
-  }
-  mTitle=getActivity().getIntent().getStringExtra(Intent.EXTRA_TITLE);
-  if (mTitle == null && (arguments != null)) {
-    final String title=arguments.getString(Intent.EXTRA_TITLE);
-    if (title != null) {
-      mTitle=title;
-    }
-  }
-  mInputMethodProperties=mImm.getInputMethodList();
+  mInputMethodId=getStringExtraFromIntentOrArguments(android.provider.Settings.EXTRA_INPUT_METHOD_ID);
+  mInputMethodInfoList=mImm.getInputMethodList();
   setPreferenceScreen(createPreferenceHierarchy());
 }

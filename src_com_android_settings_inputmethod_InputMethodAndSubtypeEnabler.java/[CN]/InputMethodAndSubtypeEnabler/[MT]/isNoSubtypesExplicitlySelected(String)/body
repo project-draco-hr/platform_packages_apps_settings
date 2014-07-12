@@ -1,8 +1,8 @@
 {
   boolean allSubtypesOff=true;
   final List<Preference> subtypePrefs=mInputMethodAndSubtypePrefsMap.get(imiId);
-  for (  Preference subtypePref : subtypePrefs) {
-    if (subtypePref instanceof CheckBoxPreference && ((CheckBoxPreference)subtypePref).isChecked()) {
+  for (  final Preference pref : subtypePrefs) {
+    if (pref instanceof CheckBoxPreference && ((CheckBoxPreference)pref).isChecked()) {
       allSubtypesOff=false;
       break;
     }

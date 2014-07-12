@@ -2,11 +2,13 @@
   final PreferenceScreen root=getPreferenceManager().createPreferenceScreen(getActivity());
   final Context context=getActivity();
   final Collator collator=Collator.getInstance();
-  final int N=(mInputMethodProperties == null ? 0 : mInputMethodProperties.size());
+  final int N=(mInputMethodInfoList == null ? 0 : mInputMethodInfoList.size());
   for (int i=0; i < N; ++i) {
-    final InputMethodInfo imi=mInputMethodProperties.get(i);
+    final InputMethodInfo imi=mInputMethodInfoList.get(i);
     final int subtypeCount=imi.getSubtypeCount();
-    if (subtypeCount <= 1)     continue;
+    if (subtypeCount <= 1) {
+      continue;
+    }
     final String imiId=imi.getId();
     if (!TextUtils.isEmpty(mInputMethodId) && !mInputMethodId.equals(imiId)) {
       continue;
@@ -18,7 +20,7 @@
     keyboardSettingsCategory.setTitle(label);
     keyboardSettingsCategory.setKey(imiId);
     final CheckBoxPreference autoCB=new CheckBoxPreference(context);
-    mSubtypeAutoSelectionCBMap.put(imiId,autoCB);
+    mAutoSelectionPrefsMap.put(imiId,autoCB);
     keyboardSettingsCategory.addPreference(autoCB);
     final PreferenceCategory activeInputMethodsCategory=new PreferenceCategory(context);
     activeInputMethodsCategory.setTitle(R.string.active_input_method_subtypes);
@@ -29,17 +31,14 @@
     if (subtypeCount > 0) {
       for (int j=0; j < subtypeCount; ++j) {
         final InputMethodSubtype subtype=imi.getSubtypeAt(j);
-        final CharSequence subtypeLabel=subtype.getDisplayName(context,imi.getPackageName(),imi.getServiceInfo().applicationInfo);
         if (subtype.overridesImplicitlyEnabledSubtype()) {
           if (!isAutoSubtype) {
             isAutoSubtype=true;
-            autoSubtypeLabel=subtypeLabel;
+            autoSubtypeLabel=subtype.getDisplayName(context,imi.getPackageName(),imi.getServiceInfo().applicationInfo);
           }
         }
  else {
           final CheckBoxPreference chkbxPref=new InputMethodSubtypePreference(context,subtype,imi);
-          chkbxPref.setKey(imiId + subtype.hashCode());
-          chkbxPref.setTitle(subtypeLabel);
           subtypePreferences.add(chkbxPref);
         }
       }

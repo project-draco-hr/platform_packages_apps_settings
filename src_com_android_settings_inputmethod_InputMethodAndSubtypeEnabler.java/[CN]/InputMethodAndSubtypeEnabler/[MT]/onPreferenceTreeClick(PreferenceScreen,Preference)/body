@@ -1,8 +1,8 @@
 {
   if (preference instanceof CheckBoxPreference) {
     final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
-    for (    String imiId : mSubtypeAutoSelectionCBMap.keySet()) {
-      if (mSubtypeAutoSelectionCBMap.get(imiId) == chkPref) {
+    for (    final String imiId : mAutoSelectionPrefsMap.keySet()) {
+      if (mAutoSelectionPrefsMap.get(imiId) == chkPref) {
         setSubtypeAutoSelectionEnabled(imiId,chkPref.isChecked());
         return super.onPreferenceTreeClick(preferenceScreen,preference);
       }
@@ -10,13 +10,13 @@
     final String id=chkPref.getKey();
     if (chkPref.isChecked()) {
       InputMethodInfo selImi=null;
-      final int N=mInputMethodProperties.size();
+      final int N=mInputMethodInfoList.size();
       for (int i=0; i < N; i++) {
-        InputMethodInfo imi=mInputMethodProperties.get(i);
+        final InputMethodInfo imi=mInputMethodInfoList.get(i);
         if (id.equals(imi.getId())) {
           selImi=imi;
           if (InputMethodUtils.isSystemIme(imi)) {
-            InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodProperties,id,true);
+            InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodInfoList,id,true);
             return super.onPreferenceTreeClick(preferenceScreen,preference);
           }
           break;
@@ -30,7 +30,7 @@
         mDialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
           @Override public void onClick(          DialogInterface dialog,          int which){
             chkPref.setChecked(true);
-            InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(InputMethodAndSubtypeEnabler.this,mInputMethodProperties,id,true);
+            InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(InputMethodAndSubtypeEnabler.this,mInputMethodInfoList,id,true);
           }
         }
 ).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
@@ -48,7 +48,7 @@
       mDialog.show();
     }
  else {
-      InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodProperties,id,false);
+      InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodInfoList,id,false);
       updateAutoSelectionCB();
     }
   }

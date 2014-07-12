@@ -1,6 +1,7 @@
 {
   super.onActivityCreated(icicle);
-  if (!TextUtils.isEmpty(mTitle)) {
-    getActivity().setTitle(mTitle);
+  final String title=getStringExtraFromIntentOrArguments(Intent.EXTRA_TITLE);
+  if (!TextUtils.isEmpty(title)) {
+    getActivity().setTitle(title);
   }
 }

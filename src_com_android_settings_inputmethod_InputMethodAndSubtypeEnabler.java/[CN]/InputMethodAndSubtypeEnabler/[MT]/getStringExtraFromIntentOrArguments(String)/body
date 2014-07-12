@@ -1,0 +1,9 @@
+{
+  final Intent intent=getActivity().getIntent();
+  final String fromIntent=intent.getStringExtra(name);
+  if (fromIntent != null) {
+    return fromIntent;
+  }
+  final Bundle arguments=getArguments();
+  return (arguments == null) ? null : arguments.getString(name);
+}

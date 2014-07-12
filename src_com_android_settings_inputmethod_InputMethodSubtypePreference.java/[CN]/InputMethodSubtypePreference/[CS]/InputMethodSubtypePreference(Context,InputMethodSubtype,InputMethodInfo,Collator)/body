@@ -1,0 +1,17 @@
+{
+  super(context);
+  setKey(imi.getId() + subtype.hashCode());
+  final CharSequence subtypeLabel=subtype.getDisplayName(context,imi.getPackageName(),imi.getServiceInfo().applicationInfo);
+  setTitle(subtypeLabel);
+  final String subtypeLocaleString=subtype.getLocale();
+  if (TextUtils.isEmpty(subtypeLocaleString)) {
+    mIsSystemLocale=false;
+    mIsSystemLanguage=false;
+  }
+ else {
+    final Locale systemLocale=context.getResources().getConfiguration().locale;
+    mIsSystemLocale=subtypeLocaleString.equals(systemLocale.toString());
+    mIsSystemLanguage=mIsSystemLocale || InputMethodUtils.getLanguageFromLocaleString(subtypeLocaleString).equals(systemLocale.getLanguage());
+  }
+  mCollator=collator;
+}

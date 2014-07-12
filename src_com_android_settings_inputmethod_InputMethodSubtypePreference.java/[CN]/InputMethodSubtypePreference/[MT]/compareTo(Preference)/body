@@ -1,6 +1,6 @@
 {
-  if (p instanceof SubtypeCheckBoxPreference) {
-    final SubtypeCheckBoxPreference pref=((SubtypeCheckBoxPreference)p);
+  if (p instanceof InputMethodSubtypePreference) {
+    final InputMethodSubtypePreference pref=((InputMethodSubtypePreference)p);
     final CharSequence t0=getTitle();
     final CharSequence t1=pref.getTitle();
     if (TextUtils.equals(t0,t1)) {
@@ -26,8 +26,6 @@
     }
     return mCollator.compare(t0.toString(),t1.toString());
   }
- else {
-    Log.w(TAG,"Illegal preference type.");
-    return super.compareTo(p);
-  }
+  Log.w(TAG,"Illegal preference type.");
+  return super.compareTo(p);
 }

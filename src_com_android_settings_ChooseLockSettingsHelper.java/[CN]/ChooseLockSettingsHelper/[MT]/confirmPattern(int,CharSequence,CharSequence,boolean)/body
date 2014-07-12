@@ -5,7 +5,7 @@
   final Intent intent=new Intent();
   intent.putExtra(ConfirmLockPattern.HEADER_TEXT,message);
   intent.putExtra(ConfirmLockPattern.FOOTER_TEXT,details);
-  intent.setClassName("com.android.settings","com.android.settings.ConfirmLockPattern");
+  intent.setClassName("com.android.settings",returnCredentials ? ConfirmLockPattern.InternalActivity.class.getName() : ConfirmLockPattern.class.getName());
   if (mFragment != null) {
     mFragment.startActivityForResult(intent,request);
   }

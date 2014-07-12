@@ -1,0 +1,16 @@
+{
+  boolean launched=false;
+switch (mLockPatternUtils.getKeyguardStoredPasswordQuality()) {
+case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
+    launched=confirmPattern(request,message,details,returnCredentials);
+  break;
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
+launched=confirmPassword(request,returnCredentials);
+break;
+}
+return launched;
+}

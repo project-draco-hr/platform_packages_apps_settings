@@ -1,8 +1,11 @@
 {
-  if (p instanceof InputMethodSubtypePreference) {
-    final InputMethodSubtypePreference pref=((InputMethodSubtypePreference)p);
+  if (this == rhs) {
+    return 0;
+  }
+  if (rhs instanceof InputMethodSubtypePreference) {
+    final InputMethodSubtypePreference pref=(InputMethodSubtypePreference)rhs;
     final CharSequence t0=getTitle();
-    final CharSequence t1=pref.getTitle();
+    final CharSequence t1=rhs.getTitle();
     if (TextUtils.equals(t0,t1)) {
       return 0;
     }
@@ -24,8 +27,7 @@
     if (TextUtils.isEmpty(t1)) {
       return -1;
     }
-    return mCollator.compare(t0.toString(),t1.toString());
+    return collator.compare(t0.toString(),t1.toString());
   }
-  Log.w(TAG,"Illegal preference type.");
-  return super.compareTo(p);
+  return super.compareTo(rhs);
 }

@@ -18,9 +18,6 @@
       mTitle=title;
     }
   }
-  final Locale locale=config.locale;
-  mSystemLocale=locale.toString();
-  mCollator=Collator.getInstance(locale);
-  onCreateIMM();
+  mInputMethodProperties=mImm.getInputMethodList();
   setPreferenceScreen(createPreferenceHierarchy());
 }

@@ -1,7 +1,8 @@
 {
   final PreferenceScreen root=getPreferenceManager().createPreferenceScreen(getActivity());
   final Context context=getActivity();
-  int N=(mInputMethodProperties == null ? 0 : mInputMethodProperties.size());
+  final Collator collator=Collator.getInstance();
+  final int N=(mInputMethodProperties == null ? 0 : mInputMethodProperties.size());
   for (int i=0; i < N; ++i) {
     final InputMethodInfo imi=mInputMethodProperties.get(i);
     final int subtypeCount=imi.getSubtypeCount();
@@ -36,13 +37,21 @@
           }
         }
  else {
-          final CheckBoxPreference chkbxPref=new InputMethodSubtypePreference(context,subtype,imi,mCollator);
+          final CheckBoxPreference chkbxPref=new InputMethodSubtypePreference(context,subtype,imi);
           chkbxPref.setKey(imiId + subtype.hashCode());
           chkbxPref.setTitle(subtypeLabel);
           subtypePreferences.add(chkbxPref);
         }
       }
-      Collections.sort(subtypePreferences);
+      Collections.sort(subtypePreferences,new Comparator<Preference>(){
+        @Override public int compare(        Preference lhs,        Preference rhs){
+          if (lhs instanceof InputMethodSubtypePreference) {
+            return ((InputMethodSubtypePreference)lhs).compareTo(rhs,collator);
+          }
+          return lhs.compareTo(rhs);
+        }
+      }
+);
       for (int j=0; j < subtypePreferences.size(); ++j) {
         activeInputMethodsCategory.addPreference(subtypePreferences.get(j));
       }

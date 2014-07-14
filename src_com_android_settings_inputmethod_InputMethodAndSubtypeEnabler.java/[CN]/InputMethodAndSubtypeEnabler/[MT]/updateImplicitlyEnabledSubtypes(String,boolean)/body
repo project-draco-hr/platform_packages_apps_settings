@@ -4,8 +4,8 @@
     if (targetImiId != null && !targetImiId.equals(imiId)) {
       continue;
     }
-    final CheckBoxPreference autoCB=mAutoSelectionPrefsMap.get(imiId);
-    if (autoCB == null || !autoCB.isChecked()) {
+    final CheckBoxPreference autoSelectionPref=mAutoSelectionPrefsMap.get(imiId);
+    if (autoSelectionPref == null || !autoSelectionPref.isChecked()) {
       continue;
     }
     final List<Preference> subtypePrefs=mInputMethodAndSubtypePrefsMap.get(imiId);
@@ -13,17 +13,18 @@
     if (subtypePrefs == null || implicitlyEnabledSubtypes == null) {
       continue;
     }
-    for (    final Preference subtypePref : subtypePrefs) {
-      if (subtypePref instanceof CheckBoxPreference) {
-        final CheckBoxPreference cb=(CheckBoxPreference)subtypePref;
-        cb.setChecked(false);
-        if (check) {
-          for (          final InputMethodSubtype subtype : implicitlyEnabledSubtypes) {
-            String implicitlyEnabledSubtypePrefKey=imiId + subtype.hashCode();
-            if (cb.getKey().equals(implicitlyEnabledSubtypePrefKey)) {
-              cb.setChecked(true);
-              break;
-            }
+    for (    final Preference pref : subtypePrefs) {
+      if (!(pref instanceof CheckBoxPreference)) {
+        continue;
+      }
+      final CheckBoxPreference subtypePref=(CheckBoxPreference)pref;
+      subtypePref.setChecked(false);
+      if (check) {
+        for (        final InputMethodSubtype subtype : implicitlyEnabledSubtypes) {
+          String implicitlyEnabledSubtypePrefKey=imiId + subtype.hashCode();
+          if (subtypePref.getKey().equals(implicitlyEnabledSubtypePrefKey)) {
+            subtypePref.setChecked(true);
+            break;
           }
         }
       }

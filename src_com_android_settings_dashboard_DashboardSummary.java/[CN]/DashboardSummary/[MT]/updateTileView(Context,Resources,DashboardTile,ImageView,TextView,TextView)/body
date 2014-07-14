@@ -1,23 +1,10 @@
 {
-  if (tile.extras != null && tile.extras.containsKey(ManageAccountsSettings.KEY_ACCOUNT_TYPE)) {
-    String accType=tile.extras.getString(ManageAccountsSettings.KEY_ACCOUNT_TYPE);
-    Drawable drawable=mAuthHelper.getDrawableForType(context,accType);
-    tileIcon.setImageDrawable(drawable);
+  if (tile.iconRes > 0) {
+    tileIcon.setImageResource(tile.iconRes);
   }
  else {
-    if (tile.iconRes > 0) {
-      tileIcon.setImageResource(tile.iconRes);
-    }
- else {
-      tileIcon.setImageDrawable(null);
-    }
-  }
-  if (tileIcon != null) {
-    if (tile.iconRes > 0) {
-    }
- else {
-      tileIcon.setBackground(null);
-    }
+    tileIcon.setImageDrawable(null);
+    tileIcon.setBackground(null);
   }
   tileTextView.setText(tile.getTitle(res));
   CharSequence summary=tile.getSummary(res);

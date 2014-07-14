@@ -3,8 +3,16 @@
   mImm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
   final Configuration config=getResources().getConfiguration();
   mHaveHardKeyboard=(config.keyboard == Configuration.KEYBOARD_QWERTY);
-  mInputMethodId=getStringExtraFromIntentOrArguments(android.provider.Settings.EXTRA_INPUT_METHOD_ID);
+  final String targetImi=getStringExtraFromIntentOrArguments(android.provider.Settings.EXTRA_INPUT_METHOD_ID);
   mInputMethodInfoList=mImm.getInputMethodList();
   mCollator=Collator.getInstance();
-  setPreferenceScreen(createPreferenceHierarchy());
+  final PreferenceScreen root=getPreferenceManager().createPreferenceScreen(getActivity());
+  final int imiCount=mInputMethodInfoList.size();
+  for (int index=0; index < imiCount; ++index) {
+    final InputMethodInfo imi=mInputMethodInfoList.get(index);
+    if (imi.getId().equals(targetImi) || TextUtils.isEmpty(targetImi)) {
+      addInputMethodSubtypePreferences(imi,root);
+    }
+  }
+  setPreferenceScreen(root);
 }

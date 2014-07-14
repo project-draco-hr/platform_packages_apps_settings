@@ -1,48 +1,50 @@
 {
-  if (preference instanceof CheckBoxPreference) {
-    final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
-    for (    final String imiId : mAutoSelectionPrefsMap.keySet()) {
-      if (mAutoSelectionPrefsMap.get(imiId) == chkPref) {
-        setAutoSelectionSubtypesEnabled(imiId,chkPref.isChecked());
-        return super.onPreferenceTreeClick(preferenceScreen,preference);
-      }
-    }
-    final String id=chkPref.getKey();
-    if (chkPref.isChecked()) {
-      final InputMethodInfo imi=getInputMethodInfoById(id);
-      if (imi == null) {
-        return super.onPreferenceTreeClick(preferenceScreen,preference);
-      }
-      if (InputMethodUtils.isSystemIme(imi)) {
-        InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodInfoList,id,true);
-        return super.onPreferenceTreeClick(preferenceScreen,preference);
-      }
-      chkPref.setChecked(false);
-      if (mDialog == null) {
-        mDialog=(new AlertDialog.Builder(getActivity())).setTitle(android.R.string.dialog_alert_title).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-          @Override public void onClick(          DialogInterface dialog,          int which){
-            chkPref.setChecked(true);
-            InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(InputMethodAndSubtypeEnabler.this,mInputMethodInfoList,id,true);
-          }
-        }
-).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-          @Override public void onClick(          DialogInterface dialog,          int which){
-          }
-        }
-).create();
-      }
- else {
-        if (mDialog.isShowing()) {
-          mDialog.dismiss();
-        }
-      }
-      mDialog.setMessage(getResources().getString(R.string.ime_security_warning,imi.getServiceInfo().applicationInfo.loadLabel(getPackageManager())));
-      mDialog.show();
-    }
- else {
-      InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodInfoList,id,false);
-      updateAutoSelectionPreferences();
+  if (!(preference instanceof CheckBoxPreference)) {
+    return super.onPreferenceTreeClick(preferenceScreen,preference);
+  }
+  final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
+  for (  final String imiId : mAutoSelectionPrefsMap.keySet()) {
+    if (mAutoSelectionPrefsMap.get(imiId) == chkPref) {
+      setAutoSelectionSubtypesEnabled(imiId,chkPref.isChecked());
+      return super.onPreferenceTreeClick(preferenceScreen,preference);
     }
   }
+  final String id=chkPref.getKey();
+  if (!chkPref.isChecked()) {
+    InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodInfoList,id,false);
+    updateAutoSelectionPreferences();
+    return super.onPreferenceTreeClick(preferenceScreen,preference);
+  }
+  final InputMethodInfo imi=getInputMethodInfoById(id);
+  if (imi == null) {
+    return super.onPreferenceTreeClick(preferenceScreen,preference);
+  }
+  if (InputMethodUtils.isSystemIme(imi)) {
+    InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodInfoList,id,true);
+    return super.onPreferenceTreeClick(preferenceScreen,preference);
+  }
+  chkPref.setChecked(false);
+  if (mDialog != null && mDialog.isShowing()) {
+    mDialog.dismiss();
+  }
+  final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+  builder.setCancelable(true);
+  builder.setTitle(android.R.string.dialog_alert_title);
+  final CharSequence label=imi.getServiceInfo().applicationInfo.loadLabel(getPackageManager());
+  builder.setMessage(getString(R.string.ime_security_warning,label));
+  builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    final DialogInterface dialog,    final int which){
+      chkPref.setChecked(true);
+      InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(InputMethodAndSubtypeEnabler.this,mInputMethodInfoList,id,true);
+    }
+  }
+);
+  builder.setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    final DialogInterface dialog,    final int which){
+    }
+  }
+);
+  mDialog=builder.create();
+  mDialog.show();
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

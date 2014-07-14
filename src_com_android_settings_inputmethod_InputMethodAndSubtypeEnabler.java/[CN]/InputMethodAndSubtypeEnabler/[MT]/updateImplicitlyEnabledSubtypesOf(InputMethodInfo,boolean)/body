@@ -1,0 +1,24 @@
+{
+  final String imiId=imi.getId();
+  final List<Preference> subtypePrefs=mInputMethodAndSubtypePrefsMap.get(imiId);
+  final List<InputMethodSubtype> implicitlyEnabledSubtypes=mImm.getEnabledInputMethodSubtypeList(imi,true);
+  if (subtypePrefs == null || implicitlyEnabledSubtypes == null) {
+    return;
+  }
+  for (  final Preference pref : subtypePrefs) {
+    if (!(pref instanceof CheckBoxPreference)) {
+      continue;
+    }
+    final CheckBoxPreference subtypePref=(CheckBoxPreference)pref;
+    subtypePref.setChecked(false);
+    if (check) {
+      for (      final InputMethodSubtype subtype : implicitlyEnabledSubtypes) {
+        final String implicitlyEnabledSubtypePrefKey=imiId + subtype.hashCode();
+        if (subtypePref.getKey().equals(implicitlyEnabledSubtypePrefKey)) {
+          subtypePref.setChecked(true);
+          break;
+        }
+      }
+    }
+  }
+}

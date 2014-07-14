@@ -1,33 +1,12 @@
 {
   for (  final InputMethodInfo imi : mInputMethodInfoList) {
     final String imiId=imi.getId();
-    if (targetImiId != null && !targetImiId.equals(imiId)) {
-      continue;
-    }
     final CheckBoxPreference autoSelectionPref=mAutoSelectionPrefsMap.get(imiId);
     if (autoSelectionPref == null || !autoSelectionPref.isChecked()) {
       continue;
     }
-    final List<Preference> subtypePrefs=mInputMethodAndSubtypePrefsMap.get(imiId);
-    final List<InputMethodSubtype> implicitlyEnabledSubtypes=mImm.getEnabledInputMethodSubtypeList(imi,true);
-    if (subtypePrefs == null || implicitlyEnabledSubtypes == null) {
-      continue;
-    }
-    for (    final Preference pref : subtypePrefs) {
-      if (!(pref instanceof CheckBoxPreference)) {
-        continue;
-      }
-      final CheckBoxPreference subtypePref=(CheckBoxPreference)pref;
-      subtypePref.setChecked(false);
-      if (check) {
-        for (        final InputMethodSubtype subtype : implicitlyEnabledSubtypes) {
-          String implicitlyEnabledSubtypePrefKey=imiId + subtype.hashCode();
-          if (subtypePref.getKey().equals(implicitlyEnabledSubtypePrefKey)) {
-            subtypePref.setChecked(true);
-            break;
-          }
-        }
-      }
+    if (imiId.equals(targetImiId) || targetImiId == null) {
+      updateImplicitlyEnabledSubtypesOf(imi,check);
     }
   }
 }

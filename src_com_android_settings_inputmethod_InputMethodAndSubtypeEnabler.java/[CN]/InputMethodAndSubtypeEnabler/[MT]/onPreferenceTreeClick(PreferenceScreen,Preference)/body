@@ -3,26 +3,18 @@
     final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
     for (    final String imiId : mAutoSelectionPrefsMap.keySet()) {
       if (mAutoSelectionPrefsMap.get(imiId) == chkPref) {
-        setSubtypeAutoSelectionEnabled(imiId,chkPref.isChecked());
+        setAutoSelectionSubtypesEnabled(imiId,chkPref.isChecked());
         return super.onPreferenceTreeClick(preferenceScreen,preference);
       }
     }
     final String id=chkPref.getKey();
     if (chkPref.isChecked()) {
-      InputMethodInfo selImi=null;
-      final int N=mInputMethodInfoList.size();
-      for (int i=0; i < N; i++) {
-        final InputMethodInfo imi=mInputMethodInfoList.get(i);
-        if (id.equals(imi.getId())) {
-          selImi=imi;
-          if (InputMethodUtils.isSystemIme(imi)) {
-            InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodInfoList,id,true);
-            return super.onPreferenceTreeClick(preferenceScreen,preference);
-          }
-          break;
-        }
+      final InputMethodInfo imi=getInputMethodInfoById(id);
+      if (imi == null) {
+        return super.onPreferenceTreeClick(preferenceScreen,preference);
       }
-      if (selImi == null) {
+      if (InputMethodUtils.isSystemIme(imi)) {
+        InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodInfoList,id,true);
         return super.onPreferenceTreeClick(preferenceScreen,preference);
       }
       chkPref.setChecked(false);
@@ -44,12 +36,12 @@
           mDialog.dismiss();
         }
       }
-      mDialog.setMessage(getResources().getString(R.string.ime_security_warning,selImi.getServiceInfo().applicationInfo.loadLabel(getPackageManager())));
+      mDialog.setMessage(getResources().getString(R.string.ime_security_warning,imi.getServiceInfo().applicationInfo.loadLabel(getPackageManager())));
       mDialog.show();
     }
  else {
       InputMethodAndSubtypeUtil.setSubtypesPreferenceEnabled(this,mInputMethodInfoList,id,false);
-      updateAutoSelectionCB();
+      updateAutoSelectionPreferences();
     }
   }
   return super.onPreferenceTreeClick(preferenceScreen,preference);

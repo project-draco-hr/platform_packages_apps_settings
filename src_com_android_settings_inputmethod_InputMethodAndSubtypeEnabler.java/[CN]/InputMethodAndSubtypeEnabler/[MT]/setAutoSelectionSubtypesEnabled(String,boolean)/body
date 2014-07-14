@@ -1,0 +1,20 @@
+{
+  final CheckBoxPreference autoSelectionPref=mAutoSelectionPrefsMap.get(imiId);
+  if (autoSelectionPref == null) {
+    return;
+  }
+  autoSelectionPref.setChecked(autoSelectionEnabled);
+  final List<Preference> subtypePrefs=mInputMethodAndSubtypePrefsMap.get(imiId);
+  for (  final Preference pref : subtypePrefs) {
+    if (pref instanceof CheckBoxPreference) {
+      pref.setEnabled(!autoSelectionEnabled);
+      if (autoSelectionEnabled) {
+        ((CheckBoxPreference)pref).setChecked(false);
+      }
+    }
+  }
+  if (autoSelectionEnabled) {
+    InputMethodAndSubtypeUtil.saveInputMethodSubtypeList(this,getContentResolver(),mInputMethodInfoList,mHaveHardKeyboard);
+    updateImplicitlyEnabledSubtypes(imiId,true);
+  }
+}

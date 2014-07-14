@@ -1,6 +1,9 @@
 {
   super.onAccountsUpdate(userHandle);
-  mAccounts=AccountManager.get(getActivity()).getAccountsAsUser(mUserHandle.getIdentifier());
-  updateAccountCheckboxes(mAccounts);
+  if (!accountExists(mAccount)) {
+    finish();
+    return;
+  }
+  updateAccountCheckboxes();
   onSyncStateUpdated();
 }

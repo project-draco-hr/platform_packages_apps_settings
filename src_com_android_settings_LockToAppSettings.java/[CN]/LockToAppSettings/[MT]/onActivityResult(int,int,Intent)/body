@@ -1,7 +1,0 @@
-{
-  super.onActivityResult(requestCode,resultCode,data);
-  if (requestCode == CHANGE_LOCK_METHOD_REQUEST) {
-    LockPatternUtils lockPatternUtils=new LockPatternUtils(getActivity());
-    setUseLockScreenSetting(lockPatternUtils.getKeyguardStoredPasswordQuality() != DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
-  }
-}

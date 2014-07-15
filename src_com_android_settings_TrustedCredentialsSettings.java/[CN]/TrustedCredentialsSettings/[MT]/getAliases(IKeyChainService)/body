@@ -1,0 +1,11 @@
+{
+switch (this) {
+case SYSTEM:
+{
+      return service.getSystemCaAliases().getList();
+    }
+case USER:
+  return service.getUserCaAliases().getList();
+}
+throw new AssertionError();
+}

@@ -9,10 +9,11 @@
     icon.setColorFilter(grayscaleFilter);
   }
  else {
+    icon.setEnabled(true);
     icon.setOnClickListener(mDeleteClickListener);
     icon.setTag(indexObj);
   }
   View v=view.findViewById(R.id.home_app_pref);
-  v.setOnClickListener(mHomeClickListener);
   v.setTag(indexObj);
+  v.setOnClickListener(mHomeClickListener);
 }

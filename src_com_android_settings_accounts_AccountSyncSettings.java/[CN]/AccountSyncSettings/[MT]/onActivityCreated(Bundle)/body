@@ -7,9 +7,14 @@
     return;
   }
   mAccount=(Account)arguments.getParcelable(ACCOUNT_KEY);
-  if (mAccount != null) {
-    if (Log.isLoggable(TAG,Log.VERBOSE))     Log.v(TAG,"Got account: " + mAccount);
-    mUserId.setText(mAccount.name);
-    mProviderId.setText(mAccount.type);
+  if (!accountExists(mAccount)) {
+    Log.e(TAG,"Account provided does not exist: " + mAccount);
+    finish();
+    return;
   }
+  if (Log.isLoggable(TAG,Log.VERBOSE)) {
+    Log.v(TAG,"Got account: " + mAccount);
+  }
+  mUserId.setText(mAccount.name);
+  mProviderId.setText(mAccount.type);
 }

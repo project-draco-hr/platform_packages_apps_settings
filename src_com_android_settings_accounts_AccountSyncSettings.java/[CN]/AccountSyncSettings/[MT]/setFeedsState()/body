@@ -3,7 +3,7 @@
   final int userId=mUserHandle.getIdentifier();
   List<SyncInfo> currentSyncs=ContentResolver.getCurrentSyncsAsUser(userId);
   boolean syncIsFailing=false;
-  updateAccountCheckboxes(mAccounts);
+  updateAccountCheckboxes();
   for (int i=0, count=getPreferenceScreen().getPreferenceCount(); i < count; i++) {
     Preference pref=getPreferenceScreen().getPreference(i);
     if (!(pref instanceof SyncStateCheckBoxPreference)) {

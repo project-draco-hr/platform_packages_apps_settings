@@ -1,6 +1,8 @@
 {
   super.onResume();
   createPreferenceHierarchy();
-  mSwitchBar.addOnSwitchChangeListener(this);
-  mValidListener=true;
+  if (!mValidListener) {
+    mSwitchBar.addOnSwitchChangeListener(this);
+    mValidListener=true;
+  }
 }

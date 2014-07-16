@@ -1,10 +1,18 @@
 {
   super(context,attrs,defStyleAttr,defStyleRes);
   LayoutInflater.from(context).inflate(R.layout.switch_bar,this);
+  final TypedArray a=context.obtainStyledAttributes(attrs,MARGIN_ATTRIBUTES);
+  int switchBarMarginStart=(int)a.getDimension(0,0);
+  int switchBarMarginEnd=(int)a.getDimension(1,0);
+  a.recycle();
   mTextView=(TextView)findViewById(R.id.switch_text);
   mTextView.setText(R.string.switch_off_text);
+  ViewGroup.MarginLayoutParams lp=(MarginLayoutParams)mTextView.getLayoutParams();
+  lp.setMarginStart(switchBarMarginStart);
   mSwitch=(ToggleSwitch)findViewById(R.id.switch_widget);
   mSwitch.setSaveEnabled(false);
+  lp=(MarginLayoutParams)mSwitch.getLayoutParams();
+  lp.setMarginEnd(switchBarMarginEnd);
   addOnSwitchChangeListener(new OnSwitchChangeListener(){
     @Override public void onSwitchChanged(    Switch switchView,    boolean isChecked){
       setTextViewLabel(isChecked);

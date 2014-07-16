@@ -1,0 +1,11 @@
+{
+  if (account == null)   return false;
+  Account[] accounts=AccountManager.get(getActivity()).getAccountsByTypeAsUser(account.type,mUserHandle);
+  final int count=accounts.length;
+  for (int i=0; i < count; i++) {
+    if (accounts[i].equals(account)) {
+      return true;
+    }
+  }
+  return false;
+}

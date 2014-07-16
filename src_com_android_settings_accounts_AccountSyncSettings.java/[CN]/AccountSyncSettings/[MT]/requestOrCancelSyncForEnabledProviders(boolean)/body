@@ -13,9 +13,7 @@
   }
   if (mAccount != null) {
     for (    SyncAdapterType syncAdapter : mInvisibleAdapters) {
-      if (syncAdapter.accountType.equals(mAccount.type)) {
-        requestOrCancelSync(mAccount,syncAdapter.authority,startSync);
-      }
+      requestOrCancelSync(mAccount,syncAdapter.authority,startSync);
     }
   }
 }

@@ -5,7 +5,8 @@
     if (Log.isLoggable(TAG,Log.VERBOSE))     Log.v(TAG,"restored");
   }
   final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
-  if (um.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS)) {
+  mUserHandle=Utils.getSecureTargetUser(getActivityToken(),um,null,getIntent().getExtras());
+  if (um.hasUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS,mUserHandle)) {
     Toast.makeText(this,R.string.user_cannot_add_accounts_message,Toast.LENGTH_LONG).show();
     finish();
     return;
@@ -23,5 +24,6 @@
   if (accountTypes != null) {
     intent.putExtra(AccountPreferenceBase.ACCOUNT_TYPES_FILTER_KEY,accountTypes);
   }
+  intent.putExtra(EXTRA_USER,mUserHandle);
   startActivityForResult(intent,CHOOSE_ACCOUNT_REQUEST);
 }

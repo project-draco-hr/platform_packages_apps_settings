@@ -11,5 +11,7 @@
     }
   }
   mAddAccountGroup=getPreferenceScreen();
+  mUm=UserManager.get(this);
+  mUserHandle=Utils.getSecureTargetUser(getActivityToken(),mUm,null,getIntent().getExtras());
   updateAuthDescriptions();
 }

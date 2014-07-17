@@ -1,0 +1,23 @@
+{
+  UserHandle currentUser=new UserHandle(UserHandle.myUserId());
+  IActivityManager am=ActivityManagerNative.getDefault();
+  try {
+    UserHandle launchedFromUser=new UserHandle(UserHandle.getUserId(am.getLaunchedFromUid(activityToken)));
+    if (launchedFromUser != null && !launchedFromUser.equals(currentUser)) {
+      return launchedFromUser;
+    }
+    UserHandle extrasUser=intentExtras != null ? (UserHandle)intentExtras.getParcelable(EXTRA_USER) : null;
+    if (extrasUser != null && !extrasUser.equals(currentUser)) {
+      return extrasUser;
+    }
+    UserHandle argumentsUser=arguments != null ? (UserHandle)arguments.getParcelable(EXTRA_USER) : null;
+    if (argumentsUser != null && !argumentsUser.equals(currentUser)) {
+      return argumentsUser;
+    }
+  }
+ catch (  RemoteException e) {
+    Log.v(TAG,"Could not talk to activity manager.",e);
+    return null;
+  }
+  return currentUser;
+}

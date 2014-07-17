@@ -1,5 +1,5 @@
 {
   super.onCreate(savedInstanceState);
-  mUserHandle=Utils.getProfileToDisplay(ActivityManagerNative.getDefault(),getActivity().getActivityToken(),savedInstanceState);
+  mUserHandle=new UserHandle(UserHandle.myUserId());
   addPreferencesFromResource(R.xml.bluetooth_message_access);
 }

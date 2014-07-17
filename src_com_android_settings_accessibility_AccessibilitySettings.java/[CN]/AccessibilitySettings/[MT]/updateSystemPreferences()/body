@@ -5,7 +5,7 @@
  catch (  RemoteException re) {
   }
   mToggleLargeTextPreference.setChecked(mCurConfig.fontScale == LARGE_FONT_SCALE);
-  mToggleHighTextContrastPreference.setChecked(AccessibilityManager.getInstance(getActivity()).isHighTextContrastEnabled());
+  mToggleHighTextContrastPreference.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_HIGH_TEXT_CONTRAST_ENABLED,0) == 1);
   if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER) && Utils.isVoiceCapable(getActivity())) {
     final int incallPowerBehavior=Settings.Secure.getInt(getContentResolver(),Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT);
     final boolean powerButtonEndsCall=(incallPowerBehavior == Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP);

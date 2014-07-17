@@ -1,5 +1,6 @@
 {
-  SyncAdapterType[] syncAdapters=ContentResolver.getSyncAdapterTypes();
+  final int userId=mUserHandle.getIdentifier();
+  SyncAdapterType[] syncAdapters=ContentResolver.getSyncAdapterTypesAsUser(userId);
   Bundle extras=new Bundle();
   extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL,true);
   int count=getPreferenceScreen().getPreferenceCount();
@@ -9,12 +10,12 @@
       Account account=((AccountPreference)pref).getAccount();
       for (int j=0; j < syncAdapters.length; j++) {
         SyncAdapterType sa=syncAdapters[j];
-        if (syncAdapters[j].accountType.equals(mAccountType) && ContentResolver.getSyncAutomatically(account,sa.authority)) {
+        if (syncAdapters[j].accountType.equals(mAccountType) && ContentResolver.getSyncAutomaticallyAsUser(account,sa.authority,userId)) {
           if (sync) {
-            ContentResolver.requestSync(account,sa.authority,extras);
+            ContentResolver.requestSyncAsUser(account,sa.authority,userId,extras);
           }
  else {
-            ContentResolver.cancelSync(account,sa.authority);
+            ContentResolver.cancelSyncAsUser(account,sa.authority,userId);
           }
         }
       }

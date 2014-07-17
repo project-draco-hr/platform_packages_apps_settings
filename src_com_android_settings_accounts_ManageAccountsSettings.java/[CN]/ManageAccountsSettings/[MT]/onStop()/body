@@ -1,7 +1,7 @@
 {
   super.onStop();
   final Activity activity=getActivity();
-  AccountManager.get(activity).removeOnAccountsUpdatedListener(this);
+  mAuthenticatorHelper.stopListeningToAccountUpdates();
   activity.getActionBar().setDisplayOptions(0,ActionBar.DISPLAY_SHOW_CUSTOM);
   activity.getActionBar().setCustomView(null);
 }

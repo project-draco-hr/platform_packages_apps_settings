@@ -1,0 +1,20 @@
+{
+  SharedPreferences sharedPreferences=getPreferenceScreen().getSharedPreferences();
+  SharedPreferences.Editor editor=sharedPreferences.edit();
+  long dismissTime=sharedPreferences.getLong(KEY_ASSISTANT_DISMISS_TIME,0);
+  if (dismissTime == 0) {
+    dismissTime=MILI_SECONDS_30_DAYS;
+  }
+ else   if (dismissTime == MILI_SECONDS_30_DAYS) {
+    dismissTime=MILI_SECONDS_90_DAYS;
+  }
+ else   if (dismissTime == MILI_SECONDS_90_DAYS) {
+    dismissTime=MILI_SECONDS_180_DAYS;
+  }
+ else   if (dismissTime == MILI_SECONDS_180_DAYS) {
+    dismissTime=java.lang.Long.MAX_VALUE;
+  }
+  editor.putLong(KEY_ASSISTANT_DISMISS_TIME,dismissTime);
+  editor.putLong(KEY_ASSISTANT_START_TIME,System.currentTimeMillis());
+  editor.apply();
+}

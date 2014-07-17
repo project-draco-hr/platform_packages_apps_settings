@@ -8,7 +8,7 @@
         pref.setOnPreferenceClickListener(new FragmentStarter(LocationSettings.class.getName(),R.string.location_settings_title));
       }
  else {
-        ResolveInfo ri=pm.resolveActivity(intent,PackageManager.MATCH_DEFAULT_ONLY);
+        ResolveInfo ri=pm.resolveActivityAsUser(intent,PackageManager.MATCH_DEFAULT_ONLY,mUserHandle.getIdentifier());
         if (ri == null) {
           prefs.removePreference(pref);
           continue;
@@ -16,6 +16,13 @@
  else {
           intent.putExtra(ACCOUNT_KEY,mFirstAccount);
           intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
+          pref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+            @Override public boolean onPreferenceClick(            Preference preference){
+              getActivity().startActivityAsUser(preference.getIntent(),mUserHandle);
+              return true;
+            }
+          }
+);
         }
       }
     }

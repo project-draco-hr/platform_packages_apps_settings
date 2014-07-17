@@ -13,7 +13,7 @@
   mPhoneSignalLabel=getContext().getString(R.string.battery_stats_phone_signal_label);
   mMaxPercentLabelString=getContext().getResources().getString(R.string.percentage,100);
   mMinPercentLabelString=getContext().getResources().getString(R.string.percentage,0);
-  int batteryLevel=com.android.settings.Utils.getBatteryLevel(mBatteryBroadcast);
+  mBatteryLevel=com.android.settings.Utils.getBatteryLevel(mBatteryBroadcast);
   long remainingTimeUs=0;
   mDischarging=true;
   if (mBatteryBroadcast.getIntExtra(BatteryManager.EXTRA_PLUGGED,0) == 0) {
@@ -21,10 +21,10 @@
     if (drainTime > 0) {
       remainingTimeUs=drainTime;
       String timeString=Formatter.formatShortElapsedTime(getContext(),drainTime / 1000);
-      mChargeLabelString=getContext().getResources().getString(R.string.power_discharging_duration,batteryLevel,timeString);
+      mChargeLabelString=getContext().getResources().getString(R.string.power_discharging_duration,mBatteryLevel,timeString);
     }
  else {
-      mChargeLabelString=getContext().getResources().getString(R.string.power_discharging,batteryLevel);
+      mChargeLabelString=getContext().getResources().getString(R.string.power_discharging,mBatteryLevel);
     }
   }
  else {
@@ -49,10 +49,10 @@
  else {
         resId=R.string.power_charging_duration;
       }
-      mChargeLabelString=getContext().getResources().getString(resId,batteryLevel,timeString);
+      mChargeLabelString=getContext().getResources().getString(resId,mBatteryLevel,timeString);
     }
  else {
-      mChargeLabelString=getContext().getResources().getString(R.string.power_charging,batteryLevel,statusLabel);
+      mChargeLabelString=getContext().getResources().getString(R.string.power_charging,mBatteryLevel,statusLabel);
     }
   }
   mDrainString="";

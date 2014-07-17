@@ -46,9 +46,11 @@
   icon.setImageDrawable(mAppIcon);
   mDetailsParent=(ViewGroup)mRootView.findViewById(R.id.details);
   mControlsParent=(ViewGroup)mRootView.findViewById(R.id.controls);
+  mMessagesParent=(ViewGroup)mRootView.findViewById(R.id.messages);
   fillDetailsSection();
   fillPackagesSection(mUid);
   fillControlsSection(mUid);
+  fillMessagesSection(mUid);
   if (mUid >= Process.FIRST_APPLICATION_UID) {
     mForceStopButton.setText(R.string.force_stop);
     mForceStopButton.setTag(ACTION_FORCE_STOP);

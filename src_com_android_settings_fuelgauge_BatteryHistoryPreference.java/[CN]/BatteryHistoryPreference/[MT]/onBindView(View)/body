@@ -1,7 +1,19 @@
 {
   super.onBindView(view);
   BatteryHistoryChart chart=(BatteryHistoryChart)view.findViewById(R.id.battery_history_chart);
-  chart.setStats(mStats,mBatteryBroadcast);
+  if (mChart == null) {
+    chart.setStats(mStats,mBatteryBroadcast);
+    mChart=chart;
+  }
+ else {
+    ViewGroup parent=(ViewGroup)chart.getParent();
+    int index=parent.indexOfChild(chart);
+    parent.removeViewAt(index);
+    if (mChart.getParent() != null) {
+      ((ViewGroup)mChart.getParent()).removeView(mChart);
+    }
+    parent.addView(mChart,index);
+  }
   mLabelHeader=view.findViewById(R.id.labelsHeader);
   mLabelHeader.setVisibility(mHideLabels ? View.GONE : View.VISIBLE);
 }

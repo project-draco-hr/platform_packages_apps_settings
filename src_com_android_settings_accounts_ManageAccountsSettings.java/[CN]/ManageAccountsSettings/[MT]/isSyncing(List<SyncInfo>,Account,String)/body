@@ -1,0 +1,10 @@
+{
+  final int count=currentSyncs.size();
+  for (int i=0; i < count; i++) {
+    SyncInfo syncInfo=currentSyncs.get(i);
+    if (syncInfo.account.equals(account) && syncInfo.authority.equals(authority)) {
+      return true;
+    }
+  }
+  return false;
+}

@@ -1,0 +1,75 @@
+{
+  if (getActivity() == null)   return;
+  final int userId=mUserHandle.getIdentifier();
+  List<SyncInfo> currentSyncs=ContentResolver.getCurrentSyncsAsUser(userId);
+  boolean anySyncFailed=false;
+  Date date=new Date();
+  final SyncAdapterType[] syncAdapters=ContentResolver.getSyncAdapterTypesAsUser(userId);
+  HashSet<String> userFacing=new HashSet<String>();
+  for (int k=0, n=syncAdapters.length; k < n; k++) {
+    final SyncAdapterType sa=syncAdapters[k];
+    if (sa.isUserVisible()) {
+      userFacing.add(sa.authority);
+    }
+  }
+  for (int i=0, count=getPreferenceScreen().getPreferenceCount(); i < count; i++) {
+    Preference pref=getPreferenceScreen().getPreference(i);
+    if (!(pref instanceof AccountPreference)) {
+      continue;
+    }
+    AccountPreference accountPref=(AccountPreference)pref;
+    Account account=accountPref.getAccount();
+    int syncCount=0;
+    long lastSuccessTime=0;
+    boolean syncIsFailing=false;
+    final ArrayList<String> authorities=accountPref.getAuthorities();
+    boolean syncingNow=false;
+    if (authorities != null) {
+      for (      String authority : authorities) {
+        SyncStatusInfo status=ContentResolver.getSyncStatusAsUser(account,authority,userId);
+        boolean syncEnabled=isSyncEnabled(userId,account,authority);
+        boolean authorityIsPending=ContentResolver.isSyncPending(account,authority);
+        boolean activelySyncing=isSyncing(currentSyncs,account,authority);
+        boolean lastSyncFailed=status != null && syncEnabled && status.lastFailureTime != 0 && status.getLastFailureMesgAsInt(0) != ContentResolver.SYNC_ERROR_SYNC_ALREADY_IN_PROGRESS;
+        if (lastSyncFailed && !activelySyncing && !authorityIsPending) {
+          syncIsFailing=true;
+          anySyncFailed=true;
+        }
+        syncingNow|=activelySyncing;
+        if (status != null && lastSuccessTime < status.lastSuccessTime) {
+          lastSuccessTime=status.lastSuccessTime;
+        }
+        syncCount+=syncEnabled && userFacing.contains(authority) ? 1 : 0;
+      }
+    }
+ else {
+      if (Log.isLoggable(TAG,Log.VERBOSE)) {
+        Log.v(TAG,"no syncadapters found for " + account);
+      }
+    }
+    if (syncIsFailing) {
+      accountPref.setSyncStatus(AccountPreference.SYNC_ERROR,true);
+    }
+ else     if (syncCount == 0) {
+      accountPref.setSyncStatus(AccountPreference.SYNC_DISABLED,true);
+    }
+ else     if (syncCount > 0) {
+      if (syncingNow) {
+        accountPref.setSyncStatus(AccountPreference.SYNC_IN_PROGRESS,true);
+      }
+ else {
+        accountPref.setSyncStatus(AccountPreference.SYNC_ENABLED,true);
+        if (lastSuccessTime > 0) {
+          accountPref.setSyncStatus(AccountPreference.SYNC_ENABLED,false);
+          date.setTime(lastSuccessTime);
+          final String timeString=formatSyncDate(date);
+          accountPref.setSummary(getResources().getString(R.string.last_synced,timeString));
+        }
+      }
+    }
+ else {
+      accountPref.setSyncStatus(AccountPreference.SYNC_DISABLED,true);
+    }
+  }
+  mErrorInfoView.setVisibility(anySyncFailed ? View.VISIBLE : View.GONE);
+}

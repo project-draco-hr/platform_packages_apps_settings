@@ -1,5 +1,6 @@
 {
   if (getActivity() == null)   return;
+  Account[] accounts=AccountManager.get(getActivity()).getAccountsAsUser(mUserHandle.getIdentifier());
   getPreferenceScreen().removeAll();
   mFirstAccount=null;
   addPreferencesFromResource(R.xml.manage_accounts_settings);
@@ -35,5 +36,4 @@
     settingsTop.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     getActivity().startActivity(settingsTop);
   }
-  onSyncStateUpdated();
 }

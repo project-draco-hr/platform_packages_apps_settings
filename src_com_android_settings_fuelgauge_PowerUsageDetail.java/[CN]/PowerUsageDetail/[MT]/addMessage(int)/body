@@ -1,0 +1,8 @@
+{
+  final Resources res=getResources();
+  LayoutInflater inflater=getActivity().getLayoutInflater();
+  View item=inflater.inflate(R.layout.power_usage_message_item,null);
+  mMessagesParent.addView(item);
+  TextView messageView=(TextView)item.findViewById(R.id.message);
+  messageView.setText(res.getText(message));
+}

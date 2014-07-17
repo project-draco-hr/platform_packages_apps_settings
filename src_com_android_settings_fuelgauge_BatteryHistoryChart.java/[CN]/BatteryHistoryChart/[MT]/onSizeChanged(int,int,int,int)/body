@@ -74,12 +74,9 @@
   mTimeLabels.clear();
   mDateLabels.clear();
   final long walltimeStart=mStartWallTime;
-  final long walltimeChange=mEndWallTime - walltimeStart;
+  final long walltimeChange=mEndWallTime > walltimeStart ? (mEndWallTime - walltimeStart) : 1;
   long curWalltime=0;
   long lastRealtime=0;
-  if (walltimeChange == 0) {
-    return;
-  }
   final int batLow=mBatLow;
   final int batChange=mBatHigh - mBatLow;
   final int levelh=h - mLevelOffset - mLevelTop;
@@ -249,7 +246,25 @@ if (curLevelPath != null) {
 i++;
 }
 }
+if (lastY < 0 || lastX < 0) {
+x=lastX=mLevelLeft;
+y=lastY=mLevelTop + levelh - ((mBatteryLevel - batLow) * (levelh - 1)) / batChange;
+Path path;
+byte value=(byte)mBatteryLevel;
+if (value <= mBatteryCriticalLevel) path=mBatCriticalPath;
+ else if (value <= mBatteryWarnLevel) path=mBatWarnPath;
+ else path=null;
+if (path != null) {
+path.moveTo(x,y);
+lastLinePath=path;
+}
+mBatLevelPath.moveTo(x,y);
+curLevelPath=mBatLevelPath;
+x=w;
+}
+ else {
 x=mLevelLeft + (int)(((mEndDataWallTime - walltimeStart) * levelWidth) / walltimeChange);
+}
 finishPaths(x,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
 if (x < w) {
 mTimeRemainPath.moveTo(x,lastY);

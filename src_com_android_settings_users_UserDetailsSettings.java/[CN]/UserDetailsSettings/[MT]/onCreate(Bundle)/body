@@ -12,14 +12,14 @@
       throw new RuntimeException("Arguments to this fragment must contain the user id");
     }
     mUserInfo=mUserManager.getUserInfo(userId);
-    mPhonePref.setChecked(!mUserManager.hasUserRestriction(UserManager.DISALLOW_TELEPHONY,new UserHandle(userId)));
+    mPhonePref.setChecked(!mUserManager.hasUserRestriction(UserManager.DISALLOW_OUTGOING_CALLS,new UserHandle(userId)));
     mRemoveUserPref.setOnPreferenceClickListener(this);
   }
  else {
     removePreference(KEY_REMOVE_USER);
     mPhonePref.setTitle(R.string.user_enable_calling);
     mDefaultGuestRestrictions=mUserManager.getDefaultGuestRestrictions();
-    mPhonePref.setChecked(!mDefaultGuestRestrictions.getBoolean(UserManager.DISALLOW_TELEPHONY));
+    mPhonePref.setChecked(!mDefaultGuestRestrictions.getBoolean(UserManager.DISALLOW_OUTGOING_CALLS));
   }
   mPhonePref.setOnPreferenceChangeListener(this);
 }

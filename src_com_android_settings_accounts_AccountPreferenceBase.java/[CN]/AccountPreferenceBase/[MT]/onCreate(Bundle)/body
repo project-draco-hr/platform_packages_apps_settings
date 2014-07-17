@@ -1,6 +1,7 @@
 {
   super.onCreate(icicle);
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
-  mUserHandle=Utils.getProfileToDisplay(ActivityManagerNative.getDefault(),getActivity().getActivityToken(),icicle);
-  mAuthenticatorHelper=new AuthenticatorHelper(getActivity(),mUserHandle,mUm,this);
+  final Activity activity=getActivity();
+  mUserHandle=Utils.getSecureTargetUser(activity.getActivityToken(),mUm,getArguments(),activity.getIntent().getExtras());
+  mAuthenticatorHelper=new AuthenticatorHelper(activity,mUserHandle,mUm,this);
 }

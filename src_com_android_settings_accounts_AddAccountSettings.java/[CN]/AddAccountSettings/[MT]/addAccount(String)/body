@@ -3,6 +3,13 @@
   mPendingIntent=PendingIntent.getBroadcast(this,0,new Intent(),0);
   addAccountOptions.putParcelable(KEY_CALLER_IDENTITY,mPendingIntent);
   addAccountOptions.putBoolean(EXTRA_HAS_MULTIPLE_USERS,Utils.hasMultipleUsers(this));
+  int userId=mUserHandle.getIdentifier();
+  int callingUserId=UserHandle.getCallingUserId();
+  if (userId != callingUserId) {
+    Log.w(TAG,"Cannot add an account for user " + userId + " from "+ callingUserId+ ".");
+    finish();
+    return;
+  }
   AccountManager.get(this).addAccount(accountType,null,null,addAccountOptions,null,mCallback,null);
   mAddAccountCalled=true;
 }

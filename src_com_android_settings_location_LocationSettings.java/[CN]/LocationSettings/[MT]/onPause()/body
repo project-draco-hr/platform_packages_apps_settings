@@ -3,8 +3,13 @@
     getActivity().unregisterReceiver(mReceiver);
   }
  catch (  RuntimeException e) {
+    if (Log.isLoggable(TAG,Log.VERBOSE)) {
+      Log.v(TAG,"Swallowing " + e);
+    }
+  }
+  if (mValidListener) {
+    mSwitchBar.removeOnSwitchChangeListener(this);
+    mValidListener=false;
   }
   super.onPause();
-  mSwitchBar.removeOnSwitchChangeListener(this);
-  mValidListener=false;
 }

@@ -2,15 +2,22 @@
   AppOpsManager aoManager=(AppOpsManager)mActivity.getSystemService(Context.APP_OPS_SERVICE);
   List<AppOpsManager.PackageOps> appOps=aoManager.getPackagesForOps(new int[]{AppOpsManager.OP_MONITOR_LOCATION,AppOpsManager.OP_MONITOR_HIGH_POWER_LOCATION});
   ArrayList<Preference> prefs=new ArrayList<Preference>();
-  long now=System.currentTimeMillis();
-  for (  AppOpsManager.PackageOps ops : appOps) {
+  final long now=System.currentTimeMillis();
+  final UserManager um=(UserManager)mActivity.getSystemService(Context.USER_SERVICE);
+  final List<UserHandle> profiles=um.getUserProfiles();
+  final int appOpsN=appOps.size();
+  for (int i=0; i < appOpsN; ++i) {
+    AppOpsManager.PackageOps ops=appOps.get(i);
+    String packageName=ops.getPackageName();
     int uid=ops.getUid();
-    boolean isAndroidOs=(uid == Process.SYSTEM_UID) && ANDROID_SYSTEM_PACKAGE_NAME.equals(ops.getPackageName());
-    if (!isAndroidOs && ActivityManager.getCurrentUser() == UserHandle.getUserId(uid)) {
-      Preference pref=getPreferenceFromOps(now,ops);
-      if (pref != null) {
-        prefs.add(pref);
-      }
+    int userId=UserHandle.getUserId(uid);
+    boolean isAndroidOs=(uid == Process.SYSTEM_UID) && ANDROID_SYSTEM_PACKAGE_NAME.equals(packageName);
+    if (isAndroidOs || !profiles.contains(new UserHandle(userId))) {
+      continue;
+    }
+    Preference preference=getPreferenceFromOps(um,now,ops);
+    if (preference != null) {
+      prefs.add(preference);
     }
   }
   return prefs;

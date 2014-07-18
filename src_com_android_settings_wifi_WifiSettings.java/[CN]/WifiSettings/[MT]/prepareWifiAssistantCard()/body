@@ -1,0 +1,20 @@
+{
+  if (mWifiAssistantPreference != null) {
+    mWifiAssistantPreference=new WifiAssistantPreference();
+  }
+  if (NetworkScorerAppManager.getActiveScorer(getActivity()) != null) {
+    return false;
+  }
+  Collection<NetworkScorerAppData> scorers=NetworkScorerAppManager.getAllValidScorers(getActivity());
+  if (scorers.isEmpty()) {
+    return false;
+  }
+  SharedPreferences sharedPreferences=getPreferenceScreen().getSharedPreferences();
+  long lastTimeoutEndTime=sharedPreferences.getLong(KEY_ASSISTANT_START_TIME,0);
+  long dismissTime=sharedPreferences.getLong(KEY_ASSISTANT_DISMISS_TIME,0);
+  boolean shouldShow=((System.currentTimeMillis() - lastTimeoutEndTime) > dismissTime);
+  if (shouldShow) {
+    mWifiAssistantApp=scorers.iterator().next();
+  }
+  return shouldShow;
+}

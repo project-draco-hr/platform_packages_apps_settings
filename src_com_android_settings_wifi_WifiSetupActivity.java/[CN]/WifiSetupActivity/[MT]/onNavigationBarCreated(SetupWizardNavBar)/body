@@ -1,12 +1,10 @@
 {
+  mNavigationBar=bar;
   final boolean useImmersiveMode=getIntent().getBooleanExtra(EXTRA_USE_IMMERSIVE_MODE,false);
   bar.setUseImmersiveMode(useImmersiveMode);
   if (useImmersiveMode) {
     getWindow().setNavigationBarColor(Color.TRANSPARENT);
     getWindow().setStatusBarColor(Color.TRANSPARENT);
   }
-  bar.getNextButton().setText(R.string.skip_label);
-  if (!getIntent().getBooleanExtra(EXTRA_ALLOW_SKIP,true)) {
-    bar.getNextButton().setEnabled(false);
-  }
+  refreshConnectionState();
 }

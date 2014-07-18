@@ -1,7 +1,65 @@
 {
   super.onCreate(savedInstanceState);
   mContext=getActivity();
-  mInflater=(LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-  mAdapter=new NotificationAppAdapter(mContext);
-  getActivity().setTitle(R.string.app_notifications_title);
+  Intent intent=getActivity().getIntent();
+  if (DEBUG)   Log.d(TAG,"onCreate getIntent()=" + intent);
+  if (intent == null) {
+    Log.w(TAG,"No intent");
+    toastAndFinish();
+    return;
+  }
+  final int uid=intent.getIntExtra(Settings.EXTRA_APP_UID,-1);
+  final String pkg=intent.getStringExtra(Settings.EXTRA_APP_PACKAGE);
+  if (uid == -1 || TextUtils.isEmpty(pkg)) {
+    Log.w(TAG,"Missing extras: " + Settings.EXTRA_APP_PACKAGE + " was "+ pkg+ ", "+ Settings.EXTRA_APP_UID+ " was "+ uid);
+    toastAndFinish();
+    return;
+  }
+  if (DEBUG)   Log.d(TAG,"Load details for pkg=" + pkg + " uid="+ uid);
+  final PackageManager pm=getPackageManager();
+  final PackageInfo info=findPackageInfo(pm,pkg,uid);
+  if (info == null) {
+    Log.w(TAG,"Failed to find package info: " + Settings.EXTRA_APP_PACKAGE + " was "+ pkg+ ", "+ Settings.EXTRA_APP_UID+ " was "+ uid);
+    toastAndFinish();
+    return;
+  }
+  addPreferencesFromResource(R.xml.app_notification_settings);
+  mBlock=(SwitchPreference)findPreference(KEY_BLOCK);
+  mPriority=(SwitchPreference)findPreference(KEY_PRIORITY);
+  mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
+  mAppRow=NotificationAppList.loadAppRow(pm,info,mBackend);
+  if (intent.hasExtra(EXTRA_HAS_SETTINGS_INTENT)) {
+    if (intent.getBooleanExtra(EXTRA_HAS_SETTINGS_INTENT,false)) {
+      mAppRow.settingsIntent=intent.getParcelableExtra(EXTRA_SETTINGS_INTENT);
+    }
+  }
+ else {
+    ArrayMap<String,AppRow> rows=new ArrayMap<String,AppRow>();
+    rows.put(mAppRow.pkg,mAppRow);
+    NotificationAppList.collectConfigActivities(getPackageManager(),rows);
+  }
+  mBlock.setChecked(mAppRow.banned);
+  mPriority.setChecked(mAppRow.priority);
+  mSensitive.setChecked(mAppRow.sensitive);
+  mBlock.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final boolean block=(Boolean)newValue;
+      return mBackend.setNotificationsBanned(pkg,uid,block);
+    }
+  }
+);
+  mPriority.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final boolean priority=(Boolean)newValue;
+      return mBackend.setHighPriority(pkg,uid,priority);
+    }
+  }
+);
+  mSensitive.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final boolean sensitive=(Boolean)newValue;
+      return mBackend.setSensitive(pkg,uid,sensitive);
+    }
+  }
+);
 }

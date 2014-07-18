@@ -1,16 +1,12 @@
 {
   super.onCreate(icicle);
-  mUsageStatsService=IUsageStats.Stub.asInterface(ServiceManager.getService("usagestats"));
-  if (mUsageStatsService == null) {
-    Log.e(TAG,"Failed to retrieve usagestats service");
-    return;
-  }
+  setContentView(R.layout.usage_stats);
+  mUsageStatsManager=(UsageStatsManager)getSystemService(Context.USAGE_STATS_SERVICE);
   mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   mPm=getPackageManager();
-  setContentView(R.layout.usage_stats);
-  mTypeSpinner=(Spinner)findViewById(R.id.typeSpinner);
-  mTypeSpinner.setOnItemSelectedListener(this);
-  mListView=(ListView)findViewById(R.id.pkg_list);
+  Spinner typeSpinner=(Spinner)findViewById(R.id.typeSpinner);
+  typeSpinner.setOnItemSelectedListener(this);
+  ListView listView=(ListView)findViewById(R.id.pkg_list);
   mAdapter=new UsageStatsAdapter();
-  mListView.setAdapter(mAdapter);
+  listView.setAdapter(mAdapter);
 }

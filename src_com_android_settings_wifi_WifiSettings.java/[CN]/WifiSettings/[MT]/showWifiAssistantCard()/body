@@ -1,6 +1,0 @@
-{
-  SharedPreferences sharedPreferences=getPreferenceScreen().getSharedPreferences();
-  long lastTimeoutEndTime=sharedPreferences.getLong(KEY_ASSISTANT_START_TIME,0);
-  long dismissTime=sharedPreferences.getLong(KEY_ASSISTANT_DISMISS_TIME,0);
-  return ((System.currentTimeMillis() - lastTimeoutEndTime) > dismissTime);
-}

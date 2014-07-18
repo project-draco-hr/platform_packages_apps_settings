@@ -1,0 +1,19 @@
+{
+  mWifiConnected=connected;
+  if (connected) {
+    if (mAutoFinishOnConnection && mUserSelectedNetwork) {
+      Log.d(TAG,"Auto-finishing with connection");
+      finishOrNext(Activity.RESULT_OK);
+    }
+    if (mNavigationBar != null) {
+      mNavigationBar.getNextButton().setText(R.string.setup_wizard_next_button_label);
+      mNavigationBar.getNextButton().setEnabled(true);
+    }
+  }
+ else {
+    if (mNavigationBar != null) {
+      mNavigationBar.getNextButton().setText(R.string.skip_label);
+      mNavigationBar.getNextButton().setEnabled(mAllowSkip);
+    }
+  }
+}

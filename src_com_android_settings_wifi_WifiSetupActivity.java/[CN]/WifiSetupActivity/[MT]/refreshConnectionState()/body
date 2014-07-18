@@ -1,0 +1,5 @@
+{
+  final ConnectivityManager connectivity=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  boolean connected=connectivity != null && connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
+  refreshConnectionState(connected);
+}

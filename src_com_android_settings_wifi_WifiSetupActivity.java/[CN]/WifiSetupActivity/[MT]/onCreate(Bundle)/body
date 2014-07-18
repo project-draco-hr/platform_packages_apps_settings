@@ -1,0 +1,8 @@
+{
+  super.onCreate(savedInstanceState);
+  final Intent intent=getIntent();
+  mAutoFinishOnConnection=intent.getBooleanExtra(EXTRA_AUTO_FINISH_ON_CONNECT,false);
+  mAllowSkip=intent.getBooleanExtra(EXTRA_ALLOW_SKIP,true);
+  mUserSelectedNetwork=!intent.getBooleanExtra(EXTRA_REQUIRE_USER_NETWORK_SELECTION,false);
+  refreshConnectionState();
+}

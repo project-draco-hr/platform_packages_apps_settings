@@ -19,7 +19,7 @@
   mIsGuest=mUserManager.getUserInfo(myUserId).isGuest();
   addPreferencesFromResource(R.xml.user_settings);
   mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
-  mMePreference=new UserPreference(context,null,myUserId,mUserManager.isLinkedUser() ? null : this,null);
+  mMePreference=new UserPreference(context,null,myUserId,mUserManager.isLinkedUser() || mIsGuest ? null : this,null);
   mMePreference.setKey(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
   if (mIsOwner) {

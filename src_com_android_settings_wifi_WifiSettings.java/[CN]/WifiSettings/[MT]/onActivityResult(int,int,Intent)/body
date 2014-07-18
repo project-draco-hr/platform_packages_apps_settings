@@ -1,0 +1,12 @@
+{
+  if (requestCode == REQUEST_ENABLE_WIFI_ASSISTANT) {
+    if (resultCode == Activity.RESULT_OK) {
+      setWifiAssistantTimeout();
+      getPreferenceScreen().removePreference(mWifiAssistantPreference);
+      mWifiAssistantApp=null;
+    }
+  }
+ else {
+    super.onActivityResult(requestCode,resultCode,resultData);
+  }
+}

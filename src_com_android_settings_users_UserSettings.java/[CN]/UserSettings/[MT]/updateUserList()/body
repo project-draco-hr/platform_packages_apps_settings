@@ -52,7 +52,7 @@
     if (user.iconPath != null) {
       if (mUserIcons.get(user.id) == null) {
         missingIcons.add(user.id);
-        pref.setIcon(encircle(R.drawable.avatar_default_1));
+        pref.setIcon(getEncircledDefaultAvatar());
       }
  else {
         setPhotoId(pref,user);
@@ -63,13 +63,13 @@
     Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,null,null);
     pref.setEnabled(false);
     pref.setTitle(R.string.user_new_user_name);
-    pref.setIcon(encircle(R.drawable.avatar_default_1));
+    pref.setIcon(getEncircledDefaultAvatar());
     mUserListCategory.addPreference(pref);
   }
   if (!mIsGuest) {
     Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mIsOwner ? this : null,null);
     pref.setTitle(R.string.user_guest);
-    pref.setIcon(encircle(R.drawable.ic_settings_accounts));
+    pref.setIcon(getEncircledGuestDrawable());
     pref.setOnPreferenceClickListener(this);
     mUserListCategory.addPreference(pref);
   }

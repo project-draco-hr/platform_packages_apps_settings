@@ -1,5 +1,9 @@
 {
   if (pref == mMePreference) {
+    if (mIsGuest) {
+      showDialog(DIALOG_CONFIRM_EXIT_GUEST);
+      return true;
+    }
     Intent editProfile;
     if (!mProfileExists) {
       editProfile=new Intent(Intent.ACTION_INSERT,Contacts.CONTENT_URI);

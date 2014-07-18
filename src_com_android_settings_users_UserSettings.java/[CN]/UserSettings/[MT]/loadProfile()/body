@@ -1,5 +1,10 @@
 {
   mProfileExists=false;
+  if (mIsGuest) {
+    mMePreference.setIcon(getEncircledGuestDrawable());
+    mMePreference.setTitle(R.string.user_exit_guest_title);
+    return;
+  }
   new AsyncTask<Void,Void,String>(){
     @Override protected void onPostExecute(    String result){
       finishLoadProfile(result);

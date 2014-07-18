@@ -1,23 +1,27 @@
 {
   super.onBindView(view);
-  final Preference pref=this;
   Button setup=(Button)view.findViewById(R.id.setup);
   Button noThanks=(Button)view.findViewById(R.id.no_thanks_button);
   if (setup != null && noThanks != null) {
     setup.setOnClickListener(new OnClickListener(){
       @Override public void onClick(      View v){
-        Intent intent=new Intent(NetworkScoreManager.ACTION_CHANGE_ACTIVE);
-        intent.putExtra(NetworkScoreManager.EXTRA_PACKAGE_NAME,"wifi-assistant");
-        mWifiSettings.startActivity(intent);
-        mWifiSettings.setWifiAssistantTimeout();
-        mWifiSettings.getPreferenceScreen().removePreference(pref);
+        Intent intent=new Intent();
+        if (mWifiAssistantApp.mConfigurationActivityClassName != null) {
+          intent.setClassName(mWifiAssistantApp.mPackageName,mWifiAssistantApp.mConfigurationActivityClassName);
+        }
+ else {
+          intent.setAction(NetworkScoreManager.ACTION_CHANGE_ACTIVE);
+          intent.putExtra(NetworkScoreManager.EXTRA_PACKAGE_NAME,mWifiAssistantApp.mPackageName);
+        }
+        startActivityForResult(intent,REQUEST_ENABLE_WIFI_ASSISTANT);
       }
     }
 );
     noThanks.setOnClickListener(new OnClickListener(){
       @Override public void onClick(      View v){
-        mWifiSettings.setWifiAssistantTimeout();
-        mWifiSettings.getPreferenceScreen().removePreference(pref);
+        setWifiAssistantTimeout();
+        getPreferenceScreen().removePreference(WifiAssistantPreference.this);
+        mWifiAssistantApp=null;
       }
     }
 );

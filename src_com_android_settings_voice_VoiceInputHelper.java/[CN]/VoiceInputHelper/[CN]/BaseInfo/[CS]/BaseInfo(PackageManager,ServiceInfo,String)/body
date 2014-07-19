@@ -1,0 +1,9 @@
+{
+  service=_service;
+  componentName=new ComponentName(_service.packageName,_service.name);
+  key=componentName.flattenToShortString();
+  settings=_settings != null ? new ComponentName(_service.packageName,_settings) : null;
+  label=_service.loadLabel(pm);
+  labelStr=label.toString();
+  appLabel=_service.applicationInfo.loadLabel(pm);
+}

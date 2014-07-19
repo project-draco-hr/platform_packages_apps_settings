@@ -1,0 +1,13 @@
+{
+  Log.i(TAG,"Displaying data alert for :" + getKey());
+  AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+  String msg=String.format(getContext().getResources().getConfiguration().locale,mAlertText.toString(),mAppLabel);
+  builder.setTitle(android.R.string.dialog_alert_title).setMessage(msg).setCancelable(true).setPositiveButton(android.R.string.ok,positiveOnClickListener).setNegativeButton(android.R.string.cancel,negativeOnClickListener).setOnCancelListener(new DialogInterface.OnCancelListener(){
+    @Override public void onCancel(    DialogInterface dialog){
+      negativeOnClickListener.onClick(dialog,DialogInterface.BUTTON_NEGATIVE);
+    }
+  }
+);
+  AlertDialog dialog=builder.create();
+  dialog.show();
+}

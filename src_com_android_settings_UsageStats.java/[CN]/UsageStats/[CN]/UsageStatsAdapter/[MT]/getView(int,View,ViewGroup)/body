@@ -4,19 +4,19 @@
     convertView=mInflater.inflate(R.layout.usage_stats_item,null);
     holder=new AppViewHolder();
     holder.pkgName=(TextView)convertView.findViewById(R.id.package_name);
-    holder.launchCount=(TextView)convertView.findViewById(R.id.launch_count);
+    holder.lastTimeUsed=(TextView)convertView.findViewById(R.id.last_time_used);
     holder.usageTime=(TextView)convertView.findViewById(R.id.usage_time);
     convertView.setTag(holder);
   }
  else {
     holder=(AppViewHolder)convertView.getTag();
   }
-  android.app.UsageStats.PackageStats pkgStats=mUsageStats.get(position);
+  PackageUsageStats pkgStats=mPackageStats.get(position);
   if (pkgStats != null) {
-    CharSequence label=mAppLabelMap.get(pkgStats.getPackageName());
+    String label=mAppLabelMap.get(pkgStats.getPackageName());
     holder.pkgName.setText(label);
-    holder.launchCount.setText(String.valueOf(pkgStats.getLaunchCount()));
-    holder.usageTime.setText(String.valueOf(pkgStats.getUsageTime(0)) + " ms");
+    holder.lastTimeUsed.setText(DateUtils.formatSameDayTime(pkgStats.getLastTimeUsed(),System.currentTimeMillis(),DateFormat.MEDIUM,DateFormat.MEDIUM));
+    holder.usageTime.setText(DateUtils.formatElapsedTime(pkgStats.getTotalTimeSpent() / 1000));
   }
  else {
     Log.w(TAG,"No usage stats info for package:" + position);

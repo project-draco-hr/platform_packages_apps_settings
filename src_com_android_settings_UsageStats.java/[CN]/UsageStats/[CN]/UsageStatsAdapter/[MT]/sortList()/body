@@ -1,15 +1,15 @@
 {
   if (mDisplayOrder == _DISPLAY_ORDER_USAGE_TIME) {
     if (localLOGV)     Log.i(TAG,"Sorting by usage time");
-    Collections.sort(mUsageStats,mUsageTimeComparator);
+    Collections.sort(mPackageStats,mUsageTimeComparator);
   }
- else   if (mDisplayOrder == _DISPLAY_ORDER_LAUNCH_COUNT) {
-    if (localLOGV)     Log.i(TAG,"Sorting launch count");
-    Collections.sort(mUsageStats,mLaunchCountComparator);
+ else   if (mDisplayOrder == _DISPLAY_ORDER_LAST_TIME_USED) {
+    if (localLOGV)     Log.i(TAG,"Sorting by last time used");
+    Collections.sort(mPackageStats,mLastTimeUsedComparator);
   }
  else   if (mDisplayOrder == _DISPLAY_ORDER_APP_NAME) {
     if (localLOGV)     Log.i(TAG,"Sorting by application name");
-    Collections.sort(mUsageStats,mAppLabelComparator);
+    Collections.sort(mPackageStats,mAppLabelComparator);
   }
   notifyDataSetChanged();
 }

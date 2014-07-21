@@ -1,8 +1,10 @@
 {
-  if (preference == mSelectLongPressTimeoutPreference) {
-    String stringValue=(String)newValue;
-    Settings.Secure.putInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,Integer.parseInt(stringValue));
-    mSelectLongPressTimeoutPreference.setSummary(mLongPressTimeoutValuetoTitleMap.get(stringValue));
+  if (mSelectLongPressTimeoutPreference == preference) {
+    handleLongPressTimeoutPreferenceChange((String)newValue);
+    return true;
+  }
+ else   if (mToggleInversionPreference == preference) {
+    handleToggleInversionPreferenceChange((Boolean)newValue);
     return true;
   }
   return false;

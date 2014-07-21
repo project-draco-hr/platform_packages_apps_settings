@@ -1,0 +1,9 @@
+{
+  final Resources res=getResources();
+  final TextPaint paint=new TextPaint(Paint.ANTI_ALIAS_FLAG);
+  paint.density=res.getDisplayMetrics().density;
+  paint.setCompatibilityScaling(res.getCompatibilityInfo().applicationScale);
+  paint.setColor(mLabelColor);
+  paint.setTextSize(mLabelSize);
+  return new StaticLayout(text,paint,(int)Math.ceil(Layout.getDesiredWidth(text,paint)),Layout.Alignment.ALIGN_NORMAL,1.f,0,true);
+}

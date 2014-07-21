@@ -1,3 +1,7 @@
 {
-  return Long.compare(another.total,total);
+  int comparison=Integer.compare(another.category,category);
+  if (comparison == 0) {
+    comparison=Long.compare(another.total,total);
+  }
+  return comparison;
 }

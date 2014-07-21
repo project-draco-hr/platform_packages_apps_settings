@@ -1,0 +1,15 @@
+{
+  final int uid=entry.uid;
+  AppItem item=knownItems.get(collapseKey);
+  if (item == null) {
+    item=new AppItem(collapseKey);
+    item.category=itemCategory;
+    mItems.add(item);
+    knownItems.put(item.key,item);
+  }
+  item.addUid(uid);
+  item.total+=entry.rxBytes + entry.txBytes;
+  if (mLargest < item.total) {
+    mLargest=item.total;
+  }
+}

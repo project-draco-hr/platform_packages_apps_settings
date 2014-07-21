@@ -1,6 +1,6 @@
 {
   loadEnabledServices();
-  getServices(mConfig,mList,mPM);
-  mList.sort(new PackageItemInfo.DisplayNameComparator(mPM));
-  getListView().setAdapter(mList);
+  getServices(mConfig,mListAdapter,mPM);
+  mListAdapter.sort(new PackageItemInfo.DisplayNameComparator(mPM));
+  getListView().setAdapter(mListAdapter);
 }

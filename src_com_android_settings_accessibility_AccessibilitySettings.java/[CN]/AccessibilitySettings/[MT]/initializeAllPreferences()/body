@@ -3,6 +3,8 @@
   mSystemsCategory=(PreferenceCategory)findPreference(SYSTEM_CATEGORY);
   mToggleLargeTextPreference=(CheckBoxPreference)findPreference(TOGGLE_LARGE_TEXT_PREFERENCE);
   mToggleHighTextContrastPreference=(CheckBoxPreference)findPreference(TOGGLE_HIGH_TEXT_CONTRAST_PREFERENCE);
+  mToggleInversionPreference=(SwitchPreference)findPreference(TOGGLE_INVERSION_PREFERENCE);
+  mToggleInversionPreference.setOnPreferenceChangeListener(this);
   mTogglePowerButtonEndsCallPreference=(CheckBoxPreference)findPreference(TOGGLE_POWER_BUTTON_ENDS_CALL_PREFERENCE);
   if (!KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER) || !Utils.isVoiceCapable(getActivity())) {
     mSystemsCategory.removePreference(mTogglePowerButtonEndsCallPreference);
@@ -25,8 +27,6 @@
   }
   mCaptioningPreferenceScreen=(PreferenceScreen)findPreference(CAPTIONING_PREFERENCE_SCREEN);
   mDisplayMagnificationPreferenceScreen=(PreferenceScreen)findPreference(DISPLAY_MAGNIFICATION_PREFERENCE_SCREEN);
-  mDisplayContrastPreferenceScreen=(PreferenceScreen)findPreference(DISPLAY_CONTRAST_PREFERENCE_SCREEN);
-  mDisplayInversionPreferenceScreen=(PreferenceScreen)findPreference(DISPLAY_INVERSION_PREFERENCE_SCREEN);
   mDisplayDaltonizerPreferenceScreen=(PreferenceScreen)findPreference(DISPLAY_DALTONIZER_PREFERENCE_SCREEN);
   mGlobalGesturePreferenceScreen=(PreferenceScreen)findPreference(ENABLE_ACCESSIBILITY_GESTURE_PREFERENCE_SCREEN);
   final int longPressOnPowerBehavior=getActivity().getResources().getInteger(com.android.internal.R.integer.config_longPressOnPowerBehavior);

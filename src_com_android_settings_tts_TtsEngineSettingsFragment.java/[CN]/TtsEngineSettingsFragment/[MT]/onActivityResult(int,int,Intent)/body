@@ -1,6 +1,6 @@
 {
   if (requestCode == VOICE_DATA_INTEGRITY_CHECK) {
-    if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+    if (resultCode != TextToSpeech.Engine.CHECK_VOICE_DATA_FAIL) {
       updateVoiceDetails(data);
     }
  else {

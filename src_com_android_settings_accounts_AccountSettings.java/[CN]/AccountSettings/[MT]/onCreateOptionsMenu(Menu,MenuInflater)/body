@@ -1,0 +1,16 @@
+{
+  inflater.inflate(R.menu.account_settings,menu);
+  final UserHandle currentProfile=UserHandle.getCallingUserHandle();
+  if (mIsSingleProfileUi) {
+    menu.findItem(R.id.account_settings_menu_auto_sync).setVisible(true).setOnMenuItemClickListener(new MasterSyncStateClickListener(currentProfile));
+    menu.removeItem(R.id.account_settings_menu_auto_sync_personal);
+    menu.removeItem(R.id.account_settings_menu_auto_sync_work);
+  }
+ else {
+    final UserHandle managedProfile=Utils.getManagedProfile(mUm);
+    menu.findItem(R.id.account_settings_menu_auto_sync_personal).setVisible(true).setOnMenuItemClickListener(new MasterSyncStateClickListener(currentProfile));
+    menu.findItem(R.id.account_settings_menu_auto_sync_work).setVisible(true).setOnMenuItemClickListener(new MasterSyncStateClickListener(managedProfile));
+    menu.removeItem(R.id.account_settings_menu_auto_sync);
+  }
+  super.onCreateOptionsMenu(menu,inflater);
+}

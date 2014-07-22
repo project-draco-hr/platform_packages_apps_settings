@@ -13,7 +13,7 @@
       if (DEBUG) {
         Log.d(TAG,"--- Set checked state: " + "id" + ", " + hashCode + ", "+ enabledSubtypesSet.contains(hashCode));
       }
-      final CheckBoxPreference pref=(CheckBoxPreference)preferenceScreen.findPreference(id + hashCode);
+      final TwoStatePreference pref=(TwoStatePreference)preferenceScreen.findPreference(id + hashCode);
       if (pref != null) {
         pref.setChecked(enabledSubtypesSet.contains(hashCode));
       }

@@ -1,38 +1,49 @@
 {
   final int width=getWidth();
-  final int height=getHeight();
+  final int height=getHeight() - getPaddingBottom();
   final Drawable secondary=mSecondary;
-  final int secondaryHeight=mSecondary.getIntrinsicHeight();
-  final float[] vertTicks=mVert.getTickPoints();
-  for (  float y : vertTicks) {
-    final int bottom=(int)Math.min(y + secondaryHeight,height);
-    secondary.setBounds(0,(int)y,width,bottom);
-    secondary.draw(canvas);
+  if (secondary != null) {
+    final int secondaryHeight=secondary.getIntrinsicHeight();
+    final float[] vertTicks=mVert.getTickPoints();
+    for (    float y : vertTicks) {
+      final int bottom=(int)Math.min(y + secondaryHeight,height);
+      secondary.setBounds(0,(int)y,width,bottom);
+      secondary.draw(canvas);
+    }
   }
   final Drawable primary=mPrimary;
-  final int primaryWidth=mPrimary.getIntrinsicWidth();
-  final int primaryHeight=mPrimary.getIntrinsicHeight();
-  final float[] horizTicks=mHoriz.getTickPoints();
-  for (  float x : horizTicks) {
-    final int right=(int)Math.min(x + primaryWidth,width);
-    primary.setBounds((int)x,0,right,height);
-    primary.draw(canvas);
+  if (primary != null) {
+    final int primaryWidth=primary.getIntrinsicWidth();
+    final int primaryHeight=primary.getIntrinsicHeight();
+    final float[] horizTicks=mHoriz.getTickPoints();
+    for (    float x : horizTicks) {
+      final int right=(int)Math.min(x + primaryWidth,width);
+      primary.setBounds((int)x,0,right,height);
+      primary.draw(canvas);
+    }
   }
   mBorder.setBounds(0,0,width,height);
   mBorder.draw(canvas);
-  final int padding=mLayoutStart != null ? mLayoutStart.getHeight() / 8 : 0;
-  final Layout start=mLayoutStart;
+  final int padding=mLabelStart != null ? mLabelStart.getHeight() / 8 : 0;
+  final Layout start=mLabelStart;
   if (start != null) {
-    canvas.save();
+    final int saveCount=canvas.save();
     canvas.translate(0,height + padding);
     start.draw(canvas);
-    canvas.restore();
+    canvas.restoreToCount(saveCount);
   }
-  final Layout end=mLayoutEnd;
+  final Layout mid=mLabelMid;
+  if (mid != null) {
+    final int saveCount=canvas.save();
+    canvas.translate((width - mid.getWidth()) / 2,height + padding);
+    mid.draw(canvas);
+    canvas.restoreToCount(saveCount);
+  }
+  final Layout end=mLabelEnd;
   if (end != null) {
-    canvas.save();
+    final int saveCount=canvas.save();
     canvas.translate(width - end.getWidth(),height + padding);
     end.draw(canvas);
-    canvas.restore();
+    canvas.restoreToCount(saveCount);
   }
 }

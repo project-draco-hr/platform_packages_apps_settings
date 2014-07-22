@@ -5,6 +5,11 @@
   mPrimary=a.getDrawable(R.styleable.ChartGridView_primaryDrawable);
   mSecondary=a.getDrawable(R.styleable.ChartGridView_secondaryDrawable);
   mBorder=a.getDrawable(R.styleable.ChartGridView_borderDrawable);
-  mLabelColor=a.getColor(R.styleable.ChartGridView_labelColor,Color.RED);
+  final int taId=a.getResourceId(R.styleable.ChartGridView_android_textAppearance,-1);
+  final TypedArray ta=context.obtainStyledAttributes(taId,com.android.internal.R.styleable.TextAppearance);
+  mLabelSize=ta.getDimensionPixelSize(com.android.internal.R.styleable.TextAppearance_textSize,0);
+  ta.recycle();
+  final ColorStateList labelColor=a.getColorStateList(R.styleable.ChartGridView_android_textColor);
+  mLabelColor=labelColor.getDefaultColor();
   a.recycle();
 }

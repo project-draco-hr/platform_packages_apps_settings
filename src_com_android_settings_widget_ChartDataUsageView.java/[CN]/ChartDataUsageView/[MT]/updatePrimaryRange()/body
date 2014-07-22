@@ -1,11 +1,8 @@
 {
-  final long left=mSweepLeft.getValue();
-  final long right=mSweepRight.getValue();
   if (mDetailSeries.getVisibility() == View.VISIBLE) {
-    mDetailSeries.setPrimaryRange(left,right);
-    mSeries.setPrimaryRange(0,0);
+    mSeries.setSecondary(true);
   }
  else {
-    mSeries.setPrimaryRange(left,right);
+    mSeries.setSecondary(false);
   }
 }

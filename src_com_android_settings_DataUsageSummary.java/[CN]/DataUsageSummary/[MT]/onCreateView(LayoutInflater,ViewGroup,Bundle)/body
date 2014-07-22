@@ -24,11 +24,15 @@
     mNetworkSwitchesContainer=(ViewGroup)mHeader.findViewById(R.id.network_switches_container);
     mNetworkSwitches=(LinearLayout)mHeader.findViewById(R.id.network_switches);
     mDataEnabled=new Switch(inflater.getContext());
+    mDataEnabled.setClickable(false);
+    mDataEnabled.setFocusable(false);
     mDataEnabledView=inflatePreference(inflater,mNetworkSwitches,mDataEnabled);
     mDataEnabledView.setTag(R.id.preference_highlight_key,DATA_USAGE_ENABLE_MOBILE_KEY);
-    mDataEnabled.setOnCheckedChangeListener(mDataEnabledListener);
+    mDataEnabledView.setClickable(true);
+    mDataEnabledView.setFocusable(true);
+    mDataEnabledView.setOnClickListener(mDataEnabledListener);
     mNetworkSwitches.addView(mDataEnabledView);
-    mDisableAtLimit=new CheckBox(inflater.getContext());
+    mDisableAtLimit=new Switch(inflater.getContext());
     mDisableAtLimit.setClickable(false);
     mDisableAtLimit.setFocusable(false);
     mDisableAtLimitView=inflatePreference(inflater,mNetworkSwitches,mDisableAtLimit);
@@ -37,13 +41,15 @@
     mDisableAtLimitView.setFocusable(true);
     mDisableAtLimitView.setOnClickListener(mDisableAtLimitListener);
     mNetworkSwitches.addView(mDisableAtLimitView);
+    mCycleView=inflater.inflate(R.layout.data_usage_cycles,mNetworkSwitches,false);
+    mCycleView.setTag(R.id.preference_highlight_key,DATA_USAGE_CYCLE_KEY);
+    mCycleSpinner=(Spinner)mCycleView.findViewById(R.id.cycles_spinner);
+    mCycleAdapter=new CycleAdapter(context);
+    mCycleSpinner.setAdapter(mCycleAdapter);
+    mCycleSpinner.setOnItemSelectedListener(mCycleListener);
+    mCycleSummary=(TextView)mCycleView.findViewById(R.id.cycle_summary);
+    mNetworkSwitches.addView(mCycleView);
   }
-  mCycleView=mHeader.findViewById(R.id.cycles);
-  mCycleView.setTag(R.id.preference_highlight_key,DATA_USAGE_CYCLE_KEY);
-  mCycleSpinner=(Spinner)mCycleView.findViewById(R.id.cycles_spinner);
-  mCycleAdapter=new CycleAdapter(context);
-  mCycleSpinner.setAdapter(mCycleAdapter);
-  mCycleSpinner.setOnItemSelectedListener(mCycleListener);
   mChart=(ChartDataUsageView)mHeader.findViewById(R.id.chart);
   mChart.setListener(mChartListener);
   mChart.bindNetworkPolicy(null);
@@ -51,13 +57,12 @@
     mAppDetail=mHeader.findViewById(R.id.app_detail);
     mAppIcon=(ImageView)mAppDetail.findViewById(R.id.app_icon);
     mAppTitles=(ViewGroup)mAppDetail.findViewById(R.id.app_titles);
-    mAppPieChart=(PieChartView)mAppDetail.findViewById(R.id.app_pie_chart);
     mAppForeground=(TextView)mAppDetail.findViewById(R.id.app_foreground);
     mAppBackground=(TextView)mAppDetail.findViewById(R.id.app_background);
     mAppSwitches=(LinearLayout)mAppDetail.findViewById(R.id.app_switches);
     mAppSettings=(Button)mAppDetail.findViewById(R.id.app_settings);
     mAppSettings.setOnClickListener(mAppSettingsListener);
-    mAppRestrict=new CheckBox(inflater.getContext());
+    mAppRestrict=new Switch(inflater.getContext());
     mAppRestrict.setClickable(false);
     mAppRestrict.setFocusable(false);
     mAppRestrictView=inflatePreference(inflater,mAppSwitches,mAppRestrict);
@@ -66,8 +71,9 @@
     mAppRestrictView.setOnClickListener(mAppRestrictListener);
     mAppSwitches.addView(mAppRestrictView);
   }
-  mUsageSummary=(TextView)mHeader.findViewById(R.id.usage_summary);
+  mDisclaimer=mHeader.findViewById(R.id.disclaimer);
   mEmpty=(TextView)mHeader.findViewById(android.R.id.empty);
+  mStupidPadding=mHeader.findViewById(R.id.stupid_padding);
   mAdapter=new DataUsageAdapter(mUidDetailProvider,mInsetSide);
   mListView.setOnItemClickListener(mListListener);
   mListView.setAdapter(mAdapter);

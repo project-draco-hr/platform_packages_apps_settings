@@ -10,32 +10,36 @@
     final long defaultBytes=entry.rxBytes + entry.txBytes;
     entry=mChartData.detailForeground.getValues(start,end,now,entry);
     final long foregroundBytes=entry.rxBytes + entry.txBytes;
-    mAppPieChart.setOriginAngle(175);
-    mAppPieChart.removeAllSlices();
-    mAppPieChart.addSlice(foregroundBytes,FOREGROUND_BYTES_COLOR);
-    mAppPieChart.addSlice(defaultBytes,DEFAULT_BYTES_COLOR);
-    mAppPieChart.generatePath();
+    final long totalBytes=defaultBytes + foregroundBytes;
+    if (mAppTotal != null) {
+      mAppTotal.setText(Formatter.formatFileSize(context,totalBytes));
+    }
     mAppBackground.setText(Formatter.formatFileSize(context,defaultBytes));
     mAppForeground.setText(Formatter.formatFileSize(context,foregroundBytes));
     entry=mChartData.detail.getValues(start,end,now,null);
     getLoaderManager().destroyLoader(LOADER_SUMMARY);
+    mCycleSummary.setVisibility(View.GONE);
   }
  else {
     if (mChartData != null) {
       entry=mChartData.network.getValues(start,end,now,null);
     }
+    mCycleSummary.setVisibility(View.VISIBLE);
     getLoaderManager().restartLoader(LOADER_SUMMARY,SummaryForAllUidLoader.buildArgs(mTemplate,start,end),mSummaryCallbacks);
   }
   final long totalBytes=entry != null ? entry.rxBytes + entry.txBytes : 0;
   final String totalPhrase=Formatter.formatFileSize(context,totalBytes);
-  final String rangePhrase=formatDateRange(context,start,end);
-  final int summaryRes;
+  mCycleSummary.setText(totalPhrase);
   if (TAB_MOBILE.equals(mCurrentTab) || TAB_3G.equals(mCurrentTab) || TAB_4G.equals(mCurrentTab)) {
-    summaryRes=R.string.data_usage_total_during_range_mobile;
+    if (isAppDetailMode()) {
+      mDisclaimer.setVisibility(View.GONE);
+    }
+ else {
+      mDisclaimer.setVisibility(View.VISIBLE);
+    }
   }
  else {
-    summaryRes=R.string.data_usage_total_during_range;
+    mDisclaimer.setVisibility(View.GONE);
   }
-  mUsageSummary.setText(getString(summaryRes,totalPhrase,rangePhrase));
   ensureLayoutTransitions();
 }

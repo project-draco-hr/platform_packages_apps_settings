@@ -2,40 +2,37 @@
   final Context context=getActivity();
   final boolean appDetailMode=isAppDetailMode();
   final boolean isOwner=ActivityManager.getCurrentUser() == UserHandle.USER_OWNER;
-  mMenuDataRoaming=menu.findItem(R.id.data_usage_menu_roaming);
-  mMenuDataRoaming.setVisible(hasReadyMobileRadio(context) && !appDetailMode);
-  mMenuDataRoaming.setChecked(getDataRoaming());
+  mMenuShowWifi=menu.findItem(R.id.data_usage_menu_show_wifi);
+  if (hasWifiRadio(context) && hasReadyMobileRadio(context)) {
+    mMenuShowWifi.setVisible(!appDetailMode);
+  }
+ else {
+    mMenuShowWifi.setVisible(false);
+  }
+  mMenuShowEthernet=menu.findItem(R.id.data_usage_menu_show_ethernet);
+  if (hasEthernet(context) && hasReadyMobileRadio(context)) {
+    mMenuShowEthernet.setVisible(!appDetailMode);
+  }
+ else {
+    mMenuShowEthernet.setVisible(false);
+  }
   mMenuRestrictBackground=menu.findItem(R.id.data_usage_menu_restrict_background);
   mMenuRestrictBackground.setVisible(hasReadyMobileRadio(context) && isOwner && !appDetailMode);
-  mMenuRestrictBackground.setChecked(mPolicyManager.getRestrictBackground());
-  mMenuAutoSync=menu.findItem(R.id.data_usage_menu_auto_sync);
-  mMenuAutoSync.setChecked(ContentResolver.getMasterSyncAutomatically());
-  mMenuAutoSync.setVisible(!appDetailMode);
-  final MenuItem split4g=menu.findItem(R.id.data_usage_menu_split_4g);
-  split4g.setVisible(hasReadyMobile4gRadio(context) && isOwner && !appDetailMode);
-  split4g.setChecked(isMobilePolicySplit());
-  final MenuItem showWifi=menu.findItem(R.id.data_usage_menu_show_wifi);
-  if (hasWifiRadio(context) && hasReadyMobileRadio(context)) {
-    showWifi.setVisible(!appDetailMode);
-    showWifi.setChecked(mShowWifi);
-  }
- else {
-    showWifi.setVisible(false);
-  }
-  final MenuItem showEthernet=menu.findItem(R.id.data_usage_menu_show_ethernet);
-  if (hasEthernet(context) && hasReadyMobileRadio(context)) {
-    showEthernet.setVisible(!appDetailMode);
-    showEthernet.setChecked(mShowEthernet);
-  }
- else {
-    showEthernet.setVisible(false);
-  }
   final MenuItem metered=menu.findItem(R.id.data_usage_menu_metered);
   if (hasReadyMobileRadio(context) || hasWifiRadio(context)) {
     metered.setVisible(!appDetailMode);
   }
  else {
     metered.setVisible(false);
+  }
+  mMenuSimCards=menu.findItem(R.id.data_usage_menu_sim_cards);
+  mMenuSimCards.setVisible(false);
+  mMenuCellularNetworks=menu.findItem(R.id.data_usage_menu_cellular_networks);
+  if (hasReadyMobileRadio(context)) {
+    mMenuCellularNetworks.setVisible(!appDetailMode);
+  }
+ else {
+    mMenuCellularNetworks.setVisible(false);
   }
   final MenuItem help=menu.findItem(R.id.data_usage_menu_help);
   String helpUrl;
@@ -45,4 +42,5 @@
  else {
     help.setVisible(false);
   }
+  updateMenuTitles();
 }

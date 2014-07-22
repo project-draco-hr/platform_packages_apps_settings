@@ -4,7 +4,9 @@
   final int stroke=a.getColor(R.styleable.ChartNetworkSeriesView_strokeColor,Color.RED);
   final int fill=a.getColor(R.styleable.ChartNetworkSeriesView_fillColor,Color.RED);
   final int fillSecondary=a.getColor(R.styleable.ChartNetworkSeriesView_fillColorSecondary,Color.RED);
+  final int safeRegion=a.getDimensionPixelSize(R.styleable.ChartNetworkSeriesView_safeRegion,0);
   setChartColor(stroke,fill,fillSecondary);
+  setSafeRegion(safeRegion);
   setWillNotDraw(false);
   a.recycle();
   mPathStroke=new Path();

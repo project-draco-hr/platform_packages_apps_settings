@@ -1,9 +1,9 @@
 {
+  boolean dataEnabledVisible=mDataEnabledSupported;
+  boolean disableAtLimitVisible=mDisableAtLimitSupported;
   if (isAppDetailMode()) {
-    mNetworkSwitches.setVisibility(View.GONE);
-  }
- else {
-    mNetworkSwitches.setVisibility(View.VISIBLE);
+    dataEnabledVisible=false;
+    disableAtLimitVisible=false;
   }
   if (TAB_MOBILE.equals(mCurrentTab)) {
     mBinding=true;
@@ -12,16 +12,17 @@
   }
   final NetworkPolicy policy=mPolicyEditor.getPolicy(mTemplate);
   if (isNetworkPolicyModifiable(policy)) {
-    mDisableAtLimitView.setVisibility(View.VISIBLE);
     mDisableAtLimit.setChecked(policy != null && policy.limitBytes != LIMIT_DISABLED);
     if (!isAppDetailMode()) {
       mChart.bindNetworkPolicy(policy);
     }
   }
  else {
-    mDisableAtLimitView.setVisibility(View.GONE);
+    disableAtLimitVisible=false;
     mChart.bindNetworkPolicy(null);
   }
+  mDataEnabledView.setVisibility(dataEnabledVisible ? View.VISIBLE : View.GONE);
+  mDisableAtLimitView.setVisibility(disableAtLimitVisible ? View.VISIBLE : View.GONE);
   if (refreshCycle) {
     updateCycleList(policy);
   }

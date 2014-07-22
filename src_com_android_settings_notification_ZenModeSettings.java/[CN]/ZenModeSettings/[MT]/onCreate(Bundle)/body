@@ -2,8 +2,6 @@
   super.onCreate(savedInstanceState);
   mContext=getActivity();
   mPM=mContext.getPackageManager();
-  final Resources res=mContext.getResources();
-  final int padding=res.getDimensionPixelSize(R.dimen.content_margin_left);
   addPreferencesFromResource(R.xml.zen_mode_settings);
   final PreferenceScreen root=getPreferenceScreen();
   mConfig=getZenModeConfig();
@@ -13,6 +11,8 @@
     zenMode.setTitle(R.string.zen_mode_option_title_novoice);
   }
   final PreferenceCategory important=(PreferenceCategory)root.findPreference(KEY_IMPORTANT);
+  final Preference alarmInfo=important.findPreference(KEY_ALARM_INFO);
+  important.removePreference(alarmInfo);
   mCalls=(SwitchPreference)important.findPreference(KEY_CALLS);
   if (Utils.isVoiceCapable(mContext)) {
     mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
@@ -65,18 +65,6 @@
   }
 );
   important.addPreference(mStarred);
-  final Preference alarmInfo=new Preference(mContext){
-    @Override public View getView(    View convertView,    ViewGroup parent){
-      final TextView tv=new TextView(mContext);
-      tv.setTypeface(Typeface.create(Typeface.DEFAULT,Typeface.ITALIC));
-      tv.setPadding(padding,padding,padding,padding);
-      tv.setText(R.string.zen_mode_alarm_info);
-      return tv;
-    }
-  }
-;
-  alarmInfo.setPersistent(false);
-  alarmInfo.setSelectable(false);
   important.addPreference(alarmInfo);
   final PreferenceCategory downtime=(PreferenceCategory)root.findPreference(KEY_DOWNTIME);
   mDays=downtime.findPreference(KEY_DAYS);

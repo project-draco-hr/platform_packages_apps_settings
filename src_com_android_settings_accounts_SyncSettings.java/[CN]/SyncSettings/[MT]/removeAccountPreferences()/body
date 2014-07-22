@@ -1,0 +1,11 @@
+{
+  PreferenceScreen parent=getPreferenceScreen();
+  for (int i=0; i < parent.getPreferenceCount(); ) {
+    if (parent.getPreference(i) instanceof AccountPreference) {
+      parent.removePreference(parent.getPreference(i));
+    }
+ else {
+      i++;
+    }
+  }
+}

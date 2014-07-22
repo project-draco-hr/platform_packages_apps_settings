@@ -5,7 +5,7 @@
   final boolean isChecking=(Boolean)newValue;
   for (  final String imiId : mAutoSelectionPrefsMap.keySet()) {
     if (mAutoSelectionPrefsMap.get(imiId) == pref) {
-      final CheckBoxPreference autoSelectionPref=(CheckBoxPreference)pref;
+      final TwoStatePreference autoSelectionPref=(TwoStatePreference)pref;
       autoSelectionPref.setChecked(isChecking);
       setAutoSelectionSubtypesEnabled(imiId,autoSelectionPref.isChecked());
       return false;

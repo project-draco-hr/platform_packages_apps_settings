@@ -6,10 +6,10 @@
     return;
   }
   for (  final Preference pref : subtypePrefs) {
-    if (!(pref instanceof CheckBoxPreference)) {
+    if (!(pref instanceof TwoStatePreference)) {
       continue;
     }
-    final CheckBoxPreference subtypePref=(CheckBoxPreference)pref;
+    final TwoStatePreference subtypePref=(TwoStatePreference)pref;
     subtypePref.setChecked(false);
     if (check) {
       for (      final InputMethodSubtype subtype : implicitlyEnabledSubtypes) {

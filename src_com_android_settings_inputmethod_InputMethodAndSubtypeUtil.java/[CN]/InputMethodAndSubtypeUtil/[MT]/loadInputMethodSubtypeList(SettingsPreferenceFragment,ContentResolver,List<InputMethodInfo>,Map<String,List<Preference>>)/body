@@ -3,10 +3,10 @@
   for (  final InputMethodInfo imi : inputMethodInfos) {
     final String imiId=imi.getId();
     final Preference pref=context.findPreference(imiId);
-    if (pref instanceof CheckBoxPreference) {
-      final CheckBoxPreference checkBoxPreference=(CheckBoxPreference)pref;
+    if (pref instanceof TwoStatePreference) {
+      final TwoStatePreference subtypePref=(TwoStatePreference)pref;
       final boolean isEnabled=enabledSubtypes.containsKey(imiId);
-      checkBoxPreference.setChecked(isEnabled);
+      subtypePref.setChecked(isEnabled);
       if (inputMethodPrefsMap != null) {
         for (        final Preference childPref : inputMethodPrefsMap.get(imiId)) {
           childPref.setEnabled(isEnabled);

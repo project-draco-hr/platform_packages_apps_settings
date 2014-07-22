@@ -1,6 +1,8 @@
 {
   final Context context=getContext();
-  mLayoutStart=makeLayout(formatDateRange(context,start,start));
-  mLayoutEnd=makeLayout(formatDateRange(context,end,end));
+  final long mid=(start + end) / 2;
+  mLabelStart=makeLabel(formatDateRange(context,start,start));
+  mLabelMid=makeLabel(formatDateRange(context,mid,mid));
+  mLabelEnd=makeLabel(formatDateRange(context,end,end));
   invalidate();
 }

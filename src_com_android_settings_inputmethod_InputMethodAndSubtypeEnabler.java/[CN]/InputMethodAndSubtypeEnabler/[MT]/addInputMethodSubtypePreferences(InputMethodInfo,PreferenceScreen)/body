@@ -14,6 +14,7 @@
   final CheckBoxPreference autoSelectionPref=new CheckBoxPreference(context);
   mAutoSelectionPrefsMap.put(imiId,autoSelectionPref);
   keyboardSettingsCategory.addPreference(autoSelectionPref);
+  autoSelectionPref.setOnPreferenceChangeListener(this);
   final PreferenceCategory activeInputMethodsCategory=new PreferenceCategory(context);
   activeInputMethodsCategory.setTitle(R.string.active_input_method_subtypes);
   root.addPreference(activeInputMethodsCategory);
@@ -44,6 +45,7 @@
   for (int index=0; index < prefCount; ++index) {
     final Preference pref=subtypePreferences.get(index);
     activeInputMethodsCategory.addPreference(pref);
+    pref.setOnPreferenceChangeListener(this);
     InputMethodAndSubtypeUtil.removeUnnecessaryNonPersistentPreference(pref);
   }
   mInputMethodAndSubtypePrefsMap.put(imiId,subtypePreferences);

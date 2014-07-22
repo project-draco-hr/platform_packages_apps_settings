@@ -11,7 +11,7 @@
   final CharSequence label=imi.loadLabel(pm);
   keyboardSettingsCategory.setTitle(label);
   keyboardSettingsCategory.setKey(imiId);
-  final CheckBoxPreference autoSelectionPref=new CheckBoxPreference(context);
+  final TwoStatePreference autoSelectionPref=new SwitchWithNoTextPreference(context);
   mAutoSelectionPrefsMap.put(imiId,autoSelectionPref);
   keyboardSettingsCategory.addPreference(autoSelectionPref);
   autoSelectionPref.setOnPreferenceChangeListener(this);

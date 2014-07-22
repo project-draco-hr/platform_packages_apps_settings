@@ -1,0 +1,23 @@
+{
+  if (!(newValue instanceof Boolean)) {
+    return true;
+  }
+  final boolean isChecking=(Boolean)newValue;
+  for (  final String imiId : mAutoSelectionPrefsMap.keySet()) {
+    if (mAutoSelectionPrefsMap.get(imiId) == pref) {
+      final CheckBoxPreference autoSelectionPref=(CheckBoxPreference)pref;
+      autoSelectionPref.setChecked(isChecking);
+      setAutoSelectionSubtypesEnabled(imiId,autoSelectionPref.isChecked());
+      return false;
+    }
+  }
+  if (pref instanceof InputMethodSubtypePreference) {
+    final InputMethodSubtypePreference subtypePref=(InputMethodSubtypePreference)pref;
+    subtypePref.setChecked(isChecking);
+    if (!subtypePref.isChecked()) {
+      updateAutoSelectionPreferences();
+    }
+    return false;
+  }
+  return true;
+}

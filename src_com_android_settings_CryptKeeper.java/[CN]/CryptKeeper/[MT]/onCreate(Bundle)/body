@@ -8,6 +8,13 @@
     finish();
     return;
   }
+  try {
+    if (getResources().getBoolean(R.bool.crypt_keeper_allow_rotation)) {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+  }
+ catch (  NotFoundException e) {
+  }
   mStatusBar=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);
   mStatusBar.disable(sWidgetsToDisable);
   setAirplaneModeIfNecessary();

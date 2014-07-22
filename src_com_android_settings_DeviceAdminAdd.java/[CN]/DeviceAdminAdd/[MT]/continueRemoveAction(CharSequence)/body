@@ -1,0 +1,25 @@
+{
+  if (!mWaitingForRemoveMsg) {
+    return;
+  }
+  mWaitingForRemoveMsg=false;
+  if (msg == null) {
+    try {
+      ActivityManagerNative.getDefault().resumeAppSwitches();
+    }
+ catch (    RemoteException e) {
+    }
+    mDPM.removeActiveAdmin(mDeviceAdmin.getComponent());
+    finish();
+  }
+ else {
+    try {
+      ActivityManagerNative.getDefault().stopAppSwitches();
+    }
+ catch (    RemoteException e) {
+    }
+    Bundle args=new Bundle();
+    args.putCharSequence(DeviceAdminReceiver.EXTRA_DISABLE_WARNING,msg);
+    showDialog(DIALOG_WARNING,args);
+  }
+}

@@ -1,4 +1,10 @@
 {
   super.onResume();
   updateInterface();
+  final int uid=mDeviceAdmin.getActivityInfo().applicationInfo.uid;
+  final String pkg=mDeviceAdmin.getActivityInfo().applicationInfo.packageName;
+  mCurSysAppOpMode=mAppOps.checkOp(AppOpsManager.OP_SYSTEM_ALERT_WINDOW,uid,pkg);
+  mCurToastAppOpMode=mAppOps.checkOp(AppOpsManager.OP_TOAST_WINDOW,uid,pkg);
+  mAppOps.setMode(AppOpsManager.OP_SYSTEM_ALERT_WINDOW,uid,pkg,AppOpsManager.MODE_IGNORED);
+  mAppOps.setMode(AppOpsManager.OP_TOAST_WINDOW,uid,pkg,AppOpsManager.MODE_IGNORED);
 }

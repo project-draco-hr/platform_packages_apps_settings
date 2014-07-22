@@ -7,6 +7,11 @@ case DIALOG_WARNING:
       builder.setMessage(msg);
       builder.setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
         public void onClick(        DialogInterface dialog,        int which){
+          try {
+            ActivityManagerNative.getDefault().resumeAppSwitches();
+          }
+ catch (          RemoteException e) {
+          }
           mDPM.removeActiveAdmin(mDeviceAdmin.getComponent());
           finish();
         }

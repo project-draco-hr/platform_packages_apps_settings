@@ -14,9 +14,8 @@
       updateSingleProfileUi();
     }
  else {
-      mIsSingleProfileUi=false;
       updateProfileUi(currentProfile,KEY_CATEGORY_PERSONAL,KEY_ADD_ACCOUNT_PERSONAL,new ArrayList<String>());
-      final ArrayList<String> unusedPreferences=new ArrayList<String>(2);
+      final ArrayList<String> unusedPreferences=new ArrayList<String>(1);
       unusedPreferences.add(KEY_ADD_ACCOUNT);
       updateProfileUi(managedProfile,KEY_CATEGORY_WORK,KEY_ADD_ACCOUNT_WORK,unusedPreferences);
       mManagedProfileBroadcastReceiver=new ManagedProfileBroadcastReceiver();

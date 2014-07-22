@@ -3,25 +3,15 @@
   if (!mPathValid) {
     generatePath();
   }
-  final float primaryLeftPoint=mHoriz.convertToPoint(mPrimaryLeft);
-  final float primaryRightPoint=mHoriz.convertToPoint(mPrimaryRight);
   if (mEstimateVisible) {
     save=canvas.save();
     canvas.clipRect(0,0,getWidth(),getHeight());
     canvas.drawPath(mPathEstimate,mPaintEstimate);
     canvas.restoreToCount(save);
   }
+  final Paint paintFill=mSecondary ? mPaintFillSecondary : mPaintFill;
   save=canvas.save();
-  canvas.clipRect(0,0,primaryLeftPoint,getHeight());
-  canvas.drawPath(mPathFill,mPaintFillSecondary);
-  canvas.restoreToCount(save);
-  save=canvas.save();
-  canvas.clipRect(primaryRightPoint,0,getWidth(),getHeight());
-  canvas.drawPath(mPathFill,mPaintFillSecondary);
-  canvas.restoreToCount(save);
-  save=canvas.save();
-  canvas.clipRect(primaryLeftPoint,0,primaryRightPoint,getHeight());
-  canvas.drawPath(mPathFill,mPaintFill);
-  canvas.drawPath(mPathStroke,mPaintStroke);
+  canvas.clipRect(mSafeRegion,0,getWidth(),getHeight() - mSafeRegion);
+  canvas.drawPath(mPathFill,paintFill);
   canvas.restoreToCount(save);
 }

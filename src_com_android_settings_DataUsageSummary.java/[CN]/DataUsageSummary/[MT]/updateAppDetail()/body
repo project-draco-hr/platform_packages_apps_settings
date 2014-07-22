@@ -17,13 +17,24 @@
   final UidDetail detail=mUidDetailProvider.getUidDetail(uid,true);
   mAppIcon.setImageDrawable(detail.icon);
   mAppTitles.removeAllViews();
+  View title=null;
   if (detail.detailLabels != null) {
     for (    CharSequence label : detail.detailLabels) {
-      mAppTitles.addView(inflateAppTitle(inflater,mAppTitles,label));
+      title=inflater.inflate(R.layout.data_usage_app_title,mAppTitles,false);
+      ((TextView)title.findViewById(R.id.app_title)).setText(label);
+      mAppTitles.addView(title);
     }
   }
  else {
-    mAppTitles.addView(inflateAppTitle(inflater,mAppTitles,detail.label));
+    title=inflater.inflate(R.layout.data_usage_app_title,mAppTitles,false);
+    ((TextView)title.findViewById(R.id.app_title)).setText(detail.label);
+    mAppTitles.addView(title);
+  }
+  if (title != null) {
+    mAppTotal=(TextView)title.findViewById(R.id.app_summary);
+  }
+ else {
+    mAppTotal=null;
   }
   final String[] packageNames=pm.getPackagesForUid(uid);
   if (packageNames != null && packageNames.length > 0) {

@@ -1,24 +1,33 @@
 {
-  if (convertView == null) {
-    convertView=LayoutInflater.from(parent.getContext()).inflate(R.layout.data_usage_item,parent,false);
-    if (mInsetSide > 0) {
-      convertView.setPaddingRelative(mInsetSide,0,mInsetSide,0);
-    }
-  }
-  final Context context=parent.getContext();
-  final TextView text1=(TextView)convertView.findViewById(android.R.id.text1);
-  final ProgressBar progress=(ProgressBar)convertView.findViewById(android.R.id.progress);
   final AppItem item=mItems.get(position);
-  UidDetailTask.bindView(mProvider,item,convertView);
-  if (item.restricted && item.total <= 0) {
-    text1.setText(R.string.data_usage_app_restricted);
-    progress.setVisibility(View.GONE);
+  if (getItemViewType(position) == 1) {
+    if (convertView == null) {
+      convertView=inflateCategoryHeader(LayoutInflater.from(parent.getContext()),parent);
+    }
+    final TextView title=(TextView)convertView.findViewById(android.R.id.title);
+    title.setText(R.string.data_usage_app);
   }
  else {
-    text1.setText(Formatter.formatFileSize(context,item.total));
-    progress.setVisibility(View.VISIBLE);
+    if (convertView == null) {
+      convertView=LayoutInflater.from(parent.getContext()).inflate(R.layout.data_usage_item,parent,false);
+      if (mInsetSide > 0) {
+        convertView.setPaddingRelative(mInsetSide,0,mInsetSide,0);
+      }
+    }
+    final Context context=parent.getContext();
+    final TextView text1=(TextView)convertView.findViewById(android.R.id.text1);
+    final ProgressBar progress=(ProgressBar)convertView.findViewById(android.R.id.progress);
+    UidDetailTask.bindView(mProvider,item,convertView);
+    if (item.restricted && item.total <= 0) {
+      text1.setText(R.string.data_usage_app_restricted);
+      progress.setVisibility(View.GONE);
+    }
+ else {
+      text1.setText(Formatter.formatFileSize(context,item.total));
+      progress.setVisibility(View.VISIBLE);
+    }
+    final int percentTotal=mLargest != 0 ? (int)(item.total * 100 / mLargest) : 0;
+    progress.setProgress(percentTotal);
   }
-  final int percentTotal=mLargest != 0 ? (int)(item.total * 100 / mLargest) : 0;
-  progress.setProgress(percentTotal);
   return convertView;
 }

@@ -1,0 +1,6 @@
+{
+  final Context context=getActivity();
+  final SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(context);
+  final String imesAndSubtypesString=prefs.getString(KEY_PREVIOUSLY_ENABLED_SUBTYPES,null);
+  return InputMethodAndSubtypeUtil.parseInputMethodsAndSubtypesString(imesAndSubtypesString);
+}

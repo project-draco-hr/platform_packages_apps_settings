@@ -1,28 +1,32 @@
 {
   String currentInputMethodId=Settings.Secure.getString(resolver,Settings.Secure.DEFAULT_INPUT_METHOD);
   final int selectedInputMethodSubtype=getInputMethodSubtypeSelected(resolver);
-  HashMap<String,HashSet<String>> enabledIMEAndSubtypesMap=getEnabledInputMethodsAndSubtypeList(resolver);
-  HashSet<String> disabledSystemIMEs=getDisabledSystemIMEs(resolver);
+  final HashMap<String,HashSet<String>> enabledIMEsAndSubtypesMap=getEnabledInputMethodsAndSubtypeList(resolver);
+  final HashSet<String> disabledSystemIMEs=getDisabledSystemIMEs(resolver);
   boolean needsToResetSelectedSubtype=false;
-  for (  InputMethodInfo imi : inputMethodInfos) {
+  for (  final InputMethodInfo imi : inputMethodInfos) {
     final String imiId=imi.getId();
-    Preference pref=context.findPreference(imiId);
-    if (pref == null)     continue;
-    final boolean isImeChecked=(pref instanceof TwoStatePreference) ? ((TwoStatePreference)pref).isChecked() : enabledIMEAndSubtypesMap.containsKey(imiId);
+    final Preference pref=context.findPreference(imiId);
+    if (pref == null) {
+      continue;
+    }
+    final boolean isImeChecked=(pref instanceof TwoStatePreference) ? ((TwoStatePreference)pref).isChecked() : enabledIMEsAndSubtypesMap.containsKey(imiId);
     final boolean isCurrentInputMethod=imiId.equals(currentInputMethodId);
     final boolean systemIme=InputMethodUtils.isSystemIme(imi);
     if ((!hasHardKeyboard && InputMethodSettingValuesWrapper.getInstance(context.getActivity()).isAlwaysCheckedIme(imi,context.getActivity())) || isImeChecked) {
-      if (!enabledIMEAndSubtypesMap.containsKey(imiId)) {
-        enabledIMEAndSubtypesMap.put(imiId,new HashSet<String>());
+      if (!enabledIMEsAndSubtypesMap.containsKey(imiId)) {
+        enabledIMEsAndSubtypesMap.put(imiId,new HashSet<String>());
       }
-      HashSet<String> subtypesSet=enabledIMEAndSubtypesMap.get(imiId);
+      final HashSet<String> subtypesSet=enabledIMEsAndSubtypesMap.get(imiId);
       boolean subtypePrefFound=false;
       final int subtypeCount=imi.getSubtypeCount();
       for (int i=0; i < subtypeCount; ++i) {
-        InputMethodSubtype subtype=imi.getSubtypeAt(i);
+        final InputMethodSubtype subtype=imi.getSubtypeAt(i);
         final String subtypeHashCodeStr=String.valueOf(subtype.hashCode());
         final TwoStatePreference subtypePref=(TwoStatePreference)context.findPreference(imiId + subtypeHashCodeStr);
-        if (subtypePref == null)         continue;
+        if (subtypePref == null) {
+          continue;
+        }
         if (!subtypePrefFound) {
           subtypesSet.clear();
           needsToResetSelectedSubtype=true;
@@ -42,7 +46,7 @@
       }
     }
  else {
-      enabledIMEAndSubtypesMap.remove(imiId);
+      enabledIMEsAndSubtypesMap.remove(imiId);
       if (isCurrentInputMethod) {
         if (DEBUG) {
           Log.d(TAG,"Current IME was uninstalled or disabled.");
@@ -63,13 +67,11 @@
       }
     }
   }
-  StringBuilder builder=new StringBuilder();
-  buildInputMethodsAndSubtypesString(builder,enabledIMEAndSubtypesMap);
-  StringBuilder disabledSysImesBuilder=new StringBuilder();
-  buildDisabledSystemInputMethods(disabledSysImesBuilder,disabledSystemIMEs);
+  final String enabledIMEsAndSubtypesString=buildInputMethodsAndSubtypesString(enabledIMEsAndSubtypesMap);
+  final String disabledSystemIMEsString=buildInputMethodsString(disabledSystemIMEs);
   if (DEBUG) {
-    Log.d(TAG,"--- Save enabled inputmethod settings. :" + builder.toString());
-    Log.d(TAG,"--- Save disable system inputmethod settings. :" + disabledSysImesBuilder.toString());
+    Log.d(TAG,"--- Save enabled inputmethod settings. :" + enabledIMEsAndSubtypesString);
+    Log.d(TAG,"--- Save disabled system inputmethod settings. :" + disabledSystemIMEsString);
     Log.d(TAG,"--- Save default inputmethod settings. :" + currentInputMethodId);
     Log.d(TAG,"--- Needs to reset the selected subtype :" + needsToResetSelectedSubtype);
     Log.d(TAG,"--- Subtype is selected :" + isInputMethodSubtypeSelected(resolver));
@@ -80,9 +82,9 @@
     }
     putSelectedInputMethodSubtype(resolver,NOT_A_SUBTYPE_ID);
   }
-  Settings.Secure.putString(resolver,Settings.Secure.ENABLED_INPUT_METHODS,builder.toString());
-  if (disabledSysImesBuilder.length() > 0) {
-    Settings.Secure.putString(resolver,Settings.Secure.DISABLED_SYSTEM_INPUT_METHODS,disabledSysImesBuilder.toString());
+  Settings.Secure.putString(resolver,Settings.Secure.ENABLED_INPUT_METHODS,enabledIMEsAndSubtypesString);
+  if (disabledSystemIMEsString.length() > 0) {
+    Settings.Secure.putString(resolver,Settings.Secure.DISABLED_SYSTEM_INPUT_METHODS,disabledSystemIMEsString);
   }
   Settings.Secure.putString(resolver,Settings.Secure.DEFAULT_INPUT_METHOD,currentInputMethodId != null ? currentInputMethodId : "");
 }

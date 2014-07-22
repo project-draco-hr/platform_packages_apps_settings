@@ -1,7 +1,7 @@
 {
   mContext=context;
-  mHasFeturePrinting=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_PRINTING);
-  mHasFetureIme=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_INPUT_METHODS);
+  mHasFeaturePrinting=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_PRINTING);
+  mHasFeatureIme=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_INPUT_METHODS);
   AccessibilityManager accessibilityManager=(AccessibilityManager)mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
   List<AccessibilityServiceInfo> accessibilityServices=accessibilityManager.getInstalledAccessibilityServiceList();
   final int accessibilityServiceCount=accessibilityServices.size();
@@ -13,7 +13,7 @@
     }
     mAccessibilityServices.add(resolveInfo.serviceInfo.packageName);
   }
-  if (mHasFeturePrinting) {
+  if (mHasFeaturePrinting) {
     PrintManager printManager=(PrintManager)mContext.getSystemService(Context.PRINT_SERVICE);
     List<PrintServiceInfo> printServices=printManager.getInstalledPrintServices();
     final int serviceCount=printServices.size();
@@ -26,7 +26,7 @@
       mPrintServices.add(resolveInfo.serviceInfo.packageName);
     }
   }
-  if (mHasFetureIme) {
+  if (mHasFeatureIme) {
     InputMethodManager imeManager=(InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
     List<InputMethodInfo> inputMethods=imeManager.getInputMethodList();
     final int inputMethodCount=inputMethods.size();

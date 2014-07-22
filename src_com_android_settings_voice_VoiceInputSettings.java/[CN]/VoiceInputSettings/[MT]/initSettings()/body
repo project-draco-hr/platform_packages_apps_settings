@@ -1,0 +1,24 @@
+{
+  mHelper=new VoiceInputHelper(getActivity());
+  mHelper.buildUi();
+  mServicePreferenceCategory.removeAll();
+  if (mHelper.mCurrentVoiceInteraction != null) {
+    mCurrentKey=mHelper.mCurrentVoiceInteraction.flattenToShortString();
+  }
+ else   if (mHelper.mCurrentRecognizer != null) {
+    mCurrentKey=mHelper.mCurrentRecognizer.flattenToShortString();
+  }
+ else {
+    mCurrentKey=null;
+  }
+  for (int i=0; i < mHelper.mAvailableInteractionInfos.size(); i++) {
+    VoiceInputHelper.InteractionInfo info=mHelper.mAvailableInteractionInfos.get(i);
+    VoiceInputPreference pref=new VoiceInputPreference(getActivity(),info,mInteractorSummary,mInteractorWarning,this);
+    mServicePreferenceCategory.addPreference(pref);
+  }
+  for (int i=0; i < mHelper.mAvailableRecognizerInfos.size(); i++) {
+    VoiceInputHelper.RecognizerInfo info=mHelper.mAvailableRecognizerInfos.get(i);
+    VoiceInputPreference pref=new VoiceInputPreference(getActivity(),info,mRecognizerSummary,null,this);
+    mServicePreferenceCategory.addPreference(pref);
+  }
+}

@@ -1,0 +1,30 @@
+{
+  if (mPreventRadioButtonCallbacks) {
+    return;
+  }
+  if (mSharedState.getCurrentChecked() == buttonView) {
+    updateCheckedState(isChecked);
+    return;
+  }
+  if (isChecked) {
+    if (shouldDisplayAlert()) {
+      displayAlert(new DialogInterface.OnClickListener(){
+        @Override public void onClick(        DialogInterface dialog,        int which){
+          makeCurrentChecked(buttonView);
+        }
+      }
+,new DialogInterface.OnClickListener(){
+        @Override public void onClick(        DialogInterface dialog,        int which){
+          buttonView.setChecked(false);
+        }
+      }
+);
+    }
+ else {
+      makeCurrentChecked(buttonView);
+    }
+  }
+ else {
+    updateCheckedState(isChecked);
+  }
+}

@@ -1,0 +1,5 @@
+{
+  mContext=context;
+  mAvailableVoiceInteractions=mContext.getPackageManager().queryIntentServices(new Intent(VoiceInteractionService.SERVICE_INTERFACE),PackageManager.GET_META_DATA);
+  mAvailableRecognition=mContext.getPackageManager().queryIntentServices(new Intent(RecognitionService.SERVICE_INTERFACE),PackageManager.GET_META_DATA);
+}

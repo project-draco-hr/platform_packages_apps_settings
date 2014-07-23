@@ -1,6 +1,8 @@
 {
   super.onPause();
-  if (mLocalManager == null)   return;
+  if (mLocalManager == null || isUiRestricted()) {
+    return;
+  }
   removeAllDevices();
   mLocalManager.setForegroundActivity(null);
   mLocalManager.getEventManager().unregisterCallback(this);

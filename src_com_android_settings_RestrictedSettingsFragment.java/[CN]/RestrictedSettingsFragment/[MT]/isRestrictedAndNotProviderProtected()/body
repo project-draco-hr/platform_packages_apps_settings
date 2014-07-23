@@ -1,0 +1,6 @@
+{
+  if (mRestrictionKey == null || RESTRICT_IF_OVERRIDABLE.equals(mRestrictionKey)) {
+    return false;
+  }
+  return mUserManager.hasUserRestriction(mRestrictionKey) && !mRestrictionsManager.hasRestrictionsProvider();
+}

@@ -1,11 +1,4 @@
 {
-  final ContentResolver res=getActivity().getContentResolver();
-  String info=mLockPatternUtils.getOwnerInfo(mUserId);
-  boolean enabled=mLockPatternUtils.isOwnerInfoEnabled();
-  mCheckbox=(CheckBox)mView.findViewById(R.id.show_owner_info_on_lockscreen_checkbox);
-  mOwnerInfo=(EditText)mView.findViewById(R.id.owner_info_edit_text);
-  mOwnerInfo.setText(info);
-  mOwnerInfo.setEnabled(enabled);
   mNickname=(EditText)mView.findViewById(R.id.owner_info_nickname);
   if (!mShowNickname) {
     mNickname.setVisibility(View.GONE);
@@ -14,6 +7,8 @@
     mNickname.setText(UserManager.get(getActivity()).getUserName());
     mNickname.setSelected(true);
   }
+  final boolean enabled=mLockPatternUtils.isOwnerInfoEnabled();
+  mCheckbox=(CheckBox)mView.findViewById(R.id.show_owner_info_on_lockscreen_checkbox);
   mCheckbox.setChecked(enabled);
   if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
     if (UserManager.get(getActivity()).isLinkedUser()) {
@@ -30,4 +25,10 @@
     }
   }
 );
+  String info=mLockPatternUtils.getOwnerInfo(mUserId);
+  mOwnerInfo=(EditText)mView.findViewById(R.id.owner_info_edit_text);
+  mOwnerInfo.setEnabled(enabled);
+  if (!TextUtils.isEmpty(info)) {
+    mOwnerInfo.setText(info);
+  }
 }

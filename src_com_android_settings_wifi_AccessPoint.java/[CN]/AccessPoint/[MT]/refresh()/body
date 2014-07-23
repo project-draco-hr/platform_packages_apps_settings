@@ -41,6 +41,9 @@ securityStrFormat=context.getString(R.string.wifi_secured_second_item);
 }
 }
 }
+if (summary.length() < 1) {
+summary.append("   ");
+}
 if (WifiSettings.mVerboseLogging > 0) {
 if (mInfo != null && mState != null) {
 summary.append(" (f=" + Integer.toString(mInfo.getFrequency()) + ")");

@@ -1,13 +1,15 @@
 {
   if (mBackground != null) {
-    int saveCount=canvas.save();
+    canvas.save();
     canvas.translate(0,mForegroundHeight);
     canvas.scale(mScale,mScale,0,0);
     mBackground.draw(canvas);
-    canvas.restoreToCount(saveCount);
+    canvas.restore();
   }
   if (mForeground != null) {
+    canvas.save();
     mForeground.draw(canvas);
+    canvas.restore();
   }
   super.onDraw(canvas);
 }

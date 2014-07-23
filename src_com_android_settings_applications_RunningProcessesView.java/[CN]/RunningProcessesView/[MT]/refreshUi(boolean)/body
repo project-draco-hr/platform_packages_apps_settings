@@ -1,6 +1,6 @@
 {
   if (dataChanged) {
-    ServiceListAdapter adapter=(ServiceListAdapter)(mListView.getAdapter());
+    ServiceListAdapter adapter=mAdapter;
     adapter.refreshItems();
     adapter.notifyDataSetChanged();
   }
@@ -14,22 +14,20 @@
     availMem=0;
   }
 synchronized (mState.mLock) {
-    if (mLastNumBackgroundProcesses != mState.mNumBackgroundProcesses || mLastBackgroundProcessMemory != mState.mBackgroundProcessMemory || mLastAvailMemory != availMem) {
+    if (mLastNumBackgroundProcesses != mState.mNumBackgroundProcesses || mLastBackgroundProcessMemory != mState.mBackgroundProcessMemory || mLastNumForegroundProcesses != mState.mNumForegroundProcesses || mLastForegroundProcessMemory != mState.mForegroundProcessMemory || mLastNumServiceProcesses != mState.mNumServiceProcesses || mLastServiceProcessMemory != mState.mServiceProcessMemory || mLastAvailMemory != availMem) {
       mLastNumBackgroundProcesses=mState.mNumBackgroundProcesses;
       mLastBackgroundProcessMemory=mState.mBackgroundProcessMemory;
+      mLastForegroundProcessMemory=mState.mForegroundProcessMemory;
+      mLastServiceProcessMemory=mState.mServiceProcessMemory;
       mLastAvailMemory=availMem;
       long freeMem=mLastAvailMemory + mLastBackgroundProcessMemory;
       BidiFormatter bidiFormatter=BidiFormatter.getInstance();
       String sizeStr=bidiFormatter.unicodeWrap(Formatter.formatShortFileSize(getContext(),freeMem));
-      mBackgroundProcessText.setText(getResources().getString(R.string.service_background_processes,sizeStr));
-      sizeStr=bidiFormatter.unicodeWrap(Formatter.formatShortFileSize(getContext(),mMemInfoReader.getTotalSize() - freeMem));
-      mForegroundProcessText.setText(getResources().getString(R.string.service_foreground_processes,sizeStr));
-    }
-    if (mLastNumForegroundProcesses != mState.mNumForegroundProcesses || mLastForegroundProcessMemory != mState.mForegroundProcessMemory || mLastNumServiceProcesses != mState.mNumServiceProcesses || mLastServiceProcessMemory != mState.mServiceProcessMemory) {
-      mLastNumForegroundProcesses=mState.mNumForegroundProcesses;
-      mLastForegroundProcessMemory=mState.mForegroundProcessMemory;
-      mLastNumServiceProcesses=mState.mNumServiceProcesses;
-      mLastServiceProcessMemory=mState.mServiceProcessMemory;
+      mBackgroundProcessText.setText(getResources().getString(R.string.running_processes_header_ram,sizeStr));
+      sizeStr=bidiFormatter.unicodeWrap(Formatter.formatShortFileSize(getContext(),mLastForegroundProcessMemory + mLastServiceProcessMemory));
+      mAppsProcessText.setText(getResources().getString(R.string.running_processes_header_ram,sizeStr));
+      sizeStr=bidiFormatter.unicodeWrap(Formatter.formatShortFileSize(getContext(),mMemInfoReader.getTotalSize() - freeMem - mLastForegroundProcessMemory- mLastServiceProcessMemory));
+      mForegroundProcessText.setText(getResources().getString(R.string.running_processes_header_ram,sizeStr));
     }
     float totalMem=mMemInfoReader.getTotalSize();
     float totalShownMem=availMem + mLastBackgroundProcessMemory + mLastServiceProcessMemory;

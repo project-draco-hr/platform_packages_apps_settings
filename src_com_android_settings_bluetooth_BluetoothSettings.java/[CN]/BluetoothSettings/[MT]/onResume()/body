@@ -3,6 +3,12 @@
     mBluetoothEnabler.resume(getActivity());
   }
   super.onResume();
+  if (isUiRestricted()) {
+    setDeviceListGroup(getPreferenceScreen());
+    removeAllDevices();
+    mEmptyView.setText(R.string.bluetooth_empty_list_user_restricted);
+    return;
+  }
   getActivity().registerReceiver(mReceiver,mIntentFilter);
   if (mLocalAdapter != null) {
     updateContent(mLocalAdapter.getBluetoothState(),mActivityStarted);

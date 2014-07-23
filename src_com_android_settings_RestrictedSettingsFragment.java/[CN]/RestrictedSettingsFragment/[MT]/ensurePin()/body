@@ -1,0 +1,13 @@
+{
+  if (!mChallengeSucceeded && !mChallengeRequested && mRestrictionsManager.hasRestrictionsProvider()) {
+    Intent intent=mRestrictionsManager.getLocalApprovalIntent();
+    if (intent != null) {
+      mChallengeRequested=true;
+      mChallengeSucceeded=false;
+      PersistableBundle request=new PersistableBundle();
+      request.putString(RestrictionsManager.REQUEST_KEY_MESSAGE,getResources().getString(R.string.restr_pin_enter_admin_pin));
+      intent.putExtra(RestrictionsManager.EXTRA_REQUEST_BUNDLE,request);
+      startActivityForResult(intent,REQUEST_PIN_CHALLENGE);
+    }
+  }
+}

@@ -17,5 +17,9 @@
     boolean auto=(Boolean)objValue;
     Settings.System.putInt(getContentResolver(),SCREEN_BRIGHTNESS_MODE,auto ? SCREEN_BRIGHTNESS_MODE_AUTOMATIC : SCREEN_BRIGHTNESS_MODE_MANUAL);
   }
+  if (preference == mLiftToWakePreference) {
+    boolean value=(Boolean)objValue;
+    Settings.Secure.putInt(getContentResolver(),WAKE_GESTURE_ENABLED,value ? 1 : 0);
+  }
   return true;
 }

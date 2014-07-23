@@ -4,6 +4,7 @@
     if (info != null)     return mPm.getApplicationLabel(info);
   }
  catch (  PackageManager.NameNotFoundException e) {
+    Log.e(TAG,"Cannot load package name",e);
   }
   return pkg;
 }

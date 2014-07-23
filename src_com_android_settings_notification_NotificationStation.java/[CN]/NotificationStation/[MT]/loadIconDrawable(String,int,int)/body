@@ -7,7 +7,7 @@
     return r.getDrawable(resId);
   }
  catch (  RuntimeException e) {
-    Log.w(TAG,"Icon not found in " + (pkg != null ? resId : "<system>") + ": "+ Integer.toHexString(resId));
+    Log.w(TAG,"Icon not found in " + (pkg != null ? resId : "<system>") + ": "+ Integer.toHexString(resId),e);
   }
   return null;
 }

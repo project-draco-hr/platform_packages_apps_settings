@@ -36,6 +36,7 @@
     }
     mDisplayHomeAsUpEnabled=savedState.getBoolean(SAVE_KEY_SHOW_HOME_AS_UP);
     mDisplaySearch=savedState.getBoolean(SAVE_KEY_SHOW_SEARCH);
+    mHomeActivitiesCount=savedState.getInt(SAVE_KEY_HOME_ACTIVITIES_COUNT,1);
   }
  else {
     if (!mIsShowingDashboard) {
@@ -115,4 +116,5 @@
       }
     }
   }
+  mHomeActivitiesCount=getHomeActivitiesCount();
 }

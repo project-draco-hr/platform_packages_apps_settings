@@ -2,6 +2,7 @@
   super.onCreate(icicle);
   mHandler=new Handler(getMainLooper());
   mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  mAppOps=(AppOpsManager)getSystemService(Context.APP_OPS_SERVICE);
   if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_NEW_TASK) != 0) {
     Log.w(TAG,"Cannot start ADD_DEVICE_ADMIN as a new task");
     finish();
@@ -123,32 +124,26 @@ catch (  IOException e) {
         }
         finish();
       }
- else {
+ else       if (!mWaitingForRemoveMsg) {
         try {
           ActivityManagerNative.getDefault().stopAppSwitches();
         }
  catch (        RemoteException e) {
         }
+        mWaitingForRemoveMsg=true;
         mDPM.getRemoveWarning(mDeviceAdmin.getComponent(),new RemoteCallback(mHandler){
           @Override protected void onResult(          Bundle bundle){
             CharSequence msg=bundle != null ? bundle.getCharSequence(DeviceAdminReceiver.EXTRA_DISABLE_WARNING) : null;
-            if (msg == null) {
-              try {
-                ActivityManagerNative.getDefault().resumeAppSwitches();
-              }
- catch (              RemoteException e) {
-              }
-              mDPM.removeActiveAdmin(mDeviceAdmin.getComponent());
-              finish();
-            }
- else {
-              Bundle args=new Bundle();
-              args.putCharSequence(DeviceAdminReceiver.EXTRA_DISABLE_WARNING,msg);
-              showDialog(DIALOG_WARNING,args);
-            }
+            continueRemoveAction(msg);
           }
         }
 );
+        getWindow().getDecorView().getHandler().postDelayed(new Runnable(){
+          @Override public void run(){
+            continueRemoveAction(null);
+          }
+        }
+,2 * 1000);
       }
     }
   }

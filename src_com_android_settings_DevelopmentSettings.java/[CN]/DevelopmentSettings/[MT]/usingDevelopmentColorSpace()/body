@@ -1,0 +1,12 @@
+{
+  final ContentResolver cr=getContentResolver();
+  final boolean enabled=Settings.Secure.getInt(cr,Settings.Secure.ACCESSIBILITY_DISPLAY_DALTONIZER_ENABLED,0) != 0;
+  if (enabled) {
+    final String mode=Integer.toString(Settings.Secure.getInt(cr,Settings.Secure.ACCESSIBILITY_DISPLAY_DALTONIZER,AccessibilityManager.DALTONIZER_DISABLED));
+    final int index=mSimulateColorSpace.findIndexOfValue(mode);
+    if (index >= 0) {
+      return true;
+    }
+  }
+  return false;
+}

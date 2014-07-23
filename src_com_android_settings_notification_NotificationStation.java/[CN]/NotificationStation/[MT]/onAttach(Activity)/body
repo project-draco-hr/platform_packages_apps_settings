@@ -8,5 +8,6 @@
     mListener.registerAsSystemService(new ComponentName(mContext.getPackageName(),this.getClass().getCanonicalName()),ActivityManager.getCurrentUser());
   }
  catch (  RemoteException e) {
+    Log.e(TAG,"Cannot register listener",e);
   }
 }

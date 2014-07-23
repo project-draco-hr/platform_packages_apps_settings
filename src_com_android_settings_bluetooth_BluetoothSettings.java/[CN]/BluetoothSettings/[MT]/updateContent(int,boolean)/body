@@ -6,6 +6,10 @@ case BluetoothAdapter.STATE_ON:
     preferenceScreen.removeAll();
   preferenceScreen.setOrderingAsAdded(true);
 mDevicePreferenceMap.clear();
+if (isUiRestricted()) {
+messageId=R.string.bluetooth_empty_list_user_restricted;
+break;
+}
 if (mPairedDevicesCategory == null) {
 mPairedDevicesCategory=new PreferenceCategory(getActivity());
 }
@@ -21,9 +25,7 @@ mAvailableDevicesCategory.setSelectable(false);
  else {
 mAvailableDevicesCategory.removeAll();
 }
-if (!isRestrictedAndNotPinProtected()) {
 addDeviceCategory(mAvailableDevicesCategory,R.string.bluetooth_preference_found_devices,BluetoothDeviceFilter.UNBONDED_DEVICE_FILTER);
-}
 int numberOfAvailableDevices=mAvailableDevicesCategory.getPreferenceCount();
 mAvailableDevicesCategoryIsPresent=true;
 if (numberOfAvailableDevices == 0) {
@@ -56,6 +58,9 @@ messageId=R.string.bluetooth_turning_off;
 break;
 case BluetoothAdapter.STATE_OFF:
 messageId=R.string.bluetooth_empty_list_bluetooth_off;
+if (isUiRestricted()) {
+messageId=R.string.bluetooth_empty_list_user_restricted;
+}
 break;
 case BluetoothAdapter.STATE_TURNING_ON:
 messageId=R.string.bluetooth_turning_on;
@@ -64,5 +69,7 @@ break;
 setDeviceListGroup(preferenceScreen);
 removeAllDevices();
 mEmptyView.setText(messageId);
+if (!isUiRestricted()) {
 getActivity().invalidateOptionsMenu();
+}
 }

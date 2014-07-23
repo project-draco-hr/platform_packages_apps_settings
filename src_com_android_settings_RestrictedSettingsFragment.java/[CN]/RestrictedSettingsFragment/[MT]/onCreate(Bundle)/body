@@ -1,9 +1,20 @@
 {
   super.onCreate(icicle);
+  mRestrictionsManager=(RestrictionsManager)getSystemService(Context.RESTRICTIONS_SERVICE);
   mUserManager=(UserManager)getSystemService(Context.USER_SERVICE);
   if (icicle != null) {
     mChallengeSucceeded=icicle.getBoolean(KEY_CHALLENGE_SUCCEEDED,false);
     mChallengeRequested=icicle.getBoolean(KEY_CHALLENGE_REQUESTED,false);
-    mResumeActionBundle=icicle.getBundle(KEY_RESUME_ACTION_BUNDLE);
+  }
+ else {
+    mChallengeSucceeded=false;
+    mChallengeRequested=false;
+  }
+  mScreenToggledOff=false;
+  IntentFilter offFilter=new IntentFilter(Intent.ACTION_SCREEN_OFF);
+  offFilter.addAction(Intent.ACTION_USER_PRESENT);
+  getActivity().registerReceiver(mScreenOffReceiver,offFilter);
+  if (shouldBeProviderProtected(mRestrictionKey)) {
+    ensurePin();
   }
 }

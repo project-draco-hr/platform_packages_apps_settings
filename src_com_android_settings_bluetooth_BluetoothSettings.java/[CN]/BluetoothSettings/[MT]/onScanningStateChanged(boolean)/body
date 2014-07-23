@@ -1,4 +1,6 @@
 {
   super.onScanningStateChanged(started);
-  getActivity().invalidateOptionsMenu();
+  if (getActivity() != null) {
+    getActivity().invalidateOptionsMenu();
+  }
 }

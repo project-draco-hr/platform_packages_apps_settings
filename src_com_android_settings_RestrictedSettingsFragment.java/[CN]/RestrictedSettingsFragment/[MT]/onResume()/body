@@ -1,12 +1,9 @@
 {
   super.onResume();
-  if (shouldBePinProtected(mRestrictionKey)) {
-    ensurePin(null);
+  if (mScreenToggledOff) {
+    mScreenToggledOff=false;
+    if (shouldBeProviderProtected(mRestrictionKey)) {
+      ensurePin();
+    }
   }
- else {
-    mChallengeSucceeded=false;
-  }
-  IntentFilter filter=new IntentFilter(Intent.ACTION_SCREEN_OFF);
-  filter.addAction(Intent.ACTION_USER_PRESENT);
-  getActivity().registerReceiver(mScreenOffReceiver,filter);
 }

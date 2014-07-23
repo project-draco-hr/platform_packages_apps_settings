@@ -5,4 +5,8 @@
     int brightnessMode=Settings.System.getInt(getContentResolver(),SCREEN_BRIGHTNESS_MODE,SCREEN_BRIGHTNESS_MODE_MANUAL);
     mAutoBrightnessPreference.setChecked(brightnessMode != SCREEN_BRIGHTNESS_MODE_MANUAL);
   }
+  if (mLiftToWakePreference != null) {
+    int value=Settings.Secure.getInt(getContentResolver(),WAKE_GESTURE_ENABLED,0);
+    mLiftToWakePreference.setChecked(value != 0);
+  }
 }

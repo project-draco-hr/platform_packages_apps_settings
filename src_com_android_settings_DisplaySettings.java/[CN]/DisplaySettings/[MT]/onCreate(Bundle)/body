@@ -16,10 +16,17 @@
   mFontSizePref.setOnPreferenceChangeListener(this);
   mFontSizePref.setOnPreferenceClickListener(this);
   if (isAutomaticBrightnessAvailable(getResources())) {
-    mAutoBrightnessPreference=(CheckBoxPreference)findPreference(KEY_AUTO_BRIGHTNESS);
+    mAutoBrightnessPreference=(SwitchPreference)findPreference(KEY_AUTO_BRIGHTNESS);
     mAutoBrightnessPreference.setOnPreferenceChangeListener(this);
   }
  else {
     removePreference(KEY_AUTO_BRIGHTNESS);
+  }
+  if (isLiftToWakeAvailable(getActivity())) {
+    mLiftToWakePreference=(SwitchPreference)findPreference(KEY_LIFT_TO_WAKE);
+    mLiftToWakePreference.setOnPreferenceChangeListener(this);
+  }
+ else {
+    removePreference(KEY_LIFT_TO_WAKE);
   }
 }

@@ -1,0 +1,13 @@
+{
+  final TelephonyManager tm=(TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+  addPreferencesFromResource(R.xml.sim_settings);
+  final PreferenceCategory simCards=(PreferenceCategory)findPreference(SIM_CARD_CATEGORY);
+  final int numSlots=tm.getSimCount();
+  mAvailableSubInfos=new ArrayList<SubInfoRecord>(numSlots);
+  for (int i=0; i < numSlots; ++i) {
+    final SubInfoRecord sir=findRecordBySlotId(i);
+    simCards.addPreference(new SimPreference(getActivity(),sir,i));
+    mAvailableSubInfos.add(sir);
+  }
+  updateActivitesCategory();
+}

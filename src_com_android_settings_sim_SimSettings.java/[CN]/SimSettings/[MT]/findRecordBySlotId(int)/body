@@ -1,0 +1,12 @@
+{
+  if (mSubInfoList != null) {
+    final int availableSubInfoLength=mSubInfoList.size();
+    for (int i=0; i < availableSubInfoLength; ++i) {
+      final SubInfoRecord sir=mSubInfoList.get(i);
+      if (sir.mSlotId == slotId) {
+        return sir;
+      }
+    }
+  }
+  return null;
+}

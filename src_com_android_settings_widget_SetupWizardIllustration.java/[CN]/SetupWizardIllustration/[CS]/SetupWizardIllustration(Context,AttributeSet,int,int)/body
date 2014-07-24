@@ -1,0 +1,10 @@
+{
+  super(context,attrs,defStyleAttr,defStyleRes);
+  if (attrs != null) {
+    TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.SetupWizardIllustration,0,0);
+    mAspectRatio=a.getFloat(R.styleable.SetupWizardIllustration_aspectRatio,0.0f);
+    a.recycle();
+  }
+  mBaselineGridSize=getResources().getDisplayMetrics().density * 8;
+  setWillNotDraw(false);
+}

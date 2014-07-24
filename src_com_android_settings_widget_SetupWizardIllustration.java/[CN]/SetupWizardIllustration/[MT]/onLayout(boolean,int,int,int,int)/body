@@ -1,0 +1,23 @@
+{
+  final int layoutWidth=right - left;
+  final int layoutHeight=bottom - top;
+  if (mForeground != null) {
+    final float intrinsicWidth=mForeground.getIntrinsicWidth();
+    final float intrinsicHeight=mForeground.getIntrinsicHeight();
+    if (intrinsicWidth <= 0 || intrinsicHeight <= 0) {
+      Log.e(TAG,"Foreground drawable intrinsic size must be defined and positive");
+      mForeground=null;
+      mForegroundHeight=0;
+      mScale=1.0f;
+    }
+ else {
+      mScale=layoutWidth / intrinsicWidth;
+      mForegroundHeight=(int)(intrinsicHeight * mScale);
+      mForeground.setBounds(0,0,layoutWidth,mForegroundHeight);
+    }
+  }
+  if (mBackground != null) {
+    mBackground.setBounds(0,0,(int)Math.ceil(layoutWidth / mScale),(int)Math.ceil((layoutHeight - mForegroundHeight) / mScale));
+  }
+  super.onLayout(changed,left,top,right,bottom);
+}

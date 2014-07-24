@@ -1,0 +1,32 @@
+{
+  final DropDownPreference simPref=preference;
+  final String keyPref=simPref.getKey();
+  final boolean askFirst=keyPref.equals(KEY_CALLS) || keyPref.equals(KEY_SMS);
+  simPref.clearItems();
+  if (askFirst) {
+    simPref.addItem(getResources().getString(R.string.sim_calls_ask_first_prefs_title),null);
+  }
+  final int subAvailableSize=mAvailableSubInfos.size();
+  for (int i=0; i < subAvailableSize; ++i) {
+    final SubInfoRecord sir=mAvailableSubInfos.get(i);
+    if (sir != null) {
+      simPref.addItem(sir.mDisplayName,sir);
+    }
+  }
+  simPref.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object value){
+      final long subId=value == null ? 0 : ((SubInfoRecord)value).mSubId;
+      if (simPref.getKey().equals(KEY_CELLULAR_DATA)) {
+        SubscriptionManager.setDefaultDataSubId(subId);
+      }
+ else       if (simPref.getKey().equals(KEY_CALLS)) {
+        SubscriptionManager.setDefaultVoiceSubId(subId);
+      }
+ else       if (simPref.getKey().equals(KEY_SMS)) {
+      }
+      updateAllOptions();
+      return true;
+    }
+  }
+);
+}

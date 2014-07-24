@@ -1,0 +1,30 @@
+{
+  AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+  final View dialogLayout=getActivity().getLayoutInflater().inflate(R.layout.multi_sim_dialog,null);
+  builder.setView(dialogLayout);
+  EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);
+  nameText.setText(mSubInfoRecord.mDisplayName);
+  TextView numberView=(TextView)dialogLayout.findViewById(R.id.number);
+  numberView.setText(mSubInfoRecord.mNumber);
+  TextView carrierView=(TextView)dialogLayout.findViewById(R.id.carrier);
+  carrierView.setText(mSubInfoRecord.mDisplayName);
+  builder.setTitle(R.string.sim_editor_title);
+  builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int whichButton){
+      final EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);
+      final Spinner displayNumbers=(Spinner)dialogLayout.findViewById(R.id.display_numbers);
+      SubscriptionManager.setDisplayNumberFormat(getActivity(),displayNumbers.getSelectedItemPosition() == 0 ? SubscriptionManager.DISPLAY_NUMBER_LAST : SubscriptionManager.DISPLAY_NUMBER_FIRST,mSubInfoRecord.mSubId);
+      mSubInfoRecord.mDisplayName=nameText.getText().toString();
+      SubscriptionManager.setDisplayName(getActivity(),mSubInfoRecord.mDisplayName,mSubInfoRecord.mSubId);
+      updateAllOptions();
+    }
+  }
+);
+  builder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int whichButton){
+      dialog.dismiss();
+    }
+  }
+);
+  builder.create().show();
+}

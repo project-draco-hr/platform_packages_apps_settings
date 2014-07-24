@@ -1,0 +1,7 @@
+{
+  final DropDownPreference simPref=(DropDownPreference)findPreference(KEY_CELLULAR_DATA);
+  final SubInfoRecord sir=findRecordBySubId(SubscriptionManager.getDefaultDataSubId());
+  if (sir != null) {
+    simPref.setSelectedItem(sir.mSlotId);
+  }
+}

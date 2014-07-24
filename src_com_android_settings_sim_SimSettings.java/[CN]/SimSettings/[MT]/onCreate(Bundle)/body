@@ -1,0 +1,8 @@
+{
+  super.onCreate(bundle);
+  if (mSubInfoList == null) {
+    mSubInfoList=SubscriptionManager.getActivatedSubInfoList(getActivity());
+  }
+  createPreferences();
+  updateAllOptions();
+}

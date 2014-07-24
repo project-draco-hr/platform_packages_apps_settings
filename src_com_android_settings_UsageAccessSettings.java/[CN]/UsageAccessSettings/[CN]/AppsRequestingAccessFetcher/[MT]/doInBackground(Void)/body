@@ -1,0 +1,59 @@
+{
+  final String[] packages;
+  try {
+    packages=mIPackageManager.getAppOpPermissionPackages(Manifest.permission.PACKAGE_USAGE_STATS);
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"PackageManager is dead. Can't get list of packages requesting " + Manifest.permission.PACKAGE_USAGE_STATS);
+    return null;
+  }
+  if (packages == null) {
+    return null;
+  }
+  ArrayMap<String,PackageEntry> entries=new ArrayMap<>();
+  for (  final String packageName : packages) {
+    if (!shouldIgnorePackage(packageName)) {
+      entries.put(packageName,new PackageEntry(packageName));
+    }
+  }
+  final List<PackageInfo> packageInfos=mPackageManager.getPackagesHoldingPermissions(PM_USAGE_STATS_PERMISSION,0);
+  final int packageInfoCount=packageInfos != null ? packageInfos.size() : 0;
+  for (int i=0; i < packageInfoCount; i++) {
+    final PackageInfo packageInfo=packageInfos.get(i);
+    final PackageEntry pe=entries.get(packageInfo.packageName);
+    if (pe != null) {
+      pe.packageInfo=packageInfo;
+      pe.permissionGranted=true;
+    }
+  }
+  int packageCount=entries.size();
+  for (int i=0; i < packageCount; i++) {
+    final PackageEntry pe=entries.valueAt(i);
+    if (pe.packageInfo == null) {
+      try {
+        pe.packageInfo=mPackageManager.getPackageInfo(pe.packageName,0);
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+        entries.removeAt(i);
+        i--;
+        packageCount--;
+      }
+    }
+  }
+  final List<AppOpsManager.PackageOps> packageOps=mAppOpsManager.getPackagesForOps(APP_OPS_OP_CODES);
+  final int packageOpsCount=packageOps != null ? packageOps.size() : 0;
+  for (int i=0; i < packageOpsCount; i++) {
+    final AppOpsManager.PackageOps packageOp=packageOps.get(i);
+    final PackageEntry pe=entries.get(packageOp.getPackageName());
+    if (pe == null) {
+      Log.w(TAG,"AppOp permission exists for package " + packageOp.getPackageName() + " but package doesn't exist or did not request UsageStats access");
+      continue;
+    }
+    if (packageOp.getOps().size() < 1) {
+      Log.w(TAG,"No AppOps permission exists for package " + packageOp.getPackageName());
+      continue;
+    }
+    pe.appOpMode=packageOp.getOps().get(0).getMode();
+  }
+  return entries;
+}

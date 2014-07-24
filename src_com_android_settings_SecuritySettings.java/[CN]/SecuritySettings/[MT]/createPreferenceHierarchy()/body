@@ -110,26 +110,5 @@ mToggleAppInstallation.setEnabled(mIsPrimary);
 if (um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES) || um.hasUserRestriction(UserManager.DISALLOW_INSTALL_APPS)) {
 mToggleAppInstallation.setEnabled(false);
 }
-mToggleVerifyApps=(CheckBoxPreference)findPreference(KEY_TOGGLE_VERIFY_APPLICATIONS);
-if (mIsPrimary && showVerifierSetting()) {
-if (isVerifierInstalled()) {
-mToggleVerifyApps.setChecked(isVerifyAppsEnabled());
-}
- else {
-mToggleVerifyApps.setChecked(false);
-mToggleVerifyApps.setEnabled(false);
-}
-}
- else {
-if (deviceAdminCategory != null) {
-deviceAdminCategory.removePreference(mToggleVerifyApps);
-}
- else {
-mToggleVerifyApps.setEnabled(false);
-}
-}
-if (um.hasUserRestriction(UserManager.ENSURE_VERIFY_APPS)) {
-mToggleVerifyApps.setEnabled(false);
-}
 return root;
 }

@@ -4,20 +4,11 @@
       showDialog(DIALOG_CONFIRM_EXIT_GUEST);
       return true;
     }
-    Intent editProfile;
-    if (!mProfileExists) {
-      editProfile=new Intent(Intent.ACTION_INSERT,Contacts.CONTENT_URI);
-      editProfile.putExtra("newLocalProfile",true);
-    }
- else {
-      editProfile=new Intent(Intent.ACTION_EDIT,ContactsContract.Profile.CONTENT_URI);
-    }
-    editProfile.putExtra("finishActivityOnSaveCompleted",true);
     if (mUserManager.isLinkedUser()) {
       onManageUserClicked(UserHandle.myUserId(),false);
     }
  else {
-      startActivity(editProfile);
+      showDialog(DIALOG_USER_PROFILE_EDITOR);
     }
   }
  else   if (pref instanceof UserPreference) {

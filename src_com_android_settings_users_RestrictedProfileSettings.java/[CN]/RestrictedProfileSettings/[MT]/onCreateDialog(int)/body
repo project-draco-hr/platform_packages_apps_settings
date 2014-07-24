@@ -1,62 +1,6 @@
 {
   if (dialogId == DIALOG_ID_EDIT_USER_INFO) {
-    if (mEditUserInfoDialog != null) {
-      return mEditUserInfoDialog;
-    }
-    LayoutInflater inflater=getActivity().getLayoutInflater();
-    View content=inflater.inflate(R.layout.edit_user_info_dialog_content,null);
-    UserInfo info=mUserManager.getUserInfo(mUser.getIdentifier());
-    final EditText userNameView=(EditText)content.findViewById(R.id.user_name);
-    userNameView.setText(info.name);
-    final ImageView userPhotoView=(ImageView)content.findViewById(R.id.user_photo);
-    Drawable drawable=null;
-    if (mSavedPhoto != null) {
-      drawable=CircleFramedDrawable.getInstance(getActivity(),mSavedPhoto);
-    }
- else {
-      drawable=mUserIconView.getDrawable();
-      if (drawable == null) {
-        drawable=getCircularUserIcon();
-      }
-    }
-    userPhotoView.setImageDrawable(drawable);
-    mEditUserPhotoController=new EditUserPhotoController(this,userPhotoView,mSavedPhoto,drawable,mWaitingForActivityResult);
-    mEditUserInfoDialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.profile_info_settings_title).setView(content).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-      @Override public void onClick(      DialogInterface dialog,      int which){
-        if (which == DialogInterface.BUTTON_POSITIVE) {
-          CharSequence userName=userNameView.getText();
-          if (!TextUtils.isEmpty(userName)) {
-            CharSequence oldUserName=mUserNameView.getText();
-            if (oldUserName == null || !userName.toString().equals(oldUserName.toString())) {
-              ((TextView)mHeaderView.findViewById(android.R.id.title)).setText(userName.toString());
-              mUserManager.setUserName(mUser.getIdentifier(),userName.toString());
-            }
-          }
-          Drawable drawable=mEditUserPhotoController.getNewUserPhotoDrawable();
-          Bitmap bitmap=mEditUserPhotoController.getNewUserPhotoBitmap();
-          if (drawable != null && bitmap != null && !drawable.equals(mUserIconView.getDrawable())) {
-            mUserIconView.setImageDrawable(drawable);
-            new AsyncTask<Void,Void,Void>(){
-              @Override protected Void doInBackground(              Void... params){
-                mUserManager.setUserIcon(mUser.getIdentifier(),mEditUserPhotoController.getNewUserPhotoBitmap());
-                return null;
-              }
-            }
-.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,(Void[])null);
-          }
-          removeDialog(DIALOG_ID_EDIT_USER_INFO);
-        }
-        clearEditUserInfoDialog();
-      }
-    }
-).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
-      @Override public void onClick(      DialogInterface dialog,      int which){
-        clearEditUserInfoDialog();
-      }
-    }
-).create();
-    mEditUserInfoDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-    return mEditUserInfoDialog;
+    return mEditUserInfoController.createDialog(this,mUserIconView.getDrawable(),mUserNameView.getText(),R.string.profile_info_settings_title,this,mUser);
   }
   return null;
 }

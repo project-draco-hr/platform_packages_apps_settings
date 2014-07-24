@@ -1,0 +1,9 @@
+{
+  if (mAspectRatio != 0.0f) {
+    int parentWidth=MeasureSpec.getSize(widthMeasureSpec);
+    int illustrationHeight=(int)(parentWidth / mAspectRatio);
+    illustrationHeight-=illustrationHeight % mBaselineGridSize;
+    setPaddingRelative(0,illustrationHeight,0,0);
+  }
+  super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+}

@@ -1,7 +1,7 @@
 {
   super.onCreate(icicle);
   if (icicle != null) {
-    mSavedPhoto=(Bitmap)icicle.getParcelable(KEY_SAVED_PHOTO);
+    mEditUserInfoController.onRestoreInstanceState(icicle);
     mWaitingForActivityResult=icicle.getBoolean(KEY_AWAITING_RESULT,false);
   }
   init(icicle);

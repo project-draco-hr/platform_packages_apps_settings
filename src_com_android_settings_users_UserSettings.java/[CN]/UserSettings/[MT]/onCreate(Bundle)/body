@@ -7,6 +7,7 @@
     if (icicle.containsKey(SAVE_REMOVING_USER)) {
       mRemovingUserId=icicle.getInt(SAVE_REMOVING_USER);
     }
+    mEditUserInfoController.onRestoreInstanceState(icicle);
   }
   final Context context=getActivity();
   mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
@@ -19,7 +20,7 @@
   mIsGuest=mUserManager.getUserInfo(myUserId).isGuest();
   addPreferencesFromResource(R.xml.user_settings);
   mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
-  mMePreference=new UserPreference(context,null,myUserId,mUserManager.isLinkedUser() || mIsGuest ? null : this,null);
+  mMePreference=new UserPreference(context,null,myUserId,null,null);
   mMePreference.setKey(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
   if (mIsOwner) {

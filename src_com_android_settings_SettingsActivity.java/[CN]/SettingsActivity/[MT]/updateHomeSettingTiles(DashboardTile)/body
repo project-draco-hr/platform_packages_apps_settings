@@ -4,9 +4,7 @@
     return true;
   }
   try {
-    final ArrayList<ResolveInfo> homeApps=new ArrayList<ResolveInfo>();
-    getPackageManager().getHomeActivities(homeApps);
-    if (homeApps.size() < 2) {
+    if (mHomeActivitiesCount < 2) {
       if (sShowNoHomeNotice) {
         sShowNoHomeNotice=false;
         NoHomeDialogFragment.show(this);

@@ -1,0 +1,20 @@
+{
+  super.onViewCreated(view,savedInstanceState);
+  final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
+  List<UserHandle> userProfiles=um.getUserProfiles();
+  if (userProfiles.size() >= 2) {
+    Spinner spinner=(Spinner)getActivity().getLayoutInflater().inflate(R.layout.spinner_view,null);
+    UserHandle myUserHandle=new UserHandle(UserHandle.myUserId());
+    userProfiles.remove(myUserHandle);
+    userProfiles.add(0,myUserHandle);
+    ArrayList<UserDetails> userDetails=new ArrayList<UserDetails>(userProfiles.size());
+    final int count=userProfiles.size();
+    for (int i=0; i < count; i++) {
+      userDetails.add(new UserDetails(userProfiles.get(i),um,mContext));
+    }
+    mProfileSpinnerAdapter=new UserSpinnerAdapter(mContext,userDetails);
+    spinner.setAdapter(mProfileSpinnerAdapter);
+    spinner.setOnItemSelectedListener(this);
+    setPinnedHeaderView(spinner);
+  }
+}

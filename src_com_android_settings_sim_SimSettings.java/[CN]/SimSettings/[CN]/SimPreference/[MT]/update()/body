@@ -1,0 +1,13 @@
+{
+  final Resources res=getResources();
+  setTitle(res.getString(R.string.sim_card_number_title,mSlotId + 1));
+  if (mSubInfoRecord != null) {
+    setSummary(res.getString(R.string.sim_settings_summary,mSubInfoRecord.mDisplayName,mSubInfoRecord.mNumber));
+    setEnabled(true);
+  }
+ else {
+    setSummary(R.string.sim_slot_empty);
+    setFragment(null);
+    setEnabled(false);
+  }
+}

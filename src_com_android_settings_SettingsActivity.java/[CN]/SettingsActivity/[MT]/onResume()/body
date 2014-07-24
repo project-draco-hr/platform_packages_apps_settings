@@ -3,13 +3,11 @@
   final int newHomeActivityCount=getHomeActivitiesCount();
   if (newHomeActivityCount != mHomeActivitiesCount) {
     mHomeActivitiesCount=newHomeActivityCount;
-    setNeedToRebuildCategories(true);
-    invalidateCategories();
+    invalidateCategories(true);
   }
   mDevelopmentPreferencesListener=new SharedPreferences.OnSharedPreferenceChangeListener(){
     @Override public void onSharedPreferenceChanged(    SharedPreferences sharedPreferences,    String key){
-      setNeedToRebuildCategories(true);
-      invalidateCategories();
+      invalidateCategories(true);
     }
   }
 ;

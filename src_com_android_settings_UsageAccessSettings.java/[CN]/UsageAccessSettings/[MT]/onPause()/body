@@ -1,0 +1,8 @@
+{
+  super.onPause();
+  mPackageMonitor.unregister();
+  if (mLastFetcherTask != null) {
+    mLastFetcherTask.cancel(true);
+    mLastFetcherTask=null;
+  }
+}

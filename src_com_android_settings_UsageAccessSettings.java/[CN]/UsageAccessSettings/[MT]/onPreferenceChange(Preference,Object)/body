@@ -1,0 +1,16 @@
+{
+  final String packageName=preference.getKey();
+  final PackageEntry pe=mPackageEntryMap.get(packageName);
+  if (pe == null) {
+    Log.w(TAG,"Preference change event for package " + packageName + " but that package is no longer valid.");
+    return false;
+  }
+  if (!(newValue instanceof Boolean)) {
+    Log.w(TAG,"Preference change event for package " + packageName + " had non boolean value of type "+ newValue.getClass().getName());
+    return false;
+  }
+  final int newMode=(Boolean)newValue ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_IGNORED;
+  mAppOpsManager.setMode(AppOpsManager.OP_GET_USAGE_STATS,pe.packageInfo.applicationInfo.uid,packageName,newMode);
+  pe.appOpMode=newMode;
+  return true;
+}

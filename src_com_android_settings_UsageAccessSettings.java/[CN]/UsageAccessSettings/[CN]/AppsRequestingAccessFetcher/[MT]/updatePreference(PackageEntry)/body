@@ -1,0 +1,15 @@
+{
+  pe.preference.setIcon(pe.packageInfo.applicationInfo.loadIcon(mPackageManager));
+  pe.preference.setTitle(pe.packageInfo.applicationInfo.loadLabel(mPackageManager));
+  pe.preference.setKey(pe.packageName);
+  boolean check=false;
+  if (pe.appOpMode == AppOpsManager.MODE_ALLOWED) {
+    check=true;
+  }
+ else   if (pe.appOpMode == AppOpsManager.MODE_DEFAULT) {
+    check=pe.permissionGranted;
+  }
+  if (check != pe.preference.isChecked()) {
+    pe.preference.setChecked(check);
+  }
+}

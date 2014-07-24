@@ -1,0 +1,7 @@
+{
+  if (mLastFetcherTask != null) {
+    mLastFetcherTask.cancel(true);
+  }
+  mLastFetcherTask=new AppsRequestingAccessFetcher(getActivity());
+  mLastFetcherTask.execute();
+}

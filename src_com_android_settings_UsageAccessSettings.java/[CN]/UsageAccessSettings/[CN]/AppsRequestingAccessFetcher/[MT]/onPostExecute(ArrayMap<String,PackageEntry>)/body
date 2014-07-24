@@ -1,0 +1,35 @@
+{
+  mLastFetcherTask=null;
+  if (getActivity() == null) {
+    return;
+  }
+  if (newEntries == null) {
+    mPackageEntryMap.clear();
+    getPreferenceScreen().removeAll();
+    return;
+  }
+  final int oldPackageCount=mPackageEntryMap.size();
+  for (int i=0; i < oldPackageCount; i++) {
+    final PackageEntry oldPackageEntry=mPackageEntryMap.valueAt(i);
+    final PackageEntry newPackageEntry=newEntries.get(oldPackageEntry.packageName);
+    if (newPackageEntry == null) {
+      getPreferenceScreen().removePreference(oldPackageEntry.preference);
+    }
+ else {
+      newPackageEntry.preference=oldPackageEntry.preference;
+    }
+  }
+  final int packageCount=newEntries.size();
+  for (int i=0; i < packageCount; i++) {
+    final PackageEntry packageEntry=newEntries.valueAt(i);
+    if (packageEntry.preference == null) {
+      packageEntry.preference=new SwitchPreference(mContext);
+      packageEntry.preference.setPersistent(false);
+      packageEntry.preference.setOnPreferenceChangeListener(UsageAccessSettings.this);
+      getPreferenceScreen().addPreference(packageEntry.preference);
+    }
+    updatePreference(packageEntry);
+  }
+  mPackageEntryMap.clear();
+  mPackageEntryMap=newEntries;
+}

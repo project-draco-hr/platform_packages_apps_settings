@@ -1,5 +1,4 @@
 {
-  mProfileExists=false;
   if (mIsGuest) {
     mMePreference.setIcon(getEncircledGuestDrawable());
     mMePreference.setTitle(R.string.user_exit_guest_title);
@@ -14,11 +13,7 @@
       if (user.iconPath == null || user.iconPath.equals("")) {
         assignProfilePhoto(user);
       }
-      String profileName=getProfileName();
-      if (profileName == null) {
-        profileName=user.name;
-      }
-      return profileName;
+      return user.name;
     }
   }
 .execute();

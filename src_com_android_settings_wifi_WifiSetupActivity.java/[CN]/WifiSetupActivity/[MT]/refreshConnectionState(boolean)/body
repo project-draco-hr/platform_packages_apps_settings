@@ -4,6 +4,7 @@
     if (mAutoFinishOnConnection && mUserSelectedNetwork) {
       Log.d(TAG,"Auto-finishing with connection");
       finishOrNext(Activity.RESULT_OK);
+      mUserSelectedNetwork=false;
     }
     if (mNavigationBar != null) {
       mNavigationBar.getNextButton().setText(R.string.setup_wizard_next_button_label);

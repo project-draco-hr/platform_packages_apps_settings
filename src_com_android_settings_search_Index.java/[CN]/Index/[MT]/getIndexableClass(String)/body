@@ -1,0 +1,11 @@
+{
+  final Class<?> clazz;
+  try {
+    clazz=Class.forName(className);
+  }
+ catch (  ClassNotFoundException e) {
+    Log.d(LOG_TAG,"Cannot find class: " + className);
+    return null;
+  }
+  return isIndexableClass(clazz) ? clazz : null;
+}

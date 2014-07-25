@@ -10,7 +10,9 @@
     return false;
   }
   final int newMode=(Boolean)newValue ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_IGNORED;
-  mAppOpsManager.setMode(AppOpsManager.OP_GET_USAGE_STATS,pe.packageInfo.applicationInfo.uid,packageName,newMode);
-  pe.appOpMode=newMode;
+  if (pe.appOpMode != newMode) {
+    mAppOpsManager.setMode(AppOpsManager.OP_GET_USAGE_STATS,pe.packageInfo.applicationInfo.uid,packageName,newMode);
+    pe.appOpMode=newMode;
+  }
   return true;
 }

@@ -1,0 +1,45 @@
+{
+  mSubscriptionSpinner=(Spinner)mContentView.findViewById(R.id.reset_network_subscription);
+  mSubscriptions=SubscriptionManager.from(getActivity()).getActiveSubscriptionInfoList();
+  if (mSubscriptions.size() > 0) {
+    int defaultSubscription=SubscriptionManager.getDefaultDataSubId();
+    if (!SubscriptionManager.isUsableSubIdValue(defaultSubscription)) {
+      defaultSubscription=SubscriptionManager.getDefaultVoiceSubId();
+    }
+    if (!SubscriptionManager.isUsableSubIdValue(defaultSubscription)) {
+      defaultSubscription=SubscriptionManager.getDefaultSmsSubId();
+    }
+    if (!SubscriptionManager.isUsableSubIdValue(defaultSubscription)) {
+      defaultSubscription=SubscriptionManager.getDefaultSubId();
+    }
+    int selectedIndex=0;
+    int size=mSubscriptions.size();
+    List<String> subscriptionNames=new ArrayList<>();
+    for (    SubscriptionInfo record : mSubscriptions) {
+      if (record.getSubscriptionId() == defaultSubscription) {
+        selectedIndex=subscriptionNames.size();
+      }
+      String name=record.getDisplayName().toString();
+      if (TextUtils.isEmpty(name)) {
+        name=record.getNumber();
+      }
+      if (TextUtils.isEmpty(name)) {
+        name=record.getCarrierName().toString();
+      }
+      if (TextUtils.isEmpty(name)) {
+        name=String.format("MCC:%s MNC:%s Slot:%s Id:%s",record.getMcc(),record.getMnc(),record.getSimSlotIndex(),record.getSubscriptionId());
+      }
+      subscriptionNames.add(name);
+    }
+    ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,subscriptionNames);
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    mSubscriptionSpinner.setAdapter(adapter);
+    mSubscriptionSpinner.setSelection(selectedIndex);
+    mSubscriptionSpinner.setVisibility(View.VISIBLE);
+  }
+ else {
+    mSubscriptionSpinner.setVisibility(View.INVISIBLE);
+  }
+  mInitiateButton=(Button)mContentView.findViewById(R.id.initiate_reset_network);
+  mInitiateButton.setOnClickListener(mInitiateListener);
+}

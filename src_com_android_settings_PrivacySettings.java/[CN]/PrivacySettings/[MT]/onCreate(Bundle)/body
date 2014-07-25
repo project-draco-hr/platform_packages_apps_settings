@@ -12,22 +12,13 @@
   mAutoRestore=(SwitchPreference)screen.findPreference(AUTO_RESTORE);
   mAutoRestore.setOnPreferenceChangeListener(preferenceChangeListener);
   mConfigure=(PreferenceScreen)screen.findPreference(CONFIGURE_ACCOUNT);
-  ArrayList<String> keysToRemove=getNonVisibleKeys(getActivity());
+  Set<String> keysToRemove=new HashSet<>();
+  getNonVisibleKeys(getActivity(),keysToRemove);
   final int screenPreferenceCount=screen.getPreferenceCount();
   for (int i=screenPreferenceCount - 1; i >= 0; --i) {
     Preference preference=screen.getPreference(i);
     if (keysToRemove.contains(preference.getKey())) {
       screen.removePreference(preference);
-    }
-  }
-  PreferenceCategory backupCategory=(PreferenceCategory)findPreference(BACKUP_CATEGORY);
-  if (backupCategory != null) {
-    final int backupCategoryPreferenceCount=backupCategory.getPreferenceCount();
-    for (int i=backupCategoryPreferenceCount - 1; i >= 0; --i) {
-      Preference preference=backupCategory.getPreference(i);
-      if (keysToRemove.contains(preference.getKey())) {
-        backupCategory.removePreference(preference);
-      }
     }
   }
   updateToggles();

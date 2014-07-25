@@ -1,0 +1,9 @@
+{
+  Bundle args=new Bundle();
+  if (mSubscriptions.size() > 0) {
+    int selectedIndex=mSubscriptionSpinner.getSelectedItemPosition();
+    SubscriptionInfo subscription=mSubscriptions.get(selectedIndex);
+    args.putInt(PhoneConstants.SUBSCRIPTION_KEY,subscription.getSubscriptionId());
+  }
+  ((SettingsActivity)getActivity()).startPreferencePanel(ResetNetworkConfirm.class.getName(),args,R.string.reset_network_confirm_title,null,null,0);
+}

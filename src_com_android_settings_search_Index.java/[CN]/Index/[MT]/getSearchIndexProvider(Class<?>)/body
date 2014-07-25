@@ -1,0 +1,19 @@
+{
+  try {
+    final Field f=clazz.getField(FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER);
+    return (Indexable.SearchIndexProvider)f.get(null);
+  }
+ catch (  NoSuchFieldException e) {
+    Log.d(LOG_TAG,"Cannot find field '" + FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER + "'");
+  }
+catch (  SecurityException se) {
+    Log.d(LOG_TAG,"Security exception for field '" + FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER + "'");
+  }
+catch (  IllegalAccessException e) {
+    Log.d(LOG_TAG,"Illegal access to field '" + FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER + "'");
+  }
+catch (  IllegalArgumentException e) {
+    Log.d(LOG_TAG,"Illegal argument when accessing field '" + FIELD_NAME_SEARCH_INDEX_DATA_PROVIDER + "'");
+  }
+  return null;
+}

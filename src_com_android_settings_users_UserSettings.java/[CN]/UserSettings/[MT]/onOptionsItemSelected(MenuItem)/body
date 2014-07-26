@@ -4,6 +4,12 @@
     onRemoveUserClicked(UserHandle.myUserId());
     return true;
   }
+ else   if (itemId == MENU_ADD_ON_LOCKSCREEN) {
+    final boolean isChecked=item.isChecked();
+    Settings.Global.putInt(getContentResolver(),Settings.Global.ADD_USERS_WHEN_LOCKED,isChecked ? 0 : 1);
+    item.setChecked(!isChecked);
+    return true;
+  }
  else {
     return super.onOptionsItemSelected(item);
   }

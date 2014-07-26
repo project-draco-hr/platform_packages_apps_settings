@@ -1,9 +1,15 @@
 {
+  int pos=0;
   UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   if (!mIsOwner && !um.hasUserRestriction(UserManager.DISALLOW_REMOVE_USER)) {
     String nickname=mUserManager.getUserName();
-    MenuItem removeThisUser=menu.add(0,MENU_REMOVE_USER,0,getResources().getString(R.string.user_remove_user_menu,nickname));
+    MenuItem removeThisUser=menu.add(0,MENU_REMOVE_USER,pos++,getResources().getString(R.string.user_remove_user_menu,nickname));
     removeThisUser.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+  }
+  if (mIsOwner && !um.hasUserRestriction(UserManager.DISALLOW_ADD_USER)) {
+    MenuItem allowAddOnLockscreen=menu.add(0,MENU_ADD_ON_LOCKSCREEN,pos++,R.string.user_add_on_lockscreen_menu);
+    allowAddOnLockscreen.setCheckable(true);
+    allowAddOnLockscreen.setChecked(Settings.Global.getInt(getContentResolver(),Settings.Global.ADD_USERS_WHEN_LOCKED,0) == 1);
   }
   super.onCreateOptionsMenu(menu,inflater);
 }

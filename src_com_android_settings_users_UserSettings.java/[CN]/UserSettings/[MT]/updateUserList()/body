@@ -67,7 +67,7 @@
     mUserListCategory.addPreference(pref);
   }
   if (!mIsGuest) {
-    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mIsOwner ? this : null,null);
+    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mIsOwner && voiceCapable ? this : null,null);
     pref.setTitle(R.string.user_guest);
     pref.setIcon(getEncircledGuestDrawable());
     pref.setOnPreferenceClickListener(this);

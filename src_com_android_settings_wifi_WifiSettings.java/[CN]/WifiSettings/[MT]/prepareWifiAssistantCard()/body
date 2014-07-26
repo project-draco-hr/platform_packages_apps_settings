@@ -2,6 +2,9 @@
   if (mWifiAssistantPreference == null) {
     mWifiAssistantPreference=new WifiAssistantPreference();
   }
+  if (getActivity() instanceof WifiPickerActivity) {
+    return false;
+  }
   if (NetworkScorerAppManager.getActiveScorer(getActivity()) != null) {
     return false;
   }

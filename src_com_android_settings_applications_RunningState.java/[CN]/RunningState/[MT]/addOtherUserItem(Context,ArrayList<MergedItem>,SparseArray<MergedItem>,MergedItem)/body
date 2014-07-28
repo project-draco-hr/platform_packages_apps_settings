@@ -15,7 +15,7 @@
       UserInfo info=mUm.getUserInfo(newItem.mUserId);
       userItem.mUser.mInfo=info;
       if (info != null) {
-        userItem.mUser.mIcon=UserUtils.getUserIcon(context,mUm,info,context.getResources());
+        userItem.mUser.mIcon=Utils.getUserIcon(context,mUm,info);
       }
       String name=info != null ? info.name : null;
       if (name == null && info != null) {

@@ -17,7 +17,9 @@ if (mWifiAssistantApp != null) {
 getPreferenceScreen().addPreference(mWifiAssistantPreference);
 }
 for (AccessPoint accessPoint : accessPoints) {
+if (accessPoint.getLevel() != -1) {
 getPreferenceScreen().addPreference(accessPoint);
+}
 }
 break;
 case WifiManager.WIFI_STATE_ENABLING:

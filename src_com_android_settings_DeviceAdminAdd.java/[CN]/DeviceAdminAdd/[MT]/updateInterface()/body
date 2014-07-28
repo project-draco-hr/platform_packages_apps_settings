@@ -8,6 +8,9 @@
  catch (  Resources.NotFoundException e) {
     mAdminDescription.setVisibility(View.GONE);
   }
+  if (mAddingProfileOwner) {
+    mProfileOwnerWarning.setVisibility(View.VISIBLE);
+  }
   if (mAddMsgText != null) {
     mAddMsg.setText(mAddMsgText);
     mAddMsg.setVisibility(View.VISIBLE);
@@ -16,7 +19,7 @@
     mAddMsg.setVisibility(View.GONE);
     mAddMsgExpander.setVisibility(View.GONE);
   }
-  if (!mRefreshing && mDPM.isAdminActive(mDeviceAdmin.getComponent())) {
+  if (!mRefreshing && !mAddingProfileOwner && mDPM.isAdminActive(mDeviceAdmin.getComponent())) {
     if (mActivePolicies.size() == 0) {
       ArrayList<DeviceAdminInfo.PolicyInfo> policies=mDeviceAdmin.getUsedPolicies();
       for (int i=0; i < policies.size(); i++) {
@@ -46,7 +49,12 @@
     setViewVisibility(mAddingPolicies,View.VISIBLE);
     setViewVisibility(mActivePolicies,View.GONE);
     mAdminWarning.setText(getString(R.string.device_admin_warning,mDeviceAdmin.getActivityInfo().applicationInfo.loadLabel(getPackageManager())));
-    setTitle(getText(R.string.add_device_admin_msg));
+    if (mAddingProfileOwner) {
+      setTitle(getText(R.string.profile_owner_add_title));
+    }
+ else {
+      setTitle(getText(R.string.add_device_admin_msg));
+    }
     mActionButton.setText(getText(R.string.add_device_admin));
     mAdding=true;
   }

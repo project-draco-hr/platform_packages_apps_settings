@@ -1,6 +1,8 @@
 {
   DeviceAdminInfo info=mAvailableAdmins.get(position);
-  if (mActiveAdmins.contains(info.getComponent()) && info.getPackageName().equals(mDeviceOwnerPkg)) {
+  String packageName=info.getPackageName();
+  ComponentName component=info.getComponent();
+  if (mActiveAdmins.contains(component) && (packageName.equals(mDeviceOwnerPkg) || component.equals(mProfileOwnerComponent))) {
     return false;
   }
  else {

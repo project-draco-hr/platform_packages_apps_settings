@@ -1,0 +1,6 @@
+{
+  final HashMap<String,HashSet<String>> enabledImeAndSubtypeIdsMap=getEnabledInputMethodsAndSubtypeList(resolver);
+  enabledImeAndSubtypeIdsMap.put(imiId,enabledSubtypeIdSet);
+  final String enabledImesAndSubtypesString=buildInputMethodsAndSubtypesString(enabledImeAndSubtypeIdsMap);
+  Settings.Secure.putString(resolver,Settings.Secure.ENABLED_INPUT_METHODS,enabledImesAndSubtypesString);
+}

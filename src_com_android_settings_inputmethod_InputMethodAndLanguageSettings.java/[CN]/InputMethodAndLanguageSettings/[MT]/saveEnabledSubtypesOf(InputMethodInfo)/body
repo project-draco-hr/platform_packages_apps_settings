@@ -1,0 +1,12 @@
+{
+  final HashSet<String> enabledSubtypeIdSet=new HashSet<>();
+  final List<InputMethodSubtype> enabledSubtypes=mImm.getEnabledInputMethodSubtypeList(imi,true);
+  for (  final InputMethodSubtype subtype : enabledSubtypes) {
+    final String subtypeId=Integer.toString(subtype.hashCode());
+    enabledSubtypeIdSet.add(subtypeId);
+  }
+  final HashMap<String,HashSet<String>> imeToEnabledSubtypeIdsMap=loadPreviouslyEnabledSubtypeIdsMap();
+  final String imiId=imi.getId();
+  imeToEnabledSubtypeIdsMap.put(imiId,enabledSubtypeIdSet);
+  savePreviouslyEnabledSubtypeIdsMap(imeToEnabledSubtypeIdsMap);
+}

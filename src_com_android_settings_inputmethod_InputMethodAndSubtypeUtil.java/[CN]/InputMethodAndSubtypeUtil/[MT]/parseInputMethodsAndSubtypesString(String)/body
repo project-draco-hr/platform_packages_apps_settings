@@ -1,0 +1,20 @@
+{
+  final HashMap<String,HashSet<String>> subtypesMap=new HashMap<>();
+  if (TextUtils.isEmpty(inputMethodsAndSubtypesString)) {
+    return subtypesMap;
+  }
+  sStringInputMethodSplitter.setString(inputMethodsAndSubtypesString);
+  while (sStringInputMethodSplitter.hasNext()) {
+    final String nextImsStr=sStringInputMethodSplitter.next();
+    sStringInputMethodSubtypeSplitter.setString(nextImsStr);
+    if (sStringInputMethodSubtypeSplitter.hasNext()) {
+      final HashSet<String> subtypeIdSet=new HashSet<>();
+      final String imiId=sStringInputMethodSubtypeSplitter.next();
+      while (sStringInputMethodSubtypeSplitter.hasNext()) {
+        subtypeIdSet.add(sStringInputMethodSubtypeSplitter.next());
+      }
+      subtypesMap.put(imiId,subtypeIdSet);
+    }
+  }
+  return subtypesMap;
+}

@@ -1,7 +1,14 @@
 {
+  final InputMethodInfo imi=pref.getInputMethodInfo();
+  if (!pref.isChecked()) {
+    saveEnabledSubtypesOf(imi);
+  }
   final boolean hasHardwareKeyboard=getResources().getConfiguration().keyboard == Configuration.KEYBOARD_QWERTY;
   InputMethodAndSubtypeUtil.saveInputMethodSubtypeList(this,getContentResolver(),mImm.getInputMethodList(),hasHardwareKeyboard);
   mInputMethodSettingValues.refreshAllInputMethodAndSubtypes();
+  if (pref.isChecked()) {
+    restorePreviouslyEnabledSubtypesOf(imi);
+  }
   for (  final InputMethodPreference p : mInputMethodPreferenceList) {
     p.updatePreferenceViews();
   }

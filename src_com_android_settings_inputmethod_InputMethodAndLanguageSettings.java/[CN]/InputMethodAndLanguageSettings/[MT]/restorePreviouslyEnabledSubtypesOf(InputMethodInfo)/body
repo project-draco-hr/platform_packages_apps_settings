@@ -1,0 +1,10 @@
+{
+  final HashMap<String,HashSet<String>> imeToEnabledSubtypeIdsMap=loadPreviouslyEnabledSubtypeIdsMap();
+  final String imiId=imi.getId();
+  final HashSet<String> enabledSubtypeIdSet=imeToEnabledSubtypeIdsMap.remove(imiId);
+  if (enabledSubtypeIdSet == null) {
+    return;
+  }
+  savePreviouslyEnabledSubtypeIdsMap(imeToEnabledSubtypeIdsMap);
+  InputMethodAndSubtypeUtil.enableInputMethodSubtypesOf(getContentResolver(),imiId,enabledSubtypeIdSet);
+}

@@ -16,9 +16,9 @@
     ArrayList<UserDetails> userDetails=new ArrayList<UserDetails>(userProfiles.size());
     final int count=userProfiles.size();
     for (int i=0; i < count; i++) {
-      userDetails.add(new UserDetails(userProfiles.get(i),um,mContext));
+      userDetails.add(new UserDetails(userProfiles.get(i),um,getActivity()));
     }
-    mProfileSpinnerAdapter=new UserSpinnerAdapter(mContext,userDetails);
+    mProfileSpinnerAdapter=new UserSpinnerAdapter(getActivity(),userDetails);
     spinner.setAdapter(mProfileSpinnerAdapter);
     spinner.setOnItemSelectedListener(this);
     setPinnedHeaderView(spinner);

@@ -1,0 +1,18 @@
+{
+  final String[] packages=pm.getPackagesForUid(uid);
+  if (packages != null && pkg != null) {
+    final int N=packages.length;
+    for (int i=0; i < N; i++) {
+      final String p=packages[i];
+      if (pkg.equals(p)) {
+        try {
+          return pm.getPackageInfo(pkg,0);
+        }
+ catch (        NameNotFoundException e) {
+          Log.w(TAG,"Failed to load package " + pkg,e);
+        }
+      }
+    }
+  }
+  return null;
+}

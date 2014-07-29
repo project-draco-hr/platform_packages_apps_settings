@@ -10,7 +10,7 @@
   vh.rowDivider.setVisibility(row.first ? View.GONE : View.VISIBLE);
   vh.appButton.setOnClickListener(new OnClickListener(){
     @Override public void onClick(    View v){
-      showDialog(view,row);
+      mContext.startActivity(new Intent(mContext,AppNotificationDialog.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra(Settings.EXTRA_APP_PACKAGE,row.pkg).putExtra(Settings.EXTRA_APP_UID,row.uid));
     }
   }
 );

@@ -1,0 +1,12 @@
+{
+  super.onCreate(savedInstanceState);
+  Intent intent=getIntent();
+  String title=intent.getStringExtra(Intent.EXTRA_TITLE);
+  String details=intent.getStringExtra(Intent.EXTRA_DETAILS);
+  ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this);
+  if (!helper.launchConfirmationActivity(0,title,details)) {
+    Log.d(TAG,"No pattern, password or PIN set.");
+    setResult(Activity.RESULT_OK);
+    finish();
+  }
+}

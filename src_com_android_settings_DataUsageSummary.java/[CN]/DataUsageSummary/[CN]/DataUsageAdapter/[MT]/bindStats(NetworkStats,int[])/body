@@ -2,42 +2,46 @@
   mItems.clear();
   mLargest=0;
   final int currentUserId=ActivityManager.getCurrentUser();
+  final List<UserHandle> profiles=mUm.getUserProfiles();
   final SparseArray<AppItem> knownItems=new SparseArray<AppItem>();
-  boolean hasApps=false;
   NetworkStats.Entry entry=null;
   final int size=stats != null ? stats.size() : 0;
   for (int i=0; i < size; i++) {
     entry=stats.getValues(i,entry);
     final int uid=entry.uid;
     final int collapseKey;
+    final int category;
+    final int userId=UserHandle.getUserId(uid);
     if (UserHandle.isApp(uid)) {
-      if (UserHandle.getUserId(uid) == currentUserId) {
+      if (profiles.contains(new UserHandle(userId))) {
+        if (userId != currentUserId) {
+          final int managedKey=UidDetailProvider.buildKeyForUser(userId);
+          accumulate(managedKey,knownItems,entry,AppItem.CATEGORY_USER);
+        }
         collapseKey=uid;
+        category=AppItem.CATEGORY_APP;
       }
  else {
-        collapseKey=UidDetailProvider.buildKeyForUser(UserHandle.getUserId(uid));
+        collapseKey=UidDetailProvider.buildKeyForUser(userId);
+        category=AppItem.CATEGORY_USER;
       }
     }
  else     if (uid == UID_REMOVED || uid == UID_TETHERING) {
       collapseKey=uid;
+      category=AppItem.CATEGORY_APP;
     }
  else {
       collapseKey=android.os.Process.SYSTEM_UID;
+      category=AppItem.CATEGORY_APP;
     }
-    AppItem item=knownItems.get(collapseKey);
-    if (item == null) {
-      item=new AppItem(collapseKey);
-      mItems.add(item);
-      knownItems.put(item.key,item);
-    }
-    item.addUid(uid);
-    item.total+=entry.rxBytes + entry.txBytes;
-    if (item.total > mLargest) {
-      mLargest=item.total;
-    }
+    accumulate(collapseKey,knownItems,entry,category);
   }
-  for (  int uid : restrictedUids) {
-    if (UserHandle.getUserId(uid) != currentUserId)     continue;
+  final int restrictedUidsMax=restrictedUids.length;
+  for (int i=0; i < restrictedUidsMax; ++i) {
+    final int uid=restrictedUids[i];
+    if (!profiles.contains(new UserHandle(UserHandle.getUserId(uid)))) {
+      continue;
+    }
     AppItem item=knownItems.get(uid);
     if (item == null) {
       item=new AppItem(uid);
@@ -47,8 +51,7 @@
     }
     item.restricted=true;
   }
-  hasApps=!mItems.isEmpty();
-  if (hasApps) {
+  if (!mItems.isEmpty()) {
     final AppItem title=new AppItem();
     title.category=AppItem.CATEGORY_APP_TITLE;
     mItems.add(title);

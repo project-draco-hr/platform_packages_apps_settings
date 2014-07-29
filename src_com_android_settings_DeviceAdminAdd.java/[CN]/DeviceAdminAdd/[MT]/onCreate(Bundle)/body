@@ -8,22 +8,33 @@
     finish();
     return;
   }
-  ComponentName cn=(ComponentName)getIntent().getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
-  if (cn == null) {
-    Log.w(TAG,"No component specified in " + getIntent().getAction());
+  String action=getIntent().getAction();
+  ComponentName who=(ComponentName)getIntent().getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
+  if (who == null) {
+    Log.w(TAG,"No component specified in " + action);
     finish();
     return;
+  }
+  if (action != null && action.equals(DevicePolicyManager.ACTION_SET_PROFILE_OWNER)) {
+    mAddingProfileOwner=true;
+    mProfileOwnerName=getIntent().getStringExtra(DevicePolicyManager.EXTRA_PROFILE_OWNER_NAME);
+    String callingPackage=getCallingPackage();
+    if (callingPackage == null || !callingPackage.equals(who.getPackageName())) {
+      Log.e(TAG,"Unknown or incorrect caller");
+      finish();
+      return;
+    }
   }
   ActivityInfo ai;
   try {
-    ai=getPackageManager().getReceiverInfo(cn,PackageManager.GET_META_DATA);
+    ai=getPackageManager().getReceiverInfo(who,PackageManager.GET_META_DATA);
   }
  catch (  PackageManager.NameNotFoundException e) {
-    Log.w(TAG,"Unable to retrieve device policy " + cn,e);
+    Log.w(TAG,"Unable to retrieve device policy " + who,e);
     finish();
     return;
   }
-  if (!mDPM.isAdminActive(cn)) {
+  if (!mDPM.isAdminActive(who)) {
     List<ResolveInfo> avail=getPackageManager().queryBroadcastReceivers(new Intent(DeviceAdminReceiver.ACTION_DEVICE_ADMIN_ENABLED),PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS);
     int count=avail == null ? 0 : avail.size();
     boolean found=false;
@@ -45,7 +56,7 @@ catch (        IOException e) {
       }
     }
     if (!found) {
-      Log.w(TAG,"Request to add invalid device admin: " + cn);
+      Log.w(TAG,"Request to add invalid device admin: " + who);
       finish();
       return;
     }
@@ -56,22 +67,22 @@ catch (        IOException e) {
     mDeviceAdmin=new DeviceAdminInfo(this,ri);
   }
  catch (  XmlPullParserException e) {
-    Log.w(TAG,"Unable to retrieve device policy " + cn,e);
+    Log.w(TAG,"Unable to retrieve device policy " + who,e);
     finish();
     return;
   }
 catch (  IOException e) {
-    Log.w(TAG,"Unable to retrieve device policy " + cn,e);
+    Log.w(TAG,"Unable to retrieve device policy " + who,e);
     finish();
     return;
   }
   if (DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN.equals(getIntent().getAction())) {
     mRefreshing=false;
-    if (mDPM.isAdminActive(cn)) {
+    if (mDPM.isAdminActive(who)) {
       ArrayList<DeviceAdminInfo.PolicyInfo> newPolicies=mDeviceAdmin.getUsedPolicies();
       for (int i=0; i < newPolicies.size(); i++) {
         DeviceAdminInfo.PolicyInfo pi=newPolicies.get(i);
-        if (!mDPM.hasGrantedPolicy(cn,pi.ident)) {
+        if (!mDPM.hasGrantedPolicy(who,pi.ident)) {
           mRefreshing=true;
           break;
         }
@@ -83,11 +94,16 @@ catch (  IOException e) {
       }
     }
   }
+  if (mAddingProfileOwner && !mDPM.hasUserSetupCompleted()) {
+    addAndFinish();
+    return;
+  }
   mAddMsgText=getIntent().getCharSequenceExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION);
   setContentView(R.layout.device_admin_add);
   mAdminIcon=(ImageView)findViewById(R.id.admin_icon);
   mAdminName=(TextView)findViewById(R.id.admin_name);
   mAdminDescription=(TextView)findViewById(R.id.admin_description);
+  mProfileOwnerWarning=(TextView)findViewById(R.id.profile_owner_warning);
   mAddMsg=(TextView)findViewById(R.id.add_msg);
   mAddMsgExpander=(ImageView)findViewById(R.id.add_msg_expander);
   mAddMsg.setOnClickListener(new View.OnClickListener(){
@@ -111,18 +127,7 @@ catch (  IOException e) {
   mActionButton.setOnClickListener(new View.OnClickListener(){
     public void onClick(    View v){
       if (mAdding) {
-        try {
-          mDPM.setActiveAdmin(mDeviceAdmin.getComponent(),mRefreshing);
-          setResult(Activity.RESULT_OK);
-          EventLog.writeEvent(EventLogTags.EXP_DET_DEVICE_ADMIN_ACTIVATED_BY_USER,mDeviceAdmin.getActivityInfo().applicationInfo.uid);
-        }
- catch (        RuntimeException e) {
-          Log.w(TAG,"Exception trying to activate admin " + mDeviceAdmin.getComponent(),e);
-          if (mDPM.isAdminActive(mDeviceAdmin.getComponent())) {
-            setResult(Activity.RESULT_OK);
-          }
-        }
-        finish();
+        addAndFinish();
       }
  else       if (!mWaitingForRemoveMsg) {
         try {

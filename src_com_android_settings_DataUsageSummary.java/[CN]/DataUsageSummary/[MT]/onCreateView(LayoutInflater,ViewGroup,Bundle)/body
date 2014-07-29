@@ -74,7 +74,8 @@
   mDisclaimer=mHeader.findViewById(R.id.disclaimer);
   mEmpty=(TextView)mHeader.findViewById(android.R.id.empty);
   mStupidPadding=mHeader.findViewById(R.id.stupid_padding);
-  mAdapter=new DataUsageAdapter(mUidDetailProvider,mInsetSide);
+  final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  mAdapter=new DataUsageAdapter(um,mUidDetailProvider,mInsetSide);
   mListView.setOnItemClickListener(mListListener);
   mListView.setAdapter(mAdapter);
   return view;

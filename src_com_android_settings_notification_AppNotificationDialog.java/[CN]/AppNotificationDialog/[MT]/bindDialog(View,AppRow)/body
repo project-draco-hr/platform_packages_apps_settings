@@ -1,0 +1,64 @@
+{
+  final ImageView icon=(ImageView)v.findViewById(android.R.id.icon);
+  icon.setImageDrawable(row.icon);
+  final TextView title=(TextView)v.findViewById(android.R.id.title);
+  title.setText(row.label);
+  final CheckBox showNotifications=(CheckBox)v.findViewById(android.R.id.button1);
+  final CheckBox highPriority=(CheckBox)v.findViewById(android.R.id.button2);
+  final CheckBox sensitive=(CheckBox)v.findViewById(android.R.id.button3);
+  if (!ENABLE_APP_NOTIFICATION_PRIVACY_OPTION) {
+    sensitive.setVisibility(View.GONE);
+  }
+  showNotifications.setChecked(!row.banned);
+  final OnCheckedChangeListener showListener=new OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      boolean success=mBackend.setNotificationsBanned(row.pkg,row.uid,!isChecked);
+      if (success) {
+        row.banned=!isChecked;
+        highPriority.setEnabled(!row.banned);
+        sensitive.setEnabled(!row.banned);
+      }
+ else {
+        showNotifications.setOnCheckedChangeListener(null);
+        showNotifications.setChecked(!isChecked);
+        showNotifications.setOnCheckedChangeListener(this);
+      }
+    }
+  }
+;
+  showNotifications.setOnCheckedChangeListener(showListener);
+  highPriority.setChecked(row.priority);
+  final OnCheckedChangeListener priListener=new OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      boolean success=mBackend.setHighPriority(row.pkg,row.uid,isChecked);
+      if (success) {
+        row.priority=isChecked;
+      }
+ else {
+        highPriority.setOnCheckedChangeListener(null);
+        highPriority.setChecked(!isChecked);
+        highPriority.setOnCheckedChangeListener(this);
+      }
+    }
+  }
+;
+  highPriority.setOnCheckedChangeListener(priListener);
+  sensitive.setChecked(row.sensitive);
+  final OnCheckedChangeListener senListener=new OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      boolean success=mBackend.setSensitive(row.pkg,row.uid,isChecked);
+      if (success) {
+        row.sensitive=isChecked;
+      }
+ else {
+        sensitive.setOnCheckedChangeListener(null);
+        sensitive.setChecked(!isChecked);
+        sensitive.setOnCheckedChangeListener(this);
+      }
+    }
+  }
+;
+  sensitive.setOnCheckedChangeListener(senListener);
+  highPriority.setEnabled(!row.banned);
+  sensitive.setEnabled(!row.banned);
+}

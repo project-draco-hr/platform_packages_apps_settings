@@ -6,4 +6,21 @@
   textView.setText(R.string.print_no_services_installed);
   contentRoot.addView(emptyView);
   getListView().setEmptyView(emptyView);
+  final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
+  List<UserHandle> userProfiles=um.getUserProfiles();
+  if (userProfiles.size() >= 2) {
+    Spinner spinner=(Spinner)getActivity().getLayoutInflater().inflate(R.layout.spinner_view,null);
+    UserHandle myUserHandle=Process.myUserHandle();
+    userProfiles.remove(myUserHandle);
+    userProfiles.add(0,myUserHandle);
+    ArrayList<UserDetails> userDetails=new ArrayList<UserDetails>(userProfiles.size());
+    final int count=userProfiles.size();
+    for (int i=0; i < count; i++) {
+      userDetails.add(new UserDetails(userProfiles.get(i),um,mContext));
+    }
+    mProfileSpinnerAdapter=new UserSpinnerAdapter(mContext,userDetails);
+    spinner.setAdapter(mProfileSpinnerAdapter);
+    spinner.setOnItemSelectedListener(this);
+    setPinnedHeaderView(spinner);
+  }
 }

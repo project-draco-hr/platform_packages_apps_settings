@@ -1,0 +1,12 @@
+{
+  mUserHandle=userHandle;
+  UserInfo userInfo=um.getUserInfo(mUserHandle.getIdentifier());
+  name=userInfo.name;
+  Bitmap bitmap=um.getUserIcon(userHandle.getIdentifier());
+  if (bitmap != null) {
+    icon=CircleFramedDrawable.getInstance(context,bitmap);
+  }
+ else {
+    icon=null;
+  }
+}

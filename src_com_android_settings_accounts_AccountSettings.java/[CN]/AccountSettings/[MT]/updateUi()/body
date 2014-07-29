@@ -15,12 +15,10 @@
     }
  else {
       mIsSingleProfileUi=false;
-      updateProfileUi(currentProfile,KEY_CATEGORY_PERSONAL,KEY_ADD_ACCOUNT_PERSONAL,new ArrayList<String>());
+      updateProfileUi(currentProfile,KEY_CATEGORY_PERSONAL,KEY_ADD_ACCOUNT_PERSONAL,EMPTY_LIST);
       final ArrayList<String> unusedPreferences=new ArrayList<String>(2);
       unusedPreferences.add(KEY_ADD_ACCOUNT);
       updateProfileUi(managedProfile,KEY_CATEGORY_WORK,KEY_ADD_ACCOUNT_WORK,unusedPreferences);
-      mManagedProfileBroadcastReceiver=new ManagedProfileBroadcastReceiver();
-      mManagedProfileBroadcastReceiver.register(getActivity());
     }
   }
   final int count=mProfiles.size();

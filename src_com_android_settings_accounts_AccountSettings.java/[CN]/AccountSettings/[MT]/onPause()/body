@@ -1,0 +1,6 @@
+{
+  super.onPause();
+  stopListeningToAccountUpdates();
+  mManagedProfileBroadcastReceiver.unregister(getActivity());
+  cleanUpPreferences();
+}

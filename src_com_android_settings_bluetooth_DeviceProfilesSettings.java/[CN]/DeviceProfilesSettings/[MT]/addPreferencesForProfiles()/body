@@ -3,5 +3,12 @@
     Preference pref=createProfilePreference(profile);
     mProfileContainer.addPreference(pref);
   }
+  final int pbapPermission=mCachedDevice.getPhonebookPermissionChoice();
+  if (pbapPermission != CachedBluetoothDevice.ACCESS_UNKNOWN) {
+    final PbapServerProfile psp=mManager.getProfileManager().getPbapProfile();
+    CheckBoxPreference pbapPref=createProfilePreference(psp);
+    pbapPref.setChecked(pbapPermission == CachedBluetoothDevice.ACCESS_ALLOWED);
+    mProfileContainer.addPreference(pbapPref);
+  }
   showOrHideProfileGroup();
 }

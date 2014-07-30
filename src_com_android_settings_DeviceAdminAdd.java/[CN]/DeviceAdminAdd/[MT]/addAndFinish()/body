@@ -1,0 +1,22 @@
+{
+  try {
+    mDPM.setActiveAdmin(mDeviceAdmin.getComponent(),mRefreshing);
+    EventLog.writeEvent(EventLogTags.EXP_DET_DEVICE_ADMIN_ACTIVATED_BY_USER,mDeviceAdmin.getActivityInfo().applicationInfo.uid);
+    setResult(Activity.RESULT_OK);
+  }
+ catch (  RuntimeException e) {
+    Log.w(TAG,"Exception trying to activate admin " + mDeviceAdmin.getComponent(),e);
+    if (mDPM.isAdminActive(mDeviceAdmin.getComponent())) {
+      setResult(Activity.RESULT_OK);
+    }
+  }
+  if (mAddingProfileOwner) {
+    try {
+      mDPM.setProfileOwner(mDeviceAdmin.getComponent(),mProfileOwnerName,UserHandle.myUserId());
+    }
+ catch (    RuntimeException re) {
+      setResult(Activity.RESULT_CANCELED);
+    }
+  }
+  finish();
+}

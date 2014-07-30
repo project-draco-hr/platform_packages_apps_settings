@@ -6,15 +6,7 @@
     mChallengeSucceeded=icicle.getBoolean(KEY_CHALLENGE_SUCCEEDED,false);
     mChallengeRequested=icicle.getBoolean(KEY_CHALLENGE_REQUESTED,false);
   }
- else {
-    mChallengeSucceeded=false;
-    mChallengeRequested=false;
-  }
-  mScreenToggledOff=false;
   IntentFilter offFilter=new IntentFilter(Intent.ACTION_SCREEN_OFF);
   offFilter.addAction(Intent.ACTION_USER_PRESENT);
   getActivity().registerReceiver(mScreenOffReceiver,offFilter);
-  if (shouldBeProviderProtected(mRestrictionKey)) {
-    ensurePin();
-  }
 }

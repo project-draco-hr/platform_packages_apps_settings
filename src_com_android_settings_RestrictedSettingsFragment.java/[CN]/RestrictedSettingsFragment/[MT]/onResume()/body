@@ -1,9 +1,6 @@
 {
   super.onResume();
-  if (mScreenToggledOff) {
-    mScreenToggledOff=false;
-    if (shouldBeProviderProtected(mRestrictionKey)) {
-      ensurePin();
-    }
+  if (shouldBeProviderProtected(mRestrictionKey)) {
+    ensurePin();
   }
 }

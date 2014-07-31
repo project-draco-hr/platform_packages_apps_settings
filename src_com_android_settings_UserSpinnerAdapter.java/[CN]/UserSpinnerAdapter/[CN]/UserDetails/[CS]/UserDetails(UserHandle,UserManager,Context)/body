@@ -1,12 +1,13 @@
 {
   mUserHandle=userHandle;
   UserInfo userInfo=um.getUserInfo(mUserHandle.getIdentifier());
-  name=userInfo.name;
-  Bitmap bitmap=um.getUserIcon(userHandle.getIdentifier());
-  if (bitmap != null) {
-    icon=CircleFramedDrawable.getInstance(context,bitmap);
+  if (userInfo.isManagedProfile()) {
+    name=context.getString(R.string.managed_user_title);
+    icon=Resources.getSystem().getDrawable(com.android.internal.R.drawable.ic_corp_icon);
   }
  else {
-    icon=null;
+    name=userInfo.name;
+    Bitmap bitmap=um.getUserIcon(userHandle.getIdentifier());
+    icon=(bitmap == null) ? null : CircleFramedDrawable.getInstance(context,bitmap);
   }
 }

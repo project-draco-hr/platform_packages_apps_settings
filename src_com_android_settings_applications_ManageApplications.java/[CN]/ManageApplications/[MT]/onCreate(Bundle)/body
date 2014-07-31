@@ -45,16 +45,5 @@
   mTabs.add(tab);
   mNumTabs=mTabs.size();
   final UserManager um=(UserManager)mContext.getSystemService(Context.USER_SERVICE);
-  List<UserHandle> userProfiles=um.getUserProfiles();
-  if (userProfiles.size() >= 2) {
-    UserHandle myUserHandle=new UserHandle(UserHandle.myUserId());
-    userProfiles.remove(myUserHandle);
-    userProfiles.add(0,myUserHandle);
-    ArrayList<UserDetails> userDetails=new ArrayList<UserDetails>(userProfiles.size());
-    final int count=userProfiles.size();
-    for (int i=0; i < count; i++) {
-      userDetails.add(new UserDetails(userProfiles.get(i),um,mContext));
-    }
-    mProfileSpinnerAdapter=new UserSpinnerAdapter(mContext,userDetails);
-  }
+  mProfileSpinnerAdapter=Utils.createUserSpinnerAdapter(um,mContext);
 }

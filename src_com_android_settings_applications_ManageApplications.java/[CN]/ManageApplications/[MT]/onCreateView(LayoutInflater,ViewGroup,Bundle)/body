@@ -16,9 +16,11 @@
     buildResetDialog();
   }
   if (savedInstanceState == null) {
-    for (int i=0; i < mTabs.size(); i++) {
+    int extraCurrentListType=getActivity().getIntent().getIntExtra(EXTRA_LIST_TYPE,LIST_TYPE_MISSING);
+    int currentListType=(extraCurrentListType != LIST_TYPE_MISSING) ? extraCurrentListType : mDefaultListType;
+    for (int i=0; i < mNumTabs; i++) {
       TabInfo tab=mTabs.get(i);
-      if (tab.mListType == mDefaultListType) {
+      if (tab.mListType == currentListType) {
         mViewPager.setCurrentItem(i);
         break;
       }

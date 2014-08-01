@@ -4,6 +4,12 @@
   if (mDeviceOwnerPkg != null && !mDPM.isDeviceOwner(mDeviceOwnerPkg)) {
     mDeviceOwnerPkg=null;
   }
-  mProfileOwnerComponent=mDPM.getProfileOwner();
+  mProfileOwnerComponents.clear();
+  final List<UserHandle> profiles=mUm.getUserProfiles();
+  final int profilesSize=profiles.size();
+  for (int i=0; i < profilesSize; ++i) {
+    final int profileId=profiles.get(i).getIdentifier();
+    mProfileOwnerComponents.put(profileId,mDPM.getProfileOwnerAsUser(profileId));
+  }
   updateList();
 }

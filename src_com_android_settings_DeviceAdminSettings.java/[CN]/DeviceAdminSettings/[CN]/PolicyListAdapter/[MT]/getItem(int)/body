@@ -1,3 +1,30 @@
 {
-  return mAvailableAdmins.get(position);
+  if (position < 0) {
+    throw new ArrayIndexOutOfBoundsException();
+  }
+  int adminPosition=position;
+  final int n=mAdminsByProfile.size();
+  int i=0;
+  for (; i < n; ++i) {
+    final int listSize=mAdminsByProfile.valueAt(i).size() + 1;
+    if (adminPosition < listSize) {
+      break;
+    }
+    adminPosition-=listSize;
+  }
+  if (i == n) {
+    throw new ArrayIndexOutOfBoundsException();
+  }
+  if (adminPosition == 0) {
+    Resources res=getActivity().getResources();
+    if (mAdminsByProfile.keyAt(i) == UserHandle.myUserId()) {
+      return res.getString(R.string.personal_device_admin_title);
+    }
+ else {
+      return res.getString(R.string.managed_device_admin_title);
+    }
+  }
+ else {
+    return mAdminsByProfile.valueAt(i).get(adminPosition - 1);
+  }
 }

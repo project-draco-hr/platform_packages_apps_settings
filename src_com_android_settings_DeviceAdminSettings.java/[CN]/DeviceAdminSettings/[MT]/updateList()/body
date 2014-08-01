@@ -1,45 +1,10 @@
 {
-  mActiveAdmins.clear();
-  List<ComponentName> cur=mDPM.getActiveAdmins();
-  if (cur != null) {
-    for (int i=0; i < cur.size(); i++) {
-      mActiveAdmins.add(cur.get(i));
-    }
-  }
-  mAvailableAdmins.clear();
-  List<ResolveInfo> avail=getActivity().getPackageManager().queryBroadcastReceivers(new Intent(DeviceAdminReceiver.ACTION_DEVICE_ADMIN_ENABLED),PackageManager.GET_META_DATA | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS);
-  if (avail == null) {
-    avail=Collections.emptyList();
-  }
-  Set<ComponentName> activeAdminsNotInAvail=new HashSet<ComponentName>(mActiveAdmins);
-  for (  ResolveInfo ri : avail) {
-    ComponentName riComponentName=new ComponentName(ri.activityInfo.packageName,ri.activityInfo.name);
-    activeAdminsNotInAvail.remove(riComponentName);
-  }
-  if (!activeAdminsNotInAvail.isEmpty()) {
-    avail=new ArrayList<ResolveInfo>(avail);
-    PackageManager packageManager=getActivity().getPackageManager();
-    for (    ComponentName unlistedActiveAdmin : activeAdminsNotInAvail) {
-      List<ResolveInfo> resolved=packageManager.queryBroadcastReceivers(new Intent().setComponent(unlistedActiveAdmin),PackageManager.GET_META_DATA | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS);
-      if (resolved != null) {
-        avail.addAll(resolved);
-      }
-    }
-  }
-  for (int i=0, count=avail.size(); i < count; i++) {
-    ResolveInfo ri=avail.get(i);
-    try {
-      DeviceAdminInfo dpi=new DeviceAdminInfo(getActivity(),ri);
-      if (dpi.isVisible() || mActiveAdmins.contains(dpi.getComponent())) {
-        mAvailableAdmins.add(dpi);
-      }
-    }
- catch (    XmlPullParserException e) {
-      Log.w(TAG,"Skipping " + ri.activityInfo,e);
-    }
-catch (    IOException e) {
-      Log.w(TAG,"Skipping " + ri.activityInfo,e);
-    }
+  mAdminsByProfile.clear();
+  final List<UserHandle> profiles=mUm.getUserProfiles();
+  final int profilesSize=profiles.size();
+  for (int i=0; i < profilesSize; ++i) {
+    final int profileId=profiles.get(i).getIdentifier();
+    updateAvailableAdminsForProfile(profileId);
   }
   getListView().setAdapter(new PolicyListAdapter());
 }

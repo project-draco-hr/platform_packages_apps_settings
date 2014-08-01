@@ -1,11 +1,17 @@
 {
-  View v;
-  if (convertView == null) {
-    v=newView(parent);
+  Object o=getItem(position);
+  if (o instanceof DeviceAdminInfo) {
+    if (convertView == null) {
+      convertView=newDeviceAdminView(parent);
+    }
+    bindView(convertView,(DeviceAdminInfo)o);
   }
  else {
-    v=convertView;
+    if (convertView == null) {
+      convertView=newTitleView(parent);
+    }
+    final TextView title=(TextView)convertView.findViewById(android.R.id.title);
+    title.setText((String)o);
   }
-  bindView(v,position);
-  return v;
+  return convertView;
 }

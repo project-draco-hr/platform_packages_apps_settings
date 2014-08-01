@@ -1,7 +1,17 @@
 {
   DeviceAdminInfo dpi=(DeviceAdminInfo)l.getAdapter().getItem(position);
-  Intent intent=new Intent();
-  intent.setClass(getActivity(),DeviceAdminAdd.class);
-  intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,dpi.getComponent());
-  startActivity(intent);
+  final Activity activity=getActivity();
+  final int userId=getUserId(dpi);
+  if (userId == UserHandle.myUserId() || !isProfileOwner(dpi)) {
+    Intent intent=new Intent();
+    intent.setClass(activity,DeviceAdminAdd.class);
+    intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,dpi.getComponent());
+    activity.startActivityAsUser(intent,new UserHandle(userId));
+  }
+ else {
+    AlertDialog.Builder builder=new AlertDialog.Builder(activity);
+    builder.setMessage(getString(R.string.managed_profile_device_admin_info,dpi.loadLabel(activity.getPackageManager())));
+    builder.setPositiveButton(android.R.string.ok,null);
+    builder.create().show();
+  }
 }

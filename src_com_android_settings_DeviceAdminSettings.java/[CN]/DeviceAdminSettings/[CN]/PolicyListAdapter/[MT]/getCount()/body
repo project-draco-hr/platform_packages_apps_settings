@@ -1,3 +1,8 @@
 {
-  return mAvailableAdmins.size();
+  int adminCount=0;
+  final int profileCount=mAdminsByProfile.size();
+  for (int i=0; i < profileCount; ++i) {
+    adminCount+=mAdminsByProfile.valueAt(i).size();
+  }
+  return adminCount + profileCount;
 }

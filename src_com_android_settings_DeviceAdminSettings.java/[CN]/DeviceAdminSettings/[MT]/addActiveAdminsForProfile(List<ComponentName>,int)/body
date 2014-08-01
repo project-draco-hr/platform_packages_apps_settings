@@ -1,0 +1,23 @@
+{
+  if (activeAdmins != null) {
+    final PackageManager packageManager=getActivity().getPackageManager();
+    final int n=activeAdmins.size();
+    ArrayList<DeviceAdminInfo> deviceAdmins=new ArrayList<DeviceAdminInfo>(n);
+    for (int i=0; i < n; ++i) {
+      ComponentName activeAdmin=activeAdmins.get(i);
+      List<ResolveInfo> resolved=packageManager.queryBroadcastReceivers(new Intent().setComponent(activeAdmin),PackageManager.GET_META_DATA | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS,profileId);
+      if (resolved != null) {
+        final int resolvedMax=resolved.size();
+        for (int j=0; j < resolvedMax; ++j) {
+          DeviceAdminInfo deviceAdminInfo=createDeviceAdminInfo(resolved.get(j));
+          if (deviceAdminInfo != null) {
+            deviceAdmins.add(deviceAdminInfo);
+          }
+        }
+      }
+    }
+    if (!deviceAdmins.isEmpty()) {
+      mAdminsByProfile.put(profileId,deviceAdmins);
+    }
+  }
+}

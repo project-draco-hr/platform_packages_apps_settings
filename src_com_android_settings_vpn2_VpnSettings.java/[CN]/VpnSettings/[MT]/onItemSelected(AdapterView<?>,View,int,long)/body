@@ -1,0 +1,10 @@
+{
+  UserHandle selectedUser=mProfileSpinnerAdapter.getUserHandle(position);
+  if (selectedUser.getIdentifier() != UserHandle.myUserId()) {
+    Intent intent=new Intent(ACTION_VPN_SETTINGS);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    Activity activity=getActivity();
+    activity.startActivityAsUser(intent,selectedUser);
+    activity.finish();
+  }
+}

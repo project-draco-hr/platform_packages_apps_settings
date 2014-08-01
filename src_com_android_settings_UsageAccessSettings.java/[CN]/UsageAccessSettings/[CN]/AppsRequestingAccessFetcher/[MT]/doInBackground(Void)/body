@@ -49,6 +49,9 @@
       Log.w(TAG,"AppOp permission exists for package " + packageOp.getPackageName() + " but package doesn't exist or did not request UsageStats access");
       continue;
     }
+    if (packageOp.getUid() != pe.packageInfo.applicationInfo.uid) {
+      continue;
+    }
     if (packageOp.getOps().size() < 1) {
       Log.w(TAG,"No AppOps permission exists for package " + packageOp.getPackageName());
       continue;

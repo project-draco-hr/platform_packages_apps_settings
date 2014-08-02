@@ -1,0 +1,9 @@
+{
+  if (isChecked) {
+    mHandler.postDelayed(mStartMode,WAIT_FOR_SWITCH_ANIM);
+  }
+ else {
+    if (DEBUG)     Log.d(TAG,"Stopping LOW_POWER_MODE from settings");
+    Global.putInt(getContentResolver(),Global.LOW_POWER_MODE,0);
+  }
+}

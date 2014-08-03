@@ -1,6 +1,7 @@
 {
-  String deviceName=mCachedDevice.getName();
-  mDeviceNamePref.setSummary(deviceName);
-  mDeviceNamePref.setText(deviceName);
+  final EditText deviceNameField=(EditText)getView().findViewById(R.id.name);
+  if (deviceNameField != null) {
+    deviceNameField.setText(mCachedDevice.getName());
+  }
   refreshProfiles();
 }

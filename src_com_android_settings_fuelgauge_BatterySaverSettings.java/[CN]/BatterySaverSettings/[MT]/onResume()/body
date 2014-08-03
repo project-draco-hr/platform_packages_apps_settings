@@ -1,4 +1,9 @@
 {
   super.onResume();
   mSettingsObserver.setListening(true);
+  if (!mValidListener) {
+    mSwitchBar.addOnSwitchChangeListener(this);
+    mValidListener=true;
+  }
+  updateSwitch();
 }

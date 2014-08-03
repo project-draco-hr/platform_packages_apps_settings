@@ -1,0 +1,11 @@
+{
+  final boolean checked=Global.getInt(getContentResolver(),Global.LOW_POWER_MODE,0) != 0;
+  if (checked == mSwitch.isChecked())   return;
+  if (mValidListener) {
+    mSwitchBar.removeOnSwitchChangeListener(this);
+  }
+  mSwitch.setChecked(checked);
+  if (mValidListener) {
+    mSwitchBar.addOnSwitchChangeListener(this);
+  }
+}

@@ -21,5 +21,9 @@
     boolean value=(Boolean)objValue;
     Settings.Secure.putInt(getContentResolver(),WAKE_GESTURE_ENABLED,value ? 1 : 0);
   }
+  if (preference == mDozePreference) {
+    boolean value=(Boolean)objValue;
+    Settings.Secure.putInt(getContentResolver(),DOZE_ENABLED,value ? 1 : 0);
+  }
   return true;
 }

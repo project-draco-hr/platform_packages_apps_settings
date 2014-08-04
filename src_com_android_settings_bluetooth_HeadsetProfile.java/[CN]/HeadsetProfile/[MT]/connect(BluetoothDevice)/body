@@ -3,7 +3,7 @@
   List<BluetoothDevice> sinks=mService.getConnectedDevices();
   if (sinks != null) {
     for (    BluetoothDevice sink : sinks) {
-      mService.disconnect(sink);
+      Log.d(TAG,"Not disconnecting device = " + sink);
     }
   }
   return mService.connect(device);

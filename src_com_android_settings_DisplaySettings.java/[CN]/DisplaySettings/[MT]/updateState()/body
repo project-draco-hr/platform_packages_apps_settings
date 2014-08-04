@@ -9,4 +9,8 @@
     int value=Settings.Secure.getInt(getContentResolver(),WAKE_GESTURE_ENABLED,0);
     mLiftToWakePreference.setChecked(value != 0);
   }
+  if (mDozePreference != null) {
+    int value=Settings.Secure.getInt(getContentResolver(),DOZE_ENABLED,1);
+    mDozePreference.setChecked(value != 0);
+  }
 }

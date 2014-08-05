@@ -1,0 +1,23 @@
+{
+  if (!(r instanceof AppRow)) {
+    final TextView tv=(TextView)view.findViewById(android.R.id.title);
+    tv.setText(r.section);
+    return;
+  }
+  final AppRow row=(AppRow)r;
+  final ViewHolder vh=(ViewHolder)view.getTag();
+  enableLayoutTransitions(vh.row,animate);
+  vh.rowDivider.setVisibility(row.first ? View.GONE : View.VISIBLE);
+  vh.row.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      mContext.startActivity(new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra(Settings.EXTRA_APP_PACKAGE,row.pkg).putExtra(Settings.EXTRA_APP_UID,row.uid).putExtra(EXTRA_HAS_SETTINGS_INTENT,row.settingsIntent != null).putExtra(EXTRA_SETTINGS_INTENT,row.settingsIntent));
+    }
+  }
+);
+  enableLayoutTransitions(vh.row,animate);
+  vh.icon.setImageDrawable(row.icon);
+  vh.title.setText(row.label);
+  final String sub=getSubtitle(row);
+  vh.subtitle.setText(sub);
+  vh.subtitle.setVisibility(!sub.isEmpty() ? View.VISIBLE : View.GONE);
+}

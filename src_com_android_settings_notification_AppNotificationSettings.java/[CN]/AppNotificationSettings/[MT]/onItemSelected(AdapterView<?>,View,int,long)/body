@@ -1,9 +1,0 @@
-{
-  UserHandle selectedUser=mProfileSpinnerAdapter.getUserHandle(position);
-  if (selectedUser.getIdentifier() != UserHandle.myUserId()) {
-    Intent intent=new Intent(getActivity(),AppNotificationSettingsActivity.class);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    mContext.startActivityAsUser(intent,selectedUser);
-    getActivity().finish();
-  }
-}

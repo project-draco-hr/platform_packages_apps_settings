@@ -5,7 +5,11 @@
   if (intent != null) {
     try {
       mAppWidgetId=intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,-1);
-      mComponentName=(ComponentName)intent.getParcelableExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER);
+      mProfile=intent.getParcelableExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER_PROFILE);
+      if (mProfile == null) {
+        mProfile=android.os.Process.myUserHandle();
+      }
+      mComponentName=intent.getParcelableExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER);
       mCallingPackage=getCallingPackage();
       PackageManager pm=getPackageManager();
       ApplicationInfo ai=pm.getApplicationInfo(mCallingPackage,0);
@@ -34,6 +38,6 @@
   mAlwaysUse.setText(getString(R.string.allow_bind_app_widget_activity_always_allow_bind,label));
   mAlwaysUse.setPadding(mAlwaysUse.getPaddingLeft(),mAlwaysUse.getPaddingTop(),mAlwaysUse.getPaddingRight(),(int)(mAlwaysUse.getPaddingBottom() + getResources().getDimension(R.dimen.bind_app_widget_dialog_checkbox_bottom_padding)));
   mAppWidgetManager=AppWidgetManager.getInstance(this);
-  mAlwaysUse.setChecked(mAppWidgetManager.hasBindAppWidgetPermission(mCallingPackage));
+  mAlwaysUse.setChecked(mAppWidgetManager.hasBindAppWidgetPermission(mCallingPackage,mProfile.getIdentifier()));
   setupAlert();
 }

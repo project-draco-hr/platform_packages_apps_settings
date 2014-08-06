@@ -8,25 +8,28 @@
     int n=category.getTilesCount() - 1;
     while (n >= 0) {
       DashboardTile tile=category.getTile(n);
+      boolean removeTile=false;
       id=(int)tile.id;
       if (id == R.id.operator_settings || id == R.id.manufacturer_settings) {
-        Utils.updateTileToSpecificActivityFromMetaDataOrRemove(this,category,tile);
+        if (!Utils.updateTileToSpecificActivityFromMetaDataOrRemove(this,tile)) {
+          removeTile=true;
+        }
       }
  else       if (id == R.id.wifi_settings) {
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
-          category.removeTile(n);
+          removeTile=true;
         }
       }
  else       if (id == R.id.bluetooth_settings) {
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
-          category.removeTile(n);
+          removeTile=true;
         }
       }
  else       if (id == R.id.data_usage_settings) {
         final INetworkManagementService netManager=INetworkManagementService.Stub.asInterface(ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
         try {
           if (!netManager.isBandwidthControlEnabled()) {
-            category.removeTile(n);
+            removeTile=true;
           }
         }
  catch (        RemoteException e) {
@@ -34,43 +37,46 @@
       }
  else       if (id == R.id.battery_settings) {
         if (!mBatteryPresent) {
-          category.removeTile(n);
+          removeTile=true;
         }
       }
  else       if (id == R.id.home_settings) {
         if (!updateHomeSettingTiles(tile)) {
-          category.removeTile(n);
+          removeTile=true;
         }
       }
  else       if (id == R.id.user_settings) {
         boolean hasMultipleUsers=((UserManager)getSystemService(Context.USER_SERVICE)).getUserCount() > 1;
         if (!UserHandle.MU_ENABLED || (!UserManager.supportsMultipleUsers() && !hasMultipleUsers) || Utils.isMonkeyRunning()) {
-          category.removeTile(n);
+          removeTile=true;
         }
       }
  else       if (id == R.id.nfc_payment_settings) {
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC)) {
-          category.removeTile(n);
+          removeTile=true;
         }
  else {
           NfcAdapter adapter=NfcAdapter.getDefaultAdapter(this);
           if (!adapter.isEnabled() || !getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)) {
-            category.removeTile(n);
+            removeTile=true;
           }
         }
       }
  else       if (id == R.id.print_settings) {
         boolean hasPrintingSupport=getPackageManager().hasSystemFeature(PackageManager.FEATURE_PRINTING);
         if (!hasPrintingSupport) {
-          category.removeTile(n);
+          removeTile=true;
         }
       }
  else       if (id == R.id.development_settings) {
         if (!showDev || um.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {
-          category.removeTile(n);
+          removeTile=true;
         }
       }
-      if (UserHandle.MU_ENABLED && UserHandle.myUserId() != 0 && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,id) && n < category.getTilesCount()) {
+      if (UserHandle.MU_ENABLED && UserHandle.myUserId() != 0 && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,id)) {
+        removeTile=true;
+      }
+      if (removeTile && n < category.getTilesCount()) {
         category.removeTile(n);
       }
       n--;

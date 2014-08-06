@@ -14,7 +14,7 @@
       final boolean enabled=val != R.string.lock_screen_notifications_summary_disable;
       final boolean show=val == R.string.lock_screen_notifications_summary_show;
       Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,show ? 1 : 0);
-      Settings.Global.putInt(getContentResolver(),Settings.Global.LOCK_SCREEN_SHOW_NOTIFICATIONS,enabled ? 1 : 0);
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_SHOW_NOTIFICATIONS,enabled ? 1 : 0);
       return true;
     }
   }

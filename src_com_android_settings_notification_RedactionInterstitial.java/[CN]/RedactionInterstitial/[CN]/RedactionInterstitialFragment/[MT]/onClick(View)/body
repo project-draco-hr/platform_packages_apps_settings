@@ -2,5 +2,5 @@
   final boolean show=(v == mShowAllButton);
   final boolean enabled=(v != mHideAllButton);
   Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,show ? 1 : 0);
-  Settings.Global.putInt(getContentResolver(),Settings.Global.LOCK_SCREEN_SHOW_NOTIFICATIONS,enabled ? 1 : 0);
+  Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_SHOW_NOTIFICATIONS,enabled ? 1 : 0);
 }

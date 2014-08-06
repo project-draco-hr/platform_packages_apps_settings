@@ -19,6 +19,7 @@
       mLockPatternUtils.saveLockPassword(pin,mRequestedQuality,isFallback);
       getActivity().setResult(RESULT_FINISHED);
       getActivity().finish();
+      startActivity(RedactionInterstitial.createStartIntent(getActivity()));
     }
  else {
       CharSequence tmp=mPasswordEntry.getText();

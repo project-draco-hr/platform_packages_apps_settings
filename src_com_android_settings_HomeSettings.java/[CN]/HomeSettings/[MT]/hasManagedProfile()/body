@@ -1,0 +1,9 @@
+{
+  Context context=getActivity();
+  UserManager userManager=(UserManager)getSystemService(Context.USER_SERVICE);
+  List<UserInfo> profiles=userManager.getProfiles(context.getUserId());
+  for (  UserInfo userInfo : profiles) {
+    if (userInfo.isManagedProfile())     return true;
+  }
+  return false;
+}

@@ -1,0 +1,7 @@
+{
+  String sanitizedString=input.replace('\n',' ').replace('\r',' ').trim();
+  if (sanitizedString.length() > PAYMENT_APP_MAX_CAPTION_LENGTH) {
+    return sanitizedString.substring(0,PAYMENT_APP_MAX_CAPTION_LENGTH);
+  }
+  return sanitizedString;
+}

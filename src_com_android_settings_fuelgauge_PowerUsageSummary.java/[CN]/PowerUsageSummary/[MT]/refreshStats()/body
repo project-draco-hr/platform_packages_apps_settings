@@ -40,7 +40,9 @@
       }
       final UserHandle userHandle=new UserHandle(UserHandle.getUserId(sipper.getUid()));
       final BatteryEntry entry=new BatteryEntry(getActivity(),mHandler,mUm,sipper);
-      final PowerGaugePreference pref=new PowerGaugePreference(getActivity(),mUm.getBadgedDrawableForUser(entry.getIcon(),userHandle),entry);
+      final Drawable badgedIcon=mUm.getBadgedDrawableForUser(entry.getIcon(),userHandle);
+      final String contentDescription=mUm.getBadgedLabelForUser(entry.getLabel(),userHandle);
+      final PowerGaugePreference pref=new PowerGaugePreference(getActivity(),badgedIcon,contentDescription,entry);
       final double percentOfMax=(sipper.value * 100) / mStatsHelper.getMaxPower();
       sipper.percent=percentOfTotal;
       pref.setTitle(entry.getLabel());

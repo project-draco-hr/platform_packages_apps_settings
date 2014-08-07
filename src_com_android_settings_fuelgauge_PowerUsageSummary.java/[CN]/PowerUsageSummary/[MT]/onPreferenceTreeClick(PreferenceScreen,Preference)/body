@@ -1,10 +1,8 @@
 {
   if (preference instanceof BatteryHistoryPreference) {
-    Parcel hist=Parcel.obtain();
-    mStatsHelper.getStats().writeToParcelWithoutUids(hist,0);
-    byte[] histData=hist.marshall();
+    mStatsHelper.storeStatsHistoryInFile(BATTERY_HISTORY_FILE);
     Bundle args=new Bundle();
-    args.putByteArray(BatteryHistoryDetail.EXTRA_STATS,histData);
+    args.putString(BatteryHistoryDetail.EXTRA_STATS,BATTERY_HISTORY_FILE);
     args.putParcelable(BatteryHistoryDetail.EXTRA_BROADCAST,mStatsHelper.getBatteryBroadcast());
     SettingsActivity sa=(SettingsActivity)getActivity();
     sa.startPreferencePanel(BatteryHistoryDetail.class.getName(),args,R.string.history_details_title,null,null,0);

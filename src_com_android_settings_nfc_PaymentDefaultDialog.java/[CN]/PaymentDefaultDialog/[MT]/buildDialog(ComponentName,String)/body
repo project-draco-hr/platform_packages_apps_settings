@@ -32,12 +32,12 @@
   p.mTitle=getString(R.string.nfc_payment_set_default_label);
   if (defaultPaymentApp == null) {
     String formatString=getString(R.string.nfc_payment_set_default);
-    String msg=String.format(formatString,requestedPaymentApp.caption);
+    String msg=String.format(formatString,sanitizePaymentAppCaption(requestedPaymentApp.caption.toString()));
     p.mMessage=msg;
   }
  else {
     String formatString=getString(R.string.nfc_payment_set_default_instead_of);
-    String msg=String.format(formatString,requestedPaymentApp.caption,defaultPaymentApp.caption);
+    String msg=String.format(formatString,sanitizePaymentAppCaption(requestedPaymentApp.caption.toString()),sanitizePaymentAppCaption(defaultPaymentApp.caption.toString()));
     p.mMessage=msg;
   }
   p.mPositiveButtonText=getString(R.string.yes);

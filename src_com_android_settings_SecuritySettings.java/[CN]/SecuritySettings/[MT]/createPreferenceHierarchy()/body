@@ -30,27 +30,19 @@ break;
 }
 }
 PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
-if (securityCategory != null) {
-PackageManager pm=getPackageManager();
-List<ResolveInfo> resolveInfos=pm.queryIntentServices(TRUST_AGENT_INTENT,PackageManager.GET_META_DATA);
-List<ComponentName> enabledTrustAgents=mLockPatternUtils.getEnabledTrustAgents();
-if (enabledTrustAgents != null && !enabledTrustAgents.isEmpty()) {
-for (ResolveInfo resolveInfo : resolveInfos) {
-if (resolveInfo.serviceInfo == null) continue;
-if (!TrustAgentUtils.checkProvidePermission(resolveInfo,pm)) continue;
-TrustAgentUtils.TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
-if (trustAgentComponentInfo.componentName == null || !enabledTrustAgents.contains(TrustAgentUtils.getComponentName(resolveInfo)) || TextUtils.isEmpty(trustAgentComponentInfo.title)) continue;
+if (securityCategory != null && mLockPatternUtils.isSecure()) {
+ArrayList<TrustAgentComponentInfo> agents=getActiveTrustAgents(getPackageManager(),mLockPatternUtils);
+for (int i=0; i < agents.size(); i++) {
+final TrustAgentComponentInfo agent=agents.get(i);
 Preference trustAgentPreference=new Preference(securityCategory.getContext());
 trustAgentPreference.setKey(KEY_TRUST_AGENT);
-trustAgentPreference.setTitle(trustAgentComponentInfo.title);
-trustAgentPreference.setSummary(trustAgentComponentInfo.summary);
+trustAgentPreference.setTitle(agent.title);
+trustAgentPreference.setSummary(agent.summary);
 Intent intent=new Intent();
-intent.setComponent(trustAgentComponentInfo.componentName);
+intent.setComponent(agent.componentName);
 intent.setAction(Intent.ACTION_MAIN);
 trustAgentPreference.setIntent(intent);
 securityCategory.addPreference(trustAgentPreference);
-break;
-}
 }
 }
 mLockAfter=(ListPreference)root.findPreference(KEY_LOCK_AFTER_TIMEOUT);
@@ -110,5 +102,11 @@ mToggleAppInstallation.setEnabled(mIsPrimary);
 if (um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES) || um.hasUserRestriction(UserManager.DISALLOW_INSTALL_APPS)) {
 mToggleAppInstallation.setEnabled(false);
 }
+PreferenceGroup advancedCategory=(PreferenceGroup)root.findPreference(KEY_ADVANCED_SECURITY);
+if (advancedCategory != null && !mLockPatternUtils.isSecure()) {
+Preference manageAgents=advancedCategory.findPreference(KEY_MANAGE_TRUST_AGENTS);
+if (advancedCategory != null) advancedCategory.removePreference(manageAgents);
+}
+Index.getInstance(getActivity()).updateFromClassNameResource(SecuritySettings.class.getName(),true,true);
 return root;
 }

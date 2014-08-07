@@ -35,7 +35,7 @@ final UserHandle userHandle=new UserHandle(userId);
 Drawable appIcon=mPackageManager.getApplicationIcon(appInfo);
 Drawable icon=um.getBadgedDrawableForUser(appIcon,userHandle);
 CharSequence appLabel=mPackageManager.getApplicationLabel(appInfo);
-String badgedAppLabel=um.getBadgedLabelForUser(appLabel.toString(),userHandle);
+CharSequence badgedAppLabel=um.getBadgedLabelForUser(appLabel.toString(),userHandle);
 preference=createRecentLocationEntry(icon,appLabel,highBattery,badgedAppLabel,new PackageEntryClickedListener(packageName));
 }
  catch (RemoteException e) {

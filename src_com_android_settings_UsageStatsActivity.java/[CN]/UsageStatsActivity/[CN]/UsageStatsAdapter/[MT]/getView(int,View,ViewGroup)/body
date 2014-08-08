@@ -11,12 +11,12 @@
  else {
     holder=(AppViewHolder)convertView.getTag();
   }
-  PackageUsageStats pkgStats=mPackageStats.get(position);
+  UsageStats pkgStats=mPackageStats.get(position);
   if (pkgStats != null) {
     String label=mAppLabelMap.get(pkgStats.getPackageName());
     holder.pkgName.setText(label);
     holder.lastTimeUsed.setText(DateUtils.formatSameDayTime(pkgStats.getLastTimeUsed(),System.currentTimeMillis(),DateFormat.MEDIUM,DateFormat.MEDIUM));
-    holder.usageTime.setText(DateUtils.formatElapsedTime(pkgStats.getTotalTimeSpent() / 1000));
+    holder.usageTime.setText(DateUtils.formatElapsedTime(pkgStats.getTotalTimeInForeground() / 1000));
   }
  else {
     Log.w(TAG,"No usage stats info for package:" + position);

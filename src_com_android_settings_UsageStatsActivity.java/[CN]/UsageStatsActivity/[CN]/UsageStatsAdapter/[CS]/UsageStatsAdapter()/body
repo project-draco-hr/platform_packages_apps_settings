@@ -1,0 +1,30 @@
+{
+  Calendar cal=Calendar.getInstance();
+  cal.add(Calendar.DAY_OF_YEAR,-5);
+  final List<UsageStats> stats=mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST,cal.getTimeInMillis(),System.currentTimeMillis());
+  if (stats == null) {
+    return;
+  }
+  ArrayMap<String,UsageStats> map=new ArrayMap<>();
+  final int statCount=stats.size();
+  for (int i=0; i < statCount; i++) {
+    final android.app.usage.UsageStats pkgStats=stats.get(i);
+    try {
+      ApplicationInfo appInfo=mPm.getApplicationInfo(pkgStats.getPackageName(),0);
+      String label=appInfo.loadLabel(mPm).toString();
+      mAppLabelMap.put(pkgStats.getPackageName(),label);
+      UsageStats existingStats=map.get(pkgStats.getPackageName());
+      if (existingStats == null) {
+        map.put(pkgStats.getPackageName(),pkgStats);
+      }
+ else {
+        existingStats.add(pkgStats);
+      }
+    }
+ catch (    NameNotFoundException e) {
+    }
+  }
+  mPackageStats.addAll(map.values());
+  mAppLabelComparator=new AppNameComparator(mAppLabelMap);
+  sortList();
+}

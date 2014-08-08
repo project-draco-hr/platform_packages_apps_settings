@@ -1,5 +1,7 @@
 {
   super.onPause();
-  mCachedDevice.unregisterCallback(this);
+  if (mCachedDevice != null) {
+    mCachedDevice.unregisterCallback(this);
+  }
   mManager.setForegroundActivity(null);
 }

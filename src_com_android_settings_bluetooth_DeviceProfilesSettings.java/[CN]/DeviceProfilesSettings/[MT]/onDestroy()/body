@@ -4,4 +4,7 @@
     mDisconnectDialog.dismiss();
     mDisconnectDialog=null;
   }
+  if (mCachedDevice != null) {
+    mCachedDevice.unregisterCallback(this);
+  }
 }

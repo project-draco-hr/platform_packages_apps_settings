@@ -1,9 +1,6 @@
 {
   super.onCreate(icicle);
-  byte[] data=getArguments().getByteArray(EXTRA_STATS);
-  Parcel parcel=Parcel.obtain();
-  parcel.unmarshall(data,0,data.length);
-  parcel.setDataPosition(0);
-  mStats=com.android.internal.os.BatteryStatsImpl.CREATOR.createFromParcel(parcel);
+  String histFile=getArguments().getString(EXTRA_STATS);
+  mStats=BatteryStatsHelper.statsFromFile(getActivity(),histFile);
   mBatteryBroadcast=getArguments().getParcelable(EXTRA_BROADCAST);
 }

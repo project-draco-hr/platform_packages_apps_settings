@@ -22,5 +22,16 @@
     data.screenTitle=screenTitle;
     result.add(data);
   }
+  final LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
+  if (lockPatternUtils.isSecure()) {
+    ArrayList<TrustAgentComponentInfo> agents=getActiveTrustAgents(context.getPackageManager(),lockPatternUtils);
+    for (int i=0; i < agents.size(); i++) {
+      final TrustAgentComponentInfo agent=agents.get(i);
+      data=new SearchIndexableRaw(context);
+      data.title=agent.title;
+      data.screenTitle=screenTitle;
+      result.add(data);
+    }
+  }
   return result;
 }

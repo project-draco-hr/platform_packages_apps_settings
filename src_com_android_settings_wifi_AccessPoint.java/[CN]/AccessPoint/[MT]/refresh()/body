@@ -2,6 +2,7 @@
   setTitle(ssid);
   final Context context=getContext();
   updateIcon(getLevel(),context);
+  setSummary(null);
   StringBuilder summary=new StringBuilder();
   if (mState != null) {
     summary.append(Summary.get(context,mState));
@@ -31,18 +32,6 @@ summary.append(context.getString(R.string.wifi_not_in_range));
 if (mConfig != null) {
 summary.append(context.getString(R.string.wifi_remembered));
 }
-if (security != SECURITY_NONE) {
-String securityStrFormat;
-if (summary.length() == 0) {
-securityStrFormat=context.getString(R.string.wifi_secured_first_item);
-}
- else {
-securityStrFormat=context.getString(R.string.wifi_secured_second_item);
-}
-}
-}
-if (summary.length() < 1) {
-summary.append("   ");
 }
 if (WifiSettings.mVerboseLogging > 0) {
 if (mInfo != null && mState != null) {
@@ -65,5 +54,10 @@ summary.append(Long.toString(sec) + "s ");
 summary.append(")");
 }
 }
+if (summary.length() > 0) {
 setSummary(summary.toString());
+}
+ else {
+showSummary=false;
+}
 }

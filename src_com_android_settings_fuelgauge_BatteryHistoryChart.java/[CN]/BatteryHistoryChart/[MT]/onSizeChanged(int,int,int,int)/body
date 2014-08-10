@@ -102,6 +102,9 @@
       }
       if (curWalltime != 0 && rec.isDeltaData()) {
         x=mLevelLeft + (int)(((curWalltime - walltimeStart) * levelWidth) / walltimeChange);
+        if (x < 0) {
+          x=0;
+        }
         if (false) {
           StringBuilder sb=new StringBuilder(128);
           sb.append("walloff=");
@@ -264,6 +267,9 @@ x=w;
 }
  else {
 x=mLevelLeft + (int)(((mEndDataWallTime - walltimeStart) * levelWidth) / walltimeChange);
+if (x < 0) {
+x=0;
+}
 }
 finishPaths(x,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
 if (x < w) {

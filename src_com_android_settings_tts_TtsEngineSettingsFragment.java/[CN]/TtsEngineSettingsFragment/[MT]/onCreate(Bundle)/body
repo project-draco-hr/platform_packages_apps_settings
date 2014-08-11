@@ -28,7 +28,7 @@
     final CharSequence value=savedInstanceState.getCharSequence(STATE_KEY_LOCALE_VALUE);
     mLocalePreference.setEntries(entries);
     mLocalePreference.setEntryValues(entryValues);
-    mLocalePreference.setValue(value.toString());
+    mLocalePreference.setValue(value != null ? value.toString() : null);
     mLocalePreference.setEnabled(entries.length > 0);
   }
   mVoiceDataDetails=getArguments().getParcelable(TtsEnginePreference.FRAGMENT_ARGS_VOICES);

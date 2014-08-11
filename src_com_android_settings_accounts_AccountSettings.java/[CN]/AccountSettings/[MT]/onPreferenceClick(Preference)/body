@@ -4,8 +4,18 @@
     ProfileData profileData=mProfiles.valueAt(i);
     if (preference == profileData.addAccountPreference) {
       Intent intent=new Intent(ADD_ACCOUNT_ACTION);
-      intent.putExtra(EXTRA_USER,profileData.userHandle);
+      intent.putExtra(EXTRA_USER,profileData.userInfo.getUserHandle());
       startActivity(intent);
+      return true;
+    }
+    if (preference == profileData.removeWorkProfilePreference) {
+      final int userId=profileData.userInfo.id;
+      Utils.createRemoveConfirmationDialog(getActivity(),userId,new DialogInterface.OnClickListener(){
+        @Override public void onClick(        DialogInterface dialog,        int which){
+          mUm.removeUser(userId);
+        }
+      }
+).show();
       return true;
     }
   }

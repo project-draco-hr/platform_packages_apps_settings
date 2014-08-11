@@ -1,0 +1,23 @@
+{
+  final Context context=getActivity();
+  final ProfileData profileData=new ProfileData();
+  profileData.userInfo=userInfo;
+  if (addCategory) {
+    profileData.preferenceGroup=new PreferenceCategory(context);
+    profileData.preferenceGroup.setTitle(userInfo.isManagedProfile() ? R.string.category_work : R.string.category_personal);
+    parent.addPreference(profileData.preferenceGroup);
+  }
+ else {
+    profileData.preferenceGroup=parent;
+  }
+  if (userInfo.isEnabled()) {
+    profileData.authenticatorHelper=new AuthenticatorHelper(context,userInfo.getUserHandle(),mUm,this);
+    if (!mUm.hasUserRestriction(DISALLOW_MODIFY_ACCOUNTS,userInfo.getUserHandle())) {
+      profileData.addAccountPreference=newAddAccountPreference(context);
+    }
+  }
+  if (userInfo.isManagedProfile()) {
+    profileData.removeWorkProfilePreference=newRemoveWorkProfilePreference(context);
+  }
+  mProfiles.put(userInfo.id,profileData);
+}

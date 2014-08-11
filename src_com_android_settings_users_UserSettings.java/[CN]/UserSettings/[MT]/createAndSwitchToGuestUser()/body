@@ -6,6 +6,10 @@
       return;
     }
   }
+  if (mUserManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER)) {
+    Log.i(TAG,"Blocking guest creation because it is restricted");
+    return;
+  }
   UserInfo guestUser=mUserManager.createGuest(getActivity(),getResources().getString(R.string.user_guest));
   if (guestUser != null) {
     switchUserNow(guestUser.id);

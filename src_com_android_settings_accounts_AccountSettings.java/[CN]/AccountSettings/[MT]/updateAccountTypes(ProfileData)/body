@@ -1,11 +1,28 @@
 {
   profileData.preferenceGroup.removeAll();
-  final ArrayList<AccountPreference> preferences=getAccountTypePreferences(profileData.authenticatorHelper,profileData.userHandle);
-  final int count=preferences.size();
-  for (int i=0; i < count; i++) {
-    profileData.preferenceGroup.addPreference(preferences.get(i));
+  if (profileData.userInfo.isEnabled()) {
+    final ArrayList<AccountPreference> preferences=getAccountTypePreferences(profileData.authenticatorHelper,profileData.userInfo.getUserHandle());
+    final int count=preferences.size();
+    for (int i=0; i < count; i++) {
+      profileData.preferenceGroup.addPreference(preferences.get(i));
+    }
+    if (profileData.addAccountPreference != null) {
+      profileData.preferenceGroup.addPreference(profileData.addAccountPreference);
+    }
   }
-  if (profileData.addAccountPreference != null) {
-    profileData.preferenceGroup.addPreference(profileData.addAccountPreference);
+ else {
+synchronized (this) {
+      if (mProfileNotAvailablePreference == null) {
+        mProfileNotAvailablePreference=new Preference(getActivity());
+        mProfileNotAvailablePreference.setEnabled(false);
+        mProfileNotAvailablePreference.setIcon(R.drawable.empty_icon);
+        mProfileNotAvailablePreference.setTitle(null);
+        mProfileNotAvailablePreference.setSummary(R.string.managed_profile_not_available_label);
+      }
+    }
+    profileData.preferenceGroup.addPreference(mProfileNotAvailablePreference);
+  }
+  if (profileData.removeWorkProfilePreference != null) {
+    profileData.preferenceGroup.addPreference(profileData.removeWorkProfilePreference);
   }
 }

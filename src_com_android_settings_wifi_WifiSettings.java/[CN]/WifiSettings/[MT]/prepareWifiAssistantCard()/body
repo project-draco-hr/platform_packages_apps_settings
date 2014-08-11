@@ -1,23 +1,48 @@
 {
-  if (mWifiAssistantPreference == null) {
-    mWifiAssistantPreference=new WifiAssistantPreference();
-  }
   if (getActivity() instanceof WifiPickerActivity) {
-    return false;
+    return;
   }
   if (NetworkScorerAppManager.getActiveScorer(getActivity()) != null) {
-    return false;
+    return;
   }
   Collection<NetworkScorerAppData> scorers=NetworkScorerAppManager.getAllValidScorers(getActivity());
   if (scorers.isEmpty()) {
-    return false;
+    return;
   }
   SharedPreferences sharedPreferences=getPreferenceScreen().getSharedPreferences();
   long lastTimeoutEndTime=sharedPreferences.getLong(KEY_ASSISTANT_START_TIME,0);
   long dismissTime=sharedPreferences.getLong(KEY_ASSISTANT_DISMISS_TIME,0);
-  boolean shouldShow=((System.currentTimeMillis() - lastTimeoutEndTime) > dismissTime);
-  if (shouldShow) {
-    mWifiAssistantApp=scorers.iterator().next();
+  if ((System.currentTimeMillis() - lastTimeoutEndTime) <= dismissTime) {
+    return;
   }
-  return shouldShow;
+  mWifiAssistantApp=scorers.iterator().next();
+  if (mWifiAssistantCard == null) {
+    mWifiAssistantCard=LayoutInflater.from(getActivity()).inflate(R.layout.wifi_assistant_card,getListView(),false);
+    Button setup=(Button)mWifiAssistantCard.findViewById(R.id.setup);
+    Button noThanks=(Button)mWifiAssistantCard.findViewById(R.id.no_thanks_button);
+    if (setup != null && noThanks != null) {
+      setup.setOnClickListener(new OnClickListener(){
+        @Override public void onClick(        View v){
+          Intent intent=new Intent();
+          if (mWifiAssistantApp.mConfigurationActivityClassName != null) {
+            intent.setClassName(mWifiAssistantApp.mPackageName,mWifiAssistantApp.mConfigurationActivityClassName);
+          }
+ else {
+            intent.setAction(NetworkScoreManager.ACTION_CHANGE_ACTIVE);
+            intent.putExtra(NetworkScoreManager.EXTRA_PACKAGE_NAME,mWifiAssistantApp.mPackageName);
+          }
+          startActivityForResult(intent,REQUEST_ENABLE_WIFI_ASSISTANT);
+        }
+      }
+);
+      noThanks.setOnClickListener(new OnClickListener(){
+        @Override public void onClick(        View v){
+          setWifiAssistantTimeout();
+          getListView().removeHeaderView(mWifiAssistantCard);
+          mWifiAssistantApp=null;
+        }
+      }
+);
+    }
+  }
 }

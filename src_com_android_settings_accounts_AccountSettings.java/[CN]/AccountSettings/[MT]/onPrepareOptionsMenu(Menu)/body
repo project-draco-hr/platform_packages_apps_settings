@@ -1,11 +1,14 @@
 {
-  final UserHandle currentProfile=UserHandle.getCallingUserHandle();
-  if (mIsSingleProfileUi) {
-    menu.findItem(R.id.account_settings_menu_auto_sync).setChecked(ContentResolver.getMasterSyncAutomaticallyAsUser(currentProfile.getIdentifier()));
+  final UserHandle currentProfile=Process.myUserHandle();
+  if (mProfiles.size() == 1) {
+    menu.findItem(R.id.account_settings_menu_auto_sync).setVisible(true).setOnMenuItemClickListener(new MasterSyncStateClickListener(currentProfile)).setChecked(ContentResolver.getMasterSyncAutomaticallyAsUser(currentProfile.getIdentifier()));
+    menu.findItem(R.id.account_settings_menu_auto_sync_personal).setVisible(false);
+    menu.findItem(R.id.account_settings_menu_auto_sync_work).setVisible(false);
   }
  else {
-    final UserHandle managedProfile=Utils.getManagedProfile(mUm);
-    menu.findItem(R.id.account_settings_menu_auto_sync_personal).setChecked(ContentResolver.getMasterSyncAutomaticallyAsUser(currentProfile.getIdentifier()));
-    menu.findItem(R.id.account_settings_menu_auto_sync_work).setChecked(ContentResolver.getMasterSyncAutomaticallyAsUser(managedProfile.getIdentifier()));
+    final UserHandle managedProfile=mProfiles.valueAt(1).userInfo.getUserHandle();
+    menu.findItem(R.id.account_settings_menu_auto_sync_personal).setVisible(true).setOnMenuItemClickListener(new MasterSyncStateClickListener(currentProfile)).setChecked(ContentResolver.getMasterSyncAutomaticallyAsUser(currentProfile.getIdentifier()));
+    menu.findItem(R.id.account_settings_menu_auto_sync_work).setVisible(true).setOnMenuItemClickListener(new MasterSyncStateClickListener(managedProfile)).setChecked(ContentResolver.getMasterSyncAutomaticallyAsUser(managedProfile.getIdentifier()));
+    menu.findItem(R.id.account_settings_menu_auto_sync).setVisible(false);
   }
 }

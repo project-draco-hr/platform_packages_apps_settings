@@ -50,9 +50,9 @@ if (mLockAfter != null) {
 setupLockAfterPreference();
 updateLockAfterPreferenceSummary();
 }
-mBiometricWeakLiveliness=(CheckBoxPreference)root.findPreference(KEY_BIOMETRIC_WEAK_LIVELINESS);
-mVisiblePattern=(CheckBoxPreference)root.findPreference(KEY_VISIBLE_PATTERN);
-mPowerButtonInstantlyLocks=(CheckBoxPreference)root.findPreference(KEY_POWER_INSTANTLY_LOCKS);
+mBiometricWeakLiveliness=(SwitchPreference)root.findPreference(KEY_BIOMETRIC_WEAK_LIVELINESS);
+mVisiblePattern=(SwitchPreference)root.findPreference(KEY_VISIBLE_PATTERN);
+mPowerButtonInstantlyLocks=(SwitchPreference)root.findPreference(KEY_POWER_INSTANTLY_LOCKS);
 Preference trustAgentPreference=root.findPreference(KEY_TRUST_AGENT);
 if (mPowerButtonInstantlyLocks != null && trustAgentPreference != null && trustAgentPreference.getTitle().length() > 0) {
 mPowerButtonInstantlyLocks.setSummary(getString(R.string.lockpattern_settings_power_button_instantly_locks_summary,trustAgentPreference.getTitle()));
@@ -80,7 +80,7 @@ root.findPreference(KEY_SCREEN_PINNING).setSummary(getResources().getString(R.st
  catch (SettingNotFoundException e) {
 Log.w(TAG,"No Lock-to-app enabled setting",e);
 }
-mShowPassword=(CheckBoxPreference)root.findPreference(KEY_SHOW_PASSWORD);
+mShowPassword=(SwitchPreference)root.findPreference(KEY_SHOW_PASSWORD);
 mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
 final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
 mKeyStore=KeyStore.getInstance();
@@ -96,7 +96,7 @@ credentialsManager.removePreference(root.findPreference(KEY_CREDENTIALS_INSTALL)
 credentialsManager.removePreference(root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE));
 }
 PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
-mToggleAppInstallation=(CheckBoxPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
+mToggleAppInstallation=(SwitchPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
 mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
 mToggleAppInstallation.setEnabled(mIsPrimary);
 if (um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES) || um.hasUserRestriction(UserManager.DISALLOW_INSTALL_APPS)) {
@@ -105,8 +105,12 @@ mToggleAppInstallation.setEnabled(false);
 PreferenceGroup advancedCategory=(PreferenceGroup)root.findPreference(KEY_ADVANCED_SECURITY);
 if (advancedCategory != null && !mLockPatternUtils.isSecure()) {
 Preference manageAgents=advancedCategory.findPreference(KEY_MANAGE_TRUST_AGENTS);
-if (advancedCategory != null) advancedCategory.removePreference(manageAgents);
+if (manageAgents != null) advancedCategory.removePreference(manageAgents);
 }
 Index.getInstance(getActivity()).updateFromClassNameResource(SecuritySettings.class.getName(),true,true);
+for (int i=0; i < SWITCH_PREFERENCE_KEYS.length; i++) {
+final Preference pref=findPreference(SWITCH_PREFERENCE_KEYS[i]);
+if (pref != null) pref.setOnPreferenceChangeListener(this);
+}
 return root;
 }

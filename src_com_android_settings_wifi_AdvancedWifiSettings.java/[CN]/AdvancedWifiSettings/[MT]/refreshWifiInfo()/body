@@ -1,11 +1,12 @@
 {
+  final Context context=getActivity();
   WifiInfo wifiInfo=mWifiManager.getConnectionInfo();
   Preference wifiMacAddressPref=findPreference(KEY_MAC_ADDRESS);
   String macAddress=wifiInfo == null ? null : wifiInfo.getMacAddress();
-  wifiMacAddressPref.setSummary(!TextUtils.isEmpty(macAddress) ? macAddress : getActivity().getString(R.string.status_unavailable));
+  wifiMacAddressPref.setSummary(!TextUtils.isEmpty(macAddress) ? macAddress : context.getString(R.string.status_unavailable));
   wifiMacAddressPref.setSelectable(false);
   Preference wifiIpAddressPref=findPreference(KEY_CURRENT_IP_ADDRESS);
-  String ipAddress=Utils.getWifiIpAddresses(getActivity());
-  wifiIpAddressPref.setSummary(ipAddress == null ? getActivity().getString(R.string.status_unavailable) : ipAddress);
+  String ipAddress=Utils.getWifiIpAddresses(context);
+  wifiIpAddressPref.setSummary(ipAddress == null ? context.getString(R.string.status_unavailable) : ipAddress);
   wifiIpAddressPref.setSelectable(false);
 }

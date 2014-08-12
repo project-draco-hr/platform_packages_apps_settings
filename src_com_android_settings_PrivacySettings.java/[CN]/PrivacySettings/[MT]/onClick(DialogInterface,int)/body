@@ -1,9 +1,12 @@
 {
-  if (which == DialogInterface.BUTTON_POSITIVE) {
-    if (mDialogType == DIALOG_ERASE_BACKUP) {
+  if (mDialogType == DIALOG_ERASE_BACKUP) {
+    if (which == DialogInterface.BUTTON_POSITIVE) {
       setBackupEnabled(false);
-      updateConfigureSummary();
     }
+ else     if (which == DialogInterface.BUTTON_NEGATIVE) {
+      setBackupEnabled(true);
+    }
+    updateConfigureSummary();
   }
   mDialogType=0;
 }

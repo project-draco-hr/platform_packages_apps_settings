@@ -1,14 +1,15 @@
 {
-  mLinkProperties.clear();
   mIpAssignment=(mIpSettingsSpinner != null && mIpSettingsSpinner.getSelectedItemPosition() == STATIC_IP) ? IpAssignment.STATIC : IpAssignment.DHCP;
   if (mIpAssignment == IpAssignment.STATIC) {
-    int result=validateIpConfigFields(mLinkProperties);
+    mStaticIpConfiguration=new StaticIpConfiguration();
+    int result=validateIpConfigFields(mStaticIpConfiguration);
     if (result != 0) {
       return false;
     }
   }
   final int selectedPosition=mProxySettingsSpinner.getSelectedItemPosition();
   mProxySettings=ProxySettings.NONE;
+  mHttpProxy=null;
   if (selectedPosition == PROXY_STATIC && mProxyHostView != null) {
     mProxySettings=ProxySettings.STATIC;
     String host=mProxyHostView.getText().toString();
@@ -24,8 +25,7 @@
       result=R.string.proxy_error_invalid_port;
     }
     if (result == 0) {
-      ProxyInfo proxyProperties=new ProxyInfo(host,port,exclusionList);
-      mLinkProperties.setHttpProxy(proxyProperties);
+      mHttpProxy=new ProxyInfo(host,port,exclusionList);
     }
  else {
       return false;
@@ -41,8 +41,7 @@
     if (uri == null) {
       return false;
     }
-    ProxyInfo proxyInfo=new ProxyInfo(uri);
-    mLinkProperties.setHttpProxy(proxyInfo);
+    mHttpProxy=new ProxyInfo(uri);
   }
   return true;
 }

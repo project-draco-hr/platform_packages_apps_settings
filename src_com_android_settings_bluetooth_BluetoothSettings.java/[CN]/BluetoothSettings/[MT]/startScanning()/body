@@ -3,5 +3,7 @@
   if (!mAvailableDevicesCategoryIsPresent) {
     getPreferenceScreen().addPreference(mAvailableDevicesCategory);
   }
+  mLocalManager.getCachedDeviceManager().clearCachedDevices();
+  mAvailableDevicesCategory.removeAll();
   mLocalAdapter.startScanning(true);
 }

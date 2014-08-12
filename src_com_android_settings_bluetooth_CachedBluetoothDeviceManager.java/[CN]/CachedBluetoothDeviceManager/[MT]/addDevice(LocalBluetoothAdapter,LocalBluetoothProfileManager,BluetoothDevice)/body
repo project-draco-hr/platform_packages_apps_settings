@@ -1,5 +1,7 @@
 {
   CachedBluetoothDevice newDevice=new CachedBluetoothDevice(mContext,adapter,profileManager,device);
-  mCachedDevices.add(newDevice);
+synchronized (mCachedDevices) {
+    mCachedDevices.add(newDevice);
+  }
   return newDevice;
 }

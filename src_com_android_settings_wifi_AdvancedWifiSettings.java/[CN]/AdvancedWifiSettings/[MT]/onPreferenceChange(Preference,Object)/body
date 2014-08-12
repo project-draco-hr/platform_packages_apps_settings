@@ -1,4 +1,5 @@
 {
+  final Context context=getActivity();
   String key=preference.getKey();
   if (KEY_FREQUENCY_BAND.equals(key)) {
     try {
@@ -7,9 +8,25 @@
       updateFrequencyBandSummary(preference,value);
     }
  catch (    NumberFormatException e) {
-      Toast.makeText(getActivity(),R.string.wifi_setting_frequency_band_error,Toast.LENGTH_SHORT).show();
+      Toast.makeText(context,R.string.wifi_setting_frequency_band_error,Toast.LENGTH_SHORT).show();
       return false;
     }
+  }
+ else   if (KEY_WIFI_ASSISTANT.equals(key)) {
+    if (((Boolean)newValue).booleanValue() == false) {
+      NetworkScorerAppManager.setActiveScorer(context,null);
+      return true;
+    }
+    NetworkScorerAppData wifiAssistant=WifiSettings.getWifiAssistantApp(context);
+    Intent intent=new Intent();
+    if (wifiAssistant.mConfigurationActivityClassName != null) {
+      intent.setClassName(wifiAssistant.mPackageName,wifiAssistant.mConfigurationActivityClassName);
+    }
+ else {
+      intent.setAction(NetworkScoreManager.ACTION_CHANGE_ACTIVE);
+      intent.putExtra(NetworkScoreManager.EXTRA_PACKAGE_NAME,wifiAssistant.mPackageName);
+    }
+    startActivity(intent);
   }
   if (KEY_SLEEP_POLICY.equals(key)) {
     try {
@@ -18,7 +35,7 @@
       updateSleepPolicySummary(preference,stringValue);
     }
  catch (    NumberFormatException e) {
-      Toast.makeText(getActivity(),R.string.wifi_setting_sleep_policy_error,Toast.LENGTH_SHORT).show();
+      Toast.makeText(context,R.string.wifi_setting_sleep_policy_error,Toast.LENGTH_SHORT).show();
       return false;
     }
   }

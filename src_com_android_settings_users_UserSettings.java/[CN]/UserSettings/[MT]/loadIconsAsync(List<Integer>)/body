@@ -7,6 +7,9 @@
     @Override protected Void doInBackground(    List<Integer>... values){
       for (      int userId : values[0]) {
         Bitmap bitmap=mUserManager.getUserIcon(userId);
+        if (bitmap == null) {
+          bitmap=createBitmapFromDrawable(R.drawable.ic_avatar_default_1);
+        }
         mUserIcons.append(userId,bitmap);
       }
       return null;

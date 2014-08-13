@@ -50,6 +50,9 @@
         setPhotoId(pref,user);
       }
     }
+ else {
+      pref.setIcon(getEncircledDefaultAvatar());
+    }
   }
   if (mAddingUser) {
     Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,null,null);
@@ -79,6 +82,6 @@
   if (missingIcons.size() > 0) {
     loadIconsAsync(missingIcons);
   }
-  boolean moreUsers=mUserManager.getMaxSupportedUsers() > users.size();
+  boolean moreUsers=mUserManager.canAddMoreUsers();
   mAddUser.setEnabled(moreUsers);
 }

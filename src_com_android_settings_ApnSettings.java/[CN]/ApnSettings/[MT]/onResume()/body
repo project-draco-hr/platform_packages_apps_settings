@@ -3,7 +3,7 @@
   if (mUnavailable) {
     return;
   }
-  registerReceiver(mMobileStateReceiver,mMobileStateFilter);
+  getActivity().registerReceiver(mMobileStateReceiver,mMobileStateFilter);
   if (!mRestoreDefaultApnMode) {
     fillList();
   }

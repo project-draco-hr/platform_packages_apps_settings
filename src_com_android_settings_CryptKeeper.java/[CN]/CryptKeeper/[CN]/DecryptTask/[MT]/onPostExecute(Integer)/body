@@ -4,6 +4,11 @@
  else   if (failedAttempts == MAX_FAILED_ATTEMPTS) {
     sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
   }
+ else   if (failedAttempts == -1) {
+    setContentView(R.layout.crypt_keeper_progress);
+    showFactoryReset(true);
+    return;
+  }
  else {
     if (mLockPatternView != null) {
       mLockPatternView.setDisplayMode(DisplayMode.Wrong);

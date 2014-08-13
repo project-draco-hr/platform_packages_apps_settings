@@ -8,8 +8,14 @@
     }
   }
 );
-  ((TextView)findViewById(R.id.title)).setText(R.string.crypt_keeper_failed_title);
-  ((TextView)findViewById(R.id.status)).setText(R.string.crypt_keeper_failed_summary);
+  if (corrupt) {
+    ((TextView)findViewById(R.id.title)).setText(R.string.crypt_keeper_data_corrupt_title);
+    ((TextView)findViewById(R.id.status)).setText(R.string.crypt_keeper_data_corrupt_summary);
+  }
+ else {
+    ((TextView)findViewById(R.id.title)).setText(R.string.crypt_keeper_failed_title);
+    ((TextView)findViewById(R.id.status)).setText(R.string.crypt_keeper_failed_summary);
+  }
   final View view=findViewById(R.id.bottom_divider);
   if (view != null) {
     view.setVisibility(View.VISIBLE);

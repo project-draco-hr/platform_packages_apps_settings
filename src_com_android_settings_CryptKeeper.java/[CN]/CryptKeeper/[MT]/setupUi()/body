@@ -1,7 +1,7 @@
 {
   if (mEncryptionGoneBad || isDebugView(FORCE_VIEW_ERROR)) {
     setContentView(R.layout.crypt_keeper_progress);
-    showFactoryReset();
+    showFactoryReset(false);
     return;
   }
   final String progress=SystemProperties.get("vold.encrypt_progress");

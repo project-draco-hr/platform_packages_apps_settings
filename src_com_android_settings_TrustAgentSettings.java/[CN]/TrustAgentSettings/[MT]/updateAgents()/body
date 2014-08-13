@@ -1,0 +1,25 @@
+{
+  final Context context=getActivity();
+  if (mAvailableAgents == null) {
+    mAvailableAgents=findAvailableTrustAgents();
+  }
+  if (mLockPatternUtils == null) {
+    mLockPatternUtils=new LockPatternUtils(getActivity());
+  }
+  loadActiveAgents();
+  PreferenceGroup category=(PreferenceGroup)getPreferenceScreen().findPreference("trust_agents");
+  category.removeAll();
+  final int count=mAvailableAgents.size();
+  for (int i=0; i < count; i++) {
+    AgentInfo agent=mAvailableAgents.valueAt(i);
+    final SwitchPreference preference=new SwitchPreference(context);
+    agent.preference=preference;
+    preference.setPersistent(false);
+    preference.setTitle(agent.label);
+    preference.setIcon(agent.icon);
+    preference.setPersistent(false);
+    preference.setOnPreferenceChangeListener(this);
+    preference.setChecked(mActiveAgents.contains(agent.component));
+    category.addPreference(agent.preference);
+  }
+}

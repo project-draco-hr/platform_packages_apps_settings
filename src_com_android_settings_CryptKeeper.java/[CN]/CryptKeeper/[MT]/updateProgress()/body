@@ -1,7 +1,7 @@
 {
   final String state=SystemProperties.get("vold.encrypt_progress");
   if ("error_partially_encrypted".equals(state)) {
-    showFactoryReset();
+    showFactoryReset(false);
     return;
   }
   CharSequence status=getText(R.string.crypt_keeper_setup_description);

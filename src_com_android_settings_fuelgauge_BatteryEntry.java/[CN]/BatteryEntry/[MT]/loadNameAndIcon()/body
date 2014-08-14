@@ -12,9 +12,15 @@
   }
   String[] packageLabels=new String[sipper.mPackages.length];
   System.arraycopy(sipper.mPackages,0,packageLabels,0,sipper.mPackages.length);
+  IPackageManager ipm=AppGlobals.getPackageManager();
+  final int userId=UserHandle.getUserId(uid);
   for (int i=0; i < packageLabels.length; i++) {
     try {
-      ApplicationInfo ai=pm.getApplicationInfo(packageLabels[i],0);
+      final ApplicationInfo ai=ipm.getApplicationInfo(packageLabels[i],0,userId);
+      if (ai == null) {
+        Log.d(PowerUsageSummary.TAG,"Retrieving null app info for package " + packageLabels[i] + ", user "+ userId);
+        continue;
+      }
       CharSequence label=ai.loadLabel(pm);
       if (label != null) {
         packageLabels[i]=label.toString();
@@ -25,17 +31,24 @@
         break;
       }
     }
- catch (    PackageManager.NameNotFoundException e) {
+ catch (    RemoteException e) {
+      Log.d(PowerUsageSummary.TAG,"Error while retrieving app info for package " + packageLabels[i] + ", user "+ userId,e);
     }
   }
-  if (icon == null)   icon=defaultActivityIcon;
+  if (icon == null) {
+    icon=defaultActivityIcon;
+  }
   if (packageLabels.length == 1) {
     name=packageLabels[0];
   }
  else {
     for (    String pkgName : sipper.mPackages) {
       try {
-        final PackageInfo pi=pm.getPackageInfo(pkgName,0);
+        final PackageInfo pi=ipm.getPackageInfo(pkgName,0,userId);
+        if (pi == null) {
+          Log.d(PowerUsageSummary.TAG,"Retrieving null package info for package " + pkgName + ", user "+ userId);
+          continue;
+        }
         if (pi.sharedUserLabel != 0) {
           final CharSequence nm=pm.getText(pkgName,pi.sharedUserLabel,pi.applicationInfo);
           if (nm != null) {
@@ -48,7 +61,8 @@
           }
         }
       }
- catch (      PackageManager.NameNotFoundException e) {
+ catch (      RemoteException e) {
+        Log.d(PowerUsageSummary.TAG,"Error while retrieving package info for package " + pkgName + ", user "+ userId,e);
       }
     }
   }

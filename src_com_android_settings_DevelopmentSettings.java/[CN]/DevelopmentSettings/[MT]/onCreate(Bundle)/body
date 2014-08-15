@@ -98,8 +98,4 @@
   mProcessStats=(PreferenceScreen)findPreference(PROCESS_STATS);
   mAllPrefs.add(mProcessStats);
   mWebViewDataReductionProxy=findAndInitCheckboxPref(WEBVIEW_DATA_REDUCTION_PROXY_KEY);
-  String key=Settings.Global.getString(getActivity().getContentResolver(),Settings.Global.WEBVIEW_DATA_REDUCTION_PROXY_KEY);
-  if (key == null || key.isEmpty()) {
-    disableForUser(mWebViewDataReductionProxy);
-  }
 }

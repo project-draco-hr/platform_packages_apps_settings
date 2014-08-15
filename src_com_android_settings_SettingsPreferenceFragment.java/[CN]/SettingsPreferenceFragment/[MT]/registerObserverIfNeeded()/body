@@ -1,8 +1,10 @@
 {
-synchronized (mRegisterLock) {
-    if (!mIsDataSetObserverRegistered) {
-      getPreferenceScreen().getRootAdapter().registerDataSetObserver(mDataSetObserver);
-      mIsDataSetObserverRegistered=true;
+  if (!mIsDataSetObserverRegistered) {
+    if (mCurrentRootAdapter != null) {
+      mCurrentRootAdapter.unregisterDataSetObserver(mDataSetObserver);
     }
+    mCurrentRootAdapter=getPreferenceScreen().getRootAdapter();
+    mCurrentRootAdapter.registerDataSetObserver(mDataSetObserver);
+    mIsDataSetObserverRegistered=true;
   }
 }

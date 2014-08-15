@@ -1,4 +1,5 @@
 {
+  boolean result=true;
   final String key=preference.getKey();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (KEY_LOCK_AFTER_TIMEOUT.equals(key)) {
@@ -40,10 +41,11 @@
     if ((Boolean)value) {
       mToggleAppInstallation.setChecked(false);
       warnAppInstallation();
+      result=false;
     }
  else {
       setNonMarketAppsAllowed(false);
     }
   }
-  return true;
+  return result;
 }

@@ -1,6 +1,6 @@
 {
   Settings.Global.putInt(mContext.getContentResolver(),Settings.Global.AIRPLANE_MODE_ON,enabling ? 1 : 0);
-  mCheckBoxPref.setChecked(enabling);
+  mSwitchPref.setChecked(enabling);
   Intent intent=new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
   intent.putExtra("state",enabling);
   mContext.sendBroadcastAsUser(intent,UserHandle.ALL);

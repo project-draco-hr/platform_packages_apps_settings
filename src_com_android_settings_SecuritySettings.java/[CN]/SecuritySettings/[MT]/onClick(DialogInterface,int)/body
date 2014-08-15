@@ -1,8 +1,9 @@
 {
-  if (dialog == mWarnInstallApps && which == DialogInterface.BUTTON_POSITIVE) {
-    setNonMarketAppsAllowed(true);
+  if (dialog == mWarnInstallApps) {
+    boolean turnOn=which == DialogInterface.BUTTON_POSITIVE;
+    setNonMarketAppsAllowed(turnOn);
     if (mToggleAppInstallation != null) {
-      mToggleAppInstallation.setChecked(true);
+      mToggleAppInstallation.setChecked(turnOn);
     }
   }
 }

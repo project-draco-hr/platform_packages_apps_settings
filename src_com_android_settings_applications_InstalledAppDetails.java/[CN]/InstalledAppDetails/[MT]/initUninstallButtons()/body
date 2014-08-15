@@ -1,10 +1,11 @@
 {
   mUpdatedSysApp=(mAppEntry.info.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
+  final boolean isBundled=(mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
   boolean enabled=true;
   if (mUpdatedSysApp) {
     mUninstallButton.setText(R.string.app_factory_reset);
     boolean showSpecialDisable=false;
-    if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+    if (isBundled) {
       showSpecialDisable=handleDisableable(mSpecialDisableButton);
       mSpecialDisableButton.setOnClickListener(this);
     }
@@ -15,7 +16,7 @@
   }
  else {
     mMoreControlButtons.setVisibility(View.GONE);
-    if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+    if (isBundled) {
       enabled=handleDisableable(mUninstallButton);
     }
  else     if ((mPackageInfo.applicationInfo.flags & ApplicationInfo.FLAG_INSTALLED) == 0 && mUserManager.getUsers().size() >= 2) {
@@ -30,13 +31,18 @@
     enabled=false;
   }
   if (enabled && mHomePackages.contains(mPackageInfo.packageName)) {
-    ArrayList<ResolveInfo> homeActivities=new ArrayList<ResolveInfo>();
-    ComponentName currentDefaultHome=mPm.getHomeActivities(homeActivities);
-    if (currentDefaultHome == null) {
-      enabled=(mHomePackages.size() > 1);
+    if (isBundled) {
+      enabled=false;
     }
  else {
-      enabled=!mPackageInfo.packageName.equals(currentDefaultHome.getPackageName());
+      ArrayList<ResolveInfo> homeActivities=new ArrayList<ResolveInfo>();
+      ComponentName currentDefaultHome=mPm.getHomeActivities(homeActivities);
+      if (currentDefaultHome == null) {
+        enabled=(mHomePackages.size() > 1);
+      }
+ else {
+        enabled=!mPackageInfo.packageName.equals(currentDefaultHome.getPackageName());
+      }
     }
   }
   if (mAppControlRestricted) {

@@ -1,10 +1,10 @@
 {
   final RadioButton button=new RadioButton(mContext);
-  button.setTag(tag);
+  button.setTag(condition);
   button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
     @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
       if (isChecked) {
-        handleSubscribe((Uri)button.getTag());
+        handleSubscribe((Condition)button.getTag());
       }
     }
   }

@@ -2,8 +2,10 @@
   if (isUiRestricted())   return;
   if (!mAvailableDevicesCategoryIsPresent) {
     getPreferenceScreen().addPreference(mAvailableDevicesCategory);
+    mAvailableDevicesCategoryIsPresent=true;
   }
   mLocalManager.getCachedDeviceManager().clearCachedDevices();
   mAvailableDevicesCategory.removeAll();
+  mInitialScanStarted=true;
   mLocalAdapter.startScanning(true);
 }

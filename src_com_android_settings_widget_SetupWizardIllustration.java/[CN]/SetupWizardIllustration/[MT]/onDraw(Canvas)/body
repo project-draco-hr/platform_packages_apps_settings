@@ -1,4 +1,9 @@
 {
+  canvas.save();
+  if (mAutoMirrored && getLayoutDirection() == LayoutDirection.RTL) {
+    canvas.scale(-1,1);
+    canvas.translate(-canvas.getWidth(),0);
+  }
   if (mBackground != null) {
     canvas.save();
     canvas.translate(0,mForegroundHeight);
@@ -11,5 +16,6 @@
     mForeground.draw(canvas);
     canvas.restore();
   }
+  canvas.restore();
   super.onDraw(canvas);
 }

@@ -1,14 +1,14 @@
 {
 switch (newState) {
 case NfcAdapter.STATE_OFF:
-    mCheckbox.setChecked(false);
-  mCheckbox.setEnabled(true);
+    mSwitch.setChecked(false);
+  mSwitch.setEnabled(true);
 mAndroidBeam.setEnabled(false);
 mAndroidBeam.setSummary(R.string.android_beam_disabled_summary);
 break;
 case NfcAdapter.STATE_ON:
-mCheckbox.setChecked(true);
-mCheckbox.setEnabled(true);
+mSwitch.setChecked(true);
+mSwitch.setEnabled(true);
 mAndroidBeam.setEnabled(true);
 if (mNfcAdapter.isNdefPushEnabled()) {
 mAndroidBeam.setSummary(R.string.android_beam_on_summary);
@@ -18,13 +18,13 @@ mAndroidBeam.setSummary(R.string.android_beam_off_summary);
 }
 break;
 case NfcAdapter.STATE_TURNING_ON:
-mCheckbox.setChecked(true);
-mCheckbox.setEnabled(false);
+mSwitch.setChecked(true);
+mSwitch.setEnabled(false);
 mAndroidBeam.setEnabled(false);
 break;
 case NfcAdapter.STATE_TURNING_OFF:
-mCheckbox.setChecked(false);
-mCheckbox.setEnabled(false);
+mSwitch.setChecked(false);
+mSwitch.setEnabled(false);
 mAndroidBeam.setEnabled(false);
 break;
 }

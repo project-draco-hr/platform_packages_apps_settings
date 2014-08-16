@@ -11,8 +11,12 @@
   }
   final int newMode=(Boolean)newValue ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_IGNORED;
   if (pe.appOpMode != newMode) {
-    mAppOpsManager.setMode(AppOpsManager.OP_GET_USAGE_STATS,pe.packageInfo.applicationInfo.uid,packageName,newMode);
-    pe.appOpMode=newMode;
+    if (newMode != AppOpsManager.MODE_ALLOWED) {
+      setNewMode(pe,newMode);
+      return true;
+    }
+    getFragmentManager().beginTransaction().add(new WarningDialog(pe),"warning").commit();
+    return false;
   }
   return true;
 }

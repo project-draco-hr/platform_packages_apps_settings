@@ -5,10 +5,13 @@
     menu.findItem(R.id.account_settings_menu_auto_sync_personal).setVisible(false);
     menu.findItem(R.id.account_settings_menu_auto_sync_work).setVisible(false);
   }
- else {
+ else   if (mProfiles.size() > 1) {
     final UserHandle managedProfile=mProfiles.valueAt(1).userInfo.getUserHandle();
     menu.findItem(R.id.account_settings_menu_auto_sync_personal).setVisible(true).setOnMenuItemClickListener(new MasterSyncStateClickListener(currentProfile)).setChecked(ContentResolver.getMasterSyncAutomaticallyAsUser(currentProfile.getIdentifier()));
     menu.findItem(R.id.account_settings_menu_auto_sync_work).setVisible(true).setOnMenuItemClickListener(new MasterSyncStateClickListener(managedProfile)).setChecked(ContentResolver.getMasterSyncAutomaticallyAsUser(managedProfile.getIdentifier()));
     menu.findItem(R.id.account_settings_menu_auto_sync).setVisible(false);
+  }
+ else {
+    Log.w(TAG,"Method onPrepareOptionsMenu called before mProfiles was initialized");
   }
 }

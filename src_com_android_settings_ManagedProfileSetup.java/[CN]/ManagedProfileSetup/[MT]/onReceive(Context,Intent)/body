@@ -3,6 +3,7 @@
   if (!Utils.isManagedProfile(um)) {
     return;
   }
+  Log.i(TAG,"Received broadcast: " + broadcast.getAction() + ". Setting up intent forwarding for managed profile.");
   final PackageManager pm=context.getPackageManager();
   pm.clearCrossProfileIntentFilters(UserHandle.myUserId());
   Intent intent=new Intent();

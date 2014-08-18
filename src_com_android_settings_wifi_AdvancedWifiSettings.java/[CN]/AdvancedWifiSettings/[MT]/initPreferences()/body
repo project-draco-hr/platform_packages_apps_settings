@@ -19,7 +19,9 @@
     wifiAssistant.setChecked(checked);
   }
  else {
-    getPreferenceScreen().removePreference(wifiAssistant);
+    if (wifiAssistant != null) {
+      getPreferenceScreen().removePreference(wifiAssistant);
+    }
   }
   Intent wifiDirectIntent=new Intent(context,com.android.settings.Settings.WifiP2pSettingsActivity.class);
   Preference wifiDirectPref=findPreference(KEY_WIFI_DIRECT);

@@ -1,0 +1,10 @@
+{
+  super.onSaveInstanceState(outState);
+  if (mDialog != null && mDialog.isShowing()) {
+    if (mDlgAccessPoint != null) {
+      mAccessPointSavedState=new Bundle();
+      mDlgAccessPoint.saveWifiState(mAccessPointSavedState);
+      outState.putBundle(SAVE_DIALOG_ACCESS_POINT_STATE,mAccessPointSavedState);
+    }
+  }
+}

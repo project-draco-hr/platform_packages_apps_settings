@@ -1,4 +1,9 @@
 {
   super.onActivityCreated(savedInstanceState);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
+  if (savedInstanceState != null) {
+    if (savedInstanceState.containsKey(SAVE_DIALOG_ACCESS_POINT_STATE)) {
+      mAccessPointSavedState=savedInstanceState.getBundle(SAVE_DIALOG_ACCESS_POINT_STATE);
+    }
+  }
 }

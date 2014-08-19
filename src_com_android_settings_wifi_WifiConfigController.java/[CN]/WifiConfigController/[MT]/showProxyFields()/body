@@ -17,7 +17,7 @@
       mProxyExclusionListView.addTextChangedListener(this);
     }
     if (config != null) {
-      ProxyInfo proxyProperties=config.getLinkProperties().getHttpProxy();
+      ProxyInfo proxyProperties=config.getHttpProxy();
       if (proxyProperties != null) {
         mProxyHostView.setText(proxyProperties.getHost());
         mProxyPortView.setText(Integer.toString(proxyProperties.getPort()));
@@ -34,7 +34,7 @@
       mProxyPacView.addTextChangedListener(this);
     }
     if (config != null) {
-      ProxyInfo proxyInfo=config.getLinkProperties().getHttpProxy();
+      ProxyInfo proxyInfo=config.getHttpProxy();
       if (proxyInfo != null) {
         mProxyPacView.setText(proxyInfo.getPacFileUrl().toString());
       }

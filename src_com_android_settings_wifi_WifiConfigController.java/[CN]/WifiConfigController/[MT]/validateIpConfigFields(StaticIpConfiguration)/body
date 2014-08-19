@@ -2,11 +2,8 @@
   if (mIpAddressView == null)   return 0;
   String ipAddr=mIpAddressView.getText().toString();
   if (TextUtils.isEmpty(ipAddr))   return R.string.wifi_ip_settings_invalid_ip_address;
-  InetAddress inetAddr=null;
-  try {
-    inetAddr=NetworkUtils.numericToInetAddress(ipAddr);
-  }
- catch (  IllegalArgumentException e) {
+  Inet4Address inetAddr=getIPv4Address(ipAddr);
+  if (inetAddr == null) {
     return R.string.wifi_ip_settings_invalid_ip_address;
   }
   int networkPrefixLength=-1;
@@ -15,7 +12,7 @@
     if (networkPrefixLength < 0 || networkPrefixLength > 32) {
       return R.string.wifi_ip_settings_invalid_network_prefix_length;
     }
-    linkProperties.addLinkAddress(new LinkAddress(inetAddr,networkPrefixLength));
+    staticIpConfiguration.ipAddress=new LinkAddress(inetAddr,networkPrefixLength);
   }
  catch (  NumberFormatException e) {
     mNetworkPrefixLengthView.setText(mConfigUi.getContext().getString(R.string.wifi_network_prefix_length_hint));
@@ -34,14 +31,11 @@ catch (    java.net.UnknownHostException u) {
     }
   }
  else {
-    InetAddress gatewayAddr=null;
-    try {
-      gatewayAddr=NetworkUtils.numericToInetAddress(gateway);
-    }
- catch (    IllegalArgumentException e) {
+    InetAddress gatewayAddr=getIPv4Address(gateway);
+    if (gatewayAddr == null) {
       return R.string.wifi_ip_settings_invalid_gateway;
     }
-    linkProperties.addRoute(new RouteInfo(gatewayAddr));
+    staticIpConfiguration.gateway=gatewayAddr;
   }
   String dns=mDns1View.getText().toString();
   InetAddress dnsAddr=null;
@@ -49,23 +43,19 @@ catch (    java.net.UnknownHostException u) {
     mDns1View.setText(mConfigUi.getContext().getString(R.string.wifi_dns1_hint));
   }
  else {
-    try {
-      dnsAddr=NetworkUtils.numericToInetAddress(dns);
-    }
- catch (    IllegalArgumentException e) {
+    dnsAddr=getIPv4Address(dns);
+    if (dnsAddr == null) {
       return R.string.wifi_ip_settings_invalid_dns;
     }
-    linkProperties.addDnsServer(dnsAddr);
+    staticIpConfiguration.dnsServers.add(dnsAddr);
   }
   if (mDns2View.length() > 0) {
     dns=mDns2View.getText().toString();
-    try {
-      dnsAddr=NetworkUtils.numericToInetAddress(dns);
-    }
- catch (    IllegalArgumentException e) {
+    dnsAddr=getIPv4Address(dns);
+    if (dnsAddr == null) {
       return R.string.wifi_ip_settings_invalid_dns;
     }
-    linkProperties.addDnsServer(dnsAddr);
+    staticIpConfiguration.dnsServers.add(dnsAddr);
   }
   return 0;
 }

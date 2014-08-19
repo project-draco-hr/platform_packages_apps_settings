@@ -19,25 +19,22 @@
       mDns2View.addTextChangedListener(this);
     }
     if (config != null) {
-      LinkProperties linkProperties=config.getLinkProperties();
-      Iterator<LinkAddress> iterator=linkProperties.getLinkAddresses().iterator();
-      if (iterator.hasNext()) {
-        LinkAddress linkAddress=iterator.next();
-        mIpAddressView.setText(linkAddress.getAddress().getHostAddress());
-        mNetworkPrefixLengthView.setText(Integer.toString(linkAddress.getNetworkPrefixLength()));
-      }
-      for (      RouteInfo route : linkProperties.getRoutes()) {
-        if (route.isDefaultRoute()) {
-          mGatewayView.setText(route.getGateway().getHostAddress());
-          break;
+      StaticIpConfiguration staticConfig=config.getStaticIpConfiguration();
+      if (staticConfig != null) {
+        if (staticConfig.ipAddress != null) {
+          mIpAddressView.setText(staticConfig.ipAddress.getAddress().getHostAddress());
+          mNetworkPrefixLengthView.setText(Integer.toString(staticConfig.ipAddress.getNetworkPrefixLength()));
         }
-      }
-      Iterator<InetAddress> dnsIterator=linkProperties.getDnsServers().iterator();
-      if (dnsIterator.hasNext()) {
-        mDns1View.setText(dnsIterator.next().getHostAddress());
-      }
-      if (dnsIterator.hasNext()) {
-        mDns2View.setText(dnsIterator.next().getHostAddress());
+        if (staticConfig.gateway != null) {
+          mGatewayView.setText(staticConfig.gateway.getHostAddress());
+        }
+        Iterator<InetAddress> dnsIterator=staticConfig.dnsServers.iterator();
+        if (dnsIterator.hasNext()) {
+          mDns1View.setText(dnsIterator.next().getHostAddress());
+        }
+        if (dnsIterator.hasNext()) {
+          mDns2View.setText(dnsIterator.next().getHostAddress());
+        }
       }
     }
   }

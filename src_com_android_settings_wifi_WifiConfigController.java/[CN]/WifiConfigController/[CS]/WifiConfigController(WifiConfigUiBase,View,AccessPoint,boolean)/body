@@ -48,12 +48,13 @@
       if (config.getIpAssignment() == IpAssignment.STATIC) {
         mIpSettingsSpinner.setSelection(STATIC_IP);
         showAdvancedFields=true;
+        StaticIpConfiguration staticConfig=config.getStaticIpConfiguration();
+        if (staticConfig != null && staticConfig.ipAddress != null) {
+          addRow(group,R.string.wifi_ip_address,staticConfig.ipAddress.getAddress().getHostAddress());
+        }
       }
  else {
         mIpSettingsSpinner.setSelection(DHCP);
-      }
-      for (      InetAddress a : config.getLinkProperties().getAddresses()) {
-        addRow(group,R.string.wifi_ip_address,a.getHostAddress());
       }
       if (config.getProxySettings() == ProxySettings.STATIC) {
         mProxySettingsSpinner.setSelection(PROXY_STATIC);

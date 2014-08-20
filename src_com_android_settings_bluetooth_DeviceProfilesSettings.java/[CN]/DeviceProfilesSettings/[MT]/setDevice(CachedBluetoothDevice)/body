@@ -1,6 +1,8 @@
 {
   mCachedDevice=cachedDevice;
   mCachedDevice.registerCallback(this);
-  addPreferencesForProfiles();
-  refresh();
+  if (isResumed()) {
+    addPreferencesForProfiles();
+    refresh();
+  }
 }

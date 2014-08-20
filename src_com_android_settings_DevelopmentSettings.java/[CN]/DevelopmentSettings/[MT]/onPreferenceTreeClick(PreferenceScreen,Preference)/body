@@ -39,6 +39,9 @@
  else   if (preference == mAllowMockLocation) {
     Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,mAllowMockLocation.isChecked() ? 1 : 0);
   }
+ else   if (preference == mDebugViewAttributes) {
+    Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.DEBUG_VIEW_ATTRIBUTES,mDebugViewAttributes.isChecked() ? 1 : 0);
+  }
  else   if (preference == mDebugAppPref) {
     startActivityForResult(new Intent(getActivity(),AppPicker.class),RESULT_DEBUG_APP);
   }

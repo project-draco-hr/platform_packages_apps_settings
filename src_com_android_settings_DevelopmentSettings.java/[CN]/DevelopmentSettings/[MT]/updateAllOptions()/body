@@ -13,6 +13,7 @@
     updateCheckBox(mEnableOemUnlock,Utils.isOemUnlockEnabled(getActivity()));
   }
   updateCheckBox(mAllowMockLocation,Settings.Secure.getInt(cr,Settings.Secure.ALLOW_MOCK_LOCATION,0) != 0);
+  updateCheckBox(mDebugViewAttributes,Settings.Global.getInt(cr,Settings.Global.DEBUG_VIEW_ATTRIBUTES,0) != 0);
   updateHdcpValues();
   updatePasswordSummary();
   updateDebuggerOptions();

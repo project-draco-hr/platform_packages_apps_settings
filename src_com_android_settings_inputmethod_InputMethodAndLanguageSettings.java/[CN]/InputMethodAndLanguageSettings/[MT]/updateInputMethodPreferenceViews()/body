@@ -4,12 +4,14 @@ synchronized (mInputMethodPreferenceList) {
       mKeyboardSettingsCategory.removePreference(pref);
     }
     mInputMethodPreferenceList.clear();
+    List<String> permittedList=mDpm.getPermittedInputMethodsForCurrentUser();
     final Context context=getActivity();
     final List<InputMethodInfo> imis=mShowsOnlyFullImeAndKeyboardList ? mInputMethodSettingValues.getInputMethodList() : mImm.getEnabledInputMethodList();
     final int N=(imis == null ? 0 : imis.size());
     for (int i=0; i < N; ++i) {
       final InputMethodInfo imi=imis.get(i);
-      final InputMethodPreference pref=new InputMethodPreference(context,imi,mShowsOnlyFullImeAndKeyboardList,this);
+      final boolean isAllowedByOrganization=permittedList == null || permittedList.contains(imi.getPackageName());
+      final InputMethodPreference pref=new InputMethodPreference(context,imi,mShowsOnlyFullImeAndKeyboardList,isAllowedByOrganization,this);
       mInputMethodPreferenceList.add(pref);
     }
     final Collator collator=Collator.getInstance();

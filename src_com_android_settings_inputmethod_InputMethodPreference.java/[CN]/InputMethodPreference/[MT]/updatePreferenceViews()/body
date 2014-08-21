@@ -1,6 +1,6 @@
 {
   final boolean isAlwaysChecked=mInputMethodSettingValues.isAlwaysCheckedIme(mImi,getContext());
-  setEnabled(!(isAlwaysChecked && isImeEnabler()));
+  setEnabled(!((isAlwaysChecked && isImeEnabler()) || (!mIsAllowedByOrganization)));
   setChecked(mInputMethodSettingValues.isEnabledImi(mImi));
   setSummary(getSummaryString());
 }

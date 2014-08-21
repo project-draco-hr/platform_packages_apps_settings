@@ -1,5 +1,8 @@
 {
   final Context context=getContext();
+  if (!mIsAllowedByOrganization) {
+    return context.getString(R.string.accessibility_feature_or_input_method_not_allowed);
+  }
   final InputMethodManager imm=getInputMethodManager();
   final List<InputMethodSubtype> subtypes=imm.getEnabledInputMethodSubtypeList(mImi,true);
   final ArrayList<CharSequence> subtypeLabels=new ArrayList<>();

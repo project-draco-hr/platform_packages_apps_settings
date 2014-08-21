@@ -3,6 +3,7 @@
   AccessibilityManager accessibilityManager=AccessibilityManager.getInstance(getActivity());
   List<AccessibilityServiceInfo> installedServices=accessibilityManager.getInstalledAccessibilityServiceList();
   Set<ComponentName> enabledServices=AccessibilityUtils.getEnabledServicesFromSettings(getActivity());
+  List<String> permittedServices=mDpm.getPermittedAccessibilityServices(UserHandle.myUserId());
   final boolean accessibilityEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_ENABLED,0) == 1;
   for (int i=0, count=installedServices.size(); i < count; ++i) {
     AccessibilityServiceInfo info=installedServices.get(i);
@@ -13,12 +14,24 @@
     preference.setKey(componentName.flattenToString());
     preference.setTitle(title);
     final boolean serviceEnabled=accessibilityEnabled && enabledServices.contains(componentName);
+    String serviceEnabledString;
     if (serviceEnabled) {
-      preference.setSummary(getString(R.string.accessibility_feature_state_on));
+      serviceEnabledString=getString(R.string.accessibility_feature_state_on);
     }
  else {
-      preference.setSummary(getString(R.string.accessibility_feature_state_off));
+      serviceEnabledString=getString(R.string.accessibility_feature_state_off);
     }
+    String packageName=serviceInfo.packageName;
+    boolean serviceAllowed=permittedServices == null || permittedServices.contains(packageName);
+    preference.setEnabled(serviceAllowed || serviceEnabled);
+    String summaryString;
+    if (serviceAllowed) {
+      summaryString=serviceEnabledString;
+    }
+ else {
+      summaryString=getString(R.string.accessibility_feature_or_input_method_not_allowed);
+    }
+    preference.setSummary(summaryString);
     preference.setOrder(i);
     preference.setFragment(ToggleAccessibilityServicePreferenceFragment.class.getName());
     preference.setPersistent(true);

@@ -1,7 +1,7 @@
 {
   if (requestCode == REQUEST_ENABLE_WIFI_ASSISTANT) {
     if (resultCode == Activity.RESULT_OK) {
-      setWifiAssistantTimeout();
+      disableWifiAssistantCardUntilPlatformUpgrade();
       getListView().removeHeaderView(mWifiAssistantCard);
       mWifiAssistantApp=null;
     }

@@ -10,9 +10,8 @@
     return;
   }
   SharedPreferences sharedPreferences=getPreferenceScreen().getSharedPreferences();
-  long lastTimeoutEndTime=sharedPreferences.getLong(KEY_ASSISTANT_START_TIME,0);
-  long dismissTime=sharedPreferences.getLong(KEY_ASSISTANT_DISMISS_TIME,0);
-  if ((System.currentTimeMillis() - lastTimeoutEndTime) <= dismissTime) {
+  int lastDismissPlatform=sharedPreferences.getInt(KEY_ASSISTANT_DISMISS_PLATFORM,0);
+  if (Build.VERSION.SDK_INT <= lastDismissPlatform) {
     return;
   }
   mWifiAssistantApp=scorers.iterator().next();
@@ -37,7 +36,7 @@
 );
       noThanks.setOnClickListener(new OnClickListener(){
         @Override public void onClick(        View v){
-          setWifiAssistantTimeout();
+          disableWifiAssistantCardUntilPlatformUpgrade();
           getListView().removeHeaderView(mWifiAssistantCard);
           mWifiAssistantApp=null;
         }

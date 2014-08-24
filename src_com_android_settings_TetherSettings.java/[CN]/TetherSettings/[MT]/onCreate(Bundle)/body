@@ -12,10 +12,10 @@
   if (adapter != null) {
     adapter.getProfileProxy(activity.getApplicationContext(),mProfileServiceListener,BluetoothProfile.PAN);
   }
-  mEnableWifiAp=(CheckBoxPreference)findPreference(ENABLE_WIFI_AP);
+  mEnableWifiAp=(SwitchPreference)findPreference(ENABLE_WIFI_AP);
   Preference wifiApSettings=findPreference(WIFI_AP_SSID_AND_SECURITY);
-  mUsbTether=(CheckBoxPreference)findPreference(USB_TETHER_SETTINGS);
-  mBluetoothTether=(CheckBoxPreference)findPreference(ENABLE_BLUETOOTH_TETHERING);
+  mUsbTether=(SwitchPreference)findPreference(USB_TETHER_SETTINGS);
+  mBluetoothTether=(SwitchPreference)findPreference(ENABLE_BLUETOOTH_TETHERING);
   ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   mUsbRegexs=cm.getTetherableUsbRegexs();
   mWifiRegexs=cm.getTetherableWifiRegexs();

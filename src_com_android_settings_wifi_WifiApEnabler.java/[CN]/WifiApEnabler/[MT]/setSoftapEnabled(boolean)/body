@@ -6,10 +6,10 @@
     Settings.Global.putInt(cr,Settings.Global.WIFI_SAVED_STATE,1);
   }
   if (mWifiManager.setWifiApEnabled(null,enable)) {
-    mCheckBox.setEnabled(false);
+    mSwitch.setEnabled(false);
   }
  else {
-    mCheckBox.setSummary(R.string.wifi_error);
+    mSwitch.setSummary(R.string.wifi_error);
   }
   if (!enable) {
     int wifiSavedState=0;

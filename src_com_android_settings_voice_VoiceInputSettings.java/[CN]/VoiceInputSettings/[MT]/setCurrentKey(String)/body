@@ -13,7 +13,7 @@
   for (int i=0; i < mHelper.mAvailableRecognizerInfos.size(); i++) {
     VoiceInputHelper.RecognizerInfo info=mHelper.mAvailableRecognizerInfos.get(i);
     if (info.key.equals(key)) {
-      Settings.Secure.putString(getActivity().getContentResolver(),Settings.Secure.VOICE_INTERACTION_SERVICE,null);
+      Settings.Secure.putString(getActivity().getContentResolver(),Settings.Secure.VOICE_INTERACTION_SERVICE,"");
       Settings.Secure.putString(getActivity().getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE,key);
       return;
     }

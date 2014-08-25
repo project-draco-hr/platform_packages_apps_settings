@@ -1,7 +1,10 @@
 {
   int bondState=mCachedDevice.getBondState();
   if (mCachedDevice.isConnected()) {
-    askDisconnect();
+    if (mOnSettingsClickListener != null) {
+      mView.setTag(mCachedDevice);
+      mOnSettingsClickListener.onClick(mView);
+    }
   }
  else   if (bondState == BluetoothDevice.BOND_BONDED) {
     mCachedDevice.connect(true);

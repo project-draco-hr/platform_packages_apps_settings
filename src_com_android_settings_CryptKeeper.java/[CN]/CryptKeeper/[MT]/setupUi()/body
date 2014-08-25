@@ -13,11 +13,13 @@
     new AsyncTask<Void,Void,Void>(){
       int type=StorageManager.CRYPT_TYPE_PASSWORD;
       String owner_info;
+      boolean pattern_visible;
       @Override public Void doInBackground(      Void... v){
         try {
           final IMountService service=getMountService();
           type=service.getPasswordType();
           owner_info=service.getField("OwnerInfo");
+          pattern_visible=!("0".equals(service.getField("PatternVisible")));
         }
  catch (        Exception e) {
           Log.e(TAG,"Error calling mount service " + e);
@@ -44,6 +46,9 @@
         ownerInfo.setText(owner_info);
         ownerInfo.setSelected(true);
         passwordEntryInit();
+        if (mLockPatternView != null) {
+          mLockPatternView.setInStealthMode(!pattern_visible);
+        }
         if (mCooldown > 0) {
           setBackFunctionality(false);
           cooldown();

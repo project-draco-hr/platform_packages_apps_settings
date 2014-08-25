@@ -1,5 +1,9 @@
 {
   if (failedAttempts == 0) {
+    if (mLockPatternView != null) {
+      mLockPatternView.removeCallbacks(mClearPatternRunnable);
+      mLockPatternView.postDelayed(mClearPatternRunnable,RIGHT_PATTERN_CLEAR_TIMEOUT_MS);
+    }
   }
  else   if (failedAttempts == MAX_FAILED_ATTEMPTS) {
     sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));

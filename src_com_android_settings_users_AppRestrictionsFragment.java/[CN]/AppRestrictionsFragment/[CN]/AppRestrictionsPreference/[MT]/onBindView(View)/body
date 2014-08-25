@@ -14,6 +14,8 @@
     final Switch toggle=(Switch)widget.getChildAt(0);
     toggle.setEnabled(!isImmutable());
     toggle.setTag(this);
+    toggle.setClickable(true);
+    toggle.setFocusable(true);
     toggle.setOnCheckedChangeListener(new OnCheckedChangeListener(){
       @Override public void onCheckedChanged(      CompoundButton buttonView,      boolean isChecked){
         listener.onClick(toggle);

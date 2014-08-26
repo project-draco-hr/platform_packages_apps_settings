@@ -1,7 +1,7 @@
 {
-  PhoneManager phoneManager=getPhoneManager();
-  if (phoneManager.isInAPhoneCall()) {
-    phoneManager.showCallScreen(false);
+  TelecommManager telecommManager=getTelecommManager();
+  if (telecommManager.isInCall()) {
+    telecommManager.showInCallScreen(false);
   }
  else {
     launchEmergencyDialer();

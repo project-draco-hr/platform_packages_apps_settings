@@ -53,8 +53,7 @@
   }
   addPreferencesFromResource(R.xml.wifi_settings);
   prepareWifiAssistantCard();
-  mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
-  getListView().setEmptyView(mEmptyView);
+  mEmptyView=initEmptyView();
   registerForContextMenu(getListView());
   setHasOptionsMenu(true);
 }

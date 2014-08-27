@@ -1,6 +1,6 @@
 {
   super.onActivityCreated(savedInstanceState);
-  mActivityStarted=(savedInstanceState == null);
+  mInitialScanStarted=(savedInstanceState != null);
   mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
   getListView().setEmptyView(mEmptyView);
   final SettingsActivity activity=(SettingsActivity)getActivity();

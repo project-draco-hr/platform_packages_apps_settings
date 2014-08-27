@@ -4,6 +4,7 @@
   }
   if (!mAvailableDevicesCategoryIsPresent) {
     getPreferenceScreen().addPreference(mAvailableDevicesCategory);
+    mAvailableDevicesCategoryIsPresent=true;
   }
   if (mAvailableDevicesCategory != null) {
     setDeviceListGroup(mAvailableDevicesCategory);
@@ -11,5 +12,6 @@
   }
   mLocalManager.getCachedDeviceManager().clearCachedDevices();
   mAvailableDevicesCategory.removeAll();
+  mInitialScanStarted=true;
   mLocalAdapter.startScanning(true);
 }

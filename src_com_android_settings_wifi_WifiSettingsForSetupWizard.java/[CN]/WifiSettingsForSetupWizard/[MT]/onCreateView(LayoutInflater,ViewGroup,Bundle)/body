@@ -6,9 +6,9 @@
     final View header=inflater.inflate(R.layout.setup_wizard_header,list,false);
     list.addHeaderView(header,null,false);
   }
-  final View other=inflater.inflate(R.layout.setup_wifi_add_network,list,false);
-  list.addFooterView(other,null,true);
-  other.setOnClickListener(new OnClickListener(){
+  mAddOtherNetworkItem=inflater.inflate(R.layout.setup_wifi_add_network,list,false);
+  list.addFooterView(mAddOtherNetworkItem,null,true);
+  mAddOtherNetworkItem.setOnClickListener(new OnClickListener(){
     @Override public void onClick(    View v){
       if (mWifiManager.isWifiEnabled()) {
         onAddNetworkPressed();

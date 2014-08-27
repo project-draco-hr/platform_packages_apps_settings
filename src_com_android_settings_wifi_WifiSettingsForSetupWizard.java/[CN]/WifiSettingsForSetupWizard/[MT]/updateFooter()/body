@@ -1,0 +1,15 @@
+{
+  final boolean isEmpty=mAdapter.isEmpty();
+  if (isEmpty != mListLastEmpty) {
+    final ListView list=getListView();
+    if (isEmpty) {
+      list.removeFooterView(mAddOtherNetworkItem);
+      list.addFooterView(mEmptyFooter,null,false);
+    }
+ else {
+      list.removeFooterView(mEmptyFooter);
+      list.addFooterView(mAddOtherNetworkItem,null,true);
+    }
+    mListLastEmpty=isEmpty;
+  }
+}

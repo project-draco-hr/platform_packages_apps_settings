@@ -14,7 +14,7 @@
   }
  else   if (KEY_WIFI_ASSISTANT.equals(key)) {
     if (((Boolean)newValue).booleanValue() == false) {
-      NetworkScorerAppManager.setActiveScorer(context,null);
+      mNetworkScoreManager.setActiveScorer(null);
       return true;
     }
     NetworkScorerAppData wifiAssistant=WifiSettings.getWifiAssistantApp(context);

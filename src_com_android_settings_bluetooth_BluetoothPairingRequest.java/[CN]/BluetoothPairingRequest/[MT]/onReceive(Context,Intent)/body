@@ -26,7 +26,7 @@
       if (TextUtils.isEmpty(name)) {
         name=device != null ? device.getAliasName() : context.getString(android.R.string.unknownName);
       }
-      builder.setContentTitle(res.getString(R.string.bluetooth_notif_title)).setContentText(res.getString(R.string.bluetooth_notif_message,name)).setContentIntent(pending).setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND);
+      builder.setContentTitle(res.getString(R.string.bluetooth_notif_title)).setContentText(res.getString(R.string.bluetooth_notif_message,name)).setContentIntent(pending).setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND).setColor(res.getColor(com.android.internal.R.color.system_notification_accent_color));
       NotificationManager manager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
       manager.notify(NOTIFICATION_ID,builder.getNotification());
     }

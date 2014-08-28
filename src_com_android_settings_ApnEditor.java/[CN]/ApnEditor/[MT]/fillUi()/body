@@ -68,4 +68,11 @@
   mBearer.setSummary(checkNull(bearerDescription(mBearer.getValue())));
   mMvnoType.setSummary(checkNull(mvnoDescription(mMvnoType.getValue())));
   mMvnoMatchData.setSummary(checkNull(mMvnoMatchData.getText()));
+  boolean ceEditable=getResources().getBoolean(R.bool.config_allow_edit_carrier_enabled);
+  if (ceEditable) {
+    mCarrierEnabled.setEnabled(true);
+  }
+ else {
+    mCarrierEnabled.setEnabled(false);
+  }
 }

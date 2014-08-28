@@ -5,16 +5,22 @@
     return;
   }
   mLockscreen.addItem(R.string.lock_screen_notifications_summary_show,R.string.lock_screen_notifications_summary_show);
-  mLockscreen.addItem(R.string.lock_screen_notifications_summary_hide,R.string.lock_screen_notifications_summary_hide);
+  if (mSecure) {
+    mLockscreen.addItem(R.string.lock_screen_notifications_summary_hide,R.string.lock_screen_notifications_summary_hide);
+  }
   mLockscreen.addItem(R.string.lock_screen_notifications_summary_disable,R.string.lock_screen_notifications_summary_disable);
   updateLockscreenNotifications();
   mLockscreen.setCallback(new DropDownPreference.Callback(){
     @Override public boolean onItemSelected(    int pos,    Object value){
       final int val=(Integer)value;
+      if (val == mLockscreenSelectedValue) {
+        return true;
+      }
       final boolean enabled=val != R.string.lock_screen_notifications_summary_disable;
       final boolean show=val == R.string.lock_screen_notifications_summary_show;
       Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,show ? 1 : 0);
       Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_SHOW_NOTIFICATIONS,enabled ? 1 : 0);
+      mLockscreenSelectedValue=val;
       return true;
     }
   }

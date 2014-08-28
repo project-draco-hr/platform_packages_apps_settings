@@ -5,7 +5,7 @@
   }
   if (newEntries == null) {
     mPackageEntryMap.clear();
-    mAppsCategory.removeAll();
+    mPreferenceScreen.removeAll();
     return;
   }
   final int oldPackageCount=mPackageEntryMap.size();
@@ -13,7 +13,7 @@
     final PackageEntry oldPackageEntry=mPackageEntryMap.valueAt(i);
     final PackageEntry newPackageEntry=newEntries.get(oldPackageEntry.packageName);
     if (newPackageEntry == null) {
-      mAppsCategory.removePreference(oldPackageEntry.preference);
+      mPreferenceScreen.removePreference(oldPackageEntry.preference);
     }
  else {
       newPackageEntry.preference=oldPackageEntry.preference;
@@ -26,7 +26,7 @@
       packageEntry.preference=new SwitchPreference(mContext);
       packageEntry.preference.setPersistent(false);
       packageEntry.preference.setOnPreferenceChangeListener(UsageAccessSettings.this);
-      mAppsCategory.addPreference(packageEntry.preference);
+      mPreferenceScreen.addPreference(packageEntry.preference);
     }
     updatePreference(packageEntry);
   }

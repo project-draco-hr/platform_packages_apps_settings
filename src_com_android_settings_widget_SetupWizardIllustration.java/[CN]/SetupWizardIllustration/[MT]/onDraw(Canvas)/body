@@ -1,8 +1,7 @@
 {
-  canvas.save();
   if (mBackground != null) {
     canvas.save();
-    canvas.translate(0,mForegroundHeight);
+    canvas.translate(0,mForegroundBounds.height());
     canvas.scale(mScale,mScale,0,0);
     mBackground.draw(canvas);
     canvas.restore();
@@ -12,6 +11,5 @@
     mForeground.draw(canvas);
     canvas.restore();
   }
-  canvas.restore();
   super.onDraw(canvas);
 }

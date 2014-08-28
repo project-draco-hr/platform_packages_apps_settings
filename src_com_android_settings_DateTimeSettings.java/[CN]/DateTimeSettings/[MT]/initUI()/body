@@ -1,10 +1,14 @@
 {
   boolean autoTimeEnabled=getAutoState(Settings.Global.AUTO_TIME);
   boolean autoTimeZoneEnabled=getAutoState(Settings.Global.AUTO_TIME_ZONE);
+  mAutoTimePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME);
+  DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+  if (dpm.getAutoTimeRequired()) {
+    mAutoTimePref.setEnabled(false);
+  }
   Intent intent=getActivity().getIntent();
   boolean isFirstRun=intent.getBooleanExtra(EXTRA_IS_FIRST_RUN,false);
   mDummyDate=Calendar.getInstance();
-  mAutoTimePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME);
   mAutoTimePref.setChecked(autoTimeEnabled);
   mAutoTimeZonePref=(CheckBoxPreference)findPreference(KEY_AUTO_TIME_ZONE);
   if (Utils.isWifiOnly(getActivity()) || isFirstRun) {

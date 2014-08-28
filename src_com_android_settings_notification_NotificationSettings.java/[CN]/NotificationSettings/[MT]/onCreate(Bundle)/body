@@ -3,6 +3,7 @@
   mContext=getActivity();
   mPM=mContext.getPackageManager();
   mVoiceCapable=Utils.isVoiceCapable(mContext);
+  mSecure=new LockPatternUtils(getActivity()).isSecure();
   addPreferencesFromResource(R.xml.notification_settings);
   final PreferenceCategory sound=(PreferenceCategory)findPreference(KEY_SOUND);
   initVolumePreference(KEY_MEDIA_VOLUME,AudioManager.STREAM_MUSIC);

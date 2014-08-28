@@ -5,7 +5,7 @@
   NetworkInfo ni=mCm.getProvisioningOrActiveNetworkInfo();
   if (mTm.hasIccCard() && (ni != null)) {
     Intent provisioningIntent=new Intent(TelephonyIntents.ACTION_CARRIER_SETUP);
-    List<String> carrierPackages=mTm.getCarrierPackageNamesForBroadcastIntent(provisioningIntent);
+    List<String> carrierPackages=mTm.getCarrierPackageNamesForIntent(provisioningIntent);
     if (carrierPackages != null && !carrierPackages.isEmpty()) {
       if (carrierPackages.size() != 1) {
         Log.w(TAG,"Multiple matching carrier apps found, launching the first.");

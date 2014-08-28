@@ -27,6 +27,10 @@
   mBlock=(SwitchPreference)findPreference(KEY_BLOCK);
   mPriority=(SwitchPreference)findPreference(KEY_PRIORITY);
   mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
+  final boolean secure=new LockPatternUtils(getActivity()).isSecure();
+  if (!secure) {
+    getPreferenceScreen().removePreference(mSensitive);
+  }
   mAppRow=NotificationAppList.loadAppRow(pm,info,mBackend);
   if (intent.hasExtra(EXTRA_HAS_SETTINGS_INTENT)) {
     if (intent.getBooleanExtra(EXTRA_HAS_SETTINGS_INTENT,false)) {
@@ -40,7 +44,9 @@
   }
   mBlock.setChecked(mAppRow.banned);
   mPriority.setChecked(mAppRow.priority);
-  mSensitive.setChecked(mAppRow.sensitive);
+  if (mSensitive != null) {
+    mSensitive.setChecked(mAppRow.sensitive);
+  }
   mBlock.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
       final boolean block=(Boolean)newValue;
@@ -55,11 +61,13 @@
     }
   }
 );
-  mSensitive.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
-    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
-      final boolean sensitive=(Boolean)newValue;
-      return mBackend.setSensitive(pkg,uid,sensitive);
+  if (mSensitive != null) {
+    mSensitive.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        final boolean sensitive=(Boolean)newValue;
+        return mBackend.setSensitive(pkg,uid,sensitive);
+      }
     }
-  }
 );
+  }
 }

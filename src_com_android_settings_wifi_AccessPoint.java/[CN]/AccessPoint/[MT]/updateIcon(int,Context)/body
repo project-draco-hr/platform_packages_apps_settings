@@ -6,9 +6,11 @@
     Drawable drawable=getIcon();
     if (drawable == null) {
       StateListDrawable sld=(StateListDrawable)context.getTheme().obtainStyledAttributes(wifi_signal_attributes).getDrawable(0);
-      sld.setState((security != SECURITY_NONE) ? STATE_SECURED : STATE_NONE);
-      drawable=sld.getCurrent();
-      setIcon(drawable);
+      if (sld != null) {
+        sld.setState((security != SECURITY_NONE) ? STATE_SECURED : STATE_NONE);
+        drawable=sld.getCurrent();
+        setIcon(drawable);
+      }
     }
     if (drawable != null) {
       drawable.setLevel(level);

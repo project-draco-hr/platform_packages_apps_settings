@@ -3,6 +3,7 @@
   if (Boolean.FALSE.equals(result)) {
     Log.w(TAG,"Incomplete, or corrupted encryption detected. Prompting user to wipe.");
     mEncryptionGoneBad=true;
+    mCorrupt=state == IMountService.ENCRYPTION_STATE_ERROR_CORRUPT;
   }
  else {
     Log.d(TAG,"Encryption state validated. Proceeding to configure UI");

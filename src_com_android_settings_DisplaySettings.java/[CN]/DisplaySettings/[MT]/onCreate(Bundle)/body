@@ -1,6 +1,7 @@
 {
   super.onCreate(savedInstanceState);
-  final ContentResolver resolver=getActivity().getContentResolver();
+  final Activity activity=getActivity();
+  final ContentResolver resolver=activity.getContentResolver();
   addPreferencesFromResource(R.xml.display_settings);
   mScreenSaverPreference=findPreference(KEY_SCREEN_SAVER);
   if (mScreenSaverPreference != null && getResources().getBoolean(com.android.internal.R.bool.config_dreamsSupported) == false) {
@@ -22,18 +23,46 @@
  else {
     removePreference(KEY_AUTO_BRIGHTNESS);
   }
-  if (isLiftToWakeAvailable(getActivity())) {
+  if (isLiftToWakeAvailable(activity)) {
     mLiftToWakePreference=(SwitchPreference)findPreference(KEY_LIFT_TO_WAKE);
     mLiftToWakePreference.setOnPreferenceChangeListener(this);
   }
  else {
     removePreference(KEY_LIFT_TO_WAKE);
   }
-  if (isDozeAvailable(getActivity())) {
+  if (isDozeAvailable(activity)) {
     mDozePreference=(SwitchPreference)findPreference(KEY_DOZE);
     mDozePreference.setOnPreferenceChangeListener(this);
   }
  else {
     removePreference(KEY_DOZE);
+  }
+  if (RotationPolicy.isRotationLockToggleVisible(activity)) {
+    DropDownPreference rotatePreference=(DropDownPreference)findPreference(KEY_AUTO_ROTATE);
+    rotatePreference.addItem(activity.getString(R.string.display_auto_rotate_rotate),false);
+    int rotateLockedResourceId;
+    if (allowAllRotations(activity)) {
+      rotateLockedResourceId=R.string.display_auto_rotate_stay_in_current;
+    }
+ else {
+      if (RotationPolicy.getRotationLockOrientation(activity) == Configuration.ORIENTATION_PORTRAIT) {
+        rotateLockedResourceId=R.string.display_auto_rotate_stay_in_portrait;
+      }
+ else {
+        rotateLockedResourceId=R.string.display_auto_rotate_stay_in_landscape;
+      }
+    }
+    rotatePreference.addItem(activity.getString(rotateLockedResourceId),true);
+    rotatePreference.setSelectedItem(RotationPolicy.isRotationLocked(activity) ? 1 : 0);
+    rotatePreference.setCallback(new Callback(){
+      @Override public boolean onItemSelected(      int pos,      Object value){
+        RotationPolicy.setRotationLock(activity,(Boolean)value);
+        return true;
+      }
+    }
+);
+  }
+ else {
+    removePreference(KEY_AUTO_ROTATE);
   }
 }

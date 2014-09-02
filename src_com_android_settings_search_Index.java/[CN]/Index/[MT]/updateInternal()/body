@@ -1,19 +1,8 @@
 {
 synchronized (mDataToProcess) {
     final UpdateIndexTask task=new UpdateIndexTask();
-    task.execute(mDataToProcess);
-    try {
-      final boolean result=task.get();
-      mDataToProcess.clear();
-      return result;
-    }
- catch (    InterruptedException e) {
-      Log.e(LOG_TAG,"Cannot update index",e);
-      return false;
-    }
-catch (    ExecutionException e) {
-      Log.e(LOG_TAG,"Cannot update index",e);
-      return false;
-    }
+    UpdateData copy=mDataToProcess.copy();
+    task.execute(copy);
+    mDataToProcess.clear();
   }
 }

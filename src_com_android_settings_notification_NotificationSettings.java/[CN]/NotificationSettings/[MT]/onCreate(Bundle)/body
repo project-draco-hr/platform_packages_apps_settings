@@ -4,16 +4,20 @@
   mPM=mContext.getPackageManager();
   mVoiceCapable=Utils.isVoiceCapable(mContext);
   mSecure=new LockPatternUtils(getActivity()).isSecure();
+  mVibrator=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+  if (mVibrator != null && !mVibrator.hasVibrator()) {
+    mVibrator=null;
+  }
   addPreferencesFromResource(R.xml.notification_settings);
   final PreferenceCategory sound=(PreferenceCategory)findPreference(KEY_SOUND);
   initVolumePreference(KEY_MEDIA_VOLUME,AudioManager.STREAM_MUSIC);
   initVolumePreference(KEY_ALARM_VOLUME,AudioManager.STREAM_ALARM);
   if (mVoiceCapable) {
-    initVolumePreference(KEY_RING_VOLUME,AudioManager.STREAM_RING);
+    mRingOrNotificationPreference=initVolumePreference(KEY_RING_VOLUME,AudioManager.STREAM_RING);
     sound.removePreference(sound.findPreference(KEY_NOTIFICATION_VOLUME));
   }
  else {
-    initVolumePreference(KEY_NOTIFICATION_VOLUME,AudioManager.STREAM_NOTIFICATION);
+    mRingOrNotificationPreference=initVolumePreference(KEY_NOTIFICATION_VOLUME,AudioManager.STREAM_NOTIFICATION);
     sound.removePreference(sound.findPreference(KEY_RING_VOLUME));
   }
   initRingtones(sound);

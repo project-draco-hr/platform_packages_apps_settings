@@ -18,7 +18,15 @@
 ;
   final Uri sampleUri=mStream == AudioManager.STREAM_MUSIC ? getMediaVolumeUri() : null;
   if (mVolumizer == null) {
-    mVolumizer=new SeekBarVolumizer(getContext(),mStream,sampleUri,sbvc);
+    mVolumizer=new SeekBarVolumizer(getContext(),mStream,sampleUri,sbvc){
+      @Override public void onProgressChanged(      SeekBar seekBar,      int progress,      boolean fromTouch){
+        super.onProgressChanged(seekBar,progress,fromTouch);
+        mCallback.onStreamValueChanged(mStream,progress);
+      }
+    }
+;
   }
   mVolumizer.setSeekBar(mSeekBar);
+  mIconView=(ImageView)view.findViewById(com.android.internal.R.id.icon);
+  mCallback.onStreamValueChanged(mStream,mSeekBar.getProgress());
 }

@@ -1,5 +1,4 @@
 {
-  boolean result=false;
   final List<SearchIndexableData> dataToUpdate=params[0].dataToUpdate;
   final List<SearchIndexableData> dataToDelete=params[0].dataToDelete;
   final Map<String,List<String>> nonIndexableKeys=params[0].nonIndexableKeys;
@@ -15,10 +14,9 @@
       processDataToUpdate(database,localeStr,dataToUpdate,nonIndexableKeys,forceUpdate);
     }
     database.setTransactionSuccessful();
-    result=true;
   }
   finally {
     database.endTransaction();
   }
-  return result;
+  return null;
 }

@@ -2,8 +2,11 @@
   if (TextUtils.isEmpty(updatedTitle)) {
     return;
   }
+  StringBuilder sb=new StringBuilder(updatedTitle);
+  sb.append(screenTitle);
+  int docId=sb.toString().hashCode();
   ContentValues values=new ContentValues();
-  values.put(IndexColumns.DOCID,updatedTitle.hashCode());
+  values.put(IndexColumns.DOCID,docId);
   values.put(IndexColumns.LOCALE,locale);
   values.put(IndexColumns.DATA_RANK,rank);
   values.put(IndexColumns.DATA_TITLE,updatedTitle);

@@ -7,7 +7,7 @@
  catch (  android.os.RemoteException ex) {
   }
   mNotificationSwitch.setChecked(enabled);
-  if (isThisASystemPackage()) {
+  if (Utils.isSystemPackage(mPm,mPackageInfo)) {
     mNotificationSwitch.setEnabled(false);
   }
  else {

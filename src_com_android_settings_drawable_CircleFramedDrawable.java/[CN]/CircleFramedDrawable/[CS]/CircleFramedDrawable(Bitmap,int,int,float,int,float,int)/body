@@ -23,7 +23,7 @@
   mPaint.setColor(Color.BLACK);
   mPaint.setStyle(Paint.Style.FILL);
   canvas.drawPath(fillPath,mPaint);
-  mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+  mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
   canvas.drawBitmap(icon,cropRect,circleRect,mPaint);
   mPaint.setXfermode(null);
   mScale=1f;

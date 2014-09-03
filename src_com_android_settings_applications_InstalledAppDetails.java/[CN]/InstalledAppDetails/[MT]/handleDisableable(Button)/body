@@ -1,6 +1,6 @@
 {
   boolean disableable=false;
-  if (mHomePackages.contains(mAppEntry.info.packageName) || isThisASystemPackage()) {
+  if (mHomePackages.contains(mAppEntry.info.packageName) || Utils.isSystemPackage(mPm,mPackageInfo)) {
     button.setText(R.string.disable_text);
   }
  else   if (mAppEntry.info.enabled) {

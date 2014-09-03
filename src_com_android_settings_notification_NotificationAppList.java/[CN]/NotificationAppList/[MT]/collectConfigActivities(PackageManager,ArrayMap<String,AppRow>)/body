@@ -1,19 +1,4 @@
 {
-  if (DEBUG)   Log.d(TAG,"APP_NOTIFICATION_PREFS_CATEGORY_INTENT is " + APP_NOTIFICATION_PREFS_CATEGORY_INTENT);
-  final List<ResolveInfo> resolveInfos=pm.queryIntentActivities(APP_NOTIFICATION_PREFS_CATEGORY_INTENT,PackageManager.MATCH_DEFAULT_ONLY);
-  if (DEBUG)   Log.d(TAG,"Found " + resolveInfos.size() + " preference activities");
-  for (  ResolveInfo ri : resolveInfos) {
-    final ActivityInfo activityInfo=ri.activityInfo;
-    final ApplicationInfo appInfo=activityInfo.applicationInfo;
-    final AppRow row=rows.get(appInfo.packageName);
-    if (row == null) {
-      Log.v(TAG,"Ignoring notification preference activity (" + activityInfo.name + ") for unknown package "+ activityInfo.packageName);
-      continue;
-    }
-    if (row.settingsIntent != null) {
-      Log.v(TAG,"Ignoring duplicate notification preference activity (" + activityInfo.name + ") for package "+ activityInfo.packageName);
-      continue;
-    }
-    row.settingsIntent=new Intent(Intent.ACTION_MAIN).setClassName(activityInfo.packageName,activityInfo.name);
-  }
+  final List<ResolveInfo> resolveInfos=queryNotificationConfigActivities(pm);
+  applyConfigActivities(pm,rows,resolveInfos);
 }

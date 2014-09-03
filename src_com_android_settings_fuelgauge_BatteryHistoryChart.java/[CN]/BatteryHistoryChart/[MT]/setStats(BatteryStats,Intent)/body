@@ -11,8 +11,8 @@
   mWifiRunningLabel=getContext().getString(R.string.battery_stats_wifi_running_label);
   mCpuRunningLabel=getContext().getString(R.string.battery_stats_wake_lock_label);
   mPhoneSignalLabel=getContext().getString(R.string.battery_stats_phone_signal_label);
-  mMaxPercentLabelString=getContext().getResources().getString(R.string.percentage,100);
-  mMinPercentLabelString=getContext().getResources().getString(R.string.percentage,0);
+  mMaxPercentLabelString=Utils.formatPercentage(100);
+  mMinPercentLabelString=Utils.formatPercentage(0);
   mBatteryLevel=com.android.settings.Utils.getBatteryLevel(mBatteryBroadcast);
   long remainingTimeUs=0;
   mDischarging=true;
@@ -24,7 +24,7 @@
       mChargeLabelString=getContext().getResources().getString(R.string.power_discharging_duration,mBatteryLevel,timeString);
     }
  else {
-      mChargeLabelString=getContext().getResources().getString(R.string.power_discharging,mBatteryLevel);
+      mChargeLabelString=Utils.formatPercentage(mBatteryLevel);
     }
   }
  else {

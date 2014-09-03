@@ -6,7 +6,7 @@
       final String p=packages[i];
       if (pkg.equals(p)) {
         try {
-          return pm.getPackageInfo(pkg,0);
+          return pm.getPackageInfo(pkg,PackageManager.GET_SIGNATURES);
         }
  catch (        NameNotFoundException e) {
           Log.w(TAG,"Failed to load package " + pkg,e);

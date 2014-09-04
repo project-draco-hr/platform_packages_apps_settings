@@ -11,15 +11,10 @@
     }
   }
  else {
-synchronized (this) {
-      if (mProfileNotAvailablePreference == null) {
-        mProfileNotAvailablePreference=new Preference(getActivity());
-        mProfileNotAvailablePreference.setEnabled(false);
-        mProfileNotAvailablePreference.setIcon(R.drawable.empty_icon);
-        mProfileNotAvailablePreference.setTitle(null);
-        mProfileNotAvailablePreference.setSummary(R.string.managed_profile_not_available_label);
-      }
-    }
+    mProfileNotAvailablePreference.setEnabled(false);
+    mProfileNotAvailablePreference.setIcon(R.drawable.empty_icon);
+    mProfileNotAvailablePreference.setTitle(null);
+    mProfileNotAvailablePreference.setSummary(R.string.managed_profile_not_available_label);
     profileData.preferenceGroup.addPreference(mProfileNotAvailablePreference);
   }
   if (profileData.removeWorkProfilePreference != null) {

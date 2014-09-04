@@ -55,11 +55,21 @@
         break;
       }
     }
+    mAppSettings.setOnClickListener(new OnClickListener(){
+      @Override public void onClick(      View v){
+        if (!isAdded()) {
+          return;
+        }
+        getActivity().startActivityAsUser(mAppSettingsIntent,new UserHandle(UserHandle.getUserId(uid)));
+      }
+    }
+);
     mAppSettings.setEnabled(matchFound);
     mAppSettings.setVisibility(View.VISIBLE);
   }
  else {
     mAppSettingsIntent=null;
+    mAppSettings.setOnClickListener(null);
     mAppSettings.setVisibility(View.GONE);
   }
   updateDetailData();

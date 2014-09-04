@@ -70,4 +70,8 @@
     }
 );
   }
+  if (Utils.isSystemPackage(pm,info)) {
+    getPreferenceScreen().removePreference(mBlock);
+    mPriority.setDependency(null);
+  }
 }

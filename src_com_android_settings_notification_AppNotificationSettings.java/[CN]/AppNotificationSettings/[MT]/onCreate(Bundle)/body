@@ -28,9 +28,7 @@
   mPriority=(SwitchPreference)findPreference(KEY_PRIORITY);
   mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
   final boolean secure=new LockPatternUtils(getActivity()).isSecure();
-  final boolean enabled=getLockscreenNotificationsEnabled();
-  final boolean allowPrivate=getLockscreenAllowPrivateNotifications();
-  if (!secure || !enabled || !allowPrivate) {
+  if (!secure) {
     getPreferenceScreen().removePreference(mSensitive);
   }
   mAppRow=NotificationAppList.loadAppRow(pm,info,mBackend);

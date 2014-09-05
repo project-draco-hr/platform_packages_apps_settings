@@ -2,7 +2,7 @@
   final DropDownPreference simPref=(DropDownPreference)findPreference(KEY_CALLS);
   final SubInfoRecord sir=findRecordBySubId(SubscriptionManager.getDefaultVoiceSubId());
   if (sir != null) {
-    simPref.setSelectedItem(sir.mSlotId + 1);
+    simPref.setSelectedItem(sir.slotId + 1);
   }
   simPref.setEnabled(mNumSims > 1);
 }

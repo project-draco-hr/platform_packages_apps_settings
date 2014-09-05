@@ -1,6 +1,6 @@
 {
   if (!mChallengeSucceeded && !mChallengeRequested && mRestrictionsManager.hasRestrictionsProvider()) {
-    Intent intent=mRestrictionsManager.getLocalApprovalIntent();
+    Intent intent=mRestrictionsManager.createLocalApprovalIntent();
     if (intent != null) {
       mChallengeRequested=true;
       mChallengeSucceeded=false;

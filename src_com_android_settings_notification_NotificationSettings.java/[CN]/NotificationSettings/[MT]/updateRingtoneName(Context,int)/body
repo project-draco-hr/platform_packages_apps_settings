@@ -11,7 +11,12 @@
  else {
     Cursor cursor=null;
     try {
-      cursor=context.getContentResolver().query(ringtoneUri,new String[]{MediaStore.Audio.Media.TITLE},null,null,null);
+      if (MediaStore.AUTHORITY.equals(ringtoneUri.getAuthority())) {
+        cursor=context.getContentResolver().query(ringtoneUri,new String[]{MediaStore.Audio.Media.TITLE},null,null,null);
+      }
+ else       if (ContentResolver.SCHEME_CONTENT.equals(ringtoneUri.getScheme())) {
+        cursor=context.getContentResolver().query(ringtoneUri,new String[]{OpenableColumns.DISPLAY_NAME},null,null,null);
+      }
       if (cursor != null) {
         if (cursor.moveToFirst()) {
           summary=cursor.getString(0);
@@ -19,6 +24,8 @@
       }
     }
  catch (    SQLiteException sqle) {
+    }
+catch (    IllegalArgumentException iae) {
     }
  finally {
       if (cursor != null) {

@@ -4,7 +4,7 @@
     try {
       AuthenticatorDescription desc=mTypeToAuthDescription.get(accountType);
       Context authContext=createPackageContextAsUser(desc.packageName,0,mUserHandle);
-      icon=mUm.getBadgedDrawableForUser(authContext.getResources().getDrawable(desc.iconId),mUserHandle);
+      icon=getPackageManager().getUserBadgedDrawableForDensity(authContext.getResources().getDrawable(desc.iconId),mUserHandle,null,0);
     }
  catch (    PackageManager.NameNotFoundException e) {
       Log.w(TAG,"No icon name for account type " + accountType);

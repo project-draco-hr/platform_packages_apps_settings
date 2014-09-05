@@ -1,13 +1,14 @@
 {
-  mPrintJob=mPrintManager.getPrintJob(mPrintJobId);
-  if (mPrintJob == null) {
+  PrintJob printJob=mPrintManager.getPrintJob(mPrintJobId);
+  if (printJob == null) {
     finish();
     return;
   }
-  if (mPrintJob.isCancelled() || mPrintJob.isCompleted()) {
+  if (printJob.isCancelled() || printJob.isCompleted()) {
     finish();
     return;
   }
+  mPrintJob=printJob;
   PrintJobInfo info=mPrintJob.getInfo();
 switch (info.getState()) {
 case PrintJobInfo.STATE_QUEUED:

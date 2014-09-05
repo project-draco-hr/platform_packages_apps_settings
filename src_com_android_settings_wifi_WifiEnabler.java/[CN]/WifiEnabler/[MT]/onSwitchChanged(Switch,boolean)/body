@@ -4,16 +4,15 @@
   }
   if (isChecked && !WirelessSettings.isRadioAllowed(mContext,Settings.Global.RADIO_WIFI)) {
     Toast.makeText(mContext,R.string.wifi_in_airplane_mode,Toast.LENGTH_SHORT).show();
-    switchView.setChecked(false);
+    mSwitchBar.setChecked(false);
     return;
   }
   int wifiApState=mWifiManager.getWifiApState();
   if (isChecked && ((wifiApState == WifiManager.WIFI_AP_STATE_ENABLING) || (wifiApState == WifiManager.WIFI_AP_STATE_ENABLED))) {
     mWifiManager.setWifiApEnabled(null,false);
   }
-  mSwitch.setEnabled(false);
   if (!mWifiManager.setWifiEnabled(isChecked)) {
-    mSwitch.setEnabled(true);
+    mSwitchBar.setEnabled(true);
     Toast.makeText(mContext,R.string.wifi_error,Toast.LENGTH_SHORT).show();
   }
 }

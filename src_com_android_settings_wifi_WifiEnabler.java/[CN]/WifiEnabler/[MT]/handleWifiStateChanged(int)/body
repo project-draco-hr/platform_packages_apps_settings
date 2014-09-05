@@ -1,25 +1,24 @@
 {
 switch (state) {
 case WifiManager.WIFI_STATE_ENABLING:
-    mSwitch.setEnabled(false);
+    mSwitchBar.setEnabled(false);
   break;
 case WifiManager.WIFI_STATE_ENABLED:
-setSwitchChecked(true);
-mSwitch.setEnabled(true);
+setSwitchBarChecked(true);
+mSwitchBar.setEnabled(true);
 updateSearchIndex(true);
 break;
 case WifiManager.WIFI_STATE_DISABLING:
-mSwitch.setEnabled(false);
+mSwitchBar.setEnabled(false);
 break;
 case WifiManager.WIFI_STATE_DISABLED:
-setSwitchChecked(false);
-mSwitch.setEnabled(true);
+setSwitchBarChecked(false);
+mSwitchBar.setEnabled(true);
 updateSearchIndex(false);
 break;
 default :
-setSwitchChecked(false);
-mSwitch.setEnabled(true);
+setSwitchBarChecked(false);
+mSwitchBar.setEnabled(true);
 updateSearchIndex(false);
 }
-mSwitch.setVisibility(View.VISIBLE);
 }

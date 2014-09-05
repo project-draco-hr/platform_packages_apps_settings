@@ -1,5 +1,10 @@
 {
   BluetoothDevice device=mCachedDevice.getDevice();
   profilePref.setEnabled(!mCachedDevice.isBusy());
-  profilePref.setChecked(profile.isPreferred(device));
+  if (profile instanceof PbapServerProfile) {
+    profilePref.setChecked(mCachedDevice.getPhonebookPermissionChoice() == CachedBluetoothDevice.ACCESS_ALLOWED);
+  }
+ else {
+    profilePref.setChecked(profile.isPreferred(device));
+  }
 }

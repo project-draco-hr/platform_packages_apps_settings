@@ -1,7 +1,7 @@
 {
   final double percentOfWeight=(((double)mEntry.mWeight) / mMaxWeight) * 100;
   int appLevel=(int)Math.ceil(percentOfWeight);
-  String appLevelText=makePercentString(getResources(),mEntry.mDuration,mTotalTime);
+  String appLevelText=Utils.formatPercentage(mEntry.mDuration,mTotalTime);
   final TextView summary=(TextView)mRootView.findViewById(android.R.id.summary);
   summary.setText(mEntry.mName);
   summary.setVisibility(View.VISIBLE);

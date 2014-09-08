@@ -1,6 +1,10 @@
 {
   Bundle addAccountOptions=new Bundle();
-  mPendingIntent=PendingIntent.getBroadcast(this,0,new Intent(),0);
+  Intent identityIntent=new Intent();
+  identityIntent.setComponent(new ComponentName(SHOULD_NOT_RESOLVE,SHOULD_NOT_RESOLVE));
+  identityIntent.setAction(SHOULD_NOT_RESOLVE);
+  identityIntent.addCategory(SHOULD_NOT_RESOLVE);
+  mPendingIntent=PendingIntent.getBroadcast(this,0,identityIntent,0);
   addAccountOptions.putParcelable(KEY_CALLER_IDENTITY,mPendingIntent);
   addAccountOptions.putBoolean(EXTRA_HAS_MULTIPLE_USERS,Utils.hasMultipleUsers(this));
   AccountManager.get(this).addAccountAsUser(accountType,null,null,addAccountOptions,null,mCallback,null,mUserHandle);

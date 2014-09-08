@@ -41,6 +41,10 @@ mMyDevicePreference.setSelectable(false);
 mMyDevicePreference.setEnabled(false);
 preferenceScreen.addPreference(mMyDevicePreference);
 getActivity().invalidateOptionsMenu();
+if (mInitiateDiscoverable) {
+mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE);
+mInitiateDiscoverable=false;
+}
 return;
 case BluetoothAdapter.STATE_TURNING_OFF:
 messageId=R.string.bluetooth_turning_off;

@@ -10,13 +10,11 @@
     return;
   }
  else   if (requestCode == CHANGE_TRUST_AGENT_SETTINGS && resultCode == Activity.RESULT_OK) {
-    if (mClickedTrustAgentPreference != null) {
-      Intent intent=mClickedTrustAgentPreference.getIntent();
-      if (intent != null) {
-        startActivity(intent);
-      }
-      mClickedTrustAgentPreference=null;
+    if (mTrustAgentClickIntent != null) {
+      startActivity(mTrustAgentClickIntent);
+      mTrustAgentClickIntent=null;
     }
+    return;
   }
   createPreferenceHierarchy();
 }

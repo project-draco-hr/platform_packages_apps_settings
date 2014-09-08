@@ -1,7 +1,7 @@
 {
   StringBuilder sb=new StringBuilder();
   int seconds=(int)Math.floor(millis / 1000);
-  if (!inclSeconds) {
+  if (!withSeconds) {
     seconds+=30;
   }
   int days=0, hours=0, minutes=0;
@@ -17,7 +17,7 @@
     minutes=seconds / SECONDS_PER_MINUTE;
     seconds-=minutes * SECONDS_PER_MINUTE;
   }
-  if (inclSeconds) {
+  if (withSeconds) {
     if (days > 0) {
       sb.append(context.getString(R.string.battery_history_days,days,hours,minutes,seconds));
     }

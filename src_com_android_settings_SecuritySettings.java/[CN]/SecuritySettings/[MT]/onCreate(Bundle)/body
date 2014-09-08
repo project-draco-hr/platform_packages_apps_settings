@@ -3,4 +3,7 @@
   mLockPatternUtils=new LockPatternUtils(getActivity());
   mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(getActivity());
+  if (savedInstanceState != null && savedInstanceState.containsKey(TRUST_AGENT_CLICK_INTENT)) {
+    mTrustAgentClickIntent=savedInstanceState.getParcelable(TRUST_AGENT_CLICK_INTENT);
+  }
 }

@@ -5,6 +5,7 @@
     if (preference == profileData.addAccountPreference) {
       Intent intent=new Intent(ADD_ACCOUNT_ACTION);
       intent.putExtra(EXTRA_USER,profileData.userInfo.getUserHandle());
+      intent.putExtra(EXTRA_AUTHORITIES,mAuthorities);
       startActivity(intent);
       return true;
     }

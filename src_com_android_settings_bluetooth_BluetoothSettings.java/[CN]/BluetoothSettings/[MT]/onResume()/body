@@ -3,7 +3,7 @@
     mBluetoothEnabler.resume(getActivity());
   }
   super.onResume();
-  mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE);
+  mInitiateDiscoverable=true;
   if (isUiRestricted()) {
     setDeviceListGroup(getPreferenceScreen());
     removeAllDevices();

@@ -1,0 +1,11 @@
+{
+  mCertHoldersByUserId.clear();
+  final int n=certHolders.size();
+  for (int i=0; i < n; ++i) {
+    mCertHoldersByUserId.put(certHolders.keyAt(i),certHolders.valueAt(i));
+  }
+  mAdapter.notifyDataSetChanged();
+  mProgressBar.setVisibility(View.GONE);
+  mList.setVisibility(View.VISIBLE);
+  mProgressBar.setProgress(0);
+}

@@ -1,0 +1,39 @@
+{
+  mProfileId=profileId;
+  mService=service;
+  mAdapter=adapter;
+  mTab=tab;
+  mAlias=alias;
+  mX509Cert=x509Cert;
+  mSslCert=new SslCertificate(x509Cert);
+  String cn=mSslCert.getIssuedTo().getCName();
+  String o=mSslCert.getIssuedTo().getOName();
+  String ou=mSslCert.getIssuedTo().getUName();
+  if (!o.isEmpty()) {
+    if (!cn.isEmpty()) {
+      mSubjectPrimary=o;
+      mSubjectSecondary=cn;
+    }
+ else {
+      mSubjectPrimary=o;
+      mSubjectSecondary=ou;
+    }
+  }
+ else {
+    if (!cn.isEmpty()) {
+      mSubjectPrimary=cn;
+      mSubjectSecondary="";
+    }
+ else {
+      mSubjectPrimary=mSslCert.getIssuedTo().getDName();
+      mSubjectSecondary="";
+    }
+  }
+  try {
+    mDeleted=mTab.deleted(mService,mAlias);
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Remote exception while checking if alias " + mAlias + " is deleted.",e);
+    mDeleted=false;
+  }
+}

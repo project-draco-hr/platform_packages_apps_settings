@@ -1,0 +1,10 @@
+{
+  Locale currentLocale=context.getResources().getConfiguration().locale;
+  List<LocalePicker.LocaleInfo> locales=LocalePicker.getAllAssetLocales(context,true);
+  for (  LocalePicker.LocaleInfo locale : locales) {
+    if (locale.getLocale().equals(currentLocale)) {
+      return locale.getLabel();
+    }
+  }
+  return currentLocale.getDisplayName(currentLocale);
+}

@@ -15,7 +15,12 @@
       setNewMode(pe,newMode);
       return true;
     }
-    getFragmentManager().beginTransaction().add(new WarningDialog(pe),"warning").commit();
+    FragmentTransaction ft=getChildFragmentManager().beginTransaction();
+    Fragment prev=getChildFragmentManager().findFragmentByTag("warning");
+    if (prev != null) {
+      ft.remove(prev);
+    }
+    WarningDialogFragment.newInstance(pe.packageName).show(ft,"warning");
     return false;
   }
   return true;

@@ -23,9 +23,8 @@
         if (tail >= 0 && tail < (label.length() - 1)) {
           label=label.substring(tail + 1);
         }
-        long duration=service.mDuration;
-        final double percentOfTime=(((double)duration) / mTotalTime) * 100;
-        addDetailsItem(mServicesParent,label,getActivity().getResources().getString(R.string.percentage,(int)Math.ceil(percentOfTime)));
+        String percentage=Utils.formatPercentage(service.mDuration,mTotalTime);
+        addDetailsItem(mServicesParent,label,percentage);
       }
     }
   }

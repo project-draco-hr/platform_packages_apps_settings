@@ -4,5 +4,10 @@
   setInverseBackgroundForced(true);
   mController=new WifiConfigController(this,mView,mAccessPoint,mEdit);
   super.onCreate(savedInstanceState);
-  mController.enableSubmitIfAppropriate();
+  if (mHideSubmitButton) {
+    mController.hideSubmitButton();
+  }
+ else {
+    mController.enableSubmitIfAppropriate();
+  }
 }

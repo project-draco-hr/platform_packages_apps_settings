@@ -1,0 +1,26 @@
+{
+  try {
+    KeyChainConnection keyChainConnection=mKeyChainConnectionByProfileId.get(mCertHolder.mProfileId);
+    IKeyChainService service=keyChainConnection.getService();
+    if (mCertHolder.mDeleted) {
+      byte[] bytes=mCertHolder.mX509Cert.getEncoded();
+      service.installCaCertificate(bytes);
+      return true;
+    }
+ else {
+      return service.deleteCaCertificate(mCertHolder.mAlias);
+    }
+  }
+ catch (  CertificateEncodingException e) {
+    Log.w(TAG,"Error while toggling alias " + mCertHolder.mAlias,e);
+    return false;
+  }
+catch (  IllegalStateException e) {
+    Log.w(TAG,"Error while toggling alias " + mCertHolder.mAlias,e);
+    return false;
+  }
+catch (  RemoteException e) {
+    Log.w(TAG,"Error while toggling alias " + mCertHolder.mAlias,e);
+    return false;
+  }
+}

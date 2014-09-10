@@ -1,0 +1,26 @@
+{
+  if (mDialog != null)   return;
+  final ZenModeConditionSelection zenModeConditionSelection=new ZenModeConditionSelection(mContext);
+  DialogInterface.OnClickListener positiveListener=new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      zenModeConditionSelection.confirmCondition();
+      mDialog=null;
+    }
+  }
+;
+  final int oldSettingsValue=PREF_ZEN_MODE.getValue(mContext);
+  ScrollView scrollView=new ScrollView(mContext);
+  scrollView.addView(zenModeConditionSelection);
+  mDialog=new AlertDialog.Builder(getActivity()).setTitle(PREF_ZEN_MODE.getCaption(getResources(),newSettingsValue)).setView(scrollView).setPositiveButton(R.string.okay,positiveListener).setNegativeButton(R.string.cancel_all_caps,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      cancelDialog(oldSettingsValue);
+    }
+  }
+).setOnCancelListener(new DialogInterface.OnCancelListener(){
+    @Override public void onCancel(    DialogInterface dialog){
+      cancelDialog(oldSettingsValue);
+    }
+  }
+).create();
+  mDialog.show();
+}

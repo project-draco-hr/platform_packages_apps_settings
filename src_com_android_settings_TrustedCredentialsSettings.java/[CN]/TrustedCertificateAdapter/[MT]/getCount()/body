@@ -1,3 +1,7 @@
 {
-  return mData.mCertHoldersByUserId.valueAt(0).size();
+  List<CertHolder> certHolders=mData.mCertHoldersByUserId.valueAt(0);
+  if (certHolders != null) {
+    return certHolders.size();
+  }
+  return 0;
 }

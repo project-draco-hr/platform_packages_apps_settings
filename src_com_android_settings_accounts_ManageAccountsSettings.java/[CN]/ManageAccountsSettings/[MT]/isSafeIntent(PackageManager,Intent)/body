@@ -1,0 +1,17 @@
+{
+  AuthenticatorDescription authDesc=mAuthenticatorHelper.getAccountTypeDescription(mAccountType);
+  ResolveInfo resolveInfo=pm.resolveActivity(intent,0);
+  if (resolveInfo == null) {
+    return false;
+  }
+  ActivityInfo resolvedActivityInfo=resolveInfo.activityInfo;
+  ApplicationInfo resolvedAppInfo=resolvedActivityInfo.applicationInfo;
+  try {
+    ApplicationInfo authenticatorAppInf=pm.getApplicationInfo(authDesc.packageName,0);
+    return resolvedActivityInfo.exported || resolvedAppInfo.uid == authenticatorAppInf.uid;
+  }
+ catch (  NameNotFoundException e) {
+    Log.e(TAG,"Intent considered unsafe due to exception.",e);
+    return false;
+  }
+}

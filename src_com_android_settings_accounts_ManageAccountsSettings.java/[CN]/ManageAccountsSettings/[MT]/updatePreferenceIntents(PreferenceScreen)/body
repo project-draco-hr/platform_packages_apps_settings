@@ -1,5 +1,5 @@
 {
-  PackageManager pm=getActivity().getPackageManager();
+  final PackageManager pm=getActivity().getPackageManager();
   for (int i=0; i < prefs.getPreferenceCount(); ) {
     Preference pref=prefs.getPreference(i);
     Intent intent=pref.getIntent();
@@ -18,7 +18,13 @@
           intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
           pref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
             @Override public boolean onPreferenceClick(            Preference preference){
-              getActivity().startActivityAsUser(preference.getIntent(),mUserHandle);
+              Intent prefIntent=preference.getIntent();
+              if (isSafeIntent(pm,prefIntent)) {
+                getActivity().startActivityAsUser(prefIntent,mUserHandle);
+              }
+ else {
+                Log.e(TAG,"Refusing to launch authenticator intent because" + "it exploits Settings permissions: " + prefIntent);
+              }
               return true;
             }
           }

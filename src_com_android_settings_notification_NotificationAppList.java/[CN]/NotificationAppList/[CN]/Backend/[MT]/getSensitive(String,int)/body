@@ -1,7 +1,6 @@
 {
-  INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
   try {
-    return nm.getPackageVisibilityOverride(pkg,uid) == Notification.VISIBILITY_PRIVATE;
+    return sINM.getPackageVisibilityOverride(pkg,uid) == Notification.VISIBILITY_PRIVATE;
   }
  catch (  Exception e) {
     Log.w(TAG,"Error calling NoMan",e);

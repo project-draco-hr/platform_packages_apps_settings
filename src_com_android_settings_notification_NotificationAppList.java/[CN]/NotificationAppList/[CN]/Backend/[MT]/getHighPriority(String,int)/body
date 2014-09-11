@@ -1,7 +1,6 @@
 {
-  INotificationManager nm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
   try {
-    return nm.getPackagePriority(pkg,uid) == Notification.PRIORITY_MAX;
+    return sINM.getPackagePriority(pkg,uid) == Notification.PRIORITY_MAX;
   }
  catch (  Exception e) {
     Log.w(TAG,"Error calling NoMan",e);

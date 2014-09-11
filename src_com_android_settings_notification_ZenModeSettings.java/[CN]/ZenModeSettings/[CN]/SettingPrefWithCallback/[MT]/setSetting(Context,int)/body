@@ -1,0 +1,8 @@
+{
+  if (value == mValue)   return true;
+  mValue=value;
+  if (mCallback != null) {
+    mCallback.onSettingSelected(value);
+  }
+  return super.setSetting(context,value);
+}

@@ -1,14 +1,5 @@
 {
-  for (  final Condition c : conditions) {
-    RadioButton v=(RadioButton)findViewWithTag(c.id);
-    if (c.state == Condition.STATE_TRUE || c.state == Condition.STATE_UNKNOWN) {
-      if (v == null) {
-        v=newRadioButton(c);
-      }
-    }
-    if (v != null) {
-      v.setText(c.summary);
-      v.setEnabled(c.state == Condition.STATE_TRUE);
-    }
+  for (  Condition c : conditions) {
+    handleCondition(c);
   }
 }

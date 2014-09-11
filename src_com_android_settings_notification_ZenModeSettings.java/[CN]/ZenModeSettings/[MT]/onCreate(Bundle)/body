@@ -7,6 +7,14 @@
   mConfig=getZenModeConfig();
   if (DEBUG)   Log.d(TAG,"Loaded mConfig=" + mConfig);
   final Preference zenMode=PREF_ZEN_MODE.init(this);
+  PREF_ZEN_MODE.setCallback(new SettingPrefWithCallback.Callback(){
+    @Override public void onSettingSelected(    int value){
+      if (value != Global.ZEN_MODE_OFF) {
+        showConditionSelection(value);
+      }
+    }
+  }
+);
   if (!Utils.isVoiceCapable(mContext)) {
     zenMode.setTitle(R.string.zen_mode_option_title_novoice);
   }

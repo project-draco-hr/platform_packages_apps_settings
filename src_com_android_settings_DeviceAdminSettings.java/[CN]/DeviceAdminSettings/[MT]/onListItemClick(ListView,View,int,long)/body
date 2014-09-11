@@ -1,5 +1,9 @@
 {
-  DeviceAdminInfo dpi=(DeviceAdminInfo)l.getAdapter().getItem(position);
+  Object o=l.getAdapter().getItem(position);
+  if (!(o instanceof DeviceAdminInfo)) {
+    return;
+  }
+  DeviceAdminInfo dpi=(DeviceAdminInfo)o;
   final Activity activity=getActivity();
   final int userId=getUserId(dpi);
   if (userId == UserHandle.myUserId() || !isProfileOwner(dpi)) {

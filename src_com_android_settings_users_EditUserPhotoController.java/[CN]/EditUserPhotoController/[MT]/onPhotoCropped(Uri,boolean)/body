@@ -2,12 +2,24 @@
   new AsyncTask<Void,Void,Bitmap>(){
     @Override protected Bitmap doInBackground(    Void... params){
       if (cropped) {
+        InputStream imageStream=null;
         try {
-          InputStream imageStream=mContext.getContentResolver().openInputStream(data);
+          imageStream=mContext.getContentResolver().openInputStream(data);
           return BitmapFactory.decodeStream(imageStream);
         }
  catch (        FileNotFoundException fe) {
+          Log.w(TAG,"Cannot find image file",fe);
           return null;
+        }
+ finally {
+          if (imageStream != null) {
+            try {
+              imageStream.close();
+            }
+ catch (            IOException ioe) {
+              Log.w(TAG,"Cannot close image stream",ioe);
+            }
+          }
         }
       }
  else {

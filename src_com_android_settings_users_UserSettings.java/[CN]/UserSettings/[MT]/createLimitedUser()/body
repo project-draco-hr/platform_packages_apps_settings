@@ -5,8 +5,7 @@
   mUserManager.setUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS,true,user);
   Secure.putIntForUser(getContentResolver(),Secure.LOCATION_MODE,Secure.LOCATION_MODE_OFF,userId);
   mUserManager.setUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,true,user);
-  Bitmap bitmap=createBitmapFromDrawable(USER_DRAWABLES[userId % UserSettings.USER_DRAWABLES.length]);
-  mUserManager.setUserIcon(userId,bitmap);
+  assignDefaultPhoto(newUserInfo);
   AccountManager am=AccountManager.get(getActivity());
   Account[] accounts=am.getAccounts();
   if (accounts != null) {

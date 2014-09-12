@@ -1,5 +1,5 @@
 {
-  PrintJob printJob=mPrintManager.getPrintJob(mPrintJobId);
+  PrintJob printJob=getPrintJob();
   if (printJob == null) {
     finish();
     return;
@@ -8,13 +8,12 @@
     finish();
     return;
   }
-  mPrintJob=printJob;
-  PrintJobInfo info=mPrintJob.getInfo();
+  PrintJobInfo info=printJob.getInfo();
 switch (info.getState()) {
 case PrintJobInfo.STATE_QUEUED:
 case PrintJobInfo.STATE_STARTED:
 {
-      if (!mPrintJob.getInfo().isCancelling()) {
+      if (!printJob.getInfo().isCancelling()) {
         mPrintJobPreference.setTitle(getString(R.string.print_printing_state_title_template,info.getLabel()));
       }
  else {
@@ -29,7 +28,7 @@ case PrintJobInfo.STATE_FAILED:
 break;
 case PrintJobInfo.STATE_BLOCKED:
 {
-if (!mPrintJob.getInfo().isCancelling()) {
+if (!printJob.getInfo().isCancelling()) {
 mPrintJobPreference.setTitle(getString(R.string.print_blocked_state_title_template,info.getLabel()));
 }
  else {

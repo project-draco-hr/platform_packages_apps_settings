@@ -19,9 +19,10 @@
   }
   mAppListGroup.removeAll();
   mAppListGroup.setOrderingAsAdded(false);
+  final long elapsedTime=mStats.mTimePeriodEndRealtime - mStats.mTimePeriodStartRealtime;
   mMemStatusPref.setOrder(-2);
   mAppListGroup.addPreference(mMemStatusPref);
-  String durationString=Utils.formatElapsedTime(getActivity(),mStats.mTimePeriodEndRealtime - mStats.mTimePeriodStartRealtime,false);
+  String durationString=Utils.formatElapsedTime(getActivity(),elapsedTime,false);
   CharSequence memString;
   CharSequence[] memStatesStr=getResources().getTextArray(R.array.ram_states);
   if (mMemState >= 0 && mMemState < memStatesStr.length) {
@@ -71,6 +72,9 @@ timeGood+=mMemTimes[ProcessStats.ADJ_MEM_FACTOR_LOW] / 3;
 float memBadness=((float)timeGood) / mTotalTime;
 int badnessColor=badColors[1 + Math.round(memBadness * (badColors.length - 2))];
 colors.setColors(badnessColor,badnessColor,badnessColor);
+for (int i=0; i < ProcessStats.ADJ_MEM_FACTOR_COUNT; i++) {
+mMemTimes[i]=(long)((mMemTimes[i] * (double)elapsedTime) / mTotalTime);
+}
 ProcessStats.TotalMemoryUseCollection totalMem=new ProcessStats.TotalMemoryUseCollection(ProcessStats.ALL_SCREEN_ADJ,memStates);
 mStats.computeTotalMemoryUse(totalMem,now);
 double freeWeight=totalMem.sysMemFreeWeight + totalMem.sysMemCachedWeight;
@@ -239,14 +243,20 @@ Log.i(TAG,"Bar max RAM: " + Formatter.formatShortFileSize(getActivity(),(mMaxWei
 mMaxWeight=maxWeight;
 }
 if (DEBUG) Log.d(TAG,"-------------------- BUILDING UI");
-for (int i=0, N=(entries != null ? entries.size() : 0); i < N; i++) {
+int end=entries != null ? entries.size() - 1 : -1;
+while (end >= 0) {
+ProcStatsEntry proc=entries.get(end);
+final double percentOfWeight=(((double)proc.mWeight) / mMaxWeight) * 100;
+final double percentOfTime=(((double)proc.mDuration) / memTotalTime) * 100;
+if (percentOfWeight >= 1 || percentOfTime >= 25) {
+break;
+}
+end--;
+}
+for (int i=0; i <= end; i++) {
 ProcStatsEntry proc=entries.get(i);
 final double percentOfWeight=(((double)proc.mWeight) / mMaxWeight) * 100;
 final double percentOfTime=(((double)proc.mDuration) / memTotalTime) * 100;
-if (percentOfWeight < 1 && percentOfTime < 33) {
-if (DEBUG) Log.d(TAG,"Skipping " + proc.mName + " weight="+ percentOfWeight+ " time="+ percentOfTime);
-continue;
-}
 ProcessStatsPreference pref=new ProcessStatsPreference(getActivity());
 pref.init(null,proc);
 proc.evaluateTargetPackage(pm,mStats,totals,sEntryCompare,mUseUss,mStatsType == MENU_TYPE_BACKGROUND);

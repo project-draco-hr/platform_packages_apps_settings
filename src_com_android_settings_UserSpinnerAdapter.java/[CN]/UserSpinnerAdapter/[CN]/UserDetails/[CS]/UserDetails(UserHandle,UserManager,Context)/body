@@ -8,6 +8,11 @@
  else {
     name=userInfo.name;
     Bitmap bitmap=um.getUserIcon(userHandle.getIdentifier());
-    icon=(bitmap == null) ? null : CircleFramedDrawable.getInstance(context,bitmap);
+    if (bitmap != null) {
+      icon=CircleFramedDrawable.getInstance(context,bitmap);
+    }
+ else {
+      icon=UserIcons.getDefaultUserIcon(userInfo.id,false);
+    }
   }
 }

@@ -1,4 +1,4 @@
 {
-  Bitmap bitmap=createBitmapFromDrawable(USER_DRAWABLES[user.id % UserSettings.USER_DRAWABLES.length]);
+  Bitmap bitmap=UserIcons.convertToBitmap(UserIcons.getDefaultUserIcon(user.id,false));
   mUserManager.setUserIcon(user.id,bitmap);
 }

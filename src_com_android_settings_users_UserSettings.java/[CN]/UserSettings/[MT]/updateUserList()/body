@@ -44,21 +44,21 @@
     if (user.iconPath != null) {
       if (mUserIcons.get(user.id) == null) {
         missingIcons.add(user.id);
-        pref.setIcon(getEncircledDefaultAvatar());
+        pref.setIcon(getEncircledDefaultIcon());
       }
  else {
         setPhotoId(pref,user);
       }
     }
  else {
-      pref.setIcon(getEncircledDefaultAvatar());
+      pref.setIcon(getEncircledDefaultIcon());
     }
   }
   if (mAddingUser) {
     Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,null,null);
     pref.setEnabled(false);
     pref.setTitle(R.string.user_new_user_name);
-    pref.setIcon(getEncircledDefaultAvatar());
+    pref.setIcon(getEncircledDefaultIcon());
     mUserListCategory.addPreference(pref);
   }
   boolean showGuestPreference=!mIsGuest;
@@ -74,7 +74,7 @@
   if (showGuestPreference) {
     Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mIsOwner && voiceCapable ? this : null,null);
     pref.setTitle(R.string.user_guest);
-    pref.setIcon(getEncircledGuestDrawable());
+    pref.setIcon(getEncircledDefaultIcon());
     pref.setOnPreferenceClickListener(this);
     mUserListCategory.addPreference(pref);
   }

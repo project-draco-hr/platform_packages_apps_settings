@@ -286,7 +286,7 @@ mTimeRemainPath.lineTo(mLevelRight,emptyY);
 mTimeRemainPath.lineTo(x,emptyY);
 mTimeRemainPath.close();
 }
-if (mStartWallTime > 0) {
+if (mStartWallTime > 0 && mEndWallTime > mStartWallTime) {
 boolean is24hr=is24Hour();
 Calendar calStart=Calendar.getInstance();
 calStart.setTimeInMillis(mStartWallTime);

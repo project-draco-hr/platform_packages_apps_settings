@@ -1,0 +1,10 @@
+{
+  if (listening && !mRegistered) {
+    mContext.registerReceiver(this,new IntentFilter(ACTION_POWER_SAVE_MODE_CHANGING));
+    mRegistered=true;
+  }
+ else   if (!listening && mRegistered) {
+    mContext.unregisterReceiver(this);
+    mRegistered=false;
+  }
+}

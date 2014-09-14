@@ -1,10 +1,11 @@
 {
-  final boolean checked=Global.getInt(getContentResolver(),Global.LOW_POWER_MODE,0) != 0;
-  if (checked == mSwitch.isChecked())   return;
+  final boolean mode=mPowerManager.isPowerSaveMode();
+  if (DEBUG)   Log.d(TAG,"updateSwitch: isChecked=" + mSwitch.isChecked() + " mode="+ mode);
+  if (mode == mSwitch.isChecked())   return;
   if (mValidListener) {
     mSwitchBar.removeOnSwitchChangeListener(this);
   }
-  mSwitch.setChecked(checked);
+  mSwitch.setChecked(mode);
   if (mValidListener) {
     mSwitchBar.addOnSwitchChangeListener(this);
   }

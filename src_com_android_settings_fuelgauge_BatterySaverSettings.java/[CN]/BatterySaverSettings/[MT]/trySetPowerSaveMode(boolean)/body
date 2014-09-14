@@ -1,0 +1,6 @@
+{
+  if (!mPowerManager.setPowerSaveMode(mode)) {
+    if (DEBUG)     Log.d(TAG,"Setting mode failed, fallback to current value");
+    mHandler.post(mUpdateSwitch);
+  }
+}

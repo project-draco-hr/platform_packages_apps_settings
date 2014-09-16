@@ -82,10 +82,13 @@
         mHistStart=rec.time;
       }
       if (rec.cmd == HistoryItem.CMD_CURRENT_TIME || rec.cmd == HistoryItem.CMD_RESET) {
+        if (rec.currentTime > (lastWallTime + (365 * 24 * 60* 60* 1000))) {
+          mStartWallTime=0;
+        }
         lastWallTime=rec.currentTime;
         lastRealtime=rec.time;
         if (mStartWallTime == 0) {
-          mStartWallTime=lastWallTime;
+          mStartWallTime=lastWallTime - (lastRealtime - mHistStart);
         }
       }
       if (rec.isDeltaData()) {

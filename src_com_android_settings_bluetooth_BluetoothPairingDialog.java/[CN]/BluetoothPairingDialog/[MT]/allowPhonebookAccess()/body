@@ -1,0 +1,7 @@
+{
+  CachedBluetoothDevice cachedDevice=mCachedDeviceManager.findDevice(mDevice);
+  if (cachedDevice == null) {
+    cachedDevice=mCachedDeviceManager.addDevice(mBluetoothManager.getBluetoothAdapter(),mBluetoothManager.getProfileManager(),mDevice);
+  }
+  cachedDevice.setPhonebookPermissionChoice(CachedBluetoothDevice.ACCESS_ALLOWED);
+}

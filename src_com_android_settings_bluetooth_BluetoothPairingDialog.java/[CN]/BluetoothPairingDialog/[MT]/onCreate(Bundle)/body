@@ -6,19 +6,19 @@
     finish();
     return;
   }
-  LocalBluetoothManager manager=LocalBluetoothManager.getInstance(this);
-  if (manager == null) {
+  mBluetoothManager=LocalBluetoothManager.getInstance(this);
+  if (mBluetoothManager == null) {
     Log.e(TAG,"Error: BluetoothAdapter not supported by system");
     finish();
     return;
   }
-  CachedBluetoothDeviceManager deviceManager=manager.getCachedDeviceManager();
+  mCachedDeviceManager=mBluetoothManager.getCachedDeviceManager();
   mDevice=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
   mType=intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_VARIANT,BluetoothDevice.ERROR);
 switch (mType) {
 case BluetoothDevice.PAIRING_VARIANT_PIN:
 case BluetoothDevice.PAIRING_VARIANT_PASSKEY:
-    createUserEntryDialog(deviceManager);
+    createUserEntryDialog();
   break;
 case BluetoothDevice.PAIRING_VARIANT_PASSKEY_CONFIRMATION:
 int passkey=intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_KEY,BluetoothDevice.ERROR);
@@ -27,11 +27,11 @@ Log.e(TAG,"Invalid Confirmation Passkey received, not showing any dialog");
 return;
 }
 mPairingKey=String.format(Locale.US,"%06d",passkey);
-createConfirmationDialog(deviceManager);
+createConfirmationDialog();
 break;
 case BluetoothDevice.PAIRING_VARIANT_CONSENT:
 case BluetoothDevice.PAIRING_VARIANT_OOB_CONSENT:
-createConsentDialog(deviceManager);
+createConsentDialog();
 break;
 case BluetoothDevice.PAIRING_VARIANT_DISPLAY_PASSKEY:
 case BluetoothDevice.PAIRING_VARIANT_DISPLAY_PIN:
@@ -46,7 +46,7 @@ mPairingKey=String.format("%06d",pairingKey);
  else {
 mPairingKey=String.format("%04d",pairingKey);
 }
-createDisplayPasskeyOrPinDialog(deviceManager);
+createDisplayPasskeyOrPinDialog();
 break;
 default :
 Log.e(TAG,"Incorrect pairing type received, not showing any dialog");

@@ -1,0 +1,7 @@
+{
+  if (mMessageRejectionCount < MESSAGE_REJECTION_COUNT_LIMIT_TO_PERSIST) {
+    mMessageRejectionCount++;
+    saveMessageRejectionCount();
+  }
+  return mMessageRejectionCount >= MESSAGE_REJECTION_COUNT_LIMIT_TO_PERSIST;
+}

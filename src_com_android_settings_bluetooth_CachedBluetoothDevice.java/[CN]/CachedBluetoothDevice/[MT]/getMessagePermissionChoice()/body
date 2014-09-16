@@ -1,3 +1,10 @@
 {
-  return mMessagePermissionChoice;
+  int permission=mDevice.getMessageAccessPermission();
+  if (permission == BluetoothDevice.ACCESS_ALLOWED) {
+    return ACCESS_ALLOWED;
+  }
+ else   if (permission == BluetoothDevice.ACCESS_REJECTED) {
+    return ACCESS_REJECTED;
+  }
+  return ACCESS_UNKNOWN;
 }

@@ -82,7 +82,7 @@
         mHistStart=rec.time;
       }
       if (rec.cmd == HistoryItem.CMD_CURRENT_TIME || rec.cmd == HistoryItem.CMD_RESET) {
-        if (rec.currentTime > (lastWallTime + (365 * 24 * 60* 60* 1000))) {
+        if (rec.currentTime > (lastWallTime + (180 * 24 * 60* 60* 1000L)) || rec.time < (mHistStart + (5 * 60 * 1000L))) {
           mStartWallTime=0;
         }
         lastWallTime=rec.currentTime;

@@ -1,0 +1,18 @@
+{
+  SharedPreferences preferences=mContext.getSharedPreferences("bluetooth_phonebook_permission",Context.MODE_PRIVATE);
+  if (!preferences.contains(mDevice.getAddress())) {
+    return;
+  }
+  if (mDevice.getPhonebookAccessPermission() == BluetoothDevice.ACCESS_UNKNOWN) {
+    int oldPermission=preferences.getInt(mDevice.getAddress(),ACCESS_UNKNOWN);
+    if (oldPermission == ACCESS_ALLOWED) {
+      mDevice.setPhonebookAccessPermission(BluetoothDevice.ACCESS_ALLOWED);
+    }
+ else     if (oldPermission == ACCESS_REJECTED) {
+      mDevice.setPhonebookAccessPermission(BluetoothDevice.ACCESS_REJECTED);
+    }
+  }
+  SharedPreferences.Editor editor=preferences.edit();
+  editor.remove(mDevice.getAddress());
+  editor.commit();
+}

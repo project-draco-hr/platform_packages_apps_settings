@@ -27,7 +27,7 @@ Log.e(TAG,"Incorrect pairing type for createPinEntryView: " + mType);
 return null;
 }
 messageViewCaption.setText(messageId1);
-messageViewContent.setText(deviceName);
+messageViewContent.setText(mCachedDeviceManager.getName(mDevice));
 messageView2.setText(messageId2);
 mPairingView.setInputType(InputType.TYPE_CLASS_NUMBER);
 mPairingView.setFilters(new InputFilter[]{new LengthFilter(maxLength)});

@@ -9,9 +9,13 @@
     }
     String[] values=getResources().getStringArray(R.array.select_logd_size_values);
     String[] titles=getResources().getStringArray(R.array.select_logd_size_titles);
+    if (SystemProperties.get("ro.config.low_ram").equals("true")) {
+      mLogdSize.setEntries(R.array.select_logd_size_lowram_titles);
+      titles=getResources().getStringArray(R.array.select_logd_size_lowram_titles);
+    }
     String[] summaries=getResources().getStringArray(R.array.select_logd_size_summaries);
     int index=1;
-    for (int i=0; i < values.length; i++) {
+    for (int i=0; i < titles.length; i++) {
       if (currentValue.equals(values[i]) || currentValue.equals(titles[i])) {
         index=i;
         break;

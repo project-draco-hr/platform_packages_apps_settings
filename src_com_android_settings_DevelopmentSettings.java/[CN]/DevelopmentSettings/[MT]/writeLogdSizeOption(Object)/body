@@ -1,4 +1,8 @@
 {
+  String currentValue=SystemProperties.get(SELECT_LOGD_DEFAULT_SIZE_PROPERTY);
+  if (currentValue != null) {
+    DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES=currentValue;
+  }
   final String size=(newValue != null) ? newValue.toString() : DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES;
   SystemProperties.set(SELECT_LOGD_SIZE_PROPERTY,size);
   pokeSystemProperties();

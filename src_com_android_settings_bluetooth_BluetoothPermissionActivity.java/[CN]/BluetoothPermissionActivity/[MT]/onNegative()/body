@@ -1,6 +1,14 @@
 {
   if (DEBUG)   Log.d(TAG,"onNegative");
-  savePermissionChoice(mRequestType,CachedBluetoothDevice.ACCESS_REJECTED);
-  sendIntentToReceiver(BluetoothDevice.ACTION_CONNECTION_ACCESS_REPLY,false,null,false);
-  finish();
+  boolean always=true;
+  if (mRequestType == BluetoothDevice.REQUEST_TYPE_MESSAGE_ACCESS) {
+    LocalBluetoothManager bluetoothManager=LocalBluetoothManager.getInstance(this);
+    CachedBluetoothDeviceManager cachedDeviceManager=bluetoothManager.getCachedDeviceManager();
+    CachedBluetoothDevice cachedDevice=cachedDeviceManager.findDevice(mDevice);
+    if (cachedDevice == null) {
+      cachedDevice=cachedDeviceManager.addDevice(bluetoothManager.getBluetoothAdapter(),bluetoothManager.getProfileManager(),mDevice);
+    }
+    always=cachedDevice.checkAndIncreaseMessageRejectionCount();
+  }
+  sendReplyIntentToReceiver(false,always);
 }

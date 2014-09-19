@@ -1,4 +1,8 @@
 {
   mContext=context;
   mContext.registerReceiver(mReceiver,mIntentFilter);
+  if (!mListeningToOnSwitchChange) {
+    mSwitchBar.addOnSwitchChangeListener(this);
+    mListeningToOnSwitchChange=true;
+  }
 }

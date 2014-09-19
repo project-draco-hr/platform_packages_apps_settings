@@ -1,0 +1,12 @@
+{
+  String title=null;
+  if (titleRes < 0) {
+    if (titleText != null) {
+      title=titleText.toString();
+    }
+ else {
+      title="";
+    }
+  }
+  Utils.startWithFragmentAsUser(this,fragmentClass,args,titleRes,title,mIsShortcut,userHandle);
+}

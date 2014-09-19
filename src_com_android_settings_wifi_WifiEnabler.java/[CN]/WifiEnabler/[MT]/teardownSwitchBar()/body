@@ -1,4 +1,8 @@
 {
-  mSwitchBar.removeOnSwitchChangeListener(this);
+  if (mListeningToOnSwitchChange) {
+    mSwitchBar.removeOnSwitchChangeListener(this);
+    mListeningToOnSwitchChange=false;
+  }
   mSwitchBar.hide();
+  mContext.unregisterReceiver(mReceiver);
 }

@@ -1,6 +1,10 @@
 {
   final int state=mWifiManager.getWifiState();
   handleWifiStateChanged(state);
-  mSwitchBar.addOnSwitchChangeListener(this);
+  if (!mListeningToOnSwitchChange) {
+    mSwitchBar.addOnSwitchChangeListener(this);
+    mListeningToOnSwitchChange=true;
+  }
   mSwitchBar.show();
+  mContext.registerReceiver(mReceiver,mIntentFilter);
 }

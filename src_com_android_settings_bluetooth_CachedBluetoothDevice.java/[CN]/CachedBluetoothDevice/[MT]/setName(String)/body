@@ -1,12 +1,7 @@
 {
   if (!mName.equals(name)) {
-    if (TextUtils.isEmpty(name)) {
-      mName=mDevice.getAddress();
-    }
- else {
-      mName=name;
-      mDevice.setAlias(name);
-    }
+    mName=name;
+    mDevice.setAlias(name);
     dispatchAttributesChanged();
   }
 }

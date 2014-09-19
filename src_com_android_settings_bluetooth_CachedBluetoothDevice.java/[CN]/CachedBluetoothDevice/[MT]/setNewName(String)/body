@@ -1,0 +1,9 @@
+{
+  if (mName == null) {
+    mName=name;
+    if (mName == null || TextUtils.isEmpty(mName)) {
+      mName=mDevice.getAddress();
+    }
+    dispatchAttributesChanged();
+  }
+}

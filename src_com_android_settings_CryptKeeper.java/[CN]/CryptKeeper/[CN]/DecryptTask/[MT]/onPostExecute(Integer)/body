@@ -6,7 +6,10 @@
     }
   }
  else   if (failedAttempts == MAX_FAILED_ATTEMPTS) {
-    sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
+    Intent intent=new Intent(Intent.ACTION_MASTER_CLEAR);
+    intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+    intent.putExtra(Intent.EXTRA_REASON,"CryptKeeper.MAX_FAILED_ATTEMPTS");
+    sendBroadcast(intent);
   }
  else   if (failedAttempts == -1) {
     setContentView(R.layout.crypt_keeper_progress);

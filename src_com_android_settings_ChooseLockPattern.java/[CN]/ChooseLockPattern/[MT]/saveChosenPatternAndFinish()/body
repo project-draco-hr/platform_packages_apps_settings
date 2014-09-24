@@ -1,4 +1,5 @@
 {
+  if (mDone)   return;
   LockPatternUtils utils=mChooseLockSettingsHelper.utils();
   final boolean lockVirgin=!utils.isPatternEverChosen();
   final boolean isFallback=getActivity().getIntent().getBooleanExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,false);
@@ -9,5 +10,6 @@
   }
   getActivity().setResult(RESULT_FINISHED);
   getActivity().finish();
+  mDone=true;
   startActivity(RedactionInterstitial.createStartIntent(getActivity()));
 }

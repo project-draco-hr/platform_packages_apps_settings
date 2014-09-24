@@ -1,4 +1,5 @@
 {
+  if (mDone)   return;
   final String pin=mPasswordEntry.getText().toString();
   if (TextUtils.isEmpty(pin)) {
     return;
@@ -19,6 +20,7 @@
       mLockPatternUtils.saveLockPassword(pin,mRequestedQuality,isFallback);
       getActivity().setResult(RESULT_FINISHED);
       getActivity().finish();
+      mDone=true;
       startActivity(RedactionInterstitial.createStartIntent(getActivity()));
     }
  else {

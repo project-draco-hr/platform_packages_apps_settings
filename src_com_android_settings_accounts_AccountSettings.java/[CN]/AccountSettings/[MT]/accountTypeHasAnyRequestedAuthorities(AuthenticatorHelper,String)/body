@@ -1,0 +1,16 @@
+{
+  if (mAuthoritiesCount == 0) {
+    return true;
+  }
+  final ArrayList<String> authoritiesForType=helper.getAuthoritiesForAccountType(accountType);
+  if (authoritiesForType == null) {
+    Log.d(TAG,"No sync authorities for account type: " + accountType);
+    return false;
+  }
+  for (int j=0; j < mAuthoritiesCount; j++) {
+    if (authoritiesForType.contains(mAuthorities[j])) {
+      return true;
+    }
+  }
+  return false;
+}

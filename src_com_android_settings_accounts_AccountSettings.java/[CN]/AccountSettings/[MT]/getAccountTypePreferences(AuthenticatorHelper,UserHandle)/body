@@ -3,18 +3,8 @@
   final ArrayList<AccountPreference> accountTypePreferences=new ArrayList<AccountPreference>(accountTypes.length);
   for (int i=0; i < accountTypes.length; i++) {
     final String accountType=accountTypes[i];
-    if (mAuthoritiesCount > 0) {
-      final ArrayList<String> authoritiesForType=helper.getAuthoritiesForAccountType(accountType);
-      boolean show=false;
-      for (int j=0; j < mAuthoritiesCount; j++) {
-        if (authoritiesForType.contains(mAuthorities[j])) {
-          show=true;
-          break;
-        }
-      }
-      if (!show) {
-        continue;
-      }
+    if (!accountTypeHasAnyRequestedAuthorities(helper,accountType)) {
+      continue;
     }
     final CharSequence label=helper.getLabelForType(getActivity(),accountType);
     if (label == null) {

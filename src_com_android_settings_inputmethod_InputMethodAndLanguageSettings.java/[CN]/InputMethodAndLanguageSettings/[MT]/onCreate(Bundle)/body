@@ -24,7 +24,8 @@
   mHardKeyboardCategory=(PreferenceCategory)findPreference("hard_keyboard");
   mKeyboardSettingsCategory=(PreferenceCategory)findPreference("keyboard_settings_category");
   mGameControllerCategory=(PreferenceCategory)findPreference("game_controller_settings_category");
-  mShowsOnlyFullImeAndKeyboardList=Settings.ACTION_INPUT_METHOD_SETTINGS.equals(activity.getIntent().getAction());
+  final Intent startingIntent=activity.getIntent();
+  mShowsOnlyFullImeAndKeyboardList=Settings.ACTION_INPUT_METHOD_SETTINGS.equals(startingIntent.getAction());
   if (mShowsOnlyFullImeAndKeyboardList) {
     getPreferenceScreen().removeAll();
     getPreferenceScreen().addPreference(mHardKeyboardCategory);
@@ -48,4 +49,8 @@
   mHandler=new Handler();
   mSettingsObserver=new SettingsObserver(mHandler,activity);
   mDpm=(DevicePolicyManager)(getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE));
+  final InputDeviceIdentifier identifier=startingIntent.getParcelableExtra(Settings.EXTRA_INPUT_DEVICE_IDENTIFIER);
+  if (mShowsOnlyFullImeAndKeyboardList && identifier != null) {
+    showKeyboardLayoutDialog(identifier);
+  }
 }

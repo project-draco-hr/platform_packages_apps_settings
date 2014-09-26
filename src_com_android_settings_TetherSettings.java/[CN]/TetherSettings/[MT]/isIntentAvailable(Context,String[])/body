@@ -1,0 +1,9 @@
+{
+  if (provisionApp.length < 2) {
+    throw new IllegalArgumentException("provisionApp length should at least be 2");
+  }
+  final PackageManager packageManager=context.getPackageManager();
+  Intent intent=new Intent(Intent.ACTION_MAIN);
+  intent.setClassName(provisionApp[0],provisionApp[1]);
+  return (packageManager.queryIntentActivities(intent,PackageManager.MATCH_DEFAULT_ONLY).size() > 0);
+}

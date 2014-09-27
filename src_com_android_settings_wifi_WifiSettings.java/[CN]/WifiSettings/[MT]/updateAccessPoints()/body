@@ -18,6 +18,9 @@ if (mWifiAssistantApp != null) {
 getListView().addHeaderView(mWifiAssistantCard);
 }
 for (AccessPoint accessPoint : accessPoints) {
+if (showAppIcons) {
+accessPoint.showAppIcon();
+}
 if (accessPoint.getLevel() != -1) {
 getPreferenceScreen().addPreference(accessPoint);
 }

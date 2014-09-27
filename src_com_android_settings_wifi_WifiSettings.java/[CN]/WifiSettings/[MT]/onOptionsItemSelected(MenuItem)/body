@@ -33,6 +33,16 @@ if (getActivity() instanceof SettingsActivity) {
 startFragment(this,AdvancedWifiSettings.class.getCanonicalName(),R.string.wifi_advanced_titlebar,-1,null);
 }
 return true;
+case MENU_ID_APPS:
+showAppIcons=!showAppIcons;
+if (showAppIcons) {
+showAppMenuItem.setTitle(R.string.wifi_menu_apps_strength);
+}
+ else {
+showAppMenuItem.setTitle(R.string.wifi_menu_apps);
+}
+updateAccessPoints();
+return true;
 }
 return super.onOptionsItemSelected(item);
 }

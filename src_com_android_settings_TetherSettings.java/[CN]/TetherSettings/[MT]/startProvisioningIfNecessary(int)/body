@@ -3,6 +3,7 @@
   if (isProvisioningNeeded()) {
     Intent intent=new Intent(Intent.ACTION_MAIN);
     intent.setClassName(mProvisionApp[0],mProvisionApp[1]);
+    intent.putExtra(TETHER_CHOICE,mTetherChoice);
     startActivityForResult(intent,PROVISION_REQUEST);
   }
  else {

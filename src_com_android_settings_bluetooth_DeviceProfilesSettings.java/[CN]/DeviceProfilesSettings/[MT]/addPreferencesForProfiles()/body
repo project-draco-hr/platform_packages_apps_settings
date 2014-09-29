@@ -10,5 +10,11 @@
     CheckBoxPreference pbapPref=createProfilePreference(psp);
     mProfileContainer.addPreference(pbapPref);
   }
+  final MapProfile mapProfile=mManager.getProfileManager().getMapProfile();
+  final int mapPermission=mCachedDevice.getMessagePermissionChoice();
+  if (mapPermission != CachedBluetoothDevice.ACCESS_UNKNOWN) {
+    CheckBoxPreference mapPreference=createProfilePreference(mapProfile);
+    mProfileContainer.addPreference(mapPreference);
+  }
   showOrHideProfileGroup();
 }

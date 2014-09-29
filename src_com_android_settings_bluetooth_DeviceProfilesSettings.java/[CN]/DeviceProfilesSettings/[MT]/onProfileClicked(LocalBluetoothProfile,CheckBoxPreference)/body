@@ -8,10 +8,14 @@
   }
   int status=profile.getConnectionStatus(device);
   boolean isConnected=status == BluetoothProfile.STATE_CONNECTED;
-  if (isConnected) {
+  if (profilePref.isChecked()) {
     askDisconnect(mManager.getForegroundActivity(),profile);
   }
  else {
+    if (profile instanceof MapProfile) {
+      mCachedDevice.setMessagePermissionChoice(BluetoothDevice.ACCESS_ALLOWED);
+      refreshProfilePreference(profilePref,profile);
+    }
     if (profile.isPreferred(device)) {
       profile.setPreferred(device,false);
       refreshProfilePreference(profilePref,profile);

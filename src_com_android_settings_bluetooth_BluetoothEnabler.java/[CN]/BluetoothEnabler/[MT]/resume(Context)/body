@@ -7,6 +7,7 @@
     mContext=context;
   }
   handleStateChanged(mLocalAdapter.getBluetoothState());
+  mSwitchBar.addOnSwitchChangeListener(this);
   mContext.registerReceiver(mReceiver,mIntentFilter);
   mValidListener=true;
 }

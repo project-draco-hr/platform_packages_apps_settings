@@ -1,0 +1,20 @@
+{
+  if (AccessibilityManager.getInstance(getActivity()).getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK).isEmpty()) {
+    return;
+  }
+  CharSequence summary=getString(R.string.secure_lock_encryption_warning);
+  PreferenceScreen screen=getPreferenceScreen();
+  final int preferenceCount=screen.getPreferenceCount();
+  for (int i=0; i < preferenceCount; i++) {
+    Preference preference=screen.getPreference(i);
+switch (preference.getKey()) {
+case KEY_UNLOCK_SET_PATTERN:
+case KEY_UNLOCK_SET_PIN:
+case KEY_UNLOCK_SET_PASSWORD:
+{
+        preference.setSummary(summary);
+      }
+    break;
+}
+}
+}

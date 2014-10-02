@@ -1,6 +1,15 @@
 {
   LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   View content=inflater.inflate(R.layout.enable_accessibility_service_dialog_content,null);
+  TextView encryptionWarningView=(TextView)content.findViewById(R.id.encryption_warning);
+  if (LockPatternUtils.isDeviceEncrypted()) {
+    String text=getString(R.string.enable_service_encryption_warning,info.getResolveInfo().loadLabel(getPackageManager()));
+    encryptionWarningView.setText(text);
+    encryptionWarningView.setVisibility(View.VISIBLE);
+  }
+ else {
+    encryptionWarningView.setVisibility(View.GONE);
+  }
   TextView capabilitiesHeaderView=(TextView)content.findViewById(R.id.capabilities_header);
   capabilitiesHeaderView.setText(getString(R.string.capabilities_list_title,info.getResolveInfo().loadLabel(getPackageManager())));
   LinearLayout capabilitiesView=(LinearLayout)content.findViewById(R.id.capabilities);

@@ -8,6 +8,8 @@
   mPrefs=getActivity().getSharedPreferences(PREF_FILE,Context.MODE_PRIVATE);
   mPolicyEditor=new NetworkPolicyEditor(mPolicyManager);
   mPolicyEditor.read();
+  mSubInfoList=SimSettings.getSortedSubInfoList(getActivity());
+  mMobileTagMap=initMobileTabTag(mSubInfoList);
   try {
     if (!mNetworkService.isBandwidthControlEnabled()) {
       Log.w(TAG,"No bandwidth control; leaving");

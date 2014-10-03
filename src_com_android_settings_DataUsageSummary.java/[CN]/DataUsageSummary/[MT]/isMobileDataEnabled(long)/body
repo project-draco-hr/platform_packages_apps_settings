@@ -1,0 +1,11 @@
+{
+  boolean isEnable=false;
+  if (mMobileDataEnabled != null) {
+    isEnable=mMobileDataEnabled.booleanValue();
+    mMobileDataEnabled=null;
+  }
+ else {
+    isEnable=mTelephonyManager.getDataEnabled() && isMobileDataAvailable(subId);
+  }
+  return isEnable;
+}

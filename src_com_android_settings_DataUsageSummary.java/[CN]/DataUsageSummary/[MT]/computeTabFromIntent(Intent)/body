@@ -1,6 +1,12 @@
 {
   final NetworkTemplate template=intent.getParcelableExtra(EXTRA_NETWORK_TEMPLATE);
-  if (template == null)   return null;
+  if (template == null) {
+    final long subId=intent.getLongExtra(PhoneConstants.SUBSCRIPTION_KEY,SubscriptionManager.INVALID_SUB_ID);
+    if (SubscriptionManager.isValidSubId(subId)) {
+      return TAB_MOBILE + String.valueOf(subId);
+    }
+    return null;
+  }
 switch (template.getMatchRule()) {
 case MATCH_MOBILE_3G_LOWER:
     return TAB_3G;

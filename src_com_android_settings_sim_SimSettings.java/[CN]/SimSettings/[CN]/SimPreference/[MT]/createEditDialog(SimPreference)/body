@@ -5,9 +5,9 @@
   EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);
   nameText.setText(mSubInfoRecord.displayName);
   TextView numberView=(TextView)dialogLayout.findViewById(R.id.number);
-  numberView.setText(mSubInfoRecord.number);
+  numberView.setText(simPref.getFormattedPhoneNumber());
   TextView carrierView=(TextView)dialogLayout.findViewById(R.id.carrier);
-  carrierView.setText(mSubInfoRecord.displayName);
+  carrierView.setText(getCarrierName());
   builder.setTitle(R.string.sim_editor_title);
   builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){

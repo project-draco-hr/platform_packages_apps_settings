@@ -73,9 +73,7 @@ if (!mIsPrimary || !tm.hasIccCard()) {
 root.removePreference(root.findPreference(KEY_SIM_LOCK));
 }
  else {
-if ((TelephonyManager.getDefault().getSimState() == TelephonyManager.SIM_STATE_ABSENT) || (TelephonyManager.getDefault().getSimState() == TelephonyManager.SIM_STATE_UNKNOWN)) {
-root.findPreference(KEY_SIM_LOCK).setEnabled(false);
-}
+root.findPreference(KEY_SIM_LOCK).setEnabled(isSimReady());
 }
 if (Settings.System.getInt(getContentResolver(),Settings.System.LOCK_TO_APP_ENABLED,0) != 0) {
 root.findPreference(KEY_SCREEN_PINNING).setSummary(getResources().getString(R.string.switch_on_text));

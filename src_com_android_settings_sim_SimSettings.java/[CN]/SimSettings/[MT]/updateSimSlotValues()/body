@@ -1,10 +1,8 @@
 {
   SubscriptionManager.getAllSubInfoList();
-  final PreferenceCategory simCards=(PreferenceCategory)findPreference(SIM_CARD_CATEGORY);
-  final PreferenceScreen prefScreen=getPreferenceScreen();
-  final int prefSize=prefScreen.getPreferenceCount();
+  final int prefSize=mSimCards.getPreferenceCount();
   for (int i=0; i < prefSize; ++i) {
-    Preference pref=prefScreen.getPreference(i);
+    Preference pref=mSimCards.getPreference(i);
     if (pref instanceof SimPreference) {
       ((SimPreference)pref).update();
     }

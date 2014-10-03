@@ -1,0 +1,13 @@
+{
+  int simState=TelephonyManager.SIM_STATE_UNKNOWN;
+  final List<SubInfoRecord> subInfoList=SubscriptionManager.getActiveSubInfoList();
+  if (subInfoList != null) {
+    for (    SubInfoRecord subInfo : subInfoList) {
+      simState=TelephonyManager.getDefault().getSimState(subInfo.slotId);
+      if ((simState != TelephonyManager.SIM_STATE_ABSENT) && (simState != TelephonyManager.SIM_STATE_UNKNOWN)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}

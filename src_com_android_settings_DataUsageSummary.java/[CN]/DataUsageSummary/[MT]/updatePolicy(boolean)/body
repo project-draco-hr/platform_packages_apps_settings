@@ -5,13 +5,13 @@
     dataEnabledVisible=false;
     disableAtLimitVisible=false;
   }
-  if (TAB_MOBILE.equals(mCurrentTab)) {
+  if (isMobileTab(mCurrentTab)) {
     mBinding=true;
-    mDataEnabled.setChecked(isMobileDataEnabled());
+    mDataEnabled.setChecked(isMobileDataEnabled(getSubId(mCurrentTab)));
     mBinding=false;
   }
   final NetworkPolicy policy=mPolicyEditor.getPolicy(mTemplate);
-  if (isNetworkPolicyModifiable(policy)) {
+  if (isNetworkPolicyModifiable(policy) && isMobileDataAvailable(getSubId(mCurrentTab))) {
     mDisableAtLimit.setChecked(policy != null && policy.limitBytes != LIMIT_DISABLED);
     if (!isAppDetailMode()) {
       mChart.bindNetworkPolicy(policy);

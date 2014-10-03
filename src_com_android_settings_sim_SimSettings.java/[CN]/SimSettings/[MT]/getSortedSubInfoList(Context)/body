@@ -1,0 +1,16 @@
+{
+  List<SubInfoRecord> infoList=SubscriptionManager.getActiveSubInfoList();
+  if (infoList != null) {
+    Collections.sort(infoList,new Comparator<SubInfoRecord>(){
+      @Override public int compare(      SubInfoRecord arg0,      SubInfoRecord arg1){
+        int flag=arg0.slotId - arg1.slotId;
+        if (flag == 0) {
+          return (int)(arg0.subId - arg1.subId);
+        }
+        return flag;
+      }
+    }
+);
+  }
+  return infoList;
+}

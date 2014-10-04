@@ -1,0 +1,13 @@
+{
+  try {
+    final String rawNumber=PhoneFactory.getPhone(mSlotId).getLine1Number();
+    String formattedNumber=null;
+    if (!TextUtils.isEmpty(rawNumber)) {
+      formattedNumber=PhoneNumberUtils.formatNumber(rawNumber);
+    }
+    return formattedNumber;
+  }
+ catch (  java.lang.IllegalStateException ise) {
+    return "Unknown";
+  }
+}

@@ -1,0 +1,10 @@
+{
+  Set<Long> set=mMobileTagMap.keySet();
+  for (  Long subId : set) {
+    if (mMobileTagMap.get(subId).equals(currentTab)) {
+      return subId;
+    }
+  }
+  Log.e(TAG,"currentTab = " + currentTab + " non mobile tab called this function");
+  return -1;
+}

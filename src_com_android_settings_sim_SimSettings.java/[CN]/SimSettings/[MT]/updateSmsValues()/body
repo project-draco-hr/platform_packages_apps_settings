@@ -1,7 +1,10 @@
 {
   final DropDownPreference simPref=(DropDownPreference)findPreference(KEY_SMS);
   final SubInfoRecord sir=findRecordBySubId(SubscriptionManager.getDefaultSmsSubId());
-  if (sir != null) {
+  if (mSubInfoList.size() == 1) {
+    simPref.setSelectedItem(mSubInfoList.get(0).slotId + 1);
+  }
+ else   if (sir != null) {
     simPref.setSelectedItem(sir.slotId + 1);
   }
   simPref.setEnabled(mNumSims >= 1);

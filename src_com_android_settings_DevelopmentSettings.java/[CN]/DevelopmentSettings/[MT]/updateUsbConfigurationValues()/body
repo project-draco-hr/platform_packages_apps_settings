@@ -1,0 +1,27 @@
+{
+  if (mUsbConfiguration != null) {
+    String currentValue=SystemProperties.get(SELECT_USB_CONFIGURATION_PROPERTY);
+    int adbIndex=currentValue.indexOf(",adb");
+    if (adbIndex > 0) {
+      currentValue=currentValue.substring(0,adbIndex);
+    }
+    String[] values=getResources().getStringArray(R.array.usb_configuration_values);
+    String[] titles=getResources().getStringArray(R.array.usb_configuration_titles);
+    int index=1;
+    for (int i=0; i < titles.length; i++) {
+      if (currentValue.equals(values[i])) {
+        index=i;
+        break;
+      }
+    }
+    if (index >= 0) {
+      mUsbConfiguration.setValue(values[index]);
+      mUsbConfiguration.setSummary(titles[index]);
+    }
+ else {
+      mUsbConfiguration.setValue("");
+      mUsbConfiguration.setSummary("");
+    }
+    mUsbConfiguration.setOnPreferenceChangeListener(this);
+  }
+}

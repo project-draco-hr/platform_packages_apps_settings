@@ -15,7 +15,7 @@
   LinearLayout capabilitiesView=(LinearLayout)content.findViewById(R.id.capabilities);
   View capabilityView=inflater.inflate(com.android.internal.R.layout.app_permission_item_old,null);
   ImageView imageView=(ImageView)capabilityView.findViewById(com.android.internal.R.id.perm_icon);
-  imageView.setImageDrawable(getResources().getDrawable(com.android.internal.R.drawable.ic_text_dot));
+  imageView.setImageDrawable(getActivity().getDrawable(com.android.internal.R.drawable.ic_text_dot));
   TextView labelView=(TextView)capabilityView.findViewById(com.android.internal.R.id.permission_group);
   labelView.setText(getString(R.string.capability_title_receiveAccessibilityEvents));
   TextView descriptionView=(TextView)capabilityView.findViewById(com.android.internal.R.id.permission_list);
@@ -27,7 +27,7 @@
     AccessibilityServiceInfo.CapabilityInfo capability=capabilities.get(i);
     capabilityView=inflater.inflate(com.android.internal.R.layout.app_permission_item_old,null);
     imageView=(ImageView)capabilityView.findViewById(com.android.internal.R.id.perm_icon);
-    imageView.setImageDrawable(getResources().getDrawable(com.android.internal.R.drawable.ic_text_dot));
+    imageView.setImageDrawable(getActivity().getDrawable(com.android.internal.R.drawable.ic_text_dot));
     labelView=(TextView)capabilityView.findViewById(com.android.internal.R.id.permission_group);
     labelView.setText(getString(capability.titleResId));
     descriptionView=(TextView)capabilityView.findViewById(com.android.internal.R.id.permission_list);

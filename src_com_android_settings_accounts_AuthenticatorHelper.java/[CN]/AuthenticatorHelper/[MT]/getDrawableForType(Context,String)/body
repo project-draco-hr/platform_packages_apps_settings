@@ -9,7 +9,7 @@ synchronized (mAccTypeIconCache) {
     try {
       AuthenticatorDescription desc=mTypeToAuthDescription.get(accountType);
       Context authContext=context.createPackageContextAsUser(desc.packageName,0,mUserHandle);
-      icon=mContext.getPackageManager().getUserBadgedIcon(authContext.getResources().getDrawable(desc.iconId),mUserHandle);
+      icon=mContext.getPackageManager().getUserBadgedIcon(authContext.getDrawable(desc.iconId),mUserHandle);
 synchronized (mAccTypeIconCache) {
         mAccTypeIconCache.put(accountType,icon);
       }

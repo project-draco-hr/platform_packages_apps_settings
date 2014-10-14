@@ -1,6 +1,6 @@
 {
   mDebugApp=Settings.Global.getString(getActivity().getContentResolver(),Settings.Global.DEBUG_APP);
-  updateCheckBox(mWaitForDebugger,Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.WAIT_FOR_DEBUGGER,0) != 0);
+  updateSwitchPreference(mWaitForDebugger,Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.WAIT_FOR_DEBUGGER,0) != 0);
   if (mDebugApp != null && mDebugApp.length() > 0) {
     String label;
     try {

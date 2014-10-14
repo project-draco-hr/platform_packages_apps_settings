@@ -115,6 +115,8 @@
   }
   if (mLargeMode) {
     if (DEBUG)     Log.d(TAG,"Drawing large mode labels");
+    Paint.Align align=mTextPaint.getTextAlign();
+    mTextPaint.setTextAlign(textAlignLeft);
     if (mHavePhoneSignal) {
       canvas.drawText(mPhoneSignalLabel,textStartX,height - mPhoneSignalOffset - mTextDescent,mTextPaint);
     }
@@ -127,6 +129,7 @@
     canvas.drawText(mCpuRunningLabel,textStartX,height - mCpuRunningOffset - mTextDescent,mTextPaint);
     canvas.drawText(mChargingLabel,textStartX,height - mChargingOffset - mTextDescent,mTextPaint);
     canvas.drawText(mScreenOnLabel,textStartX,height - mScreenOnOffset - mTextDescent,mTextPaint);
+    mTextPaint.setTextAlign(align);
   }
   canvas.drawLine(mLevelLeft - mThinLineWidth,mLevelTop,mLevelLeft - mThinLineWidth,mLevelBottom + (mThinLineWidth / 2),mTextPaint);
   if (mLargeMode) {

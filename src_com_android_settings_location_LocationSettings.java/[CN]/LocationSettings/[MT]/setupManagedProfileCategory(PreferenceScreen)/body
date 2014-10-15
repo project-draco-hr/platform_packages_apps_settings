@@ -1,0 +1,11 @@
+{
+  mManagedProfile=Utils.getManagedProfile(mUm);
+  if (mManagedProfile == null) {
+    root.removePreference(root.findPreference(KEY_MANAGED_PROFILE_CATEGORY));
+    mManagedProfilePreference=null;
+  }
+ else {
+    mManagedProfilePreference=root.findPreference(KEY_MANAGED_PROFILE_PREFERENCE);
+    mManagedProfilePreference.setOnPreferenceClickListener(null);
+  }
+}

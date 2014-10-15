@@ -6,6 +6,7 @@
   }
   addPreferencesFromResource(R.xml.location_settings);
   root=getPreferenceScreen();
+  setupManagedProfileCategory(root);
   mLocationMode=root.findPreference(KEY_LOCATION_MODE);
   mLocationMode.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
     @Override public boolean onPreferenceClick(    Preference preference){
@@ -27,7 +28,11 @@
     banner.setSelectable(false);
     mCategoryRecentLocationRequests.addPreference(banner);
   }
-  addLocationServices(activity,root);
+  boolean lockdownOnLocationAccess=false;
+  if (mManagedProfile != null && mUm.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,mManagedProfile)) {
+    lockdownOnLocationAccess=true;
+  }
+  addLocationServices(activity,root,lockdownOnLocationAccess);
   refreshLocationMode();
   return root;
 }

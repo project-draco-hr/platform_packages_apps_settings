@@ -1,0 +1,7 @@
+{
+  Intent settingIntent=new Intent();
+  settingIntent.setClassName(mInfo.packageName,mInfo.settingsActivity);
+  settingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+  mContext.startActivityAsUser(settingIntent,mInfo.mUserHandle);
+  return true;
+}

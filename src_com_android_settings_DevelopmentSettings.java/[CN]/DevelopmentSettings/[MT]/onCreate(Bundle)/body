@@ -12,7 +12,7 @@
   }
   addPreferencesFromResource(R.xml.development_prefs);
   final PreferenceGroup debugDebuggingCategory=(PreferenceGroup)findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
-  mEnableAdb=findAndInitCheckboxPref(ENABLE_ADB);
+  mEnableAdb=findAndInitSwitchPref(ENABLE_ADB);
   mClearAdbKeys=findPreference(CLEAR_ADB_KEYS);
   if (!SystemProperties.getBoolean("ro.adb.secure",false)) {
     if (debugDebuggingCategory != null) {
@@ -20,22 +20,22 @@
     }
   }
   mAllPrefs.add(mClearAdbKeys);
-  mEnableTerminal=findAndInitCheckboxPref(ENABLE_TERMINAL);
+  mEnableTerminal=findAndInitSwitchPref(ENABLE_TERMINAL);
   if (!isPackageInstalled(getActivity(),TERMINAL_APP_PACKAGE)) {
     debugDebuggingCategory.removePreference(mEnableTerminal);
     mEnableTerminal=null;
   }
   mBugreport=findPreference(BUGREPORT);
-  mBugreportInPower=findAndInitCheckboxPref(BUGREPORT_IN_POWER_KEY);
-  mKeepScreenOn=findAndInitCheckboxPref(KEEP_SCREEN_ON);
-  mBtHciSnoopLog=findAndInitCheckboxPref(BT_HCI_SNOOP_LOG);
-  mEnableOemUnlock=findAndInitCheckboxPref(ENABLE_OEM_UNLOCK);
+  mBugreportInPower=findAndInitSwitchPref(BUGREPORT_IN_POWER_KEY);
+  mKeepScreenOn=findAndInitSwitchPref(KEEP_SCREEN_ON);
+  mBtHciSnoopLog=findAndInitSwitchPref(BT_HCI_SNOOP_LOG);
+  mEnableOemUnlock=findAndInitSwitchPref(ENABLE_OEM_UNLOCK);
   if (!showEnableOemUnlockPreference()) {
     removePreference(mEnableOemUnlock);
     mEnableOemUnlock=null;
   }
-  mAllowMockLocation=findAndInitCheckboxPref(ALLOW_MOCK_LOCATION);
-  mDebugViewAttributes=findAndInitCheckboxPref(DEBUG_VIEW_ATTRIBUTES);
+  mAllowMockLocation=findAndInitSwitchPref(ALLOW_MOCK_LOCATION);
+  mDebugViewAttributes=findAndInitSwitchPref(DEBUG_VIEW_ATTRIBUTES);
   mPassword=(PreferenceScreen)findPreference(LOCAL_BACKUP_PASSWORD);
   mAllPrefs.add(mPassword);
   if (!android.os.Process.myUserHandle().equals(UserHandle.OWNER)) {
@@ -46,8 +46,8 @@
   }
   mDebugAppPref=findPreference(DEBUG_APP_KEY);
   mAllPrefs.add(mDebugAppPref);
-  mWaitForDebugger=findAndInitCheckboxPref(WAIT_FOR_DEBUGGER_KEY);
-  mVerifyAppsOverUsb=findAndInitCheckboxPref(VERIFY_APPS_OVER_USB_KEY);
+  mWaitForDebugger=findAndInitSwitchPref(WAIT_FOR_DEBUGGER_KEY);
+  mVerifyAppsOverUsb=findAndInitSwitchPref(VERIFY_APPS_OVER_USB_KEY);
   if (!showVerifierSetting()) {
     if (debugDebuggingCategory != null) {
       debugDebuggingCategory.removePreference(mVerifyAppsOverUsb);
@@ -56,25 +56,25 @@
       mVerifyAppsOverUsb.setEnabled(false);
     }
   }
-  mStrictMode=findAndInitCheckboxPref(STRICT_MODE_KEY);
-  mPointerLocation=findAndInitCheckboxPref(POINTER_LOCATION_KEY);
-  mShowTouches=findAndInitCheckboxPref(SHOW_TOUCHES_KEY);
-  mShowScreenUpdates=findAndInitCheckboxPref(SHOW_SCREEN_UPDATES_KEY);
-  mDisableOverlays=findAndInitCheckboxPref(DISABLE_OVERLAYS_KEY);
-  mShowCpuUsage=findAndInitCheckboxPref(SHOW_CPU_USAGE_KEY);
-  mForceHardwareUi=findAndInitCheckboxPref(FORCE_HARDWARE_UI_KEY);
-  mForceMsaa=findAndInitCheckboxPref(FORCE_MSAA_KEY);
+  mStrictMode=findAndInitSwitchPref(STRICT_MODE_KEY);
+  mPointerLocation=findAndInitSwitchPref(POINTER_LOCATION_KEY);
+  mShowTouches=findAndInitSwitchPref(SHOW_TOUCHES_KEY);
+  mShowScreenUpdates=findAndInitSwitchPref(SHOW_SCREEN_UPDATES_KEY);
+  mDisableOverlays=findAndInitSwitchPref(DISABLE_OVERLAYS_KEY);
+  mShowCpuUsage=findAndInitSwitchPref(SHOW_CPU_USAGE_KEY);
+  mForceHardwareUi=findAndInitSwitchPref(FORCE_HARDWARE_UI_KEY);
+  mForceMsaa=findAndInitSwitchPref(FORCE_MSAA_KEY);
   mTrackFrameTime=addListPreference(TRACK_FRAME_TIME_KEY);
   mShowNonRectClip=addListPreference(SHOW_NON_RECTANGULAR_CLIP_KEY);
-  mShowHwScreenUpdates=findAndInitCheckboxPref(SHOW_HW_SCREEN_UPDATES_KEY);
-  mShowHwLayersUpdates=findAndInitCheckboxPref(SHOW_HW_LAYERS_UPDATES_KEY);
-  mDebugLayout=findAndInitCheckboxPref(DEBUG_LAYOUT_KEY);
-  mForceRtlLayout=findAndInitCheckboxPref(FORCE_RTL_LAYOUT_KEY);
+  mShowHwScreenUpdates=findAndInitSwitchPref(SHOW_HW_SCREEN_UPDATES_KEY);
+  mShowHwLayersUpdates=findAndInitSwitchPref(SHOW_HW_LAYERS_UPDATES_KEY);
+  mDebugLayout=findAndInitSwitchPref(DEBUG_LAYOUT_KEY);
+  mForceRtlLayout=findAndInitSwitchPref(FORCE_RTL_LAYOUT_KEY);
   mDebugHwOverdraw=addListPreference(DEBUG_HW_OVERDRAW_KEY);
-  mWifiDisplayCertification=findAndInitCheckboxPref(WIFI_DISPLAY_CERTIFICATION_KEY);
-  mWifiVerboseLogging=findAndInitCheckboxPref(WIFI_VERBOSE_LOGGING_KEY);
-  mWifiAggressiveHandover=findAndInitCheckboxPref(WIFI_AGGRESSIVE_HANDOVER_KEY);
-  mWifiAllowScansWithTraffic=findAndInitCheckboxPref(WIFI_ALLOW_SCAN_WITH_TRAFFIC_KEY);
+  mWifiDisplayCertification=findAndInitSwitchPref(WIFI_DISPLAY_CERTIFICATION_KEY);
+  mWifiVerboseLogging=findAndInitSwitchPref(WIFI_VERBOSE_LOGGING_KEY);
+  mWifiAggressiveHandover=findAndInitSwitchPref(WIFI_AGGRESSIVE_HANDOVER_KEY);
+  mWifiAllowScansWithTraffic=findAndInitSwitchPref(WIFI_ALLOW_SCAN_WITH_TRAFFIC_KEY);
   mLogdSize=addListPreference(SELECT_LOGD_SIZE_KEY);
   mWindowAnimationScale=addListPreference(WINDOW_ANIMATION_SCALE_KEY);
   mTransitionAnimationScale=addListPreference(TRANSITION_ANIMATION_SCALE_KEY);
@@ -82,15 +82,15 @@
   mOverlayDisplayDevices=addListPreference(OVERLAY_DISPLAY_DEVICES_KEY);
   mOpenGLTraces=addListPreference(OPENGL_TRACES_KEY);
   mSimulateColorSpace=addListPreference(SIMULATE_COLOR_SPACE);
-  mUseNuplayer=findAndInitCheckboxPref(USE_NUPLAYER_KEY);
-  mUSBAudio=findAndInitCheckboxPref(USB_AUDIO_KEY);
-  mImmediatelyDestroyActivities=(CheckBoxPreference)findPreference(IMMEDIATELY_DESTROY_ACTIVITIES_KEY);
+  mUseNuplayer=findAndInitSwitchPref(USE_NUPLAYER_KEY);
+  mUSBAudio=findAndInitSwitchPref(USB_AUDIO_KEY);
+  mImmediatelyDestroyActivities=(SwitchPreference)findPreference(IMMEDIATELY_DESTROY_ACTIVITIES_KEY);
   mAllPrefs.add(mImmediatelyDestroyActivities);
-  mResetCbPrefs.add(mImmediatelyDestroyActivities);
+  mResetSwitchPrefs.add(mImmediatelyDestroyActivities);
   mAppProcessLimit=addListPreference(APP_PROCESS_LIMIT_KEY);
-  mShowAllANRs=(CheckBoxPreference)findPreference(SHOW_ALL_ANRS_KEY);
+  mShowAllANRs=(SwitchPreference)findPreference(SHOW_ALL_ANRS_KEY);
   mAllPrefs.add(mShowAllANRs);
-  mResetCbPrefs.add(mShowAllANRs);
+  mResetSwitchPrefs.add(mShowAllANRs);
   Preference hdcpChecking=findPreference(HDCP_CHECKING_KEY);
   if (hdcpChecking != null) {
     mAllPrefs.add(hdcpChecking);

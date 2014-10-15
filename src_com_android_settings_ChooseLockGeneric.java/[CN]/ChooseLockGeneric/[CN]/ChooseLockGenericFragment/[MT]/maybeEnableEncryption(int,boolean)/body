@@ -1,0 +1,11 @@
+{
+  if (Process.myUserHandle().isOwner() && LockPatternUtils.isDeviceEncryptionEnabled()) {
+    mEncryptionRequestQuality=quality;
+    mEncryptionRequestDisabled=disabled;
+    Intent intent=EncryptionInterstitial.createStartIntent(getActivity(),quality);
+    startActivityForResult(intent,ENABLE_ENCRYPTION_REQUEST);
+  }
+ else {
+    updateUnlockMethodAndFinish(quality,disabled);
+  }
+}

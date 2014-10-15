@@ -10,6 +10,9 @@
     getActivity().setResult(resultCode);
     finish();
   }
+ else   if (requestCode == ENABLE_ENCRYPTION_REQUEST && resultCode == Activity.RESULT_OK) {
+    updateUnlockMethodAndFinish(mEncryptionRequestQuality,mEncryptionRequestDisabled);
+  }
  else {
     getActivity().setResult(Activity.RESULT_CANCELED);
     finish();

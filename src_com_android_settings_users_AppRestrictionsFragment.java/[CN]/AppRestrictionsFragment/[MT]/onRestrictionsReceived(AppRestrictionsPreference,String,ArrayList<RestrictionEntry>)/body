@@ -6,10 +6,10 @@
     Preference p=null;
 switch (entry.getType()) {
 case RestrictionEntry.TYPE_BOOLEAN:
-      p=new CheckBoxPreference(context);
+      p=new SwitchPreference(context);
     p.setTitle(entry.getTitle());
   p.setSummary(entry.getDescription());
-((CheckBoxPreference)p).setChecked(entry.getSelectedState());
+((SwitchPreference)p).setChecked(entry.getSelectedState());
 break;
 case RestrictionEntry.TYPE_CHOICE:
 case RestrictionEntry.TYPE_CHOICE_LEVEL:

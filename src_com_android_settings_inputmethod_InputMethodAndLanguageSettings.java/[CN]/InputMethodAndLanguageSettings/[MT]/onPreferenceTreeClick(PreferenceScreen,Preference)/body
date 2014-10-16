@@ -10,10 +10,10 @@
       imm.showInputMethodPicker();
     }
   }
- else   if (preference instanceof CheckBoxPreference) {
-    final CheckBoxPreference chkPref=(CheckBoxPreference)preference;
-    if (chkPref == mGameControllerCategory.findPreference("vibrate_input_devices")) {
-      System.putInt(getContentResolver(),Settings.System.VIBRATE_INPUT_DEVICES,chkPref.isChecked() ? 1 : 0);
+ else   if (preference instanceof SwitchPreference) {
+    final SwitchPreference pref=(SwitchPreference)preference;
+    if (pref == mGameControllerCategory.findPreference("vibrate_input_devices")) {
+      System.putInt(getContentResolver(),Settings.System.VIBRATE_INPUT_DEVICES,pref.isChecked() ? 1 : 0);
       return true;
     }
   }

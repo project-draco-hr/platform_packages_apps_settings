@@ -7,7 +7,7 @@
     if (!sa.accountType.equals(mAccount.type))     continue;
     if (sa.isUserVisible()) {
       if (Log.isLoggable(TAG,Log.VERBOSE)) {
-        Log.d(TAG,"updateAccountCheckboxes: added authority " + sa.authority + " to accountType "+ sa.accountType);
+        Log.d(TAG,"updateAccountSwitches: added authority " + sa.authority + " to accountType "+ sa.accountType);
       }
       authorities.add(sa.authority);
     }
@@ -15,10 +15,10 @@
       mInvisibleAdapters.add(sa);
     }
   }
-  for (int i=0, n=mCheckBoxes.size(); i < n; i++) {
-    getPreferenceScreen().removePreference(mCheckBoxes.get(i));
+  for (int i=0, n=mSwitches.size(); i < n; i++) {
+    getPreferenceScreen().removePreference(mSwitches.get(i));
   }
-  mCheckBoxes.clear();
+  mSwitches.clear();
   if (Log.isLoggable(TAG,Log.VERBOSE)) {
     Log.d(TAG,"looking for sync adapters that match account " + mAccount);
   }
@@ -29,11 +29,11 @@
       Log.d(TAG,"  found authority " + authority + " "+ syncState);
     }
     if (syncState > 0) {
-      addSyncStateCheckBox(mAccount,authority);
+      addSyncStateSwitch(mAccount,authority);
     }
   }
-  Collections.sort(mCheckBoxes);
-  for (int i=0, n=mCheckBoxes.size(); i < n; i++) {
-    getPreferenceScreen().addPreference(mCheckBoxes.get(i));
+  Collections.sort(mSwitches);
+  for (int i=0, n=mSwitches.size(); i < n; i++) {
+    getPreferenceScreen().addPreference(mSwitches.get(i));
   }
 }

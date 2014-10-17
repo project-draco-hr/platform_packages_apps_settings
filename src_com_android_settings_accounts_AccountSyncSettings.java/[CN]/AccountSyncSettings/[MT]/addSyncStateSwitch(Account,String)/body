@@ -1,5 +1,5 @@
 {
-  SyncStateCheckBoxPreference item=new SyncStateCheckBoxPreference(getActivity(),account,authority);
+  SyncStateSwitchPreference item=new SyncStateSwitchPreference(getActivity(),account,authority);
   item.setPersistent(false);
   final ProviderInfo providerInfo=getPackageManager().resolveContentProviderAsUser(authority,0,mUserHandle.getIdentifier());
   if (providerInfo == null) {
@@ -13,5 +13,5 @@
   String title=getString(R.string.sync_item_title,providerLabel);
   item.setTitle(title);
   item.setKey(authority);
-  mCheckBoxes.add(item);
+  mSwitches.add(item);
 }

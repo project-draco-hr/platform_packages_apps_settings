@@ -7,13 +7,13 @@
   syncActiveView.setAnimating(mIsActive);
   final boolean failedVisible=mFailed && !activeVisible;
   syncFailedView.setVisibility(failedVisible ? View.VISIBLE : View.GONE);
-  View checkBox=view.findViewById(android.R.id.checkbox);
+  View switchView=view.findViewById(com.android.internal.R.id.switchWidget);
   if (mOneTimeSyncMode) {
-    checkBox.setVisibility(View.GONE);
+    switchView.setVisibility(View.GONE);
     TextView summary=(TextView)view.findViewById(android.R.id.summary);
     summary.setText(getContext().getString(R.string.sync_one_time_sync,getSummary()));
   }
  else {
-    checkBox.setVisibility(View.VISIBLE);
+    switchView.setVisibility(View.VISIBLE);
   }
 }

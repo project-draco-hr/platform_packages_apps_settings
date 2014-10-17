@@ -1,0 +1,17 @@
+{
+  int resId=R.string.enable_service_password_reason;
+switch (mLockPatternUtils.getKeyguardStoredPasswordQuality()) {
+case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
+{
+      resId=R.string.enable_service_pattern_reason;
+    }
+  break;
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
+{
+  resId=R.string.enable_service_pin_reason;
+}
+break;
+}
+return getString(resId,getAccessibilityServiceInfo().getResolveInfo().loadLabel(getPackageManager()));
+}

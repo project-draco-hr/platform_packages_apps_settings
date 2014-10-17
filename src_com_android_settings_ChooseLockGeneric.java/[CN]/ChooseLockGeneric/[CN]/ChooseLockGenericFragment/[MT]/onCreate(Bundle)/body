@@ -3,6 +3,7 @@
   mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
   mKeyStore=KeyStore.getInstance();
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(this.getActivity());
+  mLockPatternUtils=new LockPatternUtils(getActivity());
   final boolean confirmCredentials=getActivity().getIntent().getBooleanExtra(CONFIRM_CREDENTIALS,true);
   if (getActivity() instanceof ChooseLockGeneric.InternalActivity) {
     mPasswordConfirmed=!confirmCredentials;

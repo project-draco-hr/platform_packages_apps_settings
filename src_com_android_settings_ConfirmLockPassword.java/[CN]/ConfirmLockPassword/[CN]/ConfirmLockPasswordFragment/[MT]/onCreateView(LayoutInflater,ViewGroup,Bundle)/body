@@ -11,7 +11,14 @@
   mKeyboardView=(PasswordEntryKeyboardView)view.findViewById(R.id.keyboard);
   mHeaderText=(TextView)view.findViewById(R.id.headerText);
   mIsAlpha=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_COMPLEX == storedQuality;
-  mHeaderText.setText(getDefaultHeader());
+  Intent intent=getActivity().getIntent();
+  if (intent != null) {
+    CharSequence headerMessage=intent.getCharSequenceExtra(HEADER_TEXT);
+    if (TextUtils.isEmpty(headerMessage)) {
+      headerMessage=getString(getDefaultHeader());
+    }
+    mHeaderText.setText(headerMessage);
+  }
   final Activity activity=getActivity();
   mKeyboardHelper=new PasswordEntryKeyboardHelper(activity,mKeyboardView,mPasswordEntry);
   mKeyboardHelper.setKeyboardMode(mIsAlpha ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);

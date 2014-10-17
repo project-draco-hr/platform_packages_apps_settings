@@ -1,4 +1,7 @@
 {
+  if (LockPatternUtils.isDeviceEncrypted()) {
+    return;
+  }
   if (AccessibilityManager.getInstance(getActivity()).getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK).isEmpty()) {
     return;
   }

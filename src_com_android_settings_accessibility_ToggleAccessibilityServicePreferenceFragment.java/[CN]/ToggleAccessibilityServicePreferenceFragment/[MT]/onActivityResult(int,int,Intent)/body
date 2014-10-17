@@ -1,7 +1,11 @@
 {
-  if (requestCode == ACTIVITY_REQUEST_CONFIRM_CREDENTIAL) {
+  if (requestCode == ACTIVITY_REQUEST_CONFIRM_CREDENTIAL_FOR_WEAKER_ENCRYPTION) {
     if (resultCode == Activity.RESULT_OK) {
       handleConfirmServiceEnabled(true);
+      if (LockPatternUtils.isDeviceEncrypted()) {
+        mLockPatternUtils.clearEncryptionPassword();
+        Settings.Global.putInt(getContentResolver(),Settings.Global.REQUIRE_PASSWORD_TO_DECRYPT,0);
+      }
     }
  else {
       handleConfirmServiceEnabled(false);

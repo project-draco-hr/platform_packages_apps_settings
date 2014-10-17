@@ -1,0 +1,10 @@
+{
+  Intent intent=new Intent().setClass(context,ChooseLockPassword.class);
+  intent.putExtra(LockPatternUtils.PASSWORD_TYPE_KEY,quality);
+  intent.putExtra(PASSWORD_MIN_KEY,minLength);
+  intent.putExtra(PASSWORD_MAX_KEY,maxLength);
+  intent.putExtra(ChooseLockGeneric.CONFIRM_CREDENTIALS,confirmCredentials);
+  intent.putExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,isFallback);
+  intent.putExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,requirePasswordToDecrypt);
+  return intent;
+}

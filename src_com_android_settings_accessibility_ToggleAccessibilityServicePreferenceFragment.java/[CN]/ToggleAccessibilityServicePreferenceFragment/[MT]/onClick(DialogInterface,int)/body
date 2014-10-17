@@ -2,16 +2,23 @@
   final boolean checked;
 switch (which) {
 case DialogInterface.BUTTON_POSITIVE:
-    checked=(mShownDialogId == DIALOG_ID_ENABLE_WARNING);
-  mSwitchBar.setCheckedInternal(checked);
-getArguments().putBoolean(AccessibilitySettings.EXTRA_CHECKED,checked);
-onPreferenceToggled(mPreferenceKey,checked);
-break;
+    if (mShownDialogId == DIALOG_ID_ENABLE_WARNING) {
+      if (LockPatternUtils.isDeviceEncrypted()) {
+        String title=createConfirmCredentialReasonMessage();
+        Intent intent=ConfirmDeviceCredentialActivity.createIntent(title,null);
+        startActivityForResult(intent,ACTIVITY_REQUEST_CONFIRM_CREDENTIAL);
+      }
+ else {
+        handleConfirmServiceEnabled(true);
+      }
+    }
+ else {
+      handleConfirmServiceEnabled(false);
+    }
+  break;
 case DialogInterface.BUTTON_NEGATIVE:
 checked=(mShownDialogId == DIALOG_ID_DISABLE_WARNING);
-mSwitchBar.setCheckedInternal(checked);
-getArguments().putBoolean(AccessibilitySettings.EXTRA_CHECKED,checked);
-onPreferenceToggled(mPreferenceKey,checked);
+handleConfirmServiceEnabled(checked);
 break;
 default :
 throw new IllegalArgumentException();

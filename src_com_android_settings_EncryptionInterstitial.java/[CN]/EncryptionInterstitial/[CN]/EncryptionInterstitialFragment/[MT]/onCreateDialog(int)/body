@@ -20,7 +20,15 @@ titleId=R.string.encrypt_talkback_dialog_require_password;
 messageId=R.string.encrypt_talkback_dialog_message_password;
 break;
 }
-return new AlertDialog.Builder(getActivity()).setTitle(titleId).setMessage(messageId).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
+List<AccessibilityServiceInfo> list=AccessibilityManager.getInstance(getActivity()).getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK);
+final CharSequence exampleAccessibility;
+if (list.isEmpty()) {
+exampleAccessibility="";
+}
+ else {
+exampleAccessibility=list.get(0).getResolveInfo().loadLabel(getPackageManager());
+}
+return new AlertDialog.Builder(getActivity()).setTitle(titleId).setMessage(getString(messageId,exampleAccessibility)).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
 }
 default :
 throw new IllegalArgumentException();

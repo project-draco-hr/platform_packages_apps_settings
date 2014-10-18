@@ -26,14 +26,11 @@ enableId=R.string.encrypt_require_password;
 disableId=R.string.encrypt_dont_require_password;
 break;
 }
-mPasswordRequired=getActivity().getIntent().getBooleanExtra(EXTRA_REQUIRE_PASSWORD,true);
 mEncryptionMessage.setText(msgId);
 mRequirePasswordToDecryptButton.setOnClickListener(this);
 mRequirePasswordToDecryptButton.setText(enableId);
-mRequirePasswordToDecryptButton.setChecked(mPasswordRequired);
 mDontRequirePasswordToDecryptButton.setOnClickListener(this);
 mDontRequirePasswordToDecryptButton.setText(disableId);
-mDontRequirePasswordToDecryptButton.setChecked(!mPasswordRequired);
-updateRequirePasswordIntent();
+setRequirePasswordState(getActivity().getIntent().getBooleanExtra(EXTRA_REQUIRE_PASSWORD,true));
 return view;
 }

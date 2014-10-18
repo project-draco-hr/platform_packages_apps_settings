@@ -1,0 +1,28 @@
+{
+switch (dialogId) {
+case ACCESSIBILITY_WARNING_DIALOG:
+{
+      final int quality=new LockPatternUtils(getActivity()).getKeyguardStoredPasswordQuality();
+      final int titleId;
+      final int messageId;
+switch (quality) {
+case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
+        titleId=R.string.encrypt_talkback_dialog_require_pattern;
+      messageId=R.string.encrypt_talkback_dialog_message_pattern;
+    break;
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
+  titleId=R.string.encrypt_talkback_dialog_require_pin;
+messageId=R.string.encrypt_talkback_dialog_message_pin;
+break;
+default :
+titleId=R.string.encrypt_talkback_dialog_require_password;
+messageId=R.string.encrypt_talkback_dialog_message_password;
+break;
+}
+return new AlertDialog.Builder(getActivity()).setTitle(titleId).setMessage(messageId).setCancelable(true).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).create();
+}
+default :
+throw new IllegalArgumentException();
+}
+}

@@ -1,0 +1,9 @@
+{
+  final Preference preference=findPreference(key);
+  if (TextUtils.isEmpty(text)) {
+    text=getResources().getString(R.string.device_info_default);
+  }
+  if (preference != null) {
+    preference.setSummary(text);
+  }
+}

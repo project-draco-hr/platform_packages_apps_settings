@@ -1,4 +1,5 @@
 {
+  final Resources res=getResources();
   AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
   final View dialogLayout=getActivity().getLayoutInflater().inflate(R.layout.multi_sim_dialog,null);
   builder.setView(dialogLayout);
@@ -8,7 +9,7 @@
   numberView.setText(simPref.getFormattedPhoneNumber());
   TextView carrierView=(TextView)dialogLayout.findViewById(R.id.carrier);
   carrierView.setText(getCarrierName());
-  builder.setTitle(R.string.sim_editor_title);
+  builder.setTitle(String.format(res.getString(R.string.sim_editor_title),(mSubInfoRecord.slotId + 1)));
   builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){
       final EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);

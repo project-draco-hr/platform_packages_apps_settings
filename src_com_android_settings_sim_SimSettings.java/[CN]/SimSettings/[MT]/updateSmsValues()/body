@@ -1,11 +1,15 @@
 {
-  final DropDownPreference simPref=(DropDownPreference)findPreference(KEY_SMS);
+  final Preference simPref=(Preference)findPreference(KEY_SMS);
   final SubInfoRecord sir=findRecordBySubId(SubscriptionManager.getDefaultSmsSubId());
+  simPref.setTitle(R.string.sms_messages_title);
   if (mSubInfoList.size() == 1) {
-    simPref.setSelectedItem(mSubInfoList.get(0).slotId + 1);
+    simPref.setSummary(mSubInfoList.get(0).displayName);
   }
  else   if (sir != null) {
-    simPref.setSelectedItem(sir.slotId + 1);
+    simPref.setSummary(sir.displayName);
+  }
+ else   if (sir == null) {
+    simPref.setSummary(R.string.sim_selection_required_pref);
   }
   simPref.setEnabled(mNumSims >= 1);
 }

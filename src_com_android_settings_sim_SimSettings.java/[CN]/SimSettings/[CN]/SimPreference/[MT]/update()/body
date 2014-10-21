@@ -1,12 +1,12 @@
 {
   final Resources res=getResources();
-  if (mSubInfoRecord != null) {
-    if (TextUtils.isEmpty(mSubInfoRecord.displayName)) {
-      setTitle(getCarrierName());
-    }
+  if (mSubInfoRecord.displayName.length() == 0) {
+    setTitle(getCarrierName());
+  }
  else {
-      setTitle(mSubInfoRecord.displayName);
-    }
+    setTitle(mSubInfoRecord.displayName);
+  }
+  if (mSubInfoRecord != null) {
     setSummary(mSubInfoRecord.number.toString());
     setEnabled(true);
   }

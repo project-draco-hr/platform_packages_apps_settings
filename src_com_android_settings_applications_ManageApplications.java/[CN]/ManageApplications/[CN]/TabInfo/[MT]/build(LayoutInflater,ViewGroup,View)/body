@@ -4,14 +4,6 @@
   }
   mInflater=inflater;
   mRootView=inflater.inflate(mListType == LIST_TYPE_RUNNING ? R.layout.manage_applications_running : R.layout.manage_applications_apps,null);
-  mPinnedHeader=(ViewGroup)mRootView.findViewById(R.id.pinned_header);
-  if (mOwner.mProfileSpinnerAdapter != null) {
-    mOwner.mSpinner=(Spinner)inflater.inflate(R.layout.spinner_view,null);
-    mOwner.mSpinner.setAdapter(mOwner.mProfileSpinnerAdapter);
-    mOwner.mSpinner.setOnItemSelectedListener(mOwner);
-    mPinnedHeader.addView(mOwner.mSpinner);
-    mPinnedHeader.setVisibility(View.VISIBLE);
-  }
   mLoadingContainer=mRootView.findViewById(R.id.loading_container);
   mLoadingContainer.setVisibility(View.VISIBLE);
   mListContainer=mRootView.findViewById(R.id.list_container);

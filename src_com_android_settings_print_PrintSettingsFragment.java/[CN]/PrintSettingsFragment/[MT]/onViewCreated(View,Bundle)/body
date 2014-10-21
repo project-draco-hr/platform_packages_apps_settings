@@ -9,9 +9,9 @@
   final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
   mProfileSpinnerAdapter=Utils.createUserSpinnerAdapter(um,getActivity());
   if (mProfileSpinnerAdapter != null) {
-    Spinner spinner=(Spinner)getActivity().getLayoutInflater().inflate(R.layout.spinner_view,null);
-    spinner.setAdapter(mProfileSpinnerAdapter);
-    spinner.setOnItemSelectedListener(this);
-    setPinnedHeaderView(spinner);
+    mSpinner=(Spinner)getActivity().getLayoutInflater().inflate(R.layout.spinner_view,null);
+    mSpinner.setAdapter(mProfileSpinnerAdapter);
+    mSpinner.setOnItemSelectedListener(this);
+    setPinnedHeaderView(mSpinner);
   }
 }

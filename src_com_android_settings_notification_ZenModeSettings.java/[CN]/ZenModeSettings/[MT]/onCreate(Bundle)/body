@@ -6,7 +6,7 @@
   final PreferenceScreen root=getPreferenceScreen();
   mConfig=getZenModeConfig();
   if (DEBUG)   Log.d(TAG,"Loaded mConfig=" + mConfig);
-  final Preference zenMode=PREF_ZEN_MODE.init(this);
+  PREF_ZEN_MODE.init(this);
   PREF_ZEN_MODE.setCallback(new SettingPrefWithCallback.Callback(){
     @Override public void onSettingSelected(    int value){
       if (value != Global.ZEN_MODE_OFF) {
@@ -15,29 +15,20 @@
     }
   }
 );
-  if (!Utils.isVoiceCapable(mContext)) {
-    zenMode.setTitle(R.string.zen_mode_option_title_novoice);
-  }
   final PreferenceCategory important=(PreferenceCategory)root.findPreference(KEY_IMPORTANT);
   mCalls=(SwitchPreference)important.findPreference(KEY_CALLS);
-  if (Utils.isVoiceCapable(mContext)) {
-    mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
-      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
-        if (mDisableListeners)         return true;
-        final boolean val=(Boolean)newValue;
-        if (val == mConfig.allowCalls)         return true;
-        if (DEBUG)         Log.d(TAG,"onPrefChange allowCalls=" + val);
-        final ZenModeConfig newConfig=mConfig.copy();
-        newConfig.allowCalls=val;
-        return setZenModeConfig(newConfig);
-      }
+  mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      if (mDisableListeners)       return true;
+      final boolean val=(Boolean)newValue;
+      if (val == mConfig.allowCalls)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange allowCalls=" + val);
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.allowCalls=val;
+      return setZenModeConfig(newConfig);
     }
+  }
 );
-  }
- else {
-    important.removePreference(mCalls);
-    mCalls=null;
-  }
   mMessages=(SwitchPreference)important.findPreference(KEY_MESSAGES);
   mMessages.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){

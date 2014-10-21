@@ -2,9 +2,9 @@
   super.onViewCreated(view,savedInstanceState);
   mProfileSpinnerAdapter=Utils.createUserSpinnerAdapter(mUM,mContext);
   if (mProfileSpinnerAdapter != null) {
-    Spinner spinner=(Spinner)getActivity().getLayoutInflater().inflate(R.layout.spinner_view,null);
-    spinner.setAdapter(mProfileSpinnerAdapter);
-    spinner.setOnItemSelectedListener(this);
-    setPinnedHeaderView(spinner);
+    mSpinner=(Spinner)getActivity().getLayoutInflater().inflate(R.layout.spinner_view,null);
+    mSpinner.setAdapter(mProfileSpinnerAdapter);
+    mSpinner.setOnItemSelectedListener(this);
+    setPinnedHeaderView(mSpinner);
   }
 }

@@ -16,11 +16,15 @@
     }
     String url=mCm.getMobileProvisioningUrl();
     if (!TextUtils.isEmpty(url)) {
-      Intent intent=new Intent(CONNECTED_TO_PROVISIONING_NETWORK_ACTION);
-      intent.putExtra("EXTRA_URL",url);
-      Context context=getActivity().getBaseContext();
-      context.sendBroadcast(intent);
-      mManageMobilePlanMessage=null;
+      Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN,Intent.CATEGORY_APP_BROWSER);
+      intent.setData(Uri.parse(url));
+      intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+      try {
+        startActivity(intent);
+      }
+ catch (      ActivityNotFoundException e) {
+        Log.w(TAG,"onManageMobilePlanClick: startActivity failed" + e);
+      }
     }
  else {
       String operatorName=mTm.getSimOperatorName();

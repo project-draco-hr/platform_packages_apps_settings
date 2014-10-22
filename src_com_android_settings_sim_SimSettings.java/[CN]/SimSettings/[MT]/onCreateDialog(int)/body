@@ -1,0 +1,46 @@
+{
+  final ArrayList<String> list=new ArrayList<String>();
+  final int availableSubInfoLength=mAvailableSubInfos.size();
+  final DialogInterface.OnClickListener selectionListener=new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int value){
+      final SubInfoRecord sir;
+      if (id == DATA_PICK) {
+        sir=mAvailableSubInfos.get(value);
+        SubscriptionManager.setDefaultDataSubId(sir.subId);
+      }
+ else       if (id == CALLS_PICK) {
+        if (value != 0) {
+          sir=mAvailableSubInfos.get(value - 1);
+          SubscriptionManager.setDefaultVoiceSubId(sir.subId);
+        }
+      }
+ else       if (id == SMS_PICK) {
+        sir=mAvailableSubInfos.get(value);
+        SubscriptionManager.setDefaultSmsSubId(sir.subId);
+      }
+      updateActivitesCategory();
+    }
+  }
+;
+  if (id == CALLS_PICK) {
+    list.add(getResources().getString(R.string.sim_calls_ask_first_prefs_title));
+  }
+  for (int i=0; i < availableSubInfoLength; ++i) {
+    final SubInfoRecord sir=mAvailableSubInfos.get(i);
+    list.add(sir.displayName);
+  }
+  String[] arr=new String[availableSubInfoLength];
+  arr=list.toArray(arr);
+  ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,arr);
+  AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+  if (id == DATA_PICK) {
+    builder.setTitle(R.string.select_sim_for_data);
+  }
+ else   if (id == CALLS_PICK) {
+    builder.setTitle(R.string.select_sim_for_calls);
+  }
+ else   if (id == SMS_PICK) {
+    builder.setTitle(R.string.sim_card_select_title);
+  }
+  return builder.setAdapter(adapter,selectionListener).create();
+}

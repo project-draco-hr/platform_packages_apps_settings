@@ -1,5 +1,9 @@
 {
   super.onCreate(savedInstanceState);
+  mEnabled=Process.myUserHandle().isOwner();
+  if (!mEnabled) {
+    return;
+  }
   addPreferencesFromResource(R.xml.privacy_settings);
   final PreferenceScreen screen=getPreferenceScreen();
   mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));

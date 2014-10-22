@@ -1,0 +1,10 @@
+{
+  List<SearchIndexableResource> result=new ArrayList<SearchIndexableResource>();
+  if (!mIsPrimary) {
+    return result;
+  }
+  SearchIndexableResource sir=new SearchIndexableResource(context);
+  sir.xmlResId=R.xml.privacy_settings;
+  result.add(sir);
+  return result;
+}

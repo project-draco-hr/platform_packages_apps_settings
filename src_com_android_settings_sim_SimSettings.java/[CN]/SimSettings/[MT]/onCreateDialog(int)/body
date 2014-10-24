@@ -13,6 +13,9 @@
           sir=mAvailableSubInfos.get(value - 1);
           SubscriptionManager.setDefaultVoiceSubId(sir.subId);
         }
+ else {
+          SubscriptionManager.setDefaultVoiceSubId(SubscriptionManager.ASK_USER_SUB_ID);
+        }
       }
  else       if (id == SMS_PICK) {
         sir=mAvailableSubInfos.get(value);

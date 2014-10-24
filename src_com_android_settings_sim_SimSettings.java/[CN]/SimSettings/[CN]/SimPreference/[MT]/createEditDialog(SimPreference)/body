@@ -15,6 +15,7 @@
       final EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);
       mSubInfoRecord.displayName=nameText.getText().toString();
       SubscriptionManager.setDisplayName(mSubInfoRecord.displayName,mSubInfoRecord.subId);
+      findRecordBySubId(mSubInfoRecord.subId).displayName=nameText.getText().toString();
       updateAllOptions();
       update();
     }

@@ -31,8 +31,8 @@
   }
   String[] arr=new String[availableSubInfoLength];
   arr=list.toArray(arr);
-  ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,arr);
   AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+  ListAdapter adapter=new SelectAccountListAdapter(builder.getContext(),R.layout.select_account_list_item,arr);
   if (id == DATA_PICK) {
     builder.setTitle(R.string.select_sim_for_data);
   }

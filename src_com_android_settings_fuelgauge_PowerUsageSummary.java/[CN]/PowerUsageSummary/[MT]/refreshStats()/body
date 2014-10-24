@@ -30,12 +30,18 @@
         if (percentOfTotal < 10) {
           continue;
         }
+        if ("user".equals(Build.TYPE)) {
+          continue;
+        }
       }
       if (sipper.drainType == BatterySipper.DrainType.UNACCOUNTED) {
         if (sipper.value < (mStatsHelper.getMaxRealPower() / 2)) {
           continue;
         }
         if (percentOfTotal < 5) {
+          continue;
+        }
+        if ("user".equals(Build.TYPE)) {
           continue;
         }
       }

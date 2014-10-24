@@ -99,11 +99,4 @@
   }
   mProcessStats=(PreferenceScreen)findPreference(PROCESS_STATS);
   mAllPrefs.add(mProcessStats);
-  mWebViewDataReductionProxy=findAndInitSwitchPref(WEBVIEW_DATA_REDUCTION_PROXY_KEY);
-  mWebViewDataReductionProxy.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
-    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
-      return handleDataReductionProxyPreferenceChange();
-    }
-  }
-);
 }

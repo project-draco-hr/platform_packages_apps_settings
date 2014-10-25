@@ -3,6 +3,8 @@
   if (mSubInfoRecord != null) {
     if (TextUtils.isEmpty(mSubInfoRecord.displayName)) {
       setTitle(getCarrierName());
+      mSubInfoRecord.displayName=getCarrierName();
+      SubscriptionManager.setDisplayName(getCarrierName(),mSubInfoRecord.subId);
     }
  else {
       setTitle(mSubInfoRecord.displayName);

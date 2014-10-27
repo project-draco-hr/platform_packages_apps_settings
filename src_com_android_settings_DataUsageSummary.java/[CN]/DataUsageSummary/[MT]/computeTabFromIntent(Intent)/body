@@ -1,7 +1,7 @@
 {
   final NetworkTemplate template=intent.getParcelableExtra(EXTRA_NETWORK_TEMPLATE);
   if (template == null) {
-    final long subId=intent.getLongExtra(PhoneConstants.SUBSCRIPTION_KEY,SubscriptionManager.INVALID_SUB_ID);
+    final int subId=intent.getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,SubscriptionManager.INVALID_SUB_ID);
     if (SubscriptionManager.isValidSubId(subId)) {
       return TAB_MOBILE + String.valueOf(subId);
     }

@@ -4,6 +4,7 @@
   mPm=mApplicationContext.getPackageManager();
   mUm=(UserManager)mApplicationContext.getSystemService(Context.USER_SERVICE);
   mMyUserId=UserHandle.myUserId();
+  mHideManagedProfiles=mMyUserId != UserHandle.USER_OWNER;
   mResumed=false;
   mBackgroundThread=new HandlerThread("RunningState:Background");
   mBackgroundThread.start();

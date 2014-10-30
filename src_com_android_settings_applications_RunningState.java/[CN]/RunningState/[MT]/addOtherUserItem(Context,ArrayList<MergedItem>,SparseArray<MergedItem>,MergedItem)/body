@@ -14,17 +14,8 @@
       userItem.mUser=new UserState();
       UserInfo info=mUm.getUserInfo(newItem.mUserId);
       userItem.mUser.mInfo=info;
-      if (info != null) {
-        userItem.mUser.mIcon=Utils.getUserIcon(context,mUm,info);
-      }
-      String name=info != null ? info.name : null;
-      if (name == null && info != null) {
-        name=Integer.toString(info.id);
-      }
- else       if (info == null) {
-        name=context.getString(R.string.unknown);
-      }
-      userItem.mUser.mLabel=context.getResources().getString(R.string.running_process_item_user_label,name);
+      userItem.mUser.mIcon=Utils.getUserIcon(context,mUm,info);
+      userItem.mUser.mLabel=Utils.getUserLabel(context,info);
     }
     newMergedItems.add(userItem);
   }

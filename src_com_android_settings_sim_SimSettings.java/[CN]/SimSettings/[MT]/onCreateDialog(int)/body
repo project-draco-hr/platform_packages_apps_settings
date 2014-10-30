@@ -1,16 +1,16 @@
 {
   final ArrayList<String> list=new ArrayList<String>();
-  final int availableSubInfoLength=mAvailableSubInfos.size();
+  final int selectableSubInfoLength=mSelectableSubInfos.size();
   final DialogInterface.OnClickListener selectionListener=new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int value){
       final SubInfoRecord sir;
       if (id == DATA_PICK) {
-        sir=mAvailableSubInfos.get(value);
+        sir=mSelectableSubInfos.get(value);
         SubscriptionManager.setDefaultDataSubId(sir.subId);
       }
  else       if (id == CALLS_PICK) {
         if (value != 0) {
-          sir=mAvailableSubInfos.get(value - 1);
+          sir=mSelectableSubInfos.get(value - 1);
           SubscriptionManager.setDefaultVoiceSubId(sir.subId);
         }
  else {
@@ -18,7 +18,7 @@
         }
       }
  else       if (id == SMS_PICK) {
-        sir=mAvailableSubInfos.get(value);
+        sir=mSelectableSubInfos.get(value);
         SubscriptionManager.setDefaultSmsSubId(sir.subId);
       }
       updateActivitesCategory();
@@ -28,11 +28,11 @@
   if (id == CALLS_PICK) {
     list.add(getResources().getString(R.string.sim_calls_ask_first_prefs_title));
   }
-  for (int i=0; i < availableSubInfoLength; ++i) {
-    final SubInfoRecord sir=mAvailableSubInfos.get(i);
+  for (int i=0; i < selectableSubInfoLength; ++i) {
+    final SubInfoRecord sir=mSelectableSubInfos.get(i);
     list.add(sir.displayName);
   }
-  String[] arr=new String[availableSubInfoLength];
+  String[] arr=new String[selectableSubInfoLength];
   arr=list.toArray(arr);
   AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
   ListAdapter adapter=new SelectAccountListAdapter(builder.getContext(),R.layout.select_account_list_item,arr);

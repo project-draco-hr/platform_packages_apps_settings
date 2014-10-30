@@ -1,0 +1,13 @@
+{
+  final List<SubInfoRecord> subInfos=SubscriptionManager.getSubInfoUsingSlotId(slotId);
+  if (subInfos == null || subInfos.size() < 1) {
+    return null;
+  }
+  final Phone[] phones=PhoneFactory.getPhones();
+  for (int i=0; i < phones.length; i++) {
+    if (phones[i].getSubId() == subInfos.get(0).subId) {
+      return phones[i];
+    }
+  }
+  return null;
+}

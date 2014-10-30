@@ -1,0 +1,13 @@
+{
+  final PreferenceScreen prefScreen=getPreferenceScreen();
+  final int count=prefScreen.getPreferenceCount();
+  for (int i=0; i < count; i++) {
+    Preference pref=prefScreen.getPreference(i);
+    String key=pref.getKey();
+    if (!key.startsWith("_")) {
+      key="_" + key + String.valueOf(slotId);
+      pref.setKey(key);
+      updateTitle(pref,slotId);
+    }
+  }
+}

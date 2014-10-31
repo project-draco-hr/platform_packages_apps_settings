@@ -1,15 +1,16 @@
 {
   final Resources res=getResources();
   if (mSubInfoRecord != null) {
-    if (TextUtils.isEmpty(mSubInfoRecord.displayName)) {
+    if (TextUtils.isEmpty(mSubInfoRecord.getDisplayName())) {
       setTitle(getCarrierName());
-      mSubInfoRecord.displayName=getCarrierName();
-      SubscriptionManager.setDisplayName(getCarrierName(),mSubInfoRecord.subId);
+      String displayName=getCarrierName();
+      mSubInfoRecord.setDisplayName(displayName);
+      SubscriptionManager.setDisplayName(displayName,mSubInfoRecord.getSubscriptionId());
     }
  else {
-      setTitle(mSubInfoRecord.displayName);
+      setTitle(mSubInfoRecord.getDisplayName());
     }
-    setSummary(mSubInfoRecord.number.toString());
+    setSummary(mSubInfoRecord.getNumber().toString());
     setEnabled(true);
   }
  else {

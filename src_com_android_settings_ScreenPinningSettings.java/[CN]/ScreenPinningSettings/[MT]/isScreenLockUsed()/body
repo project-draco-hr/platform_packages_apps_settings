@@ -1,0 +1,4 @@
+{
+  int def=getCurrentSecurityTitle() != R.string.screen_pinning_unlock_none ? 1 : 0;
+  return Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCK_TO_APP_EXIT_LOCKED,def) != 0;
+}

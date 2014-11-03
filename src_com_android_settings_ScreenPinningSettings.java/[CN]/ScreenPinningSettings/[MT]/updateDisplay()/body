@@ -1,0 +1,19 @@
+{
+  PreferenceScreen root=getPreferenceScreen();
+  if (root != null) {
+    root.removeAll();
+  }
+  if (isLockToAppEnabled(getActivity())) {
+    addPreferencesFromResource(R.xml.screen_pinning_settings);
+    root=getPreferenceScreen();
+    mUseScreenLock=(SwitchPreference)root.findPreference(KEY_USE_SCREEN_LOCK);
+    mUseScreenLock.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        return setScreenLockUsed((boolean)newValue);
+      }
+    }
+);
+    mUseScreenLock.setChecked(isScreenLockUsed());
+    mUseScreenLock.setTitle(getCurrentSecurityTitle());
+  }
+}

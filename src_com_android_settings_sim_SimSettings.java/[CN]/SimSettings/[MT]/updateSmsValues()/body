@@ -3,10 +3,10 @@
   final SubInfoRecord sir=findRecordBySubId(SubscriptionManager.getDefaultSmsSubId());
   simPref.setTitle(R.string.sms_messages_title);
   if (mSubInfoList.size() == 1) {
-    simPref.setSummary(mSubInfoList.get(0).displayName);
+    simPref.setSummary(mSubInfoList.get(0).getDisplayName());
   }
  else   if (sir != null) {
-    simPref.setSummary(sir.displayName);
+    simPref.setSummary(sir.getDisplayName());
   }
  else   if (sir == null) {
     simPref.setSummary(R.string.sim_selection_required_pref);

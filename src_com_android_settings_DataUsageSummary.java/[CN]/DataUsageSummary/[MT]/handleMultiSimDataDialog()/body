@@ -1,17 +1,17 @@
 {
   final SubInfoRecord currentSir=getCurrentTabSubInfo(getActivity());
   final SubInfoRecord nextSir=SubscriptionManager.getSubInfoForSubscriber(SubscriptionManager.getDefaultDataSubId());
-  if (currentSir.subId == nextSir.subId) {
+  if (currentSir.getSubscriptionId() == nextSir.getSubscriptionId()) {
     setMobileDataEnabled(true);
     updateBody();
     return;
   }
   AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
   builder.setTitle(R.string.sim_change_data_title);
-  builder.setMessage(getActivity().getResources().getString(R.string.sim_change_data_message,currentSir.displayName,nextSir.displayName));
+  builder.setMessage(getActivity().getResources().getString(R.string.sim_change_data_message,currentSir.getDisplayName(),nextSir.getDisplayName()));
   builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int id){
-      SubscriptionManager.setDefaultDataSubId(currentSir.subId);
+      SubscriptionManager.setDefaultDataSubId(currentSir.getSubscriptionId());
       setMobileDataEnabled(true);
       updateBody();
     }

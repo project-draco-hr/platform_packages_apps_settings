@@ -7,13 +7,19 @@
   if (mState != null) {
     summary.append(Summary.get(context,mState));
   }
+ else   if (mConfig != null && mConfig.noInternetAccess) {
+    summary.append(context.getString(R.string.wifi_no_internet));
+  }
  else   if (mConfig != null && ((mConfig.status == WifiConfiguration.Status.DISABLED && mConfig.disableReason != WifiConfiguration.DISABLED_UNKNOWN_REASON) || mConfig.autoJoinStatus >= WifiConfiguration.AUTO_JOIN_DISABLED_ON_AUTH_FAILURE)) {
     if (mConfig.autoJoinStatus >= WifiConfiguration.AUTO_JOIN_DISABLED_ON_AUTH_FAILURE) {
       if (mConfig.disableReason == WifiConfiguration.DISABLED_DHCP_FAILURE) {
         summary.append(context.getString(R.string.wifi_disabled_network_failure));
       }
- else {
+ else       if (mConfig.disableReason == WifiConfiguration.DISABLED_AUTH_FAILURE) {
         summary.append(context.getString(R.string.wifi_disabled_password_failure));
+      }
+ else {
+        summary.append(context.getString(R.string.wifi_disabled_wifi_failure));
       }
     }
  else {
@@ -42,7 +48,7 @@ summary.append(context.getString(R.string.wifi_remembered));
 }
 if (WifiSettings.mVerboseLogging > 0) {
 if (mInfo != null && mState != null) {
-summary.append(" (f=" + Integer.toString(mInfo.getFrequency()) + ")");
+summary.append(" f=" + Integer.toString(mInfo.getFrequency()));
 }
 summary.append(" " + getVisibilityStatus());
 if (mConfig != null && mConfig.autoJoinStatus > 0) {
@@ -59,6 +65,15 @@ summary.append(Long.toString(min) + "m ");
 summary.append(Long.toString(sec) + "s ");
 }
 summary.append(")");
+}
+if (mConfig != null && mConfig.numIpConfigFailures > 0) {
+summary.append(" ipf=").append(mConfig.numIpConfigFailures);
+}
+if (mConfig != null && mConfig.numConnectionFailures > 0) {
+summary.append(" cf=").append(mConfig.numConnectionFailures);
+}
+if (mConfig != null && mConfig.numAuthFailures > 0) {
+summary.append(" authf=").append(mConfig.numAuthFailures);
 }
 }
 if (summary.length() > 0) {

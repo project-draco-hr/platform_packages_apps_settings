@@ -1,0 +1,22 @@
+{
+  final SubInfoRecord currentSir=getCurrentTabSubInfo(getActivity());
+  final SubInfoRecord nextSir=SubscriptionManager.getSubInfoForSubscriber(SubscriptionManager.getDefaultDataSubId());
+  if (currentSir.subId == nextSir.subId) {
+    setMobileDataEnabled(true);
+    updateBody();
+    return;
+  }
+  AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+  builder.setTitle(R.string.sim_change_data_title);
+  builder.setMessage(getActivity().getResources().getString(R.string.sim_change_data_message,currentSir.displayName,nextSir.displayName));
+  builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int id){
+      SubscriptionManager.setDefaultDataSubId(currentSir.subId);
+      setMobileDataEnabled(true);
+      updateBody();
+    }
+  }
+);
+  builder.setNegativeButton(R.string.cancel,null);
+  builder.create().show();
+}

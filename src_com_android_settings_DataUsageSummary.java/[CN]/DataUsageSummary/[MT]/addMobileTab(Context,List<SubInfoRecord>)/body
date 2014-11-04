@@ -1,8 +1,8 @@
 {
   if (subInfoList != null) {
     for (    SubInfoRecord subInfo : mSubInfoList) {
-      if (hasReadyMobileRadio(context,subInfo.subId)) {
-        mTabHost.addTab(buildTabSpec(mMobileTagMap.get(subInfo.subId),subInfo.displayName));
+      if (hasReadyMobileRadio(context,subInfo.getSubscriptionId())) {
+        mTabHost.addTab(buildTabSpec(mMobileTagMap.get(subInfo.getSubscriptionId()),subInfo.getDisplayName().toString()));
       }
     }
   }

@@ -6,7 +6,7 @@
       final SubInfoRecord sir;
       if (id == DATA_PICK) {
         sir=mSelectableSubInfos.get(value);
-        SubscriptionManager.setDefaultDataSubId(sir.subId);
+        SubscriptionManager.setDefaultDataSubId(sir.getSubscriptionId());
       }
  else       if (id == CALLS_PICK) {
         final TelecomManager telecomManager=TelecomManager.from(getActivity());
@@ -15,7 +15,7 @@
       }
  else       if (id == SMS_PICK) {
         sir=mSelectableSubInfos.get(value);
-        SubscriptionManager.setDefaultSmsSubId(sir.subId);
+        SubscriptionManager.setDefaultSmsSubId(sir.getSubscriptionId());
       }
       updateActivitesCategory();
     }
@@ -33,7 +33,7 @@
  else {
     for (int i=0; i < selectableSubInfoLength; ++i) {
       final SubInfoRecord sir=mSelectableSubInfos.get(i);
-      list.add(sir.displayName);
+      list.add(sir.getDisplayName().toString());
     }
   }
   String[] arr=new String[selectableSubInfoLength];

@@ -10,7 +10,7 @@
   }
   boolean isReady=true;
   for (  SubInfoRecord subInfo : subInfoList) {
-    isReady=isReady & tele.getSimState(subInfo.slotId) == SIM_STATE_READY;
+    isReady=isReady & tele.getSimState(subInfo.getSimSlotIndex()) == SIM_STATE_READY;
   }
   return conn.isNetworkSupported(TYPE_MOBILE) && isReady;
 }

@@ -4,13 +4,13 @@
   final View dialogLayout=getActivity().getLayoutInflater().inflate(R.layout.multi_sim_dialog,null);
   builder.setView(dialogLayout);
   EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);
-  nameText.setText(mSubInfoRecord.displayName);
+  nameText.setText(mSubInfoRecord.getDisplayName());
   final Spinner colorSpinner=(Spinner)dialogLayout.findViewById(R.id.spinner);
   ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(),R.array.color_picker,android.R.layout.simple_spinner_item);
   adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
   colorSpinner.setAdapter(adapter);
   for (int i=0; i < colorArr.length; i++) {
-    if (colorArr[i] == mSubInfoRecord.color) {
+    if (colorArr[i] == mSubInfoRecord.getColor()) {
       colorSpinner.setSelection(i);
       break;
     }
@@ -27,17 +27,21 @@
   numberView.setText(simPref.getFormattedPhoneNumber());
   TextView carrierView=(TextView)dialogLayout.findViewById(R.id.carrier);
   carrierView.setText(getCarrierName());
-  builder.setTitle(String.format(res.getString(R.string.sim_editor_title),(mSubInfoRecord.slotId + 1)));
+  builder.setTitle(String.format(res.getString(R.string.sim_editor_title),(mSubInfoRecord.getSimSlotIndex() + 1)));
   builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){
       final EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);
-      mSubInfoRecord.displayName=nameText.getText().toString();
-      SubscriptionManager.setDisplayName(mSubInfoRecord.displayName,mSubInfoRecord.subId);
-      findRecordBySubId(mSubInfoRecord.subId).displayName=nameText.getText().toString();
+      String displayName=nameText.getText().toString();
+      int subId=mSubInfoRecord.getSubscriptionId();
+      mSubInfoRecord.setDisplayName(displayName);
+      SubscriptionManager.setDisplayName(displayName,subId);
+      findRecordBySubId(subId).setDisplayName(displayName);
       final int colorSelected=colorSpinner.getSelectedItemPosition();
-      mSubInfoRecord.color=colorArr[colorSelected];
-      SubscriptionManager.setColor(colorArr[colorSelected],mSubInfoRecord.subId);
-      findRecordBySubId(mSubInfoRecord.subId).color=colorArr[colorSelected];
+      int subscriptionId=mSubInfoRecord.getSubscriptionId();
+      int color=colorArr[colorSelected];
+      mSubInfoRecord.setColor(color);
+      SubscriptionManager.setColor(color,subscriptionId);
+      findRecordBySubId(subscriptionId).setColor(color);
       updateAllOptions();
       update();
     }

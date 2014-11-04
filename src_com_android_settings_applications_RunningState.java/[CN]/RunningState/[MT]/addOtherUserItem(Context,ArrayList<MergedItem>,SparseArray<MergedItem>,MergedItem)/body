@@ -2,6 +2,11 @@
   MergedItem userItem=userItems.get(newItem.mUserId);
   boolean first=userItem == null || userItem.mCurSeq != mSequence;
   if (first) {
+    UserState userState=mUsers.get(newItem.mUserId);
+    UserInfo info=userState != null ? userState.mInfo : mUm.getUserInfo(newItem.mUserId);
+    if (mHideManagedProfiles && info.isManagedProfile()) {
+      return;
+    }
     if (userItem == null) {
       userItem=new MergedItem(newItem.mUserId);
       userItems.put(newItem.mUserId,userItem);
@@ -10,9 +15,8 @@
       userItem.mChildren.clear();
     }
     userItem.mCurSeq=mSequence;
-    if ((userItem.mUser=mUsers.get(newItem.mUserId)) == null) {
+    if (userState == null) {
       userItem.mUser=new UserState();
-      UserInfo info=mUm.getUserInfo(newItem.mUserId);
       userItem.mUser.mInfo=info;
       userItem.mUser.mIcon=Utils.getUserIcon(context,mUm,info);
       userItem.mUser.mLabel=Utils.getUserLabel(context,info);

@@ -35,7 +35,12 @@
   }
  else   if (preference == mEnableOemUnlock) {
     if (!showKeyguardConfirmation(getResources(),REQUEST_CODE_ENABLE_OEM_UNLOCK)) {
-      Utils.setOemUnlockEnabled(getActivity(),mEnableOemUnlock.isChecked());
+      if (mEnableOemUnlock.isChecked()) {
+        confirmEnableOemUnlock();
+      }
+ else {
+        Utils.setOemUnlockEnabled(getActivity(),false);
+      }
     }
   }
  else   if (preference == mAllowMockLocation) {

@@ -8,7 +8,12 @@
   }
  else   if (requestCode == REQUEST_CODE_ENABLE_OEM_UNLOCK) {
     if (resultCode == Activity.RESULT_OK) {
-      Utils.setOemUnlockEnabled(getActivity(),mEnableOemUnlock.isChecked());
+      if (mEnableOemUnlock.isChecked()) {
+        confirmEnableOemUnlock();
+      }
+ else {
+        Utils.setOemUnlockEnabled(getActivity(),false);
+      }
     }
   }
  else {

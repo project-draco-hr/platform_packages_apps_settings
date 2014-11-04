@@ -14,8 +14,8 @@
         continue;
       }
       AccessPoint accessPoint=new AccessPoint(context,config);
-      if (lastInfo != null && lastState != null) {
-        accessPoint.update(lastInfo,lastState);
+      if (lastInfo != null && lastNetworkInfo != null) {
+        accessPoint.update(lastInfo,lastNetworkInfo);
       }
       accessPoints.add(accessPoint);
       apMap.put(accessPoint.ssid,accessPoint);
@@ -33,6 +33,9 @@
       }
       if (!found) {
         AccessPoint accessPoint=new AccessPoint(context,result);
+        if (lastInfo != null && lastNetworkInfo != null) {
+          accessPoint.update(lastInfo,lastNetworkInfo);
+        }
         accessPoints.add(accessPoint);
         apMap.put(accessPoint.ssid,accessPoint);
       }

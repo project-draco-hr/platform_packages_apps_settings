@@ -4,8 +4,17 @@
     if (preference instanceof AccessPoint) {
       mSelectedAccessPoint=(AccessPoint)preference;
       menu.setHeaderTitle(mSelectedAccessPoint.ssid);
-      if (mSelectedAccessPoint.getLevel() != -1 && mSelectedAccessPoint.getState() == null) {
-        menu.add(Menu.NONE,MENU_ID_CONNECT,0,R.string.wifi_menu_connect);
+      if (mSelectedAccessPoint.getLevel() != -1) {
+        int connectStringRes=0;
+        if (mSelectedAccessPoint.getState() == null) {
+          connectStringRes=R.string.wifi_menu_connect;
+        }
+ else         if (mSelectedAccessPoint.networkId == INVALID_NETWORK_ID && mSelectedAccessPoint.getNetworkInfo().getState() != State.DISCONNECTED) {
+          connectStringRes=R.string.wifi_menu_remember;
+        }
+        if (connectStringRes != 0) {
+          menu.add(Menu.NONE,MENU_ID_CONNECT,0,connectStringRes);
+        }
       }
       if (mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
         if (ActivityManager.getCurrentUser() == UserHandle.USER_OWNER) {

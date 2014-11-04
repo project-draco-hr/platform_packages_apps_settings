@@ -9,8 +9,8 @@
     loadResult(mScanResult);
   }
   mInfo=(WifiInfo)savedState.getParcelable(KEY_WIFIINFO);
-  if (savedState.containsKey(KEY_DETAILEDSTATE)) {
-    mState=DetailedState.valueOf(savedState.getString(KEY_DETAILEDSTATE));
+  if (savedState.containsKey(KEY_NETWORKINFO)) {
+    mNetworkInfo=savedState.getParcelable(KEY_NETWORKINFO);
   }
-  update(mInfo,mState);
+  update(mInfo,mNetworkInfo);
 }

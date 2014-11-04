@@ -1,0 +1,8 @@
+{
+  if (networkId != WifiConfiguration.INVALID_NETWORK_ID) {
+    return networkId == info.getNetworkId();
+  }
+ else {
+    return ssid.equals(removeDoubleQuotes(info.getSSID()));
+  }
+}

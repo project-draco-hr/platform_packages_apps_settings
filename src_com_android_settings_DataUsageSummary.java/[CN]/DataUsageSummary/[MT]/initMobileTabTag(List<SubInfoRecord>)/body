@@ -4,8 +4,8 @@
     String mobileTag;
     map=new HashMap<Integer,String>();
     for (    SubInfoRecord subInfo : subInfoList) {
-      mobileTag=TAB_MOBILE + String.valueOf(subInfo.subId);
-      map.put(subInfo.subId,mobileTag);
+      mobileTag=TAB_MOBILE + String.valueOf(subInfo.getSubscriptionId());
+      map.put(subInfo.getSubscriptionId(),mobileTag);
     }
   }
   return map;

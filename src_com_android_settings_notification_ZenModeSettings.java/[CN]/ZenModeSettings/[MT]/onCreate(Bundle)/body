@@ -139,6 +139,23 @@
 );
   downtime.addPreference(mEnd);
   mEnd.setDependency(mDays.getKey());
+  mDowntimeMode=(DropDownPreference)downtime.findPreference(KEY_DOWNTIME_MODE);
+  mDowntimeMode.addItem(R.string.zen_mode_downtime_mode_priority,false);
+  mDowntimeMode.addItem(R.string.zen_mode_downtime_mode_none,true);
+  mDowntimeMode.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object value){
+      if (mDisableListeners)       return true;
+      final boolean sleepNone=value instanceof Boolean ? ((Boolean)value) : false;
+      if (mConfig == null || mConfig.sleepNone == sleepNone)       return false;
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.sleepNone=sleepNone;
+      if (DEBUG)       Log.d(TAG,"onPrefChange sleepNone=" + sleepNone);
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  mDowntimeMode.setOrder(10);
+  mDowntimeMode.setDependency(mDays.getKey());
   mAutomationCategory=(PreferenceCategory)findPreference(KEY_AUTOMATION);
   mEntry=findPreference(KEY_ENTRY);
   mEntry.setOnPreferenceClickListener(new OnPreferenceClickListener(){

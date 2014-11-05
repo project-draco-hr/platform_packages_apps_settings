@@ -6,6 +6,16 @@
       updateDebuggerOptions();
     }
   }
+ else   if (requestCode == REQUEST_CODE_ENABLE_OEM_UNLOCK) {
+    if (resultCode == Activity.RESULT_OK) {
+      if (mEnableOemUnlock.isChecked()) {
+        confirmEnableOemUnlock();
+      }
+ else {
+        Utils.setOemUnlockEnabled(getActivity(),false);
+      }
+    }
+  }
  else {
     super.onActivityResult(requestCode,resultCode,data);
   }

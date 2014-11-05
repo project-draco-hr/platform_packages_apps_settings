@@ -34,7 +34,14 @@
     writeBtHciSnoopLogOptions();
   }
  else   if (preference == mEnableOemUnlock) {
-    Utils.setOemUnlockEnabled(getActivity(),mEnableOemUnlock.isChecked());
+    if (!showKeyguardConfirmation(getResources(),REQUEST_CODE_ENABLE_OEM_UNLOCK)) {
+      if (mEnableOemUnlock.isChecked()) {
+        confirmEnableOemUnlock();
+      }
+ else {
+        Utils.setOemUnlockEnabled(getActivity(),false);
+      }
+    }
   }
  else   if (preference == mAllowMockLocation) {
     Settings.Secure.putInt(getActivity().getContentResolver(),Settings.Secure.ALLOW_MOCK_LOCATION,mAllowMockLocation.isChecked() ? 1 : 0);

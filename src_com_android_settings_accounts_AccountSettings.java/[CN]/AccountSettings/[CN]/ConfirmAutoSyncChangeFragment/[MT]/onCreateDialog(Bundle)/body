@@ -2,6 +2,7 @@
   final Context context=getActivity();
   if (savedInstanceState != null) {
     mEnabling=savedInstanceState.getBoolean(SAVE_ENABLING);
+    mUserHandle=(UserHandle)savedInstanceState.getParcelable(SAVE_USER_HANDLE);
   }
   final AlertDialog.Builder builder=new AlertDialog.Builder(context);
   if (!mEnabling) {

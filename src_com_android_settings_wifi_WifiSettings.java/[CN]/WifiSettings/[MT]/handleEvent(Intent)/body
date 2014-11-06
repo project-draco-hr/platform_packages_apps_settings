@@ -11,9 +11,9 @@
     mConnected.set(info.isConnected());
     changeNextButtonState(info.isConnected());
     updateAccessPoints();
-    updateConnectionState(info.getDetailedState());
+    updateNetworkInfo(info);
   }
  else   if (WifiManager.RSSI_CHANGED_ACTION.equals(action)) {
-    updateConnectionState(null);
+    updateNetworkInfo(null);
   }
 }

@@ -8,7 +8,7 @@
   mVerboseLogging=mWifiManager.getVerboseLoggingLevel();
 switch (wifiState) {
 case WifiManager.WIFI_STATE_ENABLED:
-    final Collection<AccessPoint> accessPoints=constructAccessPoints(getActivity(),mWifiManager,mLastInfo,mLastState);
+    final Collection<AccessPoint> accessPoints=constructAccessPoints(getActivity(),mWifiManager,mLastInfo,mLastNetworkInfo);
   getPreferenceScreen().removeAll();
 if (accessPoints.size() == 0) {
   addMessagePreference(R.string.wifi_empty_list_wifi_on);

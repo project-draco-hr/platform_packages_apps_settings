@@ -17,7 +17,7 @@
       mNetworkScoreManager.setActiveScorer(null);
       return true;
     }
-    NetworkScorerAppData wifiAssistant=WifiSettings.getWifiAssistantApp(context);
+    NetworkScorerAppData wifiAssistant=getWifiAssistantApp(context);
     Intent intent=new Intent();
     if (wifiAssistant.mConfigurationActivityClassName != null) {
       intent.setClassName(wifiAssistant.mPackageName,wifiAssistant.mConfigurationActivityClassName);

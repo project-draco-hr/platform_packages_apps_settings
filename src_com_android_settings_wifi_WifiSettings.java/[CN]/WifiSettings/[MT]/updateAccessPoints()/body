@@ -13,13 +13,9 @@ case WifiManager.WIFI_STATE_ENABLED:
 if (accessPoints.size() == 0) {
   addMessagePreference(R.string.wifi_empty_list_wifi_on);
 }
-getListView().removeHeaderView(mWifiAssistantCard);
-if (mWifiAssistantApp != null) {
-getListView().addHeaderView(mWifiAssistantCard);
-}
 for (AccessPoint accessPoint : accessPoints) {
 if (accessPoint.getLevel() != -1) {
-getPreferenceScreen().addPreference(accessPoint);
+  getPreferenceScreen().addPreference(accessPoint);
 }
 }
 break;

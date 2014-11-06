@@ -1,16 +1,16 @@
 {
   boolean reorder=false;
-  if (info != null && networkId != WifiConfiguration.INVALID_NETWORK_ID && networkId == info.getNetworkId()) {
+  if (info != null && isInfoForThisAccessPoint(info)) {
     reorder=(mInfo == null);
     mRssi=info.getRssi();
     mInfo=info;
-    mState=state;
+    mNetworkInfo=networkInfo;
     refresh();
   }
  else   if (mInfo != null) {
     reorder=true;
     mInfo=null;
-    mState=null;
+    mNetworkInfo=null;
     refresh();
   }
   if (reorder) {

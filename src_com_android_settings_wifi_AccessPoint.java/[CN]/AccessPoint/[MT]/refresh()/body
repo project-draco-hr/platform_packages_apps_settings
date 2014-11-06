@@ -4,8 +4,8 @@
   updateIcon(getLevel(),context);
   setSummary(null);
   StringBuilder summary=new StringBuilder();
-  if (mState != null) {
-    summary.append(Summary.get(context,mState));
+  if (isActive()) {
+    summary.append(Summary.get(context,getState()));
   }
  else   if (mConfig != null && mConfig.noInternetAccess) {
     summary.append(context.getString(R.string.wifi_no_internet));
@@ -47,7 +47,7 @@ summary.append(context.getString(R.string.wifi_remembered));
 }
 }
 if (WifiSettings.mVerboseLogging > 0) {
-if (mInfo != null && mState != null) {
+if (mInfo != null && mNetworkInfo != null) {
 summary.append(" f=" + Integer.toString(mInfo.getFrequency()));
 }
 summary.append(" " + getVisibilityStatus());
@@ -78,8 +78,9 @@ summary.append(" authf=").append(mConfig.numAuthFailures);
 }
 if (summary.length() > 0) {
 setSummary(summary.toString());
+setShowSummary(true);
 }
  else {
-showSummary=false;
+setShowSummary(false);
 }
 }

@@ -1,6 +1,6 @@
 {
   final Preference simPref=(Preference)findPreference(KEY_SMS);
-  final SubInfoRecord sir=findRecordBySubId(SubscriptionManager.getDefaultSmsSubId());
+  final SubInfoRecord sir=Utils.findRecordBySubId(SubscriptionManager.getDefaultSmsSubId());
   simPref.setTitle(R.string.sms_messages_title);
   if (mSubInfoList.size() == 1) {
     simPref.setSummary(mSubInfoList.get(0).getDisplayName());

@@ -1,0 +1,11 @@
+{
+  final List<SubInfoRecord> subInfoList=SubscriptionManager.getActiveSubInfoList();
+  final int subInfoLength=subInfoList.size();
+  for (int i=0; i < subInfoLength; ++i) {
+    final SubInfoRecord sir=subInfoList.get(i);
+    if (sir.getSimSlotIndex() == slotId) {
+      return sir;
+    }
+  }
+  return null;
+}

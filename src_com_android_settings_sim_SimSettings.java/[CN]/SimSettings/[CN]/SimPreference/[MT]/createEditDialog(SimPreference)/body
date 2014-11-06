@@ -35,13 +35,13 @@
       int subId=mSubInfoRecord.getSubscriptionId();
       mSubInfoRecord.setDisplayName(displayName);
       SubscriptionManager.setDisplayName(displayName,subId,SubscriptionManager.NAME_SOURCE_USER_INPUT);
-      findRecordBySubId(subId).setDisplayName(displayName);
+      Utils.findRecordBySubId(subId).setDisplayName(displayName);
       final int colorSelected=colorSpinner.getSelectedItemPosition();
       int subscriptionId=mSubInfoRecord.getSubscriptionId();
       int color=colorArr[colorSelected];
       mSubInfoRecord.setColor(color);
       SubscriptionManager.setColor(color,subscriptionId);
-      findRecordBySubId(subscriptionId).setColor(color);
+      Utils.findRecordBySubId(subscriptionId).setColor(color);
       updateAllOptions();
       update();
     }

@@ -1,0 +1,26 @@
+{
+  if (TextUtils.equals("com.android.certinstaller",getCallingPackage())) {
+    return true;
+  }
+  final int launchedFromUserId;
+  try {
+    int launchedFromUid=android.app.ActivityManagerNative.getDefault().getLaunchedFromUid(getActivityToken());
+    if (launchedFromUid == -1) {
+      Log.e(TAG,ACTION_INSTALL + " must be started with startActivityForResult");
+      return false;
+    }
+    if (!UserHandle.isSameApp(launchedFromUid,Process.myUid())) {
+      return false;
+    }
+    launchedFromUserId=UserHandle.getUserId(launchedFromUid);
+  }
+ catch (  RemoteException re) {
+    return false;
+  }
+  UserManager userManager=(UserManager)getSystemService(Context.USER_SERVICE);
+  UserInfo parentInfo=userManager.getProfileParent(launchedFromUserId);
+  if (parentInfo == null || parentInfo.id != UserHandle.myUserId()) {
+    return false;
+  }
+  return true;
+}

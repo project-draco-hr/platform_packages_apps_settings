@@ -10,6 +10,9 @@
   if (Utils.isSystemPackage(mPm,mPackageInfo)) {
     mNotificationSwitch.setEnabled(false);
   }
+ else   if ((mPackageInfo.applicationInfo.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
+    mNotificationSwitch.setEnabled(false);
+  }
  else {
     mNotificationSwitch.setEnabled(true);
     mNotificationSwitch.setOnCheckedChangeListener(this);

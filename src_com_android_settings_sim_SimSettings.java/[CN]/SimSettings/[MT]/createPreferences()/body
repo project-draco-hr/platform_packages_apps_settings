@@ -7,7 +7,7 @@
   mSelectableSubInfos=new ArrayList<SubInfoRecord>();
   mNumSims=0;
   for (int i=0; i < numSlots; ++i) {
-    final SubInfoRecord sir=findRecordBySlotId(i);
+    final SubInfoRecord sir=Utils.findRecordBySlotId(i);
     mSimCards.addPreference(new SimPreference(getActivity(),sir,i));
     mAvailableSubInfos.add(sir);
     if (sir != null) {

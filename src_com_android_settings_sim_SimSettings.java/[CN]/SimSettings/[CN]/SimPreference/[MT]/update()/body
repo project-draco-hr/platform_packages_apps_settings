@@ -1,16 +1,8 @@
 {
   final Resources res=getResources();
   if (mSubInfoRecord != null) {
-    if (TextUtils.isEmpty(mSubInfoRecord.getDisplayName())) {
-      setTitle(getCarrierName());
-      String displayName=getCarrierName();
-      mSubInfoRecord.setDisplayName(displayName);
-      SubscriptionManager.setDisplayName(displayName,mSubInfoRecord.getSubscriptionId());
-    }
- else {
-      setTitle(mSubInfoRecord.getDisplayName());
-    }
-    setSummary(mSubInfoRecord.getNumber());
+    setTitle(String.format(res.getString(R.string.sim_editor_title),(mSubInfoRecord.getSimSlotIndex() + 1)));
+    setSummary(mSubInfoRecord.getDisplayName() + " - " + mSubInfoRecord.getNumber().toString());
     setEnabled(true);
   }
  else {

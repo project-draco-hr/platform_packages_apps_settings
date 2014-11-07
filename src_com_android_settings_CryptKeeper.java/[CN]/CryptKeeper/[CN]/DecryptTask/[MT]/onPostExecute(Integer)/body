@@ -4,10 +4,11 @@
       mLockPatternView.removeCallbacks(mClearPatternRunnable);
       mLockPatternView.postDelayed(mClearPatternRunnable,RIGHT_PATTERN_CLEAR_TIMEOUT_MS);
     }
+    final TextView status=(TextView)findViewById(R.id.status);
+    status.setText(R.string.starting_android);
     hide(R.id.passwordEntry);
     hide(R.id.switch_ime_button);
     hide(R.id.lockPattern);
-    hide(R.id.status);
     hide(R.id.owner_info);
     hide(R.id.emergencyCallButton);
   }
@@ -41,7 +42,23 @@
         status.setText(warning);
       }
  else {
-        status.setText(R.string.try_again);
+        int passwordType=StorageManager.CRYPT_TYPE_PASSWORD;
+        try {
+          final IMountService service=getMountService();
+          passwordType=service.getPasswordType();
+        }
+ catch (        Exception e) {
+          Log.e(TAG,"Error calling mount service " + e);
+        }
+        if (passwordType == StorageManager.CRYPT_TYPE_PIN) {
+          status.setText(R.string.cryptkeeper_wrong_pin);
+        }
+ else         if (passwordType == StorageManager.CRYPT_TYPE_PATTERN) {
+          status.setText(R.string.cryptkeeper_wrong_password);
+        }
+ else {
+          status.setText(R.string.cryptkeeper_wrong_pin);
+        }
       }
       if (mLockPatternView != null) {
         mLockPatternView.setDisplayMode(DisplayMode.Wrong);

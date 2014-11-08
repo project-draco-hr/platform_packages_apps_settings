@@ -2,13 +2,13 @@
   if (preference instanceof SimPreference) {
     ((SimPreference)preference).createEditDialog((SimPreference)preference);
   }
- else   if ((Preference)findPreference(KEY_CELLULAR_DATA) == preference) {
+ else   if (findPreference(KEY_CELLULAR_DATA) == preference) {
     showDialog(DATA_PICK);
   }
- else   if ((Preference)findPreference(KEY_CALLS) == preference) {
+ else   if (findPreference(KEY_CALLS) == preference) {
     showDialog(CALLS_PICK);
   }
- else   if ((Preference)findPreference(KEY_SMS) == preference) {
+ else   if (findPreference(KEY_SMS) == preference) {
     showDialog(SMS_PICK);
   }
   return true;

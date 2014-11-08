@@ -7,7 +7,12 @@
     v.setText(null);
     mPasswordEntry.setEnabled(false);
     setBackFunctionality(false);
-    new DecryptTask().execute(password);
+    if (password.length() >= LockPatternUtils.MIN_LOCK_PATTERN_SIZE) {
+      new DecryptTask().execute(password);
+    }
+ else {
+      fakeUnlockAttempt(mPasswordEntry);
+    }
     return true;
   }
   return false;

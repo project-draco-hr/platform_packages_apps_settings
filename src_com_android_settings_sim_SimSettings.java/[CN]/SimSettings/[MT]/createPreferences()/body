@@ -3,11 +3,11 @@
   addPreferencesFromResource(R.xml.sim_settings);
   mSimCards=(PreferenceCategory)findPreference(SIM_CARD_CATEGORY);
   final int numSlots=tm.getSimCount();
-  mAvailableSubInfos=new ArrayList<SubInfoRecord>(numSlots);
-  mSelectableSubInfos=new ArrayList<SubInfoRecord>();
+  mAvailableSubInfos=new ArrayList<SubscriptionInfo>(numSlots);
+  mSelectableSubInfos=new ArrayList<SubscriptionInfo>();
   mNumSims=0;
   for (int i=0; i < numSlots; ++i) {
-    final SubInfoRecord sir=Utils.findRecordBySlotId(i);
+    final SubscriptionInfo sir=Utils.findRecordBySlotId(i);
     mSimCards.addPreference(new SimPreference(getActivity(),sir,i));
     mAvailableSubInfos.add(sir);
     if (sir != null) {

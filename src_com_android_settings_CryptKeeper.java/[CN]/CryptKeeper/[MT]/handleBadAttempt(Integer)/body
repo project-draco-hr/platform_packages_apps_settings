@@ -1,0 +1,49 @@
+{
+  if (mLockPatternView != null) {
+    mLockPatternView.setDisplayMode(DisplayMode.Wrong);
+    mLockPatternView.removeCallbacks(mClearPatternRunnable);
+    mLockPatternView.postDelayed(mClearPatternRunnable,WRONG_PATTERN_CLEAR_TIMEOUT_MS);
+  }
+  if ((failedAttempts % COOL_DOWN_ATTEMPTS) == 0) {
+    mCooldown=COOL_DOWN_INTERVAL;
+    cooldown();
+  }
+ else {
+    final TextView status=(TextView)findViewById(R.id.status);
+    int remainingAttempts=MAX_FAILED_ATTEMPTS - failedAttempts;
+    if (remainingAttempts < COOL_DOWN_ATTEMPTS) {
+      CharSequence warningTemplate=getText(R.string.crypt_keeper_warn_wipe);
+      CharSequence warning=TextUtils.expandTemplate(warningTemplate,Integer.toString(remainingAttempts));
+      status.setText(warning);
+    }
+ else {
+      int passwordType=StorageManager.CRYPT_TYPE_PASSWORD;
+      try {
+        final IMountService service=getMountService();
+        passwordType=service.getPasswordType();
+      }
+ catch (      Exception e) {
+        Log.e(TAG,"Error calling mount service " + e);
+      }
+      if (passwordType == StorageManager.CRYPT_TYPE_PIN) {
+        status.setText(R.string.cryptkeeper_wrong_pin);
+      }
+ else       if (passwordType == StorageManager.CRYPT_TYPE_PATTERN) {
+        status.setText(R.string.cryptkeeper_wrong_pattern);
+      }
+ else {
+        status.setText(R.string.cryptkeeper_wrong_password);
+      }
+    }
+    if (mLockPatternView != null) {
+      mLockPatternView.setDisplayMode(DisplayMode.Wrong);
+      mLockPatternView.setEnabled(true);
+    }
+    if (mPasswordEntry != null) {
+      mPasswordEntry.setEnabled(true);
+      final InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.showSoftInput(mPasswordEntry,0);
+      setBackFunctionality(true);
+    }
+  }
+}

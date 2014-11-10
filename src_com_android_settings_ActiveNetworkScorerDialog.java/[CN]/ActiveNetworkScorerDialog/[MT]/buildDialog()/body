@@ -1,4 +1,8 @@
 {
+  if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
+    Log.i(TAG,"Can only set scorer for owner user.");
+    return false;
+  }
   NetworkScorerAppData newScorer=NetworkScorerAppManager.getScorer(this,mNewPackageName);
   if (newScorer == null) {
     Log.e(TAG,"New package " + mNewPackageName + " is not a valid scorer.");

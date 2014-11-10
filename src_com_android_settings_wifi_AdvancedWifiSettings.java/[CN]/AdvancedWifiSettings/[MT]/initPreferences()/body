@@ -10,9 +10,9 @@
   Preference pref=findPreference(KEY_INSTALL_CREDENTIALS);
   pref.setIntent(intent);
   final Context context=getActivity();
-  NetworkScorerAppData scorer=getWifiAssistantApp(context);
   SwitchPreference wifiAssistant=(SwitchPreference)findPreference(KEY_WIFI_ASSISTANT);
-  if (scorer != null) {
+  NetworkScorerAppData scorer=getWifiAssistantApp(context);
+  if (UserHandle.myUserId() == UserHandle.USER_OWNER && scorer != null) {
     final boolean checked=NetworkScorerAppManager.getActiveScorer(context) != null;
     wifiAssistant.setSummary(getResources().getString(R.string.wifi_automatically_manage_summary,scorer.mScorerName));
     wifiAssistant.setOnPreferenceChangeListener(this);

@@ -16,7 +16,9 @@
   View textLayout=view.findViewById(R.id.tts_engine_pref_text);
   textLayout.setOnClickListener(new View.OnClickListener(){
     @Override public void onClick(    View v){
-      onRadioButtonClicked(rb,!rb.isChecked());
+      if (!rb.isChecked()) {
+        onRadioButtonClicked(rb,true);
+      }
     }
   }
 );

@@ -1,6 +1,6 @@
 {
-  final SubInfoRecord currentSir=getCurrentTabSubInfo(getActivity());
-  final SubInfoRecord nextSir=SubscriptionManager.getSubInfoForSubscriber(SubscriptionManager.getDefaultDataSubId());
+  final SubscriptionInfo currentSir=getCurrentTabSubInfo(getActivity());
+  final SubscriptionInfo nextSir=SubscriptionManager.getSubscriptionInfoForSubscriber(SubscriptionManager.getDefaultDataSubId());
   if (currentSir.getSubscriptionId() == nextSir.getSubscriptionId()) {
     setMobileDataEnabled(true);
     updateBody();

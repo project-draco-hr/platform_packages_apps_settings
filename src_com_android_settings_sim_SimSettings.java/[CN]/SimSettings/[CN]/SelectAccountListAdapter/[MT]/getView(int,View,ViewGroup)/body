@@ -2,18 +2,35 @@
   LayoutInflater inflater=(LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   View rowView;
   final ViewHolder holder;
+  SubscriptionInfo sir;
   if (convertView == null) {
     rowView=inflater.inflate(mResId,null);
     holder=new ViewHolder();
-    holder.textView=(TextView)rowView.findViewById(R.id.text);
-    holder.imageView=(ImageView)rowView.findViewById(R.id.icon);
+    holder.title=(TextView)rowView.findViewById(R.id.title);
+    holder.summary=(TextView)rowView.findViewById(R.id.summary);
+    holder.icon=(ImageView)rowView.findViewById(R.id.icon);
     rowView.setTag(holder);
   }
  else {
     rowView=convertView;
     holder=(ViewHolder)rowView.getTag();
   }
-  holder.textView.setText(getItem(position));
-  holder.imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_sim_sd));
+  if (mDialogId == CALLS_PICK && position == 0) {
+    holder.title.setText(getItem(position));
+    holder.summary.setText("");
+    holder.icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_live_help));
+    holder.icon.setAlpha(OPACITY);
+  }
+ else {
+    if (mDialogId == CALLS_PICK && position != 0) {
+      sir=mSelectableSubInfos.get(position - 1);
+    }
+ else {
+      sir=mSelectableSubInfos.get(position);
+    }
+    holder.title.setText(sir.getDisplayName());
+    holder.summary.setText(sir.getNumber());
+    holder.icon.setImageBitmap(sir.createIconBitmap(mContext));
+  }
   return rowView;
 }

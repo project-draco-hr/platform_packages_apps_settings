@@ -1,9 +1,15 @@
 {
   final Resources res=getResources();
+  setTitle(String.format(getResources().getString(R.string.sim_editor_title),(mSlotId + 1)));
   if (mSubInfoRecord != null) {
-    setTitle(String.format(res.getString(R.string.sim_editor_title),(mSubInfoRecord.getSimSlotIndex() + 1)));
-    setSummary(mSubInfoRecord.getDisplayName() + " - " + mSubInfoRecord.getNumber().toString());
-    setEnabled(true);
+    if (TextUtils.isEmpty(mSubInfoRecord.getNumber().toString())) {
+      setSummary(mSubInfoRecord.getDisplayName());
+    }
+ else {
+      setSummary(mSubInfoRecord.getDisplayName() + " - " + mSubInfoRecord.getNumber().toString());
+      setEnabled(true);
+    }
+    setIcon(new BitmapDrawable(res,(mSubInfoRecord.createIconBitmap(mContext))));
   }
  else {
     setSummary(R.string.sim_slot_empty);

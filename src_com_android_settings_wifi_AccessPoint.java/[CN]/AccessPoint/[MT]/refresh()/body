@@ -7,7 +7,7 @@
   if (isActive()) {
     summary.append(Summary.get(context,getState()));
   }
- else   if (mConfig != null && mConfig.noInternetAccess) {
+ else   if (mConfig != null && mConfig.hasNoInternetAccess()) {
     summary.append(context.getString(R.string.wifi_no_internet));
   }
  else   if (mConfig != null && ((mConfig.status == WifiConfiguration.Status.DISABLED && mConfig.disableReason != WifiConfiguration.DISABLED_UNKNOWN_REASON) || mConfig.autoJoinStatus >= WifiConfiguration.AUTO_JOIN_DISABLED_ON_AUTH_FAILURE)) {
@@ -74,6 +74,9 @@ summary.append(" cf=").append(mConfig.numConnectionFailures);
 }
 if (mConfig != null && mConfig.numAuthFailures > 0) {
 summary.append(" authf=").append(mConfig.numAuthFailures);
+}
+if (mConfig != null && mConfig.numNoInternetAccessReports > 0) {
+summary.append(" noInt=").append(mConfig.numNoInternetAccessReports);
 }
 }
 if (summary.length() > 0) {

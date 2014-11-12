@@ -3,7 +3,7 @@
   final int selectableSubInfoLength=mSelectableSubInfos.size();
   final DialogInterface.OnClickListener selectionListener=new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int value){
-      final SubInfoRecord sir;
+      final SubscriptionInfo sir;
       if (id == DATA_PICK) {
         sir=mSelectableSubInfos.get(value);
         SubscriptionManager.setDefaultDataSubId(sir.getSubscriptionId());
@@ -32,7 +32,7 @@
   }
  else {
     for (int i=0; i < selectableSubInfoLength; ++i) {
-      final SubInfoRecord sir=mSelectableSubInfos.get(i);
+      final SubscriptionInfo sir=mSelectableSubInfos.get(i);
       CharSequence displayName=sir.getDisplayName();
       if (displayName == null) {
         displayName="";

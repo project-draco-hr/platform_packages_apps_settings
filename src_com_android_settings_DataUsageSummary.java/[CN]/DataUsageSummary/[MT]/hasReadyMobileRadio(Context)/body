@@ -4,12 +4,12 @@
   }
   final ConnectivityManager conn=ConnectivityManager.from(context);
   final TelephonyManager tele=TelephonyManager.from(context);
-  final List<SubInfoRecord> subInfoList=SubscriptionManager.getActiveSubInfoList();
+  final List<SubscriptionInfo> subInfoList=SubscriptionManager.getActiveSubscriptionInfoList();
   if (subInfoList == null) {
     return false;
   }
   boolean isReady=true;
-  for (  SubInfoRecord subInfo : subInfoList) {
+  for (  SubscriptionInfo subInfo : subInfoList) {
     isReady=isReady & tele.getSimState(subInfo.getSimSlotIndex()) == SIM_STATE_READY;
   }
   return conn.isNetworkSupported(TYPE_MOBILE) && isReady;

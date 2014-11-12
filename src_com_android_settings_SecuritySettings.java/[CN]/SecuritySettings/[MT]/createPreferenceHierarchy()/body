@@ -94,7 +94,7 @@
   PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
   mToggleAppInstallation=(SwitchPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
   mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
-  mToggleAppInstallation.setEnabled(mIsPrimary);
+  mToggleAppInstallation.setEnabled(!um.getUserInfo(UserHandle.myUserId()).isRestricted());
   if (um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES) || um.hasUserRestriction(UserManager.DISALLOW_INSTALL_APPS)) {
     mToggleAppInstallation.setEnabled(false);
   }

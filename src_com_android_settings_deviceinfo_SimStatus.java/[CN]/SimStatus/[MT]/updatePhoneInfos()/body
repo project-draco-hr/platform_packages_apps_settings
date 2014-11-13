@@ -1,0 +1,23 @@
+{
+  final Phone phone=PhoneFactory.getPhone(SubscriptionManager.getPhoneId(mSir.getSubscriptionId()));
+  if (UserHandle.myUserId() == UserHandle.USER_OWNER && mSir.getSubscriptionId() != SubscriptionManager.INVALID_SUB_ID) {
+    if (phone == null) {
+      Log.e(TAG,"Unable to locate a phone object for the given Subscription ID.");
+      return;
+    }
+    mPhone=phone;
+    mPhoneStateListener=new PhoneStateListener(mSir.getSubscriptionId()){
+      @Override public void onDataConnectionStateChanged(      int state){
+        updateDataState();
+        updateNetworkType();
+      }
+      @Override public void onSignalStrengthsChanged(      SignalStrength signalStrength){
+        updateSignalStrength(signalStrength);
+      }
+      @Override public void onServiceStateChanged(      ServiceState serviceState){
+        updateServiceState(serviceState);
+      }
+    }
+;
+  }
+}

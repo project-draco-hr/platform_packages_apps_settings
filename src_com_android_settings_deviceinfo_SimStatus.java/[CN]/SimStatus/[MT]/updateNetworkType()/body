@@ -1,0 +1,7 @@
+{
+  String networktype=null;
+  if (TelephonyManager.NETWORK_TYPE_UNKNOWN != mTelephonyManager.getNetworkType(mSir.getSubscriptionId())) {
+    networktype=mTelephonyManager.getNetworkTypeName(mTelephonyManager.getNetworkType(mSir.getSubscriptionId()));
+  }
+  setSummaryText(KEY_NETWORK_TYPE,networktype);
+}

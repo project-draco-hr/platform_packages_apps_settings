@@ -1,0 +1,8 @@
+{
+  if (mSuppressionTextView != null && mSeekBar != null) {
+    mSuppressionTextView.setText(mSuppressionText);
+    final boolean showSuppression=!TextUtils.isEmpty(mSuppressionText);
+    mSuppressionTextView.setVisibility(showSuppression ? View.VISIBLE : View.INVISIBLE);
+    mSeekBar.setVisibility(showSuppression ? View.INVISIBLE : View.VISIBLE);
+  }
+}

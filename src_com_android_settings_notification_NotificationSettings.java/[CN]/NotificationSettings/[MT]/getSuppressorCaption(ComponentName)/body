@@ -1,0 +1,19 @@
+{
+  final PackageManager pm=mContext.getPackageManager();
+  try {
+    final ServiceInfo info=pm.getServiceInfo(suppressor,0);
+    if (info != null) {
+      final CharSequence seq=info.loadLabel(pm);
+      if (seq != null) {
+        final String str=seq.toString().trim();
+        if (str.length() > 0) {
+          return str;
+        }
+      }
+    }
+  }
+ catch (  Throwable e) {
+    Log.w(TAG,"Error loading suppressor caption",e);
+  }
+  return suppressor.getPackageName();
+}

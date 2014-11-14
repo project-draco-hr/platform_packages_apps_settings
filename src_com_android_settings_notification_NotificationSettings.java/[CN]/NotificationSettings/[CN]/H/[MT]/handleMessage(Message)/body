@@ -10,7 +10,11 @@ case STOP_SAMPLE:
 mVolumeCallback.stopSample();
 break;
 case UPDATE_RINGER_ICON:
-updateRingOrNotificationIcon(msg.arg1);
+mRingOrNotificationProgress=msg.arg1;
+updateRingOrNotificationIcon();
+break;
+case UPDATE_EFFECTS_SUPPRESSOR:
+updateEffectsSuppressor();
 break;
 }
 }

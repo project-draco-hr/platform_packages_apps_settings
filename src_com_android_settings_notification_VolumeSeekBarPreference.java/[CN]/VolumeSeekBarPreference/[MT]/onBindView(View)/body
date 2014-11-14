@@ -29,5 +29,7 @@
   mVolumizer.start();
   mVolumizer.setSeekBar(mSeekBar);
   mIconView=(ImageView)view.findViewById(com.android.internal.R.id.icon);
+  mSuppressionTextView=(TextView)view.findViewById(R.id.suppression_text);
   mCallback.onStreamValueChanged(mStream,mSeekBar.getProgress());
+  updateSuppressionText();
 }

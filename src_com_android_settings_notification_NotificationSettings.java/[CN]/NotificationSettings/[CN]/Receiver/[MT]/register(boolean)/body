@@ -1,0 +1,10 @@
+{
+  if (mRegistered == register)   return;
+  if (register) {
+    mContext.registerReceiver(this,new IntentFilter(NotificationManager.ACTION_EFFECTS_SUPPRESSOR_CHANGED));
+  }
+ else {
+    mContext.unregisterReceiver(this);
+  }
+  mRegistered=register;
+}

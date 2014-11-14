@@ -1,0 +1,10 @@
+{
+  final ComponentName suppressor=NotificationManager.from(mContext).getEffectsSuppressor();
+  if (Objects.equals(suppressor,mSuppressor))   return;
+  mSuppressor=suppressor;
+  if (mRingOrNotificationPreference != null) {
+    final String text=suppressor != null ? mContext.getString(com.android.internal.R.string.muted_by,getSuppressorCaption(suppressor)) : null;
+    mRingOrNotificationPreference.setSuppressionText(text);
+  }
+  updateRingOrNotificationIcon();
+}

@@ -8,7 +8,7 @@
       new ResetDialog();
     }
  else {
-      if (ACTION_INSTALL.equals(action) && "com.android.certinstaller".equals(getCallingPackage())) {
+      if (ACTION_INSTALL.equals(action) && checkCallerIsCertInstallerOrSelfInProfile()) {
         mInstallBundle=intent.getExtras();
       }
       handleUnlockOrInstall();

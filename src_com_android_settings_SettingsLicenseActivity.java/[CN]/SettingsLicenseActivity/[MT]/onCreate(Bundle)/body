@@ -1,31 +1,28 @@
 {
   super.onCreate(savedInstanceState);
-  String fileName=SystemProperties.get(PROPERTY_LICENSE_PATH,DEFAULT_LICENSE_PATH);
-  if (TextUtils.isEmpty(fileName)) {
-    Log.e(TAG,"The system property for the license file is empty.");
+  final String path=SystemProperties.get(PROPERTY_LICENSE_PATH,DEFAULT_LICENSE_PATH);
+  if (TextUtils.isEmpty(path)) {
+    Log.e(TAG,"The system property for the license file is empty");
     showErrorAndFinish();
     return;
   }
-  setVisible(false);
-  mWebView=new WebView(this);
-  mHandler=new Handler(){
-    @Override public void handleMessage(    Message msg){
-      super.handleMessage(msg);
-      if (msg.what == LicenseFileLoader.STATUS_OK) {
-        String text=(String)msg.obj;
-        showPageOfText(text);
-      }
- else {
-        showErrorAndFinish();
-      }
-    }
+  final File file=new File(path);
+  if (!file.exists() || file.length() == 0) {
+    Log.e(TAG,"License file " + path + " does not exist");
+    showErrorAndFinish();
+    return;
   }
-;
-  CharSequence title=getText(R.string.settings_license_activity_title);
-  CharSequence msg=getText(R.string.settings_license_activity_loading);
-  ProgressDialog pd=ProgressDialog.show(this,title,msg,true,false);
-  pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-  mSpinnerDlg=pd;
-  Thread thread=new Thread(new LicenseFileLoader(fileName,mHandler));
-  thread.start();
+  final Intent intent=new Intent(Intent.ACTION_VIEW);
+  intent.setDataAndType(Uri.fromFile(file),"text/html");
+  intent.putExtra(Intent.EXTRA_TITLE,getString(R.string.settings_license_activity_title));
+  intent.addCategory(Intent.CATEGORY_DEFAULT);
+  intent.setPackage("com.android.htmlviewer");
+  try {
+    startActivity(intent);
+    finish();
+  }
+ catch (  ActivityNotFoundException e) {
+    Log.e(TAG,"Failed to find viewer",e);
+    showErrorAndFinish();
+  }
 }

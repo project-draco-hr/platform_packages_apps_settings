@@ -40,8 +40,7 @@
       list.add(displayName.toString());
     }
   }
-  String[] arr=new String[selectableSubInfoLength];
-  arr=list.toArray(arr);
+  String[] arr=list.toArray(new String[0]);
   AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
   ListAdapter adapter=new SelectAccountListAdapter(builder.getContext(),R.layout.select_account_list_item,arr,id);
   if (id == DATA_PICK) {

@@ -13,11 +13,11 @@
     }
   }
  else   if (KEY_WIFI_ASSISTANT.equals(key)) {
-    if (((Boolean)newValue).booleanValue() == false) {
+    NetworkScorerAppData wifiAssistant=NetworkScorerAppManager.getScorer(context,(String)newValue);
+    if (wifiAssistant == null) {
       mNetworkScoreManager.setActiveScorer(null);
       return true;
     }
-    NetworkScorerAppData wifiAssistant=getWifiAssistantApp(context);
     Intent intent=new Intent();
     if (wifiAssistant.mConfigurationActivityClassName != null) {
       intent.setClassName(wifiAssistant.mPackageName,wifiAssistant.mConfigurationActivityClassName);
@@ -27,6 +27,7 @@
       intent.putExtra(NetworkScoreManager.EXTRA_PACKAGE_NAME,wifiAssistant.mPackageName);
     }
     startActivity(intent);
+    return false;
   }
   if (KEY_SLEEP_POLICY.equals(key)) {
     try {

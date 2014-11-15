@@ -1,0 +1,10 @@
+{
+  int count=scorers.size();
+  String[] packageNames=new String[count];
+  int i=0;
+  for (  NetworkScorerAppData scorer : scorers) {
+    packageNames[i]=scorer.mPackageName;
+    i++;
+  }
+  mWifiAssistantPreference.setPackageNames(packageNames,mNetworkScoreManager.getActiveScorerPackage());
+}

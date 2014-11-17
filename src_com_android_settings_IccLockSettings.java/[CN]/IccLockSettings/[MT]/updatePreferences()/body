@@ -1,3 +1,7 @@
 {
-  mPinToggle.setChecked(mPhone.getIccCard().getIccLockEnabled());
+  mPinDialog.setEnabled(mPhone != null);
+  mPinToggle.setEnabled(mPhone != null);
+  if (mPhone != null) {
+    mPinToggle.setChecked(mPhone.getIccCard().getIccLockEnabled());
+  }
 }

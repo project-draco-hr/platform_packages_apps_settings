@@ -1,8 +1,5 @@
 {
-  String value=Settings.System.getString(mContext.getContentResolver(),Settings.System.DATE_FORMAT);
-  if (value == null) {
-    LocaleData d=LocaleData.get(mContext.getResources().getConfiguration().locale);
-    value=d.shortDateFormat4;
-  }
+  LocaleData d=LocaleData.get(mContext.getResources().getConfiguration().locale);
+  String value=d.shortDateFormat4;
   return value.indexOf('M') > value.indexOf('d');
 }

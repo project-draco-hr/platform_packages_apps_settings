@@ -1,0 +1,25 @@
+{
+  final int numSlots=mTelephonyManager.getSimCount();
+  if (numSlots < 2) {
+    return;
+  }
+  if (SubscriptionManager.getActiveSubscriptionInfoList().size() < 1) {
+    return;
+  }
+  for (int i=0; i < numSlots; i++) {
+    final SubscriptionInfo sir=Utils.findRecordBySlotId(i);
+    final String key=SLOT_PREFIX + i;
+    final int lastSubId=getLastSubId(key);
+    if (sir != null) {
+      final int currentSubId=sir.getSubscriptionId();
+      if (lastSubId != currentSubId) {
+        createNotification(mContext);
+        setLastSubId(key,currentSubId);
+      }
+    }
+ else     if (lastSubId != SLOT_EMPTY) {
+      createNotification(mContext);
+      setLastSubId(key,SLOT_EMPTY);
+    }
+  }
+}

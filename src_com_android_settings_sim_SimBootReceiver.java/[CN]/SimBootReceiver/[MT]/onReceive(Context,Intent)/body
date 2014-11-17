@@ -1,0 +1,6 @@
+{
+  mTelephonyManager=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+  mContext=context;
+  mSharedPreferences=mContext.getSharedPreferences(SHARED_PREFERENCES_NAME,Context.MODE_PRIVATE);
+  SubscriptionManager.register(mContext,mSubscriptionListener,SubscriptionListener.LISTEN_SUBSCRIPTION_INFO_LIST_CHANGED);
+}

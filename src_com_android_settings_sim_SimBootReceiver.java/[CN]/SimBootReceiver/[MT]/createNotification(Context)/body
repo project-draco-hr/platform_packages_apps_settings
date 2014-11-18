@@ -1,0 +1,10 @@
+{
+  final Resources resources=context.getResources();
+  NotificationCompat.Builder builder=new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_sim_card_alert_white_48dp).setColor(resources.getColor(R.color.sim_noitification)).setContentTitle(resources.getString(R.string.sim_notification_title)).setContentText(resources.getString(R.string.sim_notification_summary));
+  Intent resultIntent=new Intent(context,SimSettingsActivity.class);
+  resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+  PendingIntent resultPendingIntent=PendingIntent.getActivity(context,0,resultIntent,PendingIntent.FLAG_CANCEL_CURRENT);
+  builder.setContentIntent(resultPendingIntent);
+  NotificationManager notificationManager=(NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+  notificationManager.notify(NOTIFICATION_ID,builder.build());
+}

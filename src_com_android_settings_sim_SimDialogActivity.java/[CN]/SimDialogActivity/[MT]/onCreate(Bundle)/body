@@ -1,0 +1,17 @@
+{
+  super.onCreate(savedInstanceState);
+  final Bundle extras=getIntent().getExtras();
+  final int dialogType=extras.getInt(DIALOG_TYPE_KEY,INVALID_PICK);
+switch (dialogType) {
+case DATA_PICK:
+case CALLS_PICK:
+case SMS_PICK:
+    createDialog(this,dialogType).show();
+  break;
+case PREFERRED_PICK:
+displayPreferredDialog(extras.getInt(PREFERRED_SIM));
+break;
+default :
+throw new IllegalArgumentException("Invalid dialog type " + dialogType + " sent.");
+}
+}

@@ -1,5 +1,8 @@
 {
   if (!isResumed())   return;
   setFeedsState();
-  getActivity().invalidateOptionsMenu();
+  final Activity activity=getActivity();
+  if (activity != null) {
+    activity.invalidateOptionsMenu();
+  }
 }

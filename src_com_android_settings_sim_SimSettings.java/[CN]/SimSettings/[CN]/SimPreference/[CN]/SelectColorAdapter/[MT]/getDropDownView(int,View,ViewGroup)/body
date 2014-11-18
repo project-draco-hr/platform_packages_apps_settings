@@ -1,0 +1,12 @@
+{
+  View rowView=getView(position,convertView,parent);
+  final ViewHolder holder=(ViewHolder)rowView.getTag();
+  if (mTintSelectorPos == position) {
+    holder.swatch.getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
+  }
+ else {
+    holder.swatch.getPaint().setStyle(Paint.Style.STROKE);
+  }
+  holder.icon.setVisibility(View.VISIBLE);
+  return rowView;
+}

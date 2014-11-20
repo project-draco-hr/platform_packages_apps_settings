@@ -1,0 +1,65 @@
+{
+  View accountsLabel=mContentView.findViewById(R.id.accounts_label);
+  LinearLayout contents=(LinearLayout)mContentView.findViewById(R.id.accounts);
+  contents.removeAllViews();
+  Context context=getActivity();
+  final List<UserInfo> profiles=um.getProfiles(UserHandle.myUserId());
+  final int profilesSize=profiles.size();
+  AccountManager mgr=AccountManager.get(context);
+  LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  int accountsCount=0;
+  for (int profileIndex=0; profileIndex < profilesSize; profileIndex++) {
+    final UserInfo userInfo=profiles.get(profileIndex);
+    final int profileId=userInfo.id;
+    final UserHandle userHandle=new UserHandle(profileId);
+    Account[] accounts=mgr.getAccountsAsUser(profileId);
+    final int N=accounts.length;
+    if (N == 0) {
+      continue;
+    }
+    accountsCount+=N;
+    AuthenticatorDescription[] descs=AccountManager.get(context).getAuthenticatorTypesAsUser(profileId);
+    final int M=descs.length;
+    View titleView=newTitleView(contents,inflater);
+    final TextView titleText=(TextView)titleView.findViewById(android.R.id.title);
+    titleText.setText(userInfo.isManagedProfile() ? R.string.category_work : R.string.category_personal);
+    contents.addView(titleView);
+    for (int i=0; i < N; i++) {
+      Account account=accounts[i];
+      AuthenticatorDescription desc=null;
+      for (int j=0; j < M; j++) {
+        if (account.type.equals(descs[j].type)) {
+          desc=descs[j];
+          break;
+        }
+      }
+      if (desc == null) {
+        Log.w(TAG,"No descriptor for account name=" + account.name + " type="+ account.type);
+        continue;
+      }
+      Drawable icon=null;
+      try {
+        if (desc.iconId != 0) {
+          Context authContext=context.createPackageContext(desc.packageName,0);
+          icon=context.getPackageManager().getUserBadgedIcon(authContext.getDrawable(desc.iconId),userHandle);
+        }
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+        Log.w(TAG,"No icon for account type " + desc.type);
+      }
+      TextView child=(TextView)inflater.inflate(R.layout.master_clear_account,contents,false);
+      child.setText(account.name);
+      if (icon != null) {
+        child.setCompoundDrawablesWithIntrinsicBounds(icon,null,null,null);
+      }
+      contents.addView(child);
+    }
+  }
+  if (accountsCount > 0) {
+    accountsLabel.setVisibility(View.VISIBLE);
+    contents.setVisibility(View.VISIBLE);
+  }
+  View otherUsers=mContentView.findViewById(R.id.other_users_present);
+  final boolean hasOtherUsers=(um.getUserCount() - profilesSize) > 0;
+  otherUsers.setVisibility(hasOtherUsers ? View.VISIBLE : View.GONE);
+}

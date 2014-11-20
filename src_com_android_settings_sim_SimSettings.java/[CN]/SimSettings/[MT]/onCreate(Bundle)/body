@@ -1,10 +1,8 @@
 {
   super.onCreate(bundle);
-  mSubscriptionManager=SubscriptionManager.from(getActivity());
   if (mSubInfoList == null) {
-    mSubInfoList=mSubscriptionManager.getActiveSubscriptionInfoList();
+    mSubInfoList=SubscriptionManager.getActiveSubscriptionInfoList();
   }
-  if (DBG)   log("[onCreate] mSubInfoList=" + mSubInfoList);
   createPreferences();
   updateAllOptions();
   SimBootReceiver.cancelNotification(getActivity());

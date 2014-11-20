@@ -5,11 +5,10 @@
   mStatsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
   mPolicyManager=NetworkPolicyManager.from(context);
   mTelephonyManager=TelephonyManager.from(context);
-  mSubscriptionManager=SubscriptionManager.from(context);
   mPrefs=getActivity().getSharedPreferences(PREF_FILE,Context.MODE_PRIVATE);
   mPolicyEditor=new NetworkPolicyEditor(mPolicyManager);
   mPolicyEditor.read();
-  mSubInfoList=mSubscriptionManager.getActiveSubscriptionInfoList();
+  mSubInfoList=SimSettings.getSortedSubInfoList(getActivity());
   mMobileTagMap=initMobileTabTag(mSubInfoList);
   try {
     if (!mNetworkService.isBandwidthControlEnabled()) {

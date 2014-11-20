@@ -11,6 +11,7 @@
  else   if (restrictionsIntent != null) {
     preference.setRestrictions(restrictions);
     if (invokeIfCustom && AppRestrictionsFragment.this.isResumed()) {
+      assertSafeToStartCustomActivity(restrictionsIntent);
       int requestCode=generateCustomActivityRequestCode(RestrictionsResultReceiver.this.preference);
       AppRestrictionsFragment.this.startActivityForResult(restrictionsIntent,requestCode);
     }

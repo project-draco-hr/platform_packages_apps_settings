@@ -6,7 +6,7 @@
       final SubscriptionInfo sir;
       if (id == DATA_PICK) {
         sir=mSelectableSubInfos.get(value);
-        mSubscriptionManager.setDefaultDataSubId(sir.getSubscriptionId());
+        SubscriptionManager.setDefaultDataSubId(sir.getSubscriptionId());
       }
  else       if (id == CALLS_PICK) {
         final TelecomManager telecomManager=TelecomManager.from(getActivity());
@@ -15,7 +15,7 @@
       }
  else       if (id == SMS_PICK) {
         sir=mSelectableSubInfos.get(value);
-        mSubscriptionManager.setDefaultSmsSubId(sir.getSubscriptionId());
+        SubscriptionManager.setDefaultSmsSubId(sir.getSubscriptionId());
       }
       updateActivitesCategory();
     }

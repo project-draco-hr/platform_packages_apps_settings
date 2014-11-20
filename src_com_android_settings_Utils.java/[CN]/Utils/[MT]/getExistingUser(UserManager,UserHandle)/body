@@ -1,0 +1,10 @@
+{
+  final List<UserInfo> users=userManager.getUsers(true);
+  final int checkUserId=checkUser.getIdentifier();
+  for (  UserInfo user : users) {
+    if (user.id == checkUserId) {
+      return user;
+    }
+  }
+  return null;
+}

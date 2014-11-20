@@ -3,68 +3,73 @@
   if (context == null)   return;
   final PackageManager pm=mPackageManager;
   final IPackageManager ipm=mIPm;
+  final int userId=mUser.getIdentifier();
+  if (Utils.getExistingUser(mUserManager,mUser) == null) {
+    return;
+  }
   mAppList.removeAll();
   Intent restrictionsIntent=new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);
   final List<ResolveInfo> receivers=pm.queryBroadcastReceivers(restrictionsIntent,0);
   int i=0;
-  if (mVisibleApps.size() > 0) {
-    for (    SelectableAppInfo app : mVisibleApps) {
-      String packageName=app.packageName;
-      if (packageName == null)       continue;
-      final boolean isSettingsApp=packageName.equals(context.getPackageName());
-      AppRestrictionsPreference p=new AppRestrictionsPreference(context,this);
-      final boolean hasSettings=resolveInfoListHasPackage(receivers,packageName);
-      p.setIcon(app.icon != null ? app.icon.mutate() : null);
-      p.setChecked(false);
-      p.setTitle(app.activityName);
-      if (app.masterEntry != null) {
-        p.setSummary(context.getString(R.string.user_restrictions_controlled_by,app.masterEntry.activityName));
-      }
-      p.setKey(getKeyForPackage(packageName));
-      p.setSettingsEnabled((hasSettings || isSettingsApp) && app.masterEntry == null);
-      p.setPersistent(false);
-      p.setOnPreferenceChangeListener(this);
-      p.setOnPreferenceClickListener(this);
-      PackageInfo pi=null;
-      try {
-        pi=ipm.getPackageInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES,mUser.getIdentifier());
-      }
- catch (      RemoteException e) {
-      }
-      if (pi != null && (pi.requiredForAllUsers || isPlatformSigned(pi))) {
-        p.setChecked(true);
-        p.setImmutable(true);
-        if (!hasSettings && !isSettingsApp)         continue;
-        if (hasSettings && app.masterEntry == null) {
-          requestRestrictionsForApp(packageName,p,false);
-        }
-      }
- else       if (!mNewUser && isAppEnabledForUser(pi)) {
-        p.setChecked(true);
-      }
-      if (mRestrictedProfile && pi.requiredAccountType != null && pi.restrictedAccountType == null) {
-        p.setChecked(false);
-        p.setImmutable(true);
-        p.setSummary(R.string.app_not_supported_in_limited);
-      }
-      if (mRestrictedProfile && pi.restrictedAccountType != null) {
-        p.setSummary(R.string.app_sees_restricted_accounts);
-      }
-      if (app.masterEntry != null) {
-        p.setImmutable(true);
-        p.setChecked(mSelectedPackages.get(packageName));
-      }
-      mAppList.addPreference(p);
-      if (isSettingsApp) {
-        p.setOrder(MAX_APP_RESTRICTIONS * 1);
-      }
- else {
-        p.setOrder(MAX_APP_RESTRICTIONS * (i + 2));
-      }
-      mSelectedPackages.put(packageName,p.isChecked());
-      mAppListChanged=true;
-      i++;
+  for (  SelectableAppInfo app : mVisibleApps) {
+    String packageName=app.packageName;
+    if (packageName == null)     continue;
+    final boolean isSettingsApp=packageName.equals(context.getPackageName());
+    AppRestrictionsPreference p=new AppRestrictionsPreference(context,this);
+    final boolean hasSettings=resolveInfoListHasPackage(receivers,packageName);
+    p.setIcon(app.icon != null ? app.icon.mutate() : null);
+    p.setChecked(false);
+    p.setTitle(app.activityName);
+    if (app.masterEntry != null) {
+      p.setSummary(context.getString(R.string.user_restrictions_controlled_by,app.masterEntry.activityName));
     }
+    p.setKey(getKeyForPackage(packageName));
+    p.setSettingsEnabled((hasSettings || isSettingsApp) && app.masterEntry == null);
+    p.setPersistent(false);
+    p.setOnPreferenceChangeListener(this);
+    p.setOnPreferenceClickListener(this);
+    PackageInfo pi=null;
+    try {
+      pi=ipm.getPackageInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES,userId);
+    }
+ catch (    RemoteException e) {
+    }
+    if (pi == null) {
+      continue;
+    }
+    if (pi.requiredForAllUsers || isPlatformSigned(pi)) {
+      p.setChecked(true);
+      p.setImmutable(true);
+      if (!hasSettings && !isSettingsApp)       continue;
+      if (hasSettings && app.masterEntry == null) {
+        requestRestrictionsForApp(packageName,p,false);
+      }
+    }
+ else     if (!mNewUser && isAppEnabledForUser(pi)) {
+      p.setChecked(true);
+    }
+    if (mRestrictedProfile && pi.requiredAccountType != null && pi.restrictedAccountType == null) {
+      p.setChecked(false);
+      p.setImmutable(true);
+      p.setSummary(R.string.app_not_supported_in_limited);
+    }
+    if (mRestrictedProfile && pi.restrictedAccountType != null) {
+      p.setSummary(R.string.app_sees_restricted_accounts);
+    }
+    if (app.masterEntry != null) {
+      p.setImmutable(true);
+      p.setChecked(mSelectedPackages.get(packageName));
+    }
+    mAppList.addPreference(p);
+    if (isSettingsApp) {
+      p.setOrder(MAX_APP_RESTRICTIONS * 1);
+    }
+ else {
+      p.setOrder(MAX_APP_RESTRICTIONS * (i + 2));
+    }
+    mSelectedPackages.put(packageName,p.isChecked());
+    mAppListChanged=true;
+    i++;
   }
   if (mNewUser && mFirstTime) {
     mFirstTime=false;

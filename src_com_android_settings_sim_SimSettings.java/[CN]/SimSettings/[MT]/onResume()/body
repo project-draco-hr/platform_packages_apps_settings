@@ -1,7 +1,6 @@
 {
   super.onResume();
-  mSubInfoList=mSubscriptionManager.getActiveSubscriptionInfoList();
-  if (DBG)   log("[onResme] mSubInfoList=" + mSubInfoList);
+  mSubInfoList=SubscriptionManager.getActiveSubscriptionInfoList();
   updateAvailableSubInfos();
   updateAllOptions();
 }

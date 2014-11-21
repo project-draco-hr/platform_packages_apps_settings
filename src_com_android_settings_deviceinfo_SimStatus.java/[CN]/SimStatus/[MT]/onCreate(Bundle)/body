@@ -7,7 +7,7 @@
   mDefaultText=mRes.getString(R.string.device_info_default);
   mSignalStrength=findPreference(KEY_SIGNAL_STRENGTH);
   for (int i=0; i < mTelephonyManager.getSimCount(); i++) {
-    final SubscriptionInfo sir=Utils.findRecordBySlotId(this,i);
+    final SubscriptionInfo sir=Utils.findRecordBySlotId(i);
     if (sir != null) {
       mSelectableSubInfos.add(sir);
     }

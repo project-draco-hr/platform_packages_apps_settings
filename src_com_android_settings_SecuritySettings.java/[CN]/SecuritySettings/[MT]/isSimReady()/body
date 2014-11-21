@@ -1,6 +1,6 @@
 {
   int simState=TelephonyManager.SIM_STATE_UNKNOWN;
-  final List<SubscriptionInfo> subInfoList=SubscriptionManager.getActiveSubscriptionInfoList();
+  final List<SubscriptionInfo> subInfoList=mSubscriptionManager.getActiveSubscriptionInfoList();
   if (subInfoList != null) {
     for (    SubscriptionInfo subInfo : subInfoList) {
       simState=TelephonyManager.getDefault().getSimState(subInfo.getSimSlotIndex());

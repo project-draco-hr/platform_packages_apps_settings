@@ -3,11 +3,11 @@
   if (numSlots < 2) {
     return;
   }
-  if (SubscriptionManager.getActiveSubscriptionInfoList().size() < 1) {
+  if (mSubscriptionManager.getActiveSubscriptionInfoList().size() < 1) {
     return;
   }
   for (int i=0; i < numSlots; i++) {
-    final SubscriptionInfo sir=Utils.findRecordBySlotId(i);
+    final SubscriptionInfo sir=Utils.findRecordBySlotId(mContext,i);
     final String key=SLOT_PREFIX + i;
     final int lastSubId=getLastSubId(key);
     if (sir != null) {

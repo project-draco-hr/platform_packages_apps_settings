@@ -5,7 +5,7 @@
     mMobileDataEnabled=null;
   }
  else {
-    isEnable=mTelephonyManager.getDataEnabled() && (subId == SubscriptionManager.getDefaultDataSubId());
+    isEnable=mTelephonyManager.getDataEnabled() && (subId == mSubscriptionManager.getDefaultDataSubId());
   }
   return isEnable;
 }

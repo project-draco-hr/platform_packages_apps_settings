@@ -1,8 +1,9 @@
 {
   final Preference simPref=findPreference(KEY_CELLULAR_DATA);
-  final SubscriptionInfo sir=Utils.findRecordBySubId(SubscriptionManager.getDefaultDataSubId());
+  final SubscriptionInfo sir=Utils.findRecordBySubId(getActivity(),mSubscriptionManager.getDefaultDataSubId());
   simPref.setTitle(R.string.cellular_data_title);
-  if (mSubInfoList.size() == 1) {
+  if (DBG)   log("[updateCellularDataValues] mSubInfoList=" + mSubInfoList);
+  if (mSubInfoList != null && mSubInfoList.size() == 1) {
     simPref.setSummary(mSubInfoList.get(0).getDisplayName());
   }
  else   if (sir != null) {

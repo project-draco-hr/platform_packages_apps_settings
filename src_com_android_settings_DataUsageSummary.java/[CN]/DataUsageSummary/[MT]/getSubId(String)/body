@@ -1,8 +1,10 @@
 {
-  Set<Integer> set=mMobileTagMap.keySet();
-  for (  Integer subId : set) {
-    if (mMobileTagMap.get(subId).equals(currentTab)) {
-      return subId;
+  if (mMobileTagMap != null) {
+    Set<Integer> set=mMobileTagMap.keySet();
+    for (    Integer subId : set) {
+      if (mMobileTagMap.get(subId).equals(currentTab)) {
+        return subId;
+      }
     }
   }
   Log.e(TAG,"currentTab = " + currentTab + " non mobile tab called this function");

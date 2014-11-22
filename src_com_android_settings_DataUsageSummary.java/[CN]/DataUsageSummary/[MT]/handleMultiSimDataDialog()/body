@@ -1,6 +1,6 @@
 {
   final SubscriptionInfo currentSir=getCurrentTabSubInfo(getActivity());
-  final SubscriptionInfo nextSir=SubscriptionManager.getSubscriptionInfoForSubscriber(SubscriptionManager.getDefaultDataSubId());
+  final SubscriptionInfo nextSir=mSubscriptionManager.getActiveSubscriptionInfo(mSubscriptionManager.getDefaultDataSubId());
   if (currentSir.getSubscriptionId() == nextSir.getSubscriptionId()) {
     setMobileDataEnabled(true);
     updateBody();
@@ -11,7 +11,7 @@
   builder.setMessage(getActivity().getResources().getString(R.string.sim_change_data_message,currentSir.getDisplayName(),nextSir.getDisplayName()));
   builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int id){
-      SubscriptionManager.setDefaultDataSubId(currentSir.getSubscriptionId());
+      mSubscriptionManager.setDefaultDataSubId(currentSir.getSubscriptionId());
       setMobileDataEnabled(true);
       updateBody();
     }

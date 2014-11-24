@@ -1,5 +1,4 @@
 {
-  LocaleData d=LocaleData.get(mContext.getResources().getConfiguration().locale);
-  String value=d.shortDateFormat4;
+  final String value=LocaleData.get(getResources().getConfiguration().locale).getDateFormat(java.text.DateFormat.SHORT);
   return value.indexOf('M') > value.indexOf('d');
 }

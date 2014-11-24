@@ -4,7 +4,7 @@
   }
   final ConnectivityManager conn=ConnectivityManager.from(context);
   final TelephonyManager tele=TelephonyManager.from(context);
-  final List<SubscriptionInfo> subInfoList=SubscriptionManager.getActiveSubscriptionInfoList();
+  final List<SubscriptionInfo> subInfoList=SubscriptionManager.from(context).getActiveSubscriptionInfoList();
   if (subInfoList == null) {
     return false;
   }

@@ -1,8 +1,9 @@
 {
   final Preference simPref=findPreference(KEY_SMS);
-  final SubscriptionInfo sir=Utils.findRecordBySubId(SubscriptionManager.getDefaultSmsSubId());
+  final SubscriptionInfo sir=Utils.findRecordBySubId(getActivity(),mSubscriptionManager.getDefaultSmsSubId());
   simPref.setTitle(R.string.sms_messages_title);
-  if (mSubInfoList.size() == 1) {
+  if (DBG)   log("[updateSmsValues] mSubInfoList=" + mSubInfoList);
+  if (mSubInfoList != null && mSubInfoList.size() == 1) {
     simPref.setSummary(mSubInfoList.get(0).getDisplayName());
   }
  else   if (sir != null) {

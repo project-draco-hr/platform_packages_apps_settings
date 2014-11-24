@@ -9,10 +9,13 @@
     for (int i=0; i < n; ++i) {
       UserHandle profile=profiles.get(i);
       int profileId=profile.getIdentifier();
-      KeyChainConnection keyChainConnection=KeyChain.bindAsUser(getActivity(),profile);
+      KeyChainConnection keyChainConnection=KeyChain.bindAsUser(mContext,profile);
       mKeyChainConnectionByProfileId.put(profileId,keyChainConnection);
       IKeyChainService service=keyChainConnection.getService();
       List<ParcelableString> aliases=mTab.getAliases(service);
+      if (isCancelled()) {
+        return new SparseArray<List<CertHolder>>();
+      }
       max+=aliases.size();
       aliasesByProfileId.put(profileId,aliases);
     }
@@ -20,6 +23,9 @@
       UserHandle profile=profiles.get(i);
       int profileId=profile.getIdentifier();
       List<ParcelableString> aliases=aliasesByProfileId.get(profileId);
+      if (isCancelled()) {
+        return new SparseArray<List<CertHolder>>();
+      }
       IKeyChainService service=mKeyChainConnectionByProfileId.get(profileId).getService();
       List<CertHolder> certHolders=new ArrayList<CertHolder>(max);
       final int aliasMax=aliases.size();

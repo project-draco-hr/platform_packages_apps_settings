@@ -1,5 +1,5 @@
 {
-  if (subInfoList != null) {
+  if (subInfoList != null && mMobileTagMap != null) {
     for (    SubscriptionInfo subInfo : mSubInfoList) {
       if (hasReadyMobileRadio(context,subInfo.getSubscriptionId())) {
         mTabHost.addTab(buildTabSpec(mMobileTagMap.get(subInfo.getSubscriptionId()),subInfo.getDisplayName()));

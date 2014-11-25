@@ -1,4 +1,11 @@
 {
+  for (  AdapterData.AliasLoader aliasLoader : mAliasLoaders.values()) {
+    aliasLoader.cancel(true);
+  }
+  if (mAliasOperation != null) {
+    mAliasOperation.cancel(true);
+    mAliasOperation=null;
+  }
   closeKeyChainConnections();
   super.onDestroy();
 }

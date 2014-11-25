@@ -1,4 +1,7 @@
 {
   mSettingsContentObserver.unregister(getContentResolver());
+  if (mSearchView != null) {
+    mSearchView.setOnQueryTextListener(null);
+  }
   super.onPause();
 }

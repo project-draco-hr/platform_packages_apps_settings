@@ -1,0 +1,10 @@
+{
+  final View view=inflater.inflate(R.layout.setup_preference,container,false);
+  ListView list=(ListView)view.findViewById(android.R.id.list);
+  View title=view.findViewById(R.id.title);
+  if (title == null) {
+    final View header=inflater.inflate(R.layout.setup_wizard_header,list,false);
+    list.addHeaderView(header,null,false);
+  }
+  return view;
+}

@@ -1,7 +1,7 @@
 {
-  Log.d(TAG,"finishOrNext resultCode=" + resultCode + " isUsingWizardManager="+ isUsingWizardManager());
-  if (isUsingWizardManager()) {
-    sendResultsToSetupWizard(resultCode);
+  Log.d(TAG,"finishOrNext resultCode=" + resultCode + " isUsingWizardManager="+ SetupWizardUtils.isUsingWizardManager(this));
+  if (SetupWizardUtils.isUsingWizardManager(this)) {
+    SetupWizardUtils.sendResultsToSetupWizard(this,resultCode);
   }
  else {
     setResult(resultCode);

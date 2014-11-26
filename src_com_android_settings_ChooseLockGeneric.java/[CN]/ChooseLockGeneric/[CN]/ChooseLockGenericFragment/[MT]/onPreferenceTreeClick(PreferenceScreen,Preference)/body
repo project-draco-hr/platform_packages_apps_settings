@@ -1,27 +1,10 @@
 {
   final String key=preference.getKey();
-  boolean handled=true;
-  EventLog.writeEvent(EventLogTags.LOCK_SCREEN_TYPE,key);
-  if (KEY_UNLOCK_SET_OFF.equals(key)) {
-    updateUnlockMethodAndFinish(DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED,true);
-  }
- else   if (KEY_UNLOCK_SET_NONE.equals(key)) {
-    updateUnlockMethodAndFinish(DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED,false);
-  }
- else   if (KEY_UNLOCK_SET_BIOMETRIC_WEAK.equals(key)) {
-    maybeEnableEncryption(DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK,false);
-  }
- else   if (KEY_UNLOCK_SET_PATTERN.equals(key)) {
-    maybeEnableEncryption(DevicePolicyManager.PASSWORD_QUALITY_SOMETHING,false);
-  }
- else   if (KEY_UNLOCK_SET_PIN.equals(key)) {
-    maybeEnableEncryption(DevicePolicyManager.PASSWORD_QUALITY_NUMERIC,false);
-  }
- else   if (KEY_UNLOCK_SET_PASSWORD.equals(key)) {
-    maybeEnableEncryption(DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC,false);
+  if (!isUnlockMethodSecure(key) && mLockPatternUtils.isSecure()) {
+    showFactoryResetProtectionWarningDialog(key);
+    return true;
   }
  else {
-    handled=false;
+    return setUnlockMethod(key);
   }
-  return handled;
 }

@@ -7,10 +7,12 @@
   mStarred.setSelectedValue(mConfig.allowFrom);
   mEvents.setChecked(mConfig.allowEvents);
   updateStarredEnabled();
-  updateDays();
-  mStart.setTime(mConfig.sleepStartHour,mConfig.sleepStartMinute);
-  mEnd.setTime(mConfig.sleepEndHour,mConfig.sleepEndMinute);
-  mDowntimeMode.setSelectedValue(mConfig.sleepNone);
+  if (mDowntimeSupported) {
+    updateDays();
+    mStart.setTime(mConfig.sleepStartHour,mConfig.sleepStartMinute);
+    mEnd.setTime(mConfig.sleepEndHour,mConfig.sleepEndMinute);
+    mDowntimeMode.setSelectedValue(mConfig.sleepNone);
+  }
   mDisableListeners=false;
   refreshAutomationSection();
   updateEndSummary();

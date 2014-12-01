@@ -1,0 +1,12 @@
+{
+  if (mIconView == null)   return;
+  if (mIconResId != 0) {
+    mIconView.setImageResource(mIconResId);
+  }
+ else   if (mMuteIconResId != 0 && mMuted) {
+    mIconView.setImageResource(mMuteIconResId);
+  }
+ else {
+    mIconView.setImageDrawable(getIcon());
+  }
+}

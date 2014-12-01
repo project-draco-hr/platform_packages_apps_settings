@@ -4,20 +4,21 @@
   mPM=mContext.getPackageManager();
   mVoiceCapable=Utils.isVoiceCapable(mContext);
   mSecure=new LockPatternUtils(getActivity()).isSecure();
+  mAudioManager=(AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
   mVibrator=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
   if (mVibrator != null && !mVibrator.hasVibrator()) {
     mVibrator=null;
   }
   addPreferencesFromResource(R.xml.notification_settings);
   final PreferenceCategory sound=(PreferenceCategory)findPreference(KEY_SOUND);
-  initVolumePreference(KEY_MEDIA_VOLUME,AudioManager.STREAM_MUSIC);
-  initVolumePreference(KEY_ALARM_VOLUME,AudioManager.STREAM_ALARM);
+  initVolumePreference(KEY_MEDIA_VOLUME,AudioManager.STREAM_MUSIC,com.android.internal.R.drawable.ic_audio_vol_mute);
+  initVolumePreference(KEY_ALARM_VOLUME,AudioManager.STREAM_ALARM,com.android.internal.R.drawable.ic_audio_alarm_mute);
   if (mVoiceCapable) {
-    mRingOrNotificationPreference=initVolumePreference(KEY_RING_VOLUME,AudioManager.STREAM_RING);
+    mRingOrNotificationPreference=initVolumePreference(KEY_RING_VOLUME,AudioManager.STREAM_RING,com.android.internal.R.drawable.ic_audio_ring_notif_mute);
     sound.removePreference(sound.findPreference(KEY_NOTIFICATION_VOLUME));
   }
  else {
-    mRingOrNotificationPreference=initVolumePreference(KEY_NOTIFICATION_VOLUME,AudioManager.STREAM_NOTIFICATION);
+    mRingOrNotificationPreference=initVolumePreference(KEY_NOTIFICATION_VOLUME,AudioManager.STREAM_NOTIFICATION,com.android.internal.R.drawable.ic_audio_ring_notif_mute);
     sound.removePreference(sound.findPreference(KEY_RING_VOLUME));
   }
   initRingtones(sound);
@@ -27,5 +28,6 @@
   initLockscreenNotifications(notification);
   mNotificationAccess=findPreference(KEY_NOTIFICATION_ACCESS);
   refreshNotificationListeners();
+  updateRingerMode();
   updateEffectsSuppressor();
 }

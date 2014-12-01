@@ -5,4 +5,7 @@
   mSettingsObserver.register(true);
   mReceiver.register(true);
   updateEffectsSuppressor();
+  for (  VolumeSeekBarPreference volumePref : mVolumePrefs) {
+    volumePref.onActivityResume();
+  }
 }

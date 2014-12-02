@@ -1,7 +1,13 @@
 {
   String networktype=null;
-  if (TelephonyManager.NETWORK_TYPE_UNKNOWN != mTelephonyManager.getNetworkType(mSir.getSubscriptionId())) {
-    networktype=mTelephonyManager.getNetworkTypeName(mTelephonyManager.getNetworkType(mSir.getSubscriptionId()));
+  final ITelephony telephony=ITelephony.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_SERVICE));
+  try {
+    final int actualNetworkType=telephony.getVoiceNetworkTypeForSubscriber(mSir.getSubscriptionId());
+    if (TelephonyManager.NETWORK_TYPE_UNKNOWN != actualNetworkType) {
+      networktype=mTelephonyManager.getNetworkTypeName(actualNetworkType);
+    }
+  }
+ catch (  RemoteException remoteException) {
   }
   setSummaryText(KEY_NETWORK_TYPE,networktype);
 }

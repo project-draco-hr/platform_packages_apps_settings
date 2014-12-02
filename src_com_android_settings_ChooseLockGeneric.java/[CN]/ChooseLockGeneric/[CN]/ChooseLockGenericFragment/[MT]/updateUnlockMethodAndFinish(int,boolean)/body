@@ -4,13 +4,14 @@
   }
   final boolean isFallback=getActivity().getIntent().getBooleanExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,false);
   quality=upgradeQuality(quality,null);
+  final Context context=getActivity();
   if (quality >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
     int minLength=mDPM.getPasswordMinimumLength(null);
     if (minLength < MIN_PASSWORD_LENGTH) {
       minLength=MIN_PASSWORD_LENGTH;
     }
     final int maxLength=mDPM.getPasswordMaximumLength(quality);
-    Intent intent=ChooseLockPassword.createIntent(getActivity(),quality,isFallback,minLength,maxLength,mRequirePassword,false);
+    Intent intent=getLockPasswordIntent(context,quality,isFallback,minLength,maxLength,mRequirePassword,false);
     if (isFallback) {
       startActivityForResult(intent,FALLBACK_REQUEST);
       return;
@@ -22,7 +23,7 @@
     }
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
-    Intent intent=ChooseLockPattern.createIntent(getActivity(),isFallback,mRequirePassword,false);
+    Intent intent=getLockPatternIntent(context,isFallback,mRequirePassword,false);
     if (isFallback) {
       startActivityForResult(intent,FALLBACK_REQUEST);
       return;

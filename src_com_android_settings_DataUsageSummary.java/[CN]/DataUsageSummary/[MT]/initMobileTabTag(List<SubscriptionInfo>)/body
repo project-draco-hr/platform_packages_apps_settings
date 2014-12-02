@@ -1,11 +1,15 @@
 {
+  final Context context=getActivity();
   Map<Integer,String> map=null;
   if (subInfoList != null) {
     String mobileTag;
     map=new HashMap<Integer,String>();
-    for (    SubscriptionInfo subInfo : subInfoList) {
-      mobileTag=TAB_MOBILE + String.valueOf(subInfo.getSubscriptionId());
-      map.put(subInfo.getSubscriptionId(),mobileTag);
+    for (int i=0; i < mTelephonyManager.getSimCount(); i++) {
+      final SubscriptionInfo subInfo=Utils.findRecordBySlotId(context,i);
+      mobileTag=TAB_MOBILE + i;
+      if (subInfo != null) {
+        map.put(subInfo.getSubscriptionId(),mobileTag);
+      }
     }
   }
   return map;

@@ -2,6 +2,7 @@
   mBinding=true;
   if (!isAdded())   return;
   final Context context=getActivity();
+  final Resources resources=context.getResources();
   final String currentTab=mTabHost.getCurrentTabTag();
   final boolean isOwner=ActivityManager.getCurrentUser() == UserHandle.USER_OWNER;
   if (currentTab == null) {
@@ -48,4 +49,14 @@
   getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(mTemplate,mCurrentApp),mChartDataCallbacks);
   getActivity().invalidateOptionsMenu();
   mBinding=false;
+  int seriesColor=resources.getColor(R.color.sim_noitification);
+  if (mCurrentTab != null && mCurrentTab.length() > TAB_MOBILE.length()) {
+    final int slotId=Integer.parseInt(mCurrentTab.substring(TAB_MOBILE.length(),mCurrentTab.length()));
+    final SubscriptionInfo sir=com.android.settings.Utils.findRecordBySlotId(context,slotId);
+    if (sir != null) {
+      seriesColor=sir.getIconTint();
+    }
+  }
+  mSeries.setChartColor(Color.BLACK,seriesColor,seriesColor);
+  mDetailedSeries.setChartColor(Color.BLACK,seriesColor,seriesColor);
 }

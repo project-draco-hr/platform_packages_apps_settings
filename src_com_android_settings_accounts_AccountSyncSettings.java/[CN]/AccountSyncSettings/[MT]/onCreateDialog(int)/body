@@ -3,14 +3,15 @@
   if (id == REALLY_REMOVE_DIALOG) {
     dialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.really_remove_account_title).setMessage(R.string.really_remove_account_message).setNegativeButton(android.R.string.cancel,null).setPositiveButton(R.string.remove_account_label,new DialogInterface.OnClickListener(){
       @Override public void onClick(      DialogInterface dialog,      int which){
-        AccountManager.get(AccountSyncSettings.this.getActivity()).removeAccountAsUser(mAccount,new AccountManagerCallback<Boolean>(){
-          @Override public void run(          AccountManagerFuture<Boolean> future){
+        Activity activity=getActivity();
+        AccountManager.get(activity).removeAccountAsUser(mAccount,activity,new AccountManagerCallback<Bundle>(){
+          @Override public void run(          AccountManagerFuture<Bundle> future){
             if (!AccountSyncSettings.this.isResumed()) {
               return;
             }
             boolean failed=true;
             try {
-              if (future.getResult() == true) {
+              if (future.getResult().getBoolean(AccountManager.KEY_BOOLEAN_RESULT)) {
                 failed=false;
               }
             }

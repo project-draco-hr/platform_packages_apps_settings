@@ -1,0 +1,10 @@
+{
+  final ContentResolver cr=getContentResolver();
+  WifiManager wifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
+  int wifiState=wifiManager.getWifiState();
+  if ((wifiState == WifiManager.WIFI_STATE_ENABLING) || (wifiState == WifiManager.WIFI_STATE_ENABLED)) {
+    wifiManager.setWifiEnabled(false);
+    Settings.Global.putInt(cr,Settings.Global.WIFI_SAVED_STATE,1);
+  }
+  wifiManager.setWifiApEnabled(null,true);
+}

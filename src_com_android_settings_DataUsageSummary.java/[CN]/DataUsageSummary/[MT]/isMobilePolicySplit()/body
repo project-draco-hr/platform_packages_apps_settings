@@ -1,10 +1,13 @@
 {
   final Context context=getActivity();
+  boolean retVal;
   if (hasReadyMobileRadio(context)) {
     final TelephonyManager tele=TelephonyManager.from(context);
-    return mPolicyEditor.isMobilePolicySplit(getActiveSubscriberId(context));
+    retVal=mPolicyEditor.isMobilePolicySplit(getActiveSubscriberId(context));
   }
  else {
-    return false;
+    retVal=false;
   }
+  if (LOGD)   Log.d(TAG,"isMobilePolicySplit: retVal=" + retVal);
+  return retVal;
 }

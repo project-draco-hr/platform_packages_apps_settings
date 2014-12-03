@@ -6,5 +6,7 @@
   final TelephonyManager tele=TelephonyManager.from(context);
   final int slotId=SubscriptionManager.getSlotId(subId);
   final boolean isReady=tele.getSimState(slotId) == SIM_STATE_READY;
-  return conn.isNetworkSupported(TYPE_MOBILE) && isReady;
+  boolean retVal=conn.isNetworkSupported(TYPE_MOBILE) && isReady;
+  if (LOGD)   Log.d(TAG,"hasReadyMobileRadio: subId=" + subId + " conn.isNetworkSupported(TYPE_MOBILE)="+ conn.isNetworkSupported(TYPE_MOBILE)+ " isReady="+ isReady);
+  return retVal;
 }

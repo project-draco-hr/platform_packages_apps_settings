@@ -1,4 +1,6 @@
 {
   final TelephonyManager tele=TelephonyManager.from(context);
-  return tele.getSubscriberId(subId);
+  String retVal=tele.getSubscriberId(subId);
+  if (LOGD)   Log.d(TAG,"getActiveSubscriberId=" + retVal + " subId="+ subId);
+  return retVal;
 }

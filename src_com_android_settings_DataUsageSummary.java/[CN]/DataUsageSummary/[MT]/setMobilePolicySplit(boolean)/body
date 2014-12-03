@@ -1,8 +1,0 @@
-{
-  final Context context=getActivity();
-  if (hasReadyMobileRadio(context)) {
-    final TelephonyManager tele=TelephonyManager.from(context);
-    if (LOGD)     Log.d(TAG,"setMobilePolicySplit: split=" + split);
-    mPolicyEditor.setMobilePolicySplit(getActiveSubscriberId(context),split);
-  }
-}

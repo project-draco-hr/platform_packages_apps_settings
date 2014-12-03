@@ -2,9 +2,10 @@
   if (Process.myUserHandle().isOwner() && LockPatternUtils.isDeviceEncryptionEnabled()) {
     mEncryptionRequestQuality=quality;
     mEncryptionRequestDisabled=disabled;
-    final boolean accEn=AccessibilityManager.getInstance(getActivity()).isEnabled();
+    final Context context=getActivity();
+    final boolean accEn=AccessibilityManager.getInstance(context).isEnabled();
     final boolean required=mLockPatternUtils.isCredentialRequiredToDecrypt(!accEn);
-    Intent intent=EncryptionInterstitial.createStartIntent(getActivity(),quality,required);
+    Intent intent=getEncryptionInterstitialIntent(context,quality,required);
     startActivityForResult(intent,ENABLE_ENCRYPTION_REQUEST);
   }
  else {

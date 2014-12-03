@@ -1,0 +1,14 @@
+{
+  if (isProvisioningNeeded(mProvisionApp)) {
+    Intent closeDialog=new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+    sendBroadcast(closeDialog);
+    Intent intent=new Intent(Intent.ACTION_MAIN);
+    intent.setClassName(mProvisionApp[0],mProvisionApp[1]);
+    intent.putExtra(TETHER_CHOICE,WIFI_TETHERING);
+    startActivityForResult(intent,PROVISION_REQUEST);
+  }
+ else {
+    enableTethering();
+    finish();
+  }
+}

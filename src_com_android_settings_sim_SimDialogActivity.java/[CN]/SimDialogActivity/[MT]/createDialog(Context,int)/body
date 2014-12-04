@@ -1,0 +1,77 @@
+{
+  final ArrayList<String> list=new ArrayList<String>();
+  final SubscriptionManager subscriptionManager=SubscriptionManager.from(context);
+  final List<SubscriptionInfo> subInfoList=subscriptionManager.getActiveSubscriptionInfoList();
+  final int selectableSubInfoLength=subInfoList.size();
+  final DialogInterface.OnClickListener selectionListener=new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int value){
+      final SubscriptionInfo sir;
+switch (id) {
+case DATA_PICK:
+        sir=subInfoList.get(value);
+      setDefaultDataSubId(context,sir.getSubscriptionId());
+    break;
+case CALLS_PICK:
+  final TelecomManager telecomManager=TelecomManager.from(context);
+final List<PhoneAccountHandle> phoneAccountsList=telecomManager.getCallCapablePhoneAccounts();
+setUserSelectedOutgoingPhoneAccount(value < 1 ? null : phoneAccountsList.get(value - 1));
+break;
+case SMS_PICK:
+sir=subInfoList.get(value);
+setDefaultSmsSubId(context,sir.getSubscriptionId());
+break;
+default :
+throw new IllegalArgumentException("Invalid dialog type " + id + " in SIM dialog.");
+}
+finish();
+}
+}
+;
+Dialog.OnKeyListener keyListener=new Dialog.OnKeyListener(){
+@Override public boolean onKey(DialogInterface arg0,int keyCode,KeyEvent event){
+if (keyCode == KeyEvent.KEYCODE_BACK) {
+finish();
+}
+return true;
+}
+}
+;
+if (id == CALLS_PICK) {
+final TelecomManager telecomManager=TelecomManager.from(context);
+final Iterator<PhoneAccountHandle> phoneAccounts=telecomManager.getCallCapablePhoneAccounts().listIterator();
+list.add(getResources().getString(R.string.sim_calls_ask_first_prefs_title));
+while (phoneAccounts.hasNext()) {
+final PhoneAccount phoneAccount=telecomManager.getPhoneAccount(phoneAccounts.next());
+list.add((String)phoneAccount.getLabel());
+}
+}
+ else {
+for (int i=0; i < selectableSubInfoLength; ++i) {
+final SubscriptionInfo sir=subInfoList.get(i);
+CharSequence displayName=sir.getDisplayName();
+if (displayName == null) {
+displayName="";
+}
+list.add(displayName.toString());
+}
+}
+String[] arr=list.toArray(new String[0]);
+AlertDialog.Builder builder=new AlertDialog.Builder(context);
+ListAdapter adapter=new SelectAccountListAdapter(subInfoList,builder.getContext(),R.layout.select_account_list_item,arr,id);
+switch (id) {
+case DATA_PICK:
+builder.setTitle(R.string.select_sim_for_data);
+break;
+case CALLS_PICK:
+builder.setTitle(R.string.select_sim_for_calls);
+break;
+case SMS_PICK:
+builder.setTitle(R.string.sim_card_select_title);
+break;
+default :
+throw new IllegalArgumentException("Invalid dialog type " + id + " in SIM dialog.");
+}
+Dialog dialog=builder.setAdapter(adapter,selectionListener).create();
+dialog.setOnKeyListener(keyListener);
+return dialog;
+}

@@ -4,7 +4,7 @@
       mShowLatestAreaInfo=true;
     }
   }
-  String rawNumber=mPhone.getLine1Number();
+  String rawNumber=mTelephonyManager.getLine1Number();
   String formattedNumber=null;
   if (!TextUtils.isEmpty(rawNumber)) {
     formattedNumber=PhoneNumberUtils.formatNumber(rawNumber);
@@ -12,7 +12,7 @@
   setSummaryText(KEY_PHONE_NUMBER,formattedNumber);
   final String imei=mPhone.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA ? mPhone.getImei() : mPhone.getDeviceId();
   setSummaryText(KEY_IMEI,imei);
-  setSummaryText(KEY_IMEI_SV,((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
+  setSummaryText(KEY_IMEI_SV,mTelephonyManager.getDeviceSoftwareVersion());
   if (!mShowLatestAreaInfo) {
     removePreferenceFromScreen(KEY_LATEST_AREA_INFO);
   }

@@ -17,33 +17,40 @@
   if (LOGD)   Log.d(TAG,"updateBody() with currentTab=" + currentTab);
   mDataEnabledSupported=isOwner;
   mDisableAtLimitSupported=true;
+  if (LOGD)   Log.d(TAG,"updateBody() isMobileTab=" + isMobileTab(currentTab));
   if (isMobileTab(currentTab)) {
+    if (LOGD)     Log.d(TAG,"updateBody() mobile tab");
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_mobile);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_mobile_limit);
     mTemplate=buildTemplateMobileAll(getActiveSubscriberId(context,getSubId(currentTab)));
     mDataEnabledSupported=isMobileDataAvailable(getSubId(currentTab));
   }
  else   if (TAB_3G.equals(currentTab)) {
+    if (LOGD)     Log.d(TAG,"updateBody() 3g tab");
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_3g);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_3g_limit);
     mTemplate=buildTemplateMobile3gLower(getActiveSubscriberId(context));
   }
  else   if (TAB_4G.equals(currentTab)) {
+    if (LOGD)     Log.d(TAG,"updateBody() 4g tab");
     setPreferenceTitle(mDataEnabledView,R.string.data_usage_enable_4g);
     setPreferenceTitle(mDisableAtLimitView,R.string.data_usage_disable_4g_limit);
     mTemplate=buildTemplateMobile4g(getActiveSubscriberId(context));
   }
  else   if (TAB_WIFI.equals(currentTab)) {
+    if (LOGD)     Log.d(TAG,"updateBody() wifi tab");
     mDataEnabledSupported=false;
     mDisableAtLimitSupported=false;
     mTemplate=buildTemplateWifiWildcard();
   }
  else   if (TAB_ETHERNET.equals(currentTab)) {
+    if (LOGD)     Log.d(TAG,"updateBody() ethernet tab");
     mDataEnabledSupported=false;
     mDisableAtLimitSupported=false;
     mTemplate=buildTemplateEthernet();
   }
  else {
+    if (LOGD)     Log.d(TAG,"updateBody() unknown tab");
     throw new IllegalStateException("unknown tab: " + currentTab);
   }
   getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(mTemplate,mCurrentApp),mChartDataCallbacks);

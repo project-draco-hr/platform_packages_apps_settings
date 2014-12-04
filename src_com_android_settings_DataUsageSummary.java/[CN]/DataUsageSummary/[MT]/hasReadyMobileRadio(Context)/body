@@ -6,11 +6,17 @@
   final TelephonyManager tele=TelephonyManager.from(context);
   final List<SubscriptionInfo> subInfoList=SubscriptionManager.from(context).getActiveSubscriptionInfoList();
   if (subInfoList == null) {
+    if (LOGD)     Log.d(TAG,"hasReadyMobileRadio: subInfoList=null");
     return false;
   }
   boolean isReady=true;
   for (  SubscriptionInfo subInfo : subInfoList) {
     isReady=isReady & tele.getSimState(subInfo.getSimSlotIndex()) == SIM_STATE_READY;
+    if (LOGD)     Log.d(TAG,"hasReadyMobileRadio: subInfo=" + subInfo);
   }
-  return conn.isNetworkSupported(TYPE_MOBILE) && isReady;
+  boolean retVal=conn.isNetworkSupported(TYPE_MOBILE) && isReady;
+  if (LOGD) {
+    Log.d(TAG,"hasReadyMobileRadio:" + " conn.isNetworkSupported(TYPE_MOBILE)=" + conn.isNetworkSupported(TYPE_MOBILE) + " isReady="+ isReady);
+  }
+  return retVal;
 }

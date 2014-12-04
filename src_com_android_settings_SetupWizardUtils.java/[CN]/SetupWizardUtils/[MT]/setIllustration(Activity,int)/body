@@ -1,0 +1,17 @@
+{
+  SetupWizardIllustration illustration=(SetupWizardIllustration)activity.findViewById(R.id.setup_illustration);
+  if (illustration != null) {
+    Drawable drawable=activity.getDrawable(R.drawable.setup_illustration);
+    Drawable newIllustration=activity.getDrawable(asset);
+    if (drawable instanceof LayerDrawable) {
+      LayerDrawable layers=(LayerDrawable)drawable;
+      Drawable oldIllustration=layers.findDrawableByLayerId(R.id.illustration_image);
+      if (newIllustration instanceof BitmapDrawable && oldIllustration instanceof BitmapDrawable) {
+        final int gravity=((BitmapDrawable)oldIllustration).getGravity();
+        ((BitmapDrawable)newIllustration).setGravity(gravity);
+      }
+      layers.setDrawableByLayerId(R.id.illustration_image,newIllustration);
+      illustration.setForeground(layers);
+    }
+  }
+}

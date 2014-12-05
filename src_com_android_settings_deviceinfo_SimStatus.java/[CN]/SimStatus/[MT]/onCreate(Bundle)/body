@@ -12,7 +12,7 @@
       mSelectableSubInfos.add(sir);
     }
   }
-  mSir=mSelectableSubInfos.get(0);
+  mSir=mSelectableSubInfos.size() > 0 ? mSelectableSubInfos.get(0) : null;
   if (mSelectableSubInfos.size() > 1) {
     setContentView(R.layout.sim_information);
     mTabHost=(TabHost)findViewById(android.R.id.tabhost);

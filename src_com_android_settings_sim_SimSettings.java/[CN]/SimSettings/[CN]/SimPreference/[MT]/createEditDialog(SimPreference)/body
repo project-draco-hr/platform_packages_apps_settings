@@ -26,7 +26,7 @@
   }
 );
   TextView numberView=(TextView)dialogLayout.findViewById(R.id.number);
-  final String rawNumber=mSubInfoRecord.getNumber();
+  final String rawNumber=getPhoneNumber(mSubInfoRecord);
   if (TextUtils.isEmpty(rawNumber)) {
     numberView.setText(res.getString(com.android.internal.R.string.unknownName));
   }

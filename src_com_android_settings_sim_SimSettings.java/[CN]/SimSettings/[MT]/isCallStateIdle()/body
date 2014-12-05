@@ -1,0 +1,10 @@
+{
+  boolean callStateIdle=true;
+  for (int i=0; i < mCallState.length; i++) {
+    if (TelephonyManager.CALL_STATE_IDLE != mCallState[i]) {
+      callStateIdle=false;
+    }
+  }
+  Log.d(TAG,"isCallStateIdle " + callStateIdle);
+  return callStateIdle;
+}

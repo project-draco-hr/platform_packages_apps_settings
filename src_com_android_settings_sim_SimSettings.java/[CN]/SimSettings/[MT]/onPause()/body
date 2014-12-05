@@ -2,5 +2,10 @@
   super.onPause();
   mSubscriptionManager.removeOnSubscriptionsChangedListener(mOnSubscriptionsChangeListener);
   final TelephonyManager tm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-  tm.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
+  for (int i=0; i < mPhoneCount; i++) {
+    if (mPhoneStateListener[i] != null) {
+      tm.listen(mPhoneStateListener[i],PhoneStateListener.LISTEN_NONE);
+      mPhoneStateListener[i]=null;
+    }
+  }
 }

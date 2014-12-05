@@ -6,5 +6,8 @@
   if (isActiveAdmin(info) && getUserId(info) == UserHandle.myUserId() && (isDeviceOwner(info) || isProfileOwner(info))) {
     return false;
   }
+  if (isRemovingAdmin(info)) {
+    return false;
+  }
   return true;
 }

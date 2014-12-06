@@ -68,7 +68,7 @@
         mProxySettingsSpinner.setSelection(PROXY_NONE);
       }
     }
-    if (mAccessPoint.networkId == INVALID_NETWORK_ID || mEdit) {
+    if ((mAccessPoint.networkId == INVALID_NETWORK_ID && !mAccessPoint.isActive()) || mEdit) {
       showSecurityFields();
       showIpConfigFields();
       showProxyFields();
@@ -90,7 +90,7 @@
       }
  else {
         if (state != null) {
-          addRow(group,R.string.wifi_status,Summary.get(mConfigUi.getContext(),state));
+          addRow(group,R.string.wifi_status,Summary.get(mConfigUi.getContext(),state,mAccessPoint.networkId == WifiConfiguration.INVALID_NETWORK_ID));
         }
         if (signalLevel != null) {
           addRow(group,R.string.wifi_signal,signalLevel);
@@ -118,7 +118,7 @@
         addRow(group,R.string.wifi_security,mAccessPoint.getSecurityString(false));
         mView.findViewById(R.id.ip_fields).setVisibility(View.GONE);
       }
-      if (mAccessPoint.networkId != INVALID_NETWORK_ID && ActivityManager.getCurrentUser() == UserHandle.USER_OWNER) {
+      if ((mAccessPoint.networkId != INVALID_NETWORK_ID || mAccessPoint.isActive()) && ActivityManager.getCurrentUser() == UserHandle.USER_OWNER) {
         mConfigUi.setForgetButton(res.getString(R.string.wifi_forget));
       }
     }

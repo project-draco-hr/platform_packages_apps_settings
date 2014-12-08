@@ -5,7 +5,7 @@
   setSummary(null);
   StringBuilder summary=new StringBuilder();
   if (isActive()) {
-    summary.append(Summary.get(context,getState()));
+    summary.append(Summary.get(context,getState(),networkId == WifiConfiguration.INVALID_NETWORK_ID));
   }
  else   if (mConfig != null && mConfig.hasNoInternetAccess()) {
     summary.append(context.getString(R.string.wifi_no_internet));

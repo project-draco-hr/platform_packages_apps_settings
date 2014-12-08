@@ -1,7 +1,7 @@
 {
   if (preference instanceof AccessPoint) {
     mSelectedAccessPoint=(AccessPoint)preference;
-    if (mSelectedAccessPoint.security == AccessPoint.SECURITY_NONE && mSelectedAccessPoint.networkId == INVALID_NETWORK_ID) {
+    if (mSelectedAccessPoint.security == AccessPoint.SECURITY_NONE && mSelectedAccessPoint.networkId == INVALID_NETWORK_ID && !mSelectedAccessPoint.isActive()) {
       mSelectedAccessPoint.generateOpenNetworkConfig();
       if (!savedNetworksExist) {
         savedNetworksExist=true;

@@ -1,6 +1,7 @@
 {
   if (mWifiManager.isWifiEnabled()) {
-    String summary=Summary.get(this,mWifiManager.getConnectionInfo().getSSID(),networkInfo.getDetailedState());
+    WifiInfo info=mWifiManager.getConnectionInfo();
+    String summary=Summary.get(this,info.getSSID(),networkInfo.getDetailedState(),info.getNetworkId() == WifiConfiguration.INVALID_NETWORK_ID);
     mNetworkState.setText(summary);
   }
 }

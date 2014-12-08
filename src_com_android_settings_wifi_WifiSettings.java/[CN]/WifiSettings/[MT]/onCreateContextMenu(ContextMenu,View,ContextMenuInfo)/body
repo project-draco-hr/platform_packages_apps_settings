@@ -5,21 +5,14 @@
       mSelectedAccessPoint=(AccessPoint)preference;
       menu.setHeaderTitle(mSelectedAccessPoint.ssid);
       if (mSelectedAccessPoint.getLevel() != -1) {
-        int connectStringRes=0;
         if (mSelectedAccessPoint.getState() == null) {
-          connectStringRes=R.string.wifi_menu_connect;
-        }
- else         if (mSelectedAccessPoint.networkId == INVALID_NETWORK_ID && mSelectedAccessPoint.getNetworkInfo().getState() != State.DISCONNECTED) {
-          connectStringRes=R.string.wifi_menu_remember;
-        }
-        if (connectStringRes != 0) {
-          menu.add(Menu.NONE,MENU_ID_CONNECT,0,connectStringRes);
+          menu.add(Menu.NONE,MENU_ID_CONNECT,0,R.string.wifi_menu_connect);
         }
       }
+      if (ActivityManager.getCurrentUser() == UserHandle.USER_OWNER && (mSelectedAccessPoint.networkId != INVALID_NETWORK_ID || (mSelectedAccessPoint.getNetworkInfo() != null && mSelectedAccessPoint.getNetworkInfo().getState() != State.DISCONNECTED))) {
+        menu.add(Menu.NONE,MENU_ID_FORGET,0,R.string.wifi_menu_forget);
+      }
       if (mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
-        if (ActivityManager.getCurrentUser() == UserHandle.USER_OWNER) {
-          menu.add(Menu.NONE,MENU_ID_FORGET,0,R.string.wifi_menu_forget);
-        }
         menu.add(Menu.NONE,MENU_ID_MODIFY,0,R.string.wifi_menu_modify);
         if (mSelectedAccessPoint.security != AccessPoint.SECURITY_NONE) {
           menu.add(Menu.NONE,MENU_ID_WRITE_NFC,0,R.string.wifi_menu_write_to_nfc);

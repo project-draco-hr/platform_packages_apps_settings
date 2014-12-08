@@ -2,11 +2,11 @@
   final Resources res=getResources();
   setTitle(String.format(getResources().getString(R.string.sim_editor_title),(mSlotId + 1)));
   if (mSubInfoRecord != null) {
-    if (TextUtils.isEmpty(mSubInfoRecord.getNumber())) {
+    if (TextUtils.isEmpty(getPhoneNumber(mSubInfoRecord))) {
       setSummary(mSubInfoRecord.getDisplayName());
     }
  else {
-      setSummary(mSubInfoRecord.getDisplayName() + " - " + mSubInfoRecord.getNumber());
+      setSummary(mSubInfoRecord.getDisplayName() + " - " + getPhoneNumber(mSubInfoRecord));
       setEnabled(true);
     }
     setIcon(new BitmapDrawable(res,(mSubInfoRecord.createIconBitmap(mContext))));

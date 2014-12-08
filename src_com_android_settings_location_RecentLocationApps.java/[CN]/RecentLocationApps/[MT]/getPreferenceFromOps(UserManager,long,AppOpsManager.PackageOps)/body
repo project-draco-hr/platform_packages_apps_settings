@@ -26,7 +26,7 @@ return null;
 }
 int uid=ops.getUid();
 int userId=UserHandle.getUserId(uid);
-AccessiblePreference preference=null;
+DimmableIconPreference preference=null;
 try {
 IPackageManager ipm=AppGlobals.getPackageManager();
 ApplicationInfo appInfo=ipm.getApplicationInfo(packageName,PackageManager.GET_META_DATA,userId);
@@ -40,6 +40,9 @@ Drawable appIcon=mPackageManager.getApplicationIcon(appInfo);
 Drawable icon=mPackageManager.getUserBadgedIcon(appIcon,userHandle);
 CharSequence appLabel=mPackageManager.getApplicationLabel(appInfo);
 CharSequence badgedAppLabel=mPackageManager.getUserBadgedLabel(appLabel,userHandle);
+if (appLabel.toString().contentEquals(badgedAppLabel)) {
+badgedAppLabel=null;
+}
 preference=createRecentLocationEntry(icon,appLabel,highBattery,badgedAppLabel,new PackageEntryClickedListener(packageName));
 }
  catch (RemoteException e) {

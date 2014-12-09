@@ -1,14 +1,16 @@
 {
-  Preference pref=new DimmableIconPreference(mContext);
+  PackageManager pm=mContext.getPackageManager();
+  Drawable appIcon=pm.getDrawable(info.packageName,info.iconId,null);
+  Drawable icon=pm.getUserBadgedIcon(appIcon,info.mUserHandle);
+  CharSequence badgedAppLabel=pm.getUserBadgedLabel(info.title,info.mUserHandle);
+  if (info.title.contentEquals(badgedAppLabel)) {
+    badgedAppLabel=null;
+  }
+  Preference pref=new DimmableIconPreference(mContext,badgedAppLabel);
   pref.setTitle(info.title);
   pref.setSummary(null);
-  PackageManager pm=mContext.getPackageManager();
-  Drawable icon=pm.getDrawable(info.packageName,info.iconId,null);
   pref.setIcon(icon);
-  Intent settingIntent=new Intent();
-  settingIntent.setClassName(info.packageName,info.settingsActivity);
-  settingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-  pref.setIntent(settingIntent);
+  pref.setOnPreferenceClickListener(new ServiceSettingClickedListener(info));
   prefs.add(pref);
   return pref;
 }

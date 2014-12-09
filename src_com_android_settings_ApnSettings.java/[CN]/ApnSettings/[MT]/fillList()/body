@@ -1,5 +1,6 @@
 {
-  String where="numeric=\"" + android.os.SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC,"") + "\"";
+  final String mccmnc=mSubscriptionInfo == null ? "" : Integer.toString(mSubscriptionInfo.getMcc()) + Integer.toString(mSubscriptionInfo.getMnc());
+  final String where="numeric=\"" + mccmnc + "\"";
   Cursor cursor=getContentResolver().query(Telephony.Carriers.CONTENT_URI,new String[]{"_id","name","apn","type"},where,null,Telephony.Carriers.DEFAULT_SORT_ORDER);
   if (cursor != null) {
     PreferenceGroup apnList=(PreferenceGroup)findPreference("apn_list");

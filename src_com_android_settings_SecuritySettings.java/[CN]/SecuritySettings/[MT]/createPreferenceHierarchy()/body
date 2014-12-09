@@ -67,7 +67,7 @@
   }
   addPreferencesFromResource(R.xml.security_settings_misc);
   TelephonyManager tm=TelephonyManager.getDefault();
-  if (!mIsPrimary || !tm.hasIccCard()) {
+  if (!mIsPrimary || !isSimIccReady()) {
     root.removePreference(root.findPreference(KEY_SIM_LOCK));
   }
  else {

@@ -1,11 +1,18 @@
 {
+  if (LOGD)   Log.d(TAG,"isMobileDataEnabled:+ subId=" + subId);
   boolean isEnable=false;
   if (mMobileDataEnabled != null) {
     isEnable=mMobileDataEnabled.booleanValue();
+    if (LOGD) {
+      Log.d(TAG,"isMobileDataEnabled: != null, subId=" + subId + " isEnable="+ isEnable);
+    }
     mMobileDataEnabled=null;
   }
  else {
-    isEnable=mTelephonyManager.getDataEnabled() && (subId == mSubscriptionManager.getDefaultDataSubId());
+    isEnable=mTelephonyManager.getDataEnabled(subId);
+    if (LOGD) {
+      Log.d(TAG,"isMobileDataEnabled: == null, subId=" + subId + " isEnable="+ isEnable);
+    }
   }
   return isEnable;
 }

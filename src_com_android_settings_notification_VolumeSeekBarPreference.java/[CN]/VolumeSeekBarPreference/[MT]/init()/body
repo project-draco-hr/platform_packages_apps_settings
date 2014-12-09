@@ -1,0 +1,31 @@
+{
+  if (mSeekBar == null)   return;
+  getPreferenceManager().registerOnActivityStopListener(this);
+  final SeekBarVolumizer.Callback sbvc=new SeekBarVolumizer.Callback(){
+    @Override public void onSampleStarting(    SeekBarVolumizer sbv){
+      if (mCallback != null) {
+        mCallback.onSampleStarting(sbv);
+      }
+    }
+    @Override public void onProgressChanged(    SeekBar seekBar,    int progress,    boolean fromTouch){
+      if (mCallback != null) {
+        mCallback.onStreamValueChanged(mStream,progress);
+      }
+    }
+    @Override public void onMuted(    boolean muted){
+      if (mMuted == muted)       return;
+      mMuted=muted;
+      updateIconView();
+    }
+  }
+;
+  final Uri sampleUri=mStream == AudioManager.STREAM_MUSIC ? getMediaVolumeUri() : null;
+  if (mVolumizer == null) {
+    mVolumizer=new SeekBarVolumizer(getContext(),mStream,sampleUri,sbvc);
+  }
+  mVolumizer.start();
+  mVolumizer.setSeekBar(mSeekBar);
+  updateIconView();
+  mCallback.onStreamValueChanged(mStream,mSeekBar.getProgress());
+  updateSuppressionText();
+}

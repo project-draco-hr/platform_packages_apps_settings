@@ -4,37 +4,8 @@
     Log.w(TAG,"No stream found, not binding volumizer");
     return;
   }
-  getPreferenceManager().registerOnActivityStopListener(this);
-  final SeekBar seekBar=(SeekBar)view.findViewById(com.android.internal.R.id.seekbar);
-  if (seekBar == mSeekBar)   return;
-  mSeekBar=seekBar;
-  final SeekBarVolumizer.Callback sbvc=new SeekBarVolumizer.Callback(){
-    @Override public void onSampleStarting(    SeekBarVolumizer sbv){
-      if (mCallback != null) {
-        mCallback.onSampleStarting(sbv);
-      }
-    }
-    @Override public void onProgressChanged(    SeekBar seekBar,    int progress,    boolean fromTouch){
-      if (mCallback != null) {
-        mCallback.onStreamValueChanged(mStream,progress);
-      }
-    }
-    @Override public void onMuted(    boolean muted){
-      if (mMuted == muted)       return;
-      mMuted=muted;
-      updateIconView();
-    }
-  }
-;
-  final Uri sampleUri=mStream == AudioManager.STREAM_MUSIC ? getMediaVolumeUri() : null;
-  if (mVolumizer == null) {
-    mVolumizer=new SeekBarVolumizer(getContext(),mStream,sampleUri,sbvc);
-  }
-  mVolumizer.start();
-  mVolumizer.setSeekBar(mSeekBar);
+  mSeekBar=(SeekBar)view.findViewById(com.android.internal.R.id.seekbar);
   mIconView=(ImageView)view.findViewById(com.android.internal.R.id.icon);
-  updateIconView();
   mSuppressionTextView=(TextView)view.findViewById(R.id.suppression_text);
-  mCallback.onStreamValueChanged(mStream,mSeekBar.getProgress());
-  updateSuppressionText();
+  init();
 }

@@ -1,5 +1,7 @@
 {
   super.onViewCreated(view,savedInstanceState);
   SetupWizardUtils.setIllustration(getActivity(),R.drawable.setup_illustration_lock_screen);
-  SetupWizardUtils.setHeaderText(getActivity(),R.string.encryption_interstitial_header);
+  final int title=getHeaderTextResource();
+  getActivity().setTitle(title);
+  SetupWizardUtils.setHeaderText(getActivity(),title);
 }

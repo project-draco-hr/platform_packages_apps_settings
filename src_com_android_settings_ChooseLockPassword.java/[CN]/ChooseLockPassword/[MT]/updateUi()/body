@@ -5,23 +5,23 @@
     if (length < mPasswordMinLength) {
       String msg=getString(mIsAlphaMode ? R.string.lockpassword_password_too_short : R.string.lockpassword_pin_too_short,mPasswordMinLength);
       mHeaderText.setText(msg);
-      mNextButton.setEnabled(false);
+      setNextEnabled(false);
     }
  else {
       String error=validatePassword(password);
       if (error != null) {
         mHeaderText.setText(error);
-        mNextButton.setEnabled(false);
+        setNextEnabled(false);
       }
  else {
         mHeaderText.setText(R.string.lockpassword_press_continue);
-        mNextButton.setEnabled(true);
+        setNextEnabled(true);
       }
     }
   }
  else {
     mHeaderText.setText(mIsAlphaMode ? mUiStage.alphaHint : mUiStage.numericHint);
-    mNextButton.setEnabled(length > 0);
+    setNextEnabled(length > 0);
   }
-  mNextButton.setText(mUiStage.buttonText);
+  setNextText(mUiStage.buttonText);
 }

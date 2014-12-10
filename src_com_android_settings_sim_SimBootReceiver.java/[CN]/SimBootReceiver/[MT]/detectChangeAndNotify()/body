@@ -1,9 +1,10 @@
 {
   final int numSlots=mTelephonyManager.getSimCount();
+  final boolean isInProvisioning=Settings.Global.getInt(mContext.getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0;
   boolean notificationSent=false;
   int numSIMsDetected=0;
   int lastSIMSlotDetected=-1;
-  if (numSlots < 2) {
+  if (numSlots < 2 || isInProvisioning) {
     return;
   }
   List<SubscriptionInfo> sil=mSubscriptionManager.getActiveSubscriptionInfoList();

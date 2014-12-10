@@ -1,0 +1,35 @@
+{
+  if (intent.hasExtra(EXTRA_ADD_TETHER_TYPE)) {
+    int type=intent.getIntExtra(EXTRA_ADD_TETHER_TYPE,TetherSettings.INVALID);
+    if (!mCurrentTethers.contains(type)) {
+      if (DEBUG)       Log.d(TAG,"Adding tether " + type);
+      mCurrentTethers.add(type);
+    }
+  }
+  if (intent.hasExtra(EXTRA_REM_TETHER_TYPE)) {
+    int type=intent.getIntExtra(EXTRA_REM_TETHER_TYPE,TetherSettings.INVALID);
+    if (DEBUG)     Log.d(TAG,"Removing tether " + type);
+    int index=mCurrentTethers.indexOf(type);
+    if (index >= 0) {
+      mCurrentTethers.remove(index);
+      if (index <= mCurrentTypeIndex && mCurrentTypeIndex > 0) {
+        mCurrentTypeIndex--;
+      }
+    }
+    cancelAlarmIfNecessary();
+  }
+  if (intent.getBooleanExtra(EXTRA_SET_ALARM,false) && mCurrentTethers.size() == 1) {
+    scheduleAlarm();
+  }
+  if (intent.getBooleanExtra(EXTRA_ENABLE_WIFI_TETHER,false)) {
+    mEnableWifiAfterCheck=true;
+  }
+  if (intent.getBooleanExtra(EXTRA_RUN_PROVISION,false)) {
+    startProvisioning(mCurrentTypeIndex);
+  }
+ else   if (!mInProvisionCheck) {
+    stopSelf();
+    return START_NOT_STICKY;
+  }
+  return START_STICKY;
+}

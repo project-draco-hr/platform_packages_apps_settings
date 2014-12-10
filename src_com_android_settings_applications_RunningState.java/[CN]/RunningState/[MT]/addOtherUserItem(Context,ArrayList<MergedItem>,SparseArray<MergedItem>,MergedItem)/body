@@ -4,6 +4,9 @@
   if (first) {
     UserState userState=mUsers.get(newItem.mUserId);
     UserInfo info=userState != null ? userState.mInfo : mUm.getUserInfo(newItem.mUserId);
+    if (info == null) {
+      return;
+    }
     if (mHideManagedProfiles && info.isManagedProfile()) {
       return;
     }

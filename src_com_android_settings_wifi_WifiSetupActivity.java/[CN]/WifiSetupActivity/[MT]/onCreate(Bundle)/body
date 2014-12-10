@@ -1,6 +1,8 @@
 {
   super.onCreate(savedInstanceState);
   final Intent intent=getIntent();
+  mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+  mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
   mAutoFinishOnConnection=intent.getBooleanExtra(EXTRA_AUTO_FINISH_ON_CONNECT,false);
   mAllowSkip=intent.getBooleanExtra(EXTRA_ALLOW_SKIP,true);
   mUserSelectedNetwork=!intent.getBooleanExtra(EXTRA_REQUIRE_USER_NETWORK_SELECTION,false);

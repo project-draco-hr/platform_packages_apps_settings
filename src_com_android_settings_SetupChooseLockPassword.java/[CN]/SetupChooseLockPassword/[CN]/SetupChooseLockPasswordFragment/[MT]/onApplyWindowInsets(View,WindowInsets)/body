@@ -1,0 +1,8 @@
+{
+  SetupChooseLockPassword activity=(SetupChooseLockPassword)getActivity();
+  final int bottomMargin=Math.max(insets.getSystemWindowInsetBottom() - activity.mNavigationBar.getView().getHeight(),0);
+  ViewGroup.MarginLayoutParams lp=(ViewGroup.MarginLayoutParams)view.getLayoutParams();
+  lp.setMargins(lp.leftMargin,lp.topMargin,lp.rightMargin,bottomMargin);
+  view.setLayoutParams(lp);
+  return insets.replaceSystemWindowInsets(insets.getSystemWindowInsetLeft(),insets.getSystemWindowInsetTop(),insets.getSystemWindowInsetRight(),0);
+}

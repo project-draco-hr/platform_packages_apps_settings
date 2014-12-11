@@ -43,7 +43,7 @@ CharSequence badgedAppLabel=mPackageManager.getUserBadgedLabel(appLabel,userHand
 if (appLabel.toString().contentEquals(badgedAppLabel)) {
 badgedAppLabel=null;
 }
-preference=createRecentLocationEntry(icon,appLabel,highBattery,badgedAppLabel,new PackageEntryClickedListener(packageName));
+preference=createRecentLocationEntry(icon,appLabel,highBattery,badgedAppLabel,new PackageEntryClickedListener(packageName,userHandle));
 }
  catch (RemoteException e) {
 Log.w(TAG,"Error while retrieving application info for package " + packageName + ", userId "+ userId,e);

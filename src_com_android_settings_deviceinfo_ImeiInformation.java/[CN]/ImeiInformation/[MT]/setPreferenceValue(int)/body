@@ -1,5 +1,5 @@
 {
-  final Phone phone=getPhoneFromSlotId(slotId);
+  final Phone phone=PhoneFactory.getPhone(phoneId);
   if (phone != null) {
     if (phone.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
       setSummaryText(KEY_MEID_NUMBER,phone.getMeid());
@@ -20,7 +20,7 @@
     }
  else {
       setSummaryText(KEY_IMEI,phone.getDeviceId());
-      setSummaryText(KEY_IMEI_SV,((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion());
+      setSummaryText(KEY_IMEI_SV,((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion(phoneId));
       removePreferenceFromScreen(KEY_PRL_VERSION);
       removePreferenceFromScreen(KEY_MEID_NUMBER);
       removePreferenceFromScreen(KEY_MIN_NUMBER);

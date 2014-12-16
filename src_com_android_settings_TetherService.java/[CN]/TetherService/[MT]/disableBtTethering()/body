@@ -1,0 +1,14 @@
+{
+  final BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+  if (adapter != null) {
+    adapter.getProfileProxy(this,new ServiceListener(){
+      @Override public void onServiceDisconnected(      int profile){
+      }
+      @Override public void onServiceConnected(      int profile,      BluetoothProfile proxy){
+        ((BluetoothPan)proxy).setBluetoothTethering(false);
+        adapter.closeProfileProxy(BluetoothProfile.PAN,proxy);
+      }
+    }
+,BluetoothProfile.PAN);
+  }
+}

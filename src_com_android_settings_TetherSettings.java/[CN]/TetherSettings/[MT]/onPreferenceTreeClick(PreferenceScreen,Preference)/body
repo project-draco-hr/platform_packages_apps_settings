@@ -6,6 +6,9 @@
       startProvisioningIfNecessary(USB_TETHERING);
     }
  else {
+      if (isProvisioningNeeded(mProvisionApp)) {
+        TetherService.cancelRecheckAlarmIfNecessary(getActivity(),USB_TETHERING);
+      }
       setUsbTethering(newState);
     }
   }
@@ -15,6 +18,9 @@
       startProvisioningIfNecessary(BLUETOOTH_TETHERING);
     }
  else {
+      if (isProvisioningNeeded(mProvisionApp)) {
+        TetherService.cancelRecheckAlarmIfNecessary(getActivity(),BLUETOOTH_TETHERING);
+      }
       boolean errored=false;
       String[] tethered=cm.getTetheredIfaces();
       String bluetoothIface=findIface(tethered,mBluetoothRegexs);

@@ -36,13 +36,23 @@ return true;
 }
 }
 ;
+ArrayList<SubscriptionInfo> callsSubInfoList=new ArrayList<SubscriptionInfo>();
 if (id == CALLS_PICK) {
 final TelecomManager telecomManager=TelecomManager.from(context);
 final Iterator<PhoneAccountHandle> phoneAccounts=telecomManager.getCallCapablePhoneAccounts().listIterator();
 list.add(getResources().getString(R.string.sim_calls_ask_first_prefs_title));
+callsSubInfoList.add(null);
 while (phoneAccounts.hasNext()) {
 final PhoneAccount phoneAccount=telecomManager.getPhoneAccount(phoneAccounts.next());
 list.add((String)phoneAccount.getLabel());
+if (phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
+final String phoneAccountId=phoneAccount.getAccountHandle().getId();
+final SubscriptionInfo sir=Utils.findRecordBySubId(context,Integer.parseInt(phoneAccountId));
+callsSubInfoList.add(sir);
+}
+ else {
+callsSubInfoList.add(null);
+}
 }
 }
  else {
@@ -57,7 +67,7 @@ list.add(displayName.toString());
 }
 String[] arr=list.toArray(new String[0]);
 AlertDialog.Builder builder=new AlertDialog.Builder(context);
-ListAdapter adapter=new SelectAccountListAdapter(subInfoList,builder.getContext(),R.layout.select_account_list_item,arr,id);
+ListAdapter adapter=new SelectAccountListAdapter(id == CALLS_PICK ? callsSubInfoList : subInfoList,builder.getContext(),R.layout.select_account_list_item,arr,id);
 switch (id) {
 case DATA_PICK:
 builder.setTitle(R.string.select_sim_for_data);

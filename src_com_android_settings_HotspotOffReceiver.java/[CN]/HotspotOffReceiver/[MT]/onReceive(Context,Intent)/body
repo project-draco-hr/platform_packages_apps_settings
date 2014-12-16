@@ -1,0 +1,8 @@
+{
+  if (WifiManager.WIFI_AP_STATE_CHANGED_ACTION.equals(intent.getAction())) {
+    WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+    if (wifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_DISABLED) {
+      TetherService.cancelRecheckAlarmIfNecessary(context,TetherSettings.WIFI_TETHERING);
+    }
+  }
+}

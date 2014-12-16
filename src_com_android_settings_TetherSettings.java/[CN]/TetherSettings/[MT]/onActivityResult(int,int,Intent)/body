@@ -2,6 +2,7 @@
   super.onActivityResult(requestCode,resultCode,intent);
   if (requestCode == PROVISION_REQUEST) {
     if (resultCode == Activity.RESULT_OK) {
+      TetherService.scheduleRecheckAlarm(getActivity(),mTetherChoice);
       startTethering();
     }
  else {

@@ -1,0 +1,10 @@
+{
+  if (mInProvisionCheck) {
+    Log.e(TAG,"TetherService getting destroyed while mid-provisioning" + mCurrentTethers.get(mCurrentTypeIndex));
+  }
+  SharedPreferences prefs=getSharedPreferences(PREFS,MODE_PRIVATE);
+  prefs.edit().putString(KEY_TETHERS,tethersToString(mCurrentTethers)).commit();
+  if (DEBUG)   Log.d(TAG,"Destroying WifiProvisionService");
+  unregisterReceiver(mReceiver);
+  super.onDestroy();
+}

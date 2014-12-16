@@ -1,0 +1,9 @@
+{
+  String provisionAction=getResources().getString(com.android.internal.R.string.config_mobile_hotspot_provision_app_no_ui);
+  if (DEBUG)   Log.d(TAG,"Sending provisioning broadcast: " + provisionAction + " type: "+ mCurrentTethers.get(index));
+  Intent intent=new Intent(provisionAction);
+  intent.putExtra(TETHER_CHOICE,mCurrentTethers.get(index));
+  intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+  sendBroadcast(intent);
+  mInProvisionCheck=true;
+}

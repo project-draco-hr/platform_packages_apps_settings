@@ -1,0 +1,11 @@
+{
+  Intent intent=new Intent(this,TetherService.class);
+  intent.putExtra(EXTRA_RUN_PROVISION,true);
+  PendingIntent pendingIntent=PendingIntent.getService(this,0,intent,0);
+  AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
+  int period=getResources().getInteger(com.android.internal.R.integer.config_mobile_hotspot_provision_check_period);
+  long periodMs=period * MS_PER_HOUR;
+  long firstTime=SystemClock.elapsedRealtime() + periodMs;
+  if (DEBUG)   Log.d(TAG,"Scheduling alarm at interval " + periodMs);
+  alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME,firstTime,periodMs,pendingIntent);
+}

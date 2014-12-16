@@ -4,6 +4,9 @@
     startProvisioningIfNecessary(WIFI_TETHERING);
   }
  else {
+    if (isProvisioningNeeded(mProvisionApp)) {
+      TetherService.cancelRecheckAlarmIfNecessary(getActivity(),WIFI_TETHERING);
+    }
     mWifiApEnabler.setSoftapEnabled(false);
   }
   return false;

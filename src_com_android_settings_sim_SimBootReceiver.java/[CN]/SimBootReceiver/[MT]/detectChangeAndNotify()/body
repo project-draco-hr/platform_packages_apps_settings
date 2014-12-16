@@ -18,7 +18,10 @@
     if (sir != null) {
       numSIMsDetected++;
       final int currentSubId=sir.getSubscriptionId();
-      if (lastSubId != currentSubId) {
+      if (lastSubId == INVALID_SLOT) {
+        setLastSubId(key,currentSubId);
+      }
+ else       if (lastSubId != currentSubId) {
         createNotification(mContext);
         setLastSubId(key,currentSubId);
         notificationSent=true;

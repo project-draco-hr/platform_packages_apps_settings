@@ -9,5 +9,5 @@
       return CircleFramedDrawable.getInstance(context,icon);
     }
   }
-  return UserIcons.getDefaultUserIcon(user.id,false);
+  return CircleFramedDrawable.getInstance(context,UserIcons.convertToBitmap(UserIcons.getDefaultUserIcon(user.id,false)));
 }

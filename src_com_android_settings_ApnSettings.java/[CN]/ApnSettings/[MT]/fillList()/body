@@ -1,5 +1,7 @@
 {
-  final String mccmnc=mSubscriptionInfo == null ? "" : Integer.toString(mSubscriptionInfo.getMcc()) + Integer.toString(mSubscriptionInfo.getMnc());
+  final TelephonyManager tm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+  final String mccmnc=mSubscriptionInfo == null ? "" : tm.getSimOperator(mSubscriptionInfo.getSubscriptionId());
+  Log.d(TAG,"mccmnc = " + mccmnc);
   final String where="numeric=\"" + mccmnc + "\"";
   Cursor cursor=getContentResolver().query(Telephony.Carriers.CONTENT_URI,new String[]{"_id","name","apn","type"},where,null,Telephony.Carriers.DEFAULT_SORT_ORDER);
   if (cursor != null) {

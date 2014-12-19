@@ -2,16 +2,15 @@
   if (getActivity() == null)   return;
   List<UserInfo> users=mUserManager.getUsers(true);
   final Context context=getActivity();
-  mUserListCategory.removeAll();
-  mUserListCategory.setOrderingAsAdded(false);
-  mUserListCategory.addPreference(mMePreference);
   final boolean voiceCapable=Utils.isVoiceCapable(context);
-  final ArrayList<Integer> missingIcons=new ArrayList<Integer>();
+  final ArrayList<Integer> missingIcons=new ArrayList<>();
+  final ArrayList<UserPreference> userPreferences=new ArrayList<>();
+  userPreferences.add(mMePreference);
   for (  UserInfo user : users) {
     if (user.isManagedProfile()) {
       continue;
     }
-    Preference pref;
+    UserPreference pref;
     if (user.id == UserHandle.myUserId()) {
       pref=mMePreference;
     }
@@ -24,7 +23,7 @@
       pref=new UserPreference(context,null,user.id,showSettings ? this : null,showDelete ? this : null);
       pref.setOnPreferenceClickListener(this);
       pref.setKey("id=" + user.id);
-      mUserListCategory.addPreference(pref);
+      userPreferences.add(pref);
       if (user.id == UserHandle.USER_OWNER) {
         pref.setSummary(R.string.user_owner);
       }
@@ -55,33 +54,44 @@
     }
   }
   if (mAddingUser) {
-    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,null,null);
+    UserPreference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,null,null);
     pref.setEnabled(false);
     pref.setTitle(R.string.user_new_user_name);
     pref.setIcon(getEncircledDefaultIcon());
-    mUserListCategory.addPreference(pref);
+    userPreferences.add(pref);
   }
-  boolean showGuestPreference=!mIsGuest;
-  if (showGuestPreference && mUserManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER)) {
-    showGuestPreference=false;
-    for (    UserInfo user : users) {
-      if (user.isGuest()) {
-        showGuestPreference=true;
-        break;
-      }
-    }
-  }
-  if (showGuestPreference) {
-    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mIsOwner && voiceCapable ? this : null,null);
+  if (shouldShowGuestUserPreference(users)) {
+    UserPreference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mIsOwner && voiceCapable ? this : null,null);
     pref.setTitle(R.string.user_guest);
     pref.setIcon(getEncircledDefaultIcon());
     pref.setOnPreferenceClickListener(this);
-    mUserListCategory.addPreference(pref);
+    userPreferences.add(pref);
   }
+  Collections.sort(userPreferences,UserPreference.SERIAL_NUMBER_COMPARATOR);
   getActivity().invalidateOptionsMenu();
   if (missingIcons.size() > 0) {
     loadIconsAsync(missingIcons);
   }
-  boolean moreUsers=mUserManager.canAddMoreUsers();
-  mAddUser.setEnabled(moreUsers);
+  PreferenceScreen preferenceScreen=getPreferenceScreen();
+  preferenceScreen.removeAll();
+  PreferenceGroup groupToAddUsers;
+  if (mCanAddRestrictedProfile) {
+    mUserListCategory.removeAll();
+    mUserListCategory.setOrder(Preference.DEFAULT_ORDER);
+    preferenceScreen.addPreference(mUserListCategory);
+    groupToAddUsers=mUserListCategory;
+  }
+ else {
+    groupToAddUsers=preferenceScreen;
+  }
+  for (  UserPreference userPreference : userPreferences) {
+    userPreference.setOrder(Preference.DEFAULT_ORDER);
+    groupToAddUsers.addPreference(userPreference);
+  }
+  if (mCanAddUser) {
+    boolean moreUsers=mUserManager.canAddMoreUsers();
+    mAddUser.setEnabled(moreUsers);
+    mAddUser.setOrder(Preference.DEFAULT_ORDER);
+    preferenceScreen.addPreference(mAddUser);
+  }
 }

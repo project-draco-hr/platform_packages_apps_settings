@@ -1,0 +1,13 @@
+{
+  boolean showGuestPreference=!mIsGuest;
+  if (showGuestPreference && mUserManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER)) {
+    showGuestPreference=false;
+    for (    UserInfo user : users) {
+      if (user.isGuest()) {
+        showGuestPreference=true;
+        break;
+      }
+    }
+  }
+  return showGuestPreference;
+}

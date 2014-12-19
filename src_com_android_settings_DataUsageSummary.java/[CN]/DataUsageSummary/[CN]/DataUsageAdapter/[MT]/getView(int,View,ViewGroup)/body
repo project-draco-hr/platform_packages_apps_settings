@@ -2,7 +2,7 @@
   final AppItem item=mItems.get(position);
   if (getItemViewType(position) == 1) {
     if (convertView == null) {
-      convertView=inflateCategoryHeader(LayoutInflater.from(parent.getContext()),parent);
+      convertView=Utils.inflateCategoryHeader(LayoutInflater.from(parent.getContext()),parent);
     }
     final TextView title=(TextView)convertView.findViewById(android.R.id.title);
     title.setText(R.string.data_usage_app);

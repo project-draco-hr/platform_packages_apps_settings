@@ -31,9 +31,7 @@ p.setTitle(entry.getTitle());
 ((MultiSelectListPreference)p).setEntryValues(entry.getChoiceValues());
 ((MultiSelectListPreference)p).setEntries(entry.getChoiceEntries());
 HashSet<String> set=new HashSet<String>();
-for (String s : entry.getAllSelectedStrings()) {
-set.add(s);
-}
+Collections.addAll(set,entry.getAllSelectedStrings());
 ((MultiSelectListPreference)p).setValues(set);
 ((MultiSelectListPreference)p).setDialogTitle(entry.getTitle());
 break;

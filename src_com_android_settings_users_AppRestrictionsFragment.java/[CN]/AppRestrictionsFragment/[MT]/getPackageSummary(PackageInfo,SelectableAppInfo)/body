@@ -1,0 +1,12 @@
+{
+  if (app.masterEntry != null) {
+    if (mRestrictedProfile && pi.restrictedAccountType != null) {
+      return getString(R.string.app_sees_restricted_accounts_and_controlled_by,app.masterEntry.activityName);
+    }
+    return getString(R.string.user_restrictions_controlled_by,app.masterEntry.activityName);
+  }
+ else   if (pi.restrictedAccountType != null) {
+    return getString(R.string.app_sees_restricted_accounts);
+  }
+  return null;
+}

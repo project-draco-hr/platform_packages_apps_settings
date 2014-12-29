@@ -3,7 +3,7 @@
     return mEditUserInfoController.createDialog(this,mUserIconView.getDrawable(),mUserNameView.getText(),R.string.profile_info_settings_title,this,mUser);
   }
  else   if (dialogId == DIALOG_CONFIRM_REMOVE) {
-    Dialog dlg=Utils.createRemoveConfirmationDialog(getActivity(),mUser.getIdentifier(),new DialogInterface.OnClickListener(){
+    Dialog dlg=UserDialogs.createRemoveDialog(getActivity(),mUser.getIdentifier(),new DialogInterface.OnClickListener(){
       public void onClick(      DialogInterface dialog,      int which){
         removeUser();
       }

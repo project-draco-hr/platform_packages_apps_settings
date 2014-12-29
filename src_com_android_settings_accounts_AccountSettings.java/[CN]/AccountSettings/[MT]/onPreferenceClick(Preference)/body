@@ -11,7 +11,7 @@
     }
     if (preference == profileData.removeWorkProfilePreference) {
       final int userId=profileData.userInfo.id;
-      Utils.createRemoveConfirmationDialog(getActivity(),userId,new DialogInterface.OnClickListener(){
+      UserDialogs.createRemoveDialog(getActivity(),userId,new DialogInterface.OnClickListener(){
         @Override public void onClick(        DialogInterface dialog,        int which){
           mUm.removeUser(userId);
         }

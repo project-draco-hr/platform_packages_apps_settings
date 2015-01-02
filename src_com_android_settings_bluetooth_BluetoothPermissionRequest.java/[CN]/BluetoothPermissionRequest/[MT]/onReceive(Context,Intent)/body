@@ -3,6 +3,11 @@
   String action=intent.getAction();
   if (DEBUG)   Log.d(TAG,"onReceive" + action);
   if (action.equals(BluetoothDevice.ACTION_CONNECTION_ACCESS_REQUEST)) {
+    UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+    if (com.android.settings.Utils.isManagedProfile(um)) {
+      if (DEBUG)       Log.d(TAG,"Blocking notification for managed profile.");
+      return;
+    }
     mDevice=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
     mRequestType=intent.getIntExtra(BluetoothDevice.EXTRA_ACCESS_REQUEST_TYPE,BluetoothDevice.REQUEST_TYPE_PROFILE_CONNECTION);
     mReturnPackage=intent.getStringExtra(BluetoothDevice.EXTRA_PACKAGE_NAME);

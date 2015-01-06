@@ -45,7 +45,7 @@ callsSubInfoList.add(null);
 while (phoneAccounts.hasNext()) {
 final PhoneAccount phoneAccount=telecomManager.getPhoneAccount(phoneAccounts.next());
 list.add((String)phoneAccount.getLabel());
-if (phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)) {
+if (phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION) && TextUtils.isDigitsOnly(phoneAccount.getAccountHandle().getId())) {
 final String phoneAccountId=phoneAccount.getAccountHandle().getId();
 final SubscriptionInfo sir=Utils.findRecordBySubId(context,Integer.parseInt(phoneAccountId));
 callsSubInfoList.add(sir);

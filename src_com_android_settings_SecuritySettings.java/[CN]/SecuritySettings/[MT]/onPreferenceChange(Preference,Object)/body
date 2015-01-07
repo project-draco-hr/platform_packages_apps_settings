@@ -18,19 +18,6 @@
  else   if (KEY_VISIBLE_PATTERN.equals(key)) {
     lockPatternUtils.setVisiblePatternEnabled((Boolean)value);
   }
- else   if (KEY_BIOMETRIC_WEAK_LIVELINESS.equals(key)) {
-    if ((Boolean)value) {
-      lockPatternUtils.setBiometricWeakLivelinessEnabled(true);
-    }
- else {
-      mBiometricWeakLiveliness.setChecked(true);
-      ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
-      if (!helper.launchConfirmationActivity(CONFIRM_EXISTING_FOR_BIOMETRIC_WEAK_LIVELINESS_OFF,null,null)) {
-        lockPatternUtils.setBiometricWeakLivelinessEnabled(false);
-        mBiometricWeakLiveliness.setChecked(false);
-      }
-    }
-  }
  else   if (KEY_POWER_INSTANTLY_LOCKS.equals(key)) {
     mLockPatternUtils.setPowerButtonInstantlyLocks((Boolean)value);
   }

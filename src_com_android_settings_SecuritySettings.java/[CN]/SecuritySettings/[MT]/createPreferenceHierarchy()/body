@@ -53,17 +53,11 @@
     setupLockAfterPreference();
     updateLockAfterPreferenceSummary();
   }
-  mBiometricWeakLiveliness=(SwitchPreference)root.findPreference(KEY_BIOMETRIC_WEAK_LIVELINESS);
   mVisiblePattern=(SwitchPreference)root.findPreference(KEY_VISIBLE_PATTERN);
   mPowerButtonInstantlyLocks=(SwitchPreference)root.findPreference(KEY_POWER_INSTANTLY_LOCKS);
   Preference trustAgentPreference=root.findPreference(KEY_TRUST_AGENT);
   if (mPowerButtonInstantlyLocks != null && trustAgentPreference != null && trustAgentPreference.getTitle().length() > 0) {
     mPowerButtonInstantlyLocks.setSummary(getString(R.string.lockpattern_settings_power_button_instantly_locks_summary,trustAgentPreference.getTitle()));
-  }
-  if (resid == R.xml.security_settings_biometric_weak && mLockPatternUtils.getKeyguardStoredPasswordQuality() != DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
-    if (securityCategory != null && mVisiblePattern != null) {
-      securityCategory.removePreference(root.findPreference(KEY_VISIBLE_PATTERN));
-    }
   }
   addPreferencesFromResource(R.xml.security_settings_misc);
   TelephonyManager tm=TelephonyManager.getDefault();

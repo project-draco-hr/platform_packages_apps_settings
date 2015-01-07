@@ -2,8 +2,7 @@
   if (!mPasswordConfirmed) {
     throw new IllegalStateException("Tried to update password without confirming it");
   }
-  final boolean isFallback=getActivity().getIntent().getBooleanExtra(LockPatternUtils.LOCKSCREEN_BIOMETRIC_WEAK_FALLBACK,false);
-  quality=upgradeQuality(quality,null);
+  quality=upgradeQuality(quality);
   final Context context=getActivity();
   if (quality >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
     int minLength=mDPM.getPasswordMinimumLength(null);
@@ -11,36 +10,19 @@
       minLength=MIN_PASSWORD_LENGTH;
     }
     final int maxLength=mDPM.getPasswordMaximumLength(quality);
-    Intent intent=getLockPasswordIntent(context,quality,isFallback,minLength,maxLength,mRequirePassword,false);
-    if (isFallback) {
-      startActivityForResult(intent,FALLBACK_REQUEST);
-      return;
-    }
- else {
-      mFinishPending=true;
-      intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-      startActivity(intent);
-    }
+    Intent intent=getLockPasswordIntent(context,quality,minLength,maxLength,mRequirePassword,false);
+    mFinishPending=true;
+    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+    startActivity(intent);
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
-    Intent intent=getLockPatternIntent(context,isFallback,mRequirePassword,false);
-    if (isFallback) {
-      startActivityForResult(intent,FALLBACK_REQUEST);
-      return;
-    }
- else {
-      mFinishPending=true;
-      intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-      startActivity(intent);
-    }
-  }
- else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_BIOMETRIC_WEAK) {
-    Intent intent=getBiometricSensorIntent();
+    Intent intent=getLockPatternIntent(context,mRequirePassword,false);
     mFinishPending=true;
+    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
     startActivity(intent);
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
-    mChooseLockSettingsHelper.utils().clearLock(false);
+    mChooseLockSettingsHelper.utils().clearLock();
     mChooseLockSettingsHelper.utils().setLockScreenDisabled(disabled);
     getActivity().setResult(Activity.RESULT_OK);
     finish();

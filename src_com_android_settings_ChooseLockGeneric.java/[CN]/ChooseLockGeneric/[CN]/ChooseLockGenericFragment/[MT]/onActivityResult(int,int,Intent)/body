@@ -5,11 +5,6 @@
     mPasswordConfirmed=true;
     updatePreferencesOrFinish();
   }
- else   if (requestCode == FALLBACK_REQUEST) {
-    mChooseLockSettingsHelper.utils().deleteTempGallery();
-    getActivity().setResult(resultCode);
-    finish();
-  }
  else   if (requestCode == ENABLE_ENCRYPTION_REQUEST && resultCode == Activity.RESULT_OK) {
     mRequirePassword=data.getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);
     updateUnlockMethodAndFinish(mEncryptionRequestQuality,mEncryptionRequestDisabled);

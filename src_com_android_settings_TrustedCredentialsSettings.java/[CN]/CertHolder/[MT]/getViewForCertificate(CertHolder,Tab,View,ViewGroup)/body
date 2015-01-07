@@ -16,6 +16,7 @@
   holder.mSubjectSecondaryView.setText(certHolder.mSubjectSecondary);
   if (mTab.mSwitch) {
     holder.mSwitch.setChecked(!certHolder.mDeleted);
+    holder.mSwitch.setEnabled(!mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS,new UserHandle(certHolder.mProfileId)));
     holder.mSwitch.setVisibility(View.VISIBLE);
   }
   return convertView;

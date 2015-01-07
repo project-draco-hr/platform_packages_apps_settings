@@ -11,15 +11,7 @@
       return service.deleteCaCertificate(mCertHolder.mAlias);
     }
   }
- catch (  CertificateEncodingException e) {
-    Log.w(TAG,"Error while toggling alias " + mCertHolder.mAlias,e);
-    return false;
-  }
-catch (  IllegalStateException e) {
-    Log.w(TAG,"Error while toggling alias " + mCertHolder.mAlias,e);
-    return false;
-  }
-catch (  RemoteException e) {
+ catch (  CertificateEncodingException|SecurityException|IllegalStateException|RemoteException e) {
     Log.w(TAG,"Error while toggling alias " + mCertHolder.mAlias,e);
     return false;
   }

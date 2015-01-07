@@ -39,7 +39,7 @@
   ViewGroup body=(ViewGroup)container.findViewById(com.android.internal.R.id.body);
   LayoutInflater inflater=LayoutInflater.from(getActivity());
   Button removeButton=(Button)inflater.inflate(R.layout.trusted_credential_details,body,false);
-  if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
+  if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS,new UserHandle(certHolder.mProfileId))) {
     body.addView(removeButton);
   }
   removeButton.setText(certHolder.mTab.getButtonLabel(certHolder));

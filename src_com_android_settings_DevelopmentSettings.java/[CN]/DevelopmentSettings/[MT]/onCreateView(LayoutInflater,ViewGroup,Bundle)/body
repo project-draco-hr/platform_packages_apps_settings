@@ -1,0 +1,6 @@
+{
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(UsbManager.ACTION_USB_STATE);
+  getActivity().registerReceiver(mUsbReceiver,filter);
+  return super.onCreateView(inflater,container,savedInstanceState);
+}

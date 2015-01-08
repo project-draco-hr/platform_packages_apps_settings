@@ -3,7 +3,7 @@
   final SubscriptionInfo currentSir=getCurrentTabSubInfo(context);
   final SubscriptionInfo nextSir=mSubscriptionManager.getActiveSubscriptionInfo(mSubscriptionManager.getDefaultDataSubId());
   if (!Utils.showSimCardTile(context) || (nextSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId())) {
-    setMobileDataEnabled(true);
+    setMobileDataEnabled(currentSir.getSubscriptionId(),true);
     updateBody();
     return;
   }
@@ -14,7 +14,7 @@
   builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int id){
       mSubscriptionManager.setDefaultDataSubId(currentSir.getSubscriptionId());
-      setMobileDataEnabled(true);
+      setMobileDataEnabled(currentSir.getSubscriptionId(),true);
       updateBody();
     }
   }

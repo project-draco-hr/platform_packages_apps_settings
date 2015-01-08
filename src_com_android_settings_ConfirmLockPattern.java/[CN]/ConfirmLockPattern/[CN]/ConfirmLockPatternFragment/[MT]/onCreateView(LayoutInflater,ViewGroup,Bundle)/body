@@ -19,7 +19,7 @@
     mNumWrongConfirmAttempts=savedInstanceState.getInt(KEY_NUM_WRONG_ATTEMPTS);
   }
  else {
-    if (!mLockPatternUtils.savedPatternExists()) {
+    if (!mLockPatternUtils.isLockPatternEnabled()) {
       getActivity().setResult(Activity.RESULT_OK);
       getActivity().finish();
     }

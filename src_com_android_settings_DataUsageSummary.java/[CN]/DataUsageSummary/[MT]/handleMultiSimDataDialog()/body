@@ -2,8 +2,11 @@
   final Context context=getActivity();
   final SubscriptionInfo currentSir=getCurrentTabSubInfo(context);
   final SubscriptionInfo nextSir=mSubscriptionManager.getActiveSubscriptionInfo(mSubscriptionManager.getDefaultDataSubId());
-  if (!Utils.showSimCardTile(context) || (nextSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId())) {
+  if (!Utils.showSimCardTile(context) || (nextSir != null && currentSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId())) {
     setMobileDataEnabled(currentSir.getSubscriptionId(),true);
+    if (nextSir != null && currentSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId()) {
+      disableDataForOtherSubscriptions(currentSir);
+    }
     updateBody();
     return;
   }
@@ -15,6 +18,7 @@
     @Override public void onClick(    DialogInterface dialog,    int id){
       mSubscriptionManager.setDefaultDataSubId(currentSir.getSubscriptionId());
       setMobileDataEnabled(currentSir.getSubscriptionId(),true);
+      disableDataForOtherSubscriptions(currentSir);
       updateBody();
     }
   }

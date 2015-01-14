@@ -1,5 +1,19 @@
 {
-  final ConnectivityManager connectivity=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-  boolean connected=connectivity != null && connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
-  refreshConnectionState(connected);
+  if (isWifiConnected()) {
+    if (mAutoFinishOnConnection && mUserSelectedNetwork) {
+      Log.d(TAG,"Auto-finishing with connection");
+      finishOrNext(Activity.RESULT_OK);
+      mUserSelectedNetwork=false;
+    }
+    setNextButtonText(R.string.setup_wizard_next_button_label);
+    setNextButtonEnabled(true);
+  }
+ else   if (mIsWifiRequired || (mIsNetworkRequired && !isNetworkConnected())) {
+    setNextButtonText(R.string.skip_label);
+    setNextButtonEnabled(false);
+  }
+ else {
+    setNextButtonText(R.string.skip_label);
+    setNextButtonEnabled(true);
+  }
 }

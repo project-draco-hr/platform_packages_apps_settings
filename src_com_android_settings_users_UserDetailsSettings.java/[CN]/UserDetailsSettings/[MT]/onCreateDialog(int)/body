@@ -3,17 +3,26 @@
   if (context == null)   return null;
 switch (dialogId) {
 case DIALOG_CONFIRM_REMOVE:
-{
-      Dialog dlg=Utils.createRemoveConfirmationDialog(getActivity(),mUserInfo.id,new DialogInterface.OnClickListener(){
-        public void onClick(        DialogInterface dialog,        int which){
-          removeUser();
-        }
+    return UserDialogs.createRemoveDialog(getActivity(),mUserInfo.id,new DialogInterface.OnClickListener(){
+      public void onClick(      DialogInterface dialog,      int which){
+        removeUser();
       }
-);
-      return dlg;
     }
+);
 case DIALOG_CONFIRM_ENABLE_CALLING:
-case DIALOG_CONFIRM_ENABLE_CALLING_SMS:
+  return UserDialogs.createEnablePhoneCallsDialog(getActivity(),new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      enableCallsAndSms(true);
+    }
+  }
+);
+case DIALOG_CONFIRM_ENABLE_CALLING_AND_SMS:
+return UserDialogs.createEnablePhoneCallsAndSmsDialog(getActivity(),new DialogInterface.OnClickListener(){
+  public void onClick(  DialogInterface dialog,  int which){
+    enableCallsAndSms(true);
+  }
 }
-return null;
+);
+}
+throw new IllegalArgumentException("Unsupported dialogId " + dialogId);
 }

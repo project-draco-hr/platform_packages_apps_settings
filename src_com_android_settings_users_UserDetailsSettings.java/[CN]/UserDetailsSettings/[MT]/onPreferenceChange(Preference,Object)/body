@@ -1,22 +1,8 @@
 {
-  if (mGuestUser) {
-    mDefaultGuestRestrictions.putBoolean(UserManager.DISALLOW_OUTGOING_CALLS,!((Boolean)newValue));
-    mDefaultGuestRestrictions.putBoolean(UserManager.DISALLOW_SMS,true);
-    mUserManager.setDefaultGuestRestrictions(mDefaultGuestRestrictions);
-    List<UserInfo> users=mUserManager.getUsers(true);
-    for (    UserInfo user : users) {
-      if (user.isGuest()) {
-        UserHandle userHandle=new UserHandle(user.id);
-        Bundle userRestrictions=mUserManager.getUserRestrictions(userHandle);
-        userRestrictions.putAll(mDefaultGuestRestrictions);
-        mUserManager.setUserRestrictions(userRestrictions,userHandle);
-      }
-    }
+  if (Boolean.TRUE.equals(newValue)) {
+    showDialog(mGuestUser ? DIALOG_CONFIRM_ENABLE_CALLING : DIALOG_CONFIRM_ENABLE_CALLING_AND_SMS);
+    return false;
   }
- else {
-    UserHandle userHandle=new UserHandle(mUserInfo.id);
-    mUserManager.setUserRestriction(UserManager.DISALLOW_OUTGOING_CALLS,!((Boolean)newValue),userHandle);
-    mUserManager.setUserRestriction(UserManager.DISALLOW_SMS,!((Boolean)newValue),userHandle);
-  }
+  enableCallsAndSms(false);
   return true;
 }

@@ -4,12 +4,4 @@
   if (hasNextButton()) {
     getNextButton().setVisibility(View.GONE);
   }
-  mAdapter=getPreferenceScreen().getRootAdapter();
-  mAdapter.registerDataSetObserver(new DataSetObserver(){
-    @Override public void onChanged(){
-      super.onChanged();
-      updateFooter();
-    }
-  }
-);
 }

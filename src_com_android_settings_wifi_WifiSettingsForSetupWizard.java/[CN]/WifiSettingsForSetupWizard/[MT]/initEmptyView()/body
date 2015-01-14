@@ -1,7 +1,5 @@
 {
-  mEmptyFooter=new TextView(getActivity());
-  mEmptyFooter.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
-  mEmptyFooter.setGravity(Gravity.CENTER);
-  mEmptyFooter.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.ic_wifi_emptystate,0,0);
+  final LayoutInflater inflater=LayoutInflater.from(getActivity());
+  mEmptyFooter=(TextView)inflater.inflate(R.layout.setup_wifi_empty,getListView(),false);
   return mEmptyFooter;
 }

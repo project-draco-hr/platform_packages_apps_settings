@@ -3,14 +3,13 @@
   int quality=intent.getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,-1);
   if (quality == -1) {
     quality=intent.getIntExtra(MINIMUM_QUALITY_KEY,-1);
-    MutableBoolean allowBiometric=new MutableBoolean(false);
-    quality=upgradeQuality(quality,allowBiometric);
+    quality=upgradeQuality(quality);
     final PreferenceScreen prefScreen=getPreferenceScreen();
     if (prefScreen != null) {
       prefScreen.removeAll();
     }
     addPreferencesFromResource(R.xml.security_settings_picker);
-    disableUnusablePreferences(quality,allowBiometric);
+    disableUnusablePreferences(quality);
     updatePreferenceSummaryIfNeeded();
   }
  else {

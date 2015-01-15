@@ -1,6 +1,6 @@
 {
   if (LOGD)   Log.d(TAG,"setMobileDataEnabled()");
   mTelephonyManager.setDataEnabled(subId,enabled);
-  mMobileDataEnabled=enabled;
+  mMobileDataEnabled.put(String.valueOf(subId),enabled);
   updatePolicy(false);
 }

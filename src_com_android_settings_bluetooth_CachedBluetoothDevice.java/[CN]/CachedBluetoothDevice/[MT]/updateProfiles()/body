@@ -3,6 +3,7 @@
   if (uuids == null)   return false;
   ParcelUuid[] localUuids=mLocalAdapter.getUuids();
   if (localUuids == null)   return false;
+  processPhonebookAccess();
   mProfileManager.updateProfiles(uuids,localUuids,mProfiles,mRemovedProfiles,mLocalNapRoleConnected,mDevice);
   if (DEBUG) {
     Log.e(TAG,"updating profiles for " + mDevice.getAliasName());

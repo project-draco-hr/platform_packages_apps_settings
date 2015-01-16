@@ -1,0 +1,15 @@
+{
+  String packageName=app.packageName;
+  p.setIcon(R.drawable.ic_settings_location);
+  p.setKey(getKeyForPackage(packageName));
+  ArrayList<RestrictionEntry> restrictions=RestrictionUtils.getRestrictions(getActivity(),mUser);
+  RestrictionEntry locationRestriction=restrictions.get(0);
+  p.setTitle(locationRestriction.getTitle());
+  p.setRestrictions(restrictions);
+  p.setSummary(locationRestriction.getDescription());
+  p.setChecked(locationRestriction.getSelectedState());
+  p.setPersistent(false);
+  p.setOnPreferenceClickListener(this);
+  p.setOrder(MAX_APP_RESTRICTIONS);
+  addToAppList(p,packageName);
+}

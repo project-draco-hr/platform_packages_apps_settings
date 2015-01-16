@@ -29,12 +29,7 @@ break;
 default :
 continue;
 }
-if (packageName.equals(getActivity().getPackageName())) {
-RestrictionUtils.setRestrictions(getActivity(),restrictions,mUser);
-}
- else {
 mUserManager.setApplicationRestrictions(packageName,RestrictionUtils.restrictionsToBundle(restrictions),mUser);
-}
 break;
 }
 }

@@ -2,7 +2,9 @@
 synchronized (mLock) {
     mResumed=true;
     mRefreshUiListener=listener;
-    if (mInterestingConfigChanges.applyNewConfig(mApplicationContext.getResources())) {
+    boolean usersChanged=mUmBroadcastReceiver.checkUsersChangedLocked();
+    boolean configChanged=mInterestingConfigChanges.applyNewConfig(mApplicationContext.getResources());
+    if (usersChanged || configChanged) {
       mHaveData=false;
       mBackgroundHandler.removeMessages(MSG_RESET_CONTENTS);
       mBackgroundHandler.removeMessages(MSG_UPDATE_CONTENTS);

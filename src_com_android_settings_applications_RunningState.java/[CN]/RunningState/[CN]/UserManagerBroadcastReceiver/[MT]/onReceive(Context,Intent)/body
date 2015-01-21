@@ -1,0 +1,14 @@
+{
+synchronized (mLock) {
+    if (mResumed) {
+      mHaveData=false;
+      mBackgroundHandler.removeMessages(MSG_RESET_CONTENTS);
+      mBackgroundHandler.sendEmptyMessage(MSG_RESET_CONTENTS);
+      mBackgroundHandler.removeMessages(MSG_UPDATE_CONTENTS);
+      mBackgroundHandler.sendEmptyMessage(MSG_UPDATE_CONTENTS);
+    }
+ else {
+      usersChanged=true;
+    }
+  }
+}

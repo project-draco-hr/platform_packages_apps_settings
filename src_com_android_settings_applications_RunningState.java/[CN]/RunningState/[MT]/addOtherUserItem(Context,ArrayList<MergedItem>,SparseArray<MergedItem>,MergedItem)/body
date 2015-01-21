@@ -2,8 +2,7 @@
   MergedItem userItem=userItems.get(newItem.mUserId);
   boolean first=userItem == null || userItem.mCurSeq != mSequence;
   if (first) {
-    UserState userState=mUsers.get(newItem.mUserId);
-    UserInfo info=userState != null ? userState.mInfo : mUm.getUserInfo(newItem.mUserId);
+    UserInfo info=mUm.getUserInfo(newItem.mUserId);
     if (info == null) {
       return;
     }
@@ -18,12 +17,10 @@
       userItem.mChildren.clear();
     }
     userItem.mCurSeq=mSequence;
-    if (userState == null) {
-      userItem.mUser=new UserState();
-      userItem.mUser.mInfo=info;
-      userItem.mUser.mIcon=Utils.getUserIcon(context,mUm,info);
-      userItem.mUser.mLabel=Utils.getUserLabel(context,info);
-    }
+    userItem.mUser=new UserState();
+    userItem.mUser.mInfo=info;
+    userItem.mUser.mIcon=Utils.getUserIcon(context,mUm,info);
+    userItem.mUser.mLabel=Utils.getUserLabel(context,info);
     newMergedItems.add(userItem);
   }
   userItem.mChildren.add(newItem);

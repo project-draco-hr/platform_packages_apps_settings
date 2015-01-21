@@ -1,0 +1,7 @@
+{
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(Intent.ACTION_USER_STOPPED);
+  filter.addAction(Intent.ACTION_USER_STARTED);
+  filter.addAction(Intent.ACTION_USER_INFO_CHANGED);
+  context.registerReceiverAsUser(this,UserHandle.ALL,filter,null,null);
+}

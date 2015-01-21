@@ -1,6 +1,9 @@
 {
   final Context context=getActivity();
   final SubscriptionInfo currentSir=getCurrentTabSubInfo(context);
+  if (currentSir == null) {
+    return;
+  }
   final SubscriptionInfo nextSir=mSubscriptionManager.getActiveSubscriptionInfo(mSubscriptionManager.getDefaultDataSubId());
   if (!Utils.showSimCardTile(context) || (nextSir != null && currentSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId())) {
     setMobileDataEnabled(currentSir.getSubscriptionId(),true);

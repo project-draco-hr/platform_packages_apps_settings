@@ -17,7 +17,7 @@
         mMvnoMatchData.setText(mTelephonyManager.getSimOperatorName());
       }
  else       if (values[mvnoIndex].equals("IMSI")) {
-        String numeric=SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC);
+        String numeric=mTelephonyManager.getSimOperator(mSubId);
         mMvnoMatchData.setText(numeric + "x");
       }
  else       if (values[mvnoIndex].equals("GID")) {

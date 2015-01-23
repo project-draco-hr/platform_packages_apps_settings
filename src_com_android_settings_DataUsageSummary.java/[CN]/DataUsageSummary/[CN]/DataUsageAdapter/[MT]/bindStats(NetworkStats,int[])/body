@@ -22,8 +22,15 @@
         category=AppItem.CATEGORY_APP;
       }
  else {
-        collapseKey=UidDetailProvider.buildKeyForUser(userId);
-        category=AppItem.CATEGORY_USER;
+        final UserInfo info=mUm.getUserInfo(userId);
+        if (info == null) {
+          collapseKey=UID_REMOVED;
+          category=AppItem.CATEGORY_APP;
+        }
+ else {
+          collapseKey=UidDetailProvider.buildKeyForUser(userId);
+          category=AppItem.CATEGORY_USER;
+        }
       }
     }
  else     if (uid == UID_REMOVED || uid == UID_TETHERING) {

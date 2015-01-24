@@ -3,17 +3,18 @@
   addPreferencesFromResource(R.xml.advanced_apps);
   mApplicationsState=ApplicationsState.getInstance(getActivity().getApplication());
   mSession=mApplicationsState.newSession(this);
-  mAppPerms=findPreference(KEY_APP_PERM);
-  mAllApps=findPreference(KEY_ALL_APPS);
-  mResetAll=findPreference(KEY_RESET_ALL);
-  mResetAll.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+  mAppPermsPreference=findPreference(KEY_APP_PERM);
+  mAppDomainURLsPreference=findPreference(KEY_APP_DOMAIN_URLS);
+  mAllAppsPreference=findPreference(KEY_ALL_APPS);
+  mResetAllPreference=findPreference(KEY_RESET_ALL);
+  mResetAllPreference.setOnPreferenceClickListener(new OnPreferenceClickListener(){
     @Override public boolean onPreferenceClick(    Preference preference){
       buildResetDialog();
       return true;
     }
   }
 );
-  updateAllAppsSummary();
+  updateUI();
   mPm=getActivity().getPackageManager();
   mIPm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
   mNm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));

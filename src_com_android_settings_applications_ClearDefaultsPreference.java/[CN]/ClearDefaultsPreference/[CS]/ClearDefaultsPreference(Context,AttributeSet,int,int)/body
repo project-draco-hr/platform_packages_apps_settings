@@ -1,0 +1,8 @@
+{
+  super(context,attrs,defStyleAttr,defStyleRes);
+  setLayoutResource(R.layout.app_preferred_settings);
+  mAppWidgetManager=AppWidgetManager.getInstance(context);
+  mPm=context.getPackageManager();
+  IBinder b=ServiceManager.getService(Context.USB_SERVICE);
+  mUsbManager=IUsbManager.Stub.asInterface(b);
+}

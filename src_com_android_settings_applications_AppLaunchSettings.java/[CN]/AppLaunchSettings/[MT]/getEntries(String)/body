@@ -1,0 +1,10 @@
+{
+  ArraySet<String> result=new ArraySet<>();
+  List<IntentFilterVerificationInfo> list=mPm.getIntentFilterVerifications(packageName);
+  for (  IntentFilterVerificationInfo ivi : list) {
+    for (    String host : ivi.getDomains()) {
+      result.add(host);
+    }
+  }
+  return result.toArray(new CharSequence[0]);
+}

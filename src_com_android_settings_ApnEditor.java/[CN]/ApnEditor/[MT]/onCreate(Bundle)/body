@@ -30,6 +30,7 @@
   mRes=getResources();
   final Intent intent=getIntent();
   final String action=intent.getAction();
+  mSubId=intent.getIntExtra("sub_id",SubscriptionManager.INVALID_SUBSCRIPTION_ID);
   mFirstTime=icicle == null;
   if (action.equals(Intent.ACTION_EDIT)) {
     mUri=intent.getData();

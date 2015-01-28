@@ -1,12 +1,13 @@
 {
   final String packageName=preference.getKey();
-  final PackageEntry pe=mPackageEntryMap.get(packageName);
+  final int profileId=preference.getExtras().getInt(BUNDLE_KEY_PROFILEID);
+  final PackageEntry pe=getPackageEntry(packageName,profileId);
   if (pe == null) {
-    Log.w(TAG,"Preference change event for package " + packageName + " but that package is no longer valid.");
+    Log.w(TAG,"Preference change event handling failed");
     return false;
   }
   if (!(newValue instanceof Boolean)) {
-    Log.w(TAG,"Preference change event for package " + packageName + " had non boolean value of type "+ newValue.getClass().getName());
+    Log.w(TAG,"Preference change event for package " + packageName + " of user "+ profileId+ " had non boolean value of type "+ newValue.getClass().getName());
     return false;
   }
   final int newMode=(Boolean)newValue ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_IGNORED;
@@ -20,7 +21,7 @@
     if (prev != null) {
       ft.remove(prev);
     }
-    WarningDialogFragment.newInstance(pe.packageName).show(ft,"warning");
+    WarningDialogFragment.newInstance(pe).show(ft,"warning");
     return false;
   }
   return true;

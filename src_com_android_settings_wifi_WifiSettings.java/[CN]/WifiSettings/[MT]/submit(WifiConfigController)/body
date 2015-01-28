@@ -1,8 +1,8 @@
 {
   final WifiConfiguration config=configController.getConfig();
   if (config == null) {
-    if (mSelectedAccessPoint != null && mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
-      connect(mSelectedAccessPoint.networkId);
+    if (mSelectedAccessPoint != null && mSelectedAccessPoint.isSaved()) {
+      connect(mSelectedAccessPoint.getConfig());
     }
   }
  else   if (config.networkId != INVALID_NETWORK_ID) {
@@ -18,8 +18,5 @@
       connect(config);
     }
   }
-  if (mWifiManager.isWifiEnabled()) {
-    mScanner.resume();
-  }
-  updateAccessPoints();
+  mWifiTracker.resumeScanning();
 }

@@ -4,6 +4,5 @@
   if (mWifiEnabler != null) {
     mWifiEnabler.resume(activity);
   }
-  activity.registerReceiver(mReceiver,mFilter);
-  updateAccessPoints();
+  mWifiTracker.startTracking();
 }

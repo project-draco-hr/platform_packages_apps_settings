@@ -1,0 +1,40 @@
+{
+  if (getActivity() == null)   return;
+  if (isUiRestricted()) {
+    addMessagePreference(R.string.wifi_empty_list_user_restricted);
+    return;
+  }
+  final int wifiState=mWifiManager.getWifiState();
+switch (wifiState) {
+case WifiManager.WIFI_STATE_ENABLED:
+    final Collection<AccessPoint> accessPoints=mWifiTracker.getAccessPoints();
+  getPreferenceScreen().removeAll();
+if (accessPoints.size() == 0) {
+  addMessagePreference(R.string.wifi_empty_list_wifi_on);
+}
+for (AccessPoint accessPoint : accessPoints) {
+if (accessPoint.getLevel() != -1) {
+  AccessPointPreference preference=new AccessPointPreference(accessPoint,getActivity());
+  if (showAppIcons) {
+    preference.showAppIcon();
+  }
+  getPreferenceScreen().addPreference(preference);
+  accessPoint.setListener(this);
+}
+}
+break;
+case WifiManager.WIFI_STATE_ENABLING:
+getPreferenceScreen().removeAll();
+break;
+case WifiManager.WIFI_STATE_DISABLING:
+addMessagePreference(R.string.wifi_stopping);
+break;
+case WifiManager.WIFI_STATE_DISABLED:
+setOffMessage();
+break;
+}
+if (savedNetworksExist != mWifiTracker.doSavedNetworksExist()) {
+savedNetworksExist=!savedNetworksExist;
+getActivity().invalidateOptionsMenu();
+}
+}

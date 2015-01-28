@@ -1,5 +1,5 @@
 {
-  final boolean wifiIsEnabled=mWifiManager.isWifiEnabled();
+  final boolean wifiIsEnabled=mWifiTracker.isWifiEnabled();
   TypedArray ta=getActivity().getTheme().obtainStyledAttributes(new int[]{R.attr.ic_menu_add,R.attr.ic_wps});
   menu.add(Menu.NONE,MENU_ID_ADD_NETWORK,0,R.string.wifi_add_network).setIcon(ta.getDrawable(0)).setEnabled(wifiIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
   if (savedNetworksExist) {

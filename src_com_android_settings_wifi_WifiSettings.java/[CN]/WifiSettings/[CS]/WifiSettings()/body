@@ -1,19 +1,3 @@
 {
   super(DISALLOW_CONFIG_WIFI);
-  mFilter=new IntentFilter();
-  mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-  mFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-  mFilter.addAction(WifiManager.NETWORK_IDS_CHANGED_ACTION);
-  mFilter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
-  mFilter.addAction(WifiManager.CONFIGURED_NETWORKS_CHANGED_ACTION);
-  mFilter.addAction(WifiManager.LINK_CONFIGURATION_CHANGED_ACTION);
-  mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-  mFilter.addAction(WifiManager.RSSI_CHANGED_ACTION);
-  mReceiver=new BroadcastReceiver(){
-    @Override public void onReceive(    Context context,    Intent intent){
-      handleEvent(intent);
-    }
-  }
-;
-  mScanner=new Scanner(this);
 }

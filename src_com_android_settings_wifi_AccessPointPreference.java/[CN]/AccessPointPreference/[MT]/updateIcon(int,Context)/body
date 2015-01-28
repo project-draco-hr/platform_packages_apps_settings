@@ -1,0 +1,19 @@
+{
+  if (level == -1) {
+    setIcon(null);
+  }
+ else {
+    Drawable drawable=getIcon();
+    if (drawable == null) {
+      StateListDrawable sld=(StateListDrawable)context.getTheme().obtainStyledAttributes(wifi_signal_attributes).getDrawable(0);
+      if (sld != null) {
+        sld.setState((mAccessPoint.getSecurity() != AccessPoint.SECURITY_NONE) ? STATE_SECURED : STATE_NONE);
+        drawable=sld.getCurrent();
+        setIcon(drawable);
+      }
+    }
+    if (drawable != null) {
+      drawable.setLevel(level);
+    }
+  }
+}

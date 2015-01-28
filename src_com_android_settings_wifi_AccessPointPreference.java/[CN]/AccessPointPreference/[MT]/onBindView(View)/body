@@ -1,0 +1,7 @@
+{
+  super.onBindView(view);
+  updateIcon(mAccessPoint.getLevel(),getContext());
+  mSummaryView=(TextView)view.findViewById(com.android.internal.R.id.summary);
+  mSummaryView.setVisibility(showSummary ? View.VISIBLE : View.GONE);
+  notifyChanged();
+}

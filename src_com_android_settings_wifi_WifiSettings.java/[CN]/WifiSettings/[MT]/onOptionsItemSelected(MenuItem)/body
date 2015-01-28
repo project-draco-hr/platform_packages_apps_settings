@@ -8,12 +8,10 @@ case MENU_ID_WPS_PIN:
 showDialog(WPS_PIN_DIALOG_ID);
 return true;
 case MENU_ID_SCAN:
-if (mWifiManager.isWifiEnabled()) {
-mScanner.forceScan();
-}
+mWifiTracker.forceScan();
 return true;
 case MENU_ID_ADD_NETWORK:
-if (mWifiManager.isWifiEnabled()) {
+if (mWifiTracker.isWifiEnabled()) {
 onAddNetworkPressed();
 }
 return true;
@@ -41,7 +39,7 @@ showAppMenuItem.setTitle(R.string.wifi_menu_apps_strength);
  else {
 showAppMenuItem.setTitle(R.string.wifi_menu_apps);
 }
-updateAccessPoints();
+onAccessPointsChanged();
 return true;
 }
 return super.onOptionsItemSelected(item);

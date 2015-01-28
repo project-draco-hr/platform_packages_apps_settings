@@ -1,5 +1,5 @@
 {
-  if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID && !mEdit) {
+  if (mAccessPoint != null && mAccessPoint.isSaved() && !mEdit) {
     return null;
   }
   WifiConfiguration config=new WifiConfiguration();
@@ -7,11 +7,11 @@
     config.SSID=AccessPoint.convertToQuotedString(mSsidView.getText().toString());
     config.hiddenSSID=true;
   }
- else   if (mAccessPoint.networkId == INVALID_NETWORK_ID) {
-    config.SSID=AccessPoint.convertToQuotedString(mAccessPoint.ssid);
+ else   if (!mAccessPoint.isSaved()) {
+    config.SSID=AccessPoint.convertToQuotedString(mAccessPoint.getSsid());
   }
  else {
-    config.networkId=mAccessPoint.networkId;
+    config.networkId=mAccessPoint.getConfig().networkId;
   }
 switch (mAccessPointSecurity) {
 case AccessPoint.SECURITY_NONE:

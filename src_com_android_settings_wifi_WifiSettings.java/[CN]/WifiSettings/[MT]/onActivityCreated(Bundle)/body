@@ -1,6 +1,7 @@
 {
   super.onActivityCreated(savedInstanceState);
-  mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
+  mWifiTracker=new WifiTracker(getActivity(),this,true,true);
+  mWifiManager=mWifiTracker.getManager();
   mConnectListener=new WifiManager.ActionListener(){
     @Override public void onSuccess(){
     }
@@ -57,13 +58,13 @@
   setHasOptionsMenu(true);
   if (intent.hasExtra(EXTRA_START_CONNECT_SSID)) {
     String ssid=intent.getStringExtra(EXTRA_START_CONNECT_SSID);
-    updateAccessPoints();
+    onAccessPointsChanged();
     PreferenceScreen preferenceScreen=getPreferenceScreen();
     for (int i=0; i < preferenceScreen.getPreferenceCount(); i++) {
       Preference preference=preferenceScreen.getPreference(i);
-      if (preference instanceof AccessPoint) {
-        AccessPoint accessPoint=(AccessPoint)preference;
-        if (ssid.equals(accessPoint.ssid) && accessPoint.networkId == -1 && accessPoint.security != AccessPoint.SECURITY_NONE) {
+      if (preference instanceof AccessPointPreference) {
+        AccessPoint accessPoint=((AccessPointPreference)preference).getAccessPoint();
+        if (ssid.equals(accessPoint.getSsid()) && !accessPoint.isSaved() && accessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
           onPreferenceTreeClick(preferenceScreen,preference);
           break;
         }

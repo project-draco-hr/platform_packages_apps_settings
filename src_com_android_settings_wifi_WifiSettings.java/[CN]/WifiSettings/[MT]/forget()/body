@@ -1,7 +1,7 @@
 {
-  if (mSelectedAccessPoint.networkId == INVALID_NETWORK_ID) {
+  if (!mSelectedAccessPoint.isSaved()) {
     if (mSelectedAccessPoint.getNetworkInfo().getState() != State.DISCONNECTED) {
-      mWifiManager.disableEphemeralNetwork(AccessPoint.convertToQuotedString(mSelectedAccessPoint.ssid));
+      mWifiManager.disableEphemeralNetwork(AccessPoint.convertToQuotedString(mSelectedAccessPoint.getSsid()));
     }
  else {
       Log.e(TAG,"Failed to forget invalid network " + mSelectedAccessPoint.getConfig());
@@ -9,11 +9,8 @@
     }
   }
  else {
-    mWifiManager.forget(mSelectedAccessPoint.networkId,mForgetListener);
+    mWifiManager.forget(mSelectedAccessPoint.getConfig().networkId,mForgetListener);
   }
-  if (mWifiManager.isWifiEnabled()) {
-    mScanner.resume();
-  }
-  updateAccessPoints();
+  mWifiTracker.resumeScanning();
   changeNextButtonState(false);
 }

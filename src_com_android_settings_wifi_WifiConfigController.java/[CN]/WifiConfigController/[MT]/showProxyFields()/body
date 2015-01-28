@@ -1,7 +1,7 @@
 {
   WifiConfiguration config=null;
   mView.findViewById(R.id.proxy_settings_fields).setVisibility(View.VISIBLE);
-  if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
+  if (mAccessPoint != null && mAccessPoint.isSaved()) {
     config=mAccessPoint.getConfig();
   }
   if (mProxySettingsSpinner.getSelectedItemPosition() == PROXY_STATIC) {

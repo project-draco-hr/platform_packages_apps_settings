@@ -1,0 +1,14 @@
+{
+  setTitle(mAccessPoint.getSsid());
+  final Context context=getContext();
+  updateIcon(mAccessPoint.getLevel(),context);
+  setSummary(null);
+  String summary=mAccessPoint.getSummary();
+  if (summary.length() > 0) {
+    setSummary(summary);
+    setShowSummary(true);
+  }
+ else {
+    setShowSummary(false);
+  }
+}

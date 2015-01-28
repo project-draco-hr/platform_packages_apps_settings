@@ -9,7 +9,9 @@
     mRefreshButton.setEnabled(true);
   }
   for (  AccessPoint accessPoint : accessPoints) {
-    accessPoint.setLayoutResource(R.layout.custom_preference);
-    preferenceScreen.addPreference(accessPoint);
+    AccessPointPreference preference=(AccessPointPreference)accessPoint.getTag();
+    if (preference == null)     continue;
+    preference.setLayoutResource(R.layout.custom_preference);
+    preferenceScreen.addPreference(preference);
   }
 }

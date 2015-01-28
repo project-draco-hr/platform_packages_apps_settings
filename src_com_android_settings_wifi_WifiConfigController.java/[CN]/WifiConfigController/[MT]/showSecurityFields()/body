@@ -13,7 +13,7 @@
     mPasswordView=(TextView)mView.findViewById(R.id.password);
     mPasswordView.addTextChangedListener(this);
     ((CheckBox)mView.findViewById(R.id.show_password)).setOnCheckedChangeListener(this);
-    if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
+    if (mAccessPoint != null && mAccessPoint.isSaved()) {
       mPasswordView.setHint(R.string.wifi_unchanged);
     }
   }
@@ -32,7 +32,7 @@
     mEapAnonymousView=(TextView)mView.findViewById(R.id.anonymous);
     loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE);
     loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY);
-    if (mAccessPoint != null && mAccessPoint.networkId != INVALID_NETWORK_ID) {
+    if (mAccessPoint != null && mAccessPoint.isSaved()) {
       WifiEnterpriseConfig enterpriseConfig=mAccessPoint.getConfig().enterpriseConfig;
       int eapMethod=enterpriseConfig.getEapMethod();
       int phase2Method=enterpriseConfig.getPhase2Method();

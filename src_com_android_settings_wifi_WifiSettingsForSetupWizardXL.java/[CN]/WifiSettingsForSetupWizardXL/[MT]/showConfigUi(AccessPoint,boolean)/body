@@ -1,6 +1,6 @@
 {
   mScreenState=SCREEN_STATE_EDITING;
-  if (selectedAccessPoint != null && (selectedAccessPoint.security == AccessPoint.SECURITY_WEP || selectedAccessPoint.security == AccessPoint.SECURITY_PSK)) {
+  if (selectedAccessPoint != null && (selectedAccessPoint.getSecurity() == AccessPoint.SECURITY_WEP || selectedAccessPoint.getSecurity() == AccessPoint.SECURITY_PSK)) {
     edit=true;
   }
   mWifiSettings.pauseWifiScan();
@@ -16,16 +16,16 @@
     showDisconnectedProgressBar();
     showEditingButtonState();
   }
- else   if (selectedAccessPoint.security == AccessPoint.SECURITY_NONE) {
-    mNetworkName=selectedAccessPoint.getTitle().toString();
+ else   if (selectedAccessPoint.getSecurity() == AccessPoint.SECURITY_NONE) {
+    mNetworkName=selectedAccessPoint.getSsid().toString();
     mConnectButton.performClick();
   }
  else {
-    mNetworkName=selectedAccessPoint.getTitle().toString();
+    mNetworkName=selectedAccessPoint.getSsid().toString();
     showEditingTitle();
     showDisconnectedProgressBar();
     showEditingButtonState();
-    if (selectedAccessPoint.security == AccessPoint.SECURITY_EAP) {
+    if (selectedAccessPoint.getSecurity() == AccessPoint.SECURITY_EAP) {
       onEapNetworkSelected();
     }
  else {

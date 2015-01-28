@@ -3,7 +3,7 @@
   mInXlSetupWizard=(parent instanceof WifiConfigUiForSetupWizardXL);
   mView=view;
   mAccessPoint=accessPoint;
-  mAccessPointSecurity=(accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.security;
+  mAccessPointSecurity=(accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.getSecurity();
   mEdit=edit;
   mTextViewChangedHandler=new Handler();
   mContext=mConfigUi.getContext();
@@ -40,10 +40,10 @@
     mConfigUi.setSubmitButton(res.getString(R.string.wifi_save));
   }
  else {
-    mConfigUi.setTitle(mAccessPoint.ssid);
+    mConfigUi.setTitle(mAccessPoint.getSsid());
     ViewGroup group=(ViewGroup)mView.findViewById(R.id.info);
     boolean showAdvancedFields=false;
-    if (mAccessPoint.networkId != INVALID_NETWORK_ID) {
+    if (mAccessPoint.isSaved()) {
       WifiConfiguration config=mAccessPoint.getConfig();
       if (config.getIpAssignment() == IpAssignment.STATIC) {
         mIpSettingsSpinner.setSelection(STATIC_IP);
@@ -68,7 +68,7 @@
         mProxySettingsSpinner.setSelection(PROXY_NONE);
       }
     }
-    if ((mAccessPoint.networkId == INVALID_NETWORK_ID && !mAccessPoint.isActive()) || mEdit) {
+    if ((!mAccessPoint.isSaved() && !mAccessPoint.isActive()) || mEdit) {
       showSecurityFields();
       showIpConfigFields();
       showProxyFields();
@@ -83,14 +83,14 @@
       mConfigUi.setSubmitButton(res.getString(R.string.wifi_save));
     }
  else {
-      final DetailedState state=mAccessPoint.getState();
+      final DetailedState state=mAccessPoint.getDetailedState();
       final String signalLevel=getSignalString();
       if (state == null && signalLevel != null) {
         mConfigUi.setSubmitButton(res.getString(R.string.wifi_connect));
       }
  else {
         if (state != null) {
-          addRow(group,R.string.wifi_status,Summary.get(mConfigUi.getContext(),state,mAccessPoint.networkId == WifiConfiguration.INVALID_NETWORK_ID));
+          addRow(group,R.string.wifi_status,AccessPoint.getSummary(mConfigUi.getContext(),state,!mAccessPoint.isSaved()));
         }
         if (signalLevel != null) {
           addRow(group,R.string.wifi_signal,signalLevel);
@@ -118,12 +118,12 @@
         addRow(group,R.string.wifi_security,mAccessPoint.getSecurityString(false));
         mView.findViewById(R.id.ip_fields).setVisibility(View.GONE);
       }
-      if (mAccessPoint.networkId != INVALID_NETWORK_ID || mAccessPoint.isActive()) {
+      if (mAccessPoint.isSaved() || mAccessPoint.isActive()) {
         mConfigUi.setForgetButton(res.getString(R.string.wifi_forget));
       }
     }
   }
-  if ((mEdit) || (mAccessPoint != null && mAccessPoint.getState() == null && mAccessPoint.getLevel() != -1)) {
+  if ((mEdit) || (mAccessPoint != null && mAccessPoint.getDetailedState() == null && mAccessPoint.getLevel() != -1)) {
     mConfigUi.setCancelButton(res.getString(R.string.wifi_cancel));
   }
  else {

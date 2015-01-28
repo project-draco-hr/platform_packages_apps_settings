@@ -3,6 +3,5 @@
   if (mWifiEnabler != null) {
     mWifiEnabler.pause();
   }
-  getActivity().unregisterReceiver(mReceiver);
-  mScanner.pause();
+  mWifiTracker.stopTracking();
 }

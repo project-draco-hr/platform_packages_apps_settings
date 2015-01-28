@@ -1,0 +1,20 @@
+{
+  PackageManager pm=getContext().getPackageManager();
+  String systemName=pm.getNameForUid(android.os.Process.SYSTEM_UID);
+  WifiConfiguration mConfig=mAccessPoint.getConfig();
+  Drawable drawable=pm.getDefaultActivityIcon();
+  if (mConfig == null) {
+    drawable.setAlpha(0);
+  }
+ else   if (mConfig.creatorName.equals(systemName)) {
+    drawable=getContext().getApplicationInfo().loadIcon(pm);
+  }
+ else {
+    try {
+      drawable=pm.getApplicationIcon(mConfig.creatorName);
+    }
+ catch (    NameNotFoundException nnfe) {
+    }
+  }
+  setIcon(drawable);
+}

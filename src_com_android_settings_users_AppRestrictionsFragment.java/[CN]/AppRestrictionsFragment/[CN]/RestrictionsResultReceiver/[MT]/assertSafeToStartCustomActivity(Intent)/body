@@ -1,0 +1,14 @@
+{
+  if (intent.getPackage() != null && intent.getPackage().equals(packageName)) {
+    return;
+  }
+  List<ResolveInfo> resolveInfos=AppRestrictionsFragment.this.mPackageManager.queryIntentActivities(intent,0);
+  if (resolveInfos.size() != 1) {
+    return;
+  }
+  ActivityInfo activityInfo=resolveInfos.get(0).activityInfo;
+  if (!packageName.equals(activityInfo.packageName)) {
+    throw new SecurityException("Application " + packageName + " is not allowed to start activity "+ intent);
+  }
+  ;
+}

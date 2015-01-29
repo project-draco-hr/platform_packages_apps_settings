@@ -15,6 +15,7 @@
     p.setTitle(R.string.app_restrictions_custom_label);
     p.setOnPreferenceClickListener(new OnPreferenceClickListener(){
       @Override public boolean onPreferenceClick(      Preference preference){
+        assertSafeToStartCustomActivity(customIntent);
         int requestCode=generateCustomActivityRequestCode(RestrictionsResultReceiver.this.preference);
         AppRestrictionsFragment.this.startActivityForResult(customIntent,requestCode);
         return false;

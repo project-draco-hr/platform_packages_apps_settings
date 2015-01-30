@@ -34,6 +34,10 @@
  else {
     removePreferenceFromScreen(KEY_SERIAL_NUMBER);
   }
+  if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
+    removePreferenceFromScreen(KEY_SIM_STATUS);
+    removePreferenceFromScreen(KEY_IMEI_INFO);
+  }
   getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
     @Override public boolean onItemLongClick(    AdapterView<?> parent,    View view,    int position,    long id){
       ListAdapter listAdapter=(ListAdapter)parent.getAdapter();

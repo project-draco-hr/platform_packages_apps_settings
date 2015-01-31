@@ -1,0 +1,24 @@
+{
+  mBgDuration=mAvgBgMem=mMaxBgMem=0;
+  mBgWeight=0;
+  mRunDuration=mAvgRunMem=mMaxRunMem=0;
+  mRunWeight=0;
+  final int N=mEntries.size();
+  for (int i=0; i < N; i++) {
+    ProcStatsEntry entry=mEntries.get(i);
+    mBgDuration+=entry.mBgDuration;
+    mAvgBgMem+=entry.mAvgBgMem;
+    if (entry.mMaxBgMem > mMaxBgMem) {
+      mMaxBgMem=entry.mMaxBgMem;
+    }
+    mBgWeight+=entry.mBgWeight;
+    mRunDuration+=entry.mRunDuration;
+    mAvgRunMem+=entry.mAvgRunMem;
+    if (entry.mMaxRunMem > mMaxRunMem) {
+      mMaxRunMem=entry.mMaxRunMem;
+    }
+    mRunWeight+=entry.mRunWeight;
+  }
+  mAvgBgMem/=N;
+  mAvgRunMem/=N;
+}

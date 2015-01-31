@@ -19,9 +19,10 @@
   }
   ProcessStatsPreference pgp=(ProcessStatsPreference)preference;
   Bundle args=new Bundle();
-  args.putParcelable(ProcessStatsDetail.EXTRA_ENTRY,pgp.getEntry());
+  args.putParcelable(ProcessStatsDetail.EXTRA_PACKAGE_ENTRY,pgp.getEntry());
   args.putBoolean(ProcessStatsDetail.EXTRA_USE_USS,mUseUss);
-  args.putLong(ProcessStatsDetail.EXTRA_MAX_WEIGHT,mMaxWeight);
+  args.putDouble(ProcessStatsDetail.EXTRA_MAX_WEIGHT,mMaxWeight);
+  args.putDouble(ProcessStatsDetail.EXTRA_WEIGHT_TO_RAM,mWeightToRam);
   args.putLong(ProcessStatsDetail.EXTRA_TOTAL_TIME,mTotalTime);
   ((SettingsActivity)getActivity()).startPreferencePanel(ProcessStatsDetail.class.getName(),args,R.string.details_title,null,null,0);
   return super.onPreferenceTreeClick(preferenceScreen,preference);

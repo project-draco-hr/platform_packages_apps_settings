@@ -1,5 +1,10 @@
 {
   ActivityManager am=(ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
-  am.forceStopPackage(mEntry.mUiPackage);
+  for (int i=0; i < mApp.mEntries.size(); i++) {
+    ProcStatsEntry ent=mApp.mEntries.get(i);
+    for (int j=0; j < ent.mPackages.size(); j++) {
+      am.forceStopPackage(ent.mPackages.get(j));
+    }
+  }
   checkForceStop();
 }

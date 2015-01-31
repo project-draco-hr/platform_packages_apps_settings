@@ -3,12 +3,14 @@
   mUid=in.readInt();
   mName=in.readString();
   in.readStringList(mPackages);
-  mDuration=in.readLong();
-  mAvgPss=in.readLong();
-  mMaxPss=in.readLong();
-  mAvgUss=in.readLong();
-  mMaxUss=in.readLong();
-  mWeight=in.readLong();
+  mBgDuration=in.readLong();
+  mAvgBgMem=in.readLong();
+  mMaxBgMem=in.readLong();
+  mBgWeight=in.readDouble();
+  mRunDuration=in.readLong();
+  mAvgRunMem=in.readLong();
+  mMaxRunMem=in.readLong();
+  mRunWeight=in.readDouble();
   mBestTargetPackage=in.readString();
   final int N=in.readInt();
   if (N > 0) {

@@ -1,0 +1,20 @@
+{
+  final ArrayList<ProcStatsEntry> entries=new ArrayList<>();
+  for (int ie=0; ie < mApp.mEntries.size(); ie++) {
+    ProcStatsEntry entry=mApp.mEntries.get(ie);
+    entries.add(entry);
+  }
+  Collections.sort(entries,sEntryCompare);
+  for (int ie=0; ie < entries.size(); ie++) {
+    ProcStatsEntry entry=entries.get(ie);
+    LayoutInflater inflater=getActivity().getLayoutInflater();
+    ViewGroup item=(ViewGroup)inflater.inflate(R.layout.process_stats_proc_details,null);
+    mProcessesParent.addView(item);
+    ((TextView)item.findViewById(R.id.processes_name)).setText(entry.mName);
+    addDetailsItem(item,getResources().getText(R.string.process_stats_ram_use),Formatter.formatShortFileSize(getActivity(),(long)(entry.mRunWeight * mWeightToRam)));
+    if (entry.mBgWeight > 0) {
+      addDetailsItem(item,getResources().getText(R.string.process_stats_bg_ram_use),Formatter.formatShortFileSize(getActivity(),(long)(entry.mBgWeight * mWeightToRam)));
+    }
+    addDetailsItem(item,getResources().getText(R.string.process_stats_run_time),Utils.formatPercentage(entry.mRunDuration,mTotalTime));
+  }
+}

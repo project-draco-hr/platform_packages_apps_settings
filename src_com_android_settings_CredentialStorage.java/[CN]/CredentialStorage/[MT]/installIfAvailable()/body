@@ -4,8 +4,8 @@
   }
   Bundle bundle=mInstallBundle;
   mInstallBundle=null;
-  final int uid=bundle.getInt(Credentials.EXTRA_INSTALL_AS_UID,-1);
-  if (!UserHandle.isSameUser(uid,Process.myUid())) {
+  final int uid=bundle.getInt(Credentials.EXTRA_INSTALL_AS_UID,KeyStore.UID_SELF);
+  if (uid != KeyStore.UID_SELF && !UserHandle.isSameUser(uid,Process.myUid())) {
     int dstUserId=UserHandle.getUserId(uid);
     int myUserId=UserHandle.myUserId();
     if (uid != Process.WIFI_UID) {

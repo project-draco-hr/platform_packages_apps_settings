@@ -14,7 +14,7 @@
       }
       if (mSelectedAccessPoint.networkId != INVALID_NETWORK_ID) {
         menu.add(Menu.NONE,MENU_ID_MODIFY,0,R.string.wifi_menu_modify);
-        NfcAdapter nfcAdapter=NfcAdapter.getNfcAdapter(getActivity());
+        NfcAdapter nfcAdapter=NfcAdapter.getDefaultAdapter(getActivity());
         if (nfcAdapter != null && nfcAdapter.isEnabled() && mSelectedAccessPoint.security != AccessPoint.SECURITY_NONE) {
           menu.add(Menu.NONE,MENU_ID_WRITE_NFC,0,R.string.wifi_menu_write_to_nfc);
         }

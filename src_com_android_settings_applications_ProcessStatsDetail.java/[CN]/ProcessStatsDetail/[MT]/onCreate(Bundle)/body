@@ -3,9 +3,11 @@
   mPm=getActivity().getPackageManager();
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   final Bundle args=getArguments();
-  mEntry=(ProcStatsEntry)args.getParcelable(EXTRA_ENTRY);
-  mEntry.retrieveUiData(mPm);
+  mApp=args.getParcelable(EXTRA_PACKAGE_ENTRY);
+  mApp.retrieveUiData(getActivity(),mPm);
   mUseUss=args.getBoolean(EXTRA_USE_USS);
-  mMaxWeight=args.getLong(EXTRA_MAX_WEIGHT);
+  mMaxWeight=args.getDouble(EXTRA_MAX_WEIGHT);
+  mWeightToRam=args.getDouble(EXTRA_WEIGHT_TO_RAM);
   mTotalTime=args.getLong(EXTRA_TOTAL_TIME);
+  mOnePercentTime=mTotalTime / 100;
 }

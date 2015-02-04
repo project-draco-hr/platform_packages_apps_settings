@@ -1,5 +1,6 @@
 {
   if (pi == null)   return false;
   final int flags=pi.applicationInfo.flags;
-  return ((flags & ApplicationInfo.FLAG_INSTALLED) != 0 && (flags & ApplicationInfo.FLAG_HIDDEN) == 0);
+  final int privateFlags=pi.applicationInfo.privateFlags;
+  return ((flags & ApplicationInfo.FLAG_INSTALLED) != 0 && (privateFlags & ApplicationInfo.PRIVATE_FLAG_HIDDEN) == 0);
 }

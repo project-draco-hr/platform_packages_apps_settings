@@ -1,9 +1,0 @@
-{
-  for (  LocalBluetoothProfile profile : mProfiles) {
-    int status=getProfileConnectionState(profile);
-    if (status == BluetoothProfile.STATE_CONNECTING || status == BluetoothProfile.STATE_DISCONNECTING) {
-      return true;
-    }
-  }
-  return getBondState() == BluetoothDevice.BOND_BONDING;
-}

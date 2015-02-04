@@ -15,7 +15,7 @@
     setResult(RESULT_CANCELED);
     return true;
   }
-  LocalBluetoothManager manager=LocalBluetoothManager.getInstance(this);
+  LocalBluetoothManager manager=Utils.getLocalBtManager(this);
   if (manager == null) {
     Log.e(TAG,"Error: there's a problem starting Bluetooth");
     setResult(RESULT_CANCELED);

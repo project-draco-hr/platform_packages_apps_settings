@@ -4,7 +4,7 @@
     if (DEBUG)     Log.d(TAG,"checkUserChoice(): Unknown RequestType " + mRequestType);
     return processed;
   }
-  LocalBluetoothManager bluetoothManager=LocalBluetoothManager.getInstance(mContext);
+  LocalBluetoothManager bluetoothManager=Utils.getLocalBtManager(mContext);
   CachedBluetoothDeviceManager cachedDeviceManager=bluetoothManager.getCachedDeviceManager();
   CachedBluetoothDevice cachedDevice=cachedDeviceManager.findDevice(mDevice);
   if (cachedDevice == null) {

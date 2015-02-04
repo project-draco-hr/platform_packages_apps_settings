@@ -1,6 +1,6 @@
 {
   if (DEBUG)   Log.d(TAG,"onCreate");
-  LocalBluetoothManager manager=LocalBluetoothManager.getInstance(this);
+  LocalBluetoothManager manager=Utils.getLocalBtManager(this);
   if (manager == null) {
     Log.e(TAG,"Can't get LocalBluetoothManager: exiting");
     return;

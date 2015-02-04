@@ -1,0 +1,11 @@
+{
+  BluetoothDevice device=cachedDevice.getDevice();
+  if (bondState == BluetoothDevice.BOND_NONE) {
+    if (device.isBluetoothDock()) {
+      LocalBluetoothPreferences.removeDockAutoConnectSetting(mContext,device.getAddress());
+      if (!device.getAddress().equals(getDockedDeviceAddress(mContext))) {
+        cachedDevice.setVisible(false);
+      }
+    }
+  }
+}

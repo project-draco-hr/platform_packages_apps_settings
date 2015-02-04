@@ -1,6 +1,6 @@
 {
   super.onCreate(savedInstanceState);
-  mLocalManager=LocalBluetoothManager.getInstance(getActivity());
+  mLocalManager=Utils.getLocalBtManager(getActivity());
   if (mLocalManager == null) {
     Log.e(TAG,"Bluetooth is not supported on this device");
     return;

@@ -3,7 +3,7 @@
   mSwitchBar=switchBar;
   mSwitch=switchBar.getSwitch();
   mValidListener=false;
-  LocalBluetoothManager manager=LocalBluetoothManager.getInstance(context);
+  LocalBluetoothManager manager=Utils.getLocalBtManager(context);
   if (manager == null) {
     mLocalAdapter=null;
     mSwitch.setEnabled(false);

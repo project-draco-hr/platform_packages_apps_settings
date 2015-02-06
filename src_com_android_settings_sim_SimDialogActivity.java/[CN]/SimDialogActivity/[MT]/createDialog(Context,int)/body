@@ -39,15 +39,16 @@ return true;
 ArrayList<SubscriptionInfo> callsSubInfoList=new ArrayList<SubscriptionInfo>();
 if (id == CALLS_PICK) {
 final TelecomManager telecomManager=TelecomManager.from(context);
+final TelephonyManager telephonyManager=TelephonyManager.from(context);
 final Iterator<PhoneAccountHandle> phoneAccounts=telecomManager.getCallCapablePhoneAccounts().listIterator();
 list.add(getResources().getString(R.string.sim_calls_ask_first_prefs_title));
 callsSubInfoList.add(null);
 while (phoneAccounts.hasNext()) {
 final PhoneAccount phoneAccount=telecomManager.getPhoneAccount(phoneAccounts.next());
 list.add((String)phoneAccount.getLabel());
-if (phoneAccount.hasCapabilities(PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION) && TextUtils.isDigitsOnly(phoneAccount.getAccountHandle().getId())) {
-final String phoneAccountId=phoneAccount.getAccountHandle().getId();
-final SubscriptionInfo sir=Utils.findRecordBySubId(context,Integer.parseInt(phoneAccountId));
+int subId=telephonyManager.getSubIdForPhoneAccount(phoneAccount);
+if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+final SubscriptionInfo sir=Utils.findRecordBySubId(context,subId);
 callsSubInfoList.add(sir);
 }
  else {

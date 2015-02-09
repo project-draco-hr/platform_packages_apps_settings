@@ -2,4 +2,6 @@
   mContext=context;
   mPackageManager=context.getPackageManager();
   mIPackageManager=ActivityThread.getPackageManager();
+  mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  mProfiles=mUserManager.getUserProfiles();
 }

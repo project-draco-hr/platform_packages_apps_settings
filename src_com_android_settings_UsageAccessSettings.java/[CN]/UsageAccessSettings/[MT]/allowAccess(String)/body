@@ -1,9 +1,0 @@
-{
-  final PackageEntry entry=mPackageEntryMap.get(packageName);
-  if (entry == null) {
-    Log.w(TAG,"Unable to give access to package " + packageName + ": it does not exist.");
-    return;
-  }
-  setNewMode(entry,AppOpsManager.MODE_ALLOWED);
-  entry.preference.setChecked(true);
-}

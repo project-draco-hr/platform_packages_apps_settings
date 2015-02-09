@@ -1,0 +1,84 @@
+{
+  mLastFetcherTask=null;
+  if (getActivity() == null) {
+    return;
+  }
+  if (newEntries == null) {
+    mPackageEntryMap.clear();
+    mPreferenceScreen.removeAll();
+    return;
+  }
+  final int oldProfileCount=mPackageEntryMap.size();
+  for (int profileIndex=0; profileIndex < oldProfileCount; ++profileIndex) {
+    final int profileId=mPackageEntryMap.keyAt(profileIndex);
+    final ArrayMap<String,PackageEntry> oldEntriesForProfile=mPackageEntryMap.valueAt(profileIndex);
+    final int oldPackageCount=oldEntriesForProfile.size();
+    final ArrayMap<String,PackageEntry> newEntriesForProfile=newEntries.get(profileId);
+    for (int i=0; i < oldPackageCount; i++) {
+      final PackageEntry oldPackageEntry=oldEntriesForProfile.valueAt(i);
+      PackageEntry newPackageEntry=null;
+      if (newEntriesForProfile != null) {
+        newPackageEntry=newEntriesForProfile.get(oldPackageEntry.packageName);
+      }
+      if (newPackageEntry == null) {
+        mPreferenceScreen.removePreference(oldPackageEntry.preference);
+      }
+ else {
+        newPackageEntry.preference=oldPackageEntry.preference;
+      }
+    }
+  }
+  final int newProfileCount=newEntries.size();
+  for (int profileIndex=0; profileIndex < newProfileCount; ++profileIndex) {
+    final int profileId=newEntries.keyAt(profileIndex);
+    final ArrayMap<String,PackageEntry> newEntriesForProfile=newEntries.get(profileId);
+    final int packageCount=newEntriesForProfile.size();
+    for (int i=0; i < packageCount; i++) {
+      final PackageEntry packageEntry=newEntriesForProfile.valueAt(i);
+      if (packageEntry.preference == null) {
+        packageEntry.preference=new SwitchPreference(mContext);
+        packageEntry.preference.setPersistent(false);
+        packageEntry.preference.setOnPreferenceChangeListener(UsageAccessSettings.this);
+        mPreferenceScreen.addPreference(packageEntry.preference);
+      }
+      updatePreference(packageEntry);
+    }
+  }
+  mPackageEntryMap.clear();
+  mPackageEntryMap=newEntries;
+  if (mPackageEntryMap.size() == 1 && mPackageEntryMap.keyAt(0) == UserHandle.myUserId()) {
+    for (int i=0; i < mCategoryHeaders.length; ++i) {
+      if (mCategoryHeaders[i] != null) {
+        mPreferenceScreen.removePreference(mCategoryHeaders[i]);
+      }
+      mCategoryHeaders[i]=null;
+    }
+  }
+ else {
+    for (int i=0; i < mCategoryHeaders.length; ++i) {
+      if (mCategoryHeaders[i] == null) {
+        final Preference preference=new Preference(mContext,null,com.android.internal.R.attr.preferenceCategoryStyle,0);
+        mCategoryHeaders[i]=preference;
+        preference.setTitle(mCategoryHeaderTitleResIds[i]);
+        preference.setEnabled(false);
+        mPreferenceScreen.addPreference(preference);
+      }
+    }
+  }
+  int order=0;
+  final int profileCount=mProfiles.size();
+  for (int i=0; i < profileCount; ++i) {
+    Preference header=mCategoryHeaders[i];
+    if (header != null) {
+      header.setOrder(order++);
+    }
+    ArrayMap<String,PackageEntry> entriesForProfile=mPackageEntryMap.get(mProfiles.get(i).getIdentifier());
+    if (entriesForProfile != null) {
+      List<PackageEntry> sortedEntries=Collections.list(Collections.enumeration(entriesForProfile.values()));
+      Collections.sort(sortedEntries);
+      for (      PackageEntry pe : sortedEntries) {
+        pe.preference.setOrder(order++);
+      }
+    }
+  }
+}

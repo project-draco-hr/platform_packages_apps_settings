@@ -1,11 +1,6 @@
 {
   super();
   mSize=size;
-  mShadowRadius=shadowRadius;
-  mFrameColor=frameColor;
-  mFrameShadowColor=frameShadowColor;
-  mStrokeWidth=strokeWidth;
-  mHighlightColor=highlightColor;
   mBitmap=Bitmap.createBitmap(mSize,mSize,Bitmap.Config.ARGB_8888);
   final Canvas canvas=new Canvas(mBitmap);
   final int width=icon.getWidth();
@@ -13,8 +8,6 @@
   final int square=Math.min(width,height);
   final Rect cropRect=new Rect((width - square) / 2,(height - square) / 2,square,square);
   final RectF circleRect=new RectF(0f,0f,mSize,mSize);
-  circleRect.inset(mStrokeWidth / 2f,mStrokeWidth / 2f);
-  circleRect.inset(mShadowRadius,mShadowRadius);
   final Path fillPath=new Path();
   fillPath.addArc(circleRect,0f,360f);
   canvas.drawColor(0,PorterDuff.Mode.CLEAR);
@@ -29,6 +22,4 @@
   mScale=1f;
   mSrcRect=new Rect(0,0,mSize,mSize);
   mDstRect=new RectF(0,0,mSize,mSize);
-  mFrameRect=new RectF(mDstRect);
-  mFramePath=new Path();
 }

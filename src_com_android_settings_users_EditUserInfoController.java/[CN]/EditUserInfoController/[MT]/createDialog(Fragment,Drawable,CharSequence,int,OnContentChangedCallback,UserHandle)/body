@@ -17,7 +17,7 @@
  else {
     drawable=currentUserIcon;
     if (drawable == null) {
-      drawable=getCircularUserIcon(activity);
+      drawable=Utils.getUserIcon(activity,mUserManager,info);
     }
   }
   userPhotoView.setImageDrawable(drawable);

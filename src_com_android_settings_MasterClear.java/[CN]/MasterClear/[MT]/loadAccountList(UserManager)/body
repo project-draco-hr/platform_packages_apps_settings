@@ -20,7 +20,7 @@
     accountsCount+=N;
     AuthenticatorDescription[] descs=AccountManager.get(context).getAuthenticatorTypesAsUser(profileId);
     final int M=descs.length;
-    View titleView=newTitleView(contents,inflater);
+    View titleView=Utils.inflateCategoryHeader(inflater,contents);
     final TextView titleText=(TextView)titleView.findViewById(android.R.id.title);
     titleText.setText(userInfo.isManagedProfile() ? R.string.category_work : R.string.category_personal);
     contents.addView(titleView);

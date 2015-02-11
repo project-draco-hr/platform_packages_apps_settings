@@ -1,6 +1,5 @@
 {
   mConfigUi=parent;
-  mInXlSetupWizard=(parent instanceof WifiConfigUiForSetupWizardXL);
   mView=view;
   mAccessPoint=accessPoint;
   mAccessPointSecurity=(accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.getSecurity();
@@ -24,15 +23,7 @@
     mSsidView.addTextChangedListener(this);
     mSecuritySpinner=((Spinner)mView.findViewById(R.id.security));
     mSecuritySpinner.setOnItemSelectedListener(this);
-    if (mInXlSetupWizard) {
-      mView.findViewById(R.id.type_ssid).setVisibility(View.VISIBLE);
-      mView.findViewById(R.id.type_security).setVisibility(View.VISIBLE);
-      ArrayAdapter<String> adapter=new ArrayAdapter<String>(mContext,R.layout.wifi_setup_custom_list_item_1,android.R.id.text1,res.getStringArray(R.array.wifi_security_no_eap));
-      mSecuritySpinner.setAdapter(adapter);
-    }
- else {
-      mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
-    }
+    mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
     showIpConfigFields();
     showProxyFields();
     mView.findViewById(R.id.wifi_advanced_toggle).setVisibility(View.VISIBLE);

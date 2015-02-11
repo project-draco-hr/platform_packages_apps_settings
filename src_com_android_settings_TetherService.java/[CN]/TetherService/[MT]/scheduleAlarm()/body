@@ -1,6 +1,6 @@
 {
   Intent intent=new Intent(this,TetherService.class);
-  intent.putExtra(EXTRA_RUN_PROVISION,true);
+  intent.putExtra(TetherUtil.EXTRA_RUN_PROVISION,true);
   PendingIntent pendingIntent=PendingIntent.getService(this,0,intent,0);
   AlarmManager alarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
   int period=getResources().getInteger(com.android.internal.R.integer.config_mobile_hotspot_provision_check_period);

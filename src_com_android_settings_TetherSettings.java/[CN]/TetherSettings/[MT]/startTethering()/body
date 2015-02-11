@@ -1,9 +1,9 @@
 {
 switch (mTetherChoice) {
-case WIFI_TETHERING:
+case TETHERING_WIFI:
     mWifiApEnabler.setSoftapEnabled(true);
   break;
-case BLUETOOTH_TETHERING:
+case TETHERING_BLUETOOTH:
 BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
 if (adapter.getState() == BluetoothAdapter.STATE_OFF) {
 mBluetoothEnableForTether=true;
@@ -17,7 +17,7 @@ if (bluetoothPan != null) bluetoothPan.setBluetoothTethering(true);
 mBluetoothTether.setSummary(R.string.bluetooth_tethering_available_subtext);
 }
 break;
-case USB_TETHERING:
+case TETHERING_USB:
 setUsbTethering(true);
 break;
 default :

@@ -1,10 +1,11 @@
 {
   final Context context=getActivity();
   mTabHost.clearAllTabs();
-  for (int i=0; i < mTelephonyManager.getSimCount(); i++) {
+  int simCount=mTelephonyManager.getSimCount();
+  for (int i=0; i < simCount; i++) {
     final SubscriptionInfo sir=Utils.findRecordBySlotId(context,i);
     if (sir != null) {
-      addMobileTab(context,sir);
+      addMobileTab(context,sir,(simCount > 1));
     }
   }
   if (mShowWifi && hasWifiRadio(context)) {

@@ -11,15 +11,11 @@
     }
     final int maxLength=mDPM.getPasswordMaximumLength(quality);
     Intent intent=getLockPasswordIntent(context,quality,minLength,maxLength,mRequirePassword,false);
-    mFinishPending=true;
-    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-    startActivity(intent);
+    startActivityForResult(intent,CHOOSE_LOCK_REQUEST);
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
     Intent intent=getLockPatternIntent(context,mRequirePassword,false);
-    mFinishPending=true;
-    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-    startActivity(intent);
+    startActivityForResult(intent,CHOOSE_LOCK_REQUEST);
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
     mChooseLockSettingsHelper.utils().clearLock();

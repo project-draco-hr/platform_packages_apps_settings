@@ -1,0 +1,7 @@
+{
+  Map<Pair<String,String>,DashboardTile> addedCache=new ArrayMap<Pair<String,String>,DashboardTile>();
+  UserManager userManager=UserManager.get(this);
+  for (  UserHandle user : userManager.getUserProfiles()) {
+    addExternalTiles(target,user,addedCache);
+  }
+}

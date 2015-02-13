@@ -1,0 +1,7 @@
+{
+  Context context=getActivity();
+  AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  UserAdapter adapter=Utils.createUserAdapter(UserManager.get(context),context,mSelectedTile.userHandle);
+  builder.setTitle(R.string.choose_profile).setAdapter(adapter,this);
+  return builder.create();
+}

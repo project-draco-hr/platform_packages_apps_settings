@@ -1,6 +1,8 @@
 {
   titleRes=in.readInt();
+  externalIndex=in.readInt();
   title=TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+  key=in.readString();
   final int count=in.readInt();
   for (int n=0; n < count; n++) {
     DashboardTile tile=DashboardTile.CREATOR.createFromParcel(in);

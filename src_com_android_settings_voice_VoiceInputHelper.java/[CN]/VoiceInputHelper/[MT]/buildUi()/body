@@ -16,9 +16,7 @@
       continue;
     }
     mAvailableInteractionInfos.add(new InteractionInfo(mContext.getPackageManager(),info));
-    if (info.getRecognitionService() != null) {
-      interactorRecognizers.add(new ComponentName(resolveInfo.serviceInfo.packageName,info.getRecognitionService()));
-    }
+    interactorRecognizers.add(new ComponentName(resolveInfo.serviceInfo.packageName,info.getRecognitionService()));
   }
   Collections.sort(mAvailableInteractionInfos);
   currentSetting=Settings.Secure.getString(mContext.getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE);

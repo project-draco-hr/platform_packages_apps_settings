@@ -7,6 +7,7 @@
   root=getPreferenceScreen();
   mMtp=(CheckBoxPreference)root.findPreference(KEY_MTP);
   mPtp=(CheckBoxPreference)root.findPreference(KEY_PTP);
+  mMidi=(CheckBoxPreference)root.findPreference(KEY_MIDI);
   UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   if (um.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
     mMtp.setEnabled(false);

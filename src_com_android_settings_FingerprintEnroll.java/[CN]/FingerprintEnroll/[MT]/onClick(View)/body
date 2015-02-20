@@ -1,0 +1,18 @@
+{
+switch (v.getId()) {
+case R.id.fingerprint_enroll_button_add:
+    updateStage(Stage.EnrollingStart);
+  break;
+case R.id.fingerprint_enroll_button_next:
+if (mStage == Stage.EnrollingOnboarding) {
+  launchChooseLock();
+}
+ else if (mStage == Stage.EnrollingFinish) {
+  getActivity().finish();
+}
+ else {
+  Log.v(TAG,"No idea what to do next!");
+}
+break;
+}
+}

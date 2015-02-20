@@ -1,0 +1,22 @@
+{
+  FingerprintManager fpm=(FingerprintManager)getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
+  if (!fpm.isHardwareDetected()) {
+    Log.v(TAG,"No fingerprint hardware detected!!");
+    return;
+  }
+  Preference fingerprintPreference=new Preference(securityCategory.getContext());
+  fingerprintPreference.setKey(KEY_TRUST_AGENT);
+  fingerprintPreference.setTitle(R.string.security_settings_fingerprint_preference_title);
+  Intent intent=new Intent();
+  List<FingerprintItem> items=fpm.getEnrolledFingerprints();
+  int fingerprintCount=items.size();
+  if (fingerprintCount > 0) {
+    fingerprintPreference.setSummary(getResources().getQuantityString(R.plurals.security_settings_fingerprint_preference_summary,fingerprintCount,fingerprintCount));
+    intent.setClassName("com.android.settings",FingerprintEnroll.class.getName());
+  }
+ else {
+    intent.setClassName("com.android.settings",FingerprintEnroll.class.getName());
+  }
+  fingerprintPreference.setIntent(intent);
+  securityCategory.addPreference(fingerprintPreference);
+}

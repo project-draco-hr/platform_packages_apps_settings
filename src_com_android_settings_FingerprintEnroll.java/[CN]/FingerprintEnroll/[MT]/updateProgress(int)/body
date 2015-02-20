@@ -1,0 +1,13 @@
+{
+  if (DEBUG)   Log.v(TAG,"Progress: " + progress);
+  if (mVibrator != null) {
+    mVibrator.vibrate(100,new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION).build());
+  }
+  if (mProgressAnim != null) {
+    mProgressAnim.cancel();
+  }
+  ObjectAnimator anim=ObjectAnimator.ofInt(mProgressBar,"progress",mProgressBar.getProgress(),progress);
+  anim.addListener(mProgressAnimationListener);
+  anim.start();
+  mProgressAnim=anim;
+}

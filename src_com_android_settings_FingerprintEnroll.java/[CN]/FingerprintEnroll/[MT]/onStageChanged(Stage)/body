@@ -1,0 +1,26 @@
+{
+switch (stage) {
+case EnrollingOnboarding:
+    mEnrollmentSteps=-1;
+  mEnrolling=false;
+break;
+case EnrollingStart:
+mEnrollmentSteps=-1;
+mFingerprintManager.startListening(mReceiver);
+mFingerprintManager.enroll(ENROLL_TIMEOUT);
+mProgressBar.setProgress(0);
+mEnrolling=true;
+startFingerprintAnimator();
+break;
+case EnrollingRepeat:
+break;
+case EnrollingFinish:
+stopFingerprintAnimator();
+mFingerprintManager.stopListening();
+mEnrolling=false;
+break;
+default :
+mFingerprintManager.stopListening();
+break;
+}
+}

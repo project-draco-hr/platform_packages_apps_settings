@@ -1,0 +1,23 @@
+{
+  final Activity activity=getActivity();
+  mFingerprintManager=(FingerprintManager)activity.getSystemService(Context.FINGERPRINT_SERVICE);
+  mVibrator=(Vibrator)activity.getSystemService(Context.VIBRATOR_SERVICE);
+  mPowerManager=(PowerManager)activity.getSystemService(Context.POWER_SERVICE);
+  mContentView=inflater.inflate(R.layout.fingerprint_enroll,null);
+  mTitleText=(TextView)mContentView.findViewById(R.id.fingerprint_enroll_title);
+  mMessageText=(TextView)mContentView.findViewById(R.id.fingerprint_enroll_message);
+  mProgressBar=(ProgressBar)mContentView.findViewById(R.id.fingerprint_progress_bar);
+  mFingerprintAnimator=(ImageView)mContentView.findViewById(R.id.fingerprint_animator);
+  final int buttons[]={R.id.fingerprint_enroll_button_add,R.id.fingerprint_enroll_button_next};
+  for (int i=0; i < buttons.length; i++) {
+    mContentView.findViewById(buttons[i]).setOnClickListener(this);
+  }
+  LockPatternUtils utils=new LockPatternUtils(activity);
+  if (!utils.isSecure()) {
+    updateStage(Stage.EnrollingOnboarding);
+  }
+ else {
+    updateStage(Stage.EnrollingStart);
+  }
+  return mContentView;
+}

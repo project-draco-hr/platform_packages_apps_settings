@@ -1,0 +1,8 @@
+{
+  super.onPause();
+  if (ImsManager.isWfcEnabledByPlatform(getActivity())) {
+    TelephonyManager tm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+    tm.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
+    mSwitchBar.removeOnSwitchChangeListener(this);
+  }
+}

@@ -13,6 +13,9 @@
  else   if (preference == mPtp && mPtp.isChecked()) {
     function=UsbManager.USB_FUNCTION_PTP;
   }
+ else   if (preference == mMidi && mMidi.isChecked()) {
+    function=UsbManager.USB_FUNCTION_MIDI;
+  }
   mUsbManager.setCurrentFunction(function,true);
   updateToggles(function);
   return true;

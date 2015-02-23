@@ -2,29 +2,40 @@
   if (UsbManager.USB_FUNCTION_MTP.equals(function)) {
     mMtp.setChecked(true);
     mPtp.setChecked(false);
+    mMidi.setChecked(false);
   }
  else   if (UsbManager.USB_FUNCTION_PTP.equals(function)) {
     mMtp.setChecked(false);
     mPtp.setChecked(true);
+    mMidi.setChecked(false);
+  }
+ else   if (UsbManager.USB_FUNCTION_MIDI.equals(function)) {
+    mMtp.setChecked(false);
+    mPtp.setChecked(false);
+    mMidi.setChecked(true);
   }
  else {
     mMtp.setChecked(false);
     mPtp.setChecked(false);
+    mMidi.setChecked(false);
   }
   UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   if (um.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
     Log.e(TAG,"USB is locked down");
     mMtp.setEnabled(false);
     mPtp.setEnabled(false);
+    mMidi.setEnabled(true);
   }
  else   if (!mUsbAccessoryMode) {
     Log.e(TAG,"USB Normal Mode");
     mMtp.setEnabled(true);
     mPtp.setEnabled(true);
+    mMidi.setEnabled(true);
   }
  else {
     Log.e(TAG,"USB Accessory Mode");
     mMtp.setEnabled(false);
     mPtp.setEnabled(false);
+    mMidi.setEnabled(false);
   }
 }

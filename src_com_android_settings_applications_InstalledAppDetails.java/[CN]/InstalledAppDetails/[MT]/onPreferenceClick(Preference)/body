@@ -1,0 +1,20 @@
+{
+  if (preference == mStoragePreference) {
+    startAppInfoFragment(AppStorageSettings.class,mStoragePreference.getTitle());
+  }
+ else   if (preference == mNotificationPreference) {
+    startNotifications();
+  }
+ else   if (preference == mPermissionsPreference) {
+    startAppInfoFragment(AppPermissionSettings.class,mPermissionsPreference.getTitle());
+  }
+ else   if (preference == mLaunchPreference) {
+    startAppInfoFragment(AppLaunchSettings.class,mLaunchPreference.getTitle());
+  }
+ else   if (preference == mDataPreference) {
+  }
+ else {
+    return false;
+  }
+  return true;
+}

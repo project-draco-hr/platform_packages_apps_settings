@@ -1,0 +1,13 @@
+{
+  super.onCreate(savedInstanceState);
+  mState=ApplicationsState.getInstance(getActivity().getApplication());
+  mSession=mState.newSession(this);
+  Context context=getActivity();
+  mDpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+  mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  mPm=context.getPackageManager();
+  IBinder b=ServiceManager.getService(Context.USB_SERVICE);
+  mUsbManager=IUsbManager.Stub.asInterface(b);
+  mSession.resume();
+  retrieveAppEntry();
+}

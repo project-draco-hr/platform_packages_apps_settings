@@ -1,0 +1,23 @@
+{
+switch (id) {
+case DLG_CLEAR_DATA:
+    return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.string.clear_data_dlg_title)).setMessage(getActivity().getText(R.string.clear_data_dlg_text)).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
+      public void onClick(      DialogInterface dialog,      int which){
+        initiateClearUserData();
+      }
+    }
+).setNegativeButton(R.string.dlg_cancel,null).create();
+case DLG_CANNOT_CLEAR_DATA:
+  return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.string.clear_failed_dlg_title)).setMessage(getActivity().getText(R.string.clear_failed_dlg_text)).setNeutralButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      mClearDataButton.setEnabled(false);
+      setIntentAndFinish(false,false);
+    }
+  }
+).create();
+case DLG_MOVE_FAILED:
+CharSequence msg=getActivity().getString(R.string.move_app_failed_dlg_text,getMoveErrMsg(errorCode));
+return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.string.move_app_failed_dlg_title)).setMessage(msg).setNeutralButton(R.string.dlg_ok,null).create();
+}
+return null;
+}

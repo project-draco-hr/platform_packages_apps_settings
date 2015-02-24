@@ -24,49 +24,7 @@
  else   if (v == mSpecialDisableButton) {
     showDialogInner(DLG_SPECIAL_DISABLE,0);
   }
- else   if (v == mActivitiesButton) {
-    if (mUsbManager != null) {
-      mPm.clearPackagePreferredActivities(packageName);
-      try {
-        mUsbManager.clearDefaults(packageName,UserHandle.myUserId());
-      }
- catch (      RemoteException e) {
-        Log.e(TAG,"mUsbManager.clearDefaults",e);
-      }
-      mAppWidgetManager.setBindAppWidgetPermission(packageName,false);
-      TextView autoLaunchTitleView=(TextView)mRootView.findViewById(R.id.auto_launch_title);
-      TextView autoLaunchView=(TextView)mRootView.findViewById(R.id.auto_launch);
-      resetLaunchDefaultsUi(autoLaunchTitleView,autoLaunchView);
-    }
-  }
- else   if (v == mClearDataButton) {
-    if (mAppEntry.info.manageSpaceActivityName != null) {
-      if (!Utils.isMonkeyRunning()) {
-        Intent intent=new Intent(Intent.ACTION_DEFAULT);
-        intent.setClassName(mAppEntry.info.packageName,mAppEntry.info.manageSpaceActivityName);
-        startActivityForResult(intent,REQUEST_MANAGE_SPACE);
-      }
-    }
- else {
-      showDialogInner(DLG_CLEAR_DATA,0);
-    }
-  }
- else   if (v == mClearCacheButton) {
-    if (mClearCacheObserver == null) {
-      mClearCacheObserver=new ClearCacheObserver();
-    }
-    mPm.deleteApplicationCacheFiles(packageName,mClearCacheObserver);
-  }
  else   if (v == mForceStopButton) {
     showDialogInner(DLG_FORCE_STOP,0);
-  }
- else   if (v == mMoveAppButton) {
-    if (mPackageMoveObserver == null) {
-      mPackageMoveObserver=new PackageMoveObserver();
-    }
-    int moveFlags=(mAppEntry.info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0 ? PackageManager.MOVE_INTERNAL : PackageManager.MOVE_EXTERNAL_MEDIA;
-    mMoveInProgress=true;
-    refreshButtons();
-    mPm.movePackage(mAppEntry.info.packageName,mPackageMoveObserver,moveFlags);
   }
 }

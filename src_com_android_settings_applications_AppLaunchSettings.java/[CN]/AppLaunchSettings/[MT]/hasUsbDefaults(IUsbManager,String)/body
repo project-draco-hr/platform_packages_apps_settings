@@ -1,0 +1,11 @@
+{
+  try {
+    if (usbManager != null) {
+      return usbManager.hasDefaults(packageName,UserHandle.myUserId());
+    }
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"mUsbManager.hasDefaults",e);
+  }
+  return false;
+}

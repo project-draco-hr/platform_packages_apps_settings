@@ -6,7 +6,7 @@
     finish();
     return;
   }
-  mBluetoothManager=LocalBluetoothManager.getInstance(this);
+  mBluetoothManager=Utils.getLocalBtManager(this);
   if (mBluetoothManager == null) {
     Log.e(TAG,"Error: BluetoothAdapter not supported by system");
     finish();

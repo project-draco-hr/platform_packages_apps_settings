@@ -1,6 +1,6 @@
 {
   String message=context.getString(messageResId,name);
-  LocalBluetoothManager manager=LocalBluetoothManager.getInstance(context);
+  LocalBluetoothManager manager=getLocalBtManager(context);
   Context activity=manager.getForegroundActivity();
   if (manager.isForegroundActivity()) {
     new AlertDialog.Builder(activity).setTitle(R.string.bluetooth_error_title).setMessage(message).setPositiveButton(android.R.string.ok,null).show();

@@ -4,7 +4,7 @@
   getPreferenceScreen().setOrderingAsAdded(false);
   mProfileContainer=(PreferenceGroup)findPreference(KEY_PROFILE_CONTAINER);
   mProfileContainer.setLayoutResource(R.layout.bluetooth_preference_category);
-  mManager=LocalBluetoothManager.getInstance(getActivity());
+  mManager=Utils.getLocalBtManager(getActivity());
   CachedBluetoothDeviceManager deviceManager=mManager.getCachedDeviceManager();
   mProfileManager=mManager.getProfileManager();
 }

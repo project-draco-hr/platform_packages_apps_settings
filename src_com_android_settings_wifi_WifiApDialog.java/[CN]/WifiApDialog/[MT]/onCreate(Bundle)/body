@@ -11,6 +11,15 @@
   mChannel=(RadioGroup)mView.findViewById(R.id.choose_channel);
   mChannel2G=(RadioButton)mView.findViewById(R.id.ap_2G_band);
   mChannel5G=(RadioButton)mView.findViewById(R.id.ap_5G_band);
+  String countryCode=mWifiManager.getCountryCode();
+  if (!mWifiManager.is5GHzBandSupported() || countryCode == null) {
+    Log.e(TAG," NO country code, forbid 5GHz");
+    mChannel5G.setVisibility(View.INVISIBLE);
+    mWifiConfig.apBand=0;
+  }
+ else {
+    mChannel5G.setVisibility(View.VISIBLE);
+  }
   setButton(BUTTON_SUBMIT,context.getString(R.string.wifi_save),mListener);
   setButton(DialogInterface.BUTTON_NEGATIVE,context.getString(R.string.wifi_cancel),mListener);
   if (mWifiConfig != null) {

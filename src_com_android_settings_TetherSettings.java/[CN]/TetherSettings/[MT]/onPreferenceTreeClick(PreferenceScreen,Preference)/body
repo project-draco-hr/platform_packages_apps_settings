@@ -3,11 +3,11 @@
   if (preference == mUsbTether) {
     boolean newState=mUsbTether.isChecked();
     if (newState) {
-      startProvisioningIfNecessary(USB_TETHERING);
+      startProvisioningIfNecessary(TETHERING_USB);
     }
  else {
-      if (isProvisioningNeeded(mProvisionApp)) {
-        TetherService.cancelRecheckAlarmIfNecessary(getActivity(),USB_TETHERING);
+      if (TetherUtil.isProvisioningNeeded(getActivity())) {
+        TetherService.cancelRecheckAlarmIfNecessary(getActivity(),TETHERING_USB);
       }
       setUsbTethering(newState);
     }
@@ -15,11 +15,11 @@
  else   if (preference == mBluetoothTether) {
     boolean bluetoothTetherState=mBluetoothTether.isChecked();
     if (bluetoothTetherState) {
-      startProvisioningIfNecessary(BLUETOOTH_TETHERING);
+      startProvisioningIfNecessary(TETHERING_BLUETOOTH);
     }
  else {
-      if (isProvisioningNeeded(mProvisionApp)) {
-        TetherService.cancelRecheckAlarmIfNecessary(getActivity(),BLUETOOTH_TETHERING);
+      if (TetherUtil.isProvisioningNeeded(getActivity())) {
+        TetherService.cancelRecheckAlarmIfNecessary(getActivity(),TETHERING_BLUETOOTH);
       }
       boolean errored=false;
       String[] tethered=cm.getTetheredIfaces();

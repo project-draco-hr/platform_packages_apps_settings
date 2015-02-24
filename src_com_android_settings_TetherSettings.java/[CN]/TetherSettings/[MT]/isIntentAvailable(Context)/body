@@ -1,7 +1,5 @@
 {
-  if (provisionApp.length < 2) {
-    throw new IllegalArgumentException("provisionApp length should at least be 2");
-  }
+  String[] provisionApp=context.getResources().getStringArray(com.android.internal.R.array.config_mobile_hotspot_provision_app);
   final PackageManager packageManager=context.getPackageManager();
   Intent intent=new Intent(Intent.ACTION_MAIN);
   intent.setClassName(provisionApp[0],provisionApp[1]);

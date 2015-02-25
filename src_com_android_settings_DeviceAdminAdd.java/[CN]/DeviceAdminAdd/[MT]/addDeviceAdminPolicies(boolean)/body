@@ -1,0 +1,12 @@
+{
+  if (!mAdminPoliciesInitialized) {
+    boolean isOwner=UserHandle.getCallingUserHandle().isOwner();
+    for (    DeviceAdminInfo.PolicyInfo pi : mDeviceAdmin.getUsedPolicies()) {
+      int descriptionId=isOwner ? pi.description : pi.descriptionForSecondaryUsers;
+      int labelId=isOwner ? pi.label : pi.labelForSecondaryUsers;
+      View view=AppSecurityPermissions.getPermissionItemView(this,getText(labelId),showDescription ? getText(descriptionId) : "",true);
+      mAdminPolicies.addView(view);
+    }
+    mAdminPoliciesInitialized=true;
+  }
+}

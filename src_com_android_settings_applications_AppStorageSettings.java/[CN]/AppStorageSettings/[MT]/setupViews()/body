@@ -1,9 +1,7 @@
 {
-  final View view=inflater.inflate(R.layout.storage_settings,container,false);
-  final ViewGroup allDetails=(ViewGroup)view.findViewById(R.id.all_details);
-  Utils.forceCustomPadding(allDetails,true);
   mComputingStr=getActivity().getText(R.string.computing_size);
   mInvalidSizeStr=getActivity().getText(R.string.invalid_size_value);
+  LayoutPreference view=(LayoutPreference)findPreference(KEY_STORAGE_SETTINGS);
   mTotalSize=(TextView)view.findViewById(R.id.total_size_text);
   mAppSize=(TextView)view.findViewById(R.id.application_size_text);
   mDataSize=(TextView)view.findViewById(R.id.data_size_text);
@@ -13,10 +11,11 @@
     ((View)mExternalCodeSize.getParent()).setVisibility(View.GONE);
     ((View)mExternalDataSize.getParent()).setVisibility(View.GONE);
   }
-  View data_buttons_panel=view.findViewById(R.id.data_buttons_panel);
-  mMoveAppButton=(Button)data_buttons_panel.findViewById(R.id.left_button);
+  mClearDataButton=(Button)view.findViewById(R.id.clear_data_button).findViewById(R.id.button);
+  mMoveDropDown=(DropDownPreference)findPreference(KEY_MOVE_PREFERENCE);
+  mMoveDropDown.setCallback(this);
+  view=(LayoutPreference)findPreference(KEY_CACHE_SETTINGS);
   mCacheSize=(TextView)view.findViewById(R.id.cache_size_text);
-  mClearCacheButton=(Button)view.findViewById(R.id.clear_cache_button);
-  mClearDataButton=(Button)data_buttons_panel.findViewById(R.id.right_button);
-  return view;
+  mClearCacheButton=(Button)view.findViewById(R.id.clear_cache_button).findViewById(R.id.button);
+  mClearCacheButton.setText(R.string.clear_cache_btn_text);
 }

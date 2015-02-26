@@ -1,0 +1,17 @@
+{
+  if (Environment.isExternalStorageEmulated()) {
+    updateMoveEnabled(false);
+    return;
+  }
+  boolean dataOnly=(mPackageInfo == null) && (mAppEntry != null);
+  boolean moveDisable=true;
+  if ((mAppEntry.info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0) {
+    moveDisable=false;
+  }
+ else {
+    mCanBeOnSdCardChecker.init();
+    moveDisable=!mCanBeOnSdCardChecker.check(mAppEntry.info);
+  }
+  updateMoveEnabled(!moveDisable);
+  mMoveDropDown.setSelectable(!mAppControlRestricted);
+}

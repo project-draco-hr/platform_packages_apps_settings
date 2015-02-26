@@ -1,0 +1,14 @@
+{
+  boolean selectedExternal=(Boolean)value;
+  boolean isExternal=(mAppEntry.info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0;
+  if (selectedExternal ^ isExternal) {
+    if (mPackageMoveObserver == null) {
+      mPackageMoveObserver=new PackageMoveObserver();
+    }
+    int moveFlags=selectedExternal ? PackageManager.MOVE_EXTERNAL_MEDIA : PackageManager.MOVE_INTERNAL;
+    mMoveInProgress=true;
+    refreshButtons();
+    mPm.movePackage(mAppEntry.info.packageName,mPackageMoveObserver,moveFlags);
+  }
+  return true;
+}

@@ -2,5 +2,7 @@
   retrieveAppEntry();
   refreshButtons();
   refreshSizeInfo();
+  boolean isExternal=(mAppEntry.info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0;
+  mMoveDropDown.setSelectedItem(isExternal ? 1 : 0);
   return true;
 }

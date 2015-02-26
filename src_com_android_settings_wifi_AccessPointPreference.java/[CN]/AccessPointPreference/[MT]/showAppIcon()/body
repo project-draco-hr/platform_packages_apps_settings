@@ -6,14 +6,23 @@
   if (mConfig == null) {
     drawable.setAlpha(0);
   }
- else   if (mConfig.creatorName.equals(systemName)) {
-    drawable=getContext().getApplicationInfo().loadIcon(pm);
-  }
  else {
-    try {
-      drawable=pm.getApplicationIcon(mConfig.creatorName);
+    int userId=UserHandle.getUserId(mConfig.creatorUid);
+    ApplicationInfo appInfo=null;
+    if (mConfig.creatorName.equals(systemName)) {
+      appInfo=getContext().getApplicationInfo();
     }
- catch (    NameNotFoundException nnfe) {
+ else {
+      try {
+        IPackageManager ipm=AppGlobals.getPackageManager();
+        appInfo=ipm.getApplicationInfo(mConfig.creatorName,0,userId);
+      }
+ catch (      RemoteException rex) {
+      }
+    }
+    if (appInfo != null) {
+      drawable=appInfo.loadIcon(pm);
+      drawable=pm.getUserBadgedIcon(drawable,new UserHandle(userId));
     }
   }
   setIcon(drawable);

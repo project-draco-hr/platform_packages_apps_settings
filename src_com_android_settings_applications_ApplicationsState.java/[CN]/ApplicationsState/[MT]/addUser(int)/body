@@ -1,0 +1,14 @@
+{
+  if (mUm.getUserProfiles().contains(new UserHandle(userId))) {
+synchronized (mEntriesMap) {
+      mEntriesMap.put(userId,new HashMap<String,AppEntry>());
+      if (mResumed) {
+        doPauseLocked();
+        doResumeIfNeededLocked();
+      }
+      if (!mMainHandler.hasMessages(MainHandler.MSG_PACKAGE_LIST_CHANGED)) {
+        mMainHandler.sendEmptyMessage(MainHandler.MSG_PACKAGE_LIST_CHANGED);
+      }
+    }
+  }
+}

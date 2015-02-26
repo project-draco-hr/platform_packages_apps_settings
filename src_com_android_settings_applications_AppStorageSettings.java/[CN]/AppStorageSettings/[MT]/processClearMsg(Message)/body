@@ -4,7 +4,7 @@
   mClearDataButton.setText(R.string.clear_user_data_text);
   if (result == OP_SUCCESSFUL) {
     Log.i(TAG,"Cleared user data for package : " + packageName);
-    mState.requestSize(mAppEntry.info.packageName);
+    mState.requestSize(mPackageName,mUserId);
   }
  else {
     mClearDataButton.setEnabled(true);

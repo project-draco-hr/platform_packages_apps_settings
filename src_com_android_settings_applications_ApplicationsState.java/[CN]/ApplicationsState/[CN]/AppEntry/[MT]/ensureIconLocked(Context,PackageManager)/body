@@ -1,7 +1,7 @@
 {
   if (this.icon == null) {
     if (this.apkFile.exists()) {
-      this.icon=this.info.loadIcon(pm);
+      this.icon=getBadgedIcon(pm);
       return true;
     }
  else {
@@ -12,7 +12,7 @@
  else   if (!this.mounted) {
     if (this.apkFile.exists()) {
       this.mounted=true;
-      this.icon=this.info.loadIcon(pm);
+      this.icon=getBadgedIcon(pm);
       return true;
     }
   }

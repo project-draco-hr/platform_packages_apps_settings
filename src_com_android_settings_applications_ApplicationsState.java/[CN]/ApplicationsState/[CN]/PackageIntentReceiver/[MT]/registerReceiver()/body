@@ -8,4 +8,8 @@
   sdFilter.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE);
   sdFilter.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE);
   mContext.registerReceiver(this,sdFilter);
+  IntentFilter userFilter=new IntentFilter();
+  userFilter.addAction(Intent.ACTION_USER_ADDED);
+  userFilter.addAction(Intent.ACTION_USER_REMOVED);
+  mContext.registerReceiver(this,userFilter);
 }

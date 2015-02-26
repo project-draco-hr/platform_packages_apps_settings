@@ -7,12 +7,19 @@
     mPackageIntentReceiver=new PackageIntentReceiver();
     mPackageIntentReceiver.registerReceiver();
   }
-  mApplications=mPm.getInstalledApplications(mRetrieveFlags);
-  if (mApplications == null) {
-    mApplications=new ArrayList<ApplicationInfo>();
+  mApplications=new ArrayList<ApplicationInfo>();
+  for (  UserHandle user : mUm.getUserProfiles()) {
+    try {
+      ParceledListSlice<ApplicationInfo> list=mIpm.getInstalledApplications(mRetrieveFlags,user.getIdentifier());
+      mApplications.addAll(list.getList());
+    }
+ catch (    RemoteException e) {
+    }
   }
   if (mInterestingConfigChanges.applyNewConfig(mContext.getResources())) {
-    mEntriesMap.clear();
+    for (int i=0; i < mEntriesMap.size(); i++) {
+      mEntriesMap.valueAt(i).clear();
+    }
     mAppEntries.clear();
   }
  else {
@@ -31,7 +38,8 @@
       }
       mHaveDisabledApps=true;
     }
-    final AppEntry entry=mEntriesMap.get(info.packageName);
+    int userId=UserHandle.getUserId(info.uid);
+    final AppEntry entry=mEntriesMap.get(userId).get(info.packageName);
     if (entry != null) {
       entry.info=info;
     }

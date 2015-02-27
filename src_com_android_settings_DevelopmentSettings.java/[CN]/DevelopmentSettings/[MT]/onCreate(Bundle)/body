@@ -81,6 +81,18 @@
   mTransitionAnimationScale=addListPreference(TRANSITION_ANIMATION_SCALE_KEY);
   mAnimatorDurationScale=addListPreference(ANIMATOR_DURATION_SCALE_KEY);
   mOverlayDisplayDevices=addListPreference(OVERLAY_DISPLAY_DEVICES_KEY);
+  mEnableMultiWindow=findAndInitSwitchPref(ENABLE_MULTI_WINDOW_KEY);
+  if (!showEnableMultiWindowPreference()) {
+    final PreferenceGroup drawingGroup=(PreferenceGroup)findPreference("debug_drawing_category");
+    if (drawingGroup != null) {
+      drawingGroup.removePreference(mEnableMultiWindow);
+    }
+ else {
+      mEnableMultiWindow.setEnabled(false);
+    }
+    removePreference(mEnableMultiWindow);
+    mEnableMultiWindow=null;
+  }
   mOpenGLTraces=addListPreference(OPENGL_TRACES_KEY);
   mSimulateColorSpace=addListPreference(SIMULATE_COLOR_SPACE);
   mUseAwesomePlayer=findAndInitSwitchPref(USE_AWESOMEPLAYER_KEY);

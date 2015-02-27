@@ -25,5 +25,15 @@
     boolean value=(Boolean)objValue;
     Settings.Secure.putInt(getContentResolver(),DOZE_ENABLED,value ? 1 : 0);
   }
+  if (preference == mNightModePreference) {
+    try {
+      final int value=Integer.parseInt((String)objValue);
+      final UiModeManager uiManager=(UiModeManager)getSystemService(Context.UI_MODE_SERVICE);
+      uiManager.setNightMode(value);
+    }
+ catch (    NumberFormatException e) {
+      Log.e(TAG,"could not persist night mode setting",e);
+    }
+  }
   return true;
 }

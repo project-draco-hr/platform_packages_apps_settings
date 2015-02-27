@@ -4,7 +4,11 @@
   values.put(IndexDatabaseHelper.SavedQueriesColums.QUERY,params[0]);
   values.put(IndexDatabaseHelper.SavedQueriesColums.TIME_STAMP,now);
   final SQLiteDatabase database=getWritableDatabase();
-  long lastInsertedRowId=-1;
+  if (database == null) {
+    Log.e(LOG_TAG,"Cannot save Search queries as I cannot get a writable database");
+    return -1L;
+  }
+  long lastInsertedRowId=-1L;
   try {
     database.delete(Tables.TABLE_SAVED_QUERIES,IndexDatabaseHelper.SavedQueriesColums.QUERY + " = ?",new String[]{params[0]});
     lastInsertedRowId=database.insertOrThrow(Tables.TABLE_SAVED_QUERIES,null,values);

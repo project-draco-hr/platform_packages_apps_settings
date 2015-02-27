@@ -4,6 +4,10 @@
   final Map<String,List<String>> nonIndexableKeys=params[0].nonIndexableKeys;
   final boolean forceUpdate=params[0].forceUpdate;
   final SQLiteDatabase database=getWritableDatabase();
+  if (database == null) {
+    Log.e(LOG_TAG,"Cannot update Index as I cannot get a writable database");
+    return null;
+  }
   final String localeStr=Locale.getDefault().toString();
   try {
     database.beginTransaction();

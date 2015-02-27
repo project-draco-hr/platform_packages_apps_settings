@@ -22,7 +22,12 @@
   mContent=(ViewGroup)findViewById(R.id.main_content);
   getFragmentManager().addOnBackStackChangedListener(this);
   if (mIsShowingDashboard) {
-    Index.getInstance(getApplicationContext()).update();
+    if (!Utils.isLowStorage(this)) {
+      Index.getInstance(getApplicationContext()).update();
+    }
+ else {
+      Log.w(LOG_TAG,"Cannot update the Indexer as we are running low on storage space!");
+    }
   }
   if (savedState != null) {
     mSearchMenuItemExpanded=savedState.getBoolean(SAVE_KEY_SEARCH_MENU_EXPANDED);

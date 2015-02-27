@@ -1,3 +1,9 @@
 {
-  return IndexDatabaseHelper.getInstance(mContext).getWritableDatabase();
+  try {
+    return IndexDatabaseHelper.getInstance(mContext).getWritableDatabase();
+  }
+ catch (  SQLiteException e) {
+    Log.e(LOG_TAG,"Cannot open writable database",e);
+    return null;
+  }
 }

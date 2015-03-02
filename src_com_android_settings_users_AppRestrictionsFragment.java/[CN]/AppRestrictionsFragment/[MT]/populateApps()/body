@@ -18,6 +18,7 @@
     final boolean hasSettings=resolveInfoListHasPackage(receivers,packageName);
     if (isSettingsApp) {
       addLocationAppRestrictionsPreference(app,p);
+      mSelectedPackages.put(packageName,true);
       continue;
     }
     PackageInfo pi=null;
@@ -57,7 +58,8 @@
       p.setChecked(mSelectedPackages.get(packageName));
     }
     p.setOrder(MAX_APP_RESTRICTIONS * (mAppList.getPreferenceCount() + 2));
-    addToAppList(p,packageName);
+    mSelectedPackages.put(packageName,p.isChecked());
+    mAppList.addPreference(p);
   }
   mAppListChanged=true;
   if (mNewUser && mFirstTime) {

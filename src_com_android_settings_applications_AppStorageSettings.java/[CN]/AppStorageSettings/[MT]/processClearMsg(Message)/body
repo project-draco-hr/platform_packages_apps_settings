@@ -1,0 +1,12 @@
+{
+  int result=msg.arg1;
+  String packageName=mAppEntry.info.packageName;
+  mClearDataButton.setText(R.string.clear_user_data_text);
+  if (result == OP_SUCCESSFUL) {
+    Log.i(TAG,"Cleared user data for package : " + packageName);
+    mState.requestSize(mAppEntry.info.packageName);
+  }
+ else {
+    mClearDataButton.setEnabled(true);
+  }
+}

@@ -1,0 +1,15 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  handleHeader();
+  mNotificationPreference=findPreference(KEY_NOTIFICATION);
+  mNotificationPreference.setOnPreferenceClickListener(this);
+  mStoragePreference=findPreference(KEY_STORAGE);
+  mStoragePreference.setOnPreferenceClickListener(this);
+  mPermissionsPreference=findPreference(KEY_PERMISSION);
+  mPermissionsPreference.setOnPreferenceClickListener(this);
+  mLaunchPreference=findPreference(KEY_LAUNCH);
+  mLaunchPreference.setOnPreferenceClickListener(this);
+  mDataPreference=findPreference(KEY_DATA);
+  mDataPreference.setOnPreferenceClickListener(this);
+  getPreferenceScreen().removePreference(mDataPreference);
+}

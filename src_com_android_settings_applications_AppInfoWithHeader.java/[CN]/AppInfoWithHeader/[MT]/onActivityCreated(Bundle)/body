@@ -1,0 +1,10 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  if (mCreated) {
+    Log.w(TAG,"onActivityCreated: ignoring duplicate call");
+    return;
+  }
+  mCreated=true;
+  if (mPackageInfo == null)   return;
+  AppHeader.createAppHeader(getActivity(),mPackageInfo.applicationInfo.loadIcon(mPm),mPackageInfo.applicationInfo.loadLabel(mPm),null);
+}

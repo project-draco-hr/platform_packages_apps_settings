@@ -1,0 +1,9 @@
+{
+  int id=getArguments().getInt("id");
+  int errorCode=getArguments().getInt("moveError");
+  Dialog dialog=createDialog(id,errorCode);
+  if (dialog == null) {
+    throw new IllegalArgumentException("unknown id " + id);
+  }
+  return dialog;
+}

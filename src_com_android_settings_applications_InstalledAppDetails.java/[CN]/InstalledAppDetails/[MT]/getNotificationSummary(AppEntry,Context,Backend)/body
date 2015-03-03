@@ -1,0 +1,16 @@
+{
+  AppRow appRow=NotificationAppList.loadAppRow(context.getPackageManager(),appEntry.info,backend);
+  if (appRow.banned) {
+    return context.getString(R.string.notifications_disabled);
+  }
+ else   if (appRow.priority) {
+    if (appRow.sensitive) {
+      return context.getString(R.string.notifications_priority_sensitive);
+    }
+    return context.getString(R.string.notifications_priority);
+  }
+ else   if (appRow.sensitive) {
+    return context.getString(R.string.notifications_sensitive);
+  }
+  return context.getString(R.string.notifications_enabled);
+}

@@ -1,16 +1,5 @@
 {
   super.onCreate(icicle);
-  mState=ApplicationsState.getInstance(getActivity().getApplication());
-  mSession=mState.newSession(this);
-  mPm=getActivity().getPackageManager();
-  mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
-  IBinder b=ServiceManager.getService(Context.USB_SERVICE);
-  mUsbManager=IUsbManager.Stub.asInterface(b);
-  mAppWidgetManager=AppWidgetManager.getInstance(getActivity());
-  mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
-  mSmsManager=ISms.Stub.asInterface(ServiceManager.getService("isms"));
-  mCanBeOnSdCardChecker=new CanBeOnSdCardChecker();
-  mSession.resume();
-  retrieveAppEntry();
   setHasOptionsMenu(true);
+  addPreferencesFromResource(R.xml.installed_app_details);
 }

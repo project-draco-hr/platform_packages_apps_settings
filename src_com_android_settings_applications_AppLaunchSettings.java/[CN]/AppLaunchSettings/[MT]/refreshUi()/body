@@ -1,0 +1,41 @@
+{
+  retrieveAppEntry();
+  boolean hasBindAppWidgetPermission=mAppWidgetManager.hasBindAppWidgetPermission(mAppEntry.info.packageName);
+  TextView autoLaunchTitleView=(TextView)mRootView.findViewById(R.id.auto_launch_title);
+  TextView autoLaunchView=(TextView)mRootView.findViewById(R.id.auto_launch);
+  boolean autoLaunchEnabled=hasPreferredActivities(mPm,mPackageName) || hasUsbDefaults(mUsbManager,mPackageName);
+  if (!autoLaunchEnabled && !hasBindAppWidgetPermission) {
+    resetLaunchDefaultsUi(autoLaunchTitleView,autoLaunchView);
+  }
+ else {
+    boolean useBullets=hasBindAppWidgetPermission && autoLaunchEnabled;
+    if (hasBindAppWidgetPermission) {
+      autoLaunchTitleView.setText(R.string.auto_launch_label_generic);
+    }
+ else {
+      autoLaunchTitleView.setText(R.string.auto_launch_label);
+    }
+    CharSequence text=null;
+    int bulletIndent=getResources().getDimensionPixelSize(R.dimen.installed_app_details_bullet_offset);
+    if (autoLaunchEnabled) {
+      CharSequence autoLaunchEnableText=getText(R.string.auto_launch_enable_text);
+      SpannableString s=new SpannableString(autoLaunchEnableText);
+      if (useBullets) {
+        s.setSpan(new BulletSpan(bulletIndent),0,autoLaunchEnableText.length(),0);
+      }
+      text=(text == null) ? TextUtils.concat(s,"\n") : TextUtils.concat(text,"\n",s,"\n");
+    }
+    if (hasBindAppWidgetPermission) {
+      CharSequence alwaysAllowBindAppWidgetsText=getText(R.string.always_allow_bind_appwidgets_text);
+      SpannableString s=new SpannableString(alwaysAllowBindAppWidgetsText);
+      if (useBullets) {
+        s.setSpan(new BulletSpan(bulletIndent),0,alwaysAllowBindAppWidgetsText.length(),0);
+      }
+      text=(text == null) ? TextUtils.concat(s,"\n") : TextUtils.concat(text,"\n",s,"\n");
+    }
+    autoLaunchView.setText(text);
+    mActivitiesButton.setEnabled(true);
+    mActivitiesButton.setOnClickListener(this);
+  }
+  return true;
+}

@@ -1,0 +1,17 @@
+{
+  if (v == mActivitiesButton) {
+    if (mUsbManager != null) {
+      mPm.clearPackagePreferredActivities(mPackageName);
+      try {
+        mUsbManager.clearDefaults(mPackageName,UserHandle.myUserId());
+      }
+ catch (      RemoteException e) {
+        Log.e(TAG,"mUsbManager.clearDefaults",e);
+      }
+      mAppWidgetManager.setBindAppWidgetPermission(mPackageName,false);
+      TextView autoLaunchTitleView=(TextView)mRootView.findViewById(R.id.auto_launch_title);
+      TextView autoLaunchView=(TextView)mRootView.findViewById(R.id.auto_launch);
+      resetLaunchDefaultsUi(autoLaunchTitleView,autoLaunchView);
+    }
+  }
+}

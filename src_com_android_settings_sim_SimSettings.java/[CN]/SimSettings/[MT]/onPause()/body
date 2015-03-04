@@ -1,0 +1,5 @@
+{
+  super.onPause();
+  final TelephonyManager tm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+  tm.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
+}

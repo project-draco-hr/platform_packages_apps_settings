@@ -5,18 +5,20 @@
     return;
   }
   Preference fingerprintPreference=new Preference(securityCategory.getContext());
-  fingerprintPreference.setKey(KEY_TRUST_AGENT);
+  fingerprintPreference.setKey(KEY_FINGERPRINT_SETTINGS);
   fingerprintPreference.setTitle(R.string.security_settings_fingerprint_preference_title);
   Intent intent=new Intent();
   List<FingerprintItem> items=fpm.getEnrolledFingerprints();
   int fingerprintCount=items.size();
+  final String clazz;
   if (fingerprintCount > 0) {
     fingerprintPreference.setSummary(getResources().getQuantityString(R.plurals.security_settings_fingerprint_preference_summary,fingerprintCount,fingerprintCount));
-    intent.setClassName("com.android.settings",FingerprintEnroll.class.getName());
+    clazz=FingerprintSettings.class.getName();
   }
  else {
-    intent.setClassName("com.android.settings",FingerprintEnroll.class.getName());
+    clazz=FingerprintEnroll.class.getName();
   }
+  intent.setClassName("com.android.settings",clazz);
   fingerprintPreference.setIntent(intent);
   securityCategory.addPreference(fingerprintPreference);
 }

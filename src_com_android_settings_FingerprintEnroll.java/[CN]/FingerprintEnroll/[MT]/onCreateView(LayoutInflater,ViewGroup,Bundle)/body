@@ -14,7 +14,10 @@
   }
   LockPatternUtils utils=new LockPatternUtils(activity);
   if (!utils.isSecure()) {
-    updateStage(Stage.EnrollingOnboarding);
+    updateStage(Stage.EnrollingOnboard);
+  }
+ else   if (ALWAYS_SHOW_FIND_SCREEN || mFingerprintManager.getEnrolledFingerprints().size() == 0) {
+    updateStage(Stage.EnrollingFindSensor);
   }
  else {
     updateStage(Stage.EnrollingStart);

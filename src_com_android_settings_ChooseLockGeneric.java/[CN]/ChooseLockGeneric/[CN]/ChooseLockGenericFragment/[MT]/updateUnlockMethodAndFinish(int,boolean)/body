@@ -20,10 +20,12 @@
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
     mChooseLockSettingsHelper.utils().clearLock();
     mChooseLockSettingsHelper.utils().setLockScreenDisabled(disabled);
+    removeAllFingerprintTemplates();
     getActivity().setResult(Activity.RESULT_OK);
     finish();
   }
  else {
+    removeAllFingerprintTemplates();
     finish();
   }
 }

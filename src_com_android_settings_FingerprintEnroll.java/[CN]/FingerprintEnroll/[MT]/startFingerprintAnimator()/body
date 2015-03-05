@@ -1,4 +1,6 @@
 {
-  AnimationDrawable drawable=(AnimationDrawable)mFingerprintAnimator.getDrawable();
-  drawable.start();
+  final Drawable d=mFingerprintAnimator.getDrawable();
+  if (d instanceof AnimationDrawable) {
+    ((AnimationDrawable)d).start();
+  }
 }

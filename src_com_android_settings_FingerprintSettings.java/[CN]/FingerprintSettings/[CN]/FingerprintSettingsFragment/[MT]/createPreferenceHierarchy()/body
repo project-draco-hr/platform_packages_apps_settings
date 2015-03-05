@@ -1,0 +1,24 @@
+{
+  PreferenceScreen root=getPreferenceScreen();
+  if (root != null) {
+    root.removeAll();
+  }
+  addPreferencesFromResource(R.xml.security_settings_fingerprint);
+  root=getPreferenceScreen();
+  PreferenceGroup manageCategory=(PreferenceGroup)root.findPreference(KEY_MANAGE_CATEGORY);
+  if (manageCategory != null) {
+    addFingerprintItemPreferences(manageCategory);
+  }
+  PreferenceGroup usageCategory=(PreferenceGroup)root.findPreference(KEY_USAGE_CATEGORY);
+  if (usageCategory != null) {
+    Preference toggle=root.findPreference(KEY_FINGERPRINT_ENABLE_KEYGUARD_TOGGLE);
+    toggle.setOnPreferenceChangeListener(this);
+    if (!ENABLE_USAGE_CATEGORY) {
+      root.removePreference(usageCategory);
+    }
+ else {
+      toggle.setOnPreferenceChangeListener(this);
+    }
+  }
+  return root;
+}

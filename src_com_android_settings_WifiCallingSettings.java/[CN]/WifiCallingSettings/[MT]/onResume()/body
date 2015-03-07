@@ -12,4 +12,9 @@
   mButtonWfcMode.setValue(Integer.toString(wfcMode));
   mButtonWfcMode.setSummary(getWfcModeSummary(context,ImsManager.getWfcMode(context)));
   mButtonWfcRoam.setChecked(wfcEnabled && (wfcMode != ImsConfig.WfcModeFeatureValueConstants.WIFI_ONLY) && ImsManager.isWfcRoamingEnabledByUser(context));
+  context.registerReceiver(mIntentReceiver,mIntentFilter);
+  Intent intent=getActivity().getIntent();
+  if (intent.getBooleanExtra(ImsPhone.EXTRA_KEY_ALERT_SHOW,false)) {
+    showAlert(intent);
+  }
 }

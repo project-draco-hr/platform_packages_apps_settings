@@ -1,0 +1,9 @@
+{
+  Context context=getActivity();
+  CharSequence title=intent.getCharSequenceExtra(ImsPhone.EXTRA_KEY_ALERT_TITLE);
+  CharSequence message=intent.getCharSequenceExtra(ImsPhone.EXTRA_KEY_ALERT_MESSAGE);
+  AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  builder.setMessage(message).setTitle(title).setIcon(android.R.drawable.stat_sys_warning).setPositiveButton(android.R.string.ok,null);
+  AlertDialog dialog=builder.create();
+  dialog.show();
+}

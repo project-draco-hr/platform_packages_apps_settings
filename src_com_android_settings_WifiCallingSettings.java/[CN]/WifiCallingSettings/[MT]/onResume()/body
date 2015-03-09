@@ -10,6 +10,6 @@
   mSwitch.setChecked(wfcEnabled);
   int wfcMode=ImsManager.getWfcMode(context);
   mButtonWfcMode.setValue(Integer.toString(wfcMode));
-  mButtonWfcMode.setSummary(getWfcModeSummary(context,ImsManager.getWfcMode(context)));
+  mButtonWfcMode.setSummary(getWfcModeSummary(context,wfcMode));
   mButtonWfcRoam.setChecked(wfcEnabled && (wfcMode != ImsConfig.WfcModeFeatureValueConstants.WIFI_ONLY) && ImsManager.isWfcRoamingEnabledByUser(context));
 }

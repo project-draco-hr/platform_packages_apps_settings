@@ -1,8 +1,10 @@
 {
   final Context context=getActivity();
   ImsManager.setWfcSetting(context,isChecked);
+  int wfcMode=ImsManager.getWfcMode(context);
+  mButtonWfcMode.setSummary(getWfcModeSummary(context,wfcMode));
   mButtonWfcMode.setEnabled(isChecked);
-  boolean wfcHandoffEnabled=(ImsManager.getWfcMode(context) != ImsConfig.WfcModeFeatureValueConstants.WIFI_ONLY);
+  boolean wfcHandoffEnabled=(wfcMode != ImsConfig.WfcModeFeatureValueConstants.WIFI_ONLY);
   mButtonWfcRoam.setEnabled(isChecked && wfcHandoffEnabled);
   mButtonWfcRoam.setChecked(isChecked && wfcHandoffEnabled && ImsManager.isWfcRoamingEnabledByUser(context));
 }

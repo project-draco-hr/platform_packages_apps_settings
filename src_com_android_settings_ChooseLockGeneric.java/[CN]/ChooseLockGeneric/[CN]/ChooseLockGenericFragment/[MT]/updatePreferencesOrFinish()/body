@@ -4,12 +4,13 @@
   if (quality == -1) {
     quality=intent.getIntExtra(MINIMUM_QUALITY_KEY,-1);
     quality=upgradeQuality(quality);
+    final boolean hideDisabledPrefs=intent.getBooleanExtra(HIDE_DISABLED_PREFS,false);
     final PreferenceScreen prefScreen=getPreferenceScreen();
     if (prefScreen != null) {
       prefScreen.removeAll();
     }
     addPreferencesFromResource(R.xml.security_settings_picker);
-    disableUnusablePreferences(quality);
+    disableUnusablePreferences(quality,hideDisabledPrefs);
     updatePreferenceSummaryIfNeeded();
   }
  else {

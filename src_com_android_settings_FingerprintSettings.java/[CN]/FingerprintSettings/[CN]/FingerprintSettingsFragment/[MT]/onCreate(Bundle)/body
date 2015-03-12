@@ -1,0 +1,14 @@
+{
+  super.onCreate(savedInstanceState);
+  mFingerprintManager=(FingerprintManager)getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
+  mFingerprintManager.startListening(new FingerprintManagerReceiver(){
+    @Override public void onRemoved(    int fingerprintId){
+      Log.v(TAG,"Fingerprint template " + fingerprintId + " removed");
+      createPreferenceHierarchy();
+    }
+    @Override public void onProcessed(    int fingerprintId){
+      Log.v(TAG,"Fingerprint " + fingerprintId + " detected");
+    }
+  }
+);
+}

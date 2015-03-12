@@ -1,5 +1,8 @@
 {
-  AnimationDrawable drawable=(AnimationDrawable)mFingerprintAnimator.getDrawable();
-  drawable.stop();
-  drawable.setLevel(0);
+  final Drawable d=mFingerprintAnimator.getDrawable();
+  if (d instanceof AnimationDrawable) {
+    final AnimationDrawable drawable=(AnimationDrawable)d;
+    drawable.stop();
+    drawable.setLevel(0);
+  }
 }

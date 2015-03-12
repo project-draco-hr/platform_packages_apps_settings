@@ -4,8 +4,11 @@ case R.id.fingerprint_enroll_button_add:
     updateStage(Stage.EnrollingStart);
   break;
 case R.id.fingerprint_enroll_button_next:
-if (mStage == Stage.EnrollingOnboarding) {
+if (mStage == Stage.EnrollingOnboard) {
   launchChooseLock();
+}
+ else if (mStage == Stage.EnrollingFindSensor) {
+  updateStage(Stage.EnrollingStart);
 }
  else if (mStage == Stage.EnrollingFinish) {
   getActivity().finish();

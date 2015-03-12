@@ -1,5 +1,6 @@
 {
   Intent intent=new Intent();
   intent.setClassName("com.android.settings",ChooseLockGeneric.class.getName());
+  intent.putExtra(ChooseLockGeneric.ChooseLockGenericFragment.MINIMUM_QUALITY_KEY,DevicePolicyManager.PASSWORD_QUALITY_SOMETHING);
   startActivityForResult(intent,CHOOSE_LOCK_GENERIC_REQUEST);
 }

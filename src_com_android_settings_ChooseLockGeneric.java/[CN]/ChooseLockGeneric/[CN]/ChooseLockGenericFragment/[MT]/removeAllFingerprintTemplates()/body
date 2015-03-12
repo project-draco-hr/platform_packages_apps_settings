@@ -1,6 +1,6 @@
 {
-  mFingerprintManager.startListening(mReceiver);
-  if (mFingerprintManager != null) {
+  if (mFingerprintManager != null && mFingerprintManager.isHardwareDetected()) {
+    mFingerprintManager.startListening(mReceiver);
     mFingerprintManager.remove(0);
   }
 }

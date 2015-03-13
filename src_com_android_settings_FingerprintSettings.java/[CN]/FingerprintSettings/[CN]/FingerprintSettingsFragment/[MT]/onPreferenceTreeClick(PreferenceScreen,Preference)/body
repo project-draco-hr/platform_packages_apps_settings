@@ -5,8 +5,9 @@
     intent.setClassName("com.android.settings",FingerprintEnroll.class.getName());
     startActivityForResult(intent,ADD_FINGERPRINT_REQUEST);
   }
- else   if (KEY_FINGERPRINT_ITEM.equals(key)) {
-    final FingerprintItem item=mFingerprintMap.get(pref);
+ else   if (pref instanceof FingerprintPreference) {
+    FingerprintPreference fpref=(FingerprintPreference)pref;
+    final FingerprintItem item=fpref.getFingerprintItem();
     showRenameDeleteDialog(item.name,pref,item.id);
     return super.onPreferenceTreeClick(preferenceScreen,pref);
   }

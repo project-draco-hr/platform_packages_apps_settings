@@ -5,9 +5,9 @@
   }
   addPreferencesFromResource(R.xml.security_settings_fingerprint);
   root=getPreferenceScreen();
-  PreferenceGroup manageCategory=(PreferenceGroup)root.findPreference(KEY_MANAGE_CATEGORY);
-  if (manageCategory != null) {
-    addFingerprintItemPreferences(manageCategory);
+  mManageCategory=(PreferenceGroup)root.findPreference(KEY_MANAGE_CATEGORY);
+  if (mManageCategory != null) {
+    addFingerprintItemPreferences(mManageCategory);
   }
   PreferenceGroup usageCategory=(PreferenceGroup)root.findPreference(KEY_USAGE_CATEGORY);
   if (usageCategory != null) {

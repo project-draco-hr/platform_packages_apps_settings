@@ -1,0 +1,11 @@
+{
+  String prefName=genKey(fpId);
+  Preference pref=mManageCategory.findPreference(prefName);
+  if (pref instanceof FingerprintPreference) {
+    final FingerprintPreference fpref=(FingerprintPreference)pref;
+    fpref.highlight();
+  }
+ else {
+    Log.w(TAG,"Wrong pref " + (pref != null ? pref.getKey() : "null"));
+  }
+}

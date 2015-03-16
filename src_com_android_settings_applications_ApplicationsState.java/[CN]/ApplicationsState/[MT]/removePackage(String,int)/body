@@ -1,13 +1,13 @@
 {
 synchronized (mEntriesMap) {
     if (DEBUG_LOCKING)     Log.v(TAG,"removePackage acquired lock");
-    int idx=indexOfApplicationInfoLocked(pkgName);
+    int idx=indexOfApplicationInfoLocked(pkgName,userId);
     if (DEBUG)     Log.i(TAG,"removePackage: " + pkgName + " @ "+ idx);
     if (idx >= 0) {
-      AppEntry entry=mEntriesMap.get(pkgName);
+      AppEntry entry=mEntriesMap.get(userId).get(pkgName);
       if (DEBUG)       Log.i(TAG,"removePackage: " + entry);
       if (entry != null) {
-        mEntriesMap.remove(pkgName);
+        mEntriesMap.get(userId).remove(pkgName);
         mAppEntries.remove(entry);
       }
       ApplicationInfo info=mApplications.get(idx);

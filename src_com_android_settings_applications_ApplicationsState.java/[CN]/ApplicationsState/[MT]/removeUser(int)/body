@@ -1,0 +1,15 @@
+{
+synchronized (mEntriesMap) {
+    HashMap<String,AppEntry> userMap=mEntriesMap.get(userId);
+    if (userMap != null) {
+      for (      AppEntry appEntry : userMap.values()) {
+        mAppEntries.remove(appEntry);
+        mApplications.remove(appEntry.info);
+      }
+      mEntriesMap.remove(userId);
+      if (!mMainHandler.hasMessages(MainHandler.MSG_PACKAGE_LIST_CHANGED)) {
+        mMainHandler.sendEmptyMessage(MainHandler.MSG_PACKAGE_LIST_CHANGED);
+      }
+    }
+  }
+}

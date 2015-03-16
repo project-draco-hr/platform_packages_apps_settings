@@ -3,17 +3,23 @@
   if (Intent.ACTION_PACKAGE_ADDED.equals(actionStr)) {
     Uri data=intent.getData();
     String pkgName=data.getEncodedSchemeSpecificPart();
-    addPackage(pkgName);
+    for (int i=0; i < mEntriesMap.size(); i++) {
+      addPackage(pkgName,mEntriesMap.keyAt(i));
+    }
   }
  else   if (Intent.ACTION_PACKAGE_REMOVED.equals(actionStr)) {
     Uri data=intent.getData();
     String pkgName=data.getEncodedSchemeSpecificPart();
-    removePackage(pkgName);
+    for (int i=0; i < mEntriesMap.size(); i++) {
+      removePackage(pkgName,mEntriesMap.keyAt(i));
+    }
   }
  else   if (Intent.ACTION_PACKAGE_CHANGED.equals(actionStr)) {
     Uri data=intent.getData();
     String pkgName=data.getEncodedSchemeSpecificPart();
-    invalidatePackage(pkgName);
+    for (int i=0; i < mEntriesMap.size(); i++) {
+      invalidatePackage(pkgName,mEntriesMap.keyAt(i));
+    }
   }
  else   if (Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE.equals(actionStr) || Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE.equals(actionStr)) {
     String pkgList[]=intent.getStringArrayExtra(Intent.EXTRA_CHANGED_PACKAGE_LIST);
@@ -23,8 +29,16 @@
     boolean avail=Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE.equals(actionStr);
     if (avail) {
       for (      String pkgName : pkgList) {
-        invalidatePackage(pkgName);
+        for (int i=0; i < mEntriesMap.size(); i++) {
+          invalidatePackage(pkgName,mEntriesMap.keyAt(i));
+        }
       }
     }
+  }
+ else   if (Intent.ACTION_USER_ADDED.equals(actionStr)) {
+    addUser(intent.getIntExtra(Intent.EXTRA_USER_HANDLE,UserHandle.USER_NULL));
+  }
+ else   if (Intent.ACTION_USER_REMOVED.equals(actionStr)) {
+    removeUser(intent.getIntExtra(Intent.EXTRA_USER_HANDLE,UserHandle.USER_NULL));
   }
 }

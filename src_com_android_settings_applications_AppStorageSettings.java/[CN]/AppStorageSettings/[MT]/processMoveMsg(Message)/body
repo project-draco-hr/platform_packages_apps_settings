@@ -4,7 +4,7 @@
   mMoveInProgress=false;
   if (result == PackageManager.MOVE_SUCCEEDED) {
     Log.i(TAG,"Moved resources for " + packageName);
-    mState.requestSize(mAppEntry.info.packageName);
+    mState.requestSize(mPackageName,mUserId);
   }
  else {
     showDialogInner(DLG_MOVE_FAILED,result);

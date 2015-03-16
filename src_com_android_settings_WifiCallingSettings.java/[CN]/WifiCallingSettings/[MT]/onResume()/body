@@ -1,0 +1,20 @@
+{
+  super.onResume();
+  final Context context=getActivity();
+  if (ImsManager.isWfcEnabledByPlatform(context)) {
+    TelephonyManager tm=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+    tm.listen(mPhoneStateListener,PhoneStateListener.LISTEN_CALL_STATE);
+    mSwitchBar.addOnSwitchChangeListener(this);
+  }
+  boolean wfcEnabled=ImsManager.isWfcEnabledByUser(context) && ImsManager.isNonTtyOrTtyOnVolteEnabled(context);
+  mSwitch.setChecked(wfcEnabled);
+  int wfcMode=ImsManager.getWfcMode(context);
+  mButtonWfcMode.setValue(Integer.toString(wfcMode));
+  mButtonWfcMode.setSummary(getWfcModeSummary(context,wfcMode));
+  mButtonWfcRoam.setChecked(wfcEnabled && (wfcMode != ImsConfig.WfcModeFeatureValueConstants.WIFI_ONLY) && ImsManager.isWfcRoamingEnabledByUser(context));
+  context.registerReceiver(mIntentReceiver,mIntentFilter);
+  Intent intent=getActivity().getIntent();
+  if (intent.getBooleanExtra(ImsPhone.EXTRA_KEY_ALERT_SHOW,false)) {
+    showAlert(intent);
+  }
+}

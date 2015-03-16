@@ -27,6 +27,12 @@
     mSmsApplicationPreference.setOnPreferenceChangeListener(this);
     initSmsApplicationSetting();
   }
+  if (ImsManager.isWfcEnabledByPlatform(activity)) {
+    mButtonWfc=(PreferenceScreen)findPreference(KEY_WFC_SETTINGS);
+  }
+ else {
+    removePreference(KEY_WFC_SETTINGS);
+  }
   getPreferenceScreen().removePreference(nsd);
   String toggleable=Settings.Global.getString(activity.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   final boolean isWimaxEnabled=!isSecondaryUser && this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);

@@ -1,13 +1,3 @@
 {
-  if (!parent.isAdded())   return;
-  final Bundle args=new Bundle();
-  args.putParcelable(EXTRA_APP,app);
-  final AppDetailsFragment fragment=new AppDetailsFragment();
-  fragment.setArguments(args);
-  fragment.setTargetFragment(parent,0);
-  final FragmentTransaction ft=parent.getFragmentManager().beginTransaction();
-  ft.add(fragment,TAG_APP_DETAILS);
-  ft.addToBackStack(TAG_APP_DETAILS);
-  ft.setBreadCrumbTitle(parent.getResources().getString(R.string.data_usage_app_summary_title));
-  ft.commitAllowingStateLoss();
+  show(parent,app,label,true);
 }

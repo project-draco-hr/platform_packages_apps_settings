@@ -1,0 +1,6 @@
+{
+  super.onResume();
+  AppItem app=new AppItem(mAppEntry.info.uid);
+  app.addUid(mAppEntry.info.uid);
+  getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(NetworkTemplate.buildTemplateMobileWildcard(),app),mDataCallbacks);
+}

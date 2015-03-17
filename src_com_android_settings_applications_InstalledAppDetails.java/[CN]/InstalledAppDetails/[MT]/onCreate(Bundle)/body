@@ -2,4 +2,11 @@
   super.onCreate(icicle);
   setHasOptionsMenu(true);
   addPreferencesFromResource(R.xml.installed_app_details);
+  INetworkStatsService statsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+  try {
+    mStatsSession=statsService.openSession();
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException(e);
+  }
 }

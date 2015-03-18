@@ -15,20 +15,19 @@ synchronized (mRebuildSync) {
   if (filter != null) {
     filter.init();
   }
-  List<ApplicationInfo> apps;
+  List<AppEntry> apps;
 synchronized (mEntriesMap) {
-    apps=new ArrayList<ApplicationInfo>(mApplications);
+    apps=new ArrayList<>(mAppEntries);
   }
   ArrayList<AppEntry> filteredApps=new ArrayList<AppEntry>();
   if (DEBUG)   Log.i(TAG,"Rebuilding...");
   for (int i=0; i < apps.size(); i++) {
-    ApplicationInfo info=apps.get(i);
-    if (filter == null || filter.filterApp(info)) {
+    AppEntry entry=apps.get(i);
+    if (filter == null || filter.filterApp(entry)) {
 synchronized (mEntriesMap) {
         if (DEBUG_LOCKING)         Log.v(TAG,"rebuild acquired lock");
-        AppEntry entry=getEntryLocked(info);
         entry.ensureLabel(mContext);
-        if (DEBUG)         Log.i(TAG,"Using " + info.packageName + ": "+ entry);
+        if (DEBUG)         Log.i(TAG,"Using " + entry.info.packageName + ": "+ entry);
         filteredApps.add(entry);
         if (DEBUG_LOCKING)         Log.v(TAG,"rebuild releasing lock");
       }

@@ -44,5 +44,12 @@ mActiveSessions.get(i).mCallbacks.onRunningStateChanged(msg.arg1 != 0);
 }
 }
 break;
+case MSG_LAUNCHER_INFO_CHANGED:
+{
+for (int i=0; i < mActiveSessions.size(); i++) {
+mActiveSessions.get(i).mCallbacks.onLauncherInfoChanged();
+}
+}
+break;
 }
 }

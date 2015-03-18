@@ -1,0 +1,18 @@
+{
+  Activity activity=getActivity();
+  View content=activity.findViewById(R.id.main_content);
+  ViewGroup contentParent=(ViewGroup)content.getParent();
+  mSpinnerHeader=(ViewGroup)activity.getLayoutInflater().inflate(R.layout.apps_filter_spinner,contentParent,false);
+  mFilterSpinner=(Spinner)mSpinnerHeader.findViewById(R.id.filter_spinner);
+  mFilterAdapter=new FilterSpinnerAdapter(this);
+  mFilterSpinner.setAdapter(mFilterAdapter);
+  mFilterSpinner.setOnItemSelectedListener(this);
+  contentParent.addView(mSpinnerHeader,0);
+  mFilterAdapter.enableFilter(getDefaultFilter());
+  if (mListType != LIST_TYPE_MAIN) {
+    if (UserManager.get(getActivity()).getUserProfiles().size() > 1) {
+      mFilterAdapter.enableFilter(FILTER_APPS_PERSONAL);
+      mFilterAdapter.enableFilter(FILTER_APPS_WORK);
+    }
+  }
+}

@@ -1,33 +1,28 @@
 {
   mInflater=inflater;
-  View rootView=mInflater.inflate(R.layout.manage_applications_content,container,false);
-  mContentContainer=container;
-  mRootView=rootView;
-  mViewPager=(ViewPager)rootView.findViewById(R.id.pager);
-  MyPagerAdapter adapter=new MyPagerAdapter();
-  mViewPager.setAdapter(adapter);
-  mViewPager.setOnPageChangeListener(adapter);
-  PagerTabStrip tabs=(PagerTabStrip)rootView.findViewById(R.id.tabs);
-  final TypedArray ta=tabs.getContext().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
-  final int colorAccent=ta.getColor(0,0);
-  ta.recycle();
-  tabs.setTabIndicatorColorResource(colorAccent);
-  if (container instanceof PreferenceFrameLayout) {
-    ((PreferenceFrameLayout.LayoutParams)rootView.getLayoutParams()).removeBorders=true;
-  }
-  if (savedInstanceState != null && savedInstanceState.getBoolean(EXTRA_RESET_DIALOG)) {
-    buildResetDialog();
-  }
-  if (savedInstanceState == null) {
-    int extraCurrentListType=getActivity().getIntent().getIntExtra(EXTRA_LIST_TYPE,LIST_TYPE_MISSING);
-    int currentListType=(extraCurrentListType != LIST_TYPE_MISSING) ? extraCurrentListType : mDefaultListType;
-    for (int i=0; i < mNumTabs; i++) {
-      TabInfo tab=mTabs.get(i);
-      if (tab.mListType == currentListType) {
-        mViewPager.setCurrentItem(i);
-        break;
-      }
+  createHeader();
+  mRootView=inflater.inflate(R.layout.manage_applications_apps,null);
+  mLoadingContainer=mRootView.findViewById(R.id.loading_container);
+  mLoadingContainer.setVisibility(View.VISIBLE);
+  mListContainer=mRootView.findViewById(R.id.list_container);
+  if (mListContainer != null) {
+    View emptyView=mListContainer.findViewById(com.android.internal.R.id.empty);
+    ListView lv=(ListView)mListContainer.findViewById(android.R.id.list);
+    if (emptyView != null) {
+      lv.setEmptyView(emptyView);
     }
+    lv.setOnItemClickListener(this);
+    lv.setSaveEnabled(true);
+    lv.setItemsCanFocus(true);
+    lv.setTextFilterEnabled(true);
+    mListView=lv;
+    mApplications=new ApplicationsAdapter(mApplicationsState,this,mFilter);
+    mListView.setAdapter(mApplications);
+    mListView.setRecyclerListener(mApplications);
+    Utils.prepareCustomPreferencesList(container,mRootView,mListView,false);
   }
-  return rootView;
+  if (container instanceof PreferenceFrameLayout) {
+    ((PreferenceFrameLayout.LayoutParams)mRootView.getLayoutParams()).removeBorders=true;
+  }
+  return mRootView;
 }

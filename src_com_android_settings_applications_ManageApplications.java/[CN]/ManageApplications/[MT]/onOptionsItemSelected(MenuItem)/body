@@ -1,29 +1,19 @@
 {
   int menuId=item.getItemId();
-  if ((menuId == SORT_ORDER_ALPHA) || (menuId == SORT_ORDER_SIZE)) {
+switch (item.getItemId()) {
+case SORT_ORDER_ALPHA:
+case SORT_ORDER_SIZE:
     mSortOrder=menuId;
-    if (mCurTab != null && mCurTab.mApplications != null) {
-      mCurTab.mApplications.rebuild(mSortOrder);
-    }
+  if (mApplications != null) {
+    mApplications.rebuild(mSortOrder);
   }
- else   if (menuId == SHOW_RUNNING_SERVICES) {
-    mShowBackground=false;
-    if (mCurTab != null && mCurTab.mRunningProcessesView != null) {
-      mCurTab.mRunningProcessesView.mAdapter.setShowBackground(false);
-    }
-  }
- else   if (menuId == SHOW_BACKGROUND_PROCESSES) {
-    mShowBackground=true;
-    if (mCurTab != null && mCurTab.mRunningProcessesView != null) {
-      mCurTab.mRunningProcessesView.mAdapter.setShowBackground(true);
-    }
-  }
- else   if (menuId == RESET_APP_PREFERENCES) {
-    buildResetDialog();
-  }
- else {
-    return false;
-  }
-  updateOptionsMenu();
-  return true;
+break;
+case R.id.advanced:
+((SettingsActivity)getActivity()).startPreferencePanel(AdvancedAppSettings.class.getName(),null,R.string.advanced_apps,null,this,ADVANCED_SETTINGS);
+return true;
+default :
+return false;
+}
+updateOptionsMenu();
+return true;
 }

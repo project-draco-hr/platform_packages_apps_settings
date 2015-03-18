@@ -1,5 +1,4 @@
 {
-  final ArrayList<String> nonVisibleKeys=new ArrayList<String>();
   final IBackupManager backupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
   boolean isServiceActive=false;
   try {
@@ -8,19 +7,16 @@
  catch (  RemoteException e) {
     Log.w(TAG,"Failed querying backup manager service activity status. " + "Assuming it is inactive.");
   }
-  if (isServiceActive) {
+  boolean vendorSpecific=context.getPackageManager().resolveContentProvider(GSETTINGS_PROVIDER,0) == null;
+  if (vendorSpecific || isServiceActive) {
     nonVisibleKeys.add(BACKUP_INACTIVE);
   }
- else {
+  if (vendorSpecific || !isServiceActive) {
+    nonVisibleKeys.add(BACKUP_DATA);
     nonVisibleKeys.add(AUTO_RESTORE);
     nonVisibleKeys.add(CONFIGURE_ACCOUNT);
-    nonVisibleKeys.add(BACKUP_DATA);
   }
   if (UserManager.get(context).hasUserRestriction(UserManager.DISALLOW_FACTORY_RESET)) {
-    nonVisibleKeys.add(PERSONAL_DATA_CATEGORY);
+    nonVisibleKeys.add(FACTORY_RESET);
   }
-  if (context.getPackageManager().resolveContentProvider(GSETTINGS_PROVIDER,0) == null) {
-    nonVisibleKeys.add(BACKUP_CATEGORY);
-  }
-  return nonVisibleKeys;
 }

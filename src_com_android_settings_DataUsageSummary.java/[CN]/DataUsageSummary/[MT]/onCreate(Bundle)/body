@@ -33,5 +33,10 @@
     mShowWifi=true;
     mShowEthernet=true;
   }
+  mUidDetailProvider=new UidDetailProvider(context);
+  Bundle arguments=getArguments();
+  if (arguments != null) {
+    mShowAppImmediatePkg=arguments.getString(EXTRA_SHOW_APP_IMMEDIATE_PKG);
+  }
   setHasOptionsMenu(true);
 }

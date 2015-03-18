@@ -1,0 +1,8 @@
+{
+  if (mChartData != null) {
+    long totalBytes=mChartData.detail.getTotalBytes();
+    Context context=getActivity();
+    return getString(R.string.data_summary_format,Formatter.formatFileSize(context,totalBytes),DateUtils.formatDateTime(context,mChartData.detail.getStart(),DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH));
+  }
+  return getString(R.string.computing_size);
+}

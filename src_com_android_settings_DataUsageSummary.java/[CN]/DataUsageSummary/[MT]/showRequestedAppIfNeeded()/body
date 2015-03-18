@@ -1,0 +1,18 @@
+{
+  if (mShowAppImmediatePkg == null) {
+    return;
+  }
+  try {
+    int uid=getActivity().getPackageManager().getPackageUid(mShowAppImmediatePkg,UserHandle.myUserId());
+    AppItem app=new AppItem(uid);
+    app.addUid(uid);
+    final UidDetail detail=mUidDetailProvider.getUidDetail(app.key,true);
+    AppHeader.createAppHeader(getActivity(),detail.icon,detail.label,null);
+    AppDetailsFragment.show(DataUsageSummary.this,app,detail.label,false);
+  }
+ catch (  NameNotFoundException e) {
+    Log.w(TAG,"Could not find " + mShowAppImmediatePkg,e);
+    Toast.makeText(getActivity(),getString(R.string.unknown_app),Toast.LENGTH_LONG).show();
+    getActivity().finish();
+  }
+}

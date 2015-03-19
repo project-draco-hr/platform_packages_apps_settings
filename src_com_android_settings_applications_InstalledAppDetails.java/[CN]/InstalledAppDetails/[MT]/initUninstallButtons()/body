@@ -1,31 +1,14 @@
 {
-  mUpdatedSysApp=(mAppEntry.info.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
   final boolean isBundled=(mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
   boolean enabled=true;
-  if (mUpdatedSysApp) {
-    mUninstallButton.setText(R.string.app_factory_reset);
-    boolean showSpecialDisable=false;
-    if (isBundled) {
-      showSpecialDisable=handleDisableable(mSpecialDisableButton);
-      mSpecialDisableButton.setOnClickListener(this);
-    }
-    if (mAppControlRestricted) {
-      showSpecialDisable=false;
-    }
-    mMoreControlButtons.setVisibility(showSpecialDisable ? View.VISIBLE : View.GONE);
+  if (isBundled) {
+    enabled=handleDisableable(mUninstallButton);
   }
  else {
-    mMoreControlButtons.setVisibility(View.GONE);
-    if (isBundled) {
-      enabled=handleDisableable(mUninstallButton);
-    }
- else     if ((mPackageInfo.applicationInfo.flags & ApplicationInfo.FLAG_INSTALLED) == 0 && mUserManager.getUsers().size() >= 2) {
-      mUninstallButton.setText(R.string.uninstall_text);
+    if ((mPackageInfo.applicationInfo.flags & ApplicationInfo.FLAG_INSTALLED) == 0 && mUserManager.getUsers().size() >= 2) {
       enabled=false;
     }
- else {
-      mUninstallButton.setText(R.string.uninstall_text);
-    }
+    mUninstallButton.setText(R.string.uninstall_text);
   }
   if (mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
     enabled=false;

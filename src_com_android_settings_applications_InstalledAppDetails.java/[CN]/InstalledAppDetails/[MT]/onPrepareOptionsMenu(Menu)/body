@@ -19,4 +19,6 @@
     showIt=false;
   }
   menu.findItem(UNINSTALL_ALL_USERS_MENU).setVisible(showIt);
+  mUpdatedSysApp=(mAppEntry.info.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
+  menu.findItem(UNINSTALL_UPDATES).setVisible(mUpdatedSysApp && !mAppControlRestricted);
 }

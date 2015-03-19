@@ -1,28 +1,25 @@
 {
   String packageName=mAppEntry.info.packageName;
   if (v == mUninstallButton) {
-    if (mUpdatedSysApp) {
-      showDialogInner(DLG_FACTORY_RESET,0);
-    }
+    if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+      if (mAppEntry.info.enabled) {
+        if (mUpdatedSysApp) {
+          showDialogInner(DLG_SPECIAL_DISABLE,0);
+        }
  else {
-      if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-        if (mAppEntry.info.enabled) {
           showDialogInner(DLG_DISABLE,0);
         }
- else {
-          new DisableChanger(this,mAppEntry.info,PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).execute((Object)null);
-        }
-      }
- else       if ((mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
-        uninstallPkg(packageName,true,false);
       }
  else {
-        uninstallPkg(packageName,false,false);
+        new DisableChanger(this,mAppEntry.info,PackageManager.COMPONENT_ENABLED_STATE_DEFAULT).execute((Object)null);
       }
     }
-  }
- else   if (v == mSpecialDisableButton) {
-    showDialogInner(DLG_SPECIAL_DISABLE,0);
+ else     if ((mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
+      uninstallPkg(packageName,true,false);
+    }
+ else {
+      uninstallPkg(packageName,false,false);
+    }
   }
  else   if (v == mForceStopButton) {
     showDialogInner(DLG_FORCE_STOP,0);

@@ -1,0 +1,10 @@
+{
+  if (mService == null)   return false;
+  List<BluetoothDevice> sinks=mService.getConnectedDevices();
+  if (sinks != null) {
+    for (    BluetoothDevice sink : sinks) {
+      mService.disconnect(sink);
+    }
+  }
+  return mService.connect(device);
+}

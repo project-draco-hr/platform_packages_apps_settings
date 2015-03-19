@@ -1,0 +1,4 @@
+{
+  if (mService == null)   return new ArrayList<BluetoothDevice>(0);
+  return mService.getDevicesMatchingConnectionStates(new int[]{BluetoothProfile.STATE_CONNECTED,BluetoothProfile.STATE_CONNECTING,BluetoothProfile.STATE_DISCONNECTING});
+}

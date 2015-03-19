@@ -1,6 +1,6 @@
 {
   boolean processed=false;
-  if (mRequestType != BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS && mRequestType != BluetoothDevice.REQUEST_TYPE_MESSAGE_ACCESS) {
+  if (mRequestType != BluetoothDevice.REQUEST_TYPE_PHONEBOOK_ACCESS && mRequestType != BluetoothDevice.REQUEST_TYPE_MESSAGE_ACCESS && mRequestType != BluetoothDevice.REQUEST_TYPE_SIM_ACCESS) {
     if (DEBUG)     Log.d(TAG,"checkUserChoice(): Unknown RequestType " + mRequestType);
     return processed;
   }
@@ -41,6 +41,22 @@
     }
  else {
       Log.e(TAG,"Bad messagePermission: " + messagePermission);
+    }
+  }
+ else   if (mRequestType == BluetoothDevice.REQUEST_TYPE_SIM_ACCESS) {
+    int simPermission=cachedDevice.getSimPermissionChoice();
+    if (simPermission == CachedBluetoothDevice.ACCESS_UNKNOWN) {
+    }
+ else     if (simPermission == CachedBluetoothDevice.ACCESS_ALLOWED) {
+      sendReplyIntentToReceiver(true);
+      processed=true;
+    }
+ else     if (simPermission == CachedBluetoothDevice.ACCESS_REJECTED) {
+      sendReplyIntentToReceiver(false);
+      processed=true;
+    }
+ else {
+      Log.e(TAG,"Bad simPermission: " + simPermission);
     }
   }
   if (DEBUG)   Log.d(TAG,"checkUserChoice(): returning " + processed);

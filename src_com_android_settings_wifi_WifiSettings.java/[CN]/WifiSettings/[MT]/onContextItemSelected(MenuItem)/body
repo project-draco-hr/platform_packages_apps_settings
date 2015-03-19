@@ -8,7 +8,7 @@ case MENU_ID_CONNECT:
       if (mSelectedAccessPoint.isSaved()) {
         connect(mSelectedAccessPoint.getConfig());
       }
- else       if (mSelectedAccessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
+ else       if (mSelectedAccessPoint.getSecurity() == AccessPoint.SECURITY_NONE) {
         mSelectedAccessPoint.generateOpenNetworkConfig();
         connect(mSelectedAccessPoint.getConfig());
       }

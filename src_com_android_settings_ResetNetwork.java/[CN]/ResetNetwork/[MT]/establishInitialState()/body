@@ -1,7 +1,7 @@
 {
   mSubscriptionSpinner=(Spinner)mContentView.findViewById(R.id.reset_network_subscription);
   mSubscriptions=SubscriptionManager.from(getActivity()).getActiveSubscriptionInfoList();
-  if (mSubscriptions.size() > 0) {
+  if (mSubscriptions != null && mSubscriptions.size() > 0) {
     int defaultSubscription=SubscriptionManager.getDefaultDataSubId();
     if (!SubscriptionManager.isUsableSubIdValue(defaultSubscription)) {
       defaultSubscription=SubscriptionManager.getDefaultVoiceSubId();

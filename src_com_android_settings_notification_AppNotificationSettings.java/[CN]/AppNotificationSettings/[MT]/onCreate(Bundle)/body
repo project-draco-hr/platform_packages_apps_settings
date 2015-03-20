@@ -23,16 +23,12 @@
     toastAndFinish();
     return;
   }
+  mIsSystemPackage=Utils.isSystemPackage(pm,info);
   addPreferencesFromResource(R.xml.app_notification_settings);
   mBlock=(SwitchPreference)findPreference(KEY_BLOCK);
   mPriority=(SwitchPreference)findPreference(KEY_PRIORITY);
+  mPeekable=(SwitchPreference)findPreference(KEY_PEEKABLE);
   mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
-  final boolean secure=new LockPatternUtils(getActivity()).isSecure();
-  final boolean enabled=getLockscreenNotificationsEnabled();
-  final boolean allowPrivate=getLockscreenAllowPrivateNotifications();
-  if (!secure || !enabled || !allowPrivate) {
-    getPreferenceScreen().removePreference(mSensitive);
-  }
   mAppRow=NotificationAppList.loadAppRow(pm,info.applicationInfo,mBackend);
   if (intent.hasExtra(EXTRA_HAS_SETTINGS_INTENT)) {
     if (intent.getBooleanExtra(EXTRA_HAS_SETTINGS_INTENT,false)) {
@@ -45,14 +41,18 @@
     NotificationAppList.collectConfigActivities(getPackageManager(),rows);
   }
   mBlock.setChecked(mAppRow.banned);
+  updateDependents(mAppRow.banned);
   mPriority.setChecked(mAppRow.priority);
-  if (mSensitive != null) {
-    mSensitive.setChecked(mAppRow.sensitive);
-  }
+  mPeekable.setChecked(mAppRow.peekable);
+  mSensitive.setChecked(mAppRow.sensitive);
   mBlock.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
-      final boolean block=(Boolean)newValue;
-      return mBackend.setNotificationsBanned(pkg,uid,block);
+      final boolean banned=(Boolean)newValue;
+      final boolean success=mBackend.setNotificationsBanned(pkg,uid,banned);
+      if (success) {
+        updateDependents(banned);
+      }
+      return success;
     }
   }
 );
@@ -63,17 +63,18 @@
     }
   }
 );
-  if (mSensitive != null) {
-    mSensitive.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
-      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
-        final boolean sensitive=(Boolean)newValue;
-        return mBackend.setSensitive(pkg,uid,sensitive);
-      }
+  mPeekable.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final boolean peekable=(Boolean)newValue;
+      return mBackend.setPeekable(pkg,uid,peekable);
     }
+  }
 );
+  mSensitive.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final boolean sensitive=(Boolean)newValue;
+      return mBackend.setSensitive(pkg,uid,sensitive);
+    }
   }
-  if (Utils.isSystemPackage(pm,info)) {
-    getPreferenceScreen().removePreference(mBlock);
-    mPriority.setDependency(null);
-  }
+);
 }

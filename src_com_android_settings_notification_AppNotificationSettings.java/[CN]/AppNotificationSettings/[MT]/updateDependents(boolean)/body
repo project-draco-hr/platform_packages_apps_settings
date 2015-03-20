@@ -1,0 +1,9 @@
+{
+  final boolean lockscreenSecure=new LockPatternUtils(getActivity()).isSecure();
+  final boolean lockscreenNotificationsEnabled=getLockscreenNotificationsEnabled();
+  final boolean allowPrivate=getLockscreenAllowPrivateNotifications();
+  setVisible(mBlock,!mIsSystemPackage);
+  setVisible(mPriority,mIsSystemPackage || !banned);
+  setVisible(mPeekable,mIsSystemPackage || !banned);
+  setVisible(mSensitive,mIsSystemPackage || !banned && lockscreenSecure && lockscreenNotificationsEnabled&& allowPrivate);
+}

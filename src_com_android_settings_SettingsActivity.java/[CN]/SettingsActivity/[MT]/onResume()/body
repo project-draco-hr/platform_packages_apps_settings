@@ -1,5 +1,8 @@
 {
   super.onResume();
+  if (mIsShowingDashboard) {
+    MetricsLogger.visible(this,MetricsLogger.MAIN_SETTINGS);
+  }
   final int newHomeActivityCount=getHomeActivitiesCount();
   if (newHomeActivityCount != mHomeActivitiesCount) {
     mHomeActivitiesCount=newHomeActivityCount;

@@ -1,0 +1,16 @@
+{
+  Drawable highlight=getHighlightDrawable();
+  final View view=mView;
+  view.setBackground(highlight);
+  final int centerX=view.getWidth() / 2;
+  final int centerY=view.getHeight() / 2;
+  highlight.setHotspot(centerX,centerY);
+  view.setPressed(true);
+  view.postDelayed(new Runnable(){
+    @Override public void run(){
+      view.setPressed(false);
+      view.setBackground(null);
+    }
+  }
+,RESET_HIGHLIGHT_DELAY_MS);
+}

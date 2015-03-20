@@ -1,0 +1,12 @@
+{
+  String name=genKey(fingerprintId);
+  Preference prefToRemove=mManageCategory.findPreference(name);
+  if (prefToRemove != null) {
+    if (!mManageCategory.removePreference(prefToRemove)) {
+      Log.w(TAG,"Failed to remove preference with key " + name);
+    }
+  }
+ else {
+    Log.w(TAG,"Can't find preference to remove: " + name);
+  }
+}

@@ -3,11 +3,12 @@
   mFingerprintManager=(FingerprintManager)getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
   mFingerprintManager.startListening(new FingerprintManagerReceiver(){
     @Override public void onRemoved(    int fingerprintId){
-      Log.v(TAG,"Fingerprint template " + fingerprintId + " removed");
-      createPreferenceHierarchy();
+      mHandler.obtainMessage(MSG_REFRESH_FINGERPRINT_TEMPLATES,fingerprintId,0).sendToTarget();
     }
     @Override public void onProcessed(    int fingerprintId){
-      Log.v(TAG,"Fingerprint " + fingerprintId + " detected");
+      if (fingerprintId != 0) {
+        mHandler.obtainMessage(MSG_HIGHLIGHT_FINGERPRINT_ITEM,fingerprintId,0).sendToTarget();
+      }
     }
   }
 );

@@ -11,7 +11,17 @@ synchronized (entry) {
     if (entry.icon != null) {
       holder.appIcon.setImageDrawable(entry.icon);
     }
-    holder.updateSizeText(mManageApplications.mInvalidSizeStr,mWhichSize);
+    if (mManageApplications.mListType == LIST_TYPE_NOTIFICATION) {
+      if (entry.extraInfo != null) {
+        holder.summary.setText(InstalledAppDetails.getNotificationSummary((AppRow)entry.extraInfo,mContext));
+      }
+ else {
+        holder.summary.setText("");
+      }
+    }
+ else {
+      holder.updateSizeText(mManageApplications.mInvalidSizeStr,mWhichSize);
+    }
     if ((entry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
       holder.disabled.setVisibility(View.VISIBLE);
       holder.disabled.setText(R.string.not_installed);

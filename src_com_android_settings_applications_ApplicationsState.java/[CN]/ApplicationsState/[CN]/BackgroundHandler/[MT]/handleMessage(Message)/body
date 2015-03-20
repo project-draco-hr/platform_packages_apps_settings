@@ -40,6 +40,9 @@ synchronized (mEntriesMap) {
     sendEmptyMessage(MSG_LOAD_ENTRIES);
   }
  else {
+    if (!mMainHandler.hasMessages(MainHandler.MSG_LOAD_ENTRIES_COMPLETE)) {
+      mMainHandler.sendEmptyMessage(MainHandler.MSG_LOAD_ENTRIES_COMPLETE);
+    }
     sendEmptyMessage(MSG_LOAD_LAUNCHER);
   }
 }

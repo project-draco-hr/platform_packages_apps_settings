@@ -3,17 +3,17 @@
   if (entry.sizeStr != null) {
 switch (whichSize) {
 case ManageApplications.SIZE_INTERNAL:
-      appSize.setText(entry.internalSizeStr);
+      summary.setText(entry.internalSizeStr);
     break;
 case ManageApplications.SIZE_EXTERNAL:
-  appSize.setText(entry.externalSizeStr);
+  summary.setText(entry.externalSizeStr);
 break;
 default :
-appSize.setText(entry.sizeStr);
+summary.setText(entry.sizeStr);
 break;
 }
 }
  else if (entry.size == ApplicationsState.SIZE_INVALID) {
-appSize.setText(invalidSizeStr);
+summary.setText(invalidSizeStr);
 }
 }

@@ -1,5 +1,10 @@
 {
   if (requestCode == INSTALLED_APP_DETAILS && mCurrentPkgName != null) {
-    mApplicationsState.requestSize(mCurrentPkgName,UserHandle.getUserId(mCurrentUid));
+    if (mListType == LIST_TYPE_NOTIFICATION) {
+      mApplications.mNotifBridge.forceUpdate(mCurrentPkgName,mCurrentUid);
+    }
+ else {
+      mApplicationsState.requestSize(mCurrentPkgName,UserHandle.getUserId(mCurrentUid));
+    }
   }
 }

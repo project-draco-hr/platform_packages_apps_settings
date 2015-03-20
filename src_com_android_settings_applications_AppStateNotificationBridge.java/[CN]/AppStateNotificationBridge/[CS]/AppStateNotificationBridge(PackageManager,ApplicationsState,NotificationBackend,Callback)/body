@@ -1,0 +1,10 @@
+{
+  mAppState=appState;
+  mPm=pm;
+  mAppSession=mAppState.newSession(this);
+  mNotifBackend=notifBackend;
+  mCallback=callback;
+  mHandler=new BackgroundHandler(mAppState.getBackgroundLooper());
+  mMainHandler=new MainHandler();
+  mHandler.sendEmptyMessage(BackgroundHandler.MSG_LOAD_ALL);
+}

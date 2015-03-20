@@ -1,0 +1,18 @@
+{
+  final AppRow row=new AppRow();
+  row.pkg=app.packageName;
+  row.uid=app.uid;
+  try {
+    row.label=app.loadLabel(pm);
+  }
+ catch (  Throwable t) {
+    Log.e(TAG,"Error loading application label for " + row.pkg,t);
+    row.label=row.pkg;
+  }
+  row.icon=app.loadIcon(pm);
+  row.banned=getNotificationsBanned(row.pkg,row.uid);
+  row.priority=getHighPriority(row.pkg,row.uid);
+  row.peekable=getPeekable(row.pkg,row.uid);
+  row.sensitive=getSensitive(row.pkg,row.uid);
+  return row;
+}

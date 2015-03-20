@@ -8,8 +8,12 @@
   if (className == null) {
     className=intent.getComponent().getClassName();
   }
-  if (Settings.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS.equals(action) || className.equals(AllApplicationsActivity.class.getName())) {
+  if (className.equals(AllApplicationsActivity.class.getName())) {
     mListType=LIST_TYPE_ALL;
+  }
+ else   if (className.equals(NotificationAppListActivity.class.getName())) {
+    mListType=LIST_TYPE_NOTIFICATION;
+    mNotifBackend=new NotificationBackend();
   }
  else {
     mListType=LIST_TYPE_MAIN;

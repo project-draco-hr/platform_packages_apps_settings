@@ -1,5 +1,10 @@
 {
-  Intent intent=new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-  intent.setData(Uri.fromParts("package",mCurrentPkgName,null));
-  getActivity().startActivityAsUser(intent,new UserHandle(UserHandle.getUserId(mCurrentUid)));
+  if (mListType == LIST_TYPE_NOTIFICATION) {
+    getActivity().startActivity(new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra(Settings.EXTRA_APP_PACKAGE,mCurrentPkgName).putExtra(Settings.EXTRA_APP_UID,mCurrentUid));
+  }
+ else {
+    Intent intent=new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+    intent.setData(Uri.fromParts("package",mCurrentPkgName,null));
+    getActivity().startActivityAsUser(intent,new UserHandle(UserHandle.getUserId(mCurrentUid)));
+  }
 }

@@ -29,7 +29,7 @@
   mPriority=(SwitchPreference)findPreference(KEY_PRIORITY);
   mPeekable=(SwitchPreference)findPreference(KEY_PEEKABLE);
   mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
-  mAppRow=NotificationAppList.loadAppRow(pm,info.applicationInfo,mBackend);
+  mAppRow=mBackend.loadAppRow(pm,info.applicationInfo);
   if (intent.hasExtra(EXTRA_HAS_SETTINGS_INTENT)) {
     if (intent.getBooleanExtra(EXTRA_HAS_SETTINGS_INTENT,false)) {
       mAppRow.settingsIntent=intent.getParcelableExtra(EXTRA_SETTINGS_INTENT);
@@ -38,7 +38,7 @@
  else {
     ArrayMap<String,AppRow> rows=new ArrayMap<String,AppRow>();
     rows.put(mAppRow.pkg,mAppRow);
-    NotificationAppList.collectConfigActivities(getPackageManager(),rows);
+    collectConfigActivities(getPackageManager(),rows);
   }
   mBlock.setChecked(mAppRow.banned);
   updateDependents(mAppRow.banned);

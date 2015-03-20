@@ -4,6 +4,9 @@
     mResumed=true;
     mSession.resume();
     mLastSortMode=sort;
+    if (mNotifBridge != null) {
+      mNotifBridge.resume();
+    }
     rebuild(true);
   }
  else {

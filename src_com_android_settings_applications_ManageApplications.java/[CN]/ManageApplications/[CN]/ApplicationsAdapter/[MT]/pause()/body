@@ -2,5 +2,8 @@
   if (mResumed) {
     mResumed=false;
     mSession.pause();
+    if (mNotifBridge != null) {
+      mNotifBridge.pause();
+    }
   }
 }

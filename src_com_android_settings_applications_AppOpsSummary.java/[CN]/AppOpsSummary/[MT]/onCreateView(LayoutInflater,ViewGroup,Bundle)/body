@@ -9,7 +9,10 @@
   mViewPager.setAdapter(adapter);
   mViewPager.setOnPageChangeListener(adapter);
   PagerTabStrip tabs=(PagerTabStrip)rootView.findViewById(R.id.tabs);
-  tabs.setTabIndicatorColorResource(R.color.theme_accent);
+  final TypedArray ta=tabs.getContext().obtainStyledAttributes(new int[]{android.R.attr.colorAccent});
+  final int colorAccent=ta.getColor(0,0);
+  ta.recycle();
+  tabs.setTabIndicatorColorResource(colorAccent);
   if (container instanceof PreferenceFrameLayout) {
     ((PreferenceFrameLayout.LayoutParams)rootView.getLayoutParams()).removeBorders=true;
   }

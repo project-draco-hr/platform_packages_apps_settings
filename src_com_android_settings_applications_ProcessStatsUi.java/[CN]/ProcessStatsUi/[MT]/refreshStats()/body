@@ -51,8 +51,8 @@ memTotalTime=mTotalTime;
 memStates=ProcessStats.ALL_MEM_ADJ;
 break;
 }
-Resources res=getResources();
-colors.setColors(res.getColor(R.color.running_processes_apps_ram),res.getColor(R.color.running_processes_apps_ram),res.getColor(R.color.running_processes_free_ram));
+final Context context=getActivity();
+colors.setColors(context.getColor(R.color.running_processes_apps_ram),context.getColor(R.color.running_processes_apps_ram),context.getColor(R.color.running_processes_free_ram));
 for (int i=0; i < ProcessStats.ADJ_MEM_FACTOR_COUNT; i++) {
 mMemTimes[i]=(long)((mMemTimes[i] * (double)elapsedTime) / mTotalTime);
 }

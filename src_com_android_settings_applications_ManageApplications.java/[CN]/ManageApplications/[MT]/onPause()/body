@@ -1,7 +1,6 @@
 {
   super.onPause();
-  mActivityResumed=false;
-  for (int i=0; i < mTabs.size(); i++) {
-    mTabs.get(i).pause();
+  if (mApplications != null) {
+    mApplications.pause();
   }
 }

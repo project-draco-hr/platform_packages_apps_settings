@@ -1,0 +1,22 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.advanced_apps);
+  mApplicationsState=ApplicationsState.getInstance(getActivity().getApplication());
+  mSession=mApplicationsState.newSession(this);
+  mAllApps=findPreference(KEY_ALL_APPS);
+  mResetAll=findPreference(KEY_RESET_ALL);
+  mResetAll.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      buildResetDialog();
+      return true;
+    }
+  }
+);
+  updateAllAppsSummary();
+  mPm=getActivity().getPackageManager();
+  mIPm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
+  mNm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+  mNpm=NetworkPolicyManager.from(getActivity());
+  mAom=(AppOpsManager)getActivity().getSystemService(Context.APP_OPS_SERVICE);
+  mHandler=new Handler(getActivity().getMainLooper());
+}

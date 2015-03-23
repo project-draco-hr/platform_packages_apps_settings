@@ -1,47 +1,22 @@
 {
   super.onCreate(savedInstanceState);
   setHasOptionsMenu(true);
-  mContext=getActivity();
   mApplicationsState=ApplicationsState.getInstance(getActivity().getApplication());
   Intent intent=getActivity().getIntent();
   String action=intent.getAction();
-  int defaultListType=LIST_TYPE_DOWNLOADED;
   String className=getArguments() != null ? getArguments().getString("classname") : null;
   if (className == null) {
     className=intent.getComponent().getClassName();
   }
-  if (className.equals(RunningServicesActivity.class.getName()) || className.endsWith(".RunningServices")) {
-    defaultListType=LIST_TYPE_RUNNING;
+  if (Settings.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS.equals(action) || className.equals(AllApplicationsActivity.class.getName())) {
+    mListType=LIST_TYPE_ALL;
   }
- else   if (className.equals(StorageUseActivity.class.getName()) || Intent.ACTION_MANAGE_PACKAGE_STORAGE.equals(action) || className.endsWith(".StorageUse")) {
-    mSortOrder=SORT_ORDER_SIZE;
-    defaultListType=LIST_TYPE_ALL;
+ else {
+    mListType=LIST_TYPE_MAIN;
   }
- else   if (android.provider.Settings.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS.equals(action)) {
-    defaultListType=LIST_TYPE_ALL;
-  }
+  mFilter=getDefaultFilter();
   if (savedInstanceState != null) {
     mSortOrder=savedInstanceState.getInt(EXTRA_SORT_ORDER,mSortOrder);
-    int tmp=savedInstanceState.getInt(EXTRA_DEFAULT_LIST_TYPE,-1);
-    if (tmp != -1)     defaultListType=tmp;
-    mShowBackground=savedInstanceState.getBoolean(EXTRA_SHOW_BACKGROUND,false);
   }
-  mDefaultListType=defaultListType;
-  final Intent containerIntent=new Intent().setComponent(StorageMeasurement.DEFAULT_CONTAINER_COMPONENT);
-  getActivity().bindService(containerIntent,mContainerConnection,Context.BIND_AUTO_CREATE);
   mInvalidSizeStr=getActivity().getText(R.string.invalid_size_value);
-  mComputingSizeStr=getActivity().getText(R.string.computing_size);
-  TabInfo tab=new TabInfo(this,mApplicationsState,getActivity().getString(R.string.filter_apps_third_party),LIST_TYPE_DOWNLOADED,this,savedInstanceState);
-  mTabs.add(tab);
-  if (!Environment.isExternalStorageEmulated()) {
-    tab=new TabInfo(this,mApplicationsState,getActivity().getString(R.string.filter_apps_onsdcard),LIST_TYPE_SDCARD,this,savedInstanceState);
-    mTabs.add(tab);
-  }
-  tab=new TabInfo(this,mApplicationsState,getActivity().getString(R.string.filter_apps_running),LIST_TYPE_RUNNING,this,savedInstanceState);
-  mTabs.add(tab);
-  tab=new TabInfo(this,mApplicationsState,getActivity().getString(R.string.filter_apps_all),LIST_TYPE_ALL,this,savedInstanceState);
-  mTabs.add(tab);
-  tab=new TabInfo(this,mApplicationsState,getActivity().getString(R.string.filter_apps_disabled),LIST_TYPE_DISABLED,this,savedInstanceState);
-  mTabs.add(tab);
-  mNumTabs=mTabs.size();
 }

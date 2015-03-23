@@ -1,7 +1,8 @@
 {
   super.onResume();
-  mActivityResumed=true;
-  updateCurrentTab(mViewPager.getCurrentItem());
-  updateNumTabs();
+  updateView();
   updateOptionsMenu();
+  if (mApplications != null) {
+    mApplications.resume(mSortOrder);
+  }
 }

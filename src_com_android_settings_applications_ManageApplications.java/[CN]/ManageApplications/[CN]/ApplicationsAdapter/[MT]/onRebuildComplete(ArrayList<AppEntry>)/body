@@ -1,13 +1,11 @@
 {
-  if (mTab.mLoadingContainer.getVisibility() == View.VISIBLE) {
-    mTab.mLoadingContainer.startAnimation(AnimationUtils.loadAnimation(mContext,android.R.anim.fade_out));
-    mTab.mListContainer.startAnimation(AnimationUtils.loadAnimation(mContext,android.R.anim.fade_in));
+  if (mManageApplications.mLoadingContainer.getVisibility() == View.VISIBLE) {
+    mManageApplications.mLoadingContainer.startAnimation(AnimationUtils.loadAnimation(mContext,android.R.anim.fade_out));
+    mManageApplications.mListContainer.startAnimation(AnimationUtils.loadAnimation(mContext,android.R.anim.fade_in));
   }
-  mTab.mListContainer.setVisibility(View.VISIBLE);
-  mTab.mLoadingContainer.setVisibility(View.GONE);
-  mWaitingForData=false;
+  mManageApplications.mListContainer.setVisibility(View.VISIBLE);
+  mManageApplications.mLoadingContainer.setVisibility(View.GONE);
   mBaseEntries=apps;
   mEntries=applyPrefixFilter(mCurFilterPrefix,mBaseEntries);
   notifyDataSetChanged();
-  mTab.updateStorageUsage();
 }

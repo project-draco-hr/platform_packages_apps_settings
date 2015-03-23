@@ -1,0 +1,7 @@
+{
+  if (mFilterOptions.contains(filter))   return;
+  mFilterOptions.add(filter);
+  Collections.sort(mFilterOptions);
+  mManageApplications.mSpinnerHeader.setVisibility(mFilterOptions.size() > 1 ? View.VISIBLE : View.GONE);
+  notifyDataSetChanged();
+}

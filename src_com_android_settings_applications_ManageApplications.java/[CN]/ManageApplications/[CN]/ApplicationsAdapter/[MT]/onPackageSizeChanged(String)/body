@@ -3,12 +3,11 @@
     AppViewHolder holder=(AppViewHolder)mActive.get(i).getTag();
     if (holder.entry.info.packageName.equals(packageName)) {
 synchronized (holder.entry) {
-        holder.updateSizeText(mTab.mInvalidSizeStr,mWhichSize);
+        holder.updateSizeText(mManageApplications.mInvalidSizeStr,mWhichSize);
       }
-      if (holder.entry.info.packageName.equals(mTab.mOwner.mCurrentPkgName) && mLastSortMode == SORT_ORDER_SIZE) {
+      if (holder.entry.info.packageName.equals(mManageApplications.mCurrentPkgName) && mLastSortMode == SORT_ORDER_SIZE) {
         rebuild(false);
       }
-      mTab.updateStorageUsage();
       return;
     }
   }

@@ -1,0 +1,10 @@
+{
+  String key=preference.getKey();
+  if (KEY_WIFI_SCAN_ALWAYS_AVAILABLE.equals(key)) {
+    Global.putInt(getContentResolver(),Global.WIFI_SCAN_ALWAYS_AVAILABLE,((SwitchPreference)preference).isChecked() ? 1 : 0);
+  }
+ else {
+    return super.onPreferenceTreeClick(screen,preference);
+  }
+  return true;
+}

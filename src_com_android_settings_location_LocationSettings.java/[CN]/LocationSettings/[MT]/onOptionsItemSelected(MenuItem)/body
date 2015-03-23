@@ -1,0 +1,10 @@
+{
+  final SettingsActivity activity=(SettingsActivity)getActivity();
+switch (item.getItemId()) {
+case MENU_SCANNING:
+    activity.startPreferencePanel(ScanningSettings.class.getName(),null,R.string.location_scanning_screen_title,null,LocationSettings.this,0);
+  return true;
+default :
+return super.onOptionsItemSelected(item);
+}
+}

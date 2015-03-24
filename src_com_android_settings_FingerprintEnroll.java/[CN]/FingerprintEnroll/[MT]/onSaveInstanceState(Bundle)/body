@@ -1,0 +1,7 @@
+{
+  super.onSaveInstanceState(outState);
+  outState.putString(EXTRA_STAGE,mStage.toString());
+  if (mStage == Stage.EnrollingRepeat) {
+    outState.putInt(EXTRA_PROGRESS,mProgressBar.getProgress());
+  }
+}

@@ -11,7 +11,7 @@
     Bundle bundle=data.getBundleExtra(Intent.EXTRA_RESTRICTIONS_BUNDLE);
     if (list != null) {
       pref.setRestrictions(list);
-      mUserManager.setApplicationRestrictions(packageName,RestrictionUtils.restrictionsToBundle(list),mUser);
+      mUserManager.setApplicationRestrictions(packageName,RestrictionsManager.convertRestrictionsToBundle(list),mUser);
     }
  else     if (bundle != null) {
       mUserManager.setApplicationRestrictions(packageName,bundle,mUser);

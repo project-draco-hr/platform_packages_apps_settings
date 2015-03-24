@@ -5,7 +5,7 @@
   if (restrictions != null && restrictionsIntent == null) {
     onRestrictionsReceived(preference,packageName,restrictions);
     if (mRestrictedProfile) {
-      mUserManager.setApplicationRestrictions(packageName,RestrictionUtils.restrictionsToBundle(restrictions),mUser);
+      mUserManager.setApplicationRestrictions(packageName,RestrictionsManager.convertRestrictionsToBundle(restrictions),mUser);
     }
   }
  else   if (restrictionsIntent != null) {

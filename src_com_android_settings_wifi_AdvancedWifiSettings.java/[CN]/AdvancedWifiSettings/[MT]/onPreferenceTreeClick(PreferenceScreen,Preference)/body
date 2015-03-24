@@ -3,9 +3,6 @@
   if (KEY_NOTIFY_OPEN_NETWORKS.equals(key)) {
     Global.putInt(getContentResolver(),Settings.Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,((SwitchPreference)preference).isChecked() ? 1 : 0);
   }
- else   if (KEY_SCAN_ALWAYS_AVAILABLE.equals(key)) {
-    Global.putInt(getContentResolver(),Global.WIFI_SCAN_ALWAYS_AVAILABLE,((SwitchPreference)preference).isChecked() ? 1 : 0);
-  }
  else {
     return super.onPreferenceTreeClick(screen,preference);
   }

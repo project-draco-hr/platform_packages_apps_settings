@@ -1,6 +1,7 @@
 {
   ArrayList<AccessPoint> accessPoints=new ArrayList<AccessPoint>();
   Multimap<String,AccessPoint> apMap=new Multimap<String,AccessPoint>();
+  WifiConfiguration connectionConfig=null;
   final List<WifiConfiguration> configs=wifiManager.getConfiguredNetworks();
   if (configs != null) {
     if (savedNetworksExist != (configs.size() > 0)) {
@@ -10,7 +11,13 @@
       }
     }
     for (    WifiConfiguration config : configs) {
+      if (lastInfo != null && lastInfo.getNetworkId() == config.networkId) {
+        connectionConfig=config;
+      }
       if (config.selfAdded && config.numAssociation == 0) {
+        continue;
+      }
+      if (config.isPasspoint()) {
         continue;
       }
       AccessPoint accessPoint=new AccessPoint(context,config);
@@ -35,6 +42,9 @@
         AccessPoint accessPoint=new AccessPoint(context,result);
         if (lastInfo != null && lastNetworkInfo != null) {
           accessPoint.update(lastInfo,lastNetworkInfo);
+        }
+        if (lastInfo != null && lastInfo.getBSSID() != null && lastInfo.getBSSID().equals(result.BSSID) && connectionConfig != null && connectionConfig.isPasspoint()) {
+          accessPoint.update(connectionConfig);
         }
         accessPoints.add(accessPoint);
         apMap.put(accessPoint.ssid,accessPoint);

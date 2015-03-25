@@ -6,10 +6,5 @@
   UserHandle myUserHandle=new UserHandle(UserHandle.myUserId());
   userProfiles.remove(myUserHandle);
   userProfiles.add(0,myUserHandle);
-  ArrayList<UserDetails> userDetails=new ArrayList<UserDetails>(userProfiles.size());
-  final int count=userProfiles.size();
-  for (int i=0; i < count; i++) {
-    userDetails.add(new UserDetails(userProfiles.get(i),userManager,context));
-  }
-  return new UserSpinnerAdapter(context,userDetails);
+  return createUserAdapter(userManager,context,userProfiles);
 }

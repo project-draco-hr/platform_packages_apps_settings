@@ -31,6 +31,17 @@
           }
         }
         sa.recycle();
+        sa=obtainStyledAttributes(attrs,com.android.internal.R.styleable.Preference);
+        tv=sa.peekValue(com.android.internal.R.styleable.Preference_key);
+        if (tv != null && tv.type == TypedValue.TYPE_STRING) {
+          if (tv.resourceId != 0) {
+            category.key=getString(tv.resourceId);
+          }
+ else {
+            category.key=tv.string.toString();
+          }
+        }
+        sa.recycle();
         final int innerDepth=parser.getDepth();
         while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && (type != XmlPullParser.END_TAG || parser.getDepth() > innerDepth)) {
           if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
@@ -89,6 +100,9 @@
             if (tile.id != R.id.sim_settings || Utils.showSimCardTile(this)) {
               category.addTile(tile);
             }
+          }
+ else           if (innerNodeName.equals("external-tiles")) {
+            category.externalIndex=category.getTilesCount();
           }
  else {
             XmlUtils.skipCurrentTag(parser);

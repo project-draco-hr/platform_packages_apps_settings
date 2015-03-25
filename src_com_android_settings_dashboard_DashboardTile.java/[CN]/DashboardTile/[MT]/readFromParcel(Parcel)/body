@@ -5,10 +5,15 @@
   summaryRes=in.readInt();
   summary=TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
   iconRes=in.readInt();
+  iconPkg=in.readString();
   fragment=in.readString();
   fragmentArguments=in.readBundle();
   if (in.readInt() != 0) {
     intent=Intent.CREATOR.createFromParcel(in);
+  }
+  final int N=in.readInt();
+  for (int i=0; i < N; i++) {
+    userHandle.add(UserHandle.CREATOR.createFromParcel(in));
   }
   extras=in.readBundle();
 }

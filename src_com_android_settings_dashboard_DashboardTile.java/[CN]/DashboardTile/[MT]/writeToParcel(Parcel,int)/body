@@ -5,6 +5,7 @@
   dest.writeInt(summaryRes);
   TextUtils.writeToParcel(summary,dest,flags);
   dest.writeInt(iconRes);
+  dest.writeString(iconPkg);
   dest.writeString(fragment);
   dest.writeBundle(fragmentArguments);
   if (intent != null) {
@@ -13,6 +14,11 @@
   }
  else {
     dest.writeInt(0);
+  }
+  final int N=userHandle.size();
+  dest.writeInt(N);
+  for (int i=0; i < N; i++) {
+    dest.writeParcelable(userHandle.get(i),flags);
   }
   dest.writeBundle(extras);
 }

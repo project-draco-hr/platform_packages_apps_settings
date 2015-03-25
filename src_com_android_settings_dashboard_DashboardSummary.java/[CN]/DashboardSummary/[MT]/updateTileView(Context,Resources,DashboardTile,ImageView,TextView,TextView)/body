@@ -1,5 +1,14 @@
 {
-  if (tile.iconRes > 0) {
+  if (!TextUtils.isEmpty(tile.iconPkg)) {
+    try {
+      tileIcon.setImageDrawable(context.getPackageManager().getResourcesForApplication(tile.iconPkg).getDrawable(tile.iconRes,null));
+    }
+ catch (    NameNotFoundException|Resources.NotFoundException e) {
+      tileIcon.setImageDrawable(null);
+      tileIcon.setBackground(null);
+    }
+  }
+ else   if (tile.iconRes > 0) {
     tileIcon.setImageResource(tile.iconRes);
   }
  else {

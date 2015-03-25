@@ -4,12 +4,11 @@ case EnrollingOnboard:
 case EnrollingFindSensor:
     mEnrollmentSteps=-1;
   mEnrolling=false;
-mFingerprintManager.stopListening();
 break;
 case EnrollingStart:
 mEnrollmentSteps=-1;
-mFingerprintManager.startListening(mReceiver);
-mFingerprintManager.enroll(ENROLL_TIMEOUT);
+long challenge=0x12345;
+mFingerprintManager.enroll(challenge,mEnrollmentCallback,mEnrollmentCancel,0);
 mProgressBar.setProgress(0);
 mEnrolling=true;
 startFingerprintAnimator();
@@ -18,11 +17,9 @@ case EnrollingRepeat:
 break;
 case EnrollingFinish:
 stopFingerprintAnimator();
-mFingerprintManager.stopListening();
 mEnrolling=false;
 break;
 default :
-mFingerprintManager.stopListening();
 break;
 }
 }

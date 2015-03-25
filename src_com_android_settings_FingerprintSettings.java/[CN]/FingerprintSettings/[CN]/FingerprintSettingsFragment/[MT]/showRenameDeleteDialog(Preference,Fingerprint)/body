@@ -2,24 +2,25 @@
   final Activity activity=getActivity();
   AlertDialog dialog=new AlertDialog.Builder(activity).setView(R.layout.fingerprint_rename_dialog).setPositiveButton(R.string.security_settings_fingerprint_enroll_dialog_ok,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
-      String newName=mDialogTextField.getText().toString();
+      final String newName=mDialogTextField.getText().toString();
+      final CharSequence name=fp.getName();
       if (!newName.equals(name)) {
-        Log.v(TAG,"Would rename " + name + " to "+ newName);
-        mFingerprintManager.rename(fpId,newName);
+        if (DEBUG)         Log.v(TAG,"rename " + name + " to "+ newName);
+        mFingerprintManager.rename(fp.getFingerId(),newName);
       }
       dialog.dismiss();
     }
   }
 ).setNegativeButton(R.string.security_settings_fingerprint_enroll_dialog_delete,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
-      Log.v(TAG,"Removing fpId " + fpId);
-      mFingerprintManager.remove(fpId);
+      if (DEBUG)       Log.v(TAG,"Removing fpId=" + fp.getFingerId());
+      mFingerprintManager.remove(fp,mRemoveCallback);
       dialog.dismiss();
     }
   }
 ).create();
   dialog.show();
   mDialogTextField=(EditText)dialog.findViewById(R.id.fingerprint_rename_field);
-  mDialogTextField.setText(name);
+  mDialogTextField.setText(fp.getName());
   mDialogTextField.selectAll();
 }

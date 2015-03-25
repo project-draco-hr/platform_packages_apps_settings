@@ -1,15 +1,5 @@
 {
   super.onCreate(savedInstanceState);
   mFingerprintManager=(FingerprintManager)getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
-  mFingerprintManager.startListening(new FingerprintManagerReceiver(){
-    @Override public void onRemoved(    int fingerprintId){
-      mHandler.obtainMessage(MSG_REFRESH_FINGERPRINT_TEMPLATES,fingerprintId,0).sendToTarget();
-    }
-    @Override public void onProcessed(    int fingerprintId){
-      if (fingerprintId != 0) {
-        mHandler.obtainMessage(MSG_HIGHLIGHT_FINGERPRINT_ITEM,fingerprintId,0).sendToTarget();
-      }
-    }
-  }
-);
+  mFingerprintManager.authenticate(null,mAuthCallback,null,0);
 }

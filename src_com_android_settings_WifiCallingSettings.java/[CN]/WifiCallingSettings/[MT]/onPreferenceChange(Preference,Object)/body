@@ -8,14 +8,6 @@
       ImsManager.setWfcMode(context,buttonMode);
       mButtonWfcMode.setSummary(getWfcModeSummary(context,buttonMode));
     }
-    boolean wfcHandoffEnabled=(buttonMode != ImsConfig.WfcModeFeatureValueConstants.WIFI_ONLY);
-    mButtonWfcRoam.setEnabled(wfcHandoffEnabled);
-    mButtonWfcRoam.setChecked(wfcHandoffEnabled && ImsManager.isWfcRoamingEnabledByUser(context));
-  }
- else   if (preference == mButtonWfcRoam) {
-    SwitchPreference wfcRoamPref=(SwitchPreference)preference;
-    wfcRoamPref.setChecked(!wfcRoamPref.isChecked());
-    ImsManager.setWfcRoamingSetting(context,wfcRoamPref.isChecked());
   }
   return true;
 }

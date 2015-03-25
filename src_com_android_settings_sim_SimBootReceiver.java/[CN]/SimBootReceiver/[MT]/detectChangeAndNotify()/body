@@ -7,43 +7,31 @@
   if (numSlots < 2 || isInProvisioning) {
     return;
   }
+  cancelNotification(mContext);
+  mSubscriptionManager.clearDefaultsForInactiveSubIds();
+  boolean dataSelected=SubscriptionManager.isUsableSubIdValue(SubscriptionManager.getDefaultDataSubId());
+  boolean smsSelected=SubscriptionManager.isUsableSubIdValue(SubscriptionManager.getDefaultSmsSubId());
+  if (dataSelected && smsSelected) {
+    return;
+  }
   List<SubscriptionInfo> sil=mSubscriptionManager.getActiveSubscriptionInfoList();
   if (sil == null || sil.size() < 1) {
     return;
   }
-  for (int i=0; i < numSlots; i++) {
-    final SubscriptionInfo sir=Utils.findRecordBySlotId(mContext,i);
-    final String key=SLOT_PREFIX + i;
-    final int lastSubId=getLastSubId(key);
-    if (sir != null) {
-      numSIMsDetected++;
-      final int currentSubId=sir.getSubscriptionId();
-      if (lastSubId == INVALID_SLOT) {
-        setLastSubId(key,currentSubId);
-      }
- else       if (lastSubId != currentSubId) {
-        createNotification(mContext);
-        setLastSubId(key,currentSubId);
-        notificationSent=true;
-      }
-      lastSIMSlotDetected=i;
-    }
- else     if (lastSubId != SLOT_EMPTY) {
-      createNotification(mContext);
-      setLastSubId(key,SLOT_EMPTY);
-      notificationSent=true;
-    }
-  }
-  if (notificationSent) {
-    Intent intent=new Intent(mContext,SimDialogActivity.class);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    if (numSIMsDetected == 1) {
-      intent.putExtra(SimDialogActivity.DIALOG_TYPE_KEY,SimDialogActivity.PREFERRED_PICK);
-      intent.putExtra(SimDialogActivity.PREFERRED_SIM,lastSIMSlotDetected);
-    }
  else {
-      intent.putExtra(SimDialogActivity.DIALOG_TYPE_KEY,SimDialogActivity.DATA_PICK);
+    createNotification(mContext);
+    if (sil.size() == 1) {
+      Intent intent=new Intent(mContext,SimDialogActivity.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      intent.putExtra(SimDialogActivity.DIALOG_TYPE_KEY,SimDialogActivity.PREFERRED_PICK);
+      intent.putExtra(SimDialogActivity.PREFERRED_SIM,sil.get(0).getSimSlotIndex());
+      mContext.startActivity(intent);
     }
-    mContext.startActivity(intent);
+ else     if (!dataSelected) {
+      Intent intent=new Intent(mContext,SimDialogActivity.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      intent.putExtra(SimDialogActivity.DIALOG_TYPE_KEY,SimDialogActivity.DATA_PICK);
+      mContext.startActivity(intent);
+    }
   }
 }

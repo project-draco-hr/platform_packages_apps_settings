@@ -1,19 +1,4 @@
 {
-  if (preference instanceof LinearColorPreference) {
-    Bundle args=new Bundle();
-    args.putLongArray(ProcessStatsMemDetail.EXTRA_MEM_TIMES,mMemTimes);
-    args.putDoubleArray(ProcessStatsMemDetail.EXTRA_MEM_STATE_WEIGHTS,mMemStateWeights);
-    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_CACHED_WEIGHT,mMemCachedWeight);
-    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_FREE_WEIGHT,mMemFreeWeight);
-    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_ZRAM_WEIGHT,mMemZRamWeight);
-    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_KERNEL_WEIGHT,mMemKernelWeight);
-    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_NATIVE_WEIGHT,mMemNativeWeight);
-    args.putDouble(ProcessStatsMemDetail.EXTRA_MEM_TOTAL_WEIGHT,mMemTotalWeight);
-    args.putBoolean(ProcessStatsMemDetail.EXTRA_USE_USS,mUseUss);
-    args.putLong(ProcessStatsMemDetail.EXTRA_TOTAL_TIME,mTotalTime);
-    ((SettingsActivity)getActivity()).startPreferencePanel(ProcessStatsMemDetail.class.getName(),args,R.string.mem_details_title,null,null,0);
-    return true;
-  }
   if (!(preference instanceof ProcessStatsPreference)) {
     return false;
   }
@@ -21,9 +6,10 @@
   Bundle args=new Bundle();
   args.putParcelable(ProcessStatsDetail.EXTRA_PACKAGE_ENTRY,pgp.getEntry());
   args.putBoolean(ProcessStatsDetail.EXTRA_USE_USS,mUseUss);
-  args.putDouble(ProcessStatsDetail.EXTRA_MAX_WEIGHT,mMaxWeight);
-  args.putDouble(ProcessStatsDetail.EXTRA_WEIGHT_TO_RAM,mWeightToRam);
+  args.putDouble(ProcessStatsDetail.EXTRA_WEIGHT_TO_RAM,mStatsManager.getMemInfo().weightToRam);
   args.putLong(ProcessStatsDetail.EXTRA_TOTAL_TIME,mTotalTime);
+  args.putFloat(ProcessStatsDetail.EXTRA_MAX_MEMORY_USAGE,mMaxMemoryUsage);
+  args.putDouble(ProcessStatsDetail.EXTRA_TOTAL_SCALE,mStatsManager.getMemInfo().totalScale);
   ((SettingsActivity)getActivity()).startPreferencePanel(ProcessStatsDetail.class.getName(),args,R.string.details_title,null,null,0);
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

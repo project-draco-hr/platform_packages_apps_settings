@@ -1,0 +1,14 @@
+{
+switch (item.getItemId()) {
+case SHOW_RUNNING_SERVICES:
+    mRunningProcessesView.mAdapter.setShowBackground(false);
+  break;
+case SHOW_BACKGROUND_PROCESSES:
+mRunningProcessesView.mAdapter.setShowBackground(true);
+break;
+default :
+return false;
+}
+updateOptionsMenu();
+return true;
+}

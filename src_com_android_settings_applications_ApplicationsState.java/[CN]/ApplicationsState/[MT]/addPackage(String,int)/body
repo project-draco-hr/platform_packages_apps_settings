@@ -12,7 +12,7 @@ synchronized (mEntriesMap) {
         if (DEBUG_LOCKING)         Log.v(TAG,"addPackage release lock: already exists");
         return;
       }
-      ApplicationInfo info=mIpm.getApplicationInfo(pkgName,mRetrieveFlags,userId);
+      ApplicationInfo info=mIpm.getApplicationInfo(pkgName,userId == UserHandle.USER_OWNER ? mOwnerRetrieveFlags : mRetrieveFlags,userId);
       if (info == null) {
         return;
       }

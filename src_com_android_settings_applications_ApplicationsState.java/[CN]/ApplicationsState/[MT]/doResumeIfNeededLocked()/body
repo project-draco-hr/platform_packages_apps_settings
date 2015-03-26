@@ -10,7 +10,7 @@
   mApplications=new ArrayList<ApplicationInfo>();
   for (  UserHandle user : mUm.getUserProfiles()) {
     try {
-      ParceledListSlice<ApplicationInfo> list=mIpm.getInstalledApplications(mRetrieveFlags,user.getIdentifier());
+      ParceledListSlice<ApplicationInfo> list=mIpm.getInstalledApplications(user.isOwner() ? mOwnerRetrieveFlags : mRetrieveFlags,user.getIdentifier());
       mApplications.addAll(list.getList());
     }
  catch (    RemoteException e) {

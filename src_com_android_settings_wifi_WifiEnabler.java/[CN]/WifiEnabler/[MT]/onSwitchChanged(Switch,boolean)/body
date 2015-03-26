@@ -11,6 +11,7 @@
   if (isChecked && ((wifiApState == WifiManager.WIFI_AP_STATE_ENABLING) || (wifiApState == WifiManager.WIFI_AP_STATE_ENABLED))) {
     mWifiManager.setWifiApEnabled(null,false);
   }
+  MetricsLogger.action(mContext,isChecked ? MetricsLogger.ACTION_WIFI_ON : MetricsLogger.ACTION_WIFI_OFF);
   if (!mWifiManager.setWifiEnabled(isChecked)) {
     mSwitchBar.setEnabled(true);
     Toast.makeText(mContext,R.string.wifi_error,Toast.LENGTH_SHORT).show();

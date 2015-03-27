@@ -4,6 +4,7 @@
   mInitiateDiscoverable=true;
   mEmptyView=(TextView)getView().findViewById(android.R.id.empty);
   getListView().setEmptyView(mEmptyView);
+  mEmptyView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
   final SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
   mBluetoothEnabler=new BluetoothEnabler(activity,mSwitchBar);

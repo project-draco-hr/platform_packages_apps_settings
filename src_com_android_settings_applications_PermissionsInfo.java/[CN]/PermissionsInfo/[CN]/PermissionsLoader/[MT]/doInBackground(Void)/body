@@ -1,0 +1,56 @@
+{
+  List<PermissionGroupInfo> groups=mPm.getAllPermissionGroups(PackageManager.GET_META_DATA);
+  for (  PermissionGroupInfo groupInfo : groups) {
+    PermissionGroup group=new PermissionGroup();
+    group.icon=groupInfo.icon != 0 ? groupInfo.loadIcon(mPm) : new ShapeDrawable();
+    group.name=groupInfo.name;
+    group.label=groupInfo.loadLabel(mPm).toString();
+synchronized (mGroups) {
+      mGroups.add(group);
+    }
+  }
+  for (  PermissionGroup group : mGroups) {
+    try {
+      List<PermissionInfo> permissions=mPm.queryPermissionsByGroup(group.name,0);
+      for (      PermissionInfo info : permissions) {
+        if (info.protectionLevel != PermissionInfo.PROTECTION_DANGEROUS)         continue;
+        mGroupLookup.put(info.name,group);
+      }
+    }
+ catch (    NameNotFoundException e) {
+      Log.w(TAG,"Problem getting permissions",e);
+    }
+  }
+  for (  UserHandle user : UserManager.get(mContext).getUserProfiles()) {
+    List<PackageInfo> allApps=mPm.getInstalledPackages(PackageManager.GET_PERMISSIONS,user.getIdentifier());
+    for (    PackageInfo info : allApps) {
+      if (info.applicationInfo.targetSdkVersion <= Build.VERSION_CODES.LOLLIPOP_MR1 || info.requestedPermissions == null) {
+        continue;
+      }
+      final int N=info.requestedPermissionsFlags.length;
+      boolean appHasRuntimePerms=false;
+      boolean appGrantedRuntimePerms=false;
+      for (int i=0; i < N; i++) {
+        boolean granted=(info.requestedPermissionsFlags[i] & PackageInfo.REQUESTED_PERMISSION_GRANTED) != 0;
+        PermissionGroup group=getOrCreateGroup(info.requestedPermissions[i]);
+        String key=Integer.toString(info.applicationInfo.uid);
+        if (group != null && !group.possibleApps.contains(key)) {
+          appHasRuntimePerms=true;
+          group.possibleApps.add(key);
+          if (granted) {
+            appGrantedRuntimePerms=true;
+            group.grantedApps.add(key);
+          }
+        }
+      }
+      if (appHasRuntimePerms) {
+        mRuntimePermAppsCt++;
+        if (appGrantedRuntimePerms) {
+          mRuntimePermAppsGrantedCt++;
+        }
+      }
+    }
+  }
+  Collections.sort(mGroups);
+  return null;
+}

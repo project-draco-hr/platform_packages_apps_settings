@@ -3,6 +3,7 @@
   addPreferencesFromResource(R.xml.advanced_apps);
   mApplicationsState=ApplicationsState.getInstance(getActivity().getApplication());
   mSession=mApplicationsState.newSession(this);
+  mAppPerms=findPreference(KEY_APP_PERM);
   mAllApps=findPreference(KEY_ALL_APPS);
   mResetAll=findPreference(KEY_RESET_ALL);
   mResetAll.setOnPreferenceClickListener(new OnPreferenceClickListener(){

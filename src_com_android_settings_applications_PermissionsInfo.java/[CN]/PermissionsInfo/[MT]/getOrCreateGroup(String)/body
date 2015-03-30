@@ -1,0 +1,20 @@
+{
+  PermissionGroup group=mGroupLookup.get(permission);
+  if (group == null) {
+    try {
+      PermissionInfo info=mPm.getPermissionInfo(permission,0);
+      if (info.protectionLevel == PermissionInfo.PROTECTION_DANGEROUS) {
+        group=new PermissionGroup();
+        group.icon=info.icon != 0 ? info.loadIcon(mPm) : new ShapeDrawable();
+        group.name=info.name;
+        group.label=info.loadLabel(mPm).toString();
+        mGroups.add(group);
+        mGroupLookup.put(permission,group);
+      }
+    }
+ catch (    NameNotFoundException e) {
+      Log.w(TAG,"Unknown permission " + permission,e);
+    }
+  }
+  return group;
+}

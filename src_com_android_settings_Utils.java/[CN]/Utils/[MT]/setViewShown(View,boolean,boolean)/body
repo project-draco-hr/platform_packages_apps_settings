@@ -1,0 +1,25 @@
+{
+  if (animate) {
+    Animation animation=AnimationUtils.loadAnimation(view.getContext(),shown ? android.R.anim.fade_in : android.R.anim.fade_out);
+    if (shown) {
+      view.setVisibility(View.VISIBLE);
+    }
+ else {
+      animation.setAnimationListener(new AnimationListener(){
+        @Override public void onAnimationStart(        Animation animation){
+        }
+        @Override public void onAnimationRepeat(        Animation animation){
+        }
+        @Override public void onAnimationEnd(        Animation animation){
+          view.setVisibility(View.INVISIBLE);
+        }
+      }
+);
+    }
+    view.startAnimation(animation);
+  }
+ else {
+    view.clearAnimation();
+    view.setVisibility(shown ? View.VISIBLE : View.INVISIBLE);
+  }
+}

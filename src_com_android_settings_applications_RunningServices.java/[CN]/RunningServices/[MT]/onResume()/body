@@ -1,11 +1,5 @@
 {
   super.onResume();
   boolean haveData=mRunningProcessesView.doResume(this,mRunningProcessesAvail);
-  if (haveData) {
-    mRunningProcessesView.setVisibility(View.VISIBLE);
-    mLoadingContainer.setVisibility(View.INVISIBLE);
-  }
- else {
-    mLoadingContainer.setVisibility(View.VISIBLE);
-  }
+  Utils.handleLoadingContainer(mLoadingContainer,mRunningProcessesView,haveData,false);
 }

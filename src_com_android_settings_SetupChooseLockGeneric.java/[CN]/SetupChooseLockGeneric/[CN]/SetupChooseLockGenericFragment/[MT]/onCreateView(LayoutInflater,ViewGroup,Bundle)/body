@@ -6,5 +6,10 @@
     final View header=inflater.inflate(R.layout.setup_wizard_header,list,false);
     list.addHeaderView(header,null,false);
   }
+  final FingerprintManager fpm=(FingerprintManager)getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
+  if (fpm != null && fpm.isHardwareDetected()) {
+    final View footer=inflater.inflate(R.layout.setup_screen_lock_fingerprint_details,list,false);
+    list.addFooterView(footer,null,false);
+  }
   return view;
 }

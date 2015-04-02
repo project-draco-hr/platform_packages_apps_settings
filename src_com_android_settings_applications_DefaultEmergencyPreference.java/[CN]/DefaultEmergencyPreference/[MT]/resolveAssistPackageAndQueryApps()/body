@@ -1,0 +1,31 @@
+{
+  ArrayMap<String,CharSequence> packages=new ArrayMap<>();
+  Intent queryIntent=new Intent(TelephonyManager.ACTION_EMERGENCY_ASSISTANCE);
+  PackageManager packageManager=getContext().getPackageManager();
+  List<ResolveInfo> infos=packageManager.queryIntentActivities(queryIntent,0);
+  PackageInfo bestMatch=null;
+  for (int i=0; i < infos.size(); i++) {
+    if (infos.get(i) == null || infos.get(i).activityInfo == null || packages.containsKey(infos.get(i).activityInfo.packageName)) {
+      continue;
+    }
+    String packageName=infos.get(i).activityInfo.packageName;
+    CharSequence label=infos.get(i).activityInfo.applicationInfo.loadLabel(packageManager);
+    packages.put(packageName,label);
+    PackageInfo packageInfo;
+    try {
+      packageInfo=packageManager.getPackageInfo(packageName,0);
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+      continue;
+    }
+    if (bestMatch == null || !isSystemApp(bestMatch) && isSystemApp(packageInfo) || isSystemApp(bestMatch) == isSystemApp(packageInfo) && bestMatch.firstInstallTime > packageInfo.firstInstallTime) {
+      bestMatch=packageInfo;
+    }
+  }
+  String defaultPackage=Settings.Secure.getString(mContentResolver,Settings.Secure.EMERGENCY_ASSISTANCE_APPLICATION);
+  boolean defaultMissing=TextUtils.isEmpty(defaultPackage) || !packages.containsKey(defaultPackage);
+  if (bestMatch != null && defaultMissing) {
+    Settings.Secure.putString(mContentResolver,Settings.Secure.EMERGENCY_ASSISTANCE_APPLICATION,bestMatch.packageName);
+  }
+  return packages;
+}

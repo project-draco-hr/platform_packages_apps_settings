@@ -1,0 +1,8 @@
+{
+  String previousValue=Settings.Secure.getString(mContentResolver,Settings.Secure.EMERGENCY_ASSISTANCE_APPLICATION);
+  if (!TextUtils.isEmpty(value) && !Objects.equals(value,previousValue)) {
+    Settings.Secure.putString(mContentResolver,Settings.Secure.EMERGENCY_ASSISTANCE_APPLICATION,value);
+  }
+  setSummary(getEntry());
+  return true;
+}

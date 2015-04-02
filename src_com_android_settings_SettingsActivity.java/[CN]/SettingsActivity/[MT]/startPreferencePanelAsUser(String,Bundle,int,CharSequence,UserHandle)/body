@@ -1,12 +1,17 @@
 {
-  String title=null;
-  if (titleRes < 0) {
-    if (titleText != null) {
-      title=titleText.toString();
-    }
- else {
-      title="";
-    }
+  if (userHandle.getIdentifier() == UserHandle.myUserId()) {
+    startPreferencePanel(fragmentClass,args,titleRes,titleText,null,0);
   }
-  Utils.startWithFragmentAsUser(this,fragmentClass,args,titleRes,title,mIsShortcut,userHandle);
+ else {
+    String title=null;
+    if (titleRes < 0) {
+      if (titleText != null) {
+        title=titleText.toString();
+      }
+ else {
+        title="";
+      }
+    }
+    Utils.startWithFragmentAsUser(this,fragmentClass,args,titleRes,title,mIsShortcut,userHandle);
+  }
 }

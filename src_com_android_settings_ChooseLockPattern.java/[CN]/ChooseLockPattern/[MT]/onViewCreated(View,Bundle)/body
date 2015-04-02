@@ -12,10 +12,11 @@
   final LinearLayoutWithDefaultTouchRecepient topLayout=(LinearLayoutWithDefaultTouchRecepient)view.findViewById(R.id.topLayout);
   topLayout.setDefaultTouchRecepient(mLockPatternView);
   final boolean confirmCredentials=getActivity().getIntent().getBooleanExtra("confirm_credentials",true);
+  mCurrentPattern=getActivity().getIntent().getStringExtra(ChooseLockSettingsHelper.EXTRA_KEY_PASSWORD);
   if (savedInstanceState == null) {
     if (confirmCredentials) {
       updateStage(Stage.NeedToConfirm);
-      boolean launchedConfirmationActivity=mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,getString(R.string.unlock_set_unlock_launch_picker_title));
+      boolean launchedConfirmationActivity=mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,getString(R.string.unlock_set_unlock_launch_picker_title),true);
       if (!launchedConfirmationActivity) {
         updateStage(Stage.Introduction);
       }
@@ -28,6 +29,9 @@
     final String patternString=savedInstanceState.getString(KEY_PATTERN_CHOICE);
     if (patternString != null) {
       mChosenPattern=LockPatternUtils.stringToPattern(patternString);
+    }
+    if (mCurrentPattern == null) {
+      mCurrentPattern=savedInstanceState.getString(KEY_CURRENT_PATTERN);
     }
     updateStage(Stage.values()[savedInstanceState.getInt(KEY_UI_STAGE)]);
   }

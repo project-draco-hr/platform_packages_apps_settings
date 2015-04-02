@@ -5,7 +5,7 @@
   boolean wasSecureBefore=utils.isSecure();
   final boolean required=getActivity().getIntent().getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);
   utils.setCredentialRequiredToDecrypt(required);
-  utils.saveLockPattern(mChosenPattern);
+  utils.saveLockPattern(mChosenPattern,mCurrentPattern);
   if (lockVirgin) {
     utils.setVisiblePatternEnabled(true);
   }

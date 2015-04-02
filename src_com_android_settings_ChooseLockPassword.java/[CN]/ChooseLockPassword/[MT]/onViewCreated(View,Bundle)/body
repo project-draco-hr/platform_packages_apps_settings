@@ -18,10 +18,11 @@
   mPasswordEntry.setInputType(mIsAlphaMode ? currentType : (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD));
   Intent intent=getActivity().getIntent();
   final boolean confirmCredentials=intent.getBooleanExtra("confirm_credentials",true);
+  mCurrentPassword=intent.getStringExtra(ChooseLockSettingsHelper.EXTRA_KEY_PASSWORD);
   if (savedInstanceState == null) {
     updateStage(Stage.Introduction);
     if (confirmCredentials) {
-      mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,getString(R.string.unlock_set_unlock_launch_picker_title));
+      mChooseLockSettingsHelper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,getString(R.string.unlock_set_unlock_launch_picker_title),true);
     }
   }
  else {
@@ -30,6 +31,9 @@
     if (state != null) {
       mUiStage=Stage.valueOf(state);
       updateStage(mUiStage);
+    }
+    if (mCurrentPassword == null) {
+      mCurrentPassword=savedInstanceState.getString(KEY_CURRENT_PASSWORD);
     }
   }
   mDone=false;

@@ -1,6 +1,9 @@
 {
   String ip=null;
   HttpURLConnection urlConnection=null;
+  NetworkSecurityPolicy networkSecurityPolicy=NetworkSecurityPolicy.getInstance();
+  boolean cleartextTrafficPermittedBeforeTest=networkSecurityPolicy.isCleartextTrafficPermitted();
+  networkSecurityPolicy.setCleartextTrafficPermitted(true);
   try {
     URL url=new URL(EXTERNAL_SERVER);
     urlConnection=(HttpURLConnection)url.openConnection();
@@ -27,6 +30,7 @@ catch (  JSONException e) {
     Log.e(TAG,"exception while creating JSONObject: " + e.toString());
   }
  finally {
+    networkSecurityPolicy.setCleartextTrafficPermitted(cleartextTrafficPermittedBeforeTest);
     if (urlConnection != null) {
       urlConnection.disconnect();
     }

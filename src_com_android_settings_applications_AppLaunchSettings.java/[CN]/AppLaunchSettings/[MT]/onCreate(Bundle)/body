@@ -5,11 +5,18 @@
   final int myUserId=UserHandle.myUserId();
   mOpenDomainUrls=(SwitchPreference)findPreference(KEY_OPEN_DOMAIN_URLS);
   mOpenDomainUrls.setOnPreferenceChangeListener(this);
-  final int status=mPm.getIntentVerificationStatus(mPackageName,myUserId);
-  boolean checked=status == PackageManager.INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS;
-  mOpenDomainUrls.setChecked(checked);
+  boolean hasDomainUrls=(mAppEntry.info.privateFlags & ApplicationInfo.PRIVATE_FLAG_HAS_DOMAIN_URLS) != 0;
+  List<IntentFilterVerificationInfo> iviList=mPm.getIntentFilterVerifications(mPackageName);
+  boolean enabled=hasDomainUrls && (iviList.size() != 0);
+  mOpenDomainUrls.setEnabled(enabled);
+  if (enabled) {
+    final int status=mPm.getIntentVerificationStatus(mPackageName,myUserId);
+    boolean checked=(status == PackageManager.INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS);
+    mOpenDomainUrls.setChecked(checked);
+  }
+  List<IntentFilter> filters=mPm.getAllIntentFilters(mPackageName);
   mAppDomainUrls=(AppDomainsPreference)findPreference(KEY_SUPPORTED_DOMAIN_URLS);
-  CharSequence[] entries=getEntries(mPackageName);
+  CharSequence[] entries=getEntries(iviList,filters);
   mAppDomainUrls.setTitles(entries);
   mAppDomainUrls.setValues(new int[entries.length]);
   mClearDefaultsPreference=(ClearDefaultsPreference)findPreference(KEY_CLEAR_DEFAULTS);

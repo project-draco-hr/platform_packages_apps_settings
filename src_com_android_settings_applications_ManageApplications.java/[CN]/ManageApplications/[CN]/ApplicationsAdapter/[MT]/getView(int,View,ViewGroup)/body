@@ -27,6 +27,7 @@ default :
 holder.updateSizeText(mManageApplications.mInvalidSizeStr,mWhichSize);
 break;
 }
+convertView.setEnabled(isAppEntryViewEnabled(entry));
 if ((entry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
 holder.disabled.setVisibility(View.VISIBLE);
 holder.disabled.setText(R.string.not_installed);

@@ -1,0 +1,34 @@
+{
+  mGroups.clear();
+  if (mPackageInfo.requestedPermissions == null) {
+    return;
+  }
+  final boolean appSupportsRuntimePermissions=appSupportsRuntime(mPackageInfo.applicationInfo);
+  for (int i=0; i < mPackageInfo.requestedPermissions.length; i++) {
+    String requestedPerm=mPackageInfo.requestedPermissions[i];
+    final PermissionInfo permInfo;
+    try {
+      permInfo=mContext.getPackageManager().getPermissionInfo(requestedPerm,0);
+    }
+ catch (    NameNotFoundException e) {
+      Log.w(TAG,"Unknown permission: " + requestedPerm);
+      continue;
+    }
+    String permName=permInfo.name;
+    String groupName=permInfo.group != null ? permInfo.group : permName;
+    PermissionGroup group=mGroups.get(groupName);
+    if (group == null) {
+      group=new PermissionGroup();
+      mGroups.put(groupName,group);
+    }
+    final boolean runtime=appSupportsRuntimePermissions && permInfo.protectionLevel == PermissionInfo.PROTECTION_DANGEROUS;
+    final boolean granted=(mPackageInfo.requestedPermissionsFlags[i] & PackageInfo.REQUESTED_PERMISSION_GRANTED) != 0;
+    Permission permission=new Permission(runtime,granted);
+    group.addPermission(permission,permName);
+  }
+  for (int i=mGroups.size() - 1; i >= 0; i--) {
+    if (!mGroups.valueAt(i).mHasRuntimePermissions) {
+      mGroups.removeAt(i);
+    }
+  }
+}

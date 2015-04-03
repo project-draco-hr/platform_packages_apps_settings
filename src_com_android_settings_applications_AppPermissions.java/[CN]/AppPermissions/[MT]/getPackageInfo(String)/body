@@ -1,0 +1,9 @@
+{
+  try {
+    return mContext.getPackageManager().getPackageInfo(packageName,PackageManager.GET_PERMISSIONS);
+  }
+ catch (  NameNotFoundException e) {
+    Log.e(TAG,"Unable to find " + packageName,e);
+    return null;
+  }
+}

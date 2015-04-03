@@ -1,0 +1,74 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.zen_mode_priority_settings);
+  final PreferenceScreen root=getPreferenceScreen();
+  mReminders=(SwitchPreference)root.findPreference(KEY_REMINDERS);
+  mReminders.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      if (mDisableListeners)       return true;
+      final boolean val=(Boolean)newValue;
+      if (val == mConfig.allowReminders)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange allowReminders=" + val);
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.allowReminders=val;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  mEvents=(SwitchPreference)root.findPreference(KEY_EVENTS);
+  mEvents.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      if (mDisableListeners)       return true;
+      final boolean val=(Boolean)newValue;
+      if (val == mConfig.allowEvents)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange allowEvents=" + val);
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.allowEvents=val;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  mMessages=(SwitchPreference)root.findPreference(KEY_MESSAGES);
+  mMessages.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      if (mDisableListeners)       return true;
+      final boolean val=(Boolean)newValue;
+      if (val == mConfig.allowMessages)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange allowMessages=" + val);
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.allowMessages=val;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  mCalls=(SwitchPreference)root.findPreference(KEY_CALLS);
+  mCalls.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      if (mDisableListeners)       return true;
+      final boolean val=(Boolean)newValue;
+      if (val == mConfig.allowCalls)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange allowCalls=" + val);
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.allowCalls=val;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  mStarred=(DropDownPreference)root.findPreference(KEY_STARRED);
+  mStarred.addItem(R.string.zen_mode_from_anyone,ZenModeConfig.SOURCE_ANYONE);
+  mStarred.addItem(R.string.zen_mode_from_contacts,ZenModeConfig.SOURCE_CONTACT);
+  mStarred.addItem(R.string.zen_mode_from_starred,ZenModeConfig.SOURCE_STAR);
+  mStarred.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object newValue){
+      if (mDisableListeners)       return true;
+      final int val=(Integer)newValue;
+      if (val == mConfig.allowFrom)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange allowFrom=" + ZenModeConfig.sourceToString(val));
+      final ZenModeConfig newConfig=mConfig.copy();
+      newConfig.allowFrom=val;
+      return setZenModeConfig(newConfig);
+    }
+  }
+);
+  updateControls();
+}

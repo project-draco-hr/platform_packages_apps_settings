@@ -1,12 +1,5 @@
 {
   mDisableListeners=true;
-  if (mCalls != null) {
-    mCalls.setChecked(mConfig.allowCalls);
-  }
-  mMessages.setChecked(mConfig.allowMessages);
-  mStarred.setSelectedValue(mConfig.allowFrom);
-  mEvents.setChecked(mConfig.allowEvents);
-  updateStarredEnabled();
   if (mDowntimeSupported) {
     updateDays();
     mStart.setTime(mConfig.sleepStartHour,mConfig.sleepStartMinute);
@@ -16,4 +9,5 @@
   mDisableListeners=false;
   refreshAutomationSection();
   updateEndSummary();
+  updatePrioritySettingsSummary();
 }

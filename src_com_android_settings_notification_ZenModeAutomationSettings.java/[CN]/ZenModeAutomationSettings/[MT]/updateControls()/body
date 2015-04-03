@@ -1,0 +1,12 @@
+{
+  mDisableListeners=true;
+  if (mDowntimeSupported) {
+    updateDays();
+    mStart.setTime(mConfig.sleepStartHour,mConfig.sleepStartMinute);
+    mEnd.setTime(mConfig.sleepEndHour,mConfig.sleepEndMinute);
+    mDowntimeMode.setSelectedValue(mConfig.sleepNone);
+  }
+  mDisableListeners=false;
+  refreshAutomationSection();
+  updateEndSummary();
+}

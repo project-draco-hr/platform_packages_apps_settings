@@ -1,0 +1,46 @@
+{
+  super.onCreate(savedInstanceState);
+  final Intent intent=getIntent();
+  if (intent == null || !intent.getAction().equals(ConnectivityManager.ACTION_PROMPT_UNVALIDATED)) {
+    Log.e(TAG,"Unexpected intent " + intent + ", exiting");
+    finish();
+    return;
+  }
+  mNetwork=intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK);
+  if (mNetwork == null) {
+    Log.e(TAG,"ACTION_PROMPT_UNVALIDATED for null network, exiting");
+    finish();
+    return;
+  }
+  final NetworkRequest.Builder builder=new NetworkRequest.Builder();
+  for (int i=0; i < 256; i++) {
+    try {
+      builder.removeCapability(i);
+    }
+ catch (    IllegalArgumentException e) {
+    }
+  }
+  final NetworkRequest request=builder.build();
+  mNetworkCallback=new NetworkCallback(){
+    public void onLost(    Network network){
+      if (mNetwork.equals(network)) {
+        Log.d(TAG,"Network " + mNetwork + " disconnected");
+        finish();
+      }
+    }
+  }
+;
+  mCM=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  mCM.registerNetworkCallback(request,mNetworkCallback);
+  final NetworkInfo ni=mCM.getNetworkInfo(mNetwork);
+  if (ni == null || !ni.isConnectedOrConnecting()) {
+    Log.d(TAG,"Network " + mNetwork + " is not connected: "+ ni);
+    finish();
+    return;
+  }
+  mNetworkName=ni.getExtraInfo();
+  if (mNetworkName != null) {
+    mNetworkName=mNetworkName.replaceAll("^\"|\"$","");
+  }
+  createDialog();
+}

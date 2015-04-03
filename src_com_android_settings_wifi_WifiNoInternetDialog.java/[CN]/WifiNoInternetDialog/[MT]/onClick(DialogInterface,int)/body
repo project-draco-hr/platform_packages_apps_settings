@@ -1,0 +1,14 @@
+{
+  final boolean accept=(which == BUTTON_POSITIVE);
+  final String action=(accept ? "Connect" : "Ignore");
+  final boolean always=mAlwaysAllow.isChecked();
+switch (which) {
+case BUTTON_POSITIVE:
+case BUTTON_NEGATIVE:
+    mCM.setAcceptUnvalidated(mNetwork,accept,always);
+  Log.d(TAG,action + " network=" + mNetwork+ (always ? " and remember" : ""));
+break;
+default :
+break;
+}
+}

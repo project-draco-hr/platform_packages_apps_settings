@@ -1,4 +1,16 @@
 {
   super.onCreate(savedInstanceState);
-  mAppWidgetManager=AppWidgetManager.getInstance(getActivity());
+  addPreferencesFromResource(R.xml.installed_app_launch_settings);
+  mPm=getActivity().getPackageManager();
+  final int myUserId=UserHandle.myUserId();
+  mOpenDomainUrls=(SwitchPreference)findPreference(KEY_OPEN_DOMAIN_URLS);
+  mOpenDomainUrls.setOnPreferenceChangeListener(this);
+  final int status=mPm.getIntentVerificationStatus(mPackageName,myUserId);
+  boolean checked=status == PackageManager.INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS;
+  mOpenDomainUrls.setChecked(checked);
+  mAppDomainUrls=(AppDomainsPreference)findPreference(KEY_SUPPORTED_DOMAIN_URLS);
+  CharSequence[] entries=getEntries(mPackageName);
+  mAppDomainUrls.setTitles(entries);
+  mAppDomainUrls.setValues(new int[entries.length]);
+  mClearDefaultsPreference=(ClearDefaultsPreference)findPreference(KEY_CLEAR_DEFAULTS);
 }

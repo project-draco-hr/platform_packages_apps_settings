@@ -11,31 +11,36 @@ synchronized (entry) {
     if (entry.icon != null) {
       holder.appIcon.setImageDrawable(entry.icon);
     }
-    if (mManageApplications.mListType == LIST_TYPE_NOTIFICATION) {
+switch (mManageApplications.mListType) {
+case LIST_TYPE_NOTIFICATION:
       if (entry.extraInfo != null) {
         holder.summary.setText(InstalledAppDetails.getNotificationSummary((AppRow)entry.extraInfo,mContext));
       }
  else {
         holder.summary.setText("");
       }
-    }
+    break;
+case LIST_TYPE_DOMAINS_URLS:
+  holder.summary.setText(getDomainsSummary(entry.info.packageName));
+break;
+default :
+holder.updateSizeText(mManageApplications.mInvalidSizeStr,mWhichSize);
+break;
+}
+if ((entry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
+holder.disabled.setVisibility(View.VISIBLE);
+holder.disabled.setText(R.string.not_installed);
+}
+ else if (!entry.info.enabled) {
+holder.disabled.setVisibility(View.VISIBLE);
+holder.disabled.setText(R.string.disabled);
+}
  else {
-      holder.updateSizeText(mManageApplications.mInvalidSizeStr,mWhichSize);
-    }
-    if ((entry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
-      holder.disabled.setVisibility(View.VISIBLE);
-      holder.disabled.setText(R.string.not_installed);
-    }
- else     if (!entry.info.enabled) {
-      holder.disabled.setVisibility(View.VISIBLE);
-      holder.disabled.setText(R.string.disabled);
-    }
- else {
-      holder.disabled.setVisibility(View.GONE);
-    }
-    holder.checkBox.setVisibility(View.GONE);
-  }
-  mActive.remove(convertView);
-  mActive.add(convertView);
-  return convertView;
+holder.disabled.setVisibility(View.GONE);
+}
+holder.checkBox.setVisibility(View.GONE);
+}
+mActive.remove(convertView);
+mActive.add(convertView);
+return convertView;
 }

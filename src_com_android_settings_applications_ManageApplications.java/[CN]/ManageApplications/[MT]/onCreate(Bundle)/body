@@ -3,7 +3,6 @@
   setHasOptionsMenu(true);
   mApplicationsState=ApplicationsState.getInstance(getActivity().getApplication());
   Intent intent=getActivity().getIntent();
-  String action=intent.getAction();
   String className=getArguments() != null ? getArguments().getString("classname") : null;
   if (className == null) {
     className=intent.getComponent().getClassName();
@@ -14,6 +13,9 @@
  else   if (className.equals(NotificationAppListActivity.class.getName())) {
     mListType=LIST_TYPE_NOTIFICATION;
     mNotifBackend=new NotificationBackend();
+  }
+ else   if (className.equals(DomainsURLsAppListActivity.class.getName())) {
+    mListType=LIST_TYPE_DOMAINS_URLS;
   }
  else {
     mListType=LIST_TYPE_MAIN;

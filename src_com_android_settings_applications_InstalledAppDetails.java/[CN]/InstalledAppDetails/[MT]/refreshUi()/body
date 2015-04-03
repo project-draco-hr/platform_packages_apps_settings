@@ -27,7 +27,7 @@
   Activity context=getActivity();
   mStoragePreference.setSummary(AppStorageSettings.getSummary(mAppEntry,context));
   mPermissionsPreference.setSummary(AppPermissionSettings.getSummary(mAppEntry,context));
-  mLaunchPreference.setSummary(AppLaunchSettings.getSummary(mAppEntry,mUsbManager,mPm,context));
+  mLaunchPreference.setSummary(Utils.getLaunchByDeafaultSummary(mAppEntry,mUsbManager,mPm,context));
   mNotificationPreference.setSummary(getNotificationSummary(mAppEntry,context,mBackend));
   mDataPreference.setSummary(getDataSummary());
   if (!mInitialized) {

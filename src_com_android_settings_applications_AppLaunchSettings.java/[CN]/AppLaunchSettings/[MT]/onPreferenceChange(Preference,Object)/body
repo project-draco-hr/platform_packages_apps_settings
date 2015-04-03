@@ -1,0 +1,10 @@
+{
+  boolean ret=false;
+  final String key=preference.getKey();
+  if (KEY_OPEN_DOMAIN_URLS.equals(key)) {
+    SwitchPreference pref=(SwitchPreference)preference;
+    int status=!pref.isChecked() ? PackageManager.INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS : PackageManager.INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_NEVER;
+    ret=mPm.updateIntentVerificationStatus(mPackageName,status,UserHandle.myUserId());
+  }
+  return ret;
+}

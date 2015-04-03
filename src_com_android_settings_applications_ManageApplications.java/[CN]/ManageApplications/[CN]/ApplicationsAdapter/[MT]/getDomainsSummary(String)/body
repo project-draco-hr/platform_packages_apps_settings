@@ -1,0 +1,18 @@
+{
+  ArraySet<String> result=new ArraySet<>();
+  List<IntentFilterVerificationInfo> list=mPm.getIntentFilterVerifications(packageName);
+  for (  IntentFilterVerificationInfo ivi : list) {
+    for (    String host : ivi.getDomains()) {
+      result.add(host);
+    }
+  }
+  if (result.size() == 0) {
+    return mContext.getString(R.string.domain_urls_summary_none);
+  }
+ else   if (result.size() == 1) {
+    return mContext.getString(R.string.domain_urls_summary_one,result.valueAt(0));
+  }
+ else {
+    return mContext.getString(R.string.domain_urls_summary_some,result.valueAt(0));
+  }
+}

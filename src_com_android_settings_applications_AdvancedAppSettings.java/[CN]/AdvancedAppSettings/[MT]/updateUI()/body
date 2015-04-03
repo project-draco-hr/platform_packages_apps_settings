@@ -1,0 +1,11 @@
+{
+  ArrayList<AppEntry> allApps=mSession.getAllApps();
+  mAllAppsPreference.setSummary(getString(R.string.all_apps_summary,allApps.size()));
+  int countAppWithDomainURLs=0;
+  for (  AppEntry entry : allApps) {
+    boolean hasDomainURLs=(entry.info.privateFlags & ApplicationInfo.PRIVATE_FLAG_HAS_DOMAIN_URLS) != 0;
+    if (hasDomainURLs)     countAppWithDomainURLs++;
+  }
+  String summary=getResources().getQuantityString(R.plurals.domain_urls_apps_summary,countAppWithDomainURLs,countAppWithDomainURLs);
+  mAppDomainURLsPreference.setSummary(summary);
+}

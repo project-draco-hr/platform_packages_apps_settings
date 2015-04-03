@@ -1,0 +1,7 @@
+{
+  List<ComponentName> prefActList=new ArrayList<>();
+  List<IntentFilter> intentList=new ArrayList<>();
+  pm.getPreferredActivities(intentList,prefActList,packageName);
+  Log.d(TAG,"Have " + prefActList.size() + " number of activities in preferred list");
+  return prefActList.size() > 0;
+}

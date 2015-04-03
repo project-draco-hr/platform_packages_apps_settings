@@ -7,8 +7,16 @@
   mStoragePreference.setOnPreferenceClickListener(this);
   mPermissionsPreference=findPreference(KEY_PERMISSION);
   mPermissionsPreference.setOnPreferenceClickListener(this);
-  mLaunchPreference=findPreference(KEY_LAUNCH);
-  mLaunchPreference.setOnPreferenceClickListener(this);
   mDataPreference=findPreference(KEY_DATA);
   mDataPreference.setOnPreferenceClickListener(this);
+  mLaunchPreference=findPreference(KEY_LAUNCH);
+  if ((mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
+    mLaunchPreference.setEnabled(false);
+  }
+ else   if (!mAppEntry.info.enabled) {
+    mLaunchPreference.setEnabled(false);
+  }
+ else {
+    mLaunchPreference.setOnPreferenceClickListener(this);
+  }
 }

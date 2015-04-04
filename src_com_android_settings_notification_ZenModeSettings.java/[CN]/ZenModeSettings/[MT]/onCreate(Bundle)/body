@@ -2,18 +2,8 @@
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.zen_mode_settings);
   final PreferenceScreen root=getPreferenceScreen();
-  PREF_ZEN_MODE.init(this);
-  PREF_ZEN_MODE.setCallback(new SettingPrefWithCallback.Callback(){
-    @Override public void onSettingSelected(    int value){
-      if (value != Global.ZEN_MODE_OFF) {
-        showConditionSelection(value);
-      }
-    }
-  }
-);
   mPrioritySettings=root.findPreference(KEY_PRIORITY_SETTINGS);
   if (!isDowntimeSupported(mContext)) {
     removePreference(KEY_AUTOMATION_SETTINGS);
   }
-  updateControls();
 }

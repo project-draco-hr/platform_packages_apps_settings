@@ -1,0 +1,11 @@
+{
+  if (TextUtils.isEmpty(mSummary)) {
+    mTextView.setText(mLabel);
+    return;
+  }
+  final SpannableStringBuilder ssb=new SpannableStringBuilder(mLabel).append('\n');
+  final int start=ssb.length();
+  ssb.append(mSummary);
+  ssb.setSpan(mSummarySpan,start,ssb.length(),0);
+  mTextView.setText(ssb);
+}

@@ -24,7 +24,7 @@
   }
   final LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
   if (lockPatternUtils.isSecure()) {
-    ArrayList<TrustAgentComponentInfo> agents=getActiveTrustAgents(context.getPackageManager(),lockPatternUtils);
+    ArrayList<TrustAgentComponentInfo> agents=getActiveTrustAgents(context.getPackageManager(),lockPatternUtils,context.getSystemService(DevicePolicyManager.class));
     for (int i=0; i < agents.size(); i++) {
       final TrustAgentComponentInfo agent=agents.get(i);
       data=new SearchIndexableRaw(context);

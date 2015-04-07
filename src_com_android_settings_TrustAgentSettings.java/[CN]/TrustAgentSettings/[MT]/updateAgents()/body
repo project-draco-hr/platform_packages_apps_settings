@@ -9,6 +9,7 @@
   loadActiveAgents();
   PreferenceGroup category=(PreferenceGroup)getPreferenceScreen().findPreference("trust_agents");
   category.removeAll();
+  boolean disabledByDevicePolicy=(mDpm.getKeyguardDisabledFeatures(null) & DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS) != 0;
   final int count=mAvailableAgents.size();
   for (int i=0; i < count; i++) {
     AgentInfo agent=mAvailableAgents.valueAt(i);
@@ -20,6 +21,10 @@
     preference.setPersistent(false);
     preference.setOnPreferenceChangeListener(this);
     preference.setChecked(mActiveAgents.contains(agent.component));
+    if (disabledByDevicePolicy && mDpm.getTrustAgentConfiguration(null,agent.component) == null) {
+      preference.setEnabled(false);
+      preference.setSummary(R.string.trust_agent_disabled_device_admin);
+    }
     category.addPreference(agent.preference);
   }
 }

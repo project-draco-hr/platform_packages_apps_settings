@@ -2,6 +2,7 @@
   ArrayList<TrustAgentComponentInfo> result=new ArrayList<TrustAgentComponentInfo>();
   List<ResolveInfo> resolveInfos=pm.queryIntentServices(TRUST_AGENT_INTENT,PackageManager.GET_META_DATA);
   List<ComponentName> enabledTrustAgents=utils.getEnabledTrustAgents();
+  boolean disableTrustAgents=(dpm.getKeyguardDisabledFeatures(null) & DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS) != 0;
   if (enabledTrustAgents != null && !enabledTrustAgents.isEmpty()) {
     for (int i=0; i < resolveInfos.size(); i++) {
       ResolveInfo resolveInfo=resolveInfos.get(i);
@@ -9,6 +10,9 @@
       if (!TrustAgentUtils.checkProvidePermission(resolveInfo,pm))       continue;
       TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
       if (trustAgentComponentInfo.componentName == null || !enabledTrustAgents.contains(TrustAgentUtils.getComponentName(resolveInfo)) || TextUtils.isEmpty(trustAgentComponentInfo.title))       continue;
+      if (disableTrustAgents && dpm.getTrustAgentConfiguration(null,TrustAgentUtils.getComponentName(resolveInfo)) == null) {
+        trustAgentComponentInfo.disabledByAdministrator=true;
+      }
       result.add(trustAgentComponentInfo);
       if (ONLY_ONE_TRUST_AGENT)       break;
     }

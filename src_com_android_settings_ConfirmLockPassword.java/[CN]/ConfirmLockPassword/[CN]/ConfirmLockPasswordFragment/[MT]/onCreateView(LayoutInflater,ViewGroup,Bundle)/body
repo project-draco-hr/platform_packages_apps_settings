@@ -1,35 +1,26 @@
 {
   final int storedQuality=mLockPatternUtils.getKeyguardStoredPasswordQuality();
   View view=inflater.inflate(R.layout.confirm_lock_password,null);
-  view.findViewById(R.id.cancel_button).setOnClickListener(this);
-  mContinueButton=(Button)view.findViewById(R.id.next_button);
-  mContinueButton.setOnClickListener(this);
-  mContinueButton.setEnabled(false);
   mPasswordEntry=(TextView)view.findViewById(R.id.password_entry);
   mPasswordEntry.setOnEditorActionListener(this);
-  mPasswordEntry.addTextChangedListener(this);
-  mKeyboardView=(PasswordEntryKeyboardView)view.findViewById(R.id.keyboard);
-  mHeaderText=(TextView)view.findViewById(R.id.headerText);
+  mHeaderTextView=(TextView)view.findViewById(R.id.headerText);
+  mDetailsTextView=(TextView)view.findViewById(R.id.detailsText);
+  mErrorTextView=(TextView)view.findViewById(R.id.errorText);
   mIsAlpha=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_COMPLEX == storedQuality;
   Intent intent=getActivity().getIntent();
   if (intent != null) {
-    CharSequence headerMessage=intent.getCharSequenceExtra(HEADER_TEXT);
+    CharSequence headerMessage=intent.getCharSequenceExtra(ConfirmDeviceCredentialBaseFragment.HEADER_TEXT);
+    CharSequence detailsMessage=intent.getCharSequenceExtra(ConfirmDeviceCredentialBaseFragment.DETAILS_TEXT);
     if (TextUtils.isEmpty(headerMessage)) {
       headerMessage=getString(getDefaultHeader());
     }
-    mHeaderText.setText(headerMessage);
+    if (TextUtils.isEmpty(detailsMessage)) {
+      detailsMessage=getString(getDefaultDetails());
+    }
+    mHeaderTextView.setText(headerMessage);
+    mDetailsTextView.setText(detailsMessage);
   }
-  final Activity activity=getActivity();
-  mKeyboardHelper=new PasswordEntryKeyboardHelper(activity,mKeyboardView,mPasswordEntry);
-  mKeyboardHelper.setKeyboardMode(mIsAlpha ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);
-  mKeyboardView.requestFocus();
   int currentType=mPasswordEntry.getInputType();
   mPasswordEntry.setInputType(mIsAlpha ? currentType : (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD));
-  if (activity instanceof SettingsActivity) {
-    final SettingsActivity sa=(SettingsActivity)activity;
-    int id=getDefaultHeader();
-    CharSequence title=getText(id);
-    sa.setTitle(title);
-  }
   return view;
 }

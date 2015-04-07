@@ -5,30 +5,20 @@ case NeedToUnlock:
       mHeaderTextView.setText(mHeaderText);
     }
  else {
-      mHeaderTextView.setText(R.string.lockpattern_need_to_unlock);
+      mHeaderTextView.setText(R.string.lockpassword_confirm_your_pattern_header);
     }
-  if (mFooterText != null) {
-    mFooterTextView.setText(mFooterText);
+  if (mDetailsText != null) {
+    mDetailsTextView.setText(mDetailsText);
   }
  else {
-    mFooterTextView.setText(R.string.lockpattern_need_to_unlock_footer);
+    mDetailsTextView.setText(R.string.lockpassword_confirm_your_pattern_generic);
   }
+mErrorTextView.setText("");
 mLockPatternView.setEnabled(true);
 mLockPatternView.enableInput();
 break;
 case NeedToUnlockWrong:
-if (mHeaderWrongText != null) {
-mHeaderTextView.setText(mHeaderWrongText);
-}
- else {
-mHeaderTextView.setText(R.string.lockpattern_need_to_unlock_wrong);
-}
-if (mFooterWrongText != null) {
-mFooterTextView.setText(mFooterWrongText);
-}
- else {
-mFooterTextView.setText(R.string.lockpattern_need_to_unlock_wrong_footer);
-}
+mErrorTextView.setText(R.string.lockpattern_need_to_unlock_wrong);
 mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Wrong);
 mLockPatternView.setEnabled(true);
 mLockPatternView.enableInput();

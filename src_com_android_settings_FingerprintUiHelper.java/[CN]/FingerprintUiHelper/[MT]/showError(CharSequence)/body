@@ -1,0 +1,7 @@
+{
+  vibrateFingerprintError();
+  mIcon.setImageResource(R.drawable.ic_fingerprint_error);
+  mErrorTextView.setText(error);
+  mErrorTextView.removeCallbacks(mResetErrorTextRunnable);
+  mErrorTextView.postDelayed(mResetErrorTextRunnable,ERROR_TIMEOUT);
+}

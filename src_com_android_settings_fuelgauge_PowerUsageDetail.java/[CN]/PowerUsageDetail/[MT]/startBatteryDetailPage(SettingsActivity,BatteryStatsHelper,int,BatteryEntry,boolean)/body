@@ -3,8 +3,8 @@
   final int dischargeAmount=helper.getStats().getDischargeAmount(statsType);
   Bundle args=new Bundle();
   args.putString(PowerUsageDetail.EXTRA_TITLE,entry.name);
-  args.putInt(PowerUsageDetail.EXTRA_PERCENT,(int)((entry.sipper.value * dischargeAmount / helper.getTotalPower()) + .5));
-  args.putInt(PowerUsageDetail.EXTRA_GAUGE,(int)Math.ceil(entry.sipper.value * 100 / helper.getMaxPower()));
+  args.putInt(PowerUsageDetail.EXTRA_PERCENT,(int)((entry.sipper.totalPowerMah * dischargeAmount / helper.getTotalPower()) + .5));
+  args.putInt(PowerUsageDetail.EXTRA_GAUGE,(int)Math.ceil(entry.sipper.totalPowerMah * 100 / helper.getMaxPower()));
   args.putLong(PowerUsageDetail.EXTRA_USAGE_DURATION,helper.getStatsPeriod());
   args.putString(PowerUsageDetail.EXTRA_ICON_PACKAGE,entry.defaultPackageName);
   args.putInt(PowerUsageDetail.EXTRA_ICON_ID,entry.iconId);
@@ -23,7 +23,7 @@ case USER:
 {
       BatteryStats.Uid uid=entry.sipper.uidObj;
       types=new int[]{R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_gps,R.string.usage_type_wifi_running,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_radio_active,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send,R.string.usage_type_audio,R.string.usage_type_video};
-      values=new double[]{entry.sipper.cpuTime,entry.sipper.cpuFgTime,entry.sipper.wakeLockTime,entry.sipper.gpsTime,entry.sipper.wifiRunningTime,entry.sipper.mobileRxPackets,entry.sipper.mobileTxPackets,entry.sipper.mobileActive,entry.sipper.wifiRxPackets,entry.sipper.wifiTxPackets,0,0};
+      values=new double[]{entry.sipper.cpuTimeMs,entry.sipper.cpuFgTimeMs,entry.sipper.wakeLockTimeMs,entry.sipper.gpsTimeMs,entry.sipper.wifiRunningTimeMs,entry.sipper.mobileRxPackets,entry.sipper.mobileTxPackets,entry.sipper.mobileActive,entry.sipper.wifiRxPackets,entry.sipper.wifiTxPackets,0,0};
       if (entry.sipper.drainType == BatterySipper.DrainType.APP) {
         Writer result=new StringWriter();
         PrintWriter printWriter=new FastPrintWriter(result,false,1024);
@@ -42,19 +42,19 @@ case USER:
 case CELL:
 {
   types=new int[]{R.string.usage_type_on_time,R.string.usage_type_no_coverage,R.string.usage_type_radio_active};
-  values=new double[]{entry.sipper.usageTime,entry.sipper.noCoveragePercent,entry.sipper.mobileActive};
+  values=new double[]{entry.sipper.usageTimeMs,entry.sipper.noCoveragePercent,entry.sipper.mobileActive};
 }
 break;
 case WIFI:
 {
 types=new int[]{R.string.usage_type_wifi_running,R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send};
-values=new double[]{entry.sipper.usageTime,entry.sipper.cpuTime,entry.sipper.cpuFgTime,entry.sipper.wakeLockTime,entry.sipper.mobileRxPackets,entry.sipper.mobileTxPackets,entry.sipper.wifiRxPackets,entry.sipper.wifiTxPackets};
+values=new double[]{entry.sipper.usageTimeMs,entry.sipper.cpuTimeMs,entry.sipper.cpuFgTimeMs,entry.sipper.wakeLockTimeMs,entry.sipper.mobileRxPackets,entry.sipper.mobileTxPackets,entry.sipper.wifiRxPackets,entry.sipper.wifiTxPackets};
 }
 break;
 case BLUETOOTH:
 {
 types=new int[]{R.string.usage_type_on_time,R.string.usage_type_cpu,R.string.usage_type_cpu_foreground,R.string.usage_type_wake_lock,R.string.usage_type_data_recv,R.string.usage_type_data_send,R.string.usage_type_data_wifi_recv,R.string.usage_type_data_wifi_send};
-values=new double[]{entry.sipper.usageTime,entry.sipper.cpuTime,entry.sipper.cpuFgTime,entry.sipper.wakeLockTime,entry.sipper.mobileRxPackets,entry.sipper.mobileTxPackets,entry.sipper.wifiRxPackets,entry.sipper.wifiTxPackets};
+values=new double[]{entry.sipper.usageTimeMs,entry.sipper.cpuTimeMs,entry.sipper.cpuFgTimeMs,entry.sipper.wakeLockTimeMs,entry.sipper.mobileRxPackets,entry.sipper.mobileTxPackets,entry.sipper.wifiRxPackets,entry.sipper.wifiTxPackets};
 }
 break;
 case UNACCOUNTED:
@@ -72,7 +72,7 @@ break;
 default :
 {
 types=new int[]{R.string.usage_type_on_time};
-values=new double[]{entry.sipper.usageTime};
+values=new double[]{entry.sipper.usageTimeMs};
 }
 }
 args.putIntArray(PowerUsageDetail.EXTRA_DETAIL_TYPES,types);

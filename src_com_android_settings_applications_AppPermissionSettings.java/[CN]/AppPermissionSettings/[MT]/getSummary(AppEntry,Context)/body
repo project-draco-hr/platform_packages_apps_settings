@@ -1,4 +1,10 @@
 {
+  if (appEntry.info.targetSdkVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
+    AppPermissions appPerms=new AppPermissions(context,appEntry.info.packageName);
+    int count=appPerms.getPermissionCount();
+    int grantedCount=appPerms.getGrantedPermissionsCount();
+    return context.getResources().getQuantityString(R.plurals.runtime_permissions_summary,count,grantedCount,count);
+  }
   AppSecurityPermissions asp=new AppSecurityPermissions(context,appEntry.info.packageName);
   int count=asp.getPermissionCount();
   return context.getResources().getQuantityString(R.plurals.permissions_summary,count,count);

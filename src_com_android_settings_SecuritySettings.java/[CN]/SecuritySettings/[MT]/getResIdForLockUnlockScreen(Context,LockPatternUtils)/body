@@ -1,10 +1,7 @@
 {
   int resid=0;
   if (!lockPatternUtils.isSecure()) {
-    UserManager mUm=(UserManager)context.getSystemService(Context.USER_SERVICE);
-    List<UserInfo> users=mUm.getUsers(true);
-    final boolean singleUser=users.size() == 1;
-    if (singleUser && lockPatternUtils.isLockScreenDisabled()) {
+    if (lockPatternUtils.isLockScreenDisabled()) {
       resid=R.xml.security_settings_lockscreen;
     }
  else {

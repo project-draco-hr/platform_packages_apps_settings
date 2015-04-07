@@ -16,15 +16,15 @@
     final int numSippers=usageList.size();
     for (int i=0; i < numSippers; i++) {
       final BatterySipper sipper=usageList.get(i);
-      if ((sipper.totalPowerMah * SECONDS_IN_HOUR) < MIN_POWER_THRESHOLD_MILLI_AMP) {
+      if ((sipper.value * SECONDS_IN_HOUR) < MIN_POWER_THRESHOLD_MILLI_AMP) {
         continue;
       }
-      final double percentOfTotal=((sipper.totalPowerMah / mStatsHelper.getTotalPower()) * dischargeAmount);
+      final double percentOfTotal=((sipper.value / mStatsHelper.getTotalPower()) * dischargeAmount);
       if (((int)(percentOfTotal + .5)) < 1) {
         continue;
       }
       if (sipper.drainType == BatterySipper.DrainType.OVERCOUNTED) {
-        if (sipper.totalPowerMah < ((mStatsHelper.getMaxRealPower() * 2) / 3)) {
+        if (sipper.value < ((mStatsHelper.getMaxRealPower() * 2) / 3)) {
           continue;
         }
         if (percentOfTotal < 10) {
@@ -35,7 +35,7 @@
         }
       }
       if (sipper.drainType == BatterySipper.DrainType.UNACCOUNTED) {
-        if (sipper.totalPowerMah < (mStatsHelper.getMaxRealPower() / 2)) {
+        if (sipper.value < (mStatsHelper.getMaxRealPower() / 2)) {
           continue;
         }
         if (percentOfTotal < 5) {
@@ -50,7 +50,7 @@
       final Drawable badgedIcon=mUm.getBadgedIconForUser(entry.getIcon(),userHandle);
       final CharSequence contentDescription=mUm.getBadgedLabelForUser(entry.getLabel(),userHandle);
       final PowerGaugePreference pref=new PowerGaugePreference(getActivity(),badgedIcon,contentDescription,entry);
-      final double percentOfMax=(sipper.totalPowerMah * 100) / mStatsHelper.getMaxPower();
+      final double percentOfMax=(sipper.value * 100) / mStatsHelper.getMaxPower();
       sipper.percent=percentOfTotal;
       pref.setTitle(entry.getLabel());
       pref.setOrder(i + 1);

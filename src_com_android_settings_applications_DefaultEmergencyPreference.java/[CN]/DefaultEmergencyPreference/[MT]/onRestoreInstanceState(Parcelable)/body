@@ -1,0 +1,12 @@
+{
+  if (state instanceof SavedState) {
+    SavedState savedState=(SavedState)state;
+    setEntries(savedState.entries);
+    setEntryValues(savedState.entryValues);
+    setSummary(savedState.summary);
+    super.onRestoreInstanceState(savedState.superState);
+  }
+ else {
+    super.onRestoreInstanceState(state);
+  }
+}

@@ -1,18 +1,13 @@
 {
   final PreferenceScreen entries=getPreferenceScreen();
-  final Intent intent=getActivity().getIntent();
-  UserManager mUm=(UserManager)getSystemService(Context.USER_SERVICE);
-  List<UserInfo> users=mUm.getUsers(true);
-  final boolean singleUser=users.size() == 1;
   for (int i=entries.getPreferenceCount() - 1; i >= 0; --i) {
     Preference pref=entries.getPreference(i);
     if (pref instanceof PreferenceScreen) {
-      final String key=((PreferenceScreen)pref).getKey();
+      final String key=pref.getKey();
       boolean enabled=true;
       boolean visible=true;
       if (KEY_UNLOCK_SET_OFF.equals(key)) {
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
-        visible=singleUser;
       }
  else       if (KEY_UNLOCK_SET_NONE.equals(key)) {
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
@@ -27,7 +22,7 @@
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_COMPLEX;
       }
       if (hideDisabled) {
-        visible=visible && enabled;
+        visible=enabled;
       }
       if (!visible) {
         entries.removePreference(pref);

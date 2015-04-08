@@ -21,4 +21,7 @@
   mNpm=NetworkPolicyManager.from(getActivity());
   mAom=(AppOpsManager)getActivity().getSystemService(Context.APP_OPS_SERVICE);
   mHandler=new Handler(getActivity().getMainLooper());
+  if (!DefaultEmergencyPreference.isAvailable(getActivity())) {
+    removePreference(KEY_DEFAULT_EMERGENCY_APP);
+  }
 }

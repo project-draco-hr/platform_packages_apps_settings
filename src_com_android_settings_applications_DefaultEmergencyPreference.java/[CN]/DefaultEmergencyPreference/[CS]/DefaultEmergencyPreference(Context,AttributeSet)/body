@@ -1,5 +1,7 @@
 {
   super(context,attrs);
   mContentResolver=context.getContentResolver();
-  load();
+  if (isAvailable(context)) {
+    load();
+  }
 }

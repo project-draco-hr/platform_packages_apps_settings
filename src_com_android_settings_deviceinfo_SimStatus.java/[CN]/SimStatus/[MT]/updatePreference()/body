@@ -10,9 +10,8 @@
     formattedNumber=PhoneNumberUtils.formatNumber(rawNumber);
   }
   setSummaryText(KEY_PHONE_NUMBER,formattedNumber);
-  final String imei=mPhone.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA ? mPhone.getImei() : mPhone.getDeviceId();
-  setSummaryText(KEY_IMEI,imei);
-  setSummaryText(KEY_IMEI_SV,mTelephonyManager.getDeviceSoftwareVersion());
+  setSummaryText(KEY_IMEI,mPhone.getImei());
+  setSummaryText(KEY_IMEI_SV,mPhone.getDeviceSvn());
   if (!mShowLatestAreaInfo) {
     removePreferenceFromScreen(KEY_LATEST_AREA_INFO);
   }

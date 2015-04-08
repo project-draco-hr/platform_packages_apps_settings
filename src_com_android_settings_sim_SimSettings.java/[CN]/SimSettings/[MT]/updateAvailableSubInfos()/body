@@ -1,11 +1,3 @@
 {
-  final TelephonyManager tm=(TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-  final int numSlots=tm.getSimCount();
-  mAvailableSubInfos=new ArrayList<SubscriptionInfo>(numSlots);
-  for (int i=0; i < numSlots; ++i) {
-    final SubscriptionInfo sir=Utils.findRecordBySlotId(getActivity(),i);
-    mAvailableSubInfos.add(sir);
-    if (sir != null) {
-    }
-  }
+  mAvailableSubInfos=mSubscriptionManager.getActiveSubscriptionInfoList();
 }

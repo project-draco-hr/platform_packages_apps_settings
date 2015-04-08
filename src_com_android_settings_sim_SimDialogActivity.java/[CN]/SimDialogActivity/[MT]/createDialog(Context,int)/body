@@ -48,7 +48,7 @@ final PhoneAccount phoneAccount=telecomManager.getPhoneAccount(phoneAccounts.nex
 list.add((String)phoneAccount.getLabel());
 int subId=telephonyManager.getSubIdForPhoneAccount(phoneAccount);
 if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
-final SubscriptionInfo sir=Utils.findRecordBySubId(context,subId);
+final SubscriptionInfo sir=SubscriptionManager.from(context).getActiveSubscriptionInfo(subId);
 callsSubInfoList.add(sir);
 }
  else {

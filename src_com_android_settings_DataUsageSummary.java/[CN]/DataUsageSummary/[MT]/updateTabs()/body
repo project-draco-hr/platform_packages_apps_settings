@@ -2,9 +2,9 @@
   final Context context=getActivity();
   mTabHost.clearAllTabs();
   int simCount=mTelephonyManager.getSimCount();
-  for (int i=0; i < simCount; i++) {
-    final SubscriptionInfo sir=Utils.findRecordBySlotId(context,i);
-    if (sir != null) {
+  List<SubscriptionInfo> sirs=mSubscriptionManager.getActiveSubscriptionInfoList();
+  if (sirs != null) {
+    for (    SubscriptionInfo sir : sirs) {
       addMobileTab(context,sir,(simCount > 1));
     }
   }

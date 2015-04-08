@@ -45,13 +45,11 @@
       int subId=mSubInfoRecord.getSubscriptionId();
       mSubInfoRecord.setDisplayName(displayName);
       mSubscriptionManager.setDisplayName(displayName,subId,SubscriptionManager.NAME_SOURCE_USER_INPUT);
-      Utils.findRecordBySubId(getActivity(),subId).setDisplayName(displayName);
       final int tintSelected=tintSpinner.getSelectedItemPosition();
       int subscriptionId=mSubInfoRecord.getSubscriptionId();
       int tint=mTintArr[tintSelected];
       mSubInfoRecord.setIconTint(tint);
       mSubscriptionManager.setIconTint(tint,subscriptionId);
-      Utils.findRecordBySubId(getActivity(),subscriptionId).setIconTint(tint);
       updateAllOptions();
       update();
     }

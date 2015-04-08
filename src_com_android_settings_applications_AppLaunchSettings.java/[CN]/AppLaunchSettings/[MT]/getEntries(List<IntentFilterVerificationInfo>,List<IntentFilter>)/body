@@ -1,0 +1,18 @@
+{
+  ArraySet<String> result=new ArraySet<>();
+  if (iviList.size() > 0) {
+    for (    IntentFilterVerificationInfo ivi : iviList) {
+      for (      String host : ivi.getDomains()) {
+        result.add(host);
+      }
+    }
+  }
+  if (filters != null && filters.size() > 0) {
+    for (    IntentFilter filter : filters) {
+      if (filter.hasDataScheme(IntentFilter.SCHEME_HTTP) || filter.hasDataScheme(IntentFilter.SCHEME_HTTPS)) {
+        result.addAll(filter.getHostsList());
+      }
+    }
+  }
+  return result.toArray(new CharSequence[0]);
+}

@@ -1,7 +1,7 @@
 {
   if (DEBUG)   Log.d(TAG,"confirmCondition " + mCondition);
   try {
-    mNoMan.setZenModeCondition(mCondition);
+    mNoMan.setZenMode(mZenMode,mCondition != null ? mCondition.id : null,TAG);
   }
  catch (  RemoteException e) {
   }

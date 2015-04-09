@@ -1,6 +1,6 @@
 {
   final String caption=computeZenModeCaption(mZenMode);
   if (caption == null)   return null;
-  final String conditionText=computeExitConditionText().toLowerCase();
+  final String conditionText=ZenModeConfig.getConditionLine1(mContext,mConfig,UserHandle.myUserId());
   return getString(R.string.zen_mode_summary_combination,caption,conditionText);
 }

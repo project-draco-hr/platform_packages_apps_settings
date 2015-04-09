@@ -1,22 +1,5 @@
 {
   super.onCreate(icicle);
-  mPM=mContext.getPackageManager();
+  setHasOptionsMenu(true);
   addPreferencesFromResource(R.xml.zen_mode_automation_settings);
-  final PreferenceScreen root=getPreferenceScreen();
-  onCreateDowntimeSettings(root);
-  mAutomationCategory=(PreferenceCategory)findPreference(KEY_AUTOMATION);
-  mEntry=findPreference(KEY_ENTRY);
-  mEntry.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-    @Override public boolean onPreferenceClick(    Preference preference){
-      new AlertDialog.Builder(mContext).setTitle(R.string.zen_mode_entry_conditions_title).setView(new ZenModeAutomaticConditionSelection(mContext)).setOnDismissListener(new OnDismissListener(){
-        @Override public void onDismiss(        DialogInterface dialog){
-          refreshAutomationSection();
-        }
-      }
-).setPositiveButton(R.string.dlg_ok,null).show();
-      return true;
-    }
-  }
-);
-  mConditionProviders=findPreference(KEY_CONDITION_PROVIDERS);
 }

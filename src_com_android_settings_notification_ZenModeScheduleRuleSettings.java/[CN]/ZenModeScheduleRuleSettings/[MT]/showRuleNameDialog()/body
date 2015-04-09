@@ -1,0 +1,12 @@
+{
+  new ZenRuleNameDialog(mContext,mRule.name,mConfig.getAutomaticRuleNames()){
+    @Override public void onOk(    String ruleName){
+      final ZenModeConfig newConfig=mConfig.copy();
+      final ZenRule rule=newConfig.automaticRules.get(mRuleId);
+      if (rule == null)       return;
+      rule.name=ruleName;
+      setZenModeConfig(newConfig);
+    }
+  }
+.show();
+}

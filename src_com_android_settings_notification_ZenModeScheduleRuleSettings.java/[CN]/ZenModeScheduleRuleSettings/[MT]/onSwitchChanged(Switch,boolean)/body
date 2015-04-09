@@ -1,0 +1,10 @@
+{
+  if (DEBUG)   Log.d(TAG,"onSwitchChanged " + isChecked);
+  if (mDisableListeners)   return;
+  final boolean enabled=isChecked;
+  if (enabled == mRule.enabled)   return;
+  if (DEBUG)   Log.d(TAG,"onSwitchChanged enabled=" + enabled);
+  mRule.enabled=enabled;
+  mRule.snoozing=false;
+  setZenModeConfig(mConfig);
+}

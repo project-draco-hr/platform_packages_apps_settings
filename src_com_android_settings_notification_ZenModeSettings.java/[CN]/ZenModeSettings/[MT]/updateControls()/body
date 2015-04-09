@@ -1,7 +1,9 @@
 {
   if (mSwitchBar != null) {
     final String summaryLine=computeZenModeSummaryLine();
+    mUpdatingControls=true;
     mSwitchBar.setChecked(summaryLine != null);
+    mUpdatingControls=false;
     mSwitchBar.setSummary(summaryLine);
   }
   updatePrioritySettingsSummary();

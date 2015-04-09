@@ -1,0 +1,14 @@
+{
+  final SparseBooleanArray rt=new SparseBooleanArray(mDays.size());
+  for (int i=0; i < mDays.size(); i++) {
+    final int day=mDays.keyAt(i);
+    if (!mDays.valueAt(i))     continue;
+    rt.put(day,true);
+  }
+  final int[] rta=new int[rt.size()];
+  for (int i=0; i < rta.length; i++) {
+    rta[i]=rt.keyAt(i);
+  }
+  Arrays.sort(rta);
+  return rta;
+}

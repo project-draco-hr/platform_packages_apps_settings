@@ -1,0 +1,13 @@
+{
+  mDisableListeners=true;
+  updateRuleName();
+  updateDays();
+  mStart.setTime(mSchedule.startHour,mSchedule.startMinute);
+  mEnd.setTime(mSchedule.endHour,mSchedule.endMinute);
+  mZenMode.setSelectedValue(mRule.zenMode);
+  mDisableListeners=false;
+  updateEndSummary();
+  if (mSwitchBar != null) {
+    mSwitchBar.setChecked(mRule.enabled);
+  }
+}

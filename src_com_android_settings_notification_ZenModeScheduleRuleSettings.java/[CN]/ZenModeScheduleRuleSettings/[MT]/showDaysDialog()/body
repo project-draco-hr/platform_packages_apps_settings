@@ -1,0 +1,20 @@
+{
+  new AlertDialog.Builder(mContext).setTitle(R.string.zen_mode_schedule_rule_days).setView(new ZenModeScheduleDaysSelection(mContext,mSchedule.days){
+    @Override protected void onChanged(    final int[] days){
+      if (mDisableListeners)       return;
+      if (Arrays.equals(days,mSchedule.days))       return;
+      if (DEBUG)       Log.d(TAG,"days.onChanged days=" + Arrays.asList(days));
+      mSchedule.days=days;
+      mRule.conditionId=ZenModeConfig.toScheduleConditionId(mSchedule);
+      mRule.condition=null;
+      mRule.snoozing=false;
+      setZenModeConfig(mConfig);
+    }
+  }
+).setOnDismissListener(new OnDismissListener(){
+    @Override public void onDismiss(    DialogInterface dialog){
+      updateDays();
+    }
+  }
+).setPositiveButton(R.string.done_button,null).show();
+}

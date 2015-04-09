@@ -1,0 +1,7 @@
+{
+  final int startMin=60 * mSchedule.startHour + mSchedule.startMinute;
+  final int endMin=60 * mSchedule.endHour + mSchedule.endMinute;
+  final boolean nextDay=startMin >= endMin;
+  final int summaryFormat=nextDay ? R.string.zen_mode_end_time_next_day_summary_format : 0;
+  mEnd.setSummaryFormat(summaryFormat);
+}

@@ -1,0 +1,10 @@
+{
+  mRule=mConfig.automaticRules.get(mRuleId);
+  if (DEBUG)   Log.d(TAG,"mRule=" + mRule);
+  mSchedule=mRule != null ? ZenModeConfig.tryParseScheduleConditionId(mRule.conditionId) : null;
+  if (mSchedule == null) {
+    toastAndFinish();
+    return true;
+  }
+  return false;
+}

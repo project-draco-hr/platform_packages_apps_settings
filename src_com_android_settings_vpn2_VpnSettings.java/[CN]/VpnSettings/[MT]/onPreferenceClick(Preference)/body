@@ -1,28 +1,37 @@
 {
-  if (mDialog != null) {
-    Log.v(TAG,"onPreferenceClick() is called when mDialog != null");
-    return true;
-  }
-  if (preference instanceof VpnPreference) {
-    VpnProfile profile=((VpnPreference)preference).getProfile();
-    if (mInfo != null && profile.key.equals(mInfo.key) && mInfo.state == LegacyVpnInfo.STATE_CONNECTED) {
+  if (preference instanceof ConfigPreference) {
+    VpnProfile profile=((ConfigPreference)preference).getProfile();
+    if (mConnectedLegacyVpn != null && profile.key.equals(mConnectedLegacyVpn.key) && mConnectedLegacyVpn.state == LegacyVpnInfo.STATE_CONNECTED) {
       try {
-        mInfo.intent.send();
+        mConnectedLegacyVpn.intent.send();
         return true;
       }
  catch (      Exception e) {
       }
     }
-    mDialog=new VpnDialog(getActivity(),this,profile,false);
+    ConfigDialogFragment.show(this,profile,false,true);
+    return true;
   }
- else {
-    long millis=System.currentTimeMillis();
-    while (mPreferences.containsKey(Long.toHexString(millis))) {
-      ++millis;
+ else   if (preference instanceof AppPreference) {
+    AppPreference pref=(AppPreference)preference;
+    boolean connected=(pref.getState() == AppPreference.STATE_CONNECTED);
+    if (!connected) {
+      try {
+        UserHandle user=new UserHandle(UserHandle.getUserId(pref.getUid()));
+        Context userContext=getActivity().createPackageContextAsUser(getActivity().getPackageName(),0,user);
+        PackageManager pm=userContext.getPackageManager();
+        Intent appIntent=pm.getLaunchIntentForPackage(pref.getPackageName());
+        if (appIntent != null) {
+          userContext.startActivityAsUser(appIntent,user);
+          return true;
+        }
+      }
+ catch (      PackageManager.NameNotFoundException nnfe) {
+      }
     }
-    mDialog=new VpnDialog(getActivity(),this,new VpnProfile(Long.toHexString(millis)),true);
+    PackageInfo pkgInfo=pref.getPackageInfo();
+    AppDialogFragment.show(this,pkgInfo,false,connected);
+    return true;
   }
-  mDialog.setOnDismissListener(this);
-  mDialog.show();
-  return true;
+  return false;
 }

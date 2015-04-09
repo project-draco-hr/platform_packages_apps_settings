@@ -1,0 +1,14 @@
+{
+  super.onResume();
+  if (!KeyStore.getInstance().isUnlocked()) {
+    if (!mUnlocking) {
+      Credentials.getInstance().unlock(getActivity());
+    }
+ else {
+      dismiss();
+    }
+    mUnlocking=!mUnlocking;
+    return;
+  }
+  mUnlocking=false;
+}

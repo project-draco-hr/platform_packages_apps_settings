@@ -1,0 +1,20 @@
+{
+  if (preference instanceof ConfigPreference) {
+    ConfigPreference another=(ConfigPreference)preference;
+    int result;
+    if ((result=another.mState - mState) == 0 && (result=mProfile.name.compareTo(another.mProfile.name)) == 0 && (result=mProfile.type - another.mProfile.type) == 0) {
+      result=mProfile.key.compareTo(another.mProfile.key);
+    }
+    return result;
+  }
+ else   if (preference instanceof AppPreference) {
+    AppPreference another=(AppPreference)preference;
+    if (mState != STATE_CONNECTED && another.getState() == AppPreference.STATE_CONNECTED) {
+      return 1;
+    }
+    return -1;
+  }
+ else {
+    return super.compareTo(preference);
+  }
+}

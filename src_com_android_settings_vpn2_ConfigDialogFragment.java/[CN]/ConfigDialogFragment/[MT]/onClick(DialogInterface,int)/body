@@ -1,0 +1,21 @@
+{
+  ConfigDialog dialog=(ConfigDialog)getDialog();
+  VpnProfile profile=dialog.getProfile();
+  if (button == DialogInterface.BUTTON_POSITIVE) {
+    KeyStore.getInstance().put(Credentials.VPN + profile.key,profile.encode(),KeyStore.UID_SELF,KeyStore.FLAG_ENCRYPTED);
+    disconnect(profile);
+    if (!dialog.isEditing()) {
+      try {
+        connect(profile);
+      }
+ catch (      RemoteException e) {
+        Log.e(TAG,"Failed to connect",e);
+      }
+    }
+  }
+ else   if (button == DialogInterface.BUTTON_NEUTRAL) {
+    disconnect(profile);
+    KeyStore.getInstance().delete(Credentials.VPN + profile.key,KeyStore.UID_SELF);
+  }
+  dismiss();
+}

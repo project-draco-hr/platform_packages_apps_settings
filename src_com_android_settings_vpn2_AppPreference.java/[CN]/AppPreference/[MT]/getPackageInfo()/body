@@ -1,0 +1,10 @@
+{
+  UserHandle user=new UserHandle(UserHandle.getUserId(mUid));
+  try {
+    IPackageManager ipm=AppGlobals.getPackageManager();
+    return ipm.getPackageInfo(mPackageName,0,user.getIdentifier());
+  }
+ catch (  RemoteException rme) {
+    return null;
+  }
+}

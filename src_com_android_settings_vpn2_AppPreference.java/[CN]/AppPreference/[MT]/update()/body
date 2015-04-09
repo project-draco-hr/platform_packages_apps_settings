@@ -1,0 +1,24 @@
+{
+  final String[] states=getContext().getResources().getStringArray(R.array.vpn_states);
+  setSummary(mState != STATE_DISCONNECTED ? states[mState] : "");
+  mName=mPackageName;
+  Drawable icon=null;
+  try {
+    int userId=UserHandle.getUserId(mUid);
+    Context userContext=getContext().createPackageContextAsUser(getContext().getPackageName(),0,new UserHandle(userId));
+    PackageManager pm=userContext.getPackageManager();
+    PackageInfo pkgInfo=pm.getPackageInfo(mPackageName,0);
+    if (pkgInfo != null) {
+      icon=pkgInfo.applicationInfo.loadIcon(pm);
+      mName=VpnConfig.getVpnLabel(userContext,mPackageName).toString();
+    }
+  }
+ catch (  PackageManager.NameNotFoundException nnfe) {
+  }
+  if (icon == null) {
+    icon=getContext().getPackageManager().getDefaultActivityIcon();
+  }
+  setTitle(mName);
+  setIcon(icon);
+  notifyHierarchyChanged();
+}

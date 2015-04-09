@@ -1,0 +1,9 @@
+{
+  final ZenModeConfig config=getZenModeConfig();
+  if (Objects.equals(config,mConfig))   return;
+  mConfig=config;
+  if (DEBUG)   Log.d(TAG,"updateZenModeConfig mConfig=" + mConfig);
+  if (fireChanged) {
+    onZenModeConfigChanged();
+  }
+}

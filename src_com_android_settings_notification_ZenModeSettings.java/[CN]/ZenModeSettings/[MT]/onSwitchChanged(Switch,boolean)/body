@@ -1,0 +1,11 @@
+{
+  if (DEBUG)   Log.d(TAG,"onSwitchChanged " + isChecked + " mShowing="+ mShowing);
+  if (!mShowing)   return;
+  if (isChecked) {
+    setZenMode(Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS);
+    showConditionSelection(Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS);
+  }
+ else {
+    setZenMode(Global.ZEN_MODE_OFF);
+  }
+}

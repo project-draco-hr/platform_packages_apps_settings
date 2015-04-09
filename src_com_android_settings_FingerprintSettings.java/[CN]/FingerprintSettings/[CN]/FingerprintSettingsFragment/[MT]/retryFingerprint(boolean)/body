@@ -1,0 +1,10 @@
+{
+  if (resetAttempts) {
+    mMaxFingerprintAttempts=0;
+  }
+  if (mMaxFingerprintAttempts < MAX_RETRY_ATTEMPTS) {
+    mFingerprintCancel=new CancellationSignal();
+    mFingerprintManager.authenticate(null,mFingerprintCancel,mAuthCallback,0);
+  }
+  mMaxFingerprintAttempts++;
+}

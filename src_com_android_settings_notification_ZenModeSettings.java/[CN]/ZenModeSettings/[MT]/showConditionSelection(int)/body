@@ -10,7 +10,7 @@
 ;
   ScrollView scrollView=new ScrollView(mContext);
   scrollView.addView(zenModeConditionSelection);
-  mDialog=new AlertDialog.Builder(getActivity()).setTitle(computeZenModeCaption(zenMode)).setView(scrollView).setPositiveButton(R.string.okay,positiveListener).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+  mDialog=new AlertDialog.Builder(getActivity()).setTitle(computeZenModeCaption(getResources(),zenMode)).setView(scrollView).setPositiveButton(R.string.okay,positiveListener).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
       cancelDialog();
     }

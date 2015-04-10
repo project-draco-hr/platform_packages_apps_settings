@@ -1,0 +1,29 @@
+{
+  final TreeSet<Integer> daySet=new TreeSet<>();
+  for (int i=0; days != null && i < days.length; i++) {
+    daySet.add(days[i]);
+  }
+  if (daySet.isEmpty()) {
+    return getString(R.string.zen_mode_schedule_rule_days_none);
+  }
+  final int N=ALL_DAYS.length;
+  if (daySet.size() == N) {
+    return getString(R.string.zen_mode_schedule_rule_days_all);
+  }
+  String rt=null;
+  for (int i=0; i < N; i++) {
+    final int startDay=ALL_DAYS[i];
+    final boolean active=daySet.contains(startDay);
+    if (!active)     continue;
+    int end=0;
+    while (daySet.contains(ALL_DAYS[(i + end + 1) % N])) {
+      end++;
+    }
+    if (!(i == 0 && daySet.contains(ALL_DAYS[N - 1]))) {
+      final String v=end == 0 ? dayString(startDay) : getString(R.string.summary_range_symbol_combination,dayString(startDay),dayString(ALL_DAYS[(i + end) % N]));
+      rt=rt == null ? v : getString(R.string.summary_divider_text,rt,v);
+    }
+    i+=end;
+  }
+  return rt;
+}

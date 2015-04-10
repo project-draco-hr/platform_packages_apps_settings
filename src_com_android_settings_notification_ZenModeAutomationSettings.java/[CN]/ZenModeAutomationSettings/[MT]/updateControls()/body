@@ -8,7 +8,7 @@
     if (!ZenModeConfig.isValidScheduleConditionId(rule.conditionId))     continue;
     final Preference p=new Preference(mContext);
     p.setTitle(rule.name);
-    p.setSummary(rule.enabled ? R.string.switch_on_text : R.string.switch_off_text);
+    p.setSummary(computeRuleSummary(rule));
     p.setPersistent(false);
     p.setOnPreferenceClickListener(new OnPreferenceClickListener(){
       @Override public boolean onPreferenceClick(      Preference preference){

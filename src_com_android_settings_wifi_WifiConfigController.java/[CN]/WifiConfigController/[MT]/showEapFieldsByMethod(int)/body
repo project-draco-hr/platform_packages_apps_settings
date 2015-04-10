@@ -36,5 +36,14 @@ mView.findViewById(R.id.l_phase2).setVisibility(View.VISIBLE);
 mView.findViewById(R.id.l_anonymous).setVisibility(View.VISIBLE);
 setUserCertInvisible();
 break;
+case WIFI_EAP_METHOD_SIM:
+case WIFI_EAP_METHOD_AKA:
+case WIFI_EAP_METHOD_AKA_PRIME:
+setPhase2Invisible();
+setAnonymousIdentInvisible();
+setUserCertInvisible();
+setPasswordInvisible();
+setIdentityInvisible();
+break;
 }
 }

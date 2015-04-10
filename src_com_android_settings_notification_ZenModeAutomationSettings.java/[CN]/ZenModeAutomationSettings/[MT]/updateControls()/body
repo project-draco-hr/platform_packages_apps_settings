@@ -5,14 +5,15 @@
   for (int i=0; i < mConfig.automaticRules.size(); i++) {
     final String id=mConfig.automaticRules.keyAt(i);
     final ZenRule rule=mConfig.automaticRules.valueAt(i);
-    if (!ZenModeConfig.isValidScheduleConditionId(rule.conditionId))     continue;
+    final boolean isSchedule=ZenModeConfig.isValidScheduleConditionId(rule.conditionId);
     final Preference p=new Preference(mContext);
     p.setTitle(rule.name);
     p.setSummary(computeRuleSummary(rule));
     p.setPersistent(false);
     p.setOnPreferenceClickListener(new OnPreferenceClickListener(){
       @Override public boolean onPreferenceClick(      Preference preference){
-        showRule(id,rule.name);
+        final String action=isSchedule ? ZenModeScheduleRuleSettings.ACTION : ZenModeExternalRuleSettings.ACTION;
+        showRule(action,null,id,rule.name);
         return true;
       }
     }

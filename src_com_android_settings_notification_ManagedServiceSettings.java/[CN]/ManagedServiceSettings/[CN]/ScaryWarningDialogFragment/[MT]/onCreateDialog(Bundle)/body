@@ -7,8 +7,7 @@
   final String summary=getResources().getString(mConfig.warningDialogSummary,label);
   return new AlertDialog.Builder(getActivity()).setMessage(summary).setTitle(title).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int id){
-      mEnabledServices.add(cn);
-      saveEnabledServices();
+      mServiceListing.setEnabled(cn,true);
     }
   }
 ).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){

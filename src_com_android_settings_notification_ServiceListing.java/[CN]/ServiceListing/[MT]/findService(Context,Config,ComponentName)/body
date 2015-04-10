@@ -1,0 +1,11 @@
+{
+  final ServiceListing listing=new ServiceListing(context,config);
+  final List<ServiceInfo> services=listing.reload();
+  for (  ServiceInfo service : services) {
+    final ComponentName serviceCN=new ComponentName(service.packageName,service.name);
+    if (serviceCN.equals(cn)) {
+      return service;
+    }
+  }
+  return null;
+}

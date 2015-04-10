@@ -1,0 +1,45 @@
+{
+  super.onCreate(icicle);
+  mContext=getActivity();
+  final Intent intent=getActivity().getIntent();
+  if (DEBUG)   Log.d(TAG,"onCreate getIntent()=" + intent);
+  if (intent == null) {
+    Log.w(TAG,"No intent");
+    toastAndFinish();
+    return;
+  }
+  mRuleId=intent.getStringExtra(EXTRA_RULE_ID);
+  if (DEBUG)   Log.d(TAG,"mRuleId=" + mRuleId);
+  if (refreshRuleOrFinish()) {
+    return;
+  }
+  setHasOptionsMenu(true);
+  onCreateInternal();
+  final PreferenceScreen root=getPreferenceScreen();
+  mRuleName=root.findPreference(KEY_RULE_NAME);
+  mRuleName.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      showRuleNameDialog();
+      return true;
+    }
+  }
+);
+  mZenMode=(DropDownPreference)root.findPreference(KEY_ZEN_MODE);
+  mZenMode.addItem(R.string.zen_mode_option_important_interruptions,Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS);
+  mZenMode.addItem(R.string.zen_mode_option_alarms,Global.ZEN_MODE_ALARMS);
+  mZenMode.addItem(R.string.zen_mode_option_no_interruptions,Global.ZEN_MODE_NO_INTERRUPTIONS);
+  mZenMode.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object value){
+      if (mDisableListeners)       return true;
+      final int zenMode=(Integer)value;
+      if (zenMode == mRule.zenMode)       return true;
+      if (DEBUG)       Log.d(TAG,"onPrefChange zenMode=" + zenMode);
+      mRule.zenMode=zenMode;
+      setZenModeConfig(mConfig);
+      return true;
+    }
+  }
+);
+  mZenMode.setOrder(10);
+  mZenMode.setDependency(getZenModeDependency());
+}

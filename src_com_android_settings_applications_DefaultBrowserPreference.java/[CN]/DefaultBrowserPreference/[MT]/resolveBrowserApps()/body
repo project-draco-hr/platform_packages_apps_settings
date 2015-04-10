@@ -1,0 +1,20 @@
+{
+  ArrayMap<String,CharSequence> result=new ArrayMap<>();
+  Intent intent=new Intent();
+  intent.setAction(Intent.ACTION_VIEW);
+  intent.addCategory(Intent.CATEGORY_BROWSABLE);
+  intent.setData(Uri.parse("http:"));
+  PackageManager packageManager=getContext().getPackageManager();
+  List<ResolveInfo> list=packageManager.queryIntentActivitiesAsUser(intent,0,UserHandle.myUserId());
+  final int count=list.size();
+  for (int i=0; i < count; i++) {
+    ResolveInfo info=list.get(i);
+    if (info.activityInfo == null || result.containsKey(info.activityInfo.packageName) || !info.handleAllWebDataURI) {
+      continue;
+    }
+    String packageName=info.activityInfo.packageName;
+    CharSequence label=info.activityInfo.applicationInfo.loadLabel(packageManager);
+    result.put(packageName,label);
+  }
+  return result;
+}

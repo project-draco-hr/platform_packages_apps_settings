@@ -5,8 +5,10 @@
   }
   mMessages.setChecked(mConfig.allowMessages);
   mStarred.setSelectedValue(mConfig.allowFrom);
+  mStarred.setEnabled(mConfig.allowCalls || mConfig.allowMessages);
   mReminders.setChecked(mConfig.allowReminders);
   mEvents.setChecked(mConfig.allowEvents);
-  updateStarredEnabled();
+  mRepeatCallers.setChecked(mConfig.allowRepeatCallers);
+  mRepeatCallers.setEnabled(!mConfig.allowCalls || mConfig.allowFrom != ZenModeConfig.SOURCE_ANYONE);
   mDisableListeners=false;
 }

@@ -17,8 +17,10 @@
   int currentType=mPasswordEntry.getInputType();
   mPasswordEntry.setInputType(mIsAlphaMode ? currentType : (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD));
   Intent intent=getActivity().getIntent();
-  final boolean confirmCredentials=intent.getBooleanExtra("confirm_credentials",true);
+  final boolean confirmCredentials=intent.getBooleanExtra(ChooseLockGeneric.CONFIRM_CREDENTIALS,true);
   mCurrentPassword=intent.getStringExtra(ChooseLockSettingsHelper.EXTRA_KEY_PASSWORD);
+  mHasChallenge=intent.getBooleanExtra(ChooseLockSettingsHelper.EXTRA_KEY_HAS_CHALLENGE,false);
+  mChallenge=intent.getLongExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE,0);
   if (savedInstanceState == null) {
     updateStage(Stage.Introduction);
     if (confirmCredentials) {

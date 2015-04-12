@@ -7,6 +7,8 @@
   intent.putExtra(ConfirmDeviceCredentialBaseFragment.DARK_THEME,external);
   intent.putExtra(ConfirmDeviceCredentialBaseFragment.SHOW_CANCEL_BUTTON,external);
   intent.putExtra(ConfirmDeviceCredentialBaseFragment.SHOW_WHEN_LOCKED,external);
+  intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_HAS_CHALLENGE,hasChallenge);
+  intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE,challenge);
   intent.setClassName(ConfirmDeviceCredentialBaseFragment.PACKAGE,activityClass.getName());
   if (mFragment != null) {
     mFragment.startActivityForResult(intent,request);

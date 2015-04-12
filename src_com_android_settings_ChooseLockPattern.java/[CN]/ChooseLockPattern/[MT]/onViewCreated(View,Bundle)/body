@@ -12,7 +12,10 @@
   final LinearLayoutWithDefaultTouchRecepient topLayout=(LinearLayoutWithDefaultTouchRecepient)view.findViewById(R.id.topLayout);
   topLayout.setDefaultTouchRecepient(mLockPatternView);
   final boolean confirmCredentials=getActivity().getIntent().getBooleanExtra("confirm_credentials",true);
-  mCurrentPattern=getActivity().getIntent().getStringExtra(ChooseLockSettingsHelper.EXTRA_KEY_PASSWORD);
+  Intent intent=getActivity().getIntent();
+  mCurrentPattern=intent.getStringExtra(ChooseLockSettingsHelper.EXTRA_KEY_PASSWORD);
+  mHasChallenge=intent.getBooleanExtra(ChooseLockSettingsHelper.EXTRA_KEY_HAS_CHALLENGE,false);
+  mChallenge=intent.getLongExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE,0);
   if (savedInstanceState == null) {
     if (confirmCredentials) {
       updateStage(Stage.NeedToConfirm);

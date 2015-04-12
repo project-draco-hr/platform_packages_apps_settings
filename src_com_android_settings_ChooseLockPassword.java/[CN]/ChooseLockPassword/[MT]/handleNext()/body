@@ -19,7 +19,15 @@
       final boolean required=getActivity().getIntent().getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);
       mLockPatternUtils.setCredentialRequiredToDecrypt(required);
       mLockPatternUtils.saveLockPassword(pin,mCurrentPassword,mRequestedQuality);
-      getActivity().setResult(RESULT_FINISHED);
+      if (mHasChallenge) {
+        Intent intent=new Intent();
+        byte[] token=mLockPatternUtils.verifyPassword(pin,mChallenge);
+        intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
+        getActivity().setResult(RESULT_FINISHED,intent);
+      }
+ else {
+        getActivity().setResult(RESULT_FINISHED);
+      }
       getActivity().finish();
       mDone=true;
       if (!wasSecureBefore) {

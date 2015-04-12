@@ -9,6 +9,8 @@
   if (getActivity() instanceof ChooseLockGeneric.InternalActivity) {
     mPasswordConfirmed=!confirmCredentials;
   }
+  mHasChallenge=getActivity().getIntent().getBooleanExtra(ChooseLockSettingsHelper.EXTRA_KEY_HAS_CHALLENGE,false);
+  mChallenge=getActivity().getIntent().getLongExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE,0);
   if (savedInstanceState != null) {
     mPasswordConfirmed=savedInstanceState.getBoolean(PASSWORD_CONFIRMED);
     mWaitingForConfirmation=savedInstanceState.getBoolean(WAITING_FOR_CONFIRMATION);

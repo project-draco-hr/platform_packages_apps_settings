@@ -1,16 +1,3 @@
 {
-  boolean launched=false;
-switch (mLockPatternUtils.getKeyguardStoredPasswordQuality()) {
-case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
-    launched=launchConfirmationActivity(request,title,header,description,returnCredentials ? ConfirmLockPattern.InternalActivity.class : ConfirmLockPattern.class,external);
-  break;
-case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
-case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
-case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
-case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
-case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
-launched=launchConfirmationActivity(request,title,header,description,returnCredentials ? ConfirmLockPassword.InternalActivity.class : ConfirmLockPassword.class,external);
-break;
-}
-return launched;
+  return launchConfirmationActivity(request,title,header,description,returnCredentials,external,false,0);
 }

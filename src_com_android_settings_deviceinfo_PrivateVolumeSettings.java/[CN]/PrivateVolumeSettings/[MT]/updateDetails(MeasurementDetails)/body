@@ -1,0 +1,17 @@
+{
+  mGraph.clear();
+  updatePreference(mApps,details.appsSize);
+  final long dcimSize=totalValues(details.mediaSize,Environment.DIRECTORY_DCIM,Environment.DIRECTORY_MOVIES,Environment.DIRECTORY_PICTURES);
+  updatePreference(mDcim,dcimSize);
+  final long musicSize=totalValues(details.mediaSize,Environment.DIRECTORY_MUSIC,Environment.DIRECTORY_ALARMS,Environment.DIRECTORY_NOTIFICATIONS,Environment.DIRECTORY_RINGTONES,Environment.DIRECTORY_PODCASTS);
+  updatePreference(mMusic,musicSize);
+  final long downloadsSize=totalValues(details.mediaSize,Environment.DIRECTORY_DOWNLOADS);
+  updatePreference(mDownloads,downloadsSize);
+  updatePreference(mCache,details.cacheSize);
+  updatePreference(mMisc,details.miscSize);
+  for (  StorageItemPreference userPref : mUsers) {
+    final long userSize=details.usersSize.get(userPref.userHandle);
+    updatePreference(userPref,userSize);
+  }
+  mGraph.commit();
+}

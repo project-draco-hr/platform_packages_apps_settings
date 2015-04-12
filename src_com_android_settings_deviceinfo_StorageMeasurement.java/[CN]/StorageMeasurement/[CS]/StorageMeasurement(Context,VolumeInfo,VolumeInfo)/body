@@ -1,0 +1,9 @@
+{
+  mContext=context.getApplicationContext();
+  mVolume=volume;
+  mSharedVolume=sharedVolume;
+  final HandlerThread handlerThread=new HandlerThread("MemoryMeasurement");
+  handlerThread.start();
+  mMainHandler=new MainHandler();
+  mMeasurementHandler=new MeasurementHandler(handlerThread.getLooper());
+}

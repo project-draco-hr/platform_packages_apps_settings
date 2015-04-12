@@ -1,0 +1,9 @@
+{
+  if (e == null) {
+    Toast.makeText(mContext,mContext.getString(R.string.storage_unmount_success,mDescription),Toast.LENGTH_SHORT).show();
+  }
+ else {
+    Log.e(TAG,"Failed to unmount " + mVolumeId,e);
+    Toast.makeText(mContext,mContext.getString(R.string.storage_unmount_failure,mDescription),Toast.LENGTH_SHORT).show();
+  }
+}

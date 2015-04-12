@@ -1,0 +1,36 @@
+{
+  Intent intent=null;
+  if (pref == mApps) {
+    intent=new Intent(Intent.ACTION_MANAGE_PACKAGE_STORAGE);
+    intent.setClass(getActivity(),Settings.ManageApplicationsActivity.class);
+  }
+ else   if (pref == mDownloads) {
+    intent=new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS).putExtra(DownloadManager.INTENT_EXTRAS_SORT_BY_SIZE,true);
+  }
+ else   if (pref == mMusic) {
+    intent=new Intent(Intent.ACTION_GET_CONTENT);
+    intent.setType("audio/mp3");
+  }
+ else   if (pref == mDcim) {
+    intent=new Intent(Intent.ACTION_VIEW);
+    intent.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
+    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+  }
+ else   if (pref == mCache) {
+    ConfirmClearCacheFragment.show(this);
+    return true;
+  }
+ else   if (pref == mMisc) {
+    intent=StorageSettings.buildBrowseIntent(mSharedVolume);
+  }
+  if (intent != null) {
+    try {
+      startActivity(intent);
+    }
+ catch (    ActivityNotFoundException e) {
+      Log.w(TAG,"No activity found for " + intent);
+    }
+    return true;
+  }
+  return super.onPreferenceTreeClick(preferenceScreen,pref);
+}

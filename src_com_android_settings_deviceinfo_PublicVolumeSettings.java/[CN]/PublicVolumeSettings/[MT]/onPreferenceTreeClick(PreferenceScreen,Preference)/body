@@ -1,0 +1,15 @@
+{
+  final Context context=getActivity();
+  if (pref == mMount) {
+    new MountTask(context,mVolume.id).execute();
+  }
+ else   if (pref == mUnmount) {
+    new UnmountTask(context,mVolume.id).execute();
+  }
+ else   if (pref == mFormat) {
+    new FormatTask(context,mVolume.id).execute();
+  }
+ else   if (pref == mFormatInternal) {
+  }
+  return super.onPreferenceTreeClick(preferenceScreen,pref);
+}

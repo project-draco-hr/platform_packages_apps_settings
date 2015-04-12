@@ -1,0 +1,9 @@
+{
+  if (e == null) {
+    Toast.makeText(mContext,mContext.getString(R.string.storage_mount_success,mDescription),Toast.LENGTH_SHORT).show();
+  }
+ else {
+    Log.e(TAG,"Failed to mount " + mVolumeId,e);
+    Toast.makeText(mContext,mContext.getString(R.string.storage_mount_failure,mDescription),Toast.LENGTH_SHORT).show();
+  }
+}

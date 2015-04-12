@@ -1,0 +1,7 @@
+{
+  pref.setSummary(Formatter.formatFileSize(getActivity(),size));
+  if (size > 0) {
+    final int order=pref.getOrder();
+    mGraph.addEntry(order,size / (float)mTotalSize,pref.color);
+  }
+}

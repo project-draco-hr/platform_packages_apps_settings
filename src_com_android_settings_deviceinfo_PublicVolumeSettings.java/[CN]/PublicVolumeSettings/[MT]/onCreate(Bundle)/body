@@ -1,0 +1,24 @@
+{
+  super.onCreate(icicle);
+  final Context context=getActivity();
+  mStorageManager=context.getSystemService(StorageManager.class);
+  if (DocumentsContract.ACTION_DOCUMENT_ROOT_SETTINGS.equals(getActivity().getIntent().getAction())) {
+    final Uri rootUri=getActivity().getIntent().getData();
+    final String fsUuid=DocumentsContract.getRootId(rootUri);
+    mVolume=mStorageManager.findVolumeByUuid(fsUuid);
+  }
+ else {
+    final String volId=getArguments().getString(EXTRA_VOLUME_ID);
+    mVolume=mStorageManager.findVolumeById(volId);
+  }
+  Preconditions.checkNotNull(mVolume);
+  Preconditions.checkState(mVolume.type == VolumeInfo.TYPE_PUBLIC);
+  addPreferencesFromResource(R.xml.device_info_storage_volume);
+  mGraph=buildGraph();
+  mTotal=buildItem(R.string.memory_size,0);
+  mAvailable=buildItem(R.string.memory_available,R.color.memory_avail);
+  mMount=buildAction(R.string.storage_menu_mount);
+  mUnmount=buildAction(R.string.storage_menu_unmount);
+  mFormat=buildAction(R.string.storage_menu_format);
+  mFormatInternal=buildAction(R.string.storage_menu_format_internal);
+}

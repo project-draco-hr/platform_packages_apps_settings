@@ -1,0 +1,22 @@
+{
+  final Context context=getActivity();
+  getPreferenceScreen().removeAll();
+  mInternalCategory.removeAll();
+  mExternalCategory.removeAll();
+  final List<VolumeInfo> volumes=mStorageManager.getVolumes();
+  Collections.sort(volumes,sVolumeComparator);
+  for (  VolumeInfo vol : volumes) {
+    if (vol.type == VolumeInfo.TYPE_PRIVATE) {
+      mInternalCategory.addPreference(new StorageVolumePreference(context,vol));
+    }
+ else     if (vol.type == VolumeInfo.TYPE_PUBLIC) {
+      mExternalCategory.addPreference(new StorageVolumePreference(context,vol));
+    }
+  }
+  if (mInternalCategory.getPreferenceCount() > 0) {
+    getPreferenceScreen().addPreference(mInternalCategory);
+  }
+  if (mExternalCategory.getPreferenceCount() > 0) {
+    getPreferenceScreen().addPreference(mExternalCategory);
+  }
+}

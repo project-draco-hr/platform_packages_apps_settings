@@ -3,12 +3,8 @@ switch (msg.what) {
 case MSG_MEASURE:
 {
       if (mCached != null) {
-        sendExactUpdate(mCached);
+        mMainHandler.obtainMessage(0,mCached).sendToTarget();
         break;
-      }
-      final Context context=(mContext != null) ? mContext.get() : null;
-      if (context == null) {
-        return;
       }
 synchronized (mLock) {
         if (mBound) {
@@ -17,15 +13,14 @@ synchronized (mLock) {
         }
  else {
           Intent service=new Intent().setComponent(DEFAULT_CONTAINER_COMPONENT);
-          context.bindServiceAsUser(service,mDefContainerConn,Context.BIND_AUTO_CREATE,UserHandle.OWNER);
+          mContext.bindServiceAsUser(service,mDefContainerConn,Context.BIND_AUTO_CREATE,UserHandle.OWNER);
         }
       }
       break;
     }
 case MSG_CONNECTED:
 {
-    IMediaContainerService imcs=(IMediaContainerService)msg.obj;
-    measureApproximateStorage(imcs);
+    final IMediaContainerService imcs=(IMediaContainerService)msg.obj;
     measureExactStorage(imcs);
     break;
   }
@@ -33,12 +28,8 @@ case MSG_DISCONNECT:
 {
 synchronized (mLock) {
     if (mBound) {
-      final Context context=(mContext != null) ? mContext.get() : null;
-      if (context == null) {
-        return;
-      }
       mBound=false;
-      context.unbindService(mDefContainerConn);
+      mContext.unbindService(mDefContainerConn);
     }
   }
   break;
@@ -46,7 +37,7 @@ synchronized (mLock) {
 case MSG_COMPLETED:
 {
 mCached=(MeasurementDetails)msg.obj;
-sendExactUpdate(mCached);
+mMainHandler.obtainMessage(0,mCached).sendToTarget();
 break;
 }
 case MSG_INVALIDATE:

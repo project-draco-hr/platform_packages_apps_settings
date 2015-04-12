@@ -1,0 +1,7 @@
+{
+  if (!parent.isAdded())   return;
+  final RenameFragment dialog=new RenameFragment();
+  dialog.setTargetFragment(parent,0);
+  dialog.setArguments(parent.getArguments());
+  dialog.show(parent.getFragmentManager(),TAG_RENAME);
+}

@@ -1,0 +1,24 @@
+{
+  super(context);
+  mStorageManager=context.getSystemService(StorageManager.class);
+  mVolume=volume;
+  setKey(volume.id);
+  setTitle(mStorageManager.getBestVolumeDescription(volume.id));
+switch (volume.state) {
+case VolumeInfo.STATE_MOUNTED:
+    final File path=new File(volume.path);
+  final String free=Formatter.formatFileSize(context,path.getFreeSpace());
+final String total=Formatter.formatFileSize(context,path.getTotalSpace());
+setSummary(context.getString(R.string.storage_volume_summary,free,total));
+break;
+}
+if (VolumeInfo.ID_PRIVATE_INTERNAL.equals(volume.id)) {
+setIcon(context.getDrawable(R.drawable.ic_settings_storage));
+}
+ else {
+setIcon(context.getDrawable(R.drawable.ic_sim_sd));
+}
+if (volume.type == VolumeInfo.TYPE_PUBLIC && volume.state == VolumeInfo.STATE_MOUNTED) {
+setWidgetLayoutResource(R.layout.preference_storage_action);
+}
+}

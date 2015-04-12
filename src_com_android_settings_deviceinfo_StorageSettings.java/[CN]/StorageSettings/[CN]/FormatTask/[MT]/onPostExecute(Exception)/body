@@ -1,0 +1,9 @@
+{
+  if (e == null) {
+    Toast.makeText(mContext,mContext.getString(R.string.storage_format_success,mDescription),Toast.LENGTH_SHORT).show();
+  }
+ else {
+    Log.e(TAG,"Failed to format " + mVolumeId,e);
+    Toast.makeText(mContext,mContext.getString(R.string.storage_format_failure,mDescription),Toast.LENGTH_SHORT).show();
+  }
+}

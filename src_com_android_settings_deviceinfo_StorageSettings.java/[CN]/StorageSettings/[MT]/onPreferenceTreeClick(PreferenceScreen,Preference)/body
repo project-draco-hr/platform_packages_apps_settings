@@ -1,0 +1,27 @@
+{
+  final String volId=pref.getKey();
+  final VolumeInfo vol=mStorageManager.findVolumeById(volId);
+  if (vol == null) {
+    return false;
+  }
+ else   if (vol.type == VolumeInfo.TYPE_PRIVATE) {
+    final Bundle args=new Bundle();
+    args.putString(EXTRA_VOLUME_ID,volId);
+    startFragment(this,PrivateVolumeSettings.class.getCanonicalName(),-1,0,args);
+    return true;
+  }
+ else   if (vol.type == VolumeInfo.TYPE_PUBLIC) {
+    if (vol.state == VolumeInfo.STATE_MOUNTED) {
+      final Intent intent=buildBrowseIntent(vol);
+      startActivity(intent);
+      return true;
+    }
+ else {
+      final Bundle args=new Bundle();
+      args.putString(EXTRA_VOLUME_ID,volId);
+      startFragment(this,PublicVolumeSettings.class.getCanonicalName(),-1,0,args);
+      return true;
+    }
+  }
+  return false;
+}

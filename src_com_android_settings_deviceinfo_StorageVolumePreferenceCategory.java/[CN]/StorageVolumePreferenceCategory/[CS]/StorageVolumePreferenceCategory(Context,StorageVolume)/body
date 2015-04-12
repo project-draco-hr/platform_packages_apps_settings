@@ -1,9 +1,0 @@
-{
-  super(context);
-  mVolume=volume;
-  mMeasure=StorageMeasurement.getInstance(context,volume);
-  mResources=context.getResources();
-  mStorageManager=StorageManager.from(context);
-  mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
-  setTitle(volume != null ? volume.getDescription(context) : context.getText(R.string.internal_storage));
-}

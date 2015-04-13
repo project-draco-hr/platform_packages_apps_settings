@@ -1,0 +1,11 @@
+{
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.storage_wizard_generic);
+  Preconditions.checkNotNull(mDisk);
+  final String time=DateUtils.formatDuration(0).toString();
+  final String size=Formatter.formatFileSize(this,0);
+  setHeaderText(R.string.storage_wizard_migrate_confirm_title,mDisk.getDescription());
+  setBodyText(R.string.storage_wizard_migrate_confirm_body,time,size);
+  setSecondaryBodyText(R.string.storage_wizard_migrate_details,mDisk.getDescription());
+  getNextButton().setText(R.string.storage_wizard_migrate_confirm_next);
+}

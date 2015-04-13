@@ -13,6 +13,9 @@
   }
   Preconditions.checkNotNull(mVolume);
   Preconditions.checkState(mVolume.type == VolumeInfo.TYPE_PUBLIC);
+  mDisk=mStorageManager.findDiskByVolumeId(mVolume.id);
+  Preconditions.checkNotNull(mDisk);
+  mVolumeId=mVolume.id;
   addPreferencesFromResource(R.xml.device_info_storage_volume);
   mGraph=buildGraph();
   mTotal=buildItem(R.string.memory_size,0);

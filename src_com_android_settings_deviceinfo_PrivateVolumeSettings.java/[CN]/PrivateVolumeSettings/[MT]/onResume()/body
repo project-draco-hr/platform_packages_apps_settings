@@ -1,5 +1,10 @@
 {
   super.onResume();
+  mVolume=mStorageManager.findVolumeById(mVolumeId);
+  if (mVolume == null) {
+    getActivity().finish();
+    return;
+  }
   mStorageManager.registerListener(mStorageListener);
   refresh();
 }

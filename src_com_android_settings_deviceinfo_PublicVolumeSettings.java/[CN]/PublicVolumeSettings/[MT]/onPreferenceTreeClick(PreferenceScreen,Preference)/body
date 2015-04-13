@@ -10,6 +10,9 @@
     new FormatTask(context,mVolume.id).execute();
   }
  else   if (pref == mFormatInternal) {
+    final Intent intent=new Intent(context,StorageWizardFormatConfirm.class);
+    intent.putExtra(StorageWizardBase.EXTRA_DISK_ID,mDisk.id);
+    startActivity(intent);
   }
   return super.onPreferenceTreeClick(preferenceScreen,pref);
 }

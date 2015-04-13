@@ -1,0 +1,10 @@
+{
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.storage_wizard_progress);
+  Preconditions.checkNotNull(mDisk);
+  setHeaderText(R.string.storage_wizard_migrate_progress_title,mDisk.getDescription());
+  setBodyText(R.string.storage_wizard_migrate_details,mDisk.getDescription());
+  setCurrentProgress(20);
+  getNextButton().setVisibility(View.GONE);
+  new MigrateTask().execute();
+}

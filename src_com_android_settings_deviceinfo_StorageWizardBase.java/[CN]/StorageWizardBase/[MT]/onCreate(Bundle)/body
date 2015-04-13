@@ -1,0 +1,16 @@
+{
+  super.onCreate(savedInstanceState);
+  mStorage=getSystemService(StorageManager.class);
+  final String volumeId=getIntent().getStringExtra(EXTRA_VOLUME_ID);
+  if (!TextUtils.isEmpty(volumeId)) {
+    mVolume=mStorage.findVolumeById(volumeId);
+  }
+  final String diskId=getIntent().getStringExtra(EXTRA_DISK_ID);
+  if (!TextUtils.isEmpty(diskId)) {
+    mDisk=mStorage.findDiskById(diskId);
+  }
+ else {
+    mDisk=mStorage.findDiskByVolumeId(volumeId);
+  }
+  setTheme(R.style.SuwThemeMaterial_Light);
+}

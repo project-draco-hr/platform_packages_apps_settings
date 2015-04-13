@@ -1,0 +1,12 @@
+{
+  super.onCreate(savedInstanceState);
+  if (isVoiceInteraction() || savedInstanceState == null) {
+    if (onVoiceSettingInteraction(getIntent())) {
+      finish();
+    }
+  }
+ else {
+    Log.v(TAG,"Cannot modify settings without voice interaction");
+    finish();
+  }
+}

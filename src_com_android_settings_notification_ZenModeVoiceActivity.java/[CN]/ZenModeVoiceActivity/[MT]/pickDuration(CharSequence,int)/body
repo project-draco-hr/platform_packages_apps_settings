@@ -1,0 +1,21 @@
+{
+  setTitle(label.toString());
+  List<VoiceSelection> states=new ArrayList<VoiceSelection>();
+  states.add(new ConditionSelection(null,-1,getString(R.string.zen_mode_duration_indefinte_voice_label),getString(R.string.zen_mode_duration_indefinite_voice_synonyms)));
+  for (int i=ZenModeConfig.MINUTE_BUCKETS.length - 1; i >= 0; --i) {
+    states.add(getConditionSelection(ZenModeConfig.MINUTE_BUCKETS[i]));
+  }
+  VoiceSelectionFragment fragment=new VoiceSelectionFragment();
+  fragment.setArguments(VoiceSelectionFragment.createArguments(getString(R.string.zen_mode_duration_voice_prompt)));
+  fragment.setListAdapter(new VoiceSelectionAdapter(this,R.layout.voice_item_row,states));
+  fragment.setOnItemSelectedHandler(new VoiceSelection.OnItemSelectedListener(){
+    @Override public void onItemSelected(    int index,    VoiceSelection item){
+      ConditionSelection selection=((ConditionSelection)item);
+      setZenModeConfig(mode,selection.mCondition);
+      notifySuccess(getChangeSummary(mode,selection));
+      finish();
+    }
+  }
+);
+  showFragment(fragment,"pick_duration_fragment");
+}

@@ -6,7 +6,8 @@
  else   if (KEY_TRUST_AGENT.equals(key)) {
     ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
     mTrustAgentClickIntent=preference.getIntent();
-    if (!helper.launchConfirmationActivity(CHANGE_TRUST_AGENT_SETTINGS,null,null) && mTrustAgentClickIntent != null) {
+    boolean confirmationLaunched=helper.launchConfirmationActivity(CHANGE_TRUST_AGENT_SETTINGS,preference.getTitle());
+    if (!confirmationLaunched && mTrustAgentClickIntent != null) {
       startActivity(mTrustAgentClickIntent);
       mTrustAgentClickIntent=null;
     }

@@ -1,6 +1,12 @@
 {
   super.onCreate(icicle);
   mPM=getActivity().getPackageManager();
-  mCR=getActivity().getContentResolver();
+  mServiceListing=new ServiceListing(getActivity(),mConfig);
+  mServiceListing.addCallback(new ServiceListing.Callback(){
+    @Override public void onServicesReloaded(    List<ServiceInfo> services){
+      updateList(services);
+    }
+  }
+);
   mListAdapter=new ServiceListAdapter(getActivity());
 }

@@ -1,9 +1,8 @@
 {
   ServiceInfo info=mListAdapter.getItem(position);
   final ComponentName cn=new ComponentName(info.packageName,info.name);
-  if (mEnabledServices.contains(cn)) {
-    mEnabledServices.remove(cn);
-    saveEnabledServices();
+  if (mServiceListing.isEnabled(cn)) {
+    mServiceListing.setEnabled(cn,false);
   }
  else {
     new ScaryWarningDialogFragment().setServiceInfo(cn,info.loadLabel(mPM).toString()).show(getFragmentManager(),"dialog");

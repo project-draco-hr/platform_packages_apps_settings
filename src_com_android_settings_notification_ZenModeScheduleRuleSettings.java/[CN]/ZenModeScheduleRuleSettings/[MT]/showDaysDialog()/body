@@ -5,10 +5,7 @@
       if (Arrays.equals(days,mSchedule.days))       return;
       if (DEBUG)       Log.d(TAG,"days.onChanged days=" + Arrays.asList(days));
       mSchedule.days=days;
-      mRule.conditionId=ZenModeConfig.toScheduleConditionId(mSchedule);
-      mRule.condition=null;
-      mRule.snoozing=false;
-      setZenModeConfig(mConfig);
+      updateRule(ZenModeConfig.toScheduleConditionId(mSchedule));
     }
   }
 ).setOnDismissListener(new OnDismissListener(){

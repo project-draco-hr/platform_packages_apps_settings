@@ -1,0 +1,8 @@
+{
+  loadEnabledServices();
+  getServices(mConfig,mServices,mContext.getPackageManager());
+  for (  Callback callback : mCallbacks) {
+    callback.onServicesReloaded(mServices);
+  }
+  return mServices;
+}

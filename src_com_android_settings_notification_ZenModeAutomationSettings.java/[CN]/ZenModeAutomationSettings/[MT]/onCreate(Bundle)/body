@@ -2,4 +2,8 @@
   super.onCreate(icicle);
   setHasOptionsMenu(true);
   addPreferencesFromResource(R.xml.zen_mode_automation_settings);
+  mServiceListing=new ServiceListing(mContext,CONFIG);
+  mServiceListing.addCallback(mServiceListingCallback);
+  mServiceListing.reload();
+  mServiceListing.setListening(true);
 }

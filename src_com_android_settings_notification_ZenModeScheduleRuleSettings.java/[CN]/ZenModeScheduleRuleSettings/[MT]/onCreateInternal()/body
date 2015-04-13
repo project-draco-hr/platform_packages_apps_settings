@@ -1,0 +1,55 @@
+{
+  addPreferencesFromResource(R.xml.zen_mode_schedule_rule_settings);
+  final PreferenceScreen root=getPreferenceScreen();
+  mDays=root.findPreference(KEY_DAYS);
+  mDays.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      showDaysDialog();
+      return true;
+    }
+  }
+);
+  final FragmentManager mgr=getFragmentManager();
+  mStart=new TimePickerPreference(mContext,mgr);
+  mStart.setKey(KEY_START_TIME);
+  mStart.setTitle(R.string.zen_mode_start_time);
+  mStart.setCallback(new TimePickerPreference.Callback(){
+    @Override public boolean onSetTime(    final int hour,    final int minute){
+      if (mDisableListeners)       return true;
+      if (!ZenModeConfig.isValidHour(hour))       return false;
+      if (!ZenModeConfig.isValidMinute(minute))       return false;
+      if (hour == mSchedule.startHour && minute == mSchedule.startMinute) {
+        return true;
+      }
+      if (DEBUG)       Log.d(TAG,"onPrefChange start h=" + hour + " m="+ minute);
+      mSchedule.startHour=hour;
+      mSchedule.startMinute=minute;
+      updateRule(ZenModeConfig.toScheduleConditionId(mSchedule));
+      return true;
+    }
+  }
+);
+  root.addPreference(mStart);
+  mStart.setDependency(mDays.getKey());
+  mEnd=new TimePickerPreference(mContext,mgr);
+  mEnd.setKey(KEY_END_TIME);
+  mEnd.setTitle(R.string.zen_mode_end_time);
+  mEnd.setCallback(new TimePickerPreference.Callback(){
+    @Override public boolean onSetTime(    final int hour,    final int minute){
+      if (mDisableListeners)       return true;
+      if (!ZenModeConfig.isValidHour(hour))       return false;
+      if (!ZenModeConfig.isValidMinute(minute))       return false;
+      if (hour == mSchedule.endHour && minute == mSchedule.endMinute) {
+        return true;
+      }
+      if (DEBUG)       Log.d(TAG,"onPrefChange end h=" + hour + " m="+ minute);
+      mSchedule.endHour=hour;
+      mSchedule.endMinute=minute;
+      updateRule(ZenModeConfig.toScheduleConditionId(mSchedule));
+      return true;
+    }
+  }
+);
+  root.addPreference(mEnd);
+  mEnd.setDependency(mDays.getKey());
+}

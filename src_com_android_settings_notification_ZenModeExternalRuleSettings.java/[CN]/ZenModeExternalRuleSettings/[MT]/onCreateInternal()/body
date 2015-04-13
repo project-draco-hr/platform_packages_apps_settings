@@ -1,0 +1,28 @@
+{
+  addPreferencesFromResource(R.xml.zen_mode_external_rule_settings);
+  final PreferenceScreen root=getPreferenceScreen();
+  final ServiceInfo si=ServiceListing.findService(mContext,ZenModeAutomationSettings.CONFIG,mRule.component);
+  if (DEBUG)   Log.d(TAG,"ServiceInfo: " + si);
+  final RuleInfo ri=getRuleInfo(si);
+  if (DEBUG)   Log.d(TAG,"RuleInfo: " + ri);
+  mType=root.findPreference(KEY_TYPE);
+  if (ri == null) {
+    mType.setSummary(R.string.zen_mode_rule_type_unknown);
+  }
+ else {
+    mType.setSummary(ri.caption);
+  }
+  mConfigure=root.findPreference(KEY_CONFIGURE);
+  if (ri == null || ri.configurationActivity == null) {
+    mConfigure.setEnabled(false);
+  }
+ else {
+    mConfigure.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+      @Override public boolean onPreferenceClick(      Preference preference){
+        startActivityForResult(new Intent().setComponent(ri.configurationActivity),REQUEST_CODE_CONFIGURE);
+        return true;
+      }
+    }
+);
+  }
+}

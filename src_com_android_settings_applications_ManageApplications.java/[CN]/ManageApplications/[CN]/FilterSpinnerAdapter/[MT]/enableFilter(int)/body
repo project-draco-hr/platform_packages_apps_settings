@@ -1,7 +1,13 @@
 {
   if (mFilterOptions.contains(filter))   return;
+  if (DEBUG)   Log.d(TAG,"Enabling filter " + filter);
   mFilterOptions.add(filter);
   Collections.sort(mFilterOptions);
   mManageApplications.mSpinnerHeader.setVisibility(mFilterOptions.size() > 1 ? View.VISIBLE : View.GONE);
   notifyDataSetChanged();
+  if (mFilterOptions.size() == 1) {
+    if (DEBUG)     Log.d(TAG,"Auto selecting filter " + filter);
+    mManageApplications.mFilterSpinner.setSelection(0);
+    mManageApplications.onItemSelected(null,null,0,0);
+  }
 }

@@ -1,6 +1,5 @@
 {
   mInflater=inflater;
-  createHeader();
   mRootView=inflater.inflate(R.layout.manage_applications_apps,null);
   mLoadingContainer=mRootView.findViewById(R.id.loading_container);
   mLoadingContainer.setVisibility(View.VISIBLE);
@@ -24,5 +23,7 @@
   if (container instanceof PreferenceFrameLayout) {
     ((PreferenceFrameLayout.LayoutParams)mRootView.getLayoutParams()).removeBorders=true;
   }
+  createHeader();
+  mResetAppsHelper.onRestoreInstanceState(savedInstanceState);
   return mRootView;
 }

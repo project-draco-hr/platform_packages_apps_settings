@@ -1,0 +1,37 @@
+{
+  if (mResetDialog != dialog) {
+    return;
+  }
+  AsyncTask.execute(new Runnable(){
+    @Override public void run(){
+      List<ApplicationInfo> apps=mPm.getInstalledApplications(PackageManager.GET_DISABLED_COMPONENTS);
+      for (int i=0; i < apps.size(); i++) {
+        ApplicationInfo app=apps.get(i);
+        try {
+          mNm.setNotificationsEnabledForPackage(app.packageName,app.uid,true);
+        }
+ catch (        android.os.RemoteException ex) {
+        }
+        if (!app.enabled) {
+          if (mPm.getApplicationEnabledSetting(app.packageName) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER) {
+            mPm.setApplicationEnabledSetting(app.packageName,PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,PackageManager.DONT_KILL_APP);
+          }
+        }
+      }
+      try {
+        mIPm.resetPreferredActivities(UserHandle.myUserId());
+      }
+ catch (      RemoteException e) {
+      }
+      mAom.resetAllModes();
+      final int[] restrictedUids=mNpm.getUidsWithPolicy(POLICY_REJECT_METERED_BACKGROUND);
+      final int currentUserId=ActivityManager.getCurrentUser();
+      for (      int uid : restrictedUids) {
+        if (UserHandle.getUserId(uid) == currentUserId) {
+          mNpm.setUidPolicy(uid,POLICY_NONE);
+        }
+      }
+    }
+  }
+);
+}

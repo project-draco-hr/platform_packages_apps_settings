@@ -1,0 +1,11 @@
+{
+  if (mListType != LIST_TYPE_MAIN) {
+    return;
+  }
+  mFilterAdapter.setFilterEnabled(FILTER_APPS_ALL,mShowSystem);
+  mFilterAdapter.setFilterEnabled(FILTER_APPS_ENABLED,mShowSystem && mHasDisabledApps);
+  mFilterAdapter.setFilterEnabled(FILTER_APPS_DISABLED,mShowSystem && mHasDisabledApps);
+  mFilterAdapter.setFilterEnabled(FILTER_APPS_DOWNLOADED_AND_LAUNCHER,!mShowSystem);
+  mFilterAdapter.setFilterEnabled(FILTER_APPS_DL_ENABLED,!mShowSystem && mHasDisabledApps);
+  mFilterAdapter.setFilterEnabled(FILTER_APPS_DL_DISABLED,!mShowSystem && mHasDisabledApps);
+}

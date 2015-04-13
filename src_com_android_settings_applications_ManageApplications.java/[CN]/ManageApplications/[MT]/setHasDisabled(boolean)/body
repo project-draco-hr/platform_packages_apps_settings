@@ -1,13 +1,5 @@
 {
-  if (mListType == LIST_TYPE_MAIN) {
-    return;
-  }
-  if (hasDisabledApps) {
-    mFilterAdapter.enableFilter(FILTER_APPS_ENABLED);
-    mFilterAdapter.enableFilter(FILTER_APPS_DISABLED);
-  }
- else {
-    mFilterAdapter.disableFilter(FILTER_APPS_ENABLED);
-    mFilterAdapter.disableFilter(FILTER_APPS_DISABLED);
-  }
+  mHasDisabledApps=hasDisabledApps;
+  mFilterAdapter.setFilterEnabled(mShowSystem ? FILTER_APPS_ENABLED : FILTER_APPS_DL_ENABLED,hasDisabledApps);
+  mFilterAdapter.setFilterEnabled(mShowSystem ? FILTER_APPS_DISABLED : FILTER_APPS_DL_DISABLED,hasDisabledApps);
 }

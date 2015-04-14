@@ -1,9 +1,9 @@
 {
   if (intent.hasExtra(Settings.EXTRA_AIRPLANE_MODE_ENABLED)) {
-    boolean enabled=intent.getBooleanExtra(Settings.EXTRA_AIRPLANE_MODE_ENABLED,false);
-    Settings.Global.putInt(getContentResolver(),Settings.Global.AIRPLANE_MODE_ON,enabled ? 1 : 0);
+    Settings.Global.putInt(getContentResolver(),Settings.Global.AIRPLANE_MODE_ON,intent.getBooleanExtra(Settings.EXTRA_AIRPLANE_MODE_ENABLED,false) ? 1 : 0);
   }
  else {
     Log.v(TAG,"Missing airplane mode extra");
   }
+  return true;
 }

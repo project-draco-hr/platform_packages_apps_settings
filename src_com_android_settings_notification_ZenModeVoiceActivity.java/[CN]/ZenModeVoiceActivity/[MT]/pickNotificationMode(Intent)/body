@@ -1,0 +1,33 @@
+{
+  boolean enabled=intent.getBooleanExtra(EXTRA_DO_NOT_DISTURB_MODE_ENABLED,false);
+  boolean specified=intent.hasExtra(EXTRA_DO_NOT_DISTURB_MODE_ENABLED);
+  List<VoiceSelection> states=new ArrayList<VoiceSelection>();
+  if (!specified || enabled) {
+    states.add(new ModeSelection(this,Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS,R.string.zen_mode_option_important_interruptions,R.string.zen_mode_option_important_voice_synonyms));
+    states.add(new ModeSelection(this,Global.ZEN_MODE_ALARMS,R.string.zen_mode_option_alarms,R.string.zen_mode_option_alarms_voice_synonyms));
+    states.add(new ModeSelection(this,Global.ZEN_MODE_NO_INTERRUPTIONS,R.string.zen_mode_option_no_interruptions,R.string.zen_mode_option_no_interruptions_voice_synonyms));
+  }
+  if (!specified || !enabled) {
+    states.add(new ModeSelection(this,Global.ZEN_MODE_OFF,R.string.zen_mode_option_off,R.string.zen_mode_option_off_voice_synonyms));
+  }
+  VoiceSelectionFragment fragment=new VoiceSelectionFragment();
+  fragment.setArguments(VoiceSelectionFragment.createArguments(getString(R.string.zen_mode_interruptions_voice_prompt)));
+  fragment.setListAdapter(new VoiceSelectionAdapter(this,R.layout.voice_item_row,states));
+  fragment.setOnItemSelectedHandler(new VoiceSelection.OnItemSelectedListener(){
+    @Override public void onItemSelected(    int index,    VoiceSelection selection){
+      int mode=((ModeSelection)selection).mMode;
+      ConditionSelection conditionSelection=getConditionSelection(intent.getIntExtra(EXTRA_DO_NOT_DISTURB_MODE_MINUTES,0));
+      if (mode != Global.ZEN_MODE_OFF) {
+        if (conditionSelection == null) {
+          pickDuration(selection.getLabel(),mode);
+          return;
+        }
+      }
+      setZenModeConfig(mode,conditionSelection.mCondition);
+      notifySuccess(getChangeSummary(mode,conditionSelection));
+      finish();
+    }
+  }
+);
+  showFragment(fragment,"pick_mode_fragment");
+}

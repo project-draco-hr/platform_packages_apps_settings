@@ -1,0 +1,10 @@
+{
+  Option result=new Option(mLabel);
+  Bundle extras=new Bundle();
+  extras.putInt("index",index);
+  result.setExtras(extras);
+  for (  CharSequence synonym : mSynonyms) {
+    result.addSynonym(synonym);
+  }
+  return result;
+}

@@ -1,0 +1,16 @@
+{
+  Condition condition=ZenModeConfig.toTimeCondition(this,minutes,UserHandle.myUserId());
+  Resources res=getResources();
+  if (minutes <= 0) {
+    return null;
+  }
+ else   if (minutes < 60) {
+    String label=res.getQuantityString(R.plurals.zen_mode_duration_minutes_voice_label,minutes,minutes);
+    return new ConditionSelection(condition,minutes,label,Integer.toString(minutes));
+  }
+ else {
+    int hours=minutes / 60;
+    String label=res.getQuantityString(R.plurals.zen_mode_duration_hours_voice_label,hours,hours);
+    return new ConditionSelection(condition,minutes,label,Integer.toString(hours));
+  }
+}

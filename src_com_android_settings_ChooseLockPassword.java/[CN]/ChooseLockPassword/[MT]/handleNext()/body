@@ -18,7 +18,7 @@
       boolean wasSecureBefore=mLockPatternUtils.isSecure();
       final boolean required=getActivity().getIntent().getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);
       mLockPatternUtils.setCredentialRequiredToDecrypt(required);
-      mLockPatternUtils.saveLockPassword(pin,mRequestedQuality);
+      mLockPatternUtils.saveLockPassword(pin,mCurrentPassword,mRequestedQuality);
       getActivity().setResult(RESULT_FINISHED);
       getActivity().finish();
       mDone=true;

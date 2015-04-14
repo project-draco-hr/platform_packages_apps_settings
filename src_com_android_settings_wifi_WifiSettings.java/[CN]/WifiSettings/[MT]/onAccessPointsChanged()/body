@@ -15,9 +15,6 @@ if (accessPoints.size() == 0) {
 for (AccessPoint accessPoint : accessPoints) {
 if (accessPoint.getLevel() != -1) {
   AccessPointPreference preference=new AccessPointPreference(accessPoint,getActivity());
-  if (showAppIcons) {
-    preference.showAppIcon();
-  }
   getPreferenceScreen().addPreference(preference);
   accessPoint.setListener(this);
 }

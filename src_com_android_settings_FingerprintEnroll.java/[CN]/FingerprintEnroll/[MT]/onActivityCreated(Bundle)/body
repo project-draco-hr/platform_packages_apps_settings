@@ -1,6 +1,7 @@
 {
   super.onActivityCreated(savedInstanceState);
   if (savedInstanceState != null) {
+    mToken=savedInstanceState.getByteArray(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
     String stageSaved=savedInstanceState.getString(EXTRA_STAGE,null);
     if (stageSaved != null) {
       Stage stage=Stage.valueOf(stageSaved);

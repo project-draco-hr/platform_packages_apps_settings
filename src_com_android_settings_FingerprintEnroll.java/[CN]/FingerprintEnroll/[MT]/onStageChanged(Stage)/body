@@ -7,8 +7,7 @@ case EnrollingFindSensor:
 break;
 case EnrollingStart:
 mEnrollmentSteps=-1;
-long challenge=0x12345;
-mFingerprintManager.enroll(challenge,mEnrollmentCancel,mEnrollmentCallback,0);
+mFingerprintManager.enroll(0,mEnrollmentCancel,mEnrollmentCallback,0);
 mProgressBar.setProgress(0);
 mEnrolling=true;
 startFingerprintAnimator();

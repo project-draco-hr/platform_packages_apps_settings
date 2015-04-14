@@ -1,4 +1,10 @@
 {
   super.onCreate(savedInstanceState);
+  if (savedInstanceState != null) {
+    mToken=savedInstanceState.getByteArray(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
+  }
   mFingerprintManager=(FingerprintManager)getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
+  if (mToken == null) {
+    launchChooseOrConfirmLock();
+  }
 }

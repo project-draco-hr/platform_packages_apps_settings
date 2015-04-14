@@ -13,7 +13,7 @@
     mContentView.findViewById(buttons[i]).setOnClickListener(this);
   }
   LockPatternUtils utils=new LockPatternUtils(activity);
-  if (!utils.isSecure()) {
+  if (mToken == null) {
     updateStage(Stage.EnrollingOnboard);
   }
  else   if (ALWAYS_SHOW_FIND_SCREEN || mFingerprintManager.getEnrolledFingerprints().size() == 0) {

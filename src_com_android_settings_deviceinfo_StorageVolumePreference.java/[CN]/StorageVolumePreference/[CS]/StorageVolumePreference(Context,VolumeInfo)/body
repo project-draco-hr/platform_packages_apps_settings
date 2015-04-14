@@ -3,7 +3,7 @@
   mStorageManager=context.getSystemService(StorageManager.class);
   mVolume=volume;
   setKey(volume.id);
-  setTitle(mStorageManager.getBestVolumeDescription(volume.id));
+  setTitle(mStorageManager.getBestVolumeDescription(volume));
 switch (volume.state) {
 case VolumeInfo.STATE_MOUNTED:
     final File path=new File(volume.path);

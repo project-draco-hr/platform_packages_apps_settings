@@ -1,8 +1,8 @@
 {
   final StorageManager storage=getActivity().getSystemService(StorageManager.class);
-  final String volumeId=getArguments().getString(StorageSettings.EXTRA_VOLUME_ID);
+  final String volumeId=getArguments().getString(VolumeInfo.EXTRA_VOLUME_ID);
   mVolume=storage.findVolumeById(volumeId);
-  mDisk=storage.findDiskByVolumeId(volumeId);
+  mDisk=storage.findDiskById(mVolume.diskId);
   final View view=inflater.inflate(R.layout.storage_internal_format,container,false);
   final TextView body=(TextView)view.findViewById(R.id.body);
   final Button confirm=(Button)view.findViewById(R.id.confirm);

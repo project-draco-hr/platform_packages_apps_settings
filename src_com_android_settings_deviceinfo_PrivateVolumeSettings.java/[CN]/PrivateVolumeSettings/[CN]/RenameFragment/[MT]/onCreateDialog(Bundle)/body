@@ -1,7 +1,7 @@
 {
   final Context context=getActivity();
   final StorageManager storageManager=context.getSystemService(StorageManager.class);
-  final String volId=getArguments().getString(EXTRA_VOLUME_ID);
+  final String volId=getArguments().getString(VolumeInfo.EXTRA_VOLUME_ID);
   final VolumeInfo vol=storageManager.findVolumeById(volId);
   final AlertDialog.Builder builder=new AlertDialog.Builder(context);
   final LayoutInflater dialogInflater=LayoutInflater.from(builder.getContext());
@@ -11,7 +11,7 @@
     nickname.setText(vol.nickname);
   }
  else {
-    nickname.setText(storageManager.getBestVolumeDescription(volId));
+    nickname.setText(storageManager.getBestVolumeDescription(vol));
   }
   builder.setTitle(R.string.storage_rename_title);
   builder.setView(view);

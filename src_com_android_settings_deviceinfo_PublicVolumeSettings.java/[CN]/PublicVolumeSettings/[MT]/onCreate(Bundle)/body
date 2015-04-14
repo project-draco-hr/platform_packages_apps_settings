@@ -8,12 +8,12 @@
     mVolume=mStorageManager.findVolumeByUuid(fsUuid);
   }
  else {
-    final String volId=getArguments().getString(EXTRA_VOLUME_ID);
+    final String volId=getArguments().getString(VolumeInfo.EXTRA_VOLUME_ID);
     mVolume=mStorageManager.findVolumeById(volId);
   }
   Preconditions.checkNotNull(mVolume);
   Preconditions.checkState(mVolume.type == VolumeInfo.TYPE_PUBLIC);
-  mDisk=mStorageManager.findDiskByVolumeId(mVolume.id);
+  mDisk=mStorageManager.findDiskById(mVolume.diskId);
   Preconditions.checkNotNull(mDisk);
   mVolumeId=mVolume.id;
   addPreferencesFromResource(R.xml.device_info_storage_volume);

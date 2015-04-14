@@ -6,14 +6,14 @@ case R.id.storage_rename:
     RenameFragment.show(this);
   return true;
 case R.id.storage_mount:
-new MountTask(context,mVolume.id).execute();
+new MountTask(context,mVolume).execute();
 return true;
 case R.id.storage_unmount:
-args.putString(StorageSettings.EXTRA_VOLUME_ID,mVolume.id);
+args.putString(VolumeInfo.EXTRA_VOLUME_ID,mVolume.id);
 startFragment(this,PrivateVolumeUnmountConfirm.class.getCanonicalName(),R.string.storage_menu_unmount,0,args);
 return true;
 case R.id.storage_format:
-args.putString(StorageSettings.EXTRA_VOLUME_ID,mVolume.id);
+args.putString(VolumeInfo.EXTRA_VOLUME_ID,mVolume.id);
 startFragment(this,PrivateVolumeFormatConfirm.class.getCanonicalName(),R.string.storage_menu_format,0,args);
 return true;
 case R.id.storage_usb:

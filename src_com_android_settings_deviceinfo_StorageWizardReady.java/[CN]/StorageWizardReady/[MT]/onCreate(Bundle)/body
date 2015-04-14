@@ -3,7 +3,7 @@
   setContentView(R.layout.storage_wizard_generic);
   Preconditions.checkNotNull(mDisk);
   setHeaderText(R.string.storage_wizard_ready_title,mDisk.getDescription());
-  for (  String volId : mDisk.volumes) {
+  for (  String volId : mDisk.volumeIds) {
     final VolumeInfo vol=mStorage.findVolumeById(volId);
     if (vol == null)     continue;
     if (vol.type == VolumeInfo.TYPE_PUBLIC) {

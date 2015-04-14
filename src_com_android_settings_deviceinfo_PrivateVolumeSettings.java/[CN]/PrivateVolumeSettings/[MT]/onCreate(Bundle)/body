@@ -3,7 +3,7 @@
   final Context context=getActivity();
   mUserManager=context.getSystemService(UserManager.class);
   mStorageManager=context.getSystemService(StorageManager.class);
-  mVolumeId=getArguments().getString(EXTRA_VOLUME_ID);
+  mVolumeId=getArguments().getString(VolumeInfo.EXTRA_VOLUME_ID);
   mVolume=mStorageManager.findVolumeById(mVolumeId);
   Preconditions.checkNotNull(mVolume);
   Preconditions.checkState(mVolume.type == VolumeInfo.TYPE_PRIVATE);

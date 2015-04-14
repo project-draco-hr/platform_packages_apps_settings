@@ -8,7 +8,7 @@
     className=intent.getComponent().getClassName();
   }
   if (className.equals(AllApplicationsActivity.class.getName())) {
-    mListType=LIST_TYPE_ALL;
+    mShowSystem=true;
   }
  else   if (className.equals(NotificationAppListActivity.class.getName())) {
     mListType=LIST_TYPE_NOTIFICATION;
@@ -25,4 +25,5 @@
     mSortOrder=savedInstanceState.getInt(EXTRA_SORT_ORDER,mSortOrder);
   }
   mInvalidSizeStr=getActivity().getText(R.string.invalid_size_value);
+  mResetAppsHelper=new ResetAppsHelper(getActivity());
 }

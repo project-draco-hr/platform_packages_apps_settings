@@ -15,13 +15,10 @@
       mFilterAdapter.enableFilter(FILTER_APPS_WORK);
     }
   }
+  updateMainFilters();
   if (mListType == LIST_TYPE_NOTIFICATION) {
     mFilterAdapter.enableFilter(FILTER_APPS_BLOCKED);
     mFilterAdapter.enableFilter(FILTER_APPS_PRIORITY);
     mFilterAdapter.enableFilter(FILTER_APPS_SENSITIVE);
-  }
- else   if (mListType == LIST_TYPE_DOMAINS_URLS) {
-    mFilterAdapter.disableFilter(FILTER_APPS_ALL);
-    mFilterAdapter.enableFilter(FILTER_APPS_WITH_DOMAIN_URLS);
   }
 }

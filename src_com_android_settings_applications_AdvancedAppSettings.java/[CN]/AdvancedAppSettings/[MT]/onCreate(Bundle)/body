@@ -5,22 +5,7 @@
   mSession=mApplicationsState.newSession(this);
   mAppPermsPreference=findPreference(KEY_APP_PERM);
   mAppDomainURLsPreference=findPreference(KEY_APP_DOMAIN_URLS);
-  mAllAppsPreference=findPreference(KEY_ALL_APPS);
-  mResetAllPreference=findPreference(KEY_RESET_ALL);
-  mResetAllPreference.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-    @Override public boolean onPreferenceClick(    Preference preference){
-      buildResetDialog();
-      return true;
-    }
-  }
-);
   updateUI();
-  mPm=getActivity().getPackageManager();
-  mIPm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
-  mNm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
-  mNpm=NetworkPolicyManager.from(getActivity());
-  mAom=(AppOpsManager)getActivity().getSystemService(Context.APP_OPS_SERVICE);
-  mHandler=new Handler(getActivity().getMainLooper());
   if (!DefaultEmergencyPreference.isAvailable(getActivity())) {
     removePreference(KEY_DEFAULT_EMERGENCY_APP);
   }

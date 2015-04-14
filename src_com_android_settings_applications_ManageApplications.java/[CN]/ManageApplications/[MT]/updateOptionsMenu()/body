@@ -3,11 +3,15 @@
     return;
   }
   if (mListType != LIST_TYPE_MAIN) {
-    mOptionsMenu.findItem(SORT_ORDER_ALPHA).setVisible(mSortOrder != SORT_ORDER_ALPHA);
-    mOptionsMenu.findItem(SORT_ORDER_SIZE).setVisible(mSortOrder != SORT_ORDER_SIZE);
+    mOptionsMenu.findItem(R.id.sort_order_alpha).setVisible(mSortOrder != R.id.sort_order_alpha);
+    mOptionsMenu.findItem(R.id.sort_order_size).setVisible(mSortOrder != R.id.sort_order_size);
+    mOptionsMenu.findItem(R.id.show_system).setVisible(false);
+    mOptionsMenu.findItem(R.id.hide_system).setVisible(false);
   }
  else {
-    mOptionsMenu.findItem(SORT_ORDER_ALPHA).setVisible(false);
-    mOptionsMenu.findItem(SORT_ORDER_SIZE).setVisible(false);
+    mOptionsMenu.findItem(R.id.sort_order_alpha).setVisible(false);
+    mOptionsMenu.findItem(R.id.sort_order_size).setVisible(false);
+    mOptionsMenu.findItem(R.id.show_system).setVisible(!mShowSystem);
+    mOptionsMenu.findItem(R.id.hide_system).setVisible(mShowSystem);
   }
 }

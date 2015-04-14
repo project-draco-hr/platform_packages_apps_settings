@@ -1,13 +1,21 @@
 {
   int menuId=item.getItemId();
 switch (item.getItemId()) {
-case SORT_ORDER_ALPHA:
-case SORT_ORDER_SIZE:
+case R.id.sort_order_alpha:
+case R.id.sort_order_size:
     mSortOrder=menuId;
   if (mApplications != null) {
     mApplications.rebuild(mSortOrder);
   }
 break;
+case R.id.show_system:
+case R.id.hide_system:
+mShowSystem=!mShowSystem;
+updateMainFilters();
+break;
+case R.id.reset_app_preferences:
+mResetAppsHelper.buildResetDialog();
+return true;
 case R.id.advanced:
 ((SettingsActivity)getActivity()).startPreferencePanel(AdvancedAppSettings.class.getName(),null,R.string.advanced_apps,null,this,ADVANCED_SETTINGS);
 return true;

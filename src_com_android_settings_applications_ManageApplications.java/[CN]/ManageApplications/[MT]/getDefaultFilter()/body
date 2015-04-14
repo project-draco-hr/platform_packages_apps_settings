@@ -1,9 +1,10 @@
 {
-  if (mListType == LIST_TYPE_MAIN) {
-    return FILTER_APPS_DOWNLOADED_AND_LAUNCHER;
-  }
- else   if (mListType == LIST_TYPE_DOMAINS_URLS) {
-    return FILTER_APPS_WITH_DOMAIN_URLS;
-  }
-  return FILTER_APPS_ALL;
+switch (mListType) {
+case LIST_TYPE_MAIN:
+    return mShowSystem ? FILTER_APPS_ALL : FILTER_APPS_DOWNLOADED_AND_LAUNCHER;
+case LIST_TYPE_DOMAINS_URLS:
+  return FILTER_APPS_WITH_DOMAIN_URLS;
+default :
+return FILTER_APPS_ALL;
+}
 }

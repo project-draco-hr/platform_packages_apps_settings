@@ -2,7 +2,15 @@
   if (!mFilterOptions.remove((Integer)filter)) {
     return;
   }
+  if (DEBUG)   Log.d(TAG,"Disabling filter " + filter);
   Collections.sort(mFilterOptions);
   mManageApplications.mSpinnerHeader.setVisibility(mFilterOptions.size() > 1 ? View.VISIBLE : View.GONE);
   notifyDataSetChanged();
+  if (mManageApplications.mFilter == filter) {
+    if (mFilterOptions.size() > 0) {
+      if (DEBUG)       Log.d(TAG,"Auto selecting filter " + mFilterOptions.get(0));
+      mManageApplications.mFilterSpinner.setSelection(0);
+      mManageApplications.onItemSelected(null,null,0,0);
+    }
+  }
 }

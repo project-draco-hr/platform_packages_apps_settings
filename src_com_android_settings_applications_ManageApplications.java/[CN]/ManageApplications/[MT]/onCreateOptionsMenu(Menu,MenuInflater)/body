@@ -1,12 +1,8 @@
 {
-  if (mListType == LIST_TYPE_DOMAINS_URLS) {
+  if (mListType != LIST_TYPE_MAIN) {
     return;
   }
   mOptionsMenu=menu;
-  if (mListType == LIST_TYPE_MAIN) {
-    inflater.inflate(R.menu.manage_apps,menu);
-  }
-  menu.add(0,SORT_ORDER_ALPHA,1,R.string.sort_order_alpha).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-  menu.add(0,SORT_ORDER_SIZE,2,R.string.sort_order_size).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+  inflater.inflate(R.menu.manage_apps,menu);
   updateOptionsMenu();
 }

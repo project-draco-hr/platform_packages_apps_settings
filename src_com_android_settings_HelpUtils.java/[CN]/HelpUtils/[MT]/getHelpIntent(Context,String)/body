@@ -1,0 +1,11 @@
+{
+  try {
+    return Intent.parseUri(helpUriString,Intent.URI_ANDROID_APP_SCHEME | Intent.URI_INTENT_SCHEME);
+  }
+ catch (  URISyntaxException e) {
+  }
+  final Uri fullUri=uriWithAddedParameters(context,Uri.parse(helpUriString));
+  Intent intent=new Intent(Intent.ACTION_VIEW,fullUri);
+  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+  return intent;
+}

@@ -1,12 +1,10 @@
 {
-  if (TextUtils.isEmpty(helpUrlString)) {
+  if (TextUtils.isEmpty(helpUriString)) {
     helpMenuItem.setVisible(false);
     return false;
   }
  else {
-    final Uri fullUri=uriWithAddedParameters(context,Uri.parse(helpUrlString));
-    Intent intent=new Intent(Intent.ACTION_VIEW,fullUri);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+    Intent intent=getHelpIntent(context,helpUriString);
     ComponentName component=intent.resolveActivity(context.getPackageManager());
     if (component != null) {
       helpMenuItem.setIntent(intent);

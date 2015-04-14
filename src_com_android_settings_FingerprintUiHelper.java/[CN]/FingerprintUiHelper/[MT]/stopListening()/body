@@ -1,4 +1,6 @@
 {
-  mCancellationSignal.cancel();
-  mCancellationSignal=null;
+  if (mCancellationSignal != null) {
+    mCancellationSignal.cancel();
+    mCancellationSignal=null;
+  }
 }

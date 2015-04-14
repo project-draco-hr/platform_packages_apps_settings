@@ -1,0 +1,12 @@
+{
+  if (mRadioNow.isChecked()) {
+    final Intent intent=new Intent(this,StorageWizardMigrateConfirm.class);
+    intent.putExtra(EXTRA_DISK_ID,mDisk.id);
+    startActivity(intent);
+  }
+ else   if (mRadioLater.isChecked()) {
+    final Intent intent=new Intent(this,StorageWizardReady.class);
+    intent.putExtra(EXTRA_DISK_ID,mDisk.id);
+    startActivity(intent);
+  }
+}

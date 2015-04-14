@@ -1,0 +1,16 @@
+{
+  final Context context=StorageWizardFormatProgress.this;
+  if (e == null) {
+    if (!mFormatPublic) {
+      final Intent intent=new Intent(context,StorageWizardMigrate.class);
+      intent.putExtra(EXTRA_DISK_ID,mDisk.id);
+      startActivity(intent);
+    }
+    finishAffinity();
+  }
+ else {
+    Log.e(TAG,"Failed to partition",e);
+    Toast.makeText(context,e.getMessage(),Toast.LENGTH_LONG).show();
+    finishAffinity();
+  }
+}

@@ -1,0 +1,14 @@
+{
+  final Context context=StorageWizardMigrateProgress.this;
+  if (e == null) {
+    final Intent intent=new Intent(context,StorageWizardReady.class);
+    intent.putExtra(EXTRA_DISK_ID,mDisk.id);
+    startActivity(intent);
+    finishAffinity();
+  }
+ else {
+    Log.e(TAG,"Failed to migrate",e);
+    Toast.makeText(context,e.getMessage(),Toast.LENGTH_LONG).show();
+    finishAffinity();
+  }
+}

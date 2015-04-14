@@ -1,0 +1,11 @@
+{
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.storage_wizard_progress);
+  Preconditions.checkNotNull(mDisk);
+  mFormatPublic=getIntent().getBooleanExtra(EXTRA_FORMAT_PUBLIC,false);
+  setHeaderText(R.string.storage_wizard_format_progress_title,mDisk.getDescription());
+  setBodyText(R.string.storage_wizard_format_progress_body,mDisk.getDescription());
+  setCurrentProgress(20);
+  getNextButton().setVisibility(View.GONE);
+  new PartitionTask().execute();
+}

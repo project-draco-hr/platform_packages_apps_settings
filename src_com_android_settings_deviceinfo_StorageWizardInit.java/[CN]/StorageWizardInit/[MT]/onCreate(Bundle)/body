@@ -1,0 +1,13 @@
+{
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.storage_wizard_init);
+  Preconditions.checkNotNull(mDisk);
+  setHeaderText(R.string.storage_wizard_init_title,mDisk.getDescription());
+  mRadioExternal=(RadioButton)findViewById(R.id.storage_wizard_init_external_title);
+  mRadioInternal=(RadioButton)findViewById(R.id.storage_wizard_init_internal_title);
+  mRadioExternal.setOnCheckedChangeListener(mRadioListener);
+  mRadioInternal.setOnCheckedChangeListener(mRadioListener);
+  findViewById(R.id.storage_wizard_init_external_summary).setPadding(mRadioExternal.getCompoundPaddingLeft(),0,mRadioExternal.getCompoundPaddingRight(),0);
+  findViewById(R.id.storage_wizard_init_internal_summary).setPadding(mRadioExternal.getCompoundPaddingLeft(),0,mRadioExternal.getCompoundPaddingRight(),0);
+  getNextButton().setEnabled(false);
+}

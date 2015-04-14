@@ -15,7 +15,7 @@
     screen.addPreference(mUnmount);
   }
   screen.addPreference(mFormat);
-  if (SystemProperties.getBoolean(PREF_FORMAT_INTERNAL,false)) {
+  if ((mDisk.flags & DiskInfo.FLAG_ADOPTABLE) != 0) {
     screen.addPreference(mFormatInternal);
   }
   final File file=new File(mVolume.path);

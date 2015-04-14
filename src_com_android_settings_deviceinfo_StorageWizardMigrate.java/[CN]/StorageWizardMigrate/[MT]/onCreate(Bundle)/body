@@ -1,0 +1,14 @@
+{
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.storage_wizard_migrate);
+  Preconditions.checkNotNull(mDisk);
+  final String time=DateUtils.formatDuration(0).toString();
+  final String size=Formatter.formatFileSize(this,0);
+  setHeaderText(R.string.storage_wizard_migrate_title,mDisk.getDescription());
+  setBodyText(R.string.storage_wizard_migrate_body,mDisk.getDescription(),time,size);
+  mRadioNow=(RadioButton)findViewById(R.id.storage_wizard_migrate_now);
+  mRadioLater=(RadioButton)findViewById(R.id.storage_wizard_migrate_later);
+  mRadioNow.setOnCheckedChangeListener(mRadioListener);
+  mRadioLater.setOnCheckedChangeListener(mRadioListener);
+  mRadioNow.setChecked(true);
+}

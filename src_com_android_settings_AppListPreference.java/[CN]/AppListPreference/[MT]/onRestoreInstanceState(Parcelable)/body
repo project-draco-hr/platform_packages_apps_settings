@@ -1,0 +1,10 @@
+{
+  if (state instanceof SavedState) {
+    SavedState savedState=(SavedState)state;
+    setPackageNames(savedState.entryValues,savedState.value);
+    super.onRestoreInstanceState(savedState.superState);
+  }
+ else {
+    super.onRestoreInstanceState(state);
+  }
+}

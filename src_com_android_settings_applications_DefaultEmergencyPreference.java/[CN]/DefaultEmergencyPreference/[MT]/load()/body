@@ -1,12 +1,11 @@
 {
-  new AsyncTask<Void,Void,ArrayMap<String,CharSequence>>(){
-    @Override protected ArrayMap<String,CharSequence> doInBackground(    Void[] params){
+  new AsyncTask<Void,Void,Set<String>>(){
+    @Override protected Set<String> doInBackground(    Void[] params){
       return resolveAssistPackageAndQueryApps();
     }
-    @Override protected void onPostExecute(    ArrayMap<String,CharSequence> entries){
-      setEntries(entries.values().toArray(new CharSequence[entries.size()]));
-      setEntryValues(entries.keySet().toArray(new String[entries.size()]));
-      setValue(Settings.Secure.getString(mContentResolver,Settings.Secure.EMERGENCY_ASSISTANCE_APPLICATION));
+    @Override protected void onPostExecute(    Set<String> entries){
+      String currentPkg=Settings.Secure.getString(mContentResolver,Settings.Secure.EMERGENCY_ASSISTANCE_APPLICATION);
+      setPackageNames(entries.toArray(new String[entries.size()]),currentPkg);
     }
   }
 .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

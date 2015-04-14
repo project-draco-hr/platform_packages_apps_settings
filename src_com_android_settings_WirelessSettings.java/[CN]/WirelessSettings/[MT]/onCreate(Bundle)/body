@@ -11,7 +11,6 @@
   addPreferencesFromResource(R.xml.wireless_settings);
   final int myUserId=UserHandle.myUserId();
   final boolean isSecondaryUser=myUserId != UserHandle.USER_OWNER;
-  final boolean isRestrictedUser=mUm.getUserInfo(myUserId).isRestricted();
   final Activity activity=getActivity();
   mAirplaneModePreference=(SwitchPreference)findPreference(KEY_TOGGLE_AIRPLANE);
   SwitchPreference nfc=(SwitchPreference)findPreference(KEY_TOGGLE_NFC);
@@ -19,14 +18,6 @@
   SwitchPreference nsd=(SwitchPreference)findPreference(KEY_TOGGLE_NSD);
   mAirplaneModeEnabler=new AirplaneModeEnabler(activity,mAirplaneModePreference);
   mNfcEnabler=new NfcEnabler(activity,nfc,androidBeam);
-  mSmsApplicationPreference=(AppListPreference)findPreference(KEY_SMS_APPLICATION);
-  if (isRestrictedUser) {
-    removePreference(KEY_SMS_APPLICATION);
-  }
- else {
-    mSmsApplicationPreference.setOnPreferenceChangeListener(this);
-    initSmsApplicationSetting();
-  }
   if (ImsManager.isWfcEnabledByPlatform(activity)) {
     mButtonWfc=(PreferenceScreen)findPreference(KEY_WFC_SETTINGS);
   }
@@ -75,9 +66,6 @@
     if (pref != null) {
       removePreference(KEY_MANAGE_MOBILE_PLAN);
     }
-  }
-  if (!isSmsSupported()) {
-    removePreference(KEY_SMS_APPLICATION);
   }
   if (mPm.hasSystemFeature(PackageManager.FEATURE_TELEVISION)) {
     removePreference(KEY_TOGGLE_AIRPLANE);

@@ -1,0 +1,10 @@
+{
+  Collection<SmsApplicationData> smsApplications=SmsApplication.getApplicationCollection(getContext());
+  int count=smsApplications.size();
+  String[] packageNames=new String[count];
+  int i=0;
+  for (  SmsApplicationData smsApplicationData : smsApplications) {
+    packageNames[i++]=smsApplicationData.mPackageName;
+  }
+  setPackageNames(packageNames,getDefaultPackage());
+}

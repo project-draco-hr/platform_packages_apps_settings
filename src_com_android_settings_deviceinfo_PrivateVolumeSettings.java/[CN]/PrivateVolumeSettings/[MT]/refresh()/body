@@ -4,7 +4,7 @@
   final Context context=getActivity();
   final PreferenceScreen screen=getPreferenceScreen();
   screen.removeAll();
-  if (mVolume.state != VolumeInfo.STATE_MOUNTED) {
+  if (mVolume.getState() != VolumeInfo.STATE_MOUNTED) {
     return;
   }
   screen.addPreference(mGraph);
@@ -32,7 +32,7 @@
       ((StorageItemPreference)pref).setLoading();
     }
   }
-  final File file=new File(mVolume.path);
+  final File file=mVolume.getPath();
   mTotalSize=file.getTotalSpace();
   mAvailSize=file.getFreeSpace();
   mTotal.setSummary(Formatter.formatFileSize(context,mTotalSize));

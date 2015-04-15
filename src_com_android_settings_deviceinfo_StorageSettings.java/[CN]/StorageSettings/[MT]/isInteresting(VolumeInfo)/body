@@ -1,3 +1,9 @@
 {
-  return vol.type == VolumeInfo.TYPE_PRIVATE || vol.type == VolumeInfo.TYPE_PUBLIC;
+switch (vol.getType()) {
+case VolumeInfo.TYPE_PRIVATE:
+case VolumeInfo.TYPE_PUBLIC:
+    return true;
+default :
+  return false;
+}
 }

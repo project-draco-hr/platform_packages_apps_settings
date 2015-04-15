@@ -6,9 +6,9 @@
   mVolumeId=getArguments().getString(VolumeInfo.EXTRA_VOLUME_ID);
   mVolume=mStorageManager.findVolumeById(mVolumeId);
   Preconditions.checkNotNull(mVolume);
-  Preconditions.checkState(mVolume.type == VolumeInfo.TYPE_PRIVATE);
+  Preconditions.checkState(mVolume.getType() == VolumeInfo.TYPE_PRIVATE);
   addPreferencesFromResource(R.xml.device_info_storage_volume);
-  mSharedVolume=mStorageManager.findVolumeById(mVolume.id.replace("private","emulated"));
+  mSharedVolume=mStorageManager.findVolumeById(mVolume.getId().replace("private","emulated"));
   mMeasure=new StorageMeasurement(context,mVolume,mSharedVolume);
   mMeasure.setReceiver(mReceiver);
   mGraph=buildGraph();

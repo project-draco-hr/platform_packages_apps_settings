@@ -3,14 +3,14 @@
   setContentView(R.layout.storage_wizard_generic);
   Preconditions.checkNotNull(mDisk);
   setHeaderText(R.string.storage_wizard_ready_title,mDisk.getDescription());
-  for (  String volId : mDisk.volumeIds) {
-    final VolumeInfo vol=mStorage.findVolumeById(volId);
-    if (vol == null)     continue;
-    if (vol.type == VolumeInfo.TYPE_PUBLIC) {
+  final List<VolumeInfo> vols=mStorage.getVolumes();
+  for (  VolumeInfo vol : vols) {
+    if (!Objects.equals(mDisk.getId(),vol.getDiskId()))     continue;
+    if (vol.getType() == VolumeInfo.TYPE_PUBLIC) {
       setBodyText(R.string.storage_wizard_ready_external_body,mDisk.getDescription());
       break;
     }
- else     if (vol.type == VolumeInfo.TYPE_PRIVATE) {
+ else     if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
       setBodyText(R.string.storage_wizard_ready_internal_body,mDisk.getDescription());
       break;
     }

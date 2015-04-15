@@ -6,10 +6,10 @@
   final List<VolumeInfo> volumes=mStorageManager.getVolumes();
   Collections.sort(volumes,sVolumeComparator);
   for (  VolumeInfo vol : volumes) {
-    if (vol.type == VolumeInfo.TYPE_PRIVATE) {
+    if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
       mInternalCategory.addPreference(new StorageVolumePreference(context,vol));
     }
- else     if (vol.type == VolumeInfo.TYPE_PUBLIC) {
+ else     if (vol.getType() == VolumeInfo.TYPE_PUBLIC) {
       mExternalCategory.addPreference(new StorageVolumePreference(context,vol));
     }
   }

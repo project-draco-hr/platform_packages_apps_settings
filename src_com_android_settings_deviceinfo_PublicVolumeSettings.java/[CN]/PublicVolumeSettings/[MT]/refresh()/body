@@ -3,22 +3,22 @@
   final Context context=getActivity();
   final PreferenceScreen screen=getPreferenceScreen();
   screen.removeAll();
-  if (mVolume.state == VolumeInfo.STATE_MOUNTED) {
+  if (mVolume.getState() == VolumeInfo.STATE_MOUNTED) {
     screen.addPreference(mGraph);
     screen.addPreference(mTotal);
     screen.addPreference(mAvailable);
   }
-  if (mVolume.state == VolumeInfo.STATE_UNMOUNTED) {
+  if (mVolume.getState() == VolumeInfo.STATE_UNMOUNTED) {
     screen.addPreference(mMount);
   }
-  if (mVolume.state == VolumeInfo.STATE_MOUNTED) {
+  if (mVolume.getState() == VolumeInfo.STATE_MOUNTED) {
     screen.addPreference(mUnmount);
   }
   screen.addPreference(mFormat);
-  if ((mDisk.flags & DiskInfo.FLAG_ADOPTABLE) != 0) {
+  if (mDisk.isAdoptable()) {
     screen.addPreference(mFormatInternal);
   }
-  final File file=new File(mVolume.path);
+  final File file=mVolume.getPath();
   mTotalSize=file.getTotalSpace();
   mAvailSize=file.getFreeSpace();
   mTotal.setSummary(Formatter.formatFileSize(context,mTotalSize));

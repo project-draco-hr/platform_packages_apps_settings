@@ -2,8 +2,8 @@
   final Context context=StorageWizardFormatProgress.this;
   if (e == null) {
     if (!mFormatPublic) {
-      final Intent intent=new Intent(context,StorageWizardMigrate.class);
-      intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.id);
+      final Intent intent=new Intent(context,StorageWizardReady.class);
+      intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
       startActivity(intent);
     }
     finishAffinity();

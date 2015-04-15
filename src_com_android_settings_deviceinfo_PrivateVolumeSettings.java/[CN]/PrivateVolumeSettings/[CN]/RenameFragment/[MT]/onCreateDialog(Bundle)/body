@@ -7,8 +7,8 @@
   final LayoutInflater dialogInflater=LayoutInflater.from(builder.getContext());
   final View view=dialogInflater.inflate(R.layout.dialog_edittext,null,false);
   final EditText nickname=(EditText)view.findViewById(R.id.edittext);
-  if (!TextUtils.isEmpty(vol.nickname)) {
-    nickname.setText(vol.nickname);
+  if (!TextUtils.isEmpty(vol.getNickname())) {
+    nickname.setText(vol.getNickname());
   }
  else {
     nickname.setText(storageManager.getBestVolumeDescription(vol));
@@ -17,6 +17,7 @@
   builder.setView(view);
   builder.setPositiveButton(R.string.save,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
+      storageManager.setVolumeNickname(volId,nickname.getText().toString());
     }
   }
 );

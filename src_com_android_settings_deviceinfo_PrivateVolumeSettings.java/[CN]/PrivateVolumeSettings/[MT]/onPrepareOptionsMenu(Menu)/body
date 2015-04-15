@@ -4,16 +4,16 @@
   final MenuItem unmount=menu.findItem(R.id.storage_unmount);
   final MenuItem format=menu.findItem(R.id.storage_format);
   final MenuItem usb=menu.findItem(R.id.storage_usb);
-  if (VolumeInfo.ID_PRIVATE_INTERNAL.equals(mVolume.id)) {
+  if (VolumeInfo.ID_PRIVATE_INTERNAL.equals(mVolume.getId())) {
     rename.setVisible(false);
     mount.setVisible(false);
     unmount.setVisible(false);
     format.setVisible(false);
   }
  else {
-    rename.setVisible(mVolume.type == VolumeInfo.TYPE_PRIVATE);
-    mount.setVisible(mVolume.state == VolumeInfo.STATE_UNMOUNTED);
-    unmount.setVisible(mVolume.state == VolumeInfo.STATE_MOUNTED);
+    rename.setVisible(mVolume.getType() == VolumeInfo.TYPE_PRIVATE);
+    mount.setVisible(mVolume.getState() == VolumeInfo.STATE_UNMOUNTED);
+    unmount.setVisible(mVolume.getState() == VolumeInfo.STATE_MOUNTED);
     format.setVisible(true);
   }
   usb.setVisible(false);

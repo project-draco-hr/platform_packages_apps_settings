@@ -4,14 +4,14 @@
   if (vol == null) {
     return false;
   }
- else   if (vol.type == VolumeInfo.TYPE_PRIVATE) {
+ else   if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
     final Bundle args=new Bundle();
     args.putString(VolumeInfo.EXTRA_VOLUME_ID,volId);
     startFragment(this,PrivateVolumeSettings.class.getCanonicalName(),-1,0,args);
     return true;
   }
- else   if (vol.type == VolumeInfo.TYPE_PUBLIC) {
-    if (vol.state == VolumeInfo.STATE_MOUNTED) {
+ else   if (vol.getType() == VolumeInfo.TYPE_PUBLIC) {
+    if (vol.getState() == VolumeInfo.STATE_MOUNTED) {
       startActivity(vol.buildBrowseIntent());
       return true;
     }

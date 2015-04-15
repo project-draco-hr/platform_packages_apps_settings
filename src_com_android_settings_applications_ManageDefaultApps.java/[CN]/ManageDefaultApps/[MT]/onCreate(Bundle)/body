@@ -21,4 +21,7 @@
   if (!DefaultEmergencyPreference.isAvailable(getActivity())) {
     removePreference(KEY_DEFAULT_EMERGENCY_APP);
   }
+  if (DefaultEmergencyPreference.isCapable(getActivity())) {
+    Index.getInstance(getActivity()).updateFromClassNameResource(ManageDefaultApps.class.getName(),true,true);
+  }
 }

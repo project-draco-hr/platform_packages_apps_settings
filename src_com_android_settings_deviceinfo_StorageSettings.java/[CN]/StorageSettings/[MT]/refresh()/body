@@ -4,7 +4,7 @@
   mInternalCategory.removeAll();
   mExternalCategory.removeAll();
   final List<VolumeInfo> volumes=mStorageManager.getVolumes();
-  Collections.sort(volumes,sVolumeComparator);
+  Collections.sort(volumes,VolumeInfo.getDescriptionComparator());
   for (  VolumeInfo vol : volumes) {
     if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
       mInternalCategory.addPreference(new StorageVolumePreference(context,vol));

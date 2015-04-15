@@ -1,0 +1,11 @@
+{
+  final Context context=StorageWizardMoveProgress.this;
+  if (returnCode == PackageManager.MOVE_SUCCEEDED) {
+    finishAffinity();
+  }
+ else {
+    Log.w(TAG,"Move failed with status " + returnCode);
+    Toast.makeText(context,moveStatusToMessage(returnCode),Toast.LENGTH_LONG).show();
+    finishAffinity();
+  }
+}

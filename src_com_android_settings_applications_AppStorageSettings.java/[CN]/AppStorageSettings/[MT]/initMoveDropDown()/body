@@ -1,17 +1,12 @@
 {
-  if (Environment.isExternalStorageEmulated()) {
-    updateMoveEnabled(false);
-    return;
+  final Context context=getActivity();
+  final StorageManager storage=context.getSystemService(StorageManager.class);
+  final List<VolumeInfo> candidates=context.getPackageManager().getApplicationCandidateVolumes(mAppEntry.info);
+  Collections.sort(candidates,VolumeInfo.getDescriptionComparator());
+  mMoveDropDown.clearItems();
+  for (  VolumeInfo vol : candidates) {
+    final String volDescrip=storage.getBestVolumeDescription(vol);
+    mMoveDropDown.addItem(volDescrip,vol);
   }
-  boolean dataOnly=(mPackageInfo == null) && (mAppEntry != null);
-  boolean moveDisable=true;
-  if ((mAppEntry.info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0) {
-    moveDisable=false;
-  }
- else {
-    mCanBeOnSdCardChecker.init();
-    moveDisable=!mCanBeOnSdCardChecker.check(mAppEntry.info);
-  }
-  updateMoveEnabled(!moveDisable);
   mMoveDropDown.setSelectable(!mAppControlRestricted);
 }

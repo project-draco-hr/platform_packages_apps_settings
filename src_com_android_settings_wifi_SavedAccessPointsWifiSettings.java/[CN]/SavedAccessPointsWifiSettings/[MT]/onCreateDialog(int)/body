@@ -6,7 +6,8 @@ case WifiSettings.WIFI_DIALOG_ID:
       mAccessPointSavedState=null;
     }
   mSelectedAccessPoint=mDlgAccessPoint;
-mDialog=new WifiDialog(getActivity(),this,mDlgAccessPoint,false,true);
+final boolean hideForgetButton=WifiSettings.isCreatorDeviceOwner(getActivity(),mDlgAccessPoint.getConfig());
+mDialog=new WifiDialog(getActivity(),this,mDlgAccessPoint,false,true,hideForgetButton);
 return mDialog;
 }
 return super.onCreateDialog(dialogId);

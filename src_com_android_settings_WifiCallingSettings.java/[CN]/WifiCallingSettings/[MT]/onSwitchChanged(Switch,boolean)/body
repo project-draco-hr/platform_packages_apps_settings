@@ -2,13 +2,5 @@
   final Context context=getActivity();
   ImsManager.setWfcSetting(context,isChecked);
   int wfcMode=ImsManager.getWfcMode(context);
-  mButtonWfcMode.setSummary(getWfcModeSummary(context,wfcMode));
-  mButtonWfcMode.setEnabled(isChecked);
-  final PreferenceScreen preferenceScreen=getPreferenceScreen();
-  if (isChecked) {
-    preferenceScreen.addPreference(mButtonWfcMode);
-  }
- else {
-    preferenceScreen.removePreference(mButtonWfcMode);
-  }
+  updateButtonWfcMode(context,isChecked,wfcMode);
 }

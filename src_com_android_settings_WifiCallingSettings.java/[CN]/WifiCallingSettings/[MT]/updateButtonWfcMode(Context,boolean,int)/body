@@ -1,0 +1,11 @@
+{
+  mButtonWfcMode.setSummary(getWfcModeSummary(context,wfcMode));
+  mButtonWfcMode.setEnabled(wfcEnabled);
+  final PreferenceScreen preferenceScreen=getPreferenceScreen();
+  if (wfcEnabled) {
+    preferenceScreen.addPreference(mButtonWfcMode);
+  }
+ else {
+    preferenceScreen.removePreference(mButtonWfcMode);
+  }
+}

@@ -1,6 +1,6 @@
 {
   int messageRes=getArguments().getInt("messageRes");
-  return new AlertDialog.Builder(getActivity()).setMessage(messageRes).setCancelable(false).setPositiveButton(R.string.wifi_skip_anyway,new DialogInterface.OnClickListener(){
+  final AlertDialog dialog=new AlertDialog.Builder(getActivity()).setMessage(messageRes).setCancelable(false).setPositiveButton(R.string.wifi_skip_anyway,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int id){
       WifiSetupActivity activity=(WifiSetupActivity)getActivity();
       activity.finishOrNext(RESULT_SKIP);
@@ -11,4 +11,6 @@
     }
   }
 ).create();
+  SetupWizardUtils.applyImmersiveFlags(dialog);
+  return dialog;
 }

@@ -9,7 +9,7 @@
   mFilterSpinner.setOnItemSelectedListener(this);
   contentParent.addView(mSpinnerHeader,0);
   mFilterAdapter.enableFilter(getDefaultFilter());
-  if (mListType != LIST_TYPE_MAIN) {
+  if (mListType != LIST_TYPE_STORAGE) {
     if (UserManager.get(getActivity()).getUserProfiles().size() > 1) {
       mFilterAdapter.enableFilter(FILTER_APPS_PERSONAL);
       mFilterAdapter.enableFilter(FILTER_APPS_WORK);
@@ -21,4 +21,5 @@
     mFilterAdapter.enableFilter(FILTER_APPS_PRIORITY);
     mFilterAdapter.enableFilter(FILTER_APPS_SENSITIVE);
   }
+  mApplications.setOverrideFilter(new VolumeFilter(mVolumeUuid));
 }

@@ -3,7 +3,8 @@
   setHasOptionsMenu(true);
   mApplicationsState=ApplicationsState.getInstance(getActivity().getApplication());
   Intent intent=getActivity().getIntent();
-  String className=getArguments() != null ? getArguments().getString("classname") : null;
+  Bundle args=getArguments();
+  String className=args != null ? args.getString(EXTRA_CLASSNAME) : null;
   if (className == null) {
     className=intent.getComponent().getClassName();
   }
@@ -16,6 +17,17 @@
   }
  else   if (className.equals(DomainsURLsAppListActivity.class.getName())) {
     mListType=LIST_TYPE_DOMAINS_URLS;
+  }
+ else   if (className.equals(StorageUseActivity.class.getName())) {
+    if (args != null && args.containsKey(EXTRA_VOLUME_UUID)) {
+      mVolumeUuid=args.getString(EXTRA_VOLUME_UUID);
+      mVolumeName=args.getString(EXTRA_VOLUME_NAME);
+      mListType=LIST_TYPE_STORAGE;
+    }
+ else {
+      mListType=LIST_TYPE_MAIN;
+      mSortOrder=R.id.sort_order_size;
+    }
   }
  else {
     mListType=LIST_TYPE_MAIN;

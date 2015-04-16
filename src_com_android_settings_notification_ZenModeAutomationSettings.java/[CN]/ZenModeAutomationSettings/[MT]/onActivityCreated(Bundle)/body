@@ -1,0 +1,13 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  final FloatingActionButton fab=getFloatingActionButton();
+  fab.setVisibility(View.VISIBLE);
+  fab.setImageResource(R.drawable.ic_menu_add_white);
+  fab.setContentDescription(getString(R.string.zen_mode_time_add_rule));
+  fab.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      showAddRuleDialog();
+    }
+  }
+);
+}

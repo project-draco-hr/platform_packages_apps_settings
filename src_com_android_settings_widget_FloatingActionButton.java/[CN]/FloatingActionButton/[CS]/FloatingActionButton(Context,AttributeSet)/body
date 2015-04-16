@@ -1,0 +1,12 @@
+{
+  super(context,attrs);
+  setScaleType(ScaleType.CENTER);
+  setStateListAnimator(AnimatorInflater.loadStateListAnimator(context,R.anim.fab_elevation));
+  setOutlineProvider(new ViewOutlineProvider(){
+    @Override public void getOutline(    View view,    Outline outline){
+      outline.setOval(0,0,getWidth(),getHeight());
+    }
+  }
+);
+  setClipToOutline(true);
+}

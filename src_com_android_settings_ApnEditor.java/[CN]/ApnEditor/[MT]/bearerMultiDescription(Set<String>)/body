@@ -1,0 +1,24 @@
+{
+  String[] values=mRes.getStringArray(R.array.bearer_entries);
+  StringBuilder retVal=new StringBuilder();
+  boolean first=true;
+  for (  String bearer : raw) {
+    int bearerIndex=mBearerMulti.findIndexOfValue(bearer);
+    try {
+      if (first) {
+        retVal.append(values[bearerIndex]);
+        first=false;
+      }
+ else {
+        retVal.append(", " + values[bearerIndex]);
+      }
+    }
+ catch (    ArrayIndexOutOfBoundsException e) {
+    }
+  }
+  String val=retVal.toString();
+  if (!TextUtils.isEmpty(val)) {
+    return val;
+  }
+  return null;
+}

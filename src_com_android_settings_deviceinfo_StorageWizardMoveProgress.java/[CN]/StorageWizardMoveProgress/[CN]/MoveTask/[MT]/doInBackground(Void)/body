@@ -1,0 +1,20 @@
+{
+  try {
+    final LocalPackageMoveObserver observer=new LocalPackageMoveObserver();
+    if (mApp.isExternalAsec()) {
+      getPackageManager().movePackage(mPackageName,observer,PackageManager.MOVE_INTERNAL);
+    }
+ else     if (mVolume.getType() == VolumeInfo.TYPE_PUBLIC) {
+      getPackageManager().movePackage(mPackageName,observer,PackageManager.MOVE_EXTERNAL_MEDIA);
+    }
+ else {
+      getPackageManager().movePackageAndData(mPackageName,mVolume.fsUuid,observer);
+    }
+    observer.finished.await();
+    return observer.returnCode;
+  }
+ catch (  Exception e) {
+    Log.e(TAG,"Failed to move",e);
+    return PackageManager.MOVE_FAILED_INTERNAL_ERROR;
+  }
+}

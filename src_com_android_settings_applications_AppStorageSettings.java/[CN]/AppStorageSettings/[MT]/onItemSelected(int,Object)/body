@@ -1,14 +1,12 @@
 {
-  boolean selectedExternal=(Boolean)value;
-  boolean isExternal=(mAppEntry.info.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) != 0;
-  if (selectedExternal ^ isExternal) {
-    if (mPackageMoveObserver == null) {
-      mPackageMoveObserver=new PackageMoveObserver();
-    }
-    int moveFlags=selectedExternal ? PackageManager.MOVE_EXTERNAL_MEDIA : PackageManager.MOVE_INTERNAL;
-    mMoveInProgress=true;
-    refreshButtons();
-    mPm.movePackage(mAppEntry.info.packageName,mPackageMoveObserver,moveFlags);
+  final Context context=getActivity();
+  final VolumeInfo targetVol=(VolumeInfo)value;
+  final VolumeInfo currentVol=context.getPackageManager().getApplicationCurrentVolume(mAppEntry.info);
+  if (!Objects.equals(targetVol,currentVol)) {
+    final Intent intent=new Intent(context,StorageWizardMoveConfirm.class);
+    intent.putExtra(VolumeInfo.EXTRA_VOLUME_ID,targetVol.getId());
+    intent.putExtra(Intent.EXTRA_PACKAGE_NAME,mAppEntry.info.packageName);
+    startActivity(intent);
   }
   return true;
 }

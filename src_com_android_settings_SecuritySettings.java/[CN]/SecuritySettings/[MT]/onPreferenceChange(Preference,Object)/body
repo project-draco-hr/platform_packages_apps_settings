@@ -13,10 +13,10 @@
     updateLockAfterPreferenceSummary();
   }
  else   if (KEY_VISIBLE_PATTERN.equals(key)) {
-    lockPatternUtils.setVisiblePatternEnabled((Boolean)value);
+    lockPatternUtils.setVisiblePatternEnabled((Boolean)value,MY_USER_ID);
   }
  else   if (KEY_POWER_INSTANTLY_LOCKS.equals(key)) {
-    mLockPatternUtils.setPowerButtonInstantlyLocks((Boolean)value);
+    mLockPatternUtils.setPowerButtonInstantlyLocks((Boolean)value,MY_USER_ID);
   }
  else   if (KEY_SHOW_PASSWORD.equals(key)) {
     Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,((Boolean)value) ? 1 : 0);

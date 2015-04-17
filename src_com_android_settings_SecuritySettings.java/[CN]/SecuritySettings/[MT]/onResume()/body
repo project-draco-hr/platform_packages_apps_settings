@@ -3,10 +3,10 @@
   createPreferenceHierarchy();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (mVisiblePattern != null) {
-    mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled());
+    mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled(MY_USER_ID));
   }
   if (mPowerButtonInstantlyLocks != null) {
-    mPowerButtonInstantlyLocks.setChecked(lockPatternUtils.getPowerButtonInstantlyLocks());
+    mPowerButtonInstantlyLocks.setChecked(lockPatternUtils.getPowerButtonInstantlyLocks(MY_USER_ID));
   }
   if (mShowPassword != null) {
     mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0);

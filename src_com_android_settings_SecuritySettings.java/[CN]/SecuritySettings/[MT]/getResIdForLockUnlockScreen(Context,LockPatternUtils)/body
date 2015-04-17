@@ -1,7 +1,7 @@
 {
   int resid=0;
-  if (!lockPatternUtils.isSecure()) {
-    if (lockPatternUtils.isLockScreenDisabled()) {
+  if (!lockPatternUtils.isSecure(MY_USER_ID)) {
+    if (lockPatternUtils.isLockScreenDisabled(MY_USER_ID)) {
       resid=R.xml.security_settings_lockscreen;
     }
  else {
@@ -9,7 +9,7 @@
     }
   }
  else {
-switch (lockPatternUtils.getKeyguardStoredPasswordQuality()) {
+switch (lockPatternUtils.getKeyguardStoredPasswordQuality(MY_USER_ID)) {
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
       resid=R.xml.security_settings_pattern;
     break;

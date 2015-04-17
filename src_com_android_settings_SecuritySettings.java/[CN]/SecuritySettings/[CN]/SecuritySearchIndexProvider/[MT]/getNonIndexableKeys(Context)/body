@@ -10,7 +10,7 @@
   if (um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
     keys.add(KEY_CREDENTIALS_MANAGER);
   }
-  if (!lockPatternUtils.isSecure()) {
+  if (!lockPatternUtils.isSecure(MY_USER_ID)) {
     keys.add(KEY_TRUST_AGENT);
     keys.add(KEY_MANAGE_TRUST_AGENTS);
   }

@@ -1,6 +1,6 @@
 {
   boolean launched=false;
-switch (mLockPatternUtils.getKeyguardStoredPasswordQuality()) {
+switch (mLockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId())) {
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
     launched=launchConfirmationActivity(request,title,header,description,returnCredentials || hasChallenge ? ConfirmLockPattern.InternalActivity.class : ConfirmLockPattern.class,external,hasChallenge,challenge);
   break;

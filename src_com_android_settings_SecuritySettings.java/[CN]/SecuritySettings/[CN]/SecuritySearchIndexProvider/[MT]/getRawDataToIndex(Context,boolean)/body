@@ -23,7 +23,7 @@
     result.add(data);
   }
   final LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
-  if (lockPatternUtils.isSecure()) {
+  if (lockPatternUtils.isSecure(MY_USER_ID)) {
     ArrayList<TrustAgentComponentInfo> agents=getActiveTrustAgents(context.getPackageManager(),lockPatternUtils,context.getSystemService(DevicePolicyManager.class));
     for (int i=0; i < agents.size(); i++) {
       final TrustAgentComponentInfo agent=agents.get(i);

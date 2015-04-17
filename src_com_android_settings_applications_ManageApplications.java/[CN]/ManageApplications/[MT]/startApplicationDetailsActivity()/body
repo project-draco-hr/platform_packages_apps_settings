@@ -1,15 +1,20 @@
 {
   Activity activity=getActivity();
-  if (mListType == LIST_TYPE_NOTIFICATION) {
+switch (mListType) {
+case LIST_TYPE_NOTIFICATION:
     activity.startActivity(new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra(Settings.EXTRA_APP_PACKAGE,mCurrentPkgName).putExtra(Settings.EXTRA_APP_UID,mCurrentUid));
-  }
- else   if (mListType == LIST_TYPE_DOMAINS_URLS) {
-    final String title=getString(R.string.auto_launch_label);
-    startAppInfoFragment(AppLaunchSettings.class,title);
-  }
- else {
-    Intent intent=new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-    intent.setData(Uri.fromParts("package",mCurrentPkgName,null));
-    activity.startActivityAsUser(intent,new UserHandle(UserHandle.getUserId(mCurrentUid)));
-  }
+  break;
+case LIST_TYPE_DOMAINS_URLS:
+startAppInfoFragment(AppLaunchSettings.class,R.string.auto_launch_label);
+break;
+case LIST_TYPE_USAGE_ACCESS:
+startAppInfoFragment(UsageAccessDetails.class,R.string.usage_access);
+break;
+case LIST_TYPE_STORAGE:
+startAppInfoFragment(AppStorageSettings.class,R.string.storage_settings);
+break;
+default :
+startAppInfoFragment(InstalledAppDetails.class,R.string.application_info_label);
+break;
+}
 }

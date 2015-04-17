@@ -1,0 +1,12 @@
+{
+  super.onCreate(savedInstanceState);
+  Context context=getActivity();
+  mUsageBridge=new AppStateUsageBridge(context,mState,null);
+  mAppOpsManager=(AppOpsManager)context.getSystemService(Context.APP_OPS_SERVICE);
+  addPreferencesFromResource(R.xml.usage_access_details);
+  mSwitchPref=(SwitchPreference)findPreference(KEY_USAGE_SWITCH);
+  mUsagePrefs=findPreference(KEY_USAGE_PREFS);
+  mSwitchPref.setOnPreferenceChangeListener(this);
+  mUsagePrefs.setOnPreferenceClickListener(this);
+  mSettingsIntent=new Intent(Intent.ACTION_MAIN).addCategory(Settings.INTENT_CATEGORY_USAGE_ACCESS_CONFIG).setPackage(mPackageName);
+}

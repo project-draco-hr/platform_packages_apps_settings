@@ -1,0 +1,14 @@
+{
+  if (preference == mUsagePrefs) {
+    if (mSettingsIntent != null) {
+      try {
+        getActivity().startActivityAsUser(mSettingsIntent,new UserHandle(mUserId));
+      }
+ catch (      ActivityNotFoundException e) {
+        Log.w(TAG,"Unable to launch app usage access settings " + mSettingsIntent,e);
+      }
+    }
+    return true;
+  }
+  return false;
+}

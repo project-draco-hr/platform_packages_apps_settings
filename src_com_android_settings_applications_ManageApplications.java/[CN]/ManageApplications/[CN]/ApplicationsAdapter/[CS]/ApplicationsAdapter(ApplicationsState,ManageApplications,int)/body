@@ -6,9 +6,12 @@
   mPm=mContext.getPackageManager();
   mFilterMode=filterMode;
   if (mManageApplications.mListType == LIST_TYPE_NOTIFICATION) {
-    mNotifBridge=new AppStateNotificationBridge(mContext.getPackageManager(),mState,manageApplications.mNotifBackend,this);
+    mExtraInfoBridge=new AppStateNotificationBridge(mContext.getPackageManager(),mState,this,manageApplications.mNotifBackend);
+  }
+ else   if (mManageApplications.mListType == LIST_TYPE_USAGE_ACCESS) {
+    mExtraInfoBridge=new AppStateUsageBridge(mContext,mState,this);
   }
  else {
-    mNotifBridge=null;
+    mExtraInfoBridge=null;
   }
 }

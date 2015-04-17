@@ -1,9 +1,0 @@
-{
-  final PackageEntry entry=getPackageEntry(packageName,profileId);
-  if (entry == null) {
-    Log.w(TAG,"Unable to give access");
-    return;
-  }
-  setNewMode(entry,AppOpsManager.MODE_ALLOWED);
-  entry.preference.setChecked(true);
-}

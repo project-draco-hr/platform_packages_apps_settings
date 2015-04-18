@@ -13,7 +13,7 @@
  else {
     rename.setVisible(mVolume.getType() == VolumeInfo.TYPE_PRIVATE);
     mount.setVisible(mVolume.getState() == VolumeInfo.STATE_UNMOUNTED);
-    unmount.setVisible(mVolume.getState() == VolumeInfo.STATE_MOUNTED);
+    unmount.setVisible(mVolume.isMountedReadable());
     format.setVisible(true);
   }
   usb.setVisible(false);

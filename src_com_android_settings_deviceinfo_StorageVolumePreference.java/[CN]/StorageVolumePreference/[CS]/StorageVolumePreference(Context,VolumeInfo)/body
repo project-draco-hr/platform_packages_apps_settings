@@ -4,21 +4,19 @@
   mVolume=volume;
   setKey(volume.getId());
   setTitle(mStorageManager.getBestVolumeDescription(volume));
-switch (volume.getState()) {
-case VolumeInfo.STATE_MOUNTED:
+  if (volume.isMountedReadable()) {
     final File path=volume.getPath();
-  final String free=Formatter.formatFileSize(context,path.getFreeSpace());
-final String total=Formatter.formatFileSize(context,path.getTotalSpace());
-setSummary(context.getString(R.string.storage_volume_summary,free,total));
-break;
-}
-if (VolumeInfo.ID_PRIVATE_INTERNAL.equals(volume.getId())) {
-setIcon(context.getDrawable(R.drawable.ic_settings_storage));
-}
+    final String free=Formatter.formatFileSize(context,path.getFreeSpace());
+    final String total=Formatter.formatFileSize(context,path.getTotalSpace());
+    setSummary(context.getString(R.string.storage_volume_summary,free,total));
+  }
+  if (VolumeInfo.ID_PRIVATE_INTERNAL.equals(volume.getId())) {
+    setIcon(context.getDrawable(R.drawable.ic_settings_storage));
+  }
  else {
-setIcon(context.getDrawable(R.drawable.ic_sim_sd));
-}
-if (volume.getType() == VolumeInfo.TYPE_PUBLIC && volume.getState() == VolumeInfo.STATE_MOUNTED) {
-setWidgetLayoutResource(R.layout.preference_storage_action);
-}
+    setIcon(context.getDrawable(R.drawable.ic_sim_sd));
+  }
+  if (volume.getType() == VolumeInfo.TYPE_PUBLIC && volume.isMountedReadable()) {
+    setWidgetLayoutResource(R.layout.preference_storage_action);
+  }
 }

@@ -1,7 +1,7 @@
 {
   final View view=inflater.inflate(R.layout.setup_template,container,false);
   View scrollView=view.findViewById(R.id.bottom_scroll_view);
-  scrollView.setOnApplyWindowInsetsListener(this);
+  SystemBarHelper.setImeInsetView(scrollView);
   ViewGroup setupContent=(ViewGroup)view.findViewById(R.id.setup_content);
   inflater.inflate(R.layout.setup_choose_lock_password,setupContent,true);
   return view;

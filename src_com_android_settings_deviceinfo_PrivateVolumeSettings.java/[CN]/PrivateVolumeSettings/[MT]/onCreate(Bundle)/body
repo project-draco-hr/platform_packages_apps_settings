@@ -8,7 +8,7 @@
   Preconditions.checkNotNull(mVolume);
   Preconditions.checkState(mVolume.getType() == VolumeInfo.TYPE_PRIVATE);
   addPreferencesFromResource(R.xml.device_info_storage_volume);
-  mSharedVolume=mStorageManager.findVolumeById(mVolume.getId().replace("private","emulated"));
+  mSharedVolume=mStorageManager.findEmulatedForPrivate(mVolume);
   mMeasure=new StorageMeasurement(context,mVolume,mSharedVolume);
   mMeasure.setReceiver(mReceiver);
   mGraph=buildGraph();

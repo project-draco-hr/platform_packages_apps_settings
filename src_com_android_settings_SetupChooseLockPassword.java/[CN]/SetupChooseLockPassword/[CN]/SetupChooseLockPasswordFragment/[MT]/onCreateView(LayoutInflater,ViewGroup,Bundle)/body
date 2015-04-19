@@ -1,8 +1,9 @@
 {
-  final View view=inflater.inflate(R.layout.setup_template,container,false);
-  View scrollView=view.findViewById(R.id.bottom_scroll_view);
-  SystemBarHelper.setImeInsetView(scrollView);
-  ViewGroup setupContent=(ViewGroup)view.findViewById(R.id.setup_content);
-  inflater.inflate(R.layout.setup_choose_lock_password,setupContent,true);
-  return view;
+  final SetupWizardLayout layout=(SetupWizardLayout)inflater.inflate(R.layout.setup_choose_lock_password,container,false);
+  SystemBarHelper.setImeInsetView(layout.findViewById(R.id.suw_bottom_scroll_view));
+  mNavigationBar=layout.getNavigationBar();
+  mNavigationBar.setNavigationBarListener(this);
+  layout.setHeaderText(getActivity().getTitle());
+  SetupWizardUtils.setImmersiveMode(getActivity());
+  return layout;
 }

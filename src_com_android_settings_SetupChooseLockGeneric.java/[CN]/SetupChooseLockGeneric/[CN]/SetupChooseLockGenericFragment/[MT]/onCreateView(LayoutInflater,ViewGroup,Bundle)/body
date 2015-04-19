@@ -1,15 +1,14 @@
 {
-  final View view=inflater.inflate(R.layout.setup_preference,container,false);
-  ListView list=(ListView)view.findViewById(android.R.id.list);
-  View title=view.findViewById(R.id.title);
-  if (title == null) {
-    final View header=inflater.inflate(R.layout.setup_wizard_header,list,false);
-    list.addHeaderView(header,null,false);
-  }
+  final SetupWizardListLayout layout=(SetupWizardListLayout)inflater.inflate(R.layout.setup_choose_lock_generic,container,false);
+  layout.setHeaderText(getActivity().getTitle());
+  ListView list=layout.getListView();
   final FingerprintManager fpm=(FingerprintManager)getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
   if (fpm != null && fpm.isHardwareDetected()) {
     final View footer=inflater.inflate(R.layout.setup_screen_lock_fingerprint_details,list,false);
     list.addFooterView(footer,null,false);
   }
-  return view;
+  final NavigationBar navigationBar=layout.getNavigationBar();
+  navigationBar.getNextButton().setEnabled(false);
+  navigationBar.setNavigationBarListener(this);
+  return layout;
 }

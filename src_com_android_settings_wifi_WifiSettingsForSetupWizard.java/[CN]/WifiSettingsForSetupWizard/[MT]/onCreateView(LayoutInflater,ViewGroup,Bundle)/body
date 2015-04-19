@@ -1,11 +1,6 @@
 {
-  final View view=inflater.inflate(R.layout.setup_preference,container,false);
-  final ListView list=(ListView)view.findViewById(android.R.id.list);
-  final View title=view.findViewById(R.id.title);
-  if (title == null) {
-    final View header=inflater.inflate(R.layout.setup_wizard_header,list,false);
-    list.addHeaderView(header,null,false);
-  }
+  final SetupWizardListLayout layout=(SetupWizardListLayout)inflater.inflate(R.layout.setup_wifi_layout,container,false);
+  final ListView list=layout.getListView();
   mAddOtherNetworkItem=inflater.inflate(R.layout.setup_wifi_add_network,list,false);
   list.addFooterView(mAddOtherNetworkItem,null,true);
   mAddOtherNetworkItem.setOnClickListener(new OnClickListener(){
@@ -16,5 +11,10 @@
     }
   }
 );
-  return view;
+  final NavigationBar navigationBar=layout.getNavigationBar();
+  if (navigationBar != null) {
+    WifiSetupActivity activity=(WifiSetupActivity)getActivity();
+    activity.onNavigationBarCreated(navigationBar);
+  }
+  return layout;
 }

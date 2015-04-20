@@ -6,7 +6,7 @@
   mAvailableSubInfos=new ArrayList<SubscriptionInfo>(numSlots);
   mSelectableSubInfos=new ArrayList<SubscriptionInfo>();
   for (int i=0; i < numSlots; ++i) {
-    final SubscriptionInfo sir=Utils.findRecordBySlotId(getActivity(),i);
+    final SubscriptionInfo sir=mSubscriptionManager.getActiveSubscriptionInfoForSimSlotIndex(i);
     SimPreference simPreference=new SimPreference(getActivity(),sir,i);
     simPreference.setOrder(i - numSlots);
     mSimCards.addPreference(simPreference);

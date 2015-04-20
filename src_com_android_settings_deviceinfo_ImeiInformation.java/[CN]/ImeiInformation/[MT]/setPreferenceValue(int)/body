@@ -19,8 +19,8 @@
       }
     }
  else {
-      setSummaryText(KEY_IMEI,phone.getDeviceId());
-      setSummaryText(KEY_IMEI_SV,((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getDeviceSoftwareVersion(phoneId));
+      setSummaryText(KEY_IMEI,phone.getImei());
+      setSummaryText(KEY_IMEI_SV,phone.getDeviceSvn());
       removePreferenceFromScreen(KEY_PRL_VERSION);
       removePreferenceFromScreen(KEY_MEID_NUMBER);
       removePreferenceFromScreen(KEY_MIN_NUMBER);

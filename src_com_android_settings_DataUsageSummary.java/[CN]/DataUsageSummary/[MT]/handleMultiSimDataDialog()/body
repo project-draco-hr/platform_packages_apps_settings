@@ -4,7 +4,7 @@
   if (currentSir == null) {
     return;
   }
-  final SubscriptionInfo nextSir=mSubscriptionManager.getActiveSubscriptionInfo(mSubscriptionManager.getDefaultDataSubId());
+  final SubscriptionInfo nextSir=mSubscriptionManager.getDefaultDataSubscriptionInfo();
   if (!Utils.showSimCardTile(context) || (nextSir != null && currentSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId())) {
     setMobileDataEnabled(currentSir.getSubscriptionId(),true);
     if (nextSir != null && currentSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId()) {

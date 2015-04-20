@@ -1,7 +1,7 @@
 {
   final Resources res=getResources();
   final Context context=getApplicationContext();
-  final SubscriptionInfo sir=Utils.findRecordBySlotId(context,slotId);
+  final SubscriptionInfo sir=SubscriptionManager.from(context).getActiveSubscriptionInfoForSimSlotIndex(slotId);
   if (sir != null) {
     AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(this);
     alertDialogBuilder.setTitle(R.string.sim_preferred_title);

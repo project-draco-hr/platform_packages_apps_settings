@@ -1,4 +1,7 @@
 {
+  if (UserManager.get(getActivity()).hasUserRestriction(UserManager.DISALLOW_NETWORK_RESET)) {
+    return inflater.inflate(R.layout.network_reset_disallowed_screen,null);
+  }
   mContentView=inflater.inflate(R.layout.reset_network_confirm,null);
   establishFinalConfirmationState();
   return mContentView;

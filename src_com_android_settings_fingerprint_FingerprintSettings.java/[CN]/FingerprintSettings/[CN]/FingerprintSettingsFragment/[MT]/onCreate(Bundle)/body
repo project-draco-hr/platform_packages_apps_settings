@@ -4,7 +4,8 @@
     mToken=savedInstanceState.getByteArray(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
     mLaunchedConfirm=savedInstanceState.getBoolean(KEY_LAUNCHED_CONFIRM,false);
   }
-  mFingerprintManager=(FingerprintManager)getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
+  Activity activity=getActivity();
+  mFingerprintManager=(FingerprintManager)activity.getSystemService(Context.FINGERPRINT_SERVICE);
   if (mToken == null && mLaunchedConfirm == false) {
     mLaunchedConfirm=true;
     launchChooseOrConfirmLock();

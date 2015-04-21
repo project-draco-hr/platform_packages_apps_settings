@@ -18,9 +18,12 @@ case WPS_PIN_DIALOG_ID:
 return new WpsDialog(getActivity(),WpsInfo.DISPLAY);
 case WRITE_NFC_DIALOG_ID:
 if (mSelectedAccessPoint != null) {
-mWifiToNfcDialog=new WriteWifiConfigToNfcDialog(getActivity(),mSelectedAccessPoint,mWifiManager);
-return mWifiToNfcDialog;
+mWifiToNfcDialog=new WriteWifiConfigToNfcDialog(getActivity(),mSelectedAccessPoint.getConfig().networkId,mSelectedAccessPoint.getSecurity(),mWifiManager);
 }
+ else if (mWifiNfcDialogSavedState != null) {
+mWifiToNfcDialog=new WriteWifiConfigToNfcDialog(getActivity(),mWifiNfcDialogSavedState,mWifiManager);
+}
+return mWifiToNfcDialog;
 }
 return super.onCreateDialog(dialogId);
 }

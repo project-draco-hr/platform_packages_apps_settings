@@ -1,7 +1,13 @@
 {
   if (!TextUtils.isEmpty(tile.iconPkg)) {
     try {
-      tileIcon.setImageDrawable(context.getPackageManager().getResourcesForApplication(tile.iconPkg).getDrawable(tile.iconRes,null));
+      Drawable drawable=context.getPackageManager().getResourcesForApplication(tile.iconPkg).getDrawable(tile.iconRes,null);
+      if (!tile.iconPkg.equals(context.getPackageName()) && drawable != null) {
+        TypedValue tintColor=new TypedValue();
+        context.getTheme().resolveAttribute(com.android.internal.R.attr.colorAccent,tintColor,true);
+        drawable.setTint(tintColor.data);
+      }
+      tileIcon.setImageDrawable(drawable);
     }
  catch (    NameNotFoundException|Resources.NotFoundException e) {
       tileIcon.setImageDrawable(null);

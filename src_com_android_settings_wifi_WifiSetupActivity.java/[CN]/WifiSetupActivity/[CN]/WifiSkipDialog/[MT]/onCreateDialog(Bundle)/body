@@ -3,7 +3,7 @@
   final AlertDialog dialog=new AlertDialog.Builder(getActivity()).setMessage(messageRes).setCancelable(false).setPositiveButton(R.string.wifi_skip_anyway,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int id){
       WifiSetupActivity activity=(WifiSetupActivity)getActivity();
-      activity.finishOrNext(RESULT_SKIP);
+      activity.finish(RESULT_SKIP);
     }
   }
 ).setNegativeButton(R.string.wifi_dont_skip,new DialogInterface.OnClickListener(){

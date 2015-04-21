@@ -18,6 +18,9 @@
   if (isRestrictedUser || !DefaultSmsPreference.isAvailable(getActivity())) {
     removePreference(KEY_SMS_APPLICATION);
   }
+  if (!DefaultDialerPreference.isAvailable(getActivity())) {
+    removePreference(KEY_DEFAULT_DIALER);
+  }
   if (!DefaultEmergencyPreference.isAvailable(getActivity())) {
     removePreference(KEY_DEFAULT_EMERGENCY_APP);
   }

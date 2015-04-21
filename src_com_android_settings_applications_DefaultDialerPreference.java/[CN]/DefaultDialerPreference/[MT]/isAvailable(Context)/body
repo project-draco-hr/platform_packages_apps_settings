@@ -1,0 +1,8 @@
+{
+  final TelephonyManager tm=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+  if (!tm.isVoiceCapable()) {
+    return false;
+  }
+  final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  return !um.hasUserRestriction(UserManager.DISALLOW_OUTGOING_CALLS);
+}

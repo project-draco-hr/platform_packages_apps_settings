@@ -7,6 +7,10 @@
       if (mSelectedAccessPoint.isConnectable()) {
         menu.add(Menu.NONE,MENU_ID_CONNECT,0,R.string.wifi_menu_connect);
       }
+      WifiConfiguration config=mSelectedAccessPoint.getConfig();
+      if (isCreatorDeviceOwner(getActivity(),config)) {
+        return;
+      }
       if (mSelectedAccessPoint.isSaved() || mSelectedAccessPoint.isEphemeral()) {
         menu.add(Menu.NONE,MENU_ID_FORGET,0,R.string.wifi_menu_forget);
       }

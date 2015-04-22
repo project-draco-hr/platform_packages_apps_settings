@@ -1,9 +1,0 @@
-{
-  super.onActivityResult(requestCode,resultCode,data);
-  if (requestCode == CHOOSE_LOCK_GENERIC_REQUEST || requestCode == CONFIRM_REQUEST) {
-    if (resultCode == RESULT_FINISHED || resultCode == RESULT_OK) {
-      mToken=data.getByteArrayExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
-      updateStage(Stage.EnrollingFindSensor);
-    }
-  }
-}

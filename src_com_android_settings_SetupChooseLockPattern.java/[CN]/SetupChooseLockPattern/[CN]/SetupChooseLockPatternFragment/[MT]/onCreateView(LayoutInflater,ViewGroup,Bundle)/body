@@ -1,6 +1,7 @@
 {
-  final View view=inflater.inflate(R.layout.setup_template,container,false);
-  ViewGroup setupContent=(ViewGroup)view.findViewById(R.id.setup_content);
-  inflater.inflate(R.layout.setup_choose_lock_pattern,setupContent,true);
-  return view;
+  final SetupWizardLayout layout=(SetupWizardLayout)inflater.inflate(R.layout.setup_choose_lock_pattern,container,false);
+  mNavigationBar=layout.getNavigationBar();
+  mNavigationBar.setNavigationBarListener(this);
+  layout.setHeaderText(getActivity().getTitle());
+  return layout;
 }

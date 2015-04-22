@@ -9,25 +9,34 @@ switch (wifiState) {
 case WifiManager.WIFI_STATE_ENABLED:
     final Collection<AccessPoint> accessPoints=mWifiTracker.getAccessPoints();
   getPreferenceScreen().removeAll();
-if (accessPoints.size() == 0) {
-  addMessagePreference(R.string.wifi_empty_list_wifi_on);
-}
+boolean hasAvailableAccessPoints=false;
 for (AccessPoint accessPoint : accessPoints) {
 if (accessPoint.getLevel() != -1) {
+  hasAvailableAccessPoints=true;
   AccessPointPreference preference=new AccessPointPreference(accessPoint,getActivity());
   getPreferenceScreen().addPreference(preference);
   accessPoint.setListener(this);
 }
 }
+if (!hasAvailableAccessPoints) {
+setProgressBarVisible(true);
+addMessagePreference(R.string.wifi_empty_list_wifi_on);
+}
+ else {
+setProgressBarVisible(false);
+}
 break;
 case WifiManager.WIFI_STATE_ENABLING:
 getPreferenceScreen().removeAll();
+setProgressBarVisible(true);
 break;
 case WifiManager.WIFI_STATE_DISABLING:
 addMessagePreference(R.string.wifi_stopping);
+setProgressBarVisible(true);
 break;
 case WifiManager.WIFI_STATE_DISABLED:
 setOffMessage();
+setProgressBarVisible(false);
 break;
 }
 if (savedNetworksExist != mWifiTracker.doSavedNetworksExist()) {

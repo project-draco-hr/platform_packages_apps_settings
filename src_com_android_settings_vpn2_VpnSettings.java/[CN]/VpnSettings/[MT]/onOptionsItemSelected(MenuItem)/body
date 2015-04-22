@@ -3,12 +3,11 @@ switch (item.getItemId()) {
 case R.id.vpn_create:
 {
       long millis=System.currentTimeMillis();
-      while (mPreferences.containsKey(Long.toHexString(millis))) {
+      while (mConfigPreferences.containsKey(Long.toHexString(millis))) {
         ++millis;
       }
-      mDialog=new VpnDialog(getActivity(),this,new VpnProfile(Long.toHexString(millis)),true);
-      mDialog.setOnDismissListener(this);
-      mDialog.show();
+      VpnProfile profile=new VpnProfile(Long.toHexString(millis));
+      ConfigDialogFragment.show(this,profile,true,false);
       return true;
     }
 case R.id.vpn_lockdown:

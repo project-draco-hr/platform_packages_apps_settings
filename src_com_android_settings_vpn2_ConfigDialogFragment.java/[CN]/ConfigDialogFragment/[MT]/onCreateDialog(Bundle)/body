@@ -1,0 +1,7 @@
+{
+  Bundle args=getArguments();
+  VpnProfile profile=(VpnProfile)args.getParcelable(ARG_PROFILE);
+  boolean editing=args.getBoolean(ARG_EDITING);
+  boolean exists=args.getBoolean(ARG_EXISTS);
+  return new ConfigDialog(getActivity(),this,profile,editing,exists);
+}

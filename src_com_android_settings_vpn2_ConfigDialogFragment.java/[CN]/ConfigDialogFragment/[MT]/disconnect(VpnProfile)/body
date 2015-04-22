@@ -1,0 +1,11 @@
+{
+  try {
+    LegacyVpnInfo connected=mService.getLegacyVpnInfo();
+    if (connected != null && profile.key.equals(connected.key)) {
+      mService.prepareVpn(VpnConfig.LEGACY_VPN,VpnConfig.LEGACY_VPN);
+    }
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Failed to disconnect",e);
+  }
+}

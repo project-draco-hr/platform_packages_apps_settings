@@ -1,0 +1,12 @@
+{
+  if (mState < 0) {
+    setSummary("");
+  }
+ else {
+    String[] states=getContext().getResources().getStringArray(R.array.vpn_states);
+    setSummary(states[mState]);
+  }
+  setIcon(R.mipmap.ic_launcher_settings);
+  setTitle(mProfile.name);
+  notifyHierarchyChanged();
+}

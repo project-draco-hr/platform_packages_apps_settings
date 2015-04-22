@@ -1,0 +1,14 @@
+{
+  PackageInfo pkgInfo=(PackageInfo)getArguments().getParcelable(ARG_PACKAGE);
+  final String pkg=pkgInfo.packageName;
+  try {
+    VpnConfig vpnConfig=mService.getVpnConfig();
+    if (vpnConfig != null && pkg.equals(vpnConfig.user) && !vpnConfig.legacy) {
+      mService.setVpnPackageAuthorization(false);
+      onDisconnect(dialog);
+    }
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Failed to forget authorization for " + pkg,e);
+  }
+}

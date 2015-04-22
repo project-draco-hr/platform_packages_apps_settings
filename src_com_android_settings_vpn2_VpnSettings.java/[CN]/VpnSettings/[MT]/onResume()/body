@@ -12,35 +12,5 @@
   if (pickLockdown) {
     LockdownConfigFragment.show(this);
   }
-  if (!mKeyStore.isUnlocked()) {
-    if (!mUnlocking) {
-      Credentials.getInstance().unlock(getActivity());
-    }
- else {
-      finishFragment();
-    }
-    mUnlocking=!mUnlocking;
-    return;
-  }
-  mUnlocking=false;
-  if (mPreferences.size() == 0) {
-    PreferenceGroup group=getPreferenceScreen();
-    final Context context=getActivity();
-    final List<VpnProfile> profiles=loadVpnProfiles(mKeyStore);
-    for (    VpnProfile profile : profiles) {
-      final VpnPreference pref=new VpnPreference(context,profile);
-      pref.setOnPreferenceClickListener(this);
-      mPreferences.put(profile.key,pref);
-      group.addPreference(pref);
-    }
-  }
-  if (mDialog != null) {
-    mDialog.setOnDismissListener(this);
-    mDialog.show();
-  }
-  if (mUpdater == null) {
-    mUpdater=new Handler(this);
-  }
-  mUpdater.sendEmptyMessage(0);
-  registerForContextMenu(getListView());
+  update();
 }

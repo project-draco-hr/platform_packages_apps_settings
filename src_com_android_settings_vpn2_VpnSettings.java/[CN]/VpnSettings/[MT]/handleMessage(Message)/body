@@ -2,23 +2,40 @@
   mUpdater.removeMessages(0);
   if (isResumed()) {
     try {
-      LegacyVpnInfo info=mService.getLegacyVpnInfo();
-      if (mInfo != null) {
-        VpnPreference preference=mPreferences.get(mInfo.key);
+      LegacyVpnInfo info=mConnectivityService.getLegacyVpnInfo();
+      if (mConnectedLegacyVpn != null) {
+        ConfigPreference preference=mConfigPreferences.get(mConnectedLegacyVpn.key);
         if (preference != null) {
-          preference.update(-1);
+          preference.setState(-1);
         }
-        mInfo=null;
+        mConnectedLegacyVpn=null;
       }
       if (info != null) {
-        VpnPreference preference=mPreferences.get(info.key);
+        ConfigPreference preference=mConfigPreferences.get(info.key);
         if (preference != null) {
-          preference.update(info.state);
-          mInfo=info;
+          preference.setState(info.state);
+          mConnectedLegacyVpn=info;
+        }
+      }
+      for (      String key : mConnectedVpns) {
+        AppPreference preference=mAppPreferences.get(key);
+        if (preference != null) {
+          preference.setState(AppPreference.STATE_DISCONNECTED);
+        }
+      }
+      mConnectedVpns.clear();
+      VpnConfig cfg=mConnectivityService.getVpnConfig();
+      if (cfg != null) {
+        mConnectedVpns.add(cfg.user);
+      }
+      for (      String key : mConnectedVpns) {
+        AppPreference preference=mAppPreferences.get(key);
+        if (preference != null) {
+          preference.setState(AppPreference.STATE_CONNECTED);
         }
       }
     }
- catch (    Exception e) {
+ catch (    RemoteException e) {
     }
     mUpdater.sendEmptyMessageDelayed(0,1000);
   }

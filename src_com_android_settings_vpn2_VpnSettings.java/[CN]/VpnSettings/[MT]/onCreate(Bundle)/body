@@ -1,17 +1,13 @@
 {
   super.onCreate(savedState);
-  mUm=(UserManager)getSystemService(Context.USER_SERVICE);
-  if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_VPN)) {
+  mUserManager=(UserManager)getSystemService(Context.USER_SERVICE);
+  if (mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_VPN)) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getActivity(),null));
     return;
   }
+  mConnectivityManager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  mConnectivityManager.registerNetworkCallback(VPN_REQUEST,mNetworkCallback);
   setHasOptionsMenu(true);
   addPreferencesFromResource(R.xml.vpn_settings2);
-  if (savedState != null) {
-    VpnProfile profile=VpnProfile.decode(savedState.getString("VpnKey"),savedState.getByteArray("VpnProfile"));
-    if (profile != null) {
-      mDialog=new VpnDialog(getActivity(),this,profile,savedState.getBoolean("VpnEditing"));
-    }
-  }
 }

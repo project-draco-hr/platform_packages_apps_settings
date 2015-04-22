@@ -1,0 +1,9 @@
+{
+  PackageInfo pkgInfo=(PackageInfo)getArguments().getParcelable(ARG_PACKAGE);
+  try {
+    mService.prepareVpn(pkgInfo.packageName,VpnConfig.LEGACY_VPN);
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Failed to disconnect package " + pkgInfo.packageName,e);
+  }
+}

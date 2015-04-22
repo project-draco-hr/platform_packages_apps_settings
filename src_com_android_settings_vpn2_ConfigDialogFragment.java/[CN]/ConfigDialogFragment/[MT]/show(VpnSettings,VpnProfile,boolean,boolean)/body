@@ -1,0 +1,11 @@
+{
+  if (!parent.isAdded())   return;
+  Bundle args=new Bundle();
+  args.putParcelable(ARG_PROFILE,profile);
+  args.putBoolean(ARG_EDITING,edit);
+  args.putBoolean(ARG_EXISTS,exists);
+  final ConfigDialogFragment frag=new ConfigDialogFragment();
+  frag.setArguments(args);
+  frag.setTargetFragment(parent,0);
+  frag.show(parent.getFragmentManager(),TAG_CONFIG_DIALOG);
+}

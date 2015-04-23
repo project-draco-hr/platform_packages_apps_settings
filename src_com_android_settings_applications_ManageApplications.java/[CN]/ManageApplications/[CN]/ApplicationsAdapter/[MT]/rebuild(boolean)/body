@@ -46,5 +46,8 @@ notifyDataSetChanged();
 if (mEntries.size() != 0 && mManageApplications.mListContainer.getVisibility() != View.VISIBLE) {
 Utils.handleLoadingContainer(mManageApplications.mLoadingContainer,mManageApplications.mListContainer,true,true);
 }
+if (mManageApplications.mListType == LIST_TYPE_USAGE_ACCESS) {
+return;
+}
 mManageApplications.setHasDisabled(hasDisabledApps());
 }

@@ -1,0 +1,23 @@
+{
+  mUsageState=mUsageBridge.getUsageInfo(mPackageName,mPackageInfo.applicationInfo.uid);
+  boolean hasAccess=mUsageState.hasAccess();
+  mSwitchPref.setChecked(hasAccess);
+  mUsagePrefs.setEnabled(hasAccess);
+  ResolveInfo resolveInfo=mPm.resolveActivityAsUser(mSettingsIntent,PackageManager.GET_META_DATA,mUserId);
+  if (resolveInfo != null) {
+    if (findPreference(KEY_USAGE_PREFS) == null) {
+      getPreferenceScreen().addPreference(mUsagePrefs);
+    }
+    Bundle metaData=resolveInfo.activityInfo.metaData;
+    mSettingsIntent.setComponent(new ComponentName(resolveInfo.activityInfo.packageName,resolveInfo.activityInfo.name));
+    if (metaData != null && metaData.containsKey(Settings.METADATA_USAGE_ACCESS_REASON)) {
+      mSwitchPref.setSummary(metaData.getString(Settings.METADATA_USAGE_ACCESS_REASON));
+    }
+  }
+ else {
+    if (findPreference(KEY_USAGE_PREFS) != null) {
+      getPreferenceScreen().removePreference(mUsagePrefs);
+    }
+  }
+  return true;
+}

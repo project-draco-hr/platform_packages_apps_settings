@@ -1,0 +1,10 @@
+{
+  if (preference == mSwitchPref) {
+    if (mUsageState != null && (Boolean)newValue != mUsageState.hasAccess()) {
+      setHasAccess(!mUsageState.hasAccess());
+      refreshUi();
+    }
+    return true;
+  }
+  return false;
+}

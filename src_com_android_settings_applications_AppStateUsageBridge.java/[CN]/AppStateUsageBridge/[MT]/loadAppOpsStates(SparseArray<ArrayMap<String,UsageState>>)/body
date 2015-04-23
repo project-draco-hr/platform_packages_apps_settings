@@ -1,0 +1,25 @@
+{
+  final List<AppOpsManager.PackageOps> packageOps=mAppOpsManager.getPackagesForOps(APP_OPS_OP_CODES);
+  final int packageOpsCount=packageOps != null ? packageOps.size() : 0;
+  for (int i=0; i < packageOpsCount; i++) {
+    final AppOpsManager.PackageOps packageOp=packageOps.get(i);
+    final int userId=UserHandle.getUserId(packageOp.getUid());
+    if (!isThisUserAProfileOfCurrentUser(userId)) {
+      continue;
+    }
+    final ArrayMap<String,UsageState> entriesForProfile=entries.get(userId);
+    if (entriesForProfile == null) {
+      continue;
+    }
+    final UsageState pe=entriesForProfile.get(packageOp.getPackageName());
+    if (pe == null) {
+      Log.w(TAG,"AppOp permission exists for package " + packageOp.getPackageName() + " of user "+ userId+ " but package doesn't exist or did not request UsageStats access");
+      continue;
+    }
+    if (packageOp.getOps().size() < 1) {
+      Log.w(TAG,"No AppOps permission exists for package " + packageOp.getPackageName());
+      continue;
+    }
+    pe.appOpMode=packageOp.getOps().get(0).getMode();
+  }
+}

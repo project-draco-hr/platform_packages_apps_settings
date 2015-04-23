@@ -1,0 +1,26 @@
+{
+switch (mManageApplications.mListType) {
+case LIST_TYPE_NOTIFICATION:
+    if (holder.entry.extraInfo != null) {
+      holder.summary.setText(InstalledAppDetails.getNotificationSummary((AppRow)holder.entry.extraInfo,mContext));
+    }
+ else {
+      holder.summary.setText(null);
+    }
+  break;
+case LIST_TYPE_DOMAINS_URLS:
+holder.summary.setText(getDomainsSummary(holder.entry.info.packageName));
+break;
+case LIST_TYPE_USAGE_ACCESS:
+if (holder.entry.extraInfo != null) {
+holder.summary.setText(((UsageState)holder.entry.extraInfo).hasAccess() ? R.string.switch_on_text : R.string.switch_off_text);
+}
+ else {
+holder.summary.setText(null);
+}
+break;
+default :
+holder.updateSizeText(mManageApplications.mInvalidSizeStr,mWhichSize);
+break;
+}
+}

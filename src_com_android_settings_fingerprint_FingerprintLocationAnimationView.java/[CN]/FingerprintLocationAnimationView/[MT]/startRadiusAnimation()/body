@@ -1,0 +1,27 @@
+{
+  ValueAnimator animator=ValueAnimator.ofFloat(0,mMaxPulseRadius);
+  animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
+    @Override public void onAnimationUpdate(    ValueAnimator animation){
+      mPulseRadius=(float)animation.getAnimatedValue();
+      invalidate();
+    }
+  }
+);
+  animator.addListener(new AnimatorListenerAdapter(){
+    boolean mCancelled;
+    @Override public void onAnimationCancel(    Animator animation){
+      mCancelled=true;
+    }
+    @Override public void onAnimationEnd(    Animator animation){
+      mRadiusAnimator=null;
+      if (!mCancelled) {
+        postDelayed(mStartPhaseRunnable,DELAY_BETWEEN_PHASE);
+      }
+    }
+  }
+);
+  animator.setDuration(1000);
+  animator.setInterpolator(mLinearOutSlowInInterpolator);
+  animator.start();
+  mRadiusAnimator=animator;
+}

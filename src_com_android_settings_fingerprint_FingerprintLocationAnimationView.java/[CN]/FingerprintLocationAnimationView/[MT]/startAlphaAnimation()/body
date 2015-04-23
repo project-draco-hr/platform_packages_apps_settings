@@ -1,0 +1,22 @@
+{
+  mPulsePaint.setAlpha((int)(255f * MAX_PULSE_ALPHA));
+  ValueAnimator animator=ValueAnimator.ofFloat(MAX_PULSE_ALPHA,0f);
+  animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
+    @Override public void onAnimationUpdate(    ValueAnimator animation){
+      mPulsePaint.setAlpha((int)(255f * (float)animation.getAnimatedValue()));
+      invalidate();
+    }
+  }
+);
+  animator.addListener(new AnimatorListenerAdapter(){
+    @Override public void onAnimationEnd(    Animator animation){
+      mAlphaAnimator=null;
+    }
+  }
+);
+  animator.setDuration(750);
+  animator.setInterpolator(mFastOutSlowInInterpolator);
+  animator.setStartDelay(250);
+  animator.start();
+  mAlphaAnimator=animator;
+}

@@ -8,16 +8,15 @@
   final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils);
   addPreferencesFromResource(resid);
   mIsPrimary=UserHandle.myUserId() == UserHandle.USER_OWNER;
-  if (!mIsPrimary) {
-    Preference ownerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
-    if (ownerInfoPref != null) {
-      if (UserManager.get(getActivity()).isLinkedUser()) {
-        ownerInfoPref.setTitle(R.string.profile_info_settings_title);
-      }
- else {
-        ownerInfoPref.setTitle(R.string.user_info_settings_title);
+  mOwnerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
+  if (mOwnerInfoPref != null) {
+    mOwnerInfoPref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+      @Override public boolean onPreferenceClick(      Preference preference){
+        OwnerInfoSettings.show(SecuritySettings.this);
+        return true;
       }
     }
+);
   }
   if (mIsPrimary) {
     if (LockPatternUtils.isDeviceEncryptionEnabled()) {

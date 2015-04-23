@@ -1,34 +1,19 @@
 {
-  mNickname=(EditText)mView.findViewById(R.id.owner_info_nickname);
-  if (!mShowNickname) {
-    mNickname.setVisibility(View.GONE);
-  }
- else {
-    mNickname.setText(UserManager.get(getActivity()).getUserName());
-    mNickname.setSelected(true);
-  }
-  final boolean enabled=mLockPatternUtils.isOwnerInfoEnabled();
-  mCheckbox=(CheckBox)mView.findViewById(R.id.show_owner_info_on_lockscreen_checkbox);
-  mCheckbox.setChecked(enabled);
-  if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
-    if (UserManager.get(getActivity()).isLinkedUser()) {
-      mCheckbox.setText(R.string.show_profile_info_on_lockscreen_label);
-    }
- else {
-      mCheckbox.setText(R.string.show_user_info_on_lockscreen_label);
-    }
-  }
-  mCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-    public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
-      mLockPatternUtils.setOwnerInfoEnabled(isChecked);
-      mOwnerInfo.setEnabled(isChecked);
-    }
-  }
-);
   String info=mLockPatternUtils.getOwnerInfo(mUserId);
   mOwnerInfo=(EditText)mView.findViewById(R.id.owner_info_edit_text);
-  mOwnerInfo.setEnabled(enabled);
   if (!TextUtils.isEmpty(info)) {
     mOwnerInfo.setText(info);
   }
+  mOwnerInfoStatus=(TextView)mView.findViewById(R.id.owner_info_status);
+  updateOwnerInfoStatus();
+  mOwnerInfo.addTextChangedListener(new TextWatcher(){
+    @Override public void onTextChanged(    CharSequence s,    int start,    int before,    int count){
+    }
+    @Override public void beforeTextChanged(    CharSequence s,    int start,    int count,    int after){
+    }
+    @Override public void afterTextChanged(    Editable s){
+      updateOwnerInfoStatus();
+    }
+  }
+);
 }

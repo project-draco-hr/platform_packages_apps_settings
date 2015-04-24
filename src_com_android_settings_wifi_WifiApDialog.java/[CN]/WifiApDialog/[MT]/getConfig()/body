@@ -1,16 +1,7 @@
 {
   WifiConfiguration config=new WifiConfiguration();
   config.SSID=mSsid.getText().toString();
-  if (mChannel2G.isChecked()) {
-    config.apBand=0;
-  }
- else   if (mChannel5G.isChecked()) {
-    config.apBand=1;
-  }
- else {
-    Log.e("TAG","AP band configure error!");
-    return null;
-  }
+  config.apBand=mBandIndex;
 switch (mSecurityTypeIndex) {
 case OPEN_INDEX:
     config.allowedKeyManagement.set(KeyMgmt.NONE);

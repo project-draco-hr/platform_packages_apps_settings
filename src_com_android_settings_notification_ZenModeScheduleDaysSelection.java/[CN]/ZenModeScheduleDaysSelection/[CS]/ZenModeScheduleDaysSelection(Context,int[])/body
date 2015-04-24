@@ -16,7 +16,7 @@
     final int day=DAYS[i];
     final CheckBox checkBox=(CheckBox)inflater.inflate(R.layout.zen_schedule_rule_day,this,false);
     c.set(Calendar.DAY_OF_WEEK,day);
-    checkBox.setText(DAY_FORMAT.format(c.getTime()));
+    checkBox.setText(mDayFormat.format(c.getTime()));
     checkBox.setChecked(mDays.get(day));
     checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener(){
       @Override public void onCheckedChanged(      CompoundButton buttonView,      boolean isChecked){

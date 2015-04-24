@@ -1,6 +1,8 @@
 {
+  mHandler.removeCallbacks(mTimeoutRunnable);
   if (mEnrolling) {
     mEnrollmentCancel.cancel();
     mEnrolling=false;
+    mEnrollmentSteps=-1;
   }
 }

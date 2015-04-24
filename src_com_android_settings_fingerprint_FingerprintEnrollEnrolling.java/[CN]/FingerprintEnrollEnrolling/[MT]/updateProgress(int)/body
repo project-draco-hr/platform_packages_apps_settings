@@ -1,0 +1,11 @@
+{
+  if (mProgressAnim != null) {
+    mProgressAnim.cancel();
+  }
+  ObjectAnimator anim=ObjectAnimator.ofInt(mProgressBar,"progress",mProgressBar.getProgress(),progress);
+  anim.addListener(mProgressAnimationListener);
+  anim.setInterpolator(mFastOutSlowInInterpolator);
+  anim.setDuration(250);
+  anim.start();
+  mProgressAnim=anim;
+}

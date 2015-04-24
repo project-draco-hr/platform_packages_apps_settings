@@ -7,15 +7,22 @@
   mErrorText=(TextView)findViewById(R.id.error_text);
   mProgressBar=(ProgressBar)findViewById(R.id.fingerprint_progress_bar);
   mFingerprintAnimator=(ImageView)findViewById(R.id.fingerprint_animator);
+  mIconAnimationDrawable=(AnimatedVectorDrawable)mFingerprintAnimator.getDrawable();
+  mIconAnimationDrawable.addListener(mIconAnimationListener);
   mFastOutSlowInInterpolator=AnimationUtils.loadInterpolator(this,android.R.interpolator.fast_out_slow_in);
-  findViewById(R.id.fingerprint_animator).setOnTouchListener(new View.OnTouchListener(){
+  mFingerprintAnimator.setOnTouchListener(new View.OnTouchListener(){
     @Override public boolean onTouch(    View v,    MotionEvent event){
       if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
         mIconTouchCount++;
         if (mIconTouchCount == ICON_TOUCH_COUNT_SHOW_UNTIL_DIALOG_SHOWN) {
           showIconTouchDialog();
-          mIconTouchCount=0;
         }
+ else {
+          mFingerprintAnimator.postDelayed(mShowDialogRunnable,ICON_TOUCH_DURATION_UNTIL_DIALOG_SHOWN);
+        }
+      }
+ else       if (event.getActionMasked() == MotionEvent.ACTION_CANCEL || event.getActionMasked() == MotionEvent.ACTION_UP) {
+        mFingerprintAnimator.removeCallbacks(mShowDialogRunnable);
       }
       return true;
     }

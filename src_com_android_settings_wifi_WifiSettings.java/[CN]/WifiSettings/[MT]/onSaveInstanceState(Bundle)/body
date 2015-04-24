@@ -8,4 +8,9 @@
       outState.putBundle(SAVE_DIALOG_ACCESS_POINT_STATE,mAccessPointSavedState);
     }
   }
+  if (mWifiToNfcDialog != null && mWifiToNfcDialog.isShowing()) {
+    Bundle savedState=new Bundle();
+    mWifiToNfcDialog.saveState(savedState);
+    outState.putBundle(SAVED_WIFI_NFC_DIALOG_STATE,savedState);
+  }
 }

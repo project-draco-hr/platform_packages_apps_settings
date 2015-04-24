@@ -1,7 +1,7 @@
 {
   final Context context=getActivity();
   final VolumeInfo targetVol=(VolumeInfo)value;
-  final VolumeInfo currentVol=context.getPackageManager().getApplicationCurrentVolume(mAppEntry.info);
+  final VolumeInfo currentVol=context.getPackageManager().getPackageCurrentVolume(mAppEntry.info);
   if (!Objects.equals(targetVol,currentVol)) {
     final Intent intent=new Intent(context,StorageWizardMoveConfirm.class);
     intent.putExtra(VolumeInfo.EXTRA_VOLUME_ID,targetVol.getId());

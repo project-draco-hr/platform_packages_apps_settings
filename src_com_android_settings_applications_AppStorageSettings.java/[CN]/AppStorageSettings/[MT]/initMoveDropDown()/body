@@ -1,7 +1,7 @@
 {
   final Context context=getActivity();
   final StorageManager storage=context.getSystemService(StorageManager.class);
-  final List<VolumeInfo> candidates=context.getPackageManager().getApplicationCandidateVolumes(mAppEntry.info);
+  final List<VolumeInfo> candidates=context.getPackageManager().getPackageCandidateVolumes(mAppEntry.info);
   Collections.sort(candidates,VolumeInfo.getDescriptionComparator());
   mMoveDropDown.clearItems();
   for (  VolumeInfo vol : candidates) {

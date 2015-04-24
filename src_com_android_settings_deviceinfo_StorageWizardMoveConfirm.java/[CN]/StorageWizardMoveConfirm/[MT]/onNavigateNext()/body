@@ -1,7 +1,10 @@
 {
+  final String appName=getPackageManager().getApplicationLabel(mApp).toString();
+  final int moveId=getPackageManager().movePackage(mPackageName,mVolume);
   final Intent intent=new Intent(this,StorageWizardMoveProgress.class);
-  intent.putExtra(VolumeInfo.EXTRA_VOLUME_ID,mVolume.getId());
-  intent.putExtra(Intent.EXTRA_PACKAGE_NAME,mPackageName);
+  intent.putExtra(EXTRA_MOVE_ID,moveId);
+  intent.putExtra(EXTRA_TITLE,appName);
+  intent.putExtra(EXTRA_VOLUME_ID,mVolume.getId());
   startActivity(intent);
   finishAffinity();
 }

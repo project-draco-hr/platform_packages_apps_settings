@@ -1,20 +1,12 @@
 {
   super.onCreate(savedInstanceState);
   setContentView(R.layout.storage_wizard_progress);
-  try {
-    mPackageName=getIntent().getStringExtra(Intent.EXTRA_PACKAGE_NAME);
-    mApp=getPackageManager().getApplicationInfo(mPackageName,0);
-  }
- catch (  NameNotFoundException e) {
-    throw new RuntimeException(e);
-  }
-  Preconditions.checkNotNull(mVolume);
-  Preconditions.checkNotNull(mApp);
-  final String appName=getPackageManager().getApplicationLabel(mApp).toString();
+  mMoveId=getIntent().getIntExtra(EXTRA_MOVE_ID,-1);
+  final String appName=getIntent().getStringExtra(EXTRA_TITLE);
   final String volumeName=mStorage.getBestVolumeDescription(mVolume);
   setHeaderText(R.string.storage_wizard_move_progress_title,appName);
   setBodyText(R.string.storage_wizard_move_progress_body,volumeName,appName);
-  setCurrentProgress(20);
   getNextButton().setVisibility(View.GONE);
-  new MoveTask().execute();
+  getPackageManager().registerMoveCallback(mCallback,new Handler());
+  mCallback.onStatusChanged(mMoveId,getPackageManager().getMoveStatus(mMoveId),-1);
 }

@@ -1,22 +1,24 @@
 {
-  WifiConfiguration config=accessPoint.getConfig();
-  if (isCreatorDeviceOwner(getActivity(),config) && accessPoint.isActive()) {
-    final int userId=UserHandle.getUserId(config.creatorUid);
-    final PackageManager pm=getActivity().getPackageManager();
-    final IPackageManager ipm=AppGlobals.getPackageManager();
-    String appName=pm.getNameForUid(config.creatorUid);
-    try {
-      final ApplicationInfo appInfo=ipm.getApplicationInfo(appName,0,userId);
-      final CharSequence label=pm.getApplicationLabel(appInfo);
-      if (label != null) {
-        appName=label.toString();
+  if (accessPoint != null) {
+    WifiConfiguration config=accessPoint.getConfig();
+    if (isCreatorDeviceOwner(getActivity(),config) && accessPoint.isActive()) {
+      final int userId=UserHandle.getUserId(config.creatorUid);
+      final PackageManager pm=getActivity().getPackageManager();
+      final IPackageManager ipm=AppGlobals.getPackageManager();
+      String appName=pm.getNameForUid(config.creatorUid);
+      try {
+        final ApplicationInfo appInfo=ipm.getApplicationInfo(appName,0,userId);
+        final CharSequence label=pm.getApplicationLabel(appInfo);
+        if (label != null) {
+          appName=label.toString();
+        }
       }
+ catch (      RemoteException e) {
+      }
+      final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+      builder.setTitle(accessPoint.getSsid()).setMessage(getString(R.string.wifi_alert_lockdown_by_device_owner,appName)).setPositiveButton(android.R.string.ok,null).show();
+      return;
     }
- catch (    RemoteException e) {
-    }
-    final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-    builder.setTitle(accessPoint.getSsid()).setMessage(getString(R.string.wifi_alert_lockdown_by_device_owner,appName)).setPositiveButton(android.R.string.ok,null).show();
-    return;
   }
   if (mDialog != null) {
     removeDialog(WIFI_DIALOG_ID);

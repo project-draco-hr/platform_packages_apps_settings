@@ -1,6 +1,8 @@
 {
+  boolean mInit=true;
   mView=getLayoutInflater().inflate(R.layout.wifi_ap_dialog,null);
   Spinner mSecurity=((Spinner)mView.findViewById(R.id.security));
+  final Spinner mChannel=(Spinner)mView.findViewById(R.id.choose_channel);
   setView(mView);
   setInverseBackgroundForced(true);
   Context context=getContext();
@@ -8,33 +10,50 @@
   mView.findViewById(R.id.type).setVisibility(View.VISIBLE);
   mSsid=(TextView)mView.findViewById(R.id.ssid);
   mPassword=(EditText)mView.findViewById(R.id.password);
-  mChannel=(RadioGroup)mView.findViewById(R.id.choose_channel);
-  mChannel2G=(RadioButton)mView.findViewById(R.id.ap_2G_band);
-  mChannel5G=(RadioButton)mView.findViewById(R.id.ap_5G_band);
+  ArrayAdapter<CharSequence> channelAdapter;
   String countryCode=mWifiManager.getCountryCode();
   if (!mWifiManager.is5GHzBandSupported() || countryCode == null) {
-    Log.e(TAG," NO country code, forbid 5GHz");
-    mChannel5G.setVisibility(View.INVISIBLE);
+    Log.i(TAG," NO country code, forbid 5GHz");
+    channelAdapter=ArrayAdapter.createFromResource(mContext,R.array.wifi_ap_band_config_2G_only,android.R.layout.simple_spinner_item);
     mWifiConfig.apBand=0;
   }
  else {
-    mChannel5G.setVisibility(View.VISIBLE);
+    channelAdapter=ArrayAdapter.createFromResource(mContext,R.array.wifi_ap_band_config_full,android.R.layout.simple_spinner_item);
   }
+  channelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
   setButton(BUTTON_SUBMIT,context.getString(R.string.wifi_save),mListener);
   setButton(DialogInterface.BUTTON_NEGATIVE,context.getString(R.string.wifi_cancel),mListener);
   if (mWifiConfig != null) {
     mSsid.setText(mWifiConfig.SSID);
     if (mWifiConfig.apBand == 0) {
-      mChannel2G.setChecked(true);
+      mBandIndex=0;
     }
  else {
-      mChannel5G.setChecked(true);
+      mBandIndex=1;
     }
     mSecurity.setSelection(mSecurityTypeIndex);
     if (mSecurityTypeIndex == WPA2_INDEX) {
       mPassword.setText(mWifiConfig.preSharedKey);
     }
   }
+  mChannel.setAdapter(channelAdapter);
+  mChannel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+    boolean mInit=true;
+    @Override public void onItemSelected(    AdapterView<?> adapterView,    View view,    int position,    long id){
+      if (!mInit) {
+        mBandIndex=position;
+        mWifiConfig.apBand=mBandIndex;
+        Log.i(TAG,"config on channelIndex : " + mBandIndex + " Band: "+ mWifiConfig.apBand);
+      }
+ else {
+        mInit=false;
+        mChannel.setSelection(mBandIndex);
+      }
+    }
+    @Override public void onNothingSelected(    AdapterView<?> adapterView){
+    }
+  }
+);
   mSsid.addTextChangedListener(this);
   mPassword.addTextChangedListener(this);
   ((CheckBox)mView.findViewById(R.id.show_password)).setOnClickListener(this);

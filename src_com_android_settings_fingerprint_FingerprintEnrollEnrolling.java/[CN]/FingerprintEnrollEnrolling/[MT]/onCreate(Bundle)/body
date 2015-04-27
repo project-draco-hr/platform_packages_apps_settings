@@ -2,7 +2,6 @@
   super.onCreate(savedInstanceState);
   setContentView(R.layout.fingerprint_enroll_enrolling);
   setHeaderText(R.string.security_settings_fingerprint_enroll_start_title);
-  mPowerManager=getSystemService(PowerManager.class);
   mStartMessage=(TextView)findViewById(R.id.start_message);
   mRepeatMessage=(TextView)findViewById(R.id.repeat_message);
   mErrorText=(TextView)findViewById(R.id.error_text);
@@ -22,5 +21,4 @@
     }
   }
 );
-  startEnrollment();
 }

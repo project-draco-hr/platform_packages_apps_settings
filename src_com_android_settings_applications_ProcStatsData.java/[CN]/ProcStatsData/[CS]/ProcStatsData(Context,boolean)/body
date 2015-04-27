@@ -1,0 +1,10 @@
+{
+  mContext=context;
+  mPm=context.getPackageManager();
+  mProcessStats=IProcessStats.Stub.asInterface(ServiceManager.getService(ProcessStats.SERVICE_NAME));
+  mMemStates=ProcessStats.ALL_MEM_ADJ;
+  mStates=ProcessStats.BACKGROUND_PROC_STATES;
+  if (useXfer) {
+    mStats=sStatsXfer;
+  }
+}

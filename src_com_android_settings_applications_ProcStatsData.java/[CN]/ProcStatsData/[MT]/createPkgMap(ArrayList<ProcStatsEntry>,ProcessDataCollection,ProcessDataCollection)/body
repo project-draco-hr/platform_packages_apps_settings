@@ -1,0 +1,14 @@
+{
+  ArrayMap<String,ProcStatsPackageEntry> pkgMap=new ArrayMap<>();
+  for (int i=procEntries.size() - 1; i >= 0; i--) {
+    ProcStatsEntry proc=procEntries.get(i);
+    proc.evaluateTargetPackage(mPm,mStats,bgTotals,runTotals,sEntryCompare,mUseUss);
+    ProcStatsPackageEntry pkg=pkgMap.get(proc.mBestTargetPackage);
+    if (pkg == null) {
+      pkg=new ProcStatsPackageEntry(proc.mBestTargetPackage,memTotalTime);
+      pkgMap.put(proc.mBestTargetPackage,pkg);
+      pkgEntries.add(pkg);
+    }
+    pkg.addEntry(proc);
+  }
+}

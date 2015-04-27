@@ -6,8 +6,11 @@
   mApp=args.getParcelable(EXTRA_PACKAGE_ENTRY);
   mApp.retrieveUiData(getActivity(),mPm);
   mUseUss=args.getBoolean(EXTRA_USE_USS);
-  mMaxWeight=args.getDouble(EXTRA_MAX_WEIGHT);
   mWeightToRam=args.getDouble(EXTRA_WEIGHT_TO_RAM);
   mTotalTime=args.getLong(EXTRA_TOTAL_TIME);
+  mMaxMemoryUsage=args.getFloat(EXTRA_MAX_MEMORY_USAGE);
+  mTotalScale=args.getDouble(EXTRA_TOTAL_SCALE);
   mOnePercentTime=mTotalTime / 100;
+  mServiceMap.clear();
+  createDetails();
 }

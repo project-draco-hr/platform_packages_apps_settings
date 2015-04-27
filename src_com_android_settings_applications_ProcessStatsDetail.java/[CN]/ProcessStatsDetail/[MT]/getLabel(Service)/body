@@ -1,0 +1,16 @@
+{
+  try {
+    ServiceInfo serviceInfo=getPackageManager().getServiceInfo(new ComponentName(service.mPackage,service.mName),0);
+    if (serviceInfo.labelRes != 0) {
+      return serviceInfo.loadLabel(getPackageManager());
+    }
+  }
+ catch (  NameNotFoundException e) {
+  }
+  String label=service.mName;
+  int tail=label.lastIndexOf('.');
+  if (tail >= 0 && tail < (label.length() - 1)) {
+    label=label.substring(tail + 1);
+  }
+  return label;
+}

@@ -1,8 +1,8 @@
 {
   int closestIndex=0;
-  long closestDelta=Math.abs(sDurations[0] - mDuration);
+  long closestDelta=Math.abs(sDurations[0] - mStatsManager.getDuration());
   for (int i=1; i < NUM_DURATIONS; i++) {
-    long delta=Math.abs(sDurations[i] - mDuration);
+    long delta=Math.abs(sDurations[i] - mStatsManager.getDuration());
     if (delta < closestDelta) {
       closestDelta=delta;
       closestIndex=i;
@@ -13,7 +13,10 @@
       mDurationMenus[i].setChecked(i == closestIndex);
     }
   }
-  mDuration=sDurations[closestIndex];
+  mStatsManager.setDuration(sDurations[closestIndex]);
+  if (mShowPercentageMenu != null) {
+    mShowPercentageMenu.setChecked(mShowPercentage);
+  }
   if (mShowSystemMenu != null) {
     mShowSystemMenu.setChecked(mShowSystem);
     mShowSystemMenu.setEnabled(mStatsType == MENU_TYPE_BACKGROUND);

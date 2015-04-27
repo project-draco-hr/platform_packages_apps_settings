@@ -1,8 +1,9 @@
 {
   super.onSaveInstanceState(outState);
-  outState.putLong("duration",mDuration);
-  outState.putBoolean("show_system",mShowSystem);
-  outState.putBoolean("use_uss",mUseUss);
-  outState.putInt("stats_type",mStatsType);
-  outState.putInt("mem_region",mMemRegion);
+  outState.putLong(DURATION,mStatsManager.getDuration());
+  outState.putBoolean(SHOW_PERCENTAGE,mShowPercentage);
+  outState.putBoolean(SHOW_SYSTEM,mShowSystem);
+  outState.putBoolean(USE_USS,mUseUss);
+  outState.putInt(STATS_TYPE,mStatsType);
+  outState.putInt(MEM_REGION,mMemRegion);
 }

@@ -1,0 +1,16 @@
+{
+  if (mStats == null || forceLoad) {
+    load();
+  }
+  pkgEntries=new ArrayList<>();
+  long now=SystemClock.uptimeMillis();
+  memTotalTime=ProcessStats.dumpSingleTime(null,null,mStats.mMemFactorDurations,mStats.mMemFactor,mStats.mStartTime,now);
+  ProcessStats.TotalMemoryUseCollection totalMem=new ProcessStats.TotalMemoryUseCollection(ProcessStats.ALL_SCREEN_ADJ,mMemStates);
+  mStats.computeTotalMemoryUse(totalMem,now);
+  mMemInfo=new MemInfo(mContext,totalMem,memTotalTime);
+  ProcessDataCollection bgTotals=new ProcessDataCollection(ProcessStats.ALL_SCREEN_ADJ,mMemStates,mStates);
+  ProcessDataCollection runTotals=new ProcessDataCollection(ProcessStats.ALL_SCREEN_ADJ,mMemStates,ProcessStats.NON_CACHED_PROC_STATES);
+  createPkgMap(getProcs(bgTotals,runTotals),bgTotals,runTotals);
+  ProcStatsPackageEntry osPkg=createOsEntry(bgTotals,runTotals,totalMem,mMemInfo.baseCacheRam);
+  pkgEntries.add(osPkg);
+}

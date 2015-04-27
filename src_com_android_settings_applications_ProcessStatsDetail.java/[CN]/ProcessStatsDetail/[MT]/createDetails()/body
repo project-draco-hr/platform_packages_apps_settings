@@ -1,37 +1,30 @@
 {
-  final double percentOfWeight=(mApp.mBgWeight / mMaxWeight) * 100;
-  int appLevel=(int)Math.ceil(percentOfWeight);
-  String appLevelText=Formatter.formatShortFileSize(getActivity(),(long)(mApp.mRunWeight * mWeightToRam));
-  mTitleView=(TextView)mRootView.findViewById(android.R.id.title);
-  mTitleView.setText(mApp.mUiLabel);
-  final TextView text1=(TextView)mRootView.findViewById(android.R.id.text1);
-  text1.setText(appLevelText);
-  final ProgressBar progress=(ProgressBar)mRootView.findViewById(android.R.id.progress);
-  progress.setProgress(appLevel);
-  final ImageView icon=(ImageView)mRootView.findViewById(android.R.id.icon);
-  if (mApp.mUiTargetApp != null) {
-    icon.setImageDrawable(mApp.mUiTargetApp.loadIcon(mPm));
-  }
-  mTwoButtonsPanel=(ViewGroup)mRootView.findViewById(R.id.two_buttons_panel);
-  mForceStopButton=(Button)mRootView.findViewById(R.id.right_button);
-  mReportButton=(Button)mRootView.findViewById(R.id.left_button);
-  mForceStopButton.setEnabled(false);
-  mReportButton.setVisibility(View.INVISIBLE);
-  mProcessesParent=(ViewGroup)mRootView.findViewById(R.id.processes);
-  mServicesParent=(ViewGroup)mRootView.findViewById(R.id.services);
+  addPreferencesFromResource(R.xml.app_memory_settings);
   fillProcessesSection();
-  fillServicesSection();
-  if (mServicesParent.getChildCount() <= 0) {
-    mServicesParent.setVisibility(View.GONE);
-    mRootView.findViewById(R.id.services_label).setVisibility(View.GONE);
-  }
+  LayoutPreference headerLayout=(LayoutPreference)findPreference(KEY_DETAILS_HEADER);
+  TextView avgUsed=(TextView)headerLayout.findViewById(R.id.memory_avg);
+  TextView maxUsed=(TextView)headerLayout.findViewById(R.id.memory_max);
+  avgUsed.setText(getString(R.string.memory_avg_desc,Formatter.formatShortFileSize(getActivity(),(long)(Math.max(mApp.mBgWeight,mApp.mRunWeight) * mWeightToRam))));
+  maxUsed.setText(getString(R.string.memory_max_desc,Formatter.formatShortFileSize(getActivity(),(long)(Math.max(mApp.mMaxBgMem,mApp.mMaxRunMem) * 1024 * mTotalScale))));
+  mForceStopButton=(Button)headerLayout.findViewById(R.id.right_button);
+  mReportButton=(Button)headerLayout.findViewById(R.id.left_button);
   if (mApp.mEntries.get(0).mUid >= android.os.Process.FIRST_APPLICATION_UID) {
+    mForceStopButton.setEnabled(false);
+    mReportButton.setVisibility(View.INVISIBLE);
     mForceStopButton.setText(R.string.force_stop);
     mForceStopButton.setTag(ACTION_FORCE_STOP);
     mForceStopButton.setOnClickListener(this);
-    mTwoButtonsPanel.setVisibility(View.VISIBLE);
   }
  else {
-    mTwoButtonsPanel.setVisibility(View.GONE);
+    mReportButton.setVisibility(View.GONE);
+    mForceStopButton.setVisibility(View.GONE);
   }
+  boolean statsForeground=mApp.mRunWeight > mApp.mBgWeight;
+  float mAvgRatio=(statsForeground ? mApp.mAvgRunMem : mApp.mAvgBgMem) / mMaxMemoryUsage;
+  float mMaxRatio=(statsForeground ? mApp.mMaxRunMem : mApp.mMaxBgMem) / mMaxMemoryUsage - mAvgRatio;
+  float mRemainingRatio=1 - mAvgRatio - mMaxRatio;
+  mColorBar=(LinearColorBar)headerLayout.findViewById(R.id.color_bar);
+  Context context=getActivity();
+  mColorBar.setColors(context.getColor(R.color.memory_avg_use),context.getColor(R.color.memory_max_use),context.getColor(R.color.memory_remaining));
+  mColorBar.setRatios(mAvgRatio,mMaxRatio,mRemainingRatio);
 }

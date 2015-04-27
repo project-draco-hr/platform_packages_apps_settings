@@ -1,0 +1,14 @@
+{
+  try {
+    ApplicationInfo appInfo=getActivity().getPackageManager().getApplicationInfo(pkg,0);
+    if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+      showStopServiceDialog(pkg,name);
+      return;
+    }
+  }
+ catch (  NameNotFoundException e) {
+    Log.e(TAG,"Can't find app " + pkg,e);
+    return;
+  }
+  doStopService(pkg,name);
+}

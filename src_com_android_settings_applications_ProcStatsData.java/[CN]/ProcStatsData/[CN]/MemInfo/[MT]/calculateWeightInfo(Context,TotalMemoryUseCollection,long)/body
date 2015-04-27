@@ -1,0 +1,26 @@
+{
+  MemInfoReader memReader=new MemInfoReader();
+  memReader.readMemInfo();
+  realTotalRam=memReader.getTotalSize();
+  freeWeight=totalMem.sysMemFreeWeight + totalMem.sysMemCachedWeight;
+  usedWeight=totalMem.sysMemKernelWeight + totalMem.sysMemNativeWeight + totalMem.sysMemZRamWeight;
+  for (int i=0; i < ProcessStats.STATE_COUNT; i++) {
+    if (i == ProcessStats.STATE_SERVICE_RESTARTING) {
+      mMemStateWeights[i]=0;
+    }
+ else {
+      mMemStateWeights[i]=totalMem.processStateWeight[i];
+      if (i >= ProcessStats.STATE_HOME) {
+        freeWeight+=totalMem.processStateWeight[i];
+      }
+ else {
+        usedWeight+=totalMem.processStateWeight[i];
+      }
+    }
+  }
+  if (DEBUG) {
+    Log.i(TAG,"Used RAM: " + Formatter.formatShortFileSize(context,(long)((usedWeight * 1024) / memTotalTime)));
+    Log.i(TAG,"Free RAM: " + Formatter.formatShortFileSize(context,(long)((freeWeight * 1024) / memTotalTime)));
+    Log.i(TAG,"Total RAM: " + Formatter.formatShortFileSize(context,(long)(((freeWeight + usedWeight) * 1024) / memTotalTime)));
+  }
+}

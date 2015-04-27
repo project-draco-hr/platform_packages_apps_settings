@@ -1,7 +1,6 @@
 {
   super.onBindView(view);
-  final ProgressBar progress=(ProgressBar)view.findViewById(android.R.id.progress);
-  progress.setProgress(mProgress);
-  final TextView text1=(TextView)view.findViewById(android.R.id.text1);
-  text1.setText(mProgressText);
+  LinearColorBar linearColorBar=(LinearColorBar)view.findViewById(R.id.linear_color_bar);
+  linearColorBar.setColors(mAvgColor,mMaxColor,mRemainingColor);
+  linearColorBar.setRatios(mAvgRatio,mMaxRatio,mRemainingRatio);
 }

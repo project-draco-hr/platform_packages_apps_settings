@@ -1,0 +1,29 @@
+{
+  ActivityManager activityManager=(ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+  List<RunningServiceInfo> runningServices=activityManager.getRunningServices(Integer.MAX_VALUE);
+  int N=mServiceMap.size();
+  for (int i=0; i < N; i++) {
+    mServiceMap.valueAt(i).setCancellable(false);
+  }
+  N=runningServices.size();
+  for (int i=0; i < N; i++) {
+    RunningServiceInfo runningService=runningServices.get(i);
+    if (!runningService.started && runningService.clientLabel == 0) {
+      continue;
+    }
+    if ((runningService.flags & RunningServiceInfo.FLAG_PERSISTENT_PROCESS) != 0) {
+      continue;
+    }
+    final ComponentName service=runningService.service;
+    CancellablePreference pref=mServiceMap.get(service);
+    if (pref != null) {
+      pref.setOnCancelListener(new OnCancelListener(){
+        @Override public void onCancel(        CancellablePreference preference){
+          stopService(service.getPackageName(),service.getClassName());
+        }
+      }
+);
+      pref.setCancellable(true);
+    }
+  }
+}

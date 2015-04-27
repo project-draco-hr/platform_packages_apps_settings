@@ -2,27 +2,40 @@
   final int id=item.getItemId();
 switch (id) {
 case MENU_STATS_REFRESH:
-    mStats=null;
-  refreshStats();
+    mStatsManager.refreshStats(false);
+  refreshUi();
+return true;
+case MENU_SHOW_PERCENTAGE:
+mShowPercentage=!mShowPercentage;
+refreshUi();
 return true;
 case MENU_SHOW_SYSTEM:
 mShowSystem=!mShowSystem;
-refreshStats();
+refreshUi();
 return true;
 case MENU_USE_USS:
 mUseUss=!mUseUss;
-refreshStats();
+refreshUi();
 return true;
 case MENU_TYPE_BACKGROUND:
 case MENU_TYPE_FOREGROUND:
 case MENU_TYPE_CACHED:
 mStatsType=item.getItemId();
-refreshStats();
+if (mStatsType == MENU_TYPE_FOREGROUND) {
+mStatsManager.setStats(FOREGROUND_PROC_STATES);
+}
+ else if (mStatsType == MENU_TYPE_CACHED) {
+mStatsManager.setStats(CACHED_PROC_STATES);
+}
+ else {
+mStatsManager.setStats(mShowSystem ? BACKGROUND_AND_SYSTEM_PROC_STATES : ProcessStats.BACKGROUND_PROC_STATES);
+}
+refreshUi();
 return true;
 default :
 if (id >= MENU_DURATION && id < (MENU_DURATION + NUM_DURATIONS)) {
-mDuration=sDurations[id - MENU_DURATION];
-refreshStats();
+mStatsManager.setDuration(sDurations[id - MENU_DURATION]);
+refreshUi();
 }
 return false;
 }

@@ -1,0 +1,17 @@
+{
+  DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+  ComponentName mdmPackage=dpm.getProfileOwnerAsUser(profileId);
+  if (mdmPackage == null) {
+    return null;
+  }
+  String mdmPackageName=mdmPackage.getPackageName();
+  try {
+    IPackageManager ipm=AppGlobals.getPackageManager();
+    ApplicationInfo mdmApplicationInfo=ipm.getApplicationInfo(mdmPackageName,0,profileId);
+    return mdmApplicationInfo;
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Error while retrieving application info for package " + mdmPackageName + ", userId "+ profileId,e);
+    return null;
+  }
+}

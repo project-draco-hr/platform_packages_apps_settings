@@ -1,13 +1,15 @@
 {
   if (isEmpty != mListLastEmpty) {
     final ListView list=getListView();
+    list.removeFooterView(mEmptyFooter);
+    list.removeFooterView(mAddOtherNetworkItem);
+    list.removeFooterView(mMacAddressFooter);
     if (isEmpty) {
-      list.removeFooterView(mAddOtherNetworkItem);
       list.addFooterView(mEmptyFooter,null,false);
     }
  else {
-      list.removeFooterView(mEmptyFooter);
       list.addFooterView(mAddOtherNetworkItem,null,true);
+      list.addFooterView(mMacAddressFooter,null,false);
     }
     mListLastEmpty=isEmpty;
   }

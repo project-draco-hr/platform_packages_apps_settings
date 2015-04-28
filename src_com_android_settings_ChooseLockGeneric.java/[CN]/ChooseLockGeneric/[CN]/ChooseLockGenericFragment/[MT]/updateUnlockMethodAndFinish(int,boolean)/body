@@ -30,8 +30,8 @@
     startActivityForResult(intent,CHOOSE_LOCK_REQUEST);
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
-    mChooseLockSettingsHelper.utils().clearLock();
-    mChooseLockSettingsHelper.utils().setLockScreenDisabled(disabled);
+    mChooseLockSettingsHelper.utils().clearLock(UserHandle.myUserId());
+    mChooseLockSettingsHelper.utils().setLockScreenDisabled(disabled,UserHandle.myUserId());
     removeAllFingerprintTemplates();
     getActivity().setResult(Activity.RESULT_OK);
     finish();

@@ -1,8 +1,8 @@
 {
-  if (mLockPatternUtils.isLockScreenDisabled()) {
+  if (mLockPatternUtils.isLockScreenDisabled(UserHandle.myUserId())) {
     return KEY_UNLOCK_SET_OFF;
   }
-switch (mLockPatternUtils.getKeyguardStoredPasswordQuality()) {
+switch (mLockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId())) {
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
     return KEY_UNLOCK_SET_PATTERN;
 case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:

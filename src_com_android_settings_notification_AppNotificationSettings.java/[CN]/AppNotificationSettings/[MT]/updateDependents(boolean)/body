@@ -1,5 +1,5 @@
 {
-  final boolean lockscreenSecure=new LockPatternUtils(getActivity()).isSecure();
+  final boolean lockscreenSecure=new LockPatternUtils(getActivity()).isSecure(UserHandle.myUserId());
   final boolean lockscreenNotificationsEnabled=getLockscreenNotificationsEnabled();
   final boolean allowPrivate=getLockscreenAllowPrivateNotifications();
   setVisible(mBlock,!mIsSystemPackage);

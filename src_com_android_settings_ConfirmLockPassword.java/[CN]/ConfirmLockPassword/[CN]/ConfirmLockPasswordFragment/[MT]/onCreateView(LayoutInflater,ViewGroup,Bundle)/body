@@ -1,5 +1,5 @@
 {
-  final int storedQuality=mLockPatternUtils.getKeyguardStoredPasswordQuality();
+  final int storedQuality=mLockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId());
   View view=inflater.inflate(R.layout.confirm_lock_password,null);
   mPasswordEntry=(TextView)view.findViewById(R.id.password_entry);
   mPasswordEntry.setOnEditorActionListener(this);

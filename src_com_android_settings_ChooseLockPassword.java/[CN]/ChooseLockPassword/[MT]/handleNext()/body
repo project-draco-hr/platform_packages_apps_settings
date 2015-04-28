@@ -15,13 +15,13 @@
   }
  else   if (mUiStage == Stage.NeedToConfirm) {
     if (mFirstPin.equals(pin)) {
-      boolean wasSecureBefore=mLockPatternUtils.isSecure();
+      boolean wasSecureBefore=mLockPatternUtils.isSecure(UserHandle.myUserId());
       final boolean required=getActivity().getIntent().getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);
       mLockPatternUtils.setCredentialRequiredToDecrypt(required);
-      mLockPatternUtils.saveLockPassword(pin,mCurrentPassword,mRequestedQuality);
+      mLockPatternUtils.saveLockPassword(pin,mCurrentPassword,mRequestedQuality,UserHandle.myUserId());
       if (mHasChallenge) {
         Intent intent=new Intent();
-        byte[] token=mLockPatternUtils.verifyPassword(pin,mChallenge);
+        byte[] token=mLockPatternUtils.verifyPassword(pin,mChallenge,UserHandle.myUserId());
         intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
         getActivity().setResult(RESULT_FINISHED,intent);
       }

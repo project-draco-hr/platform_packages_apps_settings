@@ -6,11 +6,6 @@
     getFragmentManager().beginTransaction().add(mSidecar,TAG_SIDECAR).commit();
   }
   mSidecar.setListener(this);
-  if (mSidecar.isDone()) {
-    launchFinish(mToken);
-  }
- else {
-    updateProgress(false);
-    updateDescription();
-  }
+  updateProgress(false);
+  updateDescription();
 }

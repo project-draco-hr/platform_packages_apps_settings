@@ -6,9 +6,11 @@
 switch (state) {
 case WifiManager.WIFI_STATE_ENABLING:
     addMessagePreference(R.string.wifi_starting);
-  break;
+  setProgressBarVisible(true);
+break;
 case WifiManager.WIFI_STATE_DISABLED:
 setOffMessage();
+setProgressBarVisible(false);
 break;
 }
 }

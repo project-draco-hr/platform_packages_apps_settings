@@ -1,15 +1,26 @@
 {
   super.onViewCreated(view,savedInstanceState);
-  String packageName=getPackageManager().getDefaultBrowserPackageName(UserHandle.myUserId());
+  final PackageManager pm=getPackageManager();
+  String packageName=pm.getDefaultBrowserPackageName(UserHandle.myUserId());
   if (!TextUtils.isEmpty(packageName)) {
     Intent intent=new Intent();
     intent.setPackage(packageName);
+    intent.setAction(Intent.ACTION_VIEW);
+    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+    intent.setData(Uri.parse("http:"));
     ResolveInfo info=mPm.resolveActivityAsUser(intent,0,myUserId);
     if (info != null) {
       mDefaultBrowserPreference.setValue(packageName);
+      CharSequence label=info.loadLabel(pm);
+      mDefaultBrowserPreference.setSummary(label);
     }
  else {
-      mDefaultBrowserPreference.setValueIndex(0);
+      CharSequence[] values=mDefaultBrowserPreference.getEntryValues();
+      if (values.length > 0) {
+        mDefaultBrowserPreference.setValueIndex(0);
+      }
+ else {
+      }
     }
   }
  else {

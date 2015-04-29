@@ -1,0 +1,14 @@
+{
+  PackageManager pm=mContext.getPackageManager();
+  try {
+    Resources res=pm.getResourcesForApplication(pkgName);
+    Drawable banner=res.getDrawable(drawableResId);
+    return banner;
+  }
+ catch (  Resources.NotFoundException e) {
+    return null;
+  }
+catch (  PackageManager.NameNotFoundException e) {
+    return null;
+  }
+}

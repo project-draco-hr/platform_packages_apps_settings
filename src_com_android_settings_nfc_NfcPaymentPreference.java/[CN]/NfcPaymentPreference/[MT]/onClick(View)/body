@@ -1,0 +1,14 @@
+{
+  PaymentAppInfo defaultAppInfo=mPaymentBackend.getDefaultApp();
+  if (defaultAppInfo != null && defaultAppInfo.settingsComponent != null) {
+    Intent settingsIntent=new Intent(Intent.ACTION_MAIN);
+    settingsIntent.setComponent(defaultAppInfo.settingsComponent);
+    settingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    try {
+      mContext.startActivity(settingsIntent);
+    }
+ catch (    ActivityNotFoundException e) {
+      Log.e(TAG,"Settings activity not found.");
+    }
+  }
+}

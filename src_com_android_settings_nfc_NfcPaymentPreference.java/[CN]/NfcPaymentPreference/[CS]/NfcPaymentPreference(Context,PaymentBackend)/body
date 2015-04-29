@@ -1,0 +1,11 @@
+{
+  super(context,null);
+  mPaymentBackend=backend;
+  mContext=context;
+  backend.registerCallback(this);
+  mAdapter=new NfcPaymentAdapter();
+  setDialogTitle(context.getString(R.string.nfc_payment_pay_with));
+  mLayoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  setWidgetLayoutResource(R.layout.preference_widget_settings);
+  refresh();
+}

@@ -7,11 +7,15 @@
     new UnmountTask(context,mVolume).execute();
   }
  else   if (pref == mFormat) {
-    new FormatTask(context,mVolume).execute();
+    final Intent intent=new Intent(context,StorageWizardFormatConfirm.class);
+    intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
+    intent.putExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,false);
+    startActivity(intent);
   }
  else   if (pref == mFormatInternal) {
     final Intent intent=new Intent(context,StorageWizardFormatConfirm.class);
     intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
+    intent.putExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,true);
     startActivity(intent);
   }
   return super.onPreferenceTreeClick(preferenceScreen,pref);

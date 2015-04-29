@@ -2,7 +2,7 @@
   super.onCreate(savedInstanceState);
   setContentView(R.layout.storage_wizard_progress);
   Preconditions.checkNotNull(mDisk);
-  mFormatPublic=getIntent().getBooleanExtra(EXTRA_FORMAT_PUBLIC,false);
+  mFormatPrivate=getIntent().getBooleanExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,false);
   setHeaderText(R.string.storage_wizard_format_progress_title,mDisk.getDescription());
   setBodyText(R.string.storage_wizard_format_progress_body,mDisk.getDescription());
   setCurrentProgress(20);

@@ -1,10 +1,12 @@
 {
   super.onCreate(savedInstanceState);
   setContentView(R.layout.storage_wizard_progress);
-  Preconditions.checkNotNull(mDisk);
-  setHeaderText(R.string.storage_wizard_migrate_progress_title,mDisk.getDescription());
-  setBodyText(R.string.storage_wizard_migrate_details,mDisk.getDescription());
-  setCurrentProgress(20);
+  Preconditions.checkNotNull(mVolume);
+  mMoveId=getIntent().getIntExtra(EXTRA_MOVE_ID,-1);
+  final String descrip=mStorage.getBestVolumeDescription(mVolume);
+  setHeaderText(R.string.storage_wizard_migrate_progress_title,descrip);
+  setBodyText(R.string.storage_wizard_migrate_details,descrip);
   getNextButton().setVisibility(View.GONE);
-  new MigrateTask().execute();
+  getPackageManager().registerMoveCallback(mCallback,new Handler());
+  mCallback.onStatusChanged(mMoveId,getPackageManager().getMoveStatus(mMoveId),-1);
 }

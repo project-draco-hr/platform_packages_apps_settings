@@ -1,6 +1,8 @@
 {
+  final int moveId=getPackageManager().movePrimaryStorage(mVolume);
   final Intent intent=new Intent(this,StorageWizardMigrateProgress.class);
-  intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
+  intent.putExtra(VolumeInfo.EXTRA_VOLUME_ID,mVolume.getId());
+  intent.putExtra(PackageManager.EXTRA_MOVE_ID,moveId);
   startActivity(intent);
   finishAffinity();
 }

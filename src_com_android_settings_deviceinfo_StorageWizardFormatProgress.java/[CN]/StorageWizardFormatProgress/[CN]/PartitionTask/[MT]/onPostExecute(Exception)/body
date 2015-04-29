@@ -1,8 +1,20 @@
 {
   final Context context=StorageWizardFormatProgress.this;
   if (e == null) {
+    final String forgetUuid=getIntent().getStringExtra(StorageWizardFormatConfirm.EXTRA_FORGET_UUID);
+    if (!TextUtils.isEmpty(forgetUuid)) {
+      mStorage.forgetVolume(forgetUuid);
+    }
+    final boolean offerMigrate;
     if (mFormatPrivate) {
-      final Intent intent=new Intent(context,StorageWizardReady.class);
+      final VolumeInfo privateVol=getPackageManager().getPrimaryStorageCurrentVolume();
+      offerMigrate=(privateVol != null && VolumeInfo.ID_PRIVATE_INTERNAL.equals(privateVol.getId()));
+    }
+ else {
+      offerMigrate=false;
+    }
+    if (offerMigrate) {
+      final Intent intent=new Intent(context,StorageWizardMigrate.class);
       intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
       startActivity(intent);
     }

@@ -9,7 +9,7 @@
   if (!TextUtils.isEmpty(diskId)) {
     mDisk=mStorage.findDiskById(diskId);
   }
- else {
+ else   if (mVolume != null) {
     mDisk=mVolume.getDisk();
   }
   setTheme(R.style.SuwThemeMaterial_Light);

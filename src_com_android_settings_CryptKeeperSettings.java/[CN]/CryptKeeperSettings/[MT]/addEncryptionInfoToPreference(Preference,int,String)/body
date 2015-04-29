@@ -1,0 +1,12 @@
+{
+  Activity activity=getActivity();
+  DevicePolicyManager dpm=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
+  if (dpm.getDoNotAskCredentialsOnBoot()) {
+    preference.getExtras().putInt(TYPE,StorageManager.CRYPT_TYPE_DEFAULT);
+    preference.getExtras().putString(PASSWORD,"");
+  }
+ else {
+    preference.getExtras().putInt(TYPE,type);
+    preference.getExtras().putString(PASSWORD,password);
+  }
+}

@@ -1,8 +1,8 @@
 {
-  List<ComponentName> dialerComponents=DefaultDialerManager.getInstalledDialerApplications(getContext());
-  final String[] dialers=new String[dialerComponents.size()];
-  for (int i=0; i < dialerComponents.size(); i++) {
-    dialers[i]=dialerComponents.get(i).getPackageName();
+  List<String> dialerPackages=DefaultDialerManager.getInstalledDialerApplications(getContext());
+  final String[] dialers=new String[dialerPackages.size()];
+  for (int i=0; i < dialerPackages.size(); i++) {
+    dialers[i]=dialerPackages.get(i);
   }
   setPackageNames(dialers,getDefaultPackage());
 }

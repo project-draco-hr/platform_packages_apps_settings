@@ -4,13 +4,22 @@
   mPm=getPackageManager();
   myUserId=UserHandle.myUserId();
   mDefaultBrowserPreference=(DefaultBrowserPreference)findPreference(KEY_DEFAULT_BROWSER);
-  mDefaultBrowserPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
-    @Override public boolean onPreferenceClick(    Preference preference){
-      final CharSequence packageName=mDefaultBrowserPreference.getValue();
+  mDefaultBrowserPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      if (newValue == null) {
+        return false;
+      }
+      final CharSequence packageName=(CharSequence)newValue;
       if (TextUtils.isEmpty(packageName)) {
         return false;
       }
-      return mPm.setDefaultBrowserPackageName(packageName.toString(),myUserId);
+      boolean result=mPm.setDefaultBrowserPackageName(packageName.toString(),myUserId);
+      if (result) {
+        mDefaultBrowserPreference.setValue(packageName.toString());
+        final CharSequence appName=mDefaultBrowserPreference.getEntry();
+        mDefaultBrowserPreference.setSummary(appName);
+      }
+      return result;
     }
   }
 );

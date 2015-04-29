@@ -6,14 +6,14 @@
   if (verifyChallenge) {
     if (getActivity() instanceof ConfirmLockPassword.InternalActivity) {
       long challenge=getActivity().getIntent().getLongExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE,0);
-      byte[] token=mLockPatternUtils.verifyPassword(pin,challenge);
+      byte[] token=mLockPatternUtils.verifyPassword(pin,challenge,UserHandle.myUserId());
       if (token != null) {
         matched=true;
         intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
       }
     }
   }
- else   if (mLockPatternUtils.checkPassword(pin)) {
+ else   if (mLockPatternUtils.checkPassword(pin,UserHandle.myUserId())) {
     matched=true;
     if (getActivity() instanceof ConfirmLockPassword.InternalActivity) {
       intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_TYPE,mIsAlpha ? StorageManager.CRYPT_TYPE_PASSWORD : StorageManager.CRYPT_TYPE_PIN);
@@ -26,7 +26,7 @@
   }
  else {
     if (++mNumWrongConfirmAttempts >= LockPatternUtils.FAILED_ATTEMPTS_BEFORE_TIMEOUT) {
-      long deadline=mLockPatternUtils.setLockoutAttemptDeadline();
+      long deadline=mLockPatternUtils.setLockoutAttemptDeadline(UserHandle.myUserId());
       handleAttemptLockout(deadline);
     }
  else {

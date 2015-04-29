@@ -1,6 +1,6 @@
 {
   int resId=R.string.enable_service_password_reason;
-switch (mLockPatternUtils.getKeyguardStoredPasswordQuality()) {
+switch (mLockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId())) {
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
 {
       resId=R.string.enable_service_pattern_reason;

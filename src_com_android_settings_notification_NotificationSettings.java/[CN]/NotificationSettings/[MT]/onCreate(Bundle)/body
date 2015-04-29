@@ -3,7 +3,7 @@
   mContext=getActivity();
   mPM=mContext.getPackageManager();
   mVoiceCapable=Utils.isVoiceCapable(mContext);
-  mSecure=new LockPatternUtils(getActivity()).isSecure();
+  mSecure=new LockPatternUtils(getActivity()).isSecure(UserHandle.myUserId());
   mAudioManager=(AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
   mVibrator=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
   if (mVibrator != null && !mVibrator.hasVibrator()) {

@@ -1,5 +1,5 @@
 {
-  final boolean hasSecurity=mLockPatternUtils.isSecure();
+  final boolean hasSecurity=mLockPatternUtils.isSecure(MY_USER_ID);
   ArrayList<TrustAgentComponentInfo> agents=getActiveTrustAgents(getPackageManager(),mLockPatternUtils,mDPM);
   for (int i=0; i < agents.size(); i++) {
     final TrustAgentComponentInfo agent=agents.get(i);

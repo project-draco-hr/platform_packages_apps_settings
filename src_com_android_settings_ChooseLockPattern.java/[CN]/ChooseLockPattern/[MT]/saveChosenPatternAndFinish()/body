@@ -1,20 +1,20 @@
 {
   if (mDone)   return;
   LockPatternUtils utils=mChooseLockSettingsHelper.utils();
-  final boolean lockVirgin=!utils.isPatternEverChosen();
-  boolean wasSecureBefore=utils.isSecure();
+  final boolean lockVirgin=!utils.isPatternEverChosen(UserHandle.myUserId());
+  boolean wasSecureBefore=utils.isSecure(UserHandle.myUserId());
   final boolean required=getActivity().getIntent().getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);
   utils.setCredentialRequiredToDecrypt(required);
-  utils.saveLockPattern(mChosenPattern,mCurrentPattern);
+  utils.saveLockPattern(mChosenPattern,mCurrentPattern,UserHandle.myUserId());
   if (lockVirgin) {
-    utils.setVisiblePatternEnabled(true);
+    utils.setVisiblePatternEnabled(true,UserHandle.myUserId());
   }
   if (!wasSecureBefore) {
     startActivity(getRedactionInterstitialIntent(getActivity()));
   }
   if (mHasChallenge) {
     Intent intent=new Intent();
-    byte[] token=utils.verifyPattern(mChosenPattern,mChallenge);
+    byte[] token=utils.verifyPattern(mChosenPattern,mChallenge,UserHandle.myUserId());
     intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
     getActivity().setResult(RESULT_FINISHED,intent);
   }

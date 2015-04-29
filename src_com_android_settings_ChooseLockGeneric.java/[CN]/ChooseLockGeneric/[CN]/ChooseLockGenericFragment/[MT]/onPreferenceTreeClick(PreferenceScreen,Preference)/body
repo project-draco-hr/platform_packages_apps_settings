@@ -1,6 +1,6 @@
 {
   final String key=preference.getKey();
-  if (!isUnlockMethodSecure(key) && mLockPatternUtils.isSecure()) {
+  if (!isUnlockMethodSecure(key) && mLockPatternUtils.isSecure(UserHandle.myUserId())) {
     showFactoryResetProtectionWarningDialog(key);
     return true;
   }

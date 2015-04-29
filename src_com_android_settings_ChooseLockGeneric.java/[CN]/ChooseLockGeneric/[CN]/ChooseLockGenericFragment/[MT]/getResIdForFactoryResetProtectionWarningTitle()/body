@@ -1,5 +1,5 @@
 {
-switch (mLockPatternUtils.getKeyguardStoredPasswordQuality()) {
+switch (mLockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId())) {
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
     return R.string.unlock_disable_lock_pattern_summary;
 case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:

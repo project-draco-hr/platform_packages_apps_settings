@@ -1,0 +1,6 @@
+{
+  Intent broadcastIntent=new Intent(CardEmulation.ACTION_REQUEST_SERVICE_RESOURCES);
+  broadcastIntent.setPackage(appInfo.componentName.getPackageName());
+  broadcastIntent.putExtra(CardEmulation.EXTRA_SERVICE_COMPONENT,appInfo.componentName);
+  mContext.sendOrderedBroadcastAsUser(broadcastIntent,UserHandle.CURRENT,null,mReceiver,null,Activity.RESULT_OK,null,null);
+}

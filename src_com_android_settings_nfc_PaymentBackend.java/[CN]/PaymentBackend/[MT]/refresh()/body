@@ -1,0 +1,43 @@
+{
+  PackageManager pm=mContext.getPackageManager();
+  List<ApduServiceInfo> serviceInfos=mCardEmuManager.getServices(CardEmulation.CATEGORY_PAYMENT);
+  ArrayList<PaymentAppInfo> appInfos=new ArrayList<PaymentAppInfo>();
+  if (serviceInfos == null) {
+    makeCallbacks();
+    return;
+  }
+  ComponentName defaultAppName=getDefaultPaymentApp();
+  PaymentAppInfo foundDefaultApp=null;
+  for (  ApduServiceInfo service : serviceInfos) {
+    PaymentAppInfo appInfo=new PaymentAppInfo();
+    appInfo.label=service.loadLabel(pm);
+    if (appInfo.label == null) {
+      appInfo.label=service.loadAppLabel(pm);
+    }
+    appInfo.isDefault=service.getComponent().equals(defaultAppName);
+    if (appInfo.isDefault) {
+      foundDefaultApp=appInfo;
+    }
+    appInfo.componentName=service.getComponent();
+    String settingsActivity=service.getSettingsActivityName();
+    if (settingsActivity != null) {
+      appInfo.settingsComponent=new ComponentName(appInfo.componentName.getPackageName(),settingsActivity);
+    }
+ else {
+      appInfo.settingsComponent=null;
+    }
+    if (service.hasDynamicResources()) {
+      appInfo.description="";
+      appInfo.banner=null;
+      sendBroadcastForResources(appInfo);
+    }
+ else {
+      appInfo.description=service.getDescription();
+      appInfo.banner=service.loadBanner(pm);
+    }
+    appInfos.add(appInfo);
+  }
+  mAppInfos=appInfos;
+  mDefaultAppInfo=foundDefaultApp;
+  makeCallbacks();
+}

@@ -1,0 +1,22 @@
+{
+  ViewHolder holder;
+  PaymentAppInfo appInfo=appInfos[position];
+  if (convertView == null) {
+    convertView=mLayoutInflater.inflate(R.layout.nfc_payment_option,parent,false);
+    holder=new ViewHolder();
+    holder.imageView=(ImageView)convertView.findViewById(R.id.banner);
+    holder.radioButton=(RadioButton)convertView.findViewById(R.id.button);
+    convertView.setTag(holder);
+  }
+ else {
+    holder=(ViewHolder)convertView.getTag();
+  }
+  holder.imageView.setImageDrawable(appInfo.banner);
+  holder.imageView.setTag(appInfo);
+  holder.imageView.setOnClickListener(this);
+  holder.radioButton.setOnCheckedChangeListener(null);
+  holder.radioButton.setChecked(appInfo.isDefault);
+  holder.radioButton.setOnCheckedChangeListener(this);
+  holder.radioButton.setTag(appInfo);
+  return convertView;
+}

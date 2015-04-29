@@ -1,0 +1,16 @@
+{
+  List<PaymentAppInfo> appInfos=mPaymentBackend.getPaymentAppInfos();
+  PaymentAppInfo defaultApp=mPaymentBackend.getDefaultApp();
+  if (appInfos != null) {
+    PaymentAppInfo[] apps=appInfos.toArray(new PaymentAppInfo[appInfos.size()]);
+    mAdapter.updateApps(apps,defaultApp);
+  }
+  setTitle(R.string.nfc_payment_default);
+  if (defaultApp != null) {
+    setSummary(mContext.getString(R.string.nfc_payment_app_and_desc,defaultApp.label,defaultApp.description));
+  }
+ else {
+    setSummary(mContext.getString(R.string.nfc_payment_default_not_set));
+  }
+  updateSettingsVisibility();
+}

@@ -1,0 +1,11 @@
+{
+  if (mSettingsButtonView != null) {
+    PaymentAppInfo defaultApp=mPaymentBackend.getDefaultApp();
+    if (defaultApp == null || defaultApp.settingsComponent == null) {
+      mSettingsButtonView.setVisibility(View.GONE);
+    }
+ else {
+      mSettingsButtonView.setVisibility(View.VISIBLE);
+    }
+  }
+}

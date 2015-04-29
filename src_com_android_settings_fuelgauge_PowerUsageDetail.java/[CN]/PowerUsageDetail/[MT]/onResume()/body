@@ -2,4 +2,7 @@
   super.onResume();
   mStartTime=android.os.Process.getElapsedCpuTime();
   checkForceStop();
+  if (mHighPower != null) {
+    mHighPower.setSummary(HighPowerDetail.getSummary(getActivity(),mApp.packageName));
+  }
 }

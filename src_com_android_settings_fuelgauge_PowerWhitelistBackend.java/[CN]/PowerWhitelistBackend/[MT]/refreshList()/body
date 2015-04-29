@@ -1,0 +1,17 @@
+{
+  mSysWhitelistedApps.clear();
+  mWhitelistedApps.clear();
+  try {
+    String[] whitelistedApps=mDeviceIdleService.getFullPowerWhitelist();
+    for (    String app : whitelistedApps) {
+      mWhitelistedApps.add(app);
+    }
+    String[] sysWhitelistedApps=mDeviceIdleService.getSystemPowerWhitelist();
+    for (    String app : sysWhitelistedApps) {
+      mSysWhitelistedApps.add(app);
+    }
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"Unable to reach IDeviceIdleController",e);
+  }
+}

@@ -1,0 +1,10 @@
+{
+switch (item.getItemId()) {
+case MENU_STATS_REFRESH:
+    mStatsHelper.clearStats();
+  refreshStats();
+mHandler.removeMessages(MSG_REFRESH_STATS);
+return true;
+}
+return super.onOptionsItemSelected(item);
+}

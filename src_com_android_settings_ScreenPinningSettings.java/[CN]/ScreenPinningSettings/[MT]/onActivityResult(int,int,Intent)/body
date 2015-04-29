@@ -2,7 +2,7 @@
   super.onActivityResult(requestCode,resultCode,data);
   if (requestCode == CHANGE_LOCK_METHOD_REQUEST) {
     LockPatternUtils lockPatternUtils=new LockPatternUtils(getActivity());
-    boolean validPassQuality=lockPatternUtils.getKeyguardStoredPasswordQuality() != DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
+    boolean validPassQuality=lockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId()) != DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
     setScreenLockUsed(validPassQuality);
     mUseScreenLock.setChecked(validPassQuality);
   }

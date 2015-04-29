@@ -2,7 +2,7 @@
 switch (dialogId) {
 case ACCESSIBILITY_WARNING_DIALOG:
 {
-      final int quality=new LockPatternUtils(getActivity()).getKeyguardStoredPasswordQuality();
+      final int quality=new LockPatternUtils(getActivity()).getKeyguardStoredPasswordQuality(UserHandle.myUserId());
       final int titleId;
       final int messageId;
 switch (quality) {

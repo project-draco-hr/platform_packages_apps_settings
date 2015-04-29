@@ -1,5 +1,5 @@
 {
-  int quality=mLockPatternUtils.getKeyguardStoredPasswordQuality();
+  int quality=mLockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId());
 switch (quality) {
 case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
 case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
@@ -9,7 +9,7 @@ case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
 case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
   return R.string.screen_pinning_unlock_password;
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
-if (mLockPatternUtils.isLockPatternEnabled()) {
+if (mLockPatternUtils.isLockPatternEnabled(UserHandle.myUserId())) {
   return R.string.screen_pinning_unlock_pattern;
 }
 }

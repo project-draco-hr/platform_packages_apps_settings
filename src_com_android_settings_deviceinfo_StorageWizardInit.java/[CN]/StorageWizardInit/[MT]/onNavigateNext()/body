@@ -1,13 +1,22 @@
 {
   if (mRadioExternal.isChecked()) {
-    mStorage.setVolumeInited(mVolume.getId(),true);
-    final Intent intent=new Intent(this,StorageWizardReady.class);
-    intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
-    startActivity(intent);
+    if (mVolume != null && mVolume.getType() == VolumeInfo.TYPE_PUBLIC) {
+      mStorage.setVolumeInited(mVolume.getFsUuid(),true);
+      final Intent intent=new Intent(this,StorageWizardReady.class);
+      intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
+      startActivity(intent);
+    }
+ else {
+      final Intent intent=new Intent(this,StorageWizardFormatConfirm.class);
+      intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
+      intent.putExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,false);
+      startActivity(intent);
+    }
   }
  else   if (mRadioInternal.isChecked()) {
     final Intent intent=new Intent(this,StorageWizardFormatConfirm.class);
     intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
+    intent.putExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,true);
     startActivity(intent);
   }
 }

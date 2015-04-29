@@ -2,6 +2,8 @@
   if (!parent.isAdded())   return;
   final RenameFragment dialog=new RenameFragment();
   dialog.setTargetFragment(parent,0);
-  dialog.setArguments(parent.getArguments());
+  final Bundle args=new Bundle();
+  args.putString(VolumeRecord.EXTRA_FS_UUID,vol.getFsUuid());
+  dialog.setArguments(args);
   dialog.show(parent.getFragmentManager(),TAG_RENAME);
 }

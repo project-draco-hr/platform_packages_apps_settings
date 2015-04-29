@@ -11,7 +11,7 @@
   final List<Fingerprint> items=fpm.getEnrolledFingerprints();
   final int fingerprintCount=items != null ? items.size() : 0;
   final String clazz;
-  boolean hasPassword=mChooseLockSettingsHelper.utils().getActivePasswordQuality() != DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
+  boolean hasPassword=mChooseLockSettingsHelper.utils().getActivePasswordQuality(MY_USER_ID) != DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
   if (fingerprintCount > 0) {
     fingerprintPreference.setSummary(getResources().getQuantityString(R.plurals.security_settings_fingerprint_preference_summary,fingerprintCount,fingerprintCount));
     clazz=FingerprintSettings.class.getName();

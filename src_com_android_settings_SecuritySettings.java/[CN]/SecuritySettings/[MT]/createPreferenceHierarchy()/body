@@ -7,7 +7,7 @@
   root=getPreferenceScreen();
   final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils);
   addPreferencesFromResource(resid);
-  mIsPrimary=UserHandle.myUserId() == UserHandle.USER_OWNER;
+  mIsPrimary=MY_USER_ID == UserHandle.USER_OWNER;
   mOwnerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
   if (mOwnerInfoPref != null) {
     mOwnerInfoPref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
@@ -71,14 +71,14 @@
   PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
   mToggleAppInstallation=(SwitchPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
   mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
-  mToggleAppInstallation.setEnabled(!um.getUserInfo(UserHandle.myUserId()).isRestricted());
+  mToggleAppInstallation.setEnabled(!um.getUserInfo(MY_USER_ID).isRestricted());
   if (um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES) || um.hasUserRestriction(UserManager.DISALLOW_INSTALL_APPS)) {
     mToggleAppInstallation.setEnabled(false);
   }
   PreferenceGroup advancedCategory=(PreferenceGroup)root.findPreference(KEY_ADVANCED_SECURITY);
   if (advancedCategory != null) {
     Preference manageAgents=advancedCategory.findPreference(KEY_MANAGE_TRUST_AGENTS);
-    if (manageAgents != null && !mLockPatternUtils.isSecure()) {
+    if (manageAgents != null && !mLockPatternUtils.isSecure(MY_USER_ID)) {
       manageAgents.setEnabled(false);
       manageAgents.setSummary(R.string.disabled_because_no_backup_security);
     }

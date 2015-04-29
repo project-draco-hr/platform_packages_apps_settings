@@ -1,6 +1,6 @@
 {
   super.onResume();
-  long deadline=mLockPatternUtils.getLockoutAttemptDeadline();
+  long deadline=mLockPatternUtils.getLockoutAttemptDeadline(UserHandle.myUserId());
   if (deadline != 0) {
     handleAttemptLockout(deadline);
   }

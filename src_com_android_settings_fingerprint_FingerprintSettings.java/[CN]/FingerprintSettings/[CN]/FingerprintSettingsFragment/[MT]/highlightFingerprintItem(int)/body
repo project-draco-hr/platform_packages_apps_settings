@@ -1,11 +1,18 @@
 {
   String prefName=genKey(fpId);
-  Preference pref=mManageCategory.findPreference(prefName);
-  if (pref instanceof FingerprintPreference) {
-    final FingerprintPreference fpref=(FingerprintPreference)pref;
-    fpref.highlight();
+  FingerprintPreference fpref=(FingerprintPreference)mManageCategory.findPreference(prefName);
+  final Drawable highlight=getHighlightDrawable();
+  final View view=fpref.getView();
+  final int centerX=view.getWidth() / 2;
+  final int centerY=view.getHeight() / 2;
+  highlight.setHotspot(centerX,centerY);
+  view.setBackground(highlight);
+  view.setPressed(true);
+  mHandler.postDelayed(new Runnable(){
+    @Override public void run(){
+      view.setPressed(false);
+      view.setBackground(null);
+    }
   }
- else {
-    Log.w(TAG,"Wrong pref " + (pref != null ? pref.getKey() : "null"));
-  }
+,RESET_HIGHLIGHT_DELAY_MS);
 }

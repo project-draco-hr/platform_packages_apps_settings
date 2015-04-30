@@ -1,0 +1,9 @@
+{
+  final List<VolumeInfo> vols=mStorage.getVolumes();
+  for (  VolumeInfo vol : vols) {
+    if (Objects.equals(mDisk.getId(),vol.getDiskId()) && (vol.getType() == type)) {
+      return vol;
+    }
+  }
+  return null;
+}

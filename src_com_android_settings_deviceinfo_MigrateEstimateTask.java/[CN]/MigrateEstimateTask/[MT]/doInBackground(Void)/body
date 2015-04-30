@@ -1,0 +1,23 @@
+{
+  if (mSizeBytes != -1) {
+    return mSizeBytes;
+  }
+  final VolumeInfo privateVol=mContext.getPackageManager().getPrimaryStorageCurrentVolume();
+  final VolumeInfo emulatedVol=mStorage.findEmulatedForPrivate(privateVol);
+  final String path=emulatedVol.getPath().getAbsolutePath();
+  Log.d(TAG,"Estimating for current path " + path);
+  final Intent intent=new Intent().setComponent(DEFAULT_CONTAINER_COMPONENT);
+  mContext.bindServiceAsUser(intent,this,Context.BIND_AUTO_CREATE,UserHandle.OWNER);
+  try {
+    if (mConnected.await(15,TimeUnit.SECONDS)) {
+      return mService.calculateDirectorySize(path);
+    }
+  }
+ catch (  InterruptedException|RemoteException e) {
+    Log.w(TAG,"Failed to measure " + path);
+  }
+ finally {
+    mContext.unbindService(this);
+  }
+  return -1L;
+}

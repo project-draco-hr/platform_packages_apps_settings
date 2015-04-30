@@ -4,7 +4,15 @@
   profileData.userInfo=userInfo;
   if (addCategory) {
     profileData.preferenceGroup=new PreferenceCategory(context);
-    profileData.preferenceGroup.setTitle(userInfo.isManagedProfile() ? R.string.category_work : R.string.category_personal);
+    if (userInfo.isManagedProfile()) {
+      profileData.preferenceGroup.setLayoutResource(R.layout.work_profile_category);
+      profileData.preferenceGroup.setTitle(R.string.category_work);
+      profileData.preferenceGroup.setSummary(getWorkGroupSummary(context,userInfo));
+      profileData.removeWorkProfilePreference=newRemoveWorkProfilePreference(context);
+    }
+ else {
+      profileData.preferenceGroup.setTitle(R.string.category_personal);
+    }
     parent.addPreference(profileData.preferenceGroup);
   }
  else {
@@ -15,9 +23,6 @@
     if (!mUm.hasUserRestriction(DISALLOW_MODIFY_ACCOUNTS,userInfo.getUserHandle())) {
       profileData.addAccountPreference=newAddAccountPreference(context);
     }
-  }
-  if (userInfo.isManagedProfile()) {
-    profileData.removeWorkProfilePreference=newRemoveWorkProfilePreference(context);
   }
   mProfiles.put(userInfo.id,profileData);
 }

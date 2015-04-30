@@ -5,7 +5,7 @@
   icon.setImageDrawable(mPm.getApplicationIcon(pkgInfo.applicationInfo));
   TextView label=(TextView)appSnippet.findViewById(R.id.app_name);
   label.setText(mPm.getApplicationLabel(pkgInfo.applicationInfo));
-  mAppVersion=(TextView)appSnippet.findViewById(R.id.app_size);
+  mAppVersion=(TextView)appSnippet.findViewById(R.id.app_summary);
   if (pkgInfo.versionName != null) {
     mAppVersion.setVisibility(View.VISIBLE);
     mAppVersion.setText(getActivity().getString(R.string.version_text,String.valueOf(pkgInfo.versionName)));

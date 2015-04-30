@@ -1,0 +1,13 @@
+{
+  if (mMacAddressFooter != null) {
+    String macAddress=null;
+    if (mWifiManager != null) {
+      android.net.wifi.WifiInfo connectionInfo=mWifiManager.getConnectionInfo();
+      if (connectionInfo != null) {
+        macAddress=connectionInfo.getMacAddress();
+      }
+    }
+    final TextView macAddressTextView=(TextView)mMacAddressFooter.findViewById(R.id.mac_address);
+    macAddressTextView.setText(!TextUtils.isEmpty(macAddress) ? macAddress : getString(R.string.status_unavailable));
+  }
+}

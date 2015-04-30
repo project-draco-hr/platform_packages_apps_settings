@@ -1,9 +1,10 @@
 {
-  setTitle(mAccessPoint.getSsid());
+  if (mForSavedNetworks)   setTitle(mAccessPoint.getConfigName());
+ else   setTitle(mAccessPoint.getSsid());
   final Context context=getContext();
   updateIcon(mAccessPoint.getLevel(),context);
   setSummary(null);
-  String summary=mAccessPoint.getSummary();
+  String summary=mForSavedNetworks ? mAccessPoint.getSavedNetworkSummary() : mAccessPoint.getSettingsSummary();
   if (summary.length() > 0) {
     setSummary(summary);
     setShowSummary(true);

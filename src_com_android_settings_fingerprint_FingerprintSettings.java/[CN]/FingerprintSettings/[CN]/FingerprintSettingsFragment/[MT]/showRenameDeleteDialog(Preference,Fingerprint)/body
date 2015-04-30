@@ -1,12 +1,13 @@
 {
   final Activity activity=getActivity();
-  AlertDialog dialog=new AlertDialog.Builder(activity).setView(R.layout.fingerprint_rename_dialog).setPositiveButton(R.string.security_settings_fingerprint_enroll_dialog_ok,new DialogInterface.OnClickListener(){
+  final AlertDialog dialog=new AlertDialog.Builder(activity).setView(R.layout.fingerprint_rename_dialog).setPositiveButton(R.string.security_settings_fingerprint_enroll_dialog_ok,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
       final String newName=mDialogTextField.getText().toString();
       final CharSequence name=fp.getName();
       if (!newName.equals(name)) {
         if (DEBUG)         Log.v(TAG,"rename " + name + " to "+ newName);
         mFingerprintManager.rename(fp.getFingerId(),newName);
+        updatePreferences();
       }
       dialog.dismiss();
     }
@@ -23,4 +24,12 @@
   mDialogTextField=(EditText)dialog.findViewById(R.id.fingerprint_rename_field);
   mDialogTextField.setText(fp.getName());
   mDialogTextField.selectAll();
+  mDialogTextField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+    @Override public void onFocusChange(    View v,    boolean hasFocus){
+      if (hasFocus) {
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+      }
+    }
+  }
+);
 }

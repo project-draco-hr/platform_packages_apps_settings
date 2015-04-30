@@ -1,0 +1,11 @@
+{
+  final ZenRuleInfo[] rt=new ZenRuleInfo[mConfig.automaticRules.size()];
+  for (int i=0; i < rt.length; i++) {
+    final ZenRuleInfo zri=new ZenRuleInfo();
+    zri.id=mConfig.automaticRules.keyAt(i);
+    zri.rule=mConfig.automaticRules.valueAt(i);
+    rt[i]=zri;
+  }
+  Arrays.sort(rt,RULE_COMPARATOR);
+  return rt;
+}

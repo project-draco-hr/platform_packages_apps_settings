@@ -7,4 +7,16 @@
   mRule.enabled=enabled;
   mRule.snoozing=false;
   setZenModeConfig(mConfig);
+  if (enabled) {
+    final int toastText=getEnabledToastText();
+    if (toastText != 0) {
+      mEnabledToast=Toast.makeText(mContext,toastText,Toast.LENGTH_SHORT);
+      mEnabledToast.show();
+    }
+  }
+ else {
+    if (mEnabledToast != null) {
+      mEnabledToast.cancel();
+    }
+  }
 }

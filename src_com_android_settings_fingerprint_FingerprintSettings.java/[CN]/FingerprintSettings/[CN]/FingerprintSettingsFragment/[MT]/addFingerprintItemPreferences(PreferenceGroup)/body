@@ -1,20 +1,21 @@
 {
-  manageFingerprintCategory.removeAll();
+  root.removeAll();
   final List<Fingerprint> items=mFingerprintManager.getEnrolledFingerprints();
   final int fingerprintCount=items.size();
   for (int i=0; i < fingerprintCount; i++) {
     final Fingerprint item=items.get(i);
-    FingerprintPreference pref=new FingerprintPreference(manageFingerprintCategory.getContext());
+    FingerprintPreference pref=new FingerprintPreference(root.getContext());
     pref.setKey(genKey(item.getFingerId()));
     pref.setTitle(item.getName());
     pref.setFingerprint(item);
     pref.setPersistent(false);
-    manageFingerprintCategory.addPreference(pref);
+    root.addPreference(pref);
     pref.setOnPreferenceChangeListener(this);
   }
-  Preference addPreference=new Preference(manageFingerprintCategory.getContext());
+  Preference addPreference=new Preference(root.getContext());
   addPreference.setKey(KEY_FINGERPRINT_ADD);
   addPreference.setTitle(R.string.fingerprint_add_title);
-  manageFingerprintCategory.addPreference(addPreference);
+  addPreference.setIcon(R.drawable.ic_add_24dp);
+  root.addPreference(addPreference);
   addPreference.setOnPreferenceChangeListener(this);
 }

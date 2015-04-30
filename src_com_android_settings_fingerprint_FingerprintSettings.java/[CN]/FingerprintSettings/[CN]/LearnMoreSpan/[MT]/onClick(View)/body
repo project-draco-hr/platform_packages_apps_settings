@@ -1,0 +1,10 @@
+{
+  Context ctx=widget.getContext();
+  Intent intent=HelpUtils.getHelpIntent(ctx,getURL());
+  try {
+    ctx.startActivity(intent);
+  }
+ catch (  ActivityNotFoundException e) {
+    Log.w(FingerprintSettingsFragment.TAG,"Actvity was not found for intent, " + intent.toString());
+  }
+}

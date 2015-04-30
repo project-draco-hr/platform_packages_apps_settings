@@ -1,14 +1,14 @@
 {
   if (rule == null || !rule.enabled)   return getString(R.string.switch_off_text);
-  final ScheduleInfo schedule=ZenModeConfig.tryParseScheduleConditionId(rule.conditionId);
   final String mode=ZenModeSettings.computeZenModeCaption(getResources(),rule.zenMode);
   String summary=getString(R.string.switch_on_text);
+  final ScheduleInfo schedule=ZenModeConfig.tryParseScheduleConditionId(rule.conditionId);
+  final EventInfo event=ZenModeConfig.tryParseEventConditionId(rule.conditionId);
   if (schedule != null) {
-    final String days=computeContiguousDayRanges(schedule.days);
-    final String start=getTime(schedule.startHour,schedule.startMinute);
-    final String end=getTime(schedule.endHour,schedule.endMinute);
-    final String time=getString(R.string.summary_range_verbal_combination,start,end);
-    summary=getString(R.string.zen_mode_rule_summary_combination,days,time);
+    summary=computeScheduleRuleSummary(schedule);
+  }
+ else   if (event != null) {
+    summary=computeEventRuleSummary(event);
   }
   return getString(R.string.zen_mode_rule_summary_combination,summary,mode);
 }

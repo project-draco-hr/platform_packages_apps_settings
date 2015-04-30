@@ -1,0 +1,10 @@
+{
+  final EventInfo event=new EventInfo();
+  event.calendar=0;
+  event.attendance=EventInfo.ATTENDANCE_REQUIRED_OR_OPTIONAL;
+  event.reply=EventInfo.REPLY_ANY_EXCEPT_NO;
+  final RuleInfo rt=new RuleInfo();
+  rt.settingsAction=ZenModeEventRuleSettings.ACTION;
+  rt.defaultConditionId=ZenModeConfig.toEventConditionId(event);
+  return rt;
+}

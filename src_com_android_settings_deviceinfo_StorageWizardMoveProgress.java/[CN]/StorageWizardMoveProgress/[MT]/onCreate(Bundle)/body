@@ -8,5 +8,5 @@
   setBodyText(R.string.storage_wizard_move_progress_body,volumeName,appName);
   getNextButton().setVisibility(View.GONE);
   getPackageManager().registerMoveCallback(mCallback,new Handler());
-  mCallback.onStatusChanged(mMoveId,null,getPackageManager().getMoveStatus(mMoveId),-1);
+  mCallback.onStatusChanged(mMoveId,getPackageManager().getMoveStatus(mMoveId),-1);
 }

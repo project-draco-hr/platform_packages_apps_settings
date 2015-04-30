@@ -2,6 +2,7 @@
   final Intent intent=new Intent(this,StorageWizardFormatProgress.class);
   intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
   intent.putExtra(EXTRA_FORMAT_PRIVATE,mFormatPrivate);
+  intent.putExtra(EXTRA_FORGET_UUID,getIntent().getStringExtra(EXTRA_FORGET_UUID));
   startActivity(intent);
   finishAffinity();
 }

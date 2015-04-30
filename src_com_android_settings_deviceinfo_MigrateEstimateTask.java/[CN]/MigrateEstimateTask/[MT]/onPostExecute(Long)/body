@@ -1,0 +1,7 @@
+{
+  mSizeBytes=result;
+  mTimeMillis=(mSizeBytes * DateUtils.SECOND_IN_MILLIS) / SPEED_ESTIMATE_BPS;
+  final String size=Formatter.formatFileSize(mContext,mSizeBytes);
+  final String time=DateUtils.formatDuration(mTimeMillis).toString();
+  onPostExecute(size,time);
+}

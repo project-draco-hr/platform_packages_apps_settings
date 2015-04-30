@@ -1,0 +1,12 @@
+{
+  if (event.calendar != 0) {
+    final CalendarInfo[] calendars=ZenModeEventRuleSettings.getCalendars(mContext);
+    for (int i=0; i < calendars.length; i++) {
+      final CalendarInfo calendar=calendars[i];
+      if (calendar.id == event.calendar) {
+        return calendar.name;
+      }
+    }
+  }
+  return getString(R.string.zen_mode_event_rule_summary_any_calendar);
+}

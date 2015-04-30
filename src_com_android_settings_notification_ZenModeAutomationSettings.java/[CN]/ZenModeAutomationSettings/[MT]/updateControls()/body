@@ -2,17 +2,20 @@
   final PreferenceScreen root=getPreferenceScreen();
   root.removeAll();
   if (mConfig == null)   return;
-  for (int i=0; i < mConfig.automaticRules.size(); i++) {
-    final String id=mConfig.automaticRules.keyAt(i);
-    final ZenRule rule=mConfig.automaticRules.valueAt(i);
+  final ZenRuleInfo[] sortedRules=sortedRules();
+  for (int i=0; i < sortedRules.length; i++) {
+    final String id=sortedRules[i].id;
+    final ZenRule rule=sortedRules[i].rule;
     final boolean isSchedule=ZenModeConfig.isValidScheduleConditionId(rule.conditionId);
+    final boolean isEvent=ZenModeConfig.isValidEventConditionId(rule.conditionId);
     final Preference p=new Preference(mContext);
+    p.setIcon(isSchedule ? R.drawable.ic_schedule : isEvent ? R.drawable.ic_event : R.drawable.ic_label);
     p.setTitle(rule.name);
     p.setSummary(computeRuleSummary(rule));
     p.setPersistent(false);
     p.setOnPreferenceClickListener(new OnPreferenceClickListener(){
       @Override public boolean onPreferenceClick(      Preference preference){
-        final String action=isSchedule ? ZenModeScheduleRuleSettings.ACTION : ZenModeExternalRuleSettings.ACTION;
+        final String action=isSchedule ? ZenModeScheduleRuleSettings.ACTION : isEvent ? ZenModeEventRuleSettings.ACTION : ZenModeExternalRuleSettings.ACTION;
         showRule(action,null,id,rule.name);
         return true;
       }
@@ -20,4 +23,16 @@
 );
     root.addPreference(p);
   }
+  final Preference p=new Preference(mContext);
+  p.setIcon(R.drawable.ic_add);
+  p.setTitle(R.string.zen_mode_add_rule);
+  p.setPersistent(false);
+  p.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      showAddRuleDialog();
+      return true;
+    }
+  }
+);
+  root.addPreference(p);
 }

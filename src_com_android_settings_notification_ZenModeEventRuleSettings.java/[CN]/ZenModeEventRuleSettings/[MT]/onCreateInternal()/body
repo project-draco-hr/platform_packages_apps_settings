@@ -1,0 +1,45 @@
+{
+  addPreferencesFromResource(R.xml.zen_mode_event_rule_settings);
+  final PreferenceScreen root=getPreferenceScreen();
+  mCalendar=(DropDownPreference)root.findPreference(KEY_CALENDAR);
+  mCalendar.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object value){
+      final long calendar=(Long)value;
+      if (calendar == mEvent.calendar)       return true;
+      mEvent.calendar=calendar;
+      updateRule(ZenModeConfig.toEventConditionId(mEvent));
+      return true;
+    }
+  }
+);
+  mAttendance=(DropDownPreference)root.findPreference(KEY_ATTENDANCE);
+  mAttendance.addItem(R.string.zen_mode_event_rule_attendance_required_optional,EventInfo.ATTENDANCE_REQUIRED_OR_OPTIONAL);
+  mAttendance.addItem(R.string.zen_mode_event_rule_attendance_required,EventInfo.ATTENDANCE_REQUIRED);
+  mAttendance.addItem(R.string.zen_mode_event_rule_attendance_optional,EventInfo.ATTENDANCE_OPTIONAL);
+  mAttendance.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object value){
+      final int attendance=(Integer)value;
+      if (attendance == mEvent.attendance)       return true;
+      mEvent.attendance=attendance;
+      updateRule(ZenModeConfig.toEventConditionId(mEvent));
+      return true;
+    }
+  }
+);
+  mReply=(DropDownPreference)root.findPreference(KEY_REPLY);
+  mReply.addItem(R.string.zen_mode_event_rule_reply_any,EventInfo.REPLY_ANY);
+  mReply.addItem(R.string.zen_mode_event_rule_reply_any_except_no,EventInfo.REPLY_ANY_EXCEPT_NO);
+  mReply.addItem(R.string.zen_mode_event_rule_reply_yes,EventInfo.REPLY_YES);
+  mReply.setCallback(new DropDownPreference.Callback(){
+    @Override public boolean onItemSelected(    int pos,    Object value){
+      final int reply=(Integer)value;
+      if (reply == mEvent.reply)       return true;
+      mEvent.reply=reply;
+      updateRule(ZenModeConfig.toEventConditionId(mEvent));
+      return true;
+    }
+  }
+);
+  reloadCalendar();
+  updateControlsInternal();
+}

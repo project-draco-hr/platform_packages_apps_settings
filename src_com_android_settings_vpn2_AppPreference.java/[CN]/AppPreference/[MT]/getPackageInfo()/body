@@ -1,10 +1,10 @@
 {
   UserHandle user=new UserHandle(UserHandle.getUserId(mUid));
   try {
-    IPackageManager ipm=AppGlobals.getPackageManager();
-    return ipm.getPackageInfo(mPackageName,0,user.getIdentifier());
+    PackageManager pm=getUserContext().getPackageManager();
+    return pm.getPackageInfo(mPackageName,0);
   }
- catch (  RemoteException rme) {
+ catch (  PackageManager.NameNotFoundException nnfe) {
     return null;
   }
 }

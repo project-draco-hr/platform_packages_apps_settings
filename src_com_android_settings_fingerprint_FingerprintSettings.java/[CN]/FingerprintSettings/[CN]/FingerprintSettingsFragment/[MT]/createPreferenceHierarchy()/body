@@ -5,20 +5,6 @@
   }
   addPreferencesFromResource(R.xml.security_settings_fingerprint);
   root=getPreferenceScreen();
-  mManageCategory=(PreferenceGroup)root.findPreference(KEY_MANAGE_CATEGORY);
-  if (mManageCategory != null) {
-    addFingerprintItemPreferences(mManageCategory);
-  }
-  PreferenceGroup usageCategory=(PreferenceGroup)root.findPreference(KEY_USAGE_CATEGORY);
-  if (usageCategory != null) {
-    Preference toggle=root.findPreference(KEY_FINGERPRINT_ENABLE_KEYGUARD_TOGGLE);
-    toggle.setOnPreferenceChangeListener(this);
-    if (!ENABLE_USAGE_CATEGORY) {
-      root.removePreference(usageCategory);
-    }
- else {
-      toggle.setOnPreferenceChangeListener(this);
-    }
-  }
+  addFingerprintItemPreferences(root);
   return root;
 }

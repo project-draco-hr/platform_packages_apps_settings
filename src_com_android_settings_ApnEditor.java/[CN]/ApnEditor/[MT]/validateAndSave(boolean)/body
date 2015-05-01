@@ -41,10 +41,29 @@
       values.put(Telephony.Carriers.CURRENT,1);
     }
   }
-  String bearerVal=mBearer.getValue();
-  if (bearerVal != null) {
-    values.put(Telephony.Carriers.BEARER,Integer.parseInt(bearerVal));
+  Set<String> bearerSet=mBearerMulti.getValues();
+  int bearerBitmask=0;
+  for (  String bearer : bearerSet) {
+    if (Integer.parseInt(bearer) == 0) {
+      bearerBitmask=0;
+      break;
+    }
+ else {
+      bearerBitmask|=ServiceState.getBitmaskForTech(Integer.parseInt(bearer));
+    }
   }
+  values.put(Telephony.Carriers.BEARER_BITMASK,bearerBitmask);
+  int bearerVal;
+  if (bearerBitmask == 0 || mBearerInitialVal == 0) {
+    bearerVal=0;
+  }
+ else   if (ServiceState.bitmaskHasTech(bearerBitmask,mBearerInitialVal)) {
+    bearerVal=mBearerInitialVal;
+  }
+ else {
+    bearerVal=0;
+  }
+  values.put(Telephony.Carriers.BEARER,bearerVal);
   values.put(Telephony.Carriers.MVNO_TYPE,checkNotSet(mMvnoType.getValue()));
   values.put(Telephony.Carriers.MVNO_MATCH_DATA,checkNotSet(mMvnoMatchData.getText()));
   values.put(Telephony.Carriers.CARRIER_ENABLED,mCarrierEnabled.isChecked() ? 1 : 0);

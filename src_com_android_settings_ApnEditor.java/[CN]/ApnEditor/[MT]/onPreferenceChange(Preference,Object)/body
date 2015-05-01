@@ -27,13 +27,13 @@
     mRoamingProtocol.setSummary(protocol);
     mRoamingProtocol.setValue((String)newValue);
   }
- else   if (KEY_BEARER.equals(key)) {
-    String bearer=bearerDescription((String)newValue);
+ else   if (KEY_BEARER_MULTI.equals(key)) {
+    String bearer=bearerMultiDescription((Set<String>)newValue);
     if (bearer == null) {
       return false;
     }
-    mBearer.setValue((String)newValue);
-    mBearer.setSummary(bearer);
+    mBearerMulti.setValues((Set<String>)newValue);
+    mBearerMulti.setSummary(bearer);
   }
  else   if (KEY_MVNO_TYPE.equals(key)) {
     String mvno=mvnoDescription((String)newValue);

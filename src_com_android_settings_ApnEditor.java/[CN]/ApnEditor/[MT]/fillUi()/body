@@ -35,7 +35,28 @@
     mProtocol.setValue(mCursor.getString(PROTOCOL_INDEX));
     mRoamingProtocol.setValue(mCursor.getString(ROAMING_PROTOCOL_INDEX));
     mCarrierEnabled.setChecked(mCursor.getInt(CARRIER_ENABLED_INDEX) == 1);
-    mBearer.setValue(mCursor.getString(BEARER_INDEX));
+    mBearerInitialVal=mCursor.getInt(BEARER_INDEX);
+    HashSet<String> bearers=new HashSet<String>();
+    int bearerBitmask=mCursor.getInt(BEARER_BITMASK_INDEX);
+    if (bearerBitmask == 0) {
+      if (mBearerInitialVal == 0) {
+        bearers.add("" + 0);
+      }
+    }
+ else {
+      int i=1;
+      while (bearerBitmask != 0) {
+        if ((bearerBitmask & 1) == 1) {
+          bearers.add("" + i);
+        }
+        bearerBitmask>>=1;
+        i++;
+      }
+    }
+    if (mBearerInitialVal != 0 && bearers.contains("" + mBearerInitialVal) == false) {
+      bearers.add("" + mBearerInitialVal);
+    }
+    mBearerMulti.setValues(bearers);
     mMvnoType.setValue(mCursor.getString(MVNO_TYPE_INDEX));
     mMvnoMatchData.setEnabled(false);
     mMvnoMatchData.setText(mCursor.getString(MVNO_MATCH_DATA_INDEX));
@@ -65,7 +86,7 @@
   }
   mProtocol.setSummary(checkNull(protocolDescription(mProtocol.getValue(),mProtocol)));
   mRoamingProtocol.setSummary(checkNull(protocolDescription(mRoamingProtocol.getValue(),mRoamingProtocol)));
-  mBearer.setSummary(checkNull(bearerDescription(mBearer.getValue())));
+  mBearerMulti.setSummary(checkNull(bearerMultiDescription(mBearerMulti.getValues())));
   mMvnoType.setSummary(checkNull(mvnoDescription(mMvnoType.getValue())));
   mMvnoMatchData.setSummary(checkNull(mMvnoMatchData.getText()));
   boolean ceEditable=getResources().getBoolean(R.bool.config_allow_edit_carrier_enabled);

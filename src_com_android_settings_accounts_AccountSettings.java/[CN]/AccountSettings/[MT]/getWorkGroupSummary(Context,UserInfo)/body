@@ -1,0 +1,9 @@
+{
+  PackageManager packageManager=context.getPackageManager();
+  ApplicationInfo adminApplicationInfo=Utils.getAdminApplicationInfo(context,userInfo.id);
+  if (adminApplicationInfo == null) {
+    return null;
+  }
+  CharSequence appLabel=packageManager.getApplicationLabel(adminApplicationInfo);
+  return getString(R.string.managing_admin,appLabel);
+}

@@ -1,0 +1,12 @@
+{
+  if (mSipper != null) {
+    mBatteryPreference.setEnabled(true);
+    int dischargeAmount=mBatteryHelper.getStats().getDischargeAmount(BatteryStats.STATS_SINCE_CHARGED);
+    final int percentOfMax=(int)((mSipper.totalPowerMah) / mBatteryHelper.getTotalPower() * dischargeAmount + .5f);
+    mBatteryPreference.setSummary(getString(R.string.battery_summary,percentOfMax));
+  }
+ else {
+    mBatteryPreference.setEnabled(false);
+    mBatteryPreference.setSummary(getString(R.string.no_battery_summary));
+  }
+}

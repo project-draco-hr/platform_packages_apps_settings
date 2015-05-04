@@ -1,0 +1,6 @@
+{
+  Bundle args=new Bundle();
+  args.putString(AppInfoBase.ARG_PACKAGE_NAME,pkg);
+  Intent intent=Utils.onBuildStartFragmentIntent(source.getActivity(),fragment.getName(),args,null,titleRes,null,false);
+  source.getActivity().startActivityForResultAsUser(intent,request,new UserHandle(UserHandle.getUserId(uid)));
+}

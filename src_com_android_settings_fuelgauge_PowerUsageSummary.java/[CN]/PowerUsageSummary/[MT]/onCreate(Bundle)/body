@@ -1,7 +1,6 @@
 {
   super.onCreate(icicle);
-  mStatsHelper.create(icicle);
   addPreferencesFromResource(R.xml.power_usage_summary);
+  mHistPref=(BatteryHistoryPreference)findPreference(KEY_BATTERY_HISTORY);
   mAppListGroup=(PreferenceGroup)findPreference(KEY_APP_LIST);
-  setHasOptionsMenu(true);
 }

@@ -3,15 +3,11 @@
     removePackagesSection();
     return;
   }
-  ViewGroup packagesParent=(ViewGroup)mRootView.findViewById(R.id.packages_section);
-  if (packagesParent == null)   return;
-  LayoutInflater inflater=getActivity().getLayoutInflater();
-  PackageManager pm=getActivity().getPackageManager();
-  mPackages=pm.getPackagesForUid(uid);
   if (mPackages == null || mPackages.length < 2) {
     removePackagesSection();
     return;
   }
+  PackageManager pm=getPackageManager();
   for (int i=0; i < mPackages.length; i++) {
     try {
       ApplicationInfo ai=pm.getApplicationInfo(mPackages[i],0);
@@ -19,10 +15,7 @@
       if (label != null) {
         mPackages[i]=label.toString();
       }
-      View item=inflater.inflate(R.layout.power_usage_package_item,null);
-      packagesParent.addView(item);
-      TextView labelView=(TextView)item.findViewById(R.id.label);
-      labelView.setText(mPackages[i]);
+      addHorizontalPreference(mPackagesParent,mPackages[i],null);
     }
  catch (    NameNotFoundException e) {
     }

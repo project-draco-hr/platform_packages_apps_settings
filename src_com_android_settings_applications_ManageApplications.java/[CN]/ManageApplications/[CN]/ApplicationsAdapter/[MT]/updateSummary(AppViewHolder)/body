@@ -19,6 +19,9 @@ holder.summary.setText(((UsageState)holder.entry.extraInfo).hasAccess() ? R.stri
 holder.summary.setText(null);
 }
 break;
+case LIST_TYPE_HIGH_POWER:
+holder.summary.setText(HighPowerDetail.getSummary(mContext,holder.entry));
+break;
 default :
 holder.updateSizeText(mManageApplications.mInvalidSizeStr,mWhichSize);
 break;

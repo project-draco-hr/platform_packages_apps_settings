@@ -1,16 +1,13 @@
 {
+  super.refreshStats();
+  updatePreference(mHistPref);
   mAppListGroup.removeAll();
   mAppListGroup.setOrderingAsAdded(false);
-  mHistPref=new BatteryHistoryPreference(getActivity(),mStatsHelper.getStats(),mStatsHelper.getBatteryBroadcast());
-  mHistPref.setOrder(-1);
-  mAppListGroup.addPreference(mHistPref);
   boolean addedSome=false;
   final PowerProfile powerProfile=mStatsHelper.getPowerProfile();
   final BatteryStats stats=mStatsHelper.getStats();
   final double averagePower=powerProfile.getAveragePower(PowerProfile.POWER_SCREEN_FULL);
   if (averagePower >= MIN_AVERAGE_POWER_THRESHOLD_MILLI_AMP) {
-    final List<UserHandle> profiles=mUm.getUserProfiles();
-    mStatsHelper.refreshStats(BatteryStats.STATS_SINCE_CHARGED,profiles);
     final List<BatterySipper> usageList=mStatsHelper.getUsageList();
     final int dischargeAmount=stats != null ? stats.getDischargeAmount(mStatsType) : 0;
     final int numSippers=usageList.size();

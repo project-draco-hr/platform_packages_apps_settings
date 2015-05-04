@@ -9,6 +9,9 @@
   mPermissionsPreference.setOnPreferenceClickListener(this);
   mDataPreference=findPreference(KEY_DATA);
   mDataPreference.setOnPreferenceClickListener(this);
+  mBatteryPreference=findPreference(KEY_BATTERY);
+  mBatteryPreference.setEnabled(false);
+  mBatteryPreference.setOnPreferenceClickListener(this);
   mLaunchPreference=findPreference(KEY_LAUNCH);
   if ((mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0) {
     mLaunchPreference.setEnabled(false);

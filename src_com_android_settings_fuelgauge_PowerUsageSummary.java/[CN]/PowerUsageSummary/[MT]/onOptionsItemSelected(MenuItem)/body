@@ -1,4 +1,5 @@
 {
+  final SettingsActivity sa=(SettingsActivity)getActivity();
 switch (item.getItemId()) {
 case MENU_STATS_TYPE:
     if (mStatsType == BatteryStats.STATS_SINCE_CHARGED) {
@@ -9,16 +10,15 @@ case MENU_STATS_TYPE:
     }
   refreshStats();
 return true;
-case MENU_STATS_REFRESH:
-mStatsHelper.clearStats();
-refreshStats();
-mHandler.removeMessages(MSG_REFRESH_STATS);
-return true;
 case MENU_BATTERY_SAVER:
-final SettingsActivity sa=(SettingsActivity)getActivity();
 sa.startPreferencePanel(BatterySaverSettings.class.getName(),null,R.string.battery_saver,null,null,0);
 return true;
+case MENU_HIGH_POWER_APPS:
+Bundle args=new Bundle();
+args.putString(ManageApplications.EXTRA_CLASSNAME,HighPowerApplicationsActivity.class.getName());
+sa.startPreferencePanel(ManageApplications.class.getName(),args,R.string.high_power_apps,null,null,0);
+return true;
 default :
-return false;
+return super.onOptionsItemSelected(item);
 }
 }

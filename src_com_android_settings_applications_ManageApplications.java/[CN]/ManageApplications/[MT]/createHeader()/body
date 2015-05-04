@@ -21,6 +21,9 @@
     mFilterAdapter.enableFilter(FILTER_APPS_SENSITIVE);
     mFilterAdapter.enableFilter(FILTER_APPS_NO_PEEKING);
   }
+  if (mListType == LIST_TYPE_HIGH_POWER) {
+    mFilterAdapter.enableFilter(FILTER_APPS_POWER_NO_WHITELIST);
+  }
   if (mListType == LIST_TYPE_STORAGE) {
     mApplications.setOverrideFilter(new VolumeFilter(mVolumeUuid));
   }

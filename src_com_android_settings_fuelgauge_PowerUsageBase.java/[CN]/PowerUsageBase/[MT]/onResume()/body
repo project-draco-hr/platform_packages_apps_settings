@@ -1,0 +1,9 @@
+{
+  super.onResume();
+  BatteryStatsHelper.dropFile(getActivity(),BatteryHistoryPreference.BATTERY_HISTORY_FILE);
+  updateBatteryStatus(getActivity().registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED)));
+  if (mHandler.hasMessages(MSG_REFRESH_STATS)) {
+    mHandler.removeMessages(MSG_REFRESH_STATS);
+    mStatsHelper.clearStats();
+  }
+}

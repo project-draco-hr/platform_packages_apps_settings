@@ -1,5 +1,4 @@
 {
-  LayoutInflater inflater=getActivity().getLayoutInflater();
   if (mTypes != null && mValues != null) {
     for (int i=0; i < mTypes.length; i++) {
       if (mValues[i] <= 0)       continue;
@@ -27,12 +26,7 @@ mUsesGps=true;
 default :
 value=Utils.formatElapsedTime(getActivity(),mValues[i],true);
 }
-ViewGroup item=(ViewGroup)inflater.inflate(R.layout.power_usage_detail_item_text,null);
-mDetailsParent.addView(item);
-TextView labelView=(TextView)item.findViewById(R.id.label);
-TextView valueView=(TextView)item.findViewById(R.id.value);
-labelView.setText(label);
-valueView.setText(value);
+addHorizontalPreference(mDetailsParent,label,value);
 }
 }
 }

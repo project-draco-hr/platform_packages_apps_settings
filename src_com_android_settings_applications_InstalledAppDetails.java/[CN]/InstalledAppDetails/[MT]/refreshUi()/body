@@ -30,6 +30,7 @@
   mLaunchPreference.setSummary(Utils.getLaunchByDeafaultSummary(mAppEntry,mUsbManager,mPm,context));
   mNotificationPreference.setSummary(getNotificationSummary(mAppEntry,context,mBackend));
   mDataPreference.setSummary(getDataSummary());
+  updateBattery();
   if (!mInitialized) {
     mInitialized=true;
     mShowUninstalled=(mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0;

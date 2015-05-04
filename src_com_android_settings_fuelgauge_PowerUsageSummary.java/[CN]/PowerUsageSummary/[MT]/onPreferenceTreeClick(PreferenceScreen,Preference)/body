@@ -1,13 +1,4 @@
 {
-  if (preference instanceof BatteryHistoryPreference) {
-    mStatsHelper.storeStatsHistoryInFile(BATTERY_HISTORY_FILE);
-    Bundle args=new Bundle();
-    args.putString(BatteryHistoryDetail.EXTRA_STATS,BATTERY_HISTORY_FILE);
-    args.putParcelable(BatteryHistoryDetail.EXTRA_BROADCAST,mStatsHelper.getBatteryBroadcast());
-    SettingsActivity sa=(SettingsActivity)getActivity();
-    sa.startPreferencePanel(BatteryHistoryDetail.class.getName(),args,R.string.history_details_title,null,null,0);
-    return super.onPreferenceTreeClick(preferenceScreen,preference);
-  }
   if (!(preference instanceof PowerGaugePreference)) {
     return false;
   }

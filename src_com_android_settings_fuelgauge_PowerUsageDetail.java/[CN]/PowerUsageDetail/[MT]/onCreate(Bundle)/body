@@ -2,4 +2,11 @@
   super.onCreate(icicle);
   mPm=getActivity().getPackageManager();
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+  addPreferencesFromResource(R.xml.power_usage_details);
+  mHistPref=(BatteryHistoryPreference)findPreference(KEY_BATTERY_HISTORY);
+  mDetailsParent=(PreferenceCategory)findPreference(KEY_DETAILS_PARENT);
+  mControlsParent=(PreferenceCategory)findPreference(KEY_CONTROLS_PARENT);
+  mMessagesParent=(PreferenceCategory)findPreference(KEY_MESSAGES_PARENT);
+  mPackagesParent=(PreferenceCategory)findPreference(KEY_PACKAGES_PARENT);
+  createDetails();
 }

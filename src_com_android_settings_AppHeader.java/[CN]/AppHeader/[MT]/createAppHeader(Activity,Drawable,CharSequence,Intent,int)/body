@@ -1,0 +1,26 @@
+{
+  final View content=activity.findViewById(R.id.main_content);
+  final ViewGroup contentParent=(ViewGroup)content.getParent();
+  final View bar=activity.getLayoutInflater().inflate(R.layout.app_header,contentParent,false);
+  final ImageView appIcon=(ImageView)bar.findViewById(R.id.app_icon);
+  appIcon.setImageDrawable(icon);
+  if (tintColorRes != 0) {
+    appIcon.setImageTintList(ColorStateList.valueOf(activity.getColor(tintColorRes)));
+  }
+  final TextView appName=(TextView)bar.findViewById(R.id.app_name);
+  appName.setText(label);
+  final View appSettings=bar.findViewById(R.id.app_settings);
+  if (settingsIntent == null) {
+    appSettings.setVisibility(View.GONE);
+  }
+ else {
+    appSettings.setClickable(true);
+    appSettings.setOnClickListener(new OnClickListener(){
+      @Override public void onClick(      View v){
+        activity.startActivity(settingsIntent);
+      }
+    }
+);
+  }
+  contentParent.addView(bar,0);
+}

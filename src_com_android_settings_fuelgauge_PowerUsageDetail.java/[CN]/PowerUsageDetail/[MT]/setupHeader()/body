@@ -1,0 +1,25 @@
+{
+  final Bundle args=getArguments();
+  String title=args.getString(EXTRA_TITLE);
+  String iconPackage=args.getString(EXTRA_ICON_PACKAGE);
+  int iconId=args.getInt(EXTRA_ICON_ID,0);
+  Drawable appIcon=null;
+  if (!TextUtils.isEmpty(iconPackage)) {
+    try {
+      final PackageManager pm=getActivity().getPackageManager();
+      ApplicationInfo ai=pm.getPackageInfo(iconPackage,0).applicationInfo;
+      if (ai != null) {
+        appIcon=ai.loadIcon(pm);
+      }
+    }
+ catch (    NameNotFoundException nnfe) {
+    }
+  }
+ else   if (iconId != 0) {
+    appIcon=getActivity().getDrawable(iconId);
+  }
+  if (appIcon == null) {
+    appIcon=getActivity().getPackageManager().getDefaultActivityIcon();
+  }
+  AppHeader.createAppHeader(getActivity(),appIcon,title,null,mDrainType != DrainType.APP ? android.R.color.white : 0);
+}

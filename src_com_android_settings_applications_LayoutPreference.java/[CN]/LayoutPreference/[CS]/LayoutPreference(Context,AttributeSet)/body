@@ -7,7 +7,9 @@
   }
   final View view=LayoutInflater.from(getContext()).inflate(layoutResource,null,false);
   final ViewGroup allDetails=(ViewGroup)view.findViewById(R.id.all_details);
-  Utils.forceCustomPadding(allDetails,true);
+  if (allDetails != null) {
+    Utils.forceCustomPadding(allDetails,true);
+  }
   mRootView=view;
   setShouldDisableView(false);
 }

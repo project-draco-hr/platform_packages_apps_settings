@@ -1,5 +1,8 @@
 {
   super.onBindView(view);
+  if (mStats == null) {
+    return;
+  }
   BatteryHistoryChart chart=(BatteryHistoryChart)view.findViewById(R.id.battery_history_chart);
   if (mChart == null) {
     chart.setStats(mStats,mBatteryBroadcast);
@@ -14,6 +17,4 @@
     }
     parent.addView(mChart,index);
   }
-  mLabelHeader=view.findViewById(R.id.labelsHeader);
-  mLabelHeader.setVisibility(mHideLabels ? View.GONE : View.VISIBLE);
 }

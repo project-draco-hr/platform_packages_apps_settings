@@ -1,0 +1,9 @@
+{
+  try {
+    mDeviceIdleService.addPowerSaveWhitelistApp(pkg);
+    mWhitelistedApps.add(pkg);
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"Unable to reach IDeviceIdleController",e);
+  }
+}

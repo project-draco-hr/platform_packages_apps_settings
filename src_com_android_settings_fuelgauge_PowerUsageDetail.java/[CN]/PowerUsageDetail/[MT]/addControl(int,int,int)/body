@@ -1,12 +1,13 @@
 {
-  final Resources res=getResources();
-  LayoutInflater inflater=getActivity().getLayoutInflater();
-  ViewGroup item=(ViewGroup)inflater.inflate(R.layout.power_usage_action_item,null);
-  mControlsParent.addView(item);
-  Button actionButton=(Button)item.findViewById(R.id.action_button);
-  TextView summaryView=(TextView)item.findViewById(R.id.summary);
-  actionButton.setText(res.getString(title));
-  summaryView.setText(res.getString(summary));
-  actionButton.setOnClickListener(this);
-  actionButton.setTag(new Integer(action));
+  Preference pref=new Preference(getActivity());
+  pref.setTitle(actionTitle);
+  pref.setSummary(pageSummary);
+  pref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      doAction(action);
+      return true;
+    }
+  }
+);
+  mControlsParent.addPreference(pref);
 }

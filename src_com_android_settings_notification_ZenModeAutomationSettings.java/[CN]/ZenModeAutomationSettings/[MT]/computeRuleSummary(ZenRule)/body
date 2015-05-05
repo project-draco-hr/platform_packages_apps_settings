@@ -1,6 +1,6 @@
 {
   if (rule == null || !rule.enabled)   return getString(R.string.switch_off_text);
-  final String mode=ZenModeSettings.computeZenModeCaption(getResources(),rule.zenMode);
+  final String mode=computeZenModeCaption(getResources(),rule.zenMode);
   String summary=getString(R.string.switch_on_text);
   final ScheduleInfo schedule=ZenModeConfig.tryParseScheduleConditionId(rule.conditionId);
   final EventInfo event=ZenModeConfig.tryParseEventConditionId(rule.conditionId);

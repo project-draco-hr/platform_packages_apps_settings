@@ -21,6 +21,9 @@
  else   if (mRequestType == BluetoothDevice.REQUEST_TYPE_MESSAGE_ACCESS) {
     showDialog(getString(R.string.bluetooth_map_request),mRequestType);
   }
+ else   if (mRequestType == BluetoothDevice.REQUEST_TYPE_SIM_ACCESS) {
+    showDialog(getString(R.string.bluetooth_sap_request),mRequestType);
+  }
  else {
     Log.e(TAG,"Error: bad request type: " + mRequestType);
     finish();

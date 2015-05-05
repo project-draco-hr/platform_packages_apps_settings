@@ -1,0 +1,19 @@
+{
+  mPasswordEntry.setEnabled(false);
+  setNextEnabled(false);
+  if (mPendingLockCheck != null) {
+    mPendingLockCheck.cancel(false);
+  }
+  mPendingLockCheck=LockPatternChecker.verifyPassword(mLockPatternUtils,pin,mChallenge,UserHandle.myUserId(),new LockPatternChecker.OnVerifyCallback(){
+    @Override public void onVerified(    byte[] token){
+      mPasswordEntry.setEnabled(true);
+      setNextEnabled(true);
+      mPendingLockCheck=null;
+      Intent intent=new Intent();
+      intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
+      getActivity().setResult(RESULT_FINISHED,intent);
+      finishConfirmStage(wasSecureBefore);
+    }
+  }
+);
+}

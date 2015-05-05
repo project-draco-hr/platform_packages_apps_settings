@@ -1,10 +1,12 @@
 {
 switch (event.reply) {
 case EventInfo.REPLY_ANY_EXCEPT_NO:
-    return R.string.zen_mode_event_rule_summary_any_reply_except_no;
+    return R.string.zen_mode_event_rule_reply_any_except_no;
 case EventInfo.REPLY_YES:
-  return R.string.zen_mode_event_rule_summary_replied_yes;
+  return R.string.zen_mode_event_rule_reply_yes;
+case EventInfo.REPLY_YES_OR_MAYBE:
+return R.string.zen_mode_event_rule_reply_yes_or_maybe;
 default :
-return R.string.zen_mode_event_rule_summary_any_reply;
+throw new IllegalArgumentException("Bad reply: " + event.reply);
 }
 }

@@ -1,12 +1,5 @@
 {
-  CharSequence vpnName;
-  try {
-    vpnName=VpnConfig.getVpnLabel(getContext(),mPkgInfo.packageName);
-  }
- catch (  PackageManager.NameNotFoundException ex) {
-    vpnName=mPkgInfo.packageName;
-  }
-  setTitle(vpnName);
+  setTitle(mLabel);
   setMessage(getContext().getString(R.string.vpn_version,mPkgInfo.versionName));
   createButtons();
   super.onCreate(savedState);

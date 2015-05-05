@@ -4,19 +4,22 @@
   mName=mPackageName;
   Drawable icon=null;
   try {
-    int userId=UserHandle.getUserId(mUid);
-    Context userContext=getContext().createPackageContextAsUser(getContext().getPackageName(),0,new UserHandle(userId));
+    Context userContext=getUserContext();
     PackageManager pm=userContext.getPackageManager();
-    PackageInfo pkgInfo=pm.getPackageInfo(mPackageName,0);
-    if (pkgInfo != null) {
-      icon=pkgInfo.applicationInfo.loadIcon(pm);
-      mName=VpnConfig.getVpnLabel(userContext,mPackageName).toString();
+    try {
+      PackageInfo pkgInfo=pm.getPackageInfo(mPackageName,0);
+      if (pkgInfo != null) {
+        icon=pkgInfo.applicationInfo.loadIcon(pm);
+        mName=VpnConfig.getVpnLabel(userContext,mPackageName).toString();
+      }
+    }
+ catch (    PackageManager.NameNotFoundException pkgNotFound) {
+    }
+    if (icon == null) {
+      icon=pm.getDefaultActivityIcon();
     }
   }
- catch (  PackageManager.NameNotFoundException nnfe) {
-  }
-  if (icon == null) {
-    icon=getContext().getPackageManager().getDefaultActivityIcon();
+ catch (  PackageManager.NameNotFoundException userNotFound) {
   }
   setTitle(mName);
   setIcon(icon);

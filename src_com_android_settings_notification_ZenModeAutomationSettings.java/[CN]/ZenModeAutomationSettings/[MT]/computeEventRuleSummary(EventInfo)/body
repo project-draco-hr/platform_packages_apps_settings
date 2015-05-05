@@ -1,6 +1,5 @@
 {
-  final String calendar=computeCalendarName(event);
-  final String attendance=getString(computeAttendance(event));
-  final String reply=getString(computeReply(event));
-  return getString(R.string.zen_mode_rule_summary_combination,getString(R.string.zen_mode_rule_summary_combination,calendar,attendance),reply);
+  final String calendar=getString(R.string.zen_mode_event_rule_summary_calendar_template,computeCalendarName(event));
+  final String reply=getString(R.string.zen_mode_event_rule_summary_reply_template,getString(computeReply(event)));
+  return getString(R.string.zen_mode_rule_summary_combination,calendar,reply);
 }

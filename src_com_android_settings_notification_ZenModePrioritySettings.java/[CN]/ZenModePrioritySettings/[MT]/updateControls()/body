@@ -1,14 +1,12 @@
 {
   mDisableListeners=true;
   if (mCalls != null) {
-    mCalls.setChecked(mConfig.allowCalls);
+    mCalls.setSelectedValue(mConfig.allowCalls ? mConfig.allowCallsFrom : SOURCE_NONE);
   }
-  mMessages.setChecked(mConfig.allowMessages);
-  mStarred.setSelectedValue(mConfig.allowFrom);
-  mStarred.setEnabled(mConfig.allowCalls || mConfig.allowMessages);
+  mMessages.setSelectedValue(mConfig.allowMessages ? mConfig.allowMessagesFrom : SOURCE_NONE);
   mReminders.setChecked(mConfig.allowReminders);
   mEvents.setChecked(mConfig.allowEvents);
   mRepeatCallers.setChecked(mConfig.allowRepeatCallers);
-  mRepeatCallers.setEnabled(!mConfig.allowCalls || mConfig.allowFrom != ZenModeConfig.SOURCE_ANYONE);
+  mRepeatCallers.setEnabled(!mConfig.allowCalls || mConfig.allowCallsFrom != ZenModeConfig.SOURCE_ANYONE);
   mDisableListeners=false;
 }

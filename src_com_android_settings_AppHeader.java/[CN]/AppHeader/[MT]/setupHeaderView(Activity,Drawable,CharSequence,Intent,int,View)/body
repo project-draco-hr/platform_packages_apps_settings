@@ -1,7 +1,4 @@
 {
-  final View content=activity.findViewById(R.id.main_content);
-  final ViewGroup contentParent=(ViewGroup)content.getParent();
-  final View bar=activity.getLayoutInflater().inflate(R.layout.app_header,contentParent,false);
   final ImageView appIcon=(ImageView)bar.findViewById(R.id.app_icon);
   appIcon.setImageDrawable(icon);
   if (tintColorRes != 0) {
@@ -22,5 +19,5 @@
     }
 );
   }
-  contentParent.addView(bar,0);
+  return bar;
 }

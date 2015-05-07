@@ -1,3 +1,10 @@
 {
-  return mMemState;
+  int factor=mStats.mMemFactor;
+  if (factor == ProcessStats.ADJ_NOTHING) {
+    return ProcessStats.ADJ_MEM_FACTOR_NORMAL;
+  }
+  if (factor >= ProcessStats.ADJ_SCREEN_ON) {
+    factor-=ProcessStats.ADJ_SCREEN_ON;
+  }
+  return factor;
 }

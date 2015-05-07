@@ -1,0 +1,17 @@
+{
+  String processName=entry.mName;
+  if (processName.contains(":")) {
+    return capitalize(processName.substring(processName.lastIndexOf(':') + 1));
+  }
+  if (processName.startsWith(entry.mPackage)) {
+    if (processName.length() == entry.mPackage.length()) {
+      return appLabel;
+    }
+    int start=entry.mPackage.length();
+    if (processName.charAt(start) == '.') {
+      start++;
+    }
+    return capitalize(processName.substring(start));
+  }
+  return processName;
+}

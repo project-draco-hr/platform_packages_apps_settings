@@ -9,7 +9,12 @@
       if (sld != null) {
         sld.setState((mAccessPoint.getSecurity() != AccessPoint.SECURITY_NONE) ? STATE_SECURED : STATE_NONE);
         drawable=sld.getCurrent();
-        setIcon(drawable);
+        if (!mForSavedNetworks) {
+          setIcon(drawable);
+        }
+ else {
+          setIcon(null);
+        }
       }
     }
     if (drawable != null) {

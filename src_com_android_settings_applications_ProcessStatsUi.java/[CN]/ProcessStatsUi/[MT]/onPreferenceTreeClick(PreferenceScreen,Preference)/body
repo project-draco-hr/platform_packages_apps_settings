@@ -8,7 +8,7 @@
   args.putBoolean(ProcessStatsDetail.EXTRA_USE_USS,mUseUss);
   args.putDouble(ProcessStatsDetail.EXTRA_WEIGHT_TO_RAM,mStatsManager.getMemInfo().weightToRam);
   args.putLong(ProcessStatsDetail.EXTRA_TOTAL_TIME,memTotalTime);
-  args.putFloat(ProcessStatsDetail.EXTRA_MAX_MEMORY_USAGE,mMaxMemoryUsage);
+  args.putDouble(ProcessStatsDetail.EXTRA_MAX_MEMORY_USAGE,mMaxMemoryUsage);
   args.putDouble(ProcessStatsDetail.EXTRA_TOTAL_SCALE,mStatsManager.getMemInfo().totalScale);
   ((SettingsActivity)getActivity()).startPreferencePanel(ProcessStatsDetail.class.getName(),args,R.string.details_title,null,null,0);
   return super.onPreferenceTreeClick(preferenceScreen,preference);

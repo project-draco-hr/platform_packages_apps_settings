@@ -41,7 +41,7 @@
   for (int i=0, N=pkgEntries.size(); i < N; i++) {
     ProcStatsPackageEntry pkg=pkgEntries.get(i);
     pkg.updateMetrics();
-    float maxMem=Math.max(pkg.mMaxBgMem,pkg.mMaxRunMem);
+    double maxMem=Math.max(pkg.mMaxBgMem,pkg.mMaxRunMem) * 1024 * memInfo.totalScale;
     if (maxMem > mMaxMemoryUsage) {
       mMaxMemoryUsage=maxMem;
     }
@@ -62,7 +62,7 @@
     ProcStatsPackageEntry pkg=pkgEntries.get(i);
     ProcessStatsPreference pref=new ProcessStatsPreference(context);
     pkg.retrieveUiData(context,mPm);
-    pref.init(pkg,mPm,mMaxMemoryUsage);
+    pref.init(pkg,mPm,mMaxMemoryUsage,memInfo.weightToRam,memInfo.totalScale);
     pref.setOrder(i);
     mAppListGroup.addPreference(pref);
     if (mAppListGroup.getPreferenceCount() > (MAX_ITEMS_TO_LIST + 1)) {

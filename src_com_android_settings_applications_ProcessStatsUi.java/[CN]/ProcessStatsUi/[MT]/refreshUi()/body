@@ -5,30 +5,36 @@
   mHeader.setOrder(-1);
   mAppListGroup.addPreference(mHeader);
   final long elapsedTime=mStatsManager.getElapsedTime();
-  memTotalTime=mTotalTime;
   final Context context=getActivity();
-  mColors.setColors(context.getColor(R.color.running_processes_apps_ram),context.getColor(R.color.running_processes_apps_ram),context.getColor(R.color.running_processes_free_ram));
   MemInfo memInfo=mStatsManager.getMemInfo();
+  memTotalTime=memInfo.memTotalTime;
+  double usedRam=memInfo.realUsedRam;
+  double totalRam=memInfo.realTotalRam;
+  double freeRam=memInfo.realFreeRam;
   String durationString=Utils.formatElapsedTime(context,elapsedTime,false);
-  String usedString=Formatter.formatShortFileSize(context,(long)memInfo.realUsedRam);
-  String totalString=Formatter.formatShortFileSize(context,(long)memInfo.realTotalRam);
+  String usedString=Formatter.formatShortFileSize(context,(long)usedRam);
+  String totalString=Formatter.formatShortFileSize(context,(long)totalRam);
   CharSequence memString;
   CharSequence[] memStatesStr=getResources().getTextArray(R.array.ram_states);
   int memState=mStatsManager.getMemState();
+  int memColor;
   if (memState >= 0 && memState < memStatesStr.length) {
     memString=memStatesStr[memState];
+    memColor=getResources().getIntArray(R.array.ram_colors)[memState];
   }
  else {
     memString="?";
+    memColor=context.getColor(R.color.running_processes_apps_ram);
   }
+  mColors.setColors(memColor,memColor,context.getColor(R.color.running_processes_free_ram));
   if (mShowPercentage) {
-    mMemUsed.setText(context.getString(R.string.process_stats_total_duration_percentage,Utils.formatPercentage((long)memInfo.realUsedRam,(long)memInfo.realTotalRam),durationString));
+    mMemUsed.setText(context.getString(R.string.process_stats_total_duration_percentage,Utils.formatPercentage((long)usedRam,(long)totalRam),durationString));
   }
  else {
     mMemUsed.setText(context.getString(R.string.process_stats_total_duration,usedString,totalString,durationString));
   }
-  mMemStatus.setText(context.getString(R.string.process_stats_memory_status,memString));
-  float usedRatio=(float)(memInfo.realUsedRam / (memInfo.realFreeRam + memInfo.realUsedRam));
+  mMemStatus.setText(memString);
+  float usedRatio=(float)(usedRam / (freeRam + usedRam));
   mColors.setRatios(usedRatio,0,1 - usedRatio);
   List<ProcStatsPackageEntry> pkgEntries=mStatsManager.getEntries();
   mMaxMemoryUsage=0;

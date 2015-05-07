@@ -1,6 +1,5 @@
 {
-  final int id=item.getItemId();
-switch (id) {
+switch (item.getItemId()) {
 case MENU_STATS_REFRESH:
     mStatsManager.refreshStats(false);
   refreshUi();
@@ -32,11 +31,19 @@ mStatsManager.setStats(mShowSystem ? BACKGROUND_AND_SYSTEM_PROC_STATES : Process
 }
 refreshUi();
 return true;
-default :
-if (id >= MENU_DURATION && id < (MENU_DURATION + NUM_DURATIONS)) {
-mStatsManager.setDuration(sDurations[id - MENU_DURATION]);
+case MENU_DURATION:
+CharSequence[] durations=new CharSequence[sDurationLabels.length];
+for (int i=0; i < sDurationLabels.length; i++) {
+durations[i]=getString(sDurationLabels[i]);
+}
+new AlertDialog.Builder(getContext()).setTitle(item.getTitle()).setItems(durations,new DialogInterface.OnClickListener(){
+@Override public void onClick(DialogInterface dialog,int which){
+mStatsManager.setDuration(sDurations[which]);
 refreshUi();
 }
-return false;
 }
+).show();
+return true;
+}
+return false;
 }

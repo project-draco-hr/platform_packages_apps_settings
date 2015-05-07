@@ -6,12 +6,7 @@
       entry.mLabel=entry.mName;
     }
  else {
-      if (mApp.mEntries.size() > 1) {
-        entry.mLabel=getString(R.string.process_format,(ie + 1));
-      }
- else {
-        entry.mLabel=getString(R.string.process);
-      }
+      entry.mLabel=getProcessName(mApp.mUiLabel,entry);
     }
     entries.add(entry);
   }
@@ -21,9 +16,10 @@
     PreferenceCategory processPref=new PreferenceCategory(getActivity());
     processPref.setLayoutResource(R.layout.process_preference_category);
     processPref.setTitle(entry.mLabel);
+    long duration=Math.max(entry.mRunDuration,entry.mBgDuration);
     long memoryUse=Math.max((long)(entry.mRunWeight * mWeightToRam),(long)(entry.mBgWeight * mWeightToRam));
     String memoryString=Formatter.formatShortFileSize(getActivity(),memoryUse);
-    CharSequence frequency=ProcStatsPackageEntry.getFrequency(entry.mRunDuration / (float)mTotalTime,getActivity());
+    CharSequence frequency=ProcStatsPackageEntry.getFrequency(duration / (float)mTotalTime,getActivity());
     processPref.setSummary(getString(R.string.memory_use_running_format,memoryString,frequency));
     getPreferenceScreen().addPreference(processPref);
     fillServicesSection(entry,processPref);

@@ -1,0 +1,16 @@
+{
+  mAdapter.clear();
+  final ArraySet<String> requesting=mNoMan.getPackagesRequestingNotificationPolicyAccess();
+  if (requesting != null && !requesting.isEmpty()) {
+    final List<ApplicationInfo> apps=mPkgMan.getInstalledApplications(0);
+    if (apps != null) {
+      for (      ApplicationInfo app : apps) {
+        if (requesting.contains(app.packageName)) {
+          mAdapter.add(app);
+        }
+      }
+    }
+  }
+  mAdapter.sort(new PackageItemInfo.DisplayNameComparator(mPkgMan));
+  getListView().setAdapter(mAdapter);
+}

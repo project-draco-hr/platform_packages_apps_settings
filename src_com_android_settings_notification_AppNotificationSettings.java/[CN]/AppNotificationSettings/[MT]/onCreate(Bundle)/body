@@ -80,4 +80,16 @@
     }
   }
 );
+  if (mAppRow.settingsIntent != null) {
+    findPreference(KEY_APP_SETTINGS).setOnPreferenceClickListener(new OnPreferenceClickListener(){
+      @Override public boolean onPreferenceClick(      Preference preference){
+        mContext.startActivity(mAppRow.settingsIntent);
+        return true;
+      }
+    }
+);
+  }
+ else {
+    removePreference(KEY_APP_SETTINGS);
+  }
 }

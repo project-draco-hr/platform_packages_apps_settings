@@ -1,0 +1,14 @@
+{
+  ViewHolder vh=(ViewHolder)view.getTag();
+  ApplicationInfo info=getItem(position);
+  vh.icon.setImageDrawable(info.loadIcon(mPkgMan));
+  vh.name.setText(info.loadLabel(mPkgMan));
+  if (SHOW_PACKAGE_NAME) {
+    vh.description.setText(info.packageName);
+    vh.description.setVisibility(View.VISIBLE);
+  }
+ else {
+    vh.description.setVisibility(View.GONE);
+  }
+  vh.checkbox.setChecked(hasAccess(info.packageName));
+}

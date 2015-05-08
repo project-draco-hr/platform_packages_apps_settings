@@ -1,0 +1,6 @@
+{
+  final ApplicationInfo info=mAdapter.getItem(position);
+  final boolean hasAccess=hasAccess(info.packageName);
+  setAccess(info.packageName,!hasAccess);
+  mAdapter.notifyDataSetChanged();
+}

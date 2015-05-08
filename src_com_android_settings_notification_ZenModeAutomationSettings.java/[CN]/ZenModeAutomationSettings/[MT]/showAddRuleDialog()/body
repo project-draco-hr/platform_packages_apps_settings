@@ -1,6 +1,7 @@
 {
   new ZenRuleNameDialog(mContext,mServiceListing,null,mConfig.getAutomaticRuleNames()){
     @Override public void onOk(    String ruleName,    RuleInfo ri){
+      MetricsLogger.action(mContext,MetricsLogger.ACTION_ZEN_ADD_RULE_OK);
       final ZenRule rule=new ZenRule();
       rule.name=ruleName;
       rule.enabled=true;

@@ -29,6 +29,7 @@
   p.setPersistent(false);
   p.setOnPreferenceClickListener(new OnPreferenceClickListener(){
     @Override public boolean onPreferenceClick(    Preference preference){
+      MetricsLogger.action(mContext,MetricsLogger.ACTION_ZEN_ADD_RULE);
       showAddRuleDialog();
       return true;
     }

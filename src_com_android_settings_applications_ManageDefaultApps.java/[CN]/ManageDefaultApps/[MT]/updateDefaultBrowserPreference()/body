@@ -1,5 +1,5 @@
 {
-  super.onViewCreated(view,savedInstanceState);
+  mDefaultBrowserPreference.refreshBrowserApps();
   final PackageManager pm=getPackageManager();
   String packageName=pm.getDefaultBrowserPackageName(UserHandle.myUserId());
   if (!TextUtils.isEmpty(packageName)) {
@@ -15,15 +15,11 @@
       mDefaultBrowserPreference.setSummary(label);
     }
  else {
-      CharSequence[] values=mDefaultBrowserPreference.getEntryValues();
-      if (values.length > 0) {
-        mDefaultBrowserPreference.setValueIndex(0);
-      }
- else {
-      }
+      mDefaultBrowserPreference.setSummary(R.string.default_browser_title_none);
     }
   }
  else {
+    mDefaultBrowserPreference.setSummary(R.string.default_browser_title_none);
     Log.d(TAG,"Cannot set empty default Browser value!");
   }
 }

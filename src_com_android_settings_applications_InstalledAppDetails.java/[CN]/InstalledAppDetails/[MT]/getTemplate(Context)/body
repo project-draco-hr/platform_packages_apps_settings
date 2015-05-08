@@ -1,0 +1,9 @@
+{
+  if (DataUsageSummary.hasReadyMobileRadio(context)) {
+    return NetworkTemplate.buildTemplateMobileWildcard();
+  }
+  if (DataUsageSummary.hasWifiRadio(context)) {
+    return NetworkTemplate.buildTemplateWifiWildcard();
+  }
+  return NetworkTemplate.buildTemplateEthernet();
+}

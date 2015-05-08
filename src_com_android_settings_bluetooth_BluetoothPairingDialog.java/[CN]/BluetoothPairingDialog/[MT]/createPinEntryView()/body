@@ -1,6 +1,7 @@
 {
   View view=getLayoutInflater().inflate(R.layout.bluetooth_pin_entry,null);
   TextView messageViewCaption=(TextView)view.findViewById(R.id.message_caption);
+  TextView messageViewCaptionHint=(TextView)view.findViewById(R.id.pin_values_hint);
   TextView messageViewContent=(TextView)view.findViewById(R.id.message_subhead);
   TextView messageView2=(TextView)view.findViewById(R.id.message_below_pin);
   CheckBox alphanumericPin=(CheckBox)view.findViewById(R.id.alphanumeric_pin);
@@ -9,11 +10,14 @@
   alphanumericPin.setOnCheckedChangeListener(this);
   int messageId1;
   int messageId2;
+  int messageIdHint=R.string.bluetooth_pin_values_hint;
   int maxLength;
 switch (mType) {
+case BluetoothDevice.PAIRING_VARIANT_PIN_16_DIGITS:
+    messageIdHint=R.string.bluetooth_pin_values_hint_16_digits;
 case BluetoothDevice.PAIRING_VARIANT_PIN:
-    messageId1=R.string.bluetooth_enter_pin_msg;
-  messageId2=R.string.bluetooth_enter_pin_other_device;
+  messageId1=R.string.bluetooth_enter_pin_msg;
+messageId2=R.string.bluetooth_enter_pin_other_device;
 maxLength=BLUETOOTH_PIN_MAX_LENGTH;
 break;
 case BluetoothDevice.PAIRING_VARIANT_PASSKEY:
@@ -27,6 +31,7 @@ Log.e(TAG,"Incorrect pairing type for createPinEntryView: " + mType);
 return null;
 }
 messageViewCaption.setText(messageId1);
+messageViewCaptionHint.setText(messageIdHint);
 messageViewContent.setText(mCachedDeviceManager.getName(mDevice));
 messageView2.setText(messageId2);
 mPairingView.setInputType(InputType.TYPE_CLASS_NUMBER);

@@ -1,5 +1,10 @@
 {
   if (mOkButton != null) {
-    mOkButton.setEnabled(s.length() > 0);
+    if (mType == BluetoothDevice.PAIRING_VARIANT_PIN_16_DIGITS) {
+      mOkButton.setEnabled(s.length() >= 16);
+    }
+ else {
+      mOkButton.setEnabled(s.length() > 0);
+    }
   }
 }

@@ -1,9 +1,6 @@
 {
-  final SetupWizardLayout layout=(SetupWizardLayout)inflater.inflate(R.layout.setup_choose_lock_password,container,false);
-  SystemBarHelper.setImeInsetView(layout.findViewById(R.id.suw_bottom_scroll_view));
-  mNavigationBar=layout.getNavigationBar();
+  mLayout=(SetupWizardLayout)inflater.inflate(R.layout.setup_choose_lock_password,container,false);
+  mNavigationBar=mLayout.getNavigationBar();
   mNavigationBar.setNavigationBarListener(this);
-  layout.setHeaderText(getActivity().getTitle());
-  SetupWizardUtils.setImmersiveMode(getActivity());
-  return layout;
+  return mLayout;
 }

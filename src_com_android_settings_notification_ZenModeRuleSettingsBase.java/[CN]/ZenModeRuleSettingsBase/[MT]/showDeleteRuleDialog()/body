@@ -1,6 +1,7 @@
 {
   new AlertDialog.Builder(mContext).setMessage(getString(R.string.zen_mode_delete_rule_confirmation,mRule.name)).setNegativeButton(R.string.cancel,null).setPositiveButton(R.string.zen_mode_delete_rule_button,new OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
+      MetricsLogger.action(mContext,MetricsLogger.ACTION_ZEN_DELETE_RULE_OK);
       mDeleting=true;
       mConfig.automaticRules.remove(mRuleId);
       setZenModeConfig(mConfig);

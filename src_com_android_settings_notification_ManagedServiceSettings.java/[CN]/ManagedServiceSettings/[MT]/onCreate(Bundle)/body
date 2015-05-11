@@ -1,12 +1,13 @@
 {
   super.onCreate(icicle);
-  mPM=getActivity().getPackageManager();
-  mServiceListing=new ServiceListing(getActivity(),mConfig);
+  mContext=getActivity();
+  mPM=mContext.getPackageManager();
+  mServiceListing=new ServiceListing(mContext,mConfig);
   mServiceListing.addCallback(new ServiceListing.Callback(){
     @Override public void onServicesReloaded(    List<ServiceInfo> services){
       updateList(services);
     }
   }
 );
-  mListAdapter=new ServiceListAdapter(getActivity());
+  setPreferenceScreen(getPreferenceManager().createPreferenceScreen(mContext));
 }

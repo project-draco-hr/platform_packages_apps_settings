@@ -1,0 +1,13 @@
+{
+  if (!enable) {
+    mServiceListing.setEnabled(service,false);
+    return true;
+  }
+ else {
+    if (mServiceListing.isEnabled(service)) {
+      return true;
+    }
+    new ScaryWarningDialogFragment().setServiceInfo(service,title).show(getFragmentManager(),"dialog");
+    return false;
+  }
+}

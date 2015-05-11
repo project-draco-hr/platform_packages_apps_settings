@@ -1,16 +1,40 @@
 {
-  mAdapter.clear();
+  final PreferenceScreen screen=getPreferenceScreen();
+  screen.removeAll();
+  final ArrayList<ApplicationInfo> apps=new ArrayList<>();
   final ArraySet<String> requesting=mNoMan.getPackagesRequestingNotificationPolicyAccess();
   if (requesting != null && !requesting.isEmpty()) {
-    final List<ApplicationInfo> apps=mPkgMan.getInstalledApplications(0);
-    if (apps != null) {
-      for (      ApplicationInfo app : apps) {
+    final List<ApplicationInfo> installed=mPkgMan.getInstalledApplications(0);
+    if (installed != null) {
+      for (      ApplicationInfo app : installed) {
         if (requesting.contains(app.packageName)) {
-          mAdapter.add(app);
+          apps.add(app);
         }
       }
     }
   }
-  mAdapter.sort(new PackageItemInfo.DisplayNameComparator(mPkgMan));
-  getListView().setAdapter(mAdapter);
+  Collections.sort(apps,new PackageItemInfo.DisplayNameComparator(mPkgMan));
+  for (  ApplicationInfo app : apps) {
+    final String pkg=app.packageName;
+    final SwitchPreference pref=new SwitchPreference(mContext);
+    pref.setPersistent(false);
+    pref.setIcon(app.loadIcon(mPkgMan));
+    pref.setTitle(app.packageName);
+    pref.setChecked(hasAccess(pkg));
+    pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        final boolean access=(Boolean)newValue;
+        AsyncTask.execute(new Runnable(){
+          @Override public void run(){
+            setAccess(pkg,access);
+          }
+        }
+);
+        return true;
+      }
+    }
+);
+    screen.addPreference(pref);
+  }
+  mEmpty.setVisibility(apps.isEmpty() ? View.VISIBLE : View.GONE);
 }

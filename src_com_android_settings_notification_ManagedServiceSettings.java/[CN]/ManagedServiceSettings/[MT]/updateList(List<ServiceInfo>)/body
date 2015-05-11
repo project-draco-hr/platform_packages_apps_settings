@@ -1,6 +1,23 @@
 {
-  mListAdapter.clear();
-  mListAdapter.addAll(services);
-  mListAdapter.sort(new PackageItemInfo.DisplayNameComparator(mPM));
-  getListView().setAdapter(mListAdapter);
+  final PreferenceScreen screen=getPreferenceScreen();
+  screen.removeAll();
+  Collections.sort(services,new PackageItemInfo.DisplayNameComparator(mPM));
+  for (  ServiceInfo service : services) {
+    final ComponentName cn=new ComponentName(service.packageName,service.name);
+    final String title=service.loadLabel(mPM).toString();
+    final SwitchPreference pref=new SwitchPreference(mContext);
+    pref.setPersistent(false);
+    pref.setIcon(service.loadIcon(mPM));
+    pref.setTitle(title);
+    pref.setChecked(mServiceListing.isEnabled(cn));
+    pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        final boolean enable=(boolean)newValue;
+        return setEnabled(cn,title,enable);
+      }
+    }
+);
+    screen.addPreference(pref);
+  }
+  mEmpty.setVisibility(services.isEmpty() ? View.VISIBLE : View.GONE);
 }

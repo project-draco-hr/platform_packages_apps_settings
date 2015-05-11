@@ -1,5 +1,23 @@
 {
-  setContentView(R.layout.voice_interaction);
-  pickNotificationMode(intent);
-  return false;
+  if (intent.hasExtra(EXTRA_DO_NOT_DISTURB_MODE_ENABLED)) {
+    int minutes=intent.getIntExtra(EXTRA_DO_NOT_DISTURB_MODE_MINUTES,-1);
+    Condition condition=null;
+    int mode=Global.ZEN_MODE_OFF;
+    if (intent.getBooleanExtra(EXTRA_DO_NOT_DISTURB_MODE_ENABLED,false)) {
+      if (minutes > 0) {
+        condition=ZenModeConfig.toTimeCondition(this,minutes,UserHandle.myUserId());
+      }
+      mode=Global.ZEN_MODE_ALARMS;
+    }
+    setZenModeConfig(mode,condition);
+    notifySuccess(getChangeSummary(mode,minutes));
+    AudioManager audioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+    if (audioManager != null) {
+      audioManager.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION,AudioManager.ADJUST_SAME,AudioManager.FLAG_SHOW_UI);
+    }
+  }
+ else {
+    Log.v(TAG,"Missing extra android.provider.Settings.EXTRA_DO_NOT_DISTURB_MODE_ENABLED");
+  }
+  return true;
 }

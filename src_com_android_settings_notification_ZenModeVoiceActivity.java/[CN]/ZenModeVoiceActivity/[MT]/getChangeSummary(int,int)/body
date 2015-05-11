@@ -1,0 +1,31 @@
+{
+  int indefinite=-1;
+  int byMinute=-1;
+  int byHour=-1;
+switch (mode) {
+case Global.ZEN_MODE_ALARMS:
+    indefinite=R.string.zen_mode_summary_alarams_only_indefinite;
+  byMinute=R.plurals.zen_mode_summary_alarms_only_by_minute;
+byHour=R.plurals.zen_mode_summary_alarms_only_by_hour;
+break;
+case Global.ZEN_MODE_OFF:
+indefinite=R.string.zen_mode_summary_always;
+break;
+}
+;
+if (minutes < 0 || mode == Global.ZEN_MODE_OFF) {
+return getString(indefinite);
+}
+long time=System.currentTimeMillis() + minutes * MINUTES_MS;
+String skeleton=DateFormat.is24HourFormat(this,UserHandle.myUserId()) ? "Hm" : "hma";
+String pattern=DateFormat.getBestDateTimePattern(Locale.getDefault(),skeleton);
+CharSequence formattedTime=DateFormat.format(pattern,time);
+Resources res=getResources();
+if (minutes < 60) {
+return res.getQuantityString(byMinute,minutes,minutes,formattedTime);
+}
+ else {
+int hours=minutes / 60;
+return res.getQuantityString(byHour,hours,hours,formattedTime);
+}
+}

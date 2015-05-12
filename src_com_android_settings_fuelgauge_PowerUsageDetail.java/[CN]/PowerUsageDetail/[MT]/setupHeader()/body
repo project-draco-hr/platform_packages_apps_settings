@@ -1,13 +1,13 @@
 {
   final Bundle args=getArguments();
   String title=args.getString(EXTRA_TITLE);
-  String iconPackage=args.getString(EXTRA_ICON_PACKAGE);
+  String pkg=args.getString(EXTRA_ICON_PACKAGE);
   int iconId=args.getInt(EXTRA_ICON_ID,0);
   Drawable appIcon=null;
-  if (!TextUtils.isEmpty(iconPackage)) {
+  if (!TextUtils.isEmpty(pkg)) {
     try {
       final PackageManager pm=getActivity().getPackageManager();
-      ApplicationInfo ai=pm.getPackageInfo(iconPackage,0).applicationInfo;
+      ApplicationInfo ai=pm.getPackageInfo(pkg,0).applicationInfo;
       if (ai != null) {
         appIcon=ai.loadIcon(pm);
       }
@@ -21,5 +21,8 @@
   if (appIcon == null) {
     appIcon=getActivity().getPackageManager().getDefaultActivityIcon();
   }
-  AppHeader.createAppHeader(this,appIcon,title,AppInfoWithHeader.getInfoIntent(this,iconPackage),mDrainType != DrainType.APP ? android.R.color.white : 0);
+  if (pkg == null && mPackages != null) {
+    pkg=mPackages[0];
+  }
+  AppHeader.createAppHeader(this,appIcon,title,pkg != null ? AppInfoWithHeader.getInfoIntent(this,pkg) : null,mDrainType != DrainType.APP ? android.R.color.white : 0);
 }

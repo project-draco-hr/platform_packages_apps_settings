@@ -2,10 +2,10 @@
   if (mAppEntry.size == ApplicationsState.SIZE_INVALID || mAppEntry.size == ApplicationsState.SIZE_UNKNOWN) {
     mLastCodeSize=mLastDataSize=mLastCacheSize=mLastTotalSize=-1;
     if (!mHaveSizes) {
-      mAppSize.setText(mComputingStr);
-      mDataSize.setText(mComputingStr);
-      mCacheSize.setText(mComputingStr);
-      mTotalSize.setText(mComputingStr);
+      mAppSize.setSummary(mComputingStr);
+      mDataSize.setSummary(mComputingStr);
+      mCacheSize.setSummary(mComputingStr);
+      mTotalSize.setSummary(mComputingStr);
     }
     mClearDataButton.setEnabled(false);
     mClearCacheButton.setEnabled(false);
@@ -21,29 +21,29 @@
  else {
       if (mLastExternalCodeSize != mAppEntry.externalCodeSize) {
         mLastExternalCodeSize=mAppEntry.externalCodeSize;
-        mExternalCodeSize.setText(getSizeStr(mAppEntry.externalCodeSize));
+        mExternalCodeSize.setSummary(getSizeStr(mAppEntry.externalCodeSize));
       }
       if (mLastExternalDataSize != mAppEntry.externalDataSize) {
         mLastExternalDataSize=mAppEntry.externalDataSize;
-        mExternalDataSize.setText(getSizeStr(mAppEntry.externalDataSize));
+        mExternalDataSize.setSummary(getSizeStr(mAppEntry.externalDataSize));
       }
     }
     if (mLastCodeSize != codeSize) {
       mLastCodeSize=codeSize;
-      mAppSize.setText(getSizeStr(codeSize));
+      mAppSize.setSummary(getSizeStr(codeSize));
     }
     if (mLastDataSize != dataSize) {
       mLastDataSize=dataSize;
-      mDataSize.setText(getSizeStr(dataSize));
+      mDataSize.setSummary(getSizeStr(dataSize));
     }
     long cacheSize=mAppEntry.cacheSize + mAppEntry.externalCacheSize;
     if (mLastCacheSize != cacheSize) {
       mLastCacheSize=cacheSize;
-      mCacheSize.setText(getSizeStr(cacheSize));
+      mCacheSize.setSummary(getSizeStr(cacheSize));
     }
     if (mLastTotalSize != mAppEntry.size) {
       mLastTotalSize=mAppEntry.size;
-      mTotalSize.setText(getSizeStr(mAppEntry.size));
+      mTotalSize.setSummary(getSizeStr(mAppEntry.size));
     }
     if ((mAppEntry.dataSize + mAppEntry.externalDataSize) <= 0 || !mCanClearData) {
       mClearDataButton.setEnabled(false);

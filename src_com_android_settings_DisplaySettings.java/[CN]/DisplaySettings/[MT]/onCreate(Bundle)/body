@@ -37,6 +37,13 @@
  else {
     removePreference(KEY_DOZE);
   }
+  if (isTapToWakeAvailable(getResources())) {
+    mTapToWakePreference=(SwitchPreference)findPreference(KEY_TAP_TO_WAKE);
+    mTapToWakePreference.setOnPreferenceChangeListener(this);
+  }
+ else {
+    removePreference(KEY_TAP_TO_WAKE);
+  }
   if (RotationPolicy.isRotationLockToggleVisible(activity)) {
     DropDownPreference rotatePreference=(DropDownPreference)findPreference(KEY_AUTO_ROTATE);
     rotatePreference.addItem(activity.getString(R.string.display_auto_rotate_rotate),false);

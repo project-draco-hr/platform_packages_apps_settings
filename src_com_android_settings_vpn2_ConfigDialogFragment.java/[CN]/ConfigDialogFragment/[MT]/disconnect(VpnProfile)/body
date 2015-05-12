@@ -2,7 +2,7 @@
   try {
     LegacyVpnInfo connected=mService.getLegacyVpnInfo();
     if (connected != null && profile.key.equals(connected.key)) {
-      mService.prepareVpn(VpnConfig.LEGACY_VPN,VpnConfig.LEGACY_VPN);
+      mService.prepareVpn(VpnConfig.LEGACY_VPN,VpnConfig.LEGACY_VPN,UserHandle.myUserId());
     }
   }
  catch (  RemoteException e) {

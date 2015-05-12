@@ -1,43 +1,44 @@
 {
-  mUpdater.removeMessages(0);
-  if (isResumed()) {
-    try {
-      LegacyVpnInfo info=mConnectivityService.getLegacyVpnInfo();
-      if (mConnectedLegacyVpn != null) {
-        ConfigPreference preference=mConfigPreferences.get(mConnectedLegacyVpn.key);
-        if (preference != null) {
-          preference.setState(-1);
-        }
-        mConnectedLegacyVpn=null;
+  mUpdater.removeMessages(RESCAN_MESSAGE);
+  PreferenceGroup vpnGroup=getPreferenceScreen();
+  vpnGroup.removeAll();
+  mConfigPreferences.clear();
+  mAppPreferences.clear();
+  for (  VpnProfile profile : loadVpnProfiles(mKeyStore)) {
+    final ConfigPreference pref=new ConfigPreference(getActivity(),mManageListener,profile);
+    pref.setOnPreferenceClickListener(this);
+    mConfigPreferences.put(profile.key,pref);
+    vpnGroup.addPreference(pref);
+  }
+  for (  AppOpsManager.PackageOps pkg : getVpnApps()) {
+    String key=getVpnIdentifier(UserHandle.getUserId(pkg.getUid()),pkg.getPackageName());
+    final AppPreference pref=new AppPreference(getActivity(),mManageListener,pkg.getPackageName(),pkg.getUid());
+    pref.setOnPreferenceClickListener(this);
+    mAppPreferences.put(key,pref);
+    vpnGroup.addPreference(pref);
+  }
+  try {
+    LegacyVpnInfo info=mConnectivityService.getLegacyVpnInfo();
+    if (info != null) {
+      ConfigPreference preference=mConfigPreferences.get(info.key);
+      if (preference != null) {
+        preference.setState(info.state);
+        mConnectedLegacyVpn=info;
       }
-      if (info != null) {
-        ConfigPreference preference=mConfigPreferences.get(info.key);
-        if (preference != null) {
-          preference.setState(info.state);
-          mConnectedLegacyVpn=info;
-        }
-      }
-      for (      String key : mConnectedVpns) {
-        AppPreference preference=mAppPreferences.get(key);
-        if (preference != null) {
-          preference.setState(AppPreference.STATE_DISCONNECTED);
-        }
-      }
-      mConnectedVpns.clear();
-      VpnConfig cfg=mConnectivityService.getVpnConfig();
+    }
+    for (    UserHandle profile : mUserManager.getUserProfiles()) {
+      VpnConfig cfg=mConnectivityService.getVpnConfig(profile.getIdentifier());
       if (cfg != null) {
-        mConnectedVpns.add(cfg.user);
-      }
-      for (      String key : mConnectedVpns) {
-        AppPreference preference=mAppPreferences.get(key);
+        final String key=getVpnIdentifier(profile.getIdentifier(),cfg.user);
+        final AppPreference preference=mAppPreferences.get(key);
         if (preference != null) {
           preference.setState(AppPreference.STATE_CONNECTED);
         }
       }
     }
- catch (    RemoteException e) {
-    }
-    mUpdater.sendEmptyMessageDelayed(0,1000);
   }
+ catch (  RemoteException e) {
+  }
+  mUpdater.sendEmptyMessageDelayed(RESCAN_MESSAGE,RESCAN_INTERVAL_MS);
   return true;
 }

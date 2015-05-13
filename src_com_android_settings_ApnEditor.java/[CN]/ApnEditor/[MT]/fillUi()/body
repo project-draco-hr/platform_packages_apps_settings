@@ -60,6 +60,10 @@
     mMvnoType.setValue(mCursor.getString(MVNO_TYPE_INDEX));
     mMvnoMatchData.setEnabled(false);
     mMvnoMatchData.setText(mCursor.getString(MVNO_MATCH_DATA_INDEX));
+    if (mNewApn && mMvnoTypeStr != null && mMvnoMatchDataStr != null) {
+      mMvnoType.setValue(mMvnoTypeStr);
+      mMvnoMatchData.setText(mMvnoMatchDataStr);
+    }
   }
   mName.setSummary(checkNull(mName.getText()));
   mApn.setSummary(checkNull(mApn.getText()));

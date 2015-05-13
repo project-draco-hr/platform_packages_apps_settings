@@ -1,0 +1,12 @@
+{
+  if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_MTP)) {
+    return 1;
+  }
+ else   if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_PTP)) {
+    return 2;
+  }
+ else   if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_MIDI)) {
+    return 3;
+  }
+  return 0;
+}

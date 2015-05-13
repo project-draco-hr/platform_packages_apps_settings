@@ -2,14 +2,15 @@
   super.onCreate(savedInstanceState);
   mContext=getActivity();
   Intent intent=getActivity().getIntent();
+  Bundle args=getArguments();
   if (DEBUG)   Log.d(TAG,"onCreate getIntent()=" + intent);
-  if (intent == null) {
+  if (intent == null && args == null) {
     Log.w(TAG,"No intent");
     toastAndFinish();
     return;
   }
-  final int uid=intent.getIntExtra(Settings.EXTRA_APP_UID,-1);
-  final String pkg=intent.getStringExtra(Settings.EXTRA_APP_PACKAGE);
+  final String pkg=args != null && args.containsKey(AppInfoBase.ARG_PACKAGE_NAME) ? args.getString(AppInfoBase.ARG_PACKAGE_NAME) : intent.getStringExtra(Settings.EXTRA_APP_PACKAGE);
+  final int uid=args != null && args.containsKey(AppInfoBase.ARG_PACKAGE_UID) ? args.getInt(AppInfoBase.ARG_PACKAGE_UID) : intent.getIntExtra(Settings.EXTRA_APP_UID,-1);
   if (uid == -1 || TextUtils.isEmpty(pkg)) {
     Log.w(TAG,"Missing extras: " + Settings.EXTRA_APP_PACKAGE + " was "+ pkg+ ", "+ Settings.EXTRA_APP_UID+ " was "+ uid);
     toastAndFinish();
@@ -30,16 +31,9 @@
   mPeekable=(SwitchPreference)findPreference(KEY_PEEKABLE);
   mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
   mAppRow=mBackend.loadAppRow(pm,info.applicationInfo);
-  if (intent.hasExtra(EXTRA_HAS_SETTINGS_INTENT)) {
-    if (intent.getBooleanExtra(EXTRA_HAS_SETTINGS_INTENT,false)) {
-      mAppRow.settingsIntent=intent.getParcelableExtra(EXTRA_SETTINGS_INTENT);
-    }
-  }
- else {
-    ArrayMap<String,AppRow> rows=new ArrayMap<String,AppRow>();
-    rows.put(mAppRow.pkg,mAppRow);
-    collectConfigActivities(getPackageManager(),rows);
-  }
+  ArrayMap<String,AppRow> rows=new ArrayMap<String,AppRow>();
+  rows.put(mAppRow.pkg,mAppRow);
+  collectConfigActivities(getPackageManager(),rows);
   mBlock.setChecked(mAppRow.banned);
   updateDependents(mAppRow.banned);
   mPriority.setChecked(mAppRow.priority);

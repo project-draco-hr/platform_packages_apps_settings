@@ -1,0 +1,15 @@
+{
+  long challenge=getActivity().getIntent().getLongExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE,0);
+  mPendingLockCheck=LockPatternChecker.verifyPassword(mLockPatternUtils,pin,challenge,UserHandle.myUserId(),new LockPatternChecker.OnVerifyCallback(){
+    @Override public void onVerified(    byte[] token){
+      mPendingLockCheck=null;
+      boolean matched=false;
+      if (token != null) {
+        matched=true;
+        intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
+      }
+      onPasswordChecked(matched,intent);
+    }
+  }
+);
+}

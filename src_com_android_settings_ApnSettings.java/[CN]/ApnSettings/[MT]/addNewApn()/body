@@ -1,6 +1,10 @@
 {
   Intent intent=new Intent(Intent.ACTION_INSERT,Telephony.Carriers.CONTENT_URI);
   int subId=mSubscriptionInfo != null ? mSubscriptionInfo.getSubscriptionId() : SubscriptionManager.INVALID_SUBSCRIPTION_ID;
-  intent.putExtra("sub_id",subId);
+  intent.putExtra(SUB_ID,subId);
+  if (!TextUtils.isEmpty(mMvnoType) && !TextUtils.isEmpty(mMvnoMatchData)) {
+    intent.putExtra(MVNO_TYPE,mMvnoType);
+    intent.putExtra(MVNO_MATCH_DATA,mMvnoMatchData);
+  }
   startActivity(intent);
 }

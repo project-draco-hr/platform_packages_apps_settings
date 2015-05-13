@@ -12,11 +12,11 @@
   if (mEnableOemUnlock != null) {
     updateSwitchPreference(mEnableOemUnlock,Utils.isOemUnlockEnabled(getActivity()));
   }
-  updateSwitchPreference(mAllowMockLocation,Settings.Secure.getInt(cr,Settings.Secure.ALLOW_MOCK_LOCATION,0) != 0);
   updateSwitchPreference(mDebugViewAttributes,Settings.Global.getInt(cr,Settings.Global.DEBUG_VIEW_ATTRIBUTES,0) != 0);
   updateHdcpValues();
   updatePasswordSummary();
   updateDebuggerOptions();
+  updateMockLocation();
   updateStrictModeVisualOptions();
   updatePointerLocationOptions();
   updateShowTouchesOptions();

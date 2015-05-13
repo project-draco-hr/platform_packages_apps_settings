@@ -1,5 +1,7 @@
 {
   super.onCreate(icicle);
+  mPermissionName=getIntent().getStringExtra(EXTRA_REQUESTIING_PERMISSION);
+  mDebuggableOnly=getIntent().getBooleanExtra(EXTRA_DEBUGGABLE,false);
   mAdapter=new AppListAdapter(this);
   if (mAdapter.getCount() <= 0) {
     finish();

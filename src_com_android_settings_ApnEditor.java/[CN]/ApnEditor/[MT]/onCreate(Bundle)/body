@@ -30,7 +30,7 @@
   mRes=getResources();
   final Intent intent=getIntent();
   final String action=intent.getAction();
-  mSubId=intent.getIntExtra("sub_id",SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+  mSubId=intent.getIntExtra(ApnSettings.SUB_ID,SubscriptionManager.INVALID_SUBSCRIPTION_ID);
   mFirstTime=icicle == null;
   if (action.equals(Intent.ACTION_EDIT)) {
     mUri=intent.getData();
@@ -43,6 +43,8 @@
       mUri=ContentUris.withAppendedId(Telephony.Carriers.CONTENT_URI,icicle.getInt(SAVED_POS));
     }
     mNewApn=true;
+    mMvnoTypeStr=intent.getStringExtra(ApnSettings.MVNO_TYPE);
+    mMvnoMatchDataStr=intent.getStringExtra(ApnSettings.MVNO_MATCH_DATA);
     if (mUri == null) {
       Log.w(TAG,"Failed to insert new telephony provider into " + getIntent().getData());
       finish();

@@ -1,0 +1,17 @@
+{
+  mLockPatternView.disableInput();
+  if (mPendingLockCheck != null) {
+    mPendingLockCheck.cancel(false);
+  }
+  mPendingLockCheck=LockPatternChecker.verifyPattern(utils,mChosenPattern,mChallenge,UserHandle.myUserId(),new LockPatternChecker.OnVerifyCallback(){
+    @Override public void onVerified(    byte[] token){
+      mLockPatternView.enableInput();
+      mPendingLockCheck=null;
+      Intent intent=new Intent();
+      intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
+      getActivity().setResult(RESULT_FINISHED,intent);
+      doFinish();
+    }
+  }
+);
+}

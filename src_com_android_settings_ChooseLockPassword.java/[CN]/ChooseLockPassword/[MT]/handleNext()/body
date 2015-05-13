@@ -20,19 +20,13 @@
       mLockPatternUtils.setCredentialRequiredToDecrypt(required);
       mLockPatternUtils.saveLockPassword(pin,mCurrentPassword,mRequestedQuality,UserHandle.myUserId());
       if (mHasChallenge) {
-        Intent intent=new Intent();
-        byte[] token=mLockPatternUtils.verifyPassword(pin,mChallenge,UserHandle.myUserId());
-        intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
-        getActivity().setResult(RESULT_FINISHED,intent);
+        startVerifyPassword(pin,wasSecureBefore);
+        return;
       }
  else {
         getActivity().setResult(RESULT_FINISHED);
       }
-      getActivity().finish();
-      mDone=true;
-      if (!wasSecureBefore) {
-        startActivity(getRedactionInterstitialIntent(getActivity()));
-      }
+      finishConfirmStage(wasSecureBefore);
     }
  else {
       CharSequence tmp=mPasswordEntry.getText();

@@ -1,0 +1,12 @@
+{
+  if (r != null && !TextUtils.isEmpty(mvnoType) && !TextUtils.isEmpty(mvnoMatchData)) {
+    if (ApnSetting.mvnoMatches(r,mvnoType,mvnoMatchData)) {
+      mvnoList.add(pref);
+      mMvnoType=mvnoType;
+      mMvnoMatchData=mvnoMatchData;
+    }
+  }
+ else {
+    mnoList.add(pref);
+  }
+}

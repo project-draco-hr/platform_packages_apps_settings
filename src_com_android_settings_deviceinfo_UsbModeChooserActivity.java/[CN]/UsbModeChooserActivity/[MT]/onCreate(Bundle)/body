@@ -1,0 +1,29 @@
+{
+  super.onCreate(savedInstanceState);
+  mUsbManager=(UsbManager)getSystemService(Context.USB_SERVICE);
+  final AlertDialog levelDialog;
+  AlertDialog.Builder builder=new AlertDialog.Builder(this);
+  builder.setTitle(R.string.usb_use);
+  builder.setSingleChoiceItems(R.array.usb_available_functions,getCurrentFunction(),new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      setCurrentFunction(which);
+      dialog.dismiss();
+      UsbModeChooserActivity.this.finish();
+    }
+  }
+);
+  builder.setOnDismissListener(new DialogInterface.OnDismissListener(){
+    @Override public void onDismiss(    DialogInterface dialog){
+      UsbModeChooserActivity.this.finish();
+    }
+  }
+);
+  builder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      UsbModeChooserActivity.this.finish();
+    }
+  }
+);
+  levelDialog=builder.create();
+  levelDialog.show();
+}

@@ -136,6 +136,9 @@
  else   if (preference == mUSBAudio) {
     writeUSBAudioOptions();
   }
+ else   if (INACTIVE_APPS_KEY.equals(preference.getKey())) {
+    startInactiveAppsFragment();
+  }
  else {
     return super.onPreferenceTreeClick(preferenceScreen,preference);
   }

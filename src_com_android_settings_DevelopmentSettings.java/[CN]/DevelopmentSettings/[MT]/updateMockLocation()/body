@@ -1,0 +1,29 @@
+{
+  AppOpsManager appOpsManager=(AppOpsManager)getSystemService(Context.APP_OPS_SERVICE);
+  List<PackageOps> packageOps=appOpsManager.getPackagesForOps(MOCK_LOCATOIN_APP_OPS);
+  if (packageOps != null) {
+    for (    PackageOps packageOp : packageOps) {
+      if (packageOp.getOps().get(0).getMode() == AppOpsManager.MODE_ALLOWED) {
+        mMockLocationApp=packageOps.get(0).getPackageName();
+        break;
+      }
+    }
+  }
+  if (!TextUtils.isEmpty(mMockLocationApp)) {
+    String label=mMockLocationApp;
+    try {
+      ApplicationInfo ai=getActivity().getPackageManager().getApplicationInfo(mMockLocationApp,PackageManager.GET_DISABLED_COMPONENTS);
+      CharSequence appLabel=getPackageManager().getApplicationLabel(ai);
+      if (appLabel != null) {
+        label=appLabel.toString();
+      }
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+    }
+    mMockLocationAppPref.setSummary(getString(R.string.mock_location_app_set,label));
+    mHaveDebugSettings=true;
+  }
+ else {
+    mMockLocationAppPref.setSummary(getString(R.string.mock_location_app_not_set));
+  }
+}

@@ -7,8 +7,31 @@
     if (ai.uid == Process.SYSTEM_UID) {
       continue;
     }
-    if ((ai.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0 && "user".equals(Build.TYPE)) {
-      continue;
+    if (mDebuggableOnly) {
+      if ((ai.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0 && "user".equals(Build.TYPE)) {
+        continue;
+      }
+    }
+    if (mPermissionName != null) {
+      boolean requestsPermission=false;
+      try {
+        PackageInfo pi=getPackageManager().getPackageInfo(ai.packageName,PackageManager.GET_PERMISSIONS);
+        if (pi.requestedPermissions == null) {
+          continue;
+        }
+        for (        String requestedPermission : pi.requestedPermissions) {
+          if (requestedPermission.equals(mPermissionName)) {
+            requestsPermission=true;
+            break;
+          }
+        }
+        if (!requestsPermission) {
+          continue;
+        }
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+        continue;
+      }
     }
     MyApplicationInfo info=new MyApplicationInfo();
     info.info=ai;

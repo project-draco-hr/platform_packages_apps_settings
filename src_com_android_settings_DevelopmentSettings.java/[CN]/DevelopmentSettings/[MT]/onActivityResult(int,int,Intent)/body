@@ -6,6 +6,13 @@
       updateDebuggerOptions();
     }
   }
+ else   if (requestCode == RESULT_MOCK_LOCATION_APP) {
+    if (resultCode == Activity.RESULT_OK) {
+      mMockLocationApp=data.getAction();
+      writeMockLocation();
+      updateMockLocation();
+    }
+  }
  else   if (requestCode == REQUEST_CODE_ENABLE_OEM_UNLOCK) {
     if (resultCode == Activity.RESULT_OK) {
       if (mEnableOemUnlock.isChecked()) {

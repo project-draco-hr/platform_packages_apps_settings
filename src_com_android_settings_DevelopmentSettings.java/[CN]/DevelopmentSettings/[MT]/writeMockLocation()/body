@@ -1,0 +1,25 @@
+{
+  AppOpsManager appOpsManager=(AppOpsManager)getSystemService(Context.APP_OPS_SERVICE);
+  List<PackageOps> packageOps=appOpsManager.getPackagesForOps(MOCK_LOCATOIN_APP_OPS);
+  if (packageOps != null) {
+    for (    PackageOps packageOp : packageOps) {
+      if (packageOp.getOps().get(0).getMode() != AppOpsManager.MODE_ERRORED) {
+        String oldMockLocationApp=packageOp.getPackageName();
+        try {
+          ApplicationInfo ai=getActivity().getPackageManager().getApplicationInfo(oldMockLocationApp,PackageManager.GET_DISABLED_COMPONENTS);
+          appOpsManager.setMode(AppOpsManager.OP_MOCK_LOCATION,ai.uid,oldMockLocationApp,AppOpsManager.MODE_ERRORED);
+        }
+ catch (        NameNotFoundException e) {
+        }
+      }
+    }
+  }
+  if (!TextUtils.isEmpty(mMockLocationApp)) {
+    try {
+      ApplicationInfo ai=getActivity().getPackageManager().getApplicationInfo(mMockLocationApp,PackageManager.GET_DISABLED_COMPONENTS);
+      appOpsManager.setMode(AppOpsManager.OP_MOCK_LOCATION,ai.uid,mMockLocationApp,AppOpsManager.MODE_ALLOWED);
+    }
+ catch (    NameNotFoundException e) {
+    }
+  }
+}

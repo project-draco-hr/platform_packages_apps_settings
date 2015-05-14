@@ -34,7 +34,6 @@
     removePreference(mEnableOemUnlock);
     mEnableOemUnlock=null;
   }
-  mAllowMockLocation=findAndInitSwitchPref(ALLOW_MOCK_LOCATION);
   mDebugViewAttributes=findAndInitSwitchPref(DEBUG_VIEW_ATTRIBUTES);
   mPassword=(PreferenceScreen)findPreference(LOCAL_BACKUP_PASSWORD);
   mAllPrefs.add(mPassword);
@@ -47,6 +46,8 @@
   mDebugAppPref=findPreference(DEBUG_APP_KEY);
   mAllPrefs.add(mDebugAppPref);
   mWaitForDebugger=findAndInitSwitchPref(WAIT_FOR_DEBUGGER_KEY);
+  mMockLocationAppPref=findPreference(MOCK_LOCATION_APP_KEY);
+  mAllPrefs.add(mMockLocationAppPref);
   mVerifyAppsOverUsb=findAndInitSwitchPref(VERIFY_APPS_OVER_USB_KEY);
   if (!showVerifierSetting()) {
     if (debugDebuggingCategory != null) {

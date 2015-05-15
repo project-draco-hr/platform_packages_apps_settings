@@ -1,12 +1,12 @@
 {
-  mPasswordEntry.setEnabled(false);
+  mPasswordEntryInputDisabler.setInputEnabled(false);
   setNextEnabled(false);
   if (mPendingLockCheck != null) {
     mPendingLockCheck.cancel(false);
   }
   mPendingLockCheck=LockPatternChecker.verifyPassword(mLockPatternUtils,pin,mChallenge,UserHandle.myUserId(),new LockPatternChecker.OnVerifyCallback(){
     @Override public void onVerified(    byte[] token){
-      mPasswordEntry.setEnabled(true);
+      mPasswordEntryInputDisabler.setInputEnabled(true);
       setNextEnabled(true);
       mPendingLockCheck=null;
       Intent intent=new Intent();

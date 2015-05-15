@@ -1,6 +1,6 @@
 {
   AppOpsManager appOpsManager=(AppOpsManager)getSystemService(Context.APP_OPS_SERVICE);
-  List<PackageOps> packageOps=appOpsManager.getPackagesForOps(MOCK_LOCATOIN_APP_OPS);
+  List<PackageOps> packageOps=appOpsManager.getPackagesForOps(MOCK_LOCATION_APP_OPS);
   if (packageOps != null) {
     for (    PackageOps packageOp : packageOps) {
       if (packageOp.getOps().get(0).getMode() == AppOpsManager.MODE_ALLOWED) {

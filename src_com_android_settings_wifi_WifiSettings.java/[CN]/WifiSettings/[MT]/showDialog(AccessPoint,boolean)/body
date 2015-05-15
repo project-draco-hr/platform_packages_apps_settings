@@ -1,7 +1,7 @@
 {
   if (accessPoint != null) {
     WifiConfiguration config=accessPoint.getConfig();
-    if (isCreatorDeviceOwner(getActivity(),config) && accessPoint.isActive()) {
+    if (isEditabilityLockedDown(getActivity(),config) && accessPoint.isActive()) {
       final int userId=UserHandle.getUserId(config.creatorUid);
       final PackageManager pm=getActivity().getPackageManager();
       final IPackageManager ipm=AppGlobals.getPackageManager();

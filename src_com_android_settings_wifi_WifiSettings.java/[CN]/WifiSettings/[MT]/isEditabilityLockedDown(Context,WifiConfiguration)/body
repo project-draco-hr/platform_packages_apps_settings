@@ -7,6 +7,10 @@
   if (deviceOwnerPackageName == null) {
     return false;
   }
+  UserManager um=UserManager.get(context);
+  if (um.hasUserRestriction(UserManager.DISALLOW_CONFIG_WIFI)) {
+    return false;
+  }
   final PackageManager pm=context.getPackageManager();
   try {
     final int deviceOwnerUid=pm.getPackageUid(deviceOwnerPackageName,UserHandle.getUserId(config.creatorUid));

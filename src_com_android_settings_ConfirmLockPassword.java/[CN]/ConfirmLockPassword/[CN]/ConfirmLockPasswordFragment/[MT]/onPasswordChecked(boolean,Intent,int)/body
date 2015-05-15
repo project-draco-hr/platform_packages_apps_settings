@@ -5,8 +5,8 @@
     getActivity().finish();
   }
  else {
-    if (++mNumWrongConfirmAttempts >= LockPatternUtils.FAILED_ATTEMPTS_BEFORE_TIMEOUT) {
-      long deadline=mLockPatternUtils.setLockoutAttemptDeadline(UserHandle.myUserId());
+    if (timeoutMs > 0) {
+      long deadline=mLockPatternUtils.setLockoutAttemptDeadline(UserHandle.myUserId(),timeoutMs);
       handleAttemptLockout(deadline);
     }
  else {

@@ -4,7 +4,10 @@
     mPendingLockCheck.cancel(false);
   }
   mPendingLockCheck=LockPatternChecker.verifyPattern(utils,mChosenPattern,mChallenge,UserHandle.myUserId(),new LockPatternChecker.OnVerifyCallback(){
-    @Override public void onVerified(    byte[] token){
+    @Override public void onVerified(    byte[] token,    int timeoutMs){
+      if (token == null) {
+        Log.e(TAG,"critical: no token returned for known good pattern");
+      }
       mLockPatternView.enableInput();
       mPendingLockCheck=null;
       Intent intent=new Intent();

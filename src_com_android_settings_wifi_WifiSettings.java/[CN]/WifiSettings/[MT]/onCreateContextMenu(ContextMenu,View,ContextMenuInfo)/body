@@ -8,7 +8,7 @@
         menu.add(Menu.NONE,MENU_ID_CONNECT,0,R.string.wifi_menu_connect);
       }
       WifiConfiguration config=mSelectedAccessPoint.getConfig();
-      if (isCreatorDeviceOwner(getActivity(),config)) {
+      if (isEditabilityLockedDown(getActivity(),config)) {
         return;
       }
       if (mSelectedAccessPoint.isSaved() || mSelectedAccessPoint.isEphemeral()) {

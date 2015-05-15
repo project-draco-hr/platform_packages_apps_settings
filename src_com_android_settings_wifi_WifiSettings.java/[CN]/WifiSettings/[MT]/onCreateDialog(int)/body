@@ -10,7 +10,7 @@ case WIFI_DIALOG_ID:
     }
   }
 mSelectedAccessPoint=ap;
-final boolean hideForget=(ap == null || isCreatorDeviceOwner(getActivity(),ap.getConfig()));
+final boolean hideForget=(ap == null || isEditabilityLockedDown(getActivity(),ap.getConfig()));
 mDialog=new WifiDialog(getActivity(),this,ap,mDlgEdit,false,hideForget);
 return mDialog;
 case WPS_PBC_DIALOG_ID:

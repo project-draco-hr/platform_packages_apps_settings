@@ -7,8 +7,7 @@
   addPreferencesFromResource(R.xml.privacy_settings);
   final PreferenceScreen screen=getPreferenceScreen();
   mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
-  mBackup=(SwitchPreference)screen.findPreference(BACKUP_DATA);
-  mBackup.setOnPreferenceChangeListener(preferenceChangeListener);
+  mBackup=(PreferenceScreen)screen.findPreference(BACKUP_DATA);
   mAutoRestore=(SwitchPreference)screen.findPreference(AUTO_RESTORE);
   mAutoRestore.setOnPreferenceChangeListener(preferenceChangeListener);
   mConfigure=(PreferenceScreen)screen.findPreference(CONFIGURE_ACCOUNT);

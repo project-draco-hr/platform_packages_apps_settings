@@ -1,0 +1,15 @@
+{
+  super.onViewCreated(view,savedInstanceState);
+  SettingsActivity activity=(SettingsActivity)getActivity();
+  mSwitchBar=activity.getSwitchBar();
+  mToggleSwitch=mSwitchBar.getSwitch();
+  mSummaryPreference.setSummary(R.string.fullbackup_data_summary);
+  try {
+    boolean backupEnabled=mBackupManager == null ? false : mBackupManager.isBackupEnabled();
+    mSwitchBar.setCheckedInternal(backupEnabled);
+  }
+ catch (  RemoteException e) {
+    mSwitchBar.setEnabled(false);
+  }
+  getActivity().setTitle(R.string.backup_data_title);
+}

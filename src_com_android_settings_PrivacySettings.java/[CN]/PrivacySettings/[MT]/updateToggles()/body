@@ -8,11 +8,11 @@
     String transport=mBackupManager.getCurrentTransport();
     configIntent=mBackupManager.getConfigurationIntent(transport);
     configSummary=mBackupManager.getDestinationString(transport);
+    mBackup.setSummary(backupEnabled ? R.string.accessibility_feature_state_on : R.string.accessibility_feature_state_off);
   }
  catch (  RemoteException e) {
     mBackup.setEnabled(false);
   }
-  mBackup.setChecked(backupEnabled);
   mAutoRestore.setChecked(Settings.Secure.getInt(res,Settings.Secure.BACKUP_AUTO_RESTORE,1) == 1);
   mAutoRestore.setEnabled(backupEnabled);
   final boolean configureEnabled=(configIntent != null) && backupEnabled;

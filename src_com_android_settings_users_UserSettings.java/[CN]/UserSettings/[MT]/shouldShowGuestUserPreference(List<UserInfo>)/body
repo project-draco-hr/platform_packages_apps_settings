@@ -1,5 +1,5 @@
 {
-  boolean showGuestPreference=!mIsGuest;
+  boolean showGuestPreference=!mUserCaps.mIsGuest;
   if (showGuestPreference && mUserManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER)) {
     showGuestPreference=false;
     for (    UserInfo user : users) {

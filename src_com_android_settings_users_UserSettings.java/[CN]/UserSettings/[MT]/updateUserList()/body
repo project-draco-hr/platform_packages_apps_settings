@@ -18,8 +18,8 @@
       continue;
     }
  else {
-      final boolean showSettings=mIsOwner && (voiceCapable || user.isRestricted());
-      final boolean showDelete=mIsOwner && (!voiceCapable && !user.isRestricted() && !user.isGuest());
+      final boolean showSettings=mUserCaps.mIsOwner && (voiceCapable || user.isRestricted());
+      final boolean showDelete=mUserCaps.mIsOwner && (!voiceCapable && !user.isRestricted() && !user.isGuest());
       pref=new UserPreference(context,null,user.id,showSettings ? this : null,showDelete ? this : null);
       pref.setOnPreferenceClickListener(this);
       pref.setKey("id=" + user.id);
@@ -61,7 +61,7 @@
     userPreferences.add(pref);
   }
   if (shouldShowGuestUserPreference(users)) {
-    UserPreference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mIsOwner && voiceCapable ? this : null,null);
+    UserPreference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mUserCaps.mIsOwner && voiceCapable ? this : null,null);
     pref.setTitle(R.string.user_guest);
     pref.setIcon(getEncircledDefaultIcon());
     pref.setOnPreferenceClickListener(this);
@@ -75,7 +75,7 @@
   PreferenceScreen preferenceScreen=getPreferenceScreen();
   preferenceScreen.removeAll();
   PreferenceGroup groupToAddUsers;
-  if (mCanAddRestrictedProfile) {
+  if (mUserCaps.mCanAddRestrictedProfile) {
     mUserListCategory.removeAll();
     mUserListCategory.setOrder(Preference.DEFAULT_ORDER);
     preferenceScreen.addPreference(mUserListCategory);
@@ -88,7 +88,7 @@
     userPreference.setOrder(Preference.DEFAULT_ORDER);
     groupToAddUsers.addPreference(userPreference);
   }
-  if (mCanAddUser) {
+  if (mUserCaps.mCanAddUser) {
     boolean moreUsers=mUserManager.canAddMoreUsers();
     mAddUser.setEnabled(moreUsers);
     mAddUser.setOrder(Preference.DEFAULT_ORDER);

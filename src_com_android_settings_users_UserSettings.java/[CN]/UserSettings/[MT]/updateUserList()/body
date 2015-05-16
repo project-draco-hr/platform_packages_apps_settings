@@ -19,8 +19,8 @@
       continue;
     }
  else {
-      final boolean showSettings=mIsOwner && (voiceCapable || user.isRestricted());
-      final boolean showDelete=mIsOwner && (!voiceCapable && !user.isRestricted() && !user.isGuest());
+      final boolean showSettings=mUserCaps.mIsOwner && (voiceCapable || user.isRestricted());
+      final boolean showDelete=mUserCaps.mIsOwner && (!voiceCapable && !user.isRestricted() && !user.isGuest());
       pref=new UserPreference(context,null,user.id,showSettings ? this : null,showDelete ? this : null);
       pref.setOnPreferenceClickListener(this);
       pref.setKey("id=" + user.id);
@@ -61,7 +61,7 @@
     pref.setIcon(getEncircledDefaultIcon());
     mUserListCategory.addPreference(pref);
   }
-  boolean showGuestPreference=!mIsGuest;
+  boolean showGuestPreference=!mUserCaps.mIsGuest;
   if (showGuestPreference && mUserManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER)) {
     showGuestPreference=false;
     for (    UserInfo user : users) {
@@ -72,7 +72,7 @@
     }
   }
   if (showGuestPreference) {
-    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mIsOwner && voiceCapable ? this : null,null);
+    Preference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mUserCaps.mIsOwner && voiceCapable ? this : null,null);
     pref.setTitle(R.string.user_guest);
     pref.setIcon(getEncircledDefaultIcon());
     pref.setOnPreferenceClickListener(this);

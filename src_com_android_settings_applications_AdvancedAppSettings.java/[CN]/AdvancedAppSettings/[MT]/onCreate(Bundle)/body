@@ -1,9 +1,10 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.advanced_apps);
-  mApplicationsState=ApplicationsState.getInstance(getActivity().getApplication());
-  mSession=mApplicationsState.newSession(this);
-  mAppPermsPreference=findPreference(KEY_APP_PERM);
+  Preference permissions=getPreferenceScreen().findPreference(KEY_APP_PERM);
+  permissions.setIntent(new Intent(Intent.ACTION_MANAGE_PERMISSIONS));
+  ApplicationsState applicationsState=ApplicationsState.getInstance(getActivity().getApplication());
+  mSession=applicationsState.newSession(this);
   mAppDomainURLsPreference=findPreference(KEY_APP_DOMAIN_URLS);
   mHighPowerPreference=findPreference(KEY_HIGH_POWER_APPS);
   updateUI();

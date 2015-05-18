@@ -1,5 +1,8 @@
 {
   super.onActivityCreated(savedInstanceState);
+  if (mFinishing) {
+    return;
+  }
   handleHeader();
   mNotificationPreference=findPreference(KEY_NOTIFICATION);
   mNotificationPreference.setOnPreferenceClickListener(this);

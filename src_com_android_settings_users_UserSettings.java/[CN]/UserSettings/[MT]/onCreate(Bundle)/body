@@ -10,33 +10,24 @@
     mEditUserInfoController.onRestoreInstanceState(icicle);
   }
   final Context context=getActivity();
+  mUserCaps=UserCapabilities.create(context);
   mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
-  boolean hasMultipleUsers=mUserManager.getUserCount() > 1;
-  if ((!UserManager.supportsMultipleUsers()) || Utils.isMonkeyRunning()) {
-    mEnabled=false;
+  if (!mUserCaps.mEnabled) {
     return;
   }
   final int myUserId=UserHandle.myUserId();
-  mIsGuest=mUserManager.getUserInfo(myUserId).isGuest();
   addPreferencesFromResource(R.xml.user_settings);
   mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
   mMePreference=new UserPreference(context,null,myUserId,null,null);
   mMePreference.setKey(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
-  if (mIsOwner) {
+  if (mUserCaps.mIsOwner) {
     mMePreference.setSummary(R.string.user_owner);
   }
   mAddUser=findPreference(KEY_ADD_USER);
-  DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-  if (dpm.getDeviceOwner() != null || Utils.isVoiceCapable(context)) {
-    mCanAddRestrictedProfile=false;
-  }
-  if (!mIsOwner || UserManager.getMaxSupportedUsers() < 2 || !UserManager.supportsMultipleUsers() || mUserManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER)) {
-    mCanAddUser=false;
-  }
- else {
+  if (mUserCaps.mCanAddUser) {
     mAddUser.setOnPreferenceClickListener(this);
-    if (!mCanAddRestrictedProfile) {
+    if (!mUserCaps.mCanAddRestrictedProfile) {
       mAddUser.setTitle(R.string.user_add_user_menu);
     }
   }

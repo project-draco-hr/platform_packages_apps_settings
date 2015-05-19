@@ -1,6 +1,6 @@
 {
   if (pref == mMePreference) {
-    if (mIsGuest) {
+    if (mUserCaps.mIsGuest) {
       showDialog(DIALOG_CONFIRM_EXIT_GUEST);
       return true;
     }
@@ -27,7 +27,7 @@
     }
   }
  else   if (pref == mAddUser) {
-    if (mCanAddRestrictedProfile) {
+    if (mUserCaps.mCanAddRestrictedProfile) {
       showDialog(DIALOG_CHOOSE_USER_TYPE);
     }
  else {

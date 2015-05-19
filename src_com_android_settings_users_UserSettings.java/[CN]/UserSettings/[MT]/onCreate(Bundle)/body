@@ -12,7 +12,7 @@
   final Context context=getActivity();
   mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
   boolean hasMultipleUsers=mUserManager.getUserCount() > 1;
-  if ((!UserManager.supportsMultipleUsers() && !hasMultipleUsers) || Utils.isMonkeyRunning()) {
+  if ((!UserManager.supportsMultipleUsers()) || Utils.isMonkeyRunning()) {
     mEnabled=false;
     return;
   }

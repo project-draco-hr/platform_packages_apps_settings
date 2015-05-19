@@ -3,6 +3,7 @@
  else   setTitle(mAccessPoint.getSsid());
   final Context context=getContext();
   updateIcon(mAccessPoint.getLevel(),context);
+  updateBadge(context);
   setSummary(null);
   String summary=mForSavedNetworks ? mAccessPoint.getSavedNetworkSummary() : mAccessPoint.getSettingsSummary();
   if (summary.length() > 0) {

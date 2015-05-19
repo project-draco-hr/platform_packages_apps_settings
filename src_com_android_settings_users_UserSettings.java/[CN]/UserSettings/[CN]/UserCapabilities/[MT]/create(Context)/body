@@ -1,0 +1,18 @@
+{
+  UserManager userManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  UserCapabilities caps=new UserCapabilities();
+  if (!UserManager.supportsMultipleUsers() || Utils.isMonkeyRunning()) {
+    caps.mEnabled=false;
+    return caps;
+  }
+  if (!caps.mIsOwner || UserManager.getMaxSupportedUsers() < 2 || !UserManager.supportsMultipleUsers() || userManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER)) {
+    caps.mCanAddUser=false;
+  }
+  DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+  if (dpm.getDeviceOwner() != null || Utils.isVoiceCapable(context)) {
+    caps.mCanAddRestrictedProfile=false;
+  }
+  final int myUserId=UserHandle.myUserId();
+  caps.mIsGuest=userManager.getUserInfo(myUserId).isGuest();
+  return caps;
+}

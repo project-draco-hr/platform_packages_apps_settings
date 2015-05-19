@@ -1,33 +1,18 @@
 {
   final Context context=StorageWizardFormatProgress.this;
-  if (e == null) {
-    final String forgetUuid=getIntent().getStringExtra(StorageWizardFormatConfirm.EXTRA_FORGET_UUID);
-    if (!TextUtils.isEmpty(forgetUuid)) {
-      mStorage.forgetVolume(forgetUuid);
-    }
-    final boolean offerMigrate;
-    if (mFormatPrivate) {
-      final VolumeInfo privateVol=getPackageManager().getPrimaryStorageCurrentVolume();
-      offerMigrate=(privateVol != null && VolumeInfo.ID_PRIVATE_INTERNAL.equals(privateVol.getId()));
-    }
- else {
-      offerMigrate=false;
-    }
-    if (offerMigrate) {
-      final Intent intent=new Intent(context,StorageWizardMigrate.class);
-      intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
-      startActivity(intent);
-    }
- else {
-      final Intent intent=new Intent(context,StorageWizardReady.class);
-      intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
-      startActivity(intent);
-    }
-    finishAffinity();
-  }
- else {
+  if (e != null) {
     Log.e(TAG,"Failed to partition",e);
     Toast.makeText(context,e.getMessage(),Toast.LENGTH_LONG).show();
     finishAffinity();
+    return;
+  }
+  final float pct=(float)mInternalBench / (float)mPrivateBench;
+  Log.d(TAG,"New volume is " + pct + "x the speed of internal");
+  if (mPrivateBench > 2000000000) {
+    final SlowWarningFragment dialog=new SlowWarningFragment();
+    dialog.show(getFragmentManager(),TAG_SLOW_WARNING);
+  }
+ else {
+    onFormatFinished();
   }
 }

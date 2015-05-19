@@ -1,9 +1,15 @@
 {
-  PackageInfo pkgInfo=(PackageInfo)getArguments().getParcelable(ARG_PACKAGE);
+  final int userId=UserHandle.getUserId(mPackageInfo.applicationInfo.uid);
   try {
-    mService.prepareVpn(pkgInfo.packageName,VpnConfig.LEGACY_VPN);
+    final VpnConfig vpnConfig=mService.getVpnConfig(userId);
+    if (vpnConfig == null || vpnConfig.legacy) {
+      return;
+    }
+    if (mPackageInfo.packageName.equals(vpnConfig.user)) {
+      mService.prepareVpn(mPackageInfo.packageName,VpnConfig.LEGACY_VPN,userId);
+    }
   }
  catch (  RemoteException e) {
-    Log.e(TAG,"Failed to disconnect package " + pkgInfo.packageName,e);
+    Log.e(TAG,"Failed to disconnect package " + mPackageInfo.packageName + " for user "+ userId,e);
   }
 }

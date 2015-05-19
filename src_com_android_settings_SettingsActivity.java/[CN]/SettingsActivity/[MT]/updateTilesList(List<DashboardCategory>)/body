@@ -47,7 +47,7 @@
       }
  else       if (id == R.id.user_settings) {
         boolean hasMultipleUsers=((UserManager)getSystemService(Context.USER_SERVICE)).getUserCount() > 1;
-        if (!UserHandle.MU_ENABLED || (!UserManager.supportsMultipleUsers() && !hasMultipleUsers) || Utils.isMonkeyRunning()) {
+        if (!UserHandle.MU_ENABLED || !UserManager.supportsMultipleUsers() || Utils.isMonkeyRunning()) {
           removeTile=true;
         }
       }

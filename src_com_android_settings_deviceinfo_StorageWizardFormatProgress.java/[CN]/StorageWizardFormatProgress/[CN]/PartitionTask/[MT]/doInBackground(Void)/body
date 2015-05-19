@@ -3,12 +3,10 @@
     if (mFormatPrivate) {
       mStorage.partitionPrivate(mDisk.getId());
       publishProgress(40);
-      final long internalBench=mStorage.benchmark(null);
+      mInternalBench=mStorage.benchmark(null);
       publishProgress(60);
       final VolumeInfo privateVol=findFirstVolume(VolumeInfo.TYPE_PRIVATE);
-      final long privateBench=mStorage.benchmark(privateVol.id);
-      final float pct=(float)internalBench / (float)privateBench;
-      Log.d(TAG,"New volume is " + pct + "x the speed of internal");
+      mPrivateBench=mStorage.benchmark(privateVol.id);
     }
  else {
       mStorage.partitionPublic(mDisk.getId());

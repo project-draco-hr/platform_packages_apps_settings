@@ -1,7 +1,9 @@
 {
   super.onBindView(view);
   updateIcon(mAccessPoint.getLevel(),getContext());
+  mTitleView=(TextView)view.findViewById(com.android.internal.R.id.title);
   mSummaryView=(TextView)view.findViewById(com.android.internal.R.id.summary);
   mSummaryView.setVisibility(showSummary ? View.VISIBLE : View.GONE);
+  updateBadge(getContext());
   notifyChanged();
 }

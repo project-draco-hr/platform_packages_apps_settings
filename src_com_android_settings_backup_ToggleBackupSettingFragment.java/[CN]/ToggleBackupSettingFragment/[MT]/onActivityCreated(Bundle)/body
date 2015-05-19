@@ -1,0 +1,18 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  mToggleSwitch.setOnBeforeCheckedChangeListener(new ToggleSwitch.OnBeforeCheckedChangeListener(){
+    @Override public boolean onBeforeCheckedChanged(    ToggleSwitch toggleSwitch,    boolean checked){
+      if (!checked) {
+        showEraseBackupDialog();
+        return false;
+      }
+ else {
+        setBackupEnabled(true);
+        mSwitchBar.setCheckedInternal(true);
+        return true;
+      }
+    }
+  }
+);
+  mSwitchBar.show();
+}

@@ -1,0 +1,11 @@
+{
+  if (mBackupManager != null) {
+    try {
+      mBackupManager.setBackupEnabled(enable);
+    }
+ catch (    RemoteException e) {
+      Log.e(TAG,"Error communicating with BackupManager",e);
+      return;
+    }
+  }
+}

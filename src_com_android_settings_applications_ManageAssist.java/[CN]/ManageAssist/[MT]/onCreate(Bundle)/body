@@ -1,0 +1,7 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.manage_assist);
+  mContextPref=(SwitchPreference)findPreference(KEY_CONTEXT);
+  mContextPref.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ASSIST_STRUCTURE_ENABLED,1) != 0);
+  mContextPref.setOnPreferenceChangeListener(this);
+}

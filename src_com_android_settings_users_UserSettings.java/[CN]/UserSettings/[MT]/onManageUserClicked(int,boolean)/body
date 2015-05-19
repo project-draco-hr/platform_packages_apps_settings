@@ -6,7 +6,7 @@
     return;
   }
   UserInfo info=mUserManager.getUserInfo(userId);
-  if (info.isRestricted() && mIsOwner) {
+  if (info.isRestricted() && mUserCaps.mIsOwner) {
     Bundle extras=new Bundle();
     extras.putInt(RestrictedProfileSettings.EXTRA_USER_ID,userId);
     extras.putBoolean(RestrictedProfileSettings.EXTRA_NEW_USER,newUser);
@@ -15,7 +15,7 @@
  else   if (info.id == UserHandle.myUserId()) {
     OwnerInfoSettings.show(this);
   }
- else   if (mIsOwner) {
+ else   if (mUserCaps.mIsOwner) {
     Bundle extras=new Bundle();
     extras.putInt(UserDetailsSettings.EXTRA_USER_ID,userId);
     ((SettingsActivity)getActivity()).startPreferencePanel(UserDetailsSettings.class.getName(),extras,-1,info.name,null,0);

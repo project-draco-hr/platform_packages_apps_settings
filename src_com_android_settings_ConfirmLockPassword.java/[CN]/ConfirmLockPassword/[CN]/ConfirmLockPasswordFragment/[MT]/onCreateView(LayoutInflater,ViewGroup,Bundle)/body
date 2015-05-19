@@ -3,6 +3,7 @@
   View view=inflater.inflate(R.layout.confirm_lock_password,null);
   mPasswordEntry=(TextView)view.findViewById(R.id.password_entry);
   mPasswordEntry.setOnEditorActionListener(this);
+  mPasswordEntryInputDisabler=new TextViewInputDisabler(mPasswordEntry);
   mHeaderTextView=(TextView)view.findViewById(R.id.headerText);
   mDetailsTextView=(TextView)view.findViewById(R.id.detailsText);
   mErrorTextView=(TextView)view.findViewById(R.id.errorText);

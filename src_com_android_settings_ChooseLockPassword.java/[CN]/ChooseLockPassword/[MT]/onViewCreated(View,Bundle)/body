@@ -9,6 +9,7 @@
   mPasswordEntry=(TextView)view.findViewById(R.id.password_entry);
   mPasswordEntry.setOnEditorActionListener(this);
   mPasswordEntry.addTextChangedListener(this);
+  mPasswordEntryInputDisabler=new TextViewInputDisabler(mPasswordEntry);
   final Activity activity=getActivity();
   mKeyboardHelper=new PasswordEntryKeyboardHelper(activity,mKeyboardView,mPasswordEntry);
   mKeyboardHelper.setKeyboardMode(mIsAlphaMode ? PasswordEntryKeyboardHelper.KEYBOARD_MODE_ALPHA : PasswordEntryKeyboardHelper.KEYBOARD_MODE_NUMERIC);

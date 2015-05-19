@@ -1,6 +1,6 @@
 {
   try {
-    mService.prepareVpn(VpnConfig.LEGACY_VPN,VpnConfig.LEGACY_VPN);
+    mService.prepareVpn(VpnConfig.LEGACY_VPN,VpnConfig.LEGACY_VPN,UserHandle.myUserId());
   }
  catch (  RemoteException e) {
     Log.e(TAG,String.format("disconnect VPN exception: %s",e.toString()));

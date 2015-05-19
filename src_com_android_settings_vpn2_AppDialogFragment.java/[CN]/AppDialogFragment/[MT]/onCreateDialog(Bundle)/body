@@ -1,11 +1,11 @@
 {
   Bundle args=getArguments();
-  PackageInfo pkgInfo=(PackageInfo)args.getParcelable(ARG_PACKAGE);
-  String label=args.getString(ARG_LABEL);
+  final String label=args.getString(ARG_LABEL);
   boolean managing=args.getBoolean(ARG_MANAGING);
   boolean connected=args.getBoolean(ARG_CONNECTED);
+  mPackageInfo=(PackageInfo)args.getParcelable(ARG_PACKAGE);
   if (managing) {
-    return new AppDialog(getActivity(),this,pkgInfo,label,connected);
+    return new AppDialog(getActivity(),this,mPackageInfo,label);
   }
  else {
     AlertDialog.Builder dlog=new AlertDialog.Builder(getActivity()).setTitle(label).setMessage(getActivity().getString(R.string.vpn_disconnect_confirm)).setNegativeButton(getActivity().getString(R.string.vpn_cancel),null);

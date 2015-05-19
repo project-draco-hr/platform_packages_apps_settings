@@ -12,5 +12,9 @@
   if (pickLockdown) {
     LockdownConfigFragment.show(this);
   }
-  update();
+  mConnectivityManager.registerNetworkCallback(VPN_REQUEST,mNetworkCallback);
+  if (mUpdater == null) {
+    mUpdater=new Handler(this);
+  }
+  mUpdater.sendEmptyMessage(RESCAN_MESSAGE);
 }

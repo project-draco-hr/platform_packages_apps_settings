@@ -11,7 +11,9 @@
   mPermissionsPreference=findPreference(KEY_PERMISSION);
   mPermissionsPreference.setOnPreferenceClickListener(this);
   mDataPreference=findPreference(KEY_DATA);
-  mDataPreference.setOnPreferenceClickListener(this);
+  if (mDataPreference != null) {
+    mDataPreference.setOnPreferenceClickListener(this);
+  }
   mBatteryPreference=findPreference(KEY_BATTERY);
   mBatteryPreference.setEnabled(false);
   mBatteryPreference.setOnPreferenceClickListener(this);

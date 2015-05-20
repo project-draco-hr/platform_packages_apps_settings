@@ -26,13 +26,8 @@
         }
       }
  else       if (id == R.id.data_usage_settings) {
-        final INetworkManagementService netManager=INetworkManagementService.Stub.asInterface(ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
-        try {
-          if (!netManager.isBandwidthControlEnabled()) {
-            removeTile=true;
-          }
-        }
- catch (        RemoteException e) {
+        if (!Utils.isBandwidthControlEnabled()) {
+          removeTile=true;
         }
       }
  else       if (id == R.id.battery_settings) {

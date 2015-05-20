@@ -5,6 +5,8 @@
   }
   AppItem app=new AppItem(mAppEntry.info.uid);
   app.addUid(mAppEntry.info.uid);
-  getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(getTemplate(getContext()),app),mDataCallbacks);
+  if (mStatsSession != null) {
+    getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(getTemplate(getContext()),app),mDataCallbacks);
+  }
   new BatteryUpdater().execute();
 }

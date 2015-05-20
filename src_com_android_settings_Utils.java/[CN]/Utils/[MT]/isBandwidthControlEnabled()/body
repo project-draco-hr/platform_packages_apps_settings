@@ -1,0 +1,9 @@
+{
+  final INetworkManagementService netManager=INetworkManagementService.Stub.asInterface(ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
+  try {
+    return netManager.isBandwidthControlEnabled();
+  }
+ catch (  RemoteException e) {
+    return false;
+  }
+}

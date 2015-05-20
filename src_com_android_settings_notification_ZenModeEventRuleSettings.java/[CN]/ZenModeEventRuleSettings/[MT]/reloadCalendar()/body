@@ -1,8 +1,8 @@
 {
   mCalendars=getCalendars(mContext);
   mCalendar.clearItems();
-  mCalendar.addItem(R.string.zen_mode_event_rule_calendar_any,0L);
-  for (int i=0; i < mCalendars.length; i++) {
-    mCalendar.addItem(mCalendars[i].name,mCalendars[i].id);
+  mCalendar.addItem(R.string.zen_mode_event_rule_calendar_any,key(0,ANY_CALENDAR));
+  for (  CalendarInfo calendar : mCalendars) {
+    mCalendar.addItem(calendar.name,key(calendar));
   }
 }

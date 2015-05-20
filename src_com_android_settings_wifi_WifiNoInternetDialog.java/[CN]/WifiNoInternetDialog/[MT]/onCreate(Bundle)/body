@@ -12,19 +12,17 @@
     finish();
     return;
   }
-  final NetworkRequest.Builder builder=new NetworkRequest.Builder();
-  for (int i=0; i < 256; i++) {
-    try {
-      builder.removeCapability(i);
-    }
- catch (    IllegalArgumentException e) {
-    }
-  }
-  final NetworkRequest request=builder.build();
+  final NetworkRequest request=new NetworkRequest.Builder().clearCapabilities().build();
   mNetworkCallback=new NetworkCallback(){
-    public void onLost(    Network network){
+    @Override public void onLost(    Network network){
       if (mNetwork.equals(network)) {
         Log.d(TAG,"Network " + mNetwork + " disconnected");
+        finish();
+      }
+    }
+    @Override public void onCapabilitiesChanged(    Network network,    NetworkCapabilities nc){
+      if (mNetwork.equals(network) && nc.hasCapability(NET_CAPABILITY_VALIDATED)) {
+        Log.d(TAG,"Network " + mNetwork + " validated");
         finish();
       }
     }

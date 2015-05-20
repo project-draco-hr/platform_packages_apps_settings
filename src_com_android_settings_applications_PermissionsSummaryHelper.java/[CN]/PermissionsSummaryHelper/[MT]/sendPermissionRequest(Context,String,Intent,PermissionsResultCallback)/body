@@ -1,0 +1,14 @@
+{
+  BroadcastReceiver receiver=new BroadcastReceiver(){
+    @Override public void onReceive(    Context context,    Intent intent){
+      int[] result=intent.getIntArrayExtra(Intent.EXTRA_GET_PERMISSIONS_COUNT_RESULT);
+      callback.onPermissionCountResult(result);
+      context.unregisterReceiver(this);
+    }
+  }
+;
+  context.registerReceiver(receiver,new IntentFilter(action));
+  request.putExtra(Intent.EXTRA_GET_PERMISSIONS_RESPONSE_INTENT,action);
+  request.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+  context.sendBroadcast(request);
+}

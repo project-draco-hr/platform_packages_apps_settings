@@ -6,7 +6,7 @@
     return;
   }
   UserInfo info=mUserManager.getUserInfo(userId);
-  if (info.isRestricted() && mIsOwner) {
+  if (info.isRestricted() && mUserCaps.mIsOwner) {
     Bundle extras=new Bundle();
     extras.putInt(RestrictedProfileSettings.EXTRA_USER_ID,userId);
     extras.putBoolean(RestrictedProfileSettings.EXTRA_NEW_USER,newUser);
@@ -20,7 +20,7 @@
     int titleResId=info.id == UserHandle.USER_OWNER ? R.string.owner_info_settings_title : (info.isRestricted() ? R.string.profile_info_settings_title : R.string.user_info_settings_title);
     ((SettingsActivity)getActivity()).startPreferencePanel(OwnerInfoSettings.class.getName(),extras,titleResId,null,null,0);
   }
- else   if (mIsOwner) {
+ else   if (mUserCaps.mIsOwner) {
     Bundle extras=new Bundle();
     extras.putInt(UserDetailsSettings.EXTRA_USER_ID,userId);
     ((SettingsActivity)getActivity()).startPreferencePanel(UserDetailsSettings.class.getName(),extras,-1,info.name,null,0);

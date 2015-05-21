@@ -1,0 +1,7 @@
+{
+  super.onCreate(icicle);
+  Bundle args=getArguments();
+  mStatsManager=new ProcStatsData(getActivity(),icicle != null || (args != null && args.getBoolean(ARG_TRANSFER_STATS,false)));
+  mDurationIndex=icicle != null ? icicle.getInt(ARG_DURATION_INDEX) : args != null ? args.getInt(ARG_DURATION_INDEX) : 0;
+  mStatsManager.setDuration(icicle != null ? icicle.getLong(DURATION,sDurations[0]) : sDurations[0]);
+}

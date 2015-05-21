@@ -1,73 +1,23 @@
 {
-  updateMenus();
   mAppListGroup.removeAll();
   mAppListGroup.setOrderingAsAdded(false);
-  mHeader.setOrder(-1);
-  mAppListGroup.addPreference(mHeader);
-  final long elapsedTime=mStatsManager.getElapsedTime();
+  mAppListGroup.setTitle(mShowMax ? R.string.maximum_memory_use : R.string.average_memory_use);
   final Context context=getActivity();
   MemInfo memInfo=mStatsManager.getMemInfo();
-  memTotalTime=memInfo.memTotalTime;
-  double usedRam=memInfo.realUsedRam;
-  double totalRam=memInfo.realTotalRam;
-  double freeRam=memInfo.realFreeRam;
-  String durationString=Utils.formatElapsedTime(context,elapsedTime,false);
-  String usedString=Formatter.formatShortFileSize(context,(long)usedRam);
-  String totalString=Formatter.formatShortFileSize(context,(long)totalRam);
-  CharSequence memString;
-  CharSequence[] memStatesStr=getResources().getTextArray(R.array.ram_states);
-  int memState=mStatsManager.getMemState();
-  int memColor;
-  if (memState >= 0 && memState < memStatesStr.length) {
-    memString=memStatesStr[memState];
-    memColor=getResources().getIntArray(R.array.ram_colors)[memState];
-  }
- else {
-    memString="?";
-    memColor=context.getColor(R.color.running_processes_apps_ram);
-  }
-  mColors.setColors(memColor,memColor,context.getColor(R.color.running_processes_free_ram));
-  if (mShowPercentage) {
-    mMemUsed.setText(context.getString(R.string.process_stats_total_duration_percentage,Utils.formatPercentage((long)usedRam,(long)totalRam),durationString));
-  }
- else {
-    mMemUsed.setText(context.getString(R.string.process_stats_total_duration,usedString,totalString,durationString));
-  }
-  mMemStatus.setText(memString);
-  float usedRatio=(float)(usedRam / (freeRam + usedRam));
-  mColors.setRatios(usedRatio,0,1 - usedRatio);
   List<ProcStatsPackageEntry> pkgEntries=mStatsManager.getEntries();
-  mMaxMemoryUsage=0;
   for (int i=0, N=pkgEntries.size(); i < N; i++) {
     ProcStatsPackageEntry pkg=pkgEntries.get(i);
     pkg.updateMetrics();
-    double maxMem=Math.max(pkg.mMaxBgMem,pkg.mMaxRunMem) * 1024 * memInfo.totalScale;
-    if (maxMem > mMaxMemoryUsage) {
-      mMaxMemoryUsage=maxMem;
-    }
   }
-  Collections.sort(pkgEntries,sPackageEntryCompare);
+  Collections.sort(pkgEntries,mShowMax ? sMaxPackageEntryCompare : sPackageEntryCompare);
   if (DEBUG)   Log.d(TAG,"-------------------- BUILDING UI");
-  int end=pkgEntries.size() - 1;
-  while (end >= 0) {
-    ProcStatsPackageEntry pkg=pkgEntries.get(end);
-    final double percentOfWeight=(pkg.mRunWeight / (memInfo.totalRam / memInfo.weightToRam)) * 100;
-    final double percentOfTime=(((double)pkg.mRunDuration) / memTotalTime) * 100;
-    if (percentOfWeight >= .01 || percentOfTime >= 25) {
-      break;
-    }
-    end--;
-  }
-  for (int i=0; i <= end; i++) {
+  double maxMemory=mShowMax ? memInfo.realTotalRam : memInfo.usedWeight * memInfo.weightToRam;
+  for (int i=0; i < pkgEntries.size(); i++) {
     ProcStatsPackageEntry pkg=pkgEntries.get(i);
     ProcessStatsPreference pref=new ProcessStatsPreference(context);
     pkg.retrieveUiData(context,mPm);
-    pref.init(pkg,mPm,mMaxMemoryUsage,memInfo.weightToRam,memInfo.totalScale);
+    pref.init(pkg,mPm,maxMemory,memInfo.weightToRam,memInfo.totalScale,!mShowMax);
     pref.setOrder(i);
     mAppListGroup.addPreference(pref);
-    if (mAppListGroup.getPreferenceCount() > (MAX_ITEMS_TO_LIST + 1)) {
-      if (DEBUG)       Log.d(TAG,"Done with UI, hit item limit!");
-      break;
-    }
   }
 }

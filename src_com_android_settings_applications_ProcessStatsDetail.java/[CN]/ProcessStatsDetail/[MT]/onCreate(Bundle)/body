@@ -5,7 +5,6 @@
   final Bundle args=getArguments();
   mApp=args.getParcelable(EXTRA_PACKAGE_ENTRY);
   mApp.retrieveUiData(getActivity(),mPm);
-  mUseUss=args.getBoolean(EXTRA_USE_USS);
   mWeightToRam=args.getDouble(EXTRA_WEIGHT_TO_RAM);
   mTotalTime=args.getLong(EXTRA_TOTAL_TIME);
   mMaxMemoryUsage=args.getDouble(EXTRA_MAX_MEMORY_USAGE);
@@ -13,4 +12,5 @@
   mOnePercentTime=mTotalTime / 100;
   mServiceMap.clear();
   createDetails();
+  setHasOptionsMenu(true);
 }

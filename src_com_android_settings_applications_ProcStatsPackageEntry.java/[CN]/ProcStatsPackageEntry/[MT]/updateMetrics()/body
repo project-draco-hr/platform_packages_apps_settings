@@ -6,10 +6,10 @@
   final int N=mEntries.size();
   for (int i=0; i < N; i++) {
     ProcStatsEntry entry=mEntries.get(i);
-    mBgDuration+=entry.mBgDuration;
+    mBgDuration=Math.max(entry.mBgDuration,mBgDuration);
     mAvgBgMem+=entry.mAvgBgMem;
     mBgWeight+=entry.mBgWeight;
-    mRunDuration+=entry.mRunDuration;
+    mRunDuration=Math.max(entry.mRunDuration,mRunDuration);
     mAvgRunMem+=entry.mAvgRunMem;
     mRunWeight+=entry.mRunWeight;
     mMaxBgMem+=entry.mMaxBgMem;

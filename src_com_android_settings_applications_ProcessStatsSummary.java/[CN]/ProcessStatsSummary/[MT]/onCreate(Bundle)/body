@@ -1,0 +1,13 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.process_stats_summary);
+  mHeader=(LayoutPreference)findPreference(KEY_STATUS_HEADER);
+  mMemStatus=(TextView)mHeader.findViewById(R.id.memory_state);
+  mColors=(LinearColorBar)mHeader.findViewById(R.id.color_bar);
+  mPerformance=findPreference(KEY_PERFORMANCE);
+  mTotalMemory=findPreference(KEY_TOTAL_MEMORY);
+  mAverageUsed=findPreference(KEY_AVERAGY_USED);
+  mFree=findPreference(KEY_FREE);
+  mAppListPreference=findPreference(KEY_APP_LIST);
+  mAppListPreference.setOnPreferenceClickListener(this);
+}

@@ -1,4 +1,5 @@
 {
   CharSequence msg=getResources().getText(R.string.fullbackup_erase_dialog_message);
-  mConfirmDialog=new AlertDialog.Builder(getActivity()).setMessage(msg).setTitle(R.string.backup_erase_dialog_title).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).show();
+  mWaitingForConfirmationDialog=true;
+  mConfirmDialog=new AlertDialog.Builder(getActivity()).setMessage(msg).setTitle(R.string.backup_erase_dialog_title).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).setOnDismissListener(this).show();
 }

@@ -1,13 +1,13 @@
 {
   long elapsedRealtime=SystemClock.elapsedRealtime();
-  mPasswordEntryInputDisabler.setInputEnabled(false);
+  mPasswordEntry.setEnabled(false);
   mCountdownTimer=new CountDownTimer(elapsedRealtimeDeadline - elapsedRealtime,LockPatternUtils.FAILED_ATTEMPT_COUNTDOWN_INTERVAL_MS){
     @Override public void onTick(    long millisUntilFinished){
       final int secondsCountdown=(int)(millisUntilFinished / 1000);
       showError(getString(R.string.lockpattern_too_many_failed_confirmation_attempts,secondsCountdown),0);
     }
     @Override public void onFinish(){
-      mPasswordEntryInputDisabler.setInputEnabled(true);
+      resetState();
       mErrorTextView.setText("");
       mNumWrongConfirmAttempts=0;
     }

@@ -1,0 +1,7 @@
+{
+  super.onWindowFocusChanged(hasFocus);
+  Fragment fragment=getFragmentManager().findFragmentById(R.id.main_content);
+  if (fragment != null && fragment instanceof ConfirmLockPasswordFragment) {
+    ((ConfirmLockPasswordFragment)fragment).onWindowFocusChanged(hasFocus);
+  }
+}

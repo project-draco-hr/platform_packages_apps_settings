@@ -2,12 +2,17 @@
   super.onCreate(icicle);
   setHasOptionsMenu(true);
   addPreferencesFromResource(R.xml.installed_app_details);
-  INetworkStatsService statsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
-  try {
-    mStatsSession=statsService.openSession();
+  if (Utils.isBandwidthControlEnabled()) {
+    INetworkStatsService statsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+    try {
+      mStatsSession=statsService.openSession();
+    }
+ catch (    RemoteException e) {
+      throw new RuntimeException(e);
+    }
   }
- catch (  RemoteException e) {
-    throw new RuntimeException(e);
+ else {
+    removePreference(KEY_DATA);
   }
   mBatteryHelper=new BatteryStatsHelper(getActivity(),true);
 }

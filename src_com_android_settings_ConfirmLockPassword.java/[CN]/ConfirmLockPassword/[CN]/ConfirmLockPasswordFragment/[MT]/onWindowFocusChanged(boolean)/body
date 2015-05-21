@@ -1,0 +1,15 @@
+{
+  if (!hasFocus) {
+    return;
+  }
+  mPasswordEntry.post(new Runnable(){
+    @Override public void run(){
+      if (mPasswordEntry.isEnabled()) {
+        resetState();
+        return;
+      }
+      mImm.hideSoftInputFromWindow(mPasswordEntry.getWindowToken(),InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+  }
+);
+}

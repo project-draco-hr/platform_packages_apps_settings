@@ -1,4 +1,7 @@
 {
+  if (!mHasReceivedLoadEntries && (mExtraInfoBridge == null || mHasReceivedBridgeCallback)) {
+    return;
+  }
   if (DEBUG)   Log.i(TAG,"Rebuilding app list...");
   ApplicationsState.AppFilter filterObj;
   Comparator<AppEntry> comparatorObj;

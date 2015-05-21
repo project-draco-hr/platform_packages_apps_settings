@@ -1,5 +1,7 @@
 {
   mPasswordEntry.setEnabled(true);
   mPasswordEntryInputDisabler.setInputEnabled(true);
-  mImm.showSoftInput(mPasswordEntry,InputMethodManager.SHOW_IMPLICIT);
+  if (shouldAutoShowSoftKeyboard()) {
+    mImm.showSoftInput(mPasswordEntry,InputMethodManager.SHOW_IMPLICIT);
+  }
 }

@@ -1,13 +1,7 @@
 {
-  List<UserInfo> users=mUserManager.getUsers();
-  for (  UserInfo user : users) {
-    if (user.isGuest()) {
-      switchUserNow(user.id);
-      return;
-    }
-  }
-  if (mUserManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER) || (!mUserCaps.mIsOwner && Settings.Global.getInt(getContentResolver(),Settings.Global.ADD_USERS_WHEN_LOCKED,0) != 1)) {
-    Log.i(TAG,"Blocking guest creation because it is restricted");
+  final UserInfo guest=findGuest();
+  if (guest != null) {
+    switchUserNow(guest.id);
     return;
   }
   UserInfo guestUser=mUserManager.createGuest(getActivity(),getResources().getString(R.string.user_guest));

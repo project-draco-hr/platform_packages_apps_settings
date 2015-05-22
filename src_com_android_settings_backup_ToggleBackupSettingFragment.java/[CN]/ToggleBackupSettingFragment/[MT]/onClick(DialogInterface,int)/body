@@ -1,9 +1,11 @@
 {
   if (which == DialogInterface.BUTTON_POSITIVE) {
+    mWaitingForConfirmationDialog=false;
     setBackupEnabled(false);
     mSwitchBar.setCheckedInternal(false);
   }
  else   if (which == DialogInterface.BUTTON_NEGATIVE) {
+    mWaitingForConfirmationDialog=false;
     setBackupEnabled(true);
     mSwitchBar.setCheckedInternal(true);
   }

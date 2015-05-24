@@ -10,14 +10,15 @@
       mode=Global.ZEN_MODE_ALARMS;
     }
     setZenModeConfig(mode,condition);
-    notifySuccess(getChangeSummary(mode,minutes));
     AudioManager audioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
     if (audioManager != null) {
       audioManager.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION,AudioManager.ADJUST_SAME,AudioManager.FLAG_SHOW_UI);
     }
+    notifySuccess(getChangeSummary(mode,minutes));
   }
  else {
     Log.v(TAG,"Missing extra android.provider.Settings.EXTRA_DO_NOT_DISTURB_MODE_ENABLED");
+    finish();
   }
-  return true;
+  return false;
 }

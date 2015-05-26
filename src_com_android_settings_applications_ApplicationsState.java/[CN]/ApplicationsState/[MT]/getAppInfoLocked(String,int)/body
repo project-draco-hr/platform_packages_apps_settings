@@ -1,0 +1,9 @@
+{
+  for (int i=0; i < mApplications.size(); i++) {
+    ApplicationInfo info=mApplications.get(i);
+    if (pkg.equals(info.packageName) && userId == UserHandle.getUserId(info.uid)) {
+      return info;
+    }
+  }
+  return null;
+}

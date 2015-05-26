@@ -1,0 +1,24 @@
+{
+  final String primary="\"primary\"";
+  final String[] projection={Calendars._ID,Calendars.CALENDAR_DISPLAY_NAME,"(" + Calendars.ACCOUNT_NAME + "="+ Calendars.OWNER_ACCOUNT+ ") AS "+ primary};
+  final String selection=primary + " = 1";
+  Cursor cursor=null;
+  try {
+    cursor=context.getContentResolver().query(Calendars.CONTENT_URI,projection,selection,null,null);
+    if (cursor == null) {
+      return;
+    }
+    while (cursor.moveToNext()) {
+      final CalendarInfo ci=new CalendarInfo();
+      ci.id=cursor.getLong(0);
+      ci.name=cursor.getString(1);
+      ci.userId=context.getUserId();
+      outCalendars.add(ci);
+    }
+  }
+  finally {
+    if (cursor != null) {
+      cursor.close();
+    }
+  }
+}

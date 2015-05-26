@@ -13,8 +13,7 @@
   Collections.sort(entries,sEntryCompare);
   for (int ie=0; ie < entries.size(); ie++) {
     ProcStatsEntry entry=entries.get(ie);
-    PreferenceCategory processPref=new PreferenceCategory(getActivity());
-    processPref.setLayoutResource(R.layout.process_preference_category);
+    Preference processPref=new Preference(getActivity());
     processPref.setTitle(entry.mLabel);
     long duration=Math.max(entry.mRunDuration,entry.mBgDuration);
     long memoryUse=Math.max((long)(entry.mRunWeight * mWeightToRam),(long)(entry.mBgWeight * mWeightToRam));
@@ -22,6 +21,5 @@
     CharSequence frequency=ProcStatsPackageEntry.getFrequency(duration / (float)mTotalTime,getActivity());
     processPref.setSummary(getString(R.string.memory_use_running_format,memoryString,frequency));
     getPreferenceScreen().addPreference(processPref);
-    fillServicesSection(entry,processPref);
   }
 }

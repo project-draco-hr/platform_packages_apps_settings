@@ -5,11 +5,11 @@
   ProcessStatsPreference pgp=(ProcessStatsPreference)preference;
   Bundle args=new Bundle();
   args.putParcelable(ProcessStatsDetail.EXTRA_PACKAGE_ENTRY,pgp.getEntry());
-  args.putBoolean(ProcessStatsDetail.EXTRA_USE_USS,mUseUss);
-  args.putDouble(ProcessStatsDetail.EXTRA_WEIGHT_TO_RAM,mStatsManager.getMemInfo().weightToRam);
-  args.putLong(ProcessStatsDetail.EXTRA_TOTAL_TIME,memTotalTime);
-  args.putDouble(ProcessStatsDetail.EXTRA_MAX_MEMORY_USAGE,mMaxMemoryUsage);
-  args.putDouble(ProcessStatsDetail.EXTRA_TOTAL_SCALE,mStatsManager.getMemInfo().totalScale);
+  MemInfo memInfo=mStatsManager.getMemInfo();
+  args.putDouble(ProcessStatsDetail.EXTRA_WEIGHT_TO_RAM,memInfo.weightToRam);
+  args.putLong(ProcessStatsDetail.EXTRA_TOTAL_TIME,memInfo.memTotalTime);
+  args.putDouble(ProcessStatsDetail.EXTRA_MAX_MEMORY_USAGE,memInfo.usedWeight * memInfo.weightToRam);
+  args.putDouble(ProcessStatsDetail.EXTRA_TOTAL_SCALE,memInfo.totalScale);
   ((SettingsActivity)getActivity()).startPreferencePanel(ProcessStatsDetail.class.getName(),args,R.string.details_title,null,null,0);
   return super.onPreferenceTreeClick(preferenceScreen,preference);
 }

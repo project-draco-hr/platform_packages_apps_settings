@@ -1,6 +1,9 @@
 {
+  if (mForceStop == null) {
+    return;
+  }
   if (mApp.mEntries.get(0).mUid < Process.FIRST_APPLICATION_UID) {
-    mForceStopButton.setEnabled(false);
+    mForceStop.setVisible(false);
     return;
   }
   boolean isStarted=false;
@@ -9,7 +12,7 @@
     for (int j=0; j < ent.mPackages.size(); j++) {
       String pkg=ent.mPackages.get(j);
       if (mDpm.packageHasActiveAdmins(pkg)) {
-        mForceStopButton.setEnabled(false);
+        mForceStop.setEnabled(false);
         return;
       }
       try {
@@ -23,6 +26,6 @@
     }
   }
   if (isStarted) {
-    mForceStopButton.setEnabled(true);
+    mForceStop.setVisible(true);
   }
 }

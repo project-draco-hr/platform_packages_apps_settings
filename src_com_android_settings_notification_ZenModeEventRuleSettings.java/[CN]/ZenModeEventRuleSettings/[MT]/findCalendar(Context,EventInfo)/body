@@ -1,0 +1,10 @@
+{
+  if (context == null || event == null)   return null;
+  final String eventKey=key(event);
+  for (  CalendarInfo calendar : getCalendars(context)) {
+    if (eventKey.equals(key(calendar))) {
+      return calendar;
+    }
+  }
+  return null;
+}

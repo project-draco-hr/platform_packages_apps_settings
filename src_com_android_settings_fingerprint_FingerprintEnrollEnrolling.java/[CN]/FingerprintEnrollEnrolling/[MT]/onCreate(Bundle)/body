@@ -8,7 +8,7 @@
   mProgressBar=(ProgressBar)findViewById(R.id.fingerprint_progress_bar);
   mFingerprintAnimator=(ImageView)findViewById(R.id.fingerprint_animator);
   mIconAnimationDrawable=(AnimatedVectorDrawable)mFingerprintAnimator.getDrawable();
-  mIconAnimationDrawable.addListener(mIconAnimationListener);
+  mIconAnimationDrawable.registerAnimationCallback(mIconAnimationCallback);
   mFastOutSlowInInterpolator=AnimationUtils.loadInterpolator(this,android.R.interpolator.fast_out_slow_in);
   mFingerprintAnimator.setOnTouchListener(new View.OnTouchListener(){
     @Override public boolean onTouch(    View v,    MotionEvent event){

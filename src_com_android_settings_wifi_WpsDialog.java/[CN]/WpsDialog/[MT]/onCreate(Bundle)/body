@@ -17,5 +17,10 @@
 );
   mWifiManager=(WifiManager)mContext.getSystemService(Context.WIFI_SERVICE);
   setView(mView);
+  if (savedInstanceState == null) {
+    WpsInfo wpsConfig=new WpsInfo();
+    wpsConfig.setup=mWpsSetup;
+    mWifiManager.startWps(wpsConfig,mWpsListener);
+  }
   super.onCreate(savedInstanceState);
 }

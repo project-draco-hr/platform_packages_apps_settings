@@ -1,4 +1,7 @@
 {
   super.onResume();
-  reloadCalendar();
+  if (!mCreate) {
+    reloadCalendar();
+  }
+  mCreate=false;
 }

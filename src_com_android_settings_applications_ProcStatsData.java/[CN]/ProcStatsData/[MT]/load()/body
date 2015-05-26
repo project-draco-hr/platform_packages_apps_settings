@@ -1,6 +1,5 @@
 {
   try {
-    mMemState=mProcessStats.getCurrentMemoryState();
     ParcelFileDescriptor pfd=mProcessStats.getStatsOverTime(mDuration);
     mStats=new ProcessStats(false);
     InputStream is=new ParcelFileDescriptor.AutoCloseInputStream(pfd);

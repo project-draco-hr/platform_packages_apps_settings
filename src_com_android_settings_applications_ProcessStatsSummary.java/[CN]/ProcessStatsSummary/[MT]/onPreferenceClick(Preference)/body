@@ -1,0 +1,11 @@
+{
+  if (preference == mAppListPreference) {
+    Bundle args=new Bundle();
+    args.putBoolean(ARG_TRANSFER_STATS,true);
+    args.putInt(ARG_DURATION_INDEX,mDurationIndex);
+    mStatsManager.xferStats();
+    startFragment(this,ProcessStatsUi.class.getName(),R.string.app_memory_use,0,args);
+    return true;
+  }
+  return false;
+}

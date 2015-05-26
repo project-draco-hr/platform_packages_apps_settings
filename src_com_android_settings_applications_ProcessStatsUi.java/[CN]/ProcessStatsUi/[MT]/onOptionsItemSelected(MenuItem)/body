@@ -1,49 +1,11 @@
 {
 switch (item.getItemId()) {
-case MENU_STATS_REFRESH:
-    mStatsManager.refreshStats(false);
+case MENU_SHOW_AVG:
+case MENU_SHOW_MAX:
+    mShowMax=!mShowMax;
   refreshUi();
-return true;
-case MENU_SHOW_PERCENTAGE:
-mShowPercentage=!mShowPercentage;
-refreshUi();
-return true;
-case MENU_SHOW_SYSTEM:
-mShowSystem=!mShowSystem;
-refreshUi();
-return true;
-case MENU_USE_USS:
-mUseUss=!mUseUss;
-refreshUi();
-return true;
-case MENU_TYPE_BACKGROUND:
-case MENU_TYPE_FOREGROUND:
-case MENU_TYPE_CACHED:
-mStatsType=item.getItemId();
-if (mStatsType == MENU_TYPE_FOREGROUND) {
-mStatsManager.setStats(FOREGROUND_PROC_STATES);
-}
- else if (mStatsType == MENU_TYPE_CACHED) {
-mStatsManager.setStats(CACHED_PROC_STATES);
-}
- else {
-mStatsManager.setStats(mShowSystem ? BACKGROUND_AND_SYSTEM_PROC_STATES : ProcessStats.BACKGROUND_PROC_STATES);
-}
-refreshUi();
-return true;
-case MENU_DURATION:
-CharSequence[] durations=new CharSequence[sDurationLabels.length];
-for (int i=0; i < sDurationLabels.length; i++) {
-durations[i]=getString(sDurationLabels[i]);
-}
-new AlertDialog.Builder(getContext()).setTitle(item.getTitle()).setItems(durations,new DialogInterface.OnClickListener(){
-@Override public void onClick(DialogInterface dialog,int which){
-mStatsManager.setDuration(sDurations[which]);
-refreshUi();
-}
-}
-).show();
+updateMenu();
 return true;
 }
-return false;
+return super.onOptionsItemSelected(item);
 }

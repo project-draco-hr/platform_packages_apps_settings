@@ -1,12 +1,15 @@
 {
+  mCreate=true;
   addPreferencesFromResource(R.xml.zen_mode_event_rule_settings);
   final PreferenceScreen root=getPreferenceScreen();
   mCalendar=(DropDownPreference)root.findPreference(KEY_CALENDAR);
   mCalendar.setCallback(new DropDownPreference.Callback(){
     @Override public boolean onItemSelected(    int pos,    Object value){
-      final long calendar=(Long)value;
-      if (calendar == mEvent.calendar)       return true;
-      mEvent.calendar=calendar;
+      final String calendarKey=(String)value;
+      if (calendarKey.equals(key(mEvent)))       return true;
+      final int i=calendarKey.indexOf(':');
+      mEvent.userId=Integer.parseInt(calendarKey.substring(0,i));
+      mEvent.calendar=Long.parseLong(calendarKey.substring(i + 1));
       updateRule(ZenModeConfig.toEventConditionId(mEvent));
       return true;
     }

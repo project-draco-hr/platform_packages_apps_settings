@@ -1,11 +1,11 @@
 {
   if (amount > ALWAYS_THRESHOLD) {
-    return context.getString(R.string.always_running);
+    return context.getString(R.string.always_running,Utils.formatPercentage((int)(amount * 100)));
   }
  else   if (amount > SOMETIMES_THRESHOLD) {
-    return context.getString(R.string.sometimes_running);
+    return context.getString(R.string.sometimes_running,Utils.formatPercentage((int)(amount * 100)));
   }
  else {
-    return context.getString(R.string.rarely_running);
+    return context.getString(R.string.rarely_running,Utils.formatPercentage((int)(amount * 100)));
   }
 }

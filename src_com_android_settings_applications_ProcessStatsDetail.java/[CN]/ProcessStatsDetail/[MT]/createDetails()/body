@@ -2,29 +2,18 @@
   addPreferencesFromResource(R.xml.app_memory_settings);
   fillProcessesSection();
   LayoutPreference headerLayout=(LayoutPreference)findPreference(KEY_DETAILS_HEADER);
-  TextView avgUsed=(TextView)headerLayout.findViewById(R.id.memory_avg);
-  TextView maxUsed=(TextView)headerLayout.findViewById(R.id.memory_max);
-  avgUsed.setText(getString(R.string.memory_avg_desc,Formatter.formatShortFileSize(getActivity(),(long)(Math.max(mApp.mBgWeight,mApp.mRunWeight) * mWeightToRam))));
-  maxUsed.setText(getString(R.string.memory_max_desc,Formatter.formatShortFileSize(getActivity(),(long)(Math.max(mApp.mMaxBgMem,mApp.mMaxRunMem) * 1024 * mTotalScale))));
-  mForceStopButton=(Button)headerLayout.findViewById(R.id.right_button);
-  mReportButton=(Button)headerLayout.findViewById(R.id.left_button);
-  if (mApp.mEntries.get(0).mUid >= android.os.Process.FIRST_APPLICATION_UID) {
-    mForceStopButton.setEnabled(false);
-    mReportButton.setVisibility(View.INVISIBLE);
-    mForceStopButton.setText(R.string.force_stop);
-    mForceStopButton.setTag(ACTION_FORCE_STOP);
-    mForceStopButton.setOnClickListener(this);
-  }
- else {
-    mReportButton.setVisibility(View.GONE);
-    mForceStopButton.setVisibility(View.GONE);
-  }
   boolean statsForeground=mApp.mRunWeight > mApp.mBgWeight;
-  float avgRatio=(float)((statsForeground ? mApp.mRunWeight : mApp.mBgWeight) * mWeightToRam / mMaxMemoryUsage);
-  float maxRatio=(float)((statsForeground ? mApp.mMaxRunMem : mApp.mMaxBgMem) * mTotalScale * 1024 / mMaxMemoryUsage - avgRatio);
-  float remainingRatio=1 - avgRatio - maxRatio;
+  double avgRam=(statsForeground ? mApp.mRunWeight : mApp.mBgWeight) * mWeightToRam;
+  float avgRatio=(float)(avgRam / mMaxMemoryUsage);
+  float remainingRatio=1 - avgRatio;
   mColorBar=(LinearColorBar)headerLayout.findViewById(R.id.color_bar);
   Context context=getActivity();
-  mColorBar.setColors(context.getColor(R.color.memory_avg_use),context.getColor(R.color.memory_max_use),context.getColor(R.color.memory_remaining));
-  mColorBar.setRatios(avgRatio,maxRatio,remainingRatio);
+  mColorBar.setColors(context.getColor(R.color.memory_max_use),0,context.getColor(R.color.memory_remaining));
+  mColorBar.setRatios(avgRatio,0,remainingRatio);
+  ((TextView)headerLayout.findViewById(R.id.memory_state)).setText(Formatter.formatShortFileSize(getContext(),(long)avgRam));
+  long duration=Math.max(mApp.mRunDuration,mApp.mBgDuration);
+  CharSequence frequency=ProcStatsPackageEntry.getFrequency(duration / (float)mTotalTime,getActivity());
+  findPreference(KEY_FREQUENCY).setSummary(frequency);
+  double max=Math.max(mApp.mMaxBgMem,mApp.mMaxRunMem) * mTotalScale * 1024;
+  findPreference(KEY_MAX_USAGE).setSummary(Formatter.formatShortFileSize(getContext(),(long)max));
 }

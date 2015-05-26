@@ -1,18 +1,7 @@
 {
   super.onCreate(icicle);
-  mStatsManager=new ProcStatsData(getActivity(),icicle != null);
   mPm=getActivity().getPackageManager();
-  addPreferencesFromResource(R.xml.process_stats_summary);
+  addPreferencesFromResource(R.xml.process_stats_ui);
   mAppListGroup=(PreferenceGroup)findPreference(KEY_APP_LIST);
-  mHeader=(LayoutPreference)mAppListGroup.findPreference(KEY_STATUS_HEADER);
-  mMemStatus=(TextView)mHeader.findViewById(R.id.memory_state);
-  mColors=(LinearColorBar)mHeader.findViewById(R.id.color_bar);
-  mMemUsed=(TextView)mHeader.findViewById(R.id.memory_used);
-  mStatsManager.setDuration(icicle != null ? icicle.getLong(DURATION,sDurations[0]) : sDurations[0]);
-  mShowPercentage=icicle != null ? icicle.getBoolean(SHOW_PERCENTAGE) : true;
-  mShowSystem=icicle != null ? icicle.getBoolean(SHOW_SYSTEM) : false;
-  mUseUss=icicle != null ? icicle.getBoolean(USE_USS) : false;
-  mStatsType=icicle != null ? icicle.getInt(STATS_TYPE,MENU_TYPE_BACKGROUND) : MENU_TYPE_BACKGROUND;
-  mMemRegion=icicle != null ? icicle.getInt(MEM_REGION,LinearColorBar.REGION_GREEN) : LinearColorBar.REGION_GREEN;
   setHasOptionsMenu(true);
 }

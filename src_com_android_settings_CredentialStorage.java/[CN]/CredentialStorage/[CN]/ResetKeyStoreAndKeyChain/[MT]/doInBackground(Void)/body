@@ -1,5 +1,10 @@
 {
-  mKeyStore.reset();
+  final UserManager um=(UserManager)getSystemService(USER_SERVICE);
+  for (  UserInfo pi : um.getProfiles(UserHandle.getUserId(Process.myUid()))) {
+    for (    int uid : SYSTEM_CREDENTIAL_UIDS) {
+      mKeyStore.clearUid(UserHandle.getUid(pi.id,uid));
+    }
+  }
   try {
     KeyChainConnection keyChainConnection=KeyChain.bind(CredentialStorage.this);
     try {

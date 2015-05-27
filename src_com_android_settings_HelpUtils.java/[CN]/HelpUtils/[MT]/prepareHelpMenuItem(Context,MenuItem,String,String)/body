@@ -4,9 +4,8 @@
     return false;
   }
  else {
-    Intent intent=getHelpIntent(context,helpUriString);
-    ComponentName component=intent.resolveActivity(context.getPackageManager());
-    if (component != null) {
+    Intent intent=getHelpIntent(context,helpUriString,backupContext);
+    if (intent != null) {
       helpMenuItem.setIntent(intent);
       helpMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
       helpMenuItem.setVisible(true);

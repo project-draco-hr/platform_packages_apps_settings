@@ -2,4 +2,7 @@
   super.onStop();
   mSidecar.setListener(null);
   stopIconAnimation();
+  if (!isChangingConfigurations()) {
+    finish();
+  }
 }

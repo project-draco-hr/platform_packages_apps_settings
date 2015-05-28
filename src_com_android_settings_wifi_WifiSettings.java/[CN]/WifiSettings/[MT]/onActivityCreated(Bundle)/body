@@ -1,6 +1,6 @@
 {
   super.onActivityCreated(savedInstanceState);
-  mWifiTracker=new WifiTracker(getActivity(),this,true,true,false);
+  mWifiTracker=new WifiTracker(getActivity(),this,mBgThread.getLooper(),true,true,false);
   mWifiManager=mWifiTracker.getManager();
   mConnectListener=new WifiManager.ActionListener(){
     @Override public void onSuccess(){

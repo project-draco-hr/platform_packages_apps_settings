@@ -1,13 +1,8 @@
 {
-  if (mTitleView != null) {
-    WifiConfiguration config=mAccessPoint.getConfig();
-    if (config == null) {
-      return;
-    }
+  WifiConfiguration config=mAccessPoint.getConfig();
+  if (config != null) {
     UserHandle creatorUser=new UserHandle(UserHandle.getUserId(config.creatorUid));
-    Drawable badge=context.getPackageManager().getUserBadgeForDensity(creatorUser,0);
-    final int badgePadding=context.getResources().getDimensionPixelSize(R.dimen.wifi_preference_badge_padding);
-    mTitleView.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,badge,null);
-    mTitleView.setCompoundDrawablePadding(badgePadding);
+    mBadge=context.getPackageManager().getUserBadgeForDensity(creatorUser,0);
+    mBadgePadding=context.getResources().getDimensionPixelSize(R.dimen.wifi_preference_badge_padding);
   }
 }

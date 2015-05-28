@@ -1,0 +1,9 @@
+{
+  Bundle args=new Bundle();
+  args.putParcelable(ProcessStatsDetail.EXTRA_PACKAGE_ENTRY,entry);
+  args.putDouble(ProcessStatsDetail.EXTRA_WEIGHT_TO_RAM,memInfo.weightToRam);
+  args.putLong(ProcessStatsDetail.EXTRA_TOTAL_TIME,memInfo.memTotalTime);
+  args.putDouble(ProcessStatsDetail.EXTRA_MAX_MEMORY_USAGE,memInfo.usedWeight * memInfo.weightToRam);
+  args.putDouble(ProcessStatsDetail.EXTRA_TOTAL_SCALE,memInfo.totalScale);
+  activity.startPreferencePanel(ProcessStatsDetail.class.getName(),args,R.string.memory_usage,null,null,0);
+}

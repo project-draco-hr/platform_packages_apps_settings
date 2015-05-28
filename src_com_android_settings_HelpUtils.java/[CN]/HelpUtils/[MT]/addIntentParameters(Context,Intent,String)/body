@@ -1,0 +1,10 @@
+{
+  if (!intent.hasExtra(EXTRA_CONTEXT)) {
+    intent.putExtra(EXTRA_CONTEXT,backupContext);
+  }
+  intent.putExtra(EXTRA_THEME,1);
+  Theme theme=context.getTheme();
+  TypedValue typedValue=new TypedValue();
+  theme.resolveAttribute(android.R.attr.colorPrimary,typedValue,true);
+  intent.putExtra(EXTRA_PRIMARY_COLOR,context.getColor(typedValue.resourceId));
+}

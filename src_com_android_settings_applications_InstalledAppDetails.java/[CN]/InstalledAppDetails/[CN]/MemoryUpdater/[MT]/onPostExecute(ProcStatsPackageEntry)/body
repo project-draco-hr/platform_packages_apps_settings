@@ -1,0 +1,15 @@
+{
+  if (getActivity() == null) {
+    return;
+  }
+  if (entry != null) {
+    mStats=entry;
+    mMemoryPreference.setEnabled(true);
+    double amount=Math.max(entry.mRunWeight,entry.mBgWeight) * mStatsManager.getMemInfo().weightToRam;
+    mMemoryPreference.setSummary(getString(R.string.memory_use_summary,Formatter.formatShortFileSize(getContext(),(long)amount)));
+  }
+ else {
+    mMemoryPreference.setEnabled(false);
+    mMemoryPreference.setSummary(getString(R.string.no_memory_use_summary));
+  }
+}

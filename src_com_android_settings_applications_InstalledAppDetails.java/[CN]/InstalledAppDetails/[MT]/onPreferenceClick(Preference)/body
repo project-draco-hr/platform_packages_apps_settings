@@ -11,6 +11,9 @@
  else   if (preference == mLaunchPreference) {
     startAppInfoFragment(AppLaunchSettings.class,mLaunchPreference.getTitle());
   }
+ else   if (preference == mMemoryPreference) {
+    ProcessStatsBase.launchMemoryDetail((SettingsActivity)getActivity(),mStatsManager.getMemInfo(),mStats);
+  }
  else   if (preference == mDataPreference) {
     Bundle args=new Bundle();
     args.putString(DataUsageSummary.EXTRA_SHOW_APP_IMMEDIATE_PKG,mAppEntry.info.packageName);

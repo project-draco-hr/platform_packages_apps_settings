@@ -17,6 +17,8 @@
   mBatteryPreference=findPreference(KEY_BATTERY);
   mBatteryPreference.setEnabled(false);
   mBatteryPreference.setOnPreferenceClickListener(this);
+  mMemoryPreference=findPreference(KEY_MEMORY);
+  mMemoryPreference.setOnPreferenceClickListener(this);
   mLaunchPreference=findPreference(KEY_LAUNCH);
   if (mAppEntry.info != null) {
     if ((mAppEntry.info.flags & ApplicationInfo.FLAG_INSTALLED) == 0 || !mAppEntry.info.enabled) {

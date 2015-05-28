@@ -1,0 +1,19 @@
+{
+  if (mPackageInfo == null) {
+    return null;
+  }
+  if (mStatsManager == null) {
+    mStatsManager=new ProcStatsData(getActivity(),false);
+    mStatsManager.setDuration(ProcessStatsBase.sDurations[0]);
+  }
+  mStatsManager.refreshStats(true);
+  for (  ProcStatsPackageEntry pkgEntry : mStatsManager.getEntries()) {
+    for (    ProcStatsEntry entry : pkgEntry.mEntries) {
+      if (entry.mUid == mPackageInfo.applicationInfo.uid) {
+        pkgEntry.updateMetrics();
+        return pkgEntry;
+      }
+    }
+  }
+  return null;
+}

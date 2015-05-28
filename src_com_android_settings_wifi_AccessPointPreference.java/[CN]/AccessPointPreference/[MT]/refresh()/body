@@ -1,16 +1,26 @@
 {
-  if (mForSavedNetworks)   setTitle(mAccessPoint.getConfigName());
- else   setTitle(mAccessPoint.getSsid());
+  if (mForSavedNetworks) {
+    setTitle(mAccessPoint.getConfigName());
+  }
+ else {
+    setTitle(mAccessPoint.getSsid());
+  }
   final Context context=getContext();
-  updateIcon(mAccessPoint.getLevel(),context);
+  int level=mAccessPoint.getLevel();
+  if (level != mLevel) {
+    updateIcon(mLevel,context);
+    mLevel=level;
+    notifyChanged();
+  }
   updateBadge(context);
   setSummary(null);
   String summary=mForSavedNetworks ? mAccessPoint.getSavedNetworkSummary() : mAccessPoint.getSettingsSummary();
-  if (summary.length() > 0) {
+  boolean showSummary=summary.length() > 0;
+  if (showSummary) {
     setSummary(summary);
-    setShowSummary(true);
   }
- else {
-    setShowSummary(false);
+  if (showSummary != mShowSummary) {
+    mShowSummary=showSummary;
+    notifyChanged();
   }
 }

@@ -1,9 +1,15 @@
 {
   super.onBindView(view);
-  updateIcon(mAccessPoint.getLevel(),getContext());
+  Drawable drawable=getIcon();
+  if (drawable != null) {
+    drawable.setLevel(mLevel);
+  }
   mTitleView=(TextView)view.findViewById(com.android.internal.R.id.title);
+  if (mTitleView != null) {
+    mTitleView.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,mBadge,null);
+    mTitleView.setCompoundDrawablePadding(mBadgePadding);
+  }
   mSummaryView=(TextView)view.findViewById(com.android.internal.R.id.summary);
-  mSummaryView.setVisibility(showSummary ? View.VISIBLE : View.GONE);
+  mSummaryView.setVisibility(mShowSummary ? View.VISIBLE : View.GONE);
   updateBadge(getContext());
-  notifyChanged();
 }

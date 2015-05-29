@@ -9,7 +9,10 @@
       if (calendarKey.equals(key(mEvent)))       return true;
       final int i=calendarKey.indexOf(':');
       mEvent.userId=Integer.parseInt(calendarKey.substring(0,i));
-      mEvent.calendar=Long.parseLong(calendarKey.substring(i + 1));
+      mEvent.calendar=calendarKey.substring(i + 1);
+      if (mEvent.calendar.isEmpty()) {
+        mEvent.calendar=null;
+      }
       updateRule(ZenModeConfig.toEventConditionId(mEvent));
       return true;
     }

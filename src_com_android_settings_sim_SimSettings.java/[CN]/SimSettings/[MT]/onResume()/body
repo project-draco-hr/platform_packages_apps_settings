@@ -1,9 +1,7 @@
 {
   super.onResume();
-  mSubInfoList=mSubscriptionManager.getActiveSubscriptionInfoList();
-  if (DBG)   log("[onResme] mSubInfoList=" + mSubInfoList);
+  mSubscriptionManager.addOnSubscriptionsChangedListener(mOnSubscriptionsChangeListener);
   final TelephonyManager tm=(TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
   tm.listen(mPhoneStateListener,PhoneStateListener.LISTEN_CALL_STATE);
-  updateAvailableSubInfos();
-  updateAllOptions();
+  updateSubscriptions();
 }

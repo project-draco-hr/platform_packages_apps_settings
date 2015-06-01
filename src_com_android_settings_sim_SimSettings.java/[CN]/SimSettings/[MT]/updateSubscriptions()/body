@@ -1,0 +1,22 @@
+{
+  mSubInfoList=mSubscriptionManager.getActiveSubscriptionInfoList();
+  for (int i=0; i < mNumSlots; ++i) {
+    Preference pref=mSimCards.findPreference("sim" + i);
+    if (pref instanceof SimPreference) {
+      mSimCards.removePreference(pref);
+    }
+  }
+  mAvailableSubInfos.clear();
+  mSelectableSubInfos.clear();
+  for (int i=0; i < mNumSlots; ++i) {
+    final SubscriptionInfo sir=mSubscriptionManager.getActiveSubscriptionInfoForSimSlotIndex(i);
+    SimPreference simPreference=new SimPreference(mContext,sir,i);
+    simPreference.setOrder(i - mNumSlots);
+    mSimCards.addPreference(simPreference);
+    mAvailableSubInfos.add(sir);
+    if (sir != null) {
+      mSelectableSubInfos.add(sir);
+    }
+  }
+  updateAllOptions();
+}

@@ -1,6 +1,6 @@
 {
-  final Resources res=getResources();
-  setTitle(String.format(getResources().getString(R.string.sim_editor_title),(mSlotId + 1)));
+  final Resources res=mContext.getResources();
+  setTitle(String.format(mContext.getResources().getString(R.string.sim_editor_title),(mSlotId + 1)));
   if (mSubInfoRecord != null) {
     if (TextUtils.isEmpty(getPhoneNumber(mSubInfoRecord))) {
       setSummary(mSubInfoRecord.getDisplayName());

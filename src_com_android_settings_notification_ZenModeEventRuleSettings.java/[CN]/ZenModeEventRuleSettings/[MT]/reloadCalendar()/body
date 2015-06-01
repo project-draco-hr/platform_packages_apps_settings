@@ -1,8 +1,16 @@
 {
   mCalendars=getCalendars(mContext);
   mCalendar.clearItems();
-  mCalendar.addItem(R.string.zen_mode_event_rule_calendar_any,key(0,ANY_CALENDAR));
+  mCalendar.addItem(R.string.zen_mode_event_rule_calendar_any,key(0,null));
+  final String eventCalendar=mEvent != null ? mEvent.calendar : null;
+  boolean found=false;
   for (  CalendarInfo calendar : mCalendars) {
     mCalendar.addItem(calendar.name,key(calendar));
+    if (eventCalendar != null && eventCalendar.equals(calendar.name)) {
+      found=true;
+    }
+  }
+  if (eventCalendar != null && !found) {
+    mCalendar.addItem(eventCalendar,key(mEvent.userId,eventCalendar));
   }
 }

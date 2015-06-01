@@ -122,9 +122,24 @@ catch (  IOException e) {
   mProfileOwnerWarning=(TextView)findViewById(R.id.profile_owner_warning);
   mAddMsg=(TextView)findViewById(R.id.add_msg);
   mAddMsgExpander=(ImageView)findViewById(R.id.add_msg_expander);
-  mAddMsg.setOnClickListener(new View.OnClickListener(){
-    public void onClick(    View v){
-      toggleMessageEllipsis(v);
+  final View.OnClickListener onClickListener=new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      toggleMessageEllipsis(mAddMsg);
+    }
+  }
+;
+  mAddMsgExpander.setOnClickListener(onClickListener);
+  mAddMsg.setOnClickListener(onClickListener);
+  mAddMsg.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
+    @Override public void onGlobalLayout(){
+      final int maxLines=getEllipsizedLines();
+      boolean hideMsgExpander=mAddMsg.getLineCount() <= maxLines;
+      mAddMsgExpander.setVisibility(hideMsgExpander ? View.GONE : View.VISIBLE);
+      if (hideMsgExpander) {
+        mAddMsg.setOnClickListener(null);
+        ((View)mAddMsgExpander.getParent()).invalidate();
+      }
+      mAddMsg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
   }
 );

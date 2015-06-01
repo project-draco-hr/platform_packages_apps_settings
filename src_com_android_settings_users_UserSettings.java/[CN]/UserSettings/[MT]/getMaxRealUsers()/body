@@ -1,0 +1,11 @@
+{
+  final int maxUsersAndGuest=UserManager.getMaxSupportedUsers() + 1;
+  final List<UserInfo> users=mUserManager.getUsers();
+  int managedProfiles=0;
+  for (  UserInfo user : users) {
+    if (user.isManagedProfile()) {
+      managedProfiles++;
+    }
+  }
+  return maxUsersAndGuest - managedProfiles;
+}

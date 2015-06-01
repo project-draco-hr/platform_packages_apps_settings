@@ -1,7 +1,8 @@
 {
-  final Resources res=getResources();
-  AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-  final View dialogLayout=getActivity().getLayoutInflater().inflate(R.layout.multi_sim_dialog,null);
+  final Resources res=mContext.getResources();
+  AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
+  LayoutInflater inflater=(LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  final View dialogLayout=inflater.inflate(R.layout.multi_sim_dialog,null);
   builder.setView(dialogLayout);
   EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);
   nameText.setText(mSubInfoRecord.getDisplayName());
@@ -33,7 +34,7 @@
  else {
     numberView.setText(PhoneNumberUtils.formatNumber(rawNumber));
   }
-  final TelephonyManager tm=(TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+  final TelephonyManager tm=(TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
   String simCarrierName=tm.getSimOperatorNameForSubscription(mSubInfoRecord.getSubscriptionId());
   TextView carrierView=(TextView)dialogLayout.findViewById(R.id.carrier);
   carrierView.setText(!TextUtils.isEmpty(simCarrierName) ? simCarrierName : getContext().getString(com.android.internal.R.string.unknownName));

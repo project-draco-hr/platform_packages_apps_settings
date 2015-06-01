@@ -1,11 +1,12 @@
 {
   super.onCreate(bundle);
+  mContext=getActivity();
   mSubscriptionManager=SubscriptionManager.from(getActivity());
-  if (mSubInfoList == null) {
-    mSubInfoList=mSubscriptionManager.getActiveSubscriptionInfoList();
-  }
-  if (DBG)   log("[onCreate] mSubInfoList=" + mSubInfoList);
-  createPreferences();
-  updateAllOptions();
-  SimBootReceiver.cancelNotification(getActivity());
+  final TelephonyManager tm=(TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+  addPreferencesFromResource(R.xml.sim_settings);
+  mNumSlots=tm.getSimCount();
+  mSimCards=(PreferenceScreen)findPreference(SIM_CARD_CATEGORY);
+  mAvailableSubInfos=new ArrayList<SubscriptionInfo>(mNumSlots);
+  mSelectableSubInfos=new ArrayList<SubscriptionInfo>();
+  SimSelectNotification.cancelNotification(getActivity());
 }

@@ -1,0 +1,52 @@
+{
+  final TelephonyManager telephonyManager=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+  final SubscriptionManager subscriptionManager=SubscriptionManager.from(context);
+  final int numSlots=telephonyManager.getSimCount();
+  final boolean isInProvisioning=Settings.Global.getInt(context.getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0;
+  if (numSlots < 2 || isInProvisioning) {
+    return;
+  }
+  cancelNotification(context);
+  String simStatus=intent.getStringExtra(IccCardConstants.INTENT_KEY_ICC_STATE);
+  if (!(IccCardConstants.INTENT_VALUE_ICC_ABSENT.equals(simStatus) || IccCardConstants.INTENT_VALUE_ICC_LOADED.equals(simStatus))) {
+    Log.d(TAG,"sim state is not Absent or Loaded");
+    return;
+  }
+ else {
+    Log.d(TAG,"simstatus = " + simStatus);
+  }
+  int state;
+  for (int i=0; i < numSlots; i++) {
+    state=telephonyManager.getSimState(i);
+    if (!(state == TelephonyManager.SIM_STATE_ABSENT || state == TelephonyManager.SIM_STATE_READY || state == TelephonyManager.SIM_STATE_UNKNOWN)) {
+      Log.d(TAG,"All sims not in valid state yet");
+      return;
+    }
+  }
+  List<SubscriptionInfo> sil=subscriptionManager.getActiveSubscriptionInfoList();
+  if (sil == null || sil.size() < 1) {
+    Log.d(TAG,"Subscription list is empty");
+    return;
+  }
+  subscriptionManager.clearDefaultsForInactiveSubIds();
+  boolean dataSelected=SubscriptionManager.isUsableSubIdValue(SubscriptionManager.getDefaultDataSubId());
+  boolean smsSelected=SubscriptionManager.isUsableSubIdValue(SubscriptionManager.getDefaultSmsSubId());
+  if (dataSelected && smsSelected) {
+    Log.d(TAG,"Data & SMS default sims are selected. No notification");
+    return;
+  }
+  createNotification(context);
+  if (sil.size() == 1) {
+    Intent newIntent=new Intent(context,SimDialogActivity.class);
+    newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    newIntent.putExtra(SimDialogActivity.DIALOG_TYPE_KEY,SimDialogActivity.PREFERRED_PICK);
+    newIntent.putExtra(SimDialogActivity.PREFERRED_SIM,sil.get(0).getSimSlotIndex());
+    context.startActivity(newIntent);
+  }
+ else   if (!dataSelected) {
+    Intent newIntent=new Intent(context,SimDialogActivity.class);
+    newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    newIntent.putExtra(SimDialogActivity.DIALOG_TYPE_KEY,SimDialogActivity.DATA_PICK);
+    context.startActivity(newIntent);
+  }
+}

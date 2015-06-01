@@ -90,8 +90,14 @@
   }
   if (mUserCaps.mCanAddUser) {
     boolean moreUsers=mUserManager.canAddMoreUsers();
-    mAddUser.setEnabled(moreUsers);
     mAddUser.setOrder(Preference.DEFAULT_ORDER);
     preferenceScreen.addPreference(mAddUser);
+    mAddUser.setEnabled(moreUsers);
+    if (!moreUsers) {
+      mAddUser.setSummary(getString(R.string.user_add_max_count,getMaxRealUsers()));
+    }
+ else {
+      mAddUser.setSummary(null);
+    }
   }
 }

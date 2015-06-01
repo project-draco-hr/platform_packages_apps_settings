@@ -21,4 +21,12 @@
     }
   }
 );
+  TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.DropDownPreference);
+  CharSequence[] entries=a.getTextArray(R.styleable.DropDownPreference_android_entries);
+  CharSequence[] values=a.getTextArray(R.styleable.DropDownPreference_android_entryValues);
+  if (entries != null && values != null) {
+    for (int i=0; i < entries.length; i++) {
+      addItem(entries[i].toString(),values[i]);
+    }
+  }
 }

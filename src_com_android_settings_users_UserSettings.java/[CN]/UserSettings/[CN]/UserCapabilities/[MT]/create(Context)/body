@@ -5,7 +5,8 @@
     caps.mEnabled=false;
     return caps;
   }
-  if (!caps.mIsOwner || UserManager.getMaxSupportedUsers() < 2 || !UserManager.supportsMultipleUsers() || userManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER)) {
+  final boolean disallowAddUser=userManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER);
+  if (!caps.mIsOwner || UserManager.getMaxSupportedUsers() < 2 || !UserManager.supportsMultipleUsers() || disallowAddUser) {
     caps.mCanAddUser=false;
   }
   DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -14,5 +15,7 @@
   }
   final int myUserId=UserHandle.myUserId();
   caps.mIsGuest=userManager.getUserInfo(myUserId).isGuest();
+  final boolean canAddUsersWhenLocked=caps.mIsOwner || Settings.Global.getInt(context.getContentResolver(),Settings.Global.ADD_USERS_WHEN_LOCKED,0) == 1;
+  caps.mCanAddGuest=!caps.mIsGuest && !disallowAddUser && canAddUsersWhenLocked;
   return caps;
 }

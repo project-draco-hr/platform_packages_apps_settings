@@ -1,11 +1,13 @@
 {
-  int numProfiles=mProfileContainer.getPreferenceCount();
+  int numProfiles=mProfileContainer.getChildCount();
   if (!mProfileGroupIsRemoved && numProfiles == 0) {
-    getPreferenceScreen().removePreference(mProfileContainer);
+    mProfileContainer.setVisibility(View.GONE);
+    mProfileLabel.setVisibility(View.GONE);
     mProfileGroupIsRemoved=true;
   }
  else   if (mProfileGroupIsRemoved && numProfiles != 0) {
-    getPreferenceScreen().addPreference(mProfileContainer);
+    mProfileContainer.setVisibility(View.VISIBLE);
+    mProfileLabel.setVisibility(View.VISIBLE);
     mProfileGroupIsRemoved=false;
   }
 }

@@ -1,0 +1,8 @@
+{
+  mRootView=LayoutInflater.from(getContext()).inflate(R.layout.device_profiles_settings,null);
+  mProfileContainer=(ViewGroup)mRootView.findViewById(R.id.profiles_section);
+  mProfileLabel=(TextView)mRootView.findViewById(R.id.profiles_label);
+  final EditText deviceName=(EditText)mRootView.findViewById(R.id.name);
+  deviceName.setText(mCachedDevice.getName(),TextView.BufferType.EDITABLE);
+  return new AlertDialog.Builder(getContext()).setView(mRootView).setNegativeButton(R.string.forget,this).setPositiveButton(R.string.okay,this).setTitle(R.string.bluetooth_preference_paired_devices).create();
+}

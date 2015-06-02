@@ -1,20 +1,20 @@
 {
-  mProfileContainer.removeAll();
+  mProfileContainer.removeAllViews();
   for (  LocalBluetoothProfile profile : mCachedDevice.getConnectableProfiles()) {
-    Preference pref=createProfilePreference(profile);
-    mProfileContainer.addPreference(pref);
+    CheckBox pref=createProfilePreference(profile);
+    mProfileContainer.addView(pref);
   }
   final int pbapPermission=mCachedDevice.getPhonebookPermissionChoice();
   if (pbapPermission != CachedBluetoothDevice.ACCESS_UNKNOWN) {
     final PbapServerProfile psp=mManager.getProfileManager().getPbapProfile();
-    CheckBoxPreference pbapPref=createProfilePreference(psp);
-    mProfileContainer.addPreference(pbapPref);
+    CheckBox pbapPref=createProfilePreference(psp);
+    mProfileContainer.addView(pbapPref);
   }
   final MapProfile mapProfile=mManager.getProfileManager().getMapProfile();
   final int mapPermission=mCachedDevice.getMessagePermissionChoice();
   if (mapPermission != CachedBluetoothDevice.ACCESS_UNKNOWN) {
-    CheckBoxPreference mapPreference=createProfilePreference(mapProfile);
-    mProfileContainer.addPreference(mapPreference);
+    CheckBox mapPreference=createProfilePreference(mapProfile);
+    mProfileContainer.addView(mapPreference);
   }
   showOrHideProfileGroup();
 }

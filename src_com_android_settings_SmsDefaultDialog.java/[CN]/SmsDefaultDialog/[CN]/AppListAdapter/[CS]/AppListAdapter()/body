@@ -1,0 +1,10 @@
+{
+  mItems=getItems();
+  int selected=getSelectedIndex();
+  if (selected > 0) {
+    Item item=mItems.remove(selected);
+    mItems.add(0,item);
+    selected=0;
+  }
+  mSelectedIndex=selected;
+}

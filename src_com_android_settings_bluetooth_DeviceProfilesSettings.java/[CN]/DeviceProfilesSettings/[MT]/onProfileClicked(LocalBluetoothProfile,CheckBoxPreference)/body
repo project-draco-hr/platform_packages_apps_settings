@@ -17,8 +17,13 @@
       refreshProfilePreference(profilePref,profile);
     }
     if (profile.isPreferred(device)) {
-      profile.setPreferred(device,false);
-      refreshProfilePreference(profilePref,profile);
+      if (profile instanceof PanProfile) {
+        mCachedDevice.connectProfile(profile);
+      }
+ else {
+        profile.setPreferred(device,false);
+        refreshProfilePreference(profilePref,profile);
+      }
     }
  else {
       profile.setPreferred(device,true);

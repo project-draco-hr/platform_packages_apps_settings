@@ -3,5 +3,17 @@
     Settings.Secure.putInt(getContentResolver(),Settings.Secure.ASSIST_STRUCTURE_ENABLED,(boolean)newValue ? 1 : 0);
     return true;
   }
+  if (preference == mDefaultAssitPref) {
+    String newAssitPackage=(String)newValue;
+    if (newAssitPackage == null || newAssitPackage.contentEquals(DefaultAssistPreference.ITEM_NONE_VALUE)) {
+      setDefaultAssist(DefaultAssistPreference.ITEM_NONE_VALUE);
+      return false;
+    }
+    final String currentPackage=mDefaultAssitPref.getValue();
+    if (currentPackage == null || !newAssitPackage.contentEquals(currentPackage)) {
+      confirmNewAssist(newAssitPackage);
+    }
+    return false;
+  }
   return false;
 }

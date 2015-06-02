@@ -1,0 +1,15 @@
+{
+  mAvailableAssistants.clear();
+  addAssistServices();
+  addAssistActivities();
+  List<String> packages=new ArrayList<>();
+  for (int i=0; i < mAvailableAssistants.size(); ++i) {
+    String packageName=mAvailableAssistants.get(i).component.getPackageName();
+    if (packages.contains(packageName)) {
+      continue;
+    }
+    packages.add(packageName);
+  }
+  ComponentName currentAssist=getCurrentAssist();
+  setPackageNames(packages.toArray(new String[packages.size()]),currentAssist == null ? null : currentAssist.getPackageName());
+}

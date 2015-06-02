@@ -1,31 +1,31 @@
 {
-  int foundPackages=0;
   PackageManager pm=getContext().getPackageManager();
-  ApplicationInfo[] appInfos=new ApplicationInfo[packageNames.length];
+  final int entryCount=packageNames.length + (mShowItemNone ? 1 : 0);
+  List<CharSequence> applicationNames=new ArrayList<>(entryCount);
+  List<CharSequence> validatedPackageNames=new ArrayList<>(entryCount);
+  List<Drawable> entryDrawables=new ArrayList<>(entryCount);
+  int selectedIndex=-1;
   for (int i=0; i < packageNames.length; i++) {
     try {
-      appInfos[i]=pm.getApplicationInfo(packageNames[i].toString(),0);
-      foundPackages++;
+      ApplicationInfo appInfo=pm.getApplicationInfo(packageNames[i].toString(),0);
+      applicationNames.add(appInfo.loadLabel(pm));
+      validatedPackageNames.add(appInfo.packageName);
+      entryDrawables.add(appInfo.loadIcon(pm));
+      if (defaultPackageName != null && appInfo.packageName.contentEquals(defaultPackageName)) {
+        selectedIndex=i;
+      }
     }
  catch (    NameNotFoundException e) {
     }
   }
-  CharSequence[] applicationNames=new CharSequence[foundPackages];
-  mEntryDrawables=new Drawable[foundPackages];
-  int index=0;
-  int selectedIndex=-1;
-  for (  ApplicationInfo appInfo : appInfos) {
-    if (appInfo != null) {
-      applicationNames[index]=appInfo.loadLabel(pm);
-      mEntryDrawables[index]=appInfo.loadIcon(pm);
-      if (defaultPackageName != null && appInfo.packageName.contentEquals(defaultPackageName)) {
-        selectedIndex=index;
-      }
-      index++;
-    }
+  if (mShowItemNone) {
+    applicationNames.add(getContext().getResources().getText(R.string.app_list_preference_none));
+    validatedPackageNames.add(ITEM_NONE_VALUE);
+    entryDrawables.add(getContext().getDrawable(R.drawable.ic_remove_circle));
   }
-  setEntries(applicationNames);
-  setEntryValues(packageNames);
+  setEntries(applicationNames.toArray(new CharSequence[applicationNames.size()]));
+  setEntryValues(validatedPackageNames.toArray(new CharSequence[validatedPackageNames.size()]));
+  mEntryDrawables=entryDrawables.toArray(new Drawable[entryDrawables.size()]);
   if (selectedIndex != -1) {
     setValueIndex(selectedIndex);
   }

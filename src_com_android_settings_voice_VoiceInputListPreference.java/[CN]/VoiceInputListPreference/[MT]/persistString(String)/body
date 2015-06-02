@@ -1,0 +1,24 @@
+{
+  for (int i=0; i < mHelper.mAvailableInteractionInfos.size(); ++i) {
+    VoiceInputHelper.InteractionInfo info=mHelper.mAvailableInteractionInfos.get(i);
+    if (info.key.equals(value)) {
+      Settings.Secure.putString(getContext().getContentResolver(),Settings.Secure.VOICE_INTERACTION_SERVICE,value);
+      Settings.Secure.putString(getContext().getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE,new ComponentName(info.service.packageName,info.serviceInfo.getRecognitionService()).flattenToShortString());
+      setSummary(getEntry());
+      setSettingsComponent(info.settings);
+      return true;
+    }
+  }
+  for (int i=0; i < mHelper.mAvailableRecognizerInfos.size(); ++i) {
+    VoiceInputHelper.RecognizerInfo info=mHelper.mAvailableRecognizerInfos.get(i);
+    if (info.key.equals(value)) {
+      Settings.Secure.putString(getContext().getContentResolver(),Settings.Secure.VOICE_INTERACTION_SERVICE,"");
+      Settings.Secure.putString(getContext().getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE,value);
+      setSummary(getEntry());
+      setSettingsComponent(info.settings);
+      return true;
+    }
+  }
+  setSettingsComponent(null);
+  return true;
+}

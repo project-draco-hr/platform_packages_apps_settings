@@ -18,6 +18,7 @@
     vpnGroup.addPreference(pref);
   }
   try {
+    mConnectedLegacyVpn=null;
     LegacyVpnInfo info=mConnectivityService.getLegacyVpnInfo();
     if (info != null) {
       ConfigPreference preference=mConfigPreferences.get(info.key);

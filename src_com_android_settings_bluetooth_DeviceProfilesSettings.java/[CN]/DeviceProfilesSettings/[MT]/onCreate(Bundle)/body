@@ -1,10 +1,12 @@
 {
   super.onCreate(savedInstanceState);
-  addPreferencesFromResource(R.xml.bluetooth_device_advanced);
-  getPreferenceScreen().setOrderingAsAdded(false);
-  mProfileContainer=(PreferenceGroup)findPreference(KEY_PROFILE_CONTAINER);
-  mProfileContainer.setLayoutResource(R.layout.bluetooth_preference_category);
   mManager=Utils.getLocalBtManager(getActivity());
   CachedBluetoothDeviceManager deviceManager=mManager.getCachedDeviceManager();
+  String address=getArguments().getString(ARG_DEVICE_ADDRESS);
+  BluetoothDevice remoteDevice=mManager.getBluetoothAdapter().getRemoteDevice(address);
+  mCachedDevice=deviceManager.findDevice(remoteDevice);
+  if (mCachedDevice == null) {
+    mCachedDevice=deviceManager.addDevice(mManager.getBluetoothAdapter(),mManager.getProfileManager(),remoteDevice);
+  }
   mProfileManager=mManager.getProfileManager();
 }

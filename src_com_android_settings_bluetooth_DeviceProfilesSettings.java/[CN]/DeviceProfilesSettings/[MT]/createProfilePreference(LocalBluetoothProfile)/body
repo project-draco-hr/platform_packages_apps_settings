@@ -1,15 +1,8 @@
 {
-  CheckBoxPreference pref=new CheckBoxPreference(getActivity());
-  pref.setLayoutResource(R.layout.preference_start_widget);
-  pref.setKey(profile.toString());
-  pref.setTitle(profile.getNameResource(mCachedDevice.getDevice()));
-  pref.setPersistent(false);
-  pref.setOrder(getProfilePreferenceIndex(profile.getOrdinal()));
-  pref.setOnPreferenceChangeListener(this);
-  int iconResource=profile.getDrawableResource(mCachedDevice.getBtClass());
-  if (iconResource != 0) {
-    pref.setIcon(getActivity().getDrawable(iconResource));
-  }
+  CheckBox pref=new CheckBox(getActivity());
+  pref.setTag(profile.toString());
+  pref.setText(profile.getNameResource(mCachedDevice.getDevice()));
+  pref.setOnClickListener(this);
   refreshProfilePreference(pref,profile);
   return pref;
 }

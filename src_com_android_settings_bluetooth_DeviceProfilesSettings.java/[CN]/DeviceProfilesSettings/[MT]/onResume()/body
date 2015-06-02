@@ -4,7 +4,7 @@
   if (mCachedDevice != null) {
     mCachedDevice.registerCallback(this);
     if (mCachedDevice.getBondState() == BluetoothDevice.BOND_NONE) {
-      finish();
+      dismiss();
       return;
     }
     refresh();

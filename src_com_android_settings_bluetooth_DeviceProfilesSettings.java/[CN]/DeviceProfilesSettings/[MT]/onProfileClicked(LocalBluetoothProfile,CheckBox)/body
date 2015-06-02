@@ -13,7 +13,6 @@
  else {
     if (profile instanceof MapProfile) {
       mCachedDevice.setMessagePermissionChoice(BluetoothDevice.ACCESS_ALLOWED);
-      refreshProfilePreference(profilePref,profile);
     }
     if (profile.isPreferred(device)) {
       if (profile instanceof PanProfile) {
@@ -21,12 +20,12 @@
       }
  else {
         profile.setPreferred(device,false);
-        refreshProfilePreference(profilePref,profile);
       }
     }
  else {
       profile.setPreferred(device,true);
       mCachedDevice.connectProfile(profile);
     }
+    refreshProfilePreference(profilePref,profile);
   }
 }

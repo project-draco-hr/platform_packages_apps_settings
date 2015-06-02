@@ -45,17 +45,15 @@
   }
  else {
     if (!mIsShowingDashboard) {
+      mDisplaySearch=false;
       if (mIsShortcut) {
         mDisplayHomeAsUpEnabled=isSubSettings;
-        mDisplaySearch=false;
       }
  else       if (isSubSettings) {
         mDisplayHomeAsUpEnabled=true;
-        mDisplaySearch=true;
       }
  else {
         mDisplayHomeAsUpEnabled=false;
-        mDisplaySearch=false;
       }
       setTitleFromIntent(intent);
       Bundle initialArguments=intent.getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);

@@ -1,0 +1,12 @@
+{
+  ArrayList<BatterySipper> stats=new ArrayList<>();
+  float use=5;
+  for (  DrainType type : DrainType.values()) {
+    if (type == DrainType.APP) {
+      continue;
+    }
+    stats.add(new BatterySipper(type,null,use));
+    use+=5;
+  }
+  return stats;
+}

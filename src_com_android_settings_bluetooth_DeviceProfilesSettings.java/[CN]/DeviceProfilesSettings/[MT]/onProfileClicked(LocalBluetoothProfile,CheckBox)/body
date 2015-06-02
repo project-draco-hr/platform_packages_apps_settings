@@ -1,14 +1,13 @@
 {
   BluetoothDevice device=mCachedDevice.getDevice();
-  if (profilePref.getKey().equals(KEY_PBAP_SERVER)) {
+  if (KEY_PBAP_SERVER.equals(profilePref.getTag())) {
     final int newPermission=mCachedDevice.getPhonebookPermissionChoice() == CachedBluetoothDevice.ACCESS_ALLOWED ? CachedBluetoothDevice.ACCESS_REJECTED : CachedBluetoothDevice.ACCESS_ALLOWED;
     mCachedDevice.setPhonebookPermissionChoice(newPermission);
     profilePref.setChecked(newPermission == CachedBluetoothDevice.ACCESS_ALLOWED);
     return;
   }
-  int status=profile.getConnectionStatus(device);
-  boolean isConnected=status == BluetoothProfile.STATE_CONNECTED;
-  if (profilePref.isChecked()) {
+  if (!profilePref.isChecked()) {
+    profilePref.setChecked(true);
     askDisconnect(mManager.getForegroundActivity(),profile);
   }
  else {

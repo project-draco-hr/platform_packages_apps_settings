@@ -1,11 +1,11 @@
 {
-  if (!(pref instanceof CheckBoxPreference)) {
+  if (!(v instanceof CheckBox)) {
     return null;
   }
-  String key=pref.getKey();
+  String key=(String)v.getTag();
   if (TextUtils.isEmpty(key))   return null;
   try {
-    return mProfileManager.getProfileByName(pref.getKey());
+    return mProfileManager.getProfileByName(key);
   }
  catch (  IllegalArgumentException ignored) {
     return null;

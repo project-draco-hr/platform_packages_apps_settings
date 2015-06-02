@@ -1,0 +1,12 @@
+{
+switch (which) {
+case DialogInterface.BUTTON_POSITIVE:
+    EditText deviceName=(EditText)mRootView.findViewById(R.id.name);
+  mCachedDevice.setName(deviceName.getText().toString());
+break;
+case DialogInterface.BUTTON_NEGATIVE:
+mCachedDevice.unpair();
+com.android.settings.bluetooth.Utils.updateSearchIndex(getContext(),BluetoothSettings.class.getName(),mCachedDevice.getName(),getString(R.string.bluetooth_settings),R.drawable.ic_settings_bluetooth,false);
+break;
+}
+}

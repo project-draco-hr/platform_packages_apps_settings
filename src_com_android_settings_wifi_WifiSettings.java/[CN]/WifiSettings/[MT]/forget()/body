@@ -1,7 +1,7 @@
 {
   MetricsLogger.action(getActivity(),MetricsLogger.ACTION_WIFI_FORGET);
   if (!mSelectedAccessPoint.isSaved()) {
-    if (mSelectedAccessPoint.getNetworkInfo().getState() != State.DISCONNECTED) {
+    if (mSelectedAccessPoint.getNetworkInfo() != null && mSelectedAccessPoint.getNetworkInfo().getState() != State.DISCONNECTED) {
       mWifiManager.disableEphemeralNetwork(AccessPoint.convertToQuotedString(mSelectedAccessPoint.getSsid()));
     }
  else {

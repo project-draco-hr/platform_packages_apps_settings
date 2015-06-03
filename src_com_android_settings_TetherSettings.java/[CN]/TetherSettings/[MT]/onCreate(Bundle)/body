@@ -5,7 +5,7 @@
   }
   addPreferencesFromResource(R.xml.tether_prefs);
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
-  if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING)) {
+  if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING) || UserHandle.myUserId() != UserHandle.USER_OWNER) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getActivity(),null));
     return;

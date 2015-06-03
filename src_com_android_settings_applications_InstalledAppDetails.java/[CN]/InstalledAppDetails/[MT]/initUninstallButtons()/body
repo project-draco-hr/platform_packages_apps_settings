@@ -13,6 +13,9 @@
   if (mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
     enabled=false;
   }
+  if (isProfileOrDeviceOwner(mPackageInfo.packageName)) {
+    enabled=false;
+  }
   if (enabled && mHomePackages.contains(mPackageInfo.packageName)) {
     if (isBundled) {
       enabled=false;

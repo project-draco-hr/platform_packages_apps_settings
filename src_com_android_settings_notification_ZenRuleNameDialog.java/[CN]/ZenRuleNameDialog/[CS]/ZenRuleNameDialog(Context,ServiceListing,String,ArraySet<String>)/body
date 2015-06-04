@@ -1,6 +1,7 @@
 {
   mServiceListing=serviceListing;
   mIsNew=ruleName == null;
+  mOriginalRuleName=ruleName;
   final View v=LayoutInflater.from(context).inflate(R.layout.zen_rule_name,null,false);
   mEditText=(EditText)v.findViewById(R.id.rule_name);
   if (!mIsNew) {
@@ -20,7 +21,11 @@
   }
   mDialog=new AlertDialog.Builder(context).setTitle(mIsNew ? R.string.zen_mode_add_rule : R.string.zen_mode_rule_name).setView(v).setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
-      onOk(trimmedText(),selectedRuleInfo());
+      final String newName=trimmedText();
+      if (!mIsNew && mOriginalRuleName != null && mOriginalRuleName.equalsIgnoreCase(newName)) {
+        return;
+      }
+      onOk(newName,selectedRuleInfo());
     }
   }
 ).setOnDismissListener(new OnDismissListener(){

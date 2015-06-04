@@ -1,9 +1,6 @@
 {
-  for (  String olsonId : TimeZoneNames.forLocale(Locale.getDefault())) {
-    mLocalZones.add(olsonId);
-  }
-  try {
-    XmlResourceParser xrp=context.getResources().getXml(R.xml.timezones);
+  List<String> olsonIds=new ArrayList<String>();
+  try (XmlResourceParser xrp=context.getResources().getXml(R.xml.timezones)){
     while (xrp.next() != XmlResourceParser.START_TAG) {
       continue;
     }
@@ -11,20 +8,19 @@
     while (xrp.getEventType() != XmlResourceParser.END_TAG) {
       while (xrp.getEventType() != XmlResourceParser.START_TAG) {
         if (xrp.getEventType() == XmlResourceParser.END_DOCUMENT) {
-          return mZones;
+          return olsonIds;
         }
         xrp.next();
       }
       if (xrp.getName().equals(XMLTAG_TIMEZONE)) {
         String olsonId=xrp.getAttributeValue(0);
-        addTimeZone(olsonId);
+        olsonIds.add(olsonId);
       }
       while (xrp.getEventType() != XmlResourceParser.END_TAG) {
         xrp.next();
       }
       xrp.next();
     }
-    xrp.close();
   }
  catch (  XmlPullParserException xppe) {
     Log.e(TAG,"Ill-formatted timezones.xml file");
@@ -32,5 +28,5 @@
 catch (  java.io.IOException ioe) {
     Log.e(TAG,"Unable to read timezones.xml file");
   }
-  return mZones;
+  return olsonIds;
 }

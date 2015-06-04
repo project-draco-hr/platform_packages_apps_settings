@@ -2,6 +2,7 @@
   super.onCreate(savedInstanceState);
   mFinishing=false;
   mState=ApplicationsState.getInstance(getActivity().getApplication());
+  mSession=mState.newSession(this);
   Context context=getActivity();
   mDpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
   mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);

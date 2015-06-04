@@ -38,6 +38,8 @@
   mChargingPaint.setStrokeWidth(mLineWidth);
   mScreenOnPaint.setStrokeWidth(mLineWidth);
   mGpsOnPaint.setStrokeWidth(mLineWidth);
+  mCameraOnPaint.setStrokeWidth(mLineWidth);
+  mFlashlightOnPaint.setStrokeWidth(mLineWidth);
   mWifiRunningPaint.setStrokeWidth(mLineWidth);
   mCpuRunningPaint.setStrokeWidth(mLineWidth);
   mDebugRectPaint.setStrokeWidth(1);
@@ -48,14 +50,16 @@
     mCpuRunningOffset=mScreenOnOffset + fullBarOffset;
     mWifiRunningOffset=mCpuRunningOffset + fullBarOffset;
     mGpsOnOffset=mWifiRunningOffset + (mHaveWifi ? fullBarOffset : 0);
-    mPhoneSignalOffset=mGpsOnOffset + (mHaveGps ? fullBarOffset : 0);
+    mFlashlightOnOffset=mGpsOnOffset + (mHaveGps ? fullBarOffset : 0);
+    mCameraOnOffset=mFlashlightOnOffset + (mHaveFlashlight ? fullBarOffset : 0);
+    mPhoneSignalOffset=mCameraOnOffset + (mHaveCamera ? fullBarOffset : 0);
     mLevelOffset=mPhoneSignalOffset + (mHavePhoneSignal ? fullBarOffset : 0) + mLineWidth * 2 + mLineWidth / 2;
     if (mHavePhoneSignal) {
       mPhoneSignalChart.init(w);
     }
   }
  else {
-    mScreenOnOffset=mGpsOnOffset=mWifiRunningOffset=mCpuRunningOffset=mChargingOffset=mPhoneSignalOffset=0;
+    mScreenOnOffset=mGpsOnOffset=mCameraOnOffset=mFlashlightOnOffset=mWifiRunningOffset=mCpuRunningOffset=mChargingOffset=mPhoneSignalOffset=0;
     mLevelOffset=fullBarOffset + mThinLineWidth * 4;
     if (mHavePhoneSignal) {
       mPhoneSignalChart.init(0);
@@ -68,6 +72,8 @@
   mBatCriticalPath.reset();
   mScreenOnPath.reset();
   mGpsOnPath.reset();
+  mFlashlightOnPath.reset();
+  mCameraOnPath.reset();
   mWifiRunningPath.reset();
   mCpuRunningPath.reset();
   mChargingPath.reset();
@@ -86,6 +92,7 @@
   Path curLevelPath=null;
   Path lastLinePath=null;
   boolean lastCharging=false, lastScreenOn=false, lastGpsOn=false;
+  boolean lastFlashlightOn=false, lastCameraOn=false;
   boolean lastWifiRunning=false, lastWifiSupplRunning=false, lastCpuRunning=false;
   int lastWifiSupplState=BatteryStats.WIFI_SUPPL_STATE_INVALID;
   final int N=mNumHist;
@@ -172,6 +179,26 @@
             }
             lastGpsOn=gpsOn;
           }
+          final boolean flashlightOn=(rec.states2 & HistoryItem.STATE2_FLASHLIGHT_FLAG) != 0;
+          if (flashlightOn != lastFlashlightOn) {
+            if (flashlightOn) {
+              mFlashlightOnPath.moveTo(x,h - mFlashlightOnOffset);
+            }
+ else {
+              mFlashlightOnPath.lineTo(x,h - mFlashlightOnOffset);
+            }
+            lastFlashlightOn=flashlightOn;
+          }
+          final boolean cameraOn=(rec.states2 & HistoryItem.STATE2_CAMERA_FLAG) != 0;
+          if (cameraOn != lastCameraOn) {
+            if (cameraOn) {
+              mCameraOnPath.moveTo(x,h - mCameraOnOffset);
+            }
+ else {
+              mCameraOnPath.lineTo(x,h - mCameraOnOffset);
+            }
+            lastCameraOn=cameraOn;
+          }
           final int wifiSupplState=((rec.states2 & HistoryItem.STATE2_WIFI_SUPPL_STATE_MASK) >> HistoryItem.STATE2_WIFI_SUPPL_STATE_SHIFT);
           boolean wifiRunning;
           if (lastWifiSupplState != wifiSupplState) {
@@ -244,11 +271,11 @@ if (rec.cmd == HistoryItem.CMD_CURRENT_TIME || rec.cmd == HistoryItem.CMD_RESET)
 }
 if (rec.cmd != HistoryItem.CMD_OVERFLOW && (rec.cmd != HistoryItem.CMD_CURRENT_TIME || Math.abs(lastWalltime - curWalltime) > (60 * 60 * 1000))) {
   if (curLevelPath != null) {
-    finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
+    finishPaths(x + 1,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastFlashlightOn,lastCameraOn,lastWifiRunning,lastCpuRunning,lastLinePath);
     lastX=lastY=-1;
     curLevelPath=null;
     lastLinePath=null;
-    lastCharging=lastScreenOn=lastGpsOn=lastCpuRunning=false;
+    lastCharging=lastScreenOn=lastGpsOn=lastFlashlightOn=lastCameraOn=lastCpuRunning=false;
   }
 }
 }
@@ -278,7 +305,7 @@ if (x < 0) {
 x=0;
 }
 }
-finishPaths(x,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastWifiRunning,lastCpuRunning,lastLinePath);
+finishPaths(x,h,levelh,startX,lastY,curLevelPath,lastX,lastCharging,lastScreenOn,lastGpsOn,lastFlashlightOn,lastCameraOn,lastWifiRunning,lastCpuRunning,lastLinePath);
 if (x < w) {
 mTimeRemainPath.moveTo(x,lastY);
 int fullY=mLevelTop + levelh - ((100 - batLow) * (levelh - 1)) / batChange;

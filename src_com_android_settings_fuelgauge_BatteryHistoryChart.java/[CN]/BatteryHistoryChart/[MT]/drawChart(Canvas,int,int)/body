@@ -103,6 +103,18 @@
       canvas.drawPath(mGpsOnPath,mGpsOnPaint);
     }
   }
+  if (mHaveFlashlight) {
+    if (!mFlashlightOnPath.isEmpty()) {
+      if (DEBUG)       Log.d(TAG,"Drawing flashlight path");
+      canvas.drawPath(mFlashlightOnPath,mFlashlightOnPaint);
+    }
+  }
+  if (mHaveCamera) {
+    if (!mCameraOnPath.isEmpty()) {
+      if (DEBUG)       Log.d(TAG,"Drawing camera path");
+      canvas.drawPath(mCameraOnPath,mCameraOnPaint);
+    }
+  }
   if (mHaveWifi) {
     if (!mWifiRunningPath.isEmpty()) {
       if (DEBUG)       Log.d(TAG,"Drawing wifi path");
@@ -122,6 +134,12 @@
     }
     if (mHaveGps) {
       canvas.drawText(mGpsOnLabel,textStartX,height - mGpsOnOffset - mTextDescent,mTextPaint);
+    }
+    if (mHaveFlashlight) {
+      canvas.drawText(mFlashlightOnLabel,textStartX,height - mFlashlightOnOffset - mTextDescent,mTextPaint);
+    }
+    if (mHaveCamera) {
+      canvas.drawText(mCameraOnLabel,textStartX,height - mCameraOnOffset - mTextDescent,mTextPaint);
     }
     if (mHaveWifi) {
       canvas.drawText(mWifiRunningLabel,textStartX,height - mWifiRunningOffset - mTextDescent,mTextPaint);

@@ -1,0 +1,16 @@
+{
+  PackageManager pm=getPackageManager();
+  List<Item> items=new ArrayList<>();
+  for (  SmsApplication.SmsApplicationData app : SmsApplication.getApplicationCollection(SmsDefaultDialog.this)) {
+    try {
+      String packageName=app.mPackageName;
+      ApplicationInfo appInfo=pm.getApplicationInfo(packageName,0);
+      if (appInfo != null) {
+        items.add(new Item(appInfo.loadLabel(pm).toString(),appInfo.loadIcon(pm),packageName));
+      }
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+    }
+  }
+  return items;
+}

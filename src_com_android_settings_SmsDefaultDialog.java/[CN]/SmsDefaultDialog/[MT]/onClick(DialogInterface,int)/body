@@ -6,5 +6,17 @@ case BUTTON_POSITIVE:
 break;
 case BUTTON_NEGATIVE:
 break;
+default :
+if (which >= 0) {
+AppListAdapter adapter=(AppListAdapter)mAlertParams.mAdapter;
+if (!adapter.isSelected(which)) {
+String packageName=adapter.getPackageName(which);
+if (!TextUtils.isEmpty(packageName)) {
+  SmsApplication.setDefaultApplication(packageName,this);
+  setResult(RESULT_OK);
+}
+}
+}
+break;
 }
 }

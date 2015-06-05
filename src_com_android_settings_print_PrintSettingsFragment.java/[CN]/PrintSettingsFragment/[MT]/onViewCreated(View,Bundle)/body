@@ -4,6 +4,12 @@
   View emptyView=getActivity().getLayoutInflater().inflate(R.layout.empty_print_state,contentRoot,false);
   TextView textView=(TextView)emptyView.findViewById(R.id.message);
   textView.setText(R.string.print_no_services_installed);
+  final Intent addNewServiceIntent=createAddNewServiceIntentOrNull();
+  if (addNewServiceIntent != null) {
+    mAddNewServiceButton=(Button)emptyView.findViewById(R.id.add_new_service);
+    mAddNewServiceButton.setOnClickListener(this);
+    mAddNewServiceButton.setVisibility(View.VISIBLE);
+  }
   contentRoot.addView(emptyView);
   getListView().setEmptyView(emptyView);
   final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);

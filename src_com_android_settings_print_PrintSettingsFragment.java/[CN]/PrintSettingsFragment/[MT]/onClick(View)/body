@@ -1,0 +1,13 @@
+{
+  if (mAddNewServiceButton == v) {
+    final Intent addNewServiceIntent=createAddNewServiceIntentOrNull();
+    if (addNewServiceIntent != null) {
+      try {
+        startActivity(addNewServiceIntent);
+      }
+ catch (      ActivityNotFoundException e) {
+        Log.w(TAG,"Unable to start activity",e);
+      }
+    }
+  }
+}

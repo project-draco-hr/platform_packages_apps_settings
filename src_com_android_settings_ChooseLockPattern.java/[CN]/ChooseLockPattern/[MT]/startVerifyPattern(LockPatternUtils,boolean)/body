@@ -10,6 +10,9 @@
       }
       mLockPatternView.enableInput();
       mPendingLockCheck=null;
+      if (!wasSecureBefore) {
+        startActivity(getRedactionInterstitialIntent(getActivity()));
+      }
       Intent intent=new Intent();
       intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
       getActivity().setResult(RESULT_FINISHED,intent);

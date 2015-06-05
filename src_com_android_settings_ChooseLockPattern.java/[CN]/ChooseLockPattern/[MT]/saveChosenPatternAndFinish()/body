@@ -9,15 +9,14 @@
   if (lockVirgin) {
     utils.setVisiblePatternEnabled(true,UserHandle.myUserId());
   }
-  if (!wasSecureBefore) {
-    startActivity(getRedactionInterstitialIntent(getActivity()));
-  }
   if (mHasChallenge) {
-    startVerifyPattern(utils);
-    return;
+    startVerifyPattern(utils,wasSecureBefore);
   }
  else {
+    if (!wasSecureBefore) {
+      startActivity(getRedactionInterstitialIntent(getActivity()));
+    }
     getActivity().setResult(RESULT_FINISHED);
+    doFinish();
   }
-  doFinish();
 }

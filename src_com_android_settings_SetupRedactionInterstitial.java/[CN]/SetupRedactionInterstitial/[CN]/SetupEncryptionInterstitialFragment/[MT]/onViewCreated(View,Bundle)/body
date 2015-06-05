@@ -1,0 +1,8 @@
+{
+  super.onViewCreated(view,savedInstanceState);
+  final SetupWizardLayout layout=(SetupWizardLayout)view.findViewById(R.id.setup_wizard_layout);
+  final NavigationBar navigationBar=layout.getNavigationBar();
+  navigationBar.setNavigationBarListener(this);
+  navigationBar.getBackButton().setVisibility(View.GONE);
+  SetupWizardUtils.setImmersiveMode(getActivity());
+}

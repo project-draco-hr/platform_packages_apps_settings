@@ -1,0 +1,14 @@
+{
+  ComponentName appName=SmsApplication.getDefaultSmsApplication(SmsDefaultDialog.this,true);
+  if (appName != null) {
+    String defaultSmsAppPackageName=appName.getPackageName();
+    if (!TextUtils.isEmpty(defaultSmsAppPackageName)) {
+      for (int i=0; i < mItems.size(); i++) {
+        if (TextUtils.equals(mItems.get(i).packgeName,defaultSmsAppPackageName)) {
+          return i;
+        }
+      }
+    }
+  }
+  return -1;
+}

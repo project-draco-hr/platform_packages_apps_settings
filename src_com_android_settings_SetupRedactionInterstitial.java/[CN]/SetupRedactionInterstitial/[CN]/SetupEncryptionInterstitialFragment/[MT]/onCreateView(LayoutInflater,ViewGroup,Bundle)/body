@@ -1,14 +1,3 @@
 {
-  final SetupWizardLayout layout=new SetupWizardLayout(inflater.getContext());
-  layout.setIllustration(R.drawable.setup_illustration_lock_screen,R.drawable.setup_illustration_horizontal_tile);
-  layout.setBackgroundTile(R.drawable.setup_illustration_tile);
-  layout.setHeaderText(R.string.notification_section_header);
-  View content=super.onCreateView(inflater,layout,savedInstanceState);
-  layout.addView(content);
-  final NavigationBar navigationBar=layout.getNavigationBar();
-  navigationBar.setNavigationBarListener(this);
-  final Button backButton=navigationBar.getBackButton();
-  backButton.setVisibility(View.GONE);
-  SetupWizardUtils.setImmersiveMode(getActivity());
-  return layout;
+  return inflater.inflate(R.layout.setup_redaction_interstitial,container,false);
 }

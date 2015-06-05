@@ -4,7 +4,9 @@
   mMaxPulseRadius=getResources().getDimensionPixelSize(R.dimen.fingerprint_pulse_radius);
   mFractionCenterX=getResources().getFraction(R.fraction.fingerprint_sensor_location_fraction_x,1,1);
   mFractionCenterY=getResources().getFraction(R.fraction.fingerprint_sensor_location_fraction_y,1,1);
-  int color=getResources().getColor(R.color.fingerprint_dot_color,null);
+  TypedValue typedValue=new TypedValue();
+  context.getTheme().resolveAttribute(android.R.attr.colorAccent,typedValue,true);
+  int color=getResources().getColor(typedValue.resourceId,null);
   mDotPaint.setAntiAlias(true);
   mPulsePaint.setAntiAlias(true);
   mDotPaint.setColor(color);

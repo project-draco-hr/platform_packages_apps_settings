@@ -13,9 +13,11 @@
   }
   holder.imageView.setImageDrawable(appInfo.banner);
   holder.imageView.setTag(appInfo);
+  holder.imageView.setContentDescription(appInfo.label);
   holder.imageView.setOnClickListener(this);
   holder.radioButton.setOnCheckedChangeListener(null);
   holder.radioButton.setChecked(appInfo.isDefault);
+  holder.radioButton.setContentDescription(appInfo.label);
   holder.radioButton.setOnCheckedChangeListener(this);
   holder.radioButton.setTag(appInfo);
   return convertView;

@@ -5,12 +5,12 @@
   final ComponentName cn=ComponentName.unflattenFromString(args.getString(KEY_COMPONENT));
   final String title=getResources().getString(mConfig.warningDialogTitle,label);
   final String summary=getResources().getString(mConfig.warningDialogSummary,label);
-  return new AlertDialog.Builder(mContext).setMessage(summary).setTitle(title).setCancelable(true).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
+  return new AlertDialog.Builder(mContext).setMessage(summary).setTitle(title).setCancelable(true).setPositiveButton(R.string.allow,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int id){
       mServiceListing.setEnabled(cn,true);
     }
   }
-).setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener(){
+).setNegativeButton(R.string.deny,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int id){
     }
   }

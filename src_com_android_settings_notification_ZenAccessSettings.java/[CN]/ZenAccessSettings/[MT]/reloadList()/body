@@ -16,21 +16,21 @@
   Collections.sort(apps,new PackageItemInfo.DisplayNameComparator(mPkgMan));
   for (  ApplicationInfo app : apps) {
     final String pkg=app.packageName;
+    final CharSequence label=app.loadLabel(mPkgMan);
     final SwitchPreference pref=new SwitchPreference(mContext);
     pref.setPersistent(false);
     pref.setIcon(app.loadIcon(mPkgMan));
-    pref.setTitle(app.packageName);
+    pref.setTitle(label);
     pref.setChecked(hasAccess(pkg));
     pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
       @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
         final boolean access=(Boolean)newValue;
-        AsyncTask.execute(new Runnable(){
-          @Override public void run(){
-            setAccess(pkg,access);
-          }
+        if (!access) {
+          setAccess(mContext,pkg,access);
+          return true;
         }
-);
-        return true;
+        new ScaryWarningDialogFragment().setPkgInfo(pkg,label).show(getFragmentManager(),"dialog");
+        return false;
       }
     }
 );

@@ -13,5 +13,10 @@ catch (    Resources.NotFoundException e) {
       Log.w(TAG,"No icon resource for account type " + accountType);
     }
   }
-  return icon;
+  if (icon != null) {
+    return icon;
+  }
+ else {
+    return getPackageManager().getDefaultActivityIcon();
+  }
 }

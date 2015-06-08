@@ -26,15 +26,8 @@
  else {
       appInfo.settingsComponent=null;
     }
-    if (service.hasDynamicResources()) {
-      appInfo.description="";
-      appInfo.banner=null;
-      sendBroadcastForResources(appInfo);
-    }
- else {
-      appInfo.description=service.getDescription();
-      appInfo.banner=service.loadBanner(pm);
-    }
+    appInfo.description=service.getDescription();
+    appInfo.banner=service.loadBanner(pm);
     appInfos.add(appInfo);
   }
   mAppInfos=appInfos;

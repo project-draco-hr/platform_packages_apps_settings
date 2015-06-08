@@ -1,7 +1,7 @@
 {
   Context context=getContext();
   String first=(firstId == 0) ? "" : context.getString(firstId);
-  String[] certificates=mKeyStore.saw(prefix);
+  String[] certificates=mKeyStore.list(prefix);
   if (certificates == null || certificates.length == 0) {
     certificates=new String[]{first};
   }

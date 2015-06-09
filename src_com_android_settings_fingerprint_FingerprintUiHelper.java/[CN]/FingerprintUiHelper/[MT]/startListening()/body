@@ -1,7 +1,7 @@
 {
   if (mFingerprintManager.getEnrolledFingerprints().size() > 0) {
     mCancellationSignal=new CancellationSignal();
-    mFingerprintManager.authenticate(null,mCancellationSignal,this,0);
+    mFingerprintManager.authenticate(null,mCancellationSignal,0,this,null);
     setFingerprintIconVisibility(true);
     mIcon.setImageResource(R.drawable.ic_fingerprint);
   }

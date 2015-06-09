@@ -60,7 +60,7 @@
     pref.setIcon(getEncircledDefaultIcon());
     userPreferences.add(pref);
   }
-  if (mUserCaps.mCanAddGuest || findGuest() != null) {
+  if (!mUserCaps.mIsGuest && (mUserCaps.mCanAddGuest || findGuest() != null)) {
     UserPreference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mUserCaps.mIsOwner && voiceCapable ? this : null,null);
     pref.setTitle(R.string.user_guest);
     pref.setIcon(getEncircledDefaultIcon());

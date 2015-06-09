@@ -2,9 +2,9 @@
   if (resetAttempts) {
     mMaxFingerprintAttempts=0;
   }
-  if (mMaxFingerprintAttempts < MAX_RETRY_ATTEMPTS) {
+  if (mMaxFingerprintAttempts < MAX_RETRY_ATTEMPTS && mFingerprintCancel == null) {
     mFingerprintCancel=new CancellationSignal();
-    mFingerprintManager.authenticate(null,mFingerprintCancel,mAuthCallback,0);
+    mFingerprintManager.authenticate(null,mFingerprintCancel,0,mAuthCallback,null);
   }
   mMaxFingerprintAttempts++;
 }

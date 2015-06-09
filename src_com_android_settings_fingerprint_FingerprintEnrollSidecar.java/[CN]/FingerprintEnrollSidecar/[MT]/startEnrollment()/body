@@ -2,6 +2,6 @@
   mHandler.removeCallbacks(mTimeoutRunnable);
   mEnrollmentSteps=-1;
   mEnrollmentCancel=new CancellationSignal();
-  getActivity().getSystemService(FingerprintManager.class).enroll(mToken,mEnrollmentCancel,mEnrollmentCallback,0);
+  getActivity().getSystemService(FingerprintManager.class).enroll(mToken,mEnrollmentCancel,0,mEnrollmentCallback);
   mEnrolling=true;
 }

@@ -10,6 +10,8 @@
   mIconAnimationDrawable=(AnimatedVectorDrawable)mFingerprintAnimator.getDrawable();
   mIconAnimationDrawable.registerAnimationCallback(mIconAnimationCallback);
   mFastOutSlowInInterpolator=AnimationUtils.loadInterpolator(this,android.R.interpolator.fast_out_slow_in);
+  mLinearOutSlowInInterpolator=AnimationUtils.loadInterpolator(this,android.R.interpolator.linear_out_slow_in);
+  mFastOutLinearInInterpolator=AnimationUtils.loadInterpolator(this,android.R.interpolator.fast_out_linear_in);
   mFingerprintAnimator.setOnTouchListener(new View.OnTouchListener(){
     @Override public boolean onTouch(    View v,    MotionEvent event){
       if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
@@ -28,4 +30,7 @@
     }
   }
 );
+  mIndicatorBackgroundRestingColor=getColor(R.color.fingerprint_indicator_background_resting);
+  mIndicatorBackgroundActivatedColor=getColor(R.color.fingerprint_indicator_background_activated);
+  mRestoring=savedInstanceState != null;
 }

@@ -1,0 +1,14 @@
+{
+  final Info info=findAssistantByPackageName(value);
+  if (info == null) {
+    setAssistNone();
+    return true;
+  }
+  if (info.isVoiceInteractionService()) {
+    setAssistService(info);
+  }
+ else {
+    setAssistActivity(info);
+  }
+  return true;
+}

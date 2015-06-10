@@ -1,6 +1,4 @@
 {
-  int selectedIndex=findIndexOfValue(getValue());
-  ListAdapter adapter=new AppArrayAdapter(getContext(),R.layout.app_preference_item,getEntries(),mEntryDrawables,selectedIndex);
-  builder.setAdapter(adapter,this);
+  builder.setAdapter(createListAdapter(),this);
   super.onPrepareDialogBuilder(builder);
 }

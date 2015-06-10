@@ -1,0 +1,6 @@
+{
+  final String selectedValue=getValue();
+  final boolean selectedNone=selectedValue == null || (mShowItemNone && selectedValue.contentEquals(ITEM_NONE_VALUE));
+  int selectedIndex=selectedNone ? -1 : findIndexOfValue(selectedValue);
+  return new AppArrayAdapter(getContext(),R.layout.app_preference_item,getEntries(),mEntryDrawables,selectedIndex);
+}

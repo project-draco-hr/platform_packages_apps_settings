@@ -1,5 +1,8 @@
 {
-  if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_MTP)) {
+  if (!mUsbManager.isUsbDataUnlocked()) {
+    return 0;
+  }
+ else   if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_MTP)) {
     return 1;
   }
  else   if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_PTP)) {

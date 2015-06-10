@@ -1,5 +1,10 @@
 {
   if (resultCode != RESULT_CANCELED) {
+    if (data == null) {
+      data=new Intent();
+    }
+    LockPatternUtils lockPatternUtils=new LockPatternUtils(getActivity());
+    data.putExtra(EXTRA_PASSWORD_QUALITY,lockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId()));
     super.onActivityResult(requestCode,resultCode,data);
   }
 }

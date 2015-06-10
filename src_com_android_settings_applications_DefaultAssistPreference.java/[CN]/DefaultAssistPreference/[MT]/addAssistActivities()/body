@@ -1,0 +1,8 @@
+{
+  PackageManager pm=getContext().getPackageManager();
+  List<ResolveInfo> activities=pm.queryIntentActivities(new Intent(Intent.ACTION_ASSIST),PackageManager.MATCH_DEFAULT_ONLY);
+  for (int i=0; i < activities.size(); ++i) {
+    ResolveInfo resolveInfo=activities.get(i);
+    mAvailableAssistants.add(new Info(new ComponentName(resolveInfo.activityInfo.packageName,resolveInfo.activityInfo.name)));
+  }
+}

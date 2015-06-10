@@ -1,0 +1,13 @@
+{
+  mDefaultAssitPref.refreshAssistApps();
+  final ComponentName currentAssist=mDefaultAssitPref.getCurrentAssist();
+  final boolean hasAssistant=currentAssist != null;
+  if (hasAssistant) {
+    getPreferenceScreen().addPreference(mContextPref);
+  }
+ else {
+    getPreferenceScreen().removePreference(mContextPref);
+  }
+  mVoiceInputPref.setAssistRestrict(currentAssist);
+  mVoiceInputPref.refreshVoiceInputs();
+}

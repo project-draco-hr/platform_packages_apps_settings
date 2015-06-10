@@ -1,0 +1,7 @@
+{
+  Settings.Secure.putString(getContext().getContentResolver(),Settings.Secure.ASSISTANT,activityInfo.component.flattenToShortString());
+  Settings.Secure.putString(getContext().getContentResolver(),Settings.Secure.VOICE_INTERACTION_SERVICE,"");
+  Settings.Secure.putString(getContext().getContentResolver(),Settings.Secure.VOICE_RECOGNITION_SERVICE,getDefaultRecognizer());
+  setSummary(getEntry());
+  setSettingsComponent(null);
+}

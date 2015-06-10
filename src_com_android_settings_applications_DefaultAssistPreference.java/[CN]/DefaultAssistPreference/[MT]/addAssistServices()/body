@@ -1,0 +1,12 @@
+{
+  PackageManager pm=getContext().getPackageManager();
+  List<ResolveInfo> services=pm.queryIntentServices(new Intent(VoiceInteractionService.SERVICE_INTERFACE),PackageManager.GET_META_DATA);
+  for (int i=0; i < services.size(); ++i) {
+    ResolveInfo resolveInfo=services.get(i);
+    VoiceInteractionServiceInfo voiceInteractionServiceInfo=new VoiceInteractionServiceInfo(pm,resolveInfo.serviceInfo);
+    if (!voiceInteractionServiceInfo.getSupportsAssist()) {
+      continue;
+    }
+    mAvailableAssistants.add(new Info(new ComponentName(resolveInfo.serviceInfo.packageName,resolveInfo.serviceInfo.name),voiceInteractionServiceInfo));
+  }
+}

@@ -1,6 +1,18 @@
 {
   super.onCreate(savedInstanceState);
-  addPreferencesFromResource(R.xml.high_power_details);
-  mUsageSwitch=(SwitchPreference)findPreference(KEY_HIGH_POWER_SWITCH);
-  mUsageSwitch.setOnPreferenceChangeListener(this);
+  mPackageName=getArguments().getString(AppInfoBase.ARG_PACKAGE_NAME);
+  PackageManager pm=getContext().getPackageManager();
+  try {
+    mLabel=pm.getApplicationInfo(mPackageName,0).loadLabel(pm);
+  }
+ catch (  NameNotFoundException e) {
+    mLabel=mPackageName;
+  }
+  mAdapter=new Adapter(getContext(),R.layout.radio_with_summary);
+  mAdapter.add(new Pair<String,String>(getString(R.string.ignore_optimizations_on),getString(R.string.ignore_optimizations_on_desc)));
+  mAdapter.add(new Pair<String,String>(getString(R.string.ignore_optimizations_off),getString(R.string.ignore_optimizations_off_desc)));
+  mSelectedIndex=mBackend.isWhitelisted(mPackageName) ? 0 : 1;
+  if (mBackend.isSysWhitelisted(mPackageName)) {
+    mAdapter.setEnabled(1,false);
+  }
 }

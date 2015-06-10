@@ -1,0 +1,8 @@
+{
+  ResolveInfo resolveInfo=getContext().getPackageManager().resolveService(new Intent(RecognitionService.SERVICE_INTERFACE),PackageManager.GET_META_DATA);
+  if (resolveInfo == null || resolveInfo.serviceInfo == null) {
+    Log.w(TAG,"Unable to resolve default voice recognition service.");
+    return "";
+  }
+  return new ComponentName(resolveInfo.serviceInfo.packageName,resolveInfo.serviceInfo.name).flattenToShortString();
+}

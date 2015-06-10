@@ -1,0 +1,16 @@
+{
+  final int selected=mDefaultAssitPref.findIndexOfValue(newAssitPackage);
+  final CharSequence appLabel=mDefaultAssitPref.getEntries()[selected];
+  final String title=getString(R.string.assistant_security_warning_title,appLabel);
+  final String message=getString(R.string.assistant_security_warning,appLabel);
+  final DialogInterface.OnClickListener onAgree=new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      setDefaultAssist(newAssitPackage);
+    }
+  }
+;
+  AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+  builder.setTitle(title).setMessage(message).setCancelable(true).setPositiveButton(R.string.assistant_security_warning_agree,onAgree).setNegativeButton(R.string.assistant_security_warning_disagree,null);
+  AlertDialog dialog=builder.create();
+  dialog.show();
+}

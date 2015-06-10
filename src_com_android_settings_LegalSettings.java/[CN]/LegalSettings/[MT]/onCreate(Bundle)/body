@@ -1,0 +1,10 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.about_legal);
+  final Activity act=getActivity();
+  PreferenceGroup parentPreference=getPreferenceScreen();
+  Utils.updatePreferenceToSpecificActivityOrRemove(act,parentPreference,KEY_TERMS,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
+  Utils.updatePreferenceToSpecificActivityOrRemove(act,parentPreference,KEY_LICENSE,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
+  Utils.updatePreferenceToSpecificActivityOrRemove(act,parentPreference,KEY_COPYRIGHT,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
+  Utils.updatePreferenceToSpecificActivityOrRemove(act,parentPreference,KEY_WEBVIEW_LICENSE,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
+}

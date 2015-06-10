@@ -1,0 +1,27 @@
+{
+  ArrayList<ArrayList<Object>> result=new ArrayList<>();
+  result.add(new ArrayList<Object>(Collections.singletonList(mHeaderTextView)));
+  result.add(new ArrayList<Object>(Collections.singletonList(mDetailsTextView)));
+  if (mCancelButton.getVisibility() == View.VISIBLE) {
+    result.add(new ArrayList<Object>(Collections.singletonList(mCancelButton)));
+  }
+  LockPatternView.CellState[][] cellStates=mLockPatternView.getCellStates();
+  for (int i=0; i < cellStates.length; i++) {
+    ArrayList<Object> row=new ArrayList<>();
+    for (int j=0; j < cellStates[i].length; j++) {
+      row.add(cellStates[i][j]);
+    }
+    result.add(row);
+  }
+  if (mFingerprintIcon.getVisibility() == View.VISIBLE) {
+    result.add(new ArrayList<Object>(Collections.singletonList(mFingerprintIcon)));
+  }
+  Object[][] resultArr=new Object[result.size()][cellStates[0].length];
+  for (int i=0; i < result.size(); i++) {
+    ArrayList<Object> row=result.get(i);
+    for (int j=0; j < row.size(); j++) {
+      resultArr[i][j]=row.get(j);
+    }
+  }
+  return resultArr;
+}

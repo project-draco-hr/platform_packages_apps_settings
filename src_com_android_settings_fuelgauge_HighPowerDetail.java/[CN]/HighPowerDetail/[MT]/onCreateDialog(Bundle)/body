@@ -1,0 +1,7 @@
+{
+  AlertDialog.Builder b=new AlertDialog.Builder(getContext()).setTitle(getString(R.string.ignore_optimizations_title,mLabel)).setNegativeButton(R.string.cancel,null).setSingleChoiceItems(mAdapter,mSelectedIndex,this);
+  if (!mBackend.isSysWhitelisted(mPackageName)) {
+    b.setPositiveButton(R.string.done,this);
+  }
+  return b.create();
+}

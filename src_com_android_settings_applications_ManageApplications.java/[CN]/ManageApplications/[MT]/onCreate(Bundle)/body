@@ -36,6 +36,13 @@
  else   if (className.equals(HighPowerApplicationsActivity.class.getName())) {
     mListType=LIST_TYPE_HIGH_POWER;
     mShowSystem=true;
+    if (intent != null && Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS.equals(intent.getAction())) {
+      mCurrentPkgName=intent.getData().getSchemeSpecificPart();
+      if (mCurrentPkgName != null) {
+        mCurrentUid=mApplicationsState.getEntry(mCurrentPkgName,UserHandle.myUserId()).info.uid;
+        startApplicationDetailsActivity();
+      }
+    }
   }
  else {
     mListType=LIST_TYPE_MAIN;

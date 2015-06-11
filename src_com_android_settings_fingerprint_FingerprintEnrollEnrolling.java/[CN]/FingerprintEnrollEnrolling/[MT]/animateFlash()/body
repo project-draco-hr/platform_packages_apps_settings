@@ -1,0 +1,23 @@
+{
+  ValueAnimator anim=ValueAnimator.ofArgb(mIndicatorBackgroundRestingColor,mIndicatorBackgroundActivatedColor);
+  final ValueAnimator.AnimatorUpdateListener listener=new ValueAnimator.AnimatorUpdateListener(){
+    @Override public void onAnimationUpdate(    ValueAnimator animation){
+      mFingerprintAnimator.setBackgroundTintList(ColorStateList.valueOf((Integer)animation.getAnimatedValue()));
+    }
+  }
+;
+  anim.addUpdateListener(listener);
+  anim.addListener(new AnimatorListenerAdapter(){
+    @Override public void onAnimationEnd(    Animator animation){
+      ValueAnimator anim=ValueAnimator.ofArgb(mIndicatorBackgroundActivatedColor,mIndicatorBackgroundRestingColor);
+      anim.addUpdateListener(listener);
+      anim.setDuration(300);
+      anim.setInterpolator(mLinearOutSlowInInterpolator);
+      anim.start();
+    }
+  }
+);
+  anim.setInterpolator(mFastOutSlowInInterpolator);
+  anim.setDuration(300);
+  anim.start();
+}

@@ -1,10 +1,11 @@
 {
   super.onViewCreated(view,savedInstanceState);
-  mFingerprintHelper=new FingerprintUiHelper((ImageView)view.findViewById(R.id.fingerprintIcon),(TextView)view.findViewById(R.id.errorText),this);
+  mCancelButton=(Button)view.findViewById(R.id.cancelButton);
+  mFingerprintIcon=(ImageView)view.findViewById(R.id.fingerprintIcon);
+  mFingerprintHelper=new FingerprintUiHelper(mFingerprintIcon,(TextView)view.findViewById(R.id.errorText),this);
   boolean showCancelButton=getActivity().getIntent().getBooleanExtra(SHOW_CANCEL_BUTTON,false);
-  Button cancelButton=(Button)view.findViewById(R.id.cancelButton);
-  cancelButton.setVisibility(showCancelButton ? View.VISIBLE : View.GONE);
-  cancelButton.setOnClickListener(new View.OnClickListener(){
+  mCancelButton.setVisibility(showCancelButton ? View.VISIBLE : View.GONE);
+  mCancelButton.setOnClickListener(new View.OnClickListener(){
     @Override public void onClick(    View v){
       getActivity().finish();
     }

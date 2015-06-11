@@ -1,6 +1,7 @@
 {
   if (getIntent().getBooleanExtra(ConfirmDeviceCredentialBaseFragment.DARK_THEME,false)) {
     setTheme(R.style.Theme_ConfirmDeviceCredentialsDark);
+    mDark=true;
   }
   super.onCreate(savedState);
   boolean deviceLocked=getSystemService(KeyguardManager.class).isKeyguardLocked();
@@ -13,4 +14,5 @@
     getActionBar().setDisplayHomeAsUpEnabled(true);
     getActionBar().setHomeButtonEnabled(true);
   }
+  mRestoring=savedState != null;
 }

@@ -1,5 +1,5 @@
 {
-  List<ResolveInfo> activities=super.onQueryPackageManager(queryIntent);
+  List<ResolveInfo> activities=getPackageManager().queryIntentActivities(queryIntent,PackageManager.GET_META_DATA);
   if (activities == null)   return null;
   for (int i=activities.size() - 1; i >= 0; i--) {
     ResolveInfo info=activities.get(i);

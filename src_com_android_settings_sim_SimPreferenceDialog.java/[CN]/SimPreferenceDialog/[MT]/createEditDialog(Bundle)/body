@@ -1,13 +1,9 @@
 {
   final Resources res=mContext.getResources();
-  AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
-  LayoutInflater inflater=(LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-  final View dialogLayout=inflater.inflate(R.layout.multi_sim_dialog,null);
-  builder.setView(dialogLayout);
-  EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);
+  EditText nameText=(EditText)mDialogLayout.findViewById(R.id.sim_name);
   nameText.setText(mSubInfoRecord.getDisplayName());
-  final Spinner tintSpinner=(Spinner)dialogLayout.findViewById(R.id.spinner);
-  SelectColorAdapter adapter=new SelectColorAdapter(getContext(),R.layout.settings_color_picker_item,mColorStrings);
+  final Spinner tintSpinner=(Spinner)mDialogLayout.findViewById(R.id.spinner);
+  SelectColorAdapter adapter=new SelectColorAdapter(mContext,R.layout.settings_color_picker_item,mColorStrings);
   adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
   tintSpinner.setAdapter(adapter);
   for (int i=0; i < mTintArr.length; i++) {
@@ -26,22 +22,22 @@
     }
   }
 );
-  TextView numberView=(TextView)dialogLayout.findViewById(R.id.number);
-  final String rawNumber=getPhoneNumber(mSubInfoRecord);
+  final TelephonyManager tm=(TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
+  TextView numberView=(TextView)mDialogLayout.findViewById(R.id.number);
+  final String rawNumber=tm.getLine1NumberForSubscriber(mSubInfoRecord.getSubscriptionId());
   if (TextUtils.isEmpty(rawNumber)) {
     numberView.setText(res.getString(com.android.internal.R.string.unknownName));
   }
  else {
     numberView.setText(PhoneNumberUtils.formatNumber(rawNumber));
   }
-  final TelephonyManager tm=(TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
   String simCarrierName=tm.getSimOperatorNameForSubscription(mSubInfoRecord.getSubscriptionId());
-  TextView carrierView=(TextView)dialogLayout.findViewById(R.id.carrier);
-  carrierView.setText(!TextUtils.isEmpty(simCarrierName) ? simCarrierName : getContext().getString(com.android.internal.R.string.unknownName));
-  builder.setTitle(String.format(res.getString(R.string.sim_editor_title),(mSubInfoRecord.getSimSlotIndex() + 1)));
-  builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
+  TextView carrierView=(TextView)mDialogLayout.findViewById(R.id.carrier);
+  carrierView.setText(!TextUtils.isEmpty(simCarrierName) ? simCarrierName : mContext.getString(com.android.internal.R.string.unknownName));
+  mBuilder.setTitle(String.format(res.getString(R.string.sim_editor_title),(mSubInfoRecord.getSimSlotIndex() + 1)));
+  mBuilder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){
-      final EditText nameText=(EditText)dialogLayout.findViewById(R.id.sim_name);
+      final EditText nameText=(EditText)mDialogLayout.findViewById(R.id.sim_name);
       String displayName=nameText.getText().toString();
       int subId=mSubInfoRecord.getSubscriptionId();
       mSubInfoRecord.setDisplayName(displayName);
@@ -51,16 +47,17 @@
       int tint=mTintArr[tintSelected];
       mSubInfoRecord.setIconTint(tint);
       mSubscriptionManager.setIconTint(tint,subscriptionId);
-      updateAllOptions();
-      update();
+      dialog.dismiss();
+      finish();
     }
   }
 );
-  builder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+  mBuilder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){
       dialog.dismiss();
+      finish();
     }
   }
 );
-  builder.create().show();
+  mBuilder.create().show();
 }

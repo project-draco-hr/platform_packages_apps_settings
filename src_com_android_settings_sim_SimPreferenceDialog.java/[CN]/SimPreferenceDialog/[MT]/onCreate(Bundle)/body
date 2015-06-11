@@ -1,0 +1,16 @@
+{
+  super.onCreate(bundle);
+  mContext=this;
+  final Bundle extras=getIntent().getExtras();
+  mSlotId=extras.getInt(SimSettings.EXTRA_SLOT_ID,-1);
+  mSubscriptionManager=SubscriptionManager.from(mContext);
+  mSubInfoRecord=mSubscriptionManager.getActiveSubscriptionInfoForSimSlotIndex(mSlotId);
+  mTintArr=mContext.getResources().getIntArray(com.android.internal.R.array.sim_colors);
+  mColorStrings=mContext.getResources().getStringArray(R.array.color_picker);
+  mTintSelectorPos=0;
+  mBuilder=new AlertDialog.Builder(mContext);
+  LayoutInflater inflater=(LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  mDialogLayout=inflater.inflate(R.layout.multi_sim_dialog,null);
+  mBuilder.setView(mDialogLayout);
+  createEditDialog(bundle);
+}

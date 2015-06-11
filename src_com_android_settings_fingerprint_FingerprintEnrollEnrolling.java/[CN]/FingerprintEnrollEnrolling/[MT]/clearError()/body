@@ -1,0 +1,10 @@
+{
+  if (mErrorText.getVisibility() == View.VISIBLE) {
+    mErrorText.animate().alpha(0f).translationY(getResources().getDimensionPixelSize(R.dimen.fingerprint_error_text_disappear_distance)).setDuration(100).setInterpolator(mFastOutLinearInInterpolator).withEndAction(new Runnable(){
+      @Override public void run(){
+        mErrorText.setVisibility(View.INVISIBLE);
+      }
+    }
+).start();
+  }
+}

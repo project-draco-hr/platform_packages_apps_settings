@@ -1,0 +1,12 @@
+{
+  Context context=new ContextThemeWrapper(this,android.R.style.Theme_Material_Light);
+  View view=LayoutInflater.from(context).inflate(R.layout.shortcut_badge,null);
+  ((ImageView)view.findViewById(android.R.id.icon)).setImageResource(resource);
+  int spec=MeasureSpec.makeMeasureSpec(0,MeasureSpec.UNSPECIFIED);
+  view.measure(spec,spec);
+  Bitmap bitmap=Bitmap.createBitmap(view.getMeasuredWidth(),view.getMeasuredHeight(),Config.ARGB_8888);
+  Canvas canvas=new Canvas(bitmap);
+  view.layout(0,0,view.getMeasuredWidth(),view.getMeasuredHeight());
+  view.draw(canvas);
+  return bitmap;
+}

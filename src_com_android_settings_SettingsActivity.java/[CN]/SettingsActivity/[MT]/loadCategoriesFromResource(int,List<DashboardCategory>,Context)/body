@@ -1,7 +1,7 @@
 {
   XmlResourceParser parser=null;
   try {
-    parser=getResources().getXml(resid);
+    parser=context.getResources().getXml(resid);
     AttributeSet attrs=Xml.asAttributeSet(parser);
     int type;
     while ((type=parser.next()) != XmlPullParser.END_DOCUMENT && type != XmlPullParser.START_TAG) {
@@ -19,7 +19,7 @@
       nodeName=parser.getName();
       if ("dashboard-category".equals(nodeName)) {
         DashboardCategory category=new DashboardCategory();
-        TypedArray sa=obtainStyledAttributes(attrs,com.android.internal.R.styleable.PreferenceHeader);
+        TypedArray sa=context.obtainStyledAttributes(attrs,com.android.internal.R.styleable.PreferenceHeader);
         category.id=sa.getResourceId(com.android.internal.R.styleable.PreferenceHeader_id,(int)DashboardCategory.CAT_ID_UNDEFINED);
         TypedValue tv=sa.peekValue(com.android.internal.R.styleable.PreferenceHeader_title);
         if (tv != null && tv.type == TypedValue.TYPE_STRING) {
@@ -31,11 +31,11 @@
           }
         }
         sa.recycle();
-        sa=obtainStyledAttributes(attrs,com.android.internal.R.styleable.Preference);
+        sa=context.obtainStyledAttributes(attrs,com.android.internal.R.styleable.Preference);
         tv=sa.peekValue(com.android.internal.R.styleable.Preference_key);
         if (tv != null && tv.type == TypedValue.TYPE_STRING) {
           if (tv.resourceId != 0) {
-            category.key=getString(tv.resourceId);
+            category.key=context.getString(tv.resourceId);
           }
  else {
             category.key=tv.string.toString();
@@ -50,7 +50,7 @@
           String innerNodeName=parser.getName();
           if (innerNodeName.equals("dashboard-tile")) {
             DashboardTile tile=new DashboardTile();
-            sa=obtainStyledAttributes(attrs,com.android.internal.R.styleable.PreferenceHeader);
+            sa=context.obtainStyledAttributes(attrs,com.android.internal.R.styleable.PreferenceHeader);
             tile.id=sa.getResourceId(com.android.internal.R.styleable.PreferenceHeader_id,(int)TILE_ID_UNDEFINED);
             tv=sa.peekValue(com.android.internal.R.styleable.PreferenceHeader_title);
             if (tv != null && tv.type == TypedValue.TYPE_STRING) {
@@ -83,11 +83,11 @@
               }
               String innerNodeName2=parser.getName();
               if (innerNodeName2.equals("extra")) {
-                getResources().parseBundleExtra("extra",attrs,curBundle);
+                context.getResources().parseBundleExtra("extra",attrs,curBundle);
                 XmlUtils.skipCurrentTag(parser);
               }
  else               if (innerNodeName2.equals("intent")) {
-                tile.intent=Intent.parseIntent(getResources(),parser,attrs);
+                tile.intent=Intent.parseIntent(context.getResources(),parser,attrs);
               }
  else {
                 XmlUtils.skipCurrentTag(parser);
@@ -97,7 +97,7 @@
               tile.fragmentArguments=curBundle;
               curBundle=null;
             }
-            if (tile.id != R.id.sim_settings || Utils.showSimCardTile(this)) {
+            if (tile.id != R.id.sim_settings || Utils.showSimCardTile(context)) {
               category.addTile(tile);
             }
           }

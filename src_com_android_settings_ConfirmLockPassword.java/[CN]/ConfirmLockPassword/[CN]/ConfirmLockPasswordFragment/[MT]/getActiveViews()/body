@@ -1,0 +1,13 @@
+{
+  ArrayList<View> result=new ArrayList<>();
+  result.add(mHeaderTextView);
+  result.add(mDetailsTextView);
+  if (mCancelButton.getVisibility() == View.VISIBLE) {
+    result.add(mCancelButton);
+  }
+  result.add(mPasswordEntry);
+  if (mFingerprintIcon.getVisibility() == View.VISIBLE) {
+    result.add(mFingerprintIcon);
+  }
+  return result.toArray(new View[]{});
+}

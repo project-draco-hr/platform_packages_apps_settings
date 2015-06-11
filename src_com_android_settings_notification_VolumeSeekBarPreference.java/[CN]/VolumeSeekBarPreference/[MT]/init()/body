@@ -12,9 +12,10 @@
         mCallback.onStreamValueChanged(mStream,progress);
       }
     }
-    @Override public void onMuted(    boolean muted){
-      if (mMuted == muted)       return;
+    @Override public void onMuted(    boolean muted,    boolean zenMuted){
+      if (mMuted == muted && mZenMuted == zenMuted)       return;
       mMuted=muted;
+      mZenMuted=zenMuted;
       updateIconView();
     }
   }

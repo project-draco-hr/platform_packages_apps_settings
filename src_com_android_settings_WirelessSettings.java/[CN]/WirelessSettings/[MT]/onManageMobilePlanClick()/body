@@ -2,7 +2,7 @@
   log("onManageMobilePlanClick:");
   mManageMobilePlanMessage=null;
   Resources resources=getActivity().getResources();
-  NetworkInfo ni=mCm.getProvisioningOrActiveNetworkInfo();
+  NetworkInfo ni=mCm.getActiveNetworkInfo();
   if (mTm.hasIccCard() && (ni != null)) {
     Intent provisioningIntent=new Intent(TelephonyIntents.ACTION_CARRIER_SETUP);
     List<String> carrierPackages=mTm.getCarrierPackageNamesForIntent(provisioningIntent);

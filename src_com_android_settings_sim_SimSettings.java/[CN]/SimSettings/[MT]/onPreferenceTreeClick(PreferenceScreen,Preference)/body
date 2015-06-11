@@ -3,7 +3,9 @@
   Intent intent=new Intent(context,SimDialogActivity.class);
   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
   if (preference instanceof SimPreference) {
-    ((SimPreference)preference).createEditDialog((SimPreference)preference);
+    Intent newIntent=new Intent(context,SimPreferenceDialog.class);
+    newIntent.putExtra(EXTRA_SLOT_ID,((SimPreference)preference).getSlotId());
+    startActivity(newIntent);
   }
  else   if (findPreference(KEY_CELLULAR_DATA) == preference) {
     intent.putExtra(SimDialogActivity.DIALOG_TYPE_KEY,SimDialogActivity.DATA_PICK);

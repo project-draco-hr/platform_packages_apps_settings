@@ -1,0 +1,9 @@
+{
+  super.onRestoreInstanceState(savedInstanceState);
+  int pos=savedInstanceState.getInt(TINT_POS);
+  final Spinner tintSpinner=(Spinner)mDialogLayout.findViewById(R.id.spinner);
+  tintSpinner.setSelection(pos);
+  mTintSelectorPos=pos;
+  EditText nameText=(EditText)mDialogLayout.findViewById(R.id.sim_name);
+  nameText.setText(savedInstanceState.getString(SIM_NAME));
+}

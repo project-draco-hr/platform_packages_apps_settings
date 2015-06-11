@@ -1,5 +1,8 @@
 {
   updateProgress(true);
   updateDescription();
-  mErrorText.setText("");
+  clearError();
+  animateFlash();
+  mErrorText.removeCallbacks(mTouchAgainRunnable);
+  mErrorText.postDelayed(mTouchAgainRunnable,HINT_TIMEOUT_DURATION);
 }

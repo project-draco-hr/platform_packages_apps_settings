@@ -25,5 +25,12 @@
       getActivity().finish();
     }
   }
+  mAppearAnimationUtils=new AppearAnimationUtils(getContext(),AppearAnimationUtils.DEFAULT_APPEAR_DURATION,2f,1.3f,AnimationUtils.loadInterpolator(getContext(),android.R.interpolator.linear_out_slow_in));
+  mDisappearAnimationUtils=new DisappearAnimationUtils(getContext(),125,4f,0.3f,AnimationUtils.loadInterpolator(getContext(),android.R.interpolator.fast_out_linear_in),new AppearAnimationUtils.RowTranslationScaler(){
+    @Override public float getRowTranslationScale(    int row,    int numRows){
+      return (float)(numRows - row) / numRows;
+    }
+  }
+);
   return view;
 }

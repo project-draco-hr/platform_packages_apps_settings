@@ -1,0 +1,9 @@
+{
+  super.onRtlPropertiesChanged(layoutDirection);
+  if (layoutDirection != mLayoutDirection) {
+    mLayoutDirection=layoutDirection;
+    if (mOrientation == HORIZONTAL) {
+      requestLayout();
+    }
+  }
+}

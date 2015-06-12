@@ -1,0 +1,15 @@
+{
+  int uniformMeasureSpec=MeasureSpec.makeMeasureSpec(getMeasuredWidth(),MeasureSpec.EXACTLY);
+  for (int i=0; i < count; ++i) {
+    final View child=getVirtualChildAt(i);
+    if (child.getVisibility() != GONE) {
+      LayoutParams lp=((LayoutParams)child.getLayoutParams());
+      if (lp.width == LayoutParams.MATCH_PARENT) {
+        int oldHeight=lp.height;
+        lp.height=child.getMeasuredHeight();
+        measureChildWithMargins(child,uniformMeasureSpec,0,heightMeasureSpec,0);
+        lp.height=oldHeight;
+      }
+    }
+  }
+}

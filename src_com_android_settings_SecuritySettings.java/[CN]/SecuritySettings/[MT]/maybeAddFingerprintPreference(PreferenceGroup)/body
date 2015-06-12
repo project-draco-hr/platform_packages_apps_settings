@@ -16,11 +16,9 @@
     fingerprintPreference.setSummary(getResources().getQuantityString(R.plurals.security_settings_fingerprint_preference_summary,fingerprintCount,fingerprintCount));
     clazz=FingerprintSettings.class.getName();
   }
- else   if (!hasPassword) {
-    clazz=FingerprintEnrollOnboard.class.getName();
-  }
  else {
-    clazz=FingerprintEnrollFindSensor.class.getName();
+    clazz=FingerprintEnrollIntroduction.class.getName();
+    intent.putExtra(FingerprintEnrollIntroduction.EXTRA_HAS_PASSWORD,hasPassword);
   }
   intent.setClassName("com.android.settings",clazz);
   fingerprintPreference.setIntent(intent);

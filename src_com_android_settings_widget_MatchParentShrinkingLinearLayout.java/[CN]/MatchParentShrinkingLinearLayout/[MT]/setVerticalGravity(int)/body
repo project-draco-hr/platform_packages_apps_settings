@@ -1,0 +1,7 @@
+{
+  final int gravity=verticalGravity & Gravity.VERTICAL_GRAVITY_MASK;
+  if ((mGravity & Gravity.VERTICAL_GRAVITY_MASK) != gravity) {
+    mGravity=(mGravity & ~Gravity.VERTICAL_GRAVITY_MASK) | gravity;
+    requestLayout();
+  }
+}

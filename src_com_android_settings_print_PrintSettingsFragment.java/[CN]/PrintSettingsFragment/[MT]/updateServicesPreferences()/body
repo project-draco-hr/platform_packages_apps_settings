@@ -6,7 +6,8 @@
     mPrintServicesCategory.removeAll();
   }
   List<ComponentName> enabledServices=PrintSettingsUtils.readEnabledPrintServices(getActivity());
-  List<ResolveInfo> installedServices=getActivity().getPackageManager().queryIntentServices(new Intent(android.printservice.PrintService.SERVICE_INTERFACE),PackageManager.GET_SERVICES | PackageManager.GET_META_DATA);
+  final PackageManager pm=getActivity().getPackageManager();
+  List<ResolveInfo> installedServices=pm.queryIntentServices(new Intent(android.printservice.PrintService.SERVICE_INTERFACE),PackageManager.GET_SERVICES | PackageManager.GET_META_DATA);
   final int installedServiceCount=installedServices.size();
   for (int i=0; i < installedServiceCount; i++) {
     ResolveInfo installedService=installedServices.get(i);
@@ -24,6 +25,10 @@
     }
  else {
       preference.setSummary(getString(R.string.print_feature_state_off));
+    }
+    final Drawable drawable=installedService.loadIcon(pm);
+    if (drawable != null) {
+      preference.setIcon(drawable);
     }
     Bundle extras=preference.getExtras();
     extras.putString(EXTRA_PREFERENCE_KEY,preference.getKey());
@@ -48,5 +53,11 @@
   }
   if (mPrintServicesCategory.getPreferenceCount() == 0) {
     getPreferenceScreen().removePreference(mPrintServicesCategory);
+  }
+ else {
+    final Preference addNewServicePreference=newAddServicePreferenceOrNull();
+    if (addNewServicePreference != null) {
+      mPrintServicesCategory.addPreference(addNewServicePreference);
+    }
   }
 }

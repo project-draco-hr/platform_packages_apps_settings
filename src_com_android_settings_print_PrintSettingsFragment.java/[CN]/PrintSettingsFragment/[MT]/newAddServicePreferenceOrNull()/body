@@ -1,0 +1,13 @@
+{
+  final Intent addNewServiceIntent=createAddNewServiceIntentOrNull();
+  if (addNewServiceIntent == null) {
+    return null;
+  }
+  Preference preference=new Preference(getContext());
+  preference.setTitle(R.string.print_menu_item_add_service);
+  preference.setIcon(R.drawable.ic_menu_add);
+  preference.setOrder(ORDER_LAST);
+  preference.setIntent(addNewServiceIntent);
+  preference.setPersistent(false);
+  return preference;
+}

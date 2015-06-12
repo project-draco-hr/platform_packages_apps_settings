@@ -1,0 +1,82 @@
+{
+  final boolean isLayoutRtl=isLayoutRtl();
+  final int paddingTop=mPaddingTop;
+  int childTop;
+  int childLeft;
+  final int height=bottom - top;
+  int childBottom=height - mPaddingBottom;
+  int childSpace=height - paddingTop - mPaddingBottom;
+  final int count=getVirtualChildCount();
+  final int majorGravity=mGravity & Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK;
+  final int minorGravity=mGravity & Gravity.VERTICAL_GRAVITY_MASK;
+  final boolean baselineAligned=mBaselineAligned;
+  final int[] maxAscent=mMaxAscent;
+  final int[] maxDescent=mMaxDescent;
+  final int layoutDirection=getLayoutDirection();
+switch (Gravity.getAbsoluteGravity(majorGravity,layoutDirection)) {
+case Gravity.RIGHT:
+    childLeft=mPaddingLeft + right - left - mTotalLength;
+  break;
+case Gravity.CENTER_HORIZONTAL:
+childLeft=mPaddingLeft + (right - left - mTotalLength) / 2;
+break;
+case Gravity.LEFT:
+default :
+childLeft=mPaddingLeft;
+break;
+}
+int start=0;
+int dir=1;
+if (isLayoutRtl) {
+start=count - 1;
+dir=-1;
+}
+for (int i=0; i < count; i++) {
+int childIndex=start + dir * i;
+final View child=getVirtualChildAt(childIndex);
+if (child == null) {
+childLeft+=measureNullChild(childIndex);
+}
+ else if (child.getVisibility() != GONE) {
+final int childWidth=child.getMeasuredWidth();
+final int childHeight=child.getMeasuredHeight();
+int childBaseline=-1;
+final LayoutParams lp=(LayoutParams)child.getLayoutParams();
+if (baselineAligned && lp.height != LayoutParams.MATCH_PARENT) {
+childBaseline=child.getBaseline();
+}
+int gravity=lp.gravity;
+if (gravity < 0) {
+gravity=minorGravity;
+}
+switch (gravity & Gravity.VERTICAL_GRAVITY_MASK) {
+case Gravity.TOP:
+childTop=paddingTop + lp.topMargin;
+if (childBaseline != -1) {
+childTop+=maxAscent[INDEX_TOP] - childBaseline;
+}
+break;
+case Gravity.CENTER_VERTICAL:
+childTop=paddingTop + ((childSpace - childHeight) / 2) + lp.topMargin - lp.bottomMargin;
+break;
+case Gravity.BOTTOM:
+childTop=childBottom - childHeight - lp.bottomMargin;
+if (childBaseline != -1) {
+int descent=child.getMeasuredHeight() - childBaseline;
+childTop-=(maxDescent[INDEX_BOTTOM] - descent);
+}
+break;
+default :
+childTop=paddingTop;
+break;
+}
+if (hasDividerBeforeChildAt(childIndex)) {
+childLeft+=mDividerWidth;
+}
+childLeft+=lp.leftMargin;
+setChildFrame(child,childLeft + getLocationOffset(child),childTop,childWidth,childHeight);
+childLeft+=childWidth + lp.rightMargin + getNextLocationOffset(child);
+i+=getChildrenSkipCount(child,childIndex);
+}
+}
+}

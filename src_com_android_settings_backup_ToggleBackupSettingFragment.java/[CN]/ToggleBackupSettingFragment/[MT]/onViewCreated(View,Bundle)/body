@@ -3,7 +3,12 @@
   SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
   mToggleSwitch=mSwitchBar.getSwitch();
-  mSummaryPreference.setSummary(R.string.fullbackup_data_summary);
+  if (Settings.Secure.getInt(getContentResolver(),USER_FULL_DATA_BACKUP_AWARE,0) != 0) {
+    mSummaryPreference.setSummary(R.string.fullbackup_data_summary);
+  }
+ else {
+    mSummaryPreference.setSummary(R.string.backup_data_summary);
+  }
   try {
     boolean backupEnabled=mBackupManager == null ? false : mBackupManager.isBackupEnabled();
     mSwitchBar.setCheckedInternal(backupEnabled);

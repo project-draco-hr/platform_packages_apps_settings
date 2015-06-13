@@ -1,5 +1,11 @@
 {
-  CharSequence msg=getResources().getText(R.string.fullbackup_erase_dialog_message);
+  CharSequence msg;
+  if (Settings.Secure.getInt(getContentResolver(),USER_FULL_DATA_BACKUP_AWARE,0) != 0) {
+    msg=getResources().getText(R.string.fullbackup_erase_dialog_message);
+  }
+ else {
+    msg=getResources().getText(R.string.backup_erase_dialog_message);
+  }
   mWaitingForConfirmationDialog=true;
   mConfirmDialog=new AlertDialog.Builder(getActivity()).setMessage(msg).setTitle(R.string.backup_erase_dialog_title).setPositiveButton(android.R.string.ok,this).setNegativeButton(android.R.string.cancel,this).setOnDismissListener(this).show();
 }

@@ -1,7 +1,10 @@
 {
   super.onCreate(savedInstanceState);
+  if (mDisk == null) {
+    finish();
+    return;
+  }
   setContentView(R.layout.storage_wizard_migrate);
-  Preconditions.checkNotNull(mDisk);
   setHeaderText(R.string.storage_wizard_migrate_title,mDisk.getDescription());
   setBodyText(R.string.memory_calculating_size);
   mRadioNow=(RadioButton)findViewById(R.id.storage_wizard_migrate_now);

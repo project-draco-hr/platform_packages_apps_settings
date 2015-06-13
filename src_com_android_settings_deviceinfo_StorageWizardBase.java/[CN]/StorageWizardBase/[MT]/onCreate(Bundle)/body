@@ -13,4 +13,7 @@
     mDisk=mVolume.getDisk();
   }
   setTheme(R.style.SuwThemeMaterial_Light);
+  if (mDisk != null) {
+    mStorage.registerListener(mStorageListener);
+  }
 }

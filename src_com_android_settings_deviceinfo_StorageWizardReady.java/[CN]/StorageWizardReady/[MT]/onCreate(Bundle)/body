@@ -1,7 +1,10 @@
 {
   super.onCreate(savedInstanceState);
+  if (mDisk == null) {
+    finish();
+    return;
+  }
   setContentView(R.layout.storage_wizard_generic);
-  Preconditions.checkNotNull(mDisk);
   setHeaderText(R.string.storage_wizard_ready_title,mDisk.getDescription());
   final VolumeInfo publicVol=findFirstVolume(VolumeInfo.TYPE_PUBLIC);
   final VolumeInfo privateVol=findFirstVolume(VolumeInfo.TYPE_PRIVATE);

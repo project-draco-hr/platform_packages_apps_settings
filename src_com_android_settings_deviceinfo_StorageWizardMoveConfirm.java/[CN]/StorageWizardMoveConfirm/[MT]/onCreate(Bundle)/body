@@ -1,5 +1,9 @@
 {
   super.onCreate(savedInstanceState);
+  if (mVolume == null) {
+    finish();
+    return;
+  }
   setContentView(R.layout.storage_wizard_generic);
   try {
     mPackageName=getIntent().getStringExtra(EXTRA_PACKAGE_NAME);
@@ -8,8 +12,6 @@
  catch (  NameNotFoundException e) {
     throw new RuntimeException(e);
   }
-  Preconditions.checkNotNull(mVolume);
-  Preconditions.checkNotNull(mApp);
   Preconditions.checkState(getPackageManager().getPackageCandidateVolumes(mApp).contains(mVolume));
   final String appName=getPackageManager().getApplicationLabel(mApp).toString();
   final String volumeName=mStorage.getBestVolumeDescription(mVolume);

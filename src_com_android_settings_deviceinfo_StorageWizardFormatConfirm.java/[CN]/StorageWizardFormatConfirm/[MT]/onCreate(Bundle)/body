@@ -1,7 +1,10 @@
 {
   super.onCreate(savedInstanceState);
+  if (mDisk == null) {
+    finish();
+    return;
+  }
   setContentView(R.layout.storage_wizard_generic);
-  Preconditions.checkNotNull(mDisk);
   mFormatPrivate=getIntent().getBooleanExtra(EXTRA_FORMAT_PRIVATE,false);
   if (mFormatPrivate) {
     setHeaderText(R.string.storage_wizard_format_confirm_title);

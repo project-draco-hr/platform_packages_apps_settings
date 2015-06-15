@@ -1,0 +1,9 @@
+{
+  HighPowerDetail fragment=new HighPowerDetail();
+  Bundle args=new Bundle();
+  args.putString(AppInfoBase.ARG_PACKAGE_NAME,packageName);
+  args.putBoolean(ARG_DEFAULT_ON,defaultToOn);
+  fragment.setArguments(args);
+  fragment.setTargetFragment(caller,requestCode);
+  fragment.show(caller.getFragmentManager(),HighPowerDetail.class.getSimpleName());
+}

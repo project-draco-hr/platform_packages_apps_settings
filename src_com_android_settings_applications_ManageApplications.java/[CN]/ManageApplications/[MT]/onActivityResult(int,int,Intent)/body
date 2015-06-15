@@ -3,6 +3,14 @@
     if (mListType == LIST_TYPE_NOTIFICATION) {
       mApplications.mExtraInfoBridge.forceUpdate(mCurrentPkgName,mCurrentUid);
     }
+ else     if (mListType == LIST_TYPE_HIGH_POWER) {
+      if (mFinishAfterDialog) {
+        getActivity().onBackPressed();
+      }
+ else {
+        mApplications.mExtraInfoBridge.forceUpdate(mCurrentPkgName,mCurrentUid);
+      }
+    }
  else {
       mApplicationsState.requestSize(mCurrentPkgName,UserHandle.getUserId(mCurrentUid));
     }

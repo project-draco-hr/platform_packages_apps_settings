@@ -1,0 +1,7 @@
+{
+  super.onDismiss(dialog);
+  Fragment target=getTargetFragment();
+  if (target != null) {
+    target.onActivityResult(getTargetRequestCode(),0,null);
+  }
+}

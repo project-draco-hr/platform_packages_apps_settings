@@ -5,6 +5,8 @@
   final PreferenceScreen screen=getPreferenceScreen();
   screen.removeAll();
   if (!mVolume.isMountedReadable()) {
+    Log.d(TAG,"Leaving details fragment due to state " + mVolume.getState());
+    finish();
     return;
   }
   screen.addPreference(mGraph);

@@ -1,0 +1,8 @@
+{
+  final Bundle args=new Bundle();
+  args.putString(VolumeRecord.EXTRA_FS_UUID,fsUuid);
+  final ForgetConfirmFragment dialog=new ForgetConfirmFragment();
+  dialog.setArguments(args);
+  dialog.setTargetFragment(parent,0);
+  dialog.show(parent.getFragmentManager(),TAG_FORGET_CONFIRM);
+}

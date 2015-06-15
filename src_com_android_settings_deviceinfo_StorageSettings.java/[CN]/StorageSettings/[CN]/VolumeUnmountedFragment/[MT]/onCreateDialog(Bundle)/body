@@ -1,0 +1,16 @@
+{
+  final Context context=getActivity();
+  final StorageManager sm=context.getSystemService(StorageManager.class);
+  final String volumeId=getArguments().getString(VolumeInfo.EXTRA_VOLUME_ID);
+  final VolumeInfo vol=sm.findVolumeById(volumeId);
+  final AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  builder.setMessage(TextUtils.expandTemplate(getText(R.string.storage_dialog_unmounted),vol.getDisk().getDescription()));
+  builder.setPositiveButton(R.string.storage_menu_mount,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      new MountTask(context,vol).execute();
+    }
+  }
+);
+  builder.setNegativeButton(R.string.cancel,null);
+  return builder.create();
+}

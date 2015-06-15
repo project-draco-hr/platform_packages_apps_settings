@@ -2,7 +2,7 @@
   MetricsLogger.action(getActivity(),MetricsLogger.ACTION_WIFI_FORGET);
   if (!mSelectedAccessPoint.isSaved()) {
     if (mSelectedAccessPoint.getNetworkInfo() != null && mSelectedAccessPoint.getNetworkInfo().getState() != State.DISCONNECTED) {
-      mWifiManager.disableEphemeralNetwork(AccessPoint.convertToQuotedString(mSelectedAccessPoint.getSsid()));
+      mWifiManager.disableEphemeralNetwork(AccessPoint.convertToQuotedString(mSelectedAccessPoint.getSsidStr()));
     }
  else {
       Log.e(TAG,"Failed to forget invalid network " + mSelectedAccessPoint.getConfig());

@@ -1,26 +1,43 @@
 {
-  final String volId=pref.getKey();
-  final VolumeInfo vol=mStorageManager.findVolumeById(volId);
-  if (vol == null) {
-    return false;
+  final String key=pref.getKey();
+  if (pref instanceof StorageVolumePreference) {
+    final VolumeInfo vol=mStorageManager.findVolumeById(key);
+    if (vol.getState() == VolumeInfo.STATE_UNMOUNTED) {
+      VolumeUnmountedFragment.show(this,vol.getId());
+      return true;
+    }
+ else     if (vol.getState() == VolumeInfo.STATE_UNMOUNTABLE) {
+      DiskInitFragment.show(this,R.string.storage_dialog_unmountable,vol.getDiskId());
+      return true;
+    }
+    if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
+      final Bundle args=new Bundle();
+      args.putString(VolumeInfo.EXTRA_VOLUME_ID,vol.getId());
+      startFragment(this,PrivateVolumeSettings.class.getCanonicalName(),-1,0,args);
+      return true;
+    }
+ else     if (vol.getType() == VolumeInfo.TYPE_PUBLIC) {
+      if (vol.isMountedReadable()) {
+        startActivity(vol.buildBrowseIntent());
+        return true;
+      }
+ else {
+        final Bundle args=new Bundle();
+        args.putString(VolumeInfo.EXTRA_VOLUME_ID,vol.getId());
+        startFragment(this,PublicVolumeSettings.class.getCanonicalName(),-1,0,args);
+        return true;
+      }
+    }
   }
- else   if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
-    final Bundle args=new Bundle();
-    args.putString(VolumeInfo.EXTRA_VOLUME_ID,volId);
-    startFragment(this,PrivateVolumeSettings.class.getCanonicalName(),-1,0,args);
+ else   if (key.startsWith("disk:")) {
+    DiskInitFragment.show(this,R.string.storage_dialog_unsupported,key);
     return true;
   }
- else   if (vol.getType() == VolumeInfo.TYPE_PUBLIC) {
-    if (vol.isMountedReadable()) {
-      startActivity(vol.buildBrowseIntent());
-      return true;
-    }
  else {
-      final Bundle args=new Bundle();
-      args.putString(VolumeInfo.EXTRA_VOLUME_ID,volId);
-      startFragment(this,PublicVolumeSettings.class.getCanonicalName(),-1,0,args);
-      return true;
-    }
+    final Bundle args=new Bundle();
+    args.putString(VolumeRecord.EXTRA_FS_UUID,key);
+    startFragment(this,PrivateVolumeForget.class.getCanonicalName(),R.string.storage_menu_forget,0,args);
+    return true;
   }
   return false;
 }

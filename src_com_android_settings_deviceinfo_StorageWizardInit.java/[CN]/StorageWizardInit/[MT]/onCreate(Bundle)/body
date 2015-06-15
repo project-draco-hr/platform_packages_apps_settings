@@ -13,4 +13,9 @@
   findViewById(R.id.storage_wizard_init_external_summary).setPadding(mRadioExternal.getCompoundPaddingLeft(),0,mRadioExternal.getCompoundPaddingRight(),0);
   findViewById(R.id.storage_wizard_init_internal_summary).setPadding(mRadioExternal.getCompoundPaddingLeft(),0,mRadioExternal.getCompoundPaddingRight(),0);
   getNextButton().setEnabled(false);
+  if (!mDisk.isAdoptable()) {
+    mRadioExternal.setChecked(true);
+    onNavigateNext();
+    finish();
+  }
 }

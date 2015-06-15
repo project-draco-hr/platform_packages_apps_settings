@@ -13,6 +13,28 @@
       mExternalCategory.addPreference(new StorageVolumePreference(context,vol));
     }
   }
+  final List<VolumeRecord> recs=mStorageManager.getVolumeRecords();
+  for (  VolumeRecord rec : recs) {
+    if (rec.getType() == VolumeInfo.TYPE_PRIVATE && mStorageManager.findVolumeByUuid(rec.getFsUuid()) == null) {
+      final Preference pref=new Preference(context);
+      pref.setKey(rec.getFsUuid());
+      pref.setTitle(rec.getNickname());
+      pref.setSummary(com.android.internal.R.string.ext_media_status_missing);
+      pref.setIcon(R.drawable.ic_settings_storage);
+      mInternalCategory.addPreference(pref);
+    }
+  }
+  final List<DiskInfo> disks=mStorageManager.getDisks();
+  for (  DiskInfo disk : disks) {
+    if (disk.volumeCount == 0 && disk.size > 0) {
+      final Preference pref=new Preference(context);
+      pref.setKey(disk.getId());
+      pref.setTitle(disk.getDescription());
+      pref.setSummary(com.android.internal.R.string.ext_media_status_unsupported);
+      pref.setIcon(R.drawable.ic_sim_sd);
+      mExternalCategory.addPreference(pref);
+    }
+  }
   if (mInternalCategory.getPreferenceCount() > 0) {
     getPreferenceScreen().addPreference(mInternalCategory);
   }

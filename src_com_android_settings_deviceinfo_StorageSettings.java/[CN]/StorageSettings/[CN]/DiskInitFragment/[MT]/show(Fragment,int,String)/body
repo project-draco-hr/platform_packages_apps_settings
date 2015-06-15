@@ -1,0 +1,9 @@
+{
+  final Bundle args=new Bundle();
+  args.putInt(Intent.EXTRA_TEXT,resId);
+  args.putString(DiskInfo.EXTRA_DISK_ID,diskId);
+  final DiskInitFragment dialog=new DiskInitFragment();
+  dialog.setArguments(args);
+  dialog.setTargetFragment(parent,0);
+  dialog.show(parent.getFragmentManager(),TAG_DISK_INIT);
+}

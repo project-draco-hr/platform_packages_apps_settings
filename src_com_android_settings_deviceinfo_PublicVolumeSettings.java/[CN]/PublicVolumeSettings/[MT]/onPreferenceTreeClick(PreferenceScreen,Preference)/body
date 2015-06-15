@@ -6,13 +6,13 @@
  else   if (pref == mUnmount) {
     new UnmountTask(context,mVolume).execute();
   }
- else   if (pref == mFormat) {
+ else   if (pref == mFormatPublic) {
     final Intent intent=new Intent(context,StorageWizardFormatConfirm.class);
     intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
     intent.putExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,false);
     startActivity(intent);
   }
- else   if (pref == mFormatInternal) {
+ else   if (pref == mFormatPrivate) {
     final Intent intent=new Intent(context,StorageWizardFormatConfirm.class);
     intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
     intent.putExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,true);

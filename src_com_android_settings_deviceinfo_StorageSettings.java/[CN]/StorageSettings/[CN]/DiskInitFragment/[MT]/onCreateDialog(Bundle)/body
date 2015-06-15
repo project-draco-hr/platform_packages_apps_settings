@@ -1,0 +1,19 @@
+{
+  final Context context=getActivity();
+  final StorageManager sm=context.getSystemService(StorageManager.class);
+  final int resId=getArguments().getInt(Intent.EXTRA_TEXT);
+  final String diskId=getArguments().getString(DiskInfo.EXTRA_DISK_ID);
+  final DiskInfo disk=sm.findDiskById(diskId);
+  final AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  builder.setMessage(TextUtils.expandTemplate(getText(resId),disk.getDescription()));
+  builder.setPositiveButton(R.string.storage_menu_set_up,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      final Intent intent=new Intent(context,StorageWizardInit.class);
+      intent.putExtra(DiskInfo.EXTRA_DISK_ID,diskId);
+      startActivity(intent);
+    }
+  }
+);
+  builder.setNegativeButton(R.string.cancel,null);
+  return builder.create();
+}

@@ -8,10 +8,11 @@
  catch (  NameNotFoundException e) {
     mLabel=mPackageName;
   }
+  mDefaultOn=getArguments().getBoolean(ARG_DEFAULT_ON);
   mAdapter=new Adapter(getContext(),R.layout.radio_with_summary);
   mAdapter.add(new Pair<String,String>(getString(R.string.ignore_optimizations_on),getString(R.string.ignore_optimizations_on_desc)));
   mAdapter.add(new Pair<String,String>(getString(R.string.ignore_optimizations_off),getString(R.string.ignore_optimizations_off_desc)));
-  mSelectedIndex=mBackend.isWhitelisted(mPackageName) ? 0 : 1;
+  mSelectedIndex=mDefaultOn || mBackend.isWhitelisted(mPackageName) ? 0 : 1;
   if (mBackend.isSysWhitelisted(mPackageName)) {
     mAdapter.setEnabled(1,false);
   }

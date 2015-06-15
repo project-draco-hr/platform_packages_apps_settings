@@ -1,4 +1,3 @@
 {
-  String currentSetting=Settings.Secure.getString(getContext().getContentResolver(),Settings.Secure.ASSISTANT);
-  return currentSetting == null ? null : ComponentName.unflattenFromString(currentSetting);
+  return mAssistUtils.getAssistComponentForUser(UserHandle.myUserId());
 }

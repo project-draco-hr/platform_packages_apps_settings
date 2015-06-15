@@ -1,0 +1,8 @@
+{
+  final Bundle args=new Bundle();
+  args.putString(VolumeInfo.EXTRA_VOLUME_ID,volumeId);
+  final VolumeUnmountedFragment dialog=new VolumeUnmountedFragment();
+  dialog.setArguments(args);
+  dialog.setTargetFragment(parent,0);
+  dialog.show(parent.getFragmentManager(),TAG_VOLUME_UNMOUNTED);
+}

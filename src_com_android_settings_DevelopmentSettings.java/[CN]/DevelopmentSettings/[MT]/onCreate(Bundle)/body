@@ -112,23 +112,4 @@
     mAllPrefs.add(hdcpChecking);
     removePreferenceForProduction(hdcpChecking);
   }
-  mNightModePreference=(DropDownPreference)findPreference(KEY_NIGHT_MODE);
-  final UiModeManager uiManager=(UiModeManager)getSystemService(Context.UI_MODE_SERVICE);
-  final int currentNightMode=uiManager.getNightMode();
-  mNightModePreference.setSelectedValue(String.valueOf(currentNightMode));
-  mNightModePreference.setCallback(new DropDownPreference.Callback(){
-    @Override public boolean onItemSelected(    int pos,    Object newValue){
-      try {
-        final int value=Integer.parseInt((String)newValue);
-        final UiModeManager uiManager=(UiModeManager)getSystemService(Context.UI_MODE_SERVICE);
-        uiManager.setNightMode(value);
-        return true;
-      }
- catch (      NumberFormatException e) {
-        Log.e(TAG,"could not persist night mode setting",e);
-        return false;
-      }
-    }
-  }
-);
 }

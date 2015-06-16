@@ -1,0 +1,15 @@
+{
+  LayoutInflater.from(appSnippet.getContext()).inflate(R.layout.widget_text_views,(ViewGroup)appSnippet.findViewById(android.R.id.widget_frame));
+  ImageView iconView=(ImageView)appSnippet.findViewById(android.R.id.icon);
+  iconView.setImageDrawable(icon);
+  TextView labelView=(TextView)appSnippet.findViewById(android.R.id.title);
+  labelView.setText(label);
+  TextView appVersion=(TextView)appSnippet.findViewById(R.id.widget_text1);
+  if (!TextUtils.isEmpty(versionName)) {
+    appVersion.setVisibility(View.VISIBLE);
+    appVersion.setText(appSnippet.getContext().getString(R.string.version_text,String.valueOf(versionName)));
+  }
+ else {
+    appVersion.setVisibility(View.INVISIBLE);
+  }
+}

@@ -10,6 +10,5 @@
   boolean statsForeground=entry.mRunWeight > entry.mBgWeight;
   double amount=avg ? (statsForeground ? entry.mRunWeight : entry.mBgWeight) * weightToRam : (statsForeground ? entry.mMaxRunMem : entry.mMaxBgMem) * totalScale * 1024;
   setSummary(Formatter.formatShortFileSize(getContext(),(long)amount));
-  mRatio=(float)(amount / maxMemory);
-  mRemainingRatio=1 - mRatio;
+  setProgress((int)(100 * amount / maxMemory));
 }

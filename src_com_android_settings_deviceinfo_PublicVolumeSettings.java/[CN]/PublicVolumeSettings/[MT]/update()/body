@@ -9,17 +9,15 @@
     return;
   }
   if (mVolume.isMountedReadable()) {
-    screen.addPreference(mGraph);
-    screen.addPreference(mTotal);
-    screen.addPreference(mAvailable);
+    screen.addPreference(mSummary);
     final File file=mVolume.getPath();
-    mTotalSize=file.getTotalSpace();
-    mAvailSize=file.getFreeSpace();
-    mTotal.setSummary(Formatter.formatFileSize(context,mTotalSize));
-    mAvailable.setSummary(Formatter.formatFileSize(context,mAvailSize));
-    mGraph.clear();
-    mGraph.addEntry(0,(mTotalSize - mAvailSize) / (float)mTotalSize,android.graphics.Color.GRAY);
-    mGraph.commit();
+    final long totalBytes=file.getTotalSpace();
+    final long freeBytes=file.getFreeSpace();
+    final long usedBytes=totalBytes - freeBytes;
+    final BytesResult result=Formatter.formatBytes(getResources(),usedBytes,0);
+    mSummary.setTitle(TextUtils.expandTemplate(getText(R.string.storage_size_large),result.value,result.units));
+    mSummary.setSummary(getString(R.string.storage_volume_used,Formatter.formatFileSize(context,totalBytes)));
+    mSummary.setPercent((int)((usedBytes * 100) / totalBytes));
   }
   if (mVolume.getState() == VolumeInfo.STATE_UNMOUNTED) {
     screen.addPreference(mMount);

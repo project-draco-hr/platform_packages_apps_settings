@@ -1,8 +1,17 @@
 {
-  final TextView unmount=(TextView)view.findViewById(R.id.unmount);
+  final ImageView unmount=(ImageView)view.findViewById(R.id.unmount);
   if (unmount != null) {
-    unmount.setText("\u23CF");
+    unmount.getDrawable().setTint(Color.parseColor("#8a000000"));
     unmount.setOnClickListener(mUnmountListener);
+  }
+  final ProgressBar progress=(ProgressBar)view.findViewById(android.R.id.progress);
+  if (mVolume.getType() == VolumeInfo.TYPE_PRIVATE && mUsedPercent != -1) {
+    progress.setVisibility(View.VISIBLE);
+    progress.setProgress(mUsedPercent);
+    progress.setProgressTintList(ColorStateList.valueOf(mColor));
+  }
+ else {
+    progress.setVisibility(View.GONE);
   }
   super.onBindView(view);
 }

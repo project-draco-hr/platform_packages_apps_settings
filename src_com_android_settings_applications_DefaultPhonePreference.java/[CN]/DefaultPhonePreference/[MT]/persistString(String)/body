@@ -1,6 +1,6 @@
 {
   if (!TextUtils.isEmpty(value) && !Objects.equals(value,getDefaultPackage())) {
-    DefaultDialerManager.setDefaultDialerApplication(getContext(),value);
+    TelecomManager.from(mContext).setDefaultDialer(value);
   }
   setSummary(getEntry());
   return true;

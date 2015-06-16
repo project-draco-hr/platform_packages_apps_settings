@@ -1,6 +1,6 @@
 {
   if (mRadioExternal.isChecked()) {
-    if (mVolume != null && mVolume.getType() == VolumeInfo.TYPE_PUBLIC) {
+    if (mVolume != null && mVolume.getType() == VolumeInfo.TYPE_PUBLIC && mVolume.getState() != VolumeInfo.STATE_UNMOUNTABLE) {
       mStorage.setVolumeInited(mVolume.getFsUuid(),true);
       final Intent intent=new Intent(this,StorageWizardReady.class);
       intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());

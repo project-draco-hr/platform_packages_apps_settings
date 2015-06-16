@@ -4,9 +4,15 @@
     return false;
   }
  else {
-    Intent intent=getHelpIntent(context,helpUriString,backupContext);
+    final Intent intent=getHelpIntent(activity,helpUriString,backupContext);
     if (intent != null) {
-      helpMenuItem.setIntent(intent);
+      helpMenuItem.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+        @Override public boolean onMenuItemClick(        MenuItem item){
+          activity.startActivityForResult(intent,0);
+          return true;
+        }
+      }
+);
       helpMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
       helpMenuItem.setVisible(true);
     }

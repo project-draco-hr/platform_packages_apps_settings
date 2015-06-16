@@ -1,0 +1,10 @@
+{
+  if (!parent.isAdded())   return;
+  final OtherInfoFragment dialog=new OtherInfoFragment();
+  dialog.setTargetFragment(parent,0);
+  final Bundle args=new Bundle();
+  args.putString(Intent.EXTRA_TITLE,title);
+  args.putParcelable(Intent.EXTRA_INTENT,sharedVol.buildBrowseIntent());
+  dialog.setArguments(args);
+  dialog.show(parent.getFragmentManager(),TAG_OTHER_INFO);
+}

@@ -7,24 +7,35 @@
     args.putString(ManageApplications.EXTRA_VOLUME_NAME,mVolume.getDescription());
     intent=Utils.onBuildStartFragmentIntent(getActivity(),ManageApplications.class.getName(),args,null,R.string.apps_storage,null,false);
   }
- else   if (pref == mDownloads) {
-    intent=new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS).putExtra(DownloadManager.INTENT_EXTRAS_SORT_BY_SIZE,true);
+ else   if (pref == mImages) {
+    intent=new Intent(DocumentsContract.ACTION_BROWSE_DOCUMENT_ROOT);
+    intent.setData(DocumentsContract.buildRootUri(AUTHORITY_MEDIA,"images_root"));
+    intent.addCategory(Intent.CATEGORY_DEFAULT);
   }
- else   if (pref == mMusic) {
-    intent=new Intent(Intent.ACTION_GET_CONTENT);
-    intent.setType("audio/mp3");
+ else   if (pref == mVideos) {
+    intent=new Intent(DocumentsContract.ACTION_BROWSE_DOCUMENT_ROOT);
+    intent.setData(DocumentsContract.buildRootUri(AUTHORITY_MEDIA,"videos_root"));
+    intent.addCategory(Intent.CATEGORY_DEFAULT);
   }
- else   if (pref == mDcim) {
-    intent=new Intent(Intent.ACTION_VIEW);
-    intent.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
-    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+ else   if (pref == mAudio) {
+    intent=new Intent(DocumentsContract.ACTION_BROWSE_DOCUMENT_ROOT);
+    intent.setData(DocumentsContract.buildRootUri(AUTHORITY_MEDIA,"audio_root"));
+    intent.addCategory(Intent.CATEGORY_DEFAULT);
+  }
+ else   if (pref == mOther) {
+    OtherInfoFragment.show(this,mStorageManager.getBestVolumeDescription(mVolume),mSharedVolume);
+    return true;
   }
  else   if (pref == mCache) {
     ConfirmClearCacheFragment.show(this);
     return true;
   }
- else   if (pref == mMisc) {
+ else   if (pref == mExplore) {
     intent=mSharedVolume.buildBrowseIntent();
+  }
+  if (mUsers.contains(pref)) {
+    UserInfoFragment.show(this,pref.getTitle(),pref.getSummary());
+    return true;
   }
   if (intent != null) {
     try {

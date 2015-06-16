@@ -5,13 +5,14 @@
     return;
   }
   setContentView(R.layout.storage_wizard_migrate);
+  setIllustrationInternal(true);
   setHeaderText(R.string.storage_wizard_migrate_title,mDisk.getDescription());
   setBodyText(R.string.memory_calculating_size);
   mRadioNow=(RadioButton)findViewById(R.id.storage_wizard_migrate_now);
   mRadioLater=(RadioButton)findViewById(R.id.storage_wizard_migrate_later);
   mRadioNow.setOnCheckedChangeListener(mRadioListener);
   mRadioLater.setOnCheckedChangeListener(mRadioListener);
-  mRadioNow.setChecked(true);
+  getNextButton().setEnabled(false);
   mEstimate=new MigrateEstimateTask(this){
     @Override public void onPostExecute(    String size,    String time){
       setBodyText(R.string.storage_wizard_migrate_body,mDisk.getDescription(),time,size);

@@ -1,8 +1,12 @@
 {
   super.onPostCreate(savedInstanceState);
-  getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR);
-  getNavigationBar().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-  getWindow().setStatusBarColor(Color.TRANSPARENT);
-  getNavigationBar().setNavigationBarListener(this);
-  getBackButton().setVisibility(View.GONE);
+  final Window window=getWindow();
+  window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR);
+  window.setStatusBarColor(Color.TRANSPARENT);
+  mCustomNav.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+  final View scrollView=findViewById(R.id.suw_bottom_scroll_view);
+  scrollView.setVerticalFadingEdgeEnabled(true);
+  scrollView.setFadingEdgeLength(scrollView.getVerticalFadingEdgeLength() * 2);
+  final View title=findViewById(R.id.suw_layout_title);
+  title.setPadding(title.getPaddingLeft(),0,title.getPaddingRight(),title.getPaddingBottom());
 }

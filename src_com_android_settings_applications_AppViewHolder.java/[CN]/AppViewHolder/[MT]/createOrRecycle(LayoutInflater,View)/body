@@ -1,13 +1,13 @@
 {
   if (convertView == null) {
-    convertView=inflater.inflate(R.layout.manage_applications_item,null);
+    convertView=inflater.inflate(R.layout.preference_app,null);
+    inflater.inflate(R.layout.widget_text_views,(ViewGroup)convertView.findViewById(android.R.id.widget_frame));
     AppViewHolder holder=new AppViewHolder();
     holder.rootView=convertView;
-    holder.appName=(TextView)convertView.findViewById(R.id.app_name);
-    holder.appIcon=(ImageView)convertView.findViewById(R.id.app_icon);
-    holder.summary=(TextView)convertView.findViewById(R.id.app_summary);
-    holder.disabled=(TextView)convertView.findViewById(R.id.app_disabled);
-    holder.checkBox=(CheckBox)convertView.findViewById(R.id.app_on_sdcard);
+    holder.appName=(TextView)convertView.findViewById(android.R.id.title);
+    holder.appIcon=(ImageView)convertView.findViewById(android.R.id.icon);
+    holder.summary=(TextView)convertView.findViewById(R.id.widget_text1);
+    holder.disabled=(TextView)convertView.findViewById(R.id.widget_text2);
     convertView.setTag(holder);
     return holder;
   }

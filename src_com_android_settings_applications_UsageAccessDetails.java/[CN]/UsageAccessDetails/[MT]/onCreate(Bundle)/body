@@ -3,6 +3,7 @@
   Context context=getActivity();
   mUsageBridge=new AppStateUsageBridge(context,mState,null);
   mAppOpsManager=(AppOpsManager)context.getSystemService(Context.APP_OPS_SERVICE);
+  mDpm=context.getSystemService(DevicePolicyManager.class);
   addPreferencesFromResource(R.xml.usage_access_details);
   mSwitchPref=(SwitchPreference)findPreference(KEY_USAGE_SWITCH);
   mUsagePrefs=findPreference(KEY_USAGE_PREFS);

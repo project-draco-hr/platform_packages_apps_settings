@@ -11,22 +11,20 @@
   mSharedVolume=mStorageManager.findEmulatedForPrivate(mVolume);
   mMeasure=new StorageMeasurement(context,mVolume,mSharedVolume);
   mMeasure.setReceiver(mReceiver);
-  mGraph=buildGraph();
-  mTotal=buildItem(R.string.memory_size,0);
-  mAvailable=buildItem(R.string.memory_available,R.color.memory_avail);
-  mApps=buildItem(R.string.memory_apps_usage,R.color.memory_apps_usage);
-  mDcim=buildItem(R.string.memory_dcim_usage,R.color.memory_dcim);
-  mMusic=buildItem(R.string.memory_music_usage,R.color.memory_music);
-  mDownloads=buildItem(R.string.memory_downloads_usage,R.color.memory_downloads);
-  mCache=buildItem(R.string.memory_media_cache_usage,R.color.memory_cache);
-  mMisc=buildItem(R.string.memory_media_misc_usage,R.color.memory_misc);
+  mSummary=new StorageSummaryPreference(context);
+  mApps=buildItem(R.string.storage_detail_apps);
+  mImages=buildItem(R.string.storage_detail_images);
+  mVideos=buildItem(R.string.storage_detail_videos);
+  mAudio=buildItem(R.string.storage_detail_audio);
+  mOther=buildItem(R.string.storage_detail_other);
+  mCache=buildItem(R.string.storage_detail_cached);
   mCurrentUser=mUserManager.getUserInfo(UserHandle.myUserId());
   final List<UserInfo> otherUsers=getUsersExcluding(mCurrentUser);
   for (int i=0; i < otherUsers.size(); i++) {
     final UserInfo user=otherUsers.get(i);
-    final int colorRes=i % 2 == 0 ? R.color.memory_user_light : R.color.memory_user_dark;
-    final StorageItemPreference userPref=new StorageItemPreference(context,user.name,colorRes,user.id);
+    final StorageItemPreference userPref=new StorageItemPreference(context,user.name,user.id);
     mUsers.add(userPref);
   }
+  mExplore=buildAction(R.string.storage_menu_explore);
   setHasOptionsMenu(true);
 }

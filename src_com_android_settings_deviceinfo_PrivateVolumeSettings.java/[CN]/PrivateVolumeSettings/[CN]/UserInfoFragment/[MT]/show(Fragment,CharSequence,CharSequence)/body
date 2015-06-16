@@ -1,0 +1,10 @@
+{
+  if (!parent.isAdded())   return;
+  final UserInfoFragment dialog=new UserInfoFragment();
+  dialog.setTargetFragment(parent,0);
+  final Bundle args=new Bundle();
+  args.putCharSequence(Intent.EXTRA_TITLE,userLabel);
+  args.putCharSequence(Intent.EXTRA_SUBJECT,userSize);
+  dialog.setArguments(args);
+  dialog.show(parent.getFragmentManager(),TAG_USER_INFO);
+}

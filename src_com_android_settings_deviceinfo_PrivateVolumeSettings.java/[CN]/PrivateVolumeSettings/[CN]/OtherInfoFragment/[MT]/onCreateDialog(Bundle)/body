@@ -1,0 +1,15 @@
+{
+  final Context context=getActivity();
+  final String title=getArguments().getString(Intent.EXTRA_TITLE);
+  final Intent intent=getArguments().getParcelable(Intent.EXTRA_INTENT);
+  final AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  builder.setMessage(TextUtils.expandTemplate(getText(R.string.storage_detail_dialog_other),title));
+  builder.setPositiveButton(R.string.storage_menu_explore,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      startActivity(intent);
+    }
+  }
+);
+  builder.setNegativeButton(android.R.string.cancel,null);
+  return builder.create();
+}

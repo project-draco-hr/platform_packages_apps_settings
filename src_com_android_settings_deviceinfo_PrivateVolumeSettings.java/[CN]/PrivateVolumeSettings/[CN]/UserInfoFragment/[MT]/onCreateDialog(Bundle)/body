@@ -1,0 +1,9 @@
+{
+  final Context context=getActivity();
+  final CharSequence userLabel=getArguments().getCharSequence(Intent.EXTRA_TITLE);
+  final CharSequence userSize=getArguments().getCharSequence(Intent.EXTRA_SUBJECT);
+  final AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  builder.setMessage(TextUtils.expandTemplate(getText(R.string.storage_detail_dialog_user),userLabel,userSize));
+  builder.setPositiveButton(android.R.string.ok,null);
+  return builder.create();
+}

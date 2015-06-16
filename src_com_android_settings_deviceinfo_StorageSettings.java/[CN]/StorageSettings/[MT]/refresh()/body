@@ -3,14 +3,24 @@
   getPreferenceScreen().removeAll();
   mInternalCategory.removeAll();
   mExternalCategory.removeAll();
+  mInternalCategory.addPreference(mInternalSummary);
+  int privateCount=0;
+  long privateUsedBytes=0;
+  long privateTotalBytes=0;
   final List<VolumeInfo> volumes=mStorageManager.getVolumes();
   Collections.sort(volumes,VolumeInfo.getDescriptionComparator());
   for (  VolumeInfo vol : volumes) {
     if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
-      mInternalCategory.addPreference(new StorageVolumePreference(context,vol));
+      final int color=COLOR_PRIVATE[privateCount++ % COLOR_PRIVATE.length];
+      mInternalCategory.addPreference(new StorageVolumePreference(context,vol,color));
+      if (vol.isMountedReadable()) {
+        final File path=vol.getPath();
+        privateUsedBytes+=path.getTotalSpace() - path.getFreeSpace();
+        privateTotalBytes+=path.getTotalSpace();
+      }
     }
  else     if (vol.getType() == VolumeInfo.TYPE_PUBLIC) {
-      mExternalCategory.addPreference(new StorageVolumePreference(context,vol));
+      mExternalCategory.addPreference(new StorageVolumePreference(context,vol,COLOR_PUBLIC));
     }
   }
   final List<VolumeRecord> recs=mStorageManager.getVolumeRecords();
@@ -35,10 +45,19 @@
       mExternalCategory.addPreference(pref);
     }
   }
+  final BytesResult result=Formatter.formatBytes(getResources(),privateUsedBytes,0);
+  mInternalSummary.setTitle(TextUtils.expandTemplate(getText(R.string.storage_size_large),result.value,result.units));
+  mInternalSummary.setSummary(getString(R.string.storage_volume_used_total,Formatter.formatFileSize(context,privateTotalBytes)));
   if (mInternalCategory.getPreferenceCount() > 0) {
     getPreferenceScreen().addPreference(mInternalCategory);
   }
   if (mExternalCategory.getPreferenceCount() > 0) {
     getPreferenceScreen().addPreference(mExternalCategory);
+  }
+  if (mInternalCategory.getPreferenceCount() == 2 && mExternalCategory.getPreferenceCount() == 0) {
+    final Bundle args=new Bundle();
+    args.putString(VolumeInfo.EXTRA_VOLUME_ID,VolumeInfo.ID_PRIVATE_INTERNAL);
+    startFragment(this,PrivateVolumeSettings.class.getCanonicalName(),-1,0,args);
+    finish();
   }
 }

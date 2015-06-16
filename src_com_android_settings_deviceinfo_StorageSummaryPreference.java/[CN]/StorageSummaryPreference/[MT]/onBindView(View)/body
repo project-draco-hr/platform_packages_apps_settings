@@ -1,0 +1,11 @@
+{
+  final ProgressBar progress=(ProgressBar)view.findViewById(android.R.id.progress);
+  if (mPercent != -1) {
+    progress.setVisibility(View.VISIBLE);
+    progress.setProgress(mPercent);
+  }
+ else {
+    progress.setVisibility(View.GONE);
+  }
+  super.onBindView(view);
+}

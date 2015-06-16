@@ -6,6 +6,24 @@
   TextView pairingViewCaption=(TextView)view.findViewById(R.id.pairing_caption);
   TextView pairingViewContent=(TextView)view.findViewById(R.id.pairing_subhead);
   TextView messagePairing=(TextView)view.findViewById(R.id.pairing_code_message);
+  CheckBox contactSharing=(CheckBox)view.findViewById(R.id.phonebook_sharing_message_confirm_pin);
+  contactSharing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton compoundButton,    boolean isChecked){
+      if (isChecked) {
+        mDevice.setPhonebookAccessPermission(BluetoothDevice.ACCESS_ALLOWED);
+      }
+ else {
+        mDevice.setPhonebookAccessPermission(BluetoothDevice.ACCESS_REJECTED);
+      }
+    }
+  }
+);
+  if (mDevice.getBluetoothClass().getDeviceClass() == BluetoothClass.Device.AUDIO_VIDEO_HANDSFREE) {
+    contactSharing.setVisibility(View.VISIBLE);
+  }
+ else {
+    contactSharing.setVisibility(View.GONE);
+  }
   String messageCaption=null;
   String pairingContent=null;
 switch (mType) {

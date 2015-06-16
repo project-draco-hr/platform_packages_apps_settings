@@ -1,0 +1,19 @@
+{
+  super.setContentView(layoutResID);
+  final ViewGroup navParent=(ViewGroup)findViewById(R.id.suw_layout_navigation_bar).getParent();
+  mCustomNav=getLayoutInflater().inflate(R.layout.storage_wizard_navigation,navParent,false);
+  mCustomNext=(Button)mCustomNav.findViewById(R.id.suw_navbar_next);
+  mCustomNext.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      onNavigateNext();
+    }
+  }
+);
+  for (int i=0; i < navParent.getChildCount(); i++) {
+    if (navParent.getChildAt(i).getId() == R.id.suw_layout_navigation_bar) {
+      navParent.removeViewAt(i);
+      navParent.addView(mCustomNav,i);
+      break;
+    }
+  }
+}

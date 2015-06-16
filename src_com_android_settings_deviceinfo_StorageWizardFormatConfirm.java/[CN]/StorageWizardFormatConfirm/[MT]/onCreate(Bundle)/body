@@ -6,6 +6,7 @@
   }
   setContentView(R.layout.storage_wizard_generic);
   mFormatPrivate=getIntent().getBooleanExtra(EXTRA_FORMAT_PRIVATE,false);
+  setIllustrationInternal(mFormatPrivate);
   if (mFormatPrivate) {
     setHeaderText(R.string.storage_wizard_format_confirm_title);
     setBodyText(R.string.storage_wizard_format_confirm_body,mDisk.getDescription());
@@ -15,4 +16,5 @@
     setBodyText(R.string.storage_wizard_format_confirm_public_body,mDisk.getDescription());
   }
   getNextButton().setText(R.string.storage_wizard_format_confirm_next);
+  getNextButton().setBackgroundTintList(getColorStateList(R.color.storage_wizard_button_red));
 }

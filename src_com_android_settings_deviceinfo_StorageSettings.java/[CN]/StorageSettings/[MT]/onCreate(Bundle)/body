@@ -1,11 +1,11 @@
 {
   super.onCreate(icicle);
   final Context context=getActivity();
-  mUserManager=context.getSystemService(UserManager.class);
   mStorageManager=context.getSystemService(StorageManager.class);
   mStorageManager.registerListener(mStorageListener);
   addPreferencesFromResource(R.xml.device_info_storage);
   mInternalCategory=(PreferenceCategory)findPreference("storage_internal");
   mExternalCategory=(PreferenceCategory)findPreference("storage_external");
+  mInternalSummary=new StorageSummaryPreference(context);
   setHasOptionsMenu(true);
 }

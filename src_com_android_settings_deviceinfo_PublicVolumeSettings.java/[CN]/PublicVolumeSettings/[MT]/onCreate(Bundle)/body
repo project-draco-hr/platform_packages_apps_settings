@@ -17,9 +17,7 @@
   Preconditions.checkNotNull(mDisk);
   mVolumeId=mVolume.getId();
   addPreferencesFromResource(R.xml.device_info_storage_volume);
-  mGraph=buildGraph();
-  mTotal=buildItem(R.string.memory_size,0);
-  mAvailable=buildItem(R.string.memory_available,R.color.memory_avail);
+  mSummary=new StorageSummaryPreference(context);
   mMount=buildAction(R.string.storage_menu_mount);
   mUnmount=buildAction(R.string.storage_menu_unmount);
   mFormatPublic=buildAction(R.string.storage_menu_format);

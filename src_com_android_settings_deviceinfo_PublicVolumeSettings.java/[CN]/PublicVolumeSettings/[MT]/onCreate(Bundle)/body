@@ -11,7 +11,11 @@
     final String volId=getArguments().getString(VolumeInfo.EXTRA_VOLUME_ID);
     mVolume=mStorageManager.findVolumeById(volId);
   }
-  Preconditions.checkNotNull(mVolume);
+  if (mVolume == null) {
+    Log.d(TAG,"Leaving details fragment due to missing volume");
+    finish();
+    return;
+  }
   Preconditions.checkState(mVolume.getType() == VolumeInfo.TYPE_PUBLIC);
   mDisk=mStorageManager.findDiskById(mVolume.getDiskId());
   Preconditions.checkNotNull(mDisk);

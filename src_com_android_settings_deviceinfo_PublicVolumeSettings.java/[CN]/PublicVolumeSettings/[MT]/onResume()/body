@@ -1,7 +1,7 @@
 {
   super.onResume();
   mVolume=mStorageManager.findVolumeById(mVolumeId);
-  if (mVolume == null) {
+  if (!isVolumeValid()) {
     getActivity().finish();
     return;
   }

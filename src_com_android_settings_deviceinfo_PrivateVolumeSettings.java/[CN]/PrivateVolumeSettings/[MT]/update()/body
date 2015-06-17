@@ -1,14 +1,13 @@
 {
+  if (!isVolumeValid()) {
+    getActivity().finish();
+    return;
+  }
   getActivity().setTitle(mStorageManager.getBestVolumeDescription(mVolume));
   getFragmentManager().invalidateOptionsMenu();
   final Context context=getActivity();
   final PreferenceScreen screen=getPreferenceScreen();
   screen.removeAll();
-  if (!mVolume.isMountedReadable()) {
-    Log.d(TAG,"Leaving details fragment due to state " + mVolume.getState());
-    finish();
-    return;
-  }
   screen.addPreference(mSummary);
   final boolean showUsers=!mUsers.isEmpty();
   final boolean showShared=(mSharedVolume != null) && mSharedVolume.isMountedReadable();

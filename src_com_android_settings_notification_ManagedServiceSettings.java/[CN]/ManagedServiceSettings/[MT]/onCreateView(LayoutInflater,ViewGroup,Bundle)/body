@@ -2,5 +2,6 @@
   final View v=inflater.inflate(R.layout.managed_service_settings,container,false);
   mEmpty=(TextView)v.findViewById(android.R.id.empty);
   mEmpty.setText(mConfig.emptyText);
+  ((ListView)v.findViewById(android.R.id.list)).setEmptyView(mEmpty);
   return v;
 }

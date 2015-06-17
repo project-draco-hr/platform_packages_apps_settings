@@ -10,7 +10,8 @@
     mApp=getPackageManager().getApplicationInfo(mPackageName,0);
   }
  catch (  NameNotFoundException e) {
-    throw new RuntimeException(e);
+    finish();
+    return;
   }
   Preconditions.checkState(getPackageManager().getPackageCandidateVolumes(mApp).contains(mVolume));
   final String appName=getPackageManager().getApplicationLabel(mApp).toString();

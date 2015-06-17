@@ -44,7 +44,9 @@
   }
   addPreferencesFromResource(R.xml.security_settings_misc);
   TelephonyManager tm=TelephonyManager.getDefault();
-  if (!mIsPrimary || !isSimIccReady()) {
+  CarrierConfigManager cfgMgr=(CarrierConfigManager)getActivity().getSystemService(Context.CARRIER_CONFIG_SERVICE);
+  PersistableBundle b=cfgMgr.getConfig();
+  if (!mIsPrimary || !isSimIccReady() || b.getBoolean(CarrierConfigManager.KEY_HIDE_SIM_LOCK_SETTINGS_BOOL)) {
     root.removePreference(root.findPreference(KEY_SIM_LOCK));
   }
  else {

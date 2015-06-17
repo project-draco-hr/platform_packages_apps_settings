@@ -26,11 +26,14 @@
   final List<VolumeRecord> recs=mStorageManager.getVolumeRecords();
   for (  VolumeRecord rec : recs) {
     if (rec.getType() == VolumeInfo.TYPE_PRIVATE && mStorageManager.findVolumeByUuid(rec.getFsUuid()) == null) {
+      final Drawable icon=context.getDrawable(R.drawable.ic_sim_sd);
+      icon.mutate();
+      icon.setTint(COLOR_PUBLIC);
       final Preference pref=new Preference(context);
       pref.setKey(rec.getFsUuid());
       pref.setTitle(rec.getNickname());
       pref.setSummary(com.android.internal.R.string.ext_media_status_missing);
-      pref.setIcon(R.drawable.ic_settings_storage);
+      pref.setIcon(icon);
       mInternalCategory.addPreference(pref);
     }
   }

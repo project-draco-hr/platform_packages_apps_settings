@@ -1,13 +1,12 @@
 {
+  if (!isVolumeValid()) {
+    getActivity().finish();
+    return;
+  }
   getActivity().setTitle(mStorageManager.getBestVolumeDescription(mVolume));
   final Context context=getActivity();
   final PreferenceScreen screen=getPreferenceScreen();
   screen.removeAll();
-  if (!mVolume.isMountedReadable()) {
-    Log.d(TAG,"Leaving details fragment due to state " + mVolume.getState());
-    finish();
-    return;
-  }
   if (mVolume.isMountedReadable()) {
     screen.addPreference(mSummary);
     final File file=mVolume.getPath();

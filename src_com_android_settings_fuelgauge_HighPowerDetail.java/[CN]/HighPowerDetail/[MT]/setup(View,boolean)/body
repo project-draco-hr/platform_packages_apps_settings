@@ -1,0 +1,10 @@
+{
+  ((TextView)view.findViewById(android.R.id.title)).setText(on ? R.string.ignore_optimizations_on : R.string.ignore_optimizations_off);
+  ((TextView)view.findViewById(android.R.id.summary)).setText(on ? R.string.ignore_optimizations_on_desc : R.string.ignore_optimizations_off_desc);
+  view.setClickable(true);
+  view.setOnClickListener(this);
+  if (!on && mBackend.isSysWhitelisted(mPackageName)) {
+    view.setEnabled(false);
+  }
+  return (Checkable)view;
+}

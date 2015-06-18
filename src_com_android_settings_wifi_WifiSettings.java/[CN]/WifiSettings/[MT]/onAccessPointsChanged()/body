@@ -14,7 +14,7 @@ for (AccessPoint accessPoint : accessPoints) {
 if (accessPoint.getLevel() != -1) {
   hasAvailableAccessPoints=true;
   AccessPointPreference preference=new AccessPointPreference(accessPoint,getActivity(),false);
-  if (mOpenSsid != null && mOpenSsid.equals(accessPoint.getSsid()) && !accessPoint.isSaved() && accessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
+  if (mOpenSsid != null && mOpenSsid.equals(accessPoint.getSsidStr()) && !accessPoint.isSaved() && accessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
     onPreferenceTreeClick(getPreferenceScreen(),preference);
     mOpenSsid=null;
   }

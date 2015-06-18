@@ -14,7 +14,10 @@
   }
  else {
     if (!wasSecureBefore) {
-      startActivity(getRedactionInterstitialIntent(getActivity()));
+      Intent intent=getRedactionInterstitialIntent(getActivity());
+      if (intent != null) {
+        startActivity(intent);
+      }
     }
     getActivity().setResult(RESULT_FINISHED);
     doFinish();

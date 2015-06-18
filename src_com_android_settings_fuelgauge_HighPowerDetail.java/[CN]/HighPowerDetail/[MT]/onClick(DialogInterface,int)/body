@@ -1,6 +1,6 @@
 {
   if (which == DialogInterface.BUTTON_POSITIVE) {
-    boolean newValue=mSelectedIndex == 0;
+    boolean newValue=mIsEnabled;
     boolean oldValue=mBackend.isWhitelisted(mPackageName);
     if (newValue != oldValue) {
       if (newValue) {
@@ -10,8 +10,5 @@
         mBackend.removeApp(mPackageName);
       }
     }
-  }
- else {
-    mSelectedIndex=which;
   }
 }

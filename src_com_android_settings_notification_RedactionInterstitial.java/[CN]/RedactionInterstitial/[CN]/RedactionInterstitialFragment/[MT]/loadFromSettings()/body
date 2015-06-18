@@ -1,7 +1,14 @@
 {
   final boolean enabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_SHOW_NOTIFICATIONS,0) != 0;
   final boolean show=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,1) != 0;
-  mShowAllButton.setChecked(enabled && show);
-  mRedactSensitiveButton.setChecked(enabled && !show);
-  mHideAllButton.setChecked(!enabled);
+  int checkedButtonId=R.id.hide_all;
+  if (enabled) {
+    if (show && mShowAllButton.isEnabled()) {
+      checkedButtonId=R.id.show_all;
+    }
+ else     if (mRedactSensitiveButton.isEnabled()) {
+      checkedButtonId=R.id.redact_sensitive;
+    }
+  }
+  mRadioGroup.check(checkedButtonId);
 }

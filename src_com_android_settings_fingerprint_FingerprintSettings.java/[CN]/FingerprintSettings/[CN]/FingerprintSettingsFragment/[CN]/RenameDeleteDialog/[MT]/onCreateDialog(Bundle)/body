@@ -1,0 +1,50 @@
+{
+  mFp=getArguments().getParcelable("fingerprint");
+  if (savedInstanceState != null) {
+    mFingerName=savedInstanceState.getString("fingerName");
+    mTextHadFocus=savedInstanceState.getBoolean("textHadFocus");
+    mTextSelectionStart=savedInstanceState.getInt("startSelection");
+    mTextSelectionEnd=savedInstanceState.getInt("endSelection");
+  }
+  final AlertDialog alertDialog=new AlertDialog.Builder(getActivity()).setView(R.layout.fingerprint_rename_dialog).setPositiveButton(R.string.security_settings_fingerprint_enroll_dialog_ok,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      final String newName=mDialogTextField.getText().toString();
+      final CharSequence name=mFp.getName();
+      if (!newName.equals(name)) {
+        if (DEBUG) {
+          Log.v(TAG,"rename " + name + " to "+ newName);
+        }
+        FingerprintSettingsFragment parent=(FingerprintSettingsFragment)getTargetFragment();
+        parent.renameFingerPrint(mFp.getFingerId(),newName);
+      }
+      dialog.dismiss();
+    }
+  }
+).setNegativeButton(R.string.security_settings_fingerprint_enroll_dialog_delete,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      if (DEBUG)       Log.v(TAG,"Removing fpId=" + mFp.getFingerId());
+      FingerprintSettingsFragment parent=(FingerprintSettingsFragment)getTargetFragment();
+      parent.deleteFingerPrint(mFp);
+      dialog.dismiss();
+    }
+  }
+).create();
+  alertDialog.setOnShowListener(new DialogInterface.OnShowListener(){
+    @Override public void onShow(    DialogInterface dialog){
+      mDialogTextField=(EditText)alertDialog.findViewById(R.id.fingerprint_rename_field);
+      CharSequence name=mFingerName == null ? mFp.getName() : mFingerName;
+      mDialogTextField.setText(name);
+      if (mTextHadFocus == null) {
+        mDialogTextField.selectAll();
+      }
+ else {
+        mDialogTextField.setSelection(mTextSelectionStart,mTextSelectionEnd);
+      }
+    }
+  }
+);
+  if (mTextHadFocus == null || mTextHadFocus) {
+    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+  }
+  return alertDialog;
+}

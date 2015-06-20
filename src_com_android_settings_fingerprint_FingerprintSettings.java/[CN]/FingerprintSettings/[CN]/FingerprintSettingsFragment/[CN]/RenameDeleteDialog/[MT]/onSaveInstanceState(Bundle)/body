@@ -1,0 +1,9 @@
+{
+  super.onSaveInstanceState(outState);
+  if (mDialogTextField != null) {
+    outState.putString("fingerName",mDialogTextField.getText().toString());
+    outState.putBoolean("textHadFocus",mDialogTextField.hasFocus());
+    outState.putInt("startSelection",mDialogTextField.getSelectionStart());
+    outState.putInt("endSelection",mDialogTextField.getSelectionEnd());
+  }
+}

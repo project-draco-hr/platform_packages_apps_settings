@@ -1,7 +1,11 @@
 {
   final int colorValue;
   final int opacityValue;
-  if (Color.alpha(value) == 0) {
+  if (!CaptionStyle.hasColor(value)) {
+    colorValue=CaptionStyle.COLOR_UNSPECIFIED;
+    opacityValue=(value & 0xFF) << 24;
+  }
+ else   if ((value >>> 24) == 0) {
     colorValue=Color.TRANSPARENT;
     opacityValue=(value & 0xFF) << 24;
   }
@@ -9,6 +13,6 @@
     colorValue=value | 0xFF000000;
     opacityValue=value & 0xFF000000;
   }
-  color.setValue(colorValue);
   opacity.setValue(opacityValue | 0xFFFFFF);
+  color.setValue(colorValue);
 }

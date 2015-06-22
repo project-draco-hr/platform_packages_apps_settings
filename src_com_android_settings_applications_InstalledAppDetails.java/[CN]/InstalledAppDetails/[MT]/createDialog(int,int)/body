@@ -1,14 +1,14 @@
 {
 switch (id) {
 case DLG_DISABLE:
-    return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.string.app_disable_dlg_title)).setMessage(getActivity().getText(R.string.app_disable_dlg_text)).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
+    return new AlertDialog.Builder(getActivity()).setMessage(getActivity().getText(R.string.app_disable_dlg_text)).setPositiveButton(R.string.app_disable_dlg_positive,new DialogInterface.OnClickListener(){
       public void onClick(      DialogInterface dialog,      int which){
         new DisableChanger(InstalledAppDetails.this,mAppEntry.info,PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER).execute((Object)null);
       }
     }
 ).setNegativeButton(R.string.dlg_cancel,null).create();
 case DLG_SPECIAL_DISABLE:
-  return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.string.app_special_disable_dlg_title)).setMessage(getActivity().getText(R.string.app_special_disable_dlg_text)).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
+  return new AlertDialog.Builder(getActivity()).setMessage(getActivity().getText(R.string.app_special_disable_dlg_text)).setPositiveButton(R.string.app_disable_dlg_positive,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
       uninstallPkg(mAppEntry.info.packageName,false,true);
     }

@@ -2,8 +2,11 @@
   final int colorValue=color.getValue();
   final int opacityValue=opacity.getValue();
   final int value;
-  if (Color.alpha(colorValue) == 0) {
-    value=colorValue & 0x00FFFF00 | Color.alpha(opacityValue);
+  if (!CaptionStyle.hasColor(colorValue)) {
+    value=0x00FFFF00 | Color.alpha(opacityValue);
+  }
+ else   if (colorValue == Color.TRANSPARENT) {
+    value=Color.alpha(opacityValue);
   }
  else {
     value=colorValue & 0x00FFFFFF | opacityValue & 0xFF000000;

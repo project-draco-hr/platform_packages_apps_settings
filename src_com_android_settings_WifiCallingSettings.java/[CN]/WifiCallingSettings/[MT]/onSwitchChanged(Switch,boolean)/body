@@ -3,4 +3,10 @@
   ImsManager.setWfcSetting(context,isChecked);
   int wfcMode=ImsManager.getWfcMode(context);
   updateButtonWfcMode(context,isChecked,wfcMode);
+  if (isChecked) {
+    MetricsLogger.action(getActivity(),getMetricsCategory(),wfcMode);
+  }
+ else {
+    MetricsLogger.action(getActivity(),getMetricsCategory(),-1);
+  }
 }

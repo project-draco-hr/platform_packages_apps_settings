@@ -1,0 +1,12 @@
+{
+  TextView layoutTitle=(TextView)getSetupWizardLayout().findViewById(R.id.suw_layout_title);
+  CharSequence previousTitle=layoutTitle.getText();
+  CharSequence title=getText(resId);
+  if (previousTitle != title || force) {
+    if (!TextUtils.isEmpty(previousTitle)) {
+      layoutTitle.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
+    }
+    getSetupWizardLayout().setHeaderText(title);
+    setTitle(title);
+  }
+}

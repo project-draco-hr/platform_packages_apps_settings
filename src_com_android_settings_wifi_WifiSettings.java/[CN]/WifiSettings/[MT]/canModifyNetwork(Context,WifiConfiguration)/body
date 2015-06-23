@@ -1,0 +1,28 @@
+{
+  if (config == null) {
+    return true;
+  }
+  final DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+  final PackageManager pm=context.getPackageManager();
+  if (pm.hasSystemFeature(PackageManager.FEATURE_DEVICE_ADMIN) && dpm == null) {
+    return false;
+  }
+  boolean isConfigEligibleForLockdown=false;
+  if (dpm != null) {
+    final String deviceOwnerPackageName=dpm.getDeviceOwner();
+    if (deviceOwnerPackageName != null) {
+      try {
+        final int deviceOwnerUid=pm.getPackageUid(deviceOwnerPackageName,UserHandle.USER_OWNER);
+        isConfigEligibleForLockdown=deviceOwnerUid == config.creatorUid;
+      }
+ catch (      NameNotFoundException e) {
+      }
+    }
+  }
+  if (!isConfigEligibleForLockdown) {
+    return true;
+  }
+  final ContentResolver resolver=context.getContentResolver();
+  final boolean isLockdownFeatureEnabled=Settings.Global.getInt(resolver,Settings.Global.WIFI_DEVICE_OWNER_CONFIGS_LOCKDOWN,0) != 0;
+  return !isLockdownFeatureEnabled;
+}

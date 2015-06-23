@@ -1,22 +1,3 @@
 {
-  if (config == null) {
-    return false;
-  }
-  final DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-  final String deviceOwnerPackageName=dpm.getDeviceOwner();
-  if (deviceOwnerPackageName == null) {
-    return false;
-  }
-  UserManager um=UserManager.get(context);
-  if (um.hasUserRestriction(UserManager.DISALLOW_CONFIG_WIFI)) {
-    return false;
-  }
-  final PackageManager pm=context.getPackageManager();
-  try {
-    final int deviceOwnerUid=pm.getPackageUid(deviceOwnerPackageName,UserHandle.getUserId(config.creatorUid));
-    return deviceOwnerUid == config.creatorUid;
-  }
- catch (  NameNotFoundException e) {
-    return false;
-  }
+  return !canModifyNetwork(context,config);
 }

@@ -1,6 +1,6 @@
 {
   try {
-    ActivityManagerNative.getDefault().switchUser(UserHandle.USER_OWNER);
+    ActivityManagerNative.getDefault().switchUser(UserHandle.USER_SYSTEM);
     ((UserManager)getActivity().getSystemService(Context.USER_SERVICE)).removeUser(UserHandle.myUserId());
   }
  catch (  RemoteException re) {

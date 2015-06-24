@@ -21,8 +21,8 @@
   mMePreference=new UserPreference(context,null,myUserId,null,null);
   mMePreference.setKey(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
-  if (mUserCaps.mIsOwner) {
-    mMePreference.setSummary(R.string.user_owner);
+  if (mUserCaps.mIsAdmin) {
+    mMePreference.setSummary(R.string.user_admin);
   }
   mAddUser=findPreference(KEY_ADD_USER);
   if (mUserCaps.mCanAddUser) {

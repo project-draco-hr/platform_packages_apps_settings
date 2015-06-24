@@ -54,6 +54,28 @@
     if (LOGD)     Log.d(TAG,"updateBody() unknown tab");
     throw new IllegalStateException("unknown tab: " + currentTab);
   }
+  mPolicyEditor.read();
+  final NetworkPolicy policy=mPolicyEditor.getPolicy(mTemplate);
+  if (policy != null) {
+    final long currentTime=System.currentTimeMillis();
+    final long start=computeLastCycleBoundary(currentTime,policy);
+    final long end=currentTime;
+    long totalBytes=0;
+    try {
+      totalBytes=mStatsService.getNetworkTotalBytes(policy.template,start,end);
+    }
+ catch (    RuntimeException e) {
+    }
+catch (    RemoteException e) {
+    }
+    if (policy.isOverLimit(totalBytes) && policy.lastLimitSnooze < start) {
+      setPreferenceSummary(mDataEnabledView,getString(R.string.data_usage_cellular_data_summary));
+    }
+ else {
+      final TextView summary=(TextView)mDataEnabledView.findViewById(android.R.id.summary);
+      summary.setVisibility(View.GONE);
+    }
+  }
   getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(mTemplate,mCurrentApp),mChartDataCallbacks);
   getActivity().invalidateOptionsMenu();
   mBinding=false;

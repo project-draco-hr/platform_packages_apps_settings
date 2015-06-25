@@ -30,6 +30,7 @@
     mLockPatternView.disableInput();
   }
   mLockPatternView.setDisplayMode(DisplayMode.Correct);
+  boolean announceAlways=false;
 switch (mUiStage) {
 case Introduction:
     mLockPatternView.clearPattern();
@@ -40,6 +41,7 @@ break;
 case ChoiceTooShort:
 mLockPatternView.setDisplayMode(DisplayMode.Wrong);
 postClearPatternRunnable();
+announceAlways=true;
 break;
 case FirstChoiceValid:
 break;
@@ -49,11 +51,12 @@ break;
 case ConfirmWrong:
 mLockPatternView.setDisplayMode(DisplayMode.Wrong);
 postClearPatternRunnable();
+announceAlways=true;
 break;
 case ChoiceConfirmed:
 break;
 }
-if (previousStage != stage) {
+if (previousStage != stage || announceAlways) {
 mHeaderText.announceForAccessibility(mHeaderText.getText());
 }
 }

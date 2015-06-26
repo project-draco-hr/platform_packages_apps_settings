@@ -3,6 +3,10 @@
     Settings.Secure.putInt(getContentResolver(),Settings.Secure.ASSIST_STRUCTURE_ENABLED,(boolean)newValue ? 1 : 0);
     return true;
   }
+  if (preference == mScreenshotPref) {
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.ASSIST_SCREENSHOT_ENABLED,(boolean)newValue ? 1 : 0);
+    return true;
+  }
   if (preference == mDefaultAssitPref) {
     String newAssitPackage=(String)newValue;
     if (newAssitPackage == null || newAssitPackage.contentEquals(DefaultAssistPreference.ITEM_NONE_VALUE)) {

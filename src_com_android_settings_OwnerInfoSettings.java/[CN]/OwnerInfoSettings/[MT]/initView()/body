@@ -4,16 +4,4 @@
   if (!TextUtils.isEmpty(info)) {
     mOwnerInfo.setText(info);
   }
-  mOwnerInfoStatus=(TextView)mView.findViewById(R.id.owner_info_status);
-  updateOwnerInfoStatus();
-  mOwnerInfo.addTextChangedListener(new TextWatcher(){
-    @Override public void onTextChanged(    CharSequence s,    int start,    int before,    int count){
-    }
-    @Override public void beforeTextChanged(    CharSequence s,    int start,    int count,    int after){
-    }
-    @Override public void afterTextChanged(    Editable s){
-      updateOwnerInfoStatus();
-    }
-  }
-);
 }

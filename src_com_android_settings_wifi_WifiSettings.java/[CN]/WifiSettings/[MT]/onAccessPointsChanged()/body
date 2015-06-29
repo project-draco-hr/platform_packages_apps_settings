@@ -13,7 +13,11 @@ boolean hasAvailableAccessPoints=false;
 for (AccessPoint accessPoint : accessPoints) {
 if (accessPoint.getLevel() != -1) {
   hasAvailableAccessPoints=true;
-  AccessPointPreference preference=new AccessPointPreference(accessPoint,getActivity(),false);
+  if (accessPoint.getTag() != null) {
+    getPreferenceScreen().addPreference((Preference)accessPoint.getTag());
+    continue;
+  }
+  AccessPointPreference preference=new AccessPointPreference(accessPoint,getActivity(),mUserBadgeCache,false);
   if (mOpenSsid != null && mOpenSsid.equals(accessPoint.getSsidStr()) && !accessPoint.isSaved() && accessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
     onPreferenceTreeClick(getPreferenceScreen(),preference);
     mOpenSsid=null;

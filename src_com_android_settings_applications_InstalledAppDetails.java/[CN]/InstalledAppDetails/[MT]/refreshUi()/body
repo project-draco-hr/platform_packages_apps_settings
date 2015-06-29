@@ -26,7 +26,10 @@
   initUninstallButtons();
   Activity context=getActivity();
   mStoragePreference.setSummary(AppStorageSettings.getSummary(mAppEntry,context));
-  PermissionsSummaryHelper.getPermissionSummary(getContext(),mPackageName,mPermissionCallback);
+  if (mPermissionReceiver != null) {
+    getContext().unregisterReceiver(mPermissionReceiver);
+  }
+  mPermissionReceiver=PermissionsSummaryHelper.getPermissionSummary(getContext(),mPackageName,mPermissionCallback);
   mLaunchPreference.setSummary(Utils.getLaunchByDeafaultSummary(mAppEntry,mUsbManager,mPm,context));
   mNotificationPreference.setSummary(getNotificationSummary(mAppEntry,context,mBackend));
   if (mDataPreference != null) {

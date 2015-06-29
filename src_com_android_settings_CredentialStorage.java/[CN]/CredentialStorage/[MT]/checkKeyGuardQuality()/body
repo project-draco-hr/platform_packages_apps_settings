@@ -1,4 +1,5 @@
 {
-  int quality=new LockPatternUtils(this).getActivePasswordQuality(UserHandle.myUserId());
+  UserInfo parent=UserManager.get(this).getProfileParent(UserHandle.myUserId());
+  int quality=new LockPatternUtils(this).getActivePasswordQuality(parent != null ? parent.id : UserHandle.myUserId());
   return (quality >= MIN_PASSWORD_QUALITY);
 }

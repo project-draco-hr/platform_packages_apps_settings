@@ -1,8 +1,7 @@
 {
-  TrafficStats.closeQuietly(mStatsSession);
+  super.onDestroy();
   if (mPermissionReceiver != null) {
     getContext().unregisterReceiver(mPermissionReceiver);
     mPermissionReceiver=null;
   }
-  super.onDestroy();
 }

@@ -9,5 +9,8 @@
   mAppDomainURLsPreference.setSummary(summary);
   int highPowerCount=PowerWhitelistBackend.getInstance().getWhitelistSize();
   mHighPowerPreference.setSummary(getResources().getQuantityString(R.plurals.high_power_count,highPowerCount,highPowerCount));
-  PermissionsSummaryHelper.getAppWithPermissionsCounts(getContext(),mPermissionCallback);
+  if (mPermissionReceiver != null) {
+    getContext().unregisterReceiver(mPermissionReceiver);
+  }
+  mPermissionReceiver=PermissionsSummaryHelper.getAppWithPermissionsCounts(getContext(),mPermissionCallback);
 }

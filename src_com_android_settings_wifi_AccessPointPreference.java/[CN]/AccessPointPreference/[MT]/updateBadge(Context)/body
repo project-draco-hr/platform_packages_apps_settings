@@ -1,8 +1,6 @@
 {
   WifiConfiguration config=mAccessPoint.getConfig();
   if (config != null) {
-    UserHandle creatorUser=new UserHandle(UserHandle.getUserId(config.creatorUid));
-    mBadge=context.getPackageManager().getUserBadgeForDensity(creatorUser,0);
-    mBadgePadding=context.getResources().getDimensionPixelSize(R.dimen.wifi_preference_badge_padding);
+    mBadge=mBadgeCache.getUserBadge(config.creatorUid);
   }
 }

@@ -1,0 +1,9 @@
+{
+  int index=mBadges.indexOfKey(userId);
+  if (index < 0) {
+    Drawable badge=mPm.getUserBadgeForDensity(new UserHandle(userId),0);
+    mBadges.put(userId,badge);
+    return badge;
+  }
+  return mBadges.valueAt(index);
+}

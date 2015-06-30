@@ -13,14 +13,5 @@
     notifyChanged();
   }
   updateBadge(context);
-  setSummary(null);
-  String summary=mForSavedNetworks ? mAccessPoint.getSavedNetworkSummary() : mAccessPoint.getSettingsSummary();
-  boolean showSummary=summary.length() > 0;
-  if (showSummary) {
-    setSummary(summary);
-  }
-  if (showSummary != mShowSummary) {
-    mShowSummary=showSummary;
-    notifyChanged();
-  }
+  setSummary(mForSavedNetworks ? mAccessPoint.getSavedNetworkSummary() : mAccessPoint.getSettingsSummary());
 }

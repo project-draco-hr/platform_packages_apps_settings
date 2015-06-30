@@ -11,7 +11,7 @@
   getContext().getTheme().resolveAttribute(android.R.attr.colorControlNormal,value,true);
   int colorControl=getContext().getColor(value.resourceId);
   if (averagePower >= MIN_AVERAGE_POWER_THRESHOLD_MILLI_AMP || USE_FAKE_DATA) {
-    final List<BatterySipper> usageList=USE_FAKE_DATA ? getFakeStats() : mStatsHelper.getUsageList();
+    final List<BatterySipper> usageList=getCoalescedUsageList(USE_FAKE_DATA ? getFakeStats() : mStatsHelper.getUsageList());
     final int dischargeAmount=USE_FAKE_DATA ? 5000 : stats != null ? stats.getDischargeAmount(mStatsType) : 0;
     final int numSippers=usageList.size();
     for (int i=0; i < numSippers; i++) {

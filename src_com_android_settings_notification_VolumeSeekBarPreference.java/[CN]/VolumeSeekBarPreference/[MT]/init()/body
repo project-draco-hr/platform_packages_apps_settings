@@ -29,4 +29,8 @@
   updateIconView();
   mCallback.onStreamValueChanged(mStream,mSeekBar.getProgress());
   updateSuppressionText();
+  if (!isEnabled()) {
+    mSeekBar.setEnabled(false);
+    mVolumizer.stop();
+  }
 }

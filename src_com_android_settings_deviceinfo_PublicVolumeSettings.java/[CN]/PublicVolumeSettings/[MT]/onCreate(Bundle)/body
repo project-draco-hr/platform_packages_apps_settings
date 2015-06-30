@@ -1,6 +1,7 @@
 {
   super.onCreate(icicle);
   final Context context=getActivity();
+  mIsPermittedToAdopt=UserManager.get(context).isAdminUser();
   mStorageManager=context.getSystemService(StorageManager.class);
   if (DocumentsContract.ACTION_DOCUMENT_ROOT_SETTINGS.equals(getActivity().getIntent().getAction())) {
     final Uri rootUri=getActivity().getIntent().getData();
@@ -23,5 +24,7 @@
   mMount=buildAction(R.string.storage_menu_mount);
   mUnmount=buildAction(R.string.storage_menu_unmount);
   mFormatPublic=buildAction(R.string.storage_menu_format);
-  mFormatPrivate=buildAction(R.string.storage_menu_format_private);
+  if (mIsPermittedToAdopt) {
+    mFormatPrivate=buildAction(R.string.storage_menu_format_private);
+  }
 }

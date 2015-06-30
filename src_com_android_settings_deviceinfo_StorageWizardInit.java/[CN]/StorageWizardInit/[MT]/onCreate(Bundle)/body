@@ -5,6 +5,7 @@
     return;
   }
   setContentView(R.layout.storage_wizard_init);
+  mIsPermittedToAdopt=UserManager.get(this).isAdminUser();
   setIllustrationInternal(true);
   setHeaderText(R.string.storage_wizard_init_title,mDisk.getDescription());
   mRadioExternal=(RadioButton)findViewById(R.id.storage_wizard_init_external_title);
@@ -18,5 +19,8 @@
     mRadioExternal.setChecked(true);
     onNavigateNext();
     finish();
+  }
+  if (!mIsPermittedToAdopt) {
+    mRadioInternal.setEnabled(false);
   }
 }

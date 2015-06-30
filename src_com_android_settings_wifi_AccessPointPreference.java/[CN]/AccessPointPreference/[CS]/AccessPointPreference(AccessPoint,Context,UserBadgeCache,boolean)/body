@@ -1,0 +1,11 @@
+{
+  super(context);
+  mBadgeCache=cache;
+  mAccessPoint=accessPoint;
+  mForSavedNetworks=forSavedNetworks;
+  mAccessPoint.setTag(this);
+  mLevel=-1;
+  mWifiSld=(StateListDrawable)context.getTheme().obtainStyledAttributes(wifi_signal_attributes).getDrawable(0);
+  mBadgePadding=context.getResources().getDimensionPixelSize(R.dimen.wifi_preference_badge_padding);
+  refresh();
+}

@@ -1,0 +1,42 @@
+{
+  final SparseArray<BatterySipper> uidList=new SparseArray<>();
+  final ArrayList<BatterySipper> results=new ArrayList<>();
+  final int numSippers=sippers.size();
+  for (int i=0; i < numSippers; i++) {
+    final BatterySipper sipper=sippers.get(i);
+    if (sipper.getUid() > 0) {
+      int realUid=sipper.getUid();
+      if (sipper.getUid() >= Process.FIRST_SHARED_APPLICATION_GID && sipper.getUid() <= Process.LAST_SHARED_APPLICATION_GID) {
+        realUid=UserHandle.getUid(UserHandle.USER_OWNER,UserHandle.getAppIdFromSharedAppGid(sipper.getUid()));
+      }
+      int index=uidList.indexOfKey(realUid);
+      if (index < 0) {
+        uidList.put(realUid,sipper);
+      }
+ else {
+        BatterySipper existingSipper=uidList.valueAt(index);
+        if (existingSipper.getUid() >= Process.FIRST_SHARED_APPLICATION_GID && existingSipper.getUid() <= Process.FIRST_SHARED_APPLICATION_GID) {
+          sipper.add(existingSipper);
+          uidList.setValueAt(index,sipper);
+        }
+ else {
+          existingSipper.add(sipper);
+        }
+      }
+    }
+ else {
+      results.add(sipper);
+    }
+  }
+  final int numUidSippers=uidList.size();
+  for (int i=0; i < numUidSippers; i++) {
+    results.add(uidList.valueAt(i));
+  }
+  Collections.sort(results,new Comparator<BatterySipper>(){
+    @Override public int compare(    BatterySipper a,    BatterySipper b){
+      return Double.compare(b.totalPowerMah,a.totalPowerMah);
+    }
+  }
+);
+  return results;
+}

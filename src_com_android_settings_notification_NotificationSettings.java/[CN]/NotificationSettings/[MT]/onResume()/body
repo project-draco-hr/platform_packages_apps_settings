@@ -10,4 +10,11 @@
   for (  VolumeSeekBarPreference volumePref : mVolumePrefs) {
     volumePref.onActivityResume();
   }
+  boolean isRestricted=mUserManager.hasUserRestriction(UserManager.DISALLOW_ADJUST_VOLUME);
+  for (  String key : RESTRICTED_KEYS) {
+    Preference pref=findPreference(key);
+    if (pref != null) {
+      pref.setEnabled(!isRestricted);
+    }
+  }
 }

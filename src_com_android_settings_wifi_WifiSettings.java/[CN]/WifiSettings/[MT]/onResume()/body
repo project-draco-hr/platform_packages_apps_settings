@@ -1,6 +1,7 @@
 {
   final Activity activity=getActivity();
   super.onResume();
+  removePreference("dummy");
   if (mWifiEnabler != null) {
     mWifiEnabler.resume(activity);
   }

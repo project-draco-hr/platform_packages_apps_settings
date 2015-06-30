@@ -1,5 +1,8 @@
 {
   super.onBindView(view);
+  if (mAccessPoint == null) {
+    return;
+  }
   Drawable drawable=getIcon();
   if (drawable != null) {
     drawable.setLevel(mLevel);
@@ -9,7 +12,4 @@
     mTitleView.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,mBadge,null);
     mTitleView.setCompoundDrawablePadding(mBadgePadding);
   }
-  mSummaryView=(TextView)view.findViewById(com.android.internal.R.id.summary);
-  mSummaryView.setVisibility(mShowSummary ? View.VISIBLE : View.GONE);
-  updateBadge(getContext());
 }

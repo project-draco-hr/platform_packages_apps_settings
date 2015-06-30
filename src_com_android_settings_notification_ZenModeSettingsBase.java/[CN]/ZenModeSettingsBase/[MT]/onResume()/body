@@ -3,4 +3,7 @@
   updateZenMode(true);
   updateZenModeConfig(true);
   mSettingsObserver.register();
+  if (isUiRestricted()) {
+    finish();
+  }
 }

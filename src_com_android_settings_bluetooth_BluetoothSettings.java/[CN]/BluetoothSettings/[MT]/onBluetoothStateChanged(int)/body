@@ -1,4 +1,5 @@
 {
   super.onBluetoothStateChanged(bluetoothState);
+  if (BluetoothAdapter.STATE_ON == bluetoothState)   mInitiateDiscoverable=true;
   updateContent(bluetoothState);
 }

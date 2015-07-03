@@ -8,7 +8,7 @@
   mMoveId=getIntent().getIntExtra(EXTRA_MOVE_ID,-1);
   final String appName=getIntent().getStringExtra(EXTRA_TITLE);
   final String volumeName=mStorage.getBestVolumeDescription(mVolume);
-  setIllustrationInternal(true);
+  setIllustrationType(ILLUSTRATION_INTERNAL);
   setHeaderText(R.string.storage_wizard_move_progress_title,appName);
   setBodyText(R.string.storage_wizard_move_progress_body,volumeName,appName);
   getNextButton().setVisibility(View.GONE);

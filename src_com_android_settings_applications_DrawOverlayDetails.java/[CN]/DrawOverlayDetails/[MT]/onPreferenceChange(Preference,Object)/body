@@ -1,0 +1,10 @@
+{
+  if (preference == mSwitchPref) {
+    if (mOverlayState != null && (Boolean)newValue != mOverlayState.isAllowed()) {
+      setCanDrawOverlay(!mOverlayState.isAllowed());
+      refreshUi();
+    }
+    return true;
+  }
+  return false;
+}

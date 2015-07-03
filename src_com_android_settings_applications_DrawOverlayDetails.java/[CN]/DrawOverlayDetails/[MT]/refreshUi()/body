@@ -1,0 +1,13 @@
+{
+  mOverlayState=mOverlayBridge.getOverlayInfo(mPackageName,mPackageInfo.applicationInfo.uid);
+  boolean isAllowed=mOverlayState.isAllowed();
+  mSwitchPref.setChecked(isAllowed);
+  mOverlayPrefs.setEnabled(isAllowed);
+  ResolveInfo resolveInfo=mPm.resolveActivityAsUser(mSettingsIntent,PackageManager.GET_META_DATA,mUserId);
+  if (resolveInfo == null) {
+    if (findPreference(KEY_APP_OPS_SETTINGS_PREFS) != null) {
+      getPreferenceScreen().removePreference(mOverlayPrefs);
+    }
+  }
+  return true;
+}

@@ -13,7 +13,7 @@ holder.summary.setText(getDomainsSummary(holder.entry.info.packageName));
 break;
 case LIST_TYPE_USAGE_ACCESS:
 if (holder.entry.extraInfo != null) {
-holder.summary.setText(((UsageState)holder.entry.extraInfo).hasAccess() ? R.string.switch_on_text : R.string.switch_off_text);
+holder.summary.setText((new UsageState((PermissionState)holder.entry.extraInfo)).isPermissible() ? R.string.switch_on_text : R.string.switch_off_text);
 }
  else {
 holder.summary.setText(null);
@@ -21,6 +21,12 @@ holder.summary.setText(null);
 break;
 case LIST_TYPE_HIGH_POWER:
 holder.summary.setText(HighPowerDetail.getSummary(mContext,holder.entry));
+break;
+case LIST_TYPE_OVERLAY:
+holder.summary.setText(DrawOverlayDetails.getSummary(mContext,holder.entry));
+break;
+case LIST_TYPE_WRITE_SETTINGS:
+holder.summary.setText(WriteSettingsDetails.getSummary(mContext,holder.entry));
 break;
 default :
 holder.updateSizeText(mManageApplications.mInvalidSizeStr,mWhichSize);

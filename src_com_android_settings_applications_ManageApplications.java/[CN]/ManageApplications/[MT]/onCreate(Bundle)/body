@@ -45,6 +45,14 @@
       }
     }
   }
+ else   if (className.equals(OverlaySettingsActivity.class.getName())) {
+    mListType=LIST_TYPE_OVERLAY;
+    getActivity().getActionBar().setTitle(R.string.system_alert_window_access_title);
+  }
+ else   if (className.equals(WriteSettingsActivity.class.getName())) {
+    mListType=LIST_TYPE_WRITE_SETTINGS;
+    getActivity().getActionBar().setTitle(R.string.write_settings_title);
+  }
  else {
     mListType=LIST_TYPE_MAIN;
   }

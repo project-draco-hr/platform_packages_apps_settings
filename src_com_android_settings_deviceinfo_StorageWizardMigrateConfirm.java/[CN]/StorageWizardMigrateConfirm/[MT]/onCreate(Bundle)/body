@@ -4,11 +4,12 @@
   if (mVolume == null) {
     mVolume=findFirstVolume(VolumeInfo.TYPE_PRIVATE);
   }
-  if (mVolume == null) {
+  final VolumeInfo sourceVol=getPackageManager().getPrimaryStorageCurrentVolume();
+  if (sourceVol == null || mVolume == null) {
+    Log.d(TAG,"Missing either source or target volume");
     finish();
     return;
   }
-  final VolumeInfo sourceVol=getPackageManager().getPrimaryStorageCurrentVolume();
   final String sourceDescrip=mStorage.getBestVolumeDescription(sourceVol);
   final String targetDescrip=mStorage.getBestVolumeDescription(mVolume);
   setIllustrationInternal(true);

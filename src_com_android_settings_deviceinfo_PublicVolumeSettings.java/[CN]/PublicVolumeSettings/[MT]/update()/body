@@ -8,7 +8,7 @@
   final PreferenceScreen screen=getPreferenceScreen();
   screen.removeAll();
   if (mVolume.isMountedReadable()) {
-    screen.addPreference(mSummary);
+    addPreference(mSummary);
     final File file=mVolume.getPath();
     final long totalBytes=file.getTotalSpace();
     final long freeBytes=file.getFreeSpace();
@@ -19,13 +19,13 @@
     mSummary.setPercent((int)((usedBytes * 100) / totalBytes));
   }
   if (mVolume.getState() == VolumeInfo.STATE_UNMOUNTED) {
-    screen.addPreference(mMount);
+    addPreference(mMount);
   }
   if (mVolume.isMountedReadable()) {
-    screen.addPreference(mUnmount);
+    addPreference(mUnmount);
   }
-  screen.addPreference(mFormatPublic);
+  addPreference(mFormatPublic);
   if (mDisk.isAdoptable() && mIsPermittedToAdopt) {
-    screen.addPreference(mFormatPrivate);
+    addPreference(mFormatPrivate);
   }
 }

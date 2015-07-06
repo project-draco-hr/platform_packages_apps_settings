@@ -9,7 +9,14 @@
   setIllustrationInternal(mFormatPrivate);
   setHeaderText(R.string.storage_wizard_format_progress_title,mDisk.getDescription());
   setBodyText(R.string.storage_wizard_format_progress_body,mDisk.getDescription());
-  setCurrentProgress(20);
   getNextButton().setVisibility(View.GONE);
-  new PartitionTask().execute();
+  mTask=(PartitionTask)getLastNonConfigurationInstance();
+  if (mTask == null) {
+    mTask=new PartitionTask();
+    mTask.setActivity(this);
+    mTask.execute();
+  }
+ else {
+    mTask.setActivity(this);
+  }
 }

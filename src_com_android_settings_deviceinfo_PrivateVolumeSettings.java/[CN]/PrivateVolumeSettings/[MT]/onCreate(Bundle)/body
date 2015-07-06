@@ -12,6 +12,7 @@
     return;
   }
   addPreferencesFromResource(R.xml.device_info_storage_volume);
+  getPreferenceScreen().setOrderingAsAdded(true);
   mSharedVolume=mStorageManager.findEmulatedForPrivate(mVolume);
   mSummary=new StorageSummaryPreference(context);
   mApps=buildItem(R.string.storage_detail_apps);

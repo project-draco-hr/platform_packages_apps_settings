@@ -1,3 +1,5 @@
 {
-  getSetupWizardLayout().setHeaderText(TextUtils.expandTemplate(getText(resId),args));
+  final CharSequence headerText=TextUtils.expandTemplate(getText(resId),args);
+  getSetupWizardLayout().setHeaderText(headerText);
+  setTitle(headerText);
 }

@@ -1,15 +1,17 @@
 {
+  final StorageWizardFormatProgress activity=mActivity;
+  final StorageManager storage=mActivity.mStorage;
   try {
-    if (mFormatPrivate) {
-      mStorage.partitionPrivate(mDisk.getId());
+    if (activity.mFormatPrivate) {
+      storage.partitionPrivate(activity.mDisk.getId());
       publishProgress(40);
-      mInternalBench=mStorage.benchmark(null);
+      mInternalBench=storage.benchmark(null);
       publishProgress(60);
-      final VolumeInfo privateVol=findFirstVolume(VolumeInfo.TYPE_PRIVATE);
-      mPrivateBench=mStorage.benchmark(privateVol.id);
+      final VolumeInfo privateVol=activity.findFirstVolume(VolumeInfo.TYPE_PRIVATE);
+      mPrivateBench=storage.benchmark(privateVol.id);
     }
  else {
-      mStorage.partitionPublic(mDisk.getId());
+      storage.partitionPublic(activity.mDisk.getId());
     }
     return null;
   }

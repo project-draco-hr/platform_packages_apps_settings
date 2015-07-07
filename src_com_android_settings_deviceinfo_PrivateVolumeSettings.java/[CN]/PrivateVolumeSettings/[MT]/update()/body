@@ -8,27 +8,27 @@
   final Context context=getActivity();
   final PreferenceScreen screen=getPreferenceScreen();
   screen.removeAll();
-  screen.addPreference(mSummary);
+  addPreference(mSummary);
   final boolean showUsers=!mUsers.isEmpty();
   final boolean showShared=(mSharedVolume != null) && mSharedVolume.isMountedReadable();
   if (showUsers) {
-    screen.addPreference(new PreferenceHeader(context,mCurrentUser.name));
+    addPreference(new PreferenceHeader(context,mCurrentUser.name));
   }
-  screen.addPreference(mApps);
+  addPreference(mApps);
   if (showShared) {
-    screen.addPreference(mImages);
-    screen.addPreference(mVideos);
-    screen.addPreference(mAudio);
-    screen.addPreference(mOther);
+    addPreference(mImages);
+    addPreference(mVideos);
+    addPreference(mAudio);
+    addPreference(mOther);
   }
-  screen.addPreference(mCache);
+  addPreference(mCache);
   if (showShared) {
-    screen.addPreference(mExplore);
+    addPreference(mExplore);
   }
   if (showUsers) {
-    screen.addPreference(new PreferenceHeader(context,R.string.storage_other_users));
+    addPreference(new PreferenceHeader(context,R.string.storage_other_users));
     for (    Preference pref : mUsers) {
-      screen.addPreference(pref);
+      addPreference(pref);
     }
   }
   for (int i=0; i < screen.getPreferenceCount(); i++) {

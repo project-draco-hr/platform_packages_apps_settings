@@ -2,9 +2,19 @@
   boolean ret=false;
   final String key=preference.getKey();
   if (KEY_OPEN_DOMAIN_URLS.equals(key)) {
-    SwitchPreference pref=(SwitchPreference)preference;
-    int status=!pref.isChecked() ? PackageManager.INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS : PackageManager.INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_NEVER;
-    ret=mPm.updateIntentVerificationStatus(mPackageName,status,UserHandle.myUserId());
+    final SwitchPreference pref=(SwitchPreference)preference;
+    final Boolean switchedOn=(Boolean)newValue;
+    int newState=switchedOn ? INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS : INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_NEVER;
+    final int userId=UserHandle.myUserId();
+    boolean success=mPm.updateIntentVerificationStatus(mPackageName,newState,userId);
+    if (success) {
+      newState=mPm.getIntentVerificationStatus(mPackageName,userId);
+      ret=(newState == INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS);
+      pref.setChecked(ret);
+    }
+ else {
+      Log.e(TAG,"Couldn't update intent verification status!");
+    }
   }
   return ret;
 }

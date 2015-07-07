@@ -5,6 +5,7 @@
   mStorageManager=context.getSystemService(StorageManager.class);
   mVolumeId=getArguments().getString(VolumeInfo.EXTRA_VOLUME_ID);
   mVolume=mStorageManager.findVolumeById(mVolumeId);
+  mSharedVolume=mStorageManager.findEmulatedForPrivate(mVolume);
   mMeasure=new StorageMeasurement(context,mVolume,mSharedVolume);
   mMeasure.setReceiver(mReceiver);
   if (!isVolumeValid()) {
@@ -13,7 +14,6 @@
   }
   addPreferencesFromResource(R.xml.device_info_storage_volume);
   getPreferenceScreen().setOrderingAsAdded(true);
-  mSharedVolume=mStorageManager.findEmulatedForPrivate(mVolume);
   mSummary=new StorageSummaryPreference(context);
   mApps=buildItem(R.string.storage_detail_apps);
   mImages=buildItem(R.string.storage_detail_images);

@@ -23,17 +23,17 @@
       }
     }
   }
-  LegacyVpnInfo oldVpn=mService.getLegacyVpnInfo();
+  LegacyVpnInfo oldVpn=mService.getLegacyVpnInfo(UserHandle.myUserId());
   if (oldVpn != null) {
     Log.v(TAG,"disconnect legacy VPN");
     disconnect();
     int tries=0;
-    while (tries < MAX_DISCONNECTION_TRIES && mService.getLegacyVpnInfo() != null) {
+    while (tries < MAX_DISCONNECTION_TRIES && mService.getLegacyVpnInfo(UserHandle.myUserId()) != null) {
       tries++;
       Thread.sleep(10 * 1000);
       Log.v(TAG,"Wait for legacy VPN to be disconnected.");
     }
-    Assert.assertNull("Failed to disconect VPN",mService.getLegacyVpnInfo());
+    Assert.assertNull("Failed to disconect VPN",mService.getLegacyVpnInfo(UserHandle.myUserId()));
     sleep(30 * 1000);
   }
   mCertHelper=new CertInstallerHelper();

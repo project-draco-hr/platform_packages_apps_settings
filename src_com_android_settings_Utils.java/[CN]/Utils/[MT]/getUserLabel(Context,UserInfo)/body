@@ -1,8 +1,11 @@
 {
+  String name=info != null ? info.name : null;
   if (info.isManagedProfile()) {
     return context.getString(R.string.managed_user_title);
   }
-  String name=info != null ? info.name : null;
+ else   if (info.isGuest()) {
+    name=context.getString(R.string.user_guest);
+  }
   if (name == null && info != null) {
     name=Integer.toString(info.id);
   }

@@ -8,7 +8,11 @@
       mInternalBench=storage.benchmark(null);
       publishProgress(60);
       final VolumeInfo privateVol=activity.findFirstVolume(VolumeInfo.TYPE_PRIVATE);
-      mPrivateBench=storage.benchmark(privateVol.id);
+      mPrivateBench=storage.benchmark(privateVol.getId());
+      if (activity.mDisk.isDefaultPrimary() && Objects.equals(storage.getPrimaryStorageUuid(),StorageManager.UUID_PRIMARY_PHYSICAL)) {
+        Log.d(TAG,"Just formatted primary physical; silently moving " + "storage to new emulated volume");
+        storage.setPrimaryStorageUuid(privateVol.getFsUuid(),new SilentObserver());
+      }
     }
  else {
       storage.partitionPublic(activity.mDisk.getId());

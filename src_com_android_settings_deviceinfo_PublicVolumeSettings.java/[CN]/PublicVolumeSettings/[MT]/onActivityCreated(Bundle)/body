@@ -1,0 +1,9 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  final Resources resources=getResources();
+  final int padding=resources.getDimensionPixelSize(R.dimen.unmount_button_padding);
+  final ViewGroup buttonBar=getButtonBar();
+  buttonBar.removeAllViews();
+  buttonBar.setPadding(padding,padding,padding,padding);
+  buttonBar.addView(mUnmount,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+}

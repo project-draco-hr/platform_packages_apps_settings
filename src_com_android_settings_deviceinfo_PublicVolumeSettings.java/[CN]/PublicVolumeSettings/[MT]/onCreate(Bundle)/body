@@ -23,7 +23,9 @@
   getPreferenceScreen().setOrderingAsAdded(true);
   mSummary=new StorageSummaryPreference(context);
   mMount=buildAction(R.string.storage_menu_mount);
-  mUnmount=buildAction(R.string.storage_menu_unmount);
+  mUnmount=new Button(getActivity());
+  mUnmount.setText(R.string.storage_menu_unmount);
+  mUnmount.setOnClickListener(mUnmountListener);
   mFormatPublic=buildAction(R.string.storage_menu_format);
   if (mIsPermittedToAdopt) {
     mFormatPrivate=buildAction(R.string.storage_menu_format_private);

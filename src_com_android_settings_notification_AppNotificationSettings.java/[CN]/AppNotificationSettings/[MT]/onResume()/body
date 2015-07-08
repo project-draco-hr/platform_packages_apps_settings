@@ -1,0 +1,6 @@
+{
+  super.onResume();
+  if (mUid != -1 && getPackageManager().getPackagesForUid(mUid) == null) {
+    finish();
+  }
+}

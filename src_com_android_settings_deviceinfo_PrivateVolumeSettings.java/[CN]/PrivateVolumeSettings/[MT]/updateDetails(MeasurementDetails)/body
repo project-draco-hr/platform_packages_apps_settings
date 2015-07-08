@@ -1,15 +1,54 @@
 {
-  updatePreference(mApps,details.appsSize);
-  final long imagesSize=totalValues(details.mediaSize,Environment.DIRECTORY_DCIM,Environment.DIRECTORY_MOVIES,Environment.DIRECTORY_PICTURES);
-  updatePreference(mImages,imagesSize);
-  final long videosSize=totalValues(details.mediaSize,Environment.DIRECTORY_MOVIES);
-  updatePreference(mVideos,videosSize);
-  final long audioSize=totalValues(details.mediaSize,Environment.DIRECTORY_MUSIC,Environment.DIRECTORY_ALARMS,Environment.DIRECTORY_NOTIFICATIONS,Environment.DIRECTORY_RINGTONES,Environment.DIRECTORY_PODCASTS);
-  updatePreference(mAudio,audioSize);
-  updatePreference(mCache,details.cacheSize);
-  updatePreference(mOther,details.miscSize);
-  for (  StorageItemPreference userPref : mUsers) {
-    final long userSize=details.usersSize.get(userPref.userHandle);
-    updatePreference(userPref,userSize);
+  PreferenceScreen screen=getPreferenceScreen();
+  final int preferenceCount=screen.getPreferenceCount();
+  for (int i=0; i < preferenceCount; ++i) {
+    final Preference pref=screen.getPreference(i);
+    if (!(pref instanceof StorageItemPreference)) {
+      continue;
+    }
+    StorageItemPreference item=(StorageItemPreference)pref;
+    final int userId=item.userHandle;
+    final int itemTitleId=item.getTitleRes();
+switch (itemTitleId) {
+case R.string.storage_detail_apps:
+{
+        updatePreference(item,details.appsSize.get(userId));
+      }
+    break;
+case R.string.storage_detail_images:
+{
+    final long imagesSize=totalValues(details,userId,Environment.DIRECTORY_DCIM,Environment.DIRECTORY_MOVIES,Environment.DIRECTORY_PICTURES);
+    updatePreference(item,imagesSize);
   }
+break;
+case R.string.storage_detail_videos:
+{
+final long videosSize=totalValues(details,userId,Environment.DIRECTORY_MOVIES);
+updatePreference(item,videosSize);
+}
+break;
+case R.string.storage_detail_audio:
+{
+final long audioSize=totalValues(details,userId,Environment.DIRECTORY_MUSIC,Environment.DIRECTORY_ALARMS,Environment.DIRECTORY_NOTIFICATIONS,Environment.DIRECTORY_RINGTONES,Environment.DIRECTORY_PODCASTS);
+updatePreference(item,audioSize);
+}
+break;
+case R.string.storage_detail_other:
+{
+updatePreference(item,details.miscSize.get(userId));
+}
+break;
+case R.string.storage_detail_cached:
+{
+updatePreference(item,details.cacheSize);
+}
+break;
+case 0:
+{
+final long userSize=details.usersSize.get(userId);
+updatePreference(item,userSize);
+}
+break;
+}
+}
 }

@@ -1,4 +1,6 @@
 {
+  List<IntentFilterVerificationInfo> iviList=pm.getIntentFilterVerifications(packageName);
+  List<IntentFilter> filters=pm.getAllIntentFilters(packageName);
   ArraySet<String> result=new ArraySet<>();
   if (iviList.size() > 0) {
     for (    IntentFilterVerificationInfo ivi : iviList) {
@@ -14,5 +16,5 @@
       }
     }
   }
-  return result.toArray(new CharSequence[0]);
+  return result;
 }

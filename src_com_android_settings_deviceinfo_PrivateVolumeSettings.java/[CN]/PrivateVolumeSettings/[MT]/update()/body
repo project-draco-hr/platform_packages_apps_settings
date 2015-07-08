@@ -8,34 +8,34 @@
   final Context context=getActivity();
   final PreferenceScreen screen=getPreferenceScreen();
   screen.removeAll();
-  addPreference(mSummary);
-  final boolean showUsers=!mUsers.isEmpty();
+  addPreference(screen,mSummary);
+  List<UserInfo> allUsers=mUserManager.getUsers();
+  final int userCount=allUsers.size();
+  final boolean showHeaders=userCount > 1;
   final boolean showShared=(mSharedVolume != null) && mSharedVolume.isMountedReadable();
-  if (showUsers) {
-    addPreference(new PreferenceHeader(context,mCurrentUser.name));
-  }
-  addPreference(mApps);
-  if (showShared) {
-    addPreference(mImages);
-    addPreference(mVideos);
-    addPreference(mAudio);
-    addPreference(mOther);
-  }
-  addPreference(mCache);
-  if (showShared) {
-    addPreference(mExplore);
-  }
-  if (showUsers) {
-    addPreference(new PreferenceHeader(context,R.string.storage_other_users));
-    for (    Preference pref : mUsers) {
-      addPreference(pref);
+  mItemPoolIndex=0;
+  mHeaderPoolIndex=0;
+  int addedUserCount=0;
+  for (int userIndex=0; userIndex < userCount; ++userIndex) {
+    final UserInfo userInfo=allUsers.get(userIndex);
+    if (isProfileOf(mCurrentUser,userInfo)) {
+      PreferenceCategory details=addCategory(screen,showHeaders ? userInfo.name : null);
+      addDetailItems(details,showShared,userInfo.id);
+      ++addedUserCount;
     }
   }
-  for (int i=0; i < screen.getPreferenceCount(); i++) {
-    final Preference pref=screen.getPreference(i);
-    if (pref instanceof StorageItemPreference) {
-      ((StorageItemPreference)pref).setLoading();
+  if (userCount - addedUserCount > 0) {
+    PreferenceCategory otherUsers=addCategory(screen,getText(R.string.storage_other_users));
+    for (int userIndex=0; userIndex < userCount; ++userIndex) {
+      final UserInfo userInfo=allUsers.get(userIndex);
+      if (!isProfileOf(mCurrentUser,userInfo)) {
+        addItem(otherUsers,0,userInfo.name,userInfo.id);
+      }
     }
+  }
+  addItem(screen,R.string.storage_detail_cached,null,UserHandle.USER_NULL);
+  if (showShared) {
+    addPreference(screen,mExplore);
   }
   final File file=mVolume.getPath();
   final long totalBytes=file.getTotalSpace();

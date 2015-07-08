@@ -1,0 +1,20 @@
+{
+  StorageItemPreference item;
+  if (mItemPoolIndex < mItemPreferencePool.size()) {
+    item=mItemPreferencePool.get(mItemPoolIndex);
+  }
+ else {
+    item=buildItem();
+    mItemPreferencePool.add(item);
+  }
+  if (title != null) {
+    item.setTitle(title);
+  }
+ else {
+    item.setTitle(titleRes);
+  }
+  item.setSummary(R.string.memory_calculating_size);
+  item.userHandle=userId;
+  addPreference(group,item);
+  ++mItemPoolIndex;
+}

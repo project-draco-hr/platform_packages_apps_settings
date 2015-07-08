@@ -18,6 +18,7 @@
   mIpsecCaCert=(Spinner)mView.findViewById(R.id.ipsec_ca_cert);
   mIpsecServerCert=(Spinner)mView.findViewById(R.id.ipsec_server_cert);
   mSaveLogin=(CheckBox)mView.findViewById(R.id.save_login);
+  mShowOptions=(CheckBox)mView.findViewById(R.id.show_options);
   mName.setText(mProfile.name);
   mType.setSelection(mProfile.type);
   mServer.setText(mProfile.server);
@@ -45,18 +46,15 @@
   mRoutes.addTextChangedListener(this);
   mIpsecSecret.addTextChangedListener(this);
   mIpsecUserCert.setOnItemSelectedListener(this);
+  mShowOptions.setOnClickListener(this);
   boolean valid=validate(true);
   mEditing=mEditing || !valid;
   if (mEditing) {
     setTitle(R.string.vpn_edit);
     mView.findViewById(R.id.editor).setVisibility(View.VISIBLE);
     changeType(mProfile.type);
-    View showOptions=mView.findViewById(R.id.show_options);
-    if (mProfile.searchDomains.isEmpty() && mProfile.dnsServers.isEmpty() && mProfile.routes.isEmpty()) {
-      showOptions.setOnClickListener(this);
-    }
- else {
-      onClick(showOptions);
+    if (!mProfile.searchDomains.isEmpty() || !mProfile.dnsServers.isEmpty() || !mProfile.routes.isEmpty()) {
+      showAdvancedOptions();
     }
     if (mExists) {
       setButton(DialogInterface.BUTTON_NEUTRAL,context.getString(R.string.vpn_forget),mListener);

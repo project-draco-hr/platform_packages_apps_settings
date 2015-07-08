@@ -15,19 +15,7 @@
   addPreferencesFromResource(R.xml.device_info_storage_volume);
   getPreferenceScreen().setOrderingAsAdded(true);
   mSummary=new StorageSummaryPreference(context);
-  mApps=buildItem(R.string.storage_detail_apps);
-  mImages=buildItem(R.string.storage_detail_images);
-  mVideos=buildItem(R.string.storage_detail_videos);
-  mAudio=buildItem(R.string.storage_detail_audio);
-  mOther=buildItem(R.string.storage_detail_other);
-  mCache=buildItem(R.string.storage_detail_cached);
   mCurrentUser=mUserManager.getUserInfo(UserHandle.myUserId());
-  final List<UserInfo> otherUsers=getUsersExcluding(mCurrentUser);
-  for (int i=0; i < otherUsers.size(); i++) {
-    final UserInfo user=otherUsers.get(i);
-    final StorageItemPreference userPref=new StorageItemPreference(context,user.name,user.id);
-    mUsers.add(userPref);
-  }
   mExplore=buildAction(R.string.storage_menu_explore);
   setHasOptionsMenu(true);
 }

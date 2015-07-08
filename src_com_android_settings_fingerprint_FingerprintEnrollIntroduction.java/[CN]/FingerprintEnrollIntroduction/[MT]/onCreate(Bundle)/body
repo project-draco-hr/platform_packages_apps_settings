@@ -4,5 +4,6 @@
   setHeaderText(R.string.security_settings_fingerprint_enroll_introduction_title);
   findViewById(R.id.cancel_button).setOnClickListener(this);
   findViewById(R.id.learn_more_button).setOnClickListener(this);
-  mHasPassword=getIntent().getBooleanExtra(EXTRA_HAS_PASSWORD,false);
+  final int passwordQuality=new ChooseLockSettingsHelper(this).utils().getActivePasswordQuality(UserHandle.myUserId());
+  mHasPassword=passwordQuality != DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
 }

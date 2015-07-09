@@ -16,6 +16,9 @@
     lv.setTextFilterEnabled(true);
     mListView=lv;
     mApplications=new ApplicationsAdapter(mApplicationsState,this,mFilter);
+    if (savedInstanceState != null) {
+      mApplications.mHasReceivedLoadEntries=savedInstanceState.getBoolean(EXTRA_HAS_ENTRIES,false);
+    }
     mListView.setAdapter(mApplications);
     mListView.setRecyclerListener(mApplications);
     Utils.prepareCustomPreferencesList(container,mRootView,mListView,false);

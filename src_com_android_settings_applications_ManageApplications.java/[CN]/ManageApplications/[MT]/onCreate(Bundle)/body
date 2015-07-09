@@ -51,6 +51,7 @@
   mFilter=getDefaultFilter();
   if (savedInstanceState != null) {
     mSortOrder=savedInstanceState.getInt(EXTRA_SORT_ORDER,mSortOrder);
+    mShowSystem=savedInstanceState.getBoolean(EXTRA_SHOW_SYSTEM,mShowSystem);
   }
   mInvalidSizeStr=getActivity().getText(R.string.invalid_size_value);
   mResetAppsHelper=new ResetAppsHelper(getActivity());

@@ -26,5 +26,6 @@
   mPasswordEntry.setInputType(mIsAlpha ? currentType : (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD));
   mAppearAnimationUtils=new AppearAnimationUtils(getContext(),220,2f,1f,AnimationUtils.loadInterpolator(getContext(),android.R.interpolator.linear_out_slow_in));
   mDisappearAnimationUtils=new DisappearAnimationUtils(getContext(),110,1f,0.5f,AnimationUtils.loadInterpolator(getContext(),android.R.interpolator.fast_out_linear_in));
+  setAccessibilityTitle(mHeaderTextView.getText());
   return view;
 }

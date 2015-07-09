@@ -1,0 +1,8 @@
+{
+  CharSequence currentTitle=getActivity().getTitle();
+  TextView confirmationMessage=(TextView)mContentView.findViewById(R.id.master_clear_confirm);
+  if (confirmationMessage != null) {
+    String accessibileText=new StringBuilder(currentTitle).append(",").append(confirmationMessage.getText()).toString();
+    getActivity().setTitle(Utils.createAccessibleSequence(currentTitle,accessibileText));
+  }
+}

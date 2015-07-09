@@ -1,0 +1,8 @@
+{
+  Intent intent=getActivity().getIntent();
+  if (intent != null) {
+    CharSequence titleText=intent.getCharSequenceExtra(ConfirmDeviceCredentialBaseFragment.TITLE_TEXT);
+    String accessibilityTitle=new StringBuilder(titleText).append(",").append(suplementalText).toString();
+    getActivity().setTitle(Utils.createAccessibleSequence(titleText,accessibilityTitle));
+  }
+}

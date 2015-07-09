@@ -1,0 +1,14 @@
+{
+  if (v instanceof ViewGroup) {
+    ViewGroup vGroup=(ViewGroup)v;
+    for (int i=0; i < vGroup.getChildCount(); i++) {
+      View nextChild=vGroup.getChildAt(i);
+      getContentDescription(nextChild,description);
+    }
+  }
+ else   if (v instanceof TextView) {
+    TextView vText=(TextView)v;
+    description.append(vText.getText());
+    description.append(",");
+  }
+}

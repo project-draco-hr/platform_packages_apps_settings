@@ -22,4 +22,8 @@
   }
   final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   loadAccountList(um);
+  StringBuffer contentDescription=new StringBuffer();
+  View masterClearContainer=mContentView.findViewById(R.id.master_clear_container);
+  getContentDescription(masterClearContainer,contentDescription);
+  masterClearContainer.setContentDescription(contentDescription);
 }

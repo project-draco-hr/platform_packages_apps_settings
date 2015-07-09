@@ -1,0 +1,8 @@
+{
+  final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
+  UserInfo user=um.getUserInfo(mUserHandle.getIdentifier());
+  boolean isWorkProfile=user != null ? user.isManagedProfile() : false;
+  CharSequence currentTitle=getActivity().getTitle();
+  String accessibilityTitle=getString(isWorkProfile ? R.string.accessibility_work_account_title : R.string.accessibility_personal_account_title,currentTitle);
+  getActivity().setTitle(Utils.createAccessibleSequence(currentTitle,accessibilityTitle));
+}

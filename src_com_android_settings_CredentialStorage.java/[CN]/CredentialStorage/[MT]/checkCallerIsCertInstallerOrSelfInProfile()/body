@@ -1,6 +1,6 @@
 {
   if (TextUtils.equals("com.android.certinstaller",getCallingPackage())) {
-    return true;
+    return getPackageManager().checkSignatures(getCallingPackage(),getPackageName()) == PackageManager.SIGNATURE_MATCH;
   }
   final int launchedFromUserId;
   try {

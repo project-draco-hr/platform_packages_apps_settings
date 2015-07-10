@@ -10,20 +10,24 @@ case WifiManager.WIFI_STATE_ENABLED:
     final Collection<AccessPoint> accessPoints=mWifiTracker.getAccessPoints();
   getPreferenceScreen().removeAll();
 boolean hasAvailableAccessPoints=false;
+int index=0;
 for (AccessPoint accessPoint : accessPoints) {
 if (accessPoint.getLevel() != -1) {
-  hasAvailableAccessPoints=true;
-  if (accessPoint.getTag() != null) {
-    getPreferenceScreen().addPreference((Preference)accessPoint.getTag());
-    continue;
-  }
-  AccessPointPreference preference=new AccessPointPreference(accessPoint,getActivity(),mUserBadgeCache,false);
-  if (mOpenSsid != null && mOpenSsid.equals(accessPoint.getSsidStr()) && !accessPoint.isSaved() && accessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
-    onPreferenceTreeClick(getPreferenceScreen(),preference);
-    mOpenSsid=null;
-  }
-  getPreferenceScreen().addPreference(preference);
-  accessPoint.setListener(this);
+hasAvailableAccessPoints=true;
+if (accessPoint.getTag() != null) {
+  final Preference pref=(Preference)accessPoint.getTag();
+  pref.setOrder(index++);
+  getPreferenceScreen().addPreference(pref);
+  continue;
+}
+AccessPointPreference preference=new AccessPointPreference(accessPoint,getActivity(),mUserBadgeCache,false);
+preference.setOrder(index++);
+if (mOpenSsid != null && mOpenSsid.equals(accessPoint.getSsidStr()) && !accessPoint.isSaved() && accessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
+  onPreferenceTreeClick(getPreferenceScreen(),preference);
+  mOpenSsid=null;
+}
+getPreferenceScreen().addPreference(preference);
+accessPoint.setListener(this);
 }
 }
 if (!hasAvailableAccessPoints) {

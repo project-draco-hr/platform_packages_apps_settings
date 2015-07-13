@@ -9,5 +9,17 @@
  else   if (TelephonyManager.NETWORK_TYPE_UNKNOWN != actualVoiceNetworkType) {
     networktype=mTelephonyManager.getNetworkTypeName(actualVoiceNetworkType);
   }
+  boolean show4GForLTE=false;
+  try {
+    Context con=createPackageContext("com.android.systemui",0);
+    int id=con.getResources().getIdentifier("config_show4GForLTE","bool","com.android.systemui");
+    show4GForLTE=con.getResources().getBoolean(id);
+  }
+ catch (  NameNotFoundException e) {
+    Log.e(TAG,"NameNotFoundException for show4GFotLTE");
+  }
+  if (networktype != null && networktype.equals("LTE") && show4GForLTE) {
+    networktype="4G";
+  }
   setSummaryText(KEY_NETWORK_TYPE,networktype);
 }

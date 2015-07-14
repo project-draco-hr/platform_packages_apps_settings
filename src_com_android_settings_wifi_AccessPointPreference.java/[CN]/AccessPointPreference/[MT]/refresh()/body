@@ -14,4 +14,11 @@
   }
   updateBadge(context);
   setSummary(mForSavedNetworks ? mAccessPoint.getSavedNetworkSummary() : mAccessPoint.getSettingsSummary());
+  mContentDescription=getTitle();
+  if (getSummary() != null) {
+    mContentDescription=TextUtils.concat(mContentDescription,",",getSummary());
+  }
+  if (level >= 0 && level < WIFI_CONNECTION_STRENGTH.length) {
+    mContentDescription=TextUtils.concat(mContentDescription,",",getContext().getString(WIFI_CONNECTION_STRENGTH[level]));
+  }
 }

@@ -1,0 +1,25 @@
+{
+  try {
+    for (    final UserHandle profile : mProfiles) {
+      final int profileId=profile.getIdentifier();
+      final ArrayMap<String,PermissionState> entriesForProfile=entries.get(profileId);
+      if (entriesForProfile == null) {
+        continue;
+      }
+      @SuppressWarnings("unchecked") final List<PackageInfo> packageInfos=mIPackageManager.getPackagesHoldingPermissions(mPermissions,0,profileId).getList();
+      final int packageInfoCount=packageInfos != null ? packageInfos.size() : 0;
+      for (int i=0; i < packageInfoCount; i++) {
+        final PackageInfo packageInfo=packageInfos.get(i);
+        final PermissionState pe=entriesForProfile.get(packageInfo.packageName);
+        if (pe != null) {
+          pe.packageInfo=packageInfo;
+          pe.permissionDeclared=true;
+        }
+      }
+    }
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"PackageManager is dead. Can't get list of packages granted " + mPermissions[0],e);
+    return;
+  }
+}

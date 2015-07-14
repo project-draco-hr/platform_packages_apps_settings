@@ -1,0 +1,17 @@
+{
+  super.onCreate(savedInstanceState);
+  Context context=getActivity();
+  mAppBridge=new AppStateWriteSettingsBridge(context,mState,null);
+  mAppOpsManager=(AppOpsManager)context.getSystemService(Context.APP_OPS_SERVICE);
+  addPreferencesFromResource(R.xml.app_ops_permissions_details);
+  mSwitchPref=(SwitchPreference)findPreference(KEY_APP_OPS_SETTINGS_SWITCH);
+  mWriteSettingsPrefs=findPreference(KEY_APP_OPS_SETTINGS_PREFS);
+  mWriteSettingsDesc=findPreference(KEY_APP_OPS_SETTINGS_DESC);
+  getPreferenceScreen().setTitle(R.string.write_settings);
+  mSwitchPref.setTitle(R.string.permit_write_settings);
+  mWriteSettingsPrefs.setTitle(R.string.write_settings_preference);
+  mWriteSettingsDesc.setSummary(R.string.write_settings_description);
+  mSwitchPref.setOnPreferenceChangeListener(this);
+  mWriteSettingsPrefs.setOnPreferenceClickListener(this);
+  mSettingsIntent=new Intent(Intent.ACTION_MAIN).addCategory(Settings.INTENT_CATEGORY_USAGE_ACCESS_CONFIG).setPackage(mPackageName);
+}

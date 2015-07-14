@@ -1,0 +1,7 @@
+{
+  int result=mAppOpsManager.noteOpNoThrow(AppOpsManager.OP_WRITE_SETTINGS,mPackageInfo.applicationInfo.uid,pkgName);
+  if (result == AppOpsManager.MODE_ALLOWED) {
+    return true;
+  }
+  return false;
+}

@@ -1,0 +1,26 @@
+{
+  try {
+    final String[] packages=mIPackageManager.getAppOpPermissionPackages(mPermissions[0]);
+    if (packages == null) {
+      return null;
+    }
+    SparseArray<ArrayMap<String,PermissionState>> entries=new SparseArray<>();
+    for (    final UserHandle profile : mProfiles) {
+      final ArrayMap<String,PermissionState> entriesForProfile=new ArrayMap<>();
+      final int profileId=profile.getIdentifier();
+      entries.put(profileId,entriesForProfile);
+      for (      final String packageName : packages) {
+        final boolean isAvailable=mIPackageManager.isPackageAvailable(packageName,profileId);
+        if (!shouldIgnorePackage(packageName) && isAvailable) {
+          final PermissionState newEntry=new PermissionState(packageName,profile);
+          entriesForProfile.put(packageName,newEntry);
+        }
+      }
+    }
+    return entries;
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"PackageManager is dead. Can't get list of packages requesting " + mPermissions[0],e);
+    return null;
+  }
+}

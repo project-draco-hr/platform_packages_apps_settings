@@ -1,11 +1,11 @@
 {
   mUsageState=mUsageBridge.getUsageInfo(mPackageName,mPackageInfo.applicationInfo.uid);
-  boolean hasAccess=mUsageState.hasAccess();
+  boolean hasAccess=mUsageState.isPermissible();
   mSwitchPref.setChecked(hasAccess);
   mUsagePrefs.setEnabled(hasAccess);
   ResolveInfo resolveInfo=mPm.resolveActivityAsUser(mSettingsIntent,PackageManager.GET_META_DATA,mUserId);
   if (resolveInfo != null) {
-    if (findPreference(KEY_USAGE_PREFS) == null) {
+    if (findPreference(KEY_APP_OPS_SETTINGS_PREFS) == null) {
       getPreferenceScreen().addPreference(mUsagePrefs);
     }
     Bundle metaData=resolveInfo.activityInfo.metaData;
@@ -15,7 +15,7 @@
     }
   }
  else {
-    if (findPreference(KEY_USAGE_PREFS) != null) {
+    if (findPreference(KEY_APP_OPS_SETTINGS_PREFS) != null) {
       getPreferenceScreen().removePreference(mUsagePrefs);
     }
   }

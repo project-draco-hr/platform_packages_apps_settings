@@ -1,0 +1,13 @@
+{
+  mWriteSettingsState=mAppBridge.getWriteSettingsInfo(mPackageName,mPackageInfo.applicationInfo.uid);
+  boolean canWrite=mWriteSettingsState.canWrite();
+  mSwitchPref.setChecked(canWrite);
+  mWriteSettingsPrefs.setEnabled(canWrite);
+  ResolveInfo resolveInfo=mPm.resolveActivityAsUser(mSettingsIntent,PackageManager.GET_META_DATA,mUserId);
+  if (resolveInfo == null) {
+    if (findPreference(KEY_APP_OPS_SETTINGS_PREFS) != null) {
+      getPreferenceScreen().removePreference(mWriteSettingsPrefs);
+    }
+  }
+  return true;
+}

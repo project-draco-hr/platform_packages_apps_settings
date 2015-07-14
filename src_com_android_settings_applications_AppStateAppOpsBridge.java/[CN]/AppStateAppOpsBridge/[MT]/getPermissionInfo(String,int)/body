@@ -1,0 +1,24 @@
+{
+  PermissionState permissionState=new PermissionState(pkg,new UserHandle(UserHandle.getUserId(uid)));
+  try {
+    permissionState.packageInfo=mIPackageManager.getPackageInfo(pkg,PackageManager.GET_PERMISSIONS,permissionState.userHandle.getIdentifier());
+    String[] requestedPermissions=permissionState.packageInfo.requestedPermissions;
+    int[] permissionFlags=permissionState.packageInfo.requestedPermissionsFlags;
+    if (requestedPermissions != null) {
+      for (int i=0; i < requestedPermissions.length; i++) {
+        if (mPermissions[0].equals(requestedPermissions[i]) && (permissionFlags[i] & PackageInfo.REQUESTED_PERMISSION_GRANTED) != 0) {
+          permissionState.permissionDeclared=true;
+          break;
+        }
+      }
+    }
+    List<PackageOps> ops=mAppOpsManager.getOpsForPackage(uid,pkg,mAppOpsOpCodes);
+    if (ops != null && ops.size() > 0 && ops.get(0).getOps().size() > 0) {
+      permissionState.appOpMode=ops.get(0).getOps().get(0).getMode();
+    }
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"PackageManager is dead. Can't get package info " + pkg,e);
+  }
+  return permissionState;
+}

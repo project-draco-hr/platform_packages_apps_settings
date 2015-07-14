@@ -13,4 +13,10 @@
     getContext().unregisterReceiver(mPermissionReceiver);
   }
   mPermissionReceiver=PermissionsSummaryHelper.getAppWithPermissionsCounts(getContext(),mPermissionCallback);
+  Activity activity=getActivity();
+  ApplicationsState appState=ApplicationsState.getInstance(activity.getApplication());
+  AppStateOverlayBridge overlayBridge=new AppStateOverlayBridge(activity,appState,null);
+  AppStateWriteSettingsBridge writeSettingsBridge=new AppStateWriteSettingsBridge(activity,appState,null);
+  new CountAppsWithOverlayPermission().execute(overlayBridge);
+  new CountAppsWithWriteSettingsPermission().execute(writeSettingsBridge);
 }

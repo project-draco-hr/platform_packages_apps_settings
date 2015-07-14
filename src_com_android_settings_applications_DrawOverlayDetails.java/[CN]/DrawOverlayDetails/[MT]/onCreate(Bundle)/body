@@ -1,0 +1,17 @@
+{
+  super.onCreate(savedInstanceState);
+  Context context=getActivity();
+  mOverlayBridge=new AppStateOverlayBridge(context,mState,null);
+  mAppOpsManager=(AppOpsManager)context.getSystemService(Context.APP_OPS_SERVICE);
+  addPreferencesFromResource(R.xml.app_ops_permissions_details);
+  mSwitchPref=(SwitchPreference)findPreference(KEY_APP_OPS_SETTINGS_SWITCH);
+  mOverlayPrefs=findPreference(KEY_APP_OPS_SETTINGS_PREFS);
+  mOverlayDesc=findPreference(KEY_APP_OPS_SETTINGS_DESC);
+  getPreferenceScreen().setTitle(R.string.draw_overlay);
+  mSwitchPref.setTitle(R.string.permit_draw_overlay);
+  mOverlayPrefs.setTitle(R.string.app_overlay_permission_preference);
+  mOverlayDesc.setSummary(R.string.allow_overlay_description);
+  mSwitchPref.setOnPreferenceChangeListener(this);
+  mOverlayPrefs.setOnPreferenceClickListener(this);
+  mSettingsIntent=new Intent(Intent.ACTION_MAIN).setAction(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+}

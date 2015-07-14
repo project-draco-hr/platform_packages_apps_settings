@@ -1,5 +1,6 @@
 {
   mDefaultAssitPref.refreshAssistApps();
+  mVoiceInputPref.refreshVoiceInputs();
   final ComponentName currentAssist=mDefaultAssitPref.getCurrentAssist();
   final boolean hasAssistant=currentAssist != null;
   if (hasAssistant) {
@@ -10,6 +11,11 @@
     getPreferenceScreen().removePreference(mContextPref);
     getPreferenceScreen().removePreference(mScreenshotPref);
   }
-  mVoiceInputPref.setAssistRestrict(currentAssist);
-  mVoiceInputPref.refreshVoiceInputs();
+  if (isCurrentAssistVoiceService()) {
+    getPreferenceScreen().removePreference(mVoiceInputPref);
+  }
+ else {
+    getPreferenceScreen().addPreference(mVoiceInputPref);
+    mVoiceInputPref.setAssistRestrict(currentAssist);
+  }
 }

@@ -1,8 +1,3 @@
 {
-  super(appState,callback);
-  mContext=context;
-  mIPackageManager=AppGlobals.getPackageManager();
-  mUserManager=UserManager.get(context);
-  mProfiles=mUserManager.getUserProfiles();
-  mAppOpsManager=(AppOpsManager)context.getSystemService(Context.APP_OPS_SERVICE);
+  super(context,appState,callback,APP_OPS_OP_CODE,PM_USAGE_STATS);
 }

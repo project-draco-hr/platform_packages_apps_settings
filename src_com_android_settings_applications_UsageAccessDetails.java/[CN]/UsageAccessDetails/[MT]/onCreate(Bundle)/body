@@ -4,9 +4,14 @@
   mUsageBridge=new AppStateUsageBridge(context,mState,null);
   mAppOpsManager=(AppOpsManager)context.getSystemService(Context.APP_OPS_SERVICE);
   mDpm=context.getSystemService(DevicePolicyManager.class);
-  addPreferencesFromResource(R.xml.usage_access_details);
-  mSwitchPref=(SwitchPreference)findPreference(KEY_USAGE_SWITCH);
-  mUsagePrefs=findPreference(KEY_USAGE_PREFS);
+  addPreferencesFromResource(R.xml.app_ops_permissions_details);
+  mSwitchPref=(SwitchPreference)findPreference(KEY_APP_OPS_SETTINGS_SWITCH);
+  mUsagePrefs=findPreference(KEY_APP_OPS_SETTINGS_PREFS);
+  mUsageDesc=findPreference(KEY_APP_OPS_SETTINGS_DESC);
+  getPreferenceScreen().setTitle(R.string.usage_access);
+  mSwitchPref.setTitle(R.string.permit_usage_access);
+  mUsagePrefs.setTitle(R.string.app_usage_preference);
+  mUsageDesc.setSummary(R.string.usage_access_description);
   mSwitchPref.setOnPreferenceChangeListener(this);
   mUsagePrefs.setOnPreferenceClickListener(this);
   mSettingsIntent=new Intent(Intent.ACTION_MAIN).addCategory(Settings.INTENT_CATEGORY_USAGE_ACCESS_CONFIG).setPackage(mPackageName);

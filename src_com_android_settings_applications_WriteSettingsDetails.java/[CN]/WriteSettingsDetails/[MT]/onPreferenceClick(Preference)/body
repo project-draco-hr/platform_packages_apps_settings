@@ -1,0 +1,14 @@
+{
+  if (preference == mWriteSettingsPrefs) {
+    if (mSettingsIntent != null) {
+      try {
+        getActivity().startActivityAsUser(mSettingsIntent,new UserHandle(mUserId));
+      }
+ catch (      ActivityNotFoundException e) {
+        Log.w(TAG,"Unable to launch write system settings " + mSettingsIntent,e);
+      }
+    }
+    return true;
+  }
+  return false;
+}

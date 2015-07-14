@@ -1,0 +1,20 @@
+{
+  SparseArray<ArrayMap<String,PermissionState>> entries=getEntries();
+  if (entries == null) {
+    return 0;
+  }
+  loadPermissionsStates(entries);
+  loadAppOpsStates(entries);
+  final ArrayMap<String,PermissionState> entriesForProfile=entries.get(mUserManager.getUserHandle());
+  if (entriesForProfile == null) {
+    return 0;
+  }
+  Collection<PermissionState> permStates=entriesForProfile.values();
+  int result=0;
+  for (  PermissionState permState : permStates) {
+    if (permState.isPermissible()) {
+      result++;
+    }
+  }
+  return result;
+}

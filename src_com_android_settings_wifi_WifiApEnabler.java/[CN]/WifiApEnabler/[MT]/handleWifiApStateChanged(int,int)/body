@@ -20,7 +20,12 @@ enableWifiSwitch();
 break;
 default :
 mSwitch.setChecked(false);
+if (reason == WifiManager.SAP_START_FAILURE_NO_CHANNEL) {
+mSwitch.setSummary(R.string.wifi_sap_no_channel_error);
+}
+ else {
 mSwitch.setSummary(R.string.wifi_error);
+}
 enableWifiSwitch();
 }
 }

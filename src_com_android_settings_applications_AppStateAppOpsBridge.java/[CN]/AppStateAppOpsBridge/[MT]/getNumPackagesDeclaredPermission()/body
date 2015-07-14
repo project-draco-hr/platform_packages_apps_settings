@@ -1,0 +1,11 @@
+{
+  SparseArray<ArrayMap<String,PermissionState>> entries=getEntries();
+  if (entries == null) {
+    return 0;
+  }
+  final ArrayMap<String,PermissionState> entriesForProfile=entries.get(mUserManager.getUserHandle());
+  if (entriesForProfile == null) {
+    return 0;
+  }
+  return entriesForProfile.size();
+}

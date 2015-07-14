@@ -1,0 +1,10 @@
+{
+  if (preference == mSwitchPref) {
+    if (mWriteSettingsState != null && (Boolean)newValue != mWriteSettingsState.canWrite()) {
+      setCanWriteSettings(!mWriteSettingsState.canWrite());
+      refreshUi();
+    }
+    return true;
+  }
+  return false;
+}

@@ -3,7 +3,7 @@
     if (mListType == LIST_TYPE_NOTIFICATION) {
       mApplications.mExtraInfoBridge.forceUpdate(mCurrentPkgName,mCurrentUid);
     }
- else     if (mListType == LIST_TYPE_HIGH_POWER) {
+ else     if (mListType == LIST_TYPE_HIGH_POWER || mListType == LIST_TYPE_OVERLAY || mListType == LIST_TYPE_WRITE_SETTINGS) {
       if (mFinishAfterDialog) {
         getActivity().onBackPressed();
       }

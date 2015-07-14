@@ -1,24 +1,4 @@
 {
-  UsageState usageState=new UsageState(pkg,new UserHandle(UserHandle.getUserId(uid)));
-  try {
-    usageState.packageInfo=mIPackageManager.getPackageInfo(pkg,PackageManager.GET_PERMISSIONS,usageState.userHandle.getIdentifier());
-    String[] requestedPermissions=usageState.packageInfo.requestedPermissions;
-    int[] permissionFlags=usageState.packageInfo.requestedPermissionsFlags;
-    if (requestedPermissions != null) {
-      for (int i=0; i < requestedPermissions.length; i++) {
-        if (Manifest.permission.PACKAGE_USAGE_STATS.equals(requestedPermissions[i]) && (permissionFlags[i] & PackageInfo.REQUESTED_PERMISSION_GRANTED) != 0) {
-          usageState.permissionGranted=true;
-          break;
-        }
-      }
-    }
-    List<PackageOps> ops=mAppOpsManager.getOpsForPackage(uid,pkg,APP_OPS_OP_CODES);
-    if (ops != null && ops.size() > 0 && ops.get(0).getOps().size() > 0) {
-      usageState.appOpMode=ops.get(0).getOps().get(0).getMode();
-    }
-  }
- catch (  RemoteException e) {
-    Log.w(TAG,"PackageManager is dead. Can't get package info " + pkg,e);
-  }
-  return usageState;
+  PermissionState permissionState=super.getPermissionInfo(pkg,uid);
+  return new UsageState(permissionState);
 }

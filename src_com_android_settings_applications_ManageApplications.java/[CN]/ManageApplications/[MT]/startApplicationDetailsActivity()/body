@@ -15,6 +15,12 @@ break;
 case LIST_TYPE_HIGH_POWER:
 HighPowerDetail.show(this,mCurrentPkgName,INSTALLED_APP_DETAILS,mFinishAfterDialog);
 break;
+case LIST_TYPE_OVERLAY:
+startAppInfoFragment(DrawOverlayDetails.class,R.string.overlay_settings);
+break;
+case LIST_TYPE_WRITE_SETTINGS:
+startAppInfoFragment(WriteSettingsDetails.class,R.string.write_system_settings);
+break;
 default :
 startAppInfoFragment(InstalledAppDetails.class,R.string.application_info_label);
 break;

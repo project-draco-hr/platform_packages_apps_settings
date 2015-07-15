@@ -1,12 +1,10 @@
 {
-  Intent intent=new Intent();
-  final String clazz;
+  Intent intent;
   if (!mHasPassword) {
-    clazz=FingerprintEnrollOnboard.class.getName();
+    intent=getOnboardIntent();
   }
  else {
-    clazz=FingerprintEnrollFindSensor.class.getName();
+    intent=getFindSensorIntent();
   }
-  intent.setClassName("com.android.settings",clazz);
   startActivityForResult(intent,0);
 }

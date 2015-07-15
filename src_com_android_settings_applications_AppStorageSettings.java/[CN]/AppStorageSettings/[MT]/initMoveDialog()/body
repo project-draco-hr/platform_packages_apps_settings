@@ -1,0 +1,23 @@
+{
+  final Context context=getActivity();
+  final StorageManager storage=context.getSystemService(StorageManager.class);
+  final List<VolumeInfo> candidates=context.getPackageManager().getPackageCandidateVolumes(mAppEntry.info);
+  if (candidates.size() > 1) {
+    Collections.sort(candidates,VolumeInfo.getDescriptionComparator());
+    CharSequence[] labels=new CharSequence[candidates.size()];
+    int current=-1;
+    for (int i=0; i < candidates.size(); i++) {
+      final String volDescrip=storage.getBestVolumeDescription(candidates.get(i));
+      if (Objects.equals(volDescrip,mStorageUsed.getSummary())) {
+        current=i;
+      }
+      labels[i]=volDescrip;
+    }
+    mCandidates=candidates.toArray(new VolumeInfo[candidates.size()]);
+    mDialogBuilder=new AlertDialog.Builder(getContext()).setTitle(R.string.change_storage).setSingleChoiceItems(labels,current,this).setNegativeButton(R.string.cancel,null);
+  }
+ else {
+    removePreference(KEY_STORAGE_USED);
+    removePreference(KEY_CHANGE_STORAGE);
+  }
+}

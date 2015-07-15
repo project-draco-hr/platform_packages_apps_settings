@@ -1,8 +1,9 @@
 {
   retrieveAppEntry();
-  refreshButtons();
   refreshSizeInfo();
   final VolumeInfo currentVol=getActivity().getPackageManager().getPackageCurrentVolume(mAppEntry.info);
-  mMoveDropDown.setSelectedValue(currentVol);
+  final StorageManager storage=getContext().getSystemService(StorageManager.class);
+  mStorageUsed.setSummary(storage.getBestVolumeDescription(currentVol));
+  refreshButtons();
   return true;
 }

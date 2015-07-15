@@ -1,0 +1,10 @@
+{
+  SetupWizardUtils.setImmersiveMode(this);
+  final View buttonBar=findViewById(R.id.button_bar);
+  if (buttonBar != null) {
+    buttonBar.setVisibility(View.GONE);
+  }
+  final NavigationBar navigationBar=getNavigationBar();
+  navigationBar.setNavigationBarListener(this);
+  navigationBar.getNextButton().setEnabled(false);
+}

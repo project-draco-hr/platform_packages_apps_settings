@@ -12,8 +12,10 @@
     category.removePreference(mExternalDataSize);
   }
   mClearDataButton=(Button)((LayoutPreference)findPreference(KEY_CLEAR_DATA)).findViewById(R.id.button);
-  mMoveDropDown=(DropDownPreference)findPreference(KEY_MOVE_PREFERENCE);
-  mMoveDropDown.setCallback(this);
+  mStorageUsed=findPreference(KEY_STORAGE_USED);
+  mChangeStorageButton=(Button)((LayoutPreference)findPreference(KEY_CHANGE_STORAGE)).findViewById(R.id.button);
+  mChangeStorageButton.setText(R.string.change);
+  mChangeStorageButton.setOnClickListener(this);
   mCacheSize=findPreference(KEY_CACHE_SIZE);
   mClearCacheButton=(Button)((LayoutPreference)findPreference(KEY_CLEAR_CACHE)).findViewById(R.id.button);
   mClearCacheButton.setText(R.string.clear_cache_btn_text);

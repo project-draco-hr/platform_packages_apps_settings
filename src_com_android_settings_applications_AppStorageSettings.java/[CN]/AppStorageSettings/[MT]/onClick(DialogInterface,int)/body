@@ -1,6 +1,6 @@
 {
   final Context context=getActivity();
-  final VolumeInfo targetVol=(VolumeInfo)value;
+  final VolumeInfo targetVol=mCandidates[which];
   final VolumeInfo currentVol=context.getPackageManager().getPackageCurrentVolume(mAppEntry.info);
   if (!Objects.equals(targetVol,currentVol)) {
     final Intent intent=new Intent(context,StorageWizardMoveConfirm.class);
@@ -8,5 +8,5 @@
     intent.putExtra(Intent.EXTRA_PACKAGE_NAME,mAppEntry.info.packageName);
     startActivity(intent);
   }
-  return true;
+  dialog.dismiss();
 }

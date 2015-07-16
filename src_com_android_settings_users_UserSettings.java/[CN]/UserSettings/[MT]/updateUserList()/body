@@ -7,7 +7,7 @@
   final ArrayList<UserPreference> userPreferences=new ArrayList<>();
   userPreferences.add(mMePreference);
   for (  UserInfo user : users) {
-    if (user.isManagedProfile()) {
+    if (!user.supportsSwitchToByUser()) {
       continue;
     }
     UserPreference pref;

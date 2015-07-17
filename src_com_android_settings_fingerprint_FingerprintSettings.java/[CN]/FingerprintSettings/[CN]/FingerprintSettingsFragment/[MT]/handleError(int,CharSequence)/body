@@ -1,0 +1,19 @@
+{
+  mFingerprintCancel=null;
+switch (errMsgId) {
+case FingerprintManager.FINGERPRINT_ERROR_CANCELED:
+    return;
+case FingerprintManager.FINGERPRINT_ERROR_LOCKOUT:
+  mInFingerprintLockout=true;
+if (!mHandler.hasCallbacks(mFingerprintLockoutReset)) {
+  mHandler.postDelayed(mFingerprintLockoutReset,LOCKOUT_DURATION);
+}
+default :
+final Activity activity=getActivity();
+if (activity != null) {
+Toast.makeText(activity,msg,Toast.LENGTH_SHORT);
+}
+break;
+}
+retryFingerprint();
+}

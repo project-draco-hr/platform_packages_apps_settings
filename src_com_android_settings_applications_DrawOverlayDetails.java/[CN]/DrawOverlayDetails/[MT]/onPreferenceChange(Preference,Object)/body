@@ -1,7 +1,7 @@
 {
   if (preference == mSwitchPref) {
-    if (mOverlayState != null && (Boolean)newValue != mOverlayState.isAllowed()) {
-      setCanDrawOverlay(!mOverlayState.isAllowed());
+    if (mOverlayState != null && (Boolean)newValue != mOverlayState.isPermissible()) {
+      setCanDrawOverlay(!mOverlayState.isPermissible());
       refreshUi();
     }
     return true;

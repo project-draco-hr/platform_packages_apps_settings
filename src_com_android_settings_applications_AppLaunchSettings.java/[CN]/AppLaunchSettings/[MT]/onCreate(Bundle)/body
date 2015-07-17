@@ -2,8 +2,6 @@
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.installed_app_launch_settings);
   mPm=getActivity().getPackageManager();
-  mOpenDomainUrls=(SwitchPreference)findPreference(KEY_OPEN_DOMAIN_URLS);
-  mOpenDomainUrls.setOnPreferenceChangeListener(this);
   mHasDomainUrls=(mAppEntry.info.privateFlags & ApplicationInfo.PRIVATE_FLAG_HAS_DOMAIN_URLS) != 0;
   List<IntentFilterVerificationInfo> iviList=mPm.getIntentFilterVerifications(mPackageName);
   List<IntentFilter> filters=mPm.getAllIntentFilters(mPackageName);
@@ -12,5 +10,5 @@
   mAppDomainUrls.setTitles(entries);
   mAppDomainUrls.setValues(new int[entries.length]);
   mClearDefaultsPreference=(ClearDefaultsPreference)findPreference(KEY_CLEAR_DEFAULTS);
-  updateDomainUrlPrefState();
+  buildStateDropDown();
 }

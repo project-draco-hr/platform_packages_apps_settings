@@ -1,0 +1,16 @@
+{
+  final int userId=UserHandle.myUserId();
+  final int priorState=mPm.getIntentVerificationStatus(mPackageName,userId);
+  if (priorState == newState) {
+    return false;
+  }
+  boolean success=mPm.updateIntentVerificationStatus(mPackageName,newState,userId);
+  if (success) {
+    final int updatedState=mPm.getIntentVerificationStatus(mPackageName,userId);
+    success=(newState == updatedState);
+  }
+ else {
+    Log.e(TAG,"Couldn't update intent verification status!");
+  }
+  return success;
+}

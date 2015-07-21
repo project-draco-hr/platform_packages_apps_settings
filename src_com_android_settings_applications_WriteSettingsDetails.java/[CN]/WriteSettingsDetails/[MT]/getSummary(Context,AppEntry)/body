@@ -1,3 +1,6 @@
 {
+  if (entry.extraInfo != null) {
+    return getSummary(context,new WriteSettingsState((PermissionState)entry.extraInfo));
+  }
   return getSummary(context,entry.info.packageName);
 }

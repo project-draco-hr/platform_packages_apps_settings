@@ -3,9 +3,6 @@
   if (pref == mMount) {
     new MountTask(context,mVolume).execute();
   }
- else   if (pref == mUnmount) {
-    new UnmountTask(context,mVolume).execute();
-  }
  else   if (pref == mFormatPublic) {
     final Intent intent=new Intent(context,StorageWizardFormatConfirm.class);
     intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());

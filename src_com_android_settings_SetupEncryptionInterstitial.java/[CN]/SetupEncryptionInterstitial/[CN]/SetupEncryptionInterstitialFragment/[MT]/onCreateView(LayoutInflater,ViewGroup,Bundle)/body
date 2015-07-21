@@ -2,14 +2,13 @@
   final SetupWizardLayout layout=new SetupWizardLayout(inflater.getContext());
   layout.setIllustration(R.drawable.setup_illustration_lock_screen,R.drawable.setup_illustration_horizontal_tile);
   layout.setBackgroundTile(R.drawable.setup_illustration_tile);
-  final int headerTextResource=getHeaderTextResource();
-  layout.setHeaderText(headerTextResource);
+  layout.setHeaderText(R.string.encryption_interstitial_header);
   View content=super.onCreateView(inflater,layout,savedInstanceState);
   layout.addView(content);
   layout.getNavigationBar().setNavigationBarListener(this);
   Activity activity=getActivity();
   if (activity != null) {
-    activity.setTitle(headerTextResource);
+    activity.setTitle(R.string.encryption_interstitial_header);
     SetupWizardUtils.setImmersiveMode(activity);
   }
   return layout;

@@ -1,7 +1,7 @@
 {
   if (preference == mSwitchPref) {
-    if (mWriteSettingsState != null && (Boolean)newValue != mWriteSettingsState.canWrite()) {
-      setCanWriteSettings(!mWriteSettingsState.canWrite());
+    if (mWriteSettingsState != null && (Boolean)newValue != mWriteSettingsState.isPermissible()) {
+      setCanWriteSettings(!mWriteSettingsState.isPermissible());
       refreshUi();
     }
     return true;

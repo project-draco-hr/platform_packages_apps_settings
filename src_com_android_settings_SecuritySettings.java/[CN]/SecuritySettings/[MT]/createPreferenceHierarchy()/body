@@ -7,7 +7,7 @@
   root=getPreferenceScreen();
   final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils);
   addPreferencesFromResource(resid);
-  mIsPrimary=MY_USER_ID == UserHandle.USER_OWNER;
+  mIsAdmin=mUm.isAdminUser();
   mOwnerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
   if (mOwnerInfoPref != null) {
     mOwnerInfoPref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
@@ -18,7 +18,7 @@
     }
 );
   }
-  if (mIsPrimary) {
+  if (mIsAdmin) {
     if (LockPatternUtils.isDeviceEncryptionEnabled()) {
       addPreferencesFromResource(R.xml.security_settings_encrypted);
     }
@@ -46,7 +46,7 @@
   TelephonyManager tm=TelephonyManager.getDefault();
   CarrierConfigManager cfgMgr=(CarrierConfigManager)getActivity().getSystemService(Context.CARRIER_CONFIG_SERVICE);
   PersistableBundle b=cfgMgr.getConfig();
-  if (!mIsPrimary || !isSimIccReady() || b.getBoolean(CarrierConfigManager.KEY_HIDE_SIM_LOCK_SETTINGS_BOOL)) {
+  if (!mIsAdmin || !isSimIccReady() || b.getBoolean(CarrierConfigManager.KEY_HIDE_SIM_LOCK_SETTINGS_BOOL)) {
     root.removePreference(root.findPreference(KEY_SIM_LOCK));
   }
  else {

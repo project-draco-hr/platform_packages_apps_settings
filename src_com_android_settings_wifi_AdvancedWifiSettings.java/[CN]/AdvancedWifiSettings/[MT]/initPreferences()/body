@@ -10,7 +10,7 @@
   final Context context=getActivity();
   mWifiAssistantPreference=(AppListSwitchPreference)findPreference(KEY_WIFI_ASSISTANT);
   Collection<NetworkScorerAppData> scorers=NetworkScorerAppManager.getAllValidScorers(context);
-  if (UserHandle.myUserId() == UserHandle.USER_OWNER && !scorers.isEmpty()) {
+  if (UserManager.get(context).isAdminUser() && !scorers.isEmpty()) {
     mWifiAssistantPreference.setOnPreferenceChangeListener(this);
     initWifiAssistantPreference(scorers);
   }

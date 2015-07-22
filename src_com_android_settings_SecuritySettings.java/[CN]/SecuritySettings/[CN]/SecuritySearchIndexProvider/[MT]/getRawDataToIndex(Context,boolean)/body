@@ -6,8 +6,9 @@
   data.title=screenTitle;
   data.screenTitle=screenTitle;
   result.add(data);
-  if (!mIsPrimary) {
-    int resId=(UserManager.get(context).isLinkedUser()) ? R.string.profile_info_settings_title : R.string.user_info_settings_title;
+  final UserManager um=UserManager.get(context);
+  if (!um.isAdminUser()) {
+    int resId=um.isLinkedUser() ? R.string.profile_info_settings_title : R.string.user_info_settings_title;
     data=new SearchIndexableRaw(context);
     data.title=res.getString(resId);
     data.screenTitle=screenTitle;
@@ -20,7 +21,6 @@
     data.screenTitle=screenTitle;
     result.add(data);
   }
-  final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
   if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
     KeyStore keyStore=KeyStore.getInstance();
     final int storageSummaryRes=keyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware : R.string.credential_storage_type_software;

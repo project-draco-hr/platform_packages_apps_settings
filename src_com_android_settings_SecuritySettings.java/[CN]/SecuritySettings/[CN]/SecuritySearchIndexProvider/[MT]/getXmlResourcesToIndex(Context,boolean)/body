@@ -5,7 +5,8 @@
   SearchIndexableResource sir=new SearchIndexableResource(context);
   sir.xmlResId=resId;
   result.add(sir);
-  if (mIsPrimary) {
+  final UserManager um=UserManager.get(context);
+  if (um.isAdminUser()) {
     DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 switch (dpm.getStorageEncryptionStatus()) {
 case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:

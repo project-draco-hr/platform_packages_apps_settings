@@ -5,7 +5,7 @@
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-  if (android.os.Process.myUserHandle().getIdentifier() != UserHandle.USER_OWNER || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {
+  if (!mUm.isAdminUser() || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getActivity(),null));
     return;
@@ -37,7 +37,7 @@
   mDebugViewAttributes=findAndInitSwitchPref(DEBUG_VIEW_ATTRIBUTES);
   mPassword=(PreferenceScreen)findPreference(LOCAL_BACKUP_PASSWORD);
   mAllPrefs.add(mPassword);
-  if (!android.os.Process.myUserHandle().equals(UserHandle.OWNER)) {
+  if (!mUm.isAdminUser()) {
     disableForUser(mEnableAdb);
     disableForUser(mClearAdbKeys);
     disableForUser(mEnableTerminal);

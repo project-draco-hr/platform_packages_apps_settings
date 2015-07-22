@@ -1,12 +1,11 @@
 {
   final List<String> keys=new ArrayList<String>();
   LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
-  int resId=getResIdForLockUnlockScreen(context,lockPatternUtils);
-  TelephonyManager tm=TelephonyManager.getDefault();
-  if (!mIsPrimary || !tm.hasIccCard()) {
+  final UserManager um=UserManager.get(context);
+  final TelephonyManager tm=TelephonyManager.from(context);
+  if (!um.isAdminUser() || !tm.hasIccCard()) {
     keys.add(KEY_SIM_LOCK);
   }
-  final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
   if (um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
     keys.add(KEY_CREDENTIALS_MANAGER);
   }

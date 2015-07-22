@@ -1,6 +1,6 @@
 {
   super.onCreate(savedInstanceState);
-  mEnabled=Process.myUserHandle().isOwner();
+  mEnabled=UserManager.get(getActivity()).isAdminUser();
   if (!mEnabled) {
     return;
   }

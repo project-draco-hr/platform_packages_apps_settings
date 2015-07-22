@@ -6,6 +6,7 @@
   mPolicyManager=NetworkPolicyManager.from(context);
   mTelephonyManager=TelephonyManager.from(context);
   mSubscriptionManager=SubscriptionManager.from(context);
+  mUserManager=UserManager.get(context);
   mPrefs=getActivity().getSharedPreferences(PREF_FILE,Context.MODE_PRIVATE);
   mPolicyEditor=new NetworkPolicyEditor(mPolicyManager);
   mPolicyEditor.read();

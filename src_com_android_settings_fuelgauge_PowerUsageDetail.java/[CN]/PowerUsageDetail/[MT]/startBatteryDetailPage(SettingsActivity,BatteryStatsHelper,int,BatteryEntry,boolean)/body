@@ -35,7 +35,9 @@ case USER:
         helper.getStats().dumpCheckinLocked(caller,printWriter,helper.getStatsType(),uid.getUid());
         printWriter.flush();
         args.putString(PowerUsageDetail.EXTRA_REPORT_CHECKIN_DETAILS,result.toString());
-        userId=UserHandle.getUserId(uid.getUid());
+        if (uid.getUid() != 0) {
+          userId=UserHandle.getUserId(uid.getUid());
+        }
       }
     }
   break;

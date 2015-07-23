@@ -13,6 +13,14 @@
       setResult(RESULT_FINISHED);
       finish();
     }
+ else {
+      FingerprintManager fpm=getSystemService(FingerprintManager.class);
+      int enrolled=fpm.getEnrolledFingerprints().size();
+      int max=getResources().getInteger(com.android.internal.R.integer.config_fingerprintMaxTemplatesPerUser);
+      if (enrolled >= max) {
+        finish();
+      }
+    }
   }
  else {
     super.onActivityResult(requestCode,resultCode,data);

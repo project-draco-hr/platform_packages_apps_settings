@@ -1,0 +1,11 @@
+{
+  super.onViewCreated(view,savedInstanceState);
+  final SetupWizardLayout layout=(SetupWizardLayout)view.findViewById(R.id.setup_wizard_layout);
+  final NavigationBar navigationBar=layout.getNavigationBar();
+  navigationBar.setNavigationBarListener(this);
+  Activity activity=getActivity();
+  if (activity != null) {
+    activity.setTitle(R.string.encryption_interstitial_header);
+    SetupWizardUtils.setImmersiveMode(activity);
+  }
+}

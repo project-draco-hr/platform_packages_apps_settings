@@ -1,7 +1,7 @@
 {
   super.onCreate(icicle);
   final Context context=getActivity();
-  mIsPermittedToAdopt=UserManager.get(context).isAdminUser();
+  mIsPermittedToAdopt=UserManager.get(context).isAdminUser() && !ActivityManager.isUserAMonkey();
   mStorageManager=context.getSystemService(StorageManager.class);
   if (DocumentsContract.ACTION_DOCUMENT_ROOT_SETTINGS.equals(getActivity().getIntent().getAction())) {
     final Uri rootUri=getActivity().getIntent().getData();

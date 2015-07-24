@@ -9,8 +9,13 @@
       }
       connect(mSelectedAccessPoint.getConfig());
     }
- else {
+ else     if (mSelectedAccessPoint.isSaved()) {
+      mDlgModify=false;
       showDialog(mSelectedAccessPoint,false);
+    }
+ else {
+      mDlgModify=false;
+      showDialog(mSelectedAccessPoint,true);
     }
   }
  else {

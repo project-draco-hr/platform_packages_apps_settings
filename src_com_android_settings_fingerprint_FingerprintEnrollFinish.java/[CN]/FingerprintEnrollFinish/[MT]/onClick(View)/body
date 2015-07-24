@@ -1,6 +1,8 @@
 {
   if (v.getId() == R.id.add_another_button) {
-    startActivity(getEnrollingIntent());
+    final Intent intent=getEnrollingIntent();
+    intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+    startActivity(intent);
     finish();
   }
   super.onClick(v);

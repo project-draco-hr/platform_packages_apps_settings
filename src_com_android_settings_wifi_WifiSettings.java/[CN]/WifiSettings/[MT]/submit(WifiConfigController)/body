@@ -5,18 +5,12 @@
       connect(mSelectedAccessPoint.getConfig());
     }
   }
- else   if (config.networkId != INVALID_NETWORK_ID) {
-    if (mSelectedAccessPoint != null) {
-      mWifiManager.save(config,mSaveListener);
-    }
+ else   if (configController.isModify()) {
+    mWifiManager.save(config,mSaveListener);
   }
  else {
-    if (configController.isEdit()) {
-      mWifiManager.save(config,mSaveListener);
-    }
- else {
-      connect(config);
-    }
+    mWifiManager.save(config,mSaveListener);
+    connect(config);
   }
   mWifiTracker.resumeScanning();
 }

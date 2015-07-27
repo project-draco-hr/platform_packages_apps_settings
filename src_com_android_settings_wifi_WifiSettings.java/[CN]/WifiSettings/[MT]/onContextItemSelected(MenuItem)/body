@@ -13,6 +13,7 @@ case MENU_ID_CONNECT:
         connect(mSelectedAccessPoint.getConfig());
       }
  else {
+        mDlgModify=false;
         showDialog(mSelectedAccessPoint,true);
       }
       return true;
@@ -24,6 +25,7 @@ case MENU_ID_FORGET:
   }
 case MENU_ID_MODIFY:
 {
+  mDlgModify=true;
   showDialog(mSelectedAccessPoint,true);
   return true;
 }

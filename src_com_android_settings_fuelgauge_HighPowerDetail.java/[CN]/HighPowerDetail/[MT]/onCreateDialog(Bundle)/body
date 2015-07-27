@@ -1,5 +1,5 @@
 {
-  AlertDialog.Builder b=new AlertDialog.Builder(getContext()).setTitle(getString(R.string.ignore_optimizations_title,mLabel)).setNegativeButton(R.string.cancel,null).setView(R.layout.ignore_optimizations_content);
+  AlertDialog.Builder b=new AlertDialog.Builder(getContext()).setTitle(mLabel).setNegativeButton(R.string.cancel,null).setView(R.layout.ignore_optimizations_content);
   if (!mBackend.isSysWhitelisted(mPackageName)) {
     b.setPositiveButton(R.string.done,this);
   }

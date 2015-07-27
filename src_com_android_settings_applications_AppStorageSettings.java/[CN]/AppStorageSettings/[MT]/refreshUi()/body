@@ -1,5 +1,8 @@
 {
   retrieveAppEntry();
+  if (mAppEntry == null) {
+    return false;
+  }
   refreshSizeInfo();
   final VolumeInfo currentVol=getActivity().getPackageManager().getPackageCurrentVolume(mAppEntry.info);
   final StorageManager storage=getContext().getSystemService(StorageManager.class);

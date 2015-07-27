@@ -1,3 +1,4 @@
 {
-  return context.getString(PowerWhitelistBackend.getInstance().isWhitelisted(pkg) ? R.string.high_power_on : R.string.high_power_off);
+  PowerWhitelistBackend powerWhitelist=PowerWhitelistBackend.getInstance();
+  return context.getString(powerWhitelist.isSysWhitelisted(pkg) ? R.string.high_power_system : powerWhitelist.isWhitelisted(pkg) ? R.string.high_power_on : R.string.high_power_off);
 }

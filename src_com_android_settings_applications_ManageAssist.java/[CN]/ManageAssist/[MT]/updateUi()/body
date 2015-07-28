@@ -18,4 +18,8 @@
     getPreferenceScreen().addPreference(mVoiceInputPref);
     mVoiceInputPref.setAssistRestrict(currentAssist);
   }
+  mScreenshotPref.setEnabled(mContextPref.isChecked());
+  if (!mContextPref.isChecked()) {
+    mScreenshotPref.setChecked(false);
+  }
 }

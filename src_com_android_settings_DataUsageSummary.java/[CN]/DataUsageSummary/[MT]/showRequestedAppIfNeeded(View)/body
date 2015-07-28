@@ -9,7 +9,7 @@
     final UidDetail detail=mUidDetailProvider.getUidDetail(app.key,true);
     FrameLayout pinnedHeader=(FrameLayout)rootView.findViewById(R.id.pinned_header);
     AppHeader.createAppHeader(getActivity(),detail.icon,detail.label,null,pinnedHeader);
-    AppDetailsFragment.show(DataUsageSummary.this,app,detail.label,false);
+    AppDetailsFragment.show(DataUsageSummary.this,app,detail.label,true);
   }
  catch (  NameNotFoundException e) {
     Log.w(TAG,"Could not find " + mShowAppImmediatePkg,e);

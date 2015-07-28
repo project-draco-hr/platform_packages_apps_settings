@@ -7,7 +7,7 @@
     if (sipper.getUid() > 0) {
       int realUid=sipper.getUid();
       if (sipper.getUid() >= Process.FIRST_SHARED_APPLICATION_GID && sipper.getUid() <= Process.LAST_SHARED_APPLICATION_GID) {
-        realUid=UserHandle.getUid(UserHandle.USER_OWNER,UserHandle.getAppIdFromSharedAppGid(sipper.getUid()));
+        realUid=UserHandle.getUid(UserHandle.USER_SYSTEM,UserHandle.getAppIdFromSharedAppGid(sipper.getUid()));
       }
       int index=uidList.indexOfKey(realUid);
       if (index < 0) {

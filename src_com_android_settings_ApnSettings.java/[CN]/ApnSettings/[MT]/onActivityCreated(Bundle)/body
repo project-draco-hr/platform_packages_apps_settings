@@ -5,7 +5,7 @@
     empty.setText(R.string.apn_settings_not_available);
     getListView().setEmptyView(empty);
   }
-  if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS) || UserHandle.myUserId() != UserHandle.USER_OWNER) {
+  if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS) || !mUm.isAdminUser()) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getActivity(),null));
     return;

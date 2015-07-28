@@ -2,9 +2,8 @@
   mBinding=true;
   if (!isAdded())   return;
   final Context context=getActivity();
-  final Resources resources=context.getResources();
   final String currentTab=mTabHost.getCurrentTabTag();
-  final boolean isOwner=ActivityManager.getCurrentUser() == UserHandle.USER_OWNER;
+  final boolean isAdmin=mUserManager.isAdminUser();
   if (currentTab == null) {
     Log.w(TAG,"no tab selected; hiding body");
     mListView.setVisibility(View.GONE);
@@ -15,7 +14,7 @@
   }
   mCurrentTab=currentTab;
   if (LOGD)   Log.d(TAG,"updateBody() with currentTab=" + currentTab);
-  mDataEnabledSupported=isOwner;
+  mDataEnabledSupported=isAdmin;
   mDisableAtLimitSupported=true;
   if (LOGD)   Log.d(TAG,"updateBody() isMobileTab=" + isMobileTab(currentTab));
   if (isMobileTab(currentTab)) {

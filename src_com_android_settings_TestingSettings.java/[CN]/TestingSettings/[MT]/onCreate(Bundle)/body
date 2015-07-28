@@ -1,7 +1,8 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.testing_settings);
-  if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
+  final UserManager um=UserManager.get(this);
+  if (!um.isAdminUser()) {
     PreferenceScreen preferenceScreen=(PreferenceScreen)findPreference("radio_info_settings");
     getPreferenceScreen().removePreference(preferenceScreen);
   }

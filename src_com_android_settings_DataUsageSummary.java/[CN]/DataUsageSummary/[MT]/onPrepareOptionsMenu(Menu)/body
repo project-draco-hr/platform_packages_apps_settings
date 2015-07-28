@@ -1,7 +1,7 @@
 {
   final Context context=getActivity();
   final boolean appDetailMode=isAppDetailMode();
-  final boolean isOwner=ActivityManager.getCurrentUser() == UserHandle.USER_OWNER;
+  final boolean isAdmin=mUserManager.isAdminUser();
   mMenuShowWifi=menu.findItem(R.id.data_usage_menu_show_wifi);
   if (hasWifiRadio(context) && hasReadyMobileRadio(context)) {
     mMenuShowWifi.setVisible(!appDetailMode);
@@ -17,7 +17,7 @@
     mMenuShowEthernet.setVisible(false);
   }
   mMenuRestrictBackground=menu.findItem(R.id.data_usage_menu_restrict_background);
-  mMenuRestrictBackground.setVisible(hasReadyMobileRadio(context) && isOwner && !appDetailMode);
+  mMenuRestrictBackground.setVisible(hasReadyMobileRadio(context) && isAdmin && !appDetailMode);
   final MenuItem metered=menu.findItem(R.id.data_usage_menu_metered);
   if (hasReadyMobileRadio(context) || hasWifiRadio(context)) {
     metered.setVisible(!appDetailMode);
@@ -28,7 +28,7 @@
   mMenuSimCards=menu.findItem(R.id.data_usage_menu_sim_cards);
   mMenuSimCards.setVisible(false);
   mMenuCellularNetworks=menu.findItem(R.id.data_usage_menu_cellular_networks);
-  mMenuCellularNetworks.setVisible(hasReadyMobileRadio(context) && !appDetailMode && isOwner);
+  mMenuCellularNetworks.setVisible(hasReadyMobileRadio(context) && !appDetailMode && isAdmin);
   final MenuItem help=menu.findItem(R.id.data_usage_menu_help);
   String helpUrl;
   if (!TextUtils.isEmpty(helpUrl=getResources().getString(R.string.help_url_data_usage))) {

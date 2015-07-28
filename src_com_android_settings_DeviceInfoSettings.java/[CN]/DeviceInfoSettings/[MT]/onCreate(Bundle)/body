@@ -1,5 +1,6 @@
 {
   super.onCreate(icicle);
+  mUm=UserManager.get(getActivity());
   addPreferencesFromResource(R.xml.device_info_settings);
   setStringSummary(KEY_FIRMWARE_VERSION,Build.VERSION.RELEASE);
   findPreference(KEY_FIRMWARE_VERSION).setEnabled(true);
@@ -29,7 +30,7 @@
   }
   final Activity act=getActivity();
   PreferenceGroup parentPreference=getPreferenceScreen();
-  if (UserHandle.myUserId() == UserHandle.USER_OWNER) {
+  if (mUm.isAdminUser()) {
     Utils.updatePreferenceToSpecificActivityOrRemove(act,parentPreference,KEY_SYSTEM_UPDATE_SETTINGS,Utils.UPDATE_PREFERENCE_FLAG_SET_TITLE_TO_MATCHING_ACTIVITY);
   }
  else {

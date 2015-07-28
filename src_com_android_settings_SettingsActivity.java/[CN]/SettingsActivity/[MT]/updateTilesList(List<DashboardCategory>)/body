@@ -1,6 +1,7 @@
 {
   final boolean showDev=mDevelopmentPreferences.getBoolean(DevelopmentSettings.PREF_SHOW,android.os.Build.TYPE.equals("eng"));
-  final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
+  final UserManager um=UserManager.get(this);
+  final boolean isAdmin=um.isAdminUser();
   final int size=target.size();
   for (int i=0; i < size; i++) {
     DashboardCategory category=target.get(i);
@@ -41,7 +42,6 @@
         }
       }
  else       if (id == R.id.user_settings) {
-        boolean hasMultipleUsers=((UserManager)getSystemService(Context.USER_SERVICE)).getUserCount() > 1;
         if (!UserHandle.MU_ENABLED || !UserManager.supportsMultipleUsers() || Utils.isMonkeyRunning()) {
           removeTile=true;
         }
@@ -68,7 +68,7 @@
           removeTile=true;
         }
       }
-      if (UserHandle.MU_ENABLED && UserHandle.myUserId() != 0 && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,id)) {
+      if (UserHandle.MU_ENABLED && !isAdmin && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,id)) {
         removeTile=true;
       }
       if (removeTile && n < category.getTilesCount()) {

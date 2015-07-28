@@ -1,6 +1,7 @@
 {
   if (preference == mContextPref) {
     Settings.Secure.putInt(getContentResolver(),Settings.Secure.ASSIST_STRUCTURE_ENABLED,(boolean)newValue ? 1 : 0);
+    postUpdateUi();
     return true;
   }
   if (preference == mScreenshotPref) {

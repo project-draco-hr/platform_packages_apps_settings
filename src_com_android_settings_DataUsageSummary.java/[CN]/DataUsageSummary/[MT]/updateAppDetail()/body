@@ -5,10 +5,12 @@
   if (isAppDetailMode()) {
     mAppDetail.setVisibility(View.VISIBLE);
     mCycleAdapter.setChangeVisible(false);
+    mChart.setVisibility(View.GONE);
   }
  else {
     mAppDetail.setVisibility(View.GONE);
     mCycleAdapter.setChangeVisible(true);
+    mChart.setVisibility(View.VISIBLE);
     mChart.bindDetailNetworkStats(null);
     return;
   }

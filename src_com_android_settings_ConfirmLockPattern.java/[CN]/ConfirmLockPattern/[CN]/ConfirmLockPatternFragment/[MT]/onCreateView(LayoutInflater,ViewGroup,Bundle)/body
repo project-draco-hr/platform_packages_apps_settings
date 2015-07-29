@@ -14,6 +14,7 @@
     mDetailsText=intent.getCharSequenceExtra(ConfirmDeviceCredentialBaseFragment.DETAILS_TEXT);
   }
   mLockPatternView.setTactileFeedbackEnabled(mLockPatternUtils.isTactileFeedbackEnabled());
+  mLockPatternView.setInStealthMode(!mLockPatternUtils.isVisiblePatternEnabled(UserHandle.myUserId()));
   mLockPatternView.setOnPatternListener(mConfirmExistingLockPatternListener);
   updateStage(Stage.NeedToUnlock);
   if (savedInstanceState != null) {

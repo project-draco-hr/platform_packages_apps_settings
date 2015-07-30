@@ -1,0 +1,16 @@
+{
+  if (DEBUG)   Log.v(TAG,"Removing fpId=" + mFp.getFingerId());
+  FingerprintSettingsFragment parent=(FingerprintSettingsFragment)getTargetFragment();
+  if (parent.mFingerprintManager.getEnrolledFingerprints().size() > 1) {
+    parent.deleteFingerPrint(mFp);
+  }
+ else {
+    ConfirmLastDeleteDialog lastDeleteDialog=new ConfirmLastDeleteDialog();
+    Bundle args=new Bundle();
+    args.putParcelable("fingerprint",mFp);
+    lastDeleteDialog.setArguments(args);
+    lastDeleteDialog.setTargetFragment(getTargetFragment(),0);
+    lastDeleteDialog.show(getFragmentManager(),ConfirmLastDeleteDialog.class.getName());
+  }
+  dialog.dismiss();
+}

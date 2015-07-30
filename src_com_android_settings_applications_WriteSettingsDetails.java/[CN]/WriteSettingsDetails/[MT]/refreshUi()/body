@@ -2,6 +2,7 @@
   mWriteSettingsState=mAppBridge.getWriteSettingsInfo(mPackageName,mPackageInfo.applicationInfo.uid);
   boolean canWrite=mWriteSettingsState.isPermissible();
   mSwitchPref.setChecked(canWrite);
+  mSwitchPref.setEnabled(mWriteSettingsState.permissionDeclared);
   mWriteSettingsPrefs.setEnabled(canWrite);
   getPreferenceScreen().removePreference(mWriteSettingsPrefs);
   return true;

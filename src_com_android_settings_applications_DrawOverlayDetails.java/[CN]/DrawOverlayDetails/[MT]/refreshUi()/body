@@ -2,6 +2,7 @@
   mOverlayState=mOverlayBridge.getOverlayInfo(mPackageName,mPackageInfo.applicationInfo.uid);
   boolean isAllowed=mOverlayState.isPermissible();
   mSwitchPref.setChecked(isAllowed);
+  mSwitchPref.setEnabled(mOverlayState.permissionDeclared);
   mOverlayPrefs.setEnabled(isAllowed);
   getPreferenceScreen().removePreference(mOverlayPrefs);
   return true;

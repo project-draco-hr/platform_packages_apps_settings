@@ -5,6 +5,7 @@
     return;
   }
   setContentView(R.layout.storage_wizard_progress);
+  setKeepScreenOn(true);
   mFormatPrivate=getIntent().getBooleanExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,false);
   setIllustrationType(mFormatPrivate ? ILLUSTRATION_INTERNAL : ILLUSTRATION_PORTABLE);
   setHeaderText(R.string.storage_wizard_format_progress_title,mDisk.getDescription());

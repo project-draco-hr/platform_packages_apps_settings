@@ -22,10 +22,7 @@
   }
 ).setNegativeButton(R.string.security_settings_fingerprint_enroll_dialog_delete,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
-      if (DEBUG)       Log.v(TAG,"Removing fpId=" + mFp.getFingerId());
-      FingerprintSettingsFragment parent=(FingerprintSettingsFragment)getTargetFragment();
-      parent.deleteFingerPrint(mFp);
-      dialog.dismiss();
+      onDeleteClick(dialog);
     }
   }
 ).create();

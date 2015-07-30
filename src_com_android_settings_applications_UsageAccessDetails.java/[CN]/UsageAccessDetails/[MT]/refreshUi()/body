@@ -2,6 +2,7 @@
   mUsageState=mUsageBridge.getUsageInfo(mPackageName,mPackageInfo.applicationInfo.uid);
   boolean hasAccess=mUsageState.isPermissible();
   mSwitchPref.setChecked(hasAccess);
+  mSwitchPref.setEnabled(mUsageState.permissionDeclared);
   mUsagePrefs.setEnabled(hasAccess);
   ResolveInfo resolveInfo=mPm.resolveActivityAsUser(mSettingsIntent,PackageManager.GET_META_DATA,mUserId);
   if (resolveInfo != null) {

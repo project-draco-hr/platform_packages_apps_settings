@@ -6,11 +6,16 @@
     activity.finishAffinity();
     return;
   }
-  final float pct=(float)mInternalBench / (float)mPrivateBench;
-  Log.d(TAG,"New volume is " + pct + "x the speed of internal");
-  if (mPrivateBench > 2000000000) {
-    final SlowWarningFragment dialog=new SlowWarningFragment();
-    dialog.show(activity.getFragmentManager(),TAG_SLOW_WARNING);
+  if (activity.mFormatPrivate) {
+    final float pct=(float)mInternalBench / (float)mPrivateBench;
+    Log.d(TAG,"New volume is " + pct + "x the speed of internal");
+    if (Float.isNaN(pct) || pct < 0.25) {
+      final SlowWarningFragment dialog=new SlowWarningFragment();
+      dialog.show(activity.getFragmentManager(),TAG_SLOW_WARNING);
+    }
+ else {
+      activity.onFormatFinished();
+    }
   }
  else {
     activity.onFormatFinished();

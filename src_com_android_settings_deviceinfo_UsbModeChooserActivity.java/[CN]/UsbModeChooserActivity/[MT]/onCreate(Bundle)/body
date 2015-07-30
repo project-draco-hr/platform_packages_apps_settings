@@ -1,13 +1,17 @@
 {
+  Intent i=getBaseContext().registerReceiver(null,new IntentFilter(UsbManager.ACTION_USB_STATE));
+  mIsUnlocked=i.getBooleanExtra(UsbManager.USB_DATA_UNLOCKED,false);
   super.onCreate(savedInstanceState);
   mUsbManager=(UsbManager)getSystemService(Context.USB_SERVICE);
+  boolean isFileTransferRestricted=((UserManager)getSystemService(Context.USER_SERVICE)).hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER);
   CharSequence[] items;
-  UserManager userManager=(UserManager)getSystemService(Context.USER_SERVICE);
-  if (userManager.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
-    items=new CharSequence[]{getText(R.string.usb_use_charging_only)};
+  if (isFileTransferRestricted) {
+    items=new CharSequence[]{getText(R.string.usb_use_charging_only),getText(R.string.usb_use_MIDI)};
+    mFunctions=new String[]{null,UsbManager.USB_FUNCTION_MIDI};
   }
  else {
-    items=getResources().getTextArray(R.array.usb_available_functions);
+    items=new CharSequence[]{getText(R.string.usb_use_charging_only),getText(R.string.usb_use_file_transfers),getText(R.string.usb_use_photo_transfers),getText(R.string.usb_use_MIDI)};
+    mFunctions=new String[]{null,UsbManager.USB_FUNCTION_MTP,UsbManager.USB_FUNCTION_PTP,UsbManager.USB_FUNCTION_MIDI};
   }
   final AlertDialog levelDialog;
   AlertDialog.Builder builder=new AlertDialog.Builder(this);

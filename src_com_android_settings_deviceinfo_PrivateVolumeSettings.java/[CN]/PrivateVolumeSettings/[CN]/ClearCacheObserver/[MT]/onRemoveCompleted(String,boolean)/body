@@ -1,7 +1,12 @@
 {
 synchronized (this) {
     if (--mRemaining == 0) {
-      mTarget.update();
+      mTarget.getActivity().runOnUiThread(new Runnable(){
+        @Override public void run(){
+          mTarget.update();
+        }
+      }
+);
     }
   }
 }

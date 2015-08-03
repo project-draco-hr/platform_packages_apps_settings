@@ -1,32 +1,21 @@
 {
-  if (mDone)   return;
-  final String pin=mPasswordEntry.getText().toString();
-  if (TextUtils.isEmpty(pin)) {
+  mChosenPassword=mPasswordEntry.getText().toString();
+  if (TextUtils.isEmpty(mChosenPassword)) {
     return;
   }
   String errorMsg=null;
   if (mUiStage == Stage.Introduction) {
-    errorMsg=validatePassword(pin);
+    errorMsg=validatePassword(mChosenPassword);
     if (errorMsg == null) {
-      mFirstPin=pin;
+      mFirstPin=mChosenPassword;
       mPasswordEntry.setText("");
       updateStage(Stage.NeedToConfirm);
     }
   }
  else   if (mUiStage == Stage.NeedToConfirm) {
-    if (mFirstPin.equals(pin)) {
-      boolean wasSecureBefore=mLockPatternUtils.isSecure(UserHandle.myUserId());
-      final boolean required=getActivity().getIntent().getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);
-      mLockPatternUtils.setCredentialRequiredToDecrypt(required);
-      mLockPatternUtils.saveLockPassword(pin,mCurrentPassword,mRequestedQuality,UserHandle.myUserId());
-      if (mHasChallenge) {
-        startVerifyPassword(pin,wasSecureBefore);
-        return;
-      }
- else {
-        getActivity().setResult(RESULT_FINISHED);
-      }
-      finishConfirmStage(wasSecureBefore);
+    if (mFirstPin.equals(mChosenPassword)) {
+      setNextEnabled(false);
+      new SaveChosenPasswordAndFinish().execute();
     }
  else {
       CharSequence tmp=mPasswordEntry.getText();

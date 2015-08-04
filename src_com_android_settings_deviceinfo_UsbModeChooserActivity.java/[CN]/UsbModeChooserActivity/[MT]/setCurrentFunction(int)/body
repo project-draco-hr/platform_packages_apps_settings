@@ -1,20 +1,9 @@
 {
-switch (which) {
-case 0:
+  if (which == 0) {
     mUsbManager.setCurrentFunction(null);
-  mUsbManager.setUsbDataUnlocked(false);
-break;
-case 1:
-mUsbManager.setCurrentFunction(UsbManager.USB_FUNCTION_MTP);
-mUsbManager.setUsbDataUnlocked(true);
-break;
-case 2:
-mUsbManager.setCurrentFunction(UsbManager.USB_FUNCTION_PTP);
-mUsbManager.setUsbDataUnlocked(true);
-break;
-case 3:
-mUsbManager.setCurrentFunction(UsbManager.USB_FUNCTION_MIDI);
-mUsbManager.setUsbDataUnlocked(true);
-break;
-}
+    mUsbManager.setUsbDataUnlocked(false);
+    return;
+  }
+  mUsbManager.setCurrentFunction(mFunctions[which]);
+  mUsbManager.setUsbDataUnlocked(true);
 }

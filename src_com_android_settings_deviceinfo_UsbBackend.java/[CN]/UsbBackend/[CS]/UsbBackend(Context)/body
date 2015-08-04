@@ -1,0 +1,15 @@
+{
+  mUserManager=UserManager.get(context);
+  mUsbManager=context.getSystemService(UsbManager.class);
+  mRestricted=mUserManager.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER);
+  UsbPort[] ports=mUsbManager.getPorts();
+  final int N=ports.length;
+  for (int i=0; i < N; i++) {
+    UsbPortStatus status=mUsbManager.getPortStatus(ports[i]);
+    if (status.isConnected()) {
+      mPort=ports[i];
+      mPortStatus=status;
+      break;
+    }
+  }
+}

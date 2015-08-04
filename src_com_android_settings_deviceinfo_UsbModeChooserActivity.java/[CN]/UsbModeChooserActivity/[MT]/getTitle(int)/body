@@ -1,0 +1,15 @@
+{
+switch (mode) {
+case UsbBackend.MODE_POWER_SINK | UsbBackend.MODE_DATA_NONE:
+    return R.string.usb_use_charging_only;
+case UsbBackend.MODE_POWER_SOURCE | UsbBackend.MODE_DATA_NONE:
+  return R.string.usb_use_power_only;
+case UsbBackend.MODE_POWER_SINK | UsbBackend.MODE_DATA_MTP:
+return R.string.usb_use_file_transfers;
+case UsbBackend.MODE_POWER_SINK | UsbBackend.MODE_DATA_PTP:
+return R.string.usb_use_photo_transfers;
+case UsbBackend.MODE_POWER_SINK | UsbBackend.MODE_DATA_MIDI:
+return R.string.usb_use_MIDI;
+}
+return 0;
+}

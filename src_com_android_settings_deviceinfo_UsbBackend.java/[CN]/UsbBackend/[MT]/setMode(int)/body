@@ -1,0 +1,8 @@
+{
+  if (mPort != null) {
+    int powerRole=modeToPower(mode);
+    int dataRole=(mode & MODE_DATA_MASK) == MODE_DATA_NONE && mPortStatus.isRoleCombinationSupported(powerRole,UsbPort.DATA_ROLE_HOST) ? UsbPort.DATA_ROLE_HOST : UsbPort.DATA_ROLE_DEVICE;
+    mUsbManager.setPortRoles(mPort,powerRole,dataRole);
+  }
+  setUsbFunction(mode & MODE_DATA_MASK);
+}

@@ -1,15 +1,15 @@
 {
   if (!mUsbManager.isUsbDataUnlocked()) {
-    return 0;
+    return MODE_DATA_NONE;
   }
  else   if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_MTP)) {
-    return 1;
+    return MODE_DATA_MTP;
   }
  else   if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_PTP)) {
-    return 2;
+    return MODE_DATA_MTP;
   }
  else   if (mUsbManager.isFunctionEnabled(UsbManager.USB_FUNCTION_MIDI)) {
-    return 3;
+    return MODE_DATA_MIDI;
   }
-  return 0;
+  return MODE_DATA_NONE;
 }

@@ -1,39 +1,24 @@
 {
   super.onCreate(savedInstanceState);
-  mUsbManager=(UsbManager)getSystemService(Context.USB_SERVICE);
-  CharSequence[] items;
-  UserManager userManager=(UserManager)getSystemService(Context.USER_SERVICE);
-  if (userManager.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
-    items=new CharSequence[]{getText(R.string.usb_use_charging_only)};
-  }
- else {
-    items=getResources().getTextArray(R.array.usb_available_functions);
-  }
-  final AlertDialog levelDialog;
-  AlertDialog.Builder builder=new AlertDialog.Builder(this);
-  builder.setTitle(R.string.usb_use);
-  builder.setSingleChoiceItems(items,getCurrentFunction(),new DialogInterface.OnClickListener(){
-    @Override public void onClick(    DialogInterface dialog,    int which){
-      if (!ActivityManager.isUserAMonkey()) {
-        setCurrentFunction(which);
-      }
-      dialog.dismiss();
-      UsbModeChooserActivity.this.finish();
-    }
-  }
-);
-  builder.setOnDismissListener(new DialogInterface.OnDismissListener(){
+  mLayoutInflater=LayoutInflater.from(this);
+  mDialog=new AlertDialog.Builder(this).setTitle(R.string.usb_use).setView(R.layout.usb_dialog_container).setOnDismissListener(new DialogInterface.OnDismissListener(){
     @Override public void onDismiss(    DialogInterface dialog){
-      UsbModeChooserActivity.this.finish();
+      finish();
     }
   }
-);
-  builder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
-      UsbModeChooserActivity.this.finish();
+      finish();
     }
   }
-);
-  levelDialog=builder.create();
-  levelDialog.show();
+).create();
+  mDialog.show();
+  LinearLayout container=(LinearLayout)mDialog.findViewById(R.id.container);
+  mBackend=new UsbBackend(this);
+  int current=mBackend.getCurrentMode();
+  for (int i=0; i < DEFAULT_MODES.length; i++) {
+    if (mBackend.isModeSupported(DEFAULT_MODES[i])) {
+      inflateOption(DEFAULT_MODES[i],current == DEFAULT_MODES[i],container);
+    }
+  }
 }

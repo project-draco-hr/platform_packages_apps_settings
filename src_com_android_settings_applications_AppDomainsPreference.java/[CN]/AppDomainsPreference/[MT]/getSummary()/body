@@ -1,0 +1,9 @@
+{
+  final Context context=getContext();
+  if (mNumEntries == 0) {
+    return context.getString(R.string.domain_urls_summary_none);
+  }
+  final CharSequence summary=super.getSummary();
+  final int whichVersion=(mNumEntries == 1) ? R.string.domain_urls_summary_one : R.string.domain_urls_summary_some;
+  return context.getString(whichVersion,summary);
+}

@@ -1,6 +1,6 @@
 {
   final AlertController.AlertParams p=mAlertParams;
-  p.mTitle=getString(R.string.bluetooth_pairing_request);
+  p.mTitle=getString(R.string.bluetooth_pairing_request,mCachedDeviceManager.getName(mDevice));
   p.mView=createPinEntryView();
   p.mPositiveButtonText=getString(android.R.string.ok);
   p.mPositiveButtonListener=this;

@@ -1,6 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   mLockPatternUtils=new LockPatternUtils(getActivity());
+  mEffectiveUserId=Utils.getEffectiveUserId(getActivity());
   if (savedInstanceState != null) {
     mNumWrongConfirmAttempts=savedInstanceState.getInt(KEY_NUM_WRONG_CONFIRM_ATTEMPTS,0);
   }

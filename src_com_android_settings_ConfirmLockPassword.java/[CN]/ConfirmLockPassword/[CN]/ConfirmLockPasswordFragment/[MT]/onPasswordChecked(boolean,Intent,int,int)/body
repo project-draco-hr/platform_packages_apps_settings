@@ -5,7 +5,7 @@
   }
  else {
     if (timeoutMs > 0) {
-      long deadline=mLockPatternUtils.setLockoutAttemptDeadline(UserHandle.myUserId(),timeoutMs);
+      long deadline=mLockPatternUtils.setLockoutAttemptDeadline(effectiveUserId,timeoutMs);
       handleAttemptLockout(deadline);
     }
  else {

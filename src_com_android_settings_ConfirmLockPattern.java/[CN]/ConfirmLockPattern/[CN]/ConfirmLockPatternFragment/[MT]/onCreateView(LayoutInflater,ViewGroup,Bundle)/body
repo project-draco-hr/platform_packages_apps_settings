@@ -21,7 +21,7 @@
     mNumWrongConfirmAttempts=savedInstanceState.getInt(KEY_NUM_WRONG_ATTEMPTS);
   }
  else {
-    if (!mLockPatternUtils.isLockPatternEnabled(UserHandle.myUserId())) {
+    if (!mLockPatternUtils.isLockPatternEnabled(mEffectiveUserId)) {
       getActivity().setResult(Activity.RESULT_OK);
       getActivity().finish();
     }

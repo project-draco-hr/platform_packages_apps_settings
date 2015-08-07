@@ -6,7 +6,7 @@
     int[] permissionFlags=permissionState.packageInfo.requestedPermissionsFlags;
     if (requestedPermissions != null) {
       for (int i=0; i < requestedPermissions.length; i++) {
-        if (mPermissions[0].equals(requestedPermissions[i])) {
+        if (doesAnyPermissionMatch(requestedPermissions[i],mPermissions)) {
           permissionState.permissionDeclared=true;
           if ((permissionFlags[i] & PackageInfo.REQUESTED_PERMISSION_GRANTED) != 0) {
             permissionState.staticPermissionGranted=true;

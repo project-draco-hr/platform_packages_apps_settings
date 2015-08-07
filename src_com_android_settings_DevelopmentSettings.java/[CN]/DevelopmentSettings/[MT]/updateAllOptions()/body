@@ -13,6 +13,7 @@
     updateSwitchPreference(mEnableOemUnlock,Utils.isOemUnlockEnabled(getActivity()));
   }
   updateSwitchPreference(mDebugViewAttributes,Settings.Global.getInt(cr,Settings.Global.DEBUG_VIEW_ATTRIBUTES,0) != 0);
+  updateSwitchPreference(mForceAllowOnExternal,Settings.Global.getInt(cr,Settings.Global.FORCE_ALLOW_ON_EXTERNAL,0) != 0);
   updateHdcpValues();
   updatePasswordSummary();
   updateDebuggerOptions();

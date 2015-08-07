@@ -1,0 +1,9 @@
+{
+  final IPackageManager pm=AppGlobals.getPackageManager();
+  try {
+    return pm.isPackageFrozen(mPackageName);
+  }
+ catch (  RemoteException e) {
+    return false;
+  }
+}

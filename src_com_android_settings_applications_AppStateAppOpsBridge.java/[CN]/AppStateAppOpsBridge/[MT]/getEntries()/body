@@ -1,7 +1,13 @@
 {
   try {
-    final String[] packages=mIPackageManager.getAppOpPermissionPackages(mPermissions[0]);
-    if (packages == null) {
+    Set<String> packagesSet=new HashSet<>();
+    for (    String permission : mPermissions) {
+      String[] pkgs=mIPackageManager.getAppOpPermissionPackages(permission);
+      if (pkgs != null) {
+        packagesSet.addAll(Arrays.asList(pkgs));
+      }
+    }
+    if (packagesSet.isEmpty()) {
       return null;
     }
     SparseArray<ArrayMap<String,PermissionState>> entries=new SparseArray<>();
@@ -9,7 +15,7 @@
       final ArrayMap<String,PermissionState> entriesForProfile=new ArrayMap<>();
       final int profileId=profile.getIdentifier();
       entries.put(profileId,entriesForProfile);
-      for (      final String packageName : packages) {
+      for (      final String packageName : packagesSet) {
         final boolean isAvailable=mIPackageManager.isPackageAvailable(packageName,profileId);
         if (!shouldIgnorePackage(packageName) && isAvailable) {
           final PermissionState newEntry=new PermissionState(packageName,profile);

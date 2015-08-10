@@ -3,5 +3,10 @@
   if (limited.isEmpty()) {
     limited.add(getText(R.string.data_usage_list_none));
   }
-  return TextUtils.join(limited);
+  final ICUResourceBundle icuBundle=(ICUResourceBundle)UResourceBundle.getBundleInstance(ICUResourceBundle.ICU_BASE_NAME);
+  final String listMiddlePattern=icuBundle.getStringWithFallback("listPattern/standard/middle");
+  final int firstClosingBrace=listMiddlePattern.indexOf('}');
+  final int lastOpeningBrace=listMiddlePattern.lastIndexOf('{');
+  final CharSequence delimiter=listMiddlePattern.substring(firstClosingBrace + 1,lastOpeningBrace);
+  return TextUtils.join(delimiter,limited);
 }

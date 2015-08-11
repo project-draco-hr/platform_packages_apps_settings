@@ -9,7 +9,7 @@
     if (mUiStage != Stage.ChoiceConfirmed) {
       throw new IllegalStateException("expected ui stage " + Stage.ChoiceConfirmed + " when button is "+ RightButtonMode.Confirm);
     }
-    saveChosenPatternAndFinish();
+    new SaveChosenPatternAndFinish().execute();
   }
  else   if (mUiStage.rightMode == RightButtonMode.Ok) {
     if (mUiStage != Stage.HelpScreen) {

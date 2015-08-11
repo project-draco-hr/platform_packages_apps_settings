@@ -1,0 +1,18 @@
+{
+  if (mLockVirgin) {
+    mUtils.setVisiblePatternEnabled(true,UserHandle.myUserId());
+  }
+  if (mHasChallenge) {
+    startVerifyPattern(mUtils,mWasSecureBefore);
+  }
+ else {
+    if (!mWasSecureBefore) {
+      Intent intent=getRedactionInterstitialIntent(getActivity());
+      if (intent != null) {
+        startActivity(intent);
+      }
+    }
+    getActivity().setResult(RESULT_FINISHED);
+    doFinish();
+  }
+}

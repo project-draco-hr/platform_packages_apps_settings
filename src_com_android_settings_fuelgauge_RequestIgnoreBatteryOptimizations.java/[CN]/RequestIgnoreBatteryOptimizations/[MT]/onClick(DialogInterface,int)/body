@@ -1,0 +1,15 @@
+{
+switch (which) {
+case BUTTON_POSITIVE:
+    try {
+      mDeviceIdleService.addPowerSaveWhitelistApp(mPackageName);
+    }
+ catch (    RemoteException e) {
+      Log.w(TAG,"Unable to reach IDeviceIdleController",e);
+    }
+  setResult(RESULT_OK);
+break;
+case BUTTON_NEGATIVE:
+break;
+}
+}

@@ -1,0 +1,10 @@
+{
+  if (mHasChallenge) {
+    startVerifyPassword(mChosenPassword,mWasSecureBefore);
+    return;
+  }
+ else {
+    getActivity().setResult(RESULT_FINISHED);
+  }
+  finishConfirmStage(mWasSecureBefore);
+}

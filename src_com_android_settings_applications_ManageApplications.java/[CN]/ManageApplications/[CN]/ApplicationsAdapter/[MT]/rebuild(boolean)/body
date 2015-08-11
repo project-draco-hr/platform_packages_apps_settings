@@ -41,19 +41,5 @@ ArrayList<ApplicationsState.AppEntry> entries=mSession.rebuild(filterObj,compara
 if (entries == null && !eraseold) {
 return;
 }
-mBaseEntries=entries;
-if (mBaseEntries != null) {
-mEntries=applyPrefixFilter(mCurFilterPrefix,mBaseEntries);
-}
- else {
-mEntries=null;
-}
-notifyDataSetChanged();
-if (mSession.getAllApps().size() != 0 && mManageApplications.mListContainer.getVisibility() != View.VISIBLE) {
-Utils.handleLoadingContainer(mManageApplications.mLoadingContainer,mManageApplications.mListContainer,true,true);
-}
-if (mManageApplications.mListType == LIST_TYPE_USAGE_ACCESS) {
-return;
-}
-mManageApplications.setHasDisabled(mState.haveDisabledApps());
+onRebuildComplete(entries);
 }

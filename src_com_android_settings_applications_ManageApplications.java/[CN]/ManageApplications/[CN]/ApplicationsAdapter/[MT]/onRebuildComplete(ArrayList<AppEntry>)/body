@@ -1,11 +1,17 @@
 {
-  if (mManageApplications.mLoadingContainer.getVisibility() == View.VISIBLE) {
-    mManageApplications.mLoadingContainer.startAnimation(AnimationUtils.loadAnimation(mContext,android.R.anim.fade_out));
-    mManageApplications.mListContainer.startAnimation(AnimationUtils.loadAnimation(mContext,android.R.anim.fade_in));
+  mBaseEntries=entries;
+  if (mBaseEntries != null) {
+    mEntries=applyPrefixFilter(mCurFilterPrefix,mBaseEntries);
   }
-  mManageApplications.mListContainer.setVisibility(View.VISIBLE);
-  mManageApplications.mLoadingContainer.setVisibility(View.GONE);
-  mBaseEntries=apps;
-  mEntries=applyPrefixFilter(mCurFilterPrefix,mBaseEntries);
+ else {
+    mEntries=null;
+  }
   notifyDataSetChanged();
+  if (mSession.getAllApps().size() != 0 && mManageApplications.mListContainer.getVisibility() != View.VISIBLE) {
+    Utils.handleLoadingContainer(mManageApplications.mLoadingContainer,mManageApplications.mListContainer,true,true);
+  }
+  if (mManageApplications.mListType == LIST_TYPE_USAGE_ACCESS) {
+    return;
+  }
+  mManageApplications.setHasDisabled(mState.haveDisabledApps());
 }

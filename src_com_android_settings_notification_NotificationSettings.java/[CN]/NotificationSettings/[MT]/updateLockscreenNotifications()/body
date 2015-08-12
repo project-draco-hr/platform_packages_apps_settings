@@ -5,5 +5,5 @@
   final boolean enabled=getLockscreenNotificationsEnabled();
   final boolean allowPrivate=!mSecure || getLockscreenAllowPrivateNotifications();
   mLockscreenSelectedValue=!enabled ? R.string.lock_screen_notifications_summary_disable : allowPrivate ? R.string.lock_screen_notifications_summary_show : R.string.lock_screen_notifications_summary_hide;
-  mLockscreen.setSelectedValue(mLockscreenSelectedValue);
+  mLockscreen.setValue(Integer.toString(mLockscreenSelectedValue));
 }

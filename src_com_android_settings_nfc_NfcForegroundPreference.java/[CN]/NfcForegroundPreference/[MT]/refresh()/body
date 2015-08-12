@@ -5,13 +5,12 @@
   setTitle(getContext().getString(R.string.nfc_payment_use_default));
   CharSequence favorOpen;
   CharSequence favorDefault;
-  clearItems();
-  addItem(getContext().getString(R.string.nfc_payment_favor_open),true);
-  addItem(getContext().getString(R.string.nfc_payment_favor_default),false);
+  setEntries(new CharSequence[]{getContext().getString(R.string.nfc_payment_favor_open),getContext().getString(R.string.nfc_payment_favor_default)});
+  setEntryValues(new CharSequence[]{"1","0"});
   if (foregroundMode) {
-    setSelectedValue(true);
+    setValue("1");
   }
  else {
-    setSelectedValue(false);
+    setValue("0");
   }
 }

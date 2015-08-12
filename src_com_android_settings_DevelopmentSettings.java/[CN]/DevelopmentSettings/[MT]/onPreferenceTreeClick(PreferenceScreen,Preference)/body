@@ -51,6 +51,9 @@
  else   if (preference == mDebugViewAttributes) {
     Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.DEBUG_VIEW_ATTRIBUTES,mDebugViewAttributes.isChecked() ? 1 : 0);
   }
+ else   if (preference == mForceAllowOnExternal) {
+    Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.FORCE_ALLOW_ON_EXTERNAL,mForceAllowOnExternal.isChecked() ? 1 : 0);
+  }
  else   if (preference == mDebugAppPref) {
     Intent intent=new Intent(getActivity(),AppPicker.class);
     intent.putExtra(AppPicker.EXTRA_DEBUGGABLE,true);

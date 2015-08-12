@@ -1,16 +1,22 @@
 {
   mCalendars=getCalendars(mContext);
-  mCalendar.clearItems();
-  mCalendar.addItem(R.string.zen_mode_event_rule_calendar_any,key(0,null));
+  ArrayList<CharSequence> entries=new ArrayList<>();
+  ArrayList<CharSequence> values=new ArrayList<>();
+  entries.add(getString(R.string.zen_mode_event_rule_calendar_any));
+  values.add(key(0,null));
   final String eventCalendar=mEvent != null ? mEvent.calendar : null;
   boolean found=false;
   for (  CalendarInfo calendar : mCalendars) {
-    mCalendar.addItem(calendar.name,key(calendar));
+    entries.add(calendar.name);
+    values.add(key(calendar));
     if (eventCalendar != null && eventCalendar.equals(calendar.name)) {
       found=true;
     }
   }
   if (eventCalendar != null && !found) {
-    mCalendar.addItem(eventCalendar,key(mEvent.userId,eventCalendar));
+    entries.add(eventCalendar);
+    values.add(key(mEvent.userId,eventCalendar));
   }
+  mCalendar.setEntries(entries.toArray(new CharSequence[entries.size()]));
+  mCalendar.setEntryValues(values.toArray(new CharSequence[values.size()]));
 }

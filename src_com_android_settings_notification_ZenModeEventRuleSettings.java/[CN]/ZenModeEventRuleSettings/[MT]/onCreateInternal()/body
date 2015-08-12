@@ -3,10 +3,10 @@
   addPreferencesFromResource(R.xml.zen_mode_event_rule_settings);
   final PreferenceScreen root=getPreferenceScreen();
   mCalendar=(DropDownPreference)root.findPreference(KEY_CALENDAR);
-  mCalendar.setCallback(new DropDownPreference.Callback(){
-    @Override public boolean onItemSelected(    int pos,    Object value){
-      final String calendarKey=(String)value;
-      if (calendarKey.equals(key(mEvent)))       return true;
+  mCalendar.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final String calendarKey=(String)newValue;
+      if (calendarKey.equals(key(mEvent)))       return false;
       final int i=calendarKey.indexOf(':');
       mEvent.userId=Integer.parseInt(calendarKey.substring(0,i));
       mEvent.calendar=calendarKey.substring(i + 1);
@@ -19,13 +19,12 @@
   }
 );
   mReply=(DropDownPreference)root.findPreference(KEY_REPLY);
-  mReply.addItem(R.string.zen_mode_event_rule_reply_any_except_no,EventInfo.REPLY_ANY_EXCEPT_NO);
-  mReply.addItem(R.string.zen_mode_event_rule_reply_yes_or_maybe,EventInfo.REPLY_YES_OR_MAYBE);
-  mReply.addItem(R.string.zen_mode_event_rule_reply_yes,EventInfo.REPLY_YES);
-  mReply.setCallback(new DropDownPreference.Callback(){
-    @Override public boolean onItemSelected(    int pos,    Object value){
-      final int reply=(Integer)value;
-      if (reply == mEvent.reply)       return true;
+  mReply.setEntries(new CharSequence[]{getString(R.string.zen_mode_event_rule_reply_any_except_no),getString(R.string.zen_mode_event_rule_reply_yes_or_maybe),getString(R.string.zen_mode_event_rule_reply_yes)});
+  mReply.setEntryValues(new CharSequence[]{Integer.toString(EventInfo.REPLY_ANY_EXCEPT_NO),Integer.toString(EventInfo.REPLY_YES_OR_MAYBE),Integer.toString(EventInfo.REPLY_YES)});
+  mReply.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final int reply=Integer.parseInt((String)newValue);
+      if (reply == mEvent.reply)       return false;
       mEvent.reply=reply;
       updateRule(ZenModeConfig.toEventConditionId(mEvent));
       return true;

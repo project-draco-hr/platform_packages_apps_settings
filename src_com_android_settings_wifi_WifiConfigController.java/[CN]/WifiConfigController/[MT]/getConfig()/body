@@ -78,8 +78,18 @@ config.enterpriseConfig.setCaCertificateAlias(caCert);
 String clientCert=(String)mEapUserCertSpinner.getSelectedItem();
 if (clientCert.equals(unspecifiedCert)) clientCert="";
 config.enterpriseConfig.setClientCertificateAlias(clientCert);
+if (eapMethod == Eap.SIM || eapMethod == Eap.AKA || eapMethod == Eap.AKA_PRIME) {
+config.enterpriseConfig.setIdentity("");
+config.enterpriseConfig.setAnonymousIdentity("");
+}
+ else if (eapMethod == Eap.PWD) {
+config.enterpriseConfig.setIdentity(mEapIdentityView.getText().toString());
+config.enterpriseConfig.setAnonymousIdentity("");
+}
+ else {
 config.enterpriseConfig.setIdentity(mEapIdentityView.getText().toString());
 config.enterpriseConfig.setAnonymousIdentity(mEapAnonymousView.getText().toString());
+}
 if (mPasswordView.isShown()) {
 if (mPasswordView.length() > 0) {
 config.enterpriseConfig.setPassword(mPasswordView.getText().toString());

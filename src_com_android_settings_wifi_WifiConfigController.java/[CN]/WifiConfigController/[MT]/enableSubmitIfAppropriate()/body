@@ -17,5 +17,8 @@
       enabled=false;
     }
   }
+  if (mEapCaCertSpinner != null && mView.findViewById(R.id.l_ca_cert).getVisibility() != View.GONE && ((String)mEapCaCertSpinner.getSelectedItem()).equals(unspecifiedCert)) {
+    enabled=false;
+  }
   submit.setEnabled(enabled);
 }

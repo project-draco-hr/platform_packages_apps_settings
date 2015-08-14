@@ -3,24 +3,41 @@
   final ArrayList<BatterySipper> results=new ArrayList<>();
   final int numSippers=sippers.size();
   for (int i=0; i < numSippers; i++) {
-    final BatterySipper sipper=sippers.get(i);
+    BatterySipper sipper=sippers.get(i);
     if (sipper.getUid() > 0) {
       int realUid=sipper.getUid();
-      if (sipper.getUid() >= Process.FIRST_SHARED_APPLICATION_GID && sipper.getUid() <= Process.LAST_SHARED_APPLICATION_GID) {
+      if (isSharedGid(sipper.getUid())) {
         realUid=UserHandle.getUid(UserHandle.USER_SYSTEM,UserHandle.getAppIdFromSharedAppGid(sipper.getUid()));
+      }
+      if (isSystemUid(realUid) && !"mediaserver".equals(sipper.packageWithHighestDrain)) {
+        realUid=Process.SYSTEM_UID;
+      }
+      if (realUid != sipper.getUid()) {
+        BatterySipper newSipper=new BatterySipper(sipper.drainType,new FakeUid(realUid),0.0);
+        newSipper.add(sipper);
+        newSipper.packageWithHighestDrain=sipper.packageWithHighestDrain;
+        newSipper.mPackages=sipper.mPackages;
+        sipper=newSipper;
       }
       int index=uidList.indexOfKey(realUid);
       if (index < 0) {
         uidList.put(realUid,sipper);
       }
  else {
-        BatterySipper existingSipper=uidList.valueAt(index);
-        if (existingSipper.getUid() >= Process.FIRST_SHARED_APPLICATION_GID && existingSipper.getUid() <= Process.FIRST_SHARED_APPLICATION_GID) {
-          sipper.add(existingSipper);
-          uidList.setValueAt(index,sipper);
+        final BatterySipper existingSipper=uidList.valueAt(index);
+        existingSipper.add(sipper);
+        if (existingSipper.packageWithHighestDrain == null && sipper.packageWithHighestDrain != null) {
+          existingSipper.packageWithHighestDrain=sipper.packageWithHighestDrain;
         }
- else {
-          existingSipper.add(sipper);
+        final int existingPackageLen=existingSipper.mPackages != null ? existingSipper.mPackages.length : 0;
+        final int newPackageLen=sipper.mPackages != null ? sipper.mPackages.length : 0;
+        if (newPackageLen > 0) {
+          String[] newPackages=new String[existingPackageLen + newPackageLen];
+          if (existingPackageLen > 0) {
+            System.arraycopy(existingSipper.mPackages,0,newPackages,0,existingPackageLen);
+          }
+          System.arraycopy(sipper.mPackages,0,newPackages,existingPackageLen,newPackageLen);
+          existingSipper.mPackages=newPackages;
         }
       }
     }

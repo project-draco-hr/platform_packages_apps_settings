@@ -1,5 +1,4 @@
 {
-  final int uid=uidObj.getUid();
   final String uidString=Integer.toString(uid);
   if (sUidCache.containsKey(uidString)) {
     UidToDetail utd=sUidCache.get(uidString);
@@ -9,9 +8,8 @@
     return;
   }
   PackageManager pm=context.getPackageManager();
-  String[] packages=pm.getPackagesForUid(uid);
   icon=pm.getDefaultActivityIcon();
-  if (packages == null) {
+  if (pm.getPackagesForUid(uid) == null) {
     if (uid == 0) {
       name=context.getResources().getString(R.string.process_kernel_label);
     }
@@ -23,9 +21,6 @@
     }
     iconId=R.drawable.ic_power_system;
     icon=context.getDrawable(iconId);
-    return;
-  }
- else {
   }
   if (sHandler != null) {
 synchronized (mRequestQueue) {

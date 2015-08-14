@@ -19,5 +19,5 @@
   }
   format.setTitle(R.string.storage_menu_format_public);
   final VolumeInfo privateVol=getActivity().getPackageManager().getPrimaryStorageCurrentVolume();
-  migrate.setVisible(!Objects.equals(mVolume,privateVol));
+  migrate.setVisible((privateVol != null) && (privateVol.getType() == VolumeInfo.TYPE_PRIVATE) && !Objects.equals(mVolume,privateVol));
 }

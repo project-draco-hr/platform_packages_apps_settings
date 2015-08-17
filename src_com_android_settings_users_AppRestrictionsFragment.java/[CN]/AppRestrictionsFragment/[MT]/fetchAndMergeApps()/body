@@ -36,7 +36,10 @@
   }
   mUserApps=null;
   try {
-    mUserApps=ipm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES,mUser.getIdentifier()).getList();
+    ParceledListSlice listSlice=ipm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES,mUser.getIdentifier());
+    if (listSlice != null) {
+      mUserApps=listSlice.getList();
+    }
   }
  catch (  RemoteException re) {
   }

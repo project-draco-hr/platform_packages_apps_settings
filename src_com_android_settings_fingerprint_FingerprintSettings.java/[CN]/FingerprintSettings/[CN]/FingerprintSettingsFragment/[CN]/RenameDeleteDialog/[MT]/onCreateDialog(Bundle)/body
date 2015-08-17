@@ -14,6 +14,7 @@
         if (DEBUG) {
           Log.v(TAG,"rename " + name + " to "+ newName);
         }
+        MetricsLogger.action(mContext,MetricsLogger.ACTION_FINGERPRINT_RENAME,mFp.getFingerId());
         FingerprintSettingsFragment parent=(FingerprintSettingsFragment)getTargetFragment();
         parent.renameFingerPrint(mFp.getFingerId(),newName);
       }

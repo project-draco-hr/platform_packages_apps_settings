@@ -1,0 +1,7 @@
+{
+  if (preference == mDelay && newValue instanceof Integer) {
+    Settings.Secure.putInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_AUTOCLICK_DELAY,seekBarProgressToDelay((int)newValue));
+    return true;
+  }
+  return false;
+}

@@ -1,4 +1,5 @@
 {
+  if (mDone)   return;
   mChosenPassword=mPasswordEntry.getText().toString();
   if (TextUtils.isEmpty(mChosenPassword)) {
     return;
@@ -15,6 +16,7 @@
  else   if (mUiStage == Stage.NeedToConfirm) {
     if (mFirstPin.equals(mChosenPassword)) {
       setNextEnabled(false);
+      mDone=true;
       new SaveChosenPasswordAndFinish().execute();
     }
  else {

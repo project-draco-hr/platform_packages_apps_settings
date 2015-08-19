@@ -12,7 +12,7 @@
     startAppInfoFragment(AppLaunchSettings.class,mLaunchPreference.getTitle());
   }
  else   if (preference == mMemoryPreference) {
-    ProcessStatsBase.launchMemoryDetail((SettingsActivity)getActivity(),mStatsManager.getMemInfo(),mStats);
+    ProcessStatsBase.launchMemoryDetail((SettingsActivity)getActivity(),mStatsManager.getMemInfo(),mStats,false);
   }
  else   if (preference == mDataPreference) {
     Bundle args=new Bundle();
@@ -22,7 +22,7 @@
   }
  else   if (preference == mBatteryPreference) {
     BatteryEntry entry=new BatteryEntry(getActivity(),null,mUserManager,mSipper);
-    PowerUsageDetail.startBatteryDetailPage((SettingsActivity)getActivity(),mBatteryHelper,BatteryStats.STATS_SINCE_CHARGED,entry,true);
+    PowerUsageDetail.startBatteryDetailPage((SettingsActivity)getActivity(),mBatteryHelper,BatteryStats.STATS_SINCE_CHARGED,entry,true,false);
   }
  else {
     return false;

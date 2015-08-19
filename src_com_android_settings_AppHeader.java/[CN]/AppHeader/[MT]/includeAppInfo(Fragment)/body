@@ -1,17 +1,12 @@
 {
   Bundle args=fragment.getArguments();
-  Intent intent=fragment.getActivity().getIntent();
   boolean showInfo=true;
   if (args != null && args.getBoolean(EXTRA_HIDE_INFO_BUTTON,false)) {
     showInfo=false;
   }
+  Intent intent=fragment.getActivity().getIntent();
   if (intent != null && intent.getBooleanExtra(EXTRA_HIDE_INFO_BUTTON,false)) {
     showInfo=false;
   }
-  Intent infoIntent=null;
-  if (showInfo) {
-    infoIntent=new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-    infoIntent.setData(Uri.fromParts("package",packageName,null));
-  }
-  return infoIntent;
+  return showInfo;
 }

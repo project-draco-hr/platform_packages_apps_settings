@@ -4,12 +4,14 @@
   String pkg=args.getString(EXTRA_ICON_PACKAGE);
   int iconId=args.getInt(EXTRA_ICON_ID,0);
   Drawable appIcon=null;
+  int uid=-1;
+  final PackageManager pm=getActivity().getPackageManager();
   if (!TextUtils.isEmpty(pkg)) {
     try {
-      final PackageManager pm=getActivity().getPackageManager();
       ApplicationInfo ai=pm.getPackageInfo(pkg,0).applicationInfo;
       if (ai != null) {
         appIcon=ai.loadIcon(pm);
+        uid=ai.uid;
       }
     }
  catch (    NameNotFoundException nnfe) {
@@ -24,5 +26,5 @@
   if (pkg == null && mPackages != null) {
     pkg=mPackages[0];
   }
-  AppHeader.createAppHeader(this,appIcon,title,pkg != null ? AppInfoWithHeader.getInfoIntent(this,pkg) : null,mDrainType != DrainType.APP ? android.R.color.white : 0);
+  AppHeader.createAppHeader(this,appIcon,title,pkg,uid,mDrainType != DrainType.APP ? android.R.color.white : 0);
 }

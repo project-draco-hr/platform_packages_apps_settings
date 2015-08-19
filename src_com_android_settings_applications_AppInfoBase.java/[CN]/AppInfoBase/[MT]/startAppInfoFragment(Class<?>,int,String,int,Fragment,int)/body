@@ -1,7 +1,3 @@
 {
-  Bundle args=new Bundle();
-  args.putString(AppInfoBase.ARG_PACKAGE_NAME,pkg);
-  args.putInt(AppInfoBase.ARG_PACKAGE_UID,uid);
-  Intent intent=Utils.onBuildStartFragmentIntent(source.getActivity(),fragment.getName(),args,null,titleRes,null,false);
-  source.getActivity().startActivityForResultAsUser(intent,request,new UserHandle(UserHandle.getUserId(uid)));
+  startAppInfoFragment(fragment,titleRes,pkg,uid,source.getActivity(),request);
 }

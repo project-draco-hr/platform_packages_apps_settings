@@ -6,6 +6,14 @@
   findPreference(KEY_FIRMWARE_VERSION).setEnabled(true);
   String patch=Build.VERSION.SECURITY_PATCH;
   if (!"".equals(patch)) {
+    try {
+      SimpleDateFormat template=new SimpleDateFormat("yyyy-MM-dd");
+      Date patchDate=template.parse(patch);
+      String format=DateFormat.getBestDateTimePattern(Locale.getDefault(),"dMMMMyyyy");
+      patch=DateFormat.format(format,patchDate).toString();
+    }
+ catch (    ParseException e) {
+    }
     setStringSummary(KEY_SECURITY_PATCH,patch);
   }
  else {

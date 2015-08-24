@@ -10,7 +10,9 @@
   }
  else {
     mWifiManager.save(config,mSaveListener);
-    connect(config);
+    if (mSelectedAccessPoint != null) {
+      connect(config);
+    }
   }
   mWifiTracker.resumeScanning();
 }

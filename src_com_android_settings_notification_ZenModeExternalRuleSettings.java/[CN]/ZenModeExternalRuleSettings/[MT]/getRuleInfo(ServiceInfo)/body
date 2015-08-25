@@ -1,8 +1,8 @@
 {
   if (si == null || si.metaData == null)   return null;
-  final String ruleType=si.metaData.getString(MD_RULE_TYPE);
-  final String defaultConditionId=si.metaData.getString(MD_DEFAULT_CONDITION_ID);
-  final String configurationActivity=si.metaData.getString(MD_CONFIGURATION_ACTIVITY);
+  final String ruleType=si.metaData.getString(ConditionProviderService.META_DATA_RULE_TYPE);
+  final String defaultConditionId=si.metaData.getString(ConditionProviderService.META_DATA_DEFAULT_CONDITION_ID);
+  final String configurationActivity=si.metaData.getString(ConditionProviderService.META_DATA_CONFIGURATION_ACTIVITY);
   if (ruleType != null && !ruleType.trim().isEmpty() && defaultConditionId != null) {
     final RuleInfo ri=new RuleInfo();
     ri.serviceComponent=new ComponentName(si.packageName,si.name);

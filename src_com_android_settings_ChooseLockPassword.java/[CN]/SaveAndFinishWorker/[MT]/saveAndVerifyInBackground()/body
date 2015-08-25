@@ -1,0 +1,20 @@
+{
+  Intent result=null;
+  final int userId=UserHandle.myUserId();
+  mUtils.saveLockPassword(mChosenPassword,mCurrentPassword,mRequestedQuality,userId);
+  if (mHasChallenge) {
+    byte[] token;
+    try {
+      token=mUtils.verifyPassword(mChosenPassword,mChallenge,userId);
+    }
+ catch (    RequestThrottledException e) {
+      token=null;
+    }
+    if (token == null) {
+      Log.e(TAG,"critical: no token returned for known good password.");
+    }
+    result=new Intent();
+    result.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
+  }
+  return result;
+}

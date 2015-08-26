@@ -19,7 +19,10 @@
  else {
     mConfigure.setOnPreferenceClickListener(new OnPreferenceClickListener(){
       @Override public boolean onPreferenceClick(      Preference preference){
-        startActivityForResult(new Intent().setComponent(ri.configurationActivity),REQUEST_CODE_CONFIGURE);
+        Intent intent=new Intent().setComponent(ri.configurationActivity);
+        intent.putExtra(ConditionProviderService.EXTRA_RULE_NAME,mRule.name);
+        intent.putExtra(ConditionProviderService.EXTRA_CONDITION_ID,mRule.conditionId);
+        startActivityForResult(intent,REQUEST_CODE_CONFIGURE);
         return true;
       }
     }

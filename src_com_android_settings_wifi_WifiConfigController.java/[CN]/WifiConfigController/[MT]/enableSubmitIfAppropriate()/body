@@ -1,24 +1,5 @@
 {
   Button submit=mConfigUi.getSubmitButton();
   if (submit == null)   return;
-  boolean enabled=false;
-  boolean passwordInvalid=false;
-  if (mPasswordView != null && ((mAccessPointSecurity == AccessPoint.SECURITY_WEP && mPasswordView.length() == 0) || (mAccessPointSecurity == AccessPoint.SECURITY_PSK && mPasswordView.length() < 8))) {
-    passwordInvalid=true;
-  }
-  if ((mSsidView != null && mSsidView.length() == 0) || ((mAccessPoint == null || !mAccessPoint.isSaved()) && passwordInvalid)) {
-    enabled=false;
-  }
- else {
-    if (ipAndProxyFieldsAreValid()) {
-      enabled=true;
-    }
- else {
-      enabled=false;
-    }
-  }
-  if (mEapCaCertSpinner != null && mView.findViewById(R.id.l_ca_cert).getVisibility() != View.GONE && ((String)mEapCaCertSpinner.getSelectedItem()).equals(unspecifiedCert)) {
-    enabled=false;
-  }
-  submit.setEnabled(enabled);
+  submit.setEnabled(isSubmittable());
 }

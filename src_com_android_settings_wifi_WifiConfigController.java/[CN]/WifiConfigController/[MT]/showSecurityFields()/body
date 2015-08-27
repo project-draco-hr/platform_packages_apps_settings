@@ -7,6 +7,8 @@
   if (mPasswordView == null) {
     mPasswordView=(TextView)mView.findViewById(R.id.password);
     mPasswordView.addTextChangedListener(this);
+    mPasswordView.setOnEditorActionListener(this);
+    mPasswordView.setOnKeyListener(this);
     ((CheckBox)mView.findViewById(R.id.show_password)).setOnCheckedChangeListener(this);
     if (mAccessPoint != null && mAccessPoint.isSaved()) {
       mPasswordView.setHint(R.string.wifi_unchanged);

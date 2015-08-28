@@ -1,0 +1,13 @@
+{
+  if (mSaveAndFinishWorker != null) {
+    Log.w(TAG,"startSaveAndFinish with an existing SaveAndFinishWorker.");
+    return;
+  }
+  mPasswordEntryInputDisabler.setInputEnabled(false);
+  setNextEnabled(false);
+  mSaveAndFinishWorker=new SaveAndFinishWorker();
+  getFragmentManager().beginTransaction().add(mSaveAndFinishWorker,FRAGMENT_TAG_SAVE_AND_FINISH).commit();
+  mSaveAndFinishWorker.setListener(this);
+  final boolean required=getActivity().getIntent().getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);
+  mSaveAndFinishWorker.start(mLockPatternUtils,required,mHasChallenge,mChallenge,mChosenPassword,mCurrentPassword,mRequestedQuality);
+}

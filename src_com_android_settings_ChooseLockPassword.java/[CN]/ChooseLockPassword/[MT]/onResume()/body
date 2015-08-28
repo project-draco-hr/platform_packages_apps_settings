@@ -1,6 +1,10 @@
 {
   super.onResume();
   updateStage(mUiStage);
-  mPasswordEntryInputDisabler.setInputEnabled(true);
-  mKeyboardView.requestFocus();
+  if (mSaveAndFinishWorker != null) {
+    mSaveAndFinishWorker.setListener(this);
+  }
+ else {
+    mKeyboardView.requestFocus();
+  }
 }

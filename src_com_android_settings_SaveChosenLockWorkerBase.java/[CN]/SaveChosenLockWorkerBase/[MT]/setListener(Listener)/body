@@ -1,0 +1,9 @@
+{
+  if (mListener == listener) {
+    return;
+  }
+  mListener=listener;
+  if (mFinished && mListener != null) {
+    mListener.onChosenLockSaveFinished(mWasSecureBefore,mResultData);
+  }
+}

@@ -37,5 +37,6 @@
       mCurrentPattern=savedInstanceState.getString(KEY_CURRENT_PATTERN);
     }
     updateStage(Stage.values()[savedInstanceState.getInt(KEY_UI_STAGE)]);
+    mSaveAndFinishWorker=(SaveAndFinishWorker)getFragmentManager().findFragmentByTag(FRAGMENT_TAG_SAVE_AND_FINISH);
   }
 }

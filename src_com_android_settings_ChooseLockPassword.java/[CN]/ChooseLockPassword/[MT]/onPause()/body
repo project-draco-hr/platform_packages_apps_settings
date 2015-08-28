@@ -1,8 +1,7 @@
 {
   mHandler.removeMessages(MSG_SHOW_ERROR);
-  if (mPendingLockCheck != null) {
-    mPendingLockCheck.cancel(false);
-    mPendingLockCheck=null;
+  if (mSaveAndFinishWorker != null) {
+    mSaveAndFinishWorker.setListener(null);
   }
   super.onPause();
 }

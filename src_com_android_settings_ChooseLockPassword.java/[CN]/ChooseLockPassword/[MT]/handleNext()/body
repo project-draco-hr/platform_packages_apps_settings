@@ -1,5 +1,5 @@
 {
-  if (mDone)   return;
+  if (mSaveAndFinishWorker != null)   return;
   mChosenPassword=mPasswordEntry.getText().toString();
   if (TextUtils.isEmpty(mChosenPassword)) {
     return;
@@ -15,9 +15,7 @@
   }
  else   if (mUiStage == Stage.NeedToConfirm) {
     if (mFirstPin.equals(mChosenPassword)) {
-      setNextEnabled(false);
-      mDone=true;
-      new SaveChosenPasswordAndFinish().execute();
+      startSaveAndFinish();
     }
  else {
       CharSequence tmp=mPasswordEntry.getText();

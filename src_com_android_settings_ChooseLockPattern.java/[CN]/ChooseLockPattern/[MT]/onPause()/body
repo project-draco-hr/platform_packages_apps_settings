@@ -1,7 +1,6 @@
 {
   super.onPause();
-  if (mPendingLockCheck != null) {
-    mPendingLockCheck.cancel(false);
-    mPendingLockCheck=null;
+  if (mSaveAndFinishWorker != null) {
+    mSaveAndFinishWorker.setListener(null);
   }
 }

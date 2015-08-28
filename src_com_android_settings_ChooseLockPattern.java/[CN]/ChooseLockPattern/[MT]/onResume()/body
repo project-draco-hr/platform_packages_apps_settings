@@ -1,4 +1,10 @@
 {
   super.onResume();
-  mLockPatternView.enableInput();
+  if (mSaveAndFinishWorker != null) {
+    setRightButtonEnabled(false);
+    mSaveAndFinishWorker.setListener(this);
+  }
+ else {
+    mLockPatternView.enableInput();
+  }
 }

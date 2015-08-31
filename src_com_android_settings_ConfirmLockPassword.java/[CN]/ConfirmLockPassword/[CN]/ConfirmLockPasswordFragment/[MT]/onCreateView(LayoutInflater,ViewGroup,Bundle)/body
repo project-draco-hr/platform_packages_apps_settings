@@ -27,5 +27,10 @@
   mAppearAnimationUtils=new AppearAnimationUtils(getContext(),220,2f,1f,AnimationUtils.loadInterpolator(getContext(),android.R.interpolator.linear_out_slow_in));
   mDisappearAnimationUtils=new DisappearAnimationUtils(getContext(),110,1f,0.5f,AnimationUtils.loadInterpolator(getContext(),android.R.interpolator.fast_out_linear_in));
   setAccessibilityTitle(mHeaderTextView.getText());
+  mCredentialCheckResultTracker=(CredentialCheckResultTracker)getFragmentManager().findFragmentByTag(FRAGMENT_TAG_CHECK_LOCK_RESULT);
+  if (mCredentialCheckResultTracker == null) {
+    mCredentialCheckResultTracker=new CredentialCheckResultTracker();
+    getFragmentManager().beginTransaction().add(mCredentialCheckResultTracker,FRAGMENT_TAG_CHECK_LOCK_RESULT).commit();
+  }
   return view;
 }

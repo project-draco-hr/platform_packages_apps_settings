@@ -2,10 +2,11 @@
   super.onResume();
   long deadline=mLockPatternUtils.getLockoutAttemptDeadline(mEffectiveUserId);
   if (deadline != 0) {
+    mCredentialCheckResultTracker.clearResult();
     handleAttemptLockout(deadline);
   }
  else   if (!mLockPatternView.isEnabled()) {
-    mNumWrongConfirmAttempts=0;
     updateStage(Stage.NeedToUnlock);
   }
+  mCredentialCheckResultTracker.setListener(this);
 }

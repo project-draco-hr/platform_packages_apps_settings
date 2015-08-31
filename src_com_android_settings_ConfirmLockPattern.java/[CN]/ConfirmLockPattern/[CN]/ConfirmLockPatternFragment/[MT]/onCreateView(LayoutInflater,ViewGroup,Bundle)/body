@@ -17,10 +17,7 @@
   mLockPatternView.setInStealthMode(!mLockPatternUtils.isVisiblePatternEnabled(mEffectiveUserId));
   mLockPatternView.setOnPatternListener(mConfirmExistingLockPatternListener);
   updateStage(Stage.NeedToUnlock);
-  if (savedInstanceState != null) {
-    mNumWrongConfirmAttempts=savedInstanceState.getInt(KEY_NUM_WRONG_ATTEMPTS);
-  }
- else {
+  if (savedInstanceState == null) {
     if (!mLockPatternUtils.isLockPatternEnabled(mEffectiveUserId)) {
       getActivity().setResult(Activity.RESULT_OK);
       getActivity().finish();
@@ -34,5 +31,10 @@
   }
 );
   setAccessibilityTitle(mHeaderTextView.getText());
+  mCredentialCheckResultTracker=(CredentialCheckResultTracker)getFragmentManager().findFragmentByTag(FRAGMENT_TAG_CHECK_LOCK_RESULT);
+  if (mCredentialCheckResultTracker == null) {
+    mCredentialCheckResultTracker=new CredentialCheckResultTracker();
+    getFragmentManager().beginTransaction().add(mCredentialCheckResultTracker,FRAGMENT_TAG_CHECK_LOCK_RESULT).commit();
+  }
   return view;
 }

@@ -1,8 +1,15 @@
 {
+  if (mDisappearing) {
+    return;
+  }
+  mDisappearing=true;
   if (getActivity().getThemeResId() == R.style.Theme_ConfirmDeviceCredentialsDark) {
     mLockPatternView.clearPattern();
     mDisappearAnimationUtils.startAnimation2d(getActiveViews(),new Runnable(){
       @Override public void run(){
+        if (getActivity() == null || getActivity().isFinishing()) {
+          return;
+        }
         getActivity().setResult(RESULT_OK,intent);
         getActivity().finish();
         getActivity().overridePendingTransition(R.anim.confirm_credential_close_enter,R.anim.confirm_credential_close_exit);

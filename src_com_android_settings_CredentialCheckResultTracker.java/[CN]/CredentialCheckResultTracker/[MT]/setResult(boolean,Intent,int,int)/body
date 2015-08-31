@@ -1,0 +1,10 @@
+{
+  mResultMatched=matched;
+  mResultData=intent;
+  mResultTimeoutMs=timeoutMs;
+  mResultEffectiveUserId=effectiveUserId;
+  mHasResult=true;
+  if (mListener != null) {
+    mListener.onCredentialChecked(mResultMatched,mResultData,mResultTimeoutMs,mResultEffectiveUserId);
+  }
+}

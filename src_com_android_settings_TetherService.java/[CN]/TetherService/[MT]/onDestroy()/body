@@ -4,7 +4,7 @@
   }
   SharedPreferences prefs=getSharedPreferences(PREFS,MODE_PRIVATE);
   prefs.edit().putString(KEY_TETHERS,tethersToString(mCurrentTethers)).commit();
-  if (DEBUG)   Log.d(TAG,"Destroying WifiProvisionService");
+  if (DEBUG)   Log.d(TAG,"Destroying TetherService");
   unregisterReceiver(mReceiver);
   super.onDestroy();
 }

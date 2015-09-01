@@ -1,11 +1,12 @@
 {
   final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
-  if (!Utils.isManagedProfile(um)) {
+  UserInfo userInfo=um.getUserInfo(UserHandle.myUserId());
+  if (userInfo == null || !userInfo.isManagedProfile()) {
     return;
   }
   Log.i(TAG,"Received broadcast: " + broadcast.getAction() + ". Setting up intent forwarding for managed profile.");
   final PackageManager pm=context.getPackageManager();
-  pm.clearCrossProfileIntentFilters(UserHandle.myUserId());
+  pm.clearCrossProfileIntentFilters(userInfo.id);
   Intent intent=new Intent();
   intent.addCategory(Intent.CATEGORY_DEFAULT);
   intent.setPackage(context.getPackageName());
@@ -16,7 +17,7 @@
     if (info.filter != null && info.activityInfo != null && info.activityInfo.metaData != null) {
       boolean shouldForward=info.activityInfo.metaData.getBoolean(PRIMARY_PROFILE_SETTING);
       if (shouldForward) {
-        pm.addCrossProfileIntentFilter(info.filter,UserHandle.myUserId(),UserHandle.USER_OWNER,PackageManager.SKIP_CURRENT_PROFILE);
+        pm.addCrossProfileIntentFilter(info.filter,userInfo.id,userInfo.profileGroupId,PackageManager.SKIP_CURRENT_PROFILE);
       }
     }
   }

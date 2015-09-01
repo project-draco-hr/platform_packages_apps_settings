@@ -4,8 +4,5 @@
     mCountdownTimer.cancel();
     mCountdownTimer=null;
   }
-  if (mPendingLockCheck != null) {
-    mPendingLockCheck.cancel(false);
-    mPendingLockCheck=null;
-  }
+  mCredentialCheckResultTracker.setListener(null);
 }

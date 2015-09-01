@@ -1,0 +1,16 @@
+{
+  mLockPatternView.setEnabled(true);
+  if (matched) {
+    startDisappearAnimation(intent);
+  }
+ else {
+    if (timeoutMs > 0) {
+      long deadline=mLockPatternUtils.setLockoutAttemptDeadline(effectiveUserId,timeoutMs);
+      handleAttemptLockout(deadline);
+    }
+ else {
+      updateStage(Stage.NeedToUnlockWrong);
+      postClearPatternRunnable();
+    }
+  }
+}

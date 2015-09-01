@@ -1,0 +1,9 @@
+{
+  if (mListener == listener) {
+    return;
+  }
+  mListener=listener;
+  if (mListener != null && mHasResult) {
+    mListener.onCredentialChecked(mResultMatched,mResultData,mResultTimeoutMs,mResultEffectiveUserId);
+  }
+}

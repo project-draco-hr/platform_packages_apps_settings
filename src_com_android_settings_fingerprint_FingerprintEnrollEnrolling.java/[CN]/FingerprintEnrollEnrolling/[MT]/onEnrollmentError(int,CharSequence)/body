@@ -1,0 +1,14 @@
+{
+  int msgId;
+switch (errMsgId) {
+case FingerprintManager.FINGERPRINT_ERROR_TIMEOUT:
+    msgId=R.string.security_settings_fingerprint_enroll_error_timeout_dialog_message;
+  break;
+default :
+msgId=R.string.security_settings_fingerprint_enroll_error_generic_dialog_message;
+break;
+}
+showErrorDialog(getText(msgId),errMsgId);
+stopIconAnimation();
+mErrorText.removeCallbacks(mTouchAgainRunnable);
+}

@@ -9,7 +9,7 @@
         matched=true;
         intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
       }
-      onPasswordChecked(matched,intent,timeoutMs,localEffectiveUserId);
+      mCredentialCheckResultTracker.setResult(matched,intent,timeoutMs,localEffectiveUserId);
     }
   }
 );

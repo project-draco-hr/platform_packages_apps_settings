@@ -14,11 +14,9 @@
   mAirplaneModePreference=(SwitchPreference)findPreference(KEY_TOGGLE_AIRPLANE);
   SwitchPreference nfc=(SwitchPreference)findPreference(KEY_TOGGLE_NFC);
   PreferenceScreen androidBeam=(PreferenceScreen)findPreference(KEY_ANDROID_BEAM_SETTINGS);
-  SwitchPreference nsd=(SwitchPreference)findPreference(KEY_TOGGLE_NSD);
   mAirplaneModeEnabler=new AirplaneModeEnabler(activity,mAirplaneModePreference);
   mNfcEnabler=new NfcEnabler(activity,nfc,androidBeam);
   mButtonWfc=(PreferenceScreen)findPreference(KEY_WFC_SETTINGS);
-  getPreferenceScreen().removePreference(nsd);
   String toggleable=Settings.Global.getString(activity.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   final boolean isWimaxEnabled=isAdmin && this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);
   if (!isWimaxEnabled || mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS)) {

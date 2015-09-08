@@ -4,9 +4,13 @@
   mActivitiesButton.setOnClickListener(new View.OnClickListener(){
     @Override public void onClick(    View v){
       if (mUsbManager != null) {
+        final int userId=UserHandle.myUserId();
         mPm.clearPackagePreferredActivities(mPackageName);
+        if (isDefaultBrowser(mPackageName)) {
+          mPm.setDefaultBrowserPackageName(null,userId);
+        }
         try {
-          mUsbManager.clearDefaults(mPackageName,UserHandle.myUserId());
+          mUsbManager.clearDefaults(mPackageName,userId);
         }
  catch (        RemoteException e) {
           Log.e(TAG,"mUsbManager.clearDefaults",e);

@@ -51,6 +51,13 @@
  else {
     removePreference(KEY_CAMERA_GESTURE);
   }
+  if (isCameraDoubleTapPowerGestureAvailable(getResources())) {
+    mCameraDoubleTapPowerGesturePreference=(SwitchPreference)findPreference(KEY_CAMERA_DOUBLE_TAP_POWER_GESTURE);
+    mCameraDoubleTapPowerGesturePreference.setOnPreferenceChangeListener(this);
+  }
+ else {
+    removePreference(KEY_CAMERA_DOUBLE_TAP_POWER_GESTURE);
+  }
   if (RotationPolicy.isRotationLockToggleVisible(activity)) {
     DropDownPreference rotatePreference=(DropDownPreference)findPreference(KEY_AUTO_ROTATE);
     rotatePreference.addItem(activity.getString(R.string.display_auto_rotate_rotate),false);

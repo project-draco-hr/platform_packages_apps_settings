@@ -5,7 +5,7 @@
       connect(mSelectedAccessPoint.getConfig());
     }
   }
- else   if (configController.isModify()) {
+ else   if (configController.getMode() == WifiConfigUiBase.MODE_MODIFY) {
     mWifiManager.save(config,mSaveListener);
   }
  else {

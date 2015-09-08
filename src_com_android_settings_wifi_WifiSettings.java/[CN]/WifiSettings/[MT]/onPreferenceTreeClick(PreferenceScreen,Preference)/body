@@ -10,12 +10,10 @@
       connect(mSelectedAccessPoint.getConfig());
     }
  else     if (mSelectedAccessPoint.isSaved()) {
-      mDlgModify=false;
-      showDialog(mSelectedAccessPoint,false);
+      showDialog(mSelectedAccessPoint,WifiConfigUiBase.MODE_VIEW);
     }
  else {
-      mDlgModify=false;
-      showDialog(mSelectedAccessPoint,true);
+      showDialog(mSelectedAccessPoint,WifiConfigUiBase.MODE_CONNECT);
     }
   }
  else {

@@ -9,4 +9,7 @@
   }
   mSubscriptionInfo=SubscriptionManager.from(activity).getActiveSubscriptionInfo(subId);
   mUiccController=UiccController.getInstance();
+  CarrierConfigManager configManager=(CarrierConfigManager)getSystemService(Context.CARRIER_CONFIG_SERVICE);
+  PersistableBundle b=configManager.getConfig();
+  mHideImsApn=b.getBoolean(CarrierConfigManager.KEY_HIDE_IMS_APN_BOOL);
 }

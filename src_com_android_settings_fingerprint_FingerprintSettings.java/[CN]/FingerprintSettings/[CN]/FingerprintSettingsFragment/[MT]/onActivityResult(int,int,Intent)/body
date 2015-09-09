@@ -7,6 +7,13 @@
       }
     }
   }
+ else   if (requestCode == ADD_FINGERPRINT_REQUEST) {
+    if (resultCode == RESULT_TIMEOUT) {
+      Activity activity=getActivity();
+      activity.setResult(RESULT_TIMEOUT);
+      activity.finish();
+    }
+  }
   if (mToken == null) {
     getActivity().finish();
   }

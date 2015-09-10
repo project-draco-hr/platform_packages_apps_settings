@@ -33,6 +33,10 @@
     boolean value=(Boolean)objValue;
     Settings.Secure.putInt(getContentResolver(),CAMERA_GESTURE_DISABLED,value ? 0 : 1);
   }
+  if (preference == mCameraDoubleTapPowerGesturePreference) {
+    boolean value=(Boolean)objValue;
+    Settings.Secure.putInt(getContentResolver(),CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED,value ? 0 : 1);
+  }
   if (preference == mNightModePreference) {
     try {
       final int value=Integer.parseInt((String)objValue);

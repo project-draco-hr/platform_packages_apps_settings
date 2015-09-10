@@ -1,4 +1,5 @@
 {
   super.onAccessPointsChanged();
-  updateFooter(getPreferenceScreen().getPreferenceCount() == 0);
+  PreferenceScreen preferenceScreen=getPreferenceScreen();
+  updateFooter(preferenceScreen == null || preferenceScreen.getPreferenceCount() == 0);
 }

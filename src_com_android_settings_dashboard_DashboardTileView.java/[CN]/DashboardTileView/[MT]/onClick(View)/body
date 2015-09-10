@@ -1,17 +1,3 @@
 {
-  if (mTile.fragment != null) {
-    Utils.startWithFragment(getContext(),mTile.fragment,mTile.fragmentArguments,null,0,mTile.titleRes,mTile.getTitle(getResources()));
-  }
- else   if (mTile.intent != null) {
-    int numUserHandles=mTile.userHandle.size();
-    if (numUserHandles > 1) {
-      ProfileSelectDialog.show(((Activity)getContext()).getFragmentManager(),mTile);
-    }
- else     if (numUserHandles == 1) {
-      getContext().startActivityAsUser(mTile.intent,mTile.userHandle.get(0));
-    }
- else {
-      getContext().startActivity(mTile.intent);
-    }
-  }
+  clickTile(getContext(),mTile);
 }

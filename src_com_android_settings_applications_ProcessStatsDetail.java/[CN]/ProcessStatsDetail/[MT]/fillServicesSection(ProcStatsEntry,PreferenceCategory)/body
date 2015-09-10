@@ -28,7 +28,7 @@
     for (int is=0; is < services.size(); is++) {
       final ProcStatsEntry.Service service=services.get(is);
       CharSequence label=getLabel(service);
-      CancellablePreference servicePref=new CancellablePreference(getActivity());
+      CancellablePreference servicePref=new CancellablePreference(getPrefContext());
       servicePref.setSelectable(false);
       servicePref.setTitle(label);
       servicePref.setSummary(ProcStatsPackageEntry.getFrequency(service.mDuration / (float)mTotalTime,getActivity()));

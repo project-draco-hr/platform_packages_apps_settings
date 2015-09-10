@@ -19,7 +19,7 @@
   mEnginePreferenceCategory.removeAll();
   List<EngineInfo> engines=mEnginesHelper.getEngines();
   for (  EngineInfo engine : engines) {
-    TtsEnginePreference enginePref=new TtsEnginePreference(getActivity(),engine,this,activity);
+    TtsEnginePreference enginePref=new TtsEnginePreference(getPrefContext(),engine,this,activity);
     mEnginePreferenceCategory.addPreference(enginePref);
   }
   checkVoiceData(mCurrentEngine);

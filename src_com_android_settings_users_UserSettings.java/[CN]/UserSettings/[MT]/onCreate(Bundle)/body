@@ -18,7 +18,7 @@
   final int myUserId=UserHandle.myUserId();
   addPreferencesFromResource(R.xml.user_settings);
   mUserListCategory=(PreferenceGroup)findPreference(KEY_USER_LIST);
-  mMePreference=new UserPreference(context,null,myUserId,null,null);
+  mMePreference=new UserPreference(getPrefContext(),null,myUserId,null,null);
   mMePreference.setKey(KEY_USER_ME);
   mMePreference.setOnPreferenceClickListener(this);
   if (mUserCaps.mIsAdmin) {

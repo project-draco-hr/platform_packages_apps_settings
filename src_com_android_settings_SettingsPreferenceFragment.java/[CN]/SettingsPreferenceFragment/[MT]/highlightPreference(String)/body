@@ -3,29 +3,5 @@
   final int position=canUseListViewForHighLighting(key);
   if (position >= 0) {
     mPreferenceHighlighted=true;
-    final ListView listView=getListView();
-    final ListAdapter adapter=listView.getAdapter();
-    ((PreferenceGroupAdapter)adapter).setHighlightedDrawable(highlight);
-    ((PreferenceGroupAdapter)adapter).setHighlighted(position);
-    listView.post(new Runnable(){
-      @Override public void run(){
-        listView.setSelection(position);
-        listView.postDelayed(new Runnable(){
-          @Override public void run(){
-            final int index=position - listView.getFirstVisiblePosition();
-            if (index >= 0 && index < listView.getChildCount()) {
-              final View v=listView.getChildAt(index);
-              final int centerX=v.getWidth() / 2;
-              final int centerY=v.getHeight() / 2;
-              highlight.setHotspot(centerX,centerY);
-              v.setPressed(true);
-              v.setPressed(false);
-            }
-          }
-        }
-,DELAY_HIGHLIGHT_DURATION_MILLIS);
-      }
-    }
-);
   }
 }

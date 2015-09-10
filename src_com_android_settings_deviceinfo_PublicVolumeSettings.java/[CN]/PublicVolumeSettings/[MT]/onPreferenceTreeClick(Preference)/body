@@ -1,0 +1,19 @@
+{
+  final Context context=getActivity();
+  if (pref == mMount) {
+    new MountTask(context,mVolume).execute();
+  }
+ else   if (pref == mFormatPublic) {
+    final Intent intent=new Intent(context,StorageWizardFormatConfirm.class);
+    intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
+    intent.putExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,false);
+    startActivity(intent);
+  }
+ else   if (pref == mFormatPrivate) {
+    final Intent intent=new Intent(context,StorageWizardFormatConfirm.class);
+    intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
+    intent.putExtra(StorageWizardFormatConfirm.EXTRA_FORMAT_PRIVATE,true);
+    startActivity(intent);
+  }
+  return super.onPreferenceTreeClick(pref);
+}

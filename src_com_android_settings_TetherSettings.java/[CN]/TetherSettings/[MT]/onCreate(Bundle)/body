@@ -7,7 +7,7 @@
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING) || !mUm.isAdminUser()) {
     mUnavailable=true;
-    setPreferenceScreen(new PreferenceScreen(getActivity(),null));
+    setPreferenceScreen(new PreferenceScreen(getPrefContext(),null));
     return;
   }
   final Activity activity=getActivity();

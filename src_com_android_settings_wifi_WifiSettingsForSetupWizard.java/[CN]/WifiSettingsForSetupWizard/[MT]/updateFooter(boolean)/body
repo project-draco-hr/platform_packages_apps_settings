@@ -1,15 +1,14 @@
 {
-  if (isEmpty != mListLastEmpty && hasListView()) {
-    final ListView list=getListView();
-    list.removeFooterView(mEmptyFooter);
-    list.removeFooterView(mAddOtherNetworkItem);
-    list.removeFooterView(mMacAddressFooter);
+  if (isEmpty != mListLastEmpty) {
     if (isEmpty) {
-      list.addFooterView(mEmptyFooter,null,false);
+      setFooterView(mEmptyFooter);
     }
  else {
-      list.addFooterView(mAddOtherNetworkItem,null,true);
-      list.addFooterView(mMacAddressFooter,null,false);
+      LinearLayout layout=new LinearLayout(getContext());
+      layout.setOrientation(LinearLayout.VERTICAL);
+      layout.addView(mAddOtherNetworkItem);
+      layout.addView(mMacAddressFooter);
+      setFooterView(layout);
     }
     mListLastEmpty=isEmpty;
   }

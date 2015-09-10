@@ -1,0 +1,13 @@
+{
+  super.onBindViewHolder(holder);
+  holder.setDividerAllowedAbove(true);
+  holder.setDividerAllowedBelow(true);
+  holder.itemView.setLongClickable(true);
+  holder.itemView.setOnLongClickListener(new OnLongClickListener(){
+    @Override public boolean onLongClick(    View v){
+      copyPreference(getContext(),CopyablePreference.this);
+      return true;
+    }
+  }
+);
+}

@@ -20,7 +20,7 @@
  else {
       final boolean showSettings=mUserCaps.mIsAdmin && (voiceCapable || user.isRestricted());
       final boolean showDelete=mUserCaps.mIsAdmin && (!voiceCapable && !user.isRestricted() && !user.isGuest());
-      pref=new UserPreference(context,null,user.id,showSettings ? this : null,showDelete ? this : null);
+      pref=new UserPreference(getPrefContext(),null,user.id,showSettings ? this : null,showDelete ? this : null);
       pref.setOnPreferenceClickListener(this);
       pref.setKey("id=" + user.id);
       userPreferences.add(pref);
@@ -54,14 +54,14 @@
     }
   }
   if (mAddingUser) {
-    UserPreference pref=new UserPreference(getActivity(),null,UserPreference.USERID_UNKNOWN,null,null);
+    UserPreference pref=new UserPreference(getPrefContext(),null,UserPreference.USERID_UNKNOWN,null,null);
     pref.setEnabled(false);
     pref.setTitle(R.string.user_new_user_name);
     pref.setIcon(getEncircledDefaultIcon());
     userPreferences.add(pref);
   }
   if (!mUserCaps.mIsGuest && (mUserCaps.mCanAddGuest || findGuest() != null)) {
-    UserPreference pref=new UserPreference(getActivity(),null,UserPreference.USERID_GUEST_DEFAULTS,mUserCaps.mIsAdmin && voiceCapable ? this : null,null);
+    UserPreference pref=new UserPreference(getPrefContext(),null,UserPreference.USERID_GUEST_DEFAULTS,mUserCaps.mIsAdmin && voiceCapable ? this : null,null);
     pref.setTitle(R.string.user_guest);
     pref.setIcon(getEncircledDefaultIcon());
     pref.setOnPreferenceClickListener(this);

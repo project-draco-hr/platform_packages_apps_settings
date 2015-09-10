@@ -1,0 +1,10 @@
+{
+  super(context,attrs,defStyleAttr,defStyleRes);
+  TypedArray a=context.obtainStyledAttributes(attrs,com.android.internal.R.styleable.ProgressBar,defStyleAttr,defStyleRes);
+  setMax(a.getInt(com.android.internal.R.styleable.ProgressBar_max,mMax));
+  a.recycle();
+  a=context.obtainStyledAttributes(attrs,com.android.internal.R.styleable.SeekBarPreference,defStyleAttr,defStyleRes);
+  final int layoutResId=a.getResourceId(com.android.internal.R.styleable.SeekBarPreference_layout,com.android.internal.R.layout.preference_widget_seekbar);
+  a.recycle();
+  setLayoutResource(layoutResId);
+}

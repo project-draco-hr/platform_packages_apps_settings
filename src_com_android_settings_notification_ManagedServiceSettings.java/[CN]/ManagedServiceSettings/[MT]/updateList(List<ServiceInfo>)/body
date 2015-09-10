@@ -5,7 +5,7 @@
   for (  ServiceInfo service : services) {
     final ComponentName cn=new ComponentName(service.packageName,service.name);
     final String title=service.loadLabel(mPM).toString();
-    final SwitchPreference pref=new SwitchPreference(mContext);
+    final SwitchPreference pref=new SwitchPreference(getPrefContext());
     pref.setPersistent(false);
     pref.setIcon(service.loadIcon(mPM));
     pref.setTitle(title);

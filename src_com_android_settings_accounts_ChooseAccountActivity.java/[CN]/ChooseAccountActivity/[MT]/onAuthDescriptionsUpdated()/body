@@ -33,7 +33,7 @@
     mAddAccountGroup.removeAll();
     for (    ProviderEntry pref : mProviderList) {
       Drawable drawable=getDrawableForType(pref.type);
-      ProviderPreference p=new ProviderPreference(this,pref.type,drawable,pref.name);
+      ProviderPreference p=new ProviderPreference(getPreferenceScreen().getContext(),pref.type,drawable,pref.name);
       mAddAccountGroup.addPreference(p);
     }
   }

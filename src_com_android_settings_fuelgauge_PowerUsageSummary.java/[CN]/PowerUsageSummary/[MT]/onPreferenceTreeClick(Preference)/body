@@ -1,0 +1,9 @@
+{
+  if (!(preference instanceof PowerGaugePreference)) {
+    return false;
+  }
+  PowerGaugePreference pgp=(PowerGaugePreference)preference;
+  BatteryEntry entry=pgp.getInfo();
+  PowerUsageDetail.startBatteryDetailPage((SettingsActivity)getActivity(),mStatsHelper,mStatsType,entry,true,true);
+  return super.onPreferenceTreeClick(preference);
+}

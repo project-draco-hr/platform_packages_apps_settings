@@ -1,0 +1,19 @@
+{
+  final String key=preference.getKey();
+  if (KEY_UNLOCK_SET_OR_CHANGE.equals(key)) {
+    startFragment(this,"com.android.settings.ChooseLockGeneric$ChooseLockGenericFragment",R.string.lock_settings_picker_title,SET_OR_CHANGE_LOCK_METHOD_REQUEST,null);
+  }
+ else   if (KEY_TRUST_AGENT.equals(key)) {
+    ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
+    mTrustAgentClickIntent=preference.getIntent();
+    boolean confirmationLaunched=helper.launchConfirmationActivity(CHANGE_TRUST_AGENT_SETTINGS,preference.getTitle());
+    if (!confirmationLaunched && mTrustAgentClickIntent != null) {
+      startActivity(mTrustAgentClickIntent);
+      mTrustAgentClickIntent=null;
+    }
+  }
+ else {
+    return super.onPreferenceTreeClick(preference);
+  }
+  return true;
+}

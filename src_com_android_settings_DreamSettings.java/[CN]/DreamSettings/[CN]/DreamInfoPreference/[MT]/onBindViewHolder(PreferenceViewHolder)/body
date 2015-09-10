@@ -1,0 +1,26 @@
+{
+  super.onBindViewHolder(holder);
+  RadioButton radioButton=(RadioButton)holder.findViewById(android.R.id.button1);
+  radioButton.setChecked(mInfo.isActive);
+  radioButton.setOnTouchListener(new OnTouchListener(){
+    @Override public boolean onTouch(    View v,    MotionEvent event){
+      holder.itemView.onTouchEvent(event);
+      return false;
+    }
+  }
+);
+  boolean showSettings=mInfo.settingsComponentName != null;
+  View settingsDivider=holder.findViewById(R.id.divider);
+  settingsDivider.setVisibility(showSettings ? View.VISIBLE : View.INVISIBLE);
+  ImageView settingsButton=(ImageView)holder.findViewById(android.R.id.button2);
+  settingsButton.setVisibility(showSettings ? View.VISIBLE : View.INVISIBLE);
+  settingsButton.setAlpha(mInfo.isActive ? 1f : Utils.DISABLED_ALPHA);
+  settingsButton.setEnabled(mInfo.isActive);
+  settingsButton.setFocusable(mInfo.isActive);
+  settingsButton.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      mBackend.launchSettings(mInfo);
+    }
+  }
+);
+}

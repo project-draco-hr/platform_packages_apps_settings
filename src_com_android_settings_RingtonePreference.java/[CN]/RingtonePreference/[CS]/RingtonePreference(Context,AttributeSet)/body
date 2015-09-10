@@ -1,0 +1,9 @@
+{
+  super(context,attrs);
+  final TypedArray a=context.obtainStyledAttributes(attrs,com.android.internal.R.styleable.RingtonePreference,0,0);
+  mRingtoneType=a.getInt(com.android.internal.R.styleable.RingtonePreference_ringtoneType,RingtoneManager.TYPE_RINGTONE);
+  mShowDefault=a.getBoolean(com.android.internal.R.styleable.RingtonePreference_showDefault,true);
+  mShowSilent=a.getBoolean(com.android.internal.R.styleable.RingtonePreference_showSilent,true);
+  setIntent(new Intent(RingtoneManager.ACTION_RINGTONE_PICKER));
+  a.recycle();
+}

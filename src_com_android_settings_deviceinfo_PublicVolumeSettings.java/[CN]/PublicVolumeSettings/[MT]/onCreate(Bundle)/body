@@ -21,7 +21,7 @@
   mVolumeId=mVolume.getId();
   addPreferencesFromResource(R.xml.device_info_storage_volume);
   getPreferenceScreen().setOrderingAsAdded(true);
-  mSummary=new StorageSummaryPreference(context);
+  mSummary=new StorageSummaryPreference(getPrefContext());
   mMount=buildAction(R.string.storage_menu_mount);
   mUnmount=new Button(getActivity());
   mUnmount.setText(R.string.storage_menu_unmount);

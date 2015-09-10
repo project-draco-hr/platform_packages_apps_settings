@@ -1,0 +1,13 @@
+{
+  if (mInfo.icon != null) {
+    ((ImageView)row.findViewById(android.R.id.icon)).setImageDrawable(mInfo.icon);
+  }
+  if (mInfo.pkgicon != null) {
+    ((ImageView)row.findViewById(R.id.pkgicon)).setImageDrawable(mInfo.pkgicon);
+  }
+  ((DateTimeView)row.findViewById(R.id.timestamp)).setTime(mInfo.timestamp);
+  ((TextView)row.findViewById(android.R.id.title)).setText(mInfo.title);
+  ((TextView)row.findViewById(R.id.pkgname)).setText(mInfo.pkgname);
+  row.findViewById(R.id.extra).setVisibility(View.GONE);
+  row.itemView.setAlpha(mInfo.active ? 1.0f : 0.5f);
+}

@@ -3,6 +3,5 @@
   TextView v=(TextView)LayoutInflater.from(view.getContext()).inflate(R.layout.fingerprint_settings_footer,null);
   v.setText(LearnMoreSpan.linkify(getText(isFingerprintDisabled() ? R.string.security_settings_fingerprint_enroll_disclaimer_lockscreen_disabled : R.string.security_settings_fingerprint_enroll_disclaimer),getString(getHelpResource())));
   v.setMovementMethod(new LinkMovementMethod());
-  getListView().addFooterView(v);
-  getListView().setFooterDividersEnabled(false);
+  setFooterView(v);
 }

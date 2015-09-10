@@ -22,7 +22,7 @@
   if (mWifiDisplayStatus != null && mWifiDisplayStatus.getFeatureState() == WifiDisplayStatus.FEATURE_STATE_ON) {
     for (    WifiDisplay display : mWifiDisplayStatus.getDisplays()) {
       if (!display.isRemembered() && display.isAvailable() && !display.equals(mWifiDisplayStatus.getActiveDisplay())) {
-        preferenceScreen.addPreference(new UnpairedWifiDisplayPreference(getActivity(),display));
+        preferenceScreen.addPreference(new UnpairedWifiDisplayPreference(getPrefContext(),display));
       }
     }
     if (mWifiDisplayCertificationOn) {

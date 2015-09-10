@@ -3,7 +3,7 @@
   mUserManager=(UserManager)getSystemService(Context.USER_SERVICE);
   if (mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_VPN)) {
     mUnavailable=true;
-    setPreferenceScreen(new PreferenceScreen(getActivity(),null));
+    setPreferenceScreen(new PreferenceScreen(getPrefContext(),null));
     setHasOptionsMenu(false);
     return;
   }

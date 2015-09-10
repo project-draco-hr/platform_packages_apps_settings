@@ -14,7 +14,7 @@
     String packageName=app.packageName;
     if (packageName == null)     continue;
     final boolean isSettingsApp=packageName.equals(context.getPackageName());
-    AppRestrictionsPreference p=new AppRestrictionsPreference(context,this);
+    AppRestrictionsPreference p=new AppRestrictionsPreference(getPrefContext(),this);
     final boolean hasSettings=resolveInfoListHasPackage(receivers,packageName);
     if (isSettingsApp) {
       addLocationAppRestrictionsPreference(app,p);

@@ -14,7 +14,7 @@
   Collections.sort(entries,sEntryCompare);
   for (int ie=0; ie < entries.size(); ie++) {
     ProcStatsEntry entry=entries.get(ie);
-    Preference processPref=new Preference(getActivity());
+    Preference processPref=new Preference(getPrefContext());
     processPref.setTitle(entry.mLabel);
     processPref.setSelectable(false);
     long duration=Math.max(entry.mRunDuration,entry.mBgDuration);

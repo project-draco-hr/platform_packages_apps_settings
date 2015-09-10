@@ -1,0 +1,11 @@
+{
+  if (mInfo.isActive)   return;
+  for (int i=0; i < getPreferenceScreen().getPreferenceCount(); i++) {
+    DreamInfoPreference preference=(DreamInfoPreference)getPreferenceScreen().getPreference(i);
+    preference.mInfo.isActive=false;
+    preference.notifyChanged();
+  }
+  mInfo.isActive=true;
+  mBackend.setActiveDream(mInfo.componentName);
+  notifyChanged();
+}

@@ -3,13 +3,12 @@
   TextView empty=(TextView)getView().findViewById(android.R.id.empty);
   if (empty != null) {
     empty.setText(R.string.apn_settings_not_available);
-    getListView().setEmptyView(empty);
+    setEmptyView(empty);
   }
   if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS) || !mUm.isAdminUser()) {
     mUnavailable=true;
-    setPreferenceScreen(new PreferenceScreen(getActivity(),null));
+    setPreferenceScreen(new PreferenceScreen(getPrefContext(),null));
     return;
   }
   addPreferencesFromResource(R.xml.apn_settings);
-  getListView().setItemsCanFocus(true);
 }

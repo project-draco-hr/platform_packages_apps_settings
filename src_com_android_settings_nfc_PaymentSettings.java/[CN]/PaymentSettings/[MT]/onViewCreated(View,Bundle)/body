@@ -3,14 +3,15 @@
   ViewGroup contentRoot=(ViewGroup)getListView().getParent();
   View emptyView=getActivity().getLayoutInflater().inflate(R.layout.nfc_payment_empty,contentRoot,false);
   contentRoot.addView(emptyView);
-  getListView().setEmptyView(emptyView);
+  setEmptyView(emptyView);
   PreferenceManager manager=getPreferenceManager();
   PreferenceScreen screen=manager.createPreferenceScreen(getActivity());
   List<PaymentAppInfo> appInfos=mPaymentBackend.getPaymentAppInfos();
   if (appInfos != null && appInfos.size() > 0) {
-    NfcPaymentPreference preference=new NfcPaymentPreference(getActivity(),mPaymentBackend);
+    NfcPaymentPreference preference=new NfcPaymentPreference(getPrefContext(),mPaymentBackend);
+    preference.setKey("payment");
     screen.addPreference(preference);
-    NfcForegroundPreference foreground=new NfcForegroundPreference(getActivity(),mPaymentBackend);
+    NfcForegroundPreference foreground=new NfcForegroundPreference(getPrefContext(),mPaymentBackend);
     screen.addPreference(foreground);
   }
   setPreferenceScreen(screen);

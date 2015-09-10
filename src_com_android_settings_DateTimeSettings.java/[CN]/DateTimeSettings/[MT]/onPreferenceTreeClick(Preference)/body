@@ -1,0 +1,16 @@
+{
+  if (preference == mDatePref) {
+    showDialog(DIALOG_DATEPICKER);
+  }
+ else   if (preference == mTimePref) {
+    removeDialog(DIALOG_TIMEPICKER);
+    showDialog(DIALOG_TIMEPICKER);
+  }
+ else   if (preference == mTime24Pref) {
+    final boolean is24Hour=((SwitchPreference)mTime24Pref).isChecked();
+    set24Hour(is24Hour);
+    updateTimeAndDateDisplay(getActivity());
+    timeUpdated(is24Hour);
+  }
+  return super.onPreferenceTreeClick(preference);
+}

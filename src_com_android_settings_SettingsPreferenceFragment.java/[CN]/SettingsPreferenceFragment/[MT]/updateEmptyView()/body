@@ -1,0 +1,10 @@
+{
+  if (mEmptyView == null)   return;
+  if (getPreferenceScreen() != null) {
+    boolean show=(getPreferenceScreen().getPreferenceCount() - (mHeader != null ? 1 : 0) - (mFooter != null ? 1 : 0)) <= 0;
+    mEmptyView.setVisibility(show ? View.VISIBLE : View.GONE);
+  }
+ else {
+    mEmptyView.setVisibility(View.VISIBLE);
+  }
+}

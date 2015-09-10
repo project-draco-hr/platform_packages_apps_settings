@@ -1,0 +1,15 @@
+{
+  if (getPreferenceScreen() != null && mFooter != null) {
+    getPreferenceScreen().removePreference(mFooter);
+  }
+  if (footer != null) {
+    mFooter=footer;
+    mFooter.setOrder(Integer.MAX_VALUE);
+    if (getPreferenceScreen() != null) {
+      getPreferenceScreen().addPreference(mFooter);
+    }
+  }
+ else {
+    mFooter=null;
+  }
+}

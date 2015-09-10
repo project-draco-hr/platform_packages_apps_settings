@@ -18,14 +18,14 @@
       final Bundle fragmentArguments=new Bundle();
       fragmentArguments.putParcelable(AccountSyncSettings.ACCOUNT_KEY,accounts[0]);
       fragmentArguments.putParcelable(EXTRA_USER,userHandle);
-      accountTypePreferences.add(new AccountPreference(getActivity(),label,titleResPackageName,titleResId,AccountSyncSettings.class.getName(),fragmentArguments,helper.getDrawableForType(getActivity(),accountType)));
+      accountTypePreferences.add(new AccountPreference(getPrefContext(),label,titleResPackageName,titleResId,AccountSyncSettings.class.getName(),fragmentArguments,helper.getDrawableForType(getActivity(),accountType)));
     }
  else {
       final Bundle fragmentArguments=new Bundle();
       fragmentArguments.putString(ManageAccountsSettings.KEY_ACCOUNT_TYPE,accountType);
       fragmentArguments.putString(ManageAccountsSettings.KEY_ACCOUNT_LABEL,label.toString());
       fragmentArguments.putParcelable(EXTRA_USER,userHandle);
-      accountTypePreferences.add(new AccountPreference(getActivity(),label,titleResPackageName,titleResId,ManageAccountsSettings.class.getName(),fragmentArguments,helper.getDrawableForType(getActivity(),accountType)));
+      accountTypePreferences.add(new AccountPreference(getPrefContext(),label,titleResPackageName,titleResId,ManageAccountsSettings.class.getName(),fragmentArguments,helper.getDrawableForType(getActivity(),accountType)));
     }
     helper.preloadDrawableForType(getActivity(),accountType);
   }

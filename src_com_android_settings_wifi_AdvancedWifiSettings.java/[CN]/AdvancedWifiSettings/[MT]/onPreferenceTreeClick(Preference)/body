@@ -1,0 +1,10 @@
+{
+  String key=preference.getKey();
+  if (KEY_NOTIFY_OPEN_NETWORKS.equals(key)) {
+    Global.putInt(getContentResolver(),Settings.Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,((SwitchPreference)preference).isChecked() ? 1 : 0);
+  }
+ else {
+    return super.onPreferenceTreeClick(preference);
+  }
+  return true;
+}

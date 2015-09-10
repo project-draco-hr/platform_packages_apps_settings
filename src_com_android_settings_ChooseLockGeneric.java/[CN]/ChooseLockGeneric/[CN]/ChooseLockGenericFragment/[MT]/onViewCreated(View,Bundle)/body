@@ -1,9 +1,6 @@
 {
   super.onViewCreated(view,savedInstanceState);
   if (mForFingerprint) {
-    final LayoutInflater inflater=LayoutInflater.from(getContext());
-    final ListView listView=getListView();
-    final View fingerprintHeader=inflater.inflate(R.layout.choose_lock_generic_fingerprint_header,listView,false);
-    listView.addHeaderView(fingerprintHeader,null,false);
+    setHeaderView(R.layout.choose_lock_generic_fingerprint_header);
   }
 }

@@ -1,7 +1,7 @@
 {
   super.onCreate(savedInstanceState);
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
-  mProfileNotAvailablePreference=new Preference(getActivity());
+  mProfileNotAvailablePreference=new Preference(getPrefContext());
   mAuthorities=getActivity().getIntent().getStringArrayExtra(EXTRA_AUTHORITIES);
   if (mAuthorities != null) {
     mAuthoritiesCount=mAuthorities.length;

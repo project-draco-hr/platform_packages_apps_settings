@@ -7,7 +7,7 @@
       final InputDeviceIdentifier identifier=device.getIdentifier();
       final String keyboardLayoutDescriptor=mIm.getCurrentKeyboardLayoutForInputDevice(identifier);
       final KeyboardLayout keyboardLayout=keyboardLayoutDescriptor != null ? mIm.getKeyboardLayout(keyboardLayoutDescriptor) : null;
-      final PreferenceScreen pref=new PreferenceScreen(getActivity(),null);
+      final PreferenceScreen pref=new PreferenceScreen(getPrefContext(),null);
       pref.setTitle(device.getName());
       if (keyboardLayout != null) {
         pref.setSummary(keyboardLayout.toString());

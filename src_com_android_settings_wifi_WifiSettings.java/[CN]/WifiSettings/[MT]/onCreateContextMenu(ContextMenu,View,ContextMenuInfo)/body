@@ -1,25 +1,23 @@
 {
-  if (info instanceof AdapterContextMenuInfo) {
-    Preference preference=(Preference)getListView().getItemAtPosition(((AdapterContextMenuInfo)info).position);
-    if (preference instanceof AccessPointPreference) {
-      mSelectedAccessPoint=((AccessPointPreference)preference).getAccessPoint();
-      menu.setHeaderTitle(mSelectedAccessPoint.getSsid());
-      if (mSelectedAccessPoint.isConnectable()) {
-        menu.add(Menu.NONE,MENU_ID_CONNECT,0,R.string.wifi_menu_connect);
-      }
-      WifiConfiguration config=mSelectedAccessPoint.getConfig();
-      if (isEditabilityLockedDown(getActivity(),config)) {
-        return;
-      }
-      if (mSelectedAccessPoint.isSaved() || mSelectedAccessPoint.isEphemeral()) {
-        menu.add(Menu.NONE,MENU_ID_FORGET,0,R.string.wifi_menu_forget);
-      }
-      if (mSelectedAccessPoint.isSaved()) {
-        menu.add(Menu.NONE,MENU_ID_MODIFY,0,R.string.wifi_menu_modify);
-        NfcAdapter nfcAdapter=NfcAdapter.getDefaultAdapter(getActivity());
-        if (nfcAdapter != null && nfcAdapter.isEnabled() && mSelectedAccessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
-          menu.add(Menu.NONE,MENU_ID_WRITE_NFC,0,R.string.wifi_menu_write_to_nfc);
-        }
+  Preference preference=(Preference)view.getTag();
+  if (preference instanceof AccessPointPreference) {
+    mSelectedAccessPoint=((AccessPointPreference)preference).getAccessPoint();
+    menu.setHeaderTitle(mSelectedAccessPoint.getSsid());
+    if (mSelectedAccessPoint.isConnectable()) {
+      menu.add(Menu.NONE,MENU_ID_CONNECT,0,R.string.wifi_menu_connect);
+    }
+    WifiConfiguration config=mSelectedAccessPoint.getConfig();
+    if (isEditabilityLockedDown(getActivity(),config)) {
+      return;
+    }
+    if (mSelectedAccessPoint.isSaved() || mSelectedAccessPoint.isEphemeral()) {
+      menu.add(Menu.NONE,MENU_ID_FORGET,0,R.string.wifi_menu_forget);
+    }
+    if (mSelectedAccessPoint.isSaved()) {
+      menu.add(Menu.NONE,MENU_ID_MODIFY,0,R.string.wifi_menu_modify);
+      NfcAdapter nfcAdapter=NfcAdapter.getDefaultAdapter(getActivity());
+      if (nfcAdapter != null && nfcAdapter.isEnabled() && mSelectedAccessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
+        menu.add(Menu.NONE,MENU_ID_WRITE_NFC,0,R.string.wifi_menu_write_to_nfc);
       }
     }
   }

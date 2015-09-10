@@ -1,9 +1,15 @@
 {
   List<HistoricalNotificationInfo> infos=loadNotifications();
   if (infos != null) {
-    logd("adding %d infos",infos.size());
-    mAdapter.clear();
-    mAdapter.addAll(infos);
-    mAdapter.sort(mNotificationSorter);
+    final int N=infos.size();
+    logd("adding %d infos",N);
+    Collections.sort(infos,mNotificationSorter);
+    if (getPreferenceScreen() == null) {
+      setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getContext()));
+    }
+    getPreferenceScreen().removeAll();
+    for (int i=0; i < N; i++) {
+      getPreferenceScreen().addPreference(new HistoricalNotificationPreference(getPrefContext(),infos.get(i)));
+    }
   }
 }

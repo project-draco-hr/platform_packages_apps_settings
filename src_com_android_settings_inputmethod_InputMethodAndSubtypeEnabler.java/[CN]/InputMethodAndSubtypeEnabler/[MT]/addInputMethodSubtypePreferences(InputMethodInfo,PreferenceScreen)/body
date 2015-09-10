@@ -1,21 +1,21 @@
 {
-  final Context context=getActivity();
+  final Context context=getPrefContext();
   final int subtypeCount=imi.getSubtypeCount();
   if (subtypeCount <= 1) {
     return;
   }
   final String imiId=imi.getId();
-  final PreferenceCategory keyboardSettingsCategory=new PreferenceCategory(context);
+  final PreferenceCategory keyboardSettingsCategory=new PreferenceCategory(getPrefContext());
   root.addPreference(keyboardSettingsCategory);
   final PackageManager pm=getPackageManager();
   final CharSequence label=imi.loadLabel(pm);
   keyboardSettingsCategory.setTitle(label);
   keyboardSettingsCategory.setKey(imiId);
-  final TwoStatePreference autoSelectionPref=new SwitchWithNoTextPreference(context);
+  final TwoStatePreference autoSelectionPref=new SwitchWithNoTextPreference(getPrefContext());
   mAutoSelectionPrefsMap.put(imiId,autoSelectionPref);
   keyboardSettingsCategory.addPreference(autoSelectionPref);
   autoSelectionPref.setOnPreferenceChangeListener(this);
-  final PreferenceCategory activeInputMethodsCategory=new PreferenceCategory(context);
+  final PreferenceCategory activeInputMethodsCategory=new PreferenceCategory(getPrefContext());
   activeInputMethodsCategory.setTitle(R.string.active_input_method_subtypes);
   root.addPreference(activeInputMethodsCategory);
   CharSequence autoSubtypeLabel=null;

@@ -13,7 +13,7 @@
   final int count=mAvailableAgents.size();
   for (int i=0; i < count; i++) {
     AgentInfo agent=mAvailableAgents.valueAt(i);
-    final SwitchPreference preference=new SwitchPreference(context);
+    final SwitchPreference preference=new SwitchPreference(getPrefContext());
     agent.preference=preference;
     preference.setPersistent(false);
     preference.setTitle(agent.label);

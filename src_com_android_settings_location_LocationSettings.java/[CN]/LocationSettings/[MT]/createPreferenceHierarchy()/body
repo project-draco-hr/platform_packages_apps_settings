@@ -16,13 +16,13 @@
   }
 );
   mCategoryRecentLocationRequests=(PreferenceCategory)root.findPreference(KEY_RECENT_LOCATION_REQUESTS);
-  RecentLocationApps recentApps=new RecentLocationApps(activity);
+  RecentLocationApps recentApps=new RecentLocationApps(activity,getPrefContext());
   List<Preference> recentLocationRequests=recentApps.getAppList();
   if (recentLocationRequests.size() > 0) {
     addPreferencesSorted(recentLocationRequests,mCategoryRecentLocationRequests);
   }
  else {
-    Preference banner=new Preference(activity);
+    Preference banner=new Preference(getPrefContext());
     banner.setLayoutResource(R.layout.location_list_no_item);
     banner.setTitle(R.string.location_no_recent_apps);
     banner.setSelectable(false);

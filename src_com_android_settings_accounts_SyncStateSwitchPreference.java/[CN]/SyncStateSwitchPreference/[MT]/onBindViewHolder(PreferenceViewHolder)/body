@@ -1,0 +1,19 @@
+{
+  super.onBindViewHolder(view);
+  final AnimatedImageView syncActiveView=(AnimatedImageView)view.findViewById(R.id.sync_active);
+  final View syncFailedView=view.findViewById(R.id.sync_failed);
+  final boolean activeVisible=mIsActive || mIsPending;
+  syncActiveView.setVisibility(activeVisible ? View.VISIBLE : View.GONE);
+  syncActiveView.setAnimating(mIsActive);
+  final boolean failedVisible=mFailed && !activeVisible;
+  syncFailedView.setVisibility(failedVisible ? View.VISIBLE : View.GONE);
+  View switchView=view.findViewById(com.android.internal.R.id.switchWidget);
+  if (mOneTimeSyncMode) {
+    switchView.setVisibility(View.GONE);
+    TextView summary=(TextView)view.findViewById(android.R.id.summary);
+    summary.setText(getContext().getString(R.string.sync_one_time_sync,getSummary()));
+  }
+ else {
+    switchView.setVisibility(View.VISIBLE);
+  }
+}

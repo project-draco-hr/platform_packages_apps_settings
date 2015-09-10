@@ -1,5 +1,8 @@
 {
   super.onPause();
+  for (  VolumeSeekBarPreference volumePref : mVolumePrefs) {
+    volumePref.onActivityPause();
+  }
   mVolumeCallback.stopSample();
   mSettingsObserver.register(false);
   mReceiver.register(false);

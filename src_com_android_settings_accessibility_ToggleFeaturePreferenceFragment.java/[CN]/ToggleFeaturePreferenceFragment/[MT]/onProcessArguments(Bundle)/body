@@ -14,8 +14,6 @@
   if (arguments.containsKey(AccessibilitySettings.EXTRA_SUMMARY)) {
     final CharSequence summary=arguments.getCharSequence(AccessibilitySettings.EXTRA_SUMMARY);
     mSummaryPreference.setSummary(summary);
-    getListView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-    getListView().setDivider(null);
   }
  else {
     getPreferenceScreen().removePreference(mSummaryPreference);

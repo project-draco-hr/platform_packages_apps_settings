@@ -1,0 +1,23 @@
+{
+  if (preference instanceof AccessPointPreference) {
+    mSelectedAccessPoint=((AccessPointPreference)preference).getAccessPoint();
+    if (mSelectedAccessPoint.getSecurity() == AccessPoint.SECURITY_NONE && !mSelectedAccessPoint.isSaved() && !mSelectedAccessPoint.isActive()) {
+      mSelectedAccessPoint.generateOpenNetworkConfig();
+      if (!savedNetworksExist) {
+        savedNetworksExist=true;
+        getActivity().invalidateOptionsMenu();
+      }
+      connect(mSelectedAccessPoint.getConfig());
+    }
+ else     if (mSelectedAccessPoint.isSaved()) {
+      showDialog(mSelectedAccessPoint,WifiConfigUiBase.MODE_VIEW);
+    }
+ else {
+      showDialog(mSelectedAccessPoint,WifiConfigUiBase.MODE_CONNECT);
+    }
+  }
+ else {
+    return super.onPreferenceTreeClick(preference);
+  }
+  return true;
+}

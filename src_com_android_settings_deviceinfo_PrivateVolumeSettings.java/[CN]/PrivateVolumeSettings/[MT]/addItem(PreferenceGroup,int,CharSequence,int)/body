@@ -9,9 +9,11 @@
   }
   if (title != null) {
     item.setTitle(title);
+    item.setKey(title.toString());
   }
  else {
     item.setTitle(titleRes);
+    item.setKey(Integer.toString(titleRes));
   }
   item.setSummary(R.string.memory_calculating_size);
   item.userHandle=userId;

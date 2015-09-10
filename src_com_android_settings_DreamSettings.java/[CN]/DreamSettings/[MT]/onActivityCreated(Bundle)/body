@@ -1,13 +1,9 @@
 {
   logd("onActivityCreated(%s)",savedInstanceState);
   super.onActivityCreated(savedInstanceState);
-  ListView listView=getListView();
-  listView.setItemsCanFocus(true);
   TextView emptyView=(TextView)getView().findViewById(android.R.id.empty);
   emptyView.setText(R.string.screensaver_settings_disabled_prompt);
-  listView.setEmptyView(emptyView);
-  mAdapter=new DreamInfoAdapter(mContext);
-  listView.setAdapter(mAdapter);
+  setEmptyView(emptyView);
   final SettingsActivity sa=(SettingsActivity)getActivity();
   mSwitchBar=sa.getSwitchBar();
   mSwitchBar.addOnSwitchChangeListener(this);

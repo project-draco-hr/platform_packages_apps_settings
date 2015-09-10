@@ -11,7 +11,7 @@ messageId=R.string.bluetooth_empty_list_user_restricted;
 break;
 }
 if (mPairedDevicesCategory == null) {
-mPairedDevicesCategory=new PreferenceCategory(getActivity());
+mPairedDevicesCategory=new PreferenceCategory(getPrefContext());
 }
  else {
 mPairedDevicesCategory.removeAll();
@@ -34,7 +34,7 @@ if (!mInitialScanStarted) {
 startScanning();
 }
 if (mMyDevicePreference == null) {
-mMyDevicePreference=new Preference(getActivity());
+mMyDevicePreference=new Preference(getPrefContext());
 }
 mMyDevicePreference.setSummary(getResources().getString(R.string.bluetooth_is_visible_message,mLocalAdapter.getName()));
 mMyDevicePreference.setSelectable(false);

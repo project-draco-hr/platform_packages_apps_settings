@@ -1,0 +1,19 @@
+{
+  if (getValue() != null) {
+    if (callChangeListener(null)) {
+      setValue(null);
+    }
+  }
+ else   if (getEntryValues() == null || getEntryValues().length == 0) {
+    Log.e(TAG,"Attempting to show dialog with zero entries: " + getKey());
+  }
+ else   if (getEntryValues().length == 1) {
+    String value=getEntryValues()[0].toString();
+    if (callChangeListener(value)) {
+      setValue(value);
+    }
+  }
+ else {
+    super.onClick();
+  }
+}

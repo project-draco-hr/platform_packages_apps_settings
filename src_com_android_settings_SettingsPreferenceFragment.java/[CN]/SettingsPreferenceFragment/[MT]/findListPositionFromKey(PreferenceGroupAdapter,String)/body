@@ -1,0 +1,11 @@
+{
+  final int count=adapter.getItemCount();
+  for (int n=0; n < count; n++) {
+    final Preference preference=adapter.getItem(n);
+    final String preferenceKey=preference.getKey();
+    if (preferenceKey != null && preferenceKey.equals(key)) {
+      return n;
+    }
+  }
+  return -1;
+}

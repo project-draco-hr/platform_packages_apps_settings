@@ -6,14 +6,14 @@
     Preference p=null;
 switch (entry.getType()) {
 case RestrictionEntry.TYPE_BOOLEAN:
-      p=new SwitchPreference(context);
+      p=new SwitchPreference(getPrefContext());
     p.setTitle(entry.getTitle());
   p.setSummary(entry.getDescription());
 ((SwitchPreference)p).setChecked(entry.getSelectedState());
 break;
 case RestrictionEntry.TYPE_CHOICE:
 case RestrictionEntry.TYPE_CHOICE_LEVEL:
-p=new ListPreference(context);
+p=new ListPreference(getPrefContext());
 p.setTitle(entry.getTitle());
 String value=entry.getSelectedString();
 if (value == null) {
@@ -26,7 +26,7 @@ p.setSummary(findInArray(entry.getChoiceEntries(),entry.getChoiceValues(),value)
 ((ListPreference)p).setDialogTitle(entry.getTitle());
 break;
 case RestrictionEntry.TYPE_MULTI_SELECT:
-p=new MultiSelectListPreference(context);
+p=new MultiSelectListPreference(getPrefContext());
 p.setTitle(entry.getTitle());
 ((MultiSelectListPreference)p).setEntryValues(entry.getChoiceValues());
 ((MultiSelectListPreference)p).setEntries(entry.getChoiceEntries());

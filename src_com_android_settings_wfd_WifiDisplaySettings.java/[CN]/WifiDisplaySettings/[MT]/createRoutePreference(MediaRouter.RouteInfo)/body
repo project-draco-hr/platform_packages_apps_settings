@@ -1,9 +1,9 @@
 {
   WifiDisplay display=findWifiDisplay(route.getDeviceAddress());
   if (display != null) {
-    return new WifiDisplayRoutePreference(getActivity(),route,display);
+    return new WifiDisplayRoutePreference(getPrefContext(),route,display);
   }
  else {
-    return new RoutePreference(getActivity(),route);
+    return new RoutePreference(getPrefContext(),route);
   }
 }

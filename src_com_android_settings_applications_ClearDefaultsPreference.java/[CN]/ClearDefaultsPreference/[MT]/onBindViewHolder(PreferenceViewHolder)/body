@@ -1,0 +1,26 @@
+{
+  super.onBindViewHolder(view);
+  mActivitiesButton=(Button)view.findViewById(R.id.clear_activities_button);
+  mActivitiesButton.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      if (mUsbManager != null) {
+        final int userId=UserHandle.myUserId();
+        mPm.clearPackagePreferredActivities(mPackageName);
+        if (isDefaultBrowser(mPackageName)) {
+          mPm.setDefaultBrowserPackageName(null,userId);
+        }
+        try {
+          mUsbManager.clearDefaults(mPackageName,userId);
+        }
+ catch (        RemoteException e) {
+          Log.e(TAG,"mUsbManager.clearDefaults",e);
+        }
+        mAppWidgetManager.setBindAppWidgetPermission(mPackageName,false);
+        TextView autoLaunchView=(TextView)view.findViewById(R.id.auto_launch);
+        resetLaunchDefaultsUi(autoLaunchView);
+      }
+    }
+  }
+);
+  updateUI(view);
+}

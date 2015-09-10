@@ -3,7 +3,7 @@
     Log.w(TAG,"Trying to create a device preference before the list group/category " + "exists!");
     return;
   }
-  BluetoothDevicePreference preference=new BluetoothDevicePreference(getActivity(),cachedDevice);
+  BluetoothDevicePreference preference=new BluetoothDevicePreference(getPrefContext(),cachedDevice);
   initDevicePreference(preference);
   mDeviceListGroup.addPreference(preference);
   mDevicePreferenceMap.put(cachedDevice,preference);

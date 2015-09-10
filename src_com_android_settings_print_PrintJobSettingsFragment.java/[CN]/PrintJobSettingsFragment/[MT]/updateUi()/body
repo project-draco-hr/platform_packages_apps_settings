@@ -58,11 +58,9 @@ if (getPreferenceScreen().findPreference(PRINT_JOB_MESSAGE_PREFERENCE) == null) 
 getPreferenceScreen().addPreference(mMessagePreference);
 }
 mMessagePreference.setSummary(stateReason);
-getListView().setDivider(null);
 }
  else {
 getPreferenceScreen().removePreference(mMessagePreference);
-getListView().setDivider(mListDivider);
 }
 getActivity().invalidateOptionsMenu();
 }

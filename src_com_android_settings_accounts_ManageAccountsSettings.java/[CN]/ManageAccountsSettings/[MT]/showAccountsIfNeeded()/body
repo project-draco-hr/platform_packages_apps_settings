@@ -20,7 +20,7 @@
     }
     if (showAccount) {
       final Drawable icon=getDrawableForType(account.type);
-      final AccountPreference preference=new AccountPreference(getActivity(),account,icon,auths,false);
+      final AccountPreference preference=new AccountPreference(getPrefContext(),account,icon,auths,false);
       getPreferenceScreen().addPreference(preference);
       if (mFirstAccount == null) {
         mFirstAccount=account;

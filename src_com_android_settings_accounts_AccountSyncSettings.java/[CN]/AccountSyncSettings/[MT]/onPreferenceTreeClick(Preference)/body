@@ -1,0 +1,26 @@
+{
+  if (preference instanceof SyncStateSwitchPreference) {
+    SyncStateSwitchPreference syncPref=(SyncStateSwitchPreference)preference;
+    String authority=syncPref.getAuthority();
+    Account account=syncPref.getAccount();
+    final int userId=mUserHandle.getIdentifier();
+    boolean syncAutomatically=ContentResolver.getSyncAutomaticallyAsUser(account,authority,userId);
+    if (syncPref.isOneTimeSyncMode()) {
+      requestOrCancelSync(account,authority,true);
+    }
+ else {
+      boolean syncOn=syncPref.isChecked();
+      boolean oldSyncState=syncAutomatically;
+      if (syncOn != oldSyncState) {
+        ContentResolver.setSyncAutomaticallyAsUser(account,authority,syncOn,userId);
+        if (!ContentResolver.getMasterSyncAutomaticallyAsUser(userId) || !syncOn) {
+          requestOrCancelSync(account,authority,syncOn);
+        }
+      }
+    }
+    return true;
+  }
+ else {
+    return super.onPreferenceTreeClick(preference);
+  }
+}

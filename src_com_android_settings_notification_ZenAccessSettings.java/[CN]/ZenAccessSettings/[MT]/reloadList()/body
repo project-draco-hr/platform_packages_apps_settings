@@ -17,7 +17,7 @@
   for (  ApplicationInfo app : apps) {
     final String pkg=app.packageName;
     final CharSequence label=app.loadLabel(mPkgMan);
-    final SwitchPreference pref=new SwitchPreference(mContext);
+    final SwitchPreference pref=new SwitchPreference(getPrefContext());
     pref.setPersistent(false);
     pref.setIcon(app.loadIcon(mPkgMan));
     pref.setTitle(label);

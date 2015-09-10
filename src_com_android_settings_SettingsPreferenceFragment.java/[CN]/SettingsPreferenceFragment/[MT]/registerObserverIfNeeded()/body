@@ -1,10 +1,10 @@
 {
   if (!mIsDataSetObserverRegistered) {
     if (mCurrentRootAdapter != null) {
-      mCurrentRootAdapter.unregisterDataSetObserver(mDataSetObserver);
+      mCurrentRootAdapter.unregisterAdapterDataObserver(mDataSetObserver);
     }
-    mCurrentRootAdapter=getPreferenceScreen().getRootAdapter();
-    mCurrentRootAdapter.registerDataSetObserver(mDataSetObserver);
+    mCurrentRootAdapter=getListView().getAdapter();
+    mCurrentRootAdapter.registerAdapterDataObserver(mDataSetObserver);
     mIsDataSetObserverRegistered=true;
   }
 }

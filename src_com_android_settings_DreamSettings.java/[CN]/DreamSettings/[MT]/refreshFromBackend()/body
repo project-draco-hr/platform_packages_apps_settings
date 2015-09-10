@@ -3,10 +3,16 @@
   mRefreshing=true;
   boolean dreamsEnabled=mBackend.isEnabled();
   if (mSwitchBar.isChecked() != dreamsEnabled)   mSwitchBar.setChecked(dreamsEnabled);
-  mAdapter.clear();
+  if (getPreferenceScreen() == null) {
+    setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getContext()));
+  }
+  getPreferenceScreen().removeAll();
   if (dreamsEnabled) {
     List<DreamBackend.DreamInfo> dreamInfos=mBackend.getDreamInfos();
-    mAdapter.addAll(dreamInfos);
+    final int N=dreamInfos.size();
+    for (int i=0; i < N; i++) {
+      getPreferenceScreen().addPreference(new DreamInfoPreference(getPrefContext(),dreamInfos.get(i)));
+    }
   }
   if (mMenuItemsWhenEnabled != null)   for (  MenuItem menuItem : mMenuItemsWhenEnabled)   menuItem.setEnabled(dreamsEnabled);
   mRefreshing=false;

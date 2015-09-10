@@ -1,7 +1,7 @@
 {
   ArrayList<ResolveInfo> homeActivities=new ArrayList<ResolveInfo>();
   ComponentName currentDefaultHome=mPm.getHomeActivities(homeActivities);
-  Context context=getActivity();
+  Context context=getPrefContext();
   mCurrentHome=null;
   mPrefGroup.removeAll();
   mPrefs=new ArrayList<HomeAppPreference>();

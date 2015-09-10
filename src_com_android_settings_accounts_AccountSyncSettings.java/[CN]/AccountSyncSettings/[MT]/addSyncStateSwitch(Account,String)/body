@@ -1,5 +1,5 @@
 {
-  SyncStateSwitchPreference item=new SyncStateSwitchPreference(getActivity(),account,authority);
+  SyncStateSwitchPreference item=new SyncStateSwitchPreference(getPrefContext(),account,authority);
   item.setPersistent(false);
   final ProviderInfo providerInfo=getPackageManager().resolveContentProviderAsUser(authority,0,mUserHandle.getIdentifier());
   if (providerInfo == null) {

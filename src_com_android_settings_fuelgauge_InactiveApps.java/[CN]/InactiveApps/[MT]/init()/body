@@ -10,7 +10,7 @@
   List<ResolveInfo> apps=pm.queryIntentActivities(launcherIntent,0);
   for (  ResolveInfo app : apps) {
     String packageName=app.activityInfo.applicationInfo.packageName;
-    Preference p=new Preference(context);
+    Preference p=new Preference(getPrefContext());
     p.setTitle(app.loadLabel(pm));
     p.setIcon(app.loadIcon(pm));
     p.setKey(packageName);

@@ -127,14 +127,14 @@
   final PreferenceScreen preferenceScreen=getPreferenceScreen();
   preferenceScreen.removeAll();
   preferenceScreen.setOrderingAsAdded(true);
-  mThisDevicePref=new Preference(getActivity());
+  mThisDevicePref=new Preference(getPrefContext());
   mThisDevicePref.setPersistent(false);
   mThisDevicePref.setSelectable(false);
   preferenceScreen.addPreference(mThisDevicePref);
-  mPeersGroup=new PreferenceCategory(getActivity());
+  mPeersGroup=new PreferenceCategory(getPrefContext());
   mPeersGroup.setTitle(R.string.wifi_p2p_peer_devices);
   preferenceScreen.addPreference(mPeersGroup);
-  mPersistentGroup=new PreferenceCategory(getActivity());
+  mPersistentGroup=new PreferenceCategory(getPrefContext());
   mPersistentGroup.setTitle(R.string.wifi_p2p_remembered_groups);
   preferenceScreen.addPreference(mPersistentGroup);
   super.onActivityCreated(savedInstanceState);

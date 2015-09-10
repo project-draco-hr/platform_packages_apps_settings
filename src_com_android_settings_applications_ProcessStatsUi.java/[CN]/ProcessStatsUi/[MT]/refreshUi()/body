@@ -14,7 +14,7 @@
   double maxMemory=mShowMax ? memInfo.realTotalRam : memInfo.usedWeight * memInfo.weightToRam;
   for (int i=0; i < pkgEntries.size(); i++) {
     ProcStatsPackageEntry pkg=pkgEntries.get(i);
-    ProcessStatsPreference pref=new ProcessStatsPreference(context);
+    ProcessStatsPreference pref=new ProcessStatsPreference(getPrefContext());
     pkg.retrieveUiData(context,mPm);
     pref.init(pkg,mPm,maxMemory,memInfo.weightToRam,memInfo.totalScale,!mShowMax);
     pref.setOrder(i);

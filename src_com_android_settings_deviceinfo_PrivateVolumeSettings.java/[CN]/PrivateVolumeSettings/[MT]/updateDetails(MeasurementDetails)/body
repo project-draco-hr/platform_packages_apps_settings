@@ -2,7 +2,13 @@
   for (int i=0; i < mItemPoolIndex; ++i) {
     StorageItemPreference item=mItemPreferencePool.get(i);
     final int userId=item.userHandle;
-    final int itemTitleId=item.getTitleRes();
+    int itemTitleId;
+    try {
+      itemTitleId=Integer.parseInt(item.getKey());
+    }
+ catch (    NumberFormatException e) {
+      itemTitleId=0;
+    }
 switch (itemTitleId) {
 case R.string.storage_detail_apps:
 {

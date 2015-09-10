@@ -4,9 +4,9 @@
   if (mRules.size() == 0)   return;
   final AutomaticZenRule[] sortedRules=sortedRules();
   for (  AutomaticZenRule sortedRule : sortedRules) {
-    root.addPreference(new ZenRulePreference(mContext,sortedRule));
+    root.addPreference(new ZenRulePreference(getPrefContext(),sortedRule));
   }
-  final Preference p=new Preference(mContext);
+  final Preference p=new Preference(getPrefContext());
   p.setIcon(R.drawable.ic_add);
   p.setTitle(R.string.zen_mode_add_rule);
   p.setPersistent(false);

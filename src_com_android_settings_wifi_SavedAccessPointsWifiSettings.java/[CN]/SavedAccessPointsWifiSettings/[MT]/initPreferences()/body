@@ -1,6 +1,6 @@
 {
   PreferenceScreen preferenceScreen=getPreferenceScreen();
-  final Context context=getActivity();
+  final Context context=getPrefContext();
   final List<AccessPoint> accessPoints=WifiTracker.getCurrentAccessPoints(context,true,false,true);
   Collections.sort(accessPoints,new Comparator<AccessPoint>(){
     public int compare(    AccessPoint ap1,    AccessPoint ap2){
@@ -16,7 +16,7 @@
   preferenceScreen.removeAll();
   final int accessPointsSize=accessPoints.size();
   for (int i=0; i < accessPointsSize; ++i) {
-    AccessPointPreference preference=new AccessPointPreference(accessPoints.get(i),context,mUserBadgeCache,true);
+    AccessPointPreference preference=new AccessPointPreference(accessPoints.get(i),context,mUserBadgeCache,true,this);
     preference.setIcon(null);
     preferenceScreen.addPreference(preference);
   }

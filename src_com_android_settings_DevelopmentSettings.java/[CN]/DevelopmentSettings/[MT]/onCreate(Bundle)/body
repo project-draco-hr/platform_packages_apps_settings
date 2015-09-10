@@ -7,7 +7,7 @@
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   if (!mUm.isAdminUser() || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {
     mUnavailable=true;
-    setPreferenceScreen(new PreferenceScreen(getActivity(),null));
+    setPreferenceScreen(new PreferenceScreen(getPrefContext(),null));
     return;
   }
   addPreferencesFromResource(R.xml.development_prefs);

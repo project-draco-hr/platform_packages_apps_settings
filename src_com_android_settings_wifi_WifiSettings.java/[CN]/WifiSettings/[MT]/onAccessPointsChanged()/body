@@ -20,10 +20,10 @@ if (accessPoint.getTag() != null) {
   getPreferenceScreen().addPreference(pref);
   continue;
 }
-AccessPointPreference preference=new AccessPointPreference(accessPoint,getActivity(),mUserBadgeCache,false);
+AccessPointPreference preference=new AccessPointPreference(accessPoint,getPrefContext(),mUserBadgeCache,false,this);
 preference.setOrder(index++);
 if (mOpenSsid != null && mOpenSsid.equals(accessPoint.getSsidStr()) && !accessPoint.isSaved() && accessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
-  onPreferenceTreeClick(getPreferenceScreen(),preference);
+  onPreferenceTreeClick(preference);
   mOpenSsid=null;
 }
 getPreferenceScreen().addPreference(preference);

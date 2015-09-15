@@ -7,16 +7,22 @@
     }
   }
   if (intent.hasExtra(TetherUtil.EXTRA_REM_TETHER_TYPE)) {
-    int type=intent.getIntExtra(TetherUtil.EXTRA_REM_TETHER_TYPE,TetherUtil.TETHERING_INVALID);
-    if (DEBUG)     Log.d(TAG,"Removing tether " + type);
-    int index=mCurrentTethers.indexOf(type);
-    if (index >= 0) {
-      mCurrentTethers.remove(index);
-      if (index <= mCurrentTypeIndex && mCurrentTypeIndex > 0) {
-        mCurrentTypeIndex--;
+    if (!mInProvisionCheck) {
+      int type=intent.getIntExtra(TetherUtil.EXTRA_REM_TETHER_TYPE,TetherUtil.TETHERING_INVALID);
+      int index=mCurrentTethers.indexOf(type);
+      if (DEBUG)       Log.d(TAG,"Removing tether " + type + ", index "+ index);
+      if (index >= 0) {
+        mCurrentTethers.remove(index);
+        if (DEBUG)         Log.d(TAG,"mCurrentTypeIndex: " + mCurrentTypeIndex);
+        if (index <= mCurrentTypeIndex && mCurrentTypeIndex > 0) {
+          mCurrentTypeIndex--;
+        }
       }
+      cancelAlarmIfNecessary();
     }
-    cancelAlarmIfNecessary();
+ else {
+      if (DEBUG)       Log.d(TAG,"Don't cancel alarm during provisioning");
+    }
   }
   if (intent.getBooleanExtra(TetherUtil.EXTRA_SET_ALARM,false) && mCurrentTethers.size() == 1) {
     scheduleAlarm();

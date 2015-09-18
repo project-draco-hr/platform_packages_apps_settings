@@ -58,6 +58,12 @@
  else {
     removePreference(KEY_CAMERA_DOUBLE_TAP_POWER_GESTURE);
   }
+  mColorModePreference=(ColorModePreference)findPreference(KEY_COLOR_MODE);
+  mColorModePreference.updateCurrentAndSupported();
+  if (mColorModePreference.getTransformsCount() < 2) {
+    removePreference(KEY_COLOR_MODE);
+    mColorModePreference=null;
+  }
   if (RotationPolicy.isRotationLockToggleVisible(activity)) {
     DropDownPreference rotatePreference=(DropDownPreference)findPreference(KEY_AUTO_ROTATE);
     rotatePreference.addItem(activity.getString(R.string.display_auto_rotate_rotate),false);

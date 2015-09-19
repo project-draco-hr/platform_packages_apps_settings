@@ -1,0 +1,45 @@
+{
+  mDisplay=mDisplayManager.getDisplay(Display.DEFAULT_DISPLAY);
+  mDescriptions=new ArrayList<>();
+  Resources resources=getContext().getResources();
+  int[] transforms=resources.getIntArray(com.android.internal.R.array.config_colorTransforms);
+  String[] titles=resources.getStringArray(R.array.color_mode_names);
+  String[] descriptions=resources.getStringArray(R.array.color_mode_descriptions);
+  for (int i=0; i < transforms.length; i++) {
+    if (transforms[i] != -1) {
+      ColorTransformDescription desc=new ColorTransformDescription();
+      desc.colorTransform=transforms[i];
+      desc.title=titles[i];
+      desc.summary=descriptions[i];
+      mDescriptions.add(desc);
+    }
+  }
+  ColorTransform[] supportedColorTransforms=mDisplay.getSupportedColorTransforms();
+  for (int i=0; i < supportedColorTransforms.length; i++) {
+    for (int j=0; j < mDescriptions.size(); j++) {
+      if (mDescriptions.get(j).colorTransform == supportedColorTransforms[i].getColorTransform() && mDescriptions.get(j).transform == null) {
+        mDescriptions.get(j).transform=supportedColorTransforms[i];
+        break;
+      }
+    }
+  }
+  for (int i=0; i < mDescriptions.size(); i++) {
+    if (mDescriptions.get(i).transform == null) {
+      mDescriptions.remove(i--);
+    }
+  }
+  ColorTransform currentTransform=mDisplay.getColorTransform();
+  mCurrentIndex=-1;
+  for (int i=0; i < mDescriptions.size(); i++) {
+    if (mDescriptions.get(i).colorTransform == currentTransform.getColorTransform()) {
+      mCurrentIndex=i;
+      break;
+    }
+  }
+  if (mCurrentIndex != -1) {
+    setSummary(mDescriptions.get(mCurrentIndex).title);
+  }
+ else {
+    setSummary(null);
+  }
+}

@@ -1,18 +1,10 @@
 {
-  new ZenRuleNameDialog(mContext,mServiceListing,null,mConfig.getAutomaticRuleNames()){
+  new ZenRuleNameDialog(mContext,mServiceListing,null,mRules){
     @Override public void onOk(    String ruleName,    RuleInfo ri){
       MetricsLogger.action(mContext,MetricsLogger.ACTION_ZEN_ADD_RULE_OK);
-      final ZenRule rule=new ZenRule();
-      rule.name=ruleName;
-      rule.enabled=true;
-      rule.zenMode=Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS;
-      rule.conditionId=ri.defaultConditionId;
-      rule.component=ri.serviceComponent;
-      final ZenModeConfig newConfig=mConfig.copy();
-      final String ruleId=newConfig.newRuleId();
-      newConfig.automaticRules.put(ruleId,rule);
-      if (setZenModeConfig(newConfig)) {
-        showRule(ri.settingsAction,ri.configurationActivity,ruleId,rule.name);
+      AutomaticZenRule rule=new AutomaticZenRule(ruleName,ri.serviceComponent,ri.defaultConditionId,NotificationManager.INTERRUPTION_FILTER_PRIORITY,true);
+      if (setZenRule(rule)) {
+        showRule(ri.settingsAction,ri.configurationActivity,rule.getName());
       }
     }
   }

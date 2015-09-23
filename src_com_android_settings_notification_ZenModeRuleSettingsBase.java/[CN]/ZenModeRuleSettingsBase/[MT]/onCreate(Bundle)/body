@@ -8,8 +8,8 @@
     toastAndFinish();
     return;
   }
-  mRuleId=intent.getStringExtra(EXTRA_RULE_ID);
-  if (DEBUG)   Log.d(TAG,"mRuleId=" + mRuleId);
+  mName=intent.getStringExtra(EXTRA_RULE_NAME);
+  if (DEBUG)   Log.d(TAG,"mName=" + mName);
   if (refreshRuleOrFinish()) {
     return;
   }
@@ -26,15 +26,15 @@
 );
   mZenMode=(DropDownPreference)root.findPreference(KEY_ZEN_MODE);
   mZenMode.setEntries(new CharSequence[]{getString(R.string.zen_mode_option_important_interruptions),getString(R.string.zen_mode_option_alarms),getString(R.string.zen_mode_option_no_interruptions)});
-  mZenMode.setEntryValues(new CharSequence[]{Integer.toString(Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS),Integer.toString(Global.ZEN_MODE_ALARMS),Integer.toString(Global.ZEN_MODE_NO_INTERRUPTIONS)});
+  mZenMode.setEntryValues(new CharSequence[]{Integer.toString(NotificationManager.INTERRUPTION_FILTER_PRIORITY),Integer.toString(NotificationManager.INTERRUPTION_FILTER_ALARMS),Integer.toString(NotificationManager.INTERRUPTION_FILTER_NONE)});
   mZenMode.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
       if (mDisableListeners)       return false;
       final int zenMode=Integer.parseInt((String)newValue);
-      if (zenMode == mRule.zenMode)       return false;
+      if (zenMode == mRule.getInterruptionFilter())       return false;
       if (DEBUG)       Log.d(TAG,"onPrefChange zenMode=" + zenMode);
-      mRule.zenMode=zenMode;
-      setZenModeConfig(mConfig);
+      mRule.setInterruptionFilter(zenMode);
+      setZenRule(mRule);
       return true;
     }
   }

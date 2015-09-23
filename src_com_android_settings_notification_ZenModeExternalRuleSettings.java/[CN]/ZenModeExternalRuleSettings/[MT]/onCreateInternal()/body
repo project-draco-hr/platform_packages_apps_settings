@@ -1,7 +1,7 @@
 {
   addPreferencesFromResource(R.xml.zen_mode_external_rule_settings);
   final PreferenceScreen root=getPreferenceScreen();
-  final ServiceInfo si=ServiceListing.findService(mContext,ZenModeAutomationSettings.CONFIG,mRule.component);
+  final ServiceInfo si=ServiceListing.findService(mContext,ZenModeAutomationSettings.CONFIG,mRule.getOwner());
   if (DEBUG)   Log.d(TAG,"ServiceInfo: " + si);
   final RuleInfo ri=getRuleInfo(si);
   if (DEBUG)   Log.d(TAG,"RuleInfo: " + ri);
@@ -20,8 +20,8 @@
     mConfigure.setOnPreferenceClickListener(new OnPreferenceClickListener(){
       @Override public boolean onPreferenceClick(      Preference preference){
         Intent intent=new Intent().setComponent(ri.configurationActivity);
-        intent.putExtra(ConditionProviderService.EXTRA_RULE_NAME,mRule.name);
-        intent.putExtra(ConditionProviderService.EXTRA_CONDITION_ID,mRule.conditionId);
+        intent.putExtra(ConditionProviderService.EXTRA_RULE_NAME,mRule.getName());
+        intent.putExtra(ConditionProviderService.EXTRA_CONDITION_ID,mRule.getConditionId());
         startActivityForResult(intent,REQUEST_CODE_CONFIGURE);
         return true;
       }

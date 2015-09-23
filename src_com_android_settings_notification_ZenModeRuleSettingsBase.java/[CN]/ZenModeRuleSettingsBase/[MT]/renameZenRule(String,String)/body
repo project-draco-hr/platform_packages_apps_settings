@@ -1,0 +1,8 @@
+{
+  final boolean success=NotificationManager.from(mContext).renameAutomaticZenRule(oldName,newName);
+  if (success) {
+    mName=newName;
+  }
+  maybeRefreshRules(success,true);
+  return success;
+}

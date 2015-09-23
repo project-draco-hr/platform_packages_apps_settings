@@ -1,7 +1,7 @@
 {
   super.onResume();
   updateZenMode(true);
-  updateZenModeConfig(true);
+  maybeRefreshRules(true,true);
   mSettingsObserver.register();
   if (isUiRestricted()) {
     finish();

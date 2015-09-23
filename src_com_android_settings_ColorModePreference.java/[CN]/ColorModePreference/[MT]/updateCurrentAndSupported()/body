@@ -6,7 +6,7 @@
   String[] titles=resources.getStringArray(R.array.color_mode_names);
   String[] descriptions=resources.getStringArray(R.array.color_mode_descriptions);
   for (int i=0; i < transforms.length; i++) {
-    if (transforms[i] != -1) {
+    if (transforms[i] != -1 && i != 1) {
       ColorTransformDescription desc=new ColorTransformDescription();
       desc.colorTransform=transforms[i];
       desc.title=titles[i];
@@ -36,10 +36,5 @@
       break;
     }
   }
-  if (mCurrentIndex != -1) {
-    setSummary(mDescriptions.get(mCurrentIndex).title);
-  }
- else {
-    setSummary(null);
-  }
+  setChecked(mCurrentIndex == 1);
 }

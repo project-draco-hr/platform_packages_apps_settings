@@ -20,6 +20,10 @@
     data.title=res.getString(R.string.security_settings_fingerprint_preference_title);
     data.screenTitle=screenTitle;
     result.add(data);
+    data=new SearchIndexableRaw(context);
+    data.title=res.getString(R.string.fingerprint_manage_category_title);
+    data.screenTitle=screenTitle;
+    result.add(data);
   }
   if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
     KeyStore keyStore=KeyStore.getInstance();

@@ -19,6 +19,10 @@
     data.title=res.getString(R.string.security_settings_fingerprint_preference_title);
     data.screenTitle=screenTitle;
     result.add(data);
+    data=new SearchIndexableRaw(context);
+    data.title=res.getString(R.string.fingerprint_manage_category_title);
+    data.screenTitle=screenTitle;
+    result.add(data);
   }
   final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
   if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {

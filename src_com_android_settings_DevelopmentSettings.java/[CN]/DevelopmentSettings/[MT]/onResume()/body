@@ -25,4 +25,8 @@
     setPrefsEnabledState(mLastEnabledState);
   }
   mSwitchBar.show();
+  if (mColorModePreference != null) {
+    mColorModePreference.startListening();
+    mColorModePreference.updateCurrentAndSupported();
+  }
 }

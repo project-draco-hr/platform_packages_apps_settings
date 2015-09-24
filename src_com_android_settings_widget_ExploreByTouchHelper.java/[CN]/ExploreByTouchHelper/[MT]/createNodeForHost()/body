@@ -1,0 +1,10 @@
+{
+  final AccessibilityNodeInfo node=AccessibilityNodeInfo.obtain(mView);
+  mView.onInitializeAccessibilityNodeInfo(node);
+  final LinkedList<Integer> virtualViewIds=new LinkedList<Integer>();
+  getVisibleVirtualViews(virtualViewIds);
+  for (  Integer childVirtualViewId : virtualViewIds) {
+    node.addChild(mView,childVirtualViewId);
+  }
+  return node;
+}

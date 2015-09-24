@@ -1,0 +1,10 @@
+{
+  final ClickableSpan span=getSpanForOffset(virtualViewId);
+  if (span != null) {
+    event.setContentDescription(getTextForSpan(span));
+  }
+ else {
+    Log.e(TAG,"ClickableSpan is null for offset: " + virtualViewId);
+    event.setContentDescription(mView.getText());
+  }
+}

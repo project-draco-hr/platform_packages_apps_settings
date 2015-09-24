@@ -1,0 +1,23 @@
+{
+  if ((localRect == null) || localRect.isEmpty()) {
+    return false;
+  }
+  if (mView.getWindowVisibility() != View.VISIBLE) {
+    return false;
+  }
+  ViewParent viewParent=mView.getParent();
+  while (viewParent instanceof View) {
+    final View view=(View)viewParent;
+    if ((view.getAlpha() <= 0) || (view.getVisibility() != View.VISIBLE)) {
+      return false;
+    }
+    viewParent=view.getParent();
+  }
+  if (viewParent == null) {
+    return false;
+  }
+  if (!mView.getLocalVisibleRect(mTempVisibleRect)) {
+    return false;
+  }
+  return localRect.intersect(mTempVisibleRect);
+}

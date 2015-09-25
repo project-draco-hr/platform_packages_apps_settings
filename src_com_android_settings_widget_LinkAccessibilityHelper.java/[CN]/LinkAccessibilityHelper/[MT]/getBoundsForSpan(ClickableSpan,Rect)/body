@@ -1,0 +1,21 @@
+{
+  CharSequence text=mView.getText();
+  outRect.setEmpty();
+  if (text instanceof Spanned) {
+    Spanned spannedText=(Spanned)text;
+    final int spanStart=spannedText.getSpanStart(span);
+    final int spanEnd=spannedText.getSpanEnd(span);
+    final Layout layout=mView.getLayout();
+    final float xStart=layout.getPrimaryHorizontal(spanStart);
+    final float xEnd=layout.getPrimaryHorizontal(spanEnd);
+    final int lineStart=layout.getLineForOffset(spanStart);
+    final int lineEnd=layout.getLineForOffset(spanEnd);
+    layout.getLineBounds(lineStart,outRect);
+    outRect.left=(int)xStart;
+    if (lineEnd == lineStart) {
+      outRect.right=(int)xEnd;
+    }
+    outRect.offset(mView.getTotalPaddingLeft(),mView.getTotalPaddingTop());
+  }
+  return outRect;
+}

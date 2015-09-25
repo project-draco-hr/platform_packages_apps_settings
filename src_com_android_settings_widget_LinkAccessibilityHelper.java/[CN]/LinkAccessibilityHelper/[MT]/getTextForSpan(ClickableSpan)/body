@@ -1,0 +1,8 @@
+{
+  CharSequence text=mView.getText();
+  if (text instanceof Spanned) {
+    Spanned spannedText=(Spanned)text;
+    return spannedText.subSequence(spannedText.getSpanStart(span),spannedText.getSpanEnd(span));
+  }
+  return text;
+}

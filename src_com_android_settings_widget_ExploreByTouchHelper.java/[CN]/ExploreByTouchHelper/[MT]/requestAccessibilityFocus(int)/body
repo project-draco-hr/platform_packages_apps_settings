@@ -1,0 +1,13 @@
+{
+  final AccessibilityManager accessibilityManager=(AccessibilityManager)mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
+  if (!mManager.isEnabled() || !accessibilityManager.isTouchExplorationEnabled()) {
+    return false;
+  }
+  if (!isAccessibilityFocused(virtualViewId)) {
+    mFocusedVirtualViewId=virtualViewId;
+    mView.invalidate();
+    sendEventForVirtualView(virtualViewId,AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
+    return true;
+  }
+  return false;
+}

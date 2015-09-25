@@ -1,0 +1,42 @@
+{
+  final AccessibilityNodeInfo node=AccessibilityNodeInfo.obtain();
+  node.setEnabled(true);
+  node.setClassName(DEFAULT_CLASS_NAME);
+  onPopulateNodeForVirtualView(virtualViewId,node);
+  if ((node.getText() == null) && (node.getContentDescription() == null)) {
+    throw new RuntimeException("Callbacks must add text or a content description in " + "populateNodeForVirtualViewId()");
+  }
+  node.getBoundsInParent(mTempParentRect);
+  if (mTempParentRect.isEmpty()) {
+    throw new RuntimeException("Callbacks must set parent bounds in " + "populateNodeForVirtualViewId()");
+  }
+  final int actions=node.getActions();
+  if ((actions & AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS) != 0) {
+    throw new RuntimeException("Callbacks must not add ACTION_ACCESSIBILITY_FOCUS in " + "populateNodeForVirtualViewId()");
+  }
+  if ((actions & AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS) != 0) {
+    throw new RuntimeException("Callbacks must not add ACTION_CLEAR_ACCESSIBILITY_FOCUS in " + "populateNodeForVirtualViewId()");
+  }
+  node.setPackageName(mView.getContext().getPackageName());
+  node.setSource(mView,virtualViewId);
+  node.setParent(mView);
+  if (mFocusedVirtualViewId == virtualViewId) {
+    node.setAccessibilityFocused(true);
+    node.addAction(AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS);
+  }
+ else {
+    node.setAccessibilityFocused(false);
+    node.addAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS);
+  }
+  if (intersectVisibleToUser(mTempParentRect)) {
+    node.setVisibleToUser(true);
+    node.setBoundsInParent(mTempParentRect);
+  }
+  mView.getLocationOnScreen(mTempGlobalRect);
+  final int offsetX=mTempGlobalRect[0];
+  final int offsetY=mTempGlobalRect[1];
+  mTempScreenRect.set(mTempParentRect);
+  mTempScreenRect.offset(offsetX,offsetY);
+  node.setBoundsInScreen(mTempScreenRect);
+  return node;
+}

@@ -1,0 +1,9 @@
+{
+  if (mHoveredVirtualViewId == virtualViewId) {
+    return;
+  }
+  final int previousVirtualViewId=mHoveredVirtualViewId;
+  mHoveredVirtualViewId=virtualViewId;
+  sendEventForVirtualView(virtualViewId,AccessibilityEvent.TYPE_VIEW_HOVER_ENTER);
+  sendEventForVirtualView(previousVirtualViewId,AccessibilityEvent.TYPE_VIEW_HOVER_EXIT);
+}

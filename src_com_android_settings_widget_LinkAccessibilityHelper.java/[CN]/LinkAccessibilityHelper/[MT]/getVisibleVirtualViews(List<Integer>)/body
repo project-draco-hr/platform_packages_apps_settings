@@ -1,0 +1,10 @@
+{
+  final CharSequence text=mView.getText();
+  if (text instanceof Spanned) {
+    final Spanned spannedText=(Spanned)text;
+    ClickableSpan[] linkSpans=spannedText.getSpans(0,spannedText.length(),ClickableSpan.class);
+    for (    ClickableSpan span : linkSpans) {
+      virtualViewIds.add(spannedText.getSpanStart(span));
+    }
+  }
+}

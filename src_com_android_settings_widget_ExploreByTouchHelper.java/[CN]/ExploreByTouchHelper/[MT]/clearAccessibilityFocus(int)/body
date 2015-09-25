@@ -1,0 +1,9 @@
+{
+  if (isAccessibilityFocused(virtualViewId)) {
+    mFocusedVirtualViewId=INVALID_ID;
+    mView.invalidate();
+    sendEventForVirtualView(virtualViewId,AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED);
+    return true;
+  }
+  return false;
+}

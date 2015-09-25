@@ -1,0 +1,12 @@
+{
+  final AccessibilityEvent event=AccessibilityEvent.obtain(eventType);
+  event.setEnabled(true);
+  event.setClassName(DEFAULT_CLASS_NAME);
+  onPopulateEventForVirtualView(virtualViewId,event);
+  if (event.getText().isEmpty() && (event.getContentDescription() == null)) {
+    throw new RuntimeException("Callbacks must add text or a content description in " + "populateEventForVirtualViewId()");
+  }
+  event.setPackageName(mView.getContext().getPackageName());
+  event.setSource(mView,virtualViewId);
+  return event;
+}

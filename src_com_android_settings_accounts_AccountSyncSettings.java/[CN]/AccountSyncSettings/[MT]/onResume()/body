@@ -2,6 +2,6 @@
   removePreference("dummy");
   mAuthenticatorHelper.listenToAccountUpdates();
   updateAuthDescriptions();
-  onAccountsUpdate(UserHandle.getCallingUserHandle());
+  onAccountsUpdate(Binder.getCallingUserHandle());
   super.onResume();
 }

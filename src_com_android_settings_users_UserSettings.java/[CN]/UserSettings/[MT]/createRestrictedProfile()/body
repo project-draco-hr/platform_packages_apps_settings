@@ -1,17 +1,5 @@
 {
   UserInfo newUserInfo=mUserManager.createRestrictedProfile(getResources().getString(R.string.user_new_profile_name));
-  int userId=newUserInfo.id;
-  UserHandle user=new UserHandle(userId);
-  mUserManager.setUserRestriction(UserManager.DISALLOW_MODIFY_ACCOUNTS,true,user);
-  Secure.putIntForUser(getContentResolver(),Secure.LOCATION_MODE,Secure.LOCATION_MODE_OFF,userId);
-  mUserManager.setUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,true,user);
   assignDefaultPhoto(newUserInfo);
-  AccountManager am=AccountManager.get(getActivity());
-  Account[] accounts=am.getAccounts();
-  if (accounts != null) {
-    for (    Account account : accounts) {
-      am.addSharedAccount(account,user);
-    }
-  }
   return newUserInfo;
 }

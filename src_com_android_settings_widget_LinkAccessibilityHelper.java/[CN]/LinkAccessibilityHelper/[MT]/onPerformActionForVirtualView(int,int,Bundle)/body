@@ -1,0 +1,13 @@
+{
+  if (action == AccessibilityNodeInfo.ACTION_CLICK) {
+    ClickableSpan span=getSpanForOffset(virtualViewId);
+    if (span != null) {
+      span.onClick(mView);
+      return true;
+    }
+ else {
+      Log.e(TAG,"LinkSpan is null for offset: " + virtualViewId);
+    }
+  }
+  return false;
+}

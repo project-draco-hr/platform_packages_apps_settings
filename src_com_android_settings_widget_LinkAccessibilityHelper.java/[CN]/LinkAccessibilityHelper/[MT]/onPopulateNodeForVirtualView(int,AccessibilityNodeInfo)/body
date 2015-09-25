@@ -1,0 +1,22 @@
+{
+  final ClickableSpan span=getSpanForOffset(virtualViewId);
+  if (span != null) {
+    info.setContentDescription(getTextForSpan(span));
+  }
+ else {
+    Log.e(TAG,"ClickableSpan is null for offset: " + virtualViewId);
+    info.setContentDescription(mView.getText());
+  }
+  info.setFocusable(true);
+  info.setClickable(true);
+  getBoundsForSpan(span,mTempRect);
+  if (!mTempRect.isEmpty()) {
+    info.setBoundsInParent(getBoundsForSpan(span,mTempRect));
+  }
+ else {
+    Log.e(TAG,"LinkSpan bounds is empty for: " + virtualViewId);
+    mTempRect.set(0,0,1,1);
+    info.setBoundsInParent(mTempRect);
+  }
+  info.addAction(AccessibilityNodeInfo.ACTION_CLICK);
+}

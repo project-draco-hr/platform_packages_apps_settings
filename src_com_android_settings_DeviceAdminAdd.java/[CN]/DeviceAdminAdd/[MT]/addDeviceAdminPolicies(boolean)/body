@@ -1,6 +1,6 @@
 {
   if (!mAdminPoliciesInitialized) {
-    boolean isOwner=Binder.getCallingUserHandle().isOwner();
+    boolean isOwner=UserHandle.getCallingUserHandle().isOwner();
     for (    DeviceAdminInfo.PolicyInfo pi : mDeviceAdmin.getUsedPolicies()) {
       int descriptionId=isOwner ? pi.description : pi.descriptionForSecondaryUsers;
       int labelId=isOwner ? pi.label : pi.labelForSecondaryUsers;

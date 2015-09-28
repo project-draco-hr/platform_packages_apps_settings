@@ -1,12 +1,12 @@
 {
   mDisableListeners=true;
   if (mCalls != null) {
-    mCalls.setValue(Integer.toString(mConfig.allowCalls ? mConfig.allowCallsFrom : SOURCE_NONE));
+    mCalls.setValue(Integer.toString(isPriorityCategoryEnabled(Policy.PRIORITY_CATEGORY_CALLS) ? mPolicy.priorityCallSenders : SOURCE_NONE));
   }
-  mMessages.setValue(Integer.toString(mConfig.allowMessages ? mConfig.allowMessagesFrom : SOURCE_NONE));
-  mReminders.setChecked(mConfig.allowReminders);
-  mEvents.setChecked(mConfig.allowEvents);
-  mRepeatCallers.setChecked(mConfig.allowRepeatCallers);
-  mRepeatCallers.setEnabled(!mConfig.allowCalls || mConfig.allowCallsFrom != ZenModeConfig.SOURCE_ANYONE);
+  mMessages.setValue(Integer.toString(isPriorityCategoryEnabled(Policy.PRIORITY_CATEGORY_MESSAGES) ? mPolicy.priorityMessageSenders : SOURCE_NONE));
+  mReminders.setChecked(isPriorityCategoryEnabled(Policy.PRIORITY_CATEGORY_REMINDERS));
+  mEvents.setChecked(isPriorityCategoryEnabled(Policy.PRIORITY_CATEGORY_EVENTS));
+  mRepeatCallers.setChecked(isPriorityCategoryEnabled(Policy.PRIORITY_CATEGORY_REPEAT_CALLERS));
+  mRepeatCallers.setEnabled(!isPriorityCategoryEnabled(Policy.PRIORITY_CATEGORY_CALLS) || mPolicy.priorityCallSenders != Policy.PRIORITY_SENDERS_ANY);
   mDisableListeners=false;
 }

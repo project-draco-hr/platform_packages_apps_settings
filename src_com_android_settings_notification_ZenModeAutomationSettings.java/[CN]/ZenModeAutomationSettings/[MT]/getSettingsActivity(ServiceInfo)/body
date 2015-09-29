@@ -1,0 +1,8 @@
+{
+  if (si == null || si.metaData == null)   return null;
+  final String configurationActivity=si.metaData.getString(ConditionProviderService.META_DATA_CONFIGURATION_ACTIVITY);
+  if (configurationActivity != null) {
+    return ComponentName.unflattenFromString(configurationActivity);
+  }
+  return null;
+}

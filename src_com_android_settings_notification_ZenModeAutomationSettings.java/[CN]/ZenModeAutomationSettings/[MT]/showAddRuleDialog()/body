@@ -1,11 +1,11 @@
 {
-  new ZenRuleNameDialog(mContext,mServiceListing,null,mRules){
-    @Override public void onOk(    String ruleName,    RuleInfo ri){
-      MetricsLogger.action(mContext,MetricsLogger.ACTION_ZEN_ADD_RULE_OK);
-      AutomaticZenRule rule=new AutomaticZenRule(ruleName,ri.serviceComponent,ri.defaultConditionId,NotificationManager.INTERRUPTION_FILTER_PRIORITY,true);
-      if (setZenRule(rule)) {
-        showRule(ri.settingsAction,ri.configurationActivity,rule.getName());
-      }
+  new ZenRuleSelectionDialog(mContext,mServiceListing){
+    @Override public void onSystemRuleSelected(    ZenRuleInfo ri){
+      showNameRuleDialog(ri);
+    }
+    @Override public void onExternalRuleSelected(    ZenRuleInfo ri){
+      Intent intent=new Intent().setComponent(ri.configurationActivity);
+      startActivity(intent);
     }
   }
 .show();

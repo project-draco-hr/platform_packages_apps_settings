@@ -1,0 +1,13 @@
+{
+  final ZenModeConfig.EventInfo event=new ZenModeConfig.EventInfo();
+  event.calendar=null;
+  event.reply=ZenModeConfig.EventInfo.REPLY_ANY_EXCEPT_NO;
+  final ZenRuleInfo rt=new ZenRuleInfo();
+  rt.settingsAction=ZenModeEventRuleSettings.ACTION;
+  rt.title=mContext.getString(R.string.zen_event_rule_type_name);
+  rt.packageName=ZenModeConfig.getScheduleConditionProvider().getPackageName();
+  rt.defaultConditionId=ZenModeConfig.toEventConditionId(event);
+  rt.serviceComponent=ZenModeConfig.getEventConditionProvider();
+  rt.isSystem=true;
+  return rt;
+}

@@ -1,0 +1,22 @@
+{
+  mContext=context;
+  mPm=context.getPackageManager();
+  mServiceListing=serviceListing;
+  final View v=LayoutInflater.from(context).inflate(R.layout.zen_rule_type_selection,null,false);
+  mRuleContainer=(LinearLayout)v.findViewById(R.id.rule_container);
+  if (mServiceListing != null) {
+    bindType(defaultNewSchedule());
+    bindType(defaultNewEvent());
+    bindExternalRules();
+    mServiceListing.addCallback(mServiceListingCallback);
+    mServiceListing.reload();
+  }
+  mDialog=new AlertDialog.Builder(context).setTitle(R.string.zen_mode_choose_rule_type).setView(v).setOnDismissListener(new OnDismissListener(){
+    @Override public void onDismiss(    DialogInterface dialog){
+      if (mServiceListing != null) {
+        mServiceListing.removeCallback(mServiceListingCallback);
+      }
+    }
+  }
+).setNegativeButton(R.string.cancel,null).create();
+}

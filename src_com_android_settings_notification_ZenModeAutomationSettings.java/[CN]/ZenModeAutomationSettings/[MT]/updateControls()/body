@@ -1,12 +1,10 @@
 {
   final PreferenceScreen root=getPreferenceScreen();
   root.removeAll();
-  if (mConfig == null)   return;
-  final ZenRuleInfo[] sortedRules=sortedRules();
-  for (int i=0; i < sortedRules.length; i++) {
-    final String id=sortedRules[i].id;
-    final ZenRule rule=sortedRules[i].rule;
-    root.addPreference(new ZenRulePreference(mContext,rule,id));
+  if (mRules.size() == 0)   return;
+  final AutomaticZenRule[] sortedRules=sortedRules();
+  for (  AutomaticZenRule sortedRule : sortedRules) {
+    root.addPreference(new ZenRulePreference(mContext,sortedRule));
   }
   final Preference p=new Preference(mContext);
   p.setIcon(R.drawable.ic_add);

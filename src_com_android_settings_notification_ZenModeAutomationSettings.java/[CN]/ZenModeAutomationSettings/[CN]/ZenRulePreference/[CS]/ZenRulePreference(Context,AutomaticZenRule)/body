@@ -1,0 +1,27 @@
+{
+  super(context);
+  mName=rule.getName();
+  final boolean isSchedule=ZenModeConfig.isValidScheduleConditionId(rule.getConditionId());
+  final boolean isEvent=ZenModeConfig.isValidEventConditionId(rule.getConditionId());
+  final boolean isSystemRule=isSchedule || isEvent;
+  try {
+    ApplicationInfo info=mPm.getApplicationInfo(rule.getOwner().getPackageName(),0);
+    LoadIconTask task=new LoadIconTask(this);
+    task.execute(info);
+    setSummary(computeRuleSummary(rule,isSystemRule,info.loadLabel(mPm)));
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    setIcon(R.drawable.ic_label);
+  }
+  setTitle(rule.getName());
+  setPersistent(false);
+  setOnPreferenceClickListener(new OnPreferenceClickListener(){
+    @Override public boolean onPreferenceClick(    Preference preference){
+      final String action=isSchedule ? ZenModeScheduleRuleSettings.ACTION : isEvent ? ZenModeEventRuleSettings.ACTION : ZenModeExternalRuleSettings.ACTION;
+      showRule(action,null,rule.getName());
+      return true;
+    }
+  }
+);
+  setWidgetLayoutResource(R.layout.zen_rule_widget);
+}

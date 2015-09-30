@@ -2,9 +2,9 @@
   mDisableListeners=true;
   updateRuleName();
   updateControlsInternal();
-  mZenMode.setValue(Integer.toString(mRule.zenMode));
+  mZenMode.setValue(Integer.toString(mRule.getInterruptionFilter()));
   if (mSwitchBar != null) {
-    mSwitchBar.setChecked(mRule.enabled);
+    mSwitchBar.setChecked(mRule.isEnabled());
   }
   mDisableListeners=false;
 }

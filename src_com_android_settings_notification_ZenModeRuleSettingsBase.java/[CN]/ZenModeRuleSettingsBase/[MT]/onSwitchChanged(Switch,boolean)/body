@@ -2,12 +2,11 @@
   if (DEBUG)   Log.d(TAG,"onSwitchChanged " + isChecked);
   if (mDisableListeners)   return;
   final boolean enabled=isChecked;
-  if (enabled == mRule.enabled)   return;
+  if (enabled == mRule.isEnabled())   return;
   MetricsLogger.action(mContext,MetricsLogger.ACTION_ZEN_ENABLE_RULE,enabled);
   if (DEBUG)   Log.d(TAG,"onSwitchChanged enabled=" + enabled);
-  mRule.enabled=enabled;
-  mRule.snoozing=false;
-  setZenModeConfig(mConfig);
+  mRule.setEnabled(enabled);
+  setZenRule(mRule);
   if (enabled) {
     final int toastText=getEnabledToastText();
     if (toastText != 0) {

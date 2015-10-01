@@ -3,8 +3,7 @@
   mView=view;
   mAccessPoint=accessPoint;
   mAccessPointSecurity=(accessPoint == null) ? AccessPoint.SECURITY_NONE : accessPoint.getSecurity();
-  mEdit=edit;
-  mModify=modify;
+  mMode=mode;
   mTextViewChangedHandler=new Handler();
   mContext=mConfigUi.getContext();
   final Resources res=mContext.getResources();
@@ -63,7 +62,7 @@
         addRow(group,R.string.passpoint_label,String.format(mContext.getString(R.string.passpoint_content),config.providerFriendlyName));
       }
     }
-    if ((!mAccessPoint.isSaved() && !mAccessPoint.isActive()) || mEdit) {
+    if ((!mAccessPoint.isSaved() && !mAccessPoint.isActive()) || mMode != WifiConfigUiBase.MODE_VIEW) {
       showSecurityFields();
       showIpConfigFields();
       showProxyFields();
@@ -74,8 +73,11 @@
         mView.findViewById(R.id.wifi_advanced_fields).setVisibility(View.VISIBLE);
       }
     }
-    if (mModify) {
+    if (mMode == WifiConfigUiBase.MODE_MODIFY) {
       mConfigUi.setSubmitButton(res.getString(R.string.wifi_save));
+    }
+ else     if (mMode == WifiConfigUiBase.MODE_CONNECT) {
+      mConfigUi.setSubmitButton(res.getString(R.string.wifi_connect));
     }
  else {
       final DetailedState state=mAccessPoint.getDetailedState();

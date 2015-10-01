@@ -1,0 +1,27 @@
+{
+  final WifiConfiguration config=dialog.getController().getConfig();
+  final AccessPoint accessPoint=dialog.getController().getAccessPoint();
+  final WifiManager wifiManager=getSystemService(WifiManager.class);
+  if (config == null) {
+    if (accessPoint != null && accessPoint.isSaved()) {
+      wifiManager.connect(accessPoint.getConfig(),null);
+    }
+  }
+ else {
+    wifiManager.save(config,null);
+    if (accessPoint != null) {
+      NetworkInfo networkInfo=accessPoint.getNetworkInfo();
+      if (networkInfo == null || !networkInfo.isConnected()) {
+        wifiManager.connect(config,null);
+      }
+    }
+  }
+  Intent resultData=new Intent();
+  if (accessPoint != null) {
+    Bundle accessPointState=new Bundle();
+    accessPoint.saveWifiState(accessPointState);
+    resultData.putExtra(KEY_ACCESS_POINT_STATE,accessPointState);
+  }
+  setResult(RESULT_CONNECTED,resultData);
+  finish();
+}

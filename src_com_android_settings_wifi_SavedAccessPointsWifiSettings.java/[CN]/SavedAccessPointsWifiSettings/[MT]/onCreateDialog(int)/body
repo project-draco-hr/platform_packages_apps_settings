@@ -7,7 +7,7 @@ case WifiSettings.WIFI_DIALOG_ID:
     }
   mSelectedAccessPoint=mDlgAccessPoint;
 final boolean hideForgetButton=WifiSettings.isEditabilityLockedDown(getActivity(),mDlgAccessPoint.getConfig());
-mDialog=new WifiDialog(getActivity(),this,mDlgAccessPoint,false,false,true,hideForgetButton);
+mDialog=new WifiDialog(getActivity(),this,mDlgAccessPoint,WifiConfigUiBase.MODE_VIEW,true,hideForgetButton);
 return mDialog;
 }
 return super.onCreateDialog(dialogId);

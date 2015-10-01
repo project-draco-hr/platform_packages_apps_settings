@@ -1,0 +1,25 @@
+{
+  final WifiManager wifiManager=getSystemService(WifiManager.class);
+  final AccessPoint accessPoint=dialog.getController().getAccessPoint();
+  if (accessPoint != null) {
+    if (!accessPoint.isSaved()) {
+      if (accessPoint.getNetworkInfo() != null && accessPoint.getNetworkInfo().getState() != NetworkInfo.State.DISCONNECTED) {
+        wifiManager.disableEphemeralNetwork(AccessPoint.convertToQuotedString(accessPoint.getSsidStr()));
+      }
+ else {
+        Log.e(TAG,"Failed to forget invalid network " + accessPoint.getConfig());
+      }
+    }
+ else {
+      wifiManager.forget(accessPoint.getConfig().networkId,null);
+    }
+  }
+  Intent resultData=new Intent();
+  if (accessPoint != null) {
+    Bundle accessPointState=new Bundle();
+    accessPoint.saveWifiState(accessPointState);
+    resultData.putExtra(KEY_ACCESS_POINT_STATE,accessPointState);
+  }
+  setResult(RESULT_FORGET);
+  finish();
+}

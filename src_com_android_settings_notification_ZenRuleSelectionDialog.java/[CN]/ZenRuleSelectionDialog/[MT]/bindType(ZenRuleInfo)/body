@@ -1,0 +1,29 @@
+{
+  try {
+    ApplicationInfo info=mPm.getApplicationInfo(ri.packageName,0);
+    final LinearLayout v=(LinearLayout)LayoutInflater.from(mContext).inflate(R.layout.zen_rule_type,null,false);
+    LoadIconTask task=new LoadIconTask((ImageView)v.findViewById(R.id.icon));
+    task.execute(info);
+    ((TextView)v.findViewById(R.id.title)).setText(ri.title);
+    if (!ri.isSystem) {
+      TextView subtitle=(TextView)v.findViewById(R.id.subtitle);
+      subtitle.setText(info.loadLabel(mPm));
+      subtitle.setVisibility(View.VISIBLE);
+    }
+    v.setOnClickListener(new View.OnClickListener(){
+      @Override public void onClick(      View v){
+        mDialog.dismiss();
+        if (ri.isSystem) {
+          onSystemRuleSelected(ri);
+        }
+ else {
+          onExternalRuleSelected(ri);
+        }
+      }
+    }
+);
+    mRuleContainer.addView(v);
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+  }
+}

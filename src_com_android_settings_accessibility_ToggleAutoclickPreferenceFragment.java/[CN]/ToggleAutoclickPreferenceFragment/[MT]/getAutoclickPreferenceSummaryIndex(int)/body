@@ -1,0 +1,10 @@
+{
+  if (delay <= MIN_AUTOCLICK_DELAY) {
+    return 0;
+  }
+  if (delay >= MAX_AUTOCLICK_DELAY) {
+    return mAutoclickPreferenceSummaries.length - 1;
+  }
+  int rangeSize=(MAX_AUTOCLICK_DELAY - MIN_AUTOCLICK_DELAY) / (mAutoclickPreferenceSummaries.length - 1);
+  return (delay - MIN_AUTOCLICK_DELAY) / rangeSize;
+}

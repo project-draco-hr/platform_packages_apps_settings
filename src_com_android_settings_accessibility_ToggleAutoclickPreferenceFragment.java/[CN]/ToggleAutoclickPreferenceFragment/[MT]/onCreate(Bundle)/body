@@ -1,0 +1,9 @@
+{
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.accessibility_autoclick_settings);
+  int delay=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_AUTOCLICK_DELAY,AccessibilityManager.AUTOCLICK_DELAY_DEFAULT);
+  mDelay=(SeekBarPreference)findPreference("autoclick_delay");
+  mDelay.setMax(delayToSeekBarProgress(MAX_AUTOCLICK_DELAY));
+  mDelay.setProgress(delayToSeekBarProgress(delay));
+  mDelay.setOnPreferenceChangeListener(this);
+}

@@ -1,8 +1,8 @@
 {
   if (si == null || si.metaData == null)   return null;
   final String ruleType=si.metaData.getString(ConditionProviderService.META_DATA_RULE_TYPE);
-  final String defaultConditionId=si.metaData.getString(ConditionProviderService.META_DATA_DEFAULT_CONDITION_ID);
-  if (ruleType != null && !ruleType.trim().isEmpty() && defaultConditionId != null) {
+  final ComponentName configurationActivity=getSettingsActivity(si);
+  if (ruleType != null && !ruleType.trim().isEmpty() && configurationActivity != null) {
     final ZenRuleInfo ri=new ZenRuleInfo();
     ri.settingsAction=Settings.ACTION_ZEN_MODE_EXTERNAL_RULE_SETTINGS;
     ri.title=ruleType;

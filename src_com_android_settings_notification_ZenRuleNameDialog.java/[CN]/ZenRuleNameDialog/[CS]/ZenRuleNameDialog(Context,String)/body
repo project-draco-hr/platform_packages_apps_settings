@@ -1,17 +1,11 @@
 {
-  mServiceListing=serviceListing;
   mIsNew=ruleName == null;
   mOriginalRuleName=ruleName;
-  mWarningTint=ColorStateList.valueOf(context.getColor(R.color.zen_rule_name_warning));
   final View v=LayoutInflater.from(context).inflate(R.layout.zen_rule_name,null,false);
   mEditText=(EditText)v.findViewById(R.id.rule_name);
-  mWarning=v.findViewById(R.id.rule_name_warning);
   if (!mIsNew) {
     mEditText.setText(ruleName);
   }
-  TypedValue outValue=new TypedValue();
-  context.getTheme().resolveAttribute(android.R.attr.colorAccent,outValue,true);
-  mOriginalTint=ColorStateList.valueOf(outValue.data);
   mEditText.setSelectAllOnFocus(true);
   mDialog=new AlertDialog.Builder(context).setTitle(mIsNew ? R.string.zen_mode_add_rule : R.string.zen_mode_rule_name).setView(v).setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
@@ -23,15 +17,4 @@
     }
   }
 ).setNegativeButton(R.string.cancel,null).create();
-  mEditText.addTextChangedListener(new TextWatcher(){
-    @Override public void onTextChanged(    CharSequence s,    int start,    int before,    int count){
-    }
-    @Override public void beforeTextChanged(    CharSequence s,    int start,    int count,    int after){
-    }
-    @Override public void afterTextChanged(    Editable s){
-      updatePositiveButtonAndWarning();
-    }
-  }
-);
-  mExistingNames=getAutomaticRuleNames(rules);
 }

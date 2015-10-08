@@ -1,7 +1,8 @@
 {
-  new ZenRuleNameDialog(mContext,null,mRule.getName(),mRules){
+  new ZenRuleNameDialog(mContext,mRule.getName()){
     @Override public void onOk(    String ruleName){
-      renameZenRule(mRule.getName(),ruleName);
+      mRule.setName(ruleName);
+      setZenRule(mRule);
     }
   }
 .show();

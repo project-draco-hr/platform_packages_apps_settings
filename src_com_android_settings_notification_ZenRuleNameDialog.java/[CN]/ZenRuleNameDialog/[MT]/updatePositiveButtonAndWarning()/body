@@ -1,8 +1,0 @@
-{
-  final String name=trimmedText();
-  final boolean validName=!TextUtils.isEmpty(name) && (name.equalsIgnoreCase(mOriginalRuleName) || !mExistingNames.contains(name.toLowerCase()));
-  mDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(validName);
-  final boolean showWarning=!TextUtils.isEmpty(name) && !validName;
-  mWarning.setVisibility(showWarning ? View.VISIBLE : View.INVISIBLE);
-  mEditText.setBackgroundTintList(showWarning ? mWarningTint : mOriginalTint);
-}

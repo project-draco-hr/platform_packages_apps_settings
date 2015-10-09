@@ -1,4 +1,7 @@
 {
+  if (mIsBrowser) {
+    return false;
+  }
   final int userId=UserHandle.myUserId();
   final int priorState=mPm.getIntentVerificationStatus(mPackageName,userId);
   if (priorState == newState) {

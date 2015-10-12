@@ -5,7 +5,7 @@
   if (mSwitchBar.isChecked() != dreamsEnabled)   mSwitchBar.setChecked(dreamsEnabled);
   mAdapter.clear();
   if (dreamsEnabled) {
-    List<DreamInfo> dreamInfos=mBackend.getDreamInfos();
+    List<DreamBackend.DreamInfo> dreamInfos=mBackend.getDreamInfos();
     mAdapter.addAll(dreamInfos);
   }
   if (mMenuItemsWhenEnabled != null)   for (  MenuItem menuItem : mMenuItemsWhenEnabled)   menuItem.setEnabled(dreamsEnabled);

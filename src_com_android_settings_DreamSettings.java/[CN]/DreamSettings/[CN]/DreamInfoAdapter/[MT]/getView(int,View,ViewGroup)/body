@@ -1,5 +1,5 @@
 {
-  DreamInfo dreamInfo=getItem(position);
+  DreamBackend.DreamInfo dreamInfo=getItem(position);
   logd("getView(%s)",dreamInfo.caption);
   final View row=convertView != null ? convertView : createDreamInfoRow(parent);
   row.setTag(dreamInfo);
@@ -24,7 +24,7 @@
   settingsButton.setFocusable(dreamInfo.isActive);
   settingsButton.setOnClickListener(new OnClickListener(){
     @Override public void onClick(    View v){
-      mBackend.launchSettings((DreamInfo)row.getTag());
+      mBackend.launchSettings((DreamBackend.DreamInfo)row.getTag());
     }
   }
 );

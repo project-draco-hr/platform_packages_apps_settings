@@ -1,0 +1,12 @@
+{
+  UserManager um=UserManager.get(context);
+  if (um != null) {
+    if (um.getUserProfiles().contains(new UserHandle(userId))) {
+      return userId;
+    }
+ else {
+      throw new SecurityException("Given user id " + userId + " does not belong to user "+ UserHandle.myUserId());
+    }
+  }
+  return getEffectiveUserId(context);
+}

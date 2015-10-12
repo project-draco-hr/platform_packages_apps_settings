@@ -1,0 +1,16 @@
+{
+  boolean launched=false;
+switch (mLockPatternUtils.getKeyguardStoredPasswordQuality(effectiveUserId)) {
+case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
+    launched=launchConfirmationActivity(request,title,header,description,returnCredentials || hasChallenge ? ConfirmLockPattern.InternalActivity.class : ConfirmLockPattern.class,external,hasChallenge,challenge,effectiveUserId);
+  break;
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
+launched=launchConfirmationActivity(request,title,header,description,returnCredentials || hasChallenge ? ConfirmLockPassword.InternalActivity.class : ConfirmLockPassword.class,external,hasChallenge,challenge,effectiveUserId);
+break;
+}
+return launched;
+}

@@ -4,4 +4,6 @@
   if (!(getActivity() instanceof ChooseLockPattern)) {
     throw new SecurityException("Fragment contained in wrong activity");
   }
+  Intent intent=getActivity().getIntent();
+  mUserId=Utils.getSameOwnerUserId(getActivity(),intent.getExtras());
 }

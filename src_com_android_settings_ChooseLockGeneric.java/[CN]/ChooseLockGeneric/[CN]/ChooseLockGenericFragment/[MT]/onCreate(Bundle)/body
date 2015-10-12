@@ -18,12 +18,13 @@
     mEncryptionRequestQuality=savedInstanceState.getInt(ENCRYPT_REQUESTED_QUALITY);
     mEncryptionRequestDisabled=savedInstanceState.getBoolean(ENCRYPT_REQUESTED_DISABLED);
   }
+  mUserId=Utils.getSameOwnerUserId(getContext(),getArguments());
   if (mPasswordConfirmed) {
     updatePreferencesOrFinish();
   }
  else   if (!mWaitingForConfirmation) {
     ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
-    if (!helper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,getString(R.string.unlock_set_unlock_launch_picker_title),true)) {
+    if (!helper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,getString(R.string.unlock_set_unlock_launch_picker_title),true,mUserId)) {
       mPasswordConfirmed=true;
       updatePreferencesOrFinish();
     }

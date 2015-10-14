@@ -15,7 +15,17 @@
   }
  else   if (button == DialogInterface.BUTTON_NEUTRAL) {
     disconnect(profile);
-    KeyStore.getInstance().delete(Credentials.VPN + profile.key,KeyStore.UID_SELF);
+    KeyStore keyStore=KeyStore.getInstance();
+    keyStore.delete(Credentials.VPN + profile.key,KeyStore.UID_SELF);
+    if (Arrays.equals(profile.key.getBytes(),keyStore.get(Credentials.LOCKDOWN_VPN))) {
+      keyStore.delete(Credentials.LOCKDOWN_VPN);
+      try {
+        mService.updateLockdownVpn();
+      }
+ catch (      RemoteException e) {
+        Log.e(TAG,"Failed to clear lockdown VPN configuration");
+      }
+    }
   }
   dismiss();
 }

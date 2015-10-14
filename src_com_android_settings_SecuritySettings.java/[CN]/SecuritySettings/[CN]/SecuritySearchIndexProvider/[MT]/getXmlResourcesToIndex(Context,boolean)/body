@@ -6,6 +6,12 @@
   sir.xmlResId=resId;
   result.add(sir);
   final UserManager um=UserManager.get(context);
+  boolean hasChildProfile=um.getProfiles(UserHandle.myUserId()).size() > 1;
+  if (hasChildProfile && LockPatternUtils.isSeparateWorkChallengeEnabled()) {
+    sir=new SearchIndexableResource(context);
+    sir.xmlResId=R.xml.security_settings_profile;
+    result.add(sir);
+  }
   if (um.isAdminUser()) {
     DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 switch (dpm.getStorageEncryptionStatus()) {

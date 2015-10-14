@@ -8,6 +8,8 @@
 ;
   mDevelopmentPreferences.registerOnSharedPreferenceChangeListener(mDevelopmentPreferencesListener);
   registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+  registerReceiver(mUserAddRemoveReceiver,new IntentFilter(Intent.ACTION_USER_ADDED));
+  registerReceiver(mUserAddRemoveReceiver,new IntentFilter(Intent.ACTION_USER_REMOVED));
   mDynamicIndexableContentMonitor.register(this);
   if (mDisplaySearch && !TextUtils.isEmpty(mSearchQuery)) {
     onQueryTextSubmit(mSearchQuery);

@@ -7,10 +7,9 @@
     List<UserInfo> users=mUserManager.getUsers(true);
     for (    UserInfo user : users) {
       if (user.isGuest()) {
-        UserHandle userHandle=new UserHandle(user.id);
-        Bundle userRestrictions=mUserManager.getUserRestrictions(userHandle);
-        userRestrictions.putAll(mDefaultGuestRestrictions);
-        mUserManager.setUserRestrictions(userRestrictions,userHandle);
+        for (        String key : mDefaultGuestRestrictions.keySet()) {
+          mUserManager.setUserRestriction(key,mDefaultGuestRestrictions.getBoolean(key));
+        }
       }
     }
   }

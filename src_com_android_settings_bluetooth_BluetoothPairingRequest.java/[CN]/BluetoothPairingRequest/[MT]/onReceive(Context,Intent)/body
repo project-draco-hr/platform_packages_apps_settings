@@ -15,7 +15,9 @@
     pairingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     PowerManager powerManager=(PowerManager)context.getSystemService(Context.POWER_SERVICE);
     String deviceAddress=device != null ? device.getAddress() : null;
-    if (powerManager.isScreenOn() && LocalBluetoothPreferences.shouldShowDialogInForeground(context,deviceAddress)) {
+    String deviceName=device != null ? device.getName() : null;
+    boolean shouldShowDialog=LocalBluetoothPreferences.shouldShowDialogInForeground(context,deviceAddress,deviceName);
+    if (powerManager.isInteractive() && shouldShowDialog) {
       context.startActivity(pairingIntent);
     }
  else {

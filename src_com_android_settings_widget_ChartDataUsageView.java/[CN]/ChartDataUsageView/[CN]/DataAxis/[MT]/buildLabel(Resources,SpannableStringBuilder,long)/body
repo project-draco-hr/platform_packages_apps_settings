@@ -1,4 +1,5 @@
 {
+  value=MathUtils.constrain(value,0,TrafficStats.TB_IN_BYTES);
   final BytesResult result=Formatter.formatBytes(res,value,Formatter.FLAG_SHORTER | Formatter.FLAG_CALCULATE_ROUNDED);
   setText(builder,sSpanSize,result.value,"^1");
   setText(builder,sSpanUnit,result.units,"^2");

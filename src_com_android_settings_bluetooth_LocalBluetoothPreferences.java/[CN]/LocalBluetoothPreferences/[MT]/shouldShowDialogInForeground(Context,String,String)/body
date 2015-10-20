@@ -33,6 +33,13 @@
       }
     }
   }
+  if (!TextUtils.isEmpty(deviceName)) {
+    String packagedKeyboardName=context.getString(com.android.internal.R.string.config_packagedKeyboardName);
+    if (deviceName.equals(packagedKeyboardName)) {
+      if (DEBUG)       Log.v(TAG,"showing dialog for packaged keyboard");
+      return true;
+    }
+  }
   if (DEBUG)   Log.v(TAG,"Found no reason to show the dialog - do not show dialog.");
   return false;
 }

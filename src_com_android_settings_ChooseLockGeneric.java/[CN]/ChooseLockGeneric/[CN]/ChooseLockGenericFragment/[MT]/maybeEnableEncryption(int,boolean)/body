@@ -1,6 +1,6 @@
 {
   DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE);
-  if (Process.myUserHandle().isOwner() && LockPatternUtils.isDeviceEncryptionEnabled() && !dpm.getDoNotAskCredentialsOnBoot()) {
+  if (UserManager.get(getActivity()).isAdminUser() && LockPatternUtils.isDeviceEncryptionEnabled() && !dpm.getDoNotAskCredentialsOnBoot()) {
     mEncryptionRequestQuality=quality;
     mEncryptionRequestDisabled=disabled;
     final Context context=getActivity();

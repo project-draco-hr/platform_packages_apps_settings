@@ -1,4 +1,8 @@
 {
+  if (mAppEntry == null) {
+    setIntentAndFinish(true,true);
+    return;
+  }
   String packageName=mAppEntry.info.packageName;
   if (v == mUninstallButton) {
     if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {

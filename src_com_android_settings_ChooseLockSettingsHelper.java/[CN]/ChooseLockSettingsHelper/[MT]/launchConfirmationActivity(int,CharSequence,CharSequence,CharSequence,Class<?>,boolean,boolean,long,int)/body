@@ -14,9 +14,17 @@
   if (external) {
     intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
     if (mFragment != null) {
+      IntentSender intentSender=mFragment.getActivity().getIntent().getParcelableExtra(Intent.EXTRA_INTENT);
+      if (intentSender != null) {
+        intent.putExtra(Intent.EXTRA_INTENT,intentSender);
+      }
       mFragment.startActivity(intent);
     }
  else {
+      IntentSender intentSender=mActivity.getIntent().getParcelableExtra(Intent.EXTRA_INTENT);
+      if (intentSender != null) {
+        intent.putExtra(Intent.EXTRA_INTENT,intentSender);
+      }
       mActivity.startActivity(intent);
     }
   }

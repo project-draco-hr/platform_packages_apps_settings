@@ -1,0 +1,10 @@
+{
+  IntentSender intentSender=getActivity().getIntent().getParcelableExtra(Intent.EXTRA_INTENT);
+  if (intentSender != null) {
+    try {
+      getActivity().startIntentSenderForResult(intentSender,-1,null,0,0,0);
+    }
+ catch (    IntentSender.SendIntentException e) {
+    }
+  }
+}

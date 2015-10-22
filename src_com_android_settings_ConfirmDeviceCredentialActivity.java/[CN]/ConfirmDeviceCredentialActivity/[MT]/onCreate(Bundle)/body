@@ -3,8 +3,16 @@
   Intent intent=getIntent();
   String title=intent.getStringExtra(KeyguardManager.EXTRA_TITLE);
   String details=intent.getStringExtra(KeyguardManager.EXTRA_DESCRIPTION);
+  int userId=Utils.getEffectiveUserId(this);
+  if (isInternalActivity()) {
+    int givenUserId=intent.getIntExtra(Intent.EXTRA_USER_ID,userId);
+    UserManager userManager=UserManager.get(this);
+    if (userManager.isSameProfileGroup(givenUserId,userId)) {
+      userId=givenUserId;
+    }
+  }
   ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this);
-  if (!helper.launchConfirmationActivity(0,null,title,details,false,true)) {
+  if (!helper.launchConfirmationActivity(0,null,title,details,false,true,userId)) {
     Log.d(TAG,"No pattern, password or PIN set.");
     setResult(Activity.RESULT_OK);
   }

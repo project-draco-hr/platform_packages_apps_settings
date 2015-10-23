@@ -1,6 +1,6 @@
 {
   boolean hasFingerprints=mFingerprintManager.hasEnrolledFingerprints();
-switch (mLockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId())) {
+switch (mLockPatternUtils.getKeyguardStoredPasswordQuality(mUserId)) {
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
     return hasFingerprints ? R.string.unlock_disable_frp_warning_content_pattern_fingerprint : R.string.unlock_disable_frp_warning_content_pattern;
 case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:

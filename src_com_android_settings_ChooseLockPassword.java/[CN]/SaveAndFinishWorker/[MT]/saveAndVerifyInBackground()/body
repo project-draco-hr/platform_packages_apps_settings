@@ -1,11 +1,10 @@
 {
   Intent result=null;
-  final int userId=UserHandle.myUserId();
-  mUtils.saveLockPassword(mChosenPassword,mCurrentPassword,mRequestedQuality,userId);
+  mUtils.saveLockPassword(mChosenPassword,mCurrentPassword,mRequestedQuality,mUserId);
   if (mHasChallenge) {
     byte[] token;
     try {
-      token=mUtils.verifyPassword(mChosenPassword,mChallenge,userId);
+      token=mUtils.verifyPassword(mChosenPassword,mChallenge,mUserId);
     }
  catch (    RequestThrottledException e) {
       token=null;

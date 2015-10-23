@@ -12,26 +12,26 @@
     final int maxLength=mDPM.getPasswordMaximumLength(quality);
     Intent intent;
     if (mHasChallenge) {
-      intent=getLockPasswordIntent(context,quality,minLength,maxLength,mRequirePassword,mChallenge);
+      intent=getLockPasswordIntent(context,quality,minLength,maxLength,mRequirePassword,mChallenge,mUserId);
     }
  else {
-      intent=getLockPasswordIntent(context,quality,minLength,maxLength,mRequirePassword,mUserPassword);
+      intent=getLockPasswordIntent(context,quality,minLength,maxLength,mRequirePassword,mUserPassword,mUserId);
     }
     startActivityForResult(intent,CHOOSE_LOCK_REQUEST);
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
     Intent intent;
     if (mHasChallenge) {
-      intent=getLockPatternIntent(context,mRequirePassword,mChallenge);
+      intent=getLockPatternIntent(context,mRequirePassword,mChallenge,mUserId);
     }
  else {
-      intent=getLockPatternIntent(context,mRequirePassword,mUserPassword);
+      intent=getLockPatternIntent(context,mRequirePassword,mUserPassword,mUserId);
     }
     startActivityForResult(intent,CHOOSE_LOCK_REQUEST);
   }
  else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
-    mChooseLockSettingsHelper.utils().clearLock(UserHandle.myUserId());
-    mChooseLockSettingsHelper.utils().setLockScreenDisabled(disabled,UserHandle.myUserId());
+    mChooseLockSettingsHelper.utils().clearLock(mUserId);
+    mChooseLockSettingsHelper.utils().setLockScreenDisabled(disabled,mUserId);
     removeAllFingerprintTemplatesAndFinish();
     getActivity().setResult(Activity.RESULT_OK);
   }

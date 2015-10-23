@@ -5,14 +5,15 @@
   if (!(getActivity() instanceof ChooseLockPassword)) {
     throw new SecurityException("Fragment contained in wrong activity");
   }
-  mRequestedQuality=Math.max(intent.getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,mRequestedQuality),mLockPatternUtils.getRequestedPasswordQuality(UserHandle.myUserId()));
-  mPasswordMinLength=Math.max(Math.max(LockPatternUtils.MIN_LOCK_PASSWORD_SIZE,intent.getIntExtra(PASSWORD_MIN_KEY,mPasswordMinLength)),mLockPatternUtils.getRequestedMinimumPasswordLength(UserHandle.myUserId()));
+  mUserId=Utils.getSameOwnerUserId(getActivity(),intent.getExtras());
+  mRequestedQuality=Math.max(intent.getIntExtra(LockPatternUtils.PASSWORD_TYPE_KEY,mRequestedQuality),mLockPatternUtils.getRequestedPasswordQuality(mUserId));
+  mPasswordMinLength=Math.max(Math.max(LockPatternUtils.MIN_LOCK_PASSWORD_SIZE,intent.getIntExtra(PASSWORD_MIN_KEY,mPasswordMinLength)),mLockPatternUtils.getRequestedMinimumPasswordLength(mUserId));
   mPasswordMaxLength=intent.getIntExtra(PASSWORD_MAX_KEY,mPasswordMaxLength);
-  mPasswordMinLetters=Math.max(intent.getIntExtra(PASSWORD_MIN_LETTERS_KEY,mPasswordMinLetters),mLockPatternUtils.getRequestedPasswordMinimumLetters(UserHandle.myUserId()));
-  mPasswordMinUpperCase=Math.max(intent.getIntExtra(PASSWORD_MIN_UPPERCASE_KEY,mPasswordMinUpperCase),mLockPatternUtils.getRequestedPasswordMinimumUpperCase(UserHandle.myUserId()));
-  mPasswordMinLowerCase=Math.max(intent.getIntExtra(PASSWORD_MIN_LOWERCASE_KEY,mPasswordMinLowerCase),mLockPatternUtils.getRequestedPasswordMinimumLowerCase(UserHandle.myUserId()));
-  mPasswordMinNumeric=Math.max(intent.getIntExtra(PASSWORD_MIN_NUMERIC_KEY,mPasswordMinNumeric),mLockPatternUtils.getRequestedPasswordMinimumNumeric(UserHandle.myUserId()));
-  mPasswordMinSymbols=Math.max(intent.getIntExtra(PASSWORD_MIN_SYMBOLS_KEY,mPasswordMinSymbols),mLockPatternUtils.getRequestedPasswordMinimumSymbols(UserHandle.myUserId()));
-  mPasswordMinNonLetter=Math.max(intent.getIntExtra(PASSWORD_MIN_NONLETTER_KEY,mPasswordMinNonLetter),mLockPatternUtils.getRequestedPasswordMinimumNonLetter(UserHandle.myUserId()));
+  mPasswordMinLetters=Math.max(intent.getIntExtra(PASSWORD_MIN_LETTERS_KEY,mPasswordMinLetters),mLockPatternUtils.getRequestedPasswordMinimumLetters(mUserId));
+  mPasswordMinUpperCase=Math.max(intent.getIntExtra(PASSWORD_MIN_UPPERCASE_KEY,mPasswordMinUpperCase),mLockPatternUtils.getRequestedPasswordMinimumUpperCase(mUserId));
+  mPasswordMinLowerCase=Math.max(intent.getIntExtra(PASSWORD_MIN_LOWERCASE_KEY,mPasswordMinLowerCase),mLockPatternUtils.getRequestedPasswordMinimumLowerCase(mUserId));
+  mPasswordMinNumeric=Math.max(intent.getIntExtra(PASSWORD_MIN_NUMERIC_KEY,mPasswordMinNumeric),mLockPatternUtils.getRequestedPasswordMinimumNumeric(mUserId));
+  mPasswordMinSymbols=Math.max(intent.getIntExtra(PASSWORD_MIN_SYMBOLS_KEY,mPasswordMinSymbols),mLockPatternUtils.getRequestedPasswordMinimumSymbols(mUserId));
+  mPasswordMinNonLetter=Math.max(intent.getIntExtra(PASSWORD_MIN_NONLETTER_KEY,mPasswordMinNonLetter),mLockPatternUtils.getRequestedPasswordMinimumNonLetter(mUserId));
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(getActivity());
 }

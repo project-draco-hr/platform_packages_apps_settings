@@ -1,7 +1,7 @@
 {
   boolean hasBindAppWidgetPermission=mAppWidgetManager.hasBindAppWidgetPermission(mAppEntry.info.packageName);
   TextView autoLaunchView=(TextView)view.findViewById(R.id.auto_launch);
-  boolean autoLaunchEnabled=Utils.hasPreferredActivities(mPm,mPackageName) || isDefaultBrowser(mPackageName) || Utils.hasUsbDefaults(mUsbManager,mPackageName);
+  boolean autoLaunchEnabled=AppUtils.hasPreferredActivities(mPm,mPackageName) || isDefaultBrowser(mPackageName) || AppUtils.hasUsbDefaults(mUsbManager,mPackageName);
   if (!autoLaunchEnabled && !hasBindAppWidgetPermission) {
     resetLaunchDefaultsUi(autoLaunchView);
   }

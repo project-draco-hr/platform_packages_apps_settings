@@ -30,7 +30,7 @@
     getContext().unregisterReceiver(mPermissionReceiver);
   }
   mPermissionReceiver=PermissionsSummaryHelper.getPermissionSummary(getContext(),mPackageName,mPermissionCallback);
-  mLaunchPreference.setSummary(Utils.getLaunchByDeafaultSummary(mAppEntry,mUsbManager,mPm,context));
+  mLaunchPreference.setSummary(AppUtils.getLaunchByDefaultSummary(mAppEntry,mUsbManager,mPm,context));
   mNotificationPreference.setSummary(getNotificationSummary(mAppEntry,context,mBackend));
   if (mDataPreference != null) {
     mDataPreference.setSummary(getDataSummary());

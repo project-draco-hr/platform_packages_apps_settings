@@ -364,8 +364,9 @@ endRoundTime=calEnd.getTimeInMillis();
 if (startRoundTime < endRoundTime) {
 addDateLabel(calStart,mLevelLeft,mLevelRight,isDayFirst);
 Calendar calMid=Calendar.getInstance();
-calMid.setTimeInMillis(startRoundTime + ((endRoundTime - startRoundTime) / 2));
+calMid.setTimeInMillis(startRoundTime + ((endRoundTime - startRoundTime) / 2) + 2 * 60 * 60* 1000);
 calMid.set(Calendar.HOUR_OF_DAY,0);
+calMid.set(Calendar.MINUTE,0);
 long calMidMillis=calMid.getTimeInMillis();
 if (calMidMillis > startRoundTime && calMidMillis < endRoundTime) {
   addDateLabel(calMid,mLevelLeft,mLevelRight,isDayFirst);

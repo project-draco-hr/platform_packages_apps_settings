@@ -22,6 +22,9 @@
     accessPoint.saveWifiState(accessPointState);
     resultData.putExtra(KEY_ACCESS_POINT_STATE,accessPointState);
   }
+  if (config != null) {
+    resultData.putExtra(KEY_WIFI_CONFIGURATION,config);
+  }
   setResult(RESULT_CONNECTED,resultData);
   finish();
 }

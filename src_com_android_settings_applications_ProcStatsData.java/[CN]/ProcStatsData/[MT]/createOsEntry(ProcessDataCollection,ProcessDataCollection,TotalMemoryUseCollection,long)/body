@@ -11,11 +11,6 @@
     osEntry.evaluateTargetPackage(mPm,mStats,bgTotals,runTotals,sEntryCompare,mUseUss);
     osPkg.addEntry(osEntry);
   }
-  if (totalMem.sysMemZRamWeight > 0) {
-    osEntry=new ProcStatsEntry(Utils.OS_PKG,0,mContext.getString(R.string.process_stats_os_zram),memTotalTime,(long)(totalMem.sysMemZRamWeight / memTotalTime));
-    osEntry.evaluateTargetPackage(mPm,mStats,bgTotals,runTotals,sEntryCompare,mUseUss);
-    osPkg.addEntry(osEntry);
-  }
   if (baseCacheRam > 0) {
     osEntry=new ProcStatsEntry(Utils.OS_PKG,0,mContext.getString(R.string.process_stats_os_cache),memTotalTime,baseCacheRam / 1024);
     osEntry.evaluateTargetPackage(mPm,mStats,bgTotals,runTotals,sEntryCompare,mUseUss);

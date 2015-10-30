@@ -1,0 +1,26 @@
+{
+  IWebViewUpdateService webViewUpdateService=IWebViewUpdateService.Stub.asInterface(ServiceManager.getService("webviewupdate"));
+  try {
+    WebViewProviderInfo[] providers=webViewUpdateService.getValidWebViewPackages();
+    String[] options=new String[providers.length];
+    String[] values=new String[providers.length];
+    for (int n=0; n < providers.length; n++) {
+      options[n]=providers[n].description;
+      values[n]=providers[n].packageName;
+    }
+    mWebViewProvider.setEntries(options);
+    mWebViewProvider.setEntryValues(values);
+    String value=webViewUpdateService.getCurrentWebViewPackageName();
+    if (value == null) {
+      value="";
+    }
+    for (int i=0; i < values.length; i++) {
+      if (value.contentEquals(values[i])) {
+        mWebViewProvider.setValueIndex(i);
+        return;
+      }
+    }
+  }
+ catch (  RemoteException e) {
+  }
+}

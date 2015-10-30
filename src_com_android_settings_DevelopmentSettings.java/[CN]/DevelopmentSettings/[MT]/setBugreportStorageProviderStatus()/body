@@ -1,0 +1,5 @@
+{
+  final ComponentName componentName=new ComponentName("com.android.shell","com.android.shell.BugreportStorageProvider");
+  final boolean enabled=mBugreportInPower.isChecked();
+  getPackageManager().setComponentEnabledSetting(componentName,enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,0);
+}

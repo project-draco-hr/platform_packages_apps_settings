@@ -101,6 +101,16 @@
     mAllPrefs.add(hdcpChecking);
     removePreferenceForProduction(hdcpChecking);
   }
+  try {
+    IBinder service=ServiceManager.getService("mount");
+    IMountService mountService=IMountService.Stub.asInterface(service);
+    if (!mountService.isConvertibleToFBE()) {
+      removePreference(KEY_CONVERT_FBE);
+    }
+  }
+ catch (  RemoteException e) {
+    removePreference(KEY_CONVERT_FBE);
+  }
   mNightModePreference=(DropDownPreference)findPreference(KEY_NIGHT_MODE);
   final UiModeManager uiManager=(UiModeManager)getSystemService(Context.UI_MODE_SERVICE);
   final int currentNightMode=uiManager.getNightMode();

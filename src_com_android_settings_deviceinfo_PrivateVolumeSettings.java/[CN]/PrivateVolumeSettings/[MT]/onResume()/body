@@ -6,5 +6,7 @@
     return;
   }
   mStorageManager.registerListener(mStorageListener);
-  update();
+  if (!mDetached) {
+    update();
+  }
 }

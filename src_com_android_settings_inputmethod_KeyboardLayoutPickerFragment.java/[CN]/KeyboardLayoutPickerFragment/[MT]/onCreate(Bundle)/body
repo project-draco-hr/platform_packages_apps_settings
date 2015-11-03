@@ -5,7 +5,7 @@
     getActivity().finish();
   }
   mIm=(InputManager)getSystemService(Context.INPUT_SERVICE);
-  mKeyboardLayouts=mIm.getKeyboardLayouts();
+  mKeyboardLayouts=mIm.getKeyboardLayoutsForInputDevice(mInputDeviceIdentifier);
   Arrays.sort(mKeyboardLayouts);
   setPreferenceScreen(createPreferenceHierarchy());
 }

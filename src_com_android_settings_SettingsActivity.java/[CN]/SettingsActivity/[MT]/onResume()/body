@@ -3,14 +3,9 @@
   if (mIsShowingDashboard) {
     MetricsLogger.visible(this,MetricsLogger.MAIN_SETTINGS);
   }
-  final int newHomeActivityCount=getHomeActivitiesCount();
-  if (newHomeActivityCount != mHomeActivitiesCount) {
-    mHomeActivitiesCount=newHomeActivityCount;
-    invalidateCategories(true);
-  }
   mDevelopmentPreferencesListener=new SharedPreferences.OnSharedPreferenceChangeListener(){
     @Override public void onSharedPreferenceChanged(    SharedPreferences sharedPreferences,    String key){
-      invalidateCategories(true);
+      updateTilesList();
     }
   }
 ;
@@ -20,4 +15,5 @@
   if (mDisplaySearch && !TextUtils.isEmpty(mSearchQuery)) {
     onQueryTextSubmit(mSearchQuery);
   }
+  updateTilesList();
 }

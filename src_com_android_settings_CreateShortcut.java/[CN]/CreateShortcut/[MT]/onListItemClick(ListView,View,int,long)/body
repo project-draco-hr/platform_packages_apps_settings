@@ -7,10 +7,8 @@
   intent.putExtra(Intent.EXTRA_SHORTCUT_NAME,itemForPosition(position).label);
   ResolveInfo resolveInfo=itemForPosition(position).resolveInfo;
   ActivityInfo activityInfo=resolveInfo.activityInfo;
-  if (activityInfo.metaData != null && activityInfo.metaData.containsKey(TOP_LEVEL_HEADER)) {
-    int topLevelId=activityInfo.metaData.getInt(TOP_LEVEL_HEADER);
-    int resourceId=getDrawableResource(topLevelId);
-    intent.putExtra(Intent.EXTRA_SHORTCUT_ICON,createIcon(resourceId));
+  if (activityInfo.icon != 0) {
+    intent.putExtra(Intent.EXTRA_SHORTCUT_ICON,createIcon(activityInfo.icon));
   }
   setResult(RESULT_OK,intent);
   finish();

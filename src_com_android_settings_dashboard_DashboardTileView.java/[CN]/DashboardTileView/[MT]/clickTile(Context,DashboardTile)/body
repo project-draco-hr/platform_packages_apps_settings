@@ -1,0 +1,17 @@
+{
+  if (tile.fragment != null) {
+    Utils.startWithFragment(context,tile.fragment,tile.fragmentArguments,null,0,0,tile.title);
+  }
+ else   if (tile.intent != null) {
+    int numUserHandles=tile.userHandle.size();
+    if (numUserHandles > 1) {
+      ProfileSelectDialog.show(((Activity)context).getFragmentManager(),tile);
+    }
+ else     if (numUserHandles == 1) {
+      context.startActivityAsUser(tile.intent,tile.userHandle.get(0));
+    }
+ else {
+      context.startActivity(tile.intent);
+    }
+  }
+}

@@ -1,6 +1,9 @@
 {
-  super.onCreate(savedInstanceState);
   final Intent intent=getIntent();
+  if (WizardManagerHelper.isSetupWizardIntent(intent)) {
+    setTheme(SetupWizardUtils.getTransparentTheme(intent));
+  }
+  super.onCreate(savedInstanceState);
   final Bundle accessPointState=intent.getBundleExtra(KEY_ACCESS_POINT_STATE);
   AccessPoint accessPoint=null;
   if (accessPointState != null) {

@@ -35,9 +35,6 @@
     extras.putBoolean(EXTRA_CHECKED,serviceEnabled);
     extras.putString(EXTRA_TITLE,title);
     PrintServiceInfo printServiceInfo=PrintServiceInfo.create(installedService,getActivity());
-    CharSequence applicationLabel=installedService.loadLabel(getPackageManager());
-    extras.putString(EXTRA_ENABLE_WARNING_TITLE,getString(R.string.print_service_security_warning_title,applicationLabel));
-    extras.putString(EXTRA_ENABLE_WARNING_MESSAGE,getString(R.string.print_service_security_warning_summary,applicationLabel));
     String settingsClassName=printServiceInfo.getSettingsActivityName();
     if (!TextUtils.isEmpty(settingsClassName)) {
       extras.putString(EXTRA_SETTINGS_TITLE,getString(R.string.print_menu_item_settings));

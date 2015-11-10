@@ -4,28 +4,20 @@
   addPreferencesFromResource(R.xml.device_info_settings);
   setStringSummary(KEY_FIRMWARE_VERSION,Build.VERSION.RELEASE);
   findPreference(KEY_FIRMWARE_VERSION).setEnabled(true);
-  String patch=Build.VERSION.SECURITY_PATCH;
-  if (!"".equals(patch)) {
-    try {
-      SimpleDateFormat template=new SimpleDateFormat("yyyy-MM-dd");
-      Date patchDate=template.parse(patch);
-      String format=DateFormat.getBestDateTimePattern(Locale.getDefault(),"dMMMMyyyy");
-      patch=DateFormat.format(format,patchDate).toString();
-    }
- catch (    ParseException e) {
-    }
+  final String patch=DeviceInfoUtils.getSecurityPatch();
+  if (TextUtils.isEmpty(patch)) {
     setStringSummary(KEY_SECURITY_PATCH,patch);
   }
  else {
     getPreferenceScreen().removePreference(findPreference(KEY_SECURITY_PATCH));
   }
   setValueSummary(KEY_BASEBAND_VERSION,"gsm.version.baseband");
-  setStringSummary(KEY_DEVICE_MODEL,Build.MODEL + getMsvSuffix());
+  setStringSummary(KEY_DEVICE_MODEL,Build.MODEL + DeviceInfoUtils.getMsvSuffix());
   setValueSummary(KEY_EQUIPMENT_ID,PROPERTY_EQUIPMENT_ID);
   setStringSummary(KEY_DEVICE_MODEL,Build.MODEL);
   setStringSummary(KEY_BUILD_NUMBER,Build.DISPLAY);
   findPreference(KEY_BUILD_NUMBER).setEnabled(true);
-  findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
+  findPreference(KEY_KERNEL_VERSION).setSummary(DeviceInfoUtils.getFormattedKernelVersion());
   if (!SELinux.isSELinuxEnabled()) {
     String status=getResources().getString(R.string.selinux_status_disabled);
     setStringSummary(KEY_SELINUX_STATUS,status);
@@ -40,7 +32,7 @@
   if (Utils.isWifiOnly(getActivity())) {
     getPreferenceScreen().removePreference(findPreference(KEY_BASEBAND_VERSION));
   }
-  if (TextUtils.isEmpty(getFeedbackReporterPackage(getActivity()))) {
+  if (TextUtils.isEmpty(DeviceInfoUtils.getFeedbackReporterPackage(getActivity()))) {
     getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_FEEDBACK));
   }
   final Activity act=getActivity();

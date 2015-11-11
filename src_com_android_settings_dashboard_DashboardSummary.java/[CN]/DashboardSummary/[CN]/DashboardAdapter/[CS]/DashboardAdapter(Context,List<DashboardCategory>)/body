@@ -1,0 +1,16 @@
+{
+  mContext=context;
+  mCategories=categories;
+  TypedValue tintColor=new TypedValue();
+  context.getTheme().resolveAttribute(com.android.internal.R.attr.colorAccent,tintColor,true);
+  for (int i=0; i < categories.size(); i++) {
+    for (int j=0; j < categories.get(i).tiles.size(); j++) {
+      DashboardTile tile=categories.get(i).tiles.get(j);
+      if (!context.getPackageName().equals(tile.intent.getComponent().getPackageName())) {
+        tile.icon.setTint(tintColor.data);
+      }
+    }
+  }
+  setShowingAll(false);
+  setHasStableIds(true);
+}

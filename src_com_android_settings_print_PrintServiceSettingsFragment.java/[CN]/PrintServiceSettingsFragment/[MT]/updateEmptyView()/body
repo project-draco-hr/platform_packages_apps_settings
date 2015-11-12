@@ -1,6 +1,6 @@
 {
   ViewGroup contentRoot=(ViewGroup)getListView().getParent();
-  View emptyView=getEmptyView();
+  View emptyView=getBackupListView().getEmptyView();
   if (!mToggleSwitch.isChecked()) {
     if (emptyView != null && emptyView.getId() != R.id.empty_print_state) {
       contentRoot.removeView(emptyView);

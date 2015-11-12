@@ -6,7 +6,7 @@
       setSummary(mSubInfoRecord.getDisplayName());
     }
  else {
-      setSummary(mSubInfoRecord.getDisplayName() + " - " + getPhoneNumber(mSubInfoRecord));
+      setSummary(mSubInfoRecord.getDisplayName() + " - " + PhoneNumberUtils.createTtsSpannable(getPhoneNumber(mSubInfoRecord)));
       setEnabled(true);
     }
     setIcon(new BitmapDrawable(res,(mSubInfoRecord.createIconBitmap(mContext))));

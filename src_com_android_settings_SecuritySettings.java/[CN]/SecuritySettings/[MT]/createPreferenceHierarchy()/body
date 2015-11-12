@@ -10,13 +10,16 @@
   mIsAdmin=mUm.isAdminUser();
   mOwnerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
   if (mOwnerInfoPref != null) {
-    mOwnerInfoPref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-      @Override public boolean onPreferenceClick(      Preference preference){
-        OwnerInfoSettings.show(SecuritySettings.this);
-        return true;
+    mOwnerInfoPref.setEnabled(!mLockPatternUtils.isDeviceOwnerInfoEnabled());
+    if (mOwnerInfoPref.isEnabled()) {
+      mOwnerInfoPref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+        @Override public boolean onPreferenceClick(        Preference preference){
+          OwnerInfoSettings.show(SecuritySettings.this);
+          return true;
+        }
       }
-    }
 );
+    }
   }
   if (mIsAdmin) {
     if (LockPatternUtils.isDeviceEncryptionEnabled()) {

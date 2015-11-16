@@ -1,45 +1,52 @@
 {
   mUpdater.removeMessages(RESCAN_MESSAGE);
-  PreferenceGroup vpnGroup=getPreferenceScreen();
-  vpnGroup.removeAll();
-  mConfigPreferences.clear();
-  mAppPreferences.clear();
-  for (  VpnProfile profile : loadVpnProfiles(mKeyStore)) {
-    final ConfigPreference pref=new ConfigPreference(getPrefContext(),mManageListener,profile);
-    pref.setOnPreferenceClickListener(this);
-    mConfigPreferences.put(profile.key,pref);
-    vpnGroup.addPreference(pref);
-  }
-  for (  AppOpsManager.PackageOps pkg : getVpnApps()) {
-    String key=getVpnIdentifier(UserHandle.getUserId(pkg.getUid()),pkg.getPackageName());
-    final AppPreference pref=new AppPreference(getPrefContext(),mManageListener,pkg.getPackageName(),pkg.getUid());
-    pref.setOnPreferenceClickListener(this);
-    mAppPreferences.put(key,pref);
-    vpnGroup.addPreference(pref);
-  }
-  try {
-    mConnectedLegacyVpn=null;
-    LegacyVpnInfo info=mConnectivityService.getLegacyVpnInfo(UserHandle.myUserId());
-    if (info != null) {
-      ConfigPreference preference=mConfigPreferences.get(info.key);
-      if (preference != null) {
-        preference.setState(info.state);
-        mConnectedLegacyVpn=info;
+  final List<VpnProfile> vpnProfiles=loadVpnProfiles(mKeyStore);
+  final List<AppVpnInfo> vpnApps=getVpnApps();
+  final List<LegacyVpnInfo> connectedLegacyVpns=getConnectedLegacyVpns();
+  final List<AppVpnInfo> connectedAppVpns=getConnectedAppVpns();
+  getActivity().runOnUiThread(new Runnable(){
+    @Override public void run(){
+      final Set<Preference> updates=new ArraySet<>();
+      for (      VpnProfile profile : vpnProfiles) {
+        ConfigPreference p=findOrCreatePreference(profile);
+        p.setState(ConfigPreference.STATE_NONE);
+        updates.add(p);
       }
-    }
-    for (    UserHandle profile : mUserManager.getUserProfiles()) {
-      VpnConfig cfg=mConnectivityService.getVpnConfig(profile.getIdentifier());
-      if (cfg != null) {
-        final String key=getVpnIdentifier(profile.getIdentifier(),cfg.user);
-        final AppPreference preference=mAppPreferences.get(key);
+      for (      AppVpnInfo app : vpnApps) {
+        AppPreference p=findOrCreatePreference(app);
+        p.setState(AppPreference.STATE_DISCONNECTED);
+        updates.add(p);
+      }
+      mConfigPreferences.values().retainAll(updates);
+      mAppPreferences.values().retainAll(updates);
+      final PreferenceGroup vpnGroup=getPreferenceScreen();
+      for (int i=vpnGroup.getPreferenceCount() - 1; i >= 0; i--) {
+        Preference p=vpnGroup.getPreference(i);
+        if (updates.contains(p)) {
+          updates.remove(p);
+        }
+ else {
+          vpnGroup.removePreference(p);
+        }
+      }
+      for (      Preference pref : updates) {
+        vpnGroup.addPreference(pref);
+      }
+      for (      LegacyVpnInfo info : connectedLegacyVpns) {
+        final ConfigPreference preference=mConfigPreferences.get(info.key);
+        if (preference != null) {
+          preference.setState(info.state);
+        }
+      }
+      for (      AppVpnInfo app : connectedAppVpns) {
+        final AppPreference preference=mAppPreferences.get(app);
         if (preference != null) {
           preference.setState(AppPreference.STATE_CONNECTED);
         }
       }
     }
   }
- catch (  RemoteException e) {
-  }
+);
   mUpdater.sendEmptyMessageDelayed(RESCAN_MESSAGE,RESCAN_INTERVAL_MS);
   return true;
 }

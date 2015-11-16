@@ -1,0 +1,15 @@
+{
+  List<AppVpnInfo> connections=new ArrayList<>();
+  try {
+    for (    UserHandle profile : mUserManager.getUserProfiles()) {
+      VpnConfig config=mConnectivityService.getVpnConfig(profile.getIdentifier());
+      if (config != null && !config.legacy) {
+        connections.add(new AppVpnInfo(profile.getIdentifier(),config.user));
+      }
+    }
+  }
+ catch (  RemoteException e) {
+    Log.e(LOG_TAG,"Failure updating VPN list with connected app VPNs",e);
+  }
+  return connections;
+}

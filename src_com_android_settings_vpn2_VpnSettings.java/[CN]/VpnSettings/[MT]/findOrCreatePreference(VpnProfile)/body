@@ -1,0 +1,10 @@
+{
+  ConfigPreference pref=mConfigPreferences.get(profile.key);
+  if (pref == null) {
+    pref=new ConfigPreference(getPrefContext(),mManageListener);
+    pref.setOnPreferenceClickListener(this);
+    mConfigPreferences.put(profile.key,pref);
+  }
+  pref.setProfile(profile);
+  return pref;
+}

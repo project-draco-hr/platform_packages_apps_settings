@@ -1,15 +1,15 @@
 {
-  List<AppOpsManager.PackageOps> result=Lists.newArrayList();
-  SparseArray<Boolean> currentProfileIds=new SparseArray<>();
+  List<AppVpnInfo> result=Lists.newArrayList();
+  Set<Integer> currentProfileIds=new ArraySet<>();
   for (  UserHandle profile : mUserManager.getUserProfiles()) {
-    currentProfileIds.put(profile.getIdentifier(),Boolean.TRUE);
+    currentProfileIds.add(profile.getIdentifier());
   }
   AppOpsManager aom=(AppOpsManager)getSystemService(Context.APP_OPS_SERVICE);
   List<AppOpsManager.PackageOps> apps=aom.getPackagesForOps(new int[]{OP_ACTIVATE_VPN});
   if (apps != null) {
     for (    AppOpsManager.PackageOps pkg : apps) {
       int userId=UserHandle.getUserId(pkg.getUid());
-      if (currentProfileIds.get(userId) == null) {
+      if (!currentProfileIds.contains(userId)) {
         continue;
       }
       boolean allowed=false;
@@ -19,7 +19,7 @@
         }
       }
       if (allowed) {
-        result.add(pkg);
+        result.add(new AppVpnInfo(userId,pkg.getPackageName()));
       }
     }
   }

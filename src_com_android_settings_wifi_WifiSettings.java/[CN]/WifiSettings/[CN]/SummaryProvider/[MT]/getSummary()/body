@@ -1,0 +1,9 @@
+{
+  if (!mWifiTracker.enabled) {
+    return mContext.getString(R.string.disabled);
+  }
+  if (!mWifiTracker.connected) {
+    return mContext.getString(R.string.disconnected);
+  }
+  return mWifiTracker.ssid;
+}

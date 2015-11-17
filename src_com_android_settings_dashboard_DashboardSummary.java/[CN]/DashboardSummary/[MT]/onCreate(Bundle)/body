@@ -1,4 +1,7 @@
 {
   super.onCreate(savedInstanceState);
+  List<DashboardCategory> categories=((SettingsActivity)getActivity()).getDashboardCategories(true);
+  mAdapter=new DashboardAdapter(getContext(),categories);
+  mSummaryLoader=new SummaryLoader(getActivity(),mAdapter,categories);
   setHasOptionsMenu(true);
 }

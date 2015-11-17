@@ -15,52 +15,10 @@
   mPhoneSignalLabel=getContext().getString(R.string.battery_stats_phone_signal_label);
   mMaxPercentLabelString=Utils.formatPercentage(100);
   mMinPercentLabelString=Utils.formatPercentage(0);
-  mBatteryLevel=com.android.settings.Utils.getBatteryLevel(mBatteryBroadcast);
-  String batteryPercentString=Utils.formatPercentage(mBatteryLevel);
-  long remainingTimeUs=0;
-  mDischarging=true;
-  if (mBatteryBroadcast.getIntExtra(BatteryManager.EXTRA_PLUGGED,0) == 0) {
-    final long drainTime=mStats.computeBatteryTimeRemaining(elapsedRealtimeUs);
-    if (drainTime > 0) {
-      remainingTimeUs=drainTime;
-      String timeString=Formatter.formatShortElapsedTime(getContext(),drainTime / 1000);
-      mChargeLabelString=getContext().getResources().getString(R.string.power_discharging_duration,batteryPercentString,timeString);
-    }
- else {
-      mChargeLabelString=batteryPercentString;
-    }
-  }
- else {
-    final long chargeTime=mStats.computeChargeTimeRemaining(elapsedRealtimeUs);
-    final String statusLabel=com.android.settings.Utils.getBatteryStatus(getResources(),mBatteryBroadcast);
-    final int status=mBatteryBroadcast.getIntExtra(BatteryManager.EXTRA_STATUS,BatteryManager.BATTERY_STATUS_UNKNOWN);
-    if (chargeTime > 0 && status != BatteryManager.BATTERY_STATUS_FULL) {
-      mDischarging=false;
-      remainingTimeUs=chargeTime;
-      String timeString=Formatter.formatShortElapsedTime(getContext(),chargeTime / 1000);
-      int plugType=mBatteryBroadcast.getIntExtra(BatteryManager.EXTRA_PLUGGED,0);
-      int resId;
-      if (plugType == BatteryManager.BATTERY_PLUGGED_AC) {
-        resId=R.string.power_charging_duration_ac;
-      }
- else       if (plugType == BatteryManager.BATTERY_PLUGGED_USB) {
-        resId=R.string.power_charging_duration_usb;
-      }
- else       if (plugType == BatteryManager.BATTERY_PLUGGED_WIRELESS) {
-        resId=R.string.power_charging_duration_wireless;
-      }
- else {
-        resId=R.string.power_charging_duration;
-      }
-      mChargeLabelString=getContext().getResources().getString(resId,batteryPercentString,timeString);
-    }
- else {
-      mChargeLabelString=getContext().getResources().getString(R.string.power_charging,batteryPercentString,statusLabel);
-    }
-  }
+  mInfo=getBatteryInfo(getContext(),mBatteryBroadcast,mStats,elapsedRealtimeUs);
   mDrainString="";
   mChargeDurationString="";
-  setContentDescription(mChargeLabelString);
+  setContentDescription(mInfo.mChargeLabelString);
   int pos=0;
   int lastInteresting=0;
   byte lastLevel=-1;
@@ -105,9 +63,9 @@
       }
     }
   }
-  mHistEnd=mHistDataEnd + (remainingTimeUs / 1000);
+  mHistEnd=mHistDataEnd + (mInfo.remainingTimeUs / 1000);
   mEndDataWallTime=lastWallTime + mHistDataEnd - lastRealtime;
-  mEndWallTime=mEndDataWallTime + (remainingTimeUs / 1000);
+  mEndWallTime=mEndDataWallTime + (mInfo.remainingTimeUs / 1000);
   mNumHist=lastInteresting;
   mHaveGps=(aggrStates & HistoryItem.STATE_GPS_ON_FLAG) != 0;
   mHaveFlashlight=(aggrStates2 & HistoryItem.STATE2_FLASHLIGHT_FLAG) != 0;

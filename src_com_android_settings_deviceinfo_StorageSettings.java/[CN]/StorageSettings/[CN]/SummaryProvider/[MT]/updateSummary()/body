@@ -1,0 +1,15 @@
+{
+  StorageManager storageManager=mContext.getSystemService(StorageManager.class);
+  final List<VolumeInfo> volumes=storageManager.getVolumes();
+  long privateUsedBytes=0;
+  long privateTotalBytes=0;
+  for (  VolumeInfo info : volumes) {
+    if (info.getType() != VolumeInfo.TYPE_PUBLIC && info.getType() != VolumeInfo.TYPE_PRIVATE) {
+      continue;
+    }
+    final File path=info.getPath();
+    privateUsedBytes+=path.getTotalSpace() - path.getFreeSpace();
+    privateTotalBytes+=path.getTotalSpace();
+  }
+  mLoader.setSummary(this,mContext.getString(R.string.storage_summary,Formatter.formatFileSize(mContext,privateUsedBytes),Formatter.formatFileSize(mContext,privateTotalBytes)));
+}

@@ -62,8 +62,8 @@
   }
   int headerTop=-mHeaderTextAscent + (mHeaderTextDescent - mHeaderTextAscent) / 3;
   mHeaderTextPaint.setTextAlign(textAlignLeft);
-  if (DEBUG)   Log.d(TAG,"Drawing charge label string: " + mChargeLabelString);
-  canvas.drawText(mChargeLabelString,textStartX,headerTop,mHeaderTextPaint);
+  if (DEBUG)   Log.d(TAG,"Drawing charge label string: " + mInfo.mChargeLabelString);
+  canvas.drawText(mInfo.mChargeLabelString,textStartX,headerTop,mHeaderTextPaint);
   int stringHalfWidth=mChargeDurationStringWidth / 2;
   if (layoutRtl)   stringHalfWidth=-stringHalfWidth;
   int headerCenter=((width - mChargeDurationStringWidth - mDrainStringWidth) / 2) + (layoutRtl ? mDrainStringWidth : mChargeLabelStringWidth);

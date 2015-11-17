@@ -22,7 +22,7 @@
     profileData.preferenceGroup=parent;
   }
   if (userInfo.isEnabled()) {
-    profileData.authenticatorHelper=new AuthenticatorHelper(context,userInfo.getUserHandle(),mUm,this);
+    profileData.authenticatorHelper=new AuthenticatorHelper(context,userInfo.getUserHandle(),this);
     if (!mUm.hasUserRestriction(DISALLOW_MODIFY_ACCOUNTS,userInfo.getUserHandle())) {
       profileData.addAccountPreference=newAddAccountPreference(context);
     }

@@ -3,5 +3,5 @@
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   final Activity activity=getActivity();
   mUserHandle=Utils.getSecureTargetUser(activity.getActivityToken(),mUm,getArguments(),activity.getIntent().getExtras());
-  mAuthenticatorHelper=new AuthenticatorHelper(activity,mUserHandle,mUm,this);
+  mAuthenticatorHelper=new AuthenticatorHelper(activity,mUserHandle,this);
 }

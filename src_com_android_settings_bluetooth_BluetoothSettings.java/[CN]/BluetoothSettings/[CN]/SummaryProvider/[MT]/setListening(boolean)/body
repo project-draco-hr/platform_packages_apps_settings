@@ -1,0 +1,12 @@
+{
+  if (listening) {
+    BluetoothAdapter defaultAdapter=BluetoothAdapter.getDefaultAdapter();
+    mEnabled=defaultAdapter.isEnabled();
+    mConnected=defaultAdapter.getConnectionState() == BluetoothAdapter.STATE_CONNECTED;
+    mSummaryLoader.setSummary(this,getSummary());
+    mBluetoothManager.getEventManager().registerCallback(this);
+  }
+ else {
+    mBluetoothManager.getEventManager().unregisterCallback(this);
+  }
+}

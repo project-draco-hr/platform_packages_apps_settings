@@ -1,0 +1,14 @@
+{
+  mActivity=activity;
+  mAdapter=adapter;
+  for (int i=0; i < categories.size(); i++) {
+    List<DashboardTile> tiles=categories.get(i).tiles;
+    for (int j=0; j < tiles.size(); j++) {
+      DashboardTile tile=tiles.get(j);
+      SummaryProvider provider=getSummaryProvider(tile);
+      if (provider != null) {
+        mSummaryMap.put(provider,tile);
+      }
+    }
+  }
+}

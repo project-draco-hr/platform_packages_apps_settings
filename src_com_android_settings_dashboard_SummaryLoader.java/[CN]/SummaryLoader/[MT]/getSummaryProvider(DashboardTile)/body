@@ -1,0 +1,34 @@
+{
+  if (!mActivity.getPackageName().equals(tile.intent.getComponent().getPackageName())) {
+    return null;
+  }
+  Bundle metaData=getMetaData(tile);
+  if (metaData == null) {
+    if (DEBUG)     Log.d(TAG,"No metadata specified for " + tile.intent.getComponent());
+    return null;
+  }
+  String clsName=metaData.getString(SettingsActivity.META_DATA_KEY_FRAGMENT_CLASS);
+  if (clsName == null) {
+    if (DEBUG)     Log.d(TAG,"No fragment specified for " + tile.intent.getComponent());
+    return null;
+  }
+  try {
+    Class<?> cls=Class.forName(clsName);
+    Field field=cls.getField(SUMMARY_PROVIDER_FACTORY);
+    SummaryProviderFactory factory=(SummaryProviderFactory)field.get(null);
+    return factory.createSummaryProvider(mActivity,this);
+  }
+ catch (  ClassNotFoundException e) {
+    if (DEBUG)     Log.d(TAG,"Couldn't find " + clsName,e);
+  }
+catch (  NoSuchFieldException e) {
+    if (DEBUG)     Log.d(TAG,"Couldn't find " + SUMMARY_PROVIDER_FACTORY,e);
+  }
+catch (  ClassCastException e) {
+    if (DEBUG)     Log.d(TAG,"Couldn't cast " + SUMMARY_PROVIDER_FACTORY,e);
+  }
+catch (  IllegalAccessException e) {
+    if (DEBUG)     Log.d(TAG,"Couldn't get " + SUMMARY_PROVIDER_FACTORY,e);
+  }
+  return null;
+}

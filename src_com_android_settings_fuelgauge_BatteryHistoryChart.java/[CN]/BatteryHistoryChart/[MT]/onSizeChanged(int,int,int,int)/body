@@ -285,9 +285,9 @@ mStats.finishIteratingHistoryLocked();
 }
 if (lastY < 0 || lastX < 0) {
 x=lastX=mLevelLeft;
-y=lastY=mLevelTop + levelh - ((mBatteryLevel - batLow) * (levelh - 1)) / batChange;
+y=lastY=mLevelTop + levelh - ((mInfo.mBatteryLevel - batLow) * (levelh - 1)) / batChange;
 Path path;
-byte value=(byte)mBatteryLevel;
+byte value=(byte)mInfo.mBatteryLevel;
 if (value <= mBatteryCriticalLevel) path=mBatCriticalPath;
  else if (value <= mBatteryWarnLevel) path=mBatWarnPath;
  else path=null;
@@ -310,7 +310,7 @@ if (x < w) {
 mTimeRemainPath.moveTo(x,lastY);
 int fullY=mLevelTop + levelh - ((100 - batLow) * (levelh - 1)) / batChange;
 int emptyY=mLevelTop + levelh - ((0 - batLow) * (levelh - 1)) / batChange;
-if (mDischarging) {
+if (mInfo.mDischarging) {
 mTimeRemainPath.lineTo(mLevelRight,emptyY);
 }
  else {

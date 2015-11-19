@@ -1,10 +1,4 @@
 {
   super.onStart();
   mAnimation.startAnimation();
-  mSidecar=(FingerprintEnrollSidecar)getFragmentManager().findFragmentByTag(FingerprintEnrollEnrolling.TAG_SIDECAR);
-  if (mSidecar == null) {
-    mSidecar=new FingerprintEnrollSidecar();
-    getFragmentManager().beginTransaction().add(mSidecar,FingerprintEnrollEnrolling.TAG_SIDECAR).commit();
-  }
-  mSidecar.setListener(this);
 }

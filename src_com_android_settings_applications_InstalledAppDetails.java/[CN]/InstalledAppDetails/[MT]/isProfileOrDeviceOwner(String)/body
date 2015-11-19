@@ -1,7 +1,7 @@
 {
   List<UserInfo> userInfos=mUserManager.getUsers();
   DevicePolicyManager dpm=(DevicePolicyManager)getContext().getSystemService(Context.DEVICE_POLICY_SERVICE);
-  if (packageName.equals(dpm.getDeviceOwner())) {
+  if (dpm.isDeviceOwnerAppOnAnyUser(packageName)) {
     return true;
   }
   for (  UserInfo userInfo : userInfos) {

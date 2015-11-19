@@ -28,7 +28,6 @@
   addPreferencesFromResource(R.xml.app_notification_settings);
   mBlock=(SwitchPreference)findPreference(KEY_BLOCK);
   mPriority=(SwitchPreference)findPreference(KEY_PRIORITY);
-  mPeekable=(SwitchPreference)findPreference(KEY_PEEKABLE);
   mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
   mAppRow=mBackend.loadAppRow(pm,info.applicationInfo);
   ArrayMap<String,AppRow> rows=new ArrayMap<String,AppRow>();
@@ -37,7 +36,6 @@
   mBlock.setChecked(mAppRow.banned);
   updateDependents(mAppRow.banned);
   mPriority.setChecked(mAppRow.priority);
-  mPeekable.setChecked(mAppRow.peekable);
   mSensitive.setChecked(mAppRow.sensitive);
   mBlock.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
@@ -57,13 +55,6 @@
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
       final boolean priority=(Boolean)newValue;
       return mBackend.setHighPriority(pkg,mUid,priority);
-    }
-  }
-);
-  mPeekable.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
-    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
-      final boolean peekable=(Boolean)newValue;
-      return mBackend.setPeekable(pkg,mUid,peekable);
     }
   }
 );

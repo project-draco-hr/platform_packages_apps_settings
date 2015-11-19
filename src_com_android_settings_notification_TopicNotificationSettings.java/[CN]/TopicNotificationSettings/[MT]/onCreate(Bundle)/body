@@ -1,0 +1,52 @@
+{
+  super.onCreate(savedInstanceState);
+  mContext=getActivity();
+  Intent intent=getActivity().getIntent();
+  Bundle args=getArguments();
+  if (DEBUG)   Log.d(TAG,"onCreate getIntent()=" + intent);
+  if (intent == null && args == null) {
+    Log.w(TAG,"No intent");
+    toastAndFinish();
+    return;
+  }
+  final Notification.Topic topic=args != null && args.containsKey(ARG_TOPIC) ? (Notification.Topic)args.getParcelable(ARG_TOPIC) : null;
+  if (topic == null) {
+    toastAndFinish();
+    return;
+  }
+  final PackageInfo info=args != null && args.containsKey(ARG_PACKAGE_INFO) ? (PackageInfo)args.getParcelable(ARG_PACKAGE_INFO) : null;
+  if (info == null) {
+    Log.w(TAG,"Failed to find package info");
+    toastAndFinish();
+    return;
+  }
+  mUid=args != null && args.containsKey(AppInfoBase.ARG_PACKAGE_UID) ? args.getInt(AppInfoBase.ARG_PACKAGE_UID) : intent.getIntExtra(Settings.EXTRA_APP_UID,-1);
+  if (mUid == -1) {
+    Log.w(TAG,"Missing extras: " + Settings.EXTRA_APP_UID + " was "+ mUid);
+    toastAndFinish();
+    return;
+  }
+  final PackageManager pm=getPackageManager();
+  mIsSystemPackage=Utils.isSystemPackage(pm,info);
+  addPreferencesFromResource(R.xml.topic_notification_settings);
+  mPriority=(SwitchPreference)findPreference(KEY_BYPASS_DND);
+  mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
+  mTopicRow=mBackend.loadTopicRow(pm,info.applicationInfo,topic);
+  mPriority.setChecked(mTopicRow.priority);
+  mSensitive.setChecked(mTopicRow.sensitive);
+  mPriority.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final boolean bypassZenMode=(Boolean)newValue;
+      return mBackend.setBypassZenMode(info.packageName,mUid,topic,bypassZenMode);
+    }
+  }
+);
+  mSensitive.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      final boolean sensitive=(Boolean)newValue;
+      return mBackend.setSensitive(info.packageName,mUid,topic,sensitive);
+    }
+  }
+);
+  updateDependents(mTopicRow.banned);
+}

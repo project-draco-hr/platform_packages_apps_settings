@@ -1,6 +1,6 @@
 {
   try {
-    return sINM.getPackagePriority(pkg,uid) == Notification.PRIORITY_MAX;
+    return sINM.getTopicVisibilityOverride(pkg,uid,topic) == Notification.VISIBILITY_PRIVATE;
   }
  catch (  Exception e) {
     Log.w(TAG,"Error calling NoMan",e);

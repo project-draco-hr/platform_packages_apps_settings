@@ -1,0 +1,10 @@
+{
+  final boolean isVisible=getPreferenceScreen().findPreference(p.getKey()) != null;
+  if (isVisible == visible)   return;
+  if (visible) {
+    getPreferenceScreen().addPreference(p);
+  }
+ else {
+    getPreferenceScreen().removePreference(p);
+  }
+}

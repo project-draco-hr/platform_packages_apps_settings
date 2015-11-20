@@ -1,45 +1,33 @@
 {
-switch (mode) {
-case android.provider.Settings.Secure.LOCATION_MODE_OFF:
-    mLocationMode.setSummary(R.string.location_mode_location_off_title);
-  break;
-case android.provider.Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
-mLocationMode.setSummary(R.string.location_mode_sensors_only_title);
-break;
-case android.provider.Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
-mLocationMode.setSummary(R.string.location_mode_battery_saving_title);
-break;
-case android.provider.Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
-mLocationMode.setSummary(R.string.location_mode_high_accuracy_title);
-break;
-default :
-break;
-}
-final boolean enabled=(mode != android.provider.Settings.Secure.LOCATION_MODE_OFF);
-mSwitchBar.setEnabled(!restricted);
-mLocationMode.setEnabled(enabled && !restricted);
-mCategoryRecentLocationRequests.setEnabled(enabled);
-if (enabled != mSwitch.isChecked()) {
-if (mValidListener) {
-mSwitchBar.removeOnSwitchChangeListener(this);
-}
-mSwitch.setChecked(enabled);
-if (mValidListener) {
-mSwitchBar.addOnSwitchChangeListener(this);
-}
-}
-if (mManagedProfilePreference != null) {
-if (mUm.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,mManagedProfile)) {
-changeManagedProfileLocationAccessStatus(false,R.string.managed_profile_location_switch_lockdown);
-}
+  int modeDescription=getLocationString(mode);
+  if (modeDescription != 0) {
+    mLocationMode.setSummary(modeDescription);
+  }
+  final boolean enabled=(mode != android.provider.Settings.Secure.LOCATION_MODE_OFF);
+  mSwitchBar.setEnabled(!restricted);
+  mLocationMode.setEnabled(enabled && !restricted);
+  mCategoryRecentLocationRequests.setEnabled(enabled);
+  if (enabled != mSwitch.isChecked()) {
+    if (mValidListener) {
+      mSwitchBar.removeOnSwitchChangeListener(this);
+    }
+    mSwitch.setChecked(enabled);
+    if (mValidListener) {
+      mSwitchBar.addOnSwitchChangeListener(this);
+    }
+  }
+  if (mManagedProfilePreference != null) {
+    if (mUm.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,mManagedProfile)) {
+      changeManagedProfileLocationAccessStatus(false,R.string.managed_profile_location_switch_lockdown);
+    }
  else {
-if (enabled) {
-changeManagedProfileLocationAccessStatus(true,R.string.switch_on_text);
-}
+      if (enabled) {
+        changeManagedProfileLocationAccessStatus(true,R.string.switch_on_text);
+      }
  else {
-changeManagedProfileLocationAccessStatus(false,R.string.switch_off_text);
-}
-}
-}
-injector.reloadStatusMessages();
+        changeManagedProfileLocationAccessStatus(false,R.string.switch_off_text);
+      }
+    }
+  }
+  injector.reloadStatusMessages();
 }

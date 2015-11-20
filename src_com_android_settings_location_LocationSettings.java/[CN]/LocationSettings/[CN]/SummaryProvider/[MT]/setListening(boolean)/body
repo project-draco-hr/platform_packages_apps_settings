@@ -1,0 +1,11 @@
+{
+  if (listening) {
+    int mode=Settings.Secure.getInt(mContext.getContentResolver(),Settings.Secure.LOCATION_MODE,Settings.Secure.LOCATION_MODE_OFF);
+    if (mode != Settings.Secure.LOCATION_MODE_OFF) {
+      mSummaryLoader.setSummary(this,mContext.getString(R.string.location_on_summary,mContext.getString(getLocationString(mode))));
+    }
+ else {
+      mSummaryLoader.setSummary(this,mContext.getString(R.string.location_off_summary));
+    }
+  }
+}

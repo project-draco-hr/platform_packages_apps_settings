@@ -1,0 +1,10 @@
+{
+  if (listening) {
+    ProcStatsData statsManager=new ProcStatsData(mContext,false);
+    statsManager.setDuration(sDurations[0]);
+    MemInfo memInfo=statsManager.getMemInfo();
+    String usedResult=Formatter.formatShortFileSize(mContext,(long)memInfo.realUsedRam);
+    String totalResult=Formatter.formatShortFileSize(mContext,(long)memInfo.realTotalRam);
+    mSummaryLoader.setSummary(this,mContext.getString(R.string.memory_summary,usedResult,totalResult));
+  }
+}

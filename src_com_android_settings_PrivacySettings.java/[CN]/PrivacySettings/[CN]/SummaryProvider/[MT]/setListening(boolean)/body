@@ -1,0 +1,23 @@
+{
+  if (listening) {
+    IBackupManager backupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
+    try {
+      boolean backupEnabled=backupManager.isBackupEnabled();
+      if (backupEnabled) {
+        String transport=backupManager.getCurrentTransport();
+        String configSummary=backupManager.getDestinationString(transport);
+        if (configSummary != null) {
+          mSummaryLoader.setSummary(this,configSummary);
+        }
+ else {
+          mSummaryLoader.setSummary(this,mContext.getString(R.string.backup_configure_account_default_summary));
+        }
+      }
+ else {
+        mSummaryLoader.setSummary(this,mContext.getString(R.string.backup_disabled));
+      }
+    }
+ catch (    RemoteException e) {
+    }
+  }
+}

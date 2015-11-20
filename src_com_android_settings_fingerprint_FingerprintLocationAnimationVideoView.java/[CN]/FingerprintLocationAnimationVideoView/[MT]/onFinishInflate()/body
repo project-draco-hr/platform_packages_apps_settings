@@ -1,0 +1,37 @@
+{
+  super.onFinishInflate();
+  setSurfaceTextureListener(new SurfaceTextureListener(){
+    @Override public void onSurfaceTextureAvailable(    SurfaceTexture surfaceTexture,    int width,    int height){
+      setVisibility(View.INVISIBLE);
+      Uri videoUri=resourceEntryToUri(mContext,R.raw.fingerprint_location_animation);
+      mMediaPlayer=MediaPlayer.create(mContext,videoUri);
+      mMediaPlayer.setSurface(new Surface(surfaceTexture));
+      mMediaPlayer.setOnPreparedListener(new OnPreparedListener(){
+        @Override public void onPrepared(        MediaPlayer mediaPlayer){
+          mediaPlayer.setLooping(true);
+        }
+      }
+);
+      mMediaPlayer.setOnInfoListener(new OnInfoListener(){
+        @Override public boolean onInfo(        MediaPlayer mediaPlayer,        int what,        int extra){
+          if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+            setVisibility(View.VISIBLE);
+          }
+          return false;
+        }
+      }
+);
+      mAspect=(float)mMediaPlayer.getVideoHeight() / mMediaPlayer.getVideoWidth();
+      requestLayout();
+      startAnimation();
+    }
+    @Override public void onSurfaceTextureSizeChanged(    SurfaceTexture surfaceTexture,    int width,    int height){
+    }
+    @Override public boolean onSurfaceTextureDestroyed(    SurfaceTexture surfaceTexture){
+      return false;
+    }
+    @Override public void onSurfaceTextureUpdated(    SurfaceTexture surfaceTexture){
+    }
+  }
+);
+}

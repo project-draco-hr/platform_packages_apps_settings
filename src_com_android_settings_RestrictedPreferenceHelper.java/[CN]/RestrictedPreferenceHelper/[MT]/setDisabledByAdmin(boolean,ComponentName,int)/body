@@ -1,0 +1,10 @@
+{
+  if (mDisabledByAdmin != disabled) {
+    mDisabledByAdmin=disabled;
+    mEnforcedAdmin=admin;
+    mUserId=userId;
+    mPreference.setEnabled(!disabled);
+    return true;
+  }
+  return false;
+}

@@ -1,0 +1,22 @@
+{
+  mContext=context;
+  mPreference=preference;
+  mRestrictedPadlock=mContext.getDrawable(R.drawable.ic_settings_lock_outline);
+  final int iconSize=mContext.getResources().getDimensionPixelSize(R.dimen.restricted_lock_icon_size);
+  mRestrictedPadlock.setBounds(0,0,iconSize,iconSize);
+  mRestrictedPadlockPadding=mContext.getResources().getDimensionPixelSize(R.dimen.restricted_lock_icon_padding);
+  mDevicePolicyManager=(DevicePolicyManager)mContext.getSystemService(Context.DEVICE_POLICY_SERVICE);
+  mAttrUserRestriction=attrs.getAttributeValue(R.styleable.RestrictedPreference_userRestriction);
+  final TypedArray attributes=context.obtainStyledAttributes(attrs,R.styleable.RestrictedPreference);
+  final TypedValue userRestriction=attributes.peekValue(R.styleable.RestrictedPreference_userRestriction);
+  CharSequence data=null;
+  if (userRestriction != null && userRestriction.type == TypedValue.TYPE_STRING) {
+    if (userRestriction.resourceId != 0) {
+      data=context.getText(userRestriction.resourceId);
+    }
+ else {
+      data=userRestriction.string;
+    }
+  }
+  mAttrUserRestriction=data == null ? null : data.toString();
+}

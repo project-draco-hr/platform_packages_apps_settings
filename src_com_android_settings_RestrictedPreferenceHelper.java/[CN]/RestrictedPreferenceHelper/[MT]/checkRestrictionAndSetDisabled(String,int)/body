@@ -1,0 +1,26 @@
+{
+  ComponentName deviceOwner=mDevicePolicyManager.getDeviceOwnerComponentOnAnyUser();
+  int deviceOwnerUserId=mDevicePolicyManager.getDeviceOwnerUserId();
+  boolean enforcedByDeviceOwner=false;
+  if (deviceOwner != null && deviceOwnerUserId != UserHandle.USER_NULL) {
+    enforcedByDeviceOwner=isEnforcedByAdmin(deviceOwner,userRestriction,deviceOwnerUserId);
+  }
+  ComponentName profileOwner=mDevicePolicyManager.getProfileOwnerAsUser(userId);
+  boolean enforcedByProfileOwner=false;
+  if (profileOwner != null && userId != UserHandle.USER_NULL) {
+    enforcedByProfileOwner=isEnforcedByAdmin(profileOwner,userRestriction,userId);
+  }
+  if (!enforcedByDeviceOwner && !enforcedByProfileOwner) {
+    setDisabledByAdmin(false,null,UserHandle.USER_NULL);
+    return;
+  }
+  if (enforcedByDeviceOwner && enforcedByProfileOwner) {
+    setDisabledByAdmin(true,null,UserHandle.USER_NULL);
+  }
+ else   if (enforcedByDeviceOwner) {
+    setDisabledByAdmin(true,deviceOwner,deviceOwnerUserId);
+  }
+ else {
+    setDisabledByAdmin(true,profileOwner,userId);
+  }
+}

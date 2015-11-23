@@ -1,0 +1,9 @@
+{
+  super.onProgressChanged(seekBar,progress,fromTouch);
+  if (mSummaryTextView != null) {
+    mSummaryTextView.setText(getProgressSummary(progress));
+  }
+  if (fromTouch) {
+    mCallback.onImportanceChanged(progress);
+  }
+}

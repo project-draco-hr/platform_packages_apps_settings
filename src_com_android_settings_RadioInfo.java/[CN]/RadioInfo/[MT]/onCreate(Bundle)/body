@@ -1,8 +1,10 @@
 {
   super.onCreate(icicle);
   setContentView(R.layout.radio_info);
+  log("Started onCreate");
   mTelephonyManager=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
   phone=PhoneFactory.getDefaultPhone();
+  mImsManager=ImsManager.getInstance(getApplicationContext(),SubscriptionManager.getDefaultVoicePhoneId());
   mDeviceId=(TextView)findViewById(R.id.imei);
   number=(TextView)findViewById(R.id.number);
   callState=(TextView)findViewById(R.id.call);
@@ -17,6 +19,7 @@
   mLocation=(TextView)findViewById(R.id.location);
   mNeighboringCids=(TextView)findViewById(R.id.neighboring);
   mCellInfo=(TextView)findViewById(R.id.cellinfo);
+  mCellInfo.setTypeface(Typeface.MONOSPACE);
   mDcRtInfoTv=(TextView)findViewById(R.id.dcrtinfo);
   resets=(TextView)findViewById(R.id.resets);
   attempts=(TextView)findViewById(R.id.attempts);
@@ -27,8 +30,8 @@
   received=(TextView)findViewById(R.id.received);
   smsc=(EditText)findViewById(R.id.smsc);
   dnsCheckState=(TextView)findViewById(R.id.dnsCheckState);
-  mPingIpAddr=(TextView)findViewById(R.id.pingIpAddr);
-  mPingHostname=(TextView)findViewById(R.id.pingHostname);
+  mPingHostnameV4=(TextView)findViewById(R.id.pingHostnameV4);
+  mPingHostnameV6=(TextView)findViewById(R.id.pingHostnameV6);
   mHttpClientTest=(TextView)findViewById(R.id.httpClientTest);
   preferredNetworkType=(Spinner)findViewById(R.id.preferredNetworkType);
   ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mPreferredNetworkLabels);
@@ -67,9 +70,7 @@
   mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
   mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
   mPhoneStateReceiver.notifyPhoneCallState(EVENT_PHONE_STATE_CHANGED);
+  mPreferredNetworkTypeResult=mPreferredNetworkLabels.length - 1;
   phone.getPreferredNetworkType(mHandler.obtainMessage(EVENT_QUERY_PREFERRED_TYPE_DONE));
-  phone.getNeighboringCids(mHandler.obtainMessage(EVENT_QUERY_NEIGHBORING_CIDS_DONE));
-  CellLocation.requestLocationUpdate();
-  mCellInfoValue=mTelephonyManager.getAllCellInfo();
-  log("onCreate: mCellInfoValue=" + mCellInfoValue);
+  restoreFromBundle(icicle);
 }

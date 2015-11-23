@@ -1,0 +1,23 @@
+{
+  mCellInfo.setText("");
+  mNeighboringCids.setText("");
+  mLocation.setText("");
+  final Runnable updateAllCellInfoResults=new Runnable(){
+    public void run(){
+      updateNeighboringCids(mNeighboringCellResult);
+      updateLocation(mCellLocationResult);
+      updateCellInfo(mCellInfoResult);
+    }
+  }
+;
+  Thread locThread=new Thread(){
+    @Override public void run(){
+      mCellInfoResult=mTelephonyManager.getAllCellInfo();
+      mCellLocationResult=mTelephonyManager.getCellLocation();
+      mNeighboringCellResult=mTelephonyManager.getNeighboringCellInfo();
+      mHandler.post(updateAllCellInfoResults);
+    }
+  }
+;
+  locThread.start();
+}

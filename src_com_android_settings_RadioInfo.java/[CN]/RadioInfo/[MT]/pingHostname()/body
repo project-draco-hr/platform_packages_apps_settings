@@ -1,21 +1,33 @@
 {
   try {
-    Process p=Runtime.getRuntime().exec("ping -c 1 www.google.com");
-    int status=p.waitFor();
-    if (status == 0) {
-      mPingHostnameResult="Pass";
-    }
+    try {
+      Process p4=Runtime.getRuntime().exec("ping -c 1 www.google.com");
+      int status4=p4.waitFor();
+      if (status4 == 0) {
+        mPingHostnameResultV4="Pass";
+      }
  else {
-      mPingHostnameResult="Fail: Host unreachable";
+        mPingHostnameResultV4=String.format("Fail(%d)",status4);
+      }
+    }
+ catch (    IOException e) {
+      mPingHostnameResultV4="Fail: IOException";
+    }
+    try {
+      Process p6=Runtime.getRuntime().exec("ping6 -c 1 www.google.com");
+      int status6=p6.waitFor();
+      if (status6 == 0) {
+        mPingHostnameResultV6="Pass";
+      }
+ else {
+        mPingHostnameResultV6=String.format("Fail(%d)",status6);
+      }
+    }
+ catch (    IOException e) {
+      mPingHostnameResultV6="Fail: IOException";
     }
   }
- catch (  UnknownHostException e) {
-    mPingHostnameResult="Fail: Unknown Host";
-  }
-catch (  IOException e) {
-    mPingHostnameResult="Fail: IOException";
-  }
-catch (  InterruptedException e) {
-    mPingHostnameResult="Fail: InterruptedException";
+ catch (  InterruptedException e) {
+    mPingHostnameResultV4=mPingHostnameResultV6="Fail: InterruptedException";
   }
 }

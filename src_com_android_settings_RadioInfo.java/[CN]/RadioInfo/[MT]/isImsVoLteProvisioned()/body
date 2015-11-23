@@ -1,7 +1,8 @@
 {
   if (phone != null) {
-    ImsManager imsManager=ImsManager.getInstance(phone.getContext(),phone.getSubId());
-    return imsManager.isVolteProvisionedOnDevice(phone.getContext());
+    if (mImsManager != null) {
+      return mImsManager.isVolteProvisionedOnDevice(phone.getContext());
+    }
   }
   return false;
 }

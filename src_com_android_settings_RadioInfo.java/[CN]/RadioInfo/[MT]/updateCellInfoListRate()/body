@@ -1,4 +1,16 @@
 {
-  cellInfoListRateButton.setText("CellInfoListRate " + mCellInfoListRateHandler.getRate());
-  updateCellInfoTv(mTelephonyManager.getAllCellInfo());
+  int rate=mCellInfoListRateHandler.getRate();
+  String rateStr;
+switch (rate) {
+case Integer.MAX_VALUE:
+    rateStr="Off";
+  break;
+case 0:
+rateStr="Immediate";
+break;
+default :
+rateStr=(new Integer(rate)).toString() + "ms";
+break;
+}
+cellInfoListRateButton.setText("CellInfoListRate " + rateStr);
 }

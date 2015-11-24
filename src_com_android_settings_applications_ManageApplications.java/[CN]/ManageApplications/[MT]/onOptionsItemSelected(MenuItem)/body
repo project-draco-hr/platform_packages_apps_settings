@@ -17,7 +17,12 @@ case R.id.reset_app_preferences:
 mResetAppsHelper.buildResetDialog();
 return true;
 case R.id.advanced:
+if (mListType == LIST_TYPE_NOTIFICATION) {
+((SettingsActivity)getActivity()).startPreferencePanel(ConfigureNotificationSettings.class.getName(),null,R.string.configure_notification_settings,null,this,ADVANCED_SETTINGS);
+}
+ else {
 ((SettingsActivity)getActivity()).startPreferencePanel(AdvancedAppSettings.class.getName(),null,R.string.configure_apps,null,this,ADVANCED_SETTINGS);
+}
 return true;
 default :
 return false;

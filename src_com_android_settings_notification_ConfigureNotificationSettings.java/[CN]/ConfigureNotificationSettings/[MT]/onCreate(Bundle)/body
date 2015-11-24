@@ -1,0 +1,8 @@
+{
+  super.onCreate(savedInstanceState);
+  mContext=getActivity();
+  mSecure=new LockPatternUtils(getActivity()).isSecure(UserHandle.myUserId());
+  addPreferencesFromResource(R.xml.configure_notification_settings);
+  initPulse();
+  initLockscreenNotifications();
+}

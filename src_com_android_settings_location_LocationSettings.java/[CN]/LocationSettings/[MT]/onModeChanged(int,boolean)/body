@@ -16,18 +16,6 @@
       mSwitchBar.addOnSwitchChangeListener(this);
     }
   }
-  if (mManagedProfilePreference != null) {
-    if (mUm.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,mManagedProfile)) {
-      changeManagedProfileLocationAccessStatus(false,R.string.managed_profile_location_switch_lockdown);
-    }
- else {
-      if (enabled) {
-        changeManagedProfileLocationAccessStatus(true,R.string.switch_on_text);
-      }
- else {
-        changeManagedProfileLocationAccessStatus(false,R.string.switch_off_text);
-      }
-    }
-  }
+  changeManagedProfileLocationAccessStatus(enabled);
   injector.reloadStatusMessages();
 }

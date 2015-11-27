@@ -1,0 +1,9 @@
+{
+  Drawable drawable=getDrawable();
+  canvas.save();
+  float transX=x + mExtraPadding;
+  float transY=bottom - drawable.getBounds().bottom - paint.getFontMetricsInt().descent;
+  canvas.translate(transX,transY);
+  drawable.draw(canvas);
+  canvas.restore();
+}

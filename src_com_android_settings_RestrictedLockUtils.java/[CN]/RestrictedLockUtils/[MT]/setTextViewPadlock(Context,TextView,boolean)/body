@@ -1,0 +1,9 @@
+{
+  final SpannableStringBuilder sb=new SpannableStringBuilder(textView.getText());
+  removeExistingRestrictedSpans(sb);
+  if (showPadlock) {
+    final ImageSpan image=new RestrictedLockImageSpan(context);
+    sb.append(" ",image,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+  }
+  textView.setText(sb);
+}

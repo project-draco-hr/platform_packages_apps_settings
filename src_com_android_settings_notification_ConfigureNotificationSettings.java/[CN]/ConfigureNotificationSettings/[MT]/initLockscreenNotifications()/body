@@ -1,23 +1,25 @@
 {
-  mLockscreen=(DropDownPreference)getPreferenceScreen().findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
+  mLockscreen=(RestrictedDropDownPreference)getPreferenceScreen().findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
   if (mLockscreen == null) {
     Log.i(TAG,"Preference not found: " + KEY_LOCK_SCREEN_NOTIFICATIONS);
     return;
   }
-  boolean isSecureNotificationsDisabled=isSecureNotificationsDisabled();
-  boolean isUnredactedNotificationsDisabled=isUnredactedNotificationsDisabled();
   ArrayList<CharSequence> entries=new ArrayList<>();
   ArrayList<CharSequence> values=new ArrayList<>();
-  if (!isSecureNotificationsDisabled && !isUnredactedNotificationsDisabled) {
-    entries.add(getString(R.string.lock_screen_notifications_summary_show));
-    values.add(Integer.toString(R.string.lock_screen_notifications_summary_show));
-  }
-  if (mSecure && !isSecureNotificationsDisabled) {
-    entries.add(getString(R.string.lock_screen_notifications_summary_hide));
-    values.add(Integer.toString(R.string.lock_screen_notifications_summary_hide));
-  }
   entries.add(getString(R.string.lock_screen_notifications_summary_disable));
   values.add(Integer.toString(R.string.lock_screen_notifications_summary_disable));
+  String summaryShowEntry=getString(R.string.lock_screen_notifications_summary_show);
+  String summaryShowEntryValue=Integer.toString(R.string.lock_screen_notifications_summary_show);
+  entries.add(summaryShowEntry);
+  values.add(summaryShowEntryValue);
+  setRestrictedIfNotificationFeaturesDisabled(summaryShowEntry,summaryShowEntryValue,KEYGUARD_DISABLE_SECURE_NOTIFICATIONS | KEYGUARD_DISABLE_UNREDACTED_NOTIFICATIONS);
+  if (mSecure) {
+    String summaryHideEntry=getString(R.string.lock_screen_notifications_summary_hide);
+    String summaryHideEntryValue=Integer.toString(R.string.lock_screen_notifications_summary_hide);
+    entries.add(summaryHideEntry);
+    values.add(summaryHideEntryValue);
+    setRestrictedIfNotificationFeaturesDisabled(summaryHideEntry,summaryHideEntryValue,KEYGUARD_DISABLE_SECURE_NOTIFICATIONS);
+  }
   mLockscreen.setEntries(entries.toArray(new CharSequence[entries.size()]));
   mLockscreen.setEntryValues(values.toArray(new CharSequence[values.size()]));
   updateLockscreenNotifications();

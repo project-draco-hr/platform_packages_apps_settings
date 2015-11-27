@@ -1,0 +1,16 @@
+{
+  SpannableStringBuilder sb=new SpannableStringBuilder(item.getTitle());
+  removeExistingRestrictedSpans(sb);
+  final int disabledColor=context.getColor(R.color.disabled_text_color);
+  sb.setSpan(new ForegroundColorSpan(disabledColor),0,sb.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+  ImageSpan image=new RestrictedLockImageSpan(context);
+  sb.append(" ",image,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+  item.setTitle(sb);
+  item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
+    @Override public boolean onMenuItemClick(    MenuItem item){
+      sendShowAdminSupportDetailsIntent(context,admin);
+      return true;
+    }
+  }
+);
+}

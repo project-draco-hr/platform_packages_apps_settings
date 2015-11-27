@@ -1,0 +1,8 @@
+{
+  TextView view=(TextView)super.getView(position,convertView,parent);
+  CharSequence entry=getItem(position);
+  boolean isEntryRestricted=isRestrictedForEntry(entry);
+  RestrictedLockUtils.setTextViewPadlock(getContext(),view,isEntryRestricted);
+  view.setEnabled(!isEntryRestricted);
+  return view;
+}

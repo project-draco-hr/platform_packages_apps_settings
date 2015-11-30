@@ -4,6 +4,11 @@
     return;
   }
   long start=System.currentTimeMillis();
+  List<DashboardCategory> categories=((SettingsActivity)getActivity()).getDashboardCategories(true);
+  boolean showingAll=mAdapter != null && mAdapter.isShowingAll();
+  mAdapter=new DashboardAdapter(getContext(),categories);
+  mSummaryLoader.setAdapter(mAdapter);
+  mAdapter.setShowingAll(showingAll);
   mDashboard.setAdapter(mAdapter);
   long delta=System.currentTimeMillis() - start;
   Log.d(TAG,"rebuildUI took: " + delta + " ms");

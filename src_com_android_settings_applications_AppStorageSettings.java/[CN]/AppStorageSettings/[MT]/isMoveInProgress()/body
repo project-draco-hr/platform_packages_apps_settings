@@ -1,9 +1,9 @@
 {
-  final IPackageManager pm=AppGlobals.getPackageManager();
   try {
-    return pm.isPackageFrozen(mPackageName);
-  }
- catch (  RemoteException e) {
+    AppGlobals.getPackageManager().checkPackageStartable(mPackageName,UserHandle.myUserId());
     return false;
+  }
+ catch (  RemoteException|SecurityException e) {
+    return true;
   }
 }

@@ -1,6 +1,9 @@
 {
   if (preference instanceof AccessPointPreference) {
     mSelectedAccessPoint=((AccessPointPreference)preference).getAccessPoint();
+    if (mSelectedAccessPoint == null) {
+      return false;
+    }
     if (mSelectedAccessPoint.getSecurity() == AccessPoint.SECURITY_NONE && !mSelectedAccessPoint.isSaved() && !mSelectedAccessPoint.isActive()) {
       mSelectedAccessPoint.generateOpenNetworkConfig();
       if (!savedNetworksExist) {

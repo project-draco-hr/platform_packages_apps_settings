@@ -1,0 +1,9 @@
+{
+  final ContentResolver cr=getContentResolver();
+  if (register) {
+    cr.registerContentObserver(VIBRATE_WHEN_RINGING_URI,false,this);
+  }
+ else {
+    cr.unregisterContentObserver(this);
+  }
+}

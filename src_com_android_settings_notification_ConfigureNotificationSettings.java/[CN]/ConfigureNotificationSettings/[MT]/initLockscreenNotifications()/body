@@ -1,0 +1,44 @@
+{
+  mLockscreen=(DropDownPreference)getPreferenceScreen().findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
+  if (mLockscreen == null) {
+    Log.i(TAG,"Preference not found: " + KEY_LOCK_SCREEN_NOTIFICATIONS);
+    return;
+  }
+  boolean isSecureNotificationsDisabled=isSecureNotificationsDisabled();
+  boolean isUnredactedNotificationsDisabled=isUnredactedNotificationsDisabled();
+  ArrayList<CharSequence> entries=new ArrayList<>();
+  ArrayList<CharSequence> values=new ArrayList<>();
+  if (!isSecureNotificationsDisabled && !isUnredactedNotificationsDisabled) {
+    entries.add(getString(R.string.lock_screen_notifications_summary_show));
+    values.add(Integer.toString(R.string.lock_screen_notifications_summary_show));
+  }
+  if (mSecure && !isSecureNotificationsDisabled) {
+    entries.add(getString(R.string.lock_screen_notifications_summary_hide));
+    values.add(Integer.toString(R.string.lock_screen_notifications_summary_hide));
+  }
+  entries.add(getString(R.string.lock_screen_notifications_summary_disable));
+  values.add(Integer.toString(R.string.lock_screen_notifications_summary_disable));
+  mLockscreen.setEntries(entries.toArray(new CharSequence[entries.size()]));
+  mLockscreen.setEntryValues(values.toArray(new CharSequence[values.size()]));
+  updateLockscreenNotifications();
+  if (mLockscreen.getEntries().length > 1) {
+    mLockscreen.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        final int val=Integer.parseInt((String)newValue);
+        if (val == mLockscreenSelectedValue) {
+          return false;
+        }
+        final boolean enabled=val != R.string.lock_screen_notifications_summary_disable;
+        final boolean show=val == R.string.lock_screen_notifications_summary_show;
+        Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,show ? 1 : 0);
+        Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_SHOW_NOTIFICATIONS,enabled ? 1 : 0);
+        mLockscreenSelectedValue=val;
+        return true;
+      }
+    }
+);
+  }
+ else {
+    mLockscreen.setEnabled(false);
+  }
+}

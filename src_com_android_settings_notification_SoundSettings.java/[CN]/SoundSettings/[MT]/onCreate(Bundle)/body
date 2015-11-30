@@ -1,0 +1,26 @@
+{
+  super.onCreate(savedInstanceState);
+  mContext=getActivity();
+  mUserManager=UserManager.get(getContext());
+  mVoiceCapable=Utils.isVoiceCapable(mContext);
+  mAudioManager=(AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+  mVibrator=(Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+  if (mVibrator != null && !mVibrator.hasVibrator()) {
+    mVibrator=null;
+  }
+  addPreferencesFromResource(R.xml.sound_settings);
+  initVolumePreference(KEY_MEDIA_VOLUME,AudioManager.STREAM_MUSIC,com.android.internal.R.drawable.ic_audio_media_mute);
+  initVolumePreference(KEY_ALARM_VOLUME,AudioManager.STREAM_ALARM,com.android.internal.R.drawable.ic_audio_alarm_mute);
+  if (mVoiceCapable) {
+    mRingOrNotificationPreference=initVolumePreference(KEY_RING_VOLUME,AudioManager.STREAM_RING,com.android.internal.R.drawable.ic_audio_ring_notif_mute);
+    removePreference(KEY_NOTIFICATION_VOLUME);
+  }
+ else {
+    mRingOrNotificationPreference=initVolumePreference(KEY_NOTIFICATION_VOLUME,AudioManager.STREAM_NOTIFICATION,com.android.internal.R.drawable.ic_audio_ring_notif_mute);
+    removePreference(KEY_RING_VOLUME);
+  }
+  initRingtones();
+  initVibrateWhenRinging();
+  updateRingerMode();
+  updateEffectsSuppressor();
+}

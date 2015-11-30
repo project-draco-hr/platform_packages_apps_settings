@@ -1,0 +1,8 @@
+{
+  if (listening) {
+    PaymentBackend paymentBackend=new PaymentBackend(mContext);
+    paymentBackend.refresh();
+    PaymentAppInfo app=paymentBackend.getDefaultApp();
+    mSummaryLoader.setSummary(this,mContext.getString(R.string.payment_summary,app.label));
+  }
+}

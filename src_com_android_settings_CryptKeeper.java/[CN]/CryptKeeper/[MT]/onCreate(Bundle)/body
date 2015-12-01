@@ -15,6 +15,9 @@
   }
   mStatusBar=(StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);
   mStatusBar.disable(sWidgetsToDisable);
+  if (savedInstanceState != null) {
+    mCooldown=savedInstanceState.getBoolean(STATE_COOLDOWN);
+  }
   setAirplaneModeIfNecessary();
   mAudioManager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
   final Object lastInstance=getLastNonConfigurationInstance();

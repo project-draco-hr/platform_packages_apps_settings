@@ -4,15 +4,8 @@
   }
   PrinterInfo printer=(PrinterInfo)getItem(position);
   CharSequence title=printer.getName();
-  CharSequence subtitle=null;
-  Drawable icon=null;
-  try {
-    PackageInfo packageInfo=getPackageManager().getPackageInfo(printer.getId().getServiceName().getPackageName(),0);
-    subtitle=packageInfo.applicationInfo.loadLabel(getPackageManager());
-    icon=packageInfo.applicationInfo.loadIcon(getPackageManager());
-  }
- catch (  NameNotFoundException nnfe) {
-  }
+  CharSequence subtitle=printer.getDescription();
+  Drawable icon=printer.loadIcon(getActivity());
   TextView titleView=(TextView)convertView.findViewById(R.id.title);
   titleView.setText(title);
   TextView subtitleView=(TextView)convertView.findViewById(R.id.subtitle);

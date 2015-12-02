@@ -25,11 +25,12 @@
     pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
       @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
         final boolean access=(Boolean)newValue;
-        if (!access) {
-          setAccess(mContext,pkg,access);
-          return true;
+        if (access) {
+          new ScaryWarningDialogFragment().setPkgInfo(pkg,label).show(getFragmentManager(),"dialog");
         }
-        new ScaryWarningDialogFragment().setPkgInfo(pkg,label).show(getFragmentManager(),"dialog");
+ else {
+          new FriendlyWarningDialogFragment().setPkgInfo(pkg,label).show(getFragmentManager(),"dialog");
+        }
         return false;
       }
     }

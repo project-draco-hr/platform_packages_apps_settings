@@ -169,13 +169,13 @@ catch (  IOException e) {
  catch (        RemoteException e) {
         }
         mWaitingForRemoveMsg=true;
-        mDPM.getRemoveWarning(mDeviceAdmin.getComponent(),new RemoteCallback(mHandler){
-          @Override protected void onResult(          Bundle bundle){
-            CharSequence msg=bundle != null ? bundle.getCharSequence(DeviceAdminReceiver.EXTRA_DISABLE_WARNING) : null;
+        mDPM.getRemoveWarning(mDeviceAdmin.getComponent(),new RemoteCallback(new RemoteCallback.OnResultListener(){
+          @Override public void onResult(          Bundle result){
+            CharSequence msg=result != null ? result.getCharSequence(DeviceAdminReceiver.EXTRA_DISABLE_WARNING) : null;
             continueRemoveAction(msg);
           }
         }
-);
+,mHandler));
         getWindow().getDecorView().getHandler().postDelayed(new Runnable(){
           @Override public void run(){
             continueRemoveAction(null);

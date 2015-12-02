@@ -4,7 +4,7 @@
     return;
   }
   long start=System.currentTimeMillis();
-  List<DashboardCategory> categories=((SettingsActivity)getActivity()).getDashboardCategories(true);
+  List<DashboardCategory> categories=((SettingsActivity)getActivity()).getDashboardCategories();
   boolean showingAll=mAdapter != null && mAdapter.isShowingAll();
   mAdapter=new DashboardAdapter(getContext(),categories);
   mSummaryLoader.setAdapter(mAdapter);

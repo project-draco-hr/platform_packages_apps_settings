@@ -1,5 +1,6 @@
 {
   super.onCreate(savedState);
+  long startTime=System.currentTimeMillis();
   getMetaData();
   final Intent intent=getIntent();
   if (intent.hasExtra(EXTRA_UI_OPTIONS)) {
@@ -23,7 +24,14 @@
   getFragmentManager().addOnBackStackChangedListener(this);
   if (mIsShowingDashboard) {
     if (!Utils.isLowStorage(this)) {
-      Index.getInstance(getApplicationContext()).update();
+      long indexStartTime=System.currentTimeMillis();
+      AsyncTask.execute(new Runnable(){
+        @Override public void run(){
+          Index.getInstance(getApplicationContext()).update();
+        }
+      }
+);
+      if (DEBUG_TIMING)       Log.d(LOG_TAG,"Index.update() took " + (System.currentTimeMillis() - indexStartTime) + " ms");
     }
  else {
       Log.w(LOG_TAG,"Cannot update the Indexer as we are running low on storage space!");
@@ -124,4 +132,5 @@
     }
   }
   mHomeActivitiesCount=getHomeActivitiesCount();
+  if (DEBUG_TIMING)   Log.d(LOG_TAG,"onCreate took " + (System.currentTimeMillis() - startTime) + " ms");
 }

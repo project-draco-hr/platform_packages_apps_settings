@@ -1,5 +1,3 @@
 {
-  for (  SummaryProvider provider : mSummaryMap.keySet()) {
-    provider.setListening(listening);
-  }
+  mWorker.obtainMessage(Worker.MSG_SET_LISTENING,listening ? 1 : 0,0).sendToTarget();
 }

@@ -1,7 +1,8 @@
 {
   super.onCreate(savedInstanceState);
-  List<DashboardCategory> categories=((SettingsActivity)getActivity()).getDashboardCategories(true);
-  mAdapter=new DashboardAdapter(getContext(),categories);
-  mSummaryLoader=new SummaryLoader(getActivity(),mAdapter,categories);
+  long startTime=System.currentTimeMillis();
+  List<DashboardCategory> categories=((SettingsActivity)getActivity()).getDashboardCategories();
+  mSummaryLoader=new SummaryLoader(getActivity(),categories);
   setHasOptionsMenu(true);
+  if (DEBUG_TIMING)   Log.d(TAG,"onCreate took " + (System.currentTimeMillis() - startTime) + " ms");
 }

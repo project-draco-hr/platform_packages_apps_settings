@@ -1,5 +1,10 @@
 {
-  DashboardTile tile=mSummaryMap.get(provider);
-  tile.summary=summary;
-  mAdapter.notifyChanged(tile);
+  final DashboardTile tile=mSummaryMap.get(provider);
+  mHandler.post(new Runnable(){
+    @Override public void run(){
+      tile.summary=summary;
+      mAdapter.notifyChanged(tile);
+    }
+  }
+);
 }

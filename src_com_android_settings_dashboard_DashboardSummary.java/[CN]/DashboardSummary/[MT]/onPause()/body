@@ -1,5 +1,5 @@
 {
   super.onPause();
-  getActivity().unregisterReceiver(mHomePackageReceiver);
+  ((SettingsDrawerActivity)getActivity()).remCategoryListener(this);
   mSummaryLoader.setListening(false);
 }

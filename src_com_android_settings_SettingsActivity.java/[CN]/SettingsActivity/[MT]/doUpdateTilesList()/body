@@ -1,0 +1,29 @@
+{
+  PackageManager pm=getPackageManager();
+  final UserManager um=UserManager.get(this);
+  final boolean isAdmin=um.isAdminUser();
+  String packageName=getPackageName();
+  setTileEnabled(new ComponentName(packageName,WifiSettingsActivity.class.getName()),pm.hasSystemFeature(PackageManager.FEATURE_WIFI),isAdmin,pm);
+  setTileEnabled(new ComponentName(packageName,Settings.BluetoothSettingsActivity.class.getName()),pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH),isAdmin,pm);
+  setTileEnabled(new ComponentName(packageName,Settings.DataUsageSummaryActivity.class.getName()),Utils.isBandwidthControlEnabled(),isAdmin,pm);
+  setTileEnabled(new ComponentName(packageName,Settings.SimSettingsActivity.class.getName()),Utils.showSimCardTile(this),isAdmin,pm);
+  setTileEnabled(new ComponentName(packageName,Settings.PowerUsageSummaryActivity.class.getName()),mBatteryPresent,isAdmin,pm);
+  setTileEnabled(new ComponentName(packageName,Settings.HomeSettingsActivity.class.getName()),updateHomeSettingTiles(),isAdmin,pm);
+  setTileEnabled(new ComponentName(packageName,Settings.UserSettingsActivity.class.getName()),UserHandle.MU_ENABLED && UserManager.supportsMultipleUsers() && !Utils.isMonkeyRunning(),isAdmin,pm);
+  NfcAdapter adapter=NfcAdapter.getDefaultAdapter(this);
+  setTileEnabled(new ComponentName(packageName,Settings.PaymentSettingsActivity.class.getName()),pm.hasSystemFeature(PackageManager.FEATURE_NFC) && pm.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION) && adapter != null && adapter.isEnabled(),isAdmin,pm);
+  setTileEnabled(new ComponentName(packageName,Settings.PrintSettingsActivity.class.getName()),pm.hasSystemFeature(PackageManager.FEATURE_PRINTING),isAdmin,pm);
+  final boolean showDev=mDevelopmentPreferences.getBoolean(DevelopmentSettings.PREF_SHOW,android.os.Build.TYPE.equals("eng"));
+  setTileEnabled(new ComponentName(packageName,Settings.DevelopmentSettingsActivity.class.getName()),showDev && !um.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES),isAdmin,pm);
+  if (UserHandle.MU_ENABLED && !isAdmin) {
+    List<DashboardCategory> categories=getDashboardCategories();
+    for (    DashboardCategory category : categories) {
+      for (      DashboardTile tile : category.tiles) {
+        ComponentName component=tile.intent.getComponent();
+        if (packageName.equals(component) && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,component.getClassName())) {
+          setTileEnabled(component,false,isAdmin,pm);
+        }
+      }
+    }
+  }
+}

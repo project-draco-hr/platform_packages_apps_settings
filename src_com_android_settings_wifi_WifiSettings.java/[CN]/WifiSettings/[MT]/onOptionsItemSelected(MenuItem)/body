@@ -11,25 +11,20 @@ case MENU_ID_SCAN:
 MetricsLogger.action(getActivity(),MetricsLogger.ACTION_WIFI_FORCE_SCAN);
 mWifiTracker.forceScan();
 return true;
-case MENU_ID_ADD_NETWORK:
-if (mWifiTracker.isWifiEnabled()) {
-onAddNetworkPressed();
-}
-return true;
-case MENU_ID_SAVED_NETWORK:
-if (getActivity() instanceof SettingsActivity) {
-((SettingsActivity)getActivity()).startPreferencePanel(SavedAccessPointsWifiSettings.class.getCanonicalName(),null,R.string.wifi_saved_access_points_titlebar,null,this,0);
-}
- else {
-startFragment(this,SavedAccessPointsWifiSettings.class.getCanonicalName(),R.string.wifi_saved_access_points_titlebar,-1,null);
-}
-return true;
 case MENU_ID_ADVANCED:
 if (getActivity() instanceof SettingsActivity) {
 ((SettingsActivity)getActivity()).startPreferencePanel(AdvancedWifiSettings.class.getCanonicalName(),null,R.string.wifi_advanced_titlebar,null,this,0);
 }
  else {
 startFragment(this,AdvancedWifiSettings.class.getCanonicalName(),R.string.wifi_advanced_titlebar,-1,null);
+}
+return true;
+case MENU_ID_CONFIGURE:
+if (getActivity() instanceof SettingsActivity) {
+((SettingsActivity)getActivity()).startPreferencePanel(ConfigureWifiSettings.class.getCanonicalName(),null,R.string.wifi_configure_titlebar,null,this,0);
+}
+ else {
+startFragment(this,ConfigureWifiSettings.class.getCanonicalName(),R.string.wifi_configure_titlebar,-1,null);
 }
 return true;
 }

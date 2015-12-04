@@ -1,8 +1,5 @@
 {
   super.onPause();
-  if (mIsShowingDashboard) {
-    MetricsLogger.hidden(this,MetricsLogger.MAIN_SETTINGS);
-  }
   unregisterReceiver(mBatteryInfoReceiver);
   mDynamicIndexableContentMonitor.unregister();
 }

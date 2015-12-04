@@ -1,8 +1,5 @@
 {
   super.onResume();
-  if (mIsShowingDashboard) {
-    MetricsLogger.visible(this,MetricsLogger.MAIN_SETTINGS);
-  }
   mDevelopmentPreferencesListener=new SharedPreferences.OnSharedPreferenceChangeListener(){
     @Override public void onSharedPreferenceChanged(    SharedPreferences sharedPreferences,    String key){
       updateTilesList();

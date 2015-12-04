@@ -1,0 +1,47 @@
+{
+  List<WifiConfiguration> configs=mWifiManager.getConfiguredNetworks();
+  if (configs == null || configs.size() == 0) {
+    removePreference(KEY_SAVED_NETWORKS);
+  }
+  SwitchPreference notifyOpenNetworks=(SwitchPreference)findPreference(KEY_NOTIFY_OPEN_NETWORKS);
+  notifyOpenNetworks.setChecked(Settings.Global.getInt(getContentResolver(),Settings.Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,0) == 1);
+  notifyOpenNetworks.setEnabled(mWifiManager.isWifiEnabled());
+  final Context context=getActivity();
+  mWifiAssistantPreference=(AppListSwitchPreference)findPreference(KEY_WIFI_ASSISTANT);
+  Collection<NetworkScorerAppManager.NetworkScorerAppData> scorers=NetworkScorerAppManager.getAllValidScorers(context);
+  if (UserManager.get(context).isAdminUser() && !scorers.isEmpty()) {
+    mWifiAssistantPreference.setOnPreferenceChangeListener(this);
+    initWifiAssistantPreference(scorers);
+  }
+ else   if (mWifiAssistantPreference != null) {
+    getPreferenceScreen().removePreference(mWifiAssistantPreference);
+  }
+  ListPreference frequencyPref=(ListPreference)findPreference(KEY_FREQUENCY_BAND);
+  if (mWifiManager.isDualBandSupported()) {
+    frequencyPref.setOnPreferenceChangeListener(this);
+    int value=mWifiManager.getFrequencyBand();
+    if (value != -1) {
+      frequencyPref.setValue(String.valueOf(value));
+      updateFrequencyBandSummary(frequencyPref,value);
+    }
+ else {
+      Log.e(TAG,"Failed to fetch frequency band");
+    }
+  }
+ else {
+    if (frequencyPref != null) {
+      getPreferenceScreen().removePreference(frequencyPref);
+    }
+  }
+  ListPreference sleepPolicyPref=(ListPreference)findPreference(KEY_SLEEP_POLICY);
+  if (sleepPolicyPref != null) {
+    if (Utils.isWifiOnly(context)) {
+      sleepPolicyPref.setEntries(R.array.wifi_sleep_policy_entries_wifi_only);
+    }
+    sleepPolicyPref.setOnPreferenceChangeListener(this);
+    int value=Settings.Global.getInt(getContentResolver(),Settings.Global.WIFI_SLEEP_POLICY,Settings.Global.WIFI_SLEEP_POLICY_NEVER);
+    String stringValue=String.valueOf(value);
+    sleepPolicyPref.setValue(stringValue);
+    updateSleepPolicySummary(sleepPolicyPref,stringValue);
+  }
+}

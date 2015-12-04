@@ -32,9 +32,23 @@ accessPoint.setListener(this);
 }
 if (!hasAvailableAccessPoints) {
 setProgressBarVisible(true);
-addMessagePreference(R.string.wifi_empty_list_wifi_on);
+Preference pref=new Preference(getContext()){
+@Override public void onBindViewHolder(PreferenceViewHolder holder){
+super.onBindViewHolder(holder);
+holder.setDividerAllowedBelow(true);
+}
+}
+;
+pref.setSelectable(false);
+pref.setSummary(R.string.wifi_empty_list_wifi_on);
+pref.setOrder(0);
+getPreferenceScreen().addPreference(pref);
+mAddPreference.setOrder(1);
+getPreferenceScreen().addPreference(mAddPreference);
 }
  else {
+mAddPreference.setOrder(index++);
+getPreferenceScreen().addPreference(mAddPreference);
 setProgressBarVisible(false);
 }
 break;
@@ -50,9 +64,5 @@ case WifiManager.WIFI_STATE_DISABLED:
 setOffMessage();
 setProgressBarVisible(false);
 break;
-}
-if (savedNetworksExist != mWifiTracker.doSavedNetworksExist()) {
-savedNetworksExist=!savedNetworksExist;
-getActivity().invalidateOptionsMenu();
 }
 }

@@ -29,9 +29,19 @@
   final PackageManager pm=getPackageManager();
   mIsSystemPackage=Utils.isSystemPackage(pm,info);
   addPreferencesFromResource(R.xml.topic_notification_settings);
+  mImportance=(ImportanceSeekBarPreference)findPreference(KEY_IMPORTANCE);
   mPriority=(SwitchPreference)findPreference(KEY_BYPASS_DND);
   mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
   mTopicRow=mBackend.loadTopicRow(pm,info.applicationInfo,topic);
+  mImportance.setMax(4);
+  int importance=mTopicRow.importance == NotificationListenerService.Ranking.IMPORTANCE_UNSPECIFIED ? NotificationListenerService.Ranking.IMPORTANCE_DEFAULT : mTopicRow.importance;
+  mImportance.setProgress(importance + ImportanceSeekBarPreference.IMPORTANCE_PROGRESS_OFFSET);
+  mImportance.setCallback(new ImportanceSeekBarPreference.Callback(){
+    @Override public void onImportanceChanged(    int progress){
+      mBackend.setImportance(mTopicRow.pkg,mTopicRow.uid,mTopicRow.topic,progress - ImportanceSeekBarPreference.IMPORTANCE_PROGRESS_OFFSET);
+    }
+  }
+);
   mPriority.setChecked(mTopicRow.priority);
   mSensitive.setChecked(mTopicRow.sensitive);
   mPriority.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){

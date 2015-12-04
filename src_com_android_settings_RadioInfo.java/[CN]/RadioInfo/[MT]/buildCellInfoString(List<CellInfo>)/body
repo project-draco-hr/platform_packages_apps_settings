@@ -1,0 +1,40 @@
+{
+  String value=new String();
+  StringBuilder cdmaCells=new StringBuilder(), gsmCells=new StringBuilder(), lteCells=new StringBuilder(), wcdmaCells=new StringBuilder();
+  if (arrayCi != null) {
+    for (    CellInfo ci : arrayCi) {
+      if (ci instanceof CellInfoLte) {
+        lteCells.append(buildLteInfoString((CellInfoLte)ci));
+      }
+ else       if (ci instanceof CellInfoWcdma) {
+        wcdmaCells.append(buildWcdmaInfoString((CellInfoWcdma)ci));
+      }
+ else       if (ci instanceof CellInfoGsm) {
+        gsmCells.append(buildGsmInfoString((CellInfoGsm)ci));
+      }
+ else       if (ci instanceof CellInfoCdma) {
+        cdmaCells.append(buildCdmaInfoString((CellInfoCdma)ci));
+      }
+    }
+    if (lteCells.length() != 0) {
+      value+=String.format("LTE\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-3.3s %-4.4s %-4.4s %-2.2s\n","SRV","MCC","MNC","TAC","CID","PCI","RSRP","RSRQ","TA");
+      value+=lteCells.toString();
+    }
+    if (wcdmaCells.length() != 0) {
+      value+=String.format("WCDMA\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-5.5s %-4.4s\n","SRV","MCC","MNC","LAC","CID","PSC","RSCP");
+      value+=wcdmaCells.toString();
+    }
+    if (gsmCells.length() != 0) {
+      value+=String.format("GSM\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-4.4s %-4.4s\n","SRV","MCC","MNC","LAC","CID","BSIC","RSSI");
+      value+=gsmCells.toString();
+    }
+    if (cdmaCells.length() != 0) {
+      value+=String.format("CDMA/EVDO\n%-3.3s %-5.5s %-5.5s %-5.5s %-6.6s %-6.6s %-6.6s %-6.6s %-5.5s\n","SRV","SID","NID","BSID","C-RSSI","C-ECIO","E-RSSI","E-ECIO","E-SNR");
+      value+=cdmaCells.toString();
+    }
+  }
+ else {
+    value="unknown";
+  }
+  return value.toString();
+}

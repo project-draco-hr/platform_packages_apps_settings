@@ -1,0 +1,8 @@
+{
+  if (type >= mPreferredNetworkLabels.length || type < 0) {
+    log("EVENT_QUERY_PREFERRED_TYPE_DONE: unknown " + "type=" + type);
+    type=mPreferredNetworkLabels.length - 1;
+  }
+  mPreferredNetworkTypeResult=type;
+  preferredNetworkType.setSelection(mPreferredNetworkTypeResult,true);
+}

@@ -1,0 +1,5 @@
+{
+  CellIdentityWcdma cidWcdma=ci.getCellIdentity();
+  CellSignalStrengthWcdma ssWcdma=ci.getCellSignalStrength();
+  return String.format("%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-5.5s %-4.4s\n",ci.isRegistered() ? "S  " : "   ",getCellInfoDisplayString(cidWcdma.getMcc()),getCellInfoDisplayString(cidWcdma.getMnc()),getCellInfoDisplayString(cidWcdma.getLac()),getCellInfoDisplayString(cidWcdma.getCid()),getCellInfoDisplayString(cidWcdma.getPsc()),getCellInfoDisplayString(ssWcdma.getDbm()));
+}

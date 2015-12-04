@@ -1,8 +1,7 @@
 {
   index+=1;
-  if (index >= rates.length) {
-    index=0;
-  }
+  index%=rates.length;
   phone.setCellInfoListRate(rates[index]);
   updateCellInfoListRate();
+  updateAllCellInfo();
 }

@@ -1,11 +1,11 @@
 {
   super.onResume();
+  log("Started onResume");
   updatePhoneState();
   updateSignalStrength();
   updateMessageWaiting();
   updateCallRedirect();
   updateServiceState();
-  updateLocation(mTelephonyManager.getCellLocation());
   updateDataState();
   updateDataStats();
   updateDataStats2();
@@ -17,7 +17,12 @@
   updateLteRamDumpState();
   updateProperties();
   updateDnsCheckState();
-  log("onResume: register phone & data intents");
+  updateNeighboringCids(mNeighboringCellResult);
+  updateLocation(mCellLocationResult);
+  updateCellInfo(mCellInfoResult);
+  mPingHostnameV4.setText(mPingHostnameResultV4);
+  mPingHostnameV6.setText(mPingHostnameResultV6);
+  mHttpClientTest.setText(mHttpClientTestResult);
   mPhoneStateReceiver.registerIntent();
   mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_DATA_CONNECTION_STATE | PhoneStateListener.LISTEN_DATA_ACTIVITY | PhoneStateListener.LISTEN_CELL_LOCATION| PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR| PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR| PhoneStateListener.LISTEN_CELL_INFO| PhoneStateListener.LISTEN_DATA_CONNECTION_REAL_TIME_INFO);
 }

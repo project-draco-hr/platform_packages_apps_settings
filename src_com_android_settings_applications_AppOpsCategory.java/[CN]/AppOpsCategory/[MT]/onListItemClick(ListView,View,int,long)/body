@@ -1,7 +1,18 @@
 {
   AppOpEntry entry=mAdapter.getItem(position);
   if (entry != null) {
-    mCurrentPkgName=entry.getAppEntry().getApplicationInfo().packageName;
-    startApplicationDetailsActivity();
+    if (mUserControlled) {
+      Switch sw=((Switch)v.findViewById(R.id.op_switch));
+      boolean checked=!sw.isChecked();
+      sw.setChecked(checked);
+      AppOpsManager.OpEntry op=entry.getOpEntry(0);
+      int mode=checked ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_IGNORED;
+      mState.getAppOpsManager().setMode(op.getOp(),entry.getAppEntry().getApplicationInfo().uid,entry.getAppEntry().getApplicationInfo().packageName,mode);
+      entry.overridePrimaryOpMode(mode);
+    }
+ else {
+      mCurrentPkgName=entry.getAppEntry().getApplicationInfo().packageName;
+      startApplicationDetailsActivity();
+    }
   }
 }

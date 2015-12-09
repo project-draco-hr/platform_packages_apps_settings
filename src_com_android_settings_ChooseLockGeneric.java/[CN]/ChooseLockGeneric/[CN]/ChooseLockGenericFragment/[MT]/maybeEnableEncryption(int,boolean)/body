@@ -3,10 +3,11 @@
   if (UserManager.get(getActivity()).isAdminUser() && mUserId == UserHandle.myUserId() && LockPatternUtils.isDeviceEncryptionEnabled() && !dpm.getDoNotAskCredentialsOnBoot()) {
     mEncryptionRequestQuality=quality;
     mEncryptionRequestDisabled=disabled;
+    Intent unlockMethodIntent=getIntentForUnlockMethod(quality,disabled);
     final Context context=getActivity();
     final boolean accEn=AccessibilityManager.getInstance(context).isEnabled();
     final boolean required=mLockPatternUtils.isCredentialRequiredToDecrypt(!accEn);
-    Intent intent=getEncryptionInterstitialIntent(context,quality,required);
+    Intent intent=getEncryptionInterstitialIntent(context,quality,required,unlockMethodIntent);
     intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_FOR_FINGERPRINT,mForFingerprint);
     startActivityForResult(intent,ENABLE_ENCRYPTION_REQUEST);
   }

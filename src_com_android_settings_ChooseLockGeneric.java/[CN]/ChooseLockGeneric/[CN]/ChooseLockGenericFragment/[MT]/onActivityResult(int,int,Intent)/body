@@ -7,8 +7,8 @@
     updatePreferencesOrFinish();
   }
  else   if (requestCode == ENABLE_ENCRYPTION_REQUEST && resultCode == Activity.RESULT_OK) {
-    mRequirePassword=data.getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);
-    updateUnlockMethodAndFinish(mEncryptionRequestQuality,mEncryptionRequestDisabled);
+    getActivity().setResult(resultCode,data);
+    finish();
   }
  else   if (requestCode == CHOOSE_LOCK_REQUEST) {
     getActivity().setResult(resultCode,data);

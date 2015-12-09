@@ -1,0 +1,10 @@
+{
+  if (mUnlockMethodIntent != null) {
+    mUnlockMethodIntent.putExtra(EXTRA_REQUIRE_PASSWORD,mPasswordRequired);
+    startActivityForResult(mUnlockMethodIntent,CHOOSE_LOCK_REQUEST);
+  }
+ else {
+    Log.wtf(TAG,"no unlock intent to start");
+    finish();
+  }
+}

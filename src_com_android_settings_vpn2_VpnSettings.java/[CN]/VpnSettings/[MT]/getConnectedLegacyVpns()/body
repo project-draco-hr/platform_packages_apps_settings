@@ -1,0 +1,12 @@
+{
+  try {
+    mConnectedLegacyVpn=mConnectivityService.getLegacyVpnInfo(UserHandle.myUserId());
+    if (mConnectedLegacyVpn != null) {
+      return Collections.singletonList(mConnectedLegacyVpn);
+    }
+  }
+ catch (  RemoteException e) {
+    Log.e(LOG_TAG,"Failure updating VPN list with connected legacy VPNs",e);
+  }
+  return Collections.emptyList();
+}

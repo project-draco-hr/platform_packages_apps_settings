@@ -7,6 +7,7 @@
         return true;
       }
  catch (      Exception e) {
+        Log.w(LOG_TAG,"Starting config intent failed",e);
       }
     }
     ConfigDialogFragment.show(this,profile,false,true);
@@ -17,7 +18,7 @@
     boolean connected=(pref.getState() == AppPreference.STATE_CONNECTED);
     if (!connected) {
       try {
-        UserHandle user=new UserHandle(UserHandle.getUserId(pref.getUid()));
+        UserHandle user=UserHandle.of(pref.getUserId());
         Context userContext=getActivity().createPackageContextAsUser(getActivity().getPackageName(),0,user);
         PackageManager pm=userContext.getPackageManager();
         Intent appIntent=pm.getLaunchIntentForPackage(pref.getPackageName());
@@ -27,6 +28,7 @@
         }
       }
  catch (      PackageManager.NameNotFoundException nnfe) {
+        Log.w(LOG_TAG,"VPN provider does not exist: " + pref.getPackageName(),nnfe);
       }
     }
     PackageInfo pkgInfo=pref.getPackageInfo();

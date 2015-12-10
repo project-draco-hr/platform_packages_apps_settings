@@ -1,0 +1,61 @@
+{
+  final View root=super.onCreateView(inflater,container,savedInstanceState);
+  final ViewGroup list_container=(ViewGroup)root.findViewById(android.R.id.list_container);
+  list_container.removeAllViews();
+  final View content=inflater.inflate(R.layout.screen_zoom_activity,list_container,false);
+  list_container.addView(content);
+  mLabel=(TextView)content.findViewById(R.id.current_density);
+  final int max=Math.max(1,mValues.length - 1);
+  final SeekBar seekBar=(SeekBar)content.findViewById(R.id.seek_bar);
+  seekBar.setMax(max);
+  seekBar.setProgress(mInitialIndex);
+  seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+    @Override public void onProgressChanged(    SeekBar seekBar,    int progress,    boolean fromUser){
+      setPreviewLayer(progress,true);
+    }
+    @Override public void onStartTrackingTouch(    SeekBar seekBar){
+    }
+    @Override public void onStopTrackingTouch(    SeekBar seekBar){
+    }
+  }
+);
+  mSmaller=content.findViewById(R.id.smaller);
+  mSmaller.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      final int progress=seekBar.getProgress();
+      if (progress > 0) {
+        seekBar.setProgress(progress - 1,true);
+      }
+    }
+  }
+);
+  mLarger=content.findViewById(R.id.larger);
+  mLarger.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      final int progress=seekBar.getProgress();
+      if (progress < seekBar.getMax()) {
+        seekBar.setProgress(progress + 1,true);
+      }
+    }
+  }
+);
+  if (mValues.length == 1) {
+    seekBar.setEnabled(false);
+  }
+  mPreviewFrame=(FrameLayout)content.findViewById(R.id.preview_frame);
+  final Context context=getContext();
+  final Configuration origConfig=context.getResources().getConfiguration();
+  for (  int mValue : mValues) {
+    final Configuration config=new Configuration(origConfig);
+    config.densityDpi=mValue;
+    final Context configContext=context.createConfigurationContext(config);
+    configContext.setTheme(context.getThemeResId());
+    final LayoutInflater configInflater=LayoutInflater.from(configContext);
+    final View sampleView=configInflater.inflate(R.layout.screen_zoom_preview,mPreviewFrame,false);
+    sampleView.setAlpha(0);
+    sampleView.setVisibility(View.INVISIBLE);
+    mPreviewFrame.addView(sampleView);
+  }
+  setPreviewLayer(mInitialIndex,false);
+  return root;
+}

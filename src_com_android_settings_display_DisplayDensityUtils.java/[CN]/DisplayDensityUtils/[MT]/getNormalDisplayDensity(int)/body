@@ -1,0 +1,9 @@
+{
+  try {
+    final IWindowManager wm=WindowManagerGlobal.getWindowManagerService();
+    return wm.getInitialDisplayDensity(displayId);
+  }
+ catch (  RemoteException exc) {
+    return -1;
+  }
+}

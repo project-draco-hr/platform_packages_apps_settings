@@ -1,0 +1,14 @@
+{
+  AsyncTask.execute(new Runnable(){
+    @Override public void run(){
+      try {
+        final IWindowManager wm=WindowManagerGlobal.getWindowManagerService();
+        wm.setForcedDisplayDensity(displayId,density);
+      }
+ catch (      RemoteException exc) {
+        Log.w(LOG_TAG,"Unable to save forced display density setting");
+      }
+    }
+  }
+);
+}

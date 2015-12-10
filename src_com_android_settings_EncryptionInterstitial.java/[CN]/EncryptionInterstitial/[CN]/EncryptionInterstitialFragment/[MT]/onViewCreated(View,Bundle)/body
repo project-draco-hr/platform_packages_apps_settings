@@ -4,7 +4,9 @@
   mDontRequirePasswordToDecryptButton=(RadioButton)view.findViewById(R.id.encrypt_dont_require_password);
   mEncryptionMessage=(TextView)view.findViewById(R.id.encryption_message);
   boolean forFingerprint=getActivity().getIntent().getBooleanExtra(ChooseLockSettingsHelper.EXTRA_KEY_FOR_FINGERPRINT,false);
-  int quality=getActivity().getIntent().getIntExtra(EXTRA_PASSWORD_QUALITY,0);
+  Intent intent=getActivity().getIntent();
+  final int quality=intent.getIntExtra(EXTRA_PASSWORD_QUALITY,0);
+  mUnlockMethodIntent=(Intent)intent.getParcelableExtra(EXTRA_UNLOCK_METHOD_INTENT);
   final int msgId;
   final int enableId;
   final int disableId;
@@ -32,4 +34,13 @@ mRequirePasswordToDecryptButton.setText(enableId);
 mDontRequirePasswordToDecryptButton.setOnClickListener(this);
 mDontRequirePasswordToDecryptButton.setText(disableId);
 setRequirePasswordState(getActivity().getIntent().getBooleanExtra(EXTRA_REQUIRE_PASSWORD,true));
+Button nextButton=getNextButton();
+if (nextButton != null) {
+nextButton.setOnClickListener(new View.OnClickListener(){
+@Override public void onClick(View v){
+startLockIntent();
+}
+}
+);
+}
 }

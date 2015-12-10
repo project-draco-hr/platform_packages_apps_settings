@@ -1,0 +1,26 @@
+{
+  Intent intent=null;
+  final Context context=getActivity();
+  if (quality >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
+    int minLength=mDPM.getPasswordMinimumLength(null);
+    if (minLength < MIN_PASSWORD_LENGTH) {
+      minLength=MIN_PASSWORD_LENGTH;
+    }
+    final int maxLength=mDPM.getPasswordMaximumLength(quality);
+    if (mHasChallenge) {
+      intent=getLockPasswordIntent(context,quality,minLength,maxLength,mRequirePassword,mChallenge,mUserId);
+    }
+ else {
+      intent=getLockPasswordIntent(context,quality,minLength,maxLength,mRequirePassword,mUserPassword,mUserId);
+    }
+  }
+ else   if (quality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
+    if (mHasChallenge) {
+      intent=getLockPatternIntent(context,mRequirePassword,mChallenge,mUserId);
+    }
+ else {
+      intent=getLockPatternIntent(context,mRequirePassword,mUserPassword,mUserId);
+    }
+  }
+  return intent;
+}

@@ -1,0 +1,13 @@
+{
+  IntentSender intentSender=inIntent.getParcelableExtra(Intent.EXTRA_INTENT);
+  if (intentSender != null) {
+    outIntent.putExtra(Intent.EXTRA_INTENT,intentSender);
+  }
+  int taskId=inIntent.getIntExtra(Intent.EXTRA_TASK_ID,-1);
+  if (taskId != -1) {
+    outIntent.putExtra(Intent.EXTRA_TASK_ID,taskId);
+  }
+  if (intentSender != null || taskId != -1) {
+    outIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+  }
+}

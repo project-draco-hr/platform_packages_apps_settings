@@ -1,0 +1,15 @@
+{
+  super(context,attrs,TypedArrayUtils.getAttr(context,android.support.v7.preference.R.attr.preferenceScreenStyle,android.R.attr.preferenceScreenStyle));
+  setFragment("com.android.settings.display.ScreenZoomSettings");
+  final DisplayDensityUtils density=new DisplayDensityUtils(context);
+  final int defaultIndex=density.getCurrentIndex();
+  if (defaultIndex < 0) {
+    setVisible(false);
+    setEnabled(false);
+  }
+ else {
+    final String[] entries=density.getEntries();
+    final int currentIndex=density.getCurrentIndex();
+    setSummary(entries[currentIndex]);
+  }
+}

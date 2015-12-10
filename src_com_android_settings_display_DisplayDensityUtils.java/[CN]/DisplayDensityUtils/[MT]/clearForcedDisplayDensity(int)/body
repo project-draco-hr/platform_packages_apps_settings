@@ -1,0 +1,14 @@
+{
+  AsyncTask.execute(new Runnable(){
+    @Override public void run(){
+      try {
+        final IWindowManager wm=WindowManagerGlobal.getWindowManagerService();
+        wm.clearForcedDisplayDensity(displayId);
+      }
+ catch (      RemoteException exc) {
+        Log.w(LOG_TAG,"Unable to clear forced display density setting");
+      }
+    }
+  }
+);
+}

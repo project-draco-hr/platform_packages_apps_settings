@@ -1,0 +1,68 @@
+{
+  final int normalDensity=DisplayDensityUtils.getNormalDisplayDensity(Display.DEFAULT_DISPLAY);
+  if (normalDensity <= 0) {
+    mEntries=null;
+    mValues=null;
+    mNormalDensity=0;
+    mCurrentIndex=-1;
+    return;
+  }
+  final Resources res=context.getResources();
+  final DisplayMetrics metrics=res.getDisplayMetrics();
+  final int currentDensity=metrics.densityDpi;
+  int currentDensityIndex=-1;
+  final int minDimensionPx=Math.min(metrics.widthPixels,metrics.heightPixels);
+  final int maxDensity=DisplayMetrics.DENSITY_MEDIUM * minDimensionPx / MIN_DIMENSION_DP;
+  final float maxScale=Math.min(MAX_SCALE,maxDensity / (float)normalDensity);
+  final float minScale=MIN_SCALE;
+  final int numLarger=(int)MathUtils.constrain((maxScale - 1) / MIN_SCALE_INTERVAL,0,SUMMARIES_LARGER.length);
+  final int numSmaller=(int)MathUtils.constrain((1 - minScale) / MIN_SCALE_INTERVAL,0,SUMMARIES_SMALLER.length);
+  String[] entries=new String[1 + numSmaller + numLarger];
+  int[] values=new int[entries.length];
+  int curIndex=0;
+  if (numSmaller > 0) {
+    final float interval=(1 - minScale) / numSmaller;
+    for (int i=numSmaller - 1; i >= 0; i--) {
+      final int density=(int)(normalDensity * (1 - (i + 1) * interval));
+      if (currentDensity == density) {
+        currentDensityIndex=curIndex;
+      }
+      entries[curIndex]=res.getString(SUMMARIES_SMALLER[i]);
+      values[curIndex]=density;
+      curIndex++;
+    }
+  }
+  if (currentDensity == normalDensity) {
+    currentDensityIndex=curIndex;
+  }
+  values[curIndex]=normalDensity;
+  entries[curIndex]=res.getString(SUMMARY_NORMAL);
+  curIndex++;
+  if (numLarger > 0) {
+    final float interval=(maxScale - 1) / numLarger;
+    for (int i=0; i < numLarger; i++) {
+      final int density=(int)(normalDensity * (1 + (i + 1) * interval));
+      if (currentDensity == density) {
+        currentDensityIndex=curIndex;
+      }
+      values[curIndex]=density;
+      entries[curIndex]=res.getString(SUMMARIES_LARGER[i]);
+      curIndex++;
+    }
+  }
+  final int displayIndex;
+  if (currentDensityIndex >= 0) {
+    displayIndex=currentDensityIndex;
+  }
+ else {
+    values=Arrays.copyOf(values,values.length + 1);
+    values[curIndex]=currentDensity;
+    entries=Arrays.copyOf(entries,values.length + 1);
+    entries[curIndex]=res.getString(SUMMARY_CUSTOM,currentDensity);
+    displayIndex=curIndex;
+  }
+  mNormalDensity=normalDensity;
+  mCurrentIndex=displayIndex;
+  mEntries=entries;
+  mValues=values;
+}

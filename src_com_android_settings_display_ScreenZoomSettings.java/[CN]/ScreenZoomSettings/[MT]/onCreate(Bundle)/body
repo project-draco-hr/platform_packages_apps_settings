@@ -1,0 +1,18 @@
+{
+  super.onCreate(savedInstanceState);
+  final DisplayDensityUtils density=new DisplayDensityUtils(getContext());
+  final int initialIndex=density.getCurrentIndex();
+  if (initialIndex < 0) {
+    final int densityDpi=getResources().getDisplayMetrics().densityDpi;
+    mValues=new int[]{densityDpi};
+    mEntries=new String[]{getString(R.string.screen_zoom_summary_normal)};
+    mInitialIndex=0;
+    mNormalDensity=densityDpi;
+  }
+ else {
+    mValues=density.getValues();
+    mEntries=density.getEntries();
+    mInitialIndex=initialIndex;
+    mNormalDensity=density.getNormalDensity();
+  }
+}

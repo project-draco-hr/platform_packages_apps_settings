@@ -1,0 +1,28 @@
+{
+  if (DEBUG)   Log.d(TAG,"Reading from " + mXmlFile.toString());
+  try {
+    XmlPullParser parser=Xml.newPullParser();
+    FileReader in=new FileReader(mXmlFile);
+    parser.setInput(in);
+    int state=parser.getEventType();
+    while (state != XmlPullParser.END_DOCUMENT) {
+      if (TAG_CONDITION.equals(parser.getName())) {
+        int depth=parser.getDepth();
+        String clz=parser.getAttributeValue("",ATTR_CLASS);
+        Condition condition=createCondition(Class.forName(clz));
+        PersistableBundle bundle=PersistableBundle.restoreFromXml(parser);
+        if (DEBUG)         Log.d(TAG,"Reading " + clz + " -- "+ bundle);
+        condition.restoreState(bundle);
+        mConditions.add(condition);
+        while (parser.getDepth() > depth) {
+          parser.next();
+        }
+      }
+      state=parser.next();
+    }
+    in.close();
+  }
+ catch (  XmlPullParserException|IOException|ClassNotFoundException e) {
+    Log.w(TAG,"Problem reading " + FILE_NAME,e);
+  }
+}

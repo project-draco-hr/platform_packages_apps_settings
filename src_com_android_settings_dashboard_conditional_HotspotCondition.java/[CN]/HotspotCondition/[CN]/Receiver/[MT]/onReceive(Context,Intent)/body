@@ -1,0 +1,5 @@
+{
+  if (WifiManager.WIFI_AP_STATE_CHANGED_ACTION.equals(intent.getAction())) {
+    ConditionManager.get(context).getCondition(HotspotCondition.class).refreshState();
+  }
+}

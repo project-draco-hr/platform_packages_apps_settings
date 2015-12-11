@@ -1,0 +1,15 @@
+{
+  if (AirplaneModeCondition.class == clz) {
+    return new AirplaneModeCondition(this);
+  }
+ else   if (HotspotCondition.class == clz) {
+    return new HotspotCondition(this);
+  }
+  try {
+    Constructor<?> constructor=clz.getConstructor(ConditionManager.class);
+    return (Condition)constructor.newInstance(this);
+  }
+ catch (  NoSuchMethodException|IllegalAccessException|InstantiationException|InvocationTargetException e) {
+  }
+  return null;
+}

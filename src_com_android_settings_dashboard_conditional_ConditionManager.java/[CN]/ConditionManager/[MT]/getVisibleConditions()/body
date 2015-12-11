@@ -1,0 +1,11 @@
+{
+  List<Condition> conditions=new ArrayList<>();
+  final int N=mConditions.size();
+  for (int i=0; i < N; i++) {
+    if (mConditions.get(i).shouldShow()) {
+      conditions.add(mConditions.get(i));
+    }
+  }
+  Collections.sort(conditions,CONDITION_COMPARATOR);
+  return conditions;
+}

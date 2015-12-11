@@ -1,0 +1,20 @@
+{
+  ItemTouchHelper.SimpleCallback callback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.START | ItemTouchHelper.END){
+    @Override public boolean onMove(    RecyclerView recyclerView,    RecyclerView.ViewHolder viewHolder,    RecyclerView.ViewHolder target){
+      return true;
+    }
+    @Override public int getSwipeDirs(    RecyclerView recyclerView,    RecyclerView.ViewHolder viewHolder){
+      return viewHolder.getItemViewType() == R.layout.condition_card ? super.getSwipeDirs(recyclerView,viewHolder) : 0;
+    }
+    @Override public void onSwiped(    RecyclerView.ViewHolder viewHolder,    int direction){
+      DashboardAdapter adapter=(DashboardAdapter)recyclerView.getAdapter();
+      Object item=adapter.getItem(viewHolder.getItemId());
+      if (item instanceof Condition) {
+        ((Condition)item).silence();
+      }
+    }
+  }
+;
+  ItemTouchHelper itemTouchHelper=new ItemTouchHelper(callback);
+  itemTouchHelper.attachToRecyclerView(recyclerView);
+}

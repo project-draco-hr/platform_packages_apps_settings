@@ -1,0 +1,5 @@
+{
+  if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(intent.getAction())) {
+    ConditionManager.get(context).getCondition(AirplaneModeCondition.class).refreshState();
+  }
+}

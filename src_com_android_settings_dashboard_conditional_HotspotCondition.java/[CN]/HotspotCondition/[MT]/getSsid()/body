@@ -1,0 +1,9 @@
+{
+  WifiConfiguration wifiConfig=mWifiManager.getWifiApConfiguration();
+  if (wifiConfig == null) {
+    return mManager.getContext().getString(com.android.internal.R.string.wifi_tether_configure_ssid_default);
+  }
+ else {
+    return wifiConfig.SSID;
+  }
+}

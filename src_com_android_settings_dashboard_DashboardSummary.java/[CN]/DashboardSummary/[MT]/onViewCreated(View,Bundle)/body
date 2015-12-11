@@ -1,8 +1,13 @@
 {
-  mDashboard=(RecyclerView)view.findViewById(R.id.dashboard_container);
+  mDashboard=(FocusRecyclerView)view.findViewById(R.id.dashboard_container);
   LinearLayoutManager llm=new LinearLayoutManager(getContext());
   llm.setOrientation(LinearLayoutManager.VERTICAL);
   mDashboard.setLayoutManager(llm);
   mDashboard.setHasFixedSize(true);
+  mDashboard.setListener(this);
+  mAdapter=new DashboardAdapter(getContext());
+  mAdapter.setConditions(mConditionManager.getConditions());
+  mSummaryLoader.setAdapter(mAdapter);
+  ConditionAdapterUtils.addDismiss(mDashboard);
   rebuildUI();
 }

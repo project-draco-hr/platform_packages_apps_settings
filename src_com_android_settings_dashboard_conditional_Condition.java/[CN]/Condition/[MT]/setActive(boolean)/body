@@ -1,0 +1,12 @@
+{
+  if (mIsActive == active) {
+    return;
+  }
+  mIsActive=active;
+  mLastStateChange=System.currentTimeMillis();
+  if (mIsSilenced && !active) {
+    mIsSilenced=false;
+    onSilenceChanged(mIsSilenced);
+  }
+  notifyChanged();
+}

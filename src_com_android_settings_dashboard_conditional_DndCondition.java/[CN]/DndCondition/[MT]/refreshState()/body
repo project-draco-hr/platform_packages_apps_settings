@@ -1,0 +1,12 @@
+{
+  NotificationManager notificationManager=mManager.getContext().getSystemService(NotificationManager.class);
+  mZen=notificationManager.getZenMode();
+  boolean zenModeEnabled=mZen != Settings.Global.ZEN_MODE_OFF;
+  if (zenModeEnabled) {
+    mConfig=notificationManager.getZenModeConfig();
+  }
+ else {
+    mConfig=null;
+  }
+  setActive(zenModeEnabled);
+}

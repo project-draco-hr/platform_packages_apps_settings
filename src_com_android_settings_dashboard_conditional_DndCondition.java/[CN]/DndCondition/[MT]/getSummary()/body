@@ -1,0 +1,4 @@
+{
+  final boolean isForever=mConfig != null && mConfig.manualRule != null && mConfig.manualRule.conditionId == null;
+  return isForever ? mManager.getContext().getString(com.android.internal.R.string.zen_mode_forever_dnd) : ZenModeConfig.getConditionSummary(mManager.getContext(),mConfig,ActivityManager.getCurrentUser(),false);
+}

@@ -1,0 +1,5 @@
+{
+  if (NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED_INTERNAL.equals(intent.getAction())) {
+    ConditionManager.get(context).getCondition(DndCondition.class).refreshState();
+  }
+}

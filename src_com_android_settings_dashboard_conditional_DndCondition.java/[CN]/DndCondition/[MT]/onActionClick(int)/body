@@ -1,0 +1,10 @@
+{
+  if (index == 0) {
+    NotificationManager notificationManager=mManager.getContext().getSystemService(NotificationManager.class);
+    notificationManager.setZenMode(Settings.Global.ZEN_MODE_OFF,null,TAG);
+    setActive(false);
+  }
+ else {
+    throw new IllegalArgumentException("Unexpected index " + index);
+  }
+}

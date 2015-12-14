@@ -1,0 +1,14 @@
+{
+  if (mDisabledByAdmin) {
+    Intent intent=new Intent(mContext,ShowAdminSupportDetailsDialog.class);
+    if (mEnforcedAdmin != null) {
+      intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,mEnforcedAdmin);
+    }
+    if (mUserId != UserHandle.USER_NULL) {
+      intent.putExtra(Intent.EXTRA_USER_ID,mUserId);
+    }
+    mContext.startActivity(intent);
+    return true;
+  }
+  return false;
+}

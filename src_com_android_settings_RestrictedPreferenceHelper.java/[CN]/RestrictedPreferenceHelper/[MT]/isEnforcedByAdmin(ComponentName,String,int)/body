@@ -1,0 +1,7 @@
+{
+  Bundle enforcedRestrictions=mDevicePolicyManager.getUserRestrictions(admin,userId);
+  if (enforcedRestrictions != null && enforcedRestrictions.getBoolean(userRestriction,false)) {
+    return true;
+  }
+  return false;
+}

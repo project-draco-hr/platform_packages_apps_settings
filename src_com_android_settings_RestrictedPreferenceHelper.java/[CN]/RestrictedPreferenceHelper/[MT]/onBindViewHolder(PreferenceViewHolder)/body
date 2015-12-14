@@ -1,0 +1,13 @@
+{
+  final TextView titleView=(TextView)holder.findViewById(android.R.id.title);
+  if (titleView != null) {
+    if (mDisabledByAdmin) {
+      titleView.setCompoundDrawablesRelative(null,null,mRestrictedPadlock,null);
+      titleView.setCompoundDrawablePadding(mRestrictedPadlockPadding);
+      holder.itemView.setEnabled(true);
+    }
+ else {
+      titleView.setCompoundDrawablesRelative(null,null,null,null);
+    }
+  }
+}

@@ -74,11 +74,14 @@
     credentialsManager.removePreference(root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE));
   }
   PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
-  mToggleAppInstallation=(SwitchPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
+  mToggleAppInstallation=(RestrictedSwitchPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
   mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());
   mToggleAppInstallation.setEnabled(!um.getUserInfo(MY_USER_ID).isRestricted());
-  if (um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES) || um.hasUserRestriction(UserManager.DISALLOW_INSTALL_APPS)) {
-    mToggleAppInstallation.setEnabled(false);
+  if (mToggleAppInstallation.isEnabled()) {
+    mToggleAppInstallation.checkRestrictionAndSetDisabled(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);
+    if (!mToggleAppInstallation.isDisabledByAdmin()) {
+      mToggleAppInstallation.checkRestrictionAndSetDisabled(UserManager.DISALLOW_INSTALL_APPS);
+    }
   }
   PreferenceGroup advancedCategory=(PreferenceGroup)root.findPreference(KEY_ADVANCED_SECURITY);
   if (advancedCategory != null) {

@@ -1,11 +1,11 @@
 {
   final View root=super.onCreateView(inflater,container,savedInstanceState);
-  final ViewGroup list_container=(ViewGroup)root.findViewById(android.R.id.list_container);
-  list_container.removeAllViews();
-  final View content=inflater.inflate(R.layout.screen_zoom_activity,list_container,false);
-  list_container.addView(content);
-  mLabel=(TextView)content.findViewById(R.id.current_density);
-  final int max=Math.max(1,mValues.length - 1);
+  final ViewGroup listContainer=(ViewGroup)root.findViewById(android.R.id.list_container);
+  listContainer.removeAllViews();
+  final View content=inflater.inflate(mActivityLayoutResId,listContainer,false);
+  listContainer.addView(content);
+  mLabel=(TextView)content.findViewById(R.id.current_label);
+  final int max=Math.max(1,mEntries.length - 1);
   final SeekBar seekBar=(SeekBar)content.findViewById(R.id.seek_bar);
   seekBar.setMax(max);
   seekBar.setProgress(mInitialIndex);
@@ -39,19 +39,18 @@
     }
   }
 );
-  if (mValues.length == 1) {
+  if (mEntries.length == 1) {
     seekBar.setEnabled(false);
   }
   mPreviewFrame=(FrameLayout)content.findViewById(R.id.preview_frame);
   final Context context=getContext();
   final Configuration origConfig=context.getResources().getConfiguration();
-  for (  int mValue : mValues) {
-    final Configuration config=new Configuration(origConfig);
-    config.densityDpi=mValue;
+  for (int i=0; i < mEntries.length; ++i) {
+    final Configuration config=createConfig(origConfig,i);
     final Context configContext=context.createConfigurationContext(config);
     configContext.setTheme(context.getThemeResId());
     final LayoutInflater configInflater=LayoutInflater.from(configContext);
-    final View sampleView=configInflater.inflate(R.layout.screen_zoom_preview,mPreviewFrame,false);
+    final View sampleView=configInflater.inflate(mPreviewSampleResId,mPreviewFrame,false);
     sampleView.setAlpha(0);
     sampleView.setVisibility(View.INVISIBLE);
     mPreviewFrame.addView(sampleView);

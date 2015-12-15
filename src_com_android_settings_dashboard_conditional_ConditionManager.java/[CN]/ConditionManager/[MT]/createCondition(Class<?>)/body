@@ -8,6 +8,9 @@
  else   if (DndCondition.class == clz) {
     return new DndCondition(this);
   }
+ else   if (BatterySaverCondition.class == clz) {
+    return new BatterySaverCondition(this);
+  }
   try {
     Constructor<?> constructor=clz.getConstructor(ConditionManager.class);
     return (Condition)constructor.newInstance(this);

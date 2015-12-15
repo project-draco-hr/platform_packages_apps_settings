@@ -3,4 +3,5 @@
     if (DEBUG)     Log.d(TAG,"Setting mode failed, fallback to current value");
     mHandler.post(mUpdateSwitch);
   }
+  ConditionManager.get(getContext()).getCondition(BatterySaverCondition.class).refreshState();
 }

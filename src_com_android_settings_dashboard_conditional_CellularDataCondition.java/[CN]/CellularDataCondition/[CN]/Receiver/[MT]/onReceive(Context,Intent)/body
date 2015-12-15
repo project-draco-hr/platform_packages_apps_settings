@@ -1,0 +1,5 @@
+{
+  if (TelephonyIntents.ACTION_ANY_DATA_CONNECTION_STATE_CHANGED.equals(intent.getAction())) {
+    ConditionManager.get(context).getCondition(CellularDataCondition.class).refreshState();
+  }
+}

@@ -11,11 +11,8 @@
  else   if (BatterySaverCondition.class == clz) {
     return new BatterySaverCondition(this);
   }
-  try {
-    Constructor<?> constructor=clz.getConstructor(ConditionManager.class);
-    return (Condition)constructor.newInstance(this);
+ else   if (CellularDataCondition.class == clz) {
+    return new CellularDataCondition(this);
   }
- catch (  NoSuchMethodException|IllegalAccessException|InstantiationException|InvocationTargetException e) {
-  }
-  return null;
+  throw new RuntimeException("Unexpected Condition " + clz);
 }

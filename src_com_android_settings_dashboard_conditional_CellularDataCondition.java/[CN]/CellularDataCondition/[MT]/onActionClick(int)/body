@@ -1,0 +1,10 @@
+{
+  if (index == 0) {
+    TelephonyManager telephony=mManager.getContext().getSystemService(TelephonyManager.class);
+    telephony.setDataEnabled(true);
+    setActive(false);
+  }
+ else {
+    throw new IllegalArgumentException("Unexpected index " + index);
+  }
+}

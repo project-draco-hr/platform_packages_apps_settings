@@ -1,2 +1,8 @@
 {
+  Class<?> clz=getReceiverClass();
+  if (clz == null) {
+    return;
+  }
+  PackageManager pm=mManager.getContext().getPackageManager();
+  pm.setComponentEnabledSetting(new ComponentName(mManager.getContext(),clz),silenced ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 }

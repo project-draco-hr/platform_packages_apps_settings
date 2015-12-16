@@ -17,6 +17,7 @@
   mIpSettingsSpinner.setOnItemSelectedListener(this);
   mProxySettingsSpinner=(Spinner)mView.findViewById(R.id.proxy_settings);
   mProxySettingsSpinner.setOnItemSelectedListener(this);
+  mSharedCheckBox=(CheckBox)mView.findViewById(R.id.shared);
   if (mAccessPoint == null) {
     mConfigUi.setTitle(R.string.wifi_add_network);
     mSsidView=(TextView)mView.findViewById(R.id.ssid);
@@ -46,6 +47,10 @@
       }
  else {
         mIpSettingsSpinner.setSelection(DHCP);
+      }
+      mSharedCheckBox.setEnabled(config.shared);
+      if (!config.shared) {
+        showAdvancedFields=true;
       }
       if (config.getProxySettings() == ProxySettings.STATIC) {
         mProxySettingsSpinner.setSelection(PROXY_STATIC);
@@ -126,6 +131,10 @@
         mConfigUi.setForgetButton(res.getString(R.string.wifi_forget));
       }
     }
+  }
+  final UserManager userManager=(UserManager)mContext.getSystemService(Context.USER_SERVICE);
+  if (!userManager.isSplitSystemUser()) {
+    mSharedCheckBox.setVisibility(View.GONE);
   }
   mConfigUi.setCancelButton(res.getString(R.string.wifi_cancel));
   if (mConfigUi.getSubmitButton() != null) {

@@ -1,5 +1,5 @@
 {
-  if (listening) {
+  if (listening && NfcAdapter.getDefaultAdapter(mContext) != null) {
     PaymentBackend paymentBackend=new PaymentBackend(mContext);
     paymentBackend.refresh();
     PaymentAppInfo app=paymentBackend.getDefaultApp();

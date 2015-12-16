@@ -1,5 +1,21 @@
 {
   if (which == DialogInterface.BUTTON_POSITIVE) {
-    SystemProperties.set("ctl.start","bugreportplus");
+    if (mFullTitle.isChecked()) {
+      Log.v(TAG,"Taking full bugreport right away");
+      takeBugreport(false);
+    }
+ else {
+      Log.v(TAG,"Taking interactive bugreport in " + BUGREPORT_DELAY_SECONDS + "s");
+      final Context context=getContext();
+      final String msg=context.getResources().getQuantityString(com.android.internal.R.plurals.bugreport_countdown,BUGREPORT_DELAY_SECONDS,BUGREPORT_DELAY_SECONDS);
+      Log.v(TAG,msg);
+      Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
+      new Handler().postDelayed(new Runnable(){
+        @Override public void run(){
+          takeBugreport(true);
+        }
+      }
+,BUGREPORT_DELAY_SECONDS * DateUtils.SECOND_IN_MILLIS);
+    }
   }
 }

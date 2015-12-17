@@ -1,7 +1,13 @@
 {
-  final Drawable highlight=getHighlightDrawable();
   final int position=canUseListViewForHighLighting(key);
   if (position >= 0) {
     mPreferenceHighlighted=true;
+    mLayoutManager.scrollToPosition(position);
+    getView().postDelayed(new Runnable(){
+      @Override public void run(){
+        mAdapter.highlight(position);
+      }
+    }
+,DELAY_HIGHLIGHT_DURATION_MILLIS);
   }
 }

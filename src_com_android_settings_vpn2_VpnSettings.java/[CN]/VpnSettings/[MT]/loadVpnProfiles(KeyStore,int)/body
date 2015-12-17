@@ -1,8 +1,5 @@
 {
   final ArrayList<VpnProfile> result=Lists.newArrayList();
-  if (!keyStore.isUnlocked()) {
-    return result;
-  }
   for (  String key : keyStore.list(Credentials.VPN)) {
     final VpnProfile profile=VpnProfile.decode(key,keyStore.get(Credentials.VPN + key));
     if (profile != null && !ArrayUtils.contains(excludeTypes,profile.type)) {

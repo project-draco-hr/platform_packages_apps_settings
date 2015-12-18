@@ -1,8 +1,10 @@
 {
   mUtils=utils;
+  mUserId=userId;
   mHasChallenge=hasChallenge;
   mChallenge=challenge;
-  mWasSecureBefore=mUtils.isSecure(UserHandle.myUserId());
+  mUtils.setSeparateProfileChallengeEnabled(mUserId,true);
+  mWasSecureBefore=mUtils.isSecure(mUserId);
   mUtils.setCredentialRequiredToDecrypt(credentialRequired);
   mFinished=false;
   mResultData=null;

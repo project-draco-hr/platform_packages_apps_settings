@@ -16,7 +16,7 @@
         mProfileChallengeUserId=profile.id;
       }
     }
-    if (LockPatternUtils.isSeparateWorkChallengeEnabled()) {
+    if (mLockPatternUtils.isSeparateProfileChallengeAllowed(mProfileChallengeUserId)) {
       addPreferencesFromResource(R.xml.security_settings_profile);
     }
   }

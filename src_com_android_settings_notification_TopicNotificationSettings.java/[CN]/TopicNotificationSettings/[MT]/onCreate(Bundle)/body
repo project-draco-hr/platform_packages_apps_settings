@@ -9,6 +9,8 @@
     toastAndFinish();
     return;
   }
+  NotificationManager.Policy policy=NotificationManager.from(mContext).getNotificationPolicy();
+  mDndVisualEffectsSuppressed=policy == null ? false : policy.suppressedVisualEffects != 0;
   final Notification.Topic topic=args != null && args.containsKey(ARG_TOPIC) ? (Notification.Topic)args.getParcelable(ARG_TOPIC) : null;
   if (topic == null) {
     toastAndFinish();
@@ -27,7 +29,6 @@
     return;
   }
   final PackageManager pm=getPackageManager();
-  mIsSystemPackage=Utils.isSystemPackage(pm,info);
   addPreferencesFromResource(R.xml.topic_notification_settings);
   mImportance=(ImportanceSeekBarPreference)findPreference(KEY_IMPORTANCE);
   mPriority=(SwitchPreference)findPreference(KEY_BYPASS_DND);
@@ -39,6 +40,7 @@
   mImportance.setCallback(new ImportanceSeekBarPreference.Callback(){
     @Override public void onImportanceChanged(    int progress){
       mBackend.setImportance(mTopicRow.pkg,mTopicRow.uid,mTopicRow.topic,progress);
+      updateDependents(progress);
     }
   }
 );
@@ -58,5 +60,5 @@
     }
   }
 );
-  updateDependents(mTopicRow.banned);
+  updateDependents(mTopicRow.importance);
 }

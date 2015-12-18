@@ -32,6 +32,7 @@
   rows.put(mAppRow.pkg,mAppRow);
   collectConfigActivities(getPackageManager(),rows);
   List<Notification.Topic> topics=mBackend.getTopics(pkg,mUid);
+  mCategories=(PreferenceCategory)getPreferenceScreen().findPreference(KEY_CATEGORIES);
   for (  Notification.Topic topic : topics) {
     Preference topicPreference=new Preference(mContext);
     topicPreference.setKey(topic.getId());
@@ -43,7 +44,7 @@
     topicArgs.putParcelable(TopicNotificationSettings.ARG_PACKAGE_INFO,info);
     Intent topicIntent=Utils.onBuildStartFragmentIntent(getActivity(),TopicNotificationSettings.class.getName(),topicArgs,null,R.string.topic_notifications_title,null,false);
     topicPreference.setIntent(topicIntent);
-    getPreferenceScreen().addPreference(topicPreference);
+    mCategories.addPreference(topicPreference);
   }
   mBlock.setChecked(mAppRow.banned);
   updateDependents(mAppRow.banned);

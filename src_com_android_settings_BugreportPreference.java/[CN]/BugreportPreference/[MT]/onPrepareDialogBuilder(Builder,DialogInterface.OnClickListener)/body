@@ -1,5 +1,27 @@
 {
   super.onPrepareDialogBuilder(builder,listener);
+  final View dialogView=View.inflate(getContext(),R.layout.bugreport_options_dialog,null);
+  mInteractiveTitle=(CheckedTextView)dialogView.findViewById(R.id.bugreport_option_interactive_title);
+  mInteractiveSummary=(TextView)dialogView.findViewById(R.id.bugreport_option_interactive_summary);
+  mFullTitle=(CheckedTextView)dialogView.findViewById(R.id.bugreport_option_full_title);
+  mFullSummary=(TextView)dialogView.findViewById(R.id.bugreport_option_full_summary);
+  final View.OnClickListener l=new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      if (v == mFullTitle || v == mFullSummary) {
+        mInteractiveTitle.setChecked(false);
+        mFullTitle.setChecked(true);
+      }
+      if (v == mInteractiveTitle || v == mInteractiveSummary) {
+        mInteractiveTitle.setChecked(true);
+        mFullTitle.setChecked(false);
+      }
+    }
+  }
+;
+  mInteractiveTitle.setOnClickListener(l);
+  mFullTitle.setOnClickListener(l);
+  mInteractiveSummary.setOnClickListener(l);
+  mFullSummary.setOnClickListener(l);
   builder.setPositiveButton(com.android.internal.R.string.report,listener);
-  builder.setMessage(com.android.internal.R.string.bugreport_message);
+  builder.setView(dialogView);
 }

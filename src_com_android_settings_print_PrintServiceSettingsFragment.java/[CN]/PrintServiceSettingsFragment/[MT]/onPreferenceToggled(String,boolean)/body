@@ -1,11 +1,11 @@
 {
   ComponentName service=ComponentName.unflattenFromString(preferenceKey);
-  List<ComponentName> services=PrintSettingsUtils.readEnabledPrintServices(getActivity());
+  List<ComponentName> services=PrintSettingsUtils.readDisabledPrintServices(getActivity());
   if (enabled) {
-    services.add(service);
-  }
- else {
     services.remove(service);
   }
-  PrintSettingsUtils.writeEnabledPrintServices(getActivity(),services);
+ else {
+    services.add(service);
+  }
+  PrintSettingsUtils.writeDisabledPrintServices(getActivity(),services);
 }

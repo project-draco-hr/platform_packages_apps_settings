@@ -1,6 +1,6 @@
 {
-  List<ComponentName> services=PrintSettingsUtils.readEnabledPrintServices(getActivity());
-  mServiceEnabled=services.contains(mComponentName);
+  List<ComponentName> disabledServices=PrintSettingsUtils.readDisabledPrintServices(getActivity());
+  mServiceEnabled=!disabledServices.contains(mComponentName);
   if (mServiceEnabled) {
     mSwitchBar.setCheckedInternal(true);
     mPrintersAdapter.enable();

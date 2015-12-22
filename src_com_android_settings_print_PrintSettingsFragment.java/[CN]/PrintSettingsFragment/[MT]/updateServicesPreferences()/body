@@ -5,7 +5,7 @@
  else {
     mPrintServicesCategory.removeAll();
   }
-  List<ComponentName> enabledServices=PrintSettingsUtils.readEnabledPrintServices(getActivity());
+  List<ComponentName> disabledServices=PrintSettingsUtils.readDisabledPrintServices(getActivity());
   final PackageManager pm=getActivity().getPackageManager();
   List<ResolveInfo> installedServices=pm.queryIntentServices(new Intent(android.printservice.PrintService.SERVICE_INTERFACE),PackageManager.GET_SERVICES | PackageManager.GET_META_DATA);
   final int installedServiceCount=installedServices.size();
@@ -19,7 +19,7 @@
     preference.setOrder(i);
     preference.setFragment(PrintServiceSettingsFragment.class.getName());
     preference.setPersistent(false);
-    final boolean serviceEnabled=enabledServices.contains(componentName);
+    final boolean serviceEnabled=!disabledServices.contains(componentName);
     if (serviceEnabled) {
       preference.setSummary(getString(R.string.print_feature_state_on));
     }

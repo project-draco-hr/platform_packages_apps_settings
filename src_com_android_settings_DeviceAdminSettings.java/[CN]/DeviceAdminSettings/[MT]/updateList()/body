@@ -1,10 +1,11 @@
 {
-  mAdminsByProfile.clear();
+  mAdmins.clear();
   final List<UserHandle> profiles=mUm.getUserProfiles();
   final int profilesSize=profiles.size();
   for (int i=0; i < profilesSize; ++i) {
     final int profileId=profiles.get(i).getIdentifier();
     updateAvailableAdminsForProfile(profileId);
   }
+  Collections.sort(mAdmins);
   getListView().setAdapter(new PolicyListAdapter());
 }

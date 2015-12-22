@@ -20,11 +20,37 @@
     mAddMsgExpander.setVisibility(View.GONE);
   }
   if (!mRefreshing && !mAddingProfileOwner && mDPM.isAdminActive(mDeviceAdmin.getComponent())) {
-    addDeviceAdminPolicies(false);
-    mAdminWarning.setText(getString(R.string.device_admin_status,mDeviceAdmin.getActivityInfo().applicationInfo.loadLabel(getPackageManager())));
-    setTitle(getText(R.string.active_device_admin_msg));
-    mActionButton.setText(getText(R.string.remove_device_admin));
     mAdding=false;
+    final boolean isProfileOwner=mDeviceAdmin.getComponent().equals(mDPM.getProfileOwner());
+    final boolean isManagedProfile=isManagedProfile(mDeviceAdmin);
+    if (isProfileOwner && isManagedProfile) {
+      mAdminWarning.setText(R.string.admin_profile_owner_message);
+      mActionButton.setText(R.string.remove_managed_profile_label);
+    }
+ else     if (isProfileOwner || mDeviceAdmin.getComponent().equals(mDPM.getDeviceOwnerComponentOnCallingUser())) {
+      if (isProfileOwner) {
+        mAdminWarning.setText(R.string.admin_profile_owner_user_message);
+      }
+ else {
+        mAdminWarning.setText(R.string.admin_device_owner_message);
+      }
+      mActionButton.setText(R.string.remove_device_admin);
+      mActionButton.setEnabled(false);
+    }
+ else {
+      addDeviceAdminPolicies(false);
+      mAdminWarning.setText(getString(R.string.device_admin_status,mDeviceAdmin.getActivityInfo().applicationInfo.loadLabel(getPackageManager())));
+      setTitle(R.string.active_device_admin_msg);
+      mActionButton.setText(R.string.remove_device_admin);
+    }
+    String supportMessage=mDPM.getLongSupportMessageForUser(mDeviceAdmin.getComponent(),UserHandle.myUserId());
+    if (!TextUtils.isEmpty(supportMessage)) {
+      mSupportMessage.setText(supportMessage);
+      mSupportMessage.setVisibility(View.VISIBLE);
+    }
+ else {
+      mSupportMessage.setVisibility(View.GONE);
+    }
   }
  else {
     addDeviceAdminPolicies(true);
@@ -36,6 +62,7 @@
       setTitle(getText(R.string.add_device_admin_msg));
     }
     mActionButton.setText(getText(R.string.add_device_admin));
+    mSupportMessage.setVisibility(View.GONE);
     mAdding=true;
   }
 }

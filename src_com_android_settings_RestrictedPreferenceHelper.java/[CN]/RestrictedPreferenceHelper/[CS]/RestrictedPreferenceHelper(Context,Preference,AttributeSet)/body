@@ -1,9 +1,7 @@
 {
   mContext=context;
   mPreference=preference;
-  mRestrictedPadlock=mContext.getDrawable(R.drawable.ic_settings_lock_outline);
-  final int iconSize=mContext.getResources().getDimensionPixelSize(R.dimen.restricted_lock_icon_size);
-  mRestrictedPadlock.setBounds(0,0,iconSize,iconSize);
+  mRestrictedPadlock=getRestrictedPadlock(mContext);
   mRestrictedPadlockPadding=mContext.getResources().getDimensionPixelSize(R.dimen.restricted_lock_icon_padding);
   mDevicePolicyManager=(DevicePolicyManager)mContext.getSystemService(Context.DEVICE_POLICY_SERVICE);
   mAttrUserRestriction=attrs.getAttributeValue(R.styleable.RestrictedPreference_userRestriction);

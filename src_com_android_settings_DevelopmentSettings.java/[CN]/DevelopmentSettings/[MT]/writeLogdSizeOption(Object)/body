@@ -3,6 +3,14 @@
   if (currentValue != null) {
     DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES=currentValue;
   }
+  boolean disable=(newValue != null) && (newValue.equals("32768"));
+  if (disable) {
+    newValue="65536";
+    SystemProperties.set(SELECT_LOGD_TAG_PROPERTY,"S");
+  }
+ else {
+    SystemProperties.set(SELECT_LOGD_TAG_PROPERTY,"");
+  }
   final String size=(newValue != null) ? newValue.toString() : DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES;
   SystemProperties.set(SELECT_LOGD_SIZE_PROPERTY,size);
   pokeSystemProperties();

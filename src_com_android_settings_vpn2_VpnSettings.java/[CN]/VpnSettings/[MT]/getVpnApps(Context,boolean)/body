@@ -1,15 +1,21 @@
 {
   List<AppVpnInfo> result=Lists.newArrayList();
-  Set<Integer> currentProfileIds=new ArraySet<>();
-  for (  UserHandle profile : mUserManager.getUserProfiles()) {
-    currentProfileIds.add(profile.getIdentifier());
+  final Set<Integer> profileIds;
+  if (includeProfiles) {
+    profileIds=new ArraySet<>();
+    for (    UserHandle profile : UserManager.get(context).getUserProfiles()) {
+      profileIds.add(profile.getIdentifier());
+    }
   }
-  AppOpsManager aom=(AppOpsManager)getSystemService(Context.APP_OPS_SERVICE);
+ else {
+    profileIds=Collections.singleton(UserHandle.myUserId());
+  }
+  AppOpsManager aom=(AppOpsManager)context.getSystemService(Context.APP_OPS_SERVICE);
   List<AppOpsManager.PackageOps> apps=aom.getPackagesForOps(new int[]{OP_ACTIVATE_VPN});
   if (apps != null) {
     for (    AppOpsManager.PackageOps pkg : apps) {
       int userId=UserHandle.getUserId(pkg.getUid());
-      if (!currentProfileIds.contains(userId)) {
+      if (!profileIds.contains(userId)) {
         continue;
       }
       boolean allowed=false;
@@ -23,5 +29,6 @@
       }
     }
   }
+  Collections.sort(result);
   return result;
 }

@@ -1,7 +1,15 @@
 {
+  final ConnectivityManager cm=ConnectivityManager.from(getActivity());
   final String lockdownKey=getStringOrNull(keyStore,Credentials.LOCKDOWN_VPN);
-  mProfiles=VpnSettings.loadVpnProfiles(keyStore,VpnProfile.TYPE_PPTP);
-  mTitles=new ArrayList<>(1 + mProfiles.size());
+  final String alwaysOnPackage=cm.getAlwaysOnVpnPackageForUser(UserHandle.myUserId());
+  if (UserManager.get(getContext()).isPrimaryUser()) {
+    mProfiles=VpnSettings.loadVpnProfiles(keyStore,VpnProfile.TYPE_PPTP);
+  }
+ else {
+    mProfiles=Collections.<VpnProfile>emptyList();
+  }
+  mApps=VpnSettings.getVpnApps(getActivity(),false);
+  mTitles=new ArrayList<>(1 + mProfiles.size() + mApps.size());
   mTitles.add(res.getText(R.string.vpn_lockdown_none));
   mCurrentIndex=0;
   for (  VpnProfile profile : mProfiles) {
@@ -9,5 +17,17 @@
       mCurrentIndex=mTitles.size();
     }
     mTitles.add(profile.name);
+  }
+  for (  AppVpnInfo app : mApps) {
+    try {
+      String appName=VpnConfig.getVpnLabel(getContext(),app.packageName).toString();
+      if (TextUtils.equals(app.packageName,alwaysOnPackage)) {
+        mCurrentIndex=mTitles.size();
+      }
+      mTitles.add(appName);
+    }
+ catch (    PackageManager.NameNotFoundException pkgNotFound) {
+      Log.w(LOG_TAG,"VPN package not found: '" + app.packageName + "'",pkgNotFound);
+    }
   }
 }

@@ -100,4 +100,10 @@
       mAddUser.setSummary(null);
     }
   }
+  if (mUserCaps.mIsAdmin && !mUserCaps.mDisallowAddUser) {
+    mLockScreenSettings.setOrder(Preference.DEFAULT_ORDER);
+    preferenceScreen.addPreference(mLockScreenSettings);
+    mAddUserWhenLocked.setChecked(Settings.Global.getInt(getContentResolver(),Settings.Global.ADD_USERS_WHEN_LOCKED,0) == 1);
+    mAddUserWhenLocked.setOnPreferenceChangeListener(this);
+  }
 }

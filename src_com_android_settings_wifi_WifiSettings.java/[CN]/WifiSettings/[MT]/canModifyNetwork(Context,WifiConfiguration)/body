@@ -13,7 +13,7 @@
     if (deviceOwner != null) {
       final int deviceOwnerUserId=dpm.getDeviceOwnerUserId();
       try {
-        final int deviceOwnerUid=pm.getPackageUid(deviceOwner.getPackageName(),deviceOwnerUserId);
+        final int deviceOwnerUid=pm.getPackageUidAsUser(deviceOwner.getPackageName(),deviceOwnerUserId);
         isConfigEligibleForLockdown=deviceOwnerUid == config.creatorUid;
       }
  catch (      NameNotFoundException e) {

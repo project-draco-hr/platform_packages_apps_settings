@@ -3,7 +3,7 @@
     return;
   }
   try {
-    int uid=getActivity().getPackageManager().getPackageUid(mShowAppImmediatePkg,UserHandle.myUserId());
+    int uid=getActivity().getPackageManager().getPackageUidAsUser(mShowAppImmediatePkg,UserHandle.myUserId());
     AppItem app=new AppItem(uid);
     app.addUid(uid);
     final UidDetail detail=mUidDetailProvider.getUidDetail(app.key,true);

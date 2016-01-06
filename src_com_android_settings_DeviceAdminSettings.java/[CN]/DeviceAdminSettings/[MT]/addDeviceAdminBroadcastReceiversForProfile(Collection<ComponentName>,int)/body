@@ -1,6 +1,6 @@
 {
   final PackageManager pm=getActivity().getPackageManager();
-  List<ResolveInfo> enabledForProfile=pm.queryBroadcastReceivers(new Intent(DeviceAdminReceiver.ACTION_DEVICE_ADMIN_ENABLED),PackageManager.GET_META_DATA | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS,profileId);
+  List<ResolveInfo> enabledForProfile=pm.queryBroadcastReceiversAsUser(new Intent(DeviceAdminReceiver.ACTION_DEVICE_ADMIN_ENABLED),PackageManager.GET_META_DATA | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS,profileId);
   if (enabledForProfile == null) {
     enabledForProfile=Collections.emptyList();
   }

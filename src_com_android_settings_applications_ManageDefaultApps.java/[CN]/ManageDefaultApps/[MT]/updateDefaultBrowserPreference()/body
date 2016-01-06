@@ -1,7 +1,7 @@
 {
   mDefaultBrowserPreference.refreshBrowserApps();
   final PackageManager pm=getPackageManager();
-  String packageName=pm.getDefaultBrowserPackageName(UserHandle.myUserId());
+  String packageName=pm.getDefaultBrowserPackageNameAsUser(UserHandle.myUserId());
   if (!TextUtils.isEmpty(packageName)) {
     Intent intent=new Intent();
     intent.setPackage(packageName);

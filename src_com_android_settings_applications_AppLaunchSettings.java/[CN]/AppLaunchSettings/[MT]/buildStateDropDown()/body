@@ -10,7 +10,7 @@
     mAppLinkState.setEntryValues(new CharSequence[]{Integer.toString(INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS),Integer.toString(INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS_ASK),Integer.toString(INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_NEVER)});
     mAppLinkState.setEnabled(mHasDomainUrls);
     if (mHasDomainUrls) {
-      final int state=mPm.getIntentVerificationStatus(mPackageName,UserHandle.myUserId());
+      final int state=mPm.getIntentVerificationStatusAsUser(mPackageName,UserHandle.myUserId());
       mAppLinkState.setValue(Integer.toString((state == INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_UNDEFINED) ? INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS_ASK : state));
       mAppLinkState.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
         @Override public boolean onPreferenceChange(        Preference preference,        Object newValue){

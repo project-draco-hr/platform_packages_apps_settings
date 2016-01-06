@@ -1,9 +1,7 @@
 {
-  if (preference == mNicknamePreference) {
-    String value=(String)newValue;
-    if (preference == mNicknamePreference && value != null && value.length() > 0) {
-      setUserName(value);
-    }
+  if (preference == mAddUserWhenLocked) {
+    Boolean value=(Boolean)newValue;
+    Settings.Global.putInt(getContentResolver(),Settings.Global.ADD_USERS_WHEN_LOCKED,value != null && value ? 1 : 0);
     return true;
   }
   return false;

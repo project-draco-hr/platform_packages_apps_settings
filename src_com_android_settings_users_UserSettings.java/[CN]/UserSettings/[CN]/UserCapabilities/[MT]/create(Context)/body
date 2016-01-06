@@ -8,8 +8,8 @@
   final UserInfo myUserInfo=userManager.getUserInfo(UserHandle.myUserId());
   caps.mIsGuest=myUserInfo.isGuest();
   caps.mIsAdmin=myUserInfo.isAdmin();
-  final boolean disallowAddUser=userManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER);
-  if (!caps.mIsAdmin || UserManager.getMaxSupportedUsers() < 2 || !UserManager.supportsMultipleUsers() || disallowAddUser) {
+  caps.mDisallowAddUser=userManager.hasUserRestriction(UserManager.DISALLOW_ADD_USER);
+  if (!caps.mIsAdmin || UserManager.getMaxSupportedUsers() < 2 || !UserManager.supportsMultipleUsers() || caps.mDisallowAddUser) {
     caps.mCanAddUser=false;
   }
   DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -17,6 +17,6 @@
     caps.mCanAddRestrictedProfile=false;
   }
   final boolean canAddUsersWhenLocked=caps.mIsAdmin || Settings.Global.getInt(context.getContentResolver(),Settings.Global.ADD_USERS_WHEN_LOCKED,0) == 1;
-  caps.mCanAddGuest=!caps.mIsGuest && !disallowAddUser && canAddUsersWhenLocked;
+  caps.mCanAddGuest=!caps.mIsGuest && !caps.mDisallowAddUser && canAddUsersWhenLocked;
   return caps;
 }

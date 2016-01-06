@@ -13,7 +13,7 @@
       if (TextUtils.isEmpty(packageName)) {
         return false;
       }
-      boolean result=mPm.setDefaultBrowserPackageName(packageName.toString(),myUserId);
+      boolean result=mPm.setDefaultBrowserPackageNameAsUser(packageName.toString(),myUserId);
       if (result) {
         mDefaultBrowserPreference.setValue(packageName.toString());
         final CharSequence appName=mDefaultBrowserPreference.getEntry();

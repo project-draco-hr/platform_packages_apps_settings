@@ -3,13 +3,13 @@
     return false;
   }
   final int userId=UserHandle.myUserId();
-  final int priorState=mPm.getIntentVerificationStatus(mPackageName,userId);
+  final int priorState=mPm.getIntentVerificationStatusAsUser(mPackageName,userId);
   if (priorState == newState) {
     return false;
   }
-  boolean success=mPm.updateIntentVerificationStatus(mPackageName,newState,userId);
+  boolean success=mPm.updateIntentVerificationStatusAsUser(mPackageName,newState,userId);
   if (success) {
-    final int updatedState=mPm.getIntentVerificationStatus(mPackageName,userId);
+    final int updatedState=mPm.getIntentVerificationStatusAsUser(mPackageName,userId);
     success=(newState == updatedState);
   }
  else {

@@ -1,0 +1,5 @@
+{
+  UserManager um=UserManager.get(this);
+  UserInfo info=um.getUserInfo(UserHandle.getUserId(adminInfo.getActivityInfo().applicationInfo.uid));
+  return info != null ? info.isManagedProfile() : false;
+}

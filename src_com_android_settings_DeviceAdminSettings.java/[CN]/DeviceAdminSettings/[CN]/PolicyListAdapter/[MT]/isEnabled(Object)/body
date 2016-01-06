@@ -1,11 +1,5 @@
 {
-  if (!(o instanceof DeviceAdminInfo)) {
-    return false;
-  }
   DeviceAdminInfo info=(DeviceAdminInfo)o;
-  if (isActiveAdmin(info) && getUserId(info) == UserHandle.myUserId() && (isDeviceOwner(info) || isProfileOwner(info))) {
-    return false;
-  }
   if (isRemovingAdmin(info)) {
     return false;
   }

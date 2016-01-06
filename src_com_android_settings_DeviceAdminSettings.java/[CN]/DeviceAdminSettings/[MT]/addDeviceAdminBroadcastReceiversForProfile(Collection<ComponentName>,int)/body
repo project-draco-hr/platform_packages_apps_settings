@@ -5,21 +5,18 @@
     enabledForProfile=Collections.emptyList();
   }
   final int n=enabledForProfile.size();
-  ArrayList<DeviceAdminInfo> deviceAdmins=mAdminsByProfile.get(profileId);
-  if (deviceAdmins == null) {
-    deviceAdmins=new ArrayList<DeviceAdminInfo>(n);
-  }
   for (int i=0; i < n; ++i) {
     ResolveInfo resolveInfo=enabledForProfile.get(i);
     ComponentName riComponentName=new ComponentName(resolveInfo.activityInfo.packageName,resolveInfo.activityInfo.name);
     if (alreadyAddedComponents == null || !alreadyAddedComponents.contains(riComponentName)) {
       DeviceAdminInfo deviceAdminInfo=createDeviceAdminInfo(resolveInfo);
       if (deviceAdminInfo != null && deviceAdminInfo.isVisible()) {
-        deviceAdmins.add(deviceAdminInfo);
+        DeviceAdminListItem item=new DeviceAdminListItem();
+        item.info=deviceAdminInfo;
+        item.name=deviceAdminInfo.loadLabel(pm).toString();
+        item.active=false;
+        mAdmins.add(item);
       }
     }
-  }
-  if (!deviceAdmins.isEmpty()) {
-    mAdminsByProfile.put(profileId,deviceAdmins);
   }
 }

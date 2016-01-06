@@ -146,6 +146,7 @@ catch (  IOException e) {
   toggleMessageEllipsis(mAddMsg);
   mAdminWarning=(TextView)findViewById(R.id.admin_warning);
   mAdminPolicies=(ViewGroup)findViewById(R.id.admin_policies);
+  mSupportMessage=(TextView)findViewById(R.id.admin_support_message);
   mCancelButton=(Button)findViewById(R.id.cancel_button);
   mCancelButton.setFilterTouchesWhenObscured(true);
   mCancelButton.setOnClickListener(new View.OnClickListener(){
@@ -161,6 +162,17 @@ catch (  IOException e) {
     public void onClick(    View v){
       if (mAdding) {
         addAndFinish();
+      }
+ else       if (isManagedProfile(mDeviceAdmin) && mDeviceAdmin.getComponent().equals(mDPM.getProfileOwner())) {
+        final int userId=UserHandle.myUserId();
+        UserDialogs.createRemoveDialog(DeviceAdminAdd.this,userId,new DialogInterface.OnClickListener(){
+          @Override public void onClick(          DialogInterface dialog,          int which){
+            UserManager um=UserManager.get(DeviceAdminAdd.this);
+            um.removeUser(userId);
+            finish();
+          }
+        }
+).show();
       }
  else       if (!mWaitingForRemoveMsg) {
         try {

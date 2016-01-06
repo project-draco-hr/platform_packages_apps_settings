@@ -2,7 +2,7 @@
   ConfigDialog dialog=(ConfigDialog)getDialog();
   VpnProfile profile=dialog.getProfile();
   if (button == DialogInterface.BUTTON_POSITIVE) {
-    KeyStore.getInstance().put(Credentials.VPN + profile.key,profile.encode(),KeyStore.UID_SELF,KeyStore.FLAG_ENCRYPTED);
+    KeyStore.getInstance().put(Credentials.VPN + profile.key,profile.encode(),KeyStore.UID_SELF,0);
     disconnect(profile);
     if (!dialog.isEditing()) {
       try {

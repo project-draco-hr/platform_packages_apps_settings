@@ -1,5 +1,9 @@
 {
   if (getActivity() != null && getActivity().isResumed()) {
+    TrustManager trustManager=(TrustManager)getActivity().getSystemService(Context.TRUST_SERVICE);
+    trustManager.setDeviceLockedForUser(mEffectiveUserId,false);
     authenticationSucceeded();
+    authenticationSucceeded();
+    checkForPendingIntent();
   }
 }

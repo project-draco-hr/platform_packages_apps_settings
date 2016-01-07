@@ -1,4 +1,6 @@
 {
   super.onAttach(activity);
+  mFingerprintManager=activity.getSystemService(FingerprintManager.class);
   mToken=activity.getIntent().getByteArrayExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
+  mUserId=activity.getIntent().getIntExtra(Intent.EXTRA_USER_ID,UserHandle.USER_NULL);
 }

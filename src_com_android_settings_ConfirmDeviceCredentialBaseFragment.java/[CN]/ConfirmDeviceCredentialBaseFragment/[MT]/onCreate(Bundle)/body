@@ -1,4 +1,6 @@
 {
   super.onCreate(savedInstanceState);
   mAllowFpAuthentication=getActivity().getIntent().getBooleanExtra(ALLOW_FP_AUTHENTICATION,false);
+  Intent intent=getActivity().getIntent();
+  mEffectiveUserId=Utils.getUserIdFromBundle(getActivity(),intent.getExtras());
 }

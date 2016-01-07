@@ -2,5 +2,8 @@
   Intent intent=new Intent();
   intent.setClassName("com.android.settings",FingerprintEnrollEnrolling.class.getName());
   intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,mToken);
+  if (mUserId != UserHandle.USER_NULL) {
+    intent.putExtra(Intent.EXTRA_USER_ID,mUserId);
+  }
   return intent;
 }

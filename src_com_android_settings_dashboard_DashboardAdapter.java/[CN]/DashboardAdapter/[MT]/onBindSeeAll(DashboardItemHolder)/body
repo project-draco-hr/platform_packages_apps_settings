@@ -1,3 +1,9 @@
 {
   holder.title.setText(mIsShowingAll ? R.string.see_less : R.string.see_all);
+  holder.itemView.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      setShowingAll(!mIsShowingAll);
+    }
+  }
+);
 }

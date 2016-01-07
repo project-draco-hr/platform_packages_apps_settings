@@ -7,6 +7,7 @@
   mDashboard.setListener(this);
   mAdapter=new DashboardAdapter(getContext());
   mAdapter.setConditions(mConditionManager.getConditions());
+  mAdapter.setSuggestions(mSuggestionParser.getSuggestions());
   mSummaryLoader.setAdapter(mAdapter);
   ConditionAdapterUtils.addDismiss(mDashboard);
   rebuildUI();

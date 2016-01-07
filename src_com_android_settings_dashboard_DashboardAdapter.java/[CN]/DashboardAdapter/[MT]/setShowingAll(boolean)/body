@@ -1,18 +1,4 @@
 {
   mIsShowingAll=showingAll;
-  reset();
-  for (int i=0; mConditions != null && i < mConditions.size(); i++) {
-    countItem(mConditions.get(i),R.layout.condition_card,mConditions.get(i).shouldShow());
-  }
-  countItem(null,R.layout.dashboard_spacer,true);
-  for (int i=0; mCategories != null && i < mCategories.size(); i++) {
-    DashboardCategory category=mCategories.get(i);
-    countItem(category,R.layout.dashboard_category,mIsShowingAll);
-    for (int j=0; j < category.tiles.size(); j++) {
-      DashboardTile tile=category.tiles.get(j);
-      countItem(tile,R.layout.dashboard_tile,mIsShowingAll || ArrayUtils.contains(DashboardSummary.INITIAL_ITEMS,tile.intent.getComponent().getClassName()));
-    }
-  }
-  countItem(null,R.layout.see_all,true);
-  notifyDataSetChanged();
+  recountItems();
 }

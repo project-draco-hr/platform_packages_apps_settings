@@ -1,4 +1,6 @@
 {
   super.onResume();
+  checkNotificationFeaturesAndSetDisabled(mShowAllButton,KEYGUARD_DISABLE_SECURE_NOTIFICATIONS | KEYGUARD_DISABLE_UNREDACTED_NOTIFICATIONS);
+  checkNotificationFeaturesAndSetDisabled(mRedactSensitiveButton,KEYGUARD_DISABLE_SECURE_NOTIFICATIONS);
   loadFromSettings();
 }

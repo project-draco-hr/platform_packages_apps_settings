@@ -1,7 +1,9 @@
 {
-  mPrintManager.removePrintJobStateChangeListener(this);
   if (isListening) {
     mPrintManager.addPrintJobStateChangeListener(this);
+    onPrintJobStateChanged(null);
   }
-  onPrintJobStateChanged(null);
+ else {
+    mPrintManager.removePrintJobStateChangeListener(this);
+  }
 }

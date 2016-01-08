@@ -1,4 +1,11 @@
 {
-  int numPrintJobs=mPrintManager.getPrintJobs().size();
-  mSummaryLoader.setSummary(this,mContext.getResources().getQuantityString(R.plurals.print_settings_title,numPrintJobs,numPrintJobs));
+  List<PrintJob> printJobs=mPrintManager.getPrintJobs();
+  int numActivePrintJobs=0;
+  final int numPrintJobs=printJobs.size();
+  for (int i=0; i < numPrintJobs; i++) {
+    if (shouldShowToUser(printJobs.get(i).getInfo())) {
+      numActivePrintJobs++;
+    }
+  }
+  mSummaryLoader.setSummary(this,mContext.getResources().getQuantityString(R.plurals.print_settings_title,numActivePrintJobs,numActivePrintJobs));
 }

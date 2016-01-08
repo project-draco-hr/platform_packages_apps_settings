@@ -1,18 +1,30 @@
 {
-  String currentValue=SystemProperties.get(SELECT_LOGD_DEFAULT_SIZE_PROPERTY);
-  if (currentValue != null) {
-    DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES=currentValue;
+  boolean disable=(newValue != null) && (newValue.toString().equals(SELECT_LOGD_OFF_SIZE_MARKER_VALUE));
+  String currentTag=SystemProperties.get(SELECT_LOGD_TAG_PROPERTY);
+  if (currentTag == null) {
+    currentTag="";
   }
-  boolean disable=(newValue != null) && (newValue.equals("32768"));
+  String newTag=currentTag.replaceAll(",+" + SELECT_LOGD_TAG_SILENCE,"").replaceFirst("^" + SELECT_LOGD_TAG_SILENCE + ",*","").replaceAll(",+",",").replaceFirst(",+$","");
   if (disable) {
-    newValue="65536";
-    SystemProperties.set(SELECT_LOGD_TAG_PROPERTY,"S");
+    newValue=SELECT_LOGD_MINIMUM_SIZE_VALUE;
+    String snetValue=SystemProperties.get(SELECT_LOGD_SNET_TAG_PROPERTY);
+    if ((snetValue == null) || (snetValue.length() == 0)) {
+      snetValue=SystemProperties.get(SELECT_LOGD_RUNTIME_SNET_TAG_PROPERTY);
+      if ((snetValue == null) || (snetValue.length() == 0)) {
+        SystemProperties.set(SELECT_LOGD_SNET_TAG_PROPERTY,"I");
+      }
+    }
+    if (newTag.length() != 0) {
+      newTag="," + newTag;
+    }
+    newTag=SELECT_LOGD_TAG_SILENCE + newTag;
   }
- else {
-    SystemProperties.set(SELECT_LOGD_TAG_PROPERTY,"");
+  if (!newTag.equals(currentTag)) {
+    SystemProperties.set(SELECT_LOGD_TAG_PROPERTY,newTag);
   }
-  final String size=(newValue != null) ? newValue.toString() : DEFAULT_LOG_RING_BUFFER_SIZE_IN_BYTES;
-  SystemProperties.set(SELECT_LOGD_SIZE_PROPERTY,size);
+  String defaultValue=defaultLogdSizeValue();
+  final String size=((newValue != null) && (newValue.toString().length() != 0)) ? newValue.toString() : defaultValue;
+  SystemProperties.set(SELECT_LOGD_SIZE_PROPERTY,defaultValue.equals(size) ? "" : size);
   SystemProperties.set("ctl.start","logd-reinit");
   pokeSystemProperties();
   updateLogdSizeValues();

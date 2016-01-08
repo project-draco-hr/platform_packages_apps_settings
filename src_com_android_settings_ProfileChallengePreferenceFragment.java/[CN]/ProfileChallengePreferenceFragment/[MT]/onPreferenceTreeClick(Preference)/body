@@ -6,5 +6,10 @@
     startFragment(this,"com.android.settings.ChooseLockGeneric$ChooseLockGenericFragment",R.string.lock_settings_picker_title,SET_OR_CHANGE_LOCK_METHOD_REQUEST,extras);
     return true;
   }
+ else   if (KEY_UNIFICATION.equals(key)) {
+    UnificationConfirmationDialog dialog=UnificationConfirmationDialog.newIntance(mProfileUserId);
+    dialog.show(getChildFragmentManager(),TAG_UNIFICATION_DIALOG);
+    return true;
+  }
   return super.onPreferenceTreeClick(preference);
 }

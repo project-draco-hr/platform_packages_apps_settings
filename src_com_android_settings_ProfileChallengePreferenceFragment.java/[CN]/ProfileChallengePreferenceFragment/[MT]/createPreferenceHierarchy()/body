@@ -9,4 +9,15 @@
   addPreferencesFromResource(resid);
   mVisiblePattern=(SwitchPreference)root.findPreference(KEY_VISIBLE_PATTERN);
   removeNonWhitelistedItems(root);
+  PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
+  if (securityCategory != null) {
+    if (mLockPatternUtils.isSeparateProfileChallengeEnabled(mProfileUserId)) {
+      addUnificationPreference(securityCategory);
+    }
+ else {
+      Preference lockPreference=securityCategory.findPreference(KEY_UNLOCK_SET_OR_CHANGE);
+      String summary=getContext().getString(R.string.lock_settings_profile_unified_summary);
+      lockPreference.setSummary(summary);
+    }
+  }
 }

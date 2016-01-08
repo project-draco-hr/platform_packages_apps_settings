@@ -15,7 +15,7 @@
   mPhoneSignalLabel=getContext().getString(R.string.battery_stats_phone_signal_label);
   mMaxPercentLabelString=Utils.formatPercentage(100);
   mMinPercentLabelString=Utils.formatPercentage(0);
-  mInfo=getBatteryInfo(getContext(),mBatteryBroadcast,mStats,elapsedRealtimeUs);
+  mInfo=BatteryInfo.getBatteryInfo(getContext(),mBatteryBroadcast,mStats,elapsedRealtimeUs);
   mDrainString="";
   mChargeDurationString="";
   setContentDescription(mInfo.mChargeLabelString);

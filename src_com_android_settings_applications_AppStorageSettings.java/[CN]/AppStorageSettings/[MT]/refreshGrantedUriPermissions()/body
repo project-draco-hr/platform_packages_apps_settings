@@ -1,0 +1,40 @@
+{
+  removeUriPermissionsFromUi();
+  ActivityManager am=(ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+  List<UriPermission> perms=am.getGrantedUriPermissions(mAppEntry.info.packageName).getList();
+  if (perms.isEmpty()) {
+    mClearUriButton.setVisibility(View.GONE);
+    return;
+  }
+  PackageManager pm=getActivity().getPackageManager();
+  Map<CharSequence,MutableInt> uriCounters=new TreeMap<>();
+  for (  UriPermission perm : perms) {
+    String authority=perm.getUri().getAuthority();
+    ProviderInfo provider=pm.resolveContentProvider(authority,0);
+    CharSequence app=provider.applicationInfo.loadLabel(pm);
+    MutableInt count=uriCounters.get(app);
+    if (count == null) {
+      uriCounters.put(app,new MutableInt(1));
+    }
+ else {
+      count.value++;
+    }
+  }
+  int order=0;
+  for (  Map.Entry<CharSequence,MutableInt> entry : uriCounters.entrySet()) {
+    int numberResources=entry.getValue().value;
+    Preference pref=new Preference(getPrefContext());
+    pref.setTitle(entry.getKey());
+    pref.setSummary(getPrefContext().getResources().getQuantityString(R.plurals.uri_permissions_text,numberResources,numberResources));
+    pref.setSelectable(false);
+    pref.setLayoutResource(R.layout.horizontal_preference);
+    pref.setOrder(order);
+    Log.v(TAG,"Adding preference '" + pref + "' at order "+ order);
+    mUri.addPreference(pref);
+  }
+  if (mAppControlRestricted) {
+    mClearUriButton.setEnabled(false);
+  }
+  mClearUri.setOrder(order);
+  mClearUriButton.setVisibility(View.VISIBLE);
+}

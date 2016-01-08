@@ -4,6 +4,7 @@
     return false;
   }
   refreshSizeInfo();
+  refreshGrantedUriPermissions();
   final VolumeInfo currentVol=getActivity().getPackageManager().getPackageCurrentVolume(mAppEntry.info);
   final StorageManager storage=getContext().getSystemService(StorageManager.class);
   mStorageUsed.setSummary(storage.getBestVolumeDescription(currentVol));

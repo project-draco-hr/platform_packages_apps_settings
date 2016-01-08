@@ -19,4 +19,9 @@
   mCacheSize=findPreference(KEY_CACHE_SIZE);
   mClearCacheButton=(Button)((LayoutPreference)findPreference(KEY_CLEAR_CACHE)).findViewById(R.id.button);
   mClearCacheButton.setText(R.string.clear_cache_btn_text);
+  mUri=(PreferenceCategory)findPreference(KEY_URI_CATEGORY);
+  mClearUri=(LayoutPreference)mUri.findPreference(KEY_CLEAR_URI);
+  mClearUriButton=(Button)mClearUri.findViewById(R.id.button);
+  mClearUriButton.setText(R.string.clear_uri_btn_text);
+  mClearUriButton.setOnClickListener(this);
 }

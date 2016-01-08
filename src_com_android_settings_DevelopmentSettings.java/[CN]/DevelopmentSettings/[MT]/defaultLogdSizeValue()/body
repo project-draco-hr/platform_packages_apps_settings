@@ -1,0 +1,12 @@
+{
+  String defaultValue=SystemProperties.get(SELECT_LOGD_DEFAULT_SIZE_PROPERTY);
+  if ((defaultValue == null) || (defaultValue.length() == 0)) {
+    if (SystemProperties.get("ro.config.low_ram").equals("true")) {
+      defaultValue=SELECT_LOGD_SVELTE_DEFAULT_SIZE_VALUE;
+    }
+ else {
+      defaultValue=SELECT_LOGD_DEFAULT_SIZE_VALUE;
+    }
+  }
+  return defaultValue;
+}

@@ -18,7 +18,7 @@
   if (UserHandle.MU_ENABLED && !isAdmin) {
     List<DashboardCategory> categories=getDashboardCategories();
     for (    DashboardCategory category : categories) {
-      for (      DashboardTile tile : category.tiles) {
+      for (      Tile tile : category.tiles) {
         ComponentName component=tile.intent.getComponent();
         if (packageName.equals(component) && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,component.getClassName())) {
           setTileEnabled(component,false,isAdmin,pm);

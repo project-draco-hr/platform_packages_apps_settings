@@ -1,0 +1,6 @@
+{
+  if (requestCode == REQUEST_SUGGESTION && mCurrentSuggestion != null && resultCode != RESULT_CANCELED) {
+    getPackageManager().setComponentEnabledSetting(mCurrentSuggestion,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+  }
+  super.onActivityResult(requestCode,resultCode,data);
+}

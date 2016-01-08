@@ -4,7 +4,7 @@ case R.layout.dashboard_category:
     onBindCategory(holder,(DashboardCategory)mItems.get(position));
   break;
 case R.layout.dashboard_tile:
-final DashboardTile tile=(DashboardTile)mItems.get(position);
+final Tile tile=(Tile)mItems.get(position);
 onBindTile(holder,tile);
 holder.itemView.setOnClickListener(new View.OnClickListener(){
 @Override public void onClick(View v){
@@ -13,14 +13,27 @@ holder.itemView.setOnClickListener(new View.OnClickListener(){
 }
 );
 break;
-case R.layout.see_all:
-onBindSeeAll(holder);
+case R.layout.suggestion_header:
+onBindSuggestionHeader(holder);
+break;
+case R.layout.suggestion_tile:
+final Tile suggestion=(Tile)mItems.get(position);
+onBindTile(holder,suggestion);
 holder.itemView.setOnClickListener(new View.OnClickListener(){
 @Override public void onClick(View v){
-setShowingAll(!mIsShowingAll);
+((SettingsActivity)mContext).startSuggestion(suggestion.intent);
 }
 }
 );
+holder.itemView.findViewById(R.id.overflow).setOnClickListener(new View.OnClickListener(){
+@Override public void onClick(View v){
+showRemoveOption(v,suggestion);
+}
+}
+);
+break;
+case R.layout.see_all:
+onBindSeeAll(holder);
 break;
 case R.layout.condition_card:
 ConditionAdapterUtils.bindViews((Condition)mItems.get(position),holder,mItems.get(position) == mExpandedCondition,this,new View.OnClickListener(){

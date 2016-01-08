@@ -1,0 +1,16 @@
+{
+  holder.icon.setImageResource(hasMoreSuggestions() ? R.drawable.ic_expand_more : R.drawable.ic_expand_less);
+  holder.title.setText(mContext.getString(R.string.suggestions_title,mSuggestions.size()));
+  holder.itemView.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      if (hasMoreSuggestions()) {
+        mSuggestionMode=SUGGESTION_MODE_EXPANDED;
+      }
+ else {
+        mSuggestionMode=SUGGESTION_MODE_COLLAPSED;
+      }
+      recountItems();
+    }
+  }
+);
+}

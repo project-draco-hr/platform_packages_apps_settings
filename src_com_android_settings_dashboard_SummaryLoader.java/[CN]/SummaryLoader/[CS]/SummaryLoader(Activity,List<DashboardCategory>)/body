@@ -5,9 +5,9 @@
   mWorker=new Worker(mWorkerThread.getLooper());
   mActivity=activity;
   for (int i=0; i < categories.size(); i++) {
-    List<DashboardTile> tiles=categories.get(i).tiles;
+    List<Tile> tiles=categories.get(i).tiles;
     for (int j=0; j < tiles.size(); j++) {
-      DashboardTile tile=tiles.get(j);
+      Tile tile=tiles.get(j);
       mWorker.obtainMessage(Worker.MSG_GET_PROVIDER,tile).sendToTarget();
     }
   }

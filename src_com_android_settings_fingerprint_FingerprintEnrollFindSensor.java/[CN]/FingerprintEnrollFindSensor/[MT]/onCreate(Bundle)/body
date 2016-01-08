@@ -2,9 +2,15 @@
   super.onCreate(savedInstanceState);
   setContentView(R.layout.fingerprint_enroll_find_sensor);
   setHeaderText(R.string.security_settings_fingerprint_enroll_find_sensor_title);
-  mLaunchedConfirmLock=savedInstanceState != null && savedInstanceState.getBoolean(EXTRA_KEY_LAUNCHED_CONFIRM);
+  if (savedInstanceState != null) {
+    mLaunchedConfirmLock=savedInstanceState.getBoolean(EXTRA_KEY_LAUNCHED_CONFIRM);
+    mToken=savedInstanceState.getByteArray(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
+  }
   if (mToken == null && !mLaunchedConfirmLock) {
     launchConfirmLock();
+  }
+ else   if (mToken != null) {
+    startLookingForFingerprint();
   }
   mAnimation=(FingerprintFindSensorAnimation)findViewById(R.id.fingerprint_sensor_location_animation);
 }

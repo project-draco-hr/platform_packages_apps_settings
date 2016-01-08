@@ -3,6 +3,8 @@
   mSidecar.setListener(null);
   stopIconAnimation();
   if (!isChangingConfigurations()) {
+    mSidecar.cancelEnrollment();
+    getFragmentManager().beginTransaction().remove(mSidecar).commit();
     finish();
   }
 }

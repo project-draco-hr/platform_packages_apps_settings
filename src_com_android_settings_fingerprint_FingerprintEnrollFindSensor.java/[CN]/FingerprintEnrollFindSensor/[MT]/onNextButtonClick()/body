@@ -1,3 +1,6 @@
 {
-  startActivityForResult(getEnrollingIntent(),ENROLLING);
+  mNextClicked=true;
+  if (mSidecar == null || (mSidecar != null && !mSidecar.cancelEnrollment())) {
+    proceedToEnrolling();
+  }
 }

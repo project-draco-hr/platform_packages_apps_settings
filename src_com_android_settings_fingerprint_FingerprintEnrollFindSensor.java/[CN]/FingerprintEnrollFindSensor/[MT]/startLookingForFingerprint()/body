@@ -1,0 +1,24 @@
+{
+  mSidecar=(FingerprintEnrollSidecar)getFragmentManager().findFragmentByTag(FingerprintEnrollEnrolling.TAG_SIDECAR);
+  if (mSidecar == null) {
+    mSidecar=new FingerprintEnrollSidecar();
+    getFragmentManager().beginTransaction().add(mSidecar,FingerprintEnrollEnrolling.TAG_SIDECAR).commit();
+  }
+  mSidecar.setListener(new Listener(){
+    @Override public void onEnrollmentProgressChange(    int steps,    int remaining){
+      mNextClicked=true;
+      if (!mSidecar.cancelEnrollment()) {
+        proceedToEnrolling();
+      }
+    }
+    @Override public void onEnrollmentHelp(    CharSequence helpString){
+    }
+    @Override public void onEnrollmentError(    int errMsgId,    CharSequence errString){
+      if (mNextClicked && errMsgId == FingerprintManager.FINGERPRINT_ERROR_CANCELED) {
+        mNextClicked=false;
+        proceedToEnrolling();
+      }
+    }
+  }
+);
+}

@@ -3,6 +3,8 @@
     if (resultCode == RESULT_OK) {
       mToken=data.getByteArrayExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
       overridePendingTransition(R.anim.suw_slide_next_in,R.anim.suw_slide_next_out);
+      getIntent().putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,mToken);
+      startLookingForFingerprint();
     }
  else {
       finish();
@@ -27,6 +29,9 @@
       int max=getResources().getInteger(com.android.internal.R.integer.config_fingerprintMaxTemplatesPerUser);
       if (enrolled >= max) {
         finish();
+      }
+ else {
+        startLookingForFingerprint();
       }
     }
   }

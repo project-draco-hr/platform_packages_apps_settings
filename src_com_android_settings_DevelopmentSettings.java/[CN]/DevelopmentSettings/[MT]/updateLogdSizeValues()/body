@@ -2,19 +2,11 @@
   if (mLogdSize != null) {
     String currentTag=SystemProperties.get(SELECT_LOGD_TAG_PROPERTY);
     String currentValue=SystemProperties.get(SELECT_LOGD_SIZE_PROPERTY);
-    if ((currentTag != null) && currentTag.equals("S")) {
-      currentValue="32768";
+    if ((currentTag != null) && currentTag.startsWith(SELECT_LOGD_TAG_SILENCE)) {
+      currentValue=SELECT_LOGD_OFF_SIZE_MARKER_VALUE;
     }
-    if (currentValue == null) {
-      currentValue=SystemProperties.get(SELECT_LOGD_DEFAULT_SIZE_PROPERTY);
-      if (currentValue == null) {
-        if (SystemProperties.get("ro.config.low_ram").equals("true")) {
-          currentValue="64K";
-        }
- else {
-          currentValue="256K";
-        }
-      }
+    if ((currentValue == null) || (currentValue.length() == 0)) {
+      currentValue=defaultLogdSizeValue();
     }
     String[] values=getResources().getStringArray(R.array.select_logd_size_values);
     String[] titles=getResources().getStringArray(R.array.select_logd_size_titles);

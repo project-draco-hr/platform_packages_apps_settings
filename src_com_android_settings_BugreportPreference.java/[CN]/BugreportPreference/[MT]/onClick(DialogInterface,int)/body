@@ -2,7 +2,7 @@
   if (which == DialogInterface.BUTTON_POSITIVE) {
     if (mFullTitle.isChecked()) {
       Log.v(TAG,"Taking full bugreport right away");
-      takeBugreport(false);
+      takeBugreport(ActivityManager.BUGREPORT_OPTION_FULL);
     }
  else {
       Log.v(TAG,"Taking interactive bugreport in " + BUGREPORT_DELAY_SECONDS + "s");
@@ -12,7 +12,7 @@
       Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
       new Handler().postDelayed(new Runnable(){
         @Override public void run(){
-          takeBugreport(true);
+          takeBugreport(ActivityManager.BUGREPORT_OPTION_INTERACTIVE);
         }
       }
 ,BUGREPORT_DELAY_SECONDS * DateUtils.SECOND_IN_MILLIS);

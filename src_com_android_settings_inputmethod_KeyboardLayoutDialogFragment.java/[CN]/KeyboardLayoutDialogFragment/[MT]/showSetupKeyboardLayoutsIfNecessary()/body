@@ -1,0 +1,7 @@
+{
+  AlertDialog dialog=(AlertDialog)getDialog();
+  if (dialog != null && mAdapter.getCount() == 1 && mAdapter.getItem(0) == null && !mHasShownLayoutSelectionScreen) {
+    mHasShownLayoutSelectionScreen=true;
+    ((OnSetupKeyboardLayoutsListener)getTargetFragment()).onSetupKeyboardLayouts(mInputDeviceIdentifier);
+  }
+}

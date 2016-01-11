@@ -5,10 +5,10 @@
       final String packageName=arp.getKey().substring(PKG_PREFIX.length());
       final boolean newEnabledState=!arp.isChecked();
       arp.setChecked(newEnabledState);
-      mSelectedPackages.put(packageName,newEnabledState);
+      mHelper.setPackageSelected(packageName,newEnabledState);
       updateAllEntries(arp.getKey(),newEnabledState);
       mAppListChanged=true;
-      applyUserAppState(packageName,newEnabledState);
+      mHelper.applyUserAppState(packageName,newEnabledState,this);
     }
     return true;
   }

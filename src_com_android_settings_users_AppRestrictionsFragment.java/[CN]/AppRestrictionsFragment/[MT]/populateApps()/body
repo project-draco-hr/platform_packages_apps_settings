@@ -10,7 +10,7 @@
   mAppList.removeAll();
   Intent restrictionsIntent=new Intent(Intent.ACTION_GET_RESTRICTION_ENTRIES);
   final List<ResolveInfo> receivers=pm.queryBroadcastReceivers(restrictionsIntent,0);
-  for (  SelectableAppInfo app : mVisibleApps) {
+  for (  AppRestrictionsHelper.SelectableAppInfo app : mHelper.getVisibleApps()) {
     String packageName=app.packageName;
     if (packageName == null)     continue;
     final boolean isSettingsApp=packageName.equals(context.getPackageName());
@@ -18,12 +18,12 @@
     final boolean hasSettings=resolveInfoListHasPackage(receivers,packageName);
     if (isSettingsApp) {
       addLocationAppRestrictionsPreference(app,p);
-      mSelectedPackages.put(packageName,true);
+      mHelper.setPackageSelected(packageName,true);
       continue;
     }
     PackageInfo pi=null;
     try {
-      pi=ipm.getPackageInfo(packageName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES,userId);
+      pi=ipm.getPackageInfo(packageName,PackageManager.MATCH_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES,userId);
     }
  catch (    RemoteException e) {
     }
@@ -55,15 +55,15 @@
     }
     if (app.masterEntry != null) {
       p.setImmutable(true);
-      p.setChecked(mSelectedPackages.get(packageName));
+      p.setChecked(mHelper.isPackageSelected(packageName));
     }
     p.setOrder(MAX_APP_RESTRICTIONS * (mAppList.getPreferenceCount() + 2));
-    mSelectedPackages.put(packageName,p.isChecked());
+    mHelper.setPackageSelected(packageName,p.isChecked());
     mAppList.addPreference(p);
   }
   mAppListChanged=true;
   if (mNewUser && mFirstTime) {
     mFirstTime=false;
-    applyUserAppsStates();
+    mHelper.applyUserAppsStates(this);
   }
 }

@@ -1,9 +1,9 @@
 {
   Bundle results=getResultExtras(true);
   final ArrayList<RestrictionEntry> restrictions=results.getParcelableArrayList(Intent.EXTRA_RESTRICTIONS_LIST);
-  Intent restrictionsIntent=(Intent)results.getParcelable(CUSTOM_RESTRICTIONS_INTENT);
+  Intent restrictionsIntent=results.getParcelable(CUSTOM_RESTRICTIONS_INTENT);
   if (restrictions != null && restrictionsIntent == null) {
-    onRestrictionsReceived(preference,packageName,restrictions);
+    onRestrictionsReceived(preference,restrictions);
     if (mRestrictedProfile) {
       mUserManager.setApplicationRestrictions(packageName,RestrictionsManager.convertRestrictionsToBundle(restrictions),mUser);
     }

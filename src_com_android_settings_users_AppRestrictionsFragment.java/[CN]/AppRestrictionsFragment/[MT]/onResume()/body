@@ -8,6 +8,6 @@
   getActivity().registerReceiver(mPackageObserver,packageFilter);
   mAppListChanged=false;
   if (mAppLoadingTask == null || mAppLoadingTask.getStatus() == AsyncTask.Status.FINISHED) {
-    mAppLoadingTask=new AppLoadingTask().execute((Void[])null);
+    mAppLoadingTask=new AppLoadingTask().execute();
   }
 }

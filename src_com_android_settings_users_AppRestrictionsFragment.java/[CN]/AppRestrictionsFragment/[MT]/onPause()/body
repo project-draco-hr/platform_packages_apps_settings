@@ -4,11 +4,12 @@
   getActivity().unregisterReceiver(mUserBackgrounding);
   getActivity().unregisterReceiver(mPackageObserver);
   if (mAppListChanged) {
-    new Thread(){
-      public void run(){
-        applyUserAppsStates();
+    new AsyncTask<Void,Void,Void>(){
+      @Override protected Void doInBackground(      Void... params){
+        mHelper.applyUserAppsStates(AppRestrictionsFragment.this);
+        return null;
       }
     }
-.start();
+.execute();
   }
 }

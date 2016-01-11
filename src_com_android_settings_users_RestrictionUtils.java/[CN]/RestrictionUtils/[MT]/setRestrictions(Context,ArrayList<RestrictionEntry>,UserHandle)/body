@@ -2,8 +2,5 @@
   UserManager um=UserManager.get(context);
   for (  RestrictionEntry entry : entries) {
     um.setUserRestriction(entry.getKey(),!entry.getSelectedState());
-    if (entry.getKey().equals(UserManager.DISALLOW_SHARE_LOCATION) && !entry.getSelectedState()) {
-      Secure.putIntForUser(context.getContentResolver(),Secure.LOCATION_MODE,Secure.LOCATION_MODE_OFF,user.getIdentifier());
-    }
   }
 }

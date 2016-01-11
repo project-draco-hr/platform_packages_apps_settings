@@ -1,18 +1,10 @@
 {
   if (listening) {
-    new AsyncTask<Void,Void,BatteryStats>(){
-      @Override protected BatteryStats doInBackground(      Void... params){
-        BatteryStatsHelper statsHelper=new BatteryStatsHelper(mContext,true);
-        statsHelper.create((Bundle)null);
-        return statsHelper.getStats();
-      }
-      @Override protected void onPostExecute(      BatteryStats batteryStats){
-        final long elapsedRealtimeUs=SystemClock.elapsedRealtime() * 1000;
-        Intent batteryBroadcast=mContext.registerReceiver(null,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        BatteryHistoryChart.BatteryInfo batteryInfo=BatteryHistoryChart.getBatteryInfo(mContext,batteryBroadcast,batteryStats,elapsedRealtimeUs);
-        mLoader.setSummary(SummaryProvider.this,batteryInfo.mChargeLabelString);
+    BatteryInfo.getBatteryInfo(mContext,new BatteryInfo.Callback(){
+      @Override public void onBatteryInfoLoaded(      BatteryInfo info){
+        mLoader.setSummary(SummaryProvider.this,info.mChargeLabelString);
       }
     }
-.execute();
+);
   }
 }

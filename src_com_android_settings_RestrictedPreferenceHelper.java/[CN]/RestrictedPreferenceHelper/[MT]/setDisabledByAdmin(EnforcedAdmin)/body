@@ -1,0 +1,10 @@
+{
+  final boolean disabled=(admin != null ? true : false);
+  mEnforcedAdmin=(disabled ? admin : null);
+  if (mDisabledByAdmin != disabled) {
+    mDisabledByAdmin=disabled;
+    mPreference.setEnabled(!disabled);
+    return true;
+  }
+  return false;
+}

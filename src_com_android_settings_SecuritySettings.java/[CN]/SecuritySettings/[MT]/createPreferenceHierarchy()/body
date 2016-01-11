@@ -7,6 +7,19 @@
   root=getPreferenceScreen();
   final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils);
   addPreferencesFromResource(resid);
+  List<UserInfo> profiles=mUm.getProfiles(UserHandle.myUserId());
+  int numProfiles=profiles.size();
+  if (numProfiles > 1) {
+    for (int i=0; i < numProfiles; ++i) {
+      UserInfo profile=profiles.get(i);
+      if (profile.id != UserHandle.myUserId()) {
+        mProfileChallengeUserId=profile.id;
+      }
+    }
+    if (LockPatternUtils.isSeparateWorkChallengeEnabled()) {
+      addPreferencesFromResource(R.xml.security_settings_profile);
+    }
+  }
   mIsAdmin=mUm.isAdminUser();
   mOwnerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
   if (mOwnerInfoPref != null) {

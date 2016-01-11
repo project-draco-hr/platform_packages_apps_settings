@@ -14,6 +14,9 @@
         }
       }
  else       if (KEY_UNLOCK_SET_NONE.equals(key)) {
+        if (mUserId != UserHandle.myUserId()) {
+          visible=false;
+        }
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
       }
  else       if (KEY_UNLOCK_SET_PATTERN.equals(key)) {

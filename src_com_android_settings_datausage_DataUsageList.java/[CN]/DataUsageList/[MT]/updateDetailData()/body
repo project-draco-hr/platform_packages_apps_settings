@@ -1,0 +1,15 @@
+{
+  if (LOGD)   Log.d(TAG,"updateDetailData()");
+  final long start=mChart.getInspectStart();
+  final long end=mChart.getInspectEnd();
+  final long now=System.currentTimeMillis();
+  final Context context=getActivity();
+  NetworkStatsHistory.Entry entry=null;
+  if (mChartData != null) {
+    entry=mChartData.network.getValues(start,end,now,null);
+  }
+  getLoaderManager().restartLoader(LOADER_SUMMARY,SummaryForAllUidLoader.buildArgs(mTemplate,start,end),mSummaryCallbacks);
+  final long totalBytes=entry != null ? entry.rxBytes + entry.txBytes : 0;
+  final String totalPhrase=Formatter.formatFileSize(context,totalBytes);
+  mUsageAmount.setTitle(getString(R.string.data_used_template,totalPhrase));
+}

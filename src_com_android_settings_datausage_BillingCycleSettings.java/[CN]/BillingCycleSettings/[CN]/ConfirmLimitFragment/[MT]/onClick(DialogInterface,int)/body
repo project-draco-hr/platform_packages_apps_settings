@@ -1,0 +1,8 @@
+{
+  if (which != DialogInterface.BUTTON_POSITIVE)   return;
+  final long limitBytes=getArguments().getLong(EXTRA_LIMIT_BYTES);
+  final BillingCycleSettings target=(BillingCycleSettings)getTargetFragment();
+  if (target != null) {
+    target.setPolicyLimitBytes(limitBytes);
+  }
+}

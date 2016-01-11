@@ -1,0 +1,7 @@
+{
+  if (preference == mAppSettings) {
+    getActivity().startActivityAsUser(mAppSettingsIntent,new UserHandle(UserHandle.getUserId(mAppItem.key)));
+    return true;
+  }
+  return super.onPreferenceTreeClick(preference);
+}

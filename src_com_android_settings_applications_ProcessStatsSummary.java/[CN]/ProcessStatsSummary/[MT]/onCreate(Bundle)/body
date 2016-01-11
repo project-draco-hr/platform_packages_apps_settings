@@ -1,9 +1,9 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.process_stats_summary);
-  mHeader=(LayoutPreference)findPreference(KEY_STATUS_HEADER);
-  mMemStatus=(TextView)mHeader.findViewById(R.id.memory_state);
-  mColors=(LinearColorBar)mHeader.findViewById(R.id.color_bar);
+  mSummaryPref=(SummaryPreference)findPreference(KEY_STATUS_HEADER);
+  int memColor=getContext().getColor(R.color.running_processes_apps_ram);
+  mSummaryPref.setColors(memColor,memColor,getContext().getColor(R.color.running_processes_free_ram));
   mPerformance=findPreference(KEY_PERFORMANCE);
   mTotalMemory=findPreference(KEY_TOTAL_MEMORY);
   mAverageUsed=findPreference(KEY_AVERAGY_USED);

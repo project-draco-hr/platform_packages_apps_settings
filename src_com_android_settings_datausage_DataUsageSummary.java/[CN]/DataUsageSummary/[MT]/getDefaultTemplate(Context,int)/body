@@ -1,0 +1,13 @@
+{
+  if (hasMobileData(context)) {
+    TelephonyManager telephonyManager=TelephonyManager.from(context);
+    NetworkTemplate mobileAll=NetworkTemplate.buildTemplateMobileAll(telephonyManager.getSubscriberId(defaultSubId));
+    return NetworkTemplate.normalize(mobileAll,telephonyManager.getMergedSubscriberIds());
+  }
+ else   if (hasWifiRadio(context)) {
+    return NetworkTemplate.buildTemplateWifiWildcard();
+  }
+ else {
+    return NetworkTemplate.buildTemplateEthernet();
+  }
+}

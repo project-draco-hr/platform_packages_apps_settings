@@ -1,0 +1,10 @@
+{
+  if (!parent.isAdded())   return;
+  final Bundle args=new Bundle();
+  args.putParcelable(EXTRA_TEMPLATE,parent.mNetworkTemplate);
+  args.putBoolean(EXTRA_LIMIT,isLimit);
+  final BytesEditorFragment dialog=new BytesEditorFragment();
+  dialog.setArguments(args);
+  dialog.setTargetFragment(parent,0);
+  dialog.show(parent.getFragmentManager(),TAG_WARNING_EDITOR);
+}

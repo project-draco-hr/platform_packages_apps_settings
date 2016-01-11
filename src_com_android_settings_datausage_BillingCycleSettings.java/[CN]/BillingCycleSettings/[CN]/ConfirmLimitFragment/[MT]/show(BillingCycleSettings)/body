@@ -1,0 +1,18 @@
+{
+  if (!parent.isAdded())   return;
+  final NetworkPolicy policy=parent.services.mPolicyEditor.getPolicy(parent.mNetworkTemplate);
+  if (policy == null)   return;
+  final Resources res=parent.getResources();
+  final CharSequence message;
+  final long minLimitBytes=(long)(policy.warningBytes * FLOAT);
+  final long limitBytes;
+  message=res.getString(R.string.data_usage_limit_dialog_mobile);
+  limitBytes=Math.max(5 * GB_IN_BYTES,minLimitBytes);
+  final Bundle args=new Bundle();
+  args.putCharSequence(EXTRA_MESSAGE,message);
+  args.putLong(EXTRA_LIMIT_BYTES,limitBytes);
+  final ConfirmLimitFragment dialog=new ConfirmLimitFragment();
+  dialog.setArguments(args);
+  dialog.setTargetFragment(parent,0);
+  dialog.show(parent.getFragmentManager(),TAG_CONFIRM_LIMIT);
+}

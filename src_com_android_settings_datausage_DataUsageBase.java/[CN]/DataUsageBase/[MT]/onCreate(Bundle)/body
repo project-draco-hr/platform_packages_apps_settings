@@ -1,0 +1,11 @@
+{
+  super.onCreate(icicle);
+  final Context context=getActivity();
+  services.mNetworkService=INetworkManagementService.Stub.asInterface(ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
+  services.mStatsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+  services.mPolicyManager=NetworkPolicyManager.from(context);
+  services.mPolicyEditor=new NetworkPolicyEditor(services.mPolicyManager);
+  services.mTelephonyManager=TelephonyManager.from(context);
+  services.mSubscriptionManager=SubscriptionManager.from(context);
+  services.mUserManager=UserManager.get(context);
+}

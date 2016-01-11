@@ -1,0 +1,9 @@
+{
+  if (!parent.isAdded())   return;
+  final Bundle args=new Bundle();
+  args.putParcelable(EXTRA_TEMPLATE,parent.mNetworkTemplate);
+  final CycleEditorFragment dialog=new CycleEditorFragment();
+  dialog.setArguments(args);
+  dialog.setTargetFragment(parent,0);
+  dialog.show(parent.getFragmentManager(),TAG_CYCLE_EDITOR);
+}

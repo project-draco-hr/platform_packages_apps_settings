@@ -1,0 +1,9 @@
+{
+  PreferenceScreen rootPreferences=getPreferenceManager().inflateFromResource(getPrefContext(),resId,null);
+  Preference pref=rootPreferences.getPreference(0);
+  rootPreferences.removeAll();
+  PreferenceScreen screen=getPreferenceScreen();
+  pref.setOrder(screen.getPreferenceCount());
+  screen.addPreference(pref);
+  return pref;
+}

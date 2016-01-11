@@ -1,0 +1,8 @@
+{
+  try {
+    setEnabled(mPolicy != null && mServices.mNetworkService.isBandwidthControlEnabled() && mServices.mTelephonyManager.getDataEnabled(mSubId) && mServices.mUserManager.isAdminUser());
+  }
+ catch (  RemoteException e) {
+    setEnabled(false);
+  }
+}

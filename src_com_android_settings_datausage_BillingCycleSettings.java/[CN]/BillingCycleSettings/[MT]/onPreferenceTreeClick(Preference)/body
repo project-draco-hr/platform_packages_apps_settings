@@ -1,0 +1,15 @@
+{
+  if (preference == mBillingCycle) {
+    CycleEditorFragment.show(this);
+    return true;
+  }
+ else   if (preference == mDataWarning) {
+    BytesEditorFragment.show(this,false);
+    return true;
+  }
+ else   if (preference == mDataLimit) {
+    BytesEditorFragment.show(this,true);
+    return true;
+  }
+  return super.onPreferenceTreeClick(preference);
+}

@@ -1,0 +1,7 @@
+{
+  final Context context=getActivity();
+  final LayoutInflater dialogInflater=LayoutInflater.from(context);
+  mView=dialogInflater.inflate(R.layout.data_usage_bytes_editor,null,false);
+  setupPicker((NumberPicker)mView.findViewById(R.id.bytes));
+  return new AlertDialog.Builder(context).setTitle(R.string.data_usage_warning_editor_title).setView(mView).setPositiveButton(R.string.data_usage_cycle_editor_positive,this).create();
+}

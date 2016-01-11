@@ -1,0 +1,14 @@
+{
+  super(context);
+  mItem=item;
+  mPercent=percent;
+  setLayoutResource(com.android.settings.R.layout.data_usage_item);
+  setWidgetLayoutResource(com.android.settings.R.layout.widget_progress_bar);
+  if (item.restricted && item.total <= 0) {
+    setSummary(com.android.settings.R.string.data_usage_app_restricted);
+  }
+ else {
+    setSummary(Formatter.formatFileSize(context,item.total));
+  }
+  UidDetailTask.bindView(provider,item,this);
+}

@@ -1,0 +1,17 @@
+{
+  super.performClick(view);
+  MetricsLogger.action(getContext(),MetricsLogger.ACTION_CELL_DATA_TOGGLE,!mChecked);
+  if (mChecked) {
+    mMultiSimDialog=false;
+    super.performClick(view);
+  }
+ else {
+    if (Utils.showSimCardTile(getContext())) {
+      mMultiSimDialog=true;
+      super.performClick(view);
+    }
+ else {
+      setMobileDataEnabled(true);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (subId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+    throw new IllegalArgumentException("CellDataPreference needs a SubscriptionInfo");
+  }
+  mTelephonyManager=TelephonyManager.from(getContext());
+  if (mSubId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+    mSubId=subId;
+    setKey(getKey() + subId);
+  }
+  updateChecked();
+}

@@ -1,0 +1,12 @@
+{
+  super.onPrepareDialogBuilder(builder,listener);
+  builder.setTitle(R.string.data_usage_restrict_background_title);
+  if (Utils.hasMultipleUsers(getContext())) {
+    builder.setMessage(R.string.data_usage_restrict_background_multiuser);
+  }
+ else {
+    builder.setMessage(R.string.data_usage_restrict_background);
+  }
+  builder.setPositiveButton(android.R.string.ok,listener);
+  builder.setNegativeButton(android.R.string.cancel,null);
+}

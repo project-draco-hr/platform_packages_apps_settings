@@ -1,7 +1,0 @@
-{
-  final TelephonyManager tele=TelephonyManager.from(context);
-  final String actualSubscriberId=tele.getSubscriberId();
-  String retVal=SystemProperties.get(TEST_SUBSCRIBER_PROP,actualSubscriberId);
-  if (LOGD)   Log.d(TAG,"getActiveSubscriberId=" + retVal + " actualSubscriberId="+ actualSubscriberId);
-  return retVal;
-}

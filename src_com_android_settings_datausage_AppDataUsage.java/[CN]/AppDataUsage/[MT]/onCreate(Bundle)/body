@@ -1,0 +1,80 @@
+{
+  super.onCreate(icicle);
+  final Bundle args=getArguments();
+  try {
+    mStatsSession=services.mStatsService.openSession();
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException(e);
+  }
+  mAppItem=(args != null) ? (AppItem)args.getParcelable(ARG_APP_ITEM) : null;
+  mTemplate=(args != null) ? (NetworkTemplate)args.getParcelable(ARG_NETWORK_TEMPLATE) : null;
+  if (mTemplate == null) {
+    Context context=getContext();
+    mTemplate=DataUsageSummary.getDefaultTemplate(context,DataUsageSummary.getDefaultSubscriptionId(context));
+  }
+  if (mAppItem == null) {
+    int uid=(args != null) ? args.getInt(AppInfoBase.ARG_PACKAGE_UID,-1) : getActivity().getIntent().getIntExtra(AppInfoBase.ARG_PACKAGE_UID,-1);
+    if (uid == -1) {
+      getActivity().finish();
+    }
+ else {
+      addUid(uid);
+      mAppItem=new AppItem(uid);
+      mAppItem.addUid(uid);
+    }
+  }
+ else {
+    for (int i=0; i < mAppItem.uids.size(); i++) {
+      addUid(mAppItem.uids.keyAt(i));
+    }
+  }
+  if (mPackages.size() != 0) {
+    PackageManager pm=getPackageManager();
+    try {
+      ApplicationInfo info=pm.getApplicationInfo(mPackages.valueAt(0),0);
+      mIcon=info.loadIcon(pm);
+      mLabel=info.loadLabel(pm);
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+    }
+  }
+  addPreferencesFromResource(R.xml.app_data_usage);
+  mTotalUsage=findPreference(KEY_TOTAL_USAGE);
+  mForegroundUsage=findPreference(KEY_FOREGROUND_USAGE);
+  mBackgroundUsage=findPreference(KEY_BACKGROUND_USAGE);
+  if (UserHandle.isApp(mAppItem.key)) {
+    mRestrictBackground=(SwitchPreference)findPreference(KEY_RESTRICT_BACKGROUND);
+    mRestrictBackground.setOnPreferenceChangeListener(this);
+    mAppSettings=findPreference(KEY_APP_SETTINGS);
+    mAppSettingsIntent=new Intent(Intent.ACTION_MANAGE_NETWORK_USAGE);
+    mAppSettingsIntent.addCategory(Intent.CATEGORY_DEFAULT);
+    PackageManager pm=getPackageManager();
+    boolean matchFound=false;
+    for (    String packageName : mPackages) {
+      mAppSettingsIntent.setPackage(packageName);
+      if (pm.resolveActivity(mAppSettingsIntent,0) != null) {
+        matchFound=true;
+        break;
+      }
+    }
+    if (!matchFound) {
+      removePreference(KEY_APP_SETTINGS);
+      mAppSettings=null;
+    }
+    if (mPackages.size() > 1) {
+      mAppList=(PreferenceCategory)findPreference(KEY_APP_LIST);
+      for (int i=1; i < mPackages.size(); i++) {
+        new AppPrefLoader().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,mPackages.valueAt(i));
+      }
+    }
+ else {
+      removePreference(KEY_APP_LIST);
+    }
+  }
+ else {
+    removePreference(KEY_APP_SETTINGS);
+    removePreference(KEY_RESTRICT_BACKGROUND);
+    removePreference(KEY_APP_LIST);
+  }
+}

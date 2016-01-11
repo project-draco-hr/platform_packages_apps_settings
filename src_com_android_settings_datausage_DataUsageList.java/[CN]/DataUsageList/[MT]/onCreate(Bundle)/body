@@ -1,0 +1,22 @@
+{
+  super.onCreate(savedInstanceState);
+  final Context context=getActivity();
+  if (!isBandwidthControlEnabled()) {
+    Log.w(TAG,"No bandwidth control; leaving");
+    getActivity().finish();
+  }
+  try {
+    mStatsSession=services.mStatsService.openSession();
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException(e);
+  }
+  mUidDetailProvider=new UidDetailProvider(context);
+  addPreferencesFromResource(R.xml.data_usage_list);
+  mUsageAmount=findPreference(KEY_USAGE_AMOUNT);
+  mChart=(ChartDataUsagePreference)findPreference(KEY_CHART_DATA);
+  mApps=(PreferenceGroup)findPreference(KEY_APPS_GROUP);
+  final Bundle args=getArguments();
+  mSubId=args.getInt(EXTRA_SUB_ID,SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+  mTemplate=args.getParcelable(EXTRA_NETWORK_TEMPLATE);
+}

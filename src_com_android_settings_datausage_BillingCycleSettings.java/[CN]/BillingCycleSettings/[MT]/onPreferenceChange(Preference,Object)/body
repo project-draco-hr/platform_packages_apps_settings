@@ -1,0 +1,13 @@
+{
+  if (mEnableDataLimit == preference) {
+    boolean enabled=(Boolean)newValue;
+    if (enabled) {
+      ConfirmLimitFragment.show(this);
+    }
+ else {
+      setPolicyLimitBytes(LIMIT_DISABLED);
+    }
+    return true;
+  }
+  return false;
+}

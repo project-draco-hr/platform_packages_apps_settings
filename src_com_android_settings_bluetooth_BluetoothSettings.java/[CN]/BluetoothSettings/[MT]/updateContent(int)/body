@@ -7,7 +7,6 @@ case BluetoothAdapter.STATE_ON:
   preferenceScreen.setOrderingAsAdded(true);
 mDevicePreferenceMap.clear();
 if (isUiRestricted()) {
-messageId=R.string.bluetooth_empty_list_user_restricted;
 break;
 }
 if (mPairedDevicesCategory == null) {
@@ -51,7 +50,7 @@ break;
 case BluetoothAdapter.STATE_OFF:
 setOffMessage();
 if (isUiRestricted()) {
-messageId=R.string.bluetooth_empty_list_user_restricted;
+messageId=0;
 }
 break;
 case BluetoothAdapter.STATE_TURNING_ON:
@@ -62,7 +61,7 @@ break;
 setDeviceListGroup(preferenceScreen);
 removeAllDevices();
 if (messageId != 0) {
-mEmptyView.setText(messageId);
+getEmptyTextView().setText(messageId);
 }
 if (!isUiRestricted()) {
 getActivity().invalidateOptionsMenu();

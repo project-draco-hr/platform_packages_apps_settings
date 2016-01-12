@@ -1,0 +1,7 @@
+{
+  super.onCreate(savedInstanceState);
+  setHasOptionsMenu(true);
+  LocaleStore.fillCache(this.getContext());
+  List<LocaleStore.LocaleInfo> feedsList=getUserLocaleList(this.getContext());
+  mAdapter=new LocaleDragAndDropAdapter(this.getContext(),feedsList);
+}

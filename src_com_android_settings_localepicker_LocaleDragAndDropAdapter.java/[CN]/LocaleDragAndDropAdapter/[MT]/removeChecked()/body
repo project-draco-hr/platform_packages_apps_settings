@@ -1,0 +1,10 @@
+{
+  int itemCount=mFeedItemList.size();
+  for (int i=itemCount - 1; i >= 0; i--) {
+    if (mFeedItemList.get(i).getChecked()) {
+      mFeedItemList.remove(i);
+    }
+  }
+  notifyDataSetChanged();
+  doTheUpdate();
+}

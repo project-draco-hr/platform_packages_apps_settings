@@ -1,0 +1,20 @@
+{
+  final LocaleStore.LocaleInfo feedItem=mFeedItemList.get(i);
+  final LocaleDragCell dragCell=holder.getLocaleDragCell();
+  String label=feedItem.getFullNameNative();
+  dragCell.setLabel(label);
+  dragCell.setLocalized(feedItem.isTranslated());
+  dragCell.setMiniLabel(Integer.toString(i + 1));
+  dragCell.setShowCheckbox(mRemoveMode);
+  dragCell.setShowMiniLabel(!mRemoveMode);
+  dragCell.setShowHandle(!mRemoveMode);
+  dragCell.setChecked(false);
+  dragCell.setTag(feedItem);
+  dragCell.getCheckbox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+    @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){
+      LocaleStore.LocaleInfo feedItem=(LocaleStore.LocaleInfo)holder.getLocaleDragCell().getTag();
+      feedItem.setChecked(isChecked);
+    }
+  }
+);
+}

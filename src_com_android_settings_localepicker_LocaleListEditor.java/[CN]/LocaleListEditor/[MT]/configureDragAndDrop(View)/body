@@ -1,0 +1,15 @@
+{
+  RecyclerView list=(RecyclerView)view.findViewById(R.id.dragList);
+  list.setLayoutManager(new LinearLayoutManager(this.getContext()));
+  list.setHasFixedSize(true);
+  mAdapter.setRecyclerView(list);
+  list.setAdapter(mAdapter);
+  mAddLanguage=view.findViewById(R.id.add_language);
+  mAddLanguage.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      final LocalePickerWithRegion selector=LocalePickerWithRegion.createLanguagePicker(getContext(),LocaleListEditor.this,false);
+      getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).replace(getId(),selector).addToBackStack("localeListEditor").commit();
+    }
+  }
+);
+}

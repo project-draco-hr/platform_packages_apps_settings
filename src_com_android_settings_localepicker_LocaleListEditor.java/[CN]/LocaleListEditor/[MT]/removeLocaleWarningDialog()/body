@@ -1,0 +1,27 @@
+{
+  int checked=mAdapter.getCheckedCount();
+  if (checked == 0) {
+    setRemoveMode(!mRemoveMode);
+    return;
+  }
+  if (checked == mAdapter.getItemCount()) {
+    new AlertDialog.Builder(getActivity()).setTitle(R.string.dlg_remove_locales_error_title).setMessage(R.string.dlg_remove_locales_error_message).setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+      @Override public void onClick(      DialogInterface dialog,      int which){
+      }
+    }
+).create().show();
+    return;
+  }
+  new AlertDialog.Builder(getActivity()).setTitle(R.string.dlg_remove_locales_title).setMessage(R.string.dlg_remove_locales_message).setNegativeButton(android.R.string.no,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      setRemoveMode(!mRemoveMode);
+    }
+  }
+).setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      mAdapter.removeChecked();
+      setRemoveMode(!mRemoveMode);
+    }
+  }
+).create().show();
+}

@@ -16,8 +16,8 @@
   }
   if (!mShowsOnlyFullImeAndKeyboardList) {
     if (mLanguagePref != null) {
-      String localeName=getLocaleName(getActivity());
-      mLanguagePref.setSummary(localeName);
+      String localeNames=getLocaleNames(getActivity());
+      mLanguagePref.setSummary(localeNames);
     }
     updateUserDictionaryPreference(findPreference(KEY_USER_DICTIONARY_SETTINGS));
     if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {

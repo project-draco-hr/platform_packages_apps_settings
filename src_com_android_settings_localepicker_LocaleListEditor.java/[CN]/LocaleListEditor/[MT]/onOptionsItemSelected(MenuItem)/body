@@ -1,0 +1,12 @@
+{
+  if (menuItem.getItemId() == MENU_ID_REMOVE) {
+    if (mRemoveMode) {
+      removeLocaleWarningDialog();
+    }
+ else {
+      setRemoveMode(true);
+    }
+    return true;
+  }
+  return super.onOptionsItemSelected(menuItem);
+}

@@ -14,6 +14,7 @@
   if (mUser == null) {
     mUser=android.os.Process.myUserHandle();
   }
+  mHelper=new AppRestrictionsHelper(getContext(),mUser);
   mPackageManager=getActivity().getPackageManager();
   mIPm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
   mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
@@ -25,4 +26,5 @@
   }
   addPreferencesFromResource(R.xml.app_restrictions);
   mAppList=getAppPreferenceGroup();
+  mAppList.setOrderingAsAdded(false);
 }

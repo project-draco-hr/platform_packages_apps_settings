@@ -1,6 +1,5 @@
 {
   removeRestrictionsForApp(preference);
-  final Context context=preference.getContext();
   int count=1;
   for (  RestrictionEntry entry : restrictions) {
     Preference p=null;
@@ -30,7 +29,7 @@ p=new MultiSelectListPreference(getPrefContext());
 p.setTitle(entry.getTitle());
 ((MultiSelectListPreference)p).setEntryValues(entry.getChoiceValues());
 ((MultiSelectListPreference)p).setEntries(entry.getChoiceEntries());
-HashSet<String> set=new HashSet<String>();
+HashSet<String> set=new HashSet<>();
 Collections.addAll(set,entry.getAllSelectedStrings());
 ((MultiSelectListPreference)p).setValues(set);
 ((MultiSelectListPreference)p).setDialogTitle(entry.getTitle());

@@ -12,13 +12,13 @@
         RestrictionUtils.setRestrictions(getActivity(),pref.restrictions,mUser);
         return;
       }
-      mSelectedPackages.put(packageName,pref.isChecked());
+      mHelper.setPackageSelected(packageName,pref.isChecked());
       if (pref.isChecked() && pref.hasSettings && pref.restrictions == null) {
         requestRestrictionsForApp(packageName,pref,false);
       }
       mAppListChanged=true;
       if (!mRestrictedProfile) {
-        applyUserAppState(packageName,pref.isChecked());
+        mHelper.applyUserAppState(packageName,pref.isChecked(),this);
       }
       updateAllEntries(pref.getKey(),pref.isChecked());
     }

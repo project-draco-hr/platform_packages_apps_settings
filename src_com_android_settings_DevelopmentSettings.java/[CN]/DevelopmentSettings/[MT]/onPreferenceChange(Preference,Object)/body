@@ -6,8 +6,20 @@
     return true;
   }
  else   if (preference == mWebViewProvider) {
-    writeWebViewProviderOptions(newValue);
-    return true;
+    if (newValue == null) {
+      Log.e(TAG,"Tried to set a null WebView provider");
+      return false;
+    }
+    String newWebViewPackageName=(String)newValue;
+    if (isPackageEnabled(newWebViewPackageName)) {
+      writeWebViewProviderOptions(newValue);
+      return true;
+    }
+    if (isPackageInstalled(getActivity(),newWebViewPackageName)) {
+      showEnableWebViewProviderAlert(newWebViewPackageName);
+      return false;
+    }
+    return false;
   }
  else   if (preference == mLogdSize) {
     writeLogdSizeOption(newValue);

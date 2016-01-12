@@ -42,19 +42,15 @@
   if (mEntries.length == 1) {
     seekBar.setEnabled(false);
   }
-  mPreviewFrame=(FrameLayout)content.findViewById(R.id.preview_frame);
   final Context context=getContext();
   final Configuration origConfig=context.getResources().getConfiguration();
+  Configuration[] configurations=new Configuration[mEntries.length];
   for (int i=0; i < mEntries.length; ++i) {
-    final Configuration config=createConfig(origConfig,i);
-    final Context configContext=context.createConfigurationContext(config);
-    configContext.setTheme(context.getThemeResId());
-    final LayoutInflater configInflater=LayoutInflater.from(configContext);
-    final View sampleView=configInflater.inflate(mPreviewSampleResId,mPreviewFrame,false);
-    sampleView.setAlpha(0);
-    sampleView.setVisibility(View.INVISIBLE);
-    mPreviewFrame.addView(sampleView);
+    configurations[i]=createConfig(origConfig,i);
   }
+  mPreviewPagerAdapter=new PreviewPagerAdapter(context,mPreviewSampleResIds,configurations);
+  mPreviewPager=(ViewPager)content.findViewById(R.id.preview_pager);
+  mPreviewPager.setAdapter(mPreviewPagerAdapter);
   setPreviewLayer(mInitialIndex,false);
   return root;
 }

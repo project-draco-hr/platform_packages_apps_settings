@@ -1,0 +1,21 @@
+{
+  return new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int which){
+      final RestrictedListPreference preference=getCustomizablePreference();
+      if (which < 0 || which >= preference.getEntryValues().length) {
+        return;
+      }
+      String entryValue=preference.getEntryValues()[which].toString();
+      RestrictedItem item=preference.getRestrictedItemForEntryValue(entryValue);
+      if (item != null) {
+        RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getContext(),item.enforcedAdmin);
+      }
+ else {
+        setClickedDialogEntryIndex(which);
+      }
+      RestrictedListPreferenceDialogFragment.this.onClick(dialog,DialogInterface.BUTTON_POSITIVE);
+      dialog.dismiss();
+    }
+  }
+;
+}

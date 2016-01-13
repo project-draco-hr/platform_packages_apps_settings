@@ -1,0 +1,18 @@
+{
+  View root=super.getView(position,convertView,parent);
+  CharSequence entry=getItem(position);
+  CheckedTextView text=(CheckedTextView)root.findViewById(R.id.text1);
+  ImageView padlock=(ImageView)root.findViewById(R.id.restricted_lock_icon);
+  if (isRestrictedForEntry(entry)) {
+    text.setEnabled(false);
+    padlock.setVisibility(View.VISIBLE);
+  }
+ else {
+    if (position == mSelectedIndex) {
+      text.setChecked(true);
+    }
+    text.setEnabled(true);
+    padlock.setVisibility(View.GONE);
+  }
+  return root;
+}

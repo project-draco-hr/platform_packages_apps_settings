@@ -1,12 +1,5 @@
 {
   super.onPrepareDialogBuilder(builder);
   mClickedDialogEntryIndex=getCustomizablePreference().findIndexOfValue(getCustomizablePreference().getValue());
-  getCustomizablePreference().onPrepareDialogBuilder(builder,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int which){
-      mClickedDialogEntryIndex=which;
-      CustomListPreferenceDialogFragment.this.onClick(dialog,DialogInterface.BUTTON_POSITIVE);
-      dialog.dismiss();
-    }
-  }
-);
+  getCustomizablePreference().onPrepareDialogBuilder(builder,getOnItemClickListener());
 }

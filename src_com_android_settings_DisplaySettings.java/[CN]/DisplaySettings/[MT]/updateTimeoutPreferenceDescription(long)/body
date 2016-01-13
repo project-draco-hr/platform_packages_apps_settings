@@ -1,7 +1,10 @@
 {
-  ListPreference preference=mScreenTimeoutPreference;
+  RestrictedListPreference preference=mScreenTimeoutPreference;
   String summary;
-  if (currentTimeout < 0) {
+  if (preference.isDisabledByAdmin()) {
+    summary=getString(R.string.disabled_by_policy_title);
+  }
+ else   if (currentTimeout < 0) {
     summary="";
   }
  else {
@@ -13,12 +16,15 @@
  else {
       int best=0;
       for (int i=0; i < values.length; i++) {
+        if (preference.isRestrictedForEntry(entries[i])) {
+          break;
+        }
         long timeout=Long.parseLong(values[i].toString());
         if (currentTimeout >= timeout) {
           best=i;
         }
       }
-      summary=preference.getContext().getString(R.string.screen_timeout_summary,entries[best]);
+      summary=getString(R.string.screen_timeout_summary,entries[best]);
     }
   }
   preference.setSummary(summary);

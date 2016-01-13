@@ -1,0 +1,11 @@
+{
+  ImageView imageView=(ImageView)baseView.findViewById(R.id.background_image);
+  if (imageView != null) {
+    Drawable image=getResources().getDrawable(R.drawable.work_challenge_background);
+    image.setColorFilter(getResources().getColor(R.color.confirm_device_credential_transparent_black),PorterDuff.Mode.DARKEN);
+    imageView.setImageDrawable(image);
+    Point screenSize=new Point();
+    getActivity().getWindowManager().getDefaultDisplay().getSize(screenSize);
+    imageView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,screenSize.y));
+  }
+}

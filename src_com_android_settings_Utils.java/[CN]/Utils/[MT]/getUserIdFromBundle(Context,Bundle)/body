@@ -1,7 +1,7 @@
 {
   if (bundle == null) {
-    return getEffectiveUserId(context);
+    return getCredentialOwnerUserId(context);
   }
   int userId=bundle.getInt(Intent.EXTRA_USER_ID,UserHandle.myUserId());
-  return getSameOwnerUserId(context,userId);
+  return enforceSameOwner(context,userId);
 }

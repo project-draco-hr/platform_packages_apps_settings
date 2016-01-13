@@ -1,0 +1,7 @@
+{
+  if (userManager == null) {
+    throw new IllegalArgumentException("userManager must not be null");
+  }
+  UserInfo userInfo=userManager.getUserInfo(userId);
+  return (userInfo != null) ? userInfo.isManagedProfile() : false;
+}

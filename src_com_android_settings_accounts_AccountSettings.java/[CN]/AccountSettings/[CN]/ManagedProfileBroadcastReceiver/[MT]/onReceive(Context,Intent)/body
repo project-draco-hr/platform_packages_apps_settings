@@ -1,11 +1,18 @@
 {
+  Log.v(TAG,"Received broadcast: " + intent.getAction());
   if (intent.getAction().equals(Intent.ACTION_MANAGED_PROFILE_REMOVED) || intent.getAction().equals(Intent.ACTION_MANAGED_PROFILE_ADDED)) {
-    Log.v(TAG,"Received broadcast: " + intent.getAction());
     stopListeningToAccountUpdates();
     cleanUpPreferences();
     updateUi();
     listenToAccountUpdates();
     getActivity().invalidateOptionsMenu();
+    return;
+  }
+  if (intent.getAction().equals(Intent.ACTION_MANAGED_PROFILE_AVAILABILITY_CHANGED)) {
+    ProfileData profileData=mProfiles.valueAt(1);
+    if (intent.getIntExtra(Intent.EXTRA_USER_HANDLE,UserHandle.USER_NULL) == profileData.userInfo.id) {
+      profileData.workModeSwitch.setChecked(!mUm.isQuietModeEnabled(profileData.userInfo.getUserHandle()));
+    }
     return;
   }
   Log.w(TAG,"Cannot handle received broadcast: " + intent.getAction());

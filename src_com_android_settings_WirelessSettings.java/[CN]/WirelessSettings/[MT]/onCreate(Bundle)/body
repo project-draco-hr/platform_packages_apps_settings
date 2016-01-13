@@ -13,7 +13,7 @@
   final Activity activity=getActivity();
   mAirplaneModePreference=(SwitchPreference)findPreference(KEY_TOGGLE_AIRPLANE);
   SwitchPreference nfc=(SwitchPreference)findPreference(KEY_TOGGLE_NFC);
-  PreferenceScreen androidBeam=(PreferenceScreen)findPreference(KEY_ANDROID_BEAM_SETTINGS);
+  RestrictedPreference androidBeam=(RestrictedPreference)findPreference(KEY_ANDROID_BEAM_SETTINGS);
   mAirplaneModeEnabler=new AirplaneModeEnabler(activity,mAirplaneModePreference);
   mNfcEnabler=new NfcEnabler(activity,nfc,androidBeam);
   mButtonWfc=(PreferenceScreen)findPreference(KEY_WFC_SETTINGS);
@@ -33,7 +33,7 @@
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_WIFI)) {
     findPreference(KEY_VPN_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
   }
-  if (!isAdmin || mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_VPN)) {
+  if (!isAdmin) {
     removePreference(KEY_VPN_SETTINGS);
   }
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_BLUETOOTH)) {
@@ -67,10 +67,10 @@
   getPreferenceScreen().removePreference(mGlobalProxy);
   mGlobalProxy.setEnabled(mDPM.getGlobalProxyAdmin() == null);
   final ConnectivityManager cm=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-  if (!isAdmin || !cm.isTetheringSupported() || mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING)) {
+  if (!isAdmin || !cm.isTetheringSupported()) {
     getPreferenceScreen().removePreference(findPreference(KEY_TETHER_SETTINGS));
   }
- else {
+ else   if (!mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING)) {
     Preference p=findPreference(KEY_TETHER_SETTINGS);
     p.setTitle(com.android.settingslib.Utils.getTetheringLabel(cm));
     p.setEnabled(!TetherSettings.isProvisioningNeededButUnavailable(getActivity()));

@@ -1,7 +1,7 @@
 {
   mUpdater.removeMessages(RESCAN_MESSAGE);
   final List<VpnProfile> vpnProfiles=loadVpnProfiles(mKeyStore);
-  final List<AppVpnInfo> vpnApps=getVpnApps();
+  final List<AppVpnInfo> vpnApps=getVpnApps(getActivity(),true);
   final List<LegacyVpnInfo> connectedLegacyVpns=getConnectedLegacyVpns();
   final List<AppVpnInfo> connectedAppVpns=getConnectedAppVpns();
   getActivity().runOnUiThread(new Runnable(){

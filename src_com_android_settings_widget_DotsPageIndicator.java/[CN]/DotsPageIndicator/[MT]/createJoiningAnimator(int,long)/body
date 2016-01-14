@@ -1,0 +1,13 @@
+{
+  ValueAnimator joining=ValueAnimator.ofFloat(0f,1.0f);
+  joining.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
+    @Override public void onAnimationUpdate(    ValueAnimator valueAnimator){
+      setJoiningFraction(leftJoiningDot,valueAnimator.getAnimatedFraction());
+    }
+  }
+);
+  joining.setDuration(animHalfDuration);
+  joining.setStartDelay(startDelay);
+  joining.setInterpolator(interpolator);
+  return joining;
+}

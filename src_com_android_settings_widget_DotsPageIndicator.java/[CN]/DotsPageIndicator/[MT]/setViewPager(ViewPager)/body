@@ -1,0 +1,12 @@
+{
+  this.viewPager=viewPager;
+  viewPager.setOnPageChangeListener(this);
+  setPageCount(viewPager.getAdapter().getCount());
+  viewPager.getAdapter().registerDataSetObserver(new DataSetObserver(){
+    @Override public void onChanged(){
+      setPageCount(DotsPageIndicator.this.viewPager.getAdapter().getCount());
+    }
+  }
+);
+  setCurrentPageImmediate();
+}

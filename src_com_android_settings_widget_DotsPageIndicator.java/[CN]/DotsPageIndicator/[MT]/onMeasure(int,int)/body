@@ -1,0 +1,30 @@
+{
+  int desiredHeight=getDesiredHeight();
+  int height;
+switch (MeasureSpec.getMode(heightMeasureSpec)) {
+case MeasureSpec.EXACTLY:
+    height=MeasureSpec.getSize(heightMeasureSpec);
+  break;
+case MeasureSpec.AT_MOST:
+height=Math.min(desiredHeight,MeasureSpec.getSize(heightMeasureSpec));
+break;
+default :
+height=desiredHeight;
+break;
+}
+int desiredWidth=getDesiredWidth();
+int width;
+switch (MeasureSpec.getMode(widthMeasureSpec)) {
+case MeasureSpec.EXACTLY:
+width=MeasureSpec.getSize(widthMeasureSpec);
+break;
+case MeasureSpec.AT_MOST:
+width=Math.min(desiredWidth,MeasureSpec.getSize(widthMeasureSpec));
+break;
+default :
+width=desiredWidth;
+break;
+}
+setMeasuredDimension(width,height);
+calculateDotPositions();
+}

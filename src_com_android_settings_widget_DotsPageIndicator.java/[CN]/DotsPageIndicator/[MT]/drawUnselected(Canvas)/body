@@ -1,0 +1,19 @@
+{
+  combinedUnselectedPath.rewind();
+  for (int page=0; page < pageCount; page++) {
+    int nextXIndex=page == pageCount - 1 ? page : page + 1;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      Path unselectedPath=getUnselectedPath(page,dotCenterX[page],dotCenterX[nextXIndex],page == pageCount - 1 ? INVALID_FRACTION : joiningFractions[page],dotRevealFractions[page]);
+      combinedUnselectedPath.op(unselectedPath,Path.Op.UNION);
+    }
+ else {
+      canvas.drawCircle(dotCenterX[page],dotCenterY,dotRadius,unselectedPaint);
+    }
+  }
+  if (retreatingJoinX1 != INVALID_FRACTION) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      combinedUnselectedPath.op(getRetreatingJoinPath(),Path.Op.UNION);
+    }
+  }
+  canvas.drawPath(combinedUnselectedPath,unselectedPaint);
+}

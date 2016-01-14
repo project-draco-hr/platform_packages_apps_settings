@@ -51,6 +51,14 @@
   mPreviewPagerAdapter=new PreviewPagerAdapter(context,mPreviewSampleResIds,configurations);
   mPreviewPager=(ViewPager)content.findViewById(R.id.preview_pager);
   mPreviewPager.setAdapter(mPreviewPagerAdapter);
+  final DotsPageIndicator pageIndicator=(DotsPageIndicator)content.findViewById(R.id.page_indicator);
+  if (mPreviewSampleResIds.length > 1) {
+    pageIndicator.setViewPager(mPreviewPager);
+    pageIndicator.setVisibility(View.VISIBLE);
+  }
+ else {
+    pageIndicator.setVisibility(View.GONE);
+  }
   setPreviewLayer(mInitialIndex,false);
   return root;
 }

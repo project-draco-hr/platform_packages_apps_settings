@@ -1,0 +1,11 @@
+{
+  if (attachedState) {
+    setSelectedPage(position);
+  }
+ else {
+    setCurrentPageImmediate();
+  }
+  if (pageChangeListener != null) {
+    pageChangeListener.onPageSelected(position);
+  }
+}

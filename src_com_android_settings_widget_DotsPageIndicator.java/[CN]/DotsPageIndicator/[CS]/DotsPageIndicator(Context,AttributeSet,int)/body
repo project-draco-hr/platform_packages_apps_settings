@@ -1,0 +1,38 @@
+{
+  super(context,attrs,defStyle);
+  final int scaledDensity=(int)context.getResources().getDisplayMetrics().scaledDensity;
+  final TypedArray typedArray=getContext().obtainStyledAttributes(attrs,R.styleable.DotsPageIndicator,defStyle,0);
+  dotDiameter=typedArray.getDimensionPixelSize(R.styleable.DotsPageIndicator_dotDiameter,DEFAULT_DOT_SIZE * scaledDensity);
+  dotRadius=dotDiameter / 2;
+  halfDotRadius=dotRadius / 2;
+  gap=typedArray.getDimensionPixelSize(R.styleable.DotsPageIndicator_dotGap,DEFAULT_GAP * scaledDensity);
+  animDuration=(long)typedArray.getInteger(R.styleable.DotsPageIndicator_animationDuration,DEFAULT_ANIM_DURATION);
+  animHalfDuration=animDuration / 2;
+  unselectedColour=typedArray.getColor(R.styleable.DotsPageIndicator_pageIndicatorColor,DEFAULT_UNSELECTED_COLOUR);
+  selectedColour=typedArray.getColor(R.styleable.DotsPageIndicator_currentPageIndicatorColor,DEFAULT_SELECTED_COLOUR);
+  typedArray.recycle();
+  unselectedPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
+  unselectedPaint.setColor(unselectedColour);
+  selectedPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
+  selectedPaint.setColor(selectedColour);
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    interpolator=loadInterpolator(context,android.R.interpolator.fast_out_slow_in);
+  }
+ else {
+    interpolator=loadInterpolator(context,android.R.anim.accelerate_decelerate_interpolator);
+  }
+  combinedUnselectedPath=new Path();
+  unselectedDotPath=new Path();
+  unselectedDotLeftPath=new Path();
+  unselectedDotRightPath=new Path();
+  rectF=new RectF();
+  addOnAttachStateChangeListener(new OnAttachStateChangeListener(){
+    @Override public void onViewAttachedToWindow(    View v){
+      attachedState=true;
+    }
+    @Override public void onViewDetachedFromWindow(    View v){
+      attachedState=false;
+    }
+  }
+);
+}

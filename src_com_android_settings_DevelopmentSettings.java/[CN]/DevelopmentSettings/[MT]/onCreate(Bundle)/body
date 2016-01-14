@@ -117,4 +117,13 @@
     removePreference(KEY_COLOR_MODE);
     mColorModePreference=null;
   }
+  mColorTemperaturePreference=(SwitchPreference)findPreference(COLOR_TEMPERATURE_KEY);
+  if (getResources().getBoolean(R.bool.config_enableColorTemperature)) {
+    mAllPrefs.add(mColorTemperaturePreference);
+    mResetSwitchPrefs.add(mColorTemperaturePreference);
+  }
+ else {
+    removePreference(COLOR_TEMPERATURE_KEY);
+    mColorTemperaturePreference=null;
+  }
 }

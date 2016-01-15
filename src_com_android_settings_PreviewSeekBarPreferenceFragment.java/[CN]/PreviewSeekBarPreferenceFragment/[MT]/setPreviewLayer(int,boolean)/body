@@ -1,34 +1,7 @@
 {
   mLabel.setText(mEntries[index]);
-  if (mCurrentIndex >= 0) {
-    final View lastLayer=mPreviewFrame.getChildAt(mCurrentIndex);
-    if (animate) {
-      lastLayer.animate().alpha(0).setInterpolator(FADE_OUT_INTERPOLATOR).setDuration(CROSS_FADE_DURATION_MS).withEndAction(new Runnable(){
-        @Override public void run(){
-          lastLayer.setVisibility(View.INVISIBLE);
-        }
-      }
-);
-    }
- else {
-      lastLayer.setAlpha(0);
-      lastLayer.setVisibility(View.INVISIBLE);
-    }
-  }
-  final View nextLayer=mPreviewFrame.getChildAt(index);
-  if (animate) {
-    nextLayer.animate().alpha(1).setInterpolator(FADE_IN_INTERPOLATOR).setDuration(CROSS_FADE_DURATION_MS).withStartAction(new Runnable(){
-      @Override public void run(){
-        nextLayer.setVisibility(View.VISIBLE);
-      }
-    }
-);
-  }
- else {
-    nextLayer.setVisibility(View.VISIBLE);
-    nextLayer.setAlpha(1);
-  }
   mSmaller.setEnabled(index > 0);
   mLarger.setEnabled(index < mEntries.length - 1);
+  mPreviewPagerAdapter.setPreviewLayer(index,mCurrentIndex,mPreviewPager.getCurrentItem(),animate);
   mCurrentIndex=index;
 }

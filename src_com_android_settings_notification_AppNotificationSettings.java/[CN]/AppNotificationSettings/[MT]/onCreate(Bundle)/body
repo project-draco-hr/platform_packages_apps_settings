@@ -24,10 +24,9 @@
     toastAndFinish();
     return;
   }
-  mIsSystemPackage=Utils.isSystemPackage(pm,info);
   addPreferencesFromResource(R.xml.app_notification_settings);
   mBlock=(SwitchPreference)findPreference(KEY_BLOCK);
-  mAppRow=mBackend.loadAppRow(pm,info.applicationInfo);
+  mAppRow=mBackend.loadAppRow(pm,info);
   ArrayMap<String,AppRow> rows=new ArrayMap<String,AppRow>();
   rows.put(mAppRow.pkg,mAppRow);
   collectConfigActivities(getPackageManager(),rows);
@@ -47,7 +46,7 @@
     mCategories.addPreference(topicPreference);
   }
   mBlock.setChecked(mAppRow.banned);
-  updateDependents(mAppRow.banned);
+  updateDependents(mAppRow.systemApp,mAppRow.banned);
   mBlock.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
       final boolean banned=(Boolean)newValue;
@@ -56,7 +55,7 @@
       }
       final boolean success=mBackend.setNotificationsBanned(pkg,mUid,banned);
       if (success) {
-        updateDependents(banned);
+        updateDependents(mAppRow.systemApp,banned);
       }
       return success;
     }

@@ -1,9 +1,10 @@
 {
   final TopicRow row=new TopicRow();
   row.pkg=app.packageName;
-  row.uid=app.uid;
+  row.uid=app.applicationInfo.uid;
   row.label=topic.getLabel();
-  row.icon=app.loadIcon(pm);
+  row.icon=app.applicationInfo.loadIcon(pm);
+  row.systemApp=Utils.isSystemPackage(pm,app);
   row.topic=topic;
   row.priority=getBypassZenMode(row.pkg,row.uid,row.topic);
   row.sensitive=getSensitive(row.pkg,row.uid,row.topic);

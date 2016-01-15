@@ -5,7 +5,11 @@
   }
   String packageName=mAppEntry.info.packageName;
   if (v == mUninstallButton) {
-    if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+    EnforcedAdmin admin=RestrictedLockUtils.checkIfUninstallBlocked(getActivity(),packageName,mUserId);
+    if (admin != null) {
+      RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),admin);
+    }
+ else     if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
       if (mAppEntry.info.enabled && !isDisabledUntilUsed()) {
         if (mUpdatedSysApp) {
           showDialogInner(DLG_SPECIAL_DISABLE,0);
@@ -26,6 +30,11 @@
     }
   }
  else   if (v == mForceStopButton) {
-    showDialogInner(DLG_FORCE_STOP,0);
+    if (mAppsControlDisallowedAdmin != null) {
+      RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mAppsControlDisallowedAdmin);
+    }
+ else {
+      showDialogInner(DLG_FORCE_STOP,0);
+    }
   }
 }

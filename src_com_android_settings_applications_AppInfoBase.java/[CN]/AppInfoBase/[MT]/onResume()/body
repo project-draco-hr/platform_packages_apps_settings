@@ -1,7 +1,7 @@
 {
   super.onResume();
   mSession.resume();
-  mAppControlRestricted=mUserManager.hasUserRestriction(UserManager.DISALLOW_APPS_CONTROL);
+  mAppsControlDisallowedAdmin=RestrictedLockUtils.checkIfRestrictionEnforced(getActivity(),UserManager.DISALLOW_APPS_CONTROL,mUserId);
   if (!refreshUi()) {
     setIntentAndFinish(true,true);
   }

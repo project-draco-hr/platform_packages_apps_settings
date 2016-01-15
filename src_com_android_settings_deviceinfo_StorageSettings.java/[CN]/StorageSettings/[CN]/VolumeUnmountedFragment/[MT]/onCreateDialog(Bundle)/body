@@ -7,6 +7,11 @@
   builder.setMessage(TextUtils.expandTemplate(getText(R.string.storage_dialog_unmounted),vol.getDisk().getDescription()));
   builder.setPositiveButton(R.string.storage_menu_mount,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
+      EnforcedAdmin admin=RestrictedLockUtils.checkIfRestrictionEnforced(getActivity(),UserManager.DISALLOW_MOUNT_PHYSICAL_MEDIA,UserHandle.myUserId());
+      if (admin != null) {
+        RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),admin);
+        return;
+      }
       new MountTask(context,vol).execute();
     }
   }

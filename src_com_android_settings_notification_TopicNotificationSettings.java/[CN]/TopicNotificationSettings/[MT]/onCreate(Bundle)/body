@@ -33,8 +33,9 @@
   mImportance=(ImportanceSeekBarPreference)findPreference(KEY_IMPORTANCE);
   mPriority=(SwitchPreference)findPreference(KEY_BYPASS_DND);
   mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
-  mTopicRow=mBackend.loadTopicRow(pm,info.applicationInfo,topic);
-  mImportance.setMax(4);
+  mTopicRow=mBackend.loadTopicRow(pm,info,topic);
+  mImportance.setMinimumProgress(mTopicRow.systemApp ? Ranking.IMPORTANCE_LOW : Ranking.IMPORTANCE_NONE);
+  mImportance.setMax(Ranking.IMPORTANCE_MAX);
   int importance=mTopicRow.importance == NotificationListenerService.Ranking.IMPORTANCE_UNSPECIFIED ? NotificationListenerService.Ranking.IMPORTANCE_DEFAULT : mTopicRow.importance;
   mImportance.setProgress(importance);
   mImportance.setCallback(new ImportanceSeekBarPreference.Callback(){

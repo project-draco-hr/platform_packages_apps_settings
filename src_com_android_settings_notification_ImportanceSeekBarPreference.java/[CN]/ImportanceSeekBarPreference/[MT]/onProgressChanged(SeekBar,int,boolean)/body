@@ -1,5 +1,9 @@
 {
   super.onProgressChanged(seekBar,progress,fromTouch);
+  if (progress < mMinProgress) {
+    seekBar.setProgress(mMinProgress);
+    progress=mMinProgress;
+  }
   if (mSummaryTextView != null) {
     mSummaryTextView.setText(getProgressSummary(progress));
   }

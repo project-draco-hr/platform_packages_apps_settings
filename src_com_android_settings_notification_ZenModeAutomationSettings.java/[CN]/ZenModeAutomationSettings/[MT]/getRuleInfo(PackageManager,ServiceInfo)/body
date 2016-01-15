@@ -10,6 +10,7 @@
     ri.packageName=si.packageName;
     ri.configurationActivity=getSettingsActivity(si);
     ri.packageLabel=si.applicationInfo.loadLabel(pm);
+    ri.ruleInstanceLimit=si.metaData.getInt(ConditionProviderService.META_DATA_RULE_INSTANCE_LIMIT,-1);
     return ri;
   }
   return null;

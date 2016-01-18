@@ -1,0 +1,15 @@
+{
+  mEnforcedAdmin=admin;
+  if (admin != null) {
+    super.setEnabled(true);
+    mDisabledByAdmin=true;
+    RestrictedLockUtils.setTextViewPadlock(mContext,mTextView,true);
+    mTextView.setEnabled(false);
+    mSwitch.setEnabled(false);
+  }
+ else {
+    mDisabledByAdmin=false;
+    RestrictedLockUtils.setTextViewPadlock(mContext,mTextView,false);
+    setEnabled(true);
+  }
+}

@@ -1,4 +1,6 @@
 {
+  DevicePolicyManager dpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+  baseView.setBackground(new ColorDrawable(dpm.getOrganizationColorForUser(userId)));
   ImageView imageView=(ImageView)baseView.findViewById(R.id.background_image);
   if (imageView != null) {
     Drawable image=getResources().getDrawable(R.drawable.work_challenge_background);

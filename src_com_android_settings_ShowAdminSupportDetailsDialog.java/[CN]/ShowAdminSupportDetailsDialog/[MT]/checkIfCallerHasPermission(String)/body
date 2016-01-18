@@ -1,0 +1,11 @@
+{
+  IActivityManager am=ActivityManagerNative.getDefault();
+  try {
+    final int uid=am.getLaunchedFromUid(getActivityToken());
+    return AppGlobals.getPackageManager().checkUidPermission(permission,uid) == PackageManager.PERMISSION_GRANTED;
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Could not talk to activity manager.",e);
+  }
+  return false;
+}

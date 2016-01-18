@@ -5,16 +5,9 @@
   int userId=UserHandle.myUserId();
   Intent intent=getIntent();
   if (intent != null) {
-    IActivityManager am=ActivityManagerNative.getDefault();
-    try {
-      int uid=am.getLaunchedFromUid(getActivityToken());
-      if (UserHandle.isSameApp(uid,android.os.Process.myUid())) {
-        admin=intent.getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
-        userId=intent.getIntExtra(Intent.EXTRA_USER_ID,UserHandle.myUserId());
-      }
-    }
- catch (    RemoteException e) {
-      Log.e(TAG,"Could not talk to activity manager.",e);
+    if (checkIfCallerHasPermission(android.Manifest.permission.MANAGE_DEVICE_ADMINS)) {
+      admin=intent.getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
+      userId=intent.getIntExtra(Intent.EXTRA_USER_ID,UserHandle.myUserId());
     }
   }
   View rootView=LayoutInflater.from(this).inflate(R.layout.admin_support_details_dialog,null);

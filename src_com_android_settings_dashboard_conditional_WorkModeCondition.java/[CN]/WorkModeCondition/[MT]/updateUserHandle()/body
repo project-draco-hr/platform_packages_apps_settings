@@ -1,0 +1,12 @@
+{
+  List<UserInfo> profiles=mUm.getProfiles(UserHandle.myUserId());
+  final int profilesCount=profiles.size();
+  mUserHandle=null;
+  for (int i=0; i < profilesCount; i++) {
+    UserInfo userInfo=profiles.get(i);
+    if (userInfo.isManagedProfile()) {
+      mUserHandle=userInfo.getUserHandle();
+      break;
+    }
+  }
+}

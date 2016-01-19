@@ -1,0 +1,8 @@
+{
+  out.writeString(alias);
+  long typeBits=0;
+  for (  Type i : storedTypes) {
+    typeBits|=1L << i.ordinal();
+  }
+  out.writeLong(typeBits);
+}

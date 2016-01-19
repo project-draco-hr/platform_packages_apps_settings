@@ -1,0 +1,9 @@
+{
+  this(in.readString());
+  long typeBits=in.readLong();
+  for (  Type i : Type.values()) {
+    if ((typeBits & (1L << i.ordinal())) != 0L) {
+      storedTypes.add(i);
+    }
+  }
+}

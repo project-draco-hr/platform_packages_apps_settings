@@ -1,0 +1,9 @@
+{
+  final UidDetail cachedDetail=provider.getUidDetail(item.key,false);
+  if (cachedDetail != null) {
+    bindView(cachedDetail,target);
+  }
+ else {
+    new UidDetailTask(provider,item,target).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+  }
+}

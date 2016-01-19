@@ -1,0 +1,10 @@
+{
+  CellDataState state=(CellDataState)s;
+  super.onRestoreInstanceState(state.getSuperState());
+  mTelephonyManager=TelephonyManager.from(getContext());
+  mChecked=state.mChecked;
+  mMultiSimDialog=state.mMultiSimDialog;
+  mSubId=state.mSubId;
+  setKey(getKey() + mSubId);
+  notifyChanged();
+}

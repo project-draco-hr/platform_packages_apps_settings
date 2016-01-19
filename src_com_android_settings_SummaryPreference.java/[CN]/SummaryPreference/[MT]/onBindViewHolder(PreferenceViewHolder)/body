@@ -1,0 +1,14 @@
+{
+  super.onBindViewHolder(holder);
+  LinearColorBar colorBar=(LinearColorBar)holder.itemView.findViewById(R.id.color_bar);
+  colorBar.setRatios(mLeftRatio,mMiddleRatio,mRightRatio);
+  colorBar.setColors(mLeft,mMiddle,mRight);
+  if (!TextUtils.isEmpty(mStartLabel) || !TextUtils.isEmpty(mEndLabel)) {
+    holder.findViewById(R.id.label_bar).setVisibility(View.VISIBLE);
+    ((TextView)holder.findViewById(android.R.id.text1)).setText(mStartLabel);
+    ((TextView)holder.findViewById(android.R.id.text2)).setText(mEndLabel);
+  }
+ else {
+    holder.findViewById(R.id.label_bar).setVisibility(View.GONE);
+  }
+}

@@ -1,0 +1,12 @@
+{
+  super.onCreate(icicle);
+  mDataUsageController=new DataUsageController(getContext());
+  Bundle args=getArguments();
+  mNetworkTemplate=args.getParcelable(DataUsageList.EXTRA_NETWORK_TEMPLATE);
+  addPreferencesFromResource(R.xml.billing_cycle);
+  mBillingCycle=findPreference(KEY_BILLING_CYCLE);
+  mDataWarning=findPreference(KEY_DATA_WARNING);
+  mEnableDataLimit=(SwitchPreference)findPreference(KEY_SET_DATA_LIMIT);
+  mEnableDataLimit.setOnPreferenceChangeListener(this);
+  mDataLimit=findPreference(KEY_DATA_LIMIT);
+}

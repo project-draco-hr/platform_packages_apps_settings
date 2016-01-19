@@ -1,0 +1,16 @@
+{
+  final Context context=getActivity();
+  final BillingCycleSettings target=(BillingCycleSettings)getTargetFragment();
+  final NetworkPolicyEditor editor=target.services.mPolicyEditor;
+  final AlertDialog.Builder builder=new AlertDialog.Builder(context);
+  final LayoutInflater dialogInflater=LayoutInflater.from(builder.getContext());
+  final View view=dialogInflater.inflate(R.layout.data_usage_cycle_editor,null,false);
+  mCycleDayPicker=(NumberPicker)view.findViewById(R.id.cycle_day);
+  final NetworkTemplate template=getArguments().getParcelable(EXTRA_TEMPLATE);
+  final int cycleDay=editor.getPolicyCycleDay(template);
+  mCycleDayPicker.setMinValue(1);
+  mCycleDayPicker.setMaxValue(31);
+  mCycleDayPicker.setValue(cycleDay);
+  mCycleDayPicker.setWrapSelectorWheel(true);
+  return builder.setTitle(R.string.data_usage_cycle_editor_title).setView(view).setPositiveButton(R.string.data_usage_cycle_editor_positive,this).create();
+}

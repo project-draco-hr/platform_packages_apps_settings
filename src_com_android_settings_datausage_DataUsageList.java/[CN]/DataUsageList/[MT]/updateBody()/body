@@ -1,0 +1,17 @@
+{
+  mBinding=true;
+  if (!isAdded())   return;
+  final Context context=getActivity();
+  getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(mTemplate,null),mChartDataCallbacks);
+  getActivity().invalidateOptionsMenu();
+  mBinding=false;
+  int seriesColor=context.getColor(R.color.sim_noitification);
+  if (mSubId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+    final SubscriptionInfo sir=services.mSubscriptionManager.getActiveSubscriptionInfo(mSubId);
+    if (sir != null) {
+      seriesColor=sir.getIconTint();
+    }
+  }
+  final int secondaryColor=Color.argb(127,Color.red(seriesColor),Color.green(seriesColor),Color.blue(seriesColor));
+  mChart.setColors(seriesColor,secondaryColor);
+}

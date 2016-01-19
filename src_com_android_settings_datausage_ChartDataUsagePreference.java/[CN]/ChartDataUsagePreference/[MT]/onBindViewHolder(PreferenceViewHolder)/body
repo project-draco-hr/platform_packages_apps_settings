@@ -1,0 +1,9 @@
+{
+  super.onBindViewHolder(holder);
+  ChartDataUsageView chart=(ChartDataUsageView)holder.itemView;
+  chart.setVisibleRange(mStart,mEnd);
+  chart.bindNetworkPolicy(mPolicy);
+  chart.bindNetworkStats(mNetwork);
+  ChartNetworkSeriesView series=(ChartNetworkSeriesView)holder.findViewById(R.id.series);
+  series.setChartColor(Color.BLACK,mSeriesColor,mSecondaryColor);
+}

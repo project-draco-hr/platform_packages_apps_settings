@@ -1,0 +1,28 @@
+{
+  DataUsageController.DataUsageInfo info=mDataUsageController.getDataUsageInfo(mDefaultTemplate);
+  Context context=getContext();
+  if (mSummaryPreference != null) {
+    Formatter.BytesResult usedResult=Formatter.formatBytes(context.getResources(),info.usageLevel,Formatter.FLAG_SHORTER);
+    mSummaryPreference.setAmount(usedResult.value);
+    mSummaryPreference.setUnits(getString(mDataUsageTemplate,usedResult.units));
+    long limit=info.limitLevel;
+    if (limit <= 0) {
+      limit=info.warningLevel;
+    }
+    if (info.usageLevel > limit) {
+      limit=info.usageLevel;
+    }
+    mSummaryPreference.setSummary(info.period);
+    mSummaryPreference.setLabels(Formatter.formatFileSize(context,0),Formatter.formatFileSize(context,limit));
+    mSummaryPreference.setRatios(info.usageLevel / (float)limit,0,(limit - info.usageLevel) / (float)limit);
+  }
+  if (mLimitPreference != null) {
+    String warning=Formatter.formatFileSize(context,info.warningLevel);
+    String limit=Formatter.formatFileSize(context,info.limitLevel);
+    mLimitPreference.setSummary(getString(info.limitLevel <= 0 ? R.string.cell_warning_only : R.string.cell_warning_and_limit,warning,limit));
+  }
+  PreferenceScreen screen=getPreferenceScreen();
+  for (int i=1; i < screen.getPreferenceCount(); i++) {
+    ((TemplatePreferenceCategory)screen.getPreference(i)).pushTemplates(services);
+  }
+}

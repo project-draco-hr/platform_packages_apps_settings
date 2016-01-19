@@ -1,0 +1,5 @@
+{
+  final int uid=mAppItem.key;
+  final int uidPolicy=services.mPolicyManager.getUidPolicy(uid);
+  return (uidPolicy & POLICY_REJECT_METERED_BACKGROUND) != 0;
+}

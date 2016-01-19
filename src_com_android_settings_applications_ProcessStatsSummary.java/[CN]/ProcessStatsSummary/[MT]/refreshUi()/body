@@ -1,7 +1,5 @@
 {
   Context context=getContext();
-  int memColor=context.getColor(R.color.running_processes_apps_ram);
-  mColors.setColors(memColor,memColor,context.getColor(R.color.running_processes_free_ram));
   MemInfo memInfo=mStatsManager.getMemInfo();
   double usedRam=memInfo.realUsedRam;
   double totalRam=memInfo.realTotalRam;
@@ -18,9 +16,10 @@
  else {
     memString=memStatesStr[memStatesStr.length - 1];
   }
-  mMemStatus.setText(TextUtils.expandTemplate(getText(R.string.storage_size_large),usedResult.value,usedResult.units));
+  mSummaryPref.setAmount(usedResult.value);
+  mSummaryPref.setUnits(usedResult.units);
   float usedRatio=(float)(usedRam / (freeRam + usedRam));
-  mColors.setRatios(usedRatio,0,1 - usedRatio);
+  mSummaryPref.setRatios(usedRatio,0,1 - usedRatio);
   mPerformance.setSummary(memString);
   mTotalMemory.setSummary(totalString);
   mAverageUsed.setSummary(Utils.formatPercentage((long)usedRam,(long)totalRam));

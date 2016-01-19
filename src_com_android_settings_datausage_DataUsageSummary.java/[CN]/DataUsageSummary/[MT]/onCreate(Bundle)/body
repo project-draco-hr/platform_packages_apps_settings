@@ -1,0 +1,36 @@
+{
+  super.onCreate(icicle);
+  boolean hasMobileData=hasMobileData(getContext());
+  mDataUsageController=new DataUsageController(getContext());
+  addPreferencesFromResource(R.xml.data_usage);
+  int defaultSubId=getDefaultSubscriptionId(getContext());
+  mDefaultTemplate=getDefaultTemplate(getContext(),defaultSubId);
+  if (hasMobileData) {
+    mLimitPreference=findPreference(KEY_LIMIT_SUMMARY);
+  }
+ else {
+    removePreference(KEY_LIMIT_SUMMARY);
+  }
+  if (!hasMobileData || !isAdmin()) {
+    removePreference(KEY_RESTRICT_BACKGROUND);
+  }
+  if (hasMobileData) {
+    List<SubscriptionInfo> subscriptions=services.mSubscriptionManager.getActiveSubscriptionInfoList();
+    if (subscriptions.size() == 0) {
+      addMobileSection(defaultSubId);
+    }
+    for (int i=0; i < subscriptions.size(); i++) {
+      addMobileSection(subscriptions.get(i).getSubscriptionId());
+    }
+  }
+  boolean hasWifiRadio=hasWifiRadio(getContext());
+  if (hasWifiRadio) {
+    addWifiSection();
+  }
+  if (hasEthernet(getContext())) {
+    addEthernetSection();
+  }
+  mDataUsageTemplate=hasMobileData ? R.string.cell_data_template : hasWifiRadio ? R.string.wifi_data_template : R.string.ethernet_data_template;
+  mSummaryPreference=(SummaryPreference)findPreference(KEY_STATUS_HEADER);
+  setHasOptionsMenu(true);
+}

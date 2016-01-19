@@ -1,0 +1,16 @@
+{
+  if (listening) {
+    DataUsageController.DataUsageInfo info=mDataController.getDataUsageInfo();
+    String used;
+    if (info == null) {
+      used=Formatter.formatFileSize(mActivity,0);
+    }
+ else     if (info.limitLevel <= 0) {
+      used=Formatter.formatFileSize(mActivity,info.usageLevel);
+    }
+ else {
+      used=Utils.formatPercentage(info.usageLevel,info.limitLevel);
+    }
+    mSummaryLoader.setSummary(this,mActivity.getString(R.string.data_usage_summary_format,used));
+  }
+}

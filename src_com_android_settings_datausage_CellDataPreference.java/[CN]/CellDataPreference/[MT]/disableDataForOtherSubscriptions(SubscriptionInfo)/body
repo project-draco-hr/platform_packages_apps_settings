@@ -1,0 +1,11 @@
+{
+  List<SubscriptionInfo> subInfoList=mSubscriptionManager.getActiveSubscriptionInfoList();
+  if (subInfoList != null) {
+    for (    SubscriptionInfo subInfo : subInfoList) {
+      if (subInfo.getSubscriptionId() != currentSir.getSubscriptionId()) {
+        mTelephonyManager.setDataEnabled(subInfo.getSubscriptionId(),false);
+      }
+    }
+  }
+  getContext().sendBroadcast(new Intent(ACTION_DATA_ENABLED_CHANGED));
+}

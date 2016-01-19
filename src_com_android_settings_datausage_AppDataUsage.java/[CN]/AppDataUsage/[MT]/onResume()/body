@@ -1,0 +1,6 @@
+{
+  super.onResume();
+  mPolicy=services.mPolicyEditor.getPolicy(mTemplate);
+  getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(mTemplate,mAppItem),mChartDataCallbacks);
+  updatePrefs();
+}

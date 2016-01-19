@@ -1,0 +1,13 @@
+{
+  final int uid=entry.uid;
+  AppItem item=knownItems.get(collapseKey);
+  if (item == null) {
+    item=new AppItem(collapseKey);
+    item.category=itemCategory;
+    items.add(item);
+    knownItems.put(item.key,item);
+  }
+  item.addUid(uid);
+  item.total+=entry.rxBytes + entry.txBytes;
+  return Math.max(largest,item.total);
+}

@@ -1,0 +1,24 @@
+{
+  final NetworkPolicy policy=services.mPolicyEditor.getPolicy(mTemplate);
+  if (isNetworkPolicyModifiable(policy,mSubId) && isMobileDataAvailable(mSubId)) {
+    mChart.bindNetworkPolicy(policy);
+    mHeader.findViewById(R.id.filter_settings).setVisibility(View.VISIBLE);
+    mHeader.findViewById(R.id.filter_settings).setOnClickListener(new View.OnClickListener(){
+      @Override public void onClick(      View v){
+        Bundle args=new Bundle();
+        args.putParcelable(DataUsageList.EXTRA_NETWORK_TEMPLATE,mTemplate);
+        startFragment(DataUsageList.this,BillingCycleSettings.class.getName(),R.string.billing_cycle,0,args);
+      }
+    }
+);
+  }
+ else {
+    mChart.bindNetworkPolicy(null);
+    mHeader.findViewById(R.id.filter_settings).setVisibility(View.GONE);
+  }
+  if (refreshCycle) {
+    if (mCycleAdapter.updateCycleList(policy,mChartData)) {
+      updateDetailData();
+    }
+  }
+}

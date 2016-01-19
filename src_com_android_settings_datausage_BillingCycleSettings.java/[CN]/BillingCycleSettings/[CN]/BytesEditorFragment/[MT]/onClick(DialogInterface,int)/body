@@ -1,0 +1,19 @@
+{
+  if (which != DialogInterface.BUTTON_POSITIVE) {
+    return;
+  }
+  final BillingCycleSettings target=(BillingCycleSettings)getTargetFragment();
+  final NetworkPolicyEditor editor=target.services.mPolicyEditor;
+  final NetworkTemplate template=getArguments().getParcelable(EXTRA_TEMPLATE);
+  final boolean isLimit=getArguments().getBoolean(EXTRA_LIMIT);
+  NumberPicker bytesPicker=(NumberPicker)mView.findViewById(R.id.bytes);
+  bytesPicker.clearFocus();
+  final long bytes=bytesPicker.getValue() * MB_IN_BYTES;
+  if (isLimit) {
+    editor.setPolicyLimitBytes(template,bytes);
+  }
+ else {
+    editor.setPolicyWarningBytes(template,bytes);
+  }
+  target.updatePrefs();
+}

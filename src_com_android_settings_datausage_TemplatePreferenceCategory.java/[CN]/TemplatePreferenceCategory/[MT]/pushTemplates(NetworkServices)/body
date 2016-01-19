@@ -1,0 +1,8 @@
+{
+  if (mTemplate == null) {
+    throw new RuntimeException("null mTemplate for " + getKey());
+  }
+  for (int i=0; i < getPreferenceCount(); i++) {
+    ((TemplatePreference)getPreference(i)).setTemplate(mTemplate,mSubId,services);
+  }
+}

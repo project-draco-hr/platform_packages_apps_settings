@@ -1,0 +1,10 @@
+{
+  final NetworkTemplate template=getArguments().getParcelable(EXTRA_TEMPLATE);
+  final BillingCycleSettings target=(BillingCycleSettings)getTargetFragment();
+  final NetworkPolicyEditor editor=target.services.mPolicyEditor;
+  mCycleDayPicker.clearFocus();
+  final int cycleDay=mCycleDayPicker.getValue();
+  final String cycleTimezone=new Time().timezone;
+  editor.setPolicyCycleDay(template,cycleDay,cycleTimezone);
+  target.updatePrefs();
+}

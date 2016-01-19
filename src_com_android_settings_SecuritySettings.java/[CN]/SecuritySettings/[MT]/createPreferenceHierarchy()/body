@@ -72,20 +72,16 @@
     root.findPreference(KEY_SCREEN_PINNING).setSummary(getResources().getString(R.string.switch_on_text));
   }
   mShowPassword=(SwitchPreference)root.findPreference(KEY_SHOW_PASSWORD);
-  mResetCredentials=root.findPreference(KEY_RESET_CREDENTIALS);
+  mResetCredentials=(RestrictedPreference)root.findPreference(KEY_RESET_CREDENTIALS);
   final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   mKeyStore=KeyStore.getInstance();
-  if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
-    Preference credentialStorageType=root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE);
-    final int storageSummaryRes=mKeyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware : R.string.credential_storage_type_software;
-    credentialStorageType.setSummary(storageSummaryRes);
-  }
- else {
-    PreferenceGroup credentialsManager=(PreferenceGroup)root.findPreference(KEY_CREDENTIALS_MANAGER);
-    credentialsManager.removePreference(root.findPreference(KEY_RESET_CREDENTIALS));
-    credentialsManager.removePreference(root.findPreference(KEY_CREDENTIALS_INSTALL));
-    credentialsManager.removePreference(root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE));
-  }
+  RestrictedPreference credentialStorageType=(RestrictedPreference)root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE);
+  credentialStorageType.checkRestrictionAndSetDisabled(UserManager.DISALLOW_CONFIG_CREDENTIALS);
+  RestrictedPreference installCredentials=(RestrictedPreference)root.findPreference(KEY_CREDENTIALS_INSTALL);
+  installCredentials.checkRestrictionAndSetDisabled(UserManager.DISALLOW_CONFIG_CREDENTIALS);
+  mResetCredentials.checkRestrictionAndSetDisabled(UserManager.DISALLOW_CONFIG_CREDENTIALS);
+  final int storageSummaryRes=mKeyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware : R.string.credential_storage_type_software;
+  credentialStorageType.setSummary(storageSummaryRes);
   PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
   mToggleAppInstallation=(RestrictedSwitchPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);
   mToggleAppInstallation.setChecked(isNonMarketAppsAllowed());

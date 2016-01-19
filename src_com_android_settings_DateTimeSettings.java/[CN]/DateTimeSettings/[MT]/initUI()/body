@@ -1,11 +1,9 @@
 {
   boolean autoTimeEnabled=getAutoState(Settings.Global.AUTO_TIME);
   boolean autoTimeZoneEnabled=getAutoState(Settings.Global.AUTO_TIME_ZONE);
-  mAutoTimePref=(SwitchPreference)findPreference(KEY_AUTO_TIME);
-  DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-  if (dpm.getAutoTimeRequired()) {
-    mAutoTimePref.setEnabled(false);
-  }
+  mAutoTimePref=(RestrictedSwitchPreference)findPreference(KEY_AUTO_TIME);
+  EnforcedAdmin admin=RestrictedLockUtils.checkIfAutoTimeRequired(getActivity());
+  mAutoTimePref.setDisabledByAdmin(admin);
   Intent intent=getActivity().getIntent();
   boolean isFirstRun=intent.getBooleanExtra(EXTRA_IS_FIRST_RUN,false);
   mDummyDate=Calendar.getInstance();

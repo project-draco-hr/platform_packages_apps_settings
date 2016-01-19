@@ -4,7 +4,13 @@
     mLocationMode.setSummary(modeDescription);
   }
   final boolean enabled=(mode != android.provider.Settings.Secure.LOCATION_MODE_OFF);
-  mSwitchBar.setEnabled(!restricted);
+  EnforcedAdmin admin=RestrictedLockUtils.checkIfRestrictionEnforced(getActivity(),UserManager.DISALLOW_SHARE_LOCATION,UserHandle.myUserId());
+  if (admin != null) {
+    mSwitchBar.setDisabledByAdmin(admin);
+  }
+ else {
+    mSwitchBar.setEnabled(!restricted);
+  }
   mLocationMode.setEnabled(enabled && !restricted);
   mCategoryRecentLocationRequests.setEnabled(enabled);
   if (enabled != mSwitch.isChecked()) {

@@ -1,4 +1,8 @@
 {
+  if (enabled && mDisabledByAdmin) {
+    setDisabledByAdmin(null);
+    return;
+  }
   super.setEnabled(enabled);
   mTextView.setEnabled(enabled);
   mSwitch.setEnabled(enabled);

@@ -1,4 +1,9 @@
 {
-  final boolean isChecked=!mSwitch.isChecked();
-  setChecked(isChecked);
+  if (mDisabledByAdmin) {
+    RestrictedLockUtils.sendShowAdminSupportDetailsIntent(mContext,mEnforcedAdmin);
+  }
+ else {
+    final boolean isChecked=!mSwitch.isChecked();
+    setChecked(isChecked);
+  }
 }

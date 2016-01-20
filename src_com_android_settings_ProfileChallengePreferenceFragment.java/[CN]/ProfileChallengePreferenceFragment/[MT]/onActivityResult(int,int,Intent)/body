@@ -1,8 +1,7 @@
 {
   super.onActivityResult(requestCode,resultCode,data);
   if (requestCode == UNIFY_LOCK_METHOD_REQUEST && resultCode == Activity.RESULT_OK) {
-    mLockPatternUtils.clearLock(mProfileUserId);
-    mLockPatternUtils.setSeparateProfileChallengeEnabled(mProfileUserId,false);
+    unifyLocks();
     return;
   }
 }

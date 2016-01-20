@@ -1,0 +1,10 @@
+{
+  super.setUp();
+  System.setProperty("dexmaker.dexcache",getContext().getCacheDir().toString());
+  MockitoAnnotations.initMocks(this);
+  when(mUserManager.getUserHandle()).thenReturn(TEST_PRIMARY_USER_ID);
+  UserInfo primaryUser=new UserInfo(TEST_PRIMARY_USER_ID,null,UserInfo.FLAG_INITIALIZED | UserInfo.FLAG_PRIMARY);
+  when(mUserManager.getUserInfo(TEST_PRIMARY_USER_ID)).thenReturn(primaryUser);
+  UserInfo managedProfile=new UserInfo(TEST_MANAGED_PROFILE_ID,null,UserInfo.FLAG_INITIALIZED | UserInfo.FLAG_MANAGED_PROFILE);
+  when(mUserManager.getUserInfo(eq(TEST_MANAGED_PROFILE_ID))).thenReturn(managedProfile);
+}

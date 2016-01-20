@@ -1,0 +1,5 @@
+{
+  UserHandle[] userHandles=new UserHandle[]{new UserHandle(TEST_PRIMARY_USER_ID)};
+  when(mUserManager.getUserProfiles()).thenReturn(new ArrayList<UserHandle>(Arrays.asList(userHandles)));
+  assertNull(Utils.getManagedProfile(mUserManager));
+}

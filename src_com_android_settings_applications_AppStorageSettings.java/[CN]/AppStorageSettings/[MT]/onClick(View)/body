@@ -1,12 +1,19 @@
 {
   if (v == mClearCacheButton) {
-    if (mClearCacheObserver == null) {
+    if (mAppsControlDisallowedAdmin != null) {
+      RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mAppsControlDisallowedAdmin);
+      return;
+    }
+ else     if (mClearCacheObserver == null) {
       mClearCacheObserver=new ClearCacheObserver();
     }
     mPm.deleteApplicationCacheFiles(mPackageName,mClearCacheObserver);
   }
  else   if (v == mClearDataButton) {
-    if (mAppEntry.info.manageSpaceActivityName != null) {
+    if (mAppsControlDisallowedAdmin != null) {
+      RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mAppsControlDisallowedAdmin);
+    }
+ else     if (mAppEntry.info.manageSpaceActivityName != null) {
       if (!Utils.isMonkeyRunning()) {
         Intent intent=new Intent(Intent.ACTION_DEFAULT);
         intent.setClassName(mAppEntry.info.packageName,mAppEntry.info.manageSpaceActivityName);
@@ -21,6 +28,11 @@
     mDialogBuilder.show();
   }
  else   if (v == mClearUriButton) {
-    clearUriPermissions();
+    if (mAppsControlDisallowedAdmin != null) {
+      RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mAppsControlDisallowedAdmin);
+    }
+ else {
+      clearUriPermissions();
+    }
   }
 }

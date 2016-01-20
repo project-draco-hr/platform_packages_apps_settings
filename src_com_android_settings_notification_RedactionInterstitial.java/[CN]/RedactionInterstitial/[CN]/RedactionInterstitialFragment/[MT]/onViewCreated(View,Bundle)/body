@@ -1,14 +1,7 @@
 {
   super.onViewCreated(view,savedInstanceState);
   mRadioGroup=(RadioGroup)view.findViewById(R.id.radio_group);
-  mShowAllButton=(RadioButton)view.findViewById(R.id.show_all);
-  mRedactSensitiveButton=(RadioButton)view.findViewById(R.id.redact_sensitive);
+  mShowAllButton=(RestrictedRadioButton)view.findViewById(R.id.show_all);
+  mRedactSensitiveButton=(RestrictedRadioButton)view.findViewById(R.id.redact_sensitive);
   mRadioGroup.setOnCheckedChangeListener(this);
-  if (isSecureNotificationsDisabled(getActivity())) {
-    mShowAllButton.setEnabled(false);
-    mRedactSensitiveButton.setEnabled(false);
-  }
- else   if (isUnredactedNotificationsDisabled(getActivity())) {
-    mShowAllButton.setEnabled(false);
-  }
 }

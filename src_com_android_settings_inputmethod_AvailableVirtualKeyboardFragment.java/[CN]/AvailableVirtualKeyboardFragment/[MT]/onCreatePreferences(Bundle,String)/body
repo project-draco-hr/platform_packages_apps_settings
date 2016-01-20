@@ -1,0 +1,9 @@
+{
+  Activity activity=getActivity();
+  PreferenceScreen screen=getPreferenceManager().createPreferenceScreen(activity);
+  screen.setTitle(activity.getString(R.string.available_virtual_keyboard_category));
+  setPreferenceScreen(screen);
+  mInputMethodSettingValues=InputMethodSettingValuesWrapper.getInstance(activity);
+  mImm=activity.getSystemService(InputMethodManager.class);
+  mDpm=activity.getSystemService(DevicePolicyManager.class);
+}

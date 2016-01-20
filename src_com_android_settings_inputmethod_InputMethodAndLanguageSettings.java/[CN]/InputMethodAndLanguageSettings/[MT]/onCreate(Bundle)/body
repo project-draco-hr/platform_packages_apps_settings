@@ -28,12 +28,16 @@
   mShowsOnlyFullImeAndKeyboardList=Settings.ACTION_INPUT_METHOD_SETTINGS.equals(startingIntent.getAction());
   if (mShowsOnlyFullImeAndKeyboardList) {
     getPreferenceScreen().removeAll();
-    getPreferenceScreen().addPreference(mHardKeyboardCategory);
+    if (mHardKeyboardCategory != null) {
+      getPreferenceScreen().addPreference(mHardKeyboardCategory);
+    }
     if (SHOW_INPUT_METHOD_SWITCHER_SETTINGS) {
       getPreferenceScreen().addPreference(mShowInputMethodSelectorPref);
     }
-    mKeyboardSettingsCategory.removeAll();
-    getPreferenceScreen().addPreference(mKeyboardSettingsCategory);
+    if (mKeyboardSettingsCategory != null) {
+      mKeyboardSettingsCategory.removeAll();
+      getPreferenceScreen().addPreference(mKeyboardSettingsCategory);
+    }
   }
   mIm=(InputManager)activity.getSystemService(Context.INPUT_SERVICE);
   updateInputDevices();

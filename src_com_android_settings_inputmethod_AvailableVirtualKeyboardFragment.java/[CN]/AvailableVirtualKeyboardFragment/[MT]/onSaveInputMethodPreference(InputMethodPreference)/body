@@ -1,0 +1,8 @@
+{
+  final boolean hasHardwareKeyboard=getResources().getConfiguration().keyboard == Configuration.KEYBOARD_QWERTY;
+  InputMethodAndSubtypeUtil.saveInputMethodSubtypeList(this,getContentResolver(),mImm.getInputMethodList(),hasHardwareKeyboard);
+  mInputMethodSettingValues.refreshAllInputMethodAndSubtypes();
+  for (  final InputMethodPreference p : mInputMethodPreferenceList) {
+    p.updatePreferenceViews();
+  }
+}

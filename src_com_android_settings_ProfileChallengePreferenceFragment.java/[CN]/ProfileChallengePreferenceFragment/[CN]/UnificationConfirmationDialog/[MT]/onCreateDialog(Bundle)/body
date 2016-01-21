@@ -1,10 +1,14 @@
 {
   final Bundle args=getArguments();
+  final ProfileChallengePreferenceFragment parentFragment=((ProfileChallengePreferenceFragment)getParentFragment());
   return new AlertDialog.Builder(getActivity()).setTitle(R.string.lock_settings_profile_unification_dialog_title).setMessage(R.string.lock_settings_profile_unification_dialog_body).setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){
       String title=getContext().getString(R.string.lock_settings_profile_screen_lock_title);
-      ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(getActivity(),getParentFragment());
-      helper.launchConfirmationActivity(UNIFY_LOCK_METHOD_REQUEST,title,true,args.getInt(ARG_USER_ID));
+      ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(getActivity(),parentFragment);
+      if (!helper.launchConfirmationActivity(UNIFY_LOCK_METHOD_REQUEST,title,true,args.getInt(ARG_USER_ID))) {
+        parentFragment.unifyLocks();
+        parentFragment.createPreferenceHierarchy();
+      }
     }
   }
 ).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){

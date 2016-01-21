@@ -24,7 +24,7 @@
   if (mUserCaps.mIsAdmin) {
     mMePreference.setSummary(R.string.user_admin);
   }
-  mAddUser=findPreference(KEY_ADD_USER);
+  mAddUser=(DimmableIconPreference)findPreference(KEY_ADD_USER);
   if (mUserCaps.mCanAddUser) {
     mAddUser.setOnPreferenceClickListener(this);
     if (!mUserCaps.mCanAddRestrictedProfile) {
@@ -32,7 +32,7 @@
     }
   }
   mLockScreenSettings=(PreferenceGroup)findPreference("lock_screen_settings");
-  mAddUserWhenLocked=(SwitchPreference)findPreference("add_users_when_locked");
+  mAddUserWhenLocked=(RestrictedSwitchPreference)findPreference("add_users_when_locked");
   loadProfile();
   setHasOptionsMenu(true);
   IntentFilter filter=new IntentFilter(Intent.ACTION_USER_REMOVED);

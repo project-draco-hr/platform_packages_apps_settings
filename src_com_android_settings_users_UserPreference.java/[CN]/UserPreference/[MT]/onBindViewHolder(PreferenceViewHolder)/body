@@ -13,7 +13,8 @@
       deleteDividerView.setVisibility(View.GONE);
     }
   }
-  View manageView=view.findViewById(R.id.manage_user);
+  final boolean disabledByAdmin=isDisabledByAdmin();
+  ImageView manageView=(ImageView)view.findViewById(R.id.manage_user);
   if (manageView != null) {
     if (mSettingsClickListener != null) {
       manageView.setOnClickListener(mSettingsClickListener);
@@ -26,6 +27,8 @@
       manageView.setVisibility(View.GONE);
       manageDividerView.setVisibility(View.GONE);
     }
+    manageView.setImageAlpha(disabledByAdmin ? ALPHA_DISABLED : ALPHA_ENABLED);
   }
   super.onBindViewHolder(view);
+  dimIcon(disabledByAdmin);
 }

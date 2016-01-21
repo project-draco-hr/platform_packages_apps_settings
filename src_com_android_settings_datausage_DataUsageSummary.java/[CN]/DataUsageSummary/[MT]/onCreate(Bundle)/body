@@ -4,6 +4,9 @@
   mDataUsageController=new DataUsageController(getContext());
   addPreferencesFromResource(R.xml.data_usage);
   int defaultSubId=getDefaultSubscriptionId(getContext());
+  if (defaultSubId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+    hasMobileData=false;
+  }
   mDefaultTemplate=getDefaultTemplate(getContext(),defaultSubId);
   if (hasMobileData) {
     mLimitPreference=findPreference(KEY_LIMIT_SUMMARY);

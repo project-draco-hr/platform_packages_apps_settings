@@ -1,5 +1,5 @@
 {
-  if (hasMobileData(context)) {
+  if (hasMobileData(context) && defaultSubId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
     TelephonyManager telephonyManager=TelephonyManager.from(context);
     NetworkTemplate mobileAll=NetworkTemplate.buildTemplateMobileAll(telephonyManager.getSubscriberId(defaultSubId));
     return NetworkTemplate.normalize(mobileAll,telephonyManager.getMergedSubscriberIds());

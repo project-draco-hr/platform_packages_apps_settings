@@ -30,6 +30,7 @@
     mEapCaCertSpinner=(Spinner)mView.findViewById(R.id.ca_cert);
     mEapCaCertSpinner.setOnItemSelectedListener(this);
     mEapUserCertSpinner=(Spinner)mView.findViewById(R.id.user_cert);
+    mEapUserCertSpinner.setOnItemSelectedListener(this);
     mEapIdentityView=(TextView)mView.findViewById(R.id.identity);
     mEapAnonymousView=(TextView)mView.findViewById(R.id.anonymous);
     loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,false);
@@ -63,14 +64,14 @@ break;
 }
 String[] caCerts=enterpriseConfig.getCaCertificateAliases();
 if (caCerts == null) {
-setSelection(mEapCaCertSpinner,unspecifiedCert);
+setSelection(mEapCaCertSpinner,mUnspecifiedCertString);
 }
  else if (caCerts.length == 1) {
 setSelection(mEapCaCertSpinner,caCerts[0]);
 }
  else {
 loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,true);
-mEapCaCertSpinner.setSelection(multipleCertSetIndex);
+mEapCaCertSpinner.setSelection(MULTIPLE_CERT_SET_INDEX);
 }
 setSelection(mEapUserCertSpinner,enterpriseConfig.getClientCertificateAlias());
 mEapIdentityView.setText(enterpriseConfig.getIdentity());

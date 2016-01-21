@@ -2,8 +2,8 @@
   try {
     ASN1InputStream bIn=new ASN1InputStream(new ByteArrayInputStream(keyData));
     PrivateKeyInfo pki=PrivateKeyInfo.getInstance(bIn.readObject());
-    String algId=pki.getAlgorithmId().getAlgorithm().getId();
-    String algName=AlgNameMapper.map2AlgName(algId);
+    String algOid=pki.getAlgorithmId().getAlgorithm().getId();
+    String algName=new AlgorithmId(new ObjectIdentifier(algOid)).getName();
     return KeyChain.isBoundKeyAlgorithm(algName);
   }
  catch (  IOException e) {

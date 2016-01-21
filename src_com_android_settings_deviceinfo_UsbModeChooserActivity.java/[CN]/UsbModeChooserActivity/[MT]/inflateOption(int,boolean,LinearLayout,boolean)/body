@@ -1,0 +1,31 @@
+{
+  View v=mLayoutInflater.inflate(R.layout.radio_with_summary,container,false);
+  TextView titleView=(TextView)v.findViewById(android.R.id.title);
+  titleView.setText(getTitle(mode));
+  TextView summaryView=(TextView)v.findViewById(android.R.id.summary);
+  summaryView.setText(getSummary(mode));
+  if (disallowedByAdmin) {
+    if (mEnforcedAdmin != null) {
+      setDisabledByAdmin(titleView,summaryView);
+    }
+ else {
+      return;
+    }
+  }
+  v.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      if (disallowedByAdmin && mEnforcedAdmin != null) {
+        RestrictedLockUtils.sendShowAdminSupportDetailsIntent(UsbModeChooserActivity.this,mEnforcedAdmin);
+        return;
+      }
+      if (!ActivityManager.isUserAMonkey()) {
+        mBackend.setMode(mode);
+      }
+      mDialog.dismiss();
+      finish();
+    }
+  }
+);
+  ((Checkable)v).setChecked(selected);
+  container.addView(v);
+}

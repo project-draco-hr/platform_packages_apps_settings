@@ -1,0 +1,12 @@
+{
+  super.onCreate(savedInstanceState);
+  mVideoPreference=new VideoPreference(getPrefContext());
+  mVideoPreference.setSelectable(false);
+  mVideoPreference.setPersistent(false);
+  mVideoPreference.setLayoutResource(R.layout.video_preference);
+  final PreferenceScreen preferenceScreen=getPreferenceManager().getPreferenceScreen();
+  preferenceScreen.setOrderingAsAdded(false);
+  mVideoPreference.setOrder(0);
+  mSummaryPreference.setOrder(1);
+  preferenceScreen.addPreference(mVideoPreference);
+}

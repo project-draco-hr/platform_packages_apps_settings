@@ -12,7 +12,7 @@
   PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
   if (securityCategory != null) {
     if (mLockPatternUtils.isSeparateProfileChallengeEnabled(mProfileUserId)) {
-      addUnificationPreference(securityCategory);
+      maybeAddUnificationPreference(securityCategory);
     }
  else {
       Preference lockPreference=securityCategory.findPreference(KEY_UNLOCK_SET_OR_CHANGE);

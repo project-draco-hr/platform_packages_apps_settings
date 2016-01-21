@@ -1,0 +1,9 @@
+{
+  super.onCreate(icicle);
+  setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getContext()));
+  getPreferenceScreen().setOrderingAsAdded(false);
+  mApplicationsState=ApplicationsState.getInstance((Application)getContext().getApplicationContext());
+  mDataSaverBackend=new DataSaverBackend(getContext());
+  mDataUsageBridge=new AppStateDataUsageBridge(mApplicationsState,this,mDataSaverBackend);
+  mSession=mApplicationsState.newSession(this);
+}

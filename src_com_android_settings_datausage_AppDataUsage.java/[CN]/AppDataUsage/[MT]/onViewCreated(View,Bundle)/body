@@ -1,6 +1,6 @@
 {
   super.onViewCreated(view,savedInstanceState);
-  View header=setPinnedHeaderView(R.layout.data_usage_app_header);
+  View header=setPinnedHeaderView(R.layout.app_header);
   String pkg=mPackages.size() != 0 ? mPackages.valueAt(0) : null;
   int uid=0;
   try {
@@ -9,6 +9,4 @@
  catch (  PackageManager.NameNotFoundException e) {
   }
   AppHeader.setupHeaderView(getActivity(),mIcon,mLabel,pkg,uid,AppHeader.includeAppInfo(this),0,header);
-  mCycleSpinner=(Spinner)header.findViewById(R.id.filter_spinner);
-  mCycleAdapter=new CycleAdapter(getContext(),mCycleSpinner,mCycleListener);
 }

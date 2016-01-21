@@ -3,5 +3,9 @@
     setAppRestrictBackground((Boolean)newValue);
     return true;
   }
+ else   if (preference == mUnrestrictedData) {
+    mDataSaverBackend.setIsWhitelisted(mAppItem.key,(Boolean)newValue);
+    return true;
+  }
   return false;
 }

@@ -1,0 +1,7 @@
+{
+  super(context);
+  mEntry=entry;
+  mEntry.ensureLabel(getContext());
+  setTitle(entry.label);
+  setChecked(((AppStateDataUsageBridge.DataUsageState)entry.extraInfo).isDataSaverWhitelisted);
+}

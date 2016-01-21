@@ -19,8 +19,8 @@ setAnonymousIdentInvisible();
 setPasswordInvisible();
 break;
 case WIFI_EAP_METHOD_PEAP:
-if (mPhase2Adapter != PHASE2_PEAP_ADAPTER) {
-mPhase2Adapter=PHASE2_PEAP_ADAPTER;
+if (mPhase2Adapter != mPhase2PeapAdapter) {
+mPhase2Adapter=mPhase2PeapAdapter;
 mPhase2Spinner.setAdapter(mPhase2Adapter);
 }
 mView.findViewById(R.id.l_phase2).setVisibility(View.VISIBLE);
@@ -28,8 +28,8 @@ mView.findViewById(R.id.l_anonymous).setVisibility(View.VISIBLE);
 setUserCertInvisible();
 break;
 case WIFI_EAP_METHOD_TTLS:
-if (mPhase2Adapter != PHASE2_FULL_ADAPTER) {
-mPhase2Adapter=PHASE2_FULL_ADAPTER;
+if (mPhase2Adapter != mPhase2FullAdapter) {
+mPhase2Adapter=mPhase2FullAdapter;
 mPhase2Spinner.setAdapter(mPhase2Adapter);
 }
 mView.findViewById(R.id.l_phase2).setVisibility(View.VISIBLE);

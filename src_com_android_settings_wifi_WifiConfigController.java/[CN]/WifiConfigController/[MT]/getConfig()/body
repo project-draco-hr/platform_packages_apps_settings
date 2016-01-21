@@ -74,10 +74,10 @@ config.enterpriseConfig.setPhase2Method(phase2Method);
 break;
 }
 String caCert=(String)mEapCaCertSpinner.getSelectedItem();
-if (caCert.equals(unspecifiedCert)) {
+if (caCert.equals(mUnspecifiedCertString)) {
 config.enterpriseConfig.setCaCertificateAliases(null);
 }
- else if (caCert.equals(multipleCertSet)) {
+ else if (caCert.equals(mMultipleCertSetString)) {
 if (mAccessPoint != null) {
 if (!mAccessPoint.isSaved()) {
 Log.e(TAG,"Multiple certs can only be set when editing saved network");
@@ -89,7 +89,7 @@ config.enterpriseConfig.setCaCertificateAliases(mAccessPoint.getConfig().enterpr
 config.enterpriseConfig.setCaCertificateAliases(new String[]{caCert});
 }
 String clientCert=(String)mEapUserCertSpinner.getSelectedItem();
-if (clientCert.equals(unspecifiedCert)) clientCert="";
+if (clientCert.equals(mUnspecifiedCertString)) clientCert="";
 config.enterpriseConfig.setClientCertificateAlias(clientCert);
 if (eapMethod == Eap.SIM || eapMethod == Eap.AKA || eapMethod == Eap.AKA_PRIME) {
 config.enterpriseConfig.setIdentity("");

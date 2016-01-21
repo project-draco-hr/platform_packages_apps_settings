@@ -10,7 +10,10 @@
  else {
     enabled=ipAndProxyFieldsAreValid();
   }
-  if (mEapCaCertSpinner != null && mView.findViewById(R.id.l_ca_cert).getVisibility() != View.GONE && ((String)mEapCaCertSpinner.getSelectedItem()).equals(unspecifiedCert)) {
+  if (mEapCaCertSpinner != null && mView.findViewById(R.id.l_ca_cert).getVisibility() != View.GONE && ((String)mEapCaCertSpinner.getSelectedItem()).equals(mUnspecifiedCertString)) {
+    enabled=false;
+  }
+  if (mEapUserCertSpinner != null && mView.findViewById(R.id.l_user_cert).getVisibility() != View.GONE && ((String)mEapUserCertSpinner.getSelectedItem()).equals(mUnspecifiedCertString)) {
     enabled=false;
   }
   return enabled;

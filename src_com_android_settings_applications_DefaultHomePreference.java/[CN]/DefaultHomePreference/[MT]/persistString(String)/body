@@ -1,0 +1,8 @@
+{
+  if (value != null) {
+    ComponentName component=ComponentName.unflattenFromString(value);
+    getContext().getPackageManager().replacePreferredActivity(mHomeFilter,IntentFilter.MATCH_CATEGORY_EMPTY,mAllHomeComponents.toArray(new ComponentName[0]),component);
+    setSummary(getEntry());
+  }
+  return super.persistString(value);
+}

@@ -1,0 +1,9 @@
+{
+  try {
+    ApplicationInfo appInfo=pm.getApplicationInfo(resolveInfo.activityInfo.packageName,0);
+    return versionNumberAtLeastL(appInfo.targetSdkVersion);
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    return false;
+  }
+}

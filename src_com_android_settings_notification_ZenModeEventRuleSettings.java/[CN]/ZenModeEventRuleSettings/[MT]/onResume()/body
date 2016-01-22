@@ -1,5 +1,8 @@
 {
   super.onResume();
+  if (isUiRestricted()) {
+    return;
+  }
   if (!mCreate) {
     reloadCalendar();
   }

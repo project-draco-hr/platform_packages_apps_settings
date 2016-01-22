@@ -1,0 +1,8 @@
+{
+  super.onBindViewHolder(view);
+  if (mFragment != null) {
+    view.itemView.setOnCreateContextMenuListener(mFragment);
+    view.itemView.setTag(this);
+    view.itemView.setLongClickable(true);
+  }
+}

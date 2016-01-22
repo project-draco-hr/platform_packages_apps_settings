@@ -11,4 +11,8 @@
     }
   }
 );
+  int credentialOwnerUserId=Utils.getCredentialOwnerUserId(getActivity(),Utils.getUserIdFromBundle(getActivity(),getActivity().getIntent().getExtras()));
+  if (Utils.isManagedProfile(UserManager.get(getActivity()),credentialOwnerUserId)) {
+    setWorkChallengeBackground(view);
+  }
 }

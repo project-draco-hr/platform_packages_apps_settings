@@ -1,5 +1,9 @@
 {
-  if (getIntent().getBooleanExtra(ConfirmDeviceCredentialBaseFragment.DARK_THEME,false)) {
+  int credentialOwnerUserId=Utils.getCredentialOwnerUserId(this,Utils.getUserIdFromBundle(this,getIntent().getExtras()));
+  if (Utils.isManagedProfile(UserManager.get(this),credentialOwnerUserId)) {
+    setTheme(R.style.Theme_ConfirmDeviceCredentialsWork);
+  }
+ else   if (getIntent().getBooleanExtra(ConfirmDeviceCredentialBaseFragment.DARK_THEME,false)) {
     setTheme(R.style.Theme_ConfirmDeviceCredentialsDark);
     mDark=true;
   }

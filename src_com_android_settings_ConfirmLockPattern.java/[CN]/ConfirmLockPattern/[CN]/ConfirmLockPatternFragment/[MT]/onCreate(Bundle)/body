@@ -2,5 +2,5 @@
   super.onCreate(savedInstanceState);
   mLockPatternUtils=new LockPatternUtils(getActivity());
   Intent intent=getActivity().getIntent();
-  mEffectiveUserId=Utils.getSameOwnerUserId(getActivity(),intent.getExtras());
+  mEffectiveUserId=Utils.getUserIdFromBundle(getActivity(),intent.getExtras());
 }

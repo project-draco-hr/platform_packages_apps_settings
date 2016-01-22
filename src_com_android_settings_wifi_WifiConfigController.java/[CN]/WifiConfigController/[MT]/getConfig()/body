@@ -74,7 +74,7 @@ config.enterpriseConfig.setPhase2Method(phase2Method);
 break;
 }
 String caCert=(String)mEapCaCertSpinner.getSelectedItem();
-if (caCert.equals(mUnspecifiedCertString)) {
+if (caCert.equals(mUnspecifiedCertString) || caCert.equals(mDoNotValidateEapServerString)) {
 config.enterpriseConfig.setCaCertificateAliases(null);
 }
  else if (caCert.equals(mMultipleCertSetString)) {
@@ -89,7 +89,9 @@ config.enterpriseConfig.setCaCertificateAliases(mAccessPoint.getConfig().enterpr
 config.enterpriseConfig.setCaCertificateAliases(new String[]{caCert});
 }
 String clientCert=(String)mEapUserCertSpinner.getSelectedItem();
-if (clientCert.equals(mUnspecifiedCertString)) clientCert="";
+if (clientCert.equals(mUnspecifiedCertString) || clientCert.equals(mDoNotProvideEapUserCertString)) {
+clientCert="";
+}
 config.enterpriseConfig.setClientCertificateAlias(clientCert);
 if (eapMethod == Eap.SIM || eapMethod == Eap.AKA || eapMethod == Eap.AKA_PRIME) {
 config.enterpriseConfig.setIdentity("");

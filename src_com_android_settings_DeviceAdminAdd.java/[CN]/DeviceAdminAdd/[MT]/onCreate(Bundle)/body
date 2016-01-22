@@ -156,6 +156,15 @@ catch (  IOException e) {
     }
   }
 );
+  mUninstallButton=(Button)findViewById(R.id.uninstall_button);
+  mUninstallButton.setFilterTouchesWhenObscured(true);
+  mUninstallButton.setOnClickListener(new View.OnClickListener(){
+    public void onClick(    View v){
+      EventLog.writeEvent(EventLogTags.EXP_DET_DEVICE_ADMIN_UNINSTALLED_BY_USER,mDeviceAdmin.getActivityInfo().applicationInfo.uid);
+      uninstall();
+    }
+  }
+);
   mActionButton=(Button)findViewById(R.id.action_button);
   mActionButton.setFilterTouchesWhenObscured(true);
   mActionButton.setOnClickListener(new View.OnClickListener(){

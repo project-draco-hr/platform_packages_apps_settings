@@ -1,10 +1,15 @@
 {
   Context ctx=widget.getContext();
-  Intent intent=HelpUtils.getHelpIntent(ctx,getURL(),ctx.getClass().getName());
-  try {
-    ((Activity)ctx).startActivityForResult(intent,0);
+  if (mEnforcedAdmin != null) {
+    RestrictedLockUtils.sendShowAdminSupportDetailsIntent(ctx,mEnforcedAdmin);
   }
- catch (  ActivityNotFoundException e) {
-    Log.w(FingerprintSettingsFragment.TAG,"Actvity was not found for intent, " + intent.toString());
+ else {
+    Intent intent=HelpUtils.getHelpIntent(ctx,getURL(),ctx.getClass().getName());
+    try {
+      widget.startActivityForResult(intent,0);
+    }
+ catch (    ActivityNotFoundException e) {
+      Log.w(FingerprintSettingsFragment.TAG,"Actvity was not found for intent, " + intent.toString());
+    }
   }
 }

@@ -10,8 +10,11 @@ case NeedToUnlock:
   if (mDetailsText != null) {
     mDetailsTextView.setText(mDetailsText);
   }
- else {
+ else   if (!Utils.isManagedProfile(UserManager.get(getActivity()),mEffectiveUserId)) {
     mDetailsTextView.setText(R.string.lockpassword_confirm_your_pattern_generic);
+  }
+ else {
+    mDetailsTextView.setText(R.string.lockpassword_confirm_your_pattern_generic_profile);
   }
 mErrorTextView.setText("");
 mLockPatternView.setEnabled(true);

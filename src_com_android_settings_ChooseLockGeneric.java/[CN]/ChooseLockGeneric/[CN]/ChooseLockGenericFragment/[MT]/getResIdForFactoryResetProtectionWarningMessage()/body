@@ -1,16 +1,61 @@
 {
   boolean hasFingerprints=mFingerprintManager.hasEnrolledFingerprints();
+  boolean isProfile=Utils.isManagedProfile(UserManager.get(getActivity()),mUserId);
 switch (mLockPatternUtils.getKeyguardStoredPasswordQuality(mUserId)) {
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
-    return hasFingerprints ? R.string.unlock_disable_frp_warning_content_pattern_fingerprint : R.string.unlock_disable_frp_warning_content_pattern;
+    if (hasFingerprints && isProfile) {
+      return R.string.unlock_disable_frp_warning_content_pattern_fingerprint_profile;
+    }
+ else     if (hasFingerprints && !isProfile) {
+      return R.string.unlock_disable_frp_warning_content_pattern_fingerprint;
+    }
+ else     if (isProfile) {
+      return R.string.unlock_disable_frp_warning_content_pattern_profile;
+    }
+ else {
+      return R.string.unlock_disable_frp_warning_content_pattern;
+    }
 case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
 case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
-  return hasFingerprints ? R.string.unlock_disable_frp_warning_content_pin_fingerprint : R.string.unlock_disable_frp_warning_content_pin;
+  if (hasFingerprints && isProfile) {
+    return R.string.unlock_disable_frp_warning_content_pin_fingerprint_profile;
+  }
+ else   if (hasFingerprints && !isProfile) {
+    return R.string.unlock_disable_frp_warning_content_pin_fingerprint;
+  }
+ else   if (isProfile) {
+    return R.string.unlock_disable_frp_warning_content_pin_profile;
+  }
+ else {
+    return R.string.unlock_disable_frp_warning_content_pin;
+  }
 case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
 case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
 case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
-return hasFingerprints ? R.string.unlock_disable_frp_warning_content_password_fingerprint : R.string.unlock_disable_frp_warning_content_password;
+if (hasFingerprints && isProfile) {
+  return R.string.unlock_disable_frp_warning_content_password_fingerprint_profile;
+}
+ else if (hasFingerprints && !isProfile) {
+  return R.string.unlock_disable_frp_warning_content_password_fingerprint;
+}
+ else if (isProfile) {
+  return R.string.unlock_disable_frp_warning_content_password_profile;
+}
+ else {
+  return R.string.unlock_disable_frp_warning_content_password;
+}
 default :
-return hasFingerprints ? R.string.unlock_disable_frp_warning_content_unknown_fingerprint : R.string.unlock_disable_frp_warning_content_unknown;
+if (hasFingerprints && isProfile) {
+return R.string.unlock_disable_frp_warning_content_unknown_fingerprint_profile;
+}
+ else if (hasFingerprints && !isProfile) {
+return R.string.unlock_disable_frp_warning_content_unknown_fingerprint;
+}
+ else if (isProfile) {
+return R.string.unlock_disable_frp_warning_content_unknown_profile;
+}
+ else {
+return R.string.unlock_disable_frp_warning_content_unknown;
+}
 }
 }

@@ -1,9 +1,10 @@
 {
   final Context context=mConfigUi.getContext();
   ArrayList<String> certs=new ArrayList<String>();
-  certs.add(mUnspecifiedCertString);
+  certs.add(UNSPECIFIED_CERT_INDEX,mUnspecifiedCertString);
+  certs.add(NO_CERT_INDEX,noCertificateString);
   if (showMultipleCerts) {
-    certs.add(mMultipleCertSetString);
+    certs.add(MULTIPLE_CERT_SET_INDEX,mMultipleCertSetString);
   }
   certs.addAll(Arrays.asList(KeyStore.getInstance().list(prefix,android.os.Process.WIFI_UID)));
   final ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,certs.toArray(new String[certs.size()]));

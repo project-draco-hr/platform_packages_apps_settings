@@ -33,8 +33,8 @@
     mEapUserCertSpinner.setOnItemSelectedListener(this);
     mEapIdentityView=(TextView)mView.findViewById(R.id.identity);
     mEapAnonymousView=(TextView)mView.findViewById(R.id.anonymous);
-    loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,false);
-    loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY,false);
+    loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,false,mDoNotValidateEapServerString);
+    loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY,false,mDoNotProvideEapUserCertString);
     if (mAccessPoint != null && mAccessPoint.isSaved()) {
       WifiEnterpriseConfig enterpriseConfig=mAccessPoint.getConfig().enterpriseConfig;
       int eapMethod=enterpriseConfig.getEapMethod();
@@ -70,7 +70,7 @@ setSelection(mEapCaCertSpinner,mUnspecifiedCertString);
 setSelection(mEapCaCertSpinner,caCerts[0]);
 }
  else {
-loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,true);
+loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,true,mDoNotValidateEapServerString);
 mEapCaCertSpinner.setSelection(MULTIPLE_CERT_SET_INDEX);
 }
 setSelection(mEapUserCertSpinner,enterpriseConfig.getClientCertificateAlias());

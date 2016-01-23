@@ -7,7 +7,15 @@
   for (int i=0; i < N; ++i) {
     final InputMethodInfo imi=imis.get(i);
     final boolean isAllowedByOrganization=permittedList == null || permittedList.contains(imi.getPackageName());
+    Drawable icon;
+    try {
+      icon=getActivity().getPackageManager().getApplicationIcon(imi.getPackageName());
+    }
+ catch (    Exception e) {
+      icon=NO_ICON;
+    }
     final InputMethodPreference pref=new InputMethodPreference(context,imi,false,isAllowedByOrganization,null);
+    pref.setIcon(icon);
     mInputMethodPreferenceList.add(pref);
   }
   final Collator collator=Collator.getInstance();
@@ -25,6 +33,7 @@
     InputMethodAndSubtypeUtil.removeUnnecessaryNonPersistentPreference(pref);
     pref.updatePreferenceViews();
   }
+  mAddVirtualKeyboardScreen.setIcon(R.drawable.ic_add);
   mAddVirtualKeyboardScreen.setOrder(N);
   getPreferenceScreen().addPreference(mAddVirtualKeyboardScreen);
 }

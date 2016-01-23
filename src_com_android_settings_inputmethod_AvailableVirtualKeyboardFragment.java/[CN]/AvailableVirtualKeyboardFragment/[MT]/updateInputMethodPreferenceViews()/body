@@ -1,0 +1,29 @@
+{
+  mInputMethodSettingValues.refreshAllInputMethodAndSubtypes();
+  mInputMethodPreferenceList.clear();
+  List<String> permittedList=mDpm.getPermittedInputMethodsForCurrentUser();
+  final Context context=getPrefContext();
+  final List<InputMethodInfo> imis=mInputMethodSettingValues.getInputMethodList();
+  final int N=(imis == null ? 0 : imis.size());
+  for (int i=0; i < N; ++i) {
+    final InputMethodInfo imi=imis.get(i);
+    final boolean isAllowedByOrganization=permittedList == null || permittedList.contains(imi.getPackageName());
+    final InputMethodPreference pref=new InputMethodPreference(context,imi,true,isAllowedByOrganization,this);
+    mInputMethodPreferenceList.add(pref);
+  }
+  final Collator collator=Collator.getInstance();
+  Collections.sort(mInputMethodPreferenceList,new Comparator<InputMethodPreference>(){
+    @Override public int compare(    InputMethodPreference lhs,    InputMethodPreference rhs){
+      return lhs.compareTo(rhs,collator);
+    }
+  }
+);
+  getPreferenceScreen().removeAll();
+  for (int i=0; i < N; ++i) {
+    final InputMethodPreference pref=mInputMethodPreferenceList.get(i);
+    pref.setOrder(i);
+    getPreferenceScreen().addPreference(pref);
+    InputMethodAndSubtypeUtil.removeUnnecessaryNonPersistentPreference(pref);
+    pref.updatePreferenceViews();
+  }
+}

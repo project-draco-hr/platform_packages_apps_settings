@@ -1,0 +1,7 @@
+{
+  Activity activity=Preconditions.checkNotNull(getActivity());
+  addPreferencesFromResource(R.xml.virtual_keyboard_settings);
+  mImm=Preconditions.checkNotNull(activity.getSystemService(InputMethodManager.class));
+  mDpm=Preconditions.checkNotNull(activity.getSystemService(DevicePolicyManager.class));
+  mAddVirtualKeyboardScreen=Preconditions.checkNotNull(findPreference(ADD_VIRTUAL_KEYBOARD_SCREEN));
+}

@@ -1,0 +1,20 @@
+{
+  final InputDeviceIdentifier deviceId=mLoaderReference.get(loader.getId()).first;
+  final PreferenceCategory category=mLoaderReference.get(loader.getId()).second;
+  category.removeAll();
+  for (  KeyboardLayout layout : data.keyboardLayouts) {
+    if (layout != null) {
+      Preference pref=new Preference(getPrefContext(),null);
+      pref.setTitle(layout.getLabel());
+      pref.setSummary(layout.getCollection());
+      pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
+        @Override public boolean onPreferenceClick(        Preference preference){
+          showKeyboardLayoutScreen(deviceId);
+          return true;
+        }
+      }
+);
+      category.addPreference(pref);
+    }
+  }
+}

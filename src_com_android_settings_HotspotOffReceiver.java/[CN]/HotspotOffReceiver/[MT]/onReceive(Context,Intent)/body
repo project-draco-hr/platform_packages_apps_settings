@@ -3,7 +3,7 @@
     WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
     if (wifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_DISABLED) {
       if (DEBUG)       Log.d(TAG,"TetherService.cancelRecheckAlarmIfNecessary called");
-      TetherService.cancelRecheckAlarmIfNecessary(context,TetherUtil.TETHERING_WIFI);
+      TetherService.cancelRecheckAlarmIfNecessary(context,ConnectivityManager.TETHERING_WIFI);
     }
   }
 }

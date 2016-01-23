@@ -1,14 +1,26 @@
 {
-  if (intent.hasExtra(TetherUtil.EXTRA_ADD_TETHER_TYPE)) {
-    int type=intent.getIntExtra(TetherUtil.EXTRA_ADD_TETHER_TYPE,TetherUtil.TETHERING_INVALID);
+  if (intent.hasExtra(ConnectivityManager.EXTRA_ADD_TETHER_TYPE)) {
+    int type=intent.getIntExtra(ConnectivityManager.EXTRA_ADD_TETHER_TYPE,ConnectivityManager.TETHERING_INVALID);
+    ResultReceiver callback=intent.getParcelableExtra(ConnectivityManager.EXTRA_PROVISION_CALLBACK);
+    if (callback != null) {
+      List<ResultReceiver> callbacksForType=mPendingCallbacks.get(type);
+      if (callbacksForType != null) {
+        callbacksForType.add(callback);
+      }
+ else {
+        callback.send(ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE,null);
+        stopSelf();
+        return START_NOT_STICKY;
+      }
+    }
     if (!mCurrentTethers.contains(type)) {
       if (DEBUG)       Log.d(TAG,"Adding tether " + type);
       mCurrentTethers.add(type);
     }
   }
-  if (intent.hasExtra(TetherUtil.EXTRA_REM_TETHER_TYPE)) {
+  if (intent.hasExtra(ConnectivityManager.EXTRA_REM_TETHER_TYPE)) {
     if (!mInProvisionCheck) {
-      int type=intent.getIntExtra(TetherUtil.EXTRA_REM_TETHER_TYPE,TetherUtil.TETHERING_INVALID);
+      int type=intent.getIntExtra(ConnectivityManager.EXTRA_REM_TETHER_TYPE,ConnectivityManager.TETHERING_INVALID);
       int index=mCurrentTethers.indexOf(type);
       if (DEBUG)       Log.d(TAG,"Removing tether " + type + ", index "+ index);
       if (index >= 0) {
@@ -24,16 +36,14 @@
       if (DEBUG)       Log.d(TAG,"Don't cancel alarm during provisioning");
     }
   }
-  if (intent.getBooleanExtra(TetherUtil.EXTRA_SET_ALARM,false) && mCurrentTethers.size() == 1) {
+  if (intent.getBooleanExtra(ConnectivityManager.EXTRA_SET_ALARM,false) && mCurrentTethers.size() == 1) {
     scheduleAlarm();
   }
-  if (intent.getBooleanExtra(TetherUtil.EXTRA_ENABLE_WIFI_TETHER,false)) {
-    mEnableWifiAfterCheck=true;
-  }
-  if (intent.getBooleanExtra(TetherUtil.EXTRA_RUN_PROVISION,false)) {
+  if (intent.getBooleanExtra(ConnectivityManager.EXTRA_RUN_PROVISION,false)) {
     startProvisioning(mCurrentTypeIndex);
   }
  else   if (!mInProvisionCheck) {
+    if (DEBUG)     Log.d(TAG,"Stopping self.  startid: " + startId);
     stopSelf();
     return START_NOT_STICKY;
   }

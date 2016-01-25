@@ -1,19 +1,20 @@
 {
-  if (mEmptyView == null) {
+  final TextView emptyView=getEmptyTextView();
+  if (emptyView == null) {
     return;
   }
   final CharSequence briefText=getText(R.string.bluetooth_empty_list_bluetooth_off);
   final ContentResolver resolver=getActivity().getContentResolver();
   final boolean bleScanningMode=Settings.Global.getInt(resolver,Settings.Global.BLE_SCAN_ALWAYS_AVAILABLE,0) == 1;
   if (!bleScanningMode) {
-    mEmptyView.setText(briefText,TextView.BufferType.SPANNABLE);
+    emptyView.setText(briefText,TextView.BufferType.SPANNABLE);
   }
  else {
     final StringBuilder contentBuilder=new StringBuilder();
     contentBuilder.append(briefText);
     contentBuilder.append("\n\n");
     contentBuilder.append(getText(R.string.ble_scan_notify_text));
-    LinkifyUtils.linkify(mEmptyView,contentBuilder,new LinkifyUtils.OnClickListener(){
+    LinkifyUtils.linkify(emptyView,contentBuilder,new LinkifyUtils.OnClickListener(){
       @Override public void onClick(){
         final SettingsActivity activity=(SettingsActivity)BluetoothSettings.this.getActivity();
         activity.startPreferencePanel(ScanningSettings.class.getName(),null,R.string.location_scanning_screen_title,null,null,0);
@@ -22,6 +23,6 @@
 );
   }
   getPreferenceScreen().removeAll();
-  Spannable boldSpan=(Spannable)mEmptyView.getText();
+  Spannable boldSpan=(Spannable)emptyView.getText();
   boldSpan.setSpan(new TextAppearanceSpan(getActivity(),android.R.style.TextAppearance_Medium),0,briefText.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 }

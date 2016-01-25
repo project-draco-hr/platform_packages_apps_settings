@@ -1,0 +1,11 @@
+{
+  highlightPreferenceIfNeeded();
+  if (mAdminSupportDetails != null && isUiRestricted()) {
+    updateAdminSupportDetailsView();
+    setEmptyView(mAdminSupportDetails);
+  }
+ else   if (mEmptyTextView != null) {
+    setEmptyView(mEmptyTextView);
+  }
+  super.onDataSetChanged();
+}

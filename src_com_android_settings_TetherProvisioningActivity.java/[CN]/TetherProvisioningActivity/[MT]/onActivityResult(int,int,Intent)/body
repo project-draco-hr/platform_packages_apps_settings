@@ -1,0 +1,9 @@
+{
+  super.onActivityResult(requestCode,resultCode,intent);
+  if (requestCode == PROVISION_REQUEST) {
+    if (DEBUG)     Log.d(TAG,"Got result from app: " + resultCode);
+    int result=resultCode == Activity.RESULT_OK ? ConnectivityManager.TETHER_ERROR_NO_ERROR : ConnectivityManager.TETHER_ERROR_PROVISION_FAILED;
+    mResultReceiver.send(result,null);
+    finish();
+  }
+}

@@ -1,0 +1,13 @@
+{
+  super.onCreate(savedInstanceState);
+  mResultReceiver=(ResultReceiver)getIntent().getParcelableExtra(ConnectivityManager.EXTRA_PROVISION_CALLBACK);
+  int tetherType=getIntent().getIntExtra(ConnectivityManager.EXTRA_ADD_TETHER_TYPE,ConnectivityManager.TETHERING_INVALID);
+  String[] provisionApp=getResources().getStringArray(com.android.internal.R.array.config_mobile_hotspot_provision_app);
+  Intent intent=new Intent(Intent.ACTION_MAIN);
+  intent.setClassName(provisionApp[0],provisionApp[1]);
+  intent.putExtra(EXTRA_TETHER_TYPE,tetherType);
+  if (DEBUG) {
+    Log.d(TAG,"Starting provisioning app: " + provisionApp[0] + "."+ provisionApp[1]);
+  }
+  startActivityForResultAsUser(intent,PROVISION_REQUEST,UserHandle.CURRENT);
+}

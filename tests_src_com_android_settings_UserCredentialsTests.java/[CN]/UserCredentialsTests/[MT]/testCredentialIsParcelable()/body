@@ -1,0 +1,12 @@
+{
+  final String alias="credential-test-alias";
+  Credential c=new Credential(alias);
+  c.storedTypes.add(Credential.Type.CA_CERTIFICATE);
+  c.storedTypes.add(Credential.Type.USER_SECRET_KEY);
+  Parcel p=Parcel.obtain();
+  c.writeToParcel(p,0);
+  p.setDataPosition(0);
+  Credential r=Credential.CREATOR.createFromParcel(p);
+  assertEquals(c.alias,r.alias);
+  assertEquals(c.storedTypes,r.storedTypes);
+}

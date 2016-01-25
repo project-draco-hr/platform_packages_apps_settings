@@ -1,6 +1,6 @@
 {
   final Bundle args=getArguments();
-  return new AlertDialog.Builder(getActivity()).setTitle(R.string.unlock_disable_frp_warning_title).setMessage(args.getInt(ARG_MESSAGE_RES)).setPositiveButton(R.string.unlock_disable_frp_warning_ok,new DialogInterface.OnClickListener(){
+  return new AlertDialog.Builder(getActivity()).setTitle(args.getInt(ARG_TITLE_RES)).setMessage(args.getInt(ARG_MESSAGE_RES)).setPositiveButton(R.string.unlock_disable_frp_warning_ok,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){
       ((ChooseLockGenericFragment)getParentFragment()).setUnlockMethod(args.getString(ARG_UNLOCK_METHOD_TO_SET));
     }

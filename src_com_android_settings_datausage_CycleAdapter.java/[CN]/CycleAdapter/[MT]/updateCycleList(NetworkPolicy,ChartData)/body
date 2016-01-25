@@ -1,7 +1,7 @@
 {
   final CycleAdapter.CycleItem previousItem=(CycleAdapter.CycleItem)mSpinner.getSelectedItem();
   clear();
-  final Context context=mSpinner.getContext();
+  final Context context=getContext();
   NetworkStatsHistory.Entry entry=null;
   long historyStart=Long.MAX_VALUE;
   long historyEnd=Long.MIN_VALUE;
@@ -55,7 +55,7 @@
     mSpinner.setSelection(position);
     final CycleAdapter.CycleItem selectedItem=getItem(position);
     if (!Objects.equal(selectedItem,previousItem)) {
-      mListener.onItemSelected(mSpinner,null,position,0);
+      mListener.onItemSelected(null,null,position,0);
       return false;
     }
   }

@@ -1,0 +1,12 @@
+{
+  int count=0;
+  if (mWhitelist == null) {
+    loadWhitelist();
+  }
+  for (int i=0; i < mWhitelist.size(); i++) {
+    if (mWhitelist.valueAt(i)) {
+      count++;
+    }
+  }
+  return count;
+}

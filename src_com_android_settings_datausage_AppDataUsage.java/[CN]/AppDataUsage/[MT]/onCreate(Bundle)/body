@@ -43,9 +43,14 @@
   mTotalUsage=findPreference(KEY_TOTAL_USAGE);
   mForegroundUsage=findPreference(KEY_FOREGROUND_USAGE);
   mBackgroundUsage=findPreference(KEY_BACKGROUND_USAGE);
+  mCycle=(SpinnerPreference)findPreference(KEY_CYCLE);
+  mCycleAdapter=new CycleAdapter(getContext(),mCycle,mCycleListener,false);
   if (UserHandle.isApp(mAppItem.key)) {
     mRestrictBackground=(SwitchPreference)findPreference(KEY_RESTRICT_BACKGROUND);
     mRestrictBackground.setOnPreferenceChangeListener(this);
+    mUnrestrictedData=(SwitchPreference)findPreference(KEY_UNRESTRICTED_DATA);
+    mUnrestrictedData.setOnPreferenceChangeListener(this);
+    mDataSaverBackend=new DataSaverBackend(getContext());
     mAppSettings=findPreference(KEY_APP_SETTINGS);
     mAppSettingsIntent=new Intent(Intent.ACTION_MANAGE_NETWORK_USAGE);
     mAppSettingsIntent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -73,6 +78,7 @@
     }
   }
  else {
+    removePreference(KEY_UNRESTRICTED_DATA);
     removePreference(KEY_APP_SETTINGS);
     removePreference(KEY_RESTRICT_BACKGROUND);
     removePreference(KEY_APP_LIST);

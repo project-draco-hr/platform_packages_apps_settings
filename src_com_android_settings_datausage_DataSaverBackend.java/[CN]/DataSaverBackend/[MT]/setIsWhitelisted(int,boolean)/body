@@ -1,0 +1,14 @@
+{
+  mWhitelist.put(uid,whitelisted);
+  try {
+    if (whitelisted) {
+      mIPolicyManager.addRestrictBackgroundWhitelistedUid(uid);
+    }
+ else {
+      mIPolicyManager.removeRestrictBackgroundWhitelistedUid(uid);
+    }
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"Can't reach policy manager",e);
+  }
+}

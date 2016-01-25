@@ -1,0 +1,10 @@
+{
+  mWhitelist=new SparseBooleanArray();
+  try {
+    for (    int uid : mIPolicyManager.getRestrictBackgroundWhitelistedUids()) {
+      mWhitelist.put(uid,true);
+    }
+  }
+ catch (  RemoteException e) {
+  }
+}

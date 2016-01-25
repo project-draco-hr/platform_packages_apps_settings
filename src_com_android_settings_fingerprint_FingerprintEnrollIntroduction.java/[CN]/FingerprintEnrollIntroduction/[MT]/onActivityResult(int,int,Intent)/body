@@ -1,7 +1,14 @@
 {
   if (resultCode == RESULT_FINISHED) {
-    setResult(RESULT_OK);
-    finish();
+    if (requestCode == FINGERPRINT_FIND_SENSOR_REQUEST) {
+      setResult(RESULT_OK);
+      finish();
+    }
+ else     if (requestCode == CHOOSE_LOCK_GENERIC_REQUEST) {
+      updatePasswordQuality();
+      byte[] token=data.getByteArrayExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
+      launchFindSensor(token);
+    }
   }
  else {
     super.onActivityResult(requestCode,resultCode,data);

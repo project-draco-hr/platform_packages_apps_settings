@@ -5,5 +5,5 @@
   findViewById(R.id.cancel_button).setOnClickListener(this);
   findViewById(R.id.learn_more_button).setOnClickListener(this);
   final int passwordQuality=new ChooseLockSettingsHelper(this).utils().getActivePasswordQuality(UserHandle.myUserId());
-  mHasPassword=passwordQuality != DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
+  updatePasswordQuality();
 }

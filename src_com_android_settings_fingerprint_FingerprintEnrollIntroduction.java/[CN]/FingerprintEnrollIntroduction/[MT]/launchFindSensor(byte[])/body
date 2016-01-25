@@ -1,0 +1,7 @@
+{
+  Intent intent=getFindSensorIntent();
+  if (token != null) {
+    intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
+  }
+  startActivityForResult(intent,FINGERPRINT_FIND_SENSOR_REQUEST);
+}

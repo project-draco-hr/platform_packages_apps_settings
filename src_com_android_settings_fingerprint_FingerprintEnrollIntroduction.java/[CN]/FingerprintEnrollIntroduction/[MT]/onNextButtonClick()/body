@@ -1,10 +1,8 @@
 {
-  Intent intent;
   if (!mHasPassword) {
-    intent=getOnboardIntent();
+    launchChooseLock();
   }
  else {
-    intent=getFindSensorIntent();
+    launchFindSensor(null);
   }
-  startActivityForResult(intent,0);
 }

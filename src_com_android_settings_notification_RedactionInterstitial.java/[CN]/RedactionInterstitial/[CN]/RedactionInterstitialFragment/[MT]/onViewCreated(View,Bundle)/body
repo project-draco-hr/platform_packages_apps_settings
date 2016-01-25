@@ -4,4 +4,11 @@
   mShowAllButton=(RestrictedRadioButton)view.findViewById(R.id.show_all);
   mRedactSensitiveButton=(RestrictedRadioButton)view.findViewById(R.id.redact_sensitive);
   mRadioGroup.setOnCheckedChangeListener(this);
+  mUserId=Utils.getUserIdFromBundle(getContext(),getActivity().getIntent().getExtras());
+  if (Utils.isManagedProfile(UserManager.get(getContext()),mUserId)) {
+    ((TextView)view.findViewById(R.id.message)).setText(R.string.lock_screen_notifications_interstitial_message_profile);
+    mShowAllButton.setText(R.string.lock_screen_notifications_summary_show_profile);
+    mRedactSensitiveButton.setText(R.string.lock_screen_notifications_summary_hide_profile);
+    ((RadioButton)view.findViewById(R.id.hide_all)).setText(R.string.lock_screen_notifications_summary_disable_profile);
+  }
 }

@@ -1,5 +1,5 @@
 {
-  EnforcedAdmin admin=RestrictedLockUtils.checkIfKeyguardFeaturesDisabled(mContext,keyguardNotificationFeatures);
+  EnforcedAdmin admin=RestrictedLockUtils.checkIfKeyguardFeaturesDisabled(mContext,keyguardNotificationFeatures,UserHandle.myUserId());
   if (admin != null) {
     RestrictedItem item=new RestrictedItem(entry,entryValue,admin);
     mLockscreen.addRestrictedItem(item);

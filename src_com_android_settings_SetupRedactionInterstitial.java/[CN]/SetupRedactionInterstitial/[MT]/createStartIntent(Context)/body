@@ -1,5 +1,5 @@
 {
-  Intent startIntent=RedactionInterstitial.createStartIntent(ctx);
+  Intent startIntent=RedactionInterstitial.createStartIntent(ctx,UserHandle.myUserId());
   if (startIntent != null) {
     startIntent.setClass(ctx,SetupRedactionInterstitial.class);
     startIntent.putExtra(EXTRA_PREFS_SHOW_BUTTON_BAR,false).putExtra(EXTRA_SHOW_FRAGMENT_TITLE_RESID,-1);

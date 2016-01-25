@@ -1,40 +1,19 @@
 {
-  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   if (preference == mUsbTether) {
-    boolean newState=mUsbTether.isChecked();
-    if (newState) {
-      startProvisioningIfNecessary(TETHERING_USB);
+    if (mUsbTether.isChecked()) {
+      startTethering(TETHERING_USB);
     }
  else {
-      if (TetherUtil.isProvisioningNeeded(getActivity())) {
-        TetherService.cancelRecheckAlarmIfNecessary(getActivity(),TETHERING_USB);
-      }
-      setUsbTethering(newState);
+      mCm.stopTethering(TETHERING_USB);
     }
   }
  else   if (preference == mBluetoothTether) {
-    boolean bluetoothTetherState=mBluetoothTether.isChecked();
-    if (bluetoothTetherState) {
-      startProvisioningIfNecessary(TETHERING_BLUETOOTH);
+    if (mBluetoothTether.isChecked()) {
+      startTethering(TETHERING_BLUETOOTH);
     }
  else {
-      if (TetherUtil.isProvisioningNeeded(getActivity())) {
-        TetherService.cancelRecheckAlarmIfNecessary(getActivity(),TETHERING_BLUETOOTH);
-      }
-      boolean errored=false;
-      String[] tethered=cm.getTetheredIfaces();
-      String bluetoothIface=findIface(tethered,mBluetoothRegexs);
-      if (bluetoothIface != null && cm.untether(bluetoothIface) != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
-        errored=true;
-      }
-      BluetoothPan bluetoothPan=mBluetoothPan.get();
-      if (bluetoothPan != null)       bluetoothPan.setBluetoothTethering(false);
-      if (errored) {
-        mBluetoothTether.setSummary(R.string.bluetooth_tethering_errored_subtext);
-      }
- else {
-        mBluetoothTether.setSummary(R.string.bluetooth_tethering_off_subtext);
-      }
+      mCm.stopTethering(TETHERING_BLUETOOTH);
+      updateState();
     }
   }
  else   if (preference == mCreateNetwork) {

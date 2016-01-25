@@ -1,0 +1,13 @@
+{
+  if (choice == TETHERING_BLUETOOTH) {
+    BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+    if (adapter.getState() == BluetoothAdapter.STATE_OFF) {
+      mBluetoothEnableForTether=true;
+      adapter.enable();
+      mBluetoothTether.setSummary(R.string.bluetooth_turning_on);
+      mBluetoothTether.setEnabled(false);
+      return;
+    }
+  }
+  mCm.startTethering(choice,true,mStartTetheringCallback,mHandler);
+}

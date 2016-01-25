@@ -9,5 +9,11 @@
   if (DEBUG) {
     Log.d(TAG,"Starting provisioning app: " + provisionApp[0] + "."+ provisionApp[1]);
   }
+  if (getPackageManager().queryIntentActivities(intent,PackageManager.MATCH_DEFAULT_ONLY).isEmpty()) {
+    Log.e(TAG,"Provisioning app is configured, but not available.");
+    mResultReceiver.send(ConnectivityManager.TETHER_ERROR_PROVISION_FAILED,null);
+    finish();
+    return;
+  }
   startActivityForResultAsUser(intent,PROVISION_REQUEST,UserHandle.CURRENT);
 }

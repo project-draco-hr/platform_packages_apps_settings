@@ -1,7 +1,6 @@
 {
-  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-  String[] available=cm.getTetherableIfaces();
-  String[] tethered=cm.getTetheredIfaces();
-  String[] errored=cm.getTetheringErroredIfaces();
+  String[] available=mCm.getTetherableIfaces();
+  String[] tethered=mCm.getTetheredIfaces();
+  String[] errored=mCm.getTetheringErroredIfaces();
   updateState(available,tethered,errored);
 }

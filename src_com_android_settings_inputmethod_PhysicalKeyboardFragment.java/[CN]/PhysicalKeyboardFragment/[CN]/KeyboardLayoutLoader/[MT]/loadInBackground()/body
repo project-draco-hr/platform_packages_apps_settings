@@ -1,0 +1,10 @@
+{
+  final Keyboards keyboards=new Keyboards();
+  for (  InputMethodInfo imi : mImiSubtypes.keySet()) {
+    for (    InputMethodSubtype subtype : mImiSubtypes.get(imi)) {
+      final KeyboardLayout layout=mIm.getKeyboardLayoutForInputDevice(mInputDeviceIdentifier,imi,subtype);
+      keyboards.mInfos.add(new Keyboards.KeyboardInfo(imi,subtype,layout));
+    }
+  }
+  return keyboards;
+}

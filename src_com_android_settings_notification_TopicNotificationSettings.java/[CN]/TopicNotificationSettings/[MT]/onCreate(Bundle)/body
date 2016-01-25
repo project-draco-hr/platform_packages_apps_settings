@@ -1,65 +1,20 @@
 {
   super.onCreate(savedInstanceState);
-  mContext=getActivity();
-  Intent intent=getActivity().getIntent();
-  Bundle args=getArguments();
-  if (DEBUG)   Log.d(TAG,"onCreate getIntent()=" + intent);
-  if (intent == null && args == null) {
-    Log.w(TAG,"No intent");
-    toastAndFinish();
-    return;
-  }
   NotificationManager.Policy policy=NotificationManager.from(mContext).getNotificationPolicy();
   mDndVisualEffectsSuppressed=policy == null ? false : policy.suppressedVisualEffects != 0;
+  Bundle args=getArguments();
   final Notification.Topic topic=args != null && args.containsKey(ARG_TOPIC) ? (Notification.Topic)args.getParcelable(ARG_TOPIC) : null;
   if (topic == null) {
     toastAndFinish();
     return;
   }
-  final PackageInfo info=args != null && args.containsKey(ARG_PACKAGE_INFO) ? (PackageInfo)args.getParcelable(ARG_PACKAGE_INFO) : null;
-  if (info == null) {
-    Log.w(TAG,"Failed to find package info");
-    toastAndFinish();
-    return;
-  }
-  mUid=args != null && args.containsKey(AppInfoBase.ARG_PACKAGE_UID) ? args.getInt(AppInfoBase.ARG_PACKAGE_UID) : intent.getIntExtra(Settings.EXTRA_APP_UID,-1);
-  if (mUid == -1) {
-    Log.w(TAG,"Missing extras: " + Settings.EXTRA_APP_UID + " was "+ mUid);
-    toastAndFinish();
-    return;
-  }
-  final PackageManager pm=getPackageManager();
   addPreferencesFromResource(R.xml.topic_notification_settings);
+  mTopicRow=mBackend.loadTopicRow(mPm,mPkgInfo,topic);
   mImportance=(ImportanceSeekBarPreference)findPreference(KEY_IMPORTANCE);
+  setupImportancePref(mTopicRow,mTopicRow.topic,mTopicRow.importance);
   mPriority=(SwitchPreference)findPreference(KEY_BYPASS_DND);
+  setupPriorityPref(mTopicRow.topic,mTopicRow.priority);
   mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
-  mTopicRow=mBackend.loadTopicRow(pm,info,topic);
-  mImportance.setMinimumProgress(mTopicRow.systemApp ? Ranking.IMPORTANCE_LOW : Ranking.IMPORTANCE_NONE);
-  mImportance.setMax(Ranking.IMPORTANCE_MAX);
-  int importance=mTopicRow.importance == NotificationListenerService.Ranking.IMPORTANCE_UNSPECIFIED ? NotificationListenerService.Ranking.IMPORTANCE_DEFAULT : mTopicRow.importance;
-  mImportance.setProgress(importance);
-  mImportance.setCallback(new ImportanceSeekBarPreference.Callback(){
-    @Override public void onImportanceChanged(    int progress){
-      mBackend.setImportance(mTopicRow.pkg,mTopicRow.uid,mTopicRow.topic,progress);
-      updateDependents(progress);
-    }
-  }
-);
-  mPriority.setChecked(mTopicRow.priority);
-  mSensitive.setChecked(mTopicRow.sensitive);
-  mPriority.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
-    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
-      final boolean bypassZenMode=(Boolean)newValue;
-      return mBackend.setBypassZenMode(info.packageName,mUid,topic,bypassZenMode);
-    }
-  }
-);
-  mSensitive.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
-    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
-      final boolean sensitive=(Boolean)newValue;
-      return mBackend.setSensitive(info.packageName,mUid,topic,sensitive);
-    }
-  }
-);
+  setupSensitivePref(mTopicRow.topic,mTopicRow.sensitive);
   updateDependents(mTopicRow.importance);
 }

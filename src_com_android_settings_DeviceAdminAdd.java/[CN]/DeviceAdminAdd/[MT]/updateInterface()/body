@@ -62,6 +62,9 @@
       setTitle(getText(R.string.add_device_admin_msg));
     }
     mActionButton.setText(getText(R.string.add_device_admin));
+    if (isAdminUninstallable()) {
+      mUninstallButton.setVisibility(View.VISIBLE);
+    }
     mSupportMessage.setVisibility(View.GONE);
     mAdding=true;
   }

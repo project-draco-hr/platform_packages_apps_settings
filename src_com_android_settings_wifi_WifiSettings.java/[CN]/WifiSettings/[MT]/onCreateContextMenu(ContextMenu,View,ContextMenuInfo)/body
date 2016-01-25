@@ -1,7 +1,7 @@
 {
   Preference preference=(Preference)view.getTag();
-  if (preference instanceof AccessPointPreference) {
-    mSelectedAccessPoint=((AccessPointPreference)preference).getAccessPoint();
+  if (preference instanceof LongPressAccessPointPreference) {
+    mSelectedAccessPoint=((LongPressAccessPointPreference)preference).getAccessPoint();
     menu.setHeaderTitle(mSelectedAccessPoint.getSsid());
     if (mSelectedAccessPoint.isConnectable()) {
       menu.add(Menu.NONE,MENU_ID_CONNECT,0,R.string.wifi_menu_connect);

@@ -1,6 +1,10 @@
 {
-  if (suggestion.intent.getComponent().getClassName().equals(ZenModeAutomationSuggestionActivity.class.getName())) {
+  String className=suggestion.intent.getComponent().getClassName();
+  if (className.equals(ZenModeAutomationSuggestionActivity.class.getName())) {
     return hasEnabledZenAutoRules();
+  }
+ else   if (className.equals(WallpaperSuggestionActivity.class.getName())) {
+    return hasWallpaperSet();
   }
   return false;
 }

@@ -1,6 +1,6 @@
 {
   final int max=getContext().getResources().getInteger(com.android.internal.R.integer.config_fingerprintMaxTemplatesPerUser);
-  boolean tooMany=mFingerprintManager.getEnrolledFingerprints().size() >= max;
+  boolean tooMany=mFingerprintManager.getEnrolledFingerprints(mUserId).size() >= max;
   CharSequence maxSummary=tooMany ? getContext().getString(R.string.fingerprint_add_max,max) : "";
   Preference addPreference=findPreference(KEY_FINGERPRINT_ADD);
   addPreference.setSummary(maxSummary);

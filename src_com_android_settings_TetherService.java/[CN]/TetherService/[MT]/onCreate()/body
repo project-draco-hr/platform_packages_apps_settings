@@ -6,4 +6,8 @@
   SharedPreferences prefs=getSharedPreferences(PREFS,MODE_PRIVATE);
   mCurrentTethers=stringToTethers(prefs.getString(KEY_TETHERS,""));
   mCurrentTypeIndex=0;
+  mPendingCallbacks=new ArrayMap<>(3);
+  mPendingCallbacks.put(ConnectivityManager.TETHERING_WIFI,new ArrayList<ResultReceiver>());
+  mPendingCallbacks.put(ConnectivityManager.TETHERING_USB,new ArrayList<ResultReceiver>());
+  mPendingCallbacks.put(ConnectivityManager.TETHERING_BLUETOOTH,new ArrayList<ResultReceiver>());
 }

@@ -1,0 +1,12 @@
+{
+  List<ResultReceiver> callbacksForType=mPendingCallbacks.get(type);
+  if (callbacksForType == null) {
+    return;
+  }
+  int errorCode=result == RESULT_OK ? ConnectivityManager.TETHER_ERROR_NO_ERROR : ConnectivityManager.TETHER_ERROR_PROVISION_FAILED;
+  for (  ResultReceiver callback : callbacksForType) {
+    if (DEBUG)     Log.d(TAG,"Firing result: " + errorCode + " to callback");
+    callback.send(errorCode,null);
+  }
+  callbacksForType.clear();
+}

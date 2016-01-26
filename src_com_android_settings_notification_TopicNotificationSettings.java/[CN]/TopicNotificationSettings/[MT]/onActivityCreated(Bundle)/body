@@ -1,11 +1,5 @@
 {
   super.onActivityCreated(savedInstanceState);
-  if (DEBUG)   Log.d(TAG,"onActivityCreated mCreated=" + mCreated);
-  if (mCreated) {
-    Log.w(TAG,"onActivityCreated: ignoring duplicate call");
-    return;
-  }
-  mCreated=true;
   if (mTopicRow == null)   return;
   AppHeader.createAppHeader(this,mTopicRow.icon,mTopicRow.label,mTopicRow.pkg,mTopicRow.uid);
 }

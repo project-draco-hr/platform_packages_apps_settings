@@ -1,0 +1,20 @@
+{
+  if (mImportance == null) {
+    mImportance=new ImportanceSeekBarPreference(getPrefContext());
+    mImportance.setTitle(R.string.notification_importance_title);
+    mImportance.setKey(KEY_IMPORTANCE);
+    getPreferenceScreen().addPreference(mImportance);
+  }
+  mImportance.setSystemApp(appRow.systemApp);
+  mImportance.setMinimumProgress(appRow.systemApp ? Ranking.IMPORTANCE_LOW : Ranking.IMPORTANCE_NONE);
+  mImportance.setMax(Ranking.IMPORTANCE_MAX);
+  importance=importance == Ranking.IMPORTANCE_UNSPECIFIED ? Ranking.IMPORTANCE_DEFAULT : importance;
+  mImportance.setProgress(importance);
+  mImportance.setCallback(new ImportanceSeekBarPreference.Callback(){
+    @Override public void onImportanceChanged(    int progress){
+      mBackend.setImportance(appRow.pkg,appRow.uid,topic,progress);
+      updateDependents(progress);
+    }
+  }
+);
+}

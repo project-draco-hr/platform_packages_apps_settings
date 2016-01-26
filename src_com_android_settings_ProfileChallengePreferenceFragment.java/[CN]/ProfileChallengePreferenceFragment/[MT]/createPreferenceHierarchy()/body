@@ -11,6 +11,7 @@
   removeNonWhitelistedItems(root);
   PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
   if (securityCategory != null) {
+    maybeAddFingerprintPreference(securityCategory);
     if (mLockPatternUtils.isSeparateProfileChallengeEnabled(mProfileUserId)) {
       maybeAddUnificationPreference(securityCategory);
     }

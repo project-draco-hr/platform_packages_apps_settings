@@ -5,4 +5,5 @@
   if (savedInstanceState != null && mToken == null) {
     mToken=savedInstanceState.getByteArray(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
   }
+  mUserId=getIntent().getIntExtra(Intent.EXTRA_USER_ID,UserHandle.myUserId());
 }

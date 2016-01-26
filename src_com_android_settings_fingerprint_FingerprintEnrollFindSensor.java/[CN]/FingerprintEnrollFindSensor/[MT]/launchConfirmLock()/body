@@ -1,7 +1,14 @@
 {
   long challenge=getSystemService(FingerprintManager.class).preEnroll();
   ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this);
-  if (!helper.launchConfirmationActivity(CONFIRM_REQUEST,getString(R.string.security_settings_fingerprint_preference_title),null,null,challenge)) {
+  boolean launchedConfirmationActivity=false;
+  if (mUserId == UserHandle.USER_NULL) {
+    launchedConfirmationActivity=helper.launchConfirmationActivity(CONFIRM_REQUEST,getString(R.string.security_settings_fingerprint_preference_title),null,null,challenge);
+  }
+ else {
+    launchedConfirmationActivity=helper.launchConfirmationActivity(CONFIRM_REQUEST,getString(R.string.security_settings_fingerprint_preference_title),null,null,challenge,mUserId);
+  }
+  if (!launchedConfirmationActivity) {
     finish();
   }
  else {

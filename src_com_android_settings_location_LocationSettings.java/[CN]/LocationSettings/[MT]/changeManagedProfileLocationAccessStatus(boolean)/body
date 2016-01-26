@@ -2,22 +2,25 @@
   if (mManagedProfileSwitch == null) {
     return;
   }
-  boolean enabled=mainSwitchOn;
-  int summaryResId=R.string.switch_off_text;
-  if (mUm.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,mManagedProfile) && getAdminRestrictingManagedProfile() != null) {
-    summaryResId=R.string.managed_profile_location_switch_lockdown;
-    enabled=false;
-  }
-  mManagedProfileSwitch.setEnabled(enabled);
   mManagedProfileSwitch.setOnPreferenceClickListener(null);
-  if (!enabled) {
+  final EnforcedAdmin admin=RestrictedLockUtils.checkIfRestrictionEnforced(getActivity(),UserManager.DISALLOW_SHARE_LOCATION,mManagedProfile.getIdentifier());
+  if (mUm.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,mManagedProfile) && admin != null) {
+    mManagedProfileSwitch.setDisabledByAdmin(admin);
     mManagedProfileSwitch.setChecked(false);
   }
  else {
-    final boolean isRestricted=isManagedProfileRestrictedByBase();
-    mManagedProfileSwitch.setChecked(!isRestricted);
-    summaryResId=(isRestricted ? R.string.switch_off_text : R.string.switch_on_text);
-    mManagedProfileSwitch.setOnPreferenceClickListener(mManagedProfileSwitchClickListener);
+    boolean enabled=mainSwitchOn;
+    mManagedProfileSwitch.setEnabled(enabled);
+    int summaryResId=R.string.switch_off_text;
+    if (!enabled) {
+      mManagedProfileSwitch.setChecked(false);
+    }
+ else {
+      final boolean isRestricted=isManagedProfileRestrictedByBase();
+      mManagedProfileSwitch.setChecked(!isRestricted);
+      summaryResId=(isRestricted ? R.string.switch_off_text : R.string.switch_on_text);
+      mManagedProfileSwitch.setOnPreferenceClickListener(mManagedProfileSwitchClickListener);
+    }
+    mManagedProfileSwitch.setSummary(summaryResId);
   }
-  mManagedProfileSwitch.setSummary(summaryResId);
 }

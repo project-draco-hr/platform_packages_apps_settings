@@ -1,0 +1,14 @@
+{
+  super.onCreate(icicle);
+  Activity activity=Preconditions.checkNotNull(getActivity());
+  mInputDeviceIdentifier=activity.getIntent().getParcelableExtra(EXTRA_INPUT_DEVICE_IDENTIFIER);
+  mImi=activity.getIntent().getParcelableExtra(EXTRA_INPUT_METHOD_INFO);
+  mSubtype=activity.getIntent().getParcelableExtra(EXTRA_INPUT_METHOD_SUBTYPE);
+  if (mInputDeviceIdentifier == null || mImi == null || mSubtype == null) {
+    activity.finish();
+  }
+  mIm=activity.getSystemService(InputManager.class);
+  mKeyboardLayouts=mIm.getKeyboardLayoutsForInputDevice(mInputDeviceIdentifier);
+  Arrays.sort(mKeyboardLayouts);
+  setPreferenceScreen(createPreferenceHierarchy());
+}

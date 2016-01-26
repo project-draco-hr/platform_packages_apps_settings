@@ -1,0 +1,9 @@
+{
+  KeyboardLayout layout=mPreferenceMap.get(preference);
+  if (layout != null) {
+    mIm.setKeyboardLayoutForInputDevice(mInputDeviceIdentifier,mImi,mSubtype,layout.getDescriptor());
+    getActivity().finish();
+    return true;
+  }
+  return super.onPreferenceTreeClick(preference);
+}

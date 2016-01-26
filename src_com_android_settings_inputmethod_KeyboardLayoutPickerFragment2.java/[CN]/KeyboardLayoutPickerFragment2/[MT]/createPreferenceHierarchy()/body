@@ -1,0 +1,11 @@
+{
+  PreferenceScreen root=getPreferenceManager().createPreferenceScreen(getActivity());
+  for (  KeyboardLayout layout : mKeyboardLayouts) {
+    Preference pref=new Preference(getPrefContext());
+    pref.setTitle(layout.getLabel());
+    root.addPreference(pref);
+    mPreferenceMap.put(pref,layout);
+  }
+  root.setTitle(PhysicalKeyboardFragment.getDisplayName(getContext(),mImi,mSubtype));
+  return root;
+}

@@ -1,32 +1,18 @@
 {
   clearHardKeyboardsData();
+  loadInputMethodInfoSubtypes();
   final int[] devices=InputDevice.getDeviceIds();
   for (int deviceIndex=0; deviceIndex < devices.length; deviceIndex++) {
     InputDevice device=InputDevice.getDevice(devices[deviceIndex]);
     if (device != null && !device.isVirtual() && device.isFullKeyboard()) {
-      final InputDeviceIdentifier deviceId=device.getIdentifier();
-      final String keyboardLayoutDescriptor=mIm.getCurrentKeyboardLayoutForInputDevice(deviceId);
-      final KeyboardLayout keyboardLayout=keyboardLayoutDescriptor != null ? mIm.getKeyboardLayout(keyboardLayoutDescriptor) : null;
       final PreferenceCategory category=new PreferenceCategory(getPrefContext(),null);
       category.setTitle(device.getName());
-      if (keyboardLayout != null) {
-        category.setSummary(keyboardLayout.toString());
-      }
- else {
-        category.setSummary(R.string.keyboard_layout_default_label);
-      }
-      mLoaderReference.put(deviceIndex,new Pair(deviceId,category));
-      mHardKeyboardPreferenceList.add(category);
+      category.setOrder(0);
+      mLoaderReference.put(deviceIndex,new Pair(device.getIdentifier(),category));
+      getPreferenceScreen().addPreference(category);
     }
   }
-  Collections.sort(mHardKeyboardPreferenceList);
-  final int count=mHardKeyboardPreferenceList.size();
-  for (int i=0; i < count; i++) {
-    final PreferenceCategory category=mHardKeyboardPreferenceList.get(i);
-    category.setOrder(i);
-    getPreferenceScreen().addPreference(category);
-  }
-  mKeyboardAssistanceCategory.setOrder(count);
+  mKeyboardAssistanceCategory.setOrder(1);
   getPreferenceScreen().addPreference(mKeyboardAssistanceCategory);
   for (  int deviceIndex : mLoaderReference.keySet()) {
     getLoaderManager().initLoader(deviceIndex,null,this);

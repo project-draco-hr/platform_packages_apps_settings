@@ -1,12 +1,19 @@
 {
   LayoutInflater inflater=LayoutInflater.from(getContext());
   View view=inflater.inflate(R.layout.app_preference_item,parent,false);
-  TextView textView=(TextView)view.findViewById(R.id.app_label);
+  TextView textView=(TextView)view.findViewById(android.R.id.title);
   textView.setText(getItem(position));
   if (position == mSelectedIndex) {
     view.findViewById(R.id.default_label).setVisibility(View.VISIBLE);
   }
-  ImageView imageView=(ImageView)view.findViewById(R.id.app_image);
+  ImageView imageView=(ImageView)view.findViewById(android.R.id.icon);
   imageView.setImageDrawable(mImageDrawables[position]);
+  boolean enabled=mSummaries == null || mSummaries[position] == null;
+  view.setEnabled(enabled);
+  if (!enabled) {
+    TextView summary=(TextView)view.findViewById(android.R.id.summary);
+    summary.setText(mSummaries[position]);
+    summary.setVisibility(View.VISIBLE);
+  }
   return view;
 }

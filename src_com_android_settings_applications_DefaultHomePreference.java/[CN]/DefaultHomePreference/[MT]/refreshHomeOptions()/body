@@ -1,0 +1,27 @@
+{
+  final String myPkg=getContext().getPackageName();
+  ArrayList<ResolveInfo> homeActivities=new ArrayList<ResolveInfo>();
+  PackageManager pm=getContext().getPackageManager();
+  ComponentName currentDefaultHome=pm.getHomeActivities(homeActivities);
+  ArrayList<ComponentName> components=new ArrayList<>();
+  mAllHomeComponents.clear();
+  List<CharSequence> summaries=new ArrayList<>();
+  boolean mustSupportManagedProfile=hasManagedProfile();
+  for (int i=0; i < homeActivities.size(); i++) {
+    final ResolveInfo candidate=homeActivities.get(i);
+    final ActivityInfo info=candidate.activityInfo;
+    ComponentName activityName=new ComponentName(info.packageName,info.name);
+    mAllHomeComponents.add(activityName);
+    if (info.packageName.equals(myPkg)) {
+      continue;
+    }
+    components.add(activityName);
+    if (mustSupportManagedProfile && !launcherHasManagedProfilesFeature(candidate,pm)) {
+      summaries.add(getContext().getString(R.string.home_work_profile_not_supported));
+    }
+ else {
+      summaries.add(null);
+    }
+  }
+  setComponentNames(components.toArray(new ComponentName[0]),currentDefaultHome,summaries.toArray(new CharSequence[0]));
+}

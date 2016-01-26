@@ -4,6 +4,7 @@
   maybeRefreshRules(true,true);
   mSettingsObserver.register();
   if (isUiRestricted()) {
-    finish();
+    getPreferenceScreen().removeAll();
+    return;
   }
 }

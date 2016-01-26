@@ -1,4 +1,9 @@
 {
   super.onResume();
   updateState();
+  final long currentTimeout=Settings.System.getLong(getActivity().getContentResolver(),SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE);
+  mScreenTimeoutPreference.setValue(String.valueOf(currentTimeout));
+  mScreenTimeoutPreference.setOnPreferenceChangeListener(this);
+  disableUnusableTimeouts(mScreenTimeoutPreference);
+  updateTimeoutPreferenceDescription(currentTimeout);
 }

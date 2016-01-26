@@ -7,12 +7,7 @@
   if (mScreenSaverPreference != null && getResources().getBoolean(com.android.internal.R.bool.config_dreamsSupported) == false) {
     getPreferenceScreen().removePreference(mScreenSaverPreference);
   }
-  mScreenTimeoutPreference=(ListPreference)findPreference(KEY_SCREEN_TIMEOUT);
-  final long currentTimeout=Settings.System.getLong(resolver,SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE);
-  mScreenTimeoutPreference.setValue(String.valueOf(currentTimeout));
-  mScreenTimeoutPreference.setOnPreferenceChangeListener(this);
-  disableUnusableTimeouts(mScreenTimeoutPreference);
-  updateTimeoutPreferenceDescription(currentTimeout);
+  mScreenTimeoutPreference=(RestrictedListPreference)findPreference(KEY_SCREEN_TIMEOUT);
   mFontSizePref=(DropDownPreference)findPreference(KEY_FONT_SIZE);
   mFontSizePref.setOnPreferenceChangeListener(this);
   if (isAutomaticBrightnessAvailable(getResources())) {

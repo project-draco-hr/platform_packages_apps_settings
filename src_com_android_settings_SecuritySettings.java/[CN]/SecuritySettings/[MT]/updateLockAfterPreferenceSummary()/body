@@ -1,24 +1,34 @@
 {
-  long currentTimeout=Settings.Secure.getLong(getContentResolver(),Settings.Secure.LOCK_SCREEN_LOCK_AFTER_TIMEOUT,5000);
-  final CharSequence[] entries=mLockAfter.getEntries();
-  final CharSequence[] values=mLockAfter.getEntryValues();
-  int best=0;
-  for (int i=0; i < values.length; i++) {
-    long timeout=Long.valueOf(values[i].toString());
-    if (currentTimeout >= timeout) {
-      best=i;
-    }
-  }
-  Preference preference=getPreferenceScreen().findPreference(KEY_TRUST_AGENT);
-  if (preference != null && preference.getTitle().length() > 0) {
-    if (Long.valueOf(values[best].toString()) == 0) {
-      mLockAfter.setSummary(getString(R.string.lock_immediately_summary_with_exception,preference.getTitle()));
-    }
- else {
-      mLockAfter.setSummary(getString(R.string.lock_after_timeout_summary_with_exception,entries[best],preference.getTitle()));
-    }
+  final String summary;
+  if (mLockAfter.isDisabledByAdmin()) {
+    summary=getString(R.string.disabled_by_policy_title);
   }
  else {
-    mLockAfter.setSummary(getString(R.string.lock_after_timeout_summary,entries[best]));
+    long currentTimeout=Settings.Secure.getLong(getContentResolver(),Settings.Secure.LOCK_SCREEN_LOCK_AFTER_TIMEOUT,5000);
+    final CharSequence[] entries=mLockAfter.getEntries();
+    final CharSequence[] values=mLockAfter.getEntryValues();
+    int best=0;
+    for (int i=0; i < values.length; i++) {
+      if (mLockAfter.isRestrictedForEntry(entries[i])) {
+        break;
+      }
+      long timeout=Long.valueOf(values[i].toString());
+      if (currentTimeout >= timeout) {
+        best=i;
+      }
+    }
+    Preference preference=getPreferenceScreen().findPreference(KEY_TRUST_AGENT);
+    if (preference != null && preference.getTitle().length() > 0) {
+      if (Long.valueOf(values[best].toString()) == 0) {
+        summary=getString(R.string.lock_immediately_summary_with_exception,preference.getTitle());
+      }
+ else {
+        summary=getString(R.string.lock_after_timeout_summary_with_exception,entries[best],preference.getTitle());
+      }
+    }
+ else {
+      summary=getString(R.string.lock_after_timeout_summary,entries[best]);
+    }
   }
+  mLockAfter.setSummary(summary);
 }

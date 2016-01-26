@@ -1,0 +1,13 @@
+{
+  if (virtualViewId == ExploreByTouchHelper.HOST_ID) {
+    return false;
+  }
+switch (action) {
+case AccessibilityNodeInfoCompat.ACTION_CLICK:
+    LabeledSeekBar.this.setProgress(virtualViewId);
+  sendEventForVirtualView(virtualViewId,AccessibilityEvent.TYPE_VIEW_CLICKED);
+return true;
+default :
+return false;
+}
+}

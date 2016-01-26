@@ -1,0 +1,9 @@
+{
+  int left=(virtualViewId * 2 - 1) * getHalfVirtualViewWidth() + LabeledSeekBar.this.getPaddingStart();
+  int right=(virtualViewId * 2 + 1) * getHalfVirtualViewWidth() + LabeledSeekBar.this.getPaddingStart();
+  left=virtualViewId == 0 ? 0 : left;
+  right=virtualViewId == LabeledSeekBar.this.getMax() ? LabeledSeekBar.this.getWidth() : right;
+  final Rect r=new Rect();
+  r.set(left,0,right,LabeledSeekBar.this.getHeight());
+  return r;
+}

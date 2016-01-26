@@ -3,11 +3,15 @@
   boolean backupEnabled=false;
   Intent configIntent=null;
   String configSummary=null;
+  Intent manageIntent=null;
+  String manageLabel=null;
   try {
     backupEnabled=mBackupManager.isBackupEnabled();
     String transport=mBackupManager.getCurrentTransport();
     configIntent=mBackupManager.getConfigurationIntent(transport);
     configSummary=mBackupManager.getDestinationString(transport);
+    manageIntent=mBackupManager.getDataManagementIntent(transport);
+    manageLabel=mBackupManager.getDataManagementLabel(transport);
     mBackup.setSummary(backupEnabled ? R.string.accessibility_feature_state_on : R.string.accessibility_feature_state_off);
   }
  catch (  RemoteException e) {
@@ -19,6 +23,16 @@
   mConfigure.setEnabled(configureEnabled);
   mConfigure.setIntent(configIntent);
   setConfigureSummary(configSummary);
+  final boolean manageEnabled=(manageIntent != null) && backupEnabled;
+  if (manageEnabled) {
+    mManageData.setIntent(manageIntent);
+    if (manageLabel != null) {
+      mManageData.setTitle(manageLabel);
+    }
+  }
+ else {
+    getPreferenceScreen().removePreference(mManageData);
+  }
   RestrictedPreference networkResetPref=(RestrictedPreference)findPreference(NETWORK_RESET);
   if (networkResetPref != null) {
     networkResetPref.checkRestrictionAndSetDisabled(UserManager.DISALLOW_NETWORK_RESET);

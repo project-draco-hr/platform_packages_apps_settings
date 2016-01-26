@@ -3,6 +3,7 @@
   if (KEY_FINGERPRINT_ADD.equals(key)) {
     Intent intent=new Intent();
     intent.setClassName("com.android.settings",FingerprintEnrollEnrolling.class.getName());
+    intent.putExtra(Intent.EXTRA_USER_ID,mUserId);
     intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,mToken);
     startActivityForResult(intent,ADD_FINGERPRINT_REQUEST);
   }

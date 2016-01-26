@@ -4,6 +4,7 @@
     mToken=savedInstanceState.getByteArray(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
     mLaunchedConfirm=savedInstanceState.getBoolean(KEY_LAUNCHED_CONFIRM,false);
   }
+  mUserId=getActivity().getIntent().getIntExtra(Intent.EXTRA_USER_ID,UserHandle.myUserId());
   Activity activity=getActivity();
   mFingerprintManager=(FingerprintManager)activity.getSystemService(Context.FINGERPRINT_SERVICE);
   if (mToken == null && mLaunchedConfirm == false) {

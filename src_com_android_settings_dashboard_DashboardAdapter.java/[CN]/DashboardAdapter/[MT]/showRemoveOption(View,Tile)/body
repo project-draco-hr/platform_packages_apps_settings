@@ -2,7 +2,9 @@
   PopupMenu popup=new PopupMenu(new ContextThemeWrapper(mContext,R.style.Theme_AppCompat_DayNight),v);
   popup.getMenu().add(R.string.suggestion_remove).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
     @Override public boolean onMenuItemClick(    MenuItem item){
-      mContext.getPackageManager().setComponentEnabledSetting(suggestion.intent.getComponent(),PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+      if (mSuggestionParser.dismissSuggestion(suggestion)) {
+        mContext.getPackageManager().setComponentEnabledSetting(suggestion.intent.getComponent(),PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+      }
       mSuggestions.remove(suggestion);
       recountItems();
       return true;

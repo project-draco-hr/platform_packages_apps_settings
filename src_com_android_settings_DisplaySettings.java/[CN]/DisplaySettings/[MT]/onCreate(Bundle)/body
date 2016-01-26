@@ -8,8 +8,7 @@
     getPreferenceScreen().removePreference(mScreenSaverPreference);
   }
   mScreenTimeoutPreference=(RestrictedListPreference)findPreference(KEY_SCREEN_TIMEOUT);
-  mFontSizePref=(DropDownPreference)findPreference(KEY_FONT_SIZE);
-  mFontSizePref.setOnPreferenceChangeListener(this);
+  mFontSizePref=findPreference(KEY_FONT_SIZE);
   if (isAutomaticBrightnessAvailable(getResources())) {
     mAutoBrightnessPreference=(SwitchPreference)findPreference(KEY_AUTO_BRIGHTNESS);
     mAutoBrightnessPreference.setOnPreferenceChangeListener(this);

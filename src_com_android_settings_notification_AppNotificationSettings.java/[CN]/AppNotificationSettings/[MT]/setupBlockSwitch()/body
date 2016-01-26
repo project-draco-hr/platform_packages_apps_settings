@@ -4,7 +4,7 @@
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
       final boolean banned=(Boolean)newValue;
       if (banned) {
-        MetricsLogger.action(getActivity(),MetricsLogger.ACTION_BAN_APP_NOTES,mPkg);
+        MetricsLogger.action(getActivity(),MetricsEvent.ACTION_BAN_APP_NOTES,mPkg);
       }
       final boolean success=mBackend.setNotificationsBanned(mPkg,mUid,banned);
       if (success) {

@@ -1,6 +1,6 @@
 {
   if (DEBUG)   Log.v(TAG,"Removing fpId=" + mFp.getFingerId());
-  MetricsLogger.action(getContext(),MetricsLogger.ACTION_FINGERPRINT_DELETE,mFp.getFingerId());
+  MetricsLogger.action(getContext(),MetricsEvent.ACTION_FINGERPRINT_DELETE,mFp.getFingerId());
   FingerprintSettingsFragment parent=(FingerprintSettingsFragment)getTargetFragment();
   if (parent.mFingerprintManager.getEnrolledFingerprints().size() > 1) {
     parent.deleteFingerPrint(mFp);

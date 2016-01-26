@@ -3,7 +3,7 @@
   if (mDisableListeners)   return;
   final boolean enabled=isChecked;
   if (enabled == mRule.isEnabled())   return;
-  MetricsLogger.action(mContext,MetricsLogger.ACTION_ZEN_ENABLE_RULE,enabled);
+  MetricsLogger.action(mContext,MetricsEvent.ACTION_ZEN_ENABLE_RULE,enabled);
   if (DEBUG)   Log.d(TAG,"onSwitchChanged enabled=" + enabled);
   mRule.setEnabled(enabled);
   setZenRule(mRule);

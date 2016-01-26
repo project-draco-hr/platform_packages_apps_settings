@@ -1,7 +1,7 @@
 {
   new ZenRuleNameDialog(mContext,null){
     @Override public void onOk(    String ruleName){
-      MetricsLogger.action(mContext,MetricsLogger.ACTION_ZEN_ADD_RULE_OK);
+      MetricsLogger.action(mContext,MetricsEvent.ACTION_ZEN_ADD_RULE_OK);
       AutomaticZenRule rule=new AutomaticZenRule(ruleName,ri.serviceComponent,ri.defaultConditionId,NotificationManager.INTERRUPTION_FILTER_PRIORITY,true);
       AutomaticZenRule savedRule=addZenRule(rule);
       if (savedRule != null) {

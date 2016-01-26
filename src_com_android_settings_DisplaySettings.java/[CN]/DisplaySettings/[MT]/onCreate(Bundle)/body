@@ -72,7 +72,7 @@
     rotatePreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
       @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
         final boolean locked=Integer.parseInt((String)newValue) != 0;
-        MetricsLogger.action(getActivity(),MetricsLogger.ACTION_ROTATION_LOCK,locked);
+        MetricsLogger.action(getActivity(),MetricsEvent.ACTION_ROTATION_LOCK,locked);
         RotationPolicy.setRotationLock(activity,locked);
         return true;
       }

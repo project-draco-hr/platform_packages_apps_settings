@@ -3,7 +3,7 @@
     Toast.makeText(mContext,R.string.wifi_in_airplane_mode,Toast.LENGTH_SHORT).show();
     switchView.setChecked(false);
   }
-  MetricsLogger.action(mContext,MetricsLogger.ACTION_BLUETOOTH_TOGGLE,isChecked);
+  MetricsLogger.action(mContext,MetricsEvent.ACTION_BLUETOOTH_TOGGLE,isChecked);
   if (mLocalAdapter != null) {
     mLocalAdapter.setBluetoothEnabled(isChecked);
   }

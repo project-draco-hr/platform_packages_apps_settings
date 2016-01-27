@@ -12,12 +12,4 @@
  else {
     removePreference(KEY_WFC_SETTINGS);
   }
-  RestrictedPreference tetherSettingsPref=(RestrictedPreference)findPreference(KEY_TETHER_SETTINGS);
-  if (tetherSettingsPref != null) {
-    tetherSettingsPref.checkRestrictionAndSetDisabled(UserManager.DISALLOW_CONFIG_TETHERING);
-  }
-  RestrictedPreference vpnSettingsPref=(RestrictedPreference)findPreference(KEY_VPN_SETTINGS);
-  if (vpnSettingsPref != null) {
-    vpnSettingsPref.checkRestrictionAndSetDisabled(UserManager.DISALLOW_CONFIG_VPN);
-  }
 }

@@ -51,6 +51,9 @@ mAddPreference.setOrder(index++);
 getPreferenceScreen().addPreference(mAddPreference);
 setProgressBarVisible(false);
 }
+if (mScanMenuItem != null) {
+mScanMenuItem.setEnabled(true);
+}
 break;
 case WifiManager.WIFI_STATE_ENABLING:
 getPreferenceScreen().removeAll();
@@ -63,6 +66,9 @@ break;
 case WifiManager.WIFI_STATE_DISABLED:
 setOffMessage();
 setProgressBarVisible(false);
+if (mScanMenuItem != null) {
+mScanMenuItem.setEnabled(false);
+}
 break;
 }
 }

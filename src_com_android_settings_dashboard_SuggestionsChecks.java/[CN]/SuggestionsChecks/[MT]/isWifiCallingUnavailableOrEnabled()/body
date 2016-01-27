@@ -1,0 +1,6 @@
+{
+  if (!ImsManager.isWfcEnabledByPlatform(mContext)) {
+    return true;
+  }
+  return ImsManager.isWfcEnabledByUser(mContext) && ImsManager.isNonTtyOrTtyOnVolteEnabled(mContext);
+}

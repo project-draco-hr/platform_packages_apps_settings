@@ -6,5 +6,11 @@
  else   if (className.equals(WallpaperSuggestionActivity.class.getName())) {
     return hasWallpaperSet();
   }
+ else   if (className.equals(WifiCallingSuggestionActivity.class.getName())) {
+    return isWifiCallingUnavailableOrEnabled();
+  }
+ else   if (className.equals(FingerprintSuggestionActivity.class.getName())) {
+    return isNotSingleFingerprintEnrolled();
+  }
   return false;
 }

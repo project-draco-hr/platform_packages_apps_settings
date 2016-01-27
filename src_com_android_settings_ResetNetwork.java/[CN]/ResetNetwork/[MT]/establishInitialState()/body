@@ -2,15 +2,15 @@
   mSubscriptionSpinner=(Spinner)mContentView.findViewById(R.id.reset_network_subscription);
   mSubscriptions=SubscriptionManager.from(getActivity()).getActiveSubscriptionInfoList();
   if (mSubscriptions != null && mSubscriptions.size() > 0) {
-    int defaultSubscription=SubscriptionManager.getDefaultDataSubId();
+    int defaultSubscription=SubscriptionManager.getDefaultDataSubscriptionId();
     if (!SubscriptionManager.isUsableSubIdValue(defaultSubscription)) {
-      defaultSubscription=SubscriptionManager.getDefaultVoiceSubId();
+      defaultSubscription=SubscriptionManager.getDefaultVoiceSubscriptionId();
     }
     if (!SubscriptionManager.isUsableSubIdValue(defaultSubscription)) {
-      defaultSubscription=SubscriptionManager.getDefaultSmsSubId();
+      defaultSubscription=SubscriptionManager.getDefaultSmsSubscriptionId();
     }
     if (!SubscriptionManager.isUsableSubIdValue(defaultSubscription)) {
-      defaultSubscription=SubscriptionManager.getDefaultSubId();
+      defaultSubscription=SubscriptionManager.getDefaultSubscriptionId();
     }
     int selectedIndex=0;
     int size=mSubscriptions.size();

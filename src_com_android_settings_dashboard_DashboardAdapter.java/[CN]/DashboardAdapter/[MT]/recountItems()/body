@@ -4,26 +4,28 @@
   for (int i=0; mConditions != null && i < mConditions.size(); i++) {
     boolean shouldShow=mConditions.get(i).shouldShow();
     hasConditions|=shouldShow;
-    countItem(mConditions.get(i),R.layout.condition_card,shouldShow);
+    countItem(mConditions.get(i),R.layout.condition_card,shouldShow,NS_CONDITION);
   }
   boolean hasSuggestions=mSuggestions != null && mSuggestions.size() != 0;
-  countItem(null,R.layout.dashboard_spacer,hasConditions && hasSuggestions);
-  countItem(null,R.layout.suggestion_header,hasSuggestions);
+  countItem(null,R.layout.dashboard_spacer,hasConditions && hasSuggestions,NS_SPACER);
+  countItem(null,R.layout.suggestion_header,hasSuggestions,NS_SPACER);
+  resetCount();
   if (mSuggestions != null) {
     int maxSuggestions=mSuggestionMode == SUGGESTION_MODE_DEFAULT ? Math.min(DEFAULT_SUGGESTION_COUNT,mSuggestions.size()) : mSuggestionMode == SUGGESTION_MODE_EXPANDED ? mSuggestions.size() : 0;
     for (int i=0; i < mSuggestions.size(); i++) {
-      countItem(mSuggestions.get(i),R.layout.suggestion_tile,i < maxSuggestions);
+      countItem(mSuggestions.get(i),R.layout.suggestion_tile,i < maxSuggestions,NS_SUGGESTION);
     }
   }
-  countItem(null,R.layout.dashboard_spacer,true);
+  countItem(null,R.layout.dashboard_spacer,true,NS_SPACER);
+  resetCount();
   for (int i=0; mCategories != null && i < mCategories.size(); i++) {
     DashboardCategory category=mCategories.get(i);
-    countItem(category,R.layout.dashboard_category,mIsShowingAll);
+    countItem(category,R.layout.dashboard_category,mIsShowingAll,NS_ITEMS);
     for (int j=0; j < category.tiles.size(); j++) {
       Tile tile=category.tiles.get(j);
-      countItem(tile,R.layout.dashboard_tile,mIsShowingAll || ArrayUtils.contains(DashboardSummary.INITIAL_ITEMS,tile.intent.getComponent().getClassName()));
+      countItem(tile,R.layout.dashboard_tile,mIsShowingAll || ArrayUtils.contains(DashboardSummary.INITIAL_ITEMS,tile.intent.getComponent().getClassName()),NS_ITEMS);
     }
   }
-  countItem(null,R.layout.see_all,true);
+  countItem(null,R.layout.see_all,true,NS_ITEMS);
   notifyDataSetChanged();
 }

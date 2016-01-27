@@ -33,6 +33,12 @@
   if (!DefaultEmergencyPreference.isAvailable(getActivity())) {
     removePreference(KEY_DEFAULT_EMERGENCY_APP);
   }
+  if (!ManageAssist.isAvailable(getActivity())) {
+    removePreference(KEY_ASSIST_AND_VOICE_INPUT);
+  }
+  if (!DefaultNotificationAssistantPreference.isAvailable(getActivity())) {
+    removePreference(KEY_DEFAULT_NOTIFICATION_ASST);
+  }
   if (DefaultEmergencyPreference.isCapable(getActivity())) {
     Index.getInstance(getActivity()).updateFromClassNameResource(ManageDefaultApps.class.getName(),true,true);
   }

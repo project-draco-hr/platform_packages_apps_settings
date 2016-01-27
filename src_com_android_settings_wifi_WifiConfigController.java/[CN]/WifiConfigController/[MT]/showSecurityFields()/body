@@ -31,8 +31,8 @@
     mEapUserCertSpinner=(Spinner)mView.findViewById(R.id.user_cert);
     mEapIdentityView=(TextView)mView.findViewById(R.id.identity);
     mEapAnonymousView=(TextView)mView.findViewById(R.id.anonymous);
-    loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE);
-    loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY);
+    loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,false);
+    loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY,false);
     if (mAccessPoint != null && mAccessPoint.isSaved()) {
       WifiEnterpriseConfig enterpriseConfig=mAccessPoint.getConfig().enterpriseConfig;
       int eapMethod=enterpriseConfig.getEapMethod();
@@ -60,7 +60,17 @@ default :
 mPhase2Spinner.setSelection(phase2Method);
 break;
 }
-setSelection(mEapCaCertSpinner,enterpriseConfig.getCaCertificateAlias());
+String[] caCerts=enterpriseConfig.getCaCertificateAliases();
+if (caCerts == null) {
+setSelection(mEapCaCertSpinner,unspecifiedCert);
+}
+ else if (caCerts.length == 1) {
+setSelection(mEapCaCertSpinner,caCerts[0]);
+}
+ else {
+loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,true);
+mEapCaCertSpinner.setSelection(multipleCertSetIndex);
+}
 setSelection(mEapUserCertSpinner,enterpriseConfig.getClientCertificateAlias());
 mEapIdentityView.setText(enterpriseConfig.getIdentity());
 mEapAnonymousView.setText(enterpriseConfig.getAnonymousIdentity());

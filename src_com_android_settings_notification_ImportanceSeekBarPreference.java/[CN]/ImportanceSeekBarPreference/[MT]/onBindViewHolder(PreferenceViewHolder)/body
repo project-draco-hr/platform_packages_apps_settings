@@ -1,7 +1,8 @@
 {
   super.onBindViewHolder(view);
-  mSummaryTextView=(TextView)view.findViewById(com.android.internal.R.id.summary);
   if (mSystemApp) {
     ((ImageView)view.findViewById(R.id.low_importance)).getDrawable().setTint(getContext().getColor(R.color.importance_disabled_tint));
   }
+  view.setDividerAllowedAbove(false);
+  view.setDividerAllowedBelow(false);
 }

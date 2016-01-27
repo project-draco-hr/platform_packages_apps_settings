@@ -2,19 +2,19 @@
   super.onCreate(savedInstanceState);
   NotificationManager.Policy policy=NotificationManager.from(mContext).getNotificationPolicy();
   mDndVisualEffectsSuppressed=policy == null ? false : policy.suppressedVisualEffects != 0;
-  Bundle args=getArguments();
-  final Notification.Topic topic=args != null && args.containsKey(ARG_TOPIC) ? (Notification.Topic)args.getParcelable(ARG_TOPIC) : null;
-  if (topic == null) {
+  if (mTopic == null) {
     toastAndFinish();
     return;
   }
   addPreferencesFromResource(R.xml.topic_notification_settings);
-  mTopicRow=mBackend.loadTopicRow(mPm,mPkgInfo,topic);
+  mTopicRow=mBackend.loadTopicRow(mPm,mPkgInfo,mTopic);
   mImportance=(ImportanceSeekBarPreference)findPreference(KEY_IMPORTANCE);
-  setupImportancePref(mTopicRow,mTopicRow.topic,mTopicRow.importance);
+  mImportanceReset=(LayoutPreference)findPreference(KEY_IMPORTANCE_RESET);
+  mImportanceTitle=findPreference(KEY_IMPORTANCE_TITLE);
   mPriority=(RestrictedSwitchPreference)findPreference(KEY_BYPASS_DND);
-  setupPriorityPref(mTopicRow.topic,mTopicRow.priority);
   mSensitive=(RestrictedSwitchPreference)findPreference(KEY_SENSITIVE);
-  setupSensitivePref(mTopicRow.topic,mTopicRow.sensitive);
+  setupImportancePrefs(mTopicRow.systemApp,mTopicRow.importance);
+  setupPriorityPref(mTopicRow.priority);
+  setupSensitivePref(mTopicRow.sensitive);
   updateDependents(mTopicRow.importance);
 }

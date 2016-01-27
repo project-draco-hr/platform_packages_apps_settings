@@ -1,5 +1,4 @@
 {
-  mBlock=new RestrictedSwitchPreference(getPrefContext());
   mBlock.setDisabledByAdmin(RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId));
   mBlock.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
@@ -15,10 +14,6 @@
     }
   }
 );
-  mBlock.setKey(KEY_BLOCK);
-  mBlock.setTitle(R.string.app_notification_block_title);
-  mBlock.setSummary(R.string.app_notification_block_summary);
-  getPreferenceScreen().addPreference(mBlock);
   mBlock.setChecked(mAppRow.banned);
   updateDependents(mAppRow.banned);
 }

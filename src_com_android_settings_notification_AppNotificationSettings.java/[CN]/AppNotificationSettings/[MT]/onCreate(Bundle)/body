@@ -1,24 +1,27 @@
 {
   super.onCreate(savedInstanceState);
   addPreferencesFromResource(R.xml.app_notification_settings);
-  getPreferenceScreen().setOrderingAsAdded(true);
+  mCategories=(PreferenceCategory)findPreference(KEY_CATEGORIES);
+  mBlock=(RestrictedSwitchPreference)findPreference(KEY_BLOCK);
+  mImportance=(ImportanceSeekBarPreference)findPreference(KEY_IMPORTANCE);
+  mImportanceReset=(LayoutPreference)findPreference(KEY_IMPORTANCE_RESET);
+  mImportanceTitle=findPreference(KEY_IMPORTANCE_TITLE);
+  mPriority=(RestrictedSwitchPreference)getPreferenceScreen().findPreference(KEY_BYPASS_DND);
+  mSensitive=(RestrictedSwitchPreference)getPreferenceScreen().findPreference(KEY_SENSITIVE);
   mAppRow=mBackend.loadAppRow(mPm,mPkgInfo);
   ArrayMap<String,AppRow> rows=new ArrayMap<String,AppRow>();
   rows.put(mAppRow.pkg,mAppRow);
   collectConfigActivities(rows);
   List<Notification.Topic> topics=mBackend.getTopics(mPkg,mUid);
   if (topics.size() <= 1) {
-    setupImportancePref(mAppRow,null,mAppRow.appImportance);
-    setupPriorityPref(null,mAppRow.appBypassDnd);
-    setupSensitivePref(null,mAppRow.appSensitive);
+    removeAppPrefs();
+    setupImportancePrefs(mAppRow.systemApp,mAppRow.appImportance);
+    setupPriorityPref(mAppRow.appBypassDnd);
+    setupSensitivePref(mAppRow.appSensitive);
   }
  else {
+    removeTopicPrefs();
     setupBlockSwitch();
-    mCategories=new PreferenceCategory(getPrefContext());
-    mCategories.setKey(KEY_CATEGORIES);
-    mCategories.setTitle(R.string.notification_topic_categories);
-    mCategories.setOrderingAsAdded(true);
-    getPreferenceScreen().addPreference(mCategories);
     for (    Notification.Topic topic : topics) {
       RestrictedPreference topicPreference=new RestrictedPreference(getPrefContext());
       topicPreference.setDisabledByAdmin(RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId));

@@ -2,6 +2,6 @@
   final boolean lockscreenSecure=new LockPatternUtils(getActivity()).isSecure(UserHandle.myUserId());
   final boolean lockscreenNotificationsEnabled=getLockscreenNotificationsEnabled();
   final boolean allowPrivate=getLockscreenAllowPrivateNotifications();
-  setVisible(mPriority,importance > NotificationListenerService.Ranking.IMPORTANCE_DEFAULT && !mDndVisualEffectsSuppressed);
-  setVisible(mSensitive,(importance > NotificationListenerService.Ranking.IMPORTANCE_LOW) && lockscreenSecure && lockscreenNotificationsEnabled&& allowPrivate);
+  setVisible(mPriority,checkCanBeVisible(Ranking.IMPORTANCE_DEFAULT,importance) && !mDndVisualEffectsSuppressed);
+  setVisible(mSensitive,checkCanBeVisible(Ranking.IMPORTANCE_LOW,importance) && lockscreenSecure && lockscreenNotificationsEnabled&& allowPrivate);
 }

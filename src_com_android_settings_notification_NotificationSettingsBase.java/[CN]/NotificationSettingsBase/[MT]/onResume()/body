@@ -1,6 +1,17 @@
 {
   super.onResume();
-  if (mUid != -1 && getPackageManager().getPackagesForUid(mUid) == null) {
+  if ((mUid != -1 && getPackageManager().getPackagesForUid(mUid) == null)) {
     finish();
+    return;
+  }
+  EnforcedAdmin admin=RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId);
+  if (mImportance != null) {
+    mImportance.setDisabledByAdmin(admin);
+  }
+  if (mPriority != null) {
+    mPriority.setDisabledByAdmin(admin);
+  }
+  if (mSensitive != null) {
+    mSensitive.setDisabledByAdmin(admin);
   }
 }

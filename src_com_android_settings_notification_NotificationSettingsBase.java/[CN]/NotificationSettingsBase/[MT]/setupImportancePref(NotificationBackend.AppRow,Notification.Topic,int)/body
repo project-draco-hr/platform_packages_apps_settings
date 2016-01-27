@@ -1,6 +1,7 @@
 {
   if (mImportance == null) {
     mImportance=new ImportanceSeekBarPreference(getPrefContext());
+    mImportance.setDisabledByAdmin(RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId));
     mImportance.setTitle(R.string.notification_importance_title);
     mImportance.setKey(KEY_IMPORTANCE);
     getPreferenceScreen().addPreference(mImportance);

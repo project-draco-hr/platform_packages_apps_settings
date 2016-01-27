@@ -1,6 +1,7 @@
 {
   if (mPriority == null) {
-    mPriority=new SwitchPreference(getPrefContext());
+    mPriority=new RestrictedSwitchPreference(getPrefContext());
+    mPriority.setDisabledByAdmin(RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId));
     mPriority.setTitle(R.string.app_notification_override_dnd_title);
     mPriority.setSummary(R.string.app_notification_override_dnd_summary);
     mPriority.setKey(KEY_BYPASS_DND);

@@ -20,7 +20,8 @@
     mCategories.setOrderingAsAdded(true);
     getPreferenceScreen().addPreference(mCategories);
     for (    Notification.Topic topic : topics) {
-      Preference topicPreference=new Preference(getPrefContext());
+      RestrictedPreference topicPreference=new RestrictedPreference(getPrefContext());
+      topicPreference.setDisabledByAdmin(RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId));
       topicPreference.setKey(topic.getId());
       topicPreference.setTitle(topic.getLabel());
       Bundle topicArgs=new Bundle();

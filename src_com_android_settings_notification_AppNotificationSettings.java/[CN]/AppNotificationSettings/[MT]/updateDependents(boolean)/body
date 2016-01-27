@@ -1,6 +1,7 @@
 {
   if (mBlock != null) {
     mBlock.setEnabled(!mAppRow.systemApp);
+    mBlock.setDisabledByAdmin(RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId));
   }
   if (mCategories != null) {
     setVisible(mCategories,!banned);

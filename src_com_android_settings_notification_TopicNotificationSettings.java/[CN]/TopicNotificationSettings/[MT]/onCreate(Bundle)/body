@@ -12,9 +12,9 @@
   mTopicRow=mBackend.loadTopicRow(mPm,mPkgInfo,topic);
   mImportance=(ImportanceSeekBarPreference)findPreference(KEY_IMPORTANCE);
   setupImportancePref(mTopicRow,mTopicRow.topic,mTopicRow.importance);
-  mPriority=(SwitchPreference)findPreference(KEY_BYPASS_DND);
+  mPriority=(RestrictedSwitchPreference)findPreference(KEY_BYPASS_DND);
   setupPriorityPref(mTopicRow.topic,mTopicRow.priority);
-  mSensitive=(SwitchPreference)findPreference(KEY_SENSITIVE);
+  mSensitive=(RestrictedSwitchPreference)findPreference(KEY_SENSITIVE);
   setupSensitivePref(mTopicRow.topic,mTopicRow.sensitive);
   updateDependents(mTopicRow.importance);
 }

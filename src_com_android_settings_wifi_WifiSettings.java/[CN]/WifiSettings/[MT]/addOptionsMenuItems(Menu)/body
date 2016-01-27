@@ -1,6 +1,7 @@
 {
   final boolean wifiIsEnabled=mWifiTracker.isWifiEnabled();
-  menu.add(Menu.NONE,MENU_ID_SCAN,0,R.string.menu_stats_refresh).setEnabled(wifiIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+  mScanMenuItem=menu.add(Menu.NONE,MENU_ID_SCAN,0,R.string.menu_stats_refresh);
+  mScanMenuItem.setEnabled(wifiIsEnabled).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
   menu.add(Menu.NONE,MENU_ID_ADVANCED,0,R.string.wifi_menu_advanced).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
   menu.add(Menu.NONE,MENU_ID_CONFIGURE,0,R.string.wifi_menu_configure).setIcon(R.drawable.ic_settings_24dp).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 }

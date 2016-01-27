@@ -12,9 +12,19 @@
   String action=getIntent().getAction();
   ComponentName who=(ComponentName)getIntent().getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
   if (who == null) {
-    Log.w(TAG,"No component specified in " + action);
-    finish();
-    return;
+    String packageName=getIntent().getStringExtra(EXTRA_DEVICE_ADMIN_PACKAGE_NAME);
+    for (    ComponentName component : mDPM.getActiveAdmins()) {
+      if (component.getPackageName().equals(packageName)) {
+        who=component;
+        mUninstalling=true;
+        break;
+      }
+    }
+    if (who == null) {
+      Log.w(TAG,"No component specified in " + action);
+      finish();
+      return;
+    }
   }
   if (action != null && action.equals(DevicePolicyManager.ACTION_SET_PROFILE_OWNER)) {
     setResult(RESULT_CANCELED);
@@ -182,6 +192,10 @@ catch (  IOException e) {
           }
         }
 ).show();
+      }
+ else       if (mUninstalling) {
+        mDPM.uninstallPackageWithActiveAdmins(mDeviceAdmin.getPackageName());
+        finish();
       }
  else       if (!mWaitingForRemoveMsg) {
         try {

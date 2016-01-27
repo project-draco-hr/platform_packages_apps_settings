@@ -41,7 +41,12 @@
       addDeviceAdminPolicies(false);
       mAdminWarning.setText(getString(R.string.device_admin_status,mDeviceAdmin.getActivityInfo().applicationInfo.loadLabel(getPackageManager())));
       setTitle(R.string.active_device_admin_msg);
-      mActionButton.setText(R.string.remove_device_admin);
+      if (mUninstalling) {
+        mActionButton.setText(R.string.remove_and_uninstall_device_admin);
+      }
+ else {
+        mActionButton.setText(R.string.remove_device_admin);
+      }
     }
     String supportMessage=mDPM.getLongSupportMessageForUser(mDeviceAdmin.getComponent(),UserHandle.myUserId());
     if (!TextUtils.isEmpty(supportMessage)) {

@@ -10,10 +10,13 @@
     }
     mUninstallButton.setText(R.string.uninstall_text);
   }
-  if (mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
+  if (isBundled && mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
     enabled=false;
   }
   if (isProfileOrDeviceOwner(mPackageInfo.packageName)) {
+    enabled=false;
+  }
+  if (mDpm.isUninstallInQueue(mPackageName)) {
     enabled=false;
   }
   if (enabled && mHomePackages.contains(mPackageInfo.packageName)) {

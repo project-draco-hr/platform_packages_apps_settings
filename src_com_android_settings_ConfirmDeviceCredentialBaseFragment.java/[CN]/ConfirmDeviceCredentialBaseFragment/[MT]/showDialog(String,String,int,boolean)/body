@@ -1,0 +1,11 @@
+{
+  final AlertDialog dialog=new AlertDialog.Builder(getActivity()).setTitle(title).setMessage(message).setPositiveButton(buttonString,new OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      if (dismiss) {
+        getActivity().finish();
+      }
+    }
+  }
+).create();
+  dialog.show();
+}

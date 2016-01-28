@@ -1,0 +1,8 @@
+{
+  mErrorTextView.setText(msg);
+  onShowError();
+  mHandler.removeCallbacks(mResetErrorRunnable);
+  if (timeout != 0) {
+    mHandler.postDelayed(mResetErrorRunnable,timeout);
+  }
+}

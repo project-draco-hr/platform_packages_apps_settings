@@ -1,0 +1,19 @@
+{
+  final int maxAttempts=mLockPatternUtils.getMaximumFailedPasswordsForWipe(mEffectiveUserId);
+  if (maxAttempts > 0 && numAttempts > 0) {
+    int remainingAttempts=maxAttempts - numAttempts;
+    if (remainingAttempts == 1) {
+      final String title=getActivity().getString(R.string.lock_profile_wipe_warning_title);
+      final String message=getActivity().getString(getLastTryErrorMessage());
+      showDialog(title,message,android.R.string.ok,false);
+    }
+ else     if (remainingAttempts <= 0) {
+      final String message=getActivity().getString(R.string.lock_profile_wipe_content);
+      showDialog(null,message,R.string.lock_profile_wipe_dismiss,true);
+    }
+    if (mErrorTextView != null) {
+      final String message=getActivity().getString(R.string.lock_profile_wipe_attempts,numAttempts,maxAttempts);
+      showError(message,0);
+    }
+  }
+}

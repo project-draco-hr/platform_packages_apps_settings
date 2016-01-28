@@ -12,5 +12,8 @@
  else   if (className.equals(FingerprintSuggestionActivity.class.getName())) {
     return isNotSingleFingerprintEnrolled();
   }
+ else   if (className.equals(ScreenLockSuggestionActivity.class.getName()) || className.equals(FingerprintEnrollSuggestionActivity.class.getName())) {
+    return isDeviceSecured();
+  }
   return false;
 }

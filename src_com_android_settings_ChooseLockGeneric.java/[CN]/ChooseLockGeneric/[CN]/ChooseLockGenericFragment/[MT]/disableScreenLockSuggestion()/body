@@ -1,9 +1,0 @@
-{
-  final ComponentName suggestionChooseLock=new ComponentName("com.android.settings","com.android.settings.suggestion.ChooseLockGeneric");
-  disableComponent(suggestionChooseLock);
-  PackageManager pm=getContext().getPackageManager();
-  if (pm.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
-    final ComponentName suggestionFingerprint=new ComponentName("com.android.settings","com.android.settings.suggestion.FingerprintEnrollIntroduction");
-    disableComponent(suggestionFingerprint);
-  }
-}

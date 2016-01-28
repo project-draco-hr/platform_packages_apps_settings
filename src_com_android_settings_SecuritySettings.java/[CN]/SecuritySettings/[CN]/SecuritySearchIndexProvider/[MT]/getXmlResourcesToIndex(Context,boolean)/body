@@ -37,6 +37,10 @@ sir.xmlResId=resId;
 result.add(sir);
 }
 sir=new SearchIndexableResource(context);
+sir.xmlResId=SecuritySubSettings.getResIdForLockUnlockSubScreen(context,lockPatternUtils);
+sir.className=SecuritySubSettings.class.getName();
+result.add(sir);
+sir=new SearchIndexableResource(context);
 sir.xmlResId=R.xml.security_settings_misc;
 result.add(sir);
 return result;

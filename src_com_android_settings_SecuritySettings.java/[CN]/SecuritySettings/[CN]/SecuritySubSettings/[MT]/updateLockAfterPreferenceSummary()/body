@@ -17,7 +17,7 @@
         best=i;
       }
     }
-    Preference preference=getPreferenceScreen().findPreference(KEY_TRUST_AGENT);
+    Preference preference=findPreference(KEY_TRUST_AGENT);
     if (preference != null && preference.getTitle().length() > 0) {
       if (Long.valueOf(values[best].toString()) == 0) {
         summary=getString(R.string.lock_immediately_summary_with_exception,preference.getTitle());

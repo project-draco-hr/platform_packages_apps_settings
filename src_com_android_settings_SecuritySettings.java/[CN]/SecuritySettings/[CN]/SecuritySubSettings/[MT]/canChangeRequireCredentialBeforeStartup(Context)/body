@@ -1,0 +1,4 @@
+{
+  DevicePolicyManager dpm=context.getSystemService(DevicePolicyManager.class);
+  return UserManager.get(context).isAdminUser() && LockPatternUtils.isDeviceEncryptionEnabled() && !dpm.getDoNotAskCredentialsOnBoot();
+}

@@ -4,6 +4,7 @@
     mEncryptionRequestQuality=quality;
     mEncryptionRequestDisabled=disabled;
     Intent unlockMethodIntent=getIntentForUnlockMethod(quality,disabled);
+    unlockMethodIntent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_FOR_CHANGE_CRED_REQUIRED_FOR_BOOT,mForChangeCredRequiredForBoot);
     final Context context=getActivity();
     final boolean accEn=AccessibilityManager.getInstance(context).isEnabled();
     final boolean required=mLockPatternUtils.isCredentialRequiredToDecrypt(!accEn);
@@ -12,6 +13,10 @@
     startActivityForResult(intent,ENABLE_ENCRYPTION_REQUEST);
   }
  else {
+    if (mForChangeCredRequiredForBoot) {
+      finish();
+      return;
+    }
     mRequirePassword=false;
     updateUnlockMethodAndFinish(quality,disabled);
   }

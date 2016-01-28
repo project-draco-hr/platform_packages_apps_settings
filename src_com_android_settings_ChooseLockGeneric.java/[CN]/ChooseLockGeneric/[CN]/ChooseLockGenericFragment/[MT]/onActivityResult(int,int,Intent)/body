@@ -5,6 +5,14 @@
     mPasswordConfirmed=true;
     mUserPassword=data.getStringExtra(ChooseLockSettingsHelper.EXTRA_KEY_PASSWORD);
     updatePreferencesOrFinish();
+    if (mForChangeCredRequiredForBoot) {
+      if (!TextUtils.isEmpty(mUserPassword)) {
+        maybeEnableEncryption(mLockPatternUtils.getKeyguardStoredPasswordQuality(mUserId),false);
+      }
+ else {
+        finish();
+      }
+    }
   }
  else   if (requestCode == CHOOSE_LOCK_REQUEST || requestCode == ENABLE_ENCRYPTION_REQUEST) {
     if (resultCode != RESULT_CANCELED) {
@@ -14,6 +22,9 @@
   }
  else {
     getActivity().setResult(Activity.RESULT_CANCELED);
+    finish();
+  }
+  if (requestCode == Activity.RESULT_CANCELED && mForChangeCredRequiredForBoot) {
     finish();
   }
 }

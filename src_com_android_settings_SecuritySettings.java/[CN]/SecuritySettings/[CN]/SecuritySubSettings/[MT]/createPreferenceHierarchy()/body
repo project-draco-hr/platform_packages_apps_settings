@@ -1,0 +1,44 @@
+{
+  PreferenceScreen root=getPreferenceScreen();
+  if (root != null) {
+    root.removeAll();
+  }
+  root=null;
+  final int resid=getResIdForLockUnlockSubScreen(getActivity(),new LockPatternUtils(getContext()));
+  addPreferencesFromResource(resid);
+  mLockAfter=(RestrictedListPreference)findPreference(KEY_LOCK_AFTER_TIMEOUT);
+  if (mLockAfter != null) {
+    setupLockAfterPreference();
+    updateLockAfterPreferenceSummary();
+  }
+  mVisiblePattern=(SwitchPreference)findPreference(KEY_VISIBLE_PATTERN);
+  mPowerButtonInstantlyLocks=(SwitchPreference)findPreference(KEY_POWER_INSTANTLY_LOCKS);
+  Preference trustAgentPreference=findPreference(KEY_TRUST_AGENT);
+  if (mPowerButtonInstantlyLocks != null && trustAgentPreference != null && trustAgentPreference.getTitle().length() > 0) {
+    mPowerButtonInstantlyLocks.setSummary(getString(R.string.lockpattern_settings_power_button_instantly_locks_summary,trustAgentPreference.getTitle()));
+  }
+  mOwnerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
+  if (mOwnerInfoPref != null) {
+    mOwnerInfoPref.setEnabled(!mLockPatternUtils.isLockScreenDisabled(MY_USER_ID) && !mLockPatternUtils.isDeviceOwnerInfoEnabled());
+    if (mOwnerInfoPref.isEnabled()) {
+      mOwnerInfoPref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+        @Override public boolean onPreferenceClick(        Preference preference){
+          OwnerInfoSettings.show(SecuritySubSettings.this);
+          return true;
+        }
+      }
+);
+    }
+  }
+  Preference requireCredForStartup=findPreference(KEY_REQUIRE_CRED_BEFORE_STARTUP);
+  if (requireCredForStartup instanceof SwitchPreference) {
+    ((SwitchPreference)requireCredForStartup).setChecked(mLockPatternUtils.isCredentialRequiredToDecrypt(false));
+    if (!canChangeRequireCredentialBeforeStartup(getContext())) {
+      removePreference(KEY_REQUIRE_CRED_BEFORE_STARTUP);
+    }
+  }
+  for (int i=0; i < SWITCH_PREFERENCE_KEYS.length; i++) {
+    final Preference pref=findPreference(SWITCH_PREFERENCE_KEYS[i]);
+    if (pref != null)     pref.setOnPreferenceChangeListener(this);
+  }
+}

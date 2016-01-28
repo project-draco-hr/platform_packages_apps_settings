@@ -1,0 +1,26 @@
+{
+  String key=preference.getKey();
+  if (KEY_POWER_INSTANTLY_LOCKS.equals(key)) {
+    mLockPatternUtils.setPowerButtonInstantlyLocks((Boolean)value,MY_USER_ID);
+  }
+ else   if (KEY_LOCK_AFTER_TIMEOUT.equals(key)) {
+    int timeout=Integer.parseInt((String)value);
+    try {
+      Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_LOCK_AFTER_TIMEOUT,timeout);
+    }
+ catch (    NumberFormatException e) {
+      Log.e("SecuritySettings","could not persist lockAfter timeout setting",e);
+    }
+    updateLockAfterPreferenceSummary();
+  }
+ else   if (KEY_VISIBLE_PATTERN.equals(key)) {
+    mLockPatternUtils.setVisiblePatternEnabled((Boolean)value,MY_USER_ID);
+  }
+ else   if (KEY_REQUIRE_CRED_BEFORE_STARTUP.equals(key)) {
+    Bundle extras=new Bundle();
+    extras.putBoolean(ChooseLockSettingsHelper.EXTRA_KEY_FOR_CHANGE_CRED_REQUIRED_FOR_BOOT,true);
+    startFragment(this,"com.android.settings.ChooseLockGeneric$ChooseLockGenericFragment",R.string.lock_settings_picker_title,REQUEST_CHANGE_REQUIRE_CRED_FOR_START,extras);
+    return false;
+  }
+  return true;
+}

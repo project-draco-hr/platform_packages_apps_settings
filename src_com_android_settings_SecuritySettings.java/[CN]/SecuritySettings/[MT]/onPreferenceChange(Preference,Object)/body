@@ -2,23 +2,7 @@
   boolean result=true;
   final String key=preference.getKey();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
-  if (KEY_LOCK_AFTER_TIMEOUT.equals(key)) {
-    int timeout=Integer.parseInt((String)value);
-    try {
-      Settings.Secure.putInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_LOCK_AFTER_TIMEOUT,timeout);
-    }
- catch (    NumberFormatException e) {
-      Log.e("SecuritySettings","could not persist lockAfter timeout setting",e);
-    }
-    updateLockAfterPreferenceSummary();
-  }
- else   if (KEY_VISIBLE_PATTERN.equals(key)) {
-    lockPatternUtils.setVisiblePatternEnabled((Boolean)value,MY_USER_ID);
-  }
- else   if (KEY_POWER_INSTANTLY_LOCKS.equals(key)) {
-    mLockPatternUtils.setPowerButtonInstantlyLocks((Boolean)value,MY_USER_ID);
-  }
- else   if (KEY_SHOW_PASSWORD.equals(key)) {
+  if (KEY_SHOW_PASSWORD.equals(key)) {
     Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,((Boolean)value) ? 1 : 0);
     lockPatternUtils.setVisiblePasswordEnabled((Boolean)value,MY_USER_ID);
   }

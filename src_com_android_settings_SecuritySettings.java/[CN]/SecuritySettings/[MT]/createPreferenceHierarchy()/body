@@ -20,20 +20,11 @@
       addPreferencesFromResource(R.xml.security_settings_profile);
     }
   }
-  mIsAdmin=mUm.isAdminUser();
-  mOwnerInfoPref=findPreference(KEY_OWNER_INFO_SETTINGS);
-  if (mOwnerInfoPref != null) {
-    mOwnerInfoPref.setEnabled(!mLockPatternUtils.isLockScreenDisabled(MY_USER_ID) && !mLockPatternUtils.isDeviceOwnerInfoEnabled());
-    if (mOwnerInfoPref.isEnabled()) {
-      mOwnerInfoPref.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-        @Override public boolean onPreferenceClick(        Preference preference){
-          OwnerInfoSettings.show(SecuritySettings.this);
-          return true;
-        }
-      }
-);
-    }
+  Preference unlockSetOrChange=findPreference(KEY_UNLOCK_SET_OR_CHANGE);
+  if (unlockSetOrChange instanceof GearPreference) {
+    ((GearPreference)unlockSetOrChange).setOnGearClickListener(this);
   }
+  mIsAdmin=mUm.isAdminUser();
   if (mIsAdmin) {
     if (LockPatternUtils.isDeviceEncryptionEnabled()) {
       addPreferencesFromResource(R.xml.security_settings_encrypted);
@@ -46,17 +37,6 @@
   if (securityCategory != null) {
     maybeAddFingerprintPreference(securityCategory);
     addTrustAgentSettings(securityCategory);
-  }
-  mLockAfter=(RestrictedListPreference)root.findPreference(KEY_LOCK_AFTER_TIMEOUT);
-  if (mLockAfter != null) {
-    setupLockAfterPreference();
-    updateLockAfterPreferenceSummary();
-  }
-  mVisiblePattern=(SwitchPreference)root.findPreference(KEY_VISIBLE_PATTERN);
-  mPowerButtonInstantlyLocks=(SwitchPreference)root.findPreference(KEY_POWER_INSTANTLY_LOCKS);
-  Preference trustAgentPreference=root.findPreference(KEY_TRUST_AGENT);
-  if (mPowerButtonInstantlyLocks != null && trustAgentPreference != null && trustAgentPreference.getTitle().length() > 0) {
-    mPowerButtonInstantlyLocks.setSummary(getString(R.string.lockpattern_settings_power_button_instantly_locks_summary,trustAgentPreference.getTitle()));
   }
   addPreferencesFromResource(R.xml.security_settings_misc);
   TelephonyManager tm=TelephonyManager.getDefault();

@@ -1,0 +1,19 @@
+{
+  if (lockPatternUtils.isSecure(MY_USER_ID)) {
+switch (lockPatternUtils.getKeyguardStoredPasswordQuality(MY_USER_ID)) {
+case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
+      return R.xml.security_settings_pattern_sub;
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
+    return R.xml.security_settings_pin_sub;
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
+  return R.xml.security_settings_password_sub;
+}
+}
+ else if (!lockPatternUtils.isLockScreenDisabled(MY_USER_ID)) {
+return R.xml.security_settings_slide_sub;
+}
+return 0;
+}

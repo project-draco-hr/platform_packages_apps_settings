@@ -1,3 +1,8 @@
 {
-  new Task().execute();
+  if (mBlocking) {
+    finish(saveAndVerifyInBackground());
+  }
+ else {
+    new Task().execute();
+  }
 }

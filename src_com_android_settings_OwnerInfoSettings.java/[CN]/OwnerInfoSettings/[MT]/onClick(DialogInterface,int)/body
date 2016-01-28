@@ -3,8 +3,8 @@
     String info=mOwnerInfo.getText().toString();
     mLockPatternUtils.setOwnerInfoEnabled(!TextUtils.isEmpty(info),mUserId);
     mLockPatternUtils.setOwnerInfo(info,mUserId);
-    if (getTargetFragment() instanceof SecuritySettings) {
-      ((SecuritySettings)getTargetFragment()).updateOwnerInfo();
+    if (getTargetFragment() instanceof SecuritySettings.SecuritySubSettings) {
+      ((SecuritySettings.SecuritySubSettings)getTargetFragment()).updateOwnerInfo();
     }
   }
 }

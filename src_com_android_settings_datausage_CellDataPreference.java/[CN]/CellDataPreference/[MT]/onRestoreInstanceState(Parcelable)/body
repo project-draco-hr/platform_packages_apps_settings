@@ -4,7 +4,9 @@
   mTelephonyManager=TelephonyManager.from(getContext());
   mChecked=state.mChecked;
   mMultiSimDialog=state.mMultiSimDialog;
-  mSubId=state.mSubId;
-  setKey(getKey() + mSubId);
+  if (mSubId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+    mSubId=state.mSubId;
+    setKey(getKey() + mSubId);
+  }
   notifyChanged();
 }

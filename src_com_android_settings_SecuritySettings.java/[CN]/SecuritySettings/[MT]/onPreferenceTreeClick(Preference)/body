@@ -6,7 +6,7 @@
  else   if (KEY_UNLOCK_SET_OR_CHANGE_PROFILE.equals(key)) {
     Bundle extras=new Bundle();
     extras.putInt(Intent.EXTRA_USER_ID,mProfileChallengeUserId);
-    startFragment(this,"com.android.settings.ProfileChallengePreferenceFragment",R.string.lock_settings_profile_label,SET_OR_CHANGE_LOCK_METHOD_REQUEST,extras);
+    startFragment(this,"com.android.settings.ChooseLockGeneric$ChooseLockGenericFragment",R.string.lock_settings_picker_title_profile,SET_OR_CHANGE_LOCK_METHOD_REQUEST_PROFILE,extras);
   }
  else   if (KEY_TRUST_AGENT.equals(key)) {
     ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
@@ -16,6 +16,11 @@
       startActivity(mTrustAgentClickIntent);
       mTrustAgentClickIntent=null;
     }
+  }
+ else   if (KEY_UNIFICATION.equals(key)) {
+    UnificationConfirmationDialog dialog=UnificationConfirmationDialog.newIntance(mProfileChallengeUserId);
+    dialog.show(getChildFragmentManager(),TAG_UNIFICATION_DIALOG);
+    return true;
   }
  else {
     return super.onPreferenceTreeClick(preference);

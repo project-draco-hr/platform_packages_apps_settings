@@ -25,6 +25,16 @@
     data.screenTitle=screenTitle;
     result.add(data);
   }
+  final LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
+  final int profileUserId=getManagedProfileId(um);
+  if (profileUserId != UserHandle.USER_NULL && lockPatternUtils.isSeparateProfileChallengeAllowed(profileUserId)) {
+    if (lockPatternUtils.getKeyguardStoredPasswordQuality(profileUserId) >= DevicePolicyManager.PASSWORD_QUALITY_SOMETHING && lockPatternUtils.isSeparateProfileChallengeAllowedToUnify(profileUserId)) {
+      data=new SearchIndexableRaw(context);
+      data.title=res.getString(R.string.lock_settings_profile_unification_title);
+      data.screenTitle=screenTitle;
+      result.add(data);
+    }
+  }
   if (!um.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS)) {
     KeyStore keyStore=KeyStore.getInstance();
     final int storageSummaryRes=keyStore.isHardwareBacked() ? R.string.credential_storage_type_hardware : R.string.credential_storage_type_software;
@@ -33,7 +43,6 @@
     data.screenTitle=screenTitle;
     result.add(data);
   }
-  final LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
   if (lockPatternUtils.isSecure(MY_USER_ID)) {
     ArrayList<TrustAgentComponentInfo> agents=getActiveTrustAgents(context,lockPatternUtils,context.getSystemService(DevicePolicyManager.class));
     for (int i=0; i < agents.size(); i++) {

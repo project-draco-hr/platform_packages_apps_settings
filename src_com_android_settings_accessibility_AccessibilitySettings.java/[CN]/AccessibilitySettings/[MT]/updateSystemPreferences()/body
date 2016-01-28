@@ -1,10 +1,4 @@
 {
-  try {
-    mCurConfig.updateFrom(ActivityManagerNative.getDefault().getConfiguration());
-  }
- catch (  RemoteException re) {
-  }
-  mToggleLargeTextPreference.setChecked(mCurConfig.fontScale == LARGE_FONT_SCALE);
   mToggleHighTextContrastPreference.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_HIGH_TEXT_CONTRAST_ENABLED,0) == 1);
   mToggleInversionPreference.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_DISPLAY_INVERSION_ENABLED,0) == 1);
   if (KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_POWER) && Utils.isVoiceCapable(getActivity())) {

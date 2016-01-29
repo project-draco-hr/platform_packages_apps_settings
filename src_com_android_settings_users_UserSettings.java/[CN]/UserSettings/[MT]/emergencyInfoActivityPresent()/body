@@ -1,0 +1,8 @@
+{
+  Intent intent=new Intent(ACTION_EDIT_EMERGENCY_INFO).setPackage("com.android.emergency");
+  List<ResolveInfo> infos=getContext().getPackageManager().queryIntentActivities(intent,0);
+  if (infos == null || infos.isEmpty()) {
+    return false;
+  }
+  return true;
+}

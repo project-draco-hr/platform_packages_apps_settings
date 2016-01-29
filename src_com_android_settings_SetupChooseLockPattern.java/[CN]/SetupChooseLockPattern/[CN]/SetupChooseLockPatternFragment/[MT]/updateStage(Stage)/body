@@ -1,4 +1,17 @@
 {
   super.updateStage(stage);
   mRetryButton.setEnabled(stage == Stage.FirstChoiceValid);
+switch (stage) {
+case Introduction:
+case HelpScreen:
+case ChoiceTooShort:
+case FirstChoiceValid:
+    mRetryButton.setVisibility(View.VISIBLE);
+  break;
+case NeedToConfirm:
+case ConfirmWrong:
+case ChoiceConfirmed:
+mRetryButton.setVisibility(View.INVISIBLE);
+break;
+}
 }

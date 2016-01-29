@@ -19,6 +19,16 @@
       }
     }
 );
+    if (externalSettings != null) {
+      final View appSettings=bar.findViewById(R.id.app_settings);
+      appSettings.setVisibility(View.VISIBLE);
+      appSettings.setOnClickListener(new OnClickListener(){
+        @Override public void onClick(        View v){
+          activity.startActivity(externalSettings);
+        }
+      }
+);
+    }
   }
   return bar;
 }

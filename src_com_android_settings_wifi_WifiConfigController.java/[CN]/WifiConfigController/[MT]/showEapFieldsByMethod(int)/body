@@ -1,6 +1,7 @@
 {
   mView.findViewById(R.id.l_method).setVisibility(View.VISIBLE);
   mView.findViewById(R.id.l_identity).setVisibility(View.VISIBLE);
+  mView.findViewById(R.id.l_domain).setVisibility(View.VISIBLE);
   mView.findViewById(R.id.l_ca_cert).setVisibility(View.VISIBLE);
   mView.findViewById(R.id.password_layout).setVisibility(View.VISIBLE);
   mView.findViewById(R.id.show_password_layout).setVisibility(View.VISIBLE);
@@ -9,6 +10,7 @@ switch (eapMethod) {
 case WIFI_EAP_METHOD_PWD:
     setPhase2Invisible();
   setCaCertInvisible();
+setDomainInvisible();
 setAnonymousIdentInvisible();
 setUserCertInvisible();
 break;
@@ -42,9 +44,16 @@ case WIFI_EAP_METHOD_AKA_PRIME:
 setPhase2Invisible();
 setAnonymousIdentInvisible();
 setCaCertInvisible();
+setDomainInvisible();
 setUserCertInvisible();
 setPasswordInvisible();
 setIdentityInvisible();
 break;
+}
+if (mView.findViewById(R.id.l_ca_cert).getVisibility() != View.GONE) {
+String eapCertSelection=(String)mEapCaCertSpinner.getSelectedItem();
+if (eapCertSelection.equals(mDoNotValidateEapServerString) || eapCertSelection.equals(mUnspecifiedCertString)) {
+setDomainInvisible();
+}
 }
 }

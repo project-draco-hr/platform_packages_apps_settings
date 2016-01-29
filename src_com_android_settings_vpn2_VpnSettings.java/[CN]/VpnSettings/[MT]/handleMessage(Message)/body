@@ -4,17 +4,20 @@
   final List<AppVpnInfo> vpnApps=getVpnApps(getActivity(),true);
   final List<LegacyVpnInfo> connectedLegacyVpns=getConnectedLegacyVpns();
   final List<AppVpnInfo> connectedAppVpns=getConnectedAppVpns();
+  final Set<Integer> readOnlyUsers=getReadOnlyUserProfiles();
   getActivity().runOnUiThread(new Runnable(){
     @Override public void run(){
       final Set<Preference> updates=new ArraySet<>();
       for (      VpnProfile profile : vpnProfiles) {
         ConfigPreference p=findOrCreatePreference(profile);
         p.setState(ConfigPreference.STATE_NONE);
+        p.setEnabled(!readOnlyUsers.contains(UserHandle.myUserId()));
         updates.add(p);
       }
       for (      AppVpnInfo app : vpnApps) {
         AppPreference p=findOrCreatePreference(app);
         p.setState(AppPreference.STATE_DISCONNECTED);
+        p.setEnabled(!readOnlyUsers.contains(app.userId));
         updates.add(p);
       }
       mConfigPreferences.values().retainAll(updates);

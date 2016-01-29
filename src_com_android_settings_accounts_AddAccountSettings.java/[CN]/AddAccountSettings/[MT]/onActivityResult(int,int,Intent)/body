@@ -2,6 +2,9 @@
 switch (requestCode) {
 case CHOOSE_ACCOUNT_REQUEST:
     if (resultCode == RESULT_CANCELED) {
+      if (data != null) {
+        startActivityAsUser(data,mUserHandle);
+      }
       setResult(resultCode);
       finish();
       return;

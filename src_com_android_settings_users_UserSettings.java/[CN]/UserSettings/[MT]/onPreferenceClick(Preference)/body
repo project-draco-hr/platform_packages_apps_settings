@@ -13,17 +13,9 @@
   }
  else   if (pref instanceof UserPreference) {
     int userId=((UserPreference)pref).getUserId();
-    if (userId == UserPreference.USERID_GUEST_DEFAULTS) {
-      createAndSwitchToGuestUser();
-    }
- else {
-      UserInfo user=mUserManager.getUserInfo(userId);
-      if (!isInitialized(user)) {
-        mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SETUP_USER,user.id,user.serialNumber));
-      }
- else {
-        switchUserNow(userId);
-      }
+    UserInfo user=mUserManager.getUserInfo(userId);
+    if (!isInitialized(user)) {
+      mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SETUP_USER,user.id,user.serialNumber));
     }
   }
  else   if (pref == mAddUser) {

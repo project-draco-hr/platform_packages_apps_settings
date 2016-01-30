@@ -1,9 +1,10 @@
 {
   super(context,attrs,defStyleAttr,defStyleRes);
   LayoutInflater.from(context).inflate(R.layout.switch_bar,this);
-  final TypedArray a=context.obtainStyledAttributes(attrs,MARGIN_ATTRIBUTES);
+  final TypedArray a=context.obtainStyledAttributes(attrs,XML_ATTRIBUTES);
   int switchBarMarginStart=(int)a.getDimension(0,0);
   int switchBarMarginEnd=(int)a.getDimension(1,0);
+  int switchBarBackgroundColor=(int)a.getColor(2,0);
   a.recycle();
   mTextView=(TextView)findViewById(R.id.switch_text);
   mTextView.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
@@ -17,6 +18,8 @@
   mSwitch.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
   lp=(MarginLayoutParams)mSwitch.getLayoutParams();
   lp.setMarginEnd(switchBarMarginEnd);
+  setBackgroundColor(switchBarBackgroundColor);
+  mSwitch.setBackgroundColor(switchBarBackgroundColor);
   addOnSwitchChangeListener(new OnSwitchChangeListener(){
     @Override public void onSwitchChanged(    Switch switchView,    boolean isChecked){
       setTextViewLabel(isChecked);

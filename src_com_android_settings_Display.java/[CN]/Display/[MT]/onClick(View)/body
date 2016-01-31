@@ -1,8 +1,5 @@
 {
-  try {
-    ActivityManagerNative.getDefault().updatePersistentConfiguration(mCurConfig);
-  }
- catch (  RemoteException e) {
-  }
+  final ContentResolver resolver=getContentResolver();
+  Settings.System.putFloat(resolver,Settings.System.FONT_SCALE,mFontScale);
   finish();
 }

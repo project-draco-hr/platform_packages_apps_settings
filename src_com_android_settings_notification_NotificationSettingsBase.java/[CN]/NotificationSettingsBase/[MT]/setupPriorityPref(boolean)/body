@@ -1,5 +1,5 @@
 {
-  mPriority.setDisabledByAdmin(RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId));
+  mPriority.setDisabledByAdmin(mSuspendedAppsAdmin);
   mPriority.setChecked(priority);
   mPriority.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){

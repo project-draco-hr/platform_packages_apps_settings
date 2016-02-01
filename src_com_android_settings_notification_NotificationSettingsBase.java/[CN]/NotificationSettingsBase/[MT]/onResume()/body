@@ -4,14 +4,17 @@
     finish();
     return;
   }
-  EnforcedAdmin admin=RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId);
+  mSuspendedAppsAdmin=RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId);
   if (mImportance != null) {
-    mImportance.setDisabledByAdmin(admin);
+    mImportance.setDisabledByAdmin(mSuspendedAppsAdmin);
   }
   if (mPriority != null) {
-    mPriority.setDisabledByAdmin(admin);
+    mPriority.setDisabledByAdmin(mSuspendedAppsAdmin);
   }
   if (mSensitive != null) {
-    mSensitive.setDisabledByAdmin(admin);
+    mSensitive.setDisabledByAdmin(mSuspendedAppsAdmin);
+  }
+  if (mImportanceTitle != null) {
+    mImportanceTitle.setDisabledByAdmin(mSuspendedAppsAdmin);
   }
 }

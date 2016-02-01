@@ -29,4 +29,5 @@
     return;
   }
   mTopic=args != null && args.containsKey(ARG_TOPIC) ? (Notification.Topic)args.getParcelable(ARG_TOPIC) : null;
+  mSuspendedAppsAdmin=RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId);
 }

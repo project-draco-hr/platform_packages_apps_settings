@@ -1,5 +1,5 @@
 {
-  mSensitive.setDisabledByAdmin(RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId));
+  mSensitive.setDisabledByAdmin(mSuspendedAppsAdmin);
   mSensitive.setChecked(sensitive);
   mSensitive.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){

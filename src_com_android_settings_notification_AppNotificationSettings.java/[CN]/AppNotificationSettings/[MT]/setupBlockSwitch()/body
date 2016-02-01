@@ -1,5 +1,5 @@
 {
-  mBlock.setDisabledByAdmin(RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId));
+  mBlock.setDisabledByAdmin(mSuspendedAppsAdmin);
   mBlock.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
       final boolean banned=(Boolean)newValue;

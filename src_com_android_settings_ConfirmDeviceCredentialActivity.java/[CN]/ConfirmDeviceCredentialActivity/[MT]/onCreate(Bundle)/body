@@ -12,9 +12,6 @@
       Log.e(TAG,"Invalid intent extra",se);
     }
   }
-  if (title == null) {
-    title=getTitleFromOrganizationName(userId);
-  }
   ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this);
   if (!helper.launchConfirmationActivity(0,null,title,details,false,true,userId)) {
     Log.d(TAG,"No pattern, password or PIN set.");

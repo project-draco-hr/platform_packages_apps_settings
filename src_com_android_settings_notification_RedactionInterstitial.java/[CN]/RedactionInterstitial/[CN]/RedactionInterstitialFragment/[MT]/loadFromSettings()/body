@@ -1,6 +1,6 @@
 {
-  final boolean enabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_SHOW_NOTIFICATIONS,0) != 0;
-  final boolean show=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,1) != 0;
+  final boolean enabled=Settings.Secure.getIntForUser(getContentResolver(),Settings.Secure.LOCK_SCREEN_SHOW_NOTIFICATIONS,0,mUserId) != 0;
+  final boolean show=Settings.Secure.getIntForUser(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,1,mUserId) != 0;
   int checkedButtonId=R.id.hide_all;
   if (enabled) {
     if (show && !mShowAllButton.isDisabledByAdmin()) {

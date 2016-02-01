@@ -1,0 +1,13 @@
+{
+  JSONObject dump=new JSONObject();
+  try {
+    dump.put("service","Settings State");
+    dump.put("storage",dumpStorage());
+    dump.put("datausage",dumpDataUsage());
+    dump.put("memory",dumpMemory());
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  writer.println(dump);
+}

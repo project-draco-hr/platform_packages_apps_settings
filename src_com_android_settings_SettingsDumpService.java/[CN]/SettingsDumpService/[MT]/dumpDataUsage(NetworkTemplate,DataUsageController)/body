@@ -1,0 +1,10 @@
+{
+  JSONObject obj=new JSONObject();
+  DataUsageController.DataUsageInfo usage=controller.getDataUsageInfo(template);
+  obj.put("carrier",usage.carrier);
+  obj.put("start",usage.startDate);
+  obj.put("usage",usage.usageLevel);
+  obj.put("warning",usage.warningLevel);
+  obj.put("limit",usage.limitLevel);
+  return obj;
+}

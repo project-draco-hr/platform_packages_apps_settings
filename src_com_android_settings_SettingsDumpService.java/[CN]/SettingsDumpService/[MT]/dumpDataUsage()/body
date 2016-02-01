@@ -1,0 +1,20 @@
+{
+  JSONObject obj=new JSONObject();
+  DataUsageController controller=new DataUsageController(this);
+  ConnectivityManager connectivityManager=getSystemService(ConnectivityManager.class);
+  SubscriptionManager manager=SubscriptionManager.from(this);
+  TelephonyManager telephonyManager=TelephonyManager.from(this);
+  if (connectivityManager.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)) {
+    for (    SubscriptionInfo info : manager.getAllSubscriptionInfoList()) {
+      NetworkTemplate mobileAll=NetworkTemplate.buildTemplateMobileAll(telephonyManager.getSubscriberId(info.getSubscriptionId()));
+      obj.put("cell(" + info.getSubscriptionId() + ")",dumpDataUsage(mobileAll,controller));
+    }
+  }
+  if (connectivityManager.isNetworkSupported(ConnectivityManager.TYPE_WIFI)) {
+    obj.put("wifi",dumpDataUsage(NetworkTemplate.buildTemplateWifiWildcard(),controller));
+  }
+  if (connectivityManager.isNetworkSupported(ConnectivityManager.TYPE_ETHERNET)) {
+    obj.put("ethernet",dumpDataUsage(NetworkTemplate.buildTemplateEthernet(),controller));
+  }
+  return obj;
+}

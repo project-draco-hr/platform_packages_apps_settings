@@ -1,0 +1,11 @@
+{
+  JSONObject obj=new JSONObject();
+  ProcStatsData statsManager=new ProcStatsData(this,false);
+  statsManager.refreshStats(true);
+  ProcStatsData.MemInfo memInfo=statsManager.getMemInfo();
+  obj.put("used",String.valueOf(memInfo.realUsedRam));
+  obj.put("free",String.valueOf(memInfo.realFreeRam));
+  obj.put("total",String.valueOf(memInfo.realTotalRam));
+  obj.put("state",statsManager.getMemState());
+  return obj;
+}

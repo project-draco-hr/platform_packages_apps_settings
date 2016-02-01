@@ -1,0 +1,18 @@
+{
+  JSONObject obj=new JSONObject();
+  StorageManager manager=getSystemService(StorageManager.class);
+  for (  VolumeInfo volume : manager.getVolumes()) {
+    JSONObject volObj=new JSONObject();
+    if (volume.isMountedReadable()) {
+      File path=volume.getPath();
+      volObj.put("used",String.valueOf(path.getTotalSpace() - path.getFreeSpace()));
+      volObj.put("total",String.valueOf(path.getTotalSpace()));
+    }
+    volObj.put("path",volume.getInternalPath());
+    volObj.put("state",volume.getState());
+    volObj.put("stateDesc",volume.getStateDescription());
+    volObj.put("description",volume.getDescription());
+    obj.put(volume.getId(),volObj);
+  }
+  return obj;
+}

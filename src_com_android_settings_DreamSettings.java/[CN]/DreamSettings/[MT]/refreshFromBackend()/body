@@ -2,7 +2,9 @@
   logd("refreshFromBackend()");
   mRefreshing=true;
   boolean dreamsEnabled=mBackend.isEnabled();
-  if (mSwitchBar.isChecked() != dreamsEnabled)   mSwitchBar.setChecked(dreamsEnabled);
+  if (mSwitchBar.isChecked() != dreamsEnabled) {
+    mSwitchBar.setChecked(dreamsEnabled);
+  }
   if (getPreferenceScreen() == null) {
     setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getContext()));
   }
@@ -14,6 +16,10 @@
       getPreferenceScreen().addPreference(new DreamInfoPreference(getPrefContext(),dreamInfos.get(i)));
     }
   }
-  if (mMenuItemsWhenEnabled != null)   for (  MenuItem menuItem : mMenuItemsWhenEnabled)   menuItem.setEnabled(dreamsEnabled);
+  if (mMenuItemsWhenEnabled != null) {
+    for (    MenuItem menuItem : mMenuItemsWhenEnabled) {
+      menuItem.setEnabled(dreamsEnabled);
+    }
+  }
   mRefreshing=false;
 }

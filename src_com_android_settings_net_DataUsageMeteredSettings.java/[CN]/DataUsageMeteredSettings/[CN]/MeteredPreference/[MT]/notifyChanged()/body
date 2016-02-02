@@ -2,5 +2,6 @@
   super.notifyChanged();
   if (!mBinding) {
     mPolicyEditor.setPolicyMetered(mTemplate,isChecked());
+    BackupManager.dataChanged("com.android.providers.settings");
   }
 }

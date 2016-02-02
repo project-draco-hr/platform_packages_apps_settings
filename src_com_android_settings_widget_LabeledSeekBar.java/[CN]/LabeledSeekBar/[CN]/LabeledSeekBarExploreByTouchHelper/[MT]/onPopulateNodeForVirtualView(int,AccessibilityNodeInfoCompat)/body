@@ -1,0 +1,9 @@
+{
+  node.setClassName(RadioButton.class.getName());
+  node.setBoundsInParent(getBoundsInParentFromVirtualViewId(virtualViewId));
+  node.addAction(AccessibilityNodeInfoCompat.ACTION_CLICK);
+  node.setContentDescription(mLabels[virtualViewId]);
+  node.setClickable(true);
+  node.setCheckable(true);
+  node.setChecked(virtualViewId == LabeledSeekBar.this.getProgress());
+}

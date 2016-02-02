@@ -1,0 +1,14 @@
+{
+  long startTime=SystemClock.uptimeMillis();
+  while (true) {
+    if (mLastTetherRequestType == expectedType) {
+      mLastTetherRequestType=-1;
+      return true;
+    }
+    if ((SystemClock.uptimeMillis() - startTime) > PROVISION_TIMEOUT) {
+      Log.v(TAG,String.format("waitForProvisionRequest timeout: expected=%d, actual=%d",expectedType,mLastTetherRequestType));
+      return false;
+    }
+    SystemClock.sleep(SHORT_TIMEOUT);
+  }
+}

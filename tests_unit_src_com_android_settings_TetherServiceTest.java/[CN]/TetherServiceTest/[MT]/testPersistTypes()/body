@@ -1,0 +1,10 @@
+{
+  runProvisioningForType(TETHERING_WIFI);
+  waitForProvisionRequest(TETHERING_WIFI);
+  waitForProvisionResponse(TETHER_ERROR_NO_ERROR);
+  runProvisioningForType(TETHERING_BLUETOOTH);
+  waitForProvisionRequest(TETHERING_BLUETOOTH);
+  waitForProvisionResponse(TETHER_ERROR_NO_ERROR);
+  shutdownService();
+  assertEquals(TETHERING_WIFI + "," + TETHERING_BLUETOOTH,mStoredTypes.getValue());
+}

@@ -1,0 +1,7 @@
+{
+  mProvisionResponse=Activity.RESULT_CANCELED;
+  runProvisioningForType(TETHERING_WIFI);
+  assertTrue(waitForProvisionRequest(TETHERING_WIFI));
+  assertTrue(waitForProvisionResponse(TETHER_ERROR_PROVISION_FAILED));
+  verify(mWifiManager).setWifiApEnabled(isNull(WifiConfiguration.class),eq(false));
+}

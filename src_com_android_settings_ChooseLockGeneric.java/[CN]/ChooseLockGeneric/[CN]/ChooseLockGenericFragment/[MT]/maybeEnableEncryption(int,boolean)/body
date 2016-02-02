@@ -1,6 +1,6 @@
 {
   DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE);
-  if (UserManager.get(getActivity()).isAdminUser() && mUserId == UserHandle.myUserId() && LockPatternUtils.isDeviceEncryptionEnabled() && !dpm.getDoNotAskCredentialsOnBoot()) {
+  if (UserManager.get(getActivity()).isAdminUser() && mUserId == UserHandle.myUserId() && LockPatternUtils.isDeviceEncryptionEnabled() && !LockPatternUtils.isFileEncryptionEnabled() && !dpm.getDoNotAskCredentialsOnBoot()) {
     mEncryptionRequestQuality=quality;
     mEncryptionRequestDisabled=disabled;
     Intent unlockMethodIntent=getIntentForUnlockMethod(quality,disabled);

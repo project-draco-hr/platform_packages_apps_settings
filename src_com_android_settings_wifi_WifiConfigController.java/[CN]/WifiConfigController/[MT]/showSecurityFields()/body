@@ -31,6 +31,7 @@
     mPhase2Spinner=(Spinner)mView.findViewById(R.id.phase2);
     mEapCaCertSpinner=(Spinner)mView.findViewById(R.id.ca_cert);
     mEapCaCertSpinner.setOnItemSelectedListener(this);
+    mEapDomainView=(TextView)mView.findViewById(R.id.domain);
     mEapUserCertSpinner=(Spinner)mView.findViewById(R.id.user_cert);
     mEapUserCertSpinner.setOnItemSelectedListener(this);
     mEapIdentityView=(TextView)mView.findViewById(R.id.identity);
@@ -75,6 +76,7 @@ setSelection(mEapCaCertSpinner,caCerts[0]);
 loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,true,mDoNotValidateEapServerString);
 mEapCaCertSpinner.setSelection(MULTIPLE_CERT_SET_INDEX);
 }
+mEapDomainView.setText(enterpriseConfig.getDomainSuffixMatch());
 setSelection(mEapUserCertSpinner,enterpriseConfig.getClientCertificateAlias());
 mEapIdentityView.setText(enterpriseConfig.getIdentity());
 mEapAnonymousView.setText(enterpriseConfig.getAnonymousIdentity());

@@ -1,0 +1,7 @@
+{
+  mProvisionResponse=Activity.RESULT_CANCELED;
+  runProvisioningForType(TETHERING_USB);
+  assertTrue(waitForProvisionRequest(TETHERING_USB));
+  assertTrue(waitForProvisionResponse(TETHER_ERROR_PROVISION_FAILED));
+  verify(mConnectivityManager).setUsbTethering(eq(false));
+}

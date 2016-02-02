@@ -1,0 +1,10 @@
+{
+  Intent intent=new Intent();
+  intent.putExtra(EXTRA_ADD_TETHER_TYPE,TETHERING_WIFI);
+  intent.putExtra(EXTRA_SET_ALARM,true);
+  startService(intent);
+  long period=TEST_CHECK_PERIOD * MS_PER_HOUR;
+  verify(mAlarmManager).setRepeating(eq(AlarmManager.ELAPSED_REALTIME),anyLong(),eq(period),mPiCaptor.capture());
+  PendingIntent pi=mPiCaptor.getValue();
+  assertEquals(TetherService.class.getName(),pi.getIntent().getComponent().getClassName());
+}

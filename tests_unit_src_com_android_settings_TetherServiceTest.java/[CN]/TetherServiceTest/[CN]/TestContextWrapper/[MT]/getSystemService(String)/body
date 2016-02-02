@@ -1,0 +1,12 @@
+{
+  if (ALARM_SERVICE.equals(name)) {
+    return mAlarmManager;
+  }
+ else   if (CONNECTIVITY_SERVICE.equals(name)) {
+    return mConnectivityManager;
+  }
+ else   if (WIFI_SERVICE.equals(name)) {
+    return mWifiManager;
+  }
+  return super.getSystemService(name);
+}

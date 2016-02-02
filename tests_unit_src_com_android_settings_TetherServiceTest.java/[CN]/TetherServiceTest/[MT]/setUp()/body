@@ -1,0 +1,18 @@
+{
+  super.setUp();
+  MockitoAnnotations.initMocks(this);
+  mResources=new MockResources();
+  mContext=new TestContextWrapper(getContext());
+  setContext(mContext);
+  mResultReceiver=new Receiver(this);
+  mLastReceiverResultCode=BOGUS_RECEIVER_RESULT;
+  mProvisionResponse=Activity.RESULT_OK;
+  mProvisionReceiver=new ProvisionReceiver();
+  IntentFilter filter=new IntentFilter(TEST_NO_UI_ACTION);
+  filter.addCategory(Intent.CATEGORY_DEFAULT);
+  mContext.registerReceiver(mProvisionReceiver,filter);
+  final String CURRENT_TYPES="currentTethers";
+  when(mPrefs.getString(CURRENT_TYPES,"")).thenReturn("");
+  when(mPrefs.edit()).thenReturn(mPrefEditor);
+  when(mPrefEditor.putString(eq(CURRENT_TYPES),mStoredTypes.capture())).thenReturn(mPrefEditor);
+}

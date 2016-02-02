@@ -1,0 +1,14 @@
+{
+  long startTime=SystemClock.uptimeMillis();
+  while (true) {
+    if (mLastReceiverResultCode == expectedValue) {
+      mLastReceiverResultCode=BOGUS_RECEIVER_RESULT;
+      return true;
+    }
+    if ((SystemClock.uptimeMillis() - startTime) > PROVISION_TIMEOUT) {
+      Log.v(TAG,String.format("waitForProvisionResponse timeout: expected=%d, actual=%d",expectedValue,mLastReceiverResultCode));
+      return false;
+    }
+    SystemClock.sleep(SHORT_TIMEOUT);
+  }
+}

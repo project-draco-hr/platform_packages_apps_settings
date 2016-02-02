@@ -1,0 +1,8 @@
+{
+  int[] types=new int[]{TETHERING_BLUETOOTH,TETHERING_WIFI,TETHERING_USB};
+  for (  int type : types) {
+    Intent intent=new Intent();
+    intent.putExtra(EXTRA_REM_TETHER_TYPE,type);
+    startService(intent);
+  }
+}

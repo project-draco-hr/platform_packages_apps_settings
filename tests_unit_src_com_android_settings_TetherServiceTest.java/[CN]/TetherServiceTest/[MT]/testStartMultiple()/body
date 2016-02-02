@@ -1,0 +1,11 @@
+{
+  runProvisioningForType(TETHERING_WIFI);
+  assertTrue(waitForProvisionRequest(TETHERING_WIFI));
+  assertTrue(waitForProvisionResponse(TETHER_ERROR_NO_ERROR));
+  runProvisioningForType(TETHERING_USB);
+  assertTrue(waitForProvisionRequest(TETHERING_USB));
+  assertTrue(waitForProvisionResponse(TETHER_ERROR_NO_ERROR));
+  runProvisioningForType(TETHERING_BLUETOOTH);
+  assertTrue(waitForProvisionRequest(TETHERING_BLUETOOTH));
+  assertTrue(waitForProvisionResponse(TETHER_ERROR_NO_ERROR));
+}

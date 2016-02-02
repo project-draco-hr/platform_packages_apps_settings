@@ -1,0 +1,11 @@
+{
+  runProvisioningForType(TETHERING_WIFI);
+  assertTrue(waitForProvisionRequest(TETHERING_WIFI));
+  assertTrue(waitForProvisionResponse(TETHER_ERROR_NO_ERROR));
+  Intent intent=new Intent();
+  intent.putExtra(EXTRA_REM_TETHER_TYPE,TETHERING_WIFI);
+  startService(intent);
+  verify(mAlarmManager).cancel(mPiCaptor.capture());
+  PendingIntent pi=mPiCaptor.getValue();
+  assertEquals(TetherService.class.getName(),pi.getIntent().getComponent().getClassName());
+}

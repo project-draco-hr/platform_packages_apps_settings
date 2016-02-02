@@ -17,8 +17,14 @@
       enabled=false;
     }
   }
-  if (mEapCaCertSpinner != null && mView.findViewById(R.id.l_ca_cert).getVisibility() != View.GONE && ((String)mEapCaCertSpinner.getSelectedItem()).equals(mUnspecifiedCertString)) {
-    enabled=false;
+  if (mEapCaCertSpinner != null && mView.findViewById(R.id.l_ca_cert).getVisibility() != View.GONE) {
+    String caCertSelection=(String)mEapCaCertSpinner.getSelectedItem();
+    if (caCertSelection.equals(mUnspecifiedCertString)) {
+      enabled=false;
+    }
+    if (caCertSelection.equals(mUseSystemCertsString) && mEapDomainView != null && mView.findViewById(R.id.l_domain).getVisibility() != View.GONE && TextUtils.isEmpty(mEapDomainView.getText().toString())) {
+      enabled=false;
+    }
   }
   if (mEapUserCertSpinner != null && mView.findViewById(R.id.l_user_cert).getVisibility() != View.GONE && ((String)mEapUserCertSpinner.getSelectedItem()).equals(mUnspecifiedCertString)) {
     enabled=false;

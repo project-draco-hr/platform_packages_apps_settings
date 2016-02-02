@@ -78,7 +78,10 @@ config.enterpriseConfig.setCaCertificateAliases(null);
 }
  else {
 config.enterpriseConfig.setDomainSuffixMatch(mEapDomainView.getText().toString());
-if (caCert.equals(mMultipleCertSetString)) {
+if (caCert.equals(mUseSystemCertsString)) {
+config.enterpriseConfig.setCaPath(SYSTEM_CA_STORE_PATH);
+}
+ else if (caCert.equals(mMultipleCertSetString)) {
 if (mAccessPoint != null) {
 if (!mAccessPoint.isSaved()) {
 Log.e(TAG,"Multiple certs can only be set " + "when editing saved network");

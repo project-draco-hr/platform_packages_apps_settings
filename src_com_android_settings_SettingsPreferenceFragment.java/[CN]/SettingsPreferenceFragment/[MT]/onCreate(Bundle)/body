@@ -3,7 +3,14 @@
   if (icicle != null) {
     mPreferenceHighlighted=icicle.getBoolean(SAVE_HIGHLIGHTED_KEY);
   }
-  int helpResource=getHelpResource();
+  Bundle arguments=getArguments();
+  int helpResource;
+  if (arguments != null && arguments.containsKey(HELP_URI_RESOURCE_KEY)) {
+    helpResource=arguments.getInt(HELP_URI_RESOURCE_KEY);
+  }
+ else {
+    helpResource=getHelpResource();
+  }
   if (helpResource != 0) {
     mHelpUri=getResources().getString(helpResource);
   }

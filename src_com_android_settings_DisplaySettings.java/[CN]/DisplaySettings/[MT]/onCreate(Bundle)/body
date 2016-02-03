@@ -16,6 +16,9 @@
  else {
     removePreference(KEY_AUTO_BRIGHTNESS);
   }
+  if (!isWallpaperSettingAllowed(activity)) {
+    grayPreferenceOut(KEY_WALLPAPER);
+  }
   if (isLiftToWakeAvailable(activity)) {
     mLiftToWakePreference=(SwitchPreference)findPreference(KEY_LIFT_TO_WAKE);
     mLiftToWakePreference.setOnPreferenceChangeListener(this);

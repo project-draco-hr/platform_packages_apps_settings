@@ -1,0 +1,10 @@
+{
+  try {
+    Intent intent=new Intent(Settings.ACTION_SCREEN_READER_TUTORIAL);
+    intent.setPackage(mTalkbackPackage);
+    startActivity(intent);
+  }
+ catch (  ActivityNotFoundException e) {
+    Log.e(TAG,"Can't find Talkback Tutorial: " + Settings.ACTION_SCREEN_READER_TUTORIAL);
+  }
+}

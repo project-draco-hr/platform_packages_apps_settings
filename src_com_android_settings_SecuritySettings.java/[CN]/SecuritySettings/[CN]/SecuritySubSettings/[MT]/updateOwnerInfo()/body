@@ -1,7 +1,7 @@
 {
   if (mOwnerInfoPref != null) {
     if (mLockPatternUtils.isDeviceOwnerInfoEnabled()) {
-      mOwnerInfoPref.setSummary(R.string.disabled_by_administrator_summary);
+      mOwnerInfoPref.setSummary(mLockPatternUtils.getDeviceOwnerInfo());
     }
  else {
       mOwnerInfoPref.setSummary(mLockPatternUtils.isOwnerInfoEnabled(MY_USER_ID) ? mLockPatternUtils.getOwnerInfo(MY_USER_ID) : getString(R.string.owner_info_settings_summary));

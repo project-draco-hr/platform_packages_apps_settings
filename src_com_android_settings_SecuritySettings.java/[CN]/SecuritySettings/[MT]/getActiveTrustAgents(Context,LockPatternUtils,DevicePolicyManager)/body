@@ -1,8 +1,9 @@
 {
+  PackageManager pm=context.getPackageManager();
   ArrayList<TrustAgentComponentInfo> result=new ArrayList<TrustAgentComponentInfo>();
   List<ResolveInfo> resolveInfos=pm.queryIntentServices(TRUST_AGENT_INTENT,PackageManager.GET_META_DATA);
   List<ComponentName> enabledTrustAgents=utils.getEnabledTrustAgents(MY_USER_ID);
-  boolean disableTrustAgents=(dpm.getKeyguardDisabledFeatures(null) & DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS) != 0;
+  EnforcedAdmin admin=RestrictedLockUtils.checkIfKeyguardFeaturesDisabled(context,DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS,UserHandle.myUserId());
   if (enabledTrustAgents != null && !enabledTrustAgents.isEmpty()) {
     for (int i=0; i < resolveInfos.size(); i++) {
       ResolveInfo resolveInfo=resolveInfos.get(i);
@@ -10,8 +11,8 @@
       if (!TrustAgentUtils.checkProvidePermission(resolveInfo,pm))       continue;
       TrustAgentComponentInfo trustAgentComponentInfo=TrustAgentUtils.getSettingsComponent(pm,resolveInfo);
       if (trustAgentComponentInfo.componentName == null || !enabledTrustAgents.contains(TrustAgentUtils.getComponentName(resolveInfo)) || TextUtils.isEmpty(trustAgentComponentInfo.title))       continue;
-      if (disableTrustAgents && dpm.getTrustAgentConfiguration(null,TrustAgentUtils.getComponentName(resolveInfo)) == null) {
-        trustAgentComponentInfo.disabledByAdministrator=true;
+      if (admin != null && dpm.getTrustAgentConfiguration(null,TrustAgentUtils.getComponentName(resolveInfo)) == null) {
+        trustAgentComponentInfo.admin=admin;
       }
       result.add(trustAgentComponentInfo);
       if (ONLY_ONE_TRUST_AGENT)       break;

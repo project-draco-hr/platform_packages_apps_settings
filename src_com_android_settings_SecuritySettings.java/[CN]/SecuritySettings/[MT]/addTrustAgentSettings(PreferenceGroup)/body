@@ -1,9 +1,9 @@
 {
   final boolean hasSecurity=mLockPatternUtils.isSecure(MY_USER_ID);
-  ArrayList<TrustAgentComponentInfo> agents=getActiveTrustAgents(getPackageManager(),mLockPatternUtils,mDPM);
+  ArrayList<TrustAgentComponentInfo> agents=getActiveTrustAgents(getActivity(),mLockPatternUtils,mDPM);
   for (int i=0; i < agents.size(); i++) {
     final TrustAgentComponentInfo agent=agents.get(i);
-    Preference trustAgentPreference=new Preference(securityCategory.getContext());
+    RestrictedPreference trustAgentPreference=new RestrictedPreference(securityCategory.getContext());
     trustAgentPreference.setKey(KEY_TRUST_AGENT);
     trustAgentPreference.setTitle(agent.title);
     trustAgentPreference.setSummary(agent.summary);
@@ -12,11 +12,8 @@
     intent.setAction(Intent.ACTION_MAIN);
     trustAgentPreference.setIntent(intent);
     securityCategory.addPreference(trustAgentPreference);
-    if (agent.disabledByAdministrator) {
-      trustAgentPreference.setEnabled(false);
-      trustAgentPreference.setSummary(R.string.trust_agent_disabled_device_admin);
-    }
- else     if (!hasSecurity) {
+    trustAgentPreference.setDisabledByAdmin(agent.admin);
+    if (!trustAgentPreference.isDisabledByAdmin() && !hasSecurity) {
       trustAgentPreference.setEnabled(false);
       trustAgentPreference.setSummary(R.string.disabled_because_no_backup_security);
     }

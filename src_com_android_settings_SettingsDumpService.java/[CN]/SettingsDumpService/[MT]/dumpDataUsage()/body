@@ -5,10 +5,14 @@
   SubscriptionManager manager=SubscriptionManager.from(this);
   TelephonyManager telephonyManager=TelephonyManager.from(this);
   if (connectivityManager.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)) {
+    JSONArray array=new JSONArray();
     for (    SubscriptionInfo info : manager.getAllSubscriptionInfoList()) {
       NetworkTemplate mobileAll=NetworkTemplate.buildTemplateMobileAll(telephonyManager.getSubscriberId(info.getSubscriptionId()));
-      obj.put("cell(" + info.getSubscriptionId() + ")",dumpDataUsage(mobileAll,controller));
+      final JSONObject usage=dumpDataUsage(mobileAll,controller);
+      usage.put("subId",info.getSubscriptionId());
+      array.put(usage);
     }
+    obj.put("cell",array);
   }
   if (connectivityManager.isNetworkSupported(ConnectivityManager.TYPE_WIFI)) {
     obj.put("wifi",dumpDataUsage(NetworkTemplate.buildTemplateWifiWildcard(),controller));

@@ -4,9 +4,10 @@ switch (item.getItemId()) {
 case R.id.sort_order_alpha:
 case R.id.sort_order_size:
     mSortOrder=menuId;
-  if (mApplications != null) {
-    mApplications.rebuild(mSortOrder);
-  }
+  mListView.setFastScrollEnabled(isFastScrollEnabled());
+if (mApplications != null) {
+  mApplications.rebuild(mSortOrder);
+}
 break;
 case R.id.show_system:
 case R.id.hide_system:

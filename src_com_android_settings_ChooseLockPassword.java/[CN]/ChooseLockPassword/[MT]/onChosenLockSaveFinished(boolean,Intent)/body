@@ -1,10 +1,10 @@
 {
   getActivity().setResult(RESULT_FINISHED,resultData);
-  getActivity().finish();
   if (!wasSecureBefore) {
     Intent intent=getRedactionInterstitialIntent(getActivity());
     if (intent != null) {
       startActivity(intent);
     }
   }
+  getActivity().finish();
 }

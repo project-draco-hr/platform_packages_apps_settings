@@ -1,0 +1,7 @@
+{
+  super(context,attrs,defStyleAttr,defStyleResId);
+  setNumColumns(AUTO_FIT);
+  final int columnWidth=getResources().getDimensionPixelSize(R.dimen.screen_zoom_preview_app_icon_width);
+  setColumnWidth(columnWidth);
+  setAdapter(new AppsAdapter(context,R.layout.screen_zoom_preview_app_icon,android.R.id.text1,android.R.id.icon1));
+}

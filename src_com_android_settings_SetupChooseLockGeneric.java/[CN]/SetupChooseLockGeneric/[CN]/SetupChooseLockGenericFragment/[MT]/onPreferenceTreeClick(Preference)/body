@@ -1,0 +1,9 @@
+{
+  final String key=preference.getKey();
+  if (KEY_UNLOCK_SET_DO_LATER.equals(key)) {
+    SetupSkipDialog dialog=SetupSkipDialog.newInstance(getActivity().getIntent().getBooleanExtra(SetupSkipDialog.EXTRA_FRP_SUPPORTED,false));
+    dialog.show(getFragmentManager());
+    return true;
+  }
+  return super.onPreferenceTreeClick(preference);
+}

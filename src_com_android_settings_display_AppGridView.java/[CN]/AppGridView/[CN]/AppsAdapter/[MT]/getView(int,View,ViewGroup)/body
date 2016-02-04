@@ -1,0 +1,8 @@
+{
+  final View view=super.getView(position,convertView,parent);
+  final ActivityEntry entry=getItem(position);
+  final ImageView iconView=(ImageView)view.findViewById(mIconResId);
+  final Drawable icon=entry.info.loadIcon(mPackageManager);
+  iconView.setImageDrawable(icon);
+  return view;
+}

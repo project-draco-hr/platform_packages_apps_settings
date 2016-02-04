@@ -1,0 +1,15 @@
+{
+  final Intent mainIntent=new Intent(Intent.ACTION_MAIN,null);
+  mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+  final PackageManager pm=mPackageManager;
+  final ArrayList<ActivityEntry> results=new ArrayList<>();
+  final List<ResolveInfo> infos=pm.queryIntentActivities(mainIntent,0);
+  for (  ResolveInfo info : infos) {
+    final CharSequence label=info.loadLabel(pm);
+    if (label != null) {
+      results.add(new ActivityEntry(info,label.toString()));
+    }
+  }
+  Collections.sort(results);
+  addAll(results);
+}

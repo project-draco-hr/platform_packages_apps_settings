@@ -1,10 +1,4 @@
 {
-  Configuration config=getContext().getResources().getConfiguration();
-  config.fontScale=mValues[mCurrentIndex];
-  try {
-    ActivityManagerNative.getDefault().updatePersistentConfiguration(config);
-  }
- catch (  RemoteException e) {
-    Log.w(LOG_TAG,"Unable to save font size setting");
-  }
+  final ContentResolver resolver=getContext().getContentResolver();
+  Settings.System.putFloat(resolver,Settings.System.FONT_SCALE,mValues[mCurrentIndex]);
 }

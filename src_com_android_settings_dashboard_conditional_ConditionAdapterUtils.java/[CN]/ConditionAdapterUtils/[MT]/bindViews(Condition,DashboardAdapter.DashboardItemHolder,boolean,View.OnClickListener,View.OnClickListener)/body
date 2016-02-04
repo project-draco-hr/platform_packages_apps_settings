@@ -8,7 +8,9 @@
   expand.setImageResource(isExpanded ? R.drawable.ic_expand_less : R.drawable.ic_expand_more);
   expand.setOnClickListener(onExpandListener);
   View detailGroup=view.itemView.findViewById(R.id.detail_group);
-  detailGroup.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+  if (isExpanded != (detailGroup.getVisibility() == View.VISIBLE)) {
+    animateChange(view.itemView,view.itemView.findViewById(R.id.content),detailGroup,isExpanded);
+  }
   if (isExpanded) {
     view.summary.setText(condition.getSummary());
     CharSequence[] actions=condition.getActions();

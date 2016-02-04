@@ -25,8 +25,4 @@
   setOnPreferenceClickListener(this);
   setOnPreferenceChangeListener(this);
   useAdminDisabledSummary(true);
-  if (!isAllowedByOrganization) {
-    EnforcedAdmin admin=RestrictedLockUtils.getProfileOrDeviceOwnerOnCallingUser(context);
-    setDisabledByAdmin(admin);
-  }
 }

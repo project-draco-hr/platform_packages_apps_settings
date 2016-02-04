@@ -1,8 +1,18 @@
 {
   final boolean isAlwaysChecked=mInputMethodSettingValues.isAlwaysCheckedIme(mImi,getContext());
-  setEnabled(!((isAlwaysChecked && isImeEnabler()) || (!mIsAllowedByOrganization)));
+  if (isAlwaysChecked && isImeEnabler()) {
+    setDisabledByAdmin(null);
+    setEnabled(false);
+  }
+ else   if (!mIsAllowedByOrganization) {
+    EnforcedAdmin admin=RestrictedLockUtils.checkIfInputMethodDisallowed(getContext(),mImi.getPackageName(),UserHandle.myUserId());
+    setDisabledByAdmin(admin);
+  }
+ else {
+    setEnabled(true);
+  }
   setChecked(mInputMethodSettingValues.isEnabledImi(mImi));
-  if (mIsAllowedByOrganization) {
+  if (!isDisabledByAdmin()) {
     setSummary(getSummaryString());
   }
 }

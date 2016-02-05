@@ -1,0 +1,12 @@
+{
+  super(context,attrs,defStyleAttr,defStyleRes);
+  final TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.ConversationMessageView);
+  mIncoming=a.getBoolean(R.styleable.ConversationMessageView_incoming,true);
+  mMessageText=a.getString(R.styleable.ConversationMessageView_messageText);
+  mTimestampText=a.getString(R.styleable.ConversationMessageView_timestampText);
+  mIconText=a.getString(R.styleable.ConversationMessageView_iconText);
+  mIconTextColor=a.getColor(R.styleable.ConversationMessageView_iconTextColor,0);
+  mIconBackgroundColor=a.getColor(R.styleable.ConversationMessageView_iconBackgroundColor,0);
+  LayoutInflater.from(context).inflate(R.layout.conversation_message_icon,this);
+  LayoutInflater.from(context).inflate(R.layout.conversation_message_content,this);
+}

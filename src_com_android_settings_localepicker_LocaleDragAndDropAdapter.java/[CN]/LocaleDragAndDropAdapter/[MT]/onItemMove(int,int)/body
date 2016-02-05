@@ -1,5 +1,10 @@
 {
-  Collections.swap(mFeedItemList,fromPosition,toPosition);
+  if (fromPosition >= 0 && toPosition >= 0) {
+    Collections.swap(mFeedItemList,fromPosition,toPosition);
+  }
+ else {
+    Log.e(TAG,String.format(Locale.US,"Negative position in onItemMove %d -> %d",fromPosition,toPosition));
+  }
   notifyItemChanged(fromPosition);
   notifyItemChanged(toPosition);
   notifyItemMoved(fromPosition,toPosition);

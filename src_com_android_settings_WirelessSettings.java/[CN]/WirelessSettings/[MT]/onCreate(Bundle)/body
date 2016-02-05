@@ -68,7 +68,7 @@
   mGlobalProxy.setEnabled(mDPM.getGlobalProxyAdmin() == null);
   final ConnectivityManager cm=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
   final boolean adminDisallowedTetherConfig=mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING);
-  if (!isAdmin || (!cm.isTetheringSupported() && !adminDisallowedTetherConfig)) {
+  if (!cm.isTetheringSupported() && !adminDisallowedTetherConfig) {
     getPreferenceScreen().removePreference(findPreference(KEY_TETHER_SETTINGS));
   }
  else   if (!adminDisallowedTetherConfig) {

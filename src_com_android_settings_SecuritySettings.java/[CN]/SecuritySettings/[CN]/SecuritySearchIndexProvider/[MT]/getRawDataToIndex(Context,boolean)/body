@@ -15,7 +15,7 @@
     result.add(data);
   }
   FingerprintManager fpm=(FingerprintManager)context.getSystemService(Context.FINGERPRINT_SERVICE);
-  if (fpm.isHardwareDetected()) {
+  if (fpm != null && fpm.isHardwareDetected()) {
     data=new SearchIndexableRaw(context);
     data.title=res.getString(R.string.security_settings_fingerprint_preference_title);
     data.screenTitle=screenTitle;

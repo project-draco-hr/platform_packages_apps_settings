@@ -1,8 +1,5 @@
 {
   super.onCreate(icicle);
-  if (icicle != null) {
-    mTetherChoice=icicle.getInt(TETHER_CHOICE);
-  }
   addPreferencesFromResource(R.xml.tether_prefs);
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING) || !mUm.isAdminUser()) {
@@ -19,10 +16,10 @@
   Preference wifiApSettings=findPreference(WIFI_AP_SSID_AND_SECURITY);
   mUsbTether=(SwitchPreference)findPreference(USB_TETHER_SETTINGS);
   mBluetoothTether=(SwitchPreference)findPreference(ENABLE_BLUETOOTH_TETHERING);
-  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-  mUsbRegexs=cm.getTetherableUsbRegexs();
-  mWifiRegexs=cm.getTetherableWifiRegexs();
-  mBluetoothRegexs=cm.getTetherableBluetoothRegexs();
+  mCm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  mUsbRegexs=mCm.getTetherableUsbRegexs();
+  mWifiRegexs=mCm.getTetherableWifiRegexs();
+  mBluetoothRegexs=mCm.getTetherableBluetoothRegexs();
   final boolean usbAvailable=mUsbRegexs.length != 0;
   final boolean wifiAvailable=mWifiRegexs.length != 0;
   final boolean bluetoothAvailable=mBluetoothRegexs.length != 0;
@@ -49,5 +46,4 @@
       mBluetoothTether.setChecked(false);
     }
   }
-  mProvisionApp=getResources().getStringArray(com.android.internal.R.array.config_mobile_hotspot_provision_app);
 }

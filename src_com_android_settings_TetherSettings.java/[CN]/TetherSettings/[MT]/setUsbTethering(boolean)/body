@@ -1,9 +1,0 @@
-{
-  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-  mUsbTether.setChecked(false);
-  if (cm.setUsbTethering(enabled) != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
-    mUsbTether.setSummary(R.string.usb_tethering_errored_subtext);
-    return;
-  }
-  mUsbTether.setSummary("");
-}

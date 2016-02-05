@@ -9,6 +9,7 @@
     return;
   }
   final Activity activity=getActivity();
+  mStartTetheringCallback=new OnStartTetheringCallback(this);
   mMassStorageActive=Environment.MEDIA_SHARED.equals(Environment.getExternalStorageState());
   mTetherChangeReceiver=new TetherChangeReceiver();
   IntentFilter filter=new IntentFilter(ConnectivityManager.ACTION_TETHER_STATE_CHANGED);

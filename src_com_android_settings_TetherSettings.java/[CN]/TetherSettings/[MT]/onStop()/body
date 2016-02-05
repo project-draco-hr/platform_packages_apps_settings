@@ -5,6 +5,7 @@
   }
   getActivity().unregisterReceiver(mTetherChangeReceiver);
   mTetherChangeReceiver=null;
+  mStartTetheringCallback=null;
   if (mWifiApEnabler != null) {
     mEnableWifiAp.setOnPreferenceChangeListener(null);
     mWifiApEnabler.pause();

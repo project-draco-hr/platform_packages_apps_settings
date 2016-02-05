@@ -1,13 +1,10 @@
 {
   boolean enable=(Boolean)value;
   if (enable) {
-    startProvisioningIfNecessary(TETHERING_WIFI);
+    startTethering(TETHERING_WIFI);
   }
  else {
-    if (TetherUtil.isProvisioningNeeded(getActivity())) {
-      TetherService.cancelRecheckAlarmIfNecessary(getActivity(),TETHERING_WIFI);
-    }
-    mWifiApEnabler.setSoftapEnabled(false);
+    mCm.stopTethering(TETHERING_WIFI);
   }
   return false;
 }

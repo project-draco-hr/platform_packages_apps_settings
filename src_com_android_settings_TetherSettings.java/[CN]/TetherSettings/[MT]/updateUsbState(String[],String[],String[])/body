@@ -1,12 +1,11 @@
 {
-  ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   boolean usbAvailable=mUsbConnected && !mMassStorageActive;
   int usbError=ConnectivityManager.TETHER_ERROR_NO_ERROR;
   for (  String s : available) {
     for (    String regex : mUsbRegexs) {
       if (s.matches(regex)) {
         if (usbError == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
-          usbError=cm.getLastTetherError(s);
+          usbError=mCm.getLastTetherError(s);
         }
       }
     }

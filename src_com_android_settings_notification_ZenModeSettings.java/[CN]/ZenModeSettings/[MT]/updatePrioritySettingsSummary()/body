@@ -1,25 +1,24 @@
 {
-  Policy policy=NotificationManager.from(mContext).getNotificationPolicy();
   String s=getResources().getString(R.string.zen_mode_alarms);
-  s=appendLowercase(s,isCategoryEnabled(policy,Policy.PRIORITY_CATEGORY_REMINDERS),R.string.zen_mode_reminders);
-  s=appendLowercase(s,isCategoryEnabled(policy,Policy.PRIORITY_CATEGORY_EVENTS),R.string.zen_mode_events);
-  if (isCategoryEnabled(policy,Policy.PRIORITY_CATEGORY_MESSAGES)) {
-    if (policy.priorityMessageSenders == Policy.PRIORITY_SENDERS_ANY) {
+  s=appendLowercase(s,isCategoryEnabled(mPolicy,Policy.PRIORITY_CATEGORY_REMINDERS),R.string.zen_mode_reminders);
+  s=appendLowercase(s,isCategoryEnabled(mPolicy,Policy.PRIORITY_CATEGORY_EVENTS),R.string.zen_mode_events);
+  if (isCategoryEnabled(mPolicy,Policy.PRIORITY_CATEGORY_MESSAGES)) {
+    if (mPolicy.priorityMessageSenders == Policy.PRIORITY_SENDERS_ANY) {
       s=appendLowercase(s,true,R.string.zen_mode_all_messages);
     }
  else {
       s=appendLowercase(s,true,R.string.zen_mode_selected_messages);
     }
   }
-  if (isCategoryEnabled(policy,Policy.PRIORITY_CATEGORY_CALLS)) {
-    if (policy.priorityCallSenders == Policy.PRIORITY_SENDERS_ANY) {
+  if (isCategoryEnabled(mPolicy,Policy.PRIORITY_CATEGORY_CALLS)) {
+    if (mPolicy.priorityCallSenders == Policy.PRIORITY_SENDERS_ANY) {
       s=appendLowercase(s,true,R.string.zen_mode_all_callers);
     }
  else {
       s=appendLowercase(s,true,R.string.zen_mode_selected_callers);
     }
   }
- else   if (isCategoryEnabled(policy,Policy.PRIORITY_CATEGORY_REPEAT_CALLERS)) {
+ else   if (isCategoryEnabled(mPolicy,Policy.PRIORITY_CATEGORY_REPEAT_CALLERS)) {
     s=appendLowercase(s,true,R.string.zen_mode_repeat_callers);
   }
   mPrioritySettings.setSummary(s);

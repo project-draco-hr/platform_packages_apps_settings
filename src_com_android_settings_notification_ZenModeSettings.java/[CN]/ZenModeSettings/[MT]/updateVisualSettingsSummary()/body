@@ -1,0 +1,13 @@
+{
+  String s=getString(R.string.zen_mode_all_visual_interruptions);
+  if (isEffectSuppressed(Policy.SUPPRESSED_EFFECT_SCREEN_ON) && isEffectSuppressed(Policy.SUPPRESSED_EFFECT_SCREEN_OFF)) {
+    s=getString(R.string.zen_mode_no_visual_interruptions);
+  }
+ else   if (isEffectSuppressed(Policy.SUPPRESSED_EFFECT_SCREEN_ON)) {
+    s=getString(R.string.zen_mode_screen_on_visual_interruptions);
+  }
+ else   if (isEffectSuppressed(Policy.SUPPRESSED_EFFECT_SCREEN_OFF)) {
+    s=getString(R.string.zen_mode_screen_off_visual_interruptions);
+  }
+  mVisualSettings.setSummary(s);
+}

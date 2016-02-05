@@ -3,4 +3,6 @@
   addPreferencesFromResource(R.xml.zen_mode_settings);
   final PreferenceScreen root=getPreferenceScreen();
   mPrioritySettings=root.findPreference(KEY_PRIORITY_SETTINGS);
+  mVisualSettings=root.findPreference(KEY_VISUAL_SETTINGS);
+  mPolicy=NotificationManager.from(mContext).getNotificationPolicy();
 }

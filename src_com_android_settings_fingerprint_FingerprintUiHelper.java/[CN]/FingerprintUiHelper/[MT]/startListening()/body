@@ -1,5 +1,5 @@
 {
-  if (mFingerprintManager != null && mFingerprintManager.getEnrolledFingerprints(mUserId).size() > 0) {
+  if (mFingerprintManager != null && mFingerprintManager.isHardwareDetected() && mFingerprintManager.getEnrolledFingerprints(mUserId).size() > 0) {
     mCancellationSignal=new CancellationSignal();
     mFingerprintManager.setActiveUser(mUserId);
     mFingerprintManager.authenticate(null,mCancellationSignal,0,this,null,mUserId);

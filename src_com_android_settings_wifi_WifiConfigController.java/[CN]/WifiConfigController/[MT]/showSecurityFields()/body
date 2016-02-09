@@ -32,12 +32,13 @@
     mEapCaCertSpinner=(Spinner)mView.findViewById(R.id.ca_cert);
     mEapCaCertSpinner.setOnItemSelectedListener(this);
     mEapDomainView=(TextView)mView.findViewById(R.id.domain);
+    mEapDomainView.addTextChangedListener(this);
     mEapUserCertSpinner=(Spinner)mView.findViewById(R.id.user_cert);
     mEapUserCertSpinner.setOnItemSelectedListener(this);
     mEapIdentityView=(TextView)mView.findViewById(R.id.identity);
     mEapAnonymousView=(TextView)mView.findViewById(R.id.anonymous);
-    loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,false,mDoNotValidateEapServerString);
-    loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY,false,mDoNotProvideEapUserCertString);
+    loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,mDoNotValidateEapServerString,false,true);
+    loadCertificates(mEapUserCertSpinner,Credentials.USER_PRIVATE_KEY,mDoNotProvideEapUserCertString,false,false);
     if (mAccessPoint != null && mAccessPoint.isSaved()) {
       WifiEnterpriseConfig enterpriseConfig=mAccessPoint.getConfig().enterpriseConfig;
       int eapMethod=enterpriseConfig.getEapMethod();
@@ -65,6 +66,10 @@ default :
 mPhase2Spinner.setSelection(phase2Method);
 break;
 }
+if (!TextUtils.isEmpty(enterpriseConfig.getCaPath())) {
+setSelection(mEapCaCertSpinner,mUseSystemCertsString);
+}
+ else {
 String[] caCerts=enterpriseConfig.getCaCertificateAliases();
 if (caCerts == null) {
 setSelection(mEapCaCertSpinner,mDoNotValidateEapServerString);
@@ -73,8 +78,9 @@ setSelection(mEapCaCertSpinner,mDoNotValidateEapServerString);
 setSelection(mEapCaCertSpinner,caCerts[0]);
 }
  else {
-loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,true,mDoNotValidateEapServerString);
-mEapCaCertSpinner.setSelection(MULTIPLE_CERT_SET_INDEX);
+loadCertificates(mEapCaCertSpinner,Credentials.CA_CERTIFICATE,mDoNotValidateEapServerString,true,true);
+setSelection(mEapCaCertSpinner,mMultipleCertSetString);
+}
 }
 mEapDomainView.setText(enterpriseConfig.getDomainSuffixMatch());
 String userCert=enterpriseConfig.getClientCertificateAlias();

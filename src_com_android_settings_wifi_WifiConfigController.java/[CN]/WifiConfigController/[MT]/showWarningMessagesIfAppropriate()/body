@@ -1,0 +1,13 @@
+{
+  mView.findViewById(R.id.no_ca_cert_warning).setVisibility(View.GONE);
+  mView.findViewById(R.id.no_domain_warning).setVisibility(View.GONE);
+  if (mEapCaCertSpinner != null && mView.findViewById(R.id.l_ca_cert).getVisibility() != View.GONE) {
+    String caCertSelection=(String)mEapCaCertSpinner.getSelectedItem();
+    if (caCertSelection.equals(mDoNotValidateEapServerString)) {
+      mView.findViewById(R.id.no_ca_cert_warning).setVisibility(View.VISIBLE);
+    }
+    if (caCertSelection.equals(mUseSystemCertsString) && mEapDomainView != null && mView.findViewById(R.id.l_domain).getVisibility() != View.GONE && TextUtils.isEmpty(mEapDomainView.getText().toString())) {
+      mView.findViewById(R.id.no_domain_warning).setVisibility(View.VISIBLE);
+    }
+  }
+}

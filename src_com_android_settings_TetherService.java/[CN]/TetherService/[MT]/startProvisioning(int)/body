@@ -6,13 +6,6 @@
     int type=mCurrentTethers.get(index);
     intent.putExtra(TETHER_CHOICE,type);
     intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
-    final PackageManager packageManager=getPackageManager();
-    if (packageManager.queryBroadcastReceivers(intent,PackageManager.MATCH_DEFAULT_ONLY).isEmpty()) {
-      Log.e(TAG,"Provisioning app is configured, but not available.");
-      fireCallbacksForType(type,ConnectivityManager.TETHER_ERROR_PROVISION_FAILED);
-      removeTypeAtIndex(index);
-      return;
-    }
     sendBroadcast(intent);
     mInProvisionCheck=true;
   }

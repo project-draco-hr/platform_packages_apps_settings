@@ -3,7 +3,7 @@
   if (requestCode == FINGERPRINT_FIND_SENSOR_REQUEST) {
     if (isResultFinished || resultCode == RESULT_SKIP) {
       final int result=isResultFinished ? RESULT_OK : RESULT_SKIP;
-      setResult(result);
+      setResult(result,data);
       finish();
       return;
     }

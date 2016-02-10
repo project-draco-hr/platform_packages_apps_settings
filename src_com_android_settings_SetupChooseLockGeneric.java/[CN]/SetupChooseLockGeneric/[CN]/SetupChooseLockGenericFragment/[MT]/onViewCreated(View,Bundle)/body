@@ -3,8 +3,15 @@
   SetupWizardUtils.setImmersiveMode(getActivity());
   SetupWizardLayout layout=(SetupWizardLayout)view;
   final NavigationBar navigationBar=layout.getNavigationBar();
-  navigationBar.getNextButton().setEnabled(false);
+  Button nextButton=navigationBar.getNextButton();
+  nextButton.setText(null);
+  nextButton.setEnabled(false);
   navigationBar.setNavigationBarListener(this);
   layout.setIllustration(R.drawable.setup_illustration_lock_screen,R.drawable.setup_illustration_horizontal_tile);
-  layout.setHeaderText(R.string.setup_lock_settings_picker_title);
+  if (!mForFingerprint) {
+    layout.setHeaderText(R.string.setup_lock_settings_picker_title);
+  }
+ else {
+    layout.setHeaderText(R.string.lock_settings_picker_title);
+  }
 }

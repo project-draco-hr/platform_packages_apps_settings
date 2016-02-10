@@ -2,7 +2,7 @@
   Context ctx=widget.getContext();
   Intent intent=HelpUtils.getHelpIntent(ctx,getURL(),ctx.getClass().getName());
   try {
-    ((Activity)ctx).startActivity(intent);
+    widget.startActivityForResult(intent,LEARN_MORE_REQUEST);
   }
  catch (  ActivityNotFoundException e) {
     Log.w(LearnMoreSpan.TAG,"Actvity was not found for intent, " + intent.toString());

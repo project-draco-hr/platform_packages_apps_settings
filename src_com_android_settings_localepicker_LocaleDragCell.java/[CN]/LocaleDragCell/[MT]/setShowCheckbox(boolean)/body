@@ -1,5 +1,12 @@
 {
-  mCheckbox.setVisibility(showCheckbox ? VISIBLE : GONE);
+  if (showCheckbox) {
+    mCheckbox.setVisibility(VISIBLE);
+    mLabel.setVisibility(INVISIBLE);
+  }
+ else {
+    mCheckbox.setVisibility(INVISIBLE);
+    mLabel.setVisibility(VISIBLE);
+  }
   invalidate();
   requestLayout();
 }

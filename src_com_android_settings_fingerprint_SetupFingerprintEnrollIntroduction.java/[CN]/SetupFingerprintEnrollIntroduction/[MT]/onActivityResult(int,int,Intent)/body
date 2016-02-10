@@ -1,0 +1,10 @@
+{
+  if (requestCode == FINGERPRINT_FIND_SENSOR_REQUEST) {
+    if (data == null) {
+      data=new Intent();
+    }
+    LockPatternUtils lockPatternUtils=new LockPatternUtils(this);
+    data.putExtra(SetupChooseLockGeneric.SetupChooseLockGenericFragment.EXTRA_PASSWORD_QUALITY,lockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId()));
+  }
+  super.onActivityResult(requestCode,resultCode,data);
+}

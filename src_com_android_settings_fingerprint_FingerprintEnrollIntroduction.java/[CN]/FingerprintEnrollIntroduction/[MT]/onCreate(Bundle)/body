@@ -2,7 +2,10 @@
   super.onCreate(savedInstanceState);
   setContentView(R.layout.fingerprint_enroll_introduction);
   setHeaderText(R.string.security_settings_fingerprint_enroll_introduction_title);
-  findViewById(R.id.cancel_button).setOnClickListener(this);
-  findViewById(R.id.learn_more_button).setOnClickListener(this);
+  final SetupWizardItemsLayout layout=(SetupWizardItemsLayout)findViewById(R.id.setup_wizard_layout);
+  layout.getListView().setOnItemClickListener(this);
+  final ItemAdapter adapter=(ItemAdapter)layout.getAdapter();
+  Item item=(Item)adapter.findItemById(R.id.fingerprint_introduction_message_warning);
+  item.setTitle(LearnMoreSpan.linkify(getText(R.string.security_settings_fingerprint_enroll_introduction_message_warning),getString(R.string.help_url_fingerprint)));
   updatePasswordQuality();
 }

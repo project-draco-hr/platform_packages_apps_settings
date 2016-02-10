@@ -1,0 +1,12 @@
+{
+  SpannableString msg=new SpannableString(rawText);
+  Annotation[] spans=msg.getSpans(0,msg.length(),Annotation.class);
+  SpannableStringBuilder builder=new SpannableStringBuilder(msg);
+  for (  Annotation annotation : spans) {
+    int start=msg.getSpanStart(annotation);
+    int end=msg.getSpanEnd(annotation);
+    LearnMoreSpan link=new LearnMoreSpan(uri);
+    builder.setSpan(link,start,end,msg.getSpanFlags(link));
+  }
+  return builder;
+}

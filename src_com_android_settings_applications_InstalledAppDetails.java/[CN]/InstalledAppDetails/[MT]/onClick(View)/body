@@ -5,6 +5,13 @@
   }
   String packageName=mAppEntry.info.packageName;
   if (v == mUninstallButton) {
+    if (mDpm.packageHasActiveAdmins(mPackageInfo.packageName)) {
+      Activity activity=getActivity();
+      Intent uninstallDAIntent=new Intent(activity,DeviceAdminAdd.class);
+      uninstallDAIntent.putExtra(DeviceAdminAdd.EXTRA_DEVICE_ADMIN_PACKAGE_NAME,mPackageName);
+      activity.startActivityForResult(uninstallDAIntent,REQUEST_REMOVE_DEVICE_ADMIN);
+      return;
+    }
     EnforcedAdmin admin=RestrictedLockUtils.checkIfUninstallBlocked(getActivity(),packageName,mUserId);
     if (admin != null) {
       RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),admin);

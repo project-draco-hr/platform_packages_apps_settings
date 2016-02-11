@@ -9,7 +9,13 @@ break;
 case NfcAdapter.STATE_ON:
 mSwitch.setChecked(true);
 mSwitch.setEnabled(true);
+if (mBeamDisallowedBySystem) {
+mAndroidBeam.setDisabledByAdmin(null);
+mAndroidBeam.setEnabled(false);
+}
+ else {
 mAndroidBeam.checkRestrictionAndSetDisabled(UserManager.DISALLOW_OUTGOING_BEAM);
+}
 if (mNfcAdapter.isNdefPushEnabled() && mAndroidBeam.isEnabled()) {
 mAndroidBeam.setSummary(R.string.android_beam_on_summary);
 }

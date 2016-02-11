@@ -5,7 +5,8 @@
   }
   final boolean enabled=(mode != android.provider.Settings.Secure.LOCATION_MODE_OFF);
   EnforcedAdmin admin=RestrictedLockUtils.checkIfRestrictionEnforced(getActivity(),UserManager.DISALLOW_SHARE_LOCATION,UserHandle.myUserId());
-  if (admin != null) {
+  boolean hasBaseUserRestriction=RestrictedLockUtils.hasBaseUserRestriction(getActivity(),UserManager.DISALLOW_SHARE_LOCATION,UserHandle.myUserId());
+  if (!hasBaseUserRestriction && admin != null) {
     mSwitchBar.setDisabledByAdmin(admin);
   }
  else {

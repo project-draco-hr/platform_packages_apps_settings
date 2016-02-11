@@ -3,11 +3,15 @@
   mSwitch=switchPreference;
   mAndroidBeam=androidBeam;
   mNfcAdapter=NfcAdapter.getDefaultAdapter(context);
+  mBeamDisallowedBySystem=RestrictedLockUtils.hasBaseUserRestriction(context,UserManager.DISALLOW_OUTGOING_BEAM,UserHandle.myUserId());
   if (mNfcAdapter == null) {
     mSwitch.setEnabled(false);
     mAndroidBeam.setEnabled(false);
     mIntentFilter=null;
     return;
+  }
+  if (mBeamDisallowedBySystem) {
+    mAndroidBeam.setEnabled(false);
   }
   mIntentFilter=new IntentFilter(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED);
 }

@@ -1,4 +1,9 @@
 {
-  mForceStopButton.setEnabled(enabled);
-  mForceStopButton.setOnClickListener(InstalledAppDetails.this);
+  if (mAppsControlDisallowedBySystem) {
+    mForceStopButton.setEnabled(false);
+  }
+ else {
+    mForceStopButton.setEnabled(enabled);
+    mForceStopButton.setOnClickListener(InstalledAppDetails.this);
+  }
 }

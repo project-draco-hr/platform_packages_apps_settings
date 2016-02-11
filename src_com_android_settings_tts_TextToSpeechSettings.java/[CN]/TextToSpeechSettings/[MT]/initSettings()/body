@@ -2,22 +2,13 @@
   final ContentResolver resolver=getContentResolver();
   try {
     mDefaultRate=android.provider.Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
-    mHigherRateSwitch=android.provider.Settings.Secure.getInt(resolver,TTS_DEFAULT_HIGHER_SPEECH_RATE_ENABLED) == 1;
   }
  catch (  SettingNotFoundException e) {
     mDefaultRate=TextToSpeech.Engine.DEFAULT_RATE;
-    mHigherRateSwitch=false;
   }
   mDefaultRatePref.setProgress(mDefaultRate);
   mDefaultRatePref.setOnPreferenceChangeListener(this);
-  mHigherRateSwitchPref.setChecked(mHigherRateSwitch);
-  mHigherRateSwitchPref.setOnPreferenceChangeListener(this);
-  if (mHigherRateSwitch) {
-    mDefaultRatePref.setMax(MAX_HIGHER_SPEECH_RATE);
-  }
- else {
-    mDefaultRatePref.setMax(MAX_SPEECH_RATE);
-  }
+  mDefaultRatePref.setMax(MAX_SPEECH_RATE);
   mCurrentEngine=mTts.getCurrentEngine();
   SettingsActivity activity=null;
   if (getActivity() instanceof SettingsActivity) {

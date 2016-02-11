@@ -12,20 +12,5 @@
       Log.e(TAG,"could not persist default TTS rate setting",e);
     }
   }
- else   if (KEY_HIGHER_RATE_SWITCH.equals(preference.getKey())) {
-    mHigherRateSwitch=((Boolean)objValue).booleanValue();
-    try {
-      android.provider.Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_HIGHER_SPEECH_RATE_ENABLED,mHigherRateSwitch ? 1 : 0);
-      if (mHigherRateSwitch) {
-        mDefaultRatePref.setMax(MAX_HIGHER_SPEECH_RATE);
-      }
- else {
-        mDefaultRatePref.setMax(MAX_SPEECH_RATE);
-      }
-    }
- catch (    NumberFormatException e) {
-      Log.e(TAG,"could not persist default higher speech rate setting",e);
-    }
-  }
   return true;
 }

@@ -1,7 +1,8 @@
 {
   super.onViewCreated(view,savedInstanceState);
   SetupWizardUtils.setImmersiveMode(getActivity());
-  SetupWizardLayout layout=(SetupWizardLayout)view;
+  SetupWizardPreferenceLayout layout=(SetupWizardPreferenceLayout)view;
+  layout.setDividerInset(getContext().getResources().getDimensionPixelSize(R.dimen.suw_items_text_divider_inset));
   final NavigationBar navigationBar=layout.getNavigationBar();
   Button nextButton=navigationBar.getNextButton();
   nextButton.setText(null);
@@ -14,4 +15,5 @@
  else {
     layout.setHeaderText(R.string.lock_settings_picker_title);
   }
+  setDivider(null);
 }

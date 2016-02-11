@@ -1,7 +1,0 @@
-{
-  final Uri packageURI=Uri.parse("package:" + mDeviceAdmin.getPackageName());
-  final Intent uninstallIntent=new Intent(Intent.ACTION_UNINSTALL_PACKAGE,packageURI);
-  uninstallIntent.putExtra(Intent.EXTRA_UNINSTALL_ALL_USERS,false);
-  uninstallIntent.putExtra(Intent.EXTRA_RETURN_RESULT,true);
-  startActivityForResult(uninstallIntent,REQUEST_CODE_UNINSTALL);
-}

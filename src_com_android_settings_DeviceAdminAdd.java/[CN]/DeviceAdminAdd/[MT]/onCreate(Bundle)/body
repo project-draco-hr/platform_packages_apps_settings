@@ -171,7 +171,8 @@ catch (  IOException e) {
   mUninstallButton.setOnClickListener(new View.OnClickListener(){
     public void onClick(    View v){
       EventLog.writeEvent(EventLogTags.EXP_DET_DEVICE_ADMIN_UNINSTALLED_BY_USER,mDeviceAdmin.getActivityInfo().applicationInfo.uid);
-      uninstall();
+      mDPM.uninstallPackageWithActiveAdmins(mDeviceAdmin.getPackageName());
+      finish();
     }
   }
 );

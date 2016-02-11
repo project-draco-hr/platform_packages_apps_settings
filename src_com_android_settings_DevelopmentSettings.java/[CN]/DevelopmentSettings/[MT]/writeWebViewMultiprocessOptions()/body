@@ -1,0 +1,10 @@
+{
+  boolean value=mWebViewMultiprocess.isChecked();
+  Settings.Global.putInt(getActivity().getContentResolver(),Settings.Global.WEBVIEW_MULTIPROCESS,value ? 1 : 0);
+  try {
+    String wv_package=mWebViewUpdateService.getCurrentWebViewPackageName();
+    ActivityManagerNative.getDefault().killPackageDependents(wv_package,UserHandle.USER_ALL);
+  }
+ catch (  RemoteException e) {
+  }
+}

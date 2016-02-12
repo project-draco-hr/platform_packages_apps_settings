@@ -3,5 +3,10 @@
     speakSampleText();
     return true;
   }
+ else   if (preference == mResetSpeechRate) {
+    mDefaultRatePref.setProgress(TextToSpeech.Engine.DEFAULT_RATE);
+    updateSpeechRate(TextToSpeech.Engine.DEFAULT_RATE);
+    return true;
+  }
   return false;
 }

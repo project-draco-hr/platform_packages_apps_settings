@@ -1,6 +1,7 @@
 {
   mFp=getArguments().getParcelable("fingerprint");
-  final AlertDialog alertDialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.fingerprint_last_delete_title).setMessage(R.string.fingerprint_last_delete_message).setPositiveButton(R.string.fingerprint_last_delete_confirm,new DialogInterface.OnClickListener(){
+  final boolean isProfileChallengeUser=getArguments().getBoolean("isProfileChallengeUser");
+  final AlertDialog alertDialog=new AlertDialog.Builder(getActivity()).setTitle(R.string.fingerprint_last_delete_title).setMessage((isProfileChallengeUser) ? R.string.fingerprint_last_delete_message_profile_challenge : R.string.fingerprint_last_delete_message).setPositiveButton(R.string.fingerprint_last_delete_confirm,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
       FingerprintSettingsFragment parent=(FingerprintSettingsFragment)getTargetFragment();
       parent.deleteFingerPrint(mFp);

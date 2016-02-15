@@ -1,13 +1,22 @@
 {
+  super.onBindViewHolder(row);
   if (mInfo.icon != null) {
-    ((ImageView)row.findViewById(android.R.id.icon)).setImageDrawable(mInfo.icon);
+    ((ImageView)row.findViewById(R.id.icon)).setImageDrawable(mInfo.icon);
   }
   if (mInfo.pkgicon != null) {
     ((ImageView)row.findViewById(R.id.pkgicon)).setImageDrawable(mInfo.pkgicon);
   }
   ((DateTimeView)row.findViewById(R.id.timestamp)).setTime(mInfo.timestamp);
-  ((TextView)row.findViewById(android.R.id.title)).setText(mInfo.title);
+  ((TextView)row.findViewById(R.id.title)).setText(mInfo.title);
   ((TextView)row.findViewById(R.id.pkgname)).setText(mInfo.pkgname);
-  row.findViewById(R.id.extra).setVisibility(View.GONE);
+  final TextView extra=(TextView)row.findViewById(R.id.extra);
+  extra.setText(mInfo.extra);
+  extra.setVisibility(View.GONE);
+  row.itemView.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View view){
+      extra.setVisibility(extra.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+    }
+  }
+);
   row.itemView.setAlpha(mInfo.active ? 1.0f : 0.5f);
 }

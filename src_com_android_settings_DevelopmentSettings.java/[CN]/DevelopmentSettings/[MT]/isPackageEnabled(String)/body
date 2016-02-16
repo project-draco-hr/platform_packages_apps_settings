@@ -1,19 +1,8 @@
 {
   try {
-    PackageManager pm=getActivity().getPackageManager();
-    int enabled_state=pm.getApplicationEnabledSetting(packageName);
-switch (enabled_state) {
-case PackageManager.COMPONENT_ENABLED_STATE_ENABLED:
-      return true;
-case PackageManager.COMPONENT_ENABLED_STATE_DEFAULT:
-    return pm.getPackageInfo(packageName,0).applicationInfo.enabled;
-default :
+    return getActivity().getPackageManager().getApplicationInfo(packageName,0).enabled;
+  }
+ catch (  NameNotFoundException e) {
+  }
   return false;
-}
-}
- catch (NameNotFoundException e) {
-}
-catch (IllegalArgumentException e) {
-}
-return false;
 }

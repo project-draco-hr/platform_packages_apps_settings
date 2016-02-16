@@ -1,0 +1,17 @@
+{
+  if (admin != null) {
+    ActivityInfo ai=null;
+    try {
+      ai=AppGlobals.getPackageManager().getReceiverInfo(admin,0,userId);
+    }
+ catch (    RemoteException e) {
+      Log.w(TAG,"Missing reciever info",e);
+    }
+    if (ai != null) {
+      Drawable icon=ai.loadIcon(getPackageManager());
+      Drawable badgedIcon=getPackageManager().getUserBadgedIcon(icon,new UserHandle(userId));
+      ((ImageView)root.findViewById(R.id.admin_support_icon)).setImageDrawable(badgedIcon);
+    }
+  }
+  setAdminSupportDetails(this,root,new EnforcedAdmin(admin,userId),true);
+}

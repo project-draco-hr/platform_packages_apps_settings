@@ -1,11 +1,10 @@
 {
   super.onResume();
   if (mUnavailable) {
-    TextView emptyView=(TextView)getView().findViewById(android.R.id.empty);
-    setEmptyView(emptyView);
-    if (emptyView != null) {
-      emptyView.setText(R.string.development_settings_not_available);
+    if (!isUiRestrictedByOnlyAdmin()) {
+      getEmptyTextView().setText(R.string.development_settings_not_available);
     }
+    getPreferenceScreen().removeAll();
     return;
   }
   if (mDpm.getMaximumTimeToLock(null) > 0) {

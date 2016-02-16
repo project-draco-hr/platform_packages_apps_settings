@@ -1,12 +1,9 @@
 {
-  mEnforcedAdmin=RestrictedLockUtils.checkIfRestrictionEnforced(getActivity(),mRestrictionKey,UserHandle.myUserId());
-  if (mEnforcedAdmin != null) {
+  final EnforcedAdmin admin=getRestrictionEnforcedAdmin();
+  if (admin != null) {
     final Activity activity=getActivity();
     DevicePolicyManager dpm=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
-    if (mEnforcedAdmin.userId == UserHandle.USER_NULL) {
-      mEnforcedAdmin.userId=UserHandle.myUserId();
-    }
-    CharSequence supportMessage=dpm.getShortSupportMessageForUser(mEnforcedAdmin.component,mEnforcedAdmin.userId);
+    CharSequence supportMessage=dpm.getShortSupportMessageForUser(admin.component,admin.userId);
     if (supportMessage != null) {
       TextView textView=(TextView)activity.findViewById(R.id.admin_support_msg);
       textView.setText(supportMessage);

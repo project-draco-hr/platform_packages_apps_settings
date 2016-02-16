@@ -6,7 +6,8 @@
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-  if (!mUm.isAdminUser() || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES) || Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0) {
+  setIfOnlyAvailableForAdmins(true);
+  if (isUiRestricted() || Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getPrefContext(),null));
     return;

@@ -1,0 +1,37 @@
+{
+  if (enforcedAdmin == null) {
+    return;
+  }
+  if (enforcedAdmin.component != null) {
+    DevicePolicyManager dpm=(DevicePolicyManager)activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
+    if (enforcedAdmin.userId == UserHandle.USER_NULL) {
+      enforcedAdmin.userId=UserHandle.myUserId();
+    }
+    CharSequence supportMessage=null;
+    if (UserHandle.isSameApp(Process.myUid(),Process.SYSTEM_UID)) {
+      supportMessage=dpm.getShortSupportMessageForUser(enforcedAdmin.component,enforcedAdmin.userId);
+    }
+    if (supportMessage != null) {
+      TextView textView=(TextView)root.findViewById(R.id.admin_support_msg);
+      textView.setText(supportMessage);
+    }
+  }
+  root.findViewById(R.id.admins_policies_list).setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View view){
+      Intent intent=new Intent();
+      if (enforcedAdmin.component != null) {
+        intent.setClass(activity,DeviceAdminAdd.class);
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,enforcedAdmin.component);
+        activity.startActivityAsUser(intent,new UserHandle(enforcedAdmin.userId));
+      }
+ else {
+        intent.setClass(activity,Settings.DeviceAdminSettingsActivity.class);
+        activity.startActivity(intent);
+      }
+      if (finishActivity) {
+        activity.finish();
+      }
+    }
+  }
+);
+}

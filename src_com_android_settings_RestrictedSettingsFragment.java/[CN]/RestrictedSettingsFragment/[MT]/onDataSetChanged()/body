@@ -1,7 +1,8 @@
 {
   highlightPreferenceIfNeeded();
   if (mAdminSupportDetails != null && isUiRestrictedByOnlyAdmin()) {
-    updateAdminSupportDetailsView();
+    final EnforcedAdmin admin=getRestrictionEnforcedAdmin();
+    ShowAdminSupportDetailsDialog.setAdminSupportDetails(getActivity(),mAdminSupportDetails,admin,false);
     setEmptyView(mAdminSupportDetails);
   }
  else   if (mEmptyTextView != null) {

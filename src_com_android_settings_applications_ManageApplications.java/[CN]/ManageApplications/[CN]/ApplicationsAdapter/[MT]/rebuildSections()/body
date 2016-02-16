@@ -1,0 +1,35 @@
+{
+  if (mEntries != null && mManageApplications.mListView.isFastScrollEnabled()) {
+    if (mIndex == null) {
+      LocaleList locales=mContext.getResources().getConfiguration().getLocales();
+      if (locales.size() == 0) {
+        locales=new LocaleList(Locale.ENGLISH);
+      }
+      AlphabeticIndex index=new AlphabeticIndex<>(locales.get(0));
+      int localeCount=locales.size();
+      for (int i=1; i < localeCount; i++) {
+        index.addLabels(locales.get(i));
+      }
+      index.addLabels(Locale.ENGLISH);
+      mIndex=index.buildImmutableIndex();
+    }
+    ArrayList<SectionInfo> sections=new ArrayList<>();
+    int lastSecId=-1;
+    int totalEntries=mEntries.size();
+    mPositionToSectionIndex=new int[totalEntries];
+    for (int pos=0; pos < totalEntries; pos++) {
+      String label=mEntries.get(pos).label;
+      int secId=mIndex.getBucketIndex(TextUtils.isEmpty(label) ? "" : label);
+      if (secId != lastSecId) {
+        lastSecId=secId;
+        sections.add(new SectionInfo(mIndex.getBucket(secId).getLabel(),pos));
+      }
+      mPositionToSectionIndex[pos]=sections.size() - 1;
+    }
+    mSections=sections.toArray(EMPTY_SECTIONS);
+  }
+ else {
+    mSections=EMPTY_SECTIONS;
+    mPositionToSectionIndex=null;
+  }
+}

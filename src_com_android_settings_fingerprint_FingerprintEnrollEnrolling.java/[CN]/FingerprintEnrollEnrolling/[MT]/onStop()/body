@@ -1,10 +1,14 @@
 {
   super.onStop();
-  mSidecar.setListener(null);
+  if (mSidecar != null) {
+    mSidecar.setListener(null);
+  }
   stopIconAnimation();
   if (!isChangingConfigurations()) {
-    mSidecar.cancelEnrollment();
-    getFragmentManager().beginTransaction().remove(mSidecar).commit();
+    if (mSidecar != null) {
+      mSidecar.cancelEnrollment();
+      getFragmentManager().beginTransaction().remove(mSidecar).commit();
+    }
     finish();
   }
 }

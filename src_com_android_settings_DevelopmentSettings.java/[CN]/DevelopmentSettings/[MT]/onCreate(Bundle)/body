@@ -118,6 +118,7 @@
  catch (  RemoteException e) {
     removePreference(KEY_CONVERT_FBE);
   }
+  mOtaDisableAutomaticUpdate=findAndInitSwitchPref(OTA_DISABLE_AUTOMATIC_UPDATE_KEY);
   mNightModePreference=(DropDownPreference)findPreference(KEY_NIGHT_MODE);
   final UiModeManager uiManager=(UiModeManager)getSystemService(Context.UI_MODE_SERVICE);
   final int currentNightMode=uiManager.getNightMode();

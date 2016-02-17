@@ -1,0 +1,9 @@
+{
+  super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+  final int widthPadding=getPaddingLeft() + getPaddingRight();
+  int bubbleWidth=getMeasuredWidth() - widthPadding;
+  final int maxWidth=MeasureSpec.getSize(widthMeasureSpec) - widthPadding;
+  bubbleWidth=Math.min(maxWidth,(int)(Math.ceil(bubbleWidth / (float)mSnapWidthPixels) * mSnapWidthPixels));
+  super.onMeasure(MeasureSpec.makeMeasureSpec(bubbleWidth + widthPadding,MeasureSpec.EXACTLY),heightMeasureSpec);
+  Log.w(this.getClass().getSimpleName(),String.format("onMeasure called; width:%d, height:%d",this.getMeasuredWidth(),this.getMeasuredHeight()));
+}

@@ -1,0 +1,8 @@
+{
+  final int messageColorResId=(mIncoming ? R.color.message_text_incoming : R.color.message_text_outgoing);
+  final int timestampColorResId=mIncoming ? R.color.timestamp_text_incoming : R.color.timestamp_text_outgoing;
+  final int messageColor=getContext().getColor(messageColorResId);
+  mMessageTextView.setTextColor(messageColor);
+  mMessageTextView.setLinkTextColor(messageColor);
+  mStatusTextView.setTextColor(timestampColorResId);
+}

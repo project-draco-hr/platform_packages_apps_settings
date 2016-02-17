@@ -1,0 +1,14 @@
+{
+  updateViewAppearance();
+  final int horizontalSpace=MeasureSpec.getSize(widthMeasureSpec);
+  final int iconSize=getResources().getDimensionPixelSize(R.dimen.conversation_message_contact_icon_size);
+  final int unspecifiedMeasureSpec=MeasureSpec.makeMeasureSpec(0,MeasureSpec.UNSPECIFIED);
+  final int iconMeasureSpec=MeasureSpec.makeMeasureSpec(iconSize,MeasureSpec.EXACTLY);
+  mContactIconView.measure(iconMeasureSpec,iconMeasureSpec);
+  final int arrowWidth=getResources().getDimensionPixelSize(R.dimen.message_bubble_arrow_width);
+  final int maxLeftoverSpace=horizontalSpace - mContactIconView.getMeasuredWidth() * 2 - arrowWidth - getPaddingLeft() - getPaddingRight();
+  final int messageContentWidthMeasureSpec=MeasureSpec.makeMeasureSpec(maxLeftoverSpace,MeasureSpec.AT_MOST);
+  mMessageBubble.measure(messageContentWidthMeasureSpec,unspecifiedMeasureSpec);
+  final int maxHeight=Math.max(mContactIconView.getMeasuredHeight(),mMessageBubble.getMeasuredHeight());
+  setMeasuredDimension(horizontalSpace,maxHeight + getPaddingBottom() + getPaddingTop());
+}

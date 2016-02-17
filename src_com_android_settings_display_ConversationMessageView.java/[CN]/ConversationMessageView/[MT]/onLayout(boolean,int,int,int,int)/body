@@ -1,0 +1,33 @@
+{
+  final boolean isRtl=isLayoutRtl(this);
+  final int iconWidth=mContactIconView.getMeasuredWidth();
+  final int iconHeight=mContactIconView.getMeasuredHeight();
+  final int iconTop=getPaddingTop();
+  final int contentWidth=(right - left) - iconWidth - getPaddingLeft()- getPaddingRight();
+  final int contentHeight=mMessageBubble.getMeasuredHeight();
+  final int contentTop=iconTop;
+  final int iconLeft;
+  final int contentLeft;
+  if (mIncoming) {
+    if (isRtl) {
+      iconLeft=(right - left) - getPaddingRight() - iconWidth;
+      contentLeft=iconLeft - contentWidth;
+    }
+ else {
+      iconLeft=getPaddingLeft();
+      contentLeft=iconLeft + iconWidth;
+    }
+  }
+ else {
+    if (isRtl) {
+      iconLeft=getPaddingLeft();
+      contentLeft=iconLeft + iconWidth;
+    }
+ else {
+      iconLeft=(right - left) - getPaddingRight() - iconWidth;
+      contentLeft=iconLeft - contentWidth;
+    }
+  }
+  mContactIconView.layout(iconLeft,iconTop,iconLeft + iconWidth,iconTop + iconHeight);
+  mMessageBubble.layout(contentLeft,contentTop,contentLeft + contentWidth,contentTop + contentHeight);
+}

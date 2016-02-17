@@ -1,0 +1,6 @@
+{
+  final Drawable.ConstantState constantStateDrawable=drawable.getConstantState();
+  final Drawable retDrawable=(constantStateDrawable != null) ? constantStateDrawable.newDrawable(context.getResources()).mutate() : drawable;
+  retDrawable.setColorFilter(color,PorterDuff.Mode.SRC_ATOP);
+  return retDrawable;
+}

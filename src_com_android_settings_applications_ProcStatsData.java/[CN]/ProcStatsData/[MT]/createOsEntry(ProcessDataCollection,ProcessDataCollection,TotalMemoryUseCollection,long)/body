@@ -2,22 +2,17 @@
   ProcStatsPackageEntry osPkg=new ProcStatsPackageEntry("os",memTotalTime);
   ProcStatsEntry osEntry;
   if (totalMem.sysMemNativeWeight > 0) {
-    osEntry=new ProcStatsEntry(Utils.OS_PKG,0,mContext.getString(R.string.process_stats_os_native),memTotalTime,(long)(totalMem.sysMemNativeWeight / memTotalTime));
+    osEntry=new ProcStatsEntry(Utils.OS_PKG,0,mContext.getString(R.string.process_stats_os_native),memTotalTime,(long)(totalMem.sysMemNativeWeight / memTotalTime),memTotalTime);
     osEntry.evaluateTargetPackage(mPm,mStats,bgTotals,runTotals,sEntryCompare,mUseUss);
     osPkg.addEntry(osEntry);
   }
   if (totalMem.sysMemKernelWeight > 0) {
-    osEntry=new ProcStatsEntry(Utils.OS_PKG,0,mContext.getString(R.string.process_stats_os_kernel),memTotalTime,(long)(totalMem.sysMemKernelWeight / memTotalTime));
-    osEntry.evaluateTargetPackage(mPm,mStats,bgTotals,runTotals,sEntryCompare,mUseUss);
-    osPkg.addEntry(osEntry);
-  }
-  if (totalMem.sysMemZRamWeight > 0) {
-    osEntry=new ProcStatsEntry(Utils.OS_PKG,0,mContext.getString(R.string.process_stats_os_zram),memTotalTime,(long)(totalMem.sysMemZRamWeight / memTotalTime));
+    osEntry=new ProcStatsEntry(Utils.OS_PKG,0,mContext.getString(R.string.process_stats_os_kernel),memTotalTime,(long)(totalMem.sysMemKernelWeight / memTotalTime),memTotalTime);
     osEntry.evaluateTargetPackage(mPm,mStats,bgTotals,runTotals,sEntryCompare,mUseUss);
     osPkg.addEntry(osEntry);
   }
   if (baseCacheRam > 0) {
-    osEntry=new ProcStatsEntry(Utils.OS_PKG,0,mContext.getString(R.string.process_stats_os_cache),memTotalTime,baseCacheRam / 1024);
+    osEntry=new ProcStatsEntry(Utils.OS_PKG,0,mContext.getString(R.string.process_stats_os_cache),memTotalTime,baseCacheRam / 1024,memTotalTime);
     osEntry.evaluateTargetPackage(mPm,mStats,bgTotals,runTotals,sEntryCompare,mUseUss);
     osPkg.addEntry(osEntry);
   }

@@ -20,6 +20,9 @@
   }
  else   if (preference.getKey().equals(KEY_BUILD_NUMBER)) {
     if (UserHandle.myUserId() != UserHandle.USER_OWNER)     return true;
+    if (Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0) {
+      return true;
+    }
     final UserManager um=(UserManager)getSystemService(Context.USER_SERVICE);
     if (um.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES))     return true;
     if (mDevHitCountdown > 0) {

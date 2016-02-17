@@ -11,6 +11,9 @@
   ProcessDataCollection bgTotals=new ProcessDataCollection(ProcessStats.ALL_SCREEN_ADJ,mMemStates,mStates);
   ProcessDataCollection runTotals=new ProcessDataCollection(ProcessStats.ALL_SCREEN_ADJ,mMemStates,ProcessStats.NON_CACHED_PROC_STATES);
   createPkgMap(getProcs(bgTotals,runTotals),bgTotals,runTotals);
+  if (totalMem.sysMemZRamWeight > 0) {
+    distributeZRam(totalMem.sysMemZRamWeight);
+  }
   ProcStatsPackageEntry osPkg=createOsEntry(bgTotals,runTotals,totalMem,mMemInfo.baseCacheRam);
   pkgEntries.add(osPkg);
 }

@@ -5,7 +5,7 @@
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-  if (android.os.Process.myUserHandle().getIdentifier() != UserHandle.USER_OWNER || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {
+  if (android.os.Process.myUserHandle().getIdentifier() != UserHandle.USER_OWNER || mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES) || Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getActivity(),null));
     return;
@@ -117,5 +117,14 @@
   if (mColorModePreference.getTransformsCount() < 2) {
     removePreference(KEY_COLOR_MODE);
     mColorModePreference=null;
+  }
+  mColorTemperaturePreference=(SwitchPreference)findPreference(COLOR_TEMPERATURE_KEY);
+  if (getResources().getBoolean(R.bool.config_enableColorTemperature)) {
+    mAllPrefs.add(mColorTemperaturePreference);
+    mResetSwitchPrefs.add(mColorTemperaturePreference);
+  }
+ else {
+    removePreference(COLOR_TEMPERATURE_KEY);
+    mColorTemperaturePreference=null;
   }
 }

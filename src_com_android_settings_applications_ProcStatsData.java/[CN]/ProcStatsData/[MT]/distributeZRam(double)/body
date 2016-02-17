@@ -1,0 +1,31 @@
+{
+  long zramMem=(long)(zramWeight / memTotalTime);
+  long totalTime=0;
+  for (int i=pkgEntries.size() - 1; i >= 0; i--) {
+    ProcStatsPackageEntry entry=pkgEntries.get(i);
+    for (int j=entry.mEntries.size() - 1; j >= 0; j--) {
+      ProcStatsEntry proc=entry.mEntries.get(j);
+      totalTime+=proc.mRunDuration;
+    }
+  }
+  for (int i=pkgEntries.size() - 1; i >= 0 && totalTime > 0; i--) {
+    ProcStatsPackageEntry entry=pkgEntries.get(i);
+    long pkgRunTime=0;
+    long maxRunTime=0;
+    for (int j=entry.mEntries.size() - 1; j >= 0; j--) {
+      ProcStatsEntry proc=entry.mEntries.get(j);
+      pkgRunTime+=proc.mRunDuration;
+      if (proc.mRunDuration > maxRunTime) {
+        maxRunTime=proc.mRunDuration;
+      }
+    }
+    long pkgZRam=(zramMem * pkgRunTime) / totalTime;
+    if (pkgZRam > 0) {
+      zramMem-=pkgZRam;
+      totalTime-=pkgRunTime;
+      ProcStatsEntry procEntry=new ProcStatsEntry(entry.mPackage,0,mContext.getString(R.string.process_stats_os_zram),maxRunTime,pkgZRam,memTotalTime);
+      procEntry.evaluateTargetPackage(mPm,mStats,null,null,sEntryCompare,mUseUss);
+      entry.addEntry(procEntry);
+    }
+  }
+}

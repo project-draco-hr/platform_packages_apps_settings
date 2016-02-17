@@ -2,6 +2,7 @@
   boolean autoTimeEnabled=getAutoState(Settings.Global.AUTO_TIME);
   boolean autoTimeZoneEnabled=getAutoState(Settings.Global.AUTO_TIME_ZONE);
   mAutoTimePref=(RestrictedSwitchPreference)findPreference(KEY_AUTO_TIME);
+  mAutoTimePref.setOnPreferenceChangeListener(this);
   EnforcedAdmin admin=RestrictedLockUtils.checkIfAutoTimeRequired(getActivity());
   mAutoTimePref.setDisabledByAdmin(admin);
   Intent intent=getActivity().getIntent();
@@ -9,6 +10,7 @@
   mDummyDate=Calendar.getInstance();
   mAutoTimePref.setChecked(autoTimeEnabled);
   mAutoTimeZonePref=(SwitchPreference)findPreference(KEY_AUTO_TIME_ZONE);
+  mAutoTimeZonePref.setOnPreferenceChangeListener(this);
   if (Utils.isWifiOnly(getActivity()) || isFirstRun) {
     getPreferenceScreen().removePreference(mAutoTimeZonePref);
     autoTimeZoneEnabled=false;

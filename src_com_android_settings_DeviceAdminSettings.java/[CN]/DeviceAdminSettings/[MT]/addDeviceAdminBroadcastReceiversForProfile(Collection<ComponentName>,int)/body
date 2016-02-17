@@ -11,6 +11,9 @@
     if (alreadyAddedComponents == null || !alreadyAddedComponents.contains(riComponentName)) {
       DeviceAdminInfo deviceAdminInfo=createDeviceAdminInfo(resolveInfo);
       if (deviceAdminInfo != null && deviceAdminInfo.isVisible()) {
+        if (!deviceAdminInfo.getActivityInfo().applicationInfo.isInternal()) {
+          continue;
+        }
         DeviceAdminListItem item=new DeviceAdminListItem();
         item.info=deviceAdminInfo;
         item.name=deviceAdminInfo.loadLabel(pm).toString();

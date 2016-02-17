@@ -1,0 +1,20 @@
+{
+switch (preferenceKey) {
+case KEY_ASSIST_AND_VOICE_INPUT:
+    return new ManageAssist.AvailabilityProvider();
+case KEY_DEFAULT_BROWSER:
+  return new DefaultBrowserPreference.AvailabilityProvider();
+case KEY_DEFAULT_EMERGENCY_APP:
+return new DefaultEmergencyPreference.AvailabilityProvider();
+case KEY_DEFAULT_HOME:
+return new DefaultHomePreference.AvailabilityProvider();
+case KEY_DEFAULT_NOTIFICATION_ASST:
+return new DefaultNotificationAssistantPreference.AvailabilityProvider();
+case KEY_DEFAULT_PHONE_APP:
+return new DefaultPhonePreference.AvailabilityProvider();
+case KEY_SMS_APPLICATION:
+return new DefaultSmsPreference.AvailabilityProvider();
+}
+Log.w(TAG,"getPreferenceAvailabilityProvider: Cannot find provider for " + preferenceKey);
+return null;
+}

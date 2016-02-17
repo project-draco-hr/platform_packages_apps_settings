@@ -1,8 +1,8 @@
 {
-  super.onViewCreated(view,savedInstanceState);
-  mRequirePasswordToDecryptButton=(RadioButton)view.findViewById(R.id.encrypt_require_password);
-  mDontRequirePasswordToDecryptButton=(RadioButton)view.findViewById(R.id.encrypt_dont_require_password);
-  mEncryptionMessage=(TextView)view.findViewById(R.id.encryption_message);
+  super.onCreate(savedInstanceState);
+  addPreferencesFromResource(R.xml.security_settings_encryption_interstitial);
+  mRequirePasswordToDecrypt=findPreference(KEY_ENCRYPT_REQUIRE_PASSWORD);
+  mDontRequirePasswordToDecrypt=findPreference(KEY_ENCRYPT_DONT_REQUIRE_PASSWORD);
   boolean forFingerprint=getActivity().getIntent().getBooleanExtra(ChooseLockSettingsHelper.EXTRA_KEY_FOR_FINGERPRINT,false);
   Intent intent=getActivity().getIntent();
   final int quality=intent.getIntExtra(EXTRA_PASSWORD_QUALITY,0);
@@ -28,19 +28,10 @@ enableId=R.string.encrypt_require_password;
 disableId=R.string.encrypt_dont_require_password;
 break;
 }
-mEncryptionMessage.setText(msgId);
-mRequirePasswordToDecryptButton.setOnClickListener(this);
-mRequirePasswordToDecryptButton.setText(enableId);
-mDontRequirePasswordToDecryptButton.setOnClickListener(this);
-mDontRequirePasswordToDecryptButton.setText(disableId);
+TextView message=createHeaderView();
+message.setText(msgId);
+setHeaderView(message);
+mRequirePasswordToDecrypt.setTitle(enableId);
+mDontRequirePasswordToDecrypt.setTitle(disableId);
 setRequirePasswordState(getActivity().getIntent().getBooleanExtra(EXTRA_REQUIRE_PASSWORD,true));
-Button nextButton=getNextButton();
-if (nextButton != null) {
-nextButton.setOnClickListener(new View.OnClickListener(){
-@Override public void onClick(View v){
-startLockIntent();
-}
-}
-);
-}
 }

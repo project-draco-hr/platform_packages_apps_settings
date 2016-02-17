@@ -6,9 +6,13 @@
   BandListItem item;
   if (result.result != null) {
     int bands[]=(int[])result.result;
+    if (bands.length == 0) {
+      Log.wtf(LOG_TAG,"No Supported Band Modes");
+      return;
+    }
     int size=bands[0];
     if (size > 0) {
-      for (int i=1; i < size; i++) {
+      for (int i=1; i <= size; i++) {
         item=new BandListItem(bands[i]);
         mBandListAdapter.add(item);
         if (DBG)         log("Add " + item.toString());
@@ -18,7 +22,7 @@
   }
   if (addBandSuccess == false) {
     if (DBG)     log("Error in query, add default list");
-    for (int i=0; i < Phone.BM_BOUNDARY; i++) {
+    for (int i=0; i < Phone.BM_NUM_BAND_MODES; i++) {
       item=new BandListItem(i);
       mBandListAdapter.add(item);
       if (DBG)       log("Add default " + item.toString());

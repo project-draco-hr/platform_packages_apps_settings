@@ -1,0 +1,33 @@
+{
+  final Resources res=getResources();
+  final int arrowWidth=res.getDimensionPixelOffset(R.dimen.message_bubble_arrow_width);
+  final int messageTextLeftRightPadding=res.getDimensionPixelOffset(R.dimen.message_text_left_right_padding);
+  final int textTopPadding=res.getDimensionPixelOffset(R.dimen.message_text_top_padding);
+  final int textBottomPadding=res.getDimensionPixelOffset(R.dimen.message_text_bottom_padding);
+  final int textLeftPadding, textRightPadding;
+  if (mIncoming) {
+    textLeftPadding=messageTextLeftRightPadding + arrowWidth;
+    textRightPadding=messageTextLeftRightPadding;
+  }
+ else {
+    textLeftPadding=messageTextLeftRightPadding;
+    textRightPadding=messageTextLeftRightPadding + arrowWidth;
+  }
+  final int gravity=mIncoming ? (Gravity.START | Gravity.CENTER_VERTICAL) : (Gravity.END | Gravity.CENTER_VERTICAL);
+  final int messageTopPadding=res.getDimensionPixelSize(R.dimen.message_padding_default);
+  final int metadataTopPadding=res.getDimensionPixelOffset(R.dimen.message_metadata_top_padding);
+  final int bubbleDrawableResId=mIncoming ? R.drawable.msg_bubble_incoming : R.drawable.msg_bubble_outgoing;
+  final int bubbleColorResId=mIncoming ? R.color.message_bubble_incoming : R.color.message_bubble_outgoing;
+  final Context context=getContext();
+  final Drawable textBackgroundDrawable=getTintedDrawable(context,context.getDrawable(bubbleDrawableResId),context.getColor(bubbleColorResId));
+  mMessageTextAndInfoView.setBackground(textBackgroundDrawable);
+  if (isLayoutRtl(this)) {
+    mMessageTextAndInfoView.setPadding(textRightPadding,textTopPadding + metadataTopPadding,textLeftPadding,textBottomPadding);
+  }
+ else {
+    mMessageTextAndInfoView.setPadding(textLeftPadding,textTopPadding + metadataTopPadding,textRightPadding,textBottomPadding);
+  }
+  setPadding(getPaddingLeft(),messageTopPadding,getPaddingRight(),0);
+  mMessageBubble.setGravity(gravity);
+  updateTextAppearance();
+}

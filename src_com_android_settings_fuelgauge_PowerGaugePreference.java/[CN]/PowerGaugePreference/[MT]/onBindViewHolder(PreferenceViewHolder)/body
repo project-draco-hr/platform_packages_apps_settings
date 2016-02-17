@@ -1,5 +1,8 @@
 {
   super.onBindViewHolder(view);
+  ImageView icon=(ImageView)view.findViewById(android.R.id.icon);
+  icon.setLayoutParams(new LinearLayout.LayoutParams(mIconSize,mIconSize));
+  ((TextView)view.findViewById(R.id.widget_summary)).setText(mProgress);
   if (mContentDescription != null) {
     final TextView titleView=(TextView)view.findViewById(android.R.id.title);
     titleView.setContentDescription(mContentDescription);

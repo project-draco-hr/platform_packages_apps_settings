@@ -1,0 +1,7 @@
+{
+  super.onAttached();
+  mPowerManager=(PowerManager)getContext().getSystemService(Context.POWER_SERVICE);
+  mObserver.onChange(true);
+  getContext().getContentResolver().registerContentObserver(Settings.Global.getUriFor(Global.LOW_POWER_MODE_TRIGGER_LEVEL),true,mObserver);
+  getContext().getContentResolver().registerContentObserver(Settings.Global.getUriFor(Global.LOW_POWER_MODE),true,mObserver);
+}

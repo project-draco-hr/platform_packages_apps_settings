@@ -1,13 +1,7 @@
 {
-  if (!isEnabled()) {
-    return;
-  }
   mHelper.storeStatsHistoryInFile(BATTERY_HISTORY_FILE);
   Bundle args=new Bundle();
   args.putString(BatteryHistoryDetail.EXTRA_STATS,BATTERY_HISTORY_FILE);
   args.putParcelable(BatteryHistoryDetail.EXTRA_BROADCAST,mHelper.getBatteryBroadcast());
-  if (getContext() instanceof SettingsActivity) {
-    SettingsActivity sa=(SettingsActivity)getContext();
-    sa.startPreferencePanel(BatteryHistoryDetail.class.getName(),args,R.string.history_details_title,null,null,0);
-  }
+  Utils.startWithFragment(getContext(),BatteryHistoryDetail.class.getName(),args,null,0,R.string.history_details_title,null);
 }

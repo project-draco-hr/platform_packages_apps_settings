@@ -52,4 +52,13 @@
 );
   root.addPreference(mEnd);
   mEnd.setDependency(mDays.getKey());
+  mExitAtAlarm=(SwitchPreference)root.findPreference(KEY_EXIT_AT_ALARM);
+  mExitAtAlarm.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object o){
+      mSchedule.exitAtAlarm=(Boolean)o;
+      updateRule(ZenModeConfig.toScheduleConditionId(mSchedule));
+      return true;
+    }
+  }
+);
 }

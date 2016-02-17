@@ -2,13 +2,15 @@
   if (DEBUG)   Log.v(TAG,"Removing fpId=" + mFp.getFingerId());
   MetricsLogger.action(getContext(),MetricsEvent.ACTION_FINGERPRINT_DELETE,mFp.getFingerId());
   FingerprintSettingsFragment parent=(FingerprintSettingsFragment)getTargetFragment();
-  if (parent.mFingerprintManager.getEnrolledFingerprints().size() > 1) {
+  final boolean isProfileChallengeUser=Utils.isManagedProfile(UserManager.get(getContext()),parent.mUserId);
+  if (parent.mFingerprintManager.getEnrolledFingerprints(parent.mUserId).size() > 1) {
     parent.deleteFingerPrint(mFp);
   }
  else {
     ConfirmLastDeleteDialog lastDeleteDialog=new ConfirmLastDeleteDialog();
     Bundle args=new Bundle();
     args.putParcelable("fingerprint",mFp);
+    args.putBoolean("isProfileChallengeUser",isProfileChallengeUser);
     lastDeleteDialog.setArguments(args);
     lastDeleteDialog.setTargetFragment(getTargetFragment(),0);
     lastDeleteDialog.show(getFragmentManager(),ConfirmLastDeleteDialog.class.getName());

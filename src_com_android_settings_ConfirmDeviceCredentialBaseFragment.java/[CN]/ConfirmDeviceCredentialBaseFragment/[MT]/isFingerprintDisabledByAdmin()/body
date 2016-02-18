@@ -1,0 +1,5 @@
+{
+  DevicePolicyManager dpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+  final int disabledFeatures=dpm.getKeyguardDisabledFeatures(null,mEffectiveUserId);
+  return (disabledFeatures & DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT) != 0;
+}

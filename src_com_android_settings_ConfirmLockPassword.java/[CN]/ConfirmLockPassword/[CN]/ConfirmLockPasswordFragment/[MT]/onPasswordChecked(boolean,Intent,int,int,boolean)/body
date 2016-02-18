@@ -1,0 +1,22 @@
+{
+  mPasswordEntryInputDisabler.setInputEnabled(true);
+  if (matched) {
+    if (newResult) {
+      reportSuccessfullAttempt();
+    }
+    startDisappearAnimation(intent);
+    checkForPendingIntent();
+  }
+ else {
+    if (timeoutMs > 0) {
+      long deadline=mLockPatternUtils.setLockoutAttemptDeadline(effectiveUserId,timeoutMs);
+      handleAttemptLockout(deadline);
+    }
+ else {
+      showError(getErrorMessage(),ERROR_MESSAGE_TIMEOUT);
+    }
+    if (newResult) {
+      reportFailedAttempt();
+    }
+  }
+}

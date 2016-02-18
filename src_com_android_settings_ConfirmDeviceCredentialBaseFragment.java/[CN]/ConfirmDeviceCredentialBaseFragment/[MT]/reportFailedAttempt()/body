@@ -1,0 +1,6 @@
+{
+  if (isProfileChallenge()) {
+    updateErrorMessage(mLockPatternUtils.getCurrentFailedPasswordAttempts(mEffectiveUserId) + 1);
+    mLockPatternUtils.reportFailedPasswordAttempt(mEffectiveUserId);
+  }
+}

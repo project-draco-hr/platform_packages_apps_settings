@@ -17,6 +17,9 @@ case NeedToUnlock:
     mDetailsTextView.setText(R.string.lockpassword_confirm_your_pattern_generic_profile);
   }
 mErrorTextView.setText("");
+if (isProfileChallenge()) {
+updateErrorMessage(mLockPatternUtils.getCurrentFailedPasswordAttempts(mEffectiveUserId));
+}
 mLockPatternView.setEnabled(true);
 mLockPatternView.enableInput();
 mLockPatternView.clearPattern();

@@ -1,0 +1,14 @@
+{
+  mDefaultRate=speechRate;
+  try {
+    android.provider.Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_RATE,mDefaultRate);
+    if (mTts != null) {
+      mTts.setSpeechRate(mDefaultRate / 100.0f);
+    }
+    if (DBG)     Log.d(TAG,"TTS default rate changed, now " + mDefaultRate);
+  }
+ catch (  NumberFormatException e) {
+    Log.e(TAG,"could not persist default TTS rate setting",e);
+  }
+  return;
+}

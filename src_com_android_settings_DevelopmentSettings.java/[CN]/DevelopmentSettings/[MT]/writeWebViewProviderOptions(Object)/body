@@ -1,8 +1,10 @@
 {
   try {
-    mWebViewUpdateService.changeProviderAndSetting(newValue == null ? "" : newValue.toString());
+    String updatedProvider=mWebViewUpdateService.changeProviderAndSetting(newValue == null ? "" : newValue.toString());
     updateWebViewProviderOptions();
+    return newValue != null && newValue.equals(updatedProvider);
   }
  catch (  RemoteException e) {
   }
+  return false;
 }

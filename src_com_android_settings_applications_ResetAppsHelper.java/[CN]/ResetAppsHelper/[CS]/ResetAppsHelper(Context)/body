@@ -3,6 +3,7 @@
   mPm=context.getPackageManager();
   mIPm=IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
   mNm=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+  mWvus=IWebViewUpdateService.Stub.asInterface(ServiceManager.getService("webviewupdate"));
   mNpm=NetworkPolicyManager.from(context);
   mAom=(AppOpsManager)context.getSystemService(Context.APP_OPS_SERVICE);
 }

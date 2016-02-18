@@ -10,14 +10,12 @@
       Log.e(TAG,"Tried to set a null WebView provider");
       return false;
     }
-    String newWebViewPackageName=(String)newValue;
-    if (isPackageEnabled(newWebViewPackageName)) {
-      writeWebViewProviderOptions(newValue);
+    if (writeWebViewProviderOptions(newValue)) {
       return true;
     }
-    if (isPackageInstalled(getActivity(),newWebViewPackageName)) {
-      showEnableWebViewProviderAlert(newWebViewPackageName);
-      return false;
+ else {
+      Toast toast=Toast.makeText(getActivity(),R.string.select_webview_provider_toast_text,Toast.LENGTH_SHORT);
+      toast.show();
     }
     return false;
   }

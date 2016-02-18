@@ -1,9 +1,0 @@
-{
-  final String packageName=getArguments().getString(PACKAGE_NAME_TAG);
-  return new AlertDialog.Builder(getActivity()).setMessage(R.string.select_webview_provider_confirmation_text).setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-    public void onClick(    DialogInterface dialog,    int id){
-      ((DevelopmentSettings)getParentFragment()).enableAndSetWebViewPackage(packageName);
-    }
-  }
-).setNegativeButton(android.R.string.cancel,null).create();
-}

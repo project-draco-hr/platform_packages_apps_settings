@@ -73,12 +73,12 @@ config.enterpriseConfig.setPhase2Method(phase2Method);
 break;
 }
 String caCert=(String)mEapCaCertSpinner.getSelectedItem();
-if (caCert.equals(mUnspecifiedCertString) || caCert.equals(mDoNotValidateEapServerString)) {
 config.enterpriseConfig.setCaCertificateAliases(null);
-}
- else {
+config.enterpriseConfig.setCaPath(null);
 config.enterpriseConfig.setDomainSuffixMatch(mEapDomainView.getText().toString());
-if (caCert.equals(mUseSystemCertsString)) {
+if (caCert.equals(mUnspecifiedCertString) || caCert.equals(mDoNotValidateEapServerString)) {
+}
+ else if (caCert.equals(mUseSystemCertsString)) {
 config.enterpriseConfig.setCaPath(SYSTEM_CA_STORE_PATH);
 }
  else if (caCert.equals(mMultipleCertSetString)) {
@@ -92,6 +92,8 @@ config.enterpriseConfig.setCaCertificateAliases(mAccessPoint.getConfig().enterpr
  else {
 config.enterpriseConfig.setCaCertificateAliases(new String[]{caCert});
 }
+if (config.enterpriseConfig.getCaCertificateAliases() != null && config.enterpriseConfig.getCaPath() != null) {
+Log.e(TAG,"ca_cert (" + config.enterpriseConfig.getCaCertificateAliases() + ") and ca_path ("+ config.enterpriseConfig.getCaPath()+ ") should not both be non-null");
 }
 String clientCert=(String)mEapUserCertSpinner.getSelectedItem();
 if (clientCert.equals(mUnspecifiedCertString) || clientCert.equals(mDoNotProvideEapUserCertString)) {

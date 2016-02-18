@@ -1,10 +1,6 @@
 {
-  mChart=null;
   mHelper=batteryStats;
-  mStats=batteryStats.getStats();
-  mBatteryBroadcast=batteryStats.getBatteryBroadcast();
-  if (getLayoutResource() != R.layout.battery_history_chart) {
-    setLayoutResource(R.layout.battery_history_chart);
-  }
+  final long elapsedRealtimeUs=SystemClock.elapsedRealtime() * 1000;
+  mBatteryInfo=BatteryInfo.getBatteryInfo(getContext(),batteryStats.getBatteryBroadcast(),batteryStats.getStats(),elapsedRealtimeUs);
   notifyChanged();
 }

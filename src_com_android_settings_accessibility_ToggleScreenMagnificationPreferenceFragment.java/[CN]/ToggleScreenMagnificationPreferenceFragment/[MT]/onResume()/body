@@ -3,4 +3,8 @@
   if (Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_DISPLAY_MAGNIFICATION_ENABLED,0) == 0) {
     setMagnificationEnabled(1);
   }
+  VideoView videoView=(VideoView)getView().findViewById(R.id.video);
+  if (videoView != null) {
+    videoView.start();
+  }
 }

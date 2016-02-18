@@ -3,7 +3,7 @@
   view.setDividerAllowedAbove(false);
   view.setDividerAllowedBelow(false);
   final RelativeLayout background=(RelativeLayout)view.findViewById(R.id.video_background);
-  final VideoView videoView=(VideoView)view.findViewById(R.id.video);
+  VideoView videoView=(VideoView)view.findViewById(R.id.video);
   Resources res=getPrefContext().getResources();
   final int backgroundWidth=res.getDimensionPixelSize(R.dimen.screen_magnification_video_background_width);
   final int backgroundHeight=res.getDimensionPixelSize(R.dimen.screen_magnification_video_background_height);
@@ -25,6 +25,6 @@
   }
 );
   videoView.setVideoURI(Uri.parse(String.format("%s://%s/%s",ContentResolver.SCHEME_ANDROID_RESOURCE,getPrefContext().getPackageName(),R.raw.accessibility_screen_magnification)));
-  videoView.setMediaController(new MediaController(getPrefContext()));
+  videoView.setMediaController(null);
   videoView.start();
 }

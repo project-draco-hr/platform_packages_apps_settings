@@ -3,4 +3,7 @@
   if (mAllowFpAuthentication) {
     mFingerprintHelper.startListening();
   }
+  if (isProfileChallenge()) {
+    updateErrorMessage(mLockPatternUtils.getCurrentFailedPasswordAttempts(mEffectiveUserId));
+  }
 }

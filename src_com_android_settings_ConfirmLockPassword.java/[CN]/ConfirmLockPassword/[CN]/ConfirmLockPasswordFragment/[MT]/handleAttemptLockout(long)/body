@@ -9,6 +9,9 @@
     @Override public void onFinish(){
       resetState();
       mErrorTextView.setText("");
+      if (isProfileChallenge()) {
+        updateErrorMessage(mLockPatternUtils.getCurrentFailedPasswordAttempts(mEffectiveUserId));
+      }
     }
   }
 .start();

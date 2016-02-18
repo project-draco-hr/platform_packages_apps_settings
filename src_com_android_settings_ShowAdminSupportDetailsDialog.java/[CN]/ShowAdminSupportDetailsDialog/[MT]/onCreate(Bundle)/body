@@ -1,16 +1,8 @@
 {
   super.onCreate(savedInstanceState);
   mDpm=getSystemService(DevicePolicyManager.class);
-  ComponentName admin=null;
-  int userId=UserHandle.myUserId();
-  Intent intent=getIntent();
-  if (intent != null) {
-    if (checkIfCallerHasPermission(android.Manifest.permission.MANAGE_DEVICE_ADMINS)) {
-      admin=intent.getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
-      userId=intent.getIntExtra(Intent.EXTRA_USER_ID,UserHandle.myUserId());
-    }
-  }
-  View rootView=LayoutInflater.from(this).inflate(R.layout.admin_support_details_dialog,null);
-  setAdminSupportDetails(rootView,admin,userId);
-  new AlertDialog.Builder(this).setView(rootView).setPositiveButton(R.string.okay,null).setOnDismissListener(this).show();
+  mEnforcedAdmin=getAdminDetailsFromIntent(getIntent());
+  mDialogView=LayoutInflater.from(this).inflate(R.layout.admin_support_details_dialog,null);
+  setAdminSupportDetails(mDialogView,mEnforcedAdmin.component,mEnforcedAdmin.userId);
+  new AlertDialog.Builder(this).setView(mDialogView).setPositiveButton(R.string.okay,null).setOnDismissListener(this).show();
 }

@@ -1,0 +1,11 @@
+{
+  EnforcedAdmin admin=new EnforcedAdmin(null,UserHandle.myUserId());
+  if (intent == null) {
+    return admin;
+  }
+  if (checkIfCallerHasPermission(android.Manifest.permission.MANAGE_DEVICE_ADMINS)) {
+    admin.component=intent.getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
+    admin.userId=intent.getIntExtra(Intent.EXTRA_USER_ID,UserHandle.myUserId());
+  }
+  return admin;
+}

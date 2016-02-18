@@ -1,0 +1,8 @@
+{
+  super.onNewIntent(intent);
+  EnforcedAdmin admin=getAdminDetailsFromIntent(intent);
+  if (!mEnforcedAdmin.equals(admin)) {
+    mEnforcedAdmin=admin;
+    setAdminSupportDetails(mDialogView,mEnforcedAdmin.component,mEnforcedAdmin.userId);
+  }
+}

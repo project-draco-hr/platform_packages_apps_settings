@@ -9,11 +9,26 @@
     final ContentResolver resolver=getContentResolver();
     final int accessibilityEnabled=Settings.Secure.getInt(resolver,Settings.Secure.ACCESSIBILITY_ENABLED,0);
     if (accessibilityEnabled == 0) {
-      final String servicesToEnable=getAccessibilityServicesFiltered(getActivity(),AccessibilityServiceInfo.FEEDBACK_SPOKEN);
-      Settings.Secure.putString(resolver,Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,servicesToEnable);
-      Settings.Secure.putString(resolver,Settings.Secure.TOUCH_EXPLORATION_GRANTED_ACCESSIBILITY_SERVICES,servicesToEnable);
+      String serviceToEnable=null;
+      final AccessibilityManager manager=getActivity().getSystemService(AccessibilityManager.class);
+      final List<AccessibilityServiceInfo> accessibilityServices=manager.getInstalledAccessibilityServiceList();
+      for (      AccessibilityServiceInfo accessibilityService : accessibilityServices) {
+        if ((accessibilityService.feedbackType & AccessibilityServiceInfo.FEEDBACK_SPOKEN) != 0) {
+          final ServiceInfo serviceInfo=accessibilityService.getResolveInfo().serviceInfo;
+          mTalkbackPackage=serviceInfo.packageName;
+          final ComponentName componentName=new ComponentName(serviceInfo.packageName,serviceInfo.name);
+          serviceToEnable=componentName.flattenToString();
+          break;
+        }
+      }
+      Settings.Secure.putString(resolver,Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,serviceToEnable);
+      Settings.Secure.putString(resolver,Settings.Secure.TOUCH_EXPLORATION_GRANTED_ACCESSIBILITY_SERVICES,serviceToEnable);
       Settings.Secure.putInt(resolver,Settings.Secure.TOUCH_EXPLORATION_ENABLED,1);
       Settings.Secure.putInt(resolver,Settings.Secure.ACCESSIBILITY_ENABLED,1);
+      new Handler().postDelayed(mStartTalkbackRunnable,SCREEN_READER_INITIALIZATION_DELAY_MS);
+    }
+ else {
+      launchTalkbackTutorial();
     }
   }
   return super.onPreferenceTreeClick(preference);

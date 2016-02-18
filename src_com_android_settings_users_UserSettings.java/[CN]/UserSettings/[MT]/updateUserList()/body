@@ -110,4 +110,9 @@
     mAddUserWhenLocked.setOnPreferenceChangeListener(this);
     mAddUserWhenLocked.setDisabledByAdmin(mUserCaps.mDisallowAddUser ? mUserCaps.mEnforcedAdmin : null);
   }
+  if (emergencyInfoActivityPresent()) {
+    mEmergencyInfoPreference.setOnPreferenceClickListener(this);
+    mEmergencyInfoPreference.setOrder(Preference.DEFAULT_ORDER);
+    preferenceScreen.addPreference(mEmergencyInfoPreference);
+  }
 }

@@ -34,13 +34,6 @@
   mLockScreenSettings=(PreferenceGroup)findPreference("lock_screen_settings");
   mAddUserWhenLocked=(RestrictedSwitchPreference)findPreference("add_users_when_locked");
   mEmergencyInfoPreference=findPreference(KEY_EMERGENCY_INFO);
-  if (emergencyInfoActivityPresent()) {
-    mEmergencyInfoPreference.setOnPreferenceClickListener(this);
-  }
- else {
-    PreferenceCategory lockScreenSettingsCategory=(PreferenceCategory)findPreference(KEY_LOCK_SCREEN_SETTINGS);
-    lockScreenSettingsCategory.removePreference(mEmergencyInfoPreference);
-  }
   loadProfile();
   setHasOptionsMenu(true);
   IntentFilter filter=new IntentFilter(Intent.ACTION_USER_REMOVED);

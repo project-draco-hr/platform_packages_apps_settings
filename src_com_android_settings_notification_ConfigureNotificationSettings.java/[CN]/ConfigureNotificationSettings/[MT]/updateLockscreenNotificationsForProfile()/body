@@ -1,0 +1,12 @@
+{
+  if (mProfileChallengeUserId == UserHandle.USER_NULL) {
+    return;
+  }
+  if (mLockscreenProfile == null) {
+    return;
+  }
+  final boolean enabled=getLockscreenNotificationsEnabled(mProfileChallengeUserId);
+  final boolean allowPrivate=!mSecureProfile || getLockscreenAllowPrivateNotifications(mProfileChallengeUserId);
+  mLockscreenSelectedValueProfile=!enabled ? R.string.lock_screen_notifications_summary_disable_profile : (allowPrivate ? R.string.lock_screen_notifications_summary_show_profile : R.string.lock_screen_notifications_summary_hide_profile);
+  mLockscreenProfile.setValue(Integer.toString(mLockscreenSelectedValueProfile));
+}

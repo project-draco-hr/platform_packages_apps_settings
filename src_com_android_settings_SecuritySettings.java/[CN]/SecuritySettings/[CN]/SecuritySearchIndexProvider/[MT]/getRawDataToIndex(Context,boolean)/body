@@ -26,7 +26,7 @@
     result.add(data);
   }
   final LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
-  final int profileUserId=getManagedProfileId(um);
+  final int profileUserId=Utils.getManagedProfileId(um,MY_USER_ID);
   if (profileUserId != UserHandle.USER_NULL && lockPatternUtils.isSeparateProfileChallengeAllowed(profileUserId)) {
     if (lockPatternUtils.getKeyguardStoredPasswordQuality(profileUserId) >= DevicePolicyManager.PASSWORD_QUALITY_SOMETHING && lockPatternUtils.isSeparateProfileChallengeAllowedToUnify(profileUserId)) {
       data=new SearchIndexableRaw(context);

@@ -1,13 +1,14 @@
 {
-  if (key.equals(KEY_AUTO_TIME)) {
-    boolean autoEnabled=preferences.getBoolean(key,true);
+  if (preference.getKey().equals(KEY_AUTO_TIME)) {
+    boolean autoEnabled=(Boolean)newValue;
     Settings.Global.putInt(getContentResolver(),Settings.Global.AUTO_TIME,autoEnabled ? 1 : 0);
     mTimePref.setEnabled(!autoEnabled);
     mDatePref.setEnabled(!autoEnabled);
   }
- else   if (key.equals(KEY_AUTO_TIME_ZONE)) {
-    boolean autoZoneEnabled=preferences.getBoolean(key,true);
+ else   if (preference.getKey().equals(KEY_AUTO_TIME_ZONE)) {
+    boolean autoZoneEnabled=(Boolean)newValue;
     Settings.Global.putInt(getContentResolver(),Settings.Global.AUTO_TIME_ZONE,autoZoneEnabled ? 1 : 0);
     mTimeZone.setEnabled(!autoZoneEnabled);
   }
+  return true;
 }

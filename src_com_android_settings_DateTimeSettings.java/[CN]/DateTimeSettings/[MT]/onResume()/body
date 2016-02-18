@@ -1,6 +1,5 @@
 {
   super.onResume();
-  getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
   ((SwitchPreference)mTime24Pref).setChecked(is24Hour());
   IntentFilter filter=new IntentFilter();
   filter.addAction(Intent.ACTION_TIME_TICK);

@@ -1,7 +1,6 @@
 {
-  IWebViewUpdateService webViewUpdateService=IWebViewUpdateService.Stub.asInterface(ServiceManager.getService("webviewupdate"));
   try {
-    WebViewProviderInfo[] providers=webViewUpdateService.getValidWebViewPackages();
+    WebViewProviderInfo[] providers=mWebViewUpdateService.getValidWebViewPackages();
     if (providers == null) {
       Log.e(TAG,"No WebView providers available");
       return;
@@ -14,7 +13,7 @@
     }
     mWebViewProvider.setEntries(options);
     mWebViewProvider.setEntryValues(values);
-    String value=webViewUpdateService.getCurrentWebViewPackageName();
+    String value=mWebViewUpdateService.getCurrentWebViewPackageName();
     if (value == null) {
       value="";
     }

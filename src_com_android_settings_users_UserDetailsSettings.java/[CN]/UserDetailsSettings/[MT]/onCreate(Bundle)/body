@@ -4,7 +4,7 @@
   mUserManager=(UserManager)context.getSystemService(Context.USER_SERVICE);
   addPreferencesFromResource(R.xml.user_details_settings);
   mPhonePref=(SwitchPreference)findPreference(KEY_ENABLE_TELEPHONY);
-  mRemoveUserPref=(RestrictedPreference)findPreference(KEY_REMOVE_USER);
+  mRemoveUserPref=findPreference(KEY_REMOVE_USER);
   mGuestUser=getArguments().getBoolean(EXTRA_USER_GUEST,false);
   if (!mGuestUser) {
     final int userId=getArguments().getInt(EXTRA_USER_ID,-1);
@@ -20,6 +20,9 @@
     mPhonePref.setTitle(R.string.user_enable_calling);
     mDefaultGuestRestrictions=mUserManager.getDefaultGuestRestrictions();
     mPhonePref.setChecked(!mDefaultGuestRestrictions.getBoolean(UserManager.DISALLOW_OUTGOING_CALLS));
+  }
+  if (RestrictedLockUtils.hasBaseUserRestriction(context,UserManager.DISALLOW_REMOVE_USER,UserHandle.myUserId())) {
+    removePreference(KEY_REMOVE_USER);
   }
   mPhonePref.setOnPreferenceChangeListener(this);
 }

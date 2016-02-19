@@ -32,6 +32,9 @@
     Log.v(TAG,"Adding preference '" + pref + "' at order "+ order);
     mUri.addPreference(pref);
   }
+  if (mAppsControlDisallowedBySystem) {
+    mClearUriButton.setEnabled(false);
+  }
   mClearUri.setOrder(order);
   mClearUriButton.setVisibility(View.VISIBLE);
 }

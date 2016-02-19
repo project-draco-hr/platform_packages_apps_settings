@@ -4,7 +4,12 @@
   maybeRefreshRules(true,true);
   mSettingsObserver.register();
   if (isUiRestricted()) {
-    getPreferenceScreen().removeAll();
-    return;
+    if (isUiRestrictedByOnlyAdmin()) {
+      getPreferenceScreen().removeAll();
+      return;
+    }
+ else {
+      finish();
+    }
   }
 }

@@ -1,6 +1,6 @@
 {
   if (v == mClearCacheButton) {
-    if (mAppsControlDisallowedAdmin != null) {
+    if (mAppsControlDisallowedAdmin != null && !mAppsControlDisallowedBySystem) {
       RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mAppsControlDisallowedAdmin);
       return;
     }
@@ -10,7 +10,7 @@
     mPm.deleteApplicationCacheFiles(mPackageName,mClearCacheObserver);
   }
  else   if (v == mClearDataButton) {
-    if (mAppsControlDisallowedAdmin != null) {
+    if (mAppsControlDisallowedAdmin != null && !mAppsControlDisallowedBySystem) {
       RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mAppsControlDisallowedAdmin);
     }
  else     if (mAppEntry.info.manageSpaceActivityName != null) {
@@ -28,7 +28,7 @@
     mDialogBuilder.show();
   }
  else   if (v == mClearUriButton) {
-    if (mAppsControlDisallowedAdmin != null) {
+    if (mAppsControlDisallowedAdmin != null && !mAppsControlDisallowedBySystem) {
       RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mAppsControlDisallowedAdmin);
     }
  else {

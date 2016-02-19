@@ -4,7 +4,8 @@
   }
   mManagedProfileSwitch.setOnPreferenceClickListener(null);
   final EnforcedAdmin admin=RestrictedLockUtils.checkIfRestrictionEnforced(getActivity(),UserManager.DISALLOW_SHARE_LOCATION,mManagedProfile.getIdentifier());
-  if (mUm.hasUserRestriction(UserManager.DISALLOW_SHARE_LOCATION,mManagedProfile) && admin != null) {
+  final boolean isRestrictedByBase=isManagedProfileRestrictedByBase();
+  if (!isRestrictedByBase && admin != null) {
     mManagedProfileSwitch.setDisabledByAdmin(admin);
     mManagedProfileSwitch.setChecked(false);
   }
@@ -16,9 +17,8 @@
       mManagedProfileSwitch.setChecked(false);
     }
  else {
-      final boolean isRestricted=isManagedProfileRestrictedByBase();
-      mManagedProfileSwitch.setChecked(!isRestricted);
-      summaryResId=(isRestricted ? R.string.switch_off_text : R.string.switch_on_text);
+      mManagedProfileSwitch.setChecked(!isRestrictedByBase);
+      summaryResId=(isRestrictedByBase ? R.string.switch_off_text : R.string.switch_on_text);
       mManagedProfileSwitch.setOnPreferenceClickListener(mManagedProfileSwitchClickListener);
     }
     mManagedProfileSwitch.setSummary(summaryResId);

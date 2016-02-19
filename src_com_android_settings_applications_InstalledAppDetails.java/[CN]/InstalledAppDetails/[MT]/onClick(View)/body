@@ -13,7 +13,8 @@
       return;
     }
     EnforcedAdmin admin=RestrictedLockUtils.checkIfUninstallBlocked(getActivity(),packageName,mUserId);
-    if (admin != null) {
+    boolean uninstallBlockedBySystem=mAppsControlDisallowedBySystem || RestrictedLockUtils.hasBaseUserRestriction(getActivity(),packageName,mUserId);
+    if (admin != null && !uninstallBlockedBySystem) {
       RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),admin);
     }
  else     if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
@@ -37,7 +38,7 @@
     }
   }
  else   if (v == mForceStopButton) {
-    if (mAppsControlDisallowedAdmin != null) {
+    if (mAppsControlDisallowedAdmin != null && !mAppsControlDisallowedBySystem) {
       RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mAppsControlDisallowedAdmin);
     }
  else {

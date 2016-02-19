@@ -4,6 +4,7 @@
   mUserManager=UserManager.get(context);
   mUsbManager=context.getSystemService(UsbManager.class);
   mRestricted=mUserManager.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER);
+  mRestrictedBySystem=mUserManager.hasBaseUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER,UserHandle.of(UserHandle.myUserId()));
   mMidi=context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MIDI);
   UsbPort[] ports=mUsbManager.getPorts();
   final int N=ports.length;

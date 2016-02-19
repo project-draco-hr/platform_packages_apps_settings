@@ -6,6 +6,9 @@
   mInitiateDiscoverable=true;
   if (isUiRestricted()) {
     setDeviceListGroup(getPreferenceScreen());
+    if (!isUiRestrictedByOnlyAdmin()) {
+      getEmptyTextView().setText(R.string.bluetooth_empty_list_user_restricted);
+    }
     removeAllDevices();
     return;
   }

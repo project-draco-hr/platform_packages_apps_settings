@@ -19,7 +19,7 @@
   mButtonWfc=(PreferenceScreen)findPreference(KEY_WFC_SETTINGS);
   String toggleable=Settings.Global.getString(activity.getContentResolver(),Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
   final boolean isWimaxEnabled=isAdmin && this.getResources().getBoolean(com.android.internal.R.bool.config_wimaxEnabled);
-  if (!isWimaxEnabled) {
+  if (!isWimaxEnabled || RestrictedLockUtils.hasBaseUserRestriction(activity,UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS,UserHandle.myUserId())) {
     PreferenceScreen root=getPreferenceScreen();
     Preference ps=findPreference(KEY_WIMAX_SETTINGS);
     if (ps != null)     root.removePreference(ps);
@@ -33,7 +33,7 @@
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_WIFI)) {
     findPreference(KEY_VPN_SETTINGS).setDependency(KEY_TOGGLE_AIRPLANE);
   }
-  if (!isAdmin) {
+  if (!isAdmin || RestrictedLockUtils.hasBaseUserRestriction(activity,UserManager.DISALLOW_CONFIG_VPN,UserHandle.myUserId())) {
     removePreference(KEY_VPN_SETTINGS);
   }
   if (toggleable == null || !toggleable.contains(Settings.Global.RADIO_BLUETOOTH)) {
@@ -48,7 +48,7 @@
     getPreferenceScreen().removePreference(androidBeam);
     mNfcEnabler=null;
   }
-  if (!isAdmin || Utils.isWifiOnly(getActivity())) {
+  if (!isAdmin || Utils.isWifiOnly(getActivity()) || RestrictedLockUtils.hasBaseUserRestriction(activity,UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS,UserHandle.myUserId())) {
     removePreference(KEY_MOBILE_NETWORK_SETTINGS);
     removePreference(KEY_MANAGE_MOBILE_PLAN);
   }
@@ -67,8 +67,8 @@
   getPreferenceScreen().removePreference(mGlobalProxy);
   mGlobalProxy.setEnabled(mDPM.getGlobalProxyAdmin() == null);
   final ConnectivityManager cm=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-  final boolean adminDisallowedTetherConfig=mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING);
-  if (!cm.isTetheringSupported() && !adminDisallowedTetherConfig) {
+  final boolean adminDisallowedTetherConfig=RestrictedLockUtils.checkIfRestrictionEnforced(activity,UserManager.DISALLOW_CONFIG_TETHERING,UserHandle.myUserId()) != null;
+  if ((!cm.isTetheringSupported() && !adminDisallowedTetherConfig) || RestrictedLockUtils.hasBaseUserRestriction(activity,UserManager.DISALLOW_CONFIG_TETHERING,UserHandle.myUserId())) {
     getPreferenceScreen().removePreference(findPreference(KEY_TETHER_SETTINGS));
   }
  else   if (!adminDisallowedTetherConfig) {

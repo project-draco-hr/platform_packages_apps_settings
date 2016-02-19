@@ -3,8 +3,10 @@
     System.arraycopy(mHits,1,mHits,0,mHits.length - 1);
     mHits[mHits.length - 1]=SystemClock.uptimeMillis();
     if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
-      if (mFunDisallowedAdmin != null) {
-        RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mFunDisallowedAdmin);
+      if (mUm.hasUserRestriction(UserManager.DISALLOW_FUN)) {
+        if (mFunDisallowedAdmin != null && !mFunDisallowedBySystem) {
+          RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mFunDisallowedAdmin);
+        }
         Log.d(LOG_TAG,"Sorry, no fun for you!");
         return false;
       }
@@ -23,8 +25,10 @@
     if (Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0) {
       return true;
     }
-    if (mDebuggingFeaturesDisallowedAdmin != null) {
-      RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mDebuggingFeaturesDisallowedAdmin);
+    if (mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {
+      if (mDebuggingFeaturesDisallowedAdmin != null && !mDebuggingFeaturesDisallowedBySystem) {
+        RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mDebuggingFeaturesDisallowedAdmin);
+      }
       return true;
     }
     if (mDevHitCountdown > 0) {

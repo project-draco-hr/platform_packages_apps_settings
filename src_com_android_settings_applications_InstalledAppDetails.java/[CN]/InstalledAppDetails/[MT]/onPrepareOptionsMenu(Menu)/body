@@ -24,7 +24,7 @@
   menu.findItem(UNINSTALL_ALL_USERS_MENU).setVisible(showIt);
   mUpdatedSysApp=(mAppEntry.info.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
   MenuItem uninstallUpdatesItem=menu.findItem(UNINSTALL_UPDATES);
-  uninstallUpdatesItem.setVisible(mUpdatedSysApp);
+  uninstallUpdatesItem.setVisible(mUpdatedSysApp && !mAppsControlDisallowedBySystem);
   if (uninstallUpdatesItem.isVisible()) {
     RestrictedLockUtils.setMenuItemAsDisabledByAdmin(getActivity(),uninstallUpdatesItem,mAppsControlDisallowedAdmin);
   }

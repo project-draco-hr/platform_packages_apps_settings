@@ -26,8 +26,10 @@
   }
   if (userInfo.isEnabled()) {
     profileData.authenticatorHelper=new AuthenticatorHelper(context,userInfo.getUserHandle(),this);
-    profileData.addAccountPreference=newAddAccountPreference(context);
-    profileData.addAccountPreference.checkRestrictionAndSetDisabled(DISALLOW_MODIFY_ACCOUNTS,userInfo.id);
+    if (!RestrictedLockUtils.hasBaseUserRestriction(context,UserManager.DISALLOW_MODIFY_ACCOUNTS,userInfo.id)) {
+      profileData.addAccountPreference=newAddAccountPreference(context);
+      profileData.addAccountPreference.checkRestrictionAndSetDisabled(DISALLOW_MODIFY_ACCOUNTS,userInfo.id);
+    }
   }
   mProfiles.put(userInfo.id,profileData);
   Index.getInstance(getActivity()).updateFromClassNameResource(AccountSettings.class.getName(),true,true);

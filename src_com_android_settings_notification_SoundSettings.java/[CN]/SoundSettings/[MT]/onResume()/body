@@ -9,13 +9,14 @@
     volumePref.onActivityResume();
   }
   final EnforcedAdmin admin=RestrictedLockUtils.checkIfRestrictionEnforced(mContext,UserManager.DISALLOW_ADJUST_VOLUME,UserHandle.myUserId());
+  final boolean hasBaseRestriction=RestrictedLockUtils.hasBaseUserRestriction(mContext,UserManager.DISALLOW_ADJUST_VOLUME,UserHandle.myUserId());
   for (  String key : RESTRICTED_KEYS) {
     Preference pref=findPreference(key);
-    if (pref instanceof RestrictedPreference) {
-      ((RestrictedPreference)pref).setDisabledByAdmin(admin);
+    if (pref != null) {
+      pref.setEnabled(!hasBaseRestriction);
     }
- else     if (pref != null) {
-      pref.setEnabled(admin == null);
+    if (pref instanceof RestrictedPreference && !hasBaseRestriction) {
+      ((RestrictedPreference)pref).setDisabledByAdmin(admin);
     }
   }
   RestrictedPreference broadcastSettingsPref=(RestrictedPreference)findPreference(KEY_CELL_BROADCAST_SETTINGS);

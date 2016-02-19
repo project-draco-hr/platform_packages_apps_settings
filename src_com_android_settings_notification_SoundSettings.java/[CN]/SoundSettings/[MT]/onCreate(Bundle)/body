@@ -31,7 +31,7 @@
  catch (  IllegalArgumentException ignored) {
     isCellBroadcastAppLinkEnabled=false;
   }
-  if (!mUserManager.isAdminUser() || !isCellBroadcastAppLinkEnabled) {
+  if (!mUserManager.isAdminUser() || !isCellBroadcastAppLinkEnabled || RestrictedLockUtils.hasBaseUserRestriction(mContext,UserManager.DISALLOW_CONFIG_CELL_BROADCASTS,UserHandle.myUserId())) {
     removePreference(KEY_CELL_BROADCAST_SETTINGS);
   }
   initRingtones();

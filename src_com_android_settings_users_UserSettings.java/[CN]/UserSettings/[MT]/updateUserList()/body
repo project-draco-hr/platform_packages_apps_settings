@@ -60,7 +60,7 @@
     pref.setIcon(getEncircledDefaultIcon());
     userPreferences.add(pref);
   }
-  if (!mUserCaps.mIsGuest && (mUserCaps.mCanAddGuest || mUserCaps.mDisallowAddUser)) {
+  if (!mUserCaps.mIsGuest && (mUserCaps.mCanAddGuest || mUserCaps.mDisallowAddUserSetByAdmin)) {
     UserPreference pref=new UserPreference(getPrefContext(),null,UserPreference.USERID_GUEST_DEFAULTS,mUserCaps.mIsAdmin && voiceCapable ? this : null,null);
     pref.setTitle(R.string.user_guest);
     pref.setIcon(getEncircledDefaultIcon());
@@ -88,7 +88,7 @@
     userPreference.setOrder(Preference.DEFAULT_ORDER);
     groupToAddUsers.addPreference(userPreference);
   }
-  if (mUserCaps.mCanAddUser || mUserCaps.mDisallowAddUser) {
+  if (mUserCaps.mCanAddUser || mUserCaps.mDisallowAddUserSetByAdmin) {
     boolean moreUsers=mUserManager.canAddMoreUsers();
     mAddUser.setOrder(Preference.DEFAULT_ORDER);
     preferenceScreen.addPreference(mAddUser);
@@ -103,7 +103,7 @@
       mAddUser.setDisabledByAdmin(mUserCaps.mDisallowAddUser ? mUserCaps.mEnforcedAdmin : null);
     }
   }
-  if (mUserCaps.mIsAdmin) {
+  if (mUserCaps.mIsAdmin && (!mUserCaps.mDisallowAddUser || mUserCaps.mDisallowAddUserSetByAdmin)) {
     mLockScreenSettings.setOrder(Preference.DEFAULT_ORDER);
     preferenceScreen.addPreference(mLockScreenSettings);
     mAddUserWhenLocked.setChecked(Settings.Global.getInt(getContentResolver(),Settings.Global.ADD_USERS_WHEN_LOCKED,0) == 1);

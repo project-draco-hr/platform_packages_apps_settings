@@ -9,7 +9,9 @@
   caps.mIsGuest=myUserInfo.isGuest();
   caps.mIsAdmin=myUserInfo.isAdmin();
   caps.mEnforcedAdmin=RestrictedLockUtils.checkIfRestrictionEnforced(context,UserManager.DISALLOW_ADD_USER,UserHandle.myUserId());
-  caps.mDisallowAddUser=(caps.mEnforcedAdmin != null);
+  final boolean hasBaseUserRestriction=RestrictedLockUtils.hasBaseUserRestriction(context,UserManager.DISALLOW_ADD_USER,UserHandle.myUserId());
+  caps.mDisallowAddUserSetByAdmin=caps.mEnforcedAdmin != null && !hasBaseUserRestriction;
+  caps.mDisallowAddUser=(caps.mEnforcedAdmin != null || hasBaseUserRestriction);
   if (!caps.mIsAdmin || UserManager.getMaxSupportedUsers() < 2 || !UserManager.supportsMultipleUsers() || caps.mDisallowAddUser) {
     caps.mCanAddUser=false;
   }

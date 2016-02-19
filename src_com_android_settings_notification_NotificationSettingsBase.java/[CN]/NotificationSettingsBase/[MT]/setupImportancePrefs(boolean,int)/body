@@ -16,7 +16,7 @@
   mImportance.setProgress(importance);
   mImportance.setCallback(new ImportanceSeekBarPreference.Callback(){
     @Override public void onImportanceChanged(    int progress){
-      mBackend.setImportance(mPkg,mUid,mTopic,progress);
+      mBackend.setImportance(mPkg,mUid,progress);
       mImportanceTitle.setSummary(getProgressSummary(progress));
       updateDependents(progress);
     }
@@ -30,7 +30,7 @@
         RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getActivity(),mSuspendedAppsAdmin);
         return;
       }
-      mBackend.setImportance(mPkg,mUid,mTopic,Ranking.IMPORTANCE_UNSPECIFIED);
+      mBackend.setImportance(mPkg,mUid,Ranking.IMPORTANCE_UNSPECIFIED);
       mImportanceReset.setVisible(false);
       mImportance.setVisible(false);
       mImportanceTitle.setOnPreferenceClickListener(showEditableImportance);

@@ -4,7 +4,7 @@
   mSensitive.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
       final boolean sensitive=(Boolean)newValue;
-      return mBackend.setSensitive(mPkgInfo.packageName,mUid,mTopic,sensitive);
+      return mBackend.setSensitive(mPkgInfo.packageName,mUid,sensitive);
     }
   }
 );

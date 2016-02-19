@@ -1,11 +1,10 @@
 {
   super.onStart();
   if (mUnavailable) {
-    TextView emptyView=(TextView)getView().findViewById(android.R.id.empty);
-    setEmptyView(emptyView);
-    if (emptyView != null) {
-      emptyView.setText(R.string.tethering_settings_not_available);
+    if (!isUiRestrictedByOnlyAdmin()) {
+      getEmptyTextView().setText(R.string.tethering_settings_not_available);
     }
+    getPreferenceScreen().removeAll();
     return;
   }
   final Activity activity=getActivity();

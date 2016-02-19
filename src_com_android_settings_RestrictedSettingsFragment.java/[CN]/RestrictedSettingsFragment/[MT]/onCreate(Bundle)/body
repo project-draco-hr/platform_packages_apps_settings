@@ -2,6 +2,7 @@
   super.onCreate(icicle);
   mRestrictionsManager=(RestrictionsManager)getSystemService(Context.RESTRICTIONS_SERVICE);
   mUserManager=(UserManager)getSystemService(Context.USER_SERVICE);
+  mIsAdminUser=mUserManager.isAdminUser();
   if (icicle != null) {
     mChallengeSucceeded=icicle.getBoolean(KEY_CHALLENGE_SUCCEEDED,false);
     mChallengeRequested=icicle.getBoolean(KEY_CHALLENGE_REQUESTED,false);

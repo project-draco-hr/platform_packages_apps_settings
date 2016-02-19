@@ -1,0 +1,7 @@
+{
+  mEnforcedAdmin=RestrictedLockUtils.checkIfRestrictionEnforced(getActivity(),mRestrictionKey,UserHandle.myUserId());
+  if (mEnforcedAdmin != null && mEnforcedAdmin.userId == UserHandle.USER_NULL) {
+    mEnforcedAdmin.userId=UserHandle.myUserId();
+  }
+  return mEnforcedAdmin;
+}

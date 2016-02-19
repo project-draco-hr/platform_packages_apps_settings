@@ -1,8 +1,8 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.tether_prefs);
-  mUm=(UserManager)getSystemService(Context.USER_SERVICE);
-  if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING) || !mUm.isAdminUser()) {
+  setIfOnlyAvailableForAdmins(true);
+  if (isUiRestricted()) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getPrefContext(),null));
     return;

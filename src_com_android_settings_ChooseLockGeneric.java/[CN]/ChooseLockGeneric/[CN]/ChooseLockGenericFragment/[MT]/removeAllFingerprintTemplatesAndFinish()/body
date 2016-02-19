@@ -1,8 +1,17 @@
 {
-  if (mFingerprintManager != null && mFingerprintManager.isHardwareDetected() && mFingerprintManager.getEnrolledFingerprints().size() > 0) {
-    mFingerprintManager.remove(new Fingerprint(null,0,0,0),mUserId,mRemovalCallback);
+  if (mFingerprintManager != null && mFingerprintManager.isHardwareDetected() && mFingerprintManager.hasEnrolledFingerprints(mUserId)) {
+    mFingerprintManager.setActiveUser(mUserId);
+    mFingerprintManager.remove(new Fingerprint(null,mUserId,0,0),mUserId,new RemovalCallback(){
+      @Override public void onRemovalError(      Fingerprint fp,      int errMsgId,      CharSequence errString){
+        mRemovalCallback.onRemovalError(fp,errMsgId,errString);
+        mFingerprintManager.setActiveUser(UserHandle.myUserId());
+      }
+      @Override public void onRemovalSucceeded(      Fingerprint fingerprint){
+        mRemovalCallback.onRemovalSucceeded(fingerprint);
+        mFingerprintManager.setActiveUser(UserHandle.myUserId());
+      }
+    }
+);
   }
- else {
-    finish();
-  }
+  finish();
 }

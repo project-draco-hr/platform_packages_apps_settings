@@ -4,7 +4,7 @@
   mPriority.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
     @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
       final boolean bypassZenMode=(Boolean)newValue;
-      return mBackend.setBypassZenMode(mPkgInfo.packageName,mUid,mTopic,bypassZenMode);
+      return mBackend.setBypassZenMode(mPkgInfo.packageName,mUid,bypassZenMode);
     }
   }
 );

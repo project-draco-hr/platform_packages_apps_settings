@@ -1,7 +1,6 @@
 {
-  IWebViewUpdateService webViewUpdateService=IWebViewUpdateService.Stub.asInterface(ServiceManager.getService("webviewupdate"));
   try {
-    webViewUpdateService.changeProviderAndSetting(newValue == null ? "" : newValue.toString());
+    mWebViewUpdateService.changeProviderAndSetting(newValue == null ? "" : newValue.toString());
     updateWebViewProviderOptions();
   }
  catch (  RemoteException e) {

@@ -1,13 +1,11 @@
 {
   final Context context=getContext();
   try {
-    final Intent intent=getIntent();
+    final Intent intent=mIntent;
     if (intent != null) {
       context.startActivity(intent);
     }
   }
  catch (  final ActivityNotFoundException e) {
-    final String message=context.getString(R.string.failed_to_open_app_settings_toast,mSci.loadLabel(context.getPackageManager()));
-    Toast.makeText(context,message,Toast.LENGTH_LONG).show();
   }
 }

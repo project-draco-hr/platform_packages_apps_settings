@@ -1,0 +1,17 @@
+{
+  super.setValue(value);
+  int index=value != null ? Integer.parseInt(value) : -1;
+  if (index == -1) {
+    mIntent=null;
+    return;
+  }
+  SpellCheckerInfo sci=mScis[index];
+  final String settingsActivity=sci.getSettingsActivity();
+  if (TextUtils.isEmpty(settingsActivity)) {
+    mIntent=null;
+  }
+ else {
+    mIntent=new Intent(Intent.ACTION_MAIN);
+    mIntent.setClassName(sci.getPackageName(),settingsActivity);
+  }
+}

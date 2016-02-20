@@ -1,0 +1,13 @@
+{
+  super(context,null);
+  mScis=scis;
+  setWidgetLayoutResource(R.layout.preference_widget_settings);
+  CharSequence[] labels=new CharSequence[scis.length];
+  CharSequence[] values=new CharSequence[scis.length];
+  for (int i=0; i < scis.length; i++) {
+    labels[i]=scis[i].loadLabel(context.getPackageManager());
+    values[i]=String.valueOf(i);
+  }
+  setEntries(labels);
+  setEntryValues(values);
+}

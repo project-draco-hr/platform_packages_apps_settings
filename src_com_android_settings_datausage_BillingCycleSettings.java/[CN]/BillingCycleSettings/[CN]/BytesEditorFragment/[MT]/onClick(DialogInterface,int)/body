@@ -6,9 +6,13 @@
   final NetworkPolicyEditor editor=target.services.mPolicyEditor;
   final NetworkTemplate template=getArguments().getParcelable(EXTRA_TEMPLATE);
   final boolean isLimit=getArguments().getBoolean(EXTRA_LIMIT);
-  NumberPicker bytesPicker=(NumberPicker)mView.findViewById(R.id.bytes);
-  bytesPicker.clearFocus();
-  final long bytes=bytesPicker.getValue() * MB_IN_BYTES;
+  EditText bytesField=(EditText)mView.findViewById(R.id.bytes);
+  Spinner spinner=(Spinner)mView.findViewById(R.id.size_spinner);
+  String bytesString=bytesField.getText().toString();
+  if (bytesString.isEmpty()) {
+    bytesString="0";
+  }
+  final long bytes=(long)(Float.valueOf(bytesString) * (spinner.getSelectedItemPosition() == 0 ? MB_IN_BYTES : GB_IN_BYTES));
   if (isLimit) {
     editor.setPolicyLimitBytes(template,bytes);
   }

@@ -79,6 +79,9 @@
     mActionBar.setHomeButtonEnabled(mDisplayHomeAsUpEnabled);
   }
   mSwitchBar=(SwitchBar)findViewById(R.id.switch_bar);
+  if (mSwitchBar != null) {
+    mSwitchBar.setMetricsTag(getMetricsTag());
+  }
   if (intent.getBooleanExtra(EXTRA_PREFS_SHOW_BUTTON_BAR,false)) {
     View buttonBar=findViewById(R.id.button_bar);
     if (buttonBar != null) {

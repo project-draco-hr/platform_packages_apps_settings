@@ -1,0 +1,16 @@
+{
+  final BillingCycleSettings target=(BillingCycleSettings)getTargetFragment();
+  final NetworkPolicyEditor editor=target.services.mPolicyEditor;
+  final NetworkTemplate template=getArguments().getParcelable(EXTRA_TEMPLATE);
+  final boolean isLimit=getArguments().getBoolean(EXTRA_LIMIT);
+  final long bytes=isLimit ? editor.getPolicyLimitBytes(template) : editor.getPolicyWarningBytes(template);
+  final long limitDisabled=isLimit ? LIMIT_DISABLED : WARNING_DISABLED;
+  if (bytes > 1.5f * GB_IN_BYTES) {
+    bytesPicker.setText(formatText(bytes / (float)GB_IN_BYTES));
+    type.setSelection(1);
+  }
+ else {
+    bytesPicker.setText(formatText(bytes / (float)MB_IN_BYTES));
+    type.setSelection(0);
+  }
+}

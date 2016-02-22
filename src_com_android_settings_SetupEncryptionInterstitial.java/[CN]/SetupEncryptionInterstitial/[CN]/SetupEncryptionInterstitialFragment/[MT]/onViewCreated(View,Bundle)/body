@@ -1,11 +1,17 @@
 {
   super.onViewCreated(view,savedInstanceState);
-  final SetupWizardLayout layout=(SetupWizardLayout)view.findViewById(R.id.setup_wizard_layout);
+  final SetupWizardPreferenceLayout layout=(SetupWizardPreferenceLayout)view;
+  layout.setDividerInset(getContext().getResources().getDimensionPixelSize(R.dimen.suw_items_text_divider_inset));
+  layout.setIllustration(R.drawable.setup_illustration_lock_screen,R.drawable.setup_illustration_horizontal_tile);
   final NavigationBar navigationBar=layout.getNavigationBar();
   navigationBar.setNavigationBarListener(this);
+  Button nextButton=navigationBar.getNextButton();
+  nextButton.setText(null);
+  nextButton.setEnabled(false);
+  layout.setHeaderText(R.string.encryption_interstitial_header);
   Activity activity=getActivity();
   if (activity != null) {
-    activity.setTitle(R.string.encryption_interstitial_header);
     SetupWizardUtils.setImmersiveMode(activity);
   }
+  setDivider(null);
 }

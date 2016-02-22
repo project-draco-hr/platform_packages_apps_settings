@@ -1,5 +1,6 @@
 {
-  if (v == mRequirePasswordToDecryptButton) {
+  final String key=preference.getKey();
+  if (key.equals(KEY_ENCRYPT_REQUIRE_PASSWORD)) {
     final boolean accEn=AccessibilityManager.getInstance(getActivity()).isEnabled();
     if (accEn && !mPasswordRequired) {
       setRequirePasswordState(false);
@@ -7,9 +8,12 @@
     }
  else {
       setRequirePasswordState(true);
+      startLockIntent();
     }
   }
  else {
     setRequirePasswordState(false);
+    startLockIntent();
   }
+  return true;
 }

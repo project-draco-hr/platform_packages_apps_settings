@@ -1,6 +1,15 @@
 {
   MetricsLogger.action(getContext(),MetricsEvent.ACTION_CELL_DATA_TOGGLE,!mChecked);
   if (mChecked) {
+    final SubscriptionInfo currentSir=mSubscriptionManager.getActiveSubscriptionInfo(mSubId);
+    final SubscriptionInfo nextSir=mSubscriptionManager.getDefaultDataSubscriptionInfo();
+    if (!Utils.showSimCardTile(getContext()) || (nextSir != null && currentSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId())) {
+      setMobileDataEnabled(true);
+      if (nextSir != null && currentSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId()) {
+        disableDataForOtherSubscriptions(mSubId);
+      }
+      return;
+    }
     mMultiSimDialog=false;
     super.performClick(view);
   }

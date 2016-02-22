@@ -1,25 +1,9 @@
 {
-  mSubscriptionManager=SubscriptionManager.from(getContext());
   final SubscriptionInfo currentSir=mSubscriptionManager.getActiveSubscriptionInfo(mSubId);
   final SubscriptionInfo nextSir=mSubscriptionManager.getDefaultDataSubscriptionInfo();
-  if (!Utils.showSimCardTile(getContext()) || (nextSir != null && currentSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId())) {
-    setMobileDataEnabled(true);
-    if (nextSir != null && currentSir != null && currentSir.getSubscriptionId() == nextSir.getSubscriptionId()) {
-      disableDataForOtherSubscriptions(mSubId);
-    }
-    return;
-  }
   final String previousName=(nextSir == null) ? getContext().getResources().getString(R.string.sim_selection_required_pref) : nextSir.getDisplayName().toString();
   builder.setTitle(R.string.sim_change_data_title);
   builder.setMessage(getContext().getString(R.string.sim_change_data_message,String.valueOf(currentSir != null ? currentSir.getDisplayName() : null),previousName));
-  builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
-    @Override public void onClick(    DialogInterface dialog,    int id){
-      mSubscriptionManager.setDefaultDataSubId(mSubId);
-      setMobileDataEnabled(true);
-      disableDataForOtherSubscriptions(mSubId);
-    }
-  }
-);
+  builder.setPositiveButton(R.string.okay,listener);
   builder.setNegativeButton(R.string.cancel,null);
-  builder.create().show();
 }

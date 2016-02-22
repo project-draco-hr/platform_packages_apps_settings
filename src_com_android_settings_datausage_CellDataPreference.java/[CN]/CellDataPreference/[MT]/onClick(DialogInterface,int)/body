@@ -3,6 +3,9 @@
     return;
   }
   if (mMultiSimDialog) {
+    mSubscriptionManager.setDefaultDataSubId(mSubId);
+    setMobileDataEnabled(true);
+    disableDataForOtherSubscriptions(mSubId);
   }
  else {
     setMobileDataEnabled(false);

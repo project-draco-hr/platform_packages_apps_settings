@@ -2,6 +2,7 @@
   if (subId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
     throw new IllegalArgumentException("CellDataPreference needs a SubscriptionInfo");
   }
+  mSubscriptionManager=SubscriptionManager.from(getContext());
   mTelephonyManager=TelephonyManager.from(getContext());
   if (mSubId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
     mSubId=subId;

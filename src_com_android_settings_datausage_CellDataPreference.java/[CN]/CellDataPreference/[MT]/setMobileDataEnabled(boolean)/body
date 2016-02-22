@@ -1,6 +1,5 @@
 {
-  if (DataUsageSummary.LOGD)   Log.d(TAG,"setMobileDataEnabled()");
+  if (DataUsageSummary.LOGD)   Log.d(TAG,"setMobileDataEnabled(" + enabled + ","+ mSubId+ ")");
   mTelephonyManager.setDataEnabled(mSubId,enabled);
   setChecked(enabled);
-  getContext().sendBroadcast(new Intent(ACTION_DATA_ENABLED_CHANGED));
 }

@@ -1,0 +1,9 @@
+{
+  final String selectedValue=getValue();
+  mInitialIndex=(selectedValue == null) ? -1 : findIndexOfValue(selectedValue);
+  mListener=new Listener(innerListener);
+  builder.setSingleChoiceItems(createListAdapter(),mInitialIndex,mListener);
+  mShowRemoteInput=getEntryValues().length == 3;
+  mAllowRemoteInput=Settings.Secure.getInt(getContext().getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_REMOTE_INPUT,0) != 0;
+  builder.setView(R.layout.lockscreen_remote_input);
+}

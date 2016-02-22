@@ -2,4 +2,13 @@
   super.onPrepareDialogBuilder(builder);
   mClickedDialogEntryIndex=getCustomizablePreference().findIndexOfValue(getCustomizablePreference().getValue());
   getCustomizablePreference().onPrepareDialogBuilder(builder,getOnItemClickListener());
+  if (!getCustomizablePreference().isAutoClosePreference()) {
+    builder.setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
+      @Override public void onClick(      DialogInterface dialog,      int which){
+        CustomListPreferenceDialogFragment.this.onClick(dialog,DialogInterface.BUTTON_POSITIVE);
+        dialog.dismiss();
+      }
+    }
+);
+  }
 }

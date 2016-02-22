@@ -13,8 +13,10 @@
  else {
         setClickedDialogEntryIndex(which);
       }
-      RestrictedListPreferenceDialogFragment.this.onClick(dialog,DialogInterface.BUTTON_POSITIVE);
-      dialog.dismiss();
+      if (getCustomizablePreference().isAutoClosePreference()) {
+        RestrictedListPreferenceDialogFragment.this.onClick(dialog,DialogInterface.BUTTON_POSITIVE);
+        dialog.dismiss();
+      }
     }
   }
 ;

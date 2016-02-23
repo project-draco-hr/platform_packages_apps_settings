@@ -1,0 +1,4 @@
+{
+  ResolveInfo result=getContext().getPackageManager().resolveActivity(i,0);
+  return result != null ? new Intent(Intent.ACTION_APPLICATION_PREFERENCES).setClassName(result.activityInfo.packageName,result.activityInfo.name) : null;
+}

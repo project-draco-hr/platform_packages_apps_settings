@@ -1,0 +1,30 @@
+{
+  Preference pref=findPreference("default_home");
+  if (pref != null) {
+    pref.setSummary(DefaultHomePreference.isHomeDefault(mPackageName,getContext()) ? R.string.yes : R.string.no);
+  }
+  pref=findPreference("default_browser");
+  if (pref != null) {
+    pref.setSummary(DefaultBrowserPreference.isBrowserDefault(mPackageName,getContext()) ? R.string.yes : R.string.no);
+  }
+  pref=findPreference("default_phone_app");
+  if (pref != null) {
+    pref.setSummary(DefaultPhonePreference.isPhoneDefault(mPackageName,getContext()) ? R.string.yes : R.string.no);
+  }
+  pref=findPreference("default_emergency_app");
+  if (pref != null) {
+    pref.setSummary(DefaultEmergencyPreference.isEmergencyDefault(mPackageName,getContext()) ? R.string.yes : R.string.no);
+  }
+  pref=findPreference("default_sms_app");
+  if (pref != null) {
+    pref.setSummary(DefaultSmsPreference.isSmsDefault(mPackageName,getContext()) ? R.string.yes : R.string.no);
+  }
+  pref=findPreference("system_alert_window");
+  if (pref != null) {
+    pref.setSummary(DrawOverlayDetails.getSummary(getContext(),mAppEntry));
+  }
+  pref=findPreference("write_settings_apps");
+  if (pref != null) {
+    pref.setSummary(WriteSettingsDetails.getSummary(getContext(),mAppEntry));
+  }
+}

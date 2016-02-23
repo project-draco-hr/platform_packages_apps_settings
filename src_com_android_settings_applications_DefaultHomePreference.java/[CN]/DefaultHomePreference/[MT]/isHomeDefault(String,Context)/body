@@ -1,0 +1,6 @@
+{
+  ArrayList<ResolveInfo> homeActivities=new ArrayList<ResolveInfo>();
+  PackageManager pm=context.getPackageManager();
+  ComponentName def=pm.getHomeActivities(homeActivities);
+  return def != null && def.getPackageName().equals(pkg);
+}

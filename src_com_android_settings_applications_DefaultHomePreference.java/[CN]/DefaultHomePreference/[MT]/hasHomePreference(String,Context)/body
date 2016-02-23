@@ -1,0 +1,11 @@
+{
+  ArrayList<ResolveInfo> homeActivities=new ArrayList<ResolveInfo>();
+  PackageManager pm=context.getPackageManager();
+  pm.getHomeActivities(homeActivities);
+  for (int i=0; i < homeActivities.size(); i++) {
+    if (homeActivities.get(i).activityInfo.packageName.equals(pkg)) {
+      return true;
+    }
+  }
+  return false;
+}

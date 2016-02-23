@@ -1,3 +1,7 @@
 {
   super(context,attrs);
+  TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.WorkPreference,0,0);
+  mForWork=a.getBoolean(R.styleable.WorkPreference_forWork,false);
+  final UserHandle managedProfile=Utils.getManagedProfile(UserManager.get(context));
+  mUserId=mForWork && managedProfile != null ? managedProfile.getIdentifier() : UserHandle.myUserId();
 }

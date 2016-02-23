@@ -1,5 +1,0 @@
-{
-  boolean isRestrictedUser=UserManager.get(context).getUserInfo(UserHandle.myUserId()).isRestricted();
-  TelephonyManager tm=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-  return !isRestrictedUser && tm.isSmsCapable() && !Utils.isManagedProfile(UserManager.get(context));
-}

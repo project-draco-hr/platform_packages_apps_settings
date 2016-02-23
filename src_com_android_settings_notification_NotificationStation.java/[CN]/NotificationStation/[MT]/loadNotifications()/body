@@ -4,33 +4,110 @@
     StatusBarNotification[] active=mNoMan.getActiveNotifications(mContext.getPackageName());
     StatusBarNotification[] dismissed=mNoMan.getHistoricalNotifications(mContext.getPackageName(),50);
     List<HistoricalNotificationInfo> list=new ArrayList<HistoricalNotificationInfo>(active.length + dismissed.length);
+    final Ranking rank=new Ranking();
     for (    StatusBarNotification[] resultset : new StatusBarNotification[][]{active,dismissed}) {
       for (      StatusBarNotification sbn : resultset) {
+        if (sbn.getUserId() != UserHandle.USER_ALL & sbn.getUserId() != currentUserId) {
+          continue;
+        }
+        final Notification n=sbn.getNotification();
         final HistoricalNotificationInfo info=new HistoricalNotificationInfo();
         info.pkg=sbn.getPackageName();
         info.user=sbn.getUserId();
-        info.icon=loadIconDrawable(info.pkg,info.user,sbn.getNotification().icon);
+        info.icon=loadIconDrawable(info.pkg,info.user,n.icon);
         info.pkgicon=loadPackageIconDrawable(info.pkg,info.user);
         info.pkgname=loadPackageName(info.pkg);
-        if (sbn.getNotification().extras != null) {
-          info.title=sbn.getNotification().extras.getString(Notification.EXTRA_TITLE);
-          if (info.title == null || "".equals(info.title)) {
-            info.title=sbn.getNotification().extras.getString(Notification.EXTRA_TEXT);
-          }
-        }
-        if (info.title == null || "".equals(info.title)) {
-          info.title=sbn.getNotification().tickerText;
-        }
-        if (info.title == null || "".equals(info.title)) {
-          info.title=info.pkgname;
+        info.title=getTitleString(n);
+        if (TextUtils.isEmpty(info.title)) {
+          info.title=getString(R.string.notification_log_no_title);
         }
         info.timestamp=sbn.getPostTime();
-        info.priority=sbn.getNotification().priority;
-        logd("   [%d] %s: %s",info.timestamp,info.pkg,info.title);
+        info.priority=n.priority;
         info.active=(resultset == active);
-        if (info.user == UserHandle.USER_ALL || info.user == currentUserId) {
-          list.add(info);
+        final SpannableStringBuilder sb=new SpannableStringBuilder();
+        final String delim=getString(R.string.notification_log_details_delimiter);
+        sb.append(bold(getString(R.string.notification_log_details_package))).append(delim).append(info.pkg).append("\n").append(bold(getString(R.string.notification_log_details_key))).append(delim).append(sbn.getKey());
+        sb.append("\n").append(bold(getString(R.string.notification_log_details_icon))).append(delim).append(n.getSmallIcon().toString());
+        if (!TextUtils.isEmpty(n.getGroup())) {
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_group))).append(delim).append(n.getGroup());
+          if (n.isGroupSummary()) {
+            sb.append(bold(getString(R.string.notification_log_details_group_summary)));
+          }
         }
+        sb.append("\n").append(bold(getString(R.string.notification_log_details_sound))).append(delim);
+        if (0 != (n.defaults & Notification.DEFAULT_SOUND)) {
+          sb.append(getString(R.string.notification_log_details_default));
+        }
+ else         if (n.sound != null) {
+          sb.append(n.sound.toString());
+        }
+ else {
+          sb.append(getString(R.string.notification_log_details_none));
+        }
+        sb.append("\n").append(bold(getString(R.string.notification_log_details_vibrate))).append(delim);
+        if (0 != (n.defaults & Notification.DEFAULT_VIBRATE)) {
+          sb.append(getString(R.string.notification_log_details_default));
+        }
+ else         if (n.vibrate != null) {
+          for (int vi=0; vi < n.vibrate.length; vi++) {
+            if (vi > 0)             sb.append(',');
+            sb.append(String.valueOf(n.vibrate[vi]));
+          }
+        }
+ else {
+          sb.append(getString(R.string.notification_log_details_none));
+        }
+        sb.append("\n").append(bold(getString(R.string.notification_log_details_visibility))).append(delim).append(Notification.visibilityToString(n.visibility));
+        if (n.publicVersion != null) {
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_public_version))).append(delim).append(getTitleString(n.publicVersion));
+        }
+        sb.append("\n").append(bold(getString(R.string.notification_log_details_priority))).append(delim).append(Notification.priorityToString(n.priority));
+        if (mRanking != null && mRanking.getRanking(sbn.getKey(),rank)) {
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_importance))).append(delim).append(Ranking.importanceToString(rank.getImportance()));
+          if (rank.getImportanceExplanation() != null) {
+            sb.append("\n").append(bold(getString(R.string.notification_log_details_explanation))).append(delim).append(rank.getImportanceExplanation());
+          }
+        }
+        if (n.contentIntent != null) {
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_content_intent))).append(delim).append(formatPendingIntent(n.contentIntent));
+        }
+        if (n.deleteIntent != null) {
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_delete_intent))).append(delim).append(formatPendingIntent(n.deleteIntent));
+        }
+        if (n.fullScreenIntent != null) {
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_full_screen_intent))).append(delim).append(formatPendingIntent(n.fullScreenIntent));
+        }
+        if (n.actions != null && n.actions.length > 0) {
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_actions)));
+          for (int ai=0; ai < n.actions.length; ai++) {
+            final Notification.Action action=n.actions[ai];
+            sb.append("\n  ").append(String.valueOf(ai)).append(' ').append(bold(getString(R.string.notification_log_details_title))).append(delim).append(action.title).append("\n    ").append(bold(getString(R.string.notification_log_details_content_intent))).append(delim).append(formatPendingIntent(action.actionIntent));
+            if (action.getRemoteInputs() != null) {
+              sb.append(' ').append(bold(getString(R.string.notification_log_details_remoteinput))).append(delim).append(String.valueOf(action.getRemoteInputs().length));
+            }
+          }
+        }
+        if (n.contentView != null) {
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_content_view))).append(delim).append(n.contentView.toString());
+        }
+        if (DUMP_EXTRAS) {
+          if (n.extras != null && n.extras.size() > 0) {
+            sb.append("\n").append(bold(getString(R.string.notification_log_details_extras)));
+            for (            String extraKey : n.extras.keySet()) {
+              String val=String.valueOf(n.extras.get(extraKey));
+              if (val.length() > 100)               val=val.substring(0,100) + "...";
+              sb.append("\n  ").append(extraKey).append(delim).append(val);
+            }
+          }
+        }
+        if (DUMP_PARCEL) {
+          final Parcel p=Parcel.obtain();
+          n.writeToParcel(p,0);
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_parcel))).append(delim).append(String.valueOf(p.dataPosition())).append(' ').append(bold(getString(R.string.notification_log_details_ashmem))).append(delim).append(String.valueOf(p.getBlobAshmemSize())).append("\n");
+        }
+        info.extra=sb;
+        logd("   [%d] %s: %s",info.timestamp,info.pkg,info.title);
+        list.add(info);
       }
     }
     return list;

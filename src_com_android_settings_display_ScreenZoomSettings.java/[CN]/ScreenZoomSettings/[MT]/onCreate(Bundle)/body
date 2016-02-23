@@ -7,14 +7,14 @@
   if (initialIndex < 0) {
     final int densityDpi=getResources().getDisplayMetrics().densityDpi;
     mValues=new int[]{densityDpi};
-    mEntries=new String[]{getString(R.string.screen_zoom_summary_normal)};
+    mEntries=new String[]{getString(R.string.screen_zoom_summary_default)};
     mInitialIndex=0;
-    mNormalDensity=densityDpi;
+    mDefaultDensity=densityDpi;
   }
  else {
     mValues=density.getValues();
     mEntries=density.getEntries();
     mInitialIndex=initialIndex;
-    mNormalDensity=density.getNormalDensity();
+    mDefaultDensity=density.getDefaultDensity();
   }
 }

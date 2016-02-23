@@ -1,0 +1,8 @@
+{
+  final String title=getActivity().getString(R.string.lock_settings_profile_screen_lock_title);
+  final ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(getActivity(),this);
+  if (!helper.launchConfirmationActivity(UNIFY_LOCK_CONFIRM_PROFILE_REQUEST,title,true,mProfileChallengeUserId)) {
+    unifyLocks();
+    createPreferenceHierarchy();
+  }
+}

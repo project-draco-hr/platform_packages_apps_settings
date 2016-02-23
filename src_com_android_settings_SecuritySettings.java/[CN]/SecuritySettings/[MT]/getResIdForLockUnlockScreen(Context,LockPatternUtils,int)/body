@@ -1,0 +1,32 @@
+{
+  final boolean isMyUser=userId == MY_USER_ID;
+  int resid=0;
+  if (!lockPatternUtils.isSecure(userId)) {
+    if (!isMyUser) {
+      resid=R.xml.security_settings_lockscreen_profile;
+    }
+ else     if (lockPatternUtils.isLockScreenDisabled(userId)) {
+      resid=R.xml.security_settings_lockscreen;
+    }
+ else {
+      resid=R.xml.security_settings_chooser;
+    }
+  }
+ else {
+switch (lockPatternUtils.getKeyguardStoredPasswordQuality(userId)) {
+case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
+      resid=isMyUser ? R.xml.security_settings_pattern : R.xml.security_settings_pattern_profile;
+    break;
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
+  resid=isMyUser ? R.xml.security_settings_pin : R.xml.security_settings_pin_profile;
+break;
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
+case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
+case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
+resid=isMyUser ? R.xml.security_settings_password : R.xml.security_settings_password_profile;
+break;
+}
+}
+return resid;
+}

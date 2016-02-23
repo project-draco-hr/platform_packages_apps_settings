@@ -2,7 +2,10 @@
   boolean result=true;
   final String key=preference.getKey();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
-  if (KEY_SHOW_PASSWORD.equals(key)) {
+  if (KEY_VISIBLE_PATTERN_PROFILE.equals(key)) {
+    lockPatternUtils.setVisiblePatternEnabled((Boolean)value,mProfileChallengeUserId);
+  }
+ else   if (KEY_SHOW_PASSWORD.equals(key)) {
     Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,((Boolean)value) ? 1 : 0);
     lockPatternUtils.setVisiblePasswordEnabled((Boolean)value,MY_USER_ID);
   }

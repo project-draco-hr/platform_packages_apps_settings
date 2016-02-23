@@ -1,0 +1,14 @@
+{
+  final SecuritySettings parentFragment=((SecuritySettings)getParentFragment());
+  return new AlertDialog.Builder(getActivity()).setTitle(R.string.lock_settings_profile_unification_dialog_title).setMessage(R.string.lock_settings_profile_unification_dialog_body).setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int whichButton){
+      parentFragment.launchConfirmDeviceLockForUnification();
+    }
+  }
+).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int whichButton){
+      dismiss();
+    }
+  }
+).create();
+}

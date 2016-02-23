@@ -1,26 +1,16 @@
 {
   List<SearchIndexableResource> result=new ArrayList<SearchIndexableResource>();
   LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
-  int resId=getResIdForLockUnlockScreen(context,lockPatternUtils);
+  int resId=getResIdForLockUnlockScreen(context,lockPatternUtils,MY_USER_ID);
   SearchIndexableResource sir=new SearchIndexableResource(context);
   sir.xmlResId=resId;
   result.add(sir);
   final UserManager um=UserManager.get(context);
-  List<UserInfo> profiles=um.getProfiles(UserHandle.myUserId());
-  int numProfiles=profiles.size();
-  if (numProfiles > 1) {
-    int profileUserId=-1;
-    for (int i=0; i < numProfiles; ++i) {
-      UserInfo profile=profiles.get(i);
-      if (profile.id != UserHandle.myUserId()) {
-        profileUserId=profile.id;
-      }
-    }
-    if (lockPatternUtils.isSeparateProfileChallengeAllowed(profileUserId)) {
-      sir=new SearchIndexableResource(context);
-      sir.xmlResId=R.xml.security_settings_profile;
-      result.add(sir);
-    }
+  final int profileUserId=getManagedProfileId(um);
+  if (profileUserId != UserHandle.USER_NULL && lockPatternUtils.isSeparateProfileChallengeAllowed(profileUserId)) {
+    sir=new SearchIndexableResource(context);
+    sir.xmlResId=getResIdForLockUnlockScreen(context,lockPatternUtils,profileUserId);
+    result.add(sir);
   }
   if (um.isAdminUser()) {
     DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);

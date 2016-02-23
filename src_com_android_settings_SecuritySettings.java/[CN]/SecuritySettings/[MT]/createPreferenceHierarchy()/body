@@ -5,19 +5,21 @@
   }
   addPreferencesFromResource(R.xml.security_settings);
   root=getPreferenceScreen();
-  final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils);
+  final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,MY_USER_ID);
   addPreferencesFromResource(resid);
-  List<UserInfo> profiles=mUm.getProfiles(UserHandle.myUserId());
-  int numProfiles=profiles.size();
-  if (numProfiles > 1) {
-    for (int i=0; i < numProfiles; ++i) {
-      UserInfo profile=profiles.get(i);
-      if (profile.id != UserHandle.myUserId()) {
-        mProfileChallengeUserId=profile.id;
-      }
+  mProfileChallengeUserId=getManagedProfileId(mUm);
+  if (mProfileChallengeUserId != UserHandle.USER_NULL && mLockPatternUtils.isSeparateProfileChallengeAllowed(mProfileChallengeUserId)) {
+    addPreferencesFromResource(R.xml.security_settings_profile);
+    final int profileResid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,mProfileChallengeUserId);
+    addPreferencesFromResource(profileResid);
+    maybeAddFingerprintPreference(root,mProfileChallengeUserId);
+    if (mLockPatternUtils.isSeparateProfileChallengeEnabled(mProfileChallengeUserId)) {
+      maybeAddUnificationPreference();
     }
-    if (mLockPatternUtils.isSeparateProfileChallengeAllowed(mProfileChallengeUserId)) {
-      addPreferencesFromResource(R.xml.security_settings_profile);
+ else {
+      Preference lockPreference=root.findPreference(KEY_UNLOCK_SET_OR_CHANGE_PROFILE);
+      String summary=getContext().getString(R.string.lock_settings_profile_unified_summary);
+      lockPreference.setSummary(summary);
     }
   }
   Preference unlockSetOrChange=findPreference(KEY_UNLOCK_SET_OR_CHANGE);
@@ -35,9 +37,10 @@
   }
   PreferenceGroup securityCategory=(PreferenceGroup)root.findPreference(KEY_SECURITY_CATEGORY);
   if (securityCategory != null) {
-    maybeAddFingerprintPreference(securityCategory);
+    maybeAddFingerprintPreference(securityCategory,UserHandle.myUserId());
     addTrustAgentSettings(securityCategory);
   }
+  mVisiblePatternProfile=(SwitchPreference)root.findPreference(KEY_VISIBLE_PATTERN_PROFILE);
   addPreferencesFromResource(R.xml.security_settings_misc);
   TelephonyManager tm=TelephonyManager.getDefault();
   CarrierConfigManager cfgMgr=(CarrierConfigManager)getActivity().getSystemService(Context.CARRIER_CONFIG_SERVICE);

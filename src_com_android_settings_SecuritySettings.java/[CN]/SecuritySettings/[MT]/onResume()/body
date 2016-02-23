@@ -1,10 +1,10 @@
 {
   super.onResume();
   createPreferenceHierarchy();
-  final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (mVisiblePatternProfile != null) {
-    mVisiblePatternProfile.setChecked(lockPatternUtils.isVisiblePatternEnabled(mProfileChallengeUserId));
+    mVisiblePatternProfile.setChecked(mLockPatternUtils.isVisiblePatternEnabled(mProfileChallengeUserId));
   }
+  updateUnificationPreference();
   if (mShowPassword != null) {
     mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0);
   }

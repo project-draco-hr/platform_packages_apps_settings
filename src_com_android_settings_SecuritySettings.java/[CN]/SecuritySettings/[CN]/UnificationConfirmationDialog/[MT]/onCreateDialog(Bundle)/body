@@ -1,12 +1,19 @@
 {
   final SecuritySettings parentFragment=((SecuritySettings)getParentFragment());
-  return new AlertDialog.Builder(getActivity()).setTitle(R.string.lock_settings_profile_unification_dialog_title).setMessage(R.string.lock_settings_profile_unification_dialog_body).setPositiveButton(R.string.okay,new DialogInterface.OnClickListener(){
+  final boolean compliant=getArguments().getBoolean(EXTRA_COMPLIANT);
+  return new AlertDialog.Builder(getActivity()).setTitle(R.string.lock_settings_profile_unification_dialog_title).setMessage(compliant ? R.string.lock_settings_profile_unification_dialog_body : R.string.lock_settings_profile_unification_dialog_uncompliant_body).setPositiveButton(compliant ? R.string.okay : R.string.lock_settings_profile_unification_dialog_uncompliant_confirm,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){
-      parentFragment.launchConfirmDeviceLockForUnification();
+      if (compliant) {
+        parentFragment.launchConfirmDeviceLockForUnification();
+      }
+ else {
+        parentFragment.unifyUncompliantLocks();
+      }
     }
   }
 ).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){
+      parentFragment.updateUnificationPreference();
       dismiss();
     }
   }

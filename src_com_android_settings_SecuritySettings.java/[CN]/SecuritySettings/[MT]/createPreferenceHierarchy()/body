@@ -13,13 +13,12 @@
     final int profileResid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,mProfileChallengeUserId);
     addPreferencesFromResource(profileResid);
     maybeAddFingerprintPreference(root,mProfileChallengeUserId);
-    if (mLockPatternUtils.isSeparateProfileChallengeEnabled(mProfileChallengeUserId)) {
-      maybeAddUnificationPreference();
-    }
- else {
+    addPreferencesFromResource(R.xml.security_settings_unification);
+    if (!mLockPatternUtils.isSeparateProfileChallengeEnabled(mProfileChallengeUserId)) {
       Preference lockPreference=root.findPreference(KEY_UNLOCK_SET_OR_CHANGE_PROFILE);
       String summary=getContext().getString(R.string.lock_settings_profile_unified_summary);
       lockPreference.setSummary(summary);
+      lockPreference.setEnabled(false);
     }
   }
   Preference unlockSetOrChange=findPreference(KEY_UNLOCK_SET_OR_CHANGE);
@@ -41,6 +40,7 @@
     addTrustAgentSettings(securityCategory);
   }
   mVisiblePatternProfile=(SwitchPreference)root.findPreference(KEY_VISIBLE_PATTERN_PROFILE);
+  mUnifyProfile=(SwitchPreference)root.findPreference(KEY_UNIFICATION);
   addPreferencesFromResource(R.xml.security_settings_misc);
   TelephonyManager tm=TelephonyManager.getDefault();
   CarrierConfigManager cfgMgr=(CarrierConfigManager)getActivity().getSystemService(Context.CARRIER_CONFIG_SERVICE);

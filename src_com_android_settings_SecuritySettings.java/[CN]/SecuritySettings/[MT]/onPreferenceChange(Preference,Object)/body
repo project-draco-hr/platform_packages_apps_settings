@@ -5,6 +5,17 @@
   if (KEY_VISIBLE_PATTERN_PROFILE.equals(key)) {
     lockPatternUtils.setVisiblePatternEnabled((Boolean)value,mProfileChallengeUserId);
   }
+ else   if (KEY_UNIFICATION.equals(key)) {
+    if ((Boolean)value) {
+      final boolean compliantForDevice=(mLockPatternUtils.getKeyguardStoredPasswordQuality(mProfileChallengeUserId) >= DevicePolicyManager.PASSWORD_QUALITY_SOMETHING && mLockPatternUtils.isSeparateProfileChallengeAllowedToUnify(mProfileChallengeUserId));
+      UnificationConfirmationDialog dialog=UnificationConfirmationDialog.newIntance(compliantForDevice);
+      dialog.show(getChildFragmentManager(),TAG_UNIFICATION_DIALOG);
+    }
+ else {
+      mLockPatternUtils.setSeparateProfileChallengeEnabled(mProfileChallengeUserId,true);
+      createPreferenceHierarchy();
+    }
+  }
  else   if (KEY_SHOW_PASSWORD.equals(key)) {
     Settings.System.putInt(getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,((Boolean)value) ? 1 : 0);
     lockPatternUtils.setVisiblePasswordEnabled((Boolean)value,MY_USER_ID);

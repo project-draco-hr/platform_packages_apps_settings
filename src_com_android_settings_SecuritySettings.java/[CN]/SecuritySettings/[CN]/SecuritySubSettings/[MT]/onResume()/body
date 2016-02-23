@@ -1,12 +1,11 @@
 {
   super.onResume();
   createPreferenceHierarchy();
-  final LockPatternUtils lockPatternUtils=mLockPatternUtils;
   if (mVisiblePattern != null) {
-    mVisiblePattern.setChecked(lockPatternUtils.isVisiblePatternEnabled(MY_USER_ID));
+    mVisiblePattern.setChecked(mLockPatternUtils.isVisiblePatternEnabled(MY_USER_ID));
   }
   if (mPowerButtonInstantlyLocks != null) {
-    mPowerButtonInstantlyLocks.setChecked(lockPatternUtils.getPowerButtonInstantlyLocks(MY_USER_ID));
+    mPowerButtonInstantlyLocks.setChecked(mLockPatternUtils.getPowerButtonInstantlyLocks(MY_USER_ID));
   }
   updateOwnerInfo();
 }

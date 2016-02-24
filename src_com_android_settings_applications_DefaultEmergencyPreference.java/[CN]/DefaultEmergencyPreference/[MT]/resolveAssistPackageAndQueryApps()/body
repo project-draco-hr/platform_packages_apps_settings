@@ -18,7 +18,7 @@
  catch (    PackageManager.NameNotFoundException e) {
       continue;
     }
-    if (bestMatch == null || !isSystemApp(bestMatch) && isSystemApp(packageInfo) || isSystemApp(bestMatch) == isSystemApp(packageInfo) && bestMatch.firstInstallTime > packageInfo.firstInstallTime) {
+    if (isSystemApp(packageInfo) && (bestMatch == null || bestMatch.firstInstallTime > packageInfo.firstInstallTime)) {
       bestMatch=packageInfo;
     }
   }

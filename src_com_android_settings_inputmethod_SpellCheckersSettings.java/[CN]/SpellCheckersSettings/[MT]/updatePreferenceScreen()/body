@@ -11,8 +11,7 @@
     preference.setEnabled(isSpellCheckerEnabled);
     if (preference instanceof SpellCheckerPreference) {
       final SpellCheckerPreference pref=(SpellCheckerPreference)preference;
-      final SpellCheckerInfo sci=pref.getSpellCheckerInfo();
-      pref.setSelected(mCurrentSci != null && mCurrentSci.getId().equals(sci.getId()));
+      pref.setSelected(mCurrentSci);
     }
   }
 }

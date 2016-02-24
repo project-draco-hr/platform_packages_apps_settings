@@ -26,4 +26,5 @@
     return;
   }
   mSuspendedAppsAdmin=RestrictedLockUtils.checkIfApplicationIsSuspended(mContext,mPkg,mUserId);
+  mShowSlider=Settings.Secure.getInt(getContentResolver(),TUNER_SETTING,0) == 1;
 }

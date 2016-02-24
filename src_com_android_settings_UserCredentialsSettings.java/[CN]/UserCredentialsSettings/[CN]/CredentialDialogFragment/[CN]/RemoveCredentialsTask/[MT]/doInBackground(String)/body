@@ -1,0 +1,21 @@
+{
+  try {
+    final KeyChainConnection conn=KeyChain.bind(getContext());
+    try {
+      IKeyChainService keyChain=conn.getService();
+      for (      String alias : aliases) {
+        keyChain.removeKeyPair(alias);
+      }
+    }
+ catch (    RemoteException e) {
+      Log.w(TAG,"Removing credentials",e);
+    }
+ finally {
+      conn.close();
+    }
+  }
+ catch (  InterruptedException e) {
+    Log.w(TAG,"Connecting to keychain",e);
+  }
+  return null;
+}

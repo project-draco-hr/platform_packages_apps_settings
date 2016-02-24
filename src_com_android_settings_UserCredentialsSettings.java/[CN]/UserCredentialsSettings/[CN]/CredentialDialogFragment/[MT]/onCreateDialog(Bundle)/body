@@ -6,8 +6,7 @@
   infoContainer.addView(view);
   return new AlertDialog.Builder(getActivity()).setView(root).setTitle(R.string.user_credential_title).setPositiveButton(R.string.done,null).setNegativeButton(R.string.trusted_credentials_remove_label,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int id){
-      final KeyStore ks=KeyStore.getInstance();
-      Credentials.deleteAllTypesForAlias(ks,item.alias);
+      new RemoveCredentialsTask(getContext(),getTargetFragment()).execute(item.alias);
       dialog.dismiss();
     }
   }

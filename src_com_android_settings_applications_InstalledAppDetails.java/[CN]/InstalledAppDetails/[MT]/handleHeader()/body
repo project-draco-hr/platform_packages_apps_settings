@@ -5,4 +5,20 @@
   mForceStopButton.setText(R.string.force_stop);
   mUninstallButton=(Button)btnPanel.findViewById(R.id.left_button);
   mForceStopButton.setEnabled(false);
+  View gear=mHeader.findViewById(R.id.gear);
+  Intent i=new Intent(Intent.ACTION_APPLICATION_PREFERENCES);
+  i.setPackage(mPackageName);
+  final Intent intent=resolveIntent(i);
+  if (intent != null) {
+    gear.setVisibility(View.VISIBLE);
+    gear.setOnClickListener(new OnClickListener(){
+      @Override public void onClick(      View v){
+        startActivity(intent);
+      }
+    }
+);
+  }
+ else {
+    gear.setVisibility(View.GONE);
+  }
 }

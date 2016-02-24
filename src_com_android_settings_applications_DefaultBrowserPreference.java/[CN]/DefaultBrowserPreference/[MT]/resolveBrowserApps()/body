@@ -4,7 +4,7 @@
   intent.setAction(Intent.ACTION_VIEW);
   intent.addCategory(Intent.CATEGORY_BROWSABLE);
   intent.setData(Uri.parse("http:"));
-  List<ResolveInfo> list=mPm.queryIntentActivitiesAsUser(intent,PackageManager.MATCH_ALL,UserHandle.myUserId());
+  List<ResolveInfo> list=mPm.queryIntentActivitiesAsUser(intent,PackageManager.MATCH_ALL,mUserId);
   final int count=list.size();
   for (int i=0; i < count; i++) {
     ResolveInfo info=list.get(i);

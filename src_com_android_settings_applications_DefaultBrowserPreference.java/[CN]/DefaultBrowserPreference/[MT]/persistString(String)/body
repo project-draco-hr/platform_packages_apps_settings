@@ -1,0 +1,14 @@
+{
+  if (newValue == null) {
+    return false;
+  }
+  final CharSequence packageName=(CharSequence)newValue;
+  if (TextUtils.isEmpty(packageName)) {
+    return false;
+  }
+  boolean result=mPm.setDefaultBrowserPackageNameAsUser(packageName.toString(),mUserId);
+  if (result) {
+    setSummary("%s");
+  }
+  return result && super.persistString(newValue);
+}

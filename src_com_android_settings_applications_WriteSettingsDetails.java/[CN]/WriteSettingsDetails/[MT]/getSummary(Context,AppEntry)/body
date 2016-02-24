@@ -1,6 +1,13 @@
 {
-  if (entry.extraInfo != null) {
-    return getSummary(context,new WriteSettingsState((PermissionState)entry.extraInfo));
+  WriteSettingsState state;
+  if (entry.extraInfo instanceof WriteSettingsState) {
+    state=(WriteSettingsState)entry.extraInfo;
   }
-  return getSummary(context,entry.info.packageName);
+ else   if (entry.extraInfo instanceof PermissionState) {
+    state=new WriteSettingsState((PermissionState)entry.extraInfo);
+  }
+ else {
+    state=new AppStateWriteSettingsBridge(context,null,null).getWriteSettingsInfo(entry.info.packageName,entry.info.uid);
+  }
+  return getSummary(context,state);
 }

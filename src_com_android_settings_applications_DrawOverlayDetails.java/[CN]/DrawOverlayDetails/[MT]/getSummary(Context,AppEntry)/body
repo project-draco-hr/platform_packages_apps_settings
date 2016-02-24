@@ -1,6 +1,13 @@
 {
-  if (entry.extraInfo != null) {
-    return getSummary(context,new OverlayState((PermissionState)entry.extraInfo));
+  OverlayState state;
+  if (entry.extraInfo instanceof OverlayState) {
+    state=(OverlayState)entry.extraInfo;
   }
-  return getSummary(context,entry.info.packageName);
+ else   if (entry.extraInfo instanceof PermissionState) {
+    state=new OverlayState((PermissionState)entry.extraInfo);
+  }
+ else {
+    state=new AppStateOverlayBridge(context,null,null).getOverlayInfo(entry.info.packageName,entry.info.uid);
+  }
+  return getSummary(context,state);
 }

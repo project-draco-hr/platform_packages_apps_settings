@@ -2,6 +2,6 @@
   mAppState=appState;
   mAppSession=mAppState != null ? mAppState.newSession(this) : null;
   mCallback=callback;
-  mHandler=new BackgroundHandler(mAppState.getBackgroundLooper());
+  mHandler=new BackgroundHandler(mAppState != null ? mAppState.getBackgroundLooper() : Looper.getMainLooper());
   mMainHandler=new MainHandler();
 }

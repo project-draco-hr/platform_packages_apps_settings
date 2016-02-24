@@ -1,0 +1,10 @@
+{
+  if (group == null)   return;
+  for (int i=0; i < group.getPreferenceCount(); i++) {
+    Preference pref=group.getPreference(i);
+    ret.add(pref.getKey());
+    if (pref instanceof PreferenceGroup) {
+      addAll((PreferenceGroup)pref,ret);
+    }
+  }
+}

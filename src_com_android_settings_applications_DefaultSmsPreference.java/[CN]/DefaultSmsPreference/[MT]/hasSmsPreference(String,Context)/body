@@ -1,0 +1,9 @@
+{
+  Collection<SmsApplicationData> smsApplications=SmsApplication.getApplicationCollection(context);
+  for (  SmsApplicationData data : smsApplications) {
+    if (data.mPackageName.equals(pkg)) {
+      return true;
+    }
+  }
+  return false;
+}

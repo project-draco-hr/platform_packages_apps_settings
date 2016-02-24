@@ -1,0 +1,15 @@
+{
+  if (group == null)   return;
+  for (int i=0; i < group.getPreferenceCount(); i++) {
+    Preference pref=group.getPreference(i);
+    if (pref instanceof SelfAvailablePreference && !((SelfAvailablePreference)pref).isAvailable(group.getContext())) {
+      ret.add(pref.getKey());
+      if (pref instanceof PreferenceGroup) {
+        addAll((PreferenceGroup)pref,ret);
+      }
+    }
+ else     if (pref instanceof PreferenceGroup) {
+      checkPrefs((PreferenceGroup)pref,ret);
+    }
+  }
+}

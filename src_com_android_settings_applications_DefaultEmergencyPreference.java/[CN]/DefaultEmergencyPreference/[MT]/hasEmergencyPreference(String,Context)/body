@@ -1,0 +1,6 @@
+{
+  Intent i=new Intent(QUERY_INTENT);
+  i.setPackage(pkg);
+  final List<ResolveInfo> resolveInfos=context.getPackageManager().queryIntentActivities(i,0);
+  return resolveInfos != null && resolveInfos.size() != 0;
+}

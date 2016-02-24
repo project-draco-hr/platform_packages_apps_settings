@@ -2,6 +2,7 @@
   super.onCreate(icicle);
   setHasOptionsMenu(true);
   addPreferencesFromResource(R.xml.installed_app_details);
+  addDynamicPrefs();
   if (Utils.isBandwidthControlEnabled()) {
     INetworkStatsService statsService=INetworkStatsService.Stub.asInterface(ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
     try {

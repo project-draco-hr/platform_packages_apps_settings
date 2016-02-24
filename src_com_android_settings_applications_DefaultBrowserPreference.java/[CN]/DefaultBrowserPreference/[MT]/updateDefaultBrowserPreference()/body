@@ -1,0 +1,24 @@
+{
+  refreshBrowserApps();
+  final PackageManager pm=getContext().getPackageManager();
+  String packageName=pm.getDefaultBrowserPackageNameAsUser(mUserId);
+  if (!TextUtils.isEmpty(packageName)) {
+    Intent intent=new Intent();
+    intent.setPackage(packageName);
+    intent.setAction(Intent.ACTION_VIEW);
+    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+    intent.setData(Uri.parse("http:"));
+    ResolveInfo info=mPm.resolveActivityAsUser(intent,0,mUserId);
+    if (info != null) {
+      setValue(packageName);
+      setSummary("%s");
+    }
+ else {
+      setSummary(R.string.default_browser_title_none);
+    }
+  }
+ else {
+    setSummary(R.string.default_browser_title_none);
+    Log.d(TAG,"Cannot set empty default Browser value!");
+  }
+}

@@ -1,0 +1,12 @@
+{
+  if (preferenceGroup == null)   return;
+  for (int i=0; i < preferenceGroup.getPreferenceCount(); i++) {
+    Preference pref=preferenceGroup.getPreference(i);
+    if (pref instanceof SelfAvailablePreference && !((SelfAvailablePreference)pref).isAvailable(getContext())) {
+      preferenceGroup.removePreference(pref);
+    }
+ else     if (pref instanceof PreferenceGroup) {
+      checkAvailablePrefs((PreferenceGroup)pref);
+    }
+  }
+}

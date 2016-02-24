@@ -3,6 +3,6 @@
   mDpm=getSystemService(DevicePolicyManager.class);
   mEnforcedAdmin=getAdminDetailsFromIntent(getIntent());
   mDialogView=LayoutInflater.from(this).inflate(R.layout.admin_support_details_dialog,null);
-  setAdminSupportDetails(this,mDialogView,mEnforcedAdmin,true);
+  initializeDialogViews(mDialogView,mEnforcedAdmin.component,mEnforcedAdmin.userId);
   new AlertDialog.Builder(this).setView(mDialogView).setPositiveButton(R.string.okay,null).setOnDismissListener(this).show();
 }

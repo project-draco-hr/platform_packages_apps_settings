@@ -3,5 +3,6 @@
   mAllowFpAuthentication=getActivity().getIntent().getBooleanExtra(ALLOW_FP_AUTHENTICATION,false);
   Intent intent=getActivity().getIntent();
   mEffectiveUserId=Utils.getUserIdFromBundle(getActivity(),intent.getExtras());
+  mAllowFpAuthentication=mAllowFpAuthentication && !isFingerprintDisabledByAdmin();
   mLockPatternUtils=new LockPatternUtils(getActivity());
 }

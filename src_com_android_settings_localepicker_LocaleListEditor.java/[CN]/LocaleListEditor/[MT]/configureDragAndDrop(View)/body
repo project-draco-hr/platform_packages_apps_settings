@@ -1,6 +1,8 @@
 {
-  RecyclerView list=(RecyclerView)view.findViewById(R.id.dragList);
-  list.setLayoutManager(new LinearLayoutManager(this.getContext()));
+  final RecyclerView list=(RecyclerView)view.findViewById(R.id.dragList);
+  final LinearLayoutManager llm=new LinearLayoutManager(this.getContext());
+  llm.setAutoMeasureEnabled(true);
+  list.setLayoutManager(llm);
   list.setHasFixedSize(true);
   mAdapter.setRecyclerView(list);
   list.setAdapter(mAdapter);

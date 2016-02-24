@@ -1,9 +1,11 @@
 {
   super.onBindViewHolder(view);
-  mRadioButton=(RadioButton)view.findViewById(R.id.pref_radio);
-  mPrefLeftButton=view.findViewById(R.id.pref_left_button);
-  mPrefLeftButton.setOnClickListener(this);
-  mSettingsButton=view.findViewById(R.id.pref_right_button);
-  mSettingsButton.setOnClickListener(this);
-  updateSelectedState(mSelected);
+  View settingsButton=view.findViewById(R.id.settings_button);
+  settingsButton.setVisibility(mIntent != null ? View.VISIBLE : View.INVISIBLE);
+  settingsButton.setOnClickListener(new OnClickListener(){
+    @Override public void onClick(    View v){
+      onSettingsButtonClicked();
+    }
+  }
+);
 }

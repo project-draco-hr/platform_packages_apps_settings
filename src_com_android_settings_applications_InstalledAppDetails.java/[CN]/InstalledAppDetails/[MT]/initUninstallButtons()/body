@@ -37,6 +37,15 @@
   if (mAppsControlDisallowedBySystem) {
     enabled=false;
   }
+  try {
+    IWebViewUpdateService webviewUpdateService=IWebViewUpdateService.Stub.asInterface(ServiceManager.getService("webviewupdate"));
+    if (webviewUpdateService.isFallbackPackage(mAppEntry.info.packageName)) {
+      enabled=false;
+    }
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException(e);
+  }
   mUninstallButton.setEnabled(enabled);
   if (enabled) {
     mUninstallButton.setOnClickListener(this);

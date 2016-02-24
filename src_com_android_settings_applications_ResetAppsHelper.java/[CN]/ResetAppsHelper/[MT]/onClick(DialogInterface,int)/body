@@ -13,7 +13,7 @@
  catch (        android.os.RemoteException ex) {
         }
         if (!app.enabled) {
-          if (mPm.getApplicationEnabledSetting(app.packageName) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER) {
+          if (mPm.getApplicationEnabledSetting(app.packageName) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER && !isNonEnableableFallback(app.packageName)) {
             mPm.setApplicationEnabledSetting(app.packageName,PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,PackageManager.DONT_KILL_APP);
           }
         }

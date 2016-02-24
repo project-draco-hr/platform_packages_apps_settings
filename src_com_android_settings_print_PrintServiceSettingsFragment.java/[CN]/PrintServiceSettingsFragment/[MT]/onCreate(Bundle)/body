@@ -1,5 +1,6 @@
 {
   super.onCreate(icicle);
+  mServiceEnabled=getArguments().getBoolean(PrintSettingsFragment.EXTRA_CHECKED);
   String title=getArguments().getString(PrintSettingsFragment.EXTRA_TITLE);
   if (!TextUtils.isEmpty(title)) {
     getActivity().setTitle(title);

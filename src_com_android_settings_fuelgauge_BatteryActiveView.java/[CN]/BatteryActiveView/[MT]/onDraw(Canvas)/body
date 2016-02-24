@@ -1,0 +1,10 @@
+{
+  if (mProvider == null) {
+    return;
+  }
+  SparseIntArray array=mProvider.getColorArray();
+  float period=mProvider.getPeriod();
+  for (int i=0; i < array.size() - 1; i++) {
+    drawColor(canvas,array.keyAt(i),array.keyAt(i + 1),array.valueAt(i),period);
+  }
+}

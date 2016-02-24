@@ -1,0 +1,6 @@
+{
+  View group=getView().findViewById(groupId);
+  group.setVisibility(provider.hasData() ? View.VISIBLE : View.GONE);
+  ((TextView)group.findViewById(android.R.id.title)).setText(label);
+  ((BatteryActiveView)group.findViewById(R.id.battery_active)).setProvider(provider);
+}

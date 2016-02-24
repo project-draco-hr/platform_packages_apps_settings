@@ -9,7 +9,7 @@
     ResolveInfo resolveInfo=enabledForProfile.get(i);
     ComponentName riComponentName=new ComponentName(resolveInfo.activityInfo.packageName,resolveInfo.activityInfo.name);
     if (alreadyAddedComponents == null || !alreadyAddedComponents.contains(riComponentName)) {
-      DeviceAdminInfo deviceAdminInfo=createDeviceAdminInfo(resolveInfo);
+      DeviceAdminInfo deviceAdminInfo=createDeviceAdminInfo(resolveInfo.activityInfo);
       if (deviceAdminInfo != null && deviceAdminInfo.isVisible()) {
         if (!deviceAdminInfo.getActivityInfo().applicationInfo.isInternal()) {
           continue;

@@ -1,23 +1,27 @@
 {
   if (activeAdmins != null) {
     final PackageManager packageManager=getActivity().getPackageManager();
+    final IPackageManager iPackageManager=AppGlobals.getPackageManager();
     final int n=activeAdmins.size();
     for (int i=0; i < n; ++i) {
-      ComponentName activeAdmin=activeAdmins.get(i);
-      List<ResolveInfo> resolved=packageManager.queryBroadcastReceiversAsUser(new Intent().setComponent(activeAdmin),PackageManager.GET_META_DATA | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS,profileId);
-      if (resolved != null) {
-        final int resolvedMax=resolved.size();
-        for (int j=0; j < resolvedMax; ++j) {
-          DeviceAdminInfo deviceAdminInfo=createDeviceAdminInfo(resolved.get(j));
-          if (deviceAdminInfo != null) {
-            DeviceAdminListItem item=new DeviceAdminListItem();
-            item.info=deviceAdminInfo;
-            item.name=deviceAdminInfo.loadLabel(packageManager).toString();
-            item.active=true;
-            mAdmins.add(item);
-          }
-        }
+      final ComponentName activeAdmin=activeAdmins.get(i);
+      final ActivityInfo ai;
+      try {
+        ai=iPackageManager.getReceiverInfo(activeAdmin,PackageManager.GET_META_DATA | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS | PackageManager.MATCH_ENCRYPTION_AWARE_AND_UNAWARE,profileId);
       }
+ catch (      RemoteException e) {
+        Log.w(TAG,"Unable to load component: " + activeAdmin);
+        continue;
+      }
+      final DeviceAdminInfo deviceAdminInfo=createDeviceAdminInfo(ai);
+      if (deviceAdminInfo == null) {
+        continue;
+      }
+      final DeviceAdminListItem item=new DeviceAdminListItem();
+      item.info=deviceAdminInfo;
+      item.name=deviceAdminInfo.loadLabel(packageManager).toString();
+      item.active=true;
+      mAdmins.add(item);
     }
   }
 }

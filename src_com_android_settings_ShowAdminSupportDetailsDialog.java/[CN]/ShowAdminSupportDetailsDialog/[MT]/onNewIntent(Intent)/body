@@ -3,6 +3,6 @@
   EnforcedAdmin admin=getAdminDetailsFromIntent(intent);
   if (!mEnforcedAdmin.equals(admin)) {
     mEnforcedAdmin=admin;
-    setAdminSupportDetails(this,mDialogView,mEnforcedAdmin,true);
+    initializeDialogViews(mDialogView,mEnforcedAdmin.component,mEnforcedAdmin.userId);
   }
 }

@@ -6,13 +6,15 @@
   mImportanceTitle=(RestrictedPreference)findPreference(KEY_IMPORTANCE_TITLE);
   mPriority=(RestrictedSwitchPreference)getPreferenceScreen().findPreference(KEY_BYPASS_DND);
   mSensitive=(RestrictedSwitchPreference)getPreferenceScreen().findPreference(KEY_SENSITIVE);
+  mBlock=(RestrictedSwitchPreference)getPreferenceScreen().findPreference(KEY_BLOCK);
+  mSilent=(RestrictedSwitchPreference)getPreferenceScreen().findPreference(KEY_SILENT);
   mAppRow=mBackend.loadAppRow(mPm,mPkgInfo);
   NotificationManager.Policy policy=NotificationManager.from(mContext).getNotificationPolicy();
   mDndVisualEffectsSuppressed=policy == null ? false : policy.suppressedVisualEffects != 0;
   ArrayMap<String,AppRow> rows=new ArrayMap<String,AppRow>();
   rows.put(mAppRow.pkg,mAppRow);
   collectConfigActivities(rows);
-  setupImportancePrefs(mAppRow.systemApp,mAppRow.appImportance);
+  setupImportancePrefs(mAppRow.systemApp,mAppRow.appImportance,mAppRow.banned);
   setupPriorityPref(mAppRow.appBypassDnd);
   setupSensitivePref(mAppRow.appSensitive);
   updateDependents(mAppRow.appImportance);

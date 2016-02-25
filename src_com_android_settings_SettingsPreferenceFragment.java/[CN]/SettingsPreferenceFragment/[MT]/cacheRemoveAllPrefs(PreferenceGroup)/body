@@ -1,0 +1,11 @@
+{
+  mPreferenceCache=new ArrayMap<String,Preference>();
+  final int N=group.getPreferenceCount();
+  for (int i=0; i < N; i++) {
+    Preference p=group.getPreference(i);
+    if (TextUtils.isEmpty(p.getKey())) {
+      continue;
+    }
+    mPreferenceCache.put(p.getKey(),p);
+  }
+}

@@ -3,42 +3,28 @@
   int messageId=0;
 switch (bluetoothState) {
 case BluetoothAdapter.STATE_ON:
-    preferenceScreen.removeAll();
-  preferenceScreen.setOrderingAsAdded(true);
-mDevicePreferenceMap.clear();
-if (isUiRestricted()) {
-messageId=R.string.bluetooth_empty_list_user_restricted;
-break;
-}
-if (mPairedDevicesCategory == null) {
-mPairedDevicesCategory=new PreferenceCategory(getPrefContext());
-}
- else {
-mPairedDevicesCategory.removeAll();
-}
+    mDevicePreferenceMap.clear();
+  if (isUiRestricted()) {
+    messageId=R.string.bluetooth_empty_list_user_restricted;
+    break;
+  }
 addDeviceCategory(mPairedDevicesCategory,R.string.bluetooth_preference_paired_devices,BluetoothDeviceFilter.BONDED_DEVICE_FILTER,true);
 int numberOfPairedDevices=mPairedDevicesCategory.getPreferenceCount();
 if (isUiRestricted() || numberOfPairedDevices <= 0) {
+if (preferenceScreen.findPreference(KEY_PAIRED_DEVICES) != null) {
 preferenceScreen.removePreference(mPairedDevicesCategory);
 }
-if (mAvailableDevicesCategory == null) {
-mAvailableDevicesCategory=new BluetoothProgressCategory(getActivity());
-mAvailableDevicesCategory.setSelectable(false);
 }
  else {
-mAvailableDevicesCategory.removeAll();
+if (preferenceScreen.findPreference(KEY_PAIRED_DEVICES) == null) {
+preferenceScreen.addPreference(mPairedDevicesCategory);
+}
 }
 addDeviceCategory(mAvailableDevicesCategory,R.string.bluetooth_preference_found_devices,BluetoothDeviceFilter.UNBONDED_DEVICE_FILTER,mInitialScanStarted);
-int numberOfAvailableDevices=mAvailableDevicesCategory.getPreferenceCount();
 if (!mInitialScanStarted) {
 startScanning();
 }
-if (mMyDevicePreference == null) {
-mMyDevicePreference=new Preference(getPrefContext());
-}
 mMyDevicePreference.setSummary(getResources().getString(R.string.bluetooth_is_visible_message,mLocalAdapter.getName()));
-mMyDevicePreference.setSelectable(false);
-preferenceScreen.addPreference(mMyDevicePreference);
 getActivity().invalidateOptionsMenu();
 if (mInitiateDiscoverable) {
 mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE);

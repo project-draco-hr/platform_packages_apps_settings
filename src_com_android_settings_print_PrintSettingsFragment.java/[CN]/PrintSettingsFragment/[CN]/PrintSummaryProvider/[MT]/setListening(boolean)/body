@@ -1,9 +1,11 @@
 {
-  if (isListening) {
-    mPrintManager.addPrintJobStateChangeListener(this);
-    onPrintJobStateChanged(null);
-  }
+  if (mPrintManager != null) {
+    if (isListening) {
+      mPrintManager.addPrintJobStateChangeListener(this);
+      onPrintJobStateChanged(null);
+    }
  else {
-    mPrintManager.removePrintJobStateChangeListener(this);
+      mPrintManager.removePrintJobStateChangeListener(this);
+    }
   }
 }

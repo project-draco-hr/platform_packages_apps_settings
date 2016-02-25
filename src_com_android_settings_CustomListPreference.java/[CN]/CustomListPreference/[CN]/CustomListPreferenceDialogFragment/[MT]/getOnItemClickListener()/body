@@ -2,8 +2,10 @@
   return new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
       setClickedDialogEntryIndex(which);
-      CustomListPreferenceDialogFragment.this.onClick(dialog,DialogInterface.BUTTON_POSITIVE);
-      dialog.dismiss();
+      if (getCustomizablePreference().isAutoClosePreference()) {
+        CustomListPreferenceDialogFragment.this.onClick(dialog,DialogInterface.BUTTON_POSITIVE);
+        dialog.dismiss();
+      }
     }
   }
 ;

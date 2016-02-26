@@ -1,4 +1,16 @@
 {
   addPreferencesFromResource(R.xml.bluetooth_settings);
+  mPairedDevicesCategory=new PreferenceCategory(getPrefContext());
+  mPairedDevicesCategory.setKey(KEY_PAIRED_DEVICES);
+  mPairedDevicesCategory.setOrder(1);
+  getPreferenceScreen().addPreference(mPairedDevicesCategory);
+  mAvailableDevicesCategory=new BluetoothProgressCategory(getActivity());
+  mAvailableDevicesCategory.setSelectable(false);
+  mAvailableDevicesCategory.setOrder(2);
+  getPreferenceScreen().addPreference(mAvailableDevicesCategory);
+  mMyDevicePreference=new Preference(getPrefContext());
+  mMyDevicePreference.setSelectable(false);
+  mMyDevicePreference.setOrder(3);
+  getPreferenceScreen().addPreference(mMyDevicePreference);
   setHasOptionsMenu(true);
 }

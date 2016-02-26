@@ -1,10 +1,11 @@
 {
+  cacheRemoveAllPrefs(preferenceGroup);
   preferenceGroup.setTitle(titleId);
-  getPreferenceScreen().addPreference(preferenceGroup);
   setFilter(filter);
   setDeviceListGroup(preferenceGroup);
   if (addCachedDevices) {
     addCachedDevices();
   }
   preferenceGroup.setEnabled(true);
+  removeCachedPrefs(preferenceGroup);
 }

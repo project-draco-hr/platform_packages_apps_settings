@@ -14,25 +14,28 @@ case WifiManager.WIFI_STATE_ENABLED:
   getPreferenceScreen().removeAll();
 boolean hasAvailableAccessPoints=false;
 int index=0;
+cacheRemoveAllPrefs(getPreferenceScreen());
 for (AccessPoint accessPoint : accessPoints) {
 if (accessPoint.getLevel() != -1) {
+String key=accessPoint.getBssid();
 hasAvailableAccessPoints=true;
-if (accessPoint.getTag() != null) {
-  final Preference pref=(Preference)accessPoint.getTag();
-  pref.setOrder(index++);
-  getPreferenceScreen().addPreference(pref);
-  continue;
+LongPressAccessPointPreference pref=(LongPressAccessPointPreference)getCachedPreference(key);
+if (pref != null) {
+pref.setOrder(index++);
+continue;
 }
 LongPressAccessPointPreference preference=new LongPressAccessPointPreference(accessPoint,getPrefContext(),mUserBadgeCache,false,this);
+preference.setKey(key);
 preference.setOrder(index++);
 if (mOpenSsid != null && mOpenSsid.equals(accessPoint.getSsidStr()) && !accessPoint.isSaved() && accessPoint.getSecurity() != AccessPoint.SECURITY_NONE) {
-  onPreferenceTreeClick(preference);
-  mOpenSsid=null;
+onPreferenceTreeClick(preference);
+mOpenSsid=null;
 }
 getPreferenceScreen().addPreference(preference);
 accessPoint.setListener(this);
 }
 }
+removeCachedPrefs(getPreferenceScreen());
 if (!hasAvailableAccessPoints) {
 setProgressBarVisible(true);
 Preference pref=new Preference(getContext()){

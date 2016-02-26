@@ -1,13 +1,13 @@
 {
-  final PreferenceScreen screen=getPreferenceScreen();
-  final Context context=getActivity();
-  final int count=(mEnabledScis == null) ? 0 : mEnabledScis.length;
-  for (int index=0; index < count; ++index) {
-    final SpellCheckerInfo sci=mEnabledScis[index];
-  }
   final SpellCheckerPreference pref=new SpellCheckerPreference(getPrefContext(),mEnabledScis);
   pref.setTitle(R.string.default_spell_checker);
-  pref.setSummary("%s");
+  final int count=(mEnabledScis == null) ? 0 : mEnabledScis.length;
+  if (count > 0) {
+    pref.setSummary("%s");
+  }
+ else {
+    pref.setSummary(R.string.spell_checker_not_selected);
+  }
   pref.setOnPreferenceChangeListener(this);
-  screen.addPreference(pref);
+  getPreferenceScreen().addPreference(pref);
 }

@@ -14,7 +14,7 @@
     }
     mImportanceTitle.setSummary(getProgressSummary(importance));
     mImportance.setSystemApp(isSystemApp);
-    mImportance.setMinimumProgress(isSystemApp ? Ranking.IMPORTANCE_LOW : Ranking.IMPORTANCE_NONE);
+    mImportance.setMinimumProgress(isSystemApp ? Ranking.IMPORTANCE_MIN : Ranking.IMPORTANCE_NONE);
     mImportance.setMax(Ranking.IMPORTANCE_MAX);
     mImportance.setProgress(importance);
     mImportance.setCallback(new ImportanceSeekBarPreference.Callback(){
@@ -63,7 +63,7 @@
     mSilent.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
       @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
         final boolean silenced=(Boolean)newValue;
-        final int importance=silenced ? Ranking.IMPORTANCE_DEFAULT : Ranking.IMPORTANCE_UNSPECIFIED;
+        final int importance=silenced ? Ranking.IMPORTANCE_LOW : Ranking.IMPORTANCE_UNSPECIFIED;
         mBackend.setImportance(mPkgInfo.packageName,mUid,importance);
         updateDependents(importance);
         return true;

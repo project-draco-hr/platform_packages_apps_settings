@@ -3,6 +3,9 @@
     mDialog.dismiss();
   }
   final SpellCheckerInfo currentSci=mTsm.getCurrentSpellChecker();
+  if (currentSci == null) {
+    return;
+  }
   final SpellCheckerSubtype currentScs=mTsm.getCurrentSpellCheckerSubtype(false);
   final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
   builder.setTitle(R.string.phone_language);

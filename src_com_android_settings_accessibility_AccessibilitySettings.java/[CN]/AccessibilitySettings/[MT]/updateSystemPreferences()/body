@@ -10,6 +10,7 @@
   final boolean speakPasswordEnabled=Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_SPEAK_PASSWORD,0) != 0;
   mToggleSpeakPasswordPreference.setChecked(speakPasswordEnabled);
   mToggleLargePointerIconPreference.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_LARGE_POINTER_ICON,0) != 0);
+  updateMasterMono();
   final int longPressTimeout=Settings.Secure.getInt(getContentResolver(),Settings.Secure.LONG_PRESS_TIMEOUT,mLongPressTimeoutDefault);
   String value=String.valueOf(longPressTimeout);
   mSelectLongPressTimeoutPreference.setValue(value);

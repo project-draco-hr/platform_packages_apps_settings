@@ -1,4 +1,10 @@
 {
+  if (!TextUtils.isEmpty(titleText)) {
+    setTitle(titleText);
+  }
+ else   if (titleRes > 0) {
+    setTitle(getString(titleRes));
+  }
   args.putInt(SettingsPreferenceFragment.HELP_URI_RESOURCE_KEY,0);
   startPreferenceFragment(Fragment.instantiate(this,fragmentClass,args),true);
 }

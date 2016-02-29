@@ -7,6 +7,11 @@
   root=getPreferenceScreen();
   final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,MY_USER_ID);
   addPreferencesFromResource(resid);
+  final EnforcedAdmin admin=RestrictedLockUtils.checkIfPasswordQualityIsSet(getActivity(),MY_USER_ID);
+  if (admin != null && mDPM.getPasswordQuality(admin.component) == DevicePolicyManager.PASSWORD_QUALITY_MANAGED) {
+    final GearPreference unlockSetOrChangePref=(GearPreference)getPreferenceScreen().findPreference(KEY_UNLOCK_SET_OR_CHANGE);
+    unlockSetOrChangePref.setDisabledByAdmin(admin);
+  }
   mProfileChallengeUserId=Utils.getManagedProfileId(mUm,MY_USER_ID);
   if (mProfileChallengeUserId != UserHandle.USER_NULL && mLockPatternUtils.isSeparateProfileChallengeAllowed(mProfileChallengeUserId)) {
     addPreferencesFromResource(R.xml.security_settings_profile);

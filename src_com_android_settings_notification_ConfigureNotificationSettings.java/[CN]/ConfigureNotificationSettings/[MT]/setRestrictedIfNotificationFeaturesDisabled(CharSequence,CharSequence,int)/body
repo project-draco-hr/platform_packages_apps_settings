@@ -4,4 +4,11 @@
     RestrictedItem item=new RestrictedItem(entry,entryValue,admin);
     mLockscreen.addRestrictedItem(item);
   }
+  if (mProfileChallengeUserId != UserHandle.USER_NULL) {
+    EnforcedAdmin profileAdmin=RestrictedLockUtils.checkIfKeyguardFeaturesDisabled(mContext,keyguardNotificationFeatures,mProfileChallengeUserId);
+    if (profileAdmin != null) {
+      RestrictedItem item=new RestrictedItem(entry,entryValue,profileAdmin);
+      mLockscreenProfile.addRestrictedItem(item);
+    }
+  }
 }

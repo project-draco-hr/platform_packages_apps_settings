@@ -1,7 +1,11 @@
 {
+  if (!mUserManager.canSwitchUsers()) {
+    Log.w(TAG,"Cannot remove current user when switching is disabled");
+    return;
+  }
   try {
     ActivityManagerNative.getDefault().switchUser(UserHandle.USER_SYSTEM);
-    ((UserManager)getActivity().getSystemService(Context.USER_SERVICE)).removeUser(UserHandle.myUserId());
+    getContext().getSystemService(UserManager.class).removeUser(UserHandle.myUserId());
   }
  catch (  RemoteException re) {
     Log.e(TAG,"Unable to remove self user");

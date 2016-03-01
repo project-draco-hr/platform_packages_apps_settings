@@ -1,18 +1,4 @@
 {
-  ArrayList<ApplicationsState.AppEntry> apps=mSession.getAllApps();
-  final int N=apps.size();
-  for (int i=0; i < N; i++) {
-    ApplicationsState.AppEntry entry=apps.get(i);
-    String key=entry.info.packageName + "|" + entry.info.uid;
-    AccessPreference preference=(AccessPreference)findPreference(key);
-    if (preference == null) {
-      preference=new AccessPreference(getContext(),entry);
-      preference.setKey(key);
-      preference.setOnPreferenceChangeListener(this);
-      getPreferenceScreen().addPreference(preference);
-    }
-    AppStateDataUsageBridge.DataUsageState state=(AppStateDataUsageBridge.DataUsageState)entry.extraInfo;
-    preference.setChecked(state.isDataSaverWhitelisted);
-  }
-  setLoading(false,true);
+  mExtraLoaded=true;
+  rebuild();
 }

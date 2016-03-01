@@ -1,10 +1,12 @@
 {
-  holder.itemView.post(new Runnable(){
-    @Override public void run(){
-      mApplicationsState.ensureIcon(mEntry);
-      setIcon(mEntry.icon);
+  if (mEntry.icon == null) {
+    holder.itemView.post(new Runnable(){
+      @Override public void run(){
+        mApplicationsState.ensureIcon(mEntry);
+        setIcon(mEntry.icon);
+      }
     }
-  }
 );
+  }
   super.onBindViewHolder(holder);
 }

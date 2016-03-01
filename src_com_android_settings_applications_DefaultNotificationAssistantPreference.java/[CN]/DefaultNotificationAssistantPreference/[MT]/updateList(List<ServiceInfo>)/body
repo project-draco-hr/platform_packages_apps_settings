@@ -1,8 +1,0 @@
-{
-  final ComponentName[] assistants=new ComponentName[services.size()];
-  for (int i=0; i < services.size(); i++) {
-    assistants[i]=new ComponentName(services.get(i).packageName,services.get(i).name);
-  }
-  final String assistant=Settings.Secure.getString(mContext.getContentResolver(),mConfig.setting);
-  setComponentNames(assistants,assistant == null ? null : ComponentName.unflattenFromString(assistant));
-}

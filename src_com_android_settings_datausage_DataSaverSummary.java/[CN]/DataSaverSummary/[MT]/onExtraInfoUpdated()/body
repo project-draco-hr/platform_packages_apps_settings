@@ -1,0 +1,15 @@
+{
+  int count=0;
+  final ArrayList<AppEntry> allApps=mSession.getAllApps();
+  final int N=allApps.size();
+  for (int i=0; i < N; i++) {
+    final AppEntry entry=allApps.get(i);
+    if (!ApplicationsState.FILTER_DOWNLOADED_AND_LAUNCHER.filterApp(entry)) {
+      continue;
+    }
+    if (entry.extraInfo != null && ((AppStateDataUsageBridge.DataUsageState)entry.extraInfo).isDataSaverWhitelisted) {
+      count++;
+    }
+  }
+  mUnrestrictedAccess.setSummary(getResources().getQuantityString(R.plurals.data_saver_unrestricted_summary,count,count));
+}

@@ -1,7 +1,6 @@
 {
   super.onResume();
-  mDataSaverBackend.addListener(this);
   mDataSaverBackend.refreshWhitelist();
-  int count=mDataSaverBackend.getWhitelistedCount();
-  mUnrestrictedAccess.setSummary(getResources().getQuantityString(R.plurals.data_saver_unrestricted_summary,count,count));
+  mSession.resume();
+  mDataUsageBridge.resume();
 }

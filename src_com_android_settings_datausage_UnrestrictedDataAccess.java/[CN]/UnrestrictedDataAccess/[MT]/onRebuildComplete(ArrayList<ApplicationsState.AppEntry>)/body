@@ -1,2 +1,21 @@
 {
+  cacheRemoveAllPrefs(getPreferenceScreen());
+  final int N=apps.size();
+  for (int i=0; i < N; i++) {
+    ApplicationsState.AppEntry entry=apps.get(i);
+    String key=entry.info.packageName + "|" + entry.info.uid;
+    AccessPreference preference=(AccessPreference)getCachedPreference(key);
+    if (preference == null) {
+      preference=new AccessPreference(getContext(),entry);
+      preference.setKey(key);
+      preference.setOnPreferenceChangeListener(this);
+      getPreferenceScreen().addPreference(preference);
+    }
+ else {
+      preference.reuse();
+    }
+    preference.setOrder(i);
+  }
+  setLoading(false,true);
+  removeCachedPrefs(getPreferenceScreen());
 }

@@ -6,7 +6,7 @@
   sir.xmlResId=resId;
   result.add(sir);
   final UserManager um=UserManager.get(context);
-  final int profileUserId=getManagedProfileId(um);
+  final int profileUserId=Utils.getManagedProfileId(um,MY_USER_ID);
   if (profileUserId != UserHandle.USER_NULL && lockPatternUtils.isSeparateProfileChallengeAllowed(profileUserId)) {
     sir=new SearchIndexableResource(context);
     sir.xmlResId=getResIdForLockUnlockScreen(context,lockPatternUtils,profileUserId);

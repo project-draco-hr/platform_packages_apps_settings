@@ -1,12 +1,9 @@
 {
-  List<UserInfo> profiles=um.getProfiles(MY_USER_ID);
+  List<UserInfo> profiles=um.getProfiles(parentUserId);
   int numProfiles=profiles.size();
-  if (numProfiles == 1) {
-    return UserHandle.USER_NULL;
-  }
   for (int i=0; i < numProfiles; ++i) {
     UserInfo profile=profiles.get(i);
-    if (profile.id != MY_USER_ID) {
+    if (profile.id != parentUserId) {
       return profile.id;
     }
   }

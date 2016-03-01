@@ -1,0 +1,46 @@
+{
+  mLockscreenProfile=(NotificationLockscreenPreference)getPreferenceScreen().findPreference(KEY_LOCK_SCREEN_PROFILE_NOTIFICATIONS);
+  if (mLockscreenProfile == null) {
+    Log.i(TAG,"Preference not found: " + KEY_LOCK_SCREEN_PROFILE_NOTIFICATIONS);
+    return;
+  }
+  ArrayList<CharSequence> entries=new ArrayList<>();
+  ArrayList<CharSequence> values=new ArrayList<>();
+  entries.add(getString(R.string.lock_screen_notifications_summary_disable_profile));
+  values.add(Integer.toString(R.string.lock_screen_notifications_summary_disable_profile));
+  String summaryShowEntry=getString(R.string.lock_screen_notifications_summary_show_profile);
+  String summaryShowEntryValue=Integer.toString(R.string.lock_screen_notifications_summary_show_profile);
+  entries.add(summaryShowEntry);
+  values.add(summaryShowEntryValue);
+  setRestrictedIfNotificationFeaturesDisabled(summaryShowEntry,summaryShowEntryValue,KEYGUARD_DISABLE_SECURE_NOTIFICATIONS | KEYGUARD_DISABLE_UNREDACTED_NOTIFICATIONS);
+  if (mSecureProfile) {
+    String summaryHideEntry=getString(R.string.lock_screen_notifications_summary_hide_profile);
+    String summaryHideEntryValue=Integer.toString(R.string.lock_screen_notifications_summary_hide_profile);
+    entries.add(summaryHideEntry);
+    values.add(summaryHideEntryValue);
+    setRestrictedIfNotificationFeaturesDisabled(summaryHideEntry,summaryHideEntryValue,KEYGUARD_DISABLE_SECURE_NOTIFICATIONS);
+  }
+  mLockscreenProfile.setEntries(entries.toArray(new CharSequence[entries.size()]));
+  mLockscreenProfile.setEntryValues(values.toArray(new CharSequence[values.size()]));
+  updateLockscreenNotificationsForProfile();
+  if (mLockscreenProfile.getEntries().length > 1) {
+    mLockscreenProfile.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
+      @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
+        final int val=Integer.parseInt((String)newValue);
+        if (val == mLockscreenSelectedValueProfile) {
+          return false;
+        }
+        final boolean enabled=val != R.string.lock_screen_notifications_summary_disable_profile;
+        final boolean show=val == R.string.lock_screen_notifications_summary_show_profile;
+        Settings.Secure.putIntForUser(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,show ? 1 : 0,mProfileChallengeUserId);
+        Settings.Secure.putIntForUser(getContentResolver(),Settings.Secure.LOCK_SCREEN_SHOW_NOTIFICATIONS,enabled ? 1 : 0,mProfileChallengeUserId);
+        mLockscreenSelectedValueProfile=val;
+        return true;
+      }
+    }
+);
+  }
+ else {
+    mLockscreenProfile.setEnabled(false);
+  }
+}

@@ -1,8 +1,8 @@
 {
   final PreferenceScreen root=getPreferenceScreen();
   root.removeAll();
-  final AutomaticZenRule[] sortedRules=sortedRules();
-  for (  AutomaticZenRule sortedRule : sortedRules) {
+  final Map.Entry<String,AutomaticZenRule>[] sortedRules=sortedRules();
+  for (  Map.Entry<String,AutomaticZenRule> sortedRule : sortedRules) {
     ZenRulePreference pref=new ZenRulePreference(getPrefContext(),sortedRule);
     if (pref.appExists) {
       root.addPreference(pref);

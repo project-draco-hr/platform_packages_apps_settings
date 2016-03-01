@@ -3,9 +3,9 @@
     @Override public void onOk(    String ruleName){
       MetricsLogger.action(mContext,MetricsEvent.ACTION_ZEN_ADD_RULE_OK);
       AutomaticZenRule rule=new AutomaticZenRule(ruleName,ri.serviceComponent,ri.defaultConditionId,NotificationManager.INTERRUPTION_FILTER_PRIORITY,true);
-      AutomaticZenRule savedRule=addZenRule(rule);
-      if (savedRule != null) {
-        startActivity(getRuleIntent(ri.settingsAction,null,savedRule.getId()));
+      String savedRuleId=addZenRule(rule);
+      if (savedRuleId != null) {
+        startActivity(getRuleIntent(ri.settingsAction,null,savedRuleId));
       }
     }
   }

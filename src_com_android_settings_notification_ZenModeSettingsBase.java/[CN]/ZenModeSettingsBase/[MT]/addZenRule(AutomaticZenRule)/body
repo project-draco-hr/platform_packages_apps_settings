@@ -1,5 +1,6 @@
 {
-  final AutomaticZenRule savedRule=NotificationManager.from(mContext).addAutomaticZenRule(rule);
+  String id=NotificationManager.from(mContext).addAutomaticZenRule(rule);
+  final AutomaticZenRule savedRule=NotificationManager.from(mContext).getAutomaticZenRule(id);
   maybeRefreshRules(savedRule != null,true);
-  return savedRule;
+  return id;
 }

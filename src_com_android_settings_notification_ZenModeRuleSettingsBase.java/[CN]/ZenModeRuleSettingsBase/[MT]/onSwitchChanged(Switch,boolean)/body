@@ -6,7 +6,7 @@
   MetricsLogger.action(mContext,MetricsEvent.ACTION_ZEN_ENABLE_RULE,enabled);
   if (DEBUG)   Log.d(TAG,"onSwitchChanged enabled=" + enabled);
   mRule.setEnabled(enabled);
-  setZenRule(mRule);
+  setZenRule(mId,mRule);
   if (enabled) {
     final int toastText=getEnabledToastText();
     if (toastText != 0) {

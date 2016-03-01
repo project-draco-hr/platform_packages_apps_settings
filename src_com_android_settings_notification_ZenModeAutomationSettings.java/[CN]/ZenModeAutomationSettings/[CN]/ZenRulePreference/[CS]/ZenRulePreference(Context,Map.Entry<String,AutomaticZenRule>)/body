@@ -1,7 +1,8 @@
 {
   super(context);
+  final AutomaticZenRule rule=ruleEntry.getValue();
   mName=rule.getName();
-  mId=rule.getId();
+  mId=ruleEntry.getKey();
   final boolean isSchedule=ZenModeConfig.isValidScheduleConditionId(rule.getConditionId());
   final boolean isEvent=ZenModeConfig.isValidEventConditionId(rule.getConditionId());
   final boolean isSystemRule=isSchedule || isEvent;

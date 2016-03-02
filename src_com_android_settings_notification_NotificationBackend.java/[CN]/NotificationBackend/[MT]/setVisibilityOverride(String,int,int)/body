@@ -1,6 +1,7 @@
 {
   try {
-    return sINM.getVisibilityOverride(pkg,uid) == Notification.VISIBILITY_PRIVATE;
+    sINM.setVisibilityOverride(pkg,uid,override);
+    return true;
   }
  catch (  Exception e) {
     Log.w(TAG,"Error calling NoMan",e);

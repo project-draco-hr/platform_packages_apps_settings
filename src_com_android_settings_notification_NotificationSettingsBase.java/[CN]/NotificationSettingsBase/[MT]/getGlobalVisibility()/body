@@ -1,0 +1,10 @@
+{
+  int globalVis=Ranking.VISIBILITY_NO_OVERRIDE;
+  if (!getLockscreenNotificationsEnabled()) {
+    globalVis=Notification.VISIBILITY_SECRET;
+  }
+ else   if (!getLockscreenAllowPrivateNotifications()) {
+    globalVis=Notification.VISIBILITY_PRIVATE;
+  }
+  return globalVis;
+}

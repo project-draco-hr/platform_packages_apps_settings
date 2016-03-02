@@ -1,0 +1,32 @@
+{
+  ArrayList<CharSequence> entries=new ArrayList<>();
+  ArrayList<CharSequence> values=new ArrayList<>();
+  if (getLockscreenNotificationsEnabled() && getLockscreenAllowPrivateNotifications()) {
+    entries.add(getString(R.string.lock_screen_notifications_summary_show));
+    values.add(Integer.toString(Ranking.VISIBILITY_NO_OVERRIDE));
+  }
+  entries.add(getString(R.string.lock_screen_notifications_summary_hide));
+  values.add(Integer.toString(Notification.VISIBILITY_PRIVATE));
+  entries.add(getString(R.string.lock_screen_notifications_summary_disable));
+  values.add(Integer.toString(Notification.VISIBILITY_SECRET));
+  mVisibilityOverride.setEntries(entries.toArray(new CharSequence[entries.size()]));
+  mVisibilityOverride.setEntryValues(values.toArray(new CharSequence[values.size()]));
+  if (sensitive == Ranking.VISIBILITY_NO_OVERRIDE) {
+    mVisibilityOverride.setValue(Integer.toString(getGlobalVisibility()));
+  }
+ else {
+    mVisibilityOverride.setValue(Integer.toString(sensitive));
+  }
+  mVisibilityOverride.setSummary("%s");
+  mVisibilityOverride.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener(){
+    @Override public boolean onPreferenceChange(    Preference preference,    Object newValue){
+      int sensitive=Integer.parseInt((String)newValue);
+      if (sensitive == getGlobalVisibility()) {
+        sensitive=Ranking.VISIBILITY_NO_OVERRIDE;
+      }
+      mBackend.setVisibilityOverride(mPkgInfo.packageName,mUid,sensitive);
+      return true;
+    }
+  }
+);
+}

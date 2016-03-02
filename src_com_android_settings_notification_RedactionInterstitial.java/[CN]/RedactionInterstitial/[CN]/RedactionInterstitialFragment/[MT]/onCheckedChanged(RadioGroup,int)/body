@@ -3,4 +3,5 @@
   final boolean enabled=(checkedId != R.id.hide_all);
   Settings.Secure.putIntForUser(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,show ? 1 : 0,mUserId);
   Settings.Secure.putIntForUser(getContentResolver(),Settings.Secure.LOCK_SCREEN_SHOW_NOTIFICATIONS,enabled ? 1 : 0,mUserId);
+  updateRemoteInputCheckboxVisibility();
 }

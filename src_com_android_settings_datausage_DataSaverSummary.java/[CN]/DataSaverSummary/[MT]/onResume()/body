@@ -1,6 +1,7 @@
 {
   super.onResume();
   mDataSaverBackend.refreshWhitelist();
+  mDataSaverBackend.addListener(this);
   mSession.resume();
   mDataUsageBridge.resume();
 }

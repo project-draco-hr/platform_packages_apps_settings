@@ -2,5 +2,8 @@
   if (appRow.banned) {
     return context.getString(R.string.notifications_disabled);
   }
-  return context.getString(R.string.notifications_enabled);
+ else   if (appRow.appImportance > NotificationListenerService.Ranking.IMPORTANCE_NONE && appRow.appImportance < NotificationListenerService.Ranking.IMPORTANCE_DEFAULT) {
+    return context.getString(R.string.notifications_silenced);
+  }
+  return "";
 }

@@ -3,6 +3,7 @@
   mWindowManager=IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
   mBackupManager=IBackupManager.Stub.asInterface(ServiceManager.getService(Context.BACKUP_SERVICE));
   mWebViewUpdateService=IWebViewUpdateService.Stub.asInterface(ServiceManager.getService("webviewupdate"));
+  mOemUnlockManager=(PersistentDataBlockManager)getActivity().getSystemService(Context.PERSISTENT_DATA_BLOCK_SERVICE);
   mDpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);

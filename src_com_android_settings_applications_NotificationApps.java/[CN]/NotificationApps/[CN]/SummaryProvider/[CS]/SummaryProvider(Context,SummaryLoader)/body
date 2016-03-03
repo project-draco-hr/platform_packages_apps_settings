@@ -1,0 +1,8 @@
+{
+  mContext=context;
+  mLoader=loader;
+  mAppState=ApplicationsState.getInstance((Application)context.getApplicationContext());
+  mSession=mAppState.newSession(this);
+  mNotifBackend=new NotificationBackend();
+  mExtraInfoBridge=new AppStateNotificationBridge(mContext.getPackageManager(),mAppState,this,mNotifBackend);
+}

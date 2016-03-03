@@ -1,0 +1,9 @@
+{
+  if (apps == null)   return;
+  if (apps.size() == 0) {
+    mLoader.setSummary(this,mContext.getString(R.string.notification_summary_none));
+  }
+ else {
+    mLoader.setSummary(this,mContext.getString(R.string.notification_summary,apps.size()));
+  }
+}

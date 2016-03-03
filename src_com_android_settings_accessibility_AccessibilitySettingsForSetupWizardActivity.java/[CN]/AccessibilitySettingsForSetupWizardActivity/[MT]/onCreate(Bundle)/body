@@ -2,4 +2,16 @@
   super.onCreate(savedState);
   getActionBar().setDisplayHomeAsUpEnabled(true);
   setIsDrawerPresent(false);
+  SystemBarHelper.hideSystemBars(getWindow());
+  setContentView(R.layout.accessibility_settings_for_suw);
+  NavigationBar navigationBar=(NavigationBar)findViewById(R.id.suw_navigation_bar);
+  navigationBar.getNextButton().setVisibility(View.GONE);
+  navigationBar.setNavigationBarListener(new NavigationBar.NavigationBarListener(){
+    @Override public void onNavigateBack(){
+      onNavigateUp();
+    }
+    @Override public void onNavigateNext(){
+    }
+  }
+);
 }

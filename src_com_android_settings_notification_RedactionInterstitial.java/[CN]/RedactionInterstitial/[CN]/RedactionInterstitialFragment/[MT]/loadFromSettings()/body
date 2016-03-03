@@ -11,4 +11,7 @@
     }
   }
   mRadioGroup.check(checkedButtonId);
+  boolean allowRemoteInput=Settings.Secure.getIntForUser(getContentResolver(),Settings.Secure.LOCK_SCREEN_ALLOW_REMOTE_INPUT,0,mUserId) != 0;
+  mRemoteInputCheckbox.setChecked(!allowRemoteInput);
+  updateRemoteInputCheckboxVisibility();
 }

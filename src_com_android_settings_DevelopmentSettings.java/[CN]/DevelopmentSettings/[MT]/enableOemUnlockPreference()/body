@@ -1,4 +1,7 @@
 {
-  String flashLocked=SystemProperties.get(FLASH_LOCKED_PROP);
-  return !"0".equals(flashLocked);
+  int flashLockState=PersistentDataBlockManager.FLASH_LOCK_UNKNOWN;
+  if (mOemUnlockManager != null) {
+    flashLockState=mOemUnlockManager.getFlashLockState();
+  }
+  return flashLockState == PersistentDataBlockManager.FLASH_LOCK_LOCKED;
 }

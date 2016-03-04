@@ -34,7 +34,7 @@
   if (mEntries.length == 1) {
     seekBar.setEnabled(false);
   }
-  final Context context=getContext();
+  final Context context=getPrefContext();
   final Configuration origConfig=context.getResources().getConfiguration();
   Configuration[] configurations=new Configuration[mEntries.length];
   for (int i=0; i < mEntries.length; ++i) {
@@ -43,13 +43,33 @@
   mPreviewPagerAdapter=new PreviewPagerAdapter(context,mPreviewSampleResIds,configurations);
   mPreviewPager=(ViewPager)content.findViewById(R.id.preview_pager);
   mPreviewPager.setAdapter(mPreviewPagerAdapter);
-  final DotsPageIndicator pageIndicator=(DotsPageIndicator)content.findViewById(R.id.page_indicator);
+  mPreviewPager.addOnPageChangeListener(new OnPageChangeListener(){
+    @Override public void onPageScrollStateChanged(    int state){
+    }
+    @Override public void onPageScrolled(    int position,    float positionOffset,    int positionOffsetPixels){
+    }
+    @Override public void onPageSelected(    int position){
+      mPreviewPager.sendAccessibilityEvent(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+    }
+  }
+);
+  mPageIndicator=(DotsPageIndicator)content.findViewById(R.id.page_indicator);
   if (mPreviewSampleResIds.length > 1) {
-    pageIndicator.setViewPager(mPreviewPager);
-    pageIndicator.setVisibility(View.VISIBLE);
+    mPageIndicator.setViewPager(mPreviewPager);
+    mPageIndicator.setVisibility(View.VISIBLE);
+    mPageIndicator.setOnPageChangeListener(new OnPageChangeListener(){
+      @Override public void onPageScrollStateChanged(      int state){
+      }
+      @Override public void onPageScrolled(      int position,      float positionOffset,      int positionOffsetPixels){
+      }
+      @Override public void onPageSelected(      int position){
+        setPagerIndicatorContentDescription(position);
+      }
+    }
+);
   }
  else {
-    pageIndicator.setVisibility(View.GONE);
+    mPageIndicator.setVisibility(View.GONE);
   }
   setPreviewLayer(mInitialIndex,false);
   return root;

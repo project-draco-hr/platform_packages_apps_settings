@@ -1,9 +1,11 @@
 {
+  setMainContentId(R.id.suw_main_content);
   super.onCreate(savedState);
+  FrameLayout parentLayout=(FrameLayout)findViewById(R.id.main_content);
+  LayoutInflater.from(this).inflate(R.layout.accessibility_settings_for_suw,parentLayout);
   getActionBar().setDisplayHomeAsUpEnabled(true);
   setIsDrawerPresent(false);
   SystemBarHelper.hideSystemBars(getWindow());
-  setContentView(R.layout.accessibility_settings_for_suw);
   NavigationBar navigationBar=(NavigationBar)findViewById(R.id.suw_navigation_bar);
   navigationBar.getNextButton().setVisibility(View.GONE);
   navigationBar.setNavigationBarListener(new NavigationBar.NavigationBarListener(){

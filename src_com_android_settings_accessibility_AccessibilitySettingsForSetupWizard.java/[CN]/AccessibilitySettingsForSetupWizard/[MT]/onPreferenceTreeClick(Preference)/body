@@ -5,31 +5,5 @@
     extras.putCharSequence(AccessibilitySettings.EXTRA_SUMMARY,getText(R.string.accessibility_screen_magnification_summary));
     extras.putBoolean(AccessibilitySettings.EXTRA_CHECKED,Settings.Secure.getInt(getContentResolver(),Settings.Secure.ACCESSIBILITY_DISPLAY_MAGNIFICATION_ENABLED,0) == 1);
   }
- else   if (mTalkbackPreference == preference) {
-    final ContentResolver resolver=getContentResolver();
-    final int accessibilityEnabled=Settings.Secure.getInt(resolver,Settings.Secure.ACCESSIBILITY_ENABLED,0);
-    if (accessibilityEnabled == 0) {
-      String serviceToEnable=null;
-      final AccessibilityManager manager=getActivity().getSystemService(AccessibilityManager.class);
-      final List<AccessibilityServiceInfo> accessibilityServices=manager.getInstalledAccessibilityServiceList();
-      for (      AccessibilityServiceInfo accessibilityService : accessibilityServices) {
-        if ((accessibilityService.feedbackType & AccessibilityServiceInfo.FEEDBACK_SPOKEN) != 0) {
-          final ServiceInfo serviceInfo=accessibilityService.getResolveInfo().serviceInfo;
-          mTalkbackPackage=serviceInfo.packageName;
-          final ComponentName componentName=new ComponentName(serviceInfo.packageName,serviceInfo.name);
-          serviceToEnable=componentName.flattenToString();
-          break;
-        }
-      }
-      Settings.Secure.putString(resolver,Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,serviceToEnable);
-      Settings.Secure.putString(resolver,Settings.Secure.TOUCH_EXPLORATION_GRANTED_ACCESSIBILITY_SERVICES,serviceToEnable);
-      Settings.Secure.putInt(resolver,Settings.Secure.TOUCH_EXPLORATION_ENABLED,1);
-      Settings.Secure.putInt(resolver,Settings.Secure.ACCESSIBILITY_ENABLED,1);
-      new Handler().postDelayed(mStartTalkbackRunnable,SCREEN_READER_INITIALIZATION_DELAY_MS);
-    }
- else {
-      launchTalkbackTutorial();
-    }
-  }
   return super.onPreferenceTreeClick(preference);
 }

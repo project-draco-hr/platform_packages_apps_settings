@@ -4,7 +4,7 @@
   }
   Fragment f=Fragment.instantiate(this,fragmentName,args);
   FragmentTransaction transaction=getFragmentManager().beginTransaction();
-  transaction.replace(R.id.main_content,f);
+  transaction.replace(mMainContentId,f);
   if (withTransition) {
     TransitionManager.beginDelayedTransition(mContent);
   }

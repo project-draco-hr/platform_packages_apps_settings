@@ -6,7 +6,7 @@
   root=null;
   final int resid=getResIdForLockUnlockSubScreen(getActivity(),new LockPatternUtils(getContext()));
   addPreferencesFromResource(resid);
-  mLockAfter=(RestrictedListPreference)findPreference(KEY_LOCK_AFTER_TIMEOUT);
+  mLockAfter=(TimeoutListPreference)findPreference(KEY_LOCK_AFTER_TIMEOUT);
   if (mLockAfter != null) {
     setupLockAfterPreference();
     updateLockAfterPreferenceSummary();

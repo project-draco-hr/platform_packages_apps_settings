@@ -4,6 +4,11 @@
   final long currentTimeout=Settings.System.getLong(getActivity().getContentResolver(),SCREEN_OFF_TIMEOUT,FALLBACK_SCREEN_TIMEOUT_VALUE);
   mScreenTimeoutPreference.setValue(String.valueOf(currentTimeout));
   mScreenTimeoutPreference.setOnPreferenceChangeListener(this);
-  disableUnusableTimeouts(mScreenTimeoutPreference);
+  final DevicePolicyManager dpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
+  if (dpm != null) {
+    final EnforcedAdmin admin=RestrictedLockUtils.checkIfMaximumTimeToLockIsSet(getActivity());
+    final long maxTimeout=dpm.getMaximumTimeToLock(null);
+    mScreenTimeoutPreference.removeUnusableTimeouts(maxTimeout,admin);
+  }
   updateTimeoutPreferenceDescription(currentTimeout);
 }

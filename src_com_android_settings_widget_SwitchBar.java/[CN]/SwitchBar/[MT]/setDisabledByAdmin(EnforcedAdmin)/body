@@ -3,13 +3,15 @@
   if (admin != null) {
     super.setEnabled(true);
     mDisabledByAdmin=true;
-    RestrictedLockUtils.setTextViewPadlock(mContext,mTextView,true);
     mTextView.setEnabled(false);
     mSwitch.setEnabled(false);
+    mSwitch.setVisibility(View.GONE);
+    mRestrictedIcon.setVisibility(View.VISIBLE);
   }
  else {
     mDisabledByAdmin=false;
-    RestrictedLockUtils.setTextViewPadlock(mContext,mTextView,false);
+    mSwitch.setVisibility(View.VISIBLE);
+    mRestrictedIcon.setVisibility(View.GONE);
     setEnabled(true);
   }
 }

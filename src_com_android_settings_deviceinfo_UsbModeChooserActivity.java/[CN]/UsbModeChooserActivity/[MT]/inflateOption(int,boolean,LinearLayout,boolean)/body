@@ -1,12 +1,12 @@
 {
-  View v=mLayoutInflater.inflate(R.layout.radio_with_summary,container,false);
+  View v=mLayoutInflater.inflate(R.layout.restricted_radio_with_summary,container,false);
   TextView titleView=(TextView)v.findViewById(android.R.id.title);
   titleView.setText(getTitle(mode));
   TextView summaryView=(TextView)v.findViewById(android.R.id.summary);
   summaryView.setText(getSummary(mode));
   if (disallowedByAdmin) {
     if (mEnforcedAdmin != null) {
-      setDisabledByAdmin(titleView,summaryView);
+      setDisabledByAdmin(v,titleView,summaryView);
     }
  else {
       return;

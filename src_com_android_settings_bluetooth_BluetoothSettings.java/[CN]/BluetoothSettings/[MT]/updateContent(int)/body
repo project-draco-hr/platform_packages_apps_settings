@@ -8,6 +8,11 @@ case BluetoothAdapter.STATE_ON:
     messageId=R.string.bluetooth_empty_list_user_restricted;
     break;
   }
+if (getPreferenceScreen().getPreferenceCount() == 0) {
+  getPreferenceScreen().addPreference(mPairedDevicesCategory);
+  getPreferenceScreen().addPreference(mAvailableDevicesCategory);
+  getPreferenceScreen().addPreference(mMyDevicePreference);
+}
 addDeviceCategory(mPairedDevicesCategory,R.string.bluetooth_preference_paired_devices,BluetoothDeviceFilter.BONDED_DEVICE_FILTER,true);
 int numberOfPairedDevices=mPairedDevicesCategory.getPreferenceCount();
 if (isUiRestricted() || numberOfPairedDevices <= 0) {

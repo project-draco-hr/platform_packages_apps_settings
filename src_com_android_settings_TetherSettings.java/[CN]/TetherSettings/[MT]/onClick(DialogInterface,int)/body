@@ -3,12 +3,11 @@
     mWifiConfig=mDialog.getConfig();
     if (mWifiConfig != null) {
       if (mWifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_ENABLED) {
-        mWifiManager.setWifiApEnabled(null,false);
-        mWifiManager.setWifiApEnabled(mWifiConfig,true);
+        Log.d("TetheringSettings","Wifi AP config changed while enabled, stop and restart");
+        mRestartWifiApAfterConfigChange=true;
+        mCm.stopTethering(TETHERING_WIFI);
       }
- else {
-        mWifiManager.setWifiApConfiguration(mWifiConfig);
-      }
+      mWifiManager.setWifiApConfiguration(mWifiConfig);
       int index=WifiApDialog.getSecurityTypeIndex(mWifiConfig);
       mCreateNetwork.setSummary(String.format(getActivity().getString(CONFIG_SUBTEXT),mWifiConfig.SSID,mSecurityType[index]));
     }

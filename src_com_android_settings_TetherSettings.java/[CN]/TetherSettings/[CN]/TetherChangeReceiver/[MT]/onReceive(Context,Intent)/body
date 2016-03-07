@@ -5,6 +5,11 @@
     ArrayList<String> active=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ACTIVE_TETHER);
     ArrayList<String> errored=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_ERRORED_TETHER);
     updateState(available.toArray(new String[available.size()]),active.toArray(new String[active.size()]),errored.toArray(new String[errored.size()]));
+    if (mWifiManager.getWifiApState() == WifiManager.WIFI_AP_STATE_DISABLED && mRestartWifiApAfterConfigChange) {
+      mRestartWifiApAfterConfigChange=false;
+      Log.d(TAG,"Restarting WifiAp due to prior config change.");
+      startTethering(TETHERING_WIFI);
+    }
   }
  else   if (action.equals(Intent.ACTION_MEDIA_SHARED)) {
     mMassStorageActive=true;

@@ -1,0 +1,34 @@
+{
+  mContext=activity;
+  boolean hasFeaturePrinting=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_PRINTING);
+  mHasFeatureIme=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_INPUT_METHODS);
+  AccessibilityManager accessibilityManager=(AccessibilityManager)mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
+  List<AccessibilityServiceInfo> accessibilityServices=accessibilityManager.getInstalledAccessibilityServiceList();
+  final int accessibilityServiceCount=accessibilityServices.size();
+  for (int i=0; i < accessibilityServiceCount; i++) {
+    AccessibilityServiceInfo accessibilityService=accessibilityServices.get(i);
+    ResolveInfo resolveInfo=accessibilityService.getResolveInfo();
+    if (resolveInfo == null || resolveInfo.serviceInfo == null) {
+      continue;
+    }
+    mAccessibilityServices.add(resolveInfo.serviceInfo.packageName);
+  }
+  if (hasFeaturePrinting) {
+    activity.getLoaderManager().initLoader(loaderId,null,this);
+  }
+  if (mHasFeatureIme) {
+    InputMethodManager imeManager=(InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+    List<InputMethodInfo> inputMethods=imeManager.getInputMethodList();
+    final int inputMethodCount=inputMethods.size();
+    for (int i=0; i < inputMethodCount; i++) {
+      InputMethodInfo inputMethod=inputMethods.get(i);
+      ServiceInfo serviceInfo=inputMethod.getServiceInfo();
+      if (serviceInfo == null)       continue;
+      mImeServices.add(serviceInfo.packageName);
+    }
+    mContext.getContentResolver().registerContentObserver(UserDictionary.Words.CONTENT_URI,true,mUserDictionaryContentObserver);
+  }
+  InputManager inputManager=(InputManager)activity.getSystemService(Context.INPUT_SERVICE);
+  inputManager.registerInputDeviceListener(this,mHandler);
+  register(activity,Looper.getMainLooper(),UserHandle.CURRENT,false);
+}

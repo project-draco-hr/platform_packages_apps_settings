@@ -1,32 +1,9 @@
 {
   Bundle arguments=getArguments();
-  mPreferenceKey=arguments.getString(PrintSettingsFragment.EXTRA_PREFERENCE_KEY);
+  mComponentName=ComponentName.unflattenFromString(arguments.getString(PrintSettingsFragment.EXTRA_SERVICE_COMPONENT_NAME));
+  mPreferenceKey=mComponentName.flattenToString();
   final boolean enabled=arguments.getBoolean(PrintSettingsFragment.EXTRA_CHECKED);
   mSwitchBar.setCheckedInternal(enabled);
-  String settingsTitle=arguments.getString(PrintSettingsFragment.EXTRA_SETTINGS_TITLE);
-  String settingsComponentName=arguments.getString(PrintSettingsFragment.EXTRA_SETTINGS_COMPONENT_NAME);
-  if (!TextUtils.isEmpty(settingsTitle) && !TextUtils.isEmpty(settingsComponentName)) {
-    Intent settingsIntent=new Intent(Intent.ACTION_MAIN).setComponent(ComponentName.unflattenFromString(settingsComponentName.toString()));
-    List<ResolveInfo> resolvedActivities=getPackageManager().queryIntentActivities(settingsIntent,0);
-    if (!resolvedActivities.isEmpty()) {
-      if (resolvedActivities.get(0).activityInfo.exported) {
-        mSettingsTitle=settingsTitle;
-        mSettingsIntent=settingsIntent;
-      }
-    }
-  }
-  String addPrintersTitle=arguments.getString(PrintSettingsFragment.EXTRA_ADD_PRINTERS_TITLE);
-  String addPrintersComponentName=arguments.getString(PrintSettingsFragment.EXTRA_ADD_PRINTERS_COMPONENT_NAME);
-  if (!TextUtils.isEmpty(addPrintersTitle) && !TextUtils.isEmpty(addPrintersComponentName)) {
-    Intent addPritnersIntent=new Intent(Intent.ACTION_MAIN).setComponent(ComponentName.unflattenFromString(addPrintersComponentName.toString()));
-    List<ResolveInfo> resolvedActivities=getPackageManager().queryIntentActivities(addPritnersIntent,0);
-    if (!resolvedActivities.isEmpty()) {
-      if (resolvedActivities.get(0).activityInfo.exported) {
-        mAddPrintersTitle=addPrintersTitle;
-        mAddPrintersIntent=addPritnersIntent;
-      }
-    }
-  }
-  mComponentName=ComponentName.unflattenFromString(arguments.getString(PrintSettingsFragment.EXTRA_SERVICE_COMPONENT_NAME));
+  getLoaderManager().initLoader(LOADER_ID_PRINT_SERVICE_LOADER,null,this);
   setHasOptionsMenu(true);
 }

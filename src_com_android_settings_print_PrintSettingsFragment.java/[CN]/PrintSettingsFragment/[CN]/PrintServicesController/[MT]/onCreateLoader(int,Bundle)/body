@@ -1,0 +1,9 @@
+{
+  PrintManager printManager=(PrintManager)getContext().getSystemService(Context.PRINT_SERVICE);
+  if (printManager != null) {
+    return new PrintServicesLoader(printManager,getContext(),PrintManager.ALL_SERVICES);
+  }
+ else {
+    return null;
+  }
+}

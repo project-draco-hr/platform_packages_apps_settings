@@ -2,14 +2,14 @@
   super.onCreateOptionsMenu(menu,inflater);
   inflater.inflate(R.menu.print_service_settings,menu);
   MenuItem addPrinters=menu.findItem(R.id.print_menu_item_add_printer);
-  if (mServiceEnabled && !TextUtils.isEmpty(mAddPrintersTitle) && mAddPrintersIntent != null) {
+  if (mServiceEnabled && mAddPrintersIntent != null) {
     addPrinters.setIntent(mAddPrintersIntent);
   }
  else {
     menu.removeItem(R.id.print_menu_item_add_printer);
   }
   MenuItem settings=menu.findItem(R.id.print_menu_item_settings);
-  if (mServiceEnabled && !TextUtils.isEmpty(mSettingsTitle) && mSettingsIntent != null) {
+  if (mServiceEnabled && mSettingsIntent != null) {
     settings.setIntent(mSettingsIntent);
   }
  else {

@@ -4,13 +4,6 @@
     mAccessibilityServices.remove(accessibilityIndex);
     Index.getInstance(mContext).updateFromClassNameResource(AccessibilitySettings.class.getName(),true,true);
   }
-  if (mHasFeaturePrinting) {
-    final int printIndex=mPrintServices.indexOf(packageName);
-    if (printIndex >= 0) {
-      mPrintServices.remove(printIndex);
-      Index.getInstance(mContext).updateFromClassNameResource(PrintSettingsFragment.class.getName(),true,true);
-    }
-  }
   if (mHasFeatureIme) {
     final int imeIndex=mImeServices.indexOf(packageName);
     if (imeIndex >= 0) {

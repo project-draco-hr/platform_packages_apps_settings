@@ -34,9 +34,11 @@
   mLockScreenSettings=(PreferenceGroup)findPreference("lock_screen_settings");
   mAddUserWhenLocked=(RestrictedSwitchPreference)findPreference("add_users_when_locked");
   mEmergencyInfoPreference=findPreference(KEY_EMERGENCY_INFO);
-  loadProfile();
   setHasOptionsMenu(true);
   IntentFilter filter=new IntentFilter(Intent.ACTION_USER_REMOVED);
   filter.addAction(Intent.ACTION_USER_INFO_CHANGED);
   context.registerReceiverAsUser(mUserChangeReceiver,UserHandle.ALL,filter,null,mHandler);
+  loadProfile();
+  updateUserList();
+  mShouldUpdateUserList=false;
 }

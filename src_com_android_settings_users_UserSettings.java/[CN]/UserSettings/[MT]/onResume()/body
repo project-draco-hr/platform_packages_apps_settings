@@ -1,6 +1,8 @@
 {
   super.onResume();
   if (!mUserCaps.mEnabled)   return;
-  loadProfile();
-  updateUserList();
+  if (mShouldUpdateUserList) {
+    loadProfile();
+    updateUserList();
+  }
 }

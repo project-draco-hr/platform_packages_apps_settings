@@ -1,0 +1,12 @@
+{
+  NetworkStatsHistory.Entry entry=null;
+  long totalData=0;
+  final int start=mNetwork.getIndexBefore(mStart);
+  final int end=mNetwork.getIndexAfter(mEnd);
+  for (int i=start; i <= end; i++) {
+    entry=mNetwork.getValues(i,entry);
+    totalData+=entry.rxBytes + entry.txBytes;
+  }
+  long policyMax=mPolicy != null ? Math.max(mPolicy.limitBytes,mPolicy.warningBytes) : 0;
+  return (int)(Math.max(totalData,policyMax) / RESOLUTION);
+}

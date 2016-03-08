@@ -1,0 +1,5 @@
+{
+  Formatter.BytesResult result=Formatter.formatBytes(getContext().getResources(),bytes,Formatter.FLAG_SHORTER);
+  CharSequence label=TextUtils.expandTemplate(getContext().getText(str),result.value,result.units);
+  return new SpannableStringBuilder().append(label,new ForegroundColorSpan(mLimitColor),0);
+}

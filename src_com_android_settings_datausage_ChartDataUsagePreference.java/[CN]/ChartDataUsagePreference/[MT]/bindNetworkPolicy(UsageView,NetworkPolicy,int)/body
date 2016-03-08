@@ -1,0 +1,22 @@
+{
+  CharSequence[] labels=new CharSequence[3];
+  int middleVisibility=0;
+  int topVisibility=0;
+  if (policy == null) {
+    return;
+  }
+  if (policy.limitBytes != NetworkPolicy.LIMIT_DISABLED) {
+    topVisibility=mLimitColor;
+    labels[2]=getLabel(policy.limitBytes,R.string.data_usage_sweep_limit,mLimitColor);
+  }
+  if (policy.warningBytes != NetworkPolicy.WARNING_DISABLED) {
+    chart.setDividerLoc((int)(policy.warningBytes / RESOLUTION));
+    float weight=policy.warningBytes / RESOLUTION / (float)top;
+    float above=1 - weight;
+    chart.setSideLabelWeights(above,weight);
+    middleVisibility=mWarningColor;
+    labels[1]=getLabel(policy.warningBytes,R.string.data_usage_sweep_warning,mWarningColor);
+  }
+  chart.setSideLabels(labels);
+  chart.setDividerColors(middleVisibility,topVisibility);
+}

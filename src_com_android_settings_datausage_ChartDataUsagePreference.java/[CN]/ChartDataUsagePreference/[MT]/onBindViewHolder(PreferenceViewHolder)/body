@@ -1,9 +1,11 @@
 {
   super.onBindViewHolder(holder);
-  ChartDataUsageView chart=(ChartDataUsageView)holder.itemView;
-  chart.setVisibleRange(mStart,mEnd);
-  chart.bindNetworkPolicy(mPolicy);
-  chart.bindNetworkStats(mNetwork);
-  ChartNetworkSeriesView series=(ChartNetworkSeriesView)holder.findViewById(R.id.series);
-  series.setChartColor(Color.BLACK,mSeriesColor,mSecondaryColor);
+  UsageView chart=(UsageView)holder.findViewById(R.id.data_usage);
+  if (mNetwork == null)   return;
+  int top=getTop();
+  chart.clearPaths();
+  chart.configureGraph((int)(mEnd - mStart),top,false,false);
+  calcPoints(chart);
+  chart.setBottomLabels(new CharSequence[]{Utils.formatDateRange(getContext(),mStart,mStart),Utils.formatDateRange(getContext(),mEnd,mEnd)});
+  bindNetworkPolicy(chart,mPolicy,top);
 }

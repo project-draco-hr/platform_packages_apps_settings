@@ -8,7 +8,7 @@
   mVisibilityOverride=(DropDownPreference)getPreferenceScreen().findPreference(KEY_VISIBILITY_OVERRIDE);
   mBlock=(RestrictedSwitchPreference)getPreferenceScreen().findPreference(KEY_BLOCK);
   mSilent=(RestrictedSwitchPreference)getPreferenceScreen().findPreference(KEY_SILENT);
-  mAppRow=mBackend.loadAppRow(mPm,mPkgInfo);
+  mAppRow=mBackend.loadAppRow(mContext,mPm,mPkgInfo);
   NotificationManager.Policy policy=NotificationManager.from(mContext).getNotificationPolicy();
   mDndVisualEffectsSuppressed=policy == null ? false : policy.suppressedVisualEffects != 0;
   ArrayMap<String,AppRow> rows=new ArrayMap<String,AppRow>();

@@ -2,18 +2,11 @@
 switch (msg.what) {
 case MSG_GET_PROVIDER:
     Tile tile=(Tile)msg.obj;
-  SummaryProvider provider=getSummaryProvider(tile);
-if (provider != null) {
-  if (DEBUG)   Log.d(TAG,"Creating " + tile);
-  mSummaryMap.put(provider,tile);
-}
+  makeProviderW(tile);
 break;
 case MSG_SET_LISTENING:
 boolean listening=msg.arg1 != 0;
-if (DEBUG) Log.d(TAG,"Listening " + listening);
-for (SummaryProvider p : mSummaryMap.keySet()) {
-p.setListening(listening);
-}
+setListeningW(listening);
 break;
 }
 }

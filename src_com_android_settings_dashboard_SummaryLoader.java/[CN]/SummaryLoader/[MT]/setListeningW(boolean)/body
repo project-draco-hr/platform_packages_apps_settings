@@ -1,0 +1,8 @@
+{
+  if (mListening == listening)   return;
+  if (DEBUG)   Log.d(TAG,"Listening " + listening);
+  for (  SummaryProvider p : mSummaryMap.keySet()) {
+    p.setListening(listening);
+  }
+  mListening=listening;
+}

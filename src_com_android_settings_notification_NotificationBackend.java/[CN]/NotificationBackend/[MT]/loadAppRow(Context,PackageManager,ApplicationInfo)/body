@@ -14,5 +14,6 @@
   row.appImportance=getImportance(row.pkg,row.uid);
   row.appBypassDnd=getBypassZenMode(row.pkg,row.uid);
   row.appVisOverride=getVisibilityOverride(row.pkg,row.uid);
+  row.lockScreenSecure=new LockPatternUtils(context).isSecure(UserHandle.myUserId());
   return row;
 }

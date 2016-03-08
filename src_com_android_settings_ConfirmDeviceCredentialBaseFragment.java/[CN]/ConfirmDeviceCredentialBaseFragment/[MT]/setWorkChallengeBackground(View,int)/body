@@ -1,4 +1,8 @@
 {
+  View mainContent=getActivity().findViewById(com.android.settings.R.id.main_content);
+  if (mainContent != null) {
+    mainContent.setPadding(0,0,0,0);
+  }
   DevicePolicyManager dpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   baseView.setBackground(new ColorDrawable(dpm.getOrganizationColorForUser(userId)));
   ImageView imageView=(ImageView)baseView.findViewById(R.id.background_image);

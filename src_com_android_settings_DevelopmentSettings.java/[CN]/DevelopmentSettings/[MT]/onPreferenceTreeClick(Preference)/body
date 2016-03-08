@@ -147,6 +147,9 @@
  else   if (preference == mWebViewMultiprocess) {
     writeWebViewMultiprocessOptions();
   }
+ else   if (SHORTCUT_MANAGER_RESET_KEY.equals(preference.getKey())) {
+    confirmResetShortcutManagerThrottling();
+  }
  else {
     return super.onPreferenceTreeClick(preference);
   }

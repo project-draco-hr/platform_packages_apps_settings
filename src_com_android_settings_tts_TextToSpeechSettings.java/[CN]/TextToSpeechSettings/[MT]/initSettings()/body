@@ -1,14 +1,19 @@
 {
   final ContentResolver resolver=getContentResolver();
   try {
+    mDefaultPitch=android.provider.Settings.Secure.getInt(resolver,TTS_DEFAULT_PITCH);
     mDefaultRate=android.provider.Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE);
   }
  catch (  SettingNotFoundException e) {
+    mDefaultPitch=TextToSpeech.Engine.DEFAULT_PITCH;
     mDefaultRate=TextToSpeech.Engine.DEFAULT_RATE;
   }
   mDefaultRatePref.setProgress(mDefaultRate);
   mDefaultRatePref.setOnPreferenceChangeListener(this);
   mDefaultRatePref.setMax(MAX_SPEECH_RATE);
+  mDefaultPitchPref.setProgress(mDefaultPitch);
+  mDefaultPitchPref.setOnPreferenceChangeListener(this);
+  mDefaultPitchPref.setMax(MAX_SPEECH_PITCH);
   mCurrentEngine=mTts.getCurrentEngine();
   SettingsActivity activity=null;
   if (getActivity() instanceof SettingsActivity) {

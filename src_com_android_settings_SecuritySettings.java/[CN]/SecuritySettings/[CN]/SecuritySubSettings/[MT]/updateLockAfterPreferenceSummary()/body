@@ -9,9 +9,6 @@
     final CharSequence[] values=mLockAfter.getEntryValues();
     int best=0;
     for (int i=0; i < values.length; i++) {
-      if (mLockAfter.isRestrictedForEntry(entries[i])) {
-        break;
-      }
       long timeout=Long.valueOf(values[i].toString());
       if (currentTimeout >= timeout) {
         best=i;

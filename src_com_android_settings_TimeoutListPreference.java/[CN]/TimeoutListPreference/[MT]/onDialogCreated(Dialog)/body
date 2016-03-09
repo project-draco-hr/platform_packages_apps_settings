@@ -1,0 +1,13 @@
+{
+  super.onDialogCreated(dialog);
+  dialog.create();
+  if (mAdmin != null) {
+    View footerView=dialog.findViewById(R.id.admin_disabled_other_options);
+    footerView.findViewById(R.id.admin_more_details_link).setOnClickListener(new View.OnClickListener(){
+      @Override public void onClick(      View view){
+        RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getContext(),mAdmin);
+      }
+    }
+);
+  }
+}

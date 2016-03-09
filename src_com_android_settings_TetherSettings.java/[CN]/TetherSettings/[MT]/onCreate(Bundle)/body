@@ -17,6 +17,7 @@
   mUsbTether=(SwitchPreference)findPreference(USB_TETHER_SETTINGS);
   mBluetoothTether=(SwitchPreference)findPreference(ENABLE_BLUETOOTH_TETHERING);
   mCm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   mUsbRegexs=mCm.getTetherableUsbRegexs();
   mWifiRegexs=mCm.getTetherableWifiRegexs();
   mBluetoothRegexs=mCm.getTetherableBluetoothRegexs();

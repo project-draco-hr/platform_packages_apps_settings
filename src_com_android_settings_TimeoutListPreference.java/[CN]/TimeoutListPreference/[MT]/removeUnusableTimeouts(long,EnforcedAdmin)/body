@@ -1,0 +1,42 @@
+{
+  final DevicePolicyManager dpm=(DevicePolicyManager)getContext().getSystemService(Context.DEVICE_POLICY_SERVICE);
+  if (dpm == null) {
+    return;
+  }
+  if (admin == null && mAdmin == null && !isDisabledByAdmin()) {
+    return;
+  }
+  if (admin == null) {
+    maxTimeout=Long.MAX_VALUE;
+  }
+  ArrayList<CharSequence> revisedEntries=new ArrayList<CharSequence>();
+  ArrayList<CharSequence> revisedValues=new ArrayList<CharSequence>();
+  for (int i=0; i < mInitialValues.length; ++i) {
+    long timeout=Long.parseLong(mInitialValues[i].toString());
+    if (timeout <= maxTimeout) {
+      revisedEntries.add(mInitialEntries[i]);
+      revisedValues.add(mInitialValues[i]);
+    }
+  }
+  if (revisedValues.size() == 0) {
+    setDisabledByAdmin(admin);
+    return;
+  }
+ else {
+    setDisabledByAdmin(null);
+  }
+  if (revisedEntries.size() != getEntries().length) {
+    final int userPreference=Integer.parseInt(getValue());
+    setEntries(revisedEntries.toArray(new CharSequence[0]));
+    setEntryValues(revisedValues.toArray(new CharSequence[0]));
+    mAdmin=admin;
+    if (userPreference <= maxTimeout) {
+      setValue(String.valueOf(userPreference));
+    }
+ else     if (revisedValues.size() > 0 && Long.parseLong(revisedValues.get(revisedValues.size() - 1).toString()) == maxTimeout) {
+      setValue(String.valueOf(maxTimeout));
+    }
+ else {
+    }
+  }
+}

@@ -7,7 +7,7 @@
   if (mScreenSaverPreference != null && getResources().getBoolean(com.android.internal.R.bool.config_dreamsSupported) == false) {
     getPreferenceScreen().removePreference(mScreenSaverPreference);
   }
-  mScreenTimeoutPreference=(RestrictedListPreference)findPreference(KEY_SCREEN_TIMEOUT);
+  mScreenTimeoutPreference=(TimeoutListPreference)findPreference(KEY_SCREEN_TIMEOUT);
   mFontSizePref=findPreference(KEY_FONT_SIZE);
   if (isAutomaticBrightnessAvailable(getResources())) {
     mAutoBrightnessPreference=(SwitchPreference)findPreference(KEY_AUTO_BRIGHTNESS);

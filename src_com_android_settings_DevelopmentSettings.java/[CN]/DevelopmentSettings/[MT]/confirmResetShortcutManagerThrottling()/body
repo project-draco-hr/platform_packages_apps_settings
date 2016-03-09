@@ -1,0 +1,16 @@
+{
+  final IShortcutService service=IShortcutService.Stub.asInterface(ServiceManager.getService(Context.SHORTCUT_SERVICE));
+  DialogInterface.OnClickListener onClickListener=new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int which){
+      if (which == DialogInterface.BUTTON_POSITIVE) {
+        try {
+          service.resetThrottling();
+        }
+ catch (        RemoteException e) {
+        }
+      }
+    }
+  }
+;
+  new AlertDialog.Builder(getActivity()).setTitle(R.string.confirm_reset_shortcut_manager_throttling_title).setMessage(R.string.confirm_reset_shortcut_manager_throttling_message).setPositiveButton(R.string.okay,onClickListener).setNegativeButton(android.R.string.cancel,null).create().show();
+}

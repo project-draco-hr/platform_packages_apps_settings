@@ -3,14 +3,7 @@
   if (requestCode == REQUEST_UNINSTALL) {
     if (mDisableAfterUninstall) {
       mDisableAfterUninstall=false;
-      try {
-        ApplicationInfo ainfo=getActivity().getPackageManager().getApplicationInfo(mAppEntry.info.packageName,PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_DISABLED_COMPONENTS);
-        if ((ainfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
-          new DisableChanger(this,mAppEntry.info,PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER).execute((Object)null);
-        }
-      }
- catch (      NameNotFoundException e) {
-      }
+      new DisableChanger(this,mAppEntry.info,PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER).execute((Object)null);
     }
     if (!refreshUi()) {
       setIntentAndFinish(true,true);

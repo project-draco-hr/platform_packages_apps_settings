@@ -19,7 +19,7 @@
     }
  else     if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
       if (mAppEntry.info.enabled && !isDisabledUntilUsed()) {
-        if (mUpdatedSysApp) {
+        if (mUpdatedSysApp && isSingleUser()) {
           showDialogInner(DLG_SPECIAL_DISABLE,0);
         }
  else {

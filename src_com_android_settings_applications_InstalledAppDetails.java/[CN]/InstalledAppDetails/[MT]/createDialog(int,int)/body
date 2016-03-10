@@ -8,7 +8,7 @@ case DLG_DISABLE:
     }
 ).setNegativeButton(R.string.dlg_cancel,null).create();
 case DLG_SPECIAL_DISABLE:
-  return new AlertDialog.Builder(getActivity()).setMessage(getActivity().getText(R.string.app_special_disable_dlg_text)).setPositiveButton(R.string.app_disable_dlg_positive,new DialogInterface.OnClickListener(){
+  return new AlertDialog.Builder(getActivity()).setMessage(getActivity().getText(R.string.app_disable_dlg_text)).setPositiveButton(R.string.app_disable_dlg_positive,new DialogInterface.OnClickListener(){
     public void onClick(    DialogInterface dialog,    int which){
       uninstallPkg(mAppEntry.info.packageName,false,true);
     }

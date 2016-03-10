@@ -7,11 +7,7 @@
   root=getPreferenceScreen();
   final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,MY_USER_ID);
   addPreferencesFromResource(resid);
-  final EnforcedAdmin admin=RestrictedLockUtils.checkIfPasswordQualityIsSet(getActivity(),MY_USER_ID);
-  if (admin != null && mDPM.getPasswordQuality(admin.component) == DevicePolicyManager.PASSWORD_QUALITY_MANAGED) {
-    final GearPreference unlockSetOrChangePref=(GearPreference)getPreferenceScreen().findPreference(KEY_UNLOCK_SET_OR_CHANGE);
-    unlockSetOrChangePref.setDisabledByAdmin(admin);
-  }
+  disableIfPasswordQualityManaged(KEY_UNLOCK_SET_OR_CHANGE,MY_USER_ID);
   mProfileChallengeUserId=Utils.getManagedProfileId(mUm,MY_USER_ID);
   if (mProfileChallengeUserId != UserHandle.USER_NULL && mLockPatternUtils.isSeparateProfileChallengeAllowed(mProfileChallengeUserId)) {
     addPreferencesFromResource(R.xml.security_settings_profile);
@@ -20,10 +16,14 @@
     maybeAddFingerprintPreference(root,mProfileChallengeUserId);
     addPreferencesFromResource(R.xml.security_settings_unification);
     if (!mLockPatternUtils.isSeparateProfileChallengeEnabled(mProfileChallengeUserId)) {
-      Preference lockPreference=root.findPreference(KEY_UNLOCK_SET_OR_CHANGE_PROFILE);
-      String summary=getContext().getString(R.string.lock_settings_profile_unified_summary);
+      final Preference lockPreference=root.findPreference(KEY_UNLOCK_SET_OR_CHANGE_PROFILE);
+      final String summary=getContext().getString(R.string.lock_settings_profile_unified_summary);
       lockPreference.setSummary(summary);
       lockPreference.setEnabled(false);
+      disableIfPasswordQualityManaged(KEY_UNLOCK_SET_OR_CHANGE,mProfileChallengeUserId);
+    }
+ else {
+      disableIfPasswordQualityManaged(KEY_UNLOCK_SET_OR_CHANGE_PROFILE,mProfileChallengeUserId);
     }
   }
   Preference unlockSetOrChange=findPreference(KEY_UNLOCK_SET_OR_CHANGE);

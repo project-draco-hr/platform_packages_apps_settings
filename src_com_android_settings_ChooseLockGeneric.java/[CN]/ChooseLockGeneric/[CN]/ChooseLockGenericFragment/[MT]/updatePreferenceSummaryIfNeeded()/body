@@ -1,5 +1,8 @@
 {
-  if (LockPatternUtils.isDeviceEncrypted()) {
+  if (!StorageManager.isBlockEncrypted()) {
+    return;
+  }
+  if (StorageManager.isNonDefaultBlockEncrypted()) {
     return;
   }
   if (AccessibilityManager.getInstance(getActivity()).getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK).isEmpty()) {

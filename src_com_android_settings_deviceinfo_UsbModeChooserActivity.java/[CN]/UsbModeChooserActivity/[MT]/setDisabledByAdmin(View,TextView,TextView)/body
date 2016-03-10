@@ -2,7 +2,7 @@
   if (mEnforcedAdmin != null) {
     titleView.setEnabled(false);
     summaryView.setEnabled(false);
-    RestrictedLockUtils.setTextViewPadlock(this,titleView,true);
+    rootView.findViewById(R.id.restricted_icon).setVisibility(View.VISIBLE);
     Drawable[] compoundDrawables=titleView.getCompoundDrawablesRelative();
     compoundDrawables[0].mutate().setColorFilter(getColor(R.color.disabled_text_color),PorterDuff.Mode.MULTIPLY);
   }

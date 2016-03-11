@@ -1,18 +1,7 @@
 {
   final Context context=getActivity();
   String key=preference.getKey();
-  if (KEY_FREQUENCY_BAND.equals(key)) {
-    try {
-      int value=Integer.parseInt((String)newValue);
-      mWifiManager.setFrequencyBand(value,true);
-      updateFrequencyBandSummary(preference,value);
-    }
- catch (    NumberFormatException e) {
-      Toast.makeText(context,R.string.wifi_setting_frequency_band_error,Toast.LENGTH_SHORT).show();
-      return false;
-    }
-  }
- else   if (KEY_WIFI_ASSISTANT.equals(key)) {
+  if (KEY_WIFI_ASSISTANT.equals(key)) {
     NetworkScorerAppManager.NetworkScorerAppData wifiAssistant=NetworkScorerAppManager.getScorer(context,(String)newValue);
     if (wifiAssistant == null) {
       mNetworkScoreManager.setActiveScorer(null);

@@ -1,0 +1,5 @@
+{
+  final Intent newIntent=mKeyguardManager.createConfirmDeviceCredentialIntent(null,null,userId);
+  newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+  getActivity().startActivity(newIntent);
+}

@@ -16,23 +16,6 @@
  else   if (mWifiAssistantPreference != null) {
     getPreferenceScreen().removePreference(mWifiAssistantPreference);
   }
-  ListPreference frequencyPref=(ListPreference)findPreference(KEY_FREQUENCY_BAND);
-  if (mWifiManager.isDualBandSupported()) {
-    frequencyPref.setOnPreferenceChangeListener(this);
-    int value=mWifiManager.getFrequencyBand();
-    if (value != -1) {
-      frequencyPref.setValue(String.valueOf(value));
-      updateFrequencyBandSummary(frequencyPref,value);
-    }
- else {
-      Log.e(TAG,"Failed to fetch frequency band");
-    }
-  }
- else {
-    if (frequencyPref != null) {
-      getPreferenceScreen().removePreference(frequencyPref);
-    }
-  }
   ListPreference sleepPolicyPref=(ListPreference)findPreference(KEY_SLEEP_POLICY);
   if (sleepPolicyPref != null) {
     if (Utils.isWifiOnly(context)) {

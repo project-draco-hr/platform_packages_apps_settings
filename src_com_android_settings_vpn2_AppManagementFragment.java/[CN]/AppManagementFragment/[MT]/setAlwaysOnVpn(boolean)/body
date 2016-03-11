@@ -1,0 +1,7 @@
+{
+  if (mUserId == UserHandle.USER_SYSTEM) {
+    VpnUtils.clearLockdownVpn(getContext());
+  }
+  mConnectivityManager.setAlwaysOnVpnPackageForUser(mUserId,isEnabled ? mPackageName : null);
+  updateUI();
+}

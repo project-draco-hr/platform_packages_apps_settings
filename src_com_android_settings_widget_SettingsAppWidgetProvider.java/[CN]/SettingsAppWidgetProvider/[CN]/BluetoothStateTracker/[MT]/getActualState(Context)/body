@@ -5,6 +5,9 @@
       return STATE_UNKNOWN;
     }
     sLocalBluetoothAdapter=manager.getBluetoothAdapter();
+    if (sLocalBluetoothAdapter == null) {
+      return STATE_UNKNOWN;
+    }
   }
   return bluetoothStateToFiveState(sLocalBluetoothAdapter.getBluetoothState());
 }

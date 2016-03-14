@@ -4,6 +4,8 @@
       mShowLatestAreaInfo=true;
     }
   }
+  PersistableBundle carrierConfig=mCarrierConfigManager.getConfig(mSir.getSubscriptionId());
+  mShowICCID=carrierConfig.getBoolean(CarrierConfigManager.KEY_SHOW_ICCID_IN_SIM_STATUS_BOOL);
   String rawNumber=mTelephonyManager.getLine1Number(mSir.getSubscriptionId());
   String formattedNumber=null;
   if (!TextUtils.isEmpty(rawNumber)) {
@@ -12,6 +14,13 @@
   setSummaryText(KEY_PHONE_NUMBER,formattedNumber);
   setSummaryText(KEY_IMEI,mPhone.getImei());
   setSummaryText(KEY_IMEI_SV,mPhone.getDeviceSvn());
+  if (!mShowICCID) {
+    removePreferenceFromScreen(KEY_ICCID);
+  }
+ else {
+    String iccid=mTelephonyManager.getSimSerialNumber(mSir.getSubscriptionId());
+    setSummaryText(KEY_ICCID,iccid);
+  }
   if (!mShowLatestAreaInfo) {
     removePreferenceFromScreen(KEY_LATEST_AREA_INFO);
   }

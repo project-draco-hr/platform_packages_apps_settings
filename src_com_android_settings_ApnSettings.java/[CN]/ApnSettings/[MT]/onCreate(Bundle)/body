@@ -2,11 +2,8 @@
   super.onCreate(icicle);
   final Activity activity=getActivity();
   final int subId=activity.getIntent().getIntExtra(SUB_ID,SubscriptionManager.INVALID_SUBSCRIPTION_ID);
-  mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   mMobileStateFilter=new IntentFilter(TelephonyIntents.ACTION_ANY_DATA_CONNECTION_STATE_CHANGED);
-  if (!mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS)) {
-    setHasOptionsMenu(true);
-  }
+  setIfOnlyAvailableForAdmins(true);
   mSubscriptionInfo=SubscriptionManager.from(activity).getActiveSubscriptionInfo(subId);
   mUiccController=UiccController.getInstance();
   CarrierConfigManager configManager=(CarrierConfigManager)getSystemService(Context.CARRIER_CONFIG_SERVICE);

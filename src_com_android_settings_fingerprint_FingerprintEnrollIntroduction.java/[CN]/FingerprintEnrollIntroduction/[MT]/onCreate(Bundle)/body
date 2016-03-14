@@ -2,10 +2,11 @@
   super.onCreate(savedInstanceState);
   setContentView(R.layout.fingerprint_enroll_introduction);
   setHeaderText(R.string.security_settings_fingerprint_enroll_introduction_title);
-  final SetupWizardItemsLayout layout=(SetupWizardItemsLayout)findViewById(R.id.setup_wizard_layout);
-  layout.getListView().setOnItemClickListener(this);
-  final ItemAdapter adapter=(ItemAdapter)layout.getAdapter();
+  final SetupWizardRecyclerLayout layout=(SetupWizardRecyclerLayout)findViewById(R.id.setup_wizard_layout);
+  final RecyclerItemAdapter adapter=(RecyclerItemAdapter)layout.getAdapter();
+  adapter.setOnItemSelectedListener(this);
   Item item=(Item)adapter.findItemById(R.id.fingerprint_introduction_message);
   item.setTitle(LearnMoreSpan.linkify(getText(R.string.security_settings_fingerprint_enroll_introduction_message),getString(R.string.help_url_fingerprint)));
+  layout.setDividerInset(0);
   updatePasswordQuality();
 }

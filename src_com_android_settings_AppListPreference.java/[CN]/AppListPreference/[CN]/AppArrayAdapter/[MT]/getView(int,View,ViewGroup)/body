@@ -3,8 +3,14 @@
   View view=inflater.inflate(R.layout.app_preference_item,parent,false);
   TextView textView=(TextView)view.findViewById(android.R.id.title);
   textView.setText(getItem(position));
-  if (position == mSelectedIndex) {
+  if (position == mSelectedIndex && position == mSystemAppIndex) {
+    view.findViewById(R.id.system_default_label).setVisibility(View.VISIBLE);
+  }
+ else   if (position == mSelectedIndex) {
     view.findViewById(R.id.default_label).setVisibility(View.VISIBLE);
+  }
+ else   if (position == mSystemAppIndex) {
+    view.findViewById(R.id.system_label).setVisibility(View.VISIBLE);
   }
   ImageView imageView=(ImageView)view.findViewById(android.R.id.icon);
   imageView.setImageDrawable(mImageDrawables[position]);

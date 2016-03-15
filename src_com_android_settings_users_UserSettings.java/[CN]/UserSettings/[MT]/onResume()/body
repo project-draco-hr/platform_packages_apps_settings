@@ -2,6 +2,7 @@
   super.onResume();
   if (!mUserCaps.mEnabled)   return;
   if (mShouldUpdateUserList) {
+    mUserCaps.updateAddUserCapabilities(getActivity());
     loadProfile();
     updateUserList();
   }

@@ -20,7 +20,7 @@
     }
   }
   setContentView(mIsShowingDashboard ? R.layout.settings_main_dashboard : R.layout.settings_main_prefs);
-  mContent=(ViewGroup)findViewById(R.id.main_content);
+  mContent=(ViewGroup)findViewById(mMainContentId);
   getFragmentManager().addOnBackStackChangedListener(this);
   if (mIsShowingDashboard) {
     if (!Utils.isLowStorage(this)) {

@@ -1,7 +1,6 @@
 {
   SparseIntArray points=new SparseIntArray();
   NetworkStatsHistory.Entry entry=null;
-  long lastTime=-1;
   long totalData=0;
   final int start=mNetwork.getIndexAfter(mStart);
   final int end=mNetwork.getIndexAfter(mEnd);
@@ -12,15 +11,8 @@
     final long startTime=entry.bucketStart;
     final long endTime=startTime + entry.bucketDuration;
     totalData+=entry.rxBytes + entry.txBytes;
-    if (lastTime != startTime) {
-      if (points.size() > 1) {
-        chart.addPath(points);
-      }
-      points.clear();
-    }
-    points.put((int)(startTime - mStart + 1),(int)(totalData / RESOLUTION));
-    points.put((int)(endTime - mStart),(int)(totalData / RESOLUTION));
-    lastTime=endTime;
+    points.put(toInt(startTime - mStart + 1),(int)(totalData / RESOLUTION));
+    points.put(toInt(endTime - mStart),(int)(totalData / RESOLUTION));
   }
   if (points.size() > 1) {
     chart.addPath(points);

@@ -1,0 +1,10 @@
+{
+  final AccessibilityManager manager=getActivity().getSystemService(AccessibilityManager.class);
+  final List<AccessibilityServiceInfo> accessibilityServices=manager.getInstalledAccessibilityServiceList();
+  for (  AccessibilityServiceInfo info : accessibilityServices) {
+    if ((info.feedbackType & AccessibilityServiceInfo.FEEDBACK_SPOKEN) != 0) {
+      return info;
+    }
+  }
+  return null;
+}

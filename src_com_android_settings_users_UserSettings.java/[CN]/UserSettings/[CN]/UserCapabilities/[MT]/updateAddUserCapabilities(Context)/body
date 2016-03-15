@@ -1,0 +1,12 @@
+{
+  mEnforcedAdmin=RestrictedLockUtils.checkIfRestrictionEnforced(context,UserManager.DISALLOW_ADD_USER,UserHandle.myUserId());
+  final boolean hasBaseUserRestriction=RestrictedLockUtils.hasBaseUserRestriction(context,UserManager.DISALLOW_ADD_USER,UserHandle.myUserId());
+  mDisallowAddUserSetByAdmin=mEnforcedAdmin != null && !hasBaseUserRestriction;
+  mDisallowAddUser=(mEnforcedAdmin != null || hasBaseUserRestriction);
+  mCanAddUser=true;
+  if (!mIsAdmin || UserManager.getMaxSupportedUsers() < 2 || !UserManager.supportsMultipleUsers() || mDisallowAddUser) {
+    mCanAddUser=false;
+  }
+  final boolean canAddUsersWhenLocked=mIsAdmin || Settings.Global.getInt(context.getContentResolver(),Settings.Global.ADD_USERS_WHEN_LOCKED,0) == 1;
+  mCanAddGuest=!mIsGuest && !mDisallowAddUser && canAddUsersWhenLocked;
+}

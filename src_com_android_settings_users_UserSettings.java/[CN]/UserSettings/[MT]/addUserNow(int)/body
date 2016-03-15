@@ -10,6 +10,9 @@ synchronized (mUserLock) {
  else {
           user=createRestrictedProfile();
         }
+        if (user == null) {
+          return;
+        }
 synchronized (mUserLock) {
           mAddingUser=false;
           if (userType == USER_TYPE_USER) {

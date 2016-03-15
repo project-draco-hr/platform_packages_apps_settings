@@ -4,7 +4,7 @@
   if (mNetwork == null)   return;
   int top=getTop();
   chart.clearPaths();
-  chart.configureGraph((int)(mEnd - mStart),top,false,false);
+  chart.configureGraph(toInt(mEnd - mStart),top,false,false);
   calcPoints(chart);
   chart.setBottomLabels(new CharSequence[]{Utils.formatDateRange(getContext(),mStart,mStart),Utils.formatDateRange(getContext(),mEnd,mEnd)});
   bindNetworkPolicy(chart,mPolicy,top);

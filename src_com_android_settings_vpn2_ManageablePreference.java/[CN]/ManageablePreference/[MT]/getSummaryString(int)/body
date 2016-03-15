@@ -1,0 +1,10 @@
+{
+  final Resources res=getContext().getResources();
+  final String[] states=res.getStringArray(R.array.vpn_states);
+  String summary=state == STATE_NONE ? "" : states[state];
+  if (mIsAlwaysOn) {
+    final String alwaysOnString=res.getString(R.string.vpn_always_on_active);
+    summary=TextUtils.isEmpty(summary) ? alwaysOnString : res.getString(R.string.join_two_unrelated_items,summary,alwaysOnString);
+  }
+  return summary;
+}

@@ -2,8 +2,7 @@
   if (mPackageName == null || mUserId == UserHandle.USER_NULL) {
     return;
   }
-  final String[] states=getContext().getResources().getStringArray(R.array.vpn_states);
-  setSummary(mState != STATE_DISCONNECTED ? states[mState] : "");
+  setSummary(getSummaryString(mState == STATE_DISCONNECTED ? STATE_NONE : mState));
   mName=mPackageName;
   Drawable icon=null;
   try {

@@ -1,6 +1,7 @@
 {
   super.onCreate(icicle);
   mTelephonyManager=(TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+  mCarrierConfigManager=(CarrierConfigManager)getSystemService(CARRIER_CONFIG_SERVICE);
   mSelectableSubInfos=SubscriptionManager.from(this).getActiveSubscriptionInfoList();
   addPreferencesFromResource(R.xml.device_info_sim_status);
   mRes=getResources();

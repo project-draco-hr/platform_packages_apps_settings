@@ -2,7 +2,7 @@
   super.refreshStats();
   PowerWhitelistBackend powerWhiteist=PowerWhitelistBackend.getInstance();
   updatePreference(mHistPref);
-  mAppListGroup.removeAll();
+  cacheRemoveAllPrefs(mAppListGroup);
   mAppListGroup.setOrderingAsAdded(false);
   boolean addedSome=false;
   final PowerProfile powerProfile=mStatsHelper.getPowerProfile();
@@ -51,7 +51,12 @@
       final BatteryEntry entry=new BatteryEntry(getActivity(),mHandler,mUm,sipper);
       final Drawable badgedIcon=mUm.getBadgedIconForUser(entry.getIcon(),userHandle);
       final CharSequence contentDescription=mUm.getBadgedLabelForUser(entry.getLabel(),userHandle);
-      final PowerGaugePreference pref=new PowerGaugePreference(getPrefContext(),badgedIcon,contentDescription,entry);
+      final String key=sipper.drainType == DrainType.APP ? sipper.getPackages() != null ? TextUtils.concat(sipper.getPackages()).toString() : String.valueOf(sipper.getUid()) : sipper.drainType.toString();
+      PowerGaugePreference pref=(PowerGaugePreference)getCachedPreference(key);
+      if (pref == null) {
+        pref=new PowerGaugePreference(getPrefContext(),badgedIcon,contentDescription,entry);
+        pref.setKey(key);
+      }
       final double percentOfMax=(sipper.totalPowerMah * 100) / mStatsHelper.getMaxPower();
       sipper.percent=percentOfTotal;
       pref.setTitle(entry.getLabel());
@@ -76,5 +81,6 @@
   if (!addedSome) {
     addNotAvailableMessage();
   }
+  removeCachedPrefs(mAppListGroup);
   BatteryEntry.startRequestQueue();
 }

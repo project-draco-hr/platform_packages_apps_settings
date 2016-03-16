@@ -1,13 +1,18 @@
 {
   mDashboard=(FocusRecyclerView)view.findViewById(R.id.dashboard_container);
-  LinearLayoutManager llm=new LinearLayoutManager(getContext());
-  llm.setOrientation(LinearLayoutManager.VERTICAL);
-  mDashboard.setLayoutManager(llm);
+  mLayoutManager=new LinearLayoutManager(getContext());
+  mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+  if (bundle != null) {
+    int scrollPosition=bundle.getInt(EXTRA_SCROLL_POSITION);
+    mLayoutManager.scrollToPosition(scrollPosition);
+  }
+  mDashboard.setLayoutManager(mLayoutManager);
   mDashboard.setHasFixedSize(true);
   mDashboard.setListener(this);
   mAdapter=new DashboardAdapter(getContext());
   mAdapter.setConditions(mConditionManager.getConditions());
   mAdapter.setSuggestions(mSuggestionParser);
+  mDashboard.setAdapter(mAdapter);
   mSummaryLoader.setAdapter(mAdapter);
   ConditionAdapterUtils.addDismiss(mDashboard);
   rebuildUI();

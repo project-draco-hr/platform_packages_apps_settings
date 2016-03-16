@@ -7,7 +7,6 @@
   List<DashboardCategory> categories=((SettingsActivity)getActivity()).getDashboardCategories();
   mAdapter.setCategories(categories);
   mAdapter.setSuggestions(mSuggestionParser);
-  mDashboard.setAdapter(mAdapter);
   long delta=System.currentTimeMillis() - start;
   Log.d(TAG,"rebuildUI took: " + delta + " ms");
 }

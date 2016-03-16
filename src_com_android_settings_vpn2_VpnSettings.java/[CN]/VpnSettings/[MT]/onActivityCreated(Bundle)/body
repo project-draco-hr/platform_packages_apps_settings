@@ -1,0 +1,8 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  mUserManager=(UserManager)getSystemService(Context.USER_SERVICE);
+  mConnectivityManager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+  mUnavailable=isUiRestricted();
+  setHasOptionsMenu(!mUnavailable);
+  addPreferencesFromResource(R.xml.vpn_settings2);
+}

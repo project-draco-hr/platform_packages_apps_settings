@@ -8,7 +8,6 @@
   for (int i=0, count=installedServices.size(); i < count; ++i) {
     AccessibilityServiceInfo info=installedServices.get(i);
     RestrictedPreference preference=new RestrictedPreference(getActivity());
-    preference.useAdminDisabledSummary(true);
     String title=info.getResolveInfo().loadLabel(getPackageManager()).toString();
     ServiceInfo serviceInfo=info.getResolveInfo().serviceInfo;
     ComponentName componentName=new ComponentName(serviceInfo.packageName,serviceInfo.name);
@@ -36,9 +35,7 @@
  else {
       preference.setEnabled(true);
     }
-    if (serviceAllowed) {
-      preference.setSummary(serviceEnabledString);
-    }
+    preference.setSummary(serviceEnabledString);
     preference.setOrder(i);
     preference.setFragment(ToggleAccessibilityServicePreferenceFragment.class.getName());
     preference.setPersistent(true);

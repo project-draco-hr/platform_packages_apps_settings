@@ -1,0 +1,11 @@
+{
+  if (intent != null) {
+    PackageManager pm=getPackageManager();
+    List<ResolveInfo> resolved=pm.queryIntentActivities(intent,0);
+    if (resolved == null || resolved.isEmpty()) {
+      intent=null;
+      Log.e(TAG,"Backup " + logLabel + " intent "+ intent+ " fails to resolve; ignoring");
+    }
+  }
+  return intent;
+}

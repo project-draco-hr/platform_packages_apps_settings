@@ -1,5 +1,10 @@
 {
-  Preference notAvailable=new Preference(getPrefContext());
-  notAvailable.setTitle(R.string.power_usage_not_available);
-  mAppListGroup.addPreference(notAvailable);
+  final String NOT_AVAILABLE="not_available";
+  Preference notAvailable=getCachedPreference(NOT_AVAILABLE);
+  if (notAvailable == null) {
+    notAvailable=new Preference(getPrefContext());
+    notAvailable.setKey(NOT_AVAILABLE);
+    notAvailable.setTitle(R.string.power_usage_not_available);
+    mAppListGroup.addPreference(notAvailable);
+  }
 }

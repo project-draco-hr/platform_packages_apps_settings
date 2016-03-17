@@ -5,7 +5,11 @@ case BUTTON_SUBMIT:
       mListener.onSubmit(this);
     break;
 case BUTTON_FORGET:
-  mListener.onForget(this);
+  if (WifiSettings.isEditabilityLockedDown(getContext(),mAccessPoint.getConfig())) {
+    RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getContext(),RestrictedLockUtils.getDeviceOwner(getContext()));
+    return;
+  }
+mListener.onForget(this);
 break;
 }
 }

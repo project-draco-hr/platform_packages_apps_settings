@@ -4,7 +4,8 @@
   if (button == DialogInterface.BUTTON_POSITIVE) {
     KeyStore.getInstance().put(Credentials.VPN + profile.key,profile.encode(),KeyStore.UID_SELF,0);
     disconnect(profile);
-    if (!dialog.isEditing()) {
+    updateLockdownVpn(dialog.isVpnAlwaysOn(),profile);
+    if (!dialog.isEditing() && !VpnUtils.isVpnLockdown(profile.key)) {
       try {
         connect(profile);
       }
@@ -17,15 +18,7 @@
     disconnect(profile);
     KeyStore keyStore=KeyStore.getInstance();
     keyStore.delete(Credentials.VPN + profile.key,KeyStore.UID_SELF);
-    if (Arrays.equals(profile.key.getBytes(),keyStore.get(Credentials.LOCKDOWN_VPN))) {
-      keyStore.delete(Credentials.LOCKDOWN_VPN);
-      try {
-        mService.updateLockdownVpn();
-      }
- catch (      RemoteException e) {
-        Log.e(TAG,"Failed to clear lockdown VPN configuration");
-      }
-    }
+    updateLockdownVpn(false,profile);
   }
   dismiss();
 }

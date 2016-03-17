@@ -8,9 +8,9 @@
   try {
     backupEnabled=mBackupManager.isBackupEnabled();
     String transport=mBackupManager.getCurrentTransport();
-    configIntent=mBackupManager.getConfigurationIntent(transport);
+    configIntent=validatedActivityIntent(mBackupManager.getConfigurationIntent(transport),"config");
     configSummary=mBackupManager.getDestinationString(transport);
-    manageIntent=mBackupManager.getDataManagementIntent(transport);
+    manageIntent=validatedActivityIntent(mBackupManager.getDataManagementIntent(transport),"management");
     manageLabel=mBackupManager.getDataManagementLabel(transport);
     mBackup.setSummary(backupEnabled ? R.string.accessibility_feature_state_on : R.string.accessibility_feature_state_off);
   }

@@ -7,6 +7,9 @@
   final Set<Integer> readOnlyUsers=getReadOnlyUserProfiles();
   getActivity().runOnUiThread(new Runnable(){
     @Override public void run(){
+      if (!isAdded()) {
+        return;
+      }
       final Set<Preference> updates=new ArraySet<>();
       for (      VpnProfile profile : vpnProfiles) {
         ConfigPreference p=findOrCreatePreference(profile);

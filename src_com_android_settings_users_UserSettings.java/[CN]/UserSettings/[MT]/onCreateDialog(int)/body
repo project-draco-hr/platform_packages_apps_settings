@@ -98,17 +98,6 @@ case DIALOG_USER_PROFILE_EDITOR:
 Dialog dlg=mEditUserInfoController.createDialog(this,mMePreference.getIcon(),mMePreference.getTitle(),R.string.profile_info_settings_title,this,android.os.Process.myUserHandle());
 return dlg;
 }
-case DIALOG_EMERGENCY_INFO_CONSENT:
-{
-Dialog dlg=new AlertDialog.Builder(context).setTitle(R.string.emergency_info_title).setMessage(R.string.user_emergency_info_consent).setPositiveButton(R.string.emergency_info_continue,new DialogInterface.OnClickListener(){
-@Override public void onClick(DialogInterface dialog,int which){
-Intent intent=new Intent(ACTION_EDIT_EMERGENCY_INFO);
-startActivity(intent);
-}
-}
-).setNegativeButton(android.R.string.cancel,null).create();
-return dlg;
-}
 default :
 return null;
 }

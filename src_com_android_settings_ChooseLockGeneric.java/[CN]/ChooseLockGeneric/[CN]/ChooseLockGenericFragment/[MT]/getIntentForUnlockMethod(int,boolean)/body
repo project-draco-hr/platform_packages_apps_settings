@@ -2,7 +2,7 @@
   Intent intent=null;
   final Context context=getActivity();
   if (quality >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
-    int minLength=mDPM.getPasswordMinimumLength(null);
+    int minLength=mDPM.getPasswordMinimumLength(null,mUserId);
     if (minLength < MIN_PASSWORD_LENGTH) {
       minLength=MIN_PASSWORD_LENGTH;
     }

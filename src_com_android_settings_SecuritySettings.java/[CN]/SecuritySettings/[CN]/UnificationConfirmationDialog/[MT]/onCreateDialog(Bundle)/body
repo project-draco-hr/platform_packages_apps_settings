@@ -1,7 +1,7 @@
 {
   final SecuritySettings parentFragment=((SecuritySettings)getParentFragment());
   final boolean compliant=getArguments().getBoolean(EXTRA_COMPLIANT);
-  return new AlertDialog.Builder(getActivity()).setTitle(R.string.lock_settings_profile_unification_dialog_title).setMessage(compliant ? R.string.lock_settings_profile_unification_dialog_body : R.string.lock_settings_profile_unification_dialog_uncompliant_body).setPositiveButton(compliant ? R.string.okay : R.string.lock_settings_profile_unification_dialog_uncompliant_confirm,new DialogInterface.OnClickListener(){
+  return new AlertDialog.Builder(getActivity()).setTitle(R.string.lock_settings_profile_unification_dialog_title).setMessage(compliant ? R.string.lock_settings_profile_unification_dialog_body : R.string.lock_settings_profile_unification_dialog_uncompliant_body).setPositiveButton(compliant ? R.string.lock_settings_profile_unification_dialog_confirm : R.string.lock_settings_profile_unification_dialog_uncompliant_confirm,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int whichButton){
       if (compliant) {
         parentFragment.launchConfirmDeviceLockForUnification();

@@ -15,10 +15,10 @@
   mProfileChallengeUserId=Utils.getManagedProfileId(mUm,MY_USER_ID);
   if (mProfileChallengeUserId != UserHandle.USER_NULL && mLockPatternUtils.isSeparateProfileChallengeAllowed(mProfileChallengeUserId)) {
     addPreferencesFromResource(R.xml.security_settings_profile);
+    addPreferencesFromResource(R.xml.security_settings_unification);
     final int profileResid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,mProfileChallengeUserId);
     addPreferencesFromResource(profileResid);
     maybeAddFingerprintPreference(root,mProfileChallengeUserId);
-    addPreferencesFromResource(R.xml.security_settings_unification);
     if (!mLockPatternUtils.isSeparateProfileChallengeEnabled(mProfileChallengeUserId)) {
       Preference lockPreference=root.findPreference(KEY_UNLOCK_SET_OR_CHANGE_PROFILE);
       String summary=getContext().getString(R.string.lock_settings_profile_unified_summary);

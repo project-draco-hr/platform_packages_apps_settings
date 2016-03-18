@@ -7,6 +7,7 @@
   BluetoothDevicePreference preference=(BluetoothDevicePreference)getCachedPreference(key);
   if (preference == null) {
     preference=new BluetoothDevicePreference(getPrefContext(),cachedDevice);
+    preference.setKey(key);
     mDeviceListGroup.addPreference(preference);
   }
  else {

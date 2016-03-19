@@ -17,15 +17,15 @@
       }
     }
     if (lteCells.length() != 0) {
-      value+=String.format("LTE\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-3.3s %-4.4s %-4.4s %-2.2s\n","SRV","MCC","MNC","TAC","CID","PCI","RSRP","RSRQ","TA");
+      value+=String.format("LTE\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-3.3s %-6.6s %-4.4s %-4.4s %-2.2s\n","SRV","MCC","MNC","TAC","CID","PCI","EARFCN","RSRP","RSRQ","TA");
       value+=lteCells.toString();
     }
     if (wcdmaCells.length() != 0) {
-      value+=String.format("WCDMA\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-5.5s %-4.4s\n","SRV","MCC","MNC","LAC","CID","PSC","RSCP");
+      value+=String.format("WCDMA\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-6.6s %-3.3s %-4.4s\n","SRV","MCC","MNC","LAC","CID","UARFCN","PSC","RSCP");
       value+=wcdmaCells.toString();
     }
     if (gsmCells.length() != 0) {
-      value+=String.format("GSM\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-4.4s %-4.4s\n","SRV","MCC","MNC","LAC","CID","BSIC","RSSI");
+      value+=String.format("GSM\n%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-6.6s %-4.4s %-4.4s\n","SRV","MCC","MNC","LAC","CID","ARFCN","BSIC","RSSI");
       value+=gsmCells.toString();
     }
     if (cdmaCells.length() != 0) {

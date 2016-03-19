@@ -1,5 +1,6 @@
 {
   log("updateImsVoLteProvisionedState isImsVoLteProvisioned()=" + isImsVoLteProvisioned());
-  String buttonText=isImsVoLteProvisioned() ? getString(R.string.volte_provisioned_flag_off) : getString(R.string.volte_provisioned_flag_on);
-  imsVoLteProvisionedButton.setText(buttonText);
+  imsVoLteProvisionedSwitch.setOnCheckedChangeListener(null);
+  imsVoLteProvisionedSwitch.setChecked(isImsVoLteProvisioned());
+  imsVoLteProvisionedSwitch.setOnCheckedChangeListener(mImsVoLteCheckedChangeListener);
 }

@@ -1,28 +1,24 @@
 {
   super.onResume();
   log("Started onResume");
-  updatePhoneState();
-  updateSignalStrength();
   updateMessageWaiting();
   updateCallRedirect();
-  updateServiceState();
   updateDataState();
-  updateDataStats();
   updateDataStats2();
-  updatePowerState();
-  updateCellInfoListRate();
-  updateImsRegRequiredState();
+  updateRadioPowerState();
   updateImsVoLteProvisionedState();
-  updateSmsOverImsState();
-  updateLteRamDumpState();
   updateProperties();
   updateDnsCheckState();
+  updateNetworkType();
   updateNeighboringCids(mNeighboringCellResult);
   updateLocation(mCellLocationResult);
   updateCellInfo(mCellInfoResult);
   mPingHostnameV4.setText(mPingHostnameResultV4);
   mPingHostnameV6.setText(mPingHostnameResultV6);
   mHttpClientTest.setText(mHttpClientTestResult);
-  mPhoneStateReceiver.registerIntent();
-  mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_DATA_CONNECTION_STATE | PhoneStateListener.LISTEN_DATA_ACTIVITY | PhoneStateListener.LISTEN_CELL_LOCATION| PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR| PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR| PhoneStateListener.LISTEN_CELL_INFO| PhoneStateListener.LISTEN_DATA_CONNECTION_REAL_TIME_INFO);
+  cellInfoRefreshRateSpinner.setOnItemSelectedListener(mCellInfoRefreshRateHandler);
+  preferredNetworkType.setOnItemSelectedListener(mPreferredNetworkHandler);
+  radioPowerOnSwitch.setOnCheckedChangeListener(mRadioPowerOnChangeListener);
+  imsVoLteProvisionedSwitch.setOnCheckedChangeListener(mImsVoLteCheckedChangeListener);
+  mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_CALL_STATE | PhoneStateListener.LISTEN_DATA_CONNECTION_STATE | PhoneStateListener.LISTEN_DATA_ACTIVITY| PhoneStateListener.LISTEN_CELL_LOCATION| PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR| PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR| PhoneStateListener.LISTEN_CELL_INFO| PhoneStateListener.LISTEN_SERVICE_STATE| PhoneStateListener.LISTEN_SIGNAL_STRENGTHS| PhoneStateListener.LISTEN_DATA_CONNECTION_REAL_TIME_INFO);
 }

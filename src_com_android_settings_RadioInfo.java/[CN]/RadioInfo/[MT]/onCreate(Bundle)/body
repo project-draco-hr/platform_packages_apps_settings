@@ -12,7 +12,8 @@
   roamingState=(TextView)findViewById(R.id.roaming);
   gsmState=(TextView)findViewById(R.id.gsm);
   gprsState=(TextView)findViewById(R.id.gprs);
-  network=(TextView)findViewById(R.id.network);
+  voiceNetwork=(TextView)findViewById(R.id.voice_network);
+  dataNetwork=(TextView)findViewById(R.id.data_network);
   dBm=(TextView)findViewById(R.id.dbm);
   mMwi=(TextView)findViewById(R.id.mwi);
   mCfi=(TextView)findViewById(R.id.cfi);
@@ -21,11 +22,6 @@
   mCellInfo=(TextView)findViewById(R.id.cellinfo);
   mCellInfo.setTypeface(Typeface.MONOSPACE);
   mDcRtInfoTv=(TextView)findViewById(R.id.dcrtinfo);
-  resets=(TextView)findViewById(R.id.resets);
-  attempts=(TextView)findViewById(R.id.attempts);
-  successes=(TextView)findViewById(R.id.successes);
-  disconnects=(TextView)findViewById(R.id.disconnects);
-  sentSinceReceived=(TextView)findViewById(R.id.sentSinceReceived);
   sent=(TextView)findViewById(R.id.sent);
   received=(TextView)findViewById(R.id.received);
   smsc=(EditText)findViewById(R.id.smsc);
@@ -37,19 +33,12 @@
   ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mPreferredNetworkLabels);
   adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
   preferredNetworkType.setAdapter(adapter);
-  preferredNetworkType.setOnItemSelectedListener(mPreferredNetworkHandler);
-  radioPowerButton=(Button)findViewById(R.id.radio_power);
-  radioPowerButton.setOnClickListener(mPowerButtonHandler);
-  cellInfoListRateButton=(Button)findViewById(R.id.cell_info_list_rate);
-  cellInfoListRateButton.setOnClickListener(mCellInfoListRateHandler);
-  imsRegRequiredButton=(Button)findViewById(R.id.ims_reg_required);
-  imsRegRequiredButton.setOnClickListener(mImsRegRequiredHandler);
-  imsVoLteProvisionedButton=(Button)findViewById(R.id.volte_provisioned_flag);
-  imsVoLteProvisionedButton.setOnClickListener(mImsVoLteProvisionedHandler);
-  smsOverImsButton=(Button)findViewById(R.id.sms_over_ims);
-  smsOverImsButton.setOnClickListener(mSmsOverImsHandler);
-  lteRamDumpButton=(Button)findViewById(R.id.lte_ram_dump);
-  lteRamDumpButton.setOnClickListener(mLteRamDumpHandler);
+  cellInfoRefreshRateSpinner=(Spinner)findViewById(R.id.cell_info_rate_select);
+  ArrayAdapter<String> cellInfoAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,mCellInfoRefreshRateLabels);
+  cellInfoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+  cellInfoRefreshRateSpinner.setAdapter(cellInfoAdapter);
+  imsVoLteProvisionedSwitch=(Switch)findViewById(R.id.volte_provisioned_switch);
+  radioPowerOnSwitch=(Switch)findViewById(R.id.radio_power);
   pingTestButton=(Button)findViewById(R.id.ping_test);
   pingTestButton.setOnClickListener(mPingButtonHandler);
   updateSmscButton=(Button)findViewById(R.id.update_smsc);
@@ -66,10 +55,7 @@
   if (oemInfoIntentList.size() == 0) {
     oemInfoButton.setEnabled(false);
   }
-  mPhoneStateReceiver=new PhoneStateIntentReceiver(this,mHandler);
-  mPhoneStateReceiver.notifySignalStrength(EVENT_SIGNAL_STRENGTH_CHANGED);
-  mPhoneStateReceiver.notifyServiceState(EVENT_SERVICE_STATE_CHANGED);
-  mPhoneStateReceiver.notifyPhoneCallState(EVENT_PHONE_STATE_CHANGED);
+  mCellInfoRefreshRateIndex=CELL_INFO_LIST_RATE_DISABLED;
   mPreferredNetworkTypeResult=mPreferredNetworkLabels.length - 1;
   phone.getPreferredNetworkType(mHandler.obtainMessage(EVENT_QUERY_PREFERRED_TYPE_DONE));
   restoreFromBundle(icicle);

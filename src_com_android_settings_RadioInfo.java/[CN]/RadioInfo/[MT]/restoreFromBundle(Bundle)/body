@@ -8,5 +8,7 @@
   mPingHostnameV4.setText(mPingHostnameResultV4);
   mPingHostnameV6.setText(mPingHostnameResultV6);
   mHttpClientTest.setText(mHttpClientTestResult);
-  mPreferredNetworkTypeResult=b.getInt("mPreferredNetworkTypeResult",0);
+  mPreferredNetworkTypeResult=b.getInt("mPreferredNetworkTypeResult",mPreferredNetworkLabels.length - 1);
+  mCellInfoRefreshRateIndex=b.getInt("mCellInfoRefreshRateIndex",0);
+  cellInfoRefreshRateSpinner.setSelection(mCellInfoRefreshRateIndex);
 }

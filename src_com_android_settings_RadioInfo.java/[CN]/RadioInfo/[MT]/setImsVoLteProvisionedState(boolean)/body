@@ -1,0 +1,16 @@
+{
+  log(String.format("toggle VoLTE provisioned: %s",((state) ? "on" : "off")));
+  if (phone != null && mImsManager != null) {
+    QueuedWork.singleThreadExecutor().submit(new Runnable(){
+      public void run(){
+        try {
+          mImsManager.getConfigInterface().setProvisionedValue(ImsConfig.ConfigConstants.VLT_SETTING_ENABLED,state ? 1 : 0);
+        }
+ catch (        ImsException e) {
+          Log.e(TAG,"setImsVoLteProvisioned() exception:",e);
+        }
+      }
+    }
+);
+  }
+}

@@ -1,6 +1,7 @@
 {
-  if (preference instanceof ConfigPreference) {
-    VpnProfile profile=((ConfigPreference)preference).getProfile();
+  if (preference instanceof LegacyVpnPreference) {
+    LegacyVpnPreference pref=(LegacyVpnPreference)preference;
+    VpnProfile profile=pref.getProfile();
     if (mConnectedLegacyVpn != null && profile.key.equals(mConnectedLegacyVpn.key) && mConnectedLegacyVpn.state == LegacyVpnInfo.STATE_CONNECTED) {
       try {
         mConnectedLegacyVpn.intent.send();
@@ -15,6 +16,9 @@
   }
  else   if (preference instanceof AppPreference) {
     AppPreference pref=(AppPreference)preference;
+    if (pref.isAlwaysOn()) {
+      return true;
+    }
     boolean connected=(pref.getState() == AppPreference.STATE_CONNECTED);
     if (!connected) {
       try {

@@ -4,7 +4,8 @@
   final List<AppVpnInfo> vpnApps=getVpnApps(getActivity(),true);
   final List<LegacyVpnInfo> connectedLegacyVpns=getConnectedLegacyVpns();
   final List<AppVpnInfo> connectedAppVpns=getConnectedAppVpns();
-  final Set<Integer> readOnlyUsers=getReadOnlyUserProfiles();
+  final Set<AppVpnInfo> alwaysOnAppVpnInfos=getAlwaysOnAppVpnInfos();
+  final String lockdownVpnKey=VpnUtils.getLockdownVpn();
   getActivity().runOnUiThread(new Runnable(){
     @Override public void run(){
       if (!isAdded()) {
@@ -12,18 +13,18 @@
       }
       final Set<Preference> updates=new ArraySet<>();
       for (      VpnProfile profile : vpnProfiles) {
-        ConfigPreference p=findOrCreatePreference(profile);
-        p.setState(ConfigPreference.STATE_NONE);
-        p.setEnabled(!readOnlyUsers.contains(UserHandle.myUserId()));
+        LegacyVpnPreference p=findOrCreatePreference(profile);
+        p.setState(LegacyVpnPreference.STATE_NONE);
+        p.setAlwaysOn(lockdownVpnKey != null && lockdownVpnKey.equals(profile.key));
         updates.add(p);
       }
       for (      AppVpnInfo app : vpnApps) {
         AppPreference p=findOrCreatePreference(app);
         p.setState(AppPreference.STATE_DISCONNECTED);
-        p.setEnabled(!readOnlyUsers.contains(app.userId));
+        p.setAlwaysOn(alwaysOnAppVpnInfos.contains(app));
         updates.add(p);
       }
-      mConfigPreferences.values().retainAll(updates);
+      mLegacyVpnPreferences.values().retainAll(updates);
       mAppPreferences.values().retainAll(updates);
       final PreferenceGroup vpnGroup=getPreferenceScreen();
       for (int i=vpnGroup.getPreferenceCount() - 1; i >= 0; i--) {
@@ -39,7 +40,7 @@
         vpnGroup.addPreference(pref);
       }
       for (      LegacyVpnInfo info : connectedLegacyVpns) {
-        final ConfigPreference preference=mConfigPreferences.get(info.key);
+        final LegacyVpnPreference preference=mLegacyVpnPreferences.get(info.key);
         if (preference != null) {
           preference.setState(info.state);
         }

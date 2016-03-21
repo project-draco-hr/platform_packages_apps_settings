@@ -1,7 +1,8 @@
 {
   AppPreference pref=mAppPreferences.get(app);
   if (pref == null) {
-    pref=new AppPreference(getPrefContext(),mManageListener);
+    pref=new AppPreference(getPrefContext());
+    pref.setOnGearClickListener(mGearListener);
     pref.setOnPreferenceClickListener(this);
     mAppPreferences.put(app,pref);
   }

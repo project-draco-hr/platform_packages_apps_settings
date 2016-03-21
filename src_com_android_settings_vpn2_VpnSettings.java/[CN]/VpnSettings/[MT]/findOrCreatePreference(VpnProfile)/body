@@ -1,9 +1,10 @@
 {
-  ConfigPreference pref=mConfigPreferences.get(profile.key);
+  LegacyVpnPreference pref=mLegacyVpnPreferences.get(profile.key);
   if (pref == null) {
-    pref=new ConfigPreference(getPrefContext(),mManageListener);
+    pref=new LegacyVpnPreference(getPrefContext());
+    pref.setOnGearClickListener(mGearListener);
     pref.setOnPreferenceClickListener(this);
-    mConfigPreferences.put(profile.key,pref);
+    mLegacyVpnPreferences.put(profile.key,pref);
   }
   pref.setProfile(profile);
   return pref;

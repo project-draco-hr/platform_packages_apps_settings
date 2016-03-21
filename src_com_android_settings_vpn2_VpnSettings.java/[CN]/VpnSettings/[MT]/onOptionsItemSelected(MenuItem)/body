@@ -3,7 +3,7 @@ switch (item.getItemId()) {
 case R.id.vpn_create:
 {
       long millis=System.currentTimeMillis();
-      while (mConfigPreferences.containsKey(Long.toHexString(millis))) {
+      while (mLegacyVpnPreferences.containsKey(Long.toHexString(millis))) {
         ++millis;
       }
       VpnProfile profile=new VpnProfile(Long.toHexString(millis));

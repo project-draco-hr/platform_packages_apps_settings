@@ -3,10 +3,10 @@
   mLockPatternUtils.clearLock(mProfileChallengeUserId);
   mLockPatternUtils.setSeparateProfileChallengeEnabled(mProfileChallengeUserId,false);
   if (profileQuality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
-    mLockPatternUtils.saveLockPattern(LockPatternUtils.stringToPattern(mCurrentProfilePassword),mCurrentDevicePassword,UserHandle.myUserId());
+    mLockPatternUtils.saveLockPattern(LockPatternUtils.stringToPattern(mCurrentProfilePassword),mCurrentDevicePassword,MY_USER_ID);
   }
  else {
-    mLockPatternUtils.saveLockPassword(mCurrentProfilePassword,mCurrentDevicePassword,profileQuality,UserHandle.myUserId());
+    mLockPatternUtils.saveLockPassword(mCurrentProfilePassword,mCurrentDevicePassword,profileQuality,MY_USER_ID);
   }
   mCurrentDevicePassword=null;
   mCurrentProfilePassword=null;

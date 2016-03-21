@@ -1,0 +1,4 @@
+{
+  final List<AppOpsManager.PackageOps> apps=mAppOpsManager.getOpsForPackage(mPackageUid,mPackageName,new int[]{OP_ACTIVATE_VPN});
+  return apps != null && apps.size() > 0 && apps.get(0) != null;
+}

@@ -7,4 +7,7 @@
  catch (  RemoteException e) {
     Log.e(TAG,"Failed to forget authorization of " + mPackageInfo.packageName + " for user "+ userId,e);
   }
+  if (mListener != null) {
+    mListener.onForget();
+  }
 }

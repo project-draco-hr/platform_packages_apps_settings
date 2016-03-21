@@ -1,6 +1,11 @@
 {
-  Intent intent=onBuildStartFragmentIntent(context,fragmentName,args,null,titleResId,title,isShortcut);
-  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-  context.startActivityAsUser(intent,userHandle);
+  if (userHandle.getIdentifier() == UserHandle.myUserId()) {
+    startWithFragment(context,fragmentName,args,null,0,titleResId,title,isShortcut);
+  }
+ else {
+    Intent intent=onBuildStartFragmentIntent(context,fragmentName,args,null,titleResId,title,isShortcut);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    context.startActivityAsUser(intent,userHandle);
+  }
 }

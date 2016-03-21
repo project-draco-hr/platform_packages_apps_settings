@@ -1,0 +1,11 @@
+{
+  super.onResume();
+  boolean isInfoLoaded=loadInfo();
+  if (isInfoLoaded) {
+    mPreferenceVersion.setTitle(getPrefContext().getString(R.string.vpn_version,mPackageInfo.versionName));
+    updateUI();
+  }
+ else {
+    finish();
+  }
+}

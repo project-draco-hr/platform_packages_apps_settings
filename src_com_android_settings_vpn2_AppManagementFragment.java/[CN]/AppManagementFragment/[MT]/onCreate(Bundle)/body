@@ -1,0 +1,12 @@
+{
+  super.onCreate(savedState);
+  addPreferencesFromResource(R.xml.vpn_app_management);
+  mPackageManager=getContext().getPackageManager();
+  mAppOpsManager=getContext().getSystemService(AppOpsManager.class);
+  mConnectivityManager=getContext().getSystemService(ConnectivityManager.class);
+  mPreferenceVersion=findPreference(KEY_VERSION);
+  mPreferenceAlwaysOn=(RestrictedSwitchPreference)findPreference(KEY_ALWAYS_ON_VPN);
+  mPreferenceForget=(RestrictedPreference)findPreference(KEY_FORGET_VPN);
+  mPreferenceAlwaysOn.setOnPreferenceClickListener(this);
+  mPreferenceForget.setOnPreferenceClickListener(this);
+}

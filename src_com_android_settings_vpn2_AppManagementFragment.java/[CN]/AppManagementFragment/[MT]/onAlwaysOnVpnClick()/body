@@ -1,0 +1,11 @@
+{
+  final boolean isChecked=mPreferenceAlwaysOn.isChecked();
+  if (isChecked && isLegacyVpnLockDownOrAnotherPackageAlwaysOn()) {
+    mPreferenceAlwaysOn.setChecked(false);
+    ReplaceExistingVpnFragment.show(this);
+  }
+ else {
+    setAlwaysOnVpn(isChecked);
+  }
+  return true;
+}

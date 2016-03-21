@@ -1,0 +1,9 @@
+{
+  if (mUserId == UserHandle.USER_SYSTEM) {
+    String lockdownKey=VpnUtils.getLockdownVpn();
+    if (lockdownKey != null) {
+      return true;
+    }
+  }
+  return getAlwaysOnVpnPackage() != null && !isVpnAlwaysOn();
+}

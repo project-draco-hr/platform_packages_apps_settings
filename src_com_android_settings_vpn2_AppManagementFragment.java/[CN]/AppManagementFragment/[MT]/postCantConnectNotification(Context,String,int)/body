@@ -1,0 +1,8 @@
+{
+  final Resources res=context.getResources();
+  final Intent intent=new Intent(Settings.ACTION_VPN_SETTINGS);
+  final PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,Intent.FLAG_ACTIVITY_NEW_TASK);
+  final Notification notification=new Notification.Builder(context).setContentTitle(res.getString(R.string.vpn_cant_connect_notification_title,vpnName)).setContentText(res.getString(R.string.vpn_tap_for_vpn_settings)).setSmallIcon(R.drawable.ic_settings_wireless).setContentIntent(pendingIntent).setAutoCancel(true).build();
+  NotificationManager nm=context.getSystemService(NotificationManager.class);
+  nm.notify(notificationId,notification);
+}

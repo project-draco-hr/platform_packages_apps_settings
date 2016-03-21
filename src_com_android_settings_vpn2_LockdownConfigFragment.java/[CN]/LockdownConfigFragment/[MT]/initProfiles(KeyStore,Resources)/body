@@ -1,6 +1,6 @@
 {
   final ConnectivityManager cm=ConnectivityManager.from(getActivity());
-  final String lockdownKey=getStringOrNull(keyStore,Credentials.LOCKDOWN_VPN);
+  final String lockdownKey=VpnUtils.getLockdownVpn();
   final String alwaysOnPackage=cm.getAlwaysOnVpnPackageForUser(UserHandle.myUserId());
   if (UserManager.get(getContext()).isPrimaryUser()) {
     mProfiles=VpnSettings.loadVpnProfiles(keyStore,VpnProfile.TYPE_PPTP);

@@ -6,6 +6,7 @@
   args.putBoolean(ARG_MANAGING,managing);
   args.putBoolean(ARG_CONNECTED,connected);
   final AppDialogFragment frag=new AppDialogFragment();
+  frag.mListener=listener;
   frag.setArguments(args);
   frag.setTargetFragment(parent,0);
   frag.show(parent.getFragmentManager(),TAG_APP_DIALOG);

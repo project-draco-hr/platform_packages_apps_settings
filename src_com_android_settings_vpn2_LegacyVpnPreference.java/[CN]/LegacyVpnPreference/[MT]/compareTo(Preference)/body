@@ -1,6 +1,6 @@
 {
-  if (preference instanceof ConfigPreference) {
-    ConfigPreference another=(ConfigPreference)preference;
+  if (preference instanceof LegacyVpnPreference) {
+    LegacyVpnPreference another=(LegacyVpnPreference)preference;
     int result;
     if ((result=another.mState - mState) == 0 && (result=mProfile.name.compareToIgnoreCase(another.mProfile.name)) == 0 && (result=mProfile.type - another.mProfile.type) == 0) {
       result=mProfile.key.compareTo(another.mProfile.key);

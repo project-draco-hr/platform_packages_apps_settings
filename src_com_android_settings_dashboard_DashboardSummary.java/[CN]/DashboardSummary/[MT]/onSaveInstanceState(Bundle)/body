@@ -1,4 +1,5 @@
 {
   super.onSaveInstanceState(outState);
+  if (mLayoutManager == null)   return;
   outState.putInt(EXTRA_SCROLL_POSITION,mLayoutManager.findFirstVisibleItemPosition());
 }

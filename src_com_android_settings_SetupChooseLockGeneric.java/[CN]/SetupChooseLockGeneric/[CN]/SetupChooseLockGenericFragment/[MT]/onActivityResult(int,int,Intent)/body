@@ -5,6 +5,9 @@
     }
     LockPatternUtils lockPatternUtils=new LockPatternUtils(getActivity());
     data.putExtra(EXTRA_PASSWORD_QUALITY,lockPatternUtils.getKeyguardStoredPasswordQuality(UserHandle.myUserId()));
+    PackageManager packageManager=getPackageManager();
+    ComponentName componentName=new ComponentName("com.android.settings","com.android.settings.SetupRedactionInterstitial");
+    packageManager.setComponentEnabledSetting(componentName,PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
     super.onActivityResult(requestCode,resultCode,data);
   }
 }

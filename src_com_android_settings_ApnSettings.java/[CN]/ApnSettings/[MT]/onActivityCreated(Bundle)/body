@@ -1,13 +1,11 @@
 {
   super.onActivityCreated(savedInstanceState);
-  TextView empty=(TextView)getView().findViewById(android.R.id.empty);
-  if (empty != null) {
-    empty.setText(R.string.apn_settings_not_available);
-    setEmptyView(empty);
-  }
-  if (mUm.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS) || !mUm.isAdminUser()) {
-    mUnavailable=true;
+  getEmptyTextView().setText(R.string.apn_settings_not_available);
+  mUnavailable=isUiRestricted();
+  setHasOptionsMenu(!mUnavailable);
+  if (mUnavailable) {
     setPreferenceScreen(new PreferenceScreen(getPrefContext(),null));
+    getPreferenceScreen().removeAll();
     return;
   }
   addPreferencesFromResource(R.xml.apn_settings);

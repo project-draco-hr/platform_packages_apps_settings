@@ -1,4 +1,10 @@
 {
   super.onCreate(savedInstanceState);
-  addPreferencesFromResource(R.xml.wifi_advanced_settings);
+  if (isUiRestricted()) {
+    mUnavailable=true;
+    setPreferenceScreen(new PreferenceScreen(getPrefContext(),null));
+  }
+ else {
+    addPreferencesFromResource(R.xml.wifi_advanced_settings);
+  }
 }

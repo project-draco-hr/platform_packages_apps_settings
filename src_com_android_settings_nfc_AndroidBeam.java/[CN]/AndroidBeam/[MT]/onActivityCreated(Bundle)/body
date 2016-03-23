@@ -2,8 +2,13 @@
   super.onActivityCreated(savedInstanceState);
   SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
-  mSwitchBar.setChecked(!mBeamDisallowed && mNfcAdapter.isNdefPushEnabled());
-  mSwitchBar.addOnSwitchChangeListener(this);
-  mSwitchBar.setEnabled(!mBeamDisallowed);
-  mSwitchBar.show();
+  if (!mBeamDisallowedByBase && mBeamDisallowedByAdmin) {
+    mSwitchBar.hide();
+  }
+ else {
+    mSwitchBar.setChecked(!mBeamDisallowedByBase && mNfcAdapter.isNdefPushEnabled());
+    mSwitchBar.addOnSwitchChangeListener(this);
+    mSwitchBar.setEnabled(!mBeamDisallowedByBase);
+    mSwitchBar.show();
+  }
 }

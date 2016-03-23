@@ -1,4 +1,14 @@
 {
+  final EnforcedAdmin admin=RestrictedLockUtils.checkIfRestrictionEnforced(getActivity(),UserManager.DISALLOW_OUTGOING_BEAM,UserHandle.myUserId());
+  final UserManager um=UserManager.get(getActivity());
+  mBeamDisallowedByBase=RestrictedLockUtils.hasBaseUserRestriction(getActivity(),UserManager.DISALLOW_OUTGOING_BEAM,UserHandle.myUserId());
+  if (!mBeamDisallowedByBase && admin != null) {
+    View view=inflater.inflate(R.layout.admin_support_details_empty_view,null);
+    ShowAdminSupportDetailsDialog.setAdminSupportDetails(getActivity(),view,admin,false);
+    view.setVisibility(View.VISIBLE);
+    mBeamDisallowedByAdmin=true;
+    return view;
+  }
   mView=inflater.inflate(R.layout.android_beam,container,false);
   return mView;
 }

@@ -12,7 +12,7 @@
     View manageDividerView=view.findViewById(R.id.divider_manage);
     View deleteView=view.findViewById(R.id.trash_user);
     if (deleteView != null) {
-      if (mDeleteClickListener != null && !um.hasUserRestriction(UserManager.DISALLOW_REMOVE_USER)) {
+      if (mDeleteClickListener != null && !RestrictedLockUtils.hasBaseUserRestriction(getContext(),UserManager.DISALLOW_REMOVE_USER,UserHandle.myUserId())) {
         deleteView.setOnClickListener(mDeleteClickListener);
         deleteView.setTag(this);
       }

@@ -24,5 +24,6 @@
   ServiceInfo si=mServiceListing.findService(mContext,CONFIG,rule.getOwner());
   ComponentName settingsActivity=getSettingsActivity(si);
   setIntent(getRuleIntent(action,settingsActivity,mId));
+  setSelectable(settingsActivity != null || isSystemRule);
   setWidgetLayoutResource(R.layout.zen_rule_widget);
 }

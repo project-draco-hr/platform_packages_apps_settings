@@ -1,35 +1,3 @@
 {
-  PackageManager pm=getContext().getPackageManager();
-  final int entryCount=packageNames.length + (mShowItemNone ? 1 : 0);
-  List<CharSequence> applicationNames=new ArrayList<>(entryCount);
-  List<CharSequence> validatedPackageNames=new ArrayList<>(entryCount);
-  List<Drawable> entryDrawables=new ArrayList<>(entryCount);
-  int selectedIndex=-1;
-  for (int i=0; i < packageNames.length; i++) {
-    try {
-      ApplicationInfo appInfo=pm.getApplicationInfoAsUser(packageNames[i].toString(),0,mUserId);
-      applicationNames.add(appInfo.loadLabel(pm));
-      validatedPackageNames.add(appInfo.packageName);
-      entryDrawables.add(appInfo.loadIcon(pm));
-      if (defaultPackageName != null && appInfo.packageName.contentEquals(defaultPackageName)) {
-        selectedIndex=i;
-      }
-    }
- catch (    NameNotFoundException e) {
-    }
-  }
-  if (mShowItemNone) {
-    applicationNames.add(getContext().getResources().getText(R.string.app_list_preference_none));
-    validatedPackageNames.add(ITEM_NONE_VALUE);
-    entryDrawables.add(getContext().getDrawable(R.drawable.ic_remove_circle));
-  }
-  setEntries(applicationNames.toArray(new CharSequence[applicationNames.size()]));
-  setEntryValues(validatedPackageNames.toArray(new CharSequence[validatedPackageNames.size()]));
-  mEntryDrawables=entryDrawables.toArray(new Drawable[entryDrawables.size()]);
-  if (selectedIndex != -1) {
-    setValueIndex(selectedIndex);
-  }
- else {
-    setValue(null);
-  }
+  setPackageNames(packageNames,defaultPackageName,null);
 }

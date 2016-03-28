@@ -1,7 +1,13 @@
 {
   super.onResume();
   mSubscriptionManager.addOnSubscriptionsChangedListener(mOnSubscriptionsChangeListener);
-  final TelephonyManager tm=(TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-  tm.listen(mPhoneStateListener,PhoneStateListener.LISTEN_CALL_STATE);
   updateSubscriptions();
+  final TelephonyManager tm=(TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+  if (mSelectableSubInfos.size() > 1) {
+    Log.d(TAG,"Register for call state change");
+    for (int i=0; i < mPhoneCount; i++) {
+      int subId=mSelectableSubInfos.get(i).getSubscriptionId();
+      tm.listen(getPhoneStateListener(i,subId),PhoneStateListener.LISTEN_CALL_STATE);
+    }
+  }
 }

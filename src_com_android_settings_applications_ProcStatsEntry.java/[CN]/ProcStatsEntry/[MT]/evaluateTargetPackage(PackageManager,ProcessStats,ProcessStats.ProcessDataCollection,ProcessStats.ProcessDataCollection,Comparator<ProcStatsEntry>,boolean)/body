@@ -21,7 +21,7 @@
         Log.w(TAG,"No package state found for " + mPackages.get(ipkg) + "/"+ mUid+ " in process "+ mName);
         continue;
       }
-      ProcessStats.ProcessState pkgProc=pkgState.mProcesses.get(mName);
+      ProcessState pkgProc=pkgState.mProcesses.get(mName);
       if (pkgProc == null) {
         Log.w(TAG,"No process " + mName + " found in package state "+ mPackages.get(ipkg)+ "/"+ mUid);
         continue;

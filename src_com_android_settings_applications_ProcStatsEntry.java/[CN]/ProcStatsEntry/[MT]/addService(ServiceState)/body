@@ -1,0 +1,8 @@
+{
+  ArrayList<Service> services=mServices.get(svc.getPackage());
+  if (services == null) {
+    services=new ArrayList<Service>();
+    mServices.put(svc.getPackage(),services);
+  }
+  services.add(new Service(svc));
+}

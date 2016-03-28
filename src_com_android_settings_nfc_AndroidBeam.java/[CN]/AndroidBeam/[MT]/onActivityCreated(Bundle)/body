@@ -2,7 +2,7 @@
   super.onActivityCreated(savedInstanceState);
   SettingsActivity activity=(SettingsActivity)getActivity();
   mSwitchBar=activity.getSwitchBar();
-  if (!mBeamDisallowedByBase && mBeamDisallowedByAdmin) {
+  if (mBeamDisallowedByOnlyAdmin) {
     mSwitchBar.hide();
   }
  else {

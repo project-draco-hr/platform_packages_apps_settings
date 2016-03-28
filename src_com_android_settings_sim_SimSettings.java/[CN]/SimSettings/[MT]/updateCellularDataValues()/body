@@ -9,5 +9,7 @@
  else   if (sir == null) {
     simPref.setSummary(R.string.sim_selection_required_pref);
   }
-  simPref.setEnabled(mSelectableSubInfos.size() >= 1);
+  boolean callStateIdle=isCallStateIdle();
+  final boolean ecbMode=SystemProperties.getBoolean(TelephonyProperties.PROPERTY_INECM_MODE,false);
+  simPref.setEnabled((mSelectableSubInfos.size() >= 1) && callStateIdle && !ecbMode);
 }

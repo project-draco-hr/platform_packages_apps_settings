@@ -1,0 +1,12 @@
+{
+  final int i=phoneId;
+  mPhoneStateListener[phoneId]=new PhoneStateListener(subId){
+    @Override public void onCallStateChanged(    int state,    String incomingNumber){
+      if (DBG)       log("PhoneStateListener.onCallStateChanged: state=" + state);
+      mCallState[i]=state;
+      updateCellularDataValues();
+    }
+  }
+;
+  return mPhoneStateListener[phoneId];
+}

@@ -7,7 +7,7 @@
     setVisible(false);
     setEnabled(false);
   }
- else {
+ else   if (TextUtils.isEmpty(getSummary())) {
     final String[] entries=density.getEntries();
     final int currentIndex=density.getCurrentIndex();
     setSummary(entries[currentIndex]);

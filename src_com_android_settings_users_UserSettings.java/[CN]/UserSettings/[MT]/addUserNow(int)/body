@@ -1,6 +1,7 @@
 {
 synchronized (mUserLock) {
     mAddingUser=true;
+    mAddingUserName=userType == USER_TYPE_USER ? getString(R.string.user_new_user_name) : getString(R.string.user_new_profile_name);
     new Thread(){
       public void run(){
         UserInfo user;
@@ -11,10 +12,10 @@ synchronized (mUserLock) {
           user=createRestrictedProfile();
         }
         if (user == null) {
+          mAddingUser=false;
           return;
         }
 synchronized (mUserLock) {
-          mAddingUser=false;
           if (userType == USER_TYPE_USER) {
             mHandler.sendEmptyMessage(MESSAGE_UPDATE_LIST);
             mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_SETUP_USER,user.id,user.serialNumber));

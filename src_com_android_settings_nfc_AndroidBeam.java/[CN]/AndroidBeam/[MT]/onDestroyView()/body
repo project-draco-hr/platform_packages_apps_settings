@@ -3,6 +3,8 @@
   if (mOldActivityTitle != null) {
     getActivity().getActionBar().setTitle(mOldActivityTitle);
   }
-  mSwitchBar.removeOnSwitchChangeListener(this);
-  mSwitchBar.hide();
+  if (!mBeamDisallowedByOnlyAdmin) {
+    mSwitchBar.removeOnSwitchChangeListener(this);
+    mSwitchBar.hide();
+  }
 }

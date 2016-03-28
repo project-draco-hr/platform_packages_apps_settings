@@ -1,9 +1,9 @@
 {
-  ProcessStats.computeProcessData(proc,tmpBgTotals,0);
-  ProcessStats.computeProcessData(proc,tmpRunTotals,0);
-  mPackage=proc.mPackage;
-  mUid=proc.mUid;
-  mName=proc.mName;
+  proc.computeProcessData(tmpBgTotals,0);
+  proc.computeProcessData(tmpRunTotals,0);
+  mPackage=proc.getPackage();
+  mUid=proc.getUid();
+  mName=proc.getName();
   mPackages.add(packageName);
   mBgDuration=tmpBgTotals.totalTime;
   mAvgBgMem=useUss ? tmpBgTotals.avgUss : tmpBgTotals.avgPss;
@@ -13,5 +13,5 @@
   mAvgRunMem=useUss ? tmpRunTotals.avgUss : tmpRunTotals.avgPss;
   mMaxRunMem=useUss ? tmpRunTotals.maxUss : tmpRunTotals.maxPss;
   mRunWeight=mAvgRunMem * (double)mRunDuration;
-  if (DEBUG)   Log.d(TAG,"New proc entry " + proc.mName + ": dur="+ mBgDuration+ " avgpss="+ mAvgBgMem+ " weight="+ mBgWeight);
+  if (DEBUG)   Log.d(TAG,"New proc entry " + proc.getName() + ": dur="+ mBgDuration+ " avgpss="+ mAvgBgMem+ " weight="+ mBgWeight);
 }

@@ -4,7 +4,7 @@
   }
   pkgEntries=new ArrayList<>();
   long now=SystemClock.uptimeMillis();
-  memTotalTime=ProcessStats.dumpSingleTime(null,null,mStats.mMemFactorDurations,mStats.mMemFactor,mStats.mStartTime,now);
+  memTotalTime=DumpUtils.dumpSingleTime(null,null,mStats.mMemFactorDurations,mStats.mMemFactor,mStats.mStartTime,now);
   ProcessStats.TotalMemoryUseCollection totalMem=new ProcessStats.TotalMemoryUseCollection(ProcessStats.ALL_SCREEN_ADJ,mMemStates);
   mStats.computeTotalMemoryUse(totalMem,now);
   mMemInfo=new MemInfo(mContext,totalMem,memTotalTime);

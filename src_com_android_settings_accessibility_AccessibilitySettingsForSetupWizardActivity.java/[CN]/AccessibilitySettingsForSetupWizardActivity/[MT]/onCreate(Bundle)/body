@@ -6,6 +6,15 @@
   getActionBar().setDisplayHomeAsUpEnabled(true);
   setIsDrawerPresent(false);
   SystemBarHelper.hideSystemBars(getWindow());
+  LinearLayout parentView=(LinearLayout)findViewById(R.id.content_parent);
+  parentView.setFitsSystemWindows(false);
+  parentView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener(){
+    @Override public WindowInsets onApplyWindowInsets(    View v,    WindowInsets insets){
+      parentView.setPadding(0,insets.getSystemWindowInsetTop(),0,0);
+      return insets;
+    }
+  }
+);
   NavigationBar navigationBar=(NavigationBar)findViewById(R.id.suw_navigation_bar);
   navigationBar.getNextButton().setVisibility(View.GONE);
   navigationBar.setNavigationBarListener(new NavigationBar.NavigationBarListener(){

@@ -1,0 +1,7 @@
+{
+  final UserHandle user=UserHandle.of(mUserManager.getUserHandle());
+  if (mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS,user) && !mUserManager.hasBaseUserRestriction(UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS,user)) {
+    return EnforcedAdmin.MULTIPLE_ENFORCED_ADMIN;
+  }
+  return null;
+}

@@ -3,6 +3,7 @@
   if (!wasSecureBefore) {
     Intent intent=getRedactionInterstitialIntent(getActivity());
     if (intent != null) {
+      intent.putExtra(EXTRA_HIDE_DRAWER,mHideDrawer);
       startActivity(intent);
     }
   }

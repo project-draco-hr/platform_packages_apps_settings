@@ -1,0 +1,20 @@
+{
+  if (localeList.equals(mLocalesToSetNext)) {
+    return;
+  }
+  LocaleList.setDefault(localeList);
+  mLocalesToSetNext=localeList;
+  final RecyclerView.ItemAnimator itemAnimator=mParentView.getItemAnimator();
+  itemAnimator.isRunning(new RecyclerView.ItemAnimator.ItemAnimatorFinishedListener(){
+    @Override public void onAnimationsFinished(){
+      if (mLocalesToSetNext == null || mLocalesToSetNext.equals(mLocalesSetLast)) {
+        return;
+      }
+      LocalePicker.updateLocales(mLocalesToSetNext);
+      mLocalesSetLast=mLocalesToSetNext;
+      mLocalesToSetNext=null;
+      mNumberFormatter=NumberFormat.getNumberInstance(Locale.getDefault());
+    }
+  }
+);
+}

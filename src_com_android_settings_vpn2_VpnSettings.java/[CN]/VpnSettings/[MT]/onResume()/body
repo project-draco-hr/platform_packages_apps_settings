@@ -10,10 +10,6 @@
  else {
     getEmptyTextView().setText(R.string.vpn_no_vpns_added);
   }
-  final boolean pickLockdown=getActivity().getIntent().getBooleanExtra(EXTRA_PICK_LOCKDOWN,false);
-  if (pickLockdown) {
-    LockdownConfigFragment.show(this);
-  }
   mConnectivityManager.registerNetworkCallback(VPN_REQUEST,mNetworkCallback);
   if (mUpdater == null) {
     mUpdater=new Handler(this);

@@ -1,0 +1,18 @@
+{
+  if (isVpnAlwaysOn) {
+    if (!profile.isValidLockdownProfile()) {
+      Toast.makeText(getContext(),R.string.vpn_lockdown_config_error,Toast.LENGTH_LONG).show();
+      return;
+    }
+    if (!VpnUtils.isVpnLockdown(profile.key)) {
+      final ConnectivityManager conn=ConnectivityManager.from(getActivity());
+      conn.setAlwaysOnVpnPackageForUser(UserHandle.myUserId(),null);
+      VpnUtils.setLockdownVpn(getContext(),profile.key);
+    }
+  }
+ else {
+    if (VpnUtils.isVpnLockdown(profile.key)) {
+      VpnUtils.clearLockdownVpn(getContext());
+    }
+  }
+}

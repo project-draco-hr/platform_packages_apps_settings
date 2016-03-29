@@ -10,6 +10,7 @@
     final boolean required=mLockPatternUtils.isCredentialRequiredToDecrypt(!accEn);
     Intent intent=getEncryptionInterstitialIntent(context,quality,required,unlockMethodIntent);
     intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_FOR_FINGERPRINT,mForFingerprint);
+    intent.putExtra(EXTRA_HIDE_DRAWER,mHideDrawer);
     startActivityForResult(intent,ENABLE_ENCRYPTION_REQUEST);
   }
  else {

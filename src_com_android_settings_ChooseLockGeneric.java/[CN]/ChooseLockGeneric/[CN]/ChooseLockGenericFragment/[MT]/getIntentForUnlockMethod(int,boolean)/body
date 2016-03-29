@@ -22,5 +22,8 @@
       intent=getLockPatternIntent(context,mRequirePassword,mUserPassword,mUserId);
     }
   }
+  if (intent != null) {
+    intent.putExtra(EXTRA_HIDE_DRAWER,mHideDrawer);
+  }
   return intent;
 }

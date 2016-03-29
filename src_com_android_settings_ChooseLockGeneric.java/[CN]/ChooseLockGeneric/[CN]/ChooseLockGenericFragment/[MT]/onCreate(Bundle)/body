@@ -9,6 +9,7 @@
   if (getActivity() instanceof ChooseLockGeneric.InternalActivity) {
     mPasswordConfirmed=!confirmCredentials;
   }
+  mHideDrawer=getActivity().getIntent().getBooleanExtra(EXTRA_HIDE_DRAWER,false);
   mHasChallenge=getActivity().getIntent().getBooleanExtra(ChooseLockSettingsHelper.EXTRA_KEY_HAS_CHALLENGE,false);
   mChallenge=getActivity().getIntent().getLongExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE,0);
   mForFingerprint=getActivity().getIntent().getBooleanExtra(ChooseLockSettingsHelper.EXTRA_KEY_FOR_FINGERPRINT,false);

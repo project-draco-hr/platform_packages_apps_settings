@@ -1,5 +1,9 @@
 {
   Intent modIntent=new Intent(super.getIntent());
   modIntent.putExtra(EXTRA_SHOW_FRAGMENT,getFragmentClass().getName());
+  String action=modIntent.getAction();
+  if (DevicePolicyManager.ACTION_SET_NEW_PASSWORD.equals(action) || DevicePolicyManager.ACTION_SET_NEW_PARENT_PROFILE_PASSWORD.equals(action)) {
+    modIntent.putExtra(EXTRA_HIDE_DRAWER,true);
+  }
   return modIntent;
 }

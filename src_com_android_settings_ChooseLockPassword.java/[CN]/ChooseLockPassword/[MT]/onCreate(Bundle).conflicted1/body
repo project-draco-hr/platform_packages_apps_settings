@@ -16,6 +16,7 @@
   mPasswordMinSymbols=Math.max(intent.getIntExtra(PASSWORD_MIN_SYMBOLS_KEY,mPasswordMinSymbols),mLockPatternUtils.getRequestedPasswordMinimumSymbols(mUserId));
   mPasswordMinNonLetter=Math.max(intent.getIntExtra(PASSWORD_MIN_NONLETTER_KEY,mPasswordMinNonLetter),mLockPatternUtils.getRequestedPasswordMinimumNonLetter(mUserId));
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(getActivity());
+  mHideDrawer=getActivity().getIntent().getBooleanExtra(EXTRA_HIDE_DRAWER,false);
   if (intent.getBooleanExtra(ChooseLockSettingsHelper.EXTRA_KEY_FOR_CHANGE_CRED_REQUIRED_FOR_BOOT,false)) {
     SaveAndFinishWorker w=new SaveAndFinishWorker();
     final boolean required=getActivity().getIntent().getBooleanExtra(EncryptionInterstitial.EXTRA_REQUIRE_PASSWORD,true);

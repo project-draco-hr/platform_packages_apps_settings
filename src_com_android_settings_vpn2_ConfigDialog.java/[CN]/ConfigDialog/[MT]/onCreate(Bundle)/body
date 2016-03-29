@@ -19,6 +19,7 @@
   mIpsecServerCert=(Spinner)mView.findViewById(R.id.ipsec_server_cert);
   mSaveLogin=(CheckBox)mView.findViewById(R.id.save_login);
   mShowOptions=(CheckBox)mView.findViewById(R.id.show_options);
+  mAlwaysOnVpn=(CheckBox)mView.findViewById(R.id.always_on_vpn);
   mName.setText(mProfile.name);
   mType.setSelection(mProfile.type);
   mServer.setText(mProfile.server);
@@ -37,6 +38,12 @@
   loadCertificates(mIpsecCaCert,Credentials.CA_CERTIFICATE,R.string.vpn_no_ca_cert,mProfile.ipsecCaCert);
   loadCertificates(mIpsecServerCert,Credentials.USER_CERTIFICATE,R.string.vpn_no_server_cert,mProfile.ipsecServerCert);
   mSaveLogin.setChecked(mProfile.saveLogin);
+  mAlwaysOnVpn.setChecked(mProfile.key.equals(VpnUtils.getLockdownVpn()));
+  mAlwaysOnVpn.setOnCheckedChangeListener(this);
+  updateSaveLoginStatus();
+  if (SystemProperties.getBoolean("persist.radio.imsregrequired",false)) {
+    mAlwaysOnVpn.setVisibility(View.GONE);
+  }
   mName.addTextChangedListener(this);
   mType.setOnItemSelectedListener(this);
   mServer.addTextChangedListener(this);

@@ -5,6 +5,9 @@
   CheckBox alphanumericPin=(CheckBox)view.findViewById(R.id.alphanumeric_pin);
   CheckBox contactSharing=(CheckBox)view.findViewById(R.id.phonebook_sharing_message_entry_pin);
   contactSharing.setText(getString(R.string.bluetooth_pairing_shares_phonebook,mCachedDeviceManager.getName(mDevice)));
+  if (mPbapClientProfile != null && mPbapClientProfile.isProfileReady()) {
+    contactSharing.setVisibility(View.GONE);
+  }
   if (mDevice.getPhonebookAccessPermission() == BluetoothDevice.ACCESS_ALLOWED) {
     contactSharing.setChecked(true);
   }

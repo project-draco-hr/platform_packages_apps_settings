@@ -2,4 +2,7 @@
   super.onPause();
   ((SettingsDrawerActivity)getActivity()).remCategoryListener(this);
   mSummaryLoader.setListening(false);
+  for (  Condition c : mConditionManager.getVisibleConditions()) {
+    MetricsLogger.hidden(getContext(),c.getMetricsConstant());
+  }
 }

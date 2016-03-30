@@ -1,6 +1,7 @@
 {
   if (!mIsSilenced) {
     mIsSilenced=true;
+    MetricsLogger.action(mManager.getContext(),MetricsEvent.ACTION_SETTINGS_CONDITION_DISMISS,getMetricsConstant());
     onSilenceChanged(mIsSilenced);
     notifyChanged();
   }

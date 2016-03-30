@@ -2,5 +2,7 @@
   super.onResume();
   ((SettingsDrawerActivity)getActivity()).addCategoryListener(this);
   mSummaryLoader.setListening(true);
-  Log.d(TAG,"onResume");
+  for (  Condition c : mConditionManager.getVisibleConditions()) {
+    MetricsLogger.visible(getContext(),c.getMetricsConstant());
+  }
 }

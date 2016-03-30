@@ -18,6 +18,7 @@
     mApplications=new ApplicationsAdapter(mApplicationsState,this,mFilter);
     if (savedInstanceState != null) {
       mApplications.mHasReceivedLoadEntries=savedInstanceState.getBoolean(EXTRA_HAS_ENTRIES,false);
+      mApplications.mHasReceivedBridgeCallback=savedInstanceState.getBoolean(EXTRA_HAS_BRIDGE,false);
     }
     mListView.setAdapter(mApplications);
     mListView.setRecyclerListener(mApplications);

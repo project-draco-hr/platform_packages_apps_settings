@@ -1,5 +1,5 @@
 {
-  if (!mHasReceivedLoadEntries && (mExtraInfoBridge == null || mHasReceivedBridgeCallback)) {
+  if (!mHasReceivedLoadEntries || (mExtraInfoBridge != null && !mHasReceivedBridgeCallback)) {
     return;
   }
   if (DEBUG)   Log.i(TAG,"Rebuilding app list...");

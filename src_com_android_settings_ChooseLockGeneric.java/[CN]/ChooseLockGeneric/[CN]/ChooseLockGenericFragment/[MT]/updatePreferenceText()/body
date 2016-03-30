@@ -7,4 +7,11 @@
     Preference password=findPreference(KEY_UNLOCK_SET_PASSWORD);
     password.setTitle(R.string.fingerprint_unlock_set_unlock_password);
   }
+  if (mManagedPasswordProvider.isSettingManagedPasswordSupported()) {
+    Preference managed=findPreference(KEY_UNLOCK_SET_MANAGED);
+    managed.setTitle(mManagedPasswordProvider.getPickerOptionTitle(mForFingerprint));
+  }
+ else {
+    removePreference(KEY_UNLOCK_SET_MANAGED);
+  }
 }

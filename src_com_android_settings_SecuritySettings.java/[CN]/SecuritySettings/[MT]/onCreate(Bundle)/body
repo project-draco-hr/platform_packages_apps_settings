@@ -2,6 +2,7 @@
   super.onCreate(savedInstanceState);
   mSubscriptionManager=SubscriptionManager.from(getActivity());
   mLockPatternUtils=new LockPatternUtils(getActivity());
+  mManagedPasswordProvider=ManagedLockPasswordProvider.get(getActivity(),MY_USER_ID);
   mDPM=(DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
   mUm=UserManager.get(getActivity());
   mChooseLockSettingsHelper=new ChooseLockSettingsHelper(getActivity());

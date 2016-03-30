@@ -26,6 +26,9 @@ case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
 case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
 resid=isMyUser ? R.xml.security_settings_password : R.xml.security_settings_password_profile;
 break;
+case DevicePolicyManager.PASSWORD_QUALITY_MANAGED:
+resid=managedPasswordProvider.getResIdForLockUnlockScreen(!isMyUser);
+break;
 }
 }
 return resid;

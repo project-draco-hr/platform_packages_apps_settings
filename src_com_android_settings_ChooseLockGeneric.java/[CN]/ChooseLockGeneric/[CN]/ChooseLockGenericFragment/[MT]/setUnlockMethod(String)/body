@@ -6,6 +6,9 @@
  else   if (KEY_UNLOCK_SET_NONE.equals(unlockMethod)) {
     updateUnlockMethodAndFinish(DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED,false);
   }
+ else   if (KEY_UNLOCK_SET_MANAGED.equals(unlockMethod)) {
+    maybeEnableEncryption(DevicePolicyManager.PASSWORD_QUALITY_MANAGED,false);
+  }
  else   if (KEY_UNLOCK_SET_PATTERN.equals(unlockMethod)) {
     maybeEnableEncryption(DevicePolicyManager.PASSWORD_QUALITY_SOMETHING,false);
   }

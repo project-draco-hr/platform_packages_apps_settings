@@ -4,7 +4,7 @@
     root.removeAll();
   }
   root=null;
-  final int resid=getResIdForLockUnlockSubScreen(getActivity(),new LockPatternUtils(getContext()));
+  final int resid=getResIdForLockUnlockSubScreen(getActivity(),new LockPatternUtils(getContext()),ManagedLockPasswordProvider.get(getContext(),MY_USER_ID));
   addPreferencesFromResource(resid);
   mLockAfter=(TimeoutListPreference)findPreference(KEY_LOCK_AFTER_TIMEOUT);
   if (mLockAfter != null) {

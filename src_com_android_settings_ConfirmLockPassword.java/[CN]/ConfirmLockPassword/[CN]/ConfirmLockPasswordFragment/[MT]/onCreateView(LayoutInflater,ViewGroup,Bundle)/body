@@ -7,7 +7,7 @@
   mHeaderTextView=(TextView)view.findViewById(R.id.headerText);
   mDetailsTextView=(TextView)view.findViewById(R.id.detailsText);
   mErrorTextView=(TextView)view.findViewById(R.id.errorText);
-  mIsAlpha=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_COMPLEX == storedQuality;
+  mIsAlpha=DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_COMPLEX == storedQuality || DevicePolicyManager.PASSWORD_QUALITY_MANAGED == storedQuality;
   mImm=(InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
   Intent intent=getActivity().getIntent();
   if (intent != null) {

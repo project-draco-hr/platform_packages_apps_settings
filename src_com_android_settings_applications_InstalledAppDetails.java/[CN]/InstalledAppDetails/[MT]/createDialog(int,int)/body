@@ -21,13 +21,6 @@ return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.s
   }
 }
 ).setNegativeButton(R.string.dlg_cancel,null).create();
-case DLG_FACTORY_RESET:
-return new AlertDialog.Builder(getActivity()).setTitle(getActivity().getText(R.string.app_factory_reset_dlg_title)).setMessage(getActivity().getText(R.string.app_factory_reset_dlg_text)).setPositiveButton(R.string.dlg_ok,new DialogInterface.OnClickListener(){
-public void onClick(DialogInterface dialog,int which){
-  uninstallPkg(mAppEntry.info.packageName,false,false);
-}
-}
-).setNegativeButton(R.string.dlg_cancel,null).create();
 }
 return null;
 }

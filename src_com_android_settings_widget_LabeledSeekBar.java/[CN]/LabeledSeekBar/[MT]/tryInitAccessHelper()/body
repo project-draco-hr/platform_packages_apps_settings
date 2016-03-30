@@ -1,0 +1,7 @@
+{
+  if (mOnAttachedWindowCalled && mOnMeasureCalled) {
+    mAccessHelper=new LabeledSeekBarExploreByTouchHelper(this);
+    ViewCompat.setAccessibilityDelegate(this,mAccessHelper);
+    mOnAttachedWindowCalled=mOnMeasureCalled=false;
+  }
+}

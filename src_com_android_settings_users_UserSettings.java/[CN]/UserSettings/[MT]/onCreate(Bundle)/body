@@ -25,7 +25,7 @@
     mMePreference.setSummary(R.string.user_admin);
   }
   mAddUser=(DimmableIconPreference)findPreference(KEY_ADD_USER);
-  if (mUserCaps.mCanAddUser) {
+  if (mUserCaps.mCanAddUser && Utils.isDeviceProvisioned(getActivity())) {
     mAddUser.setOnPreferenceClickListener(this);
     if (!mUserCaps.mCanAddRestrictedProfile) {
       mAddUser.setTitle(R.string.user_add_user_menu);

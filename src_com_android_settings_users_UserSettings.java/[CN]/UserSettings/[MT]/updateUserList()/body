@@ -88,7 +88,7 @@
     userPreference.setOrder(Preference.DEFAULT_ORDER);
     groupToAddUsers.addPreference(userPreference);
   }
-  if (mUserCaps.mCanAddUser || mUserCaps.mDisallowAddUserSetByAdmin) {
+  if ((mUserCaps.mCanAddUser || mUserCaps.mDisallowAddUserSetByAdmin) && Utils.isDeviceProvisioned(getActivity())) {
     boolean moreUsers=mUserManager.canAddMoreUsers();
     mAddUser.setOrder(Preference.DEFAULT_ORDER);
     preferenceScreen.addPreference(mAddUser);

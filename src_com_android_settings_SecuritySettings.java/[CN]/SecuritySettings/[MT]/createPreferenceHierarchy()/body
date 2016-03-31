@@ -64,6 +64,8 @@
   final UserManager um=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   mKeyStore=KeyStore.getInstance();
   if (!RestrictedLockUtils.hasBaseUserRestriction(getActivity(),UserManager.DISALLOW_CONFIG_CREDENTIALS,MY_USER_ID)) {
+    RestrictedPreference userCredentials=(RestrictedPreference)root.findPreference(KEY_USER_CREDENTIALS);
+    userCredentials.checkRestrictionAndSetDisabled(UserManager.DISALLOW_CONFIG_CREDENTIALS);
     RestrictedPreference credentialStorageType=(RestrictedPreference)root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE);
     credentialStorageType.checkRestrictionAndSetDisabled(UserManager.DISALLOW_CONFIG_CREDENTIALS);
     RestrictedPreference installCredentials=(RestrictedPreference)root.findPreference(KEY_CREDENTIALS_INSTALL);
@@ -77,6 +79,7 @@
     credentialsManager.removePreference(root.findPreference(KEY_RESET_CREDENTIALS));
     credentialsManager.removePreference(root.findPreference(KEY_CREDENTIALS_INSTALL));
     credentialsManager.removePreference(root.findPreference(KEY_CREDENTIAL_STORAGE_TYPE));
+    credentialsManager.removePreference(root.findPreference(KEY_USER_CREDENTIALS));
   }
   PreferenceGroup deviceAdminCategory=(PreferenceGroup)root.findPreference(KEY_DEVICE_ADMIN_CATEGORY);
   mToggleAppInstallation=(RestrictedSwitchPreference)findPreference(KEY_TOGGLE_INSTALL_APPLICATIONS);

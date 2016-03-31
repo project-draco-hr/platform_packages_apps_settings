@@ -1,7 +1,10 @@
 {
-  final Tile tile=mSummaryMap.get(provider);
+  final ComponentName component=mSummaryMap.get(provider);
   mHandler.post(new Runnable(){
     @Override public void run(){
+      Tile tile=mAdapter.getTile(component);
+      if (tile == null)       return;
+      if (DEBUG)       Log.d(TAG,"setSummary " + tile.title + " - "+ summary);
       tile.summary=summary;
       mAdapter.notifyChanged(tile);
     }

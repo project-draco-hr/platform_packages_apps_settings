@@ -23,6 +23,7 @@
         final int index=i;
         button.setOnClickListener(new View.OnClickListener(){
           @Override public void onClick(          View v){
+            MetricsLogger.action(v.getContext(),MetricsEvent.ACTION_SETTINGS_CONDITION_BUTTON,condition.getMetricsConstant());
             condition.onActionClick(index);
           }
         }

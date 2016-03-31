@@ -2,6 +2,7 @@
   PopupMenu popup=new PopupMenu(new ContextThemeWrapper(mContext,R.style.Theme_AppCompat_DayNight),v);
   popup.getMenu().add(R.string.suggestion_remove).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
     @Override public boolean onMenuItemClick(    MenuItem item){
+      MetricsLogger.action(mContext,MetricsEvent.ACTION_SETTINGS_DISMISS_SUGGESTION,DashboardAdapter.getSuggestionIdentifier(mContext,suggestion));
       disableSuggestion(suggestion);
       mSuggestions.remove(suggestion);
       recountItems();

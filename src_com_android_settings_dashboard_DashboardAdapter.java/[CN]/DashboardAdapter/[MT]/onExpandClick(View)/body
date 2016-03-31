@@ -1,9 +1,11 @@
 {
   if (v.getTag() == mExpandedCondition) {
+    MetricsLogger.action(mContext,MetricsEvent.ACTION_SETTINGS_CONDITION_COLLAPSE,mExpandedCondition.getMetricsConstant());
     mExpandedCondition=null;
   }
  else {
     mExpandedCondition=(Condition)v.getTag();
+    MetricsLogger.action(mContext,MetricsEvent.ACTION_SETTINGS_CONDITION_EXPAND,mExpandedCondition.getMetricsConstant());
   }
   notifyDataSetChanged();
 }

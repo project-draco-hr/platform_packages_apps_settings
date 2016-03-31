@@ -2,8 +2,7 @@
   final TelephonyManager telephonyManager=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
   final SubscriptionManager subscriptionManager=SubscriptionManager.from(context);
   final int numSlots=telephonyManager.getSimCount();
-  final boolean isInProvisioning=Settings.Global.getInt(context.getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0;
-  if (numSlots < 2 || isInProvisioning) {
+  if (numSlots < 2 || !Utils.isDeviceProvisioned(context)) {
     return;
   }
   cancelNotification(context);

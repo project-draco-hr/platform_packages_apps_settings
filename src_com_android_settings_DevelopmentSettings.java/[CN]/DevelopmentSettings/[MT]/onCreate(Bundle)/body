@@ -8,7 +8,7 @@
   mUm=(UserManager)getSystemService(Context.USER_SERVICE);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   setIfOnlyAvailableForAdmins(true);
-  if (isUiRestricted() || Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0) {
+  if (isUiRestricted() || !Utils.isDeviceProvisioned(getActivity())) {
     mUnavailable=true;
     setPreferenceScreen(new PreferenceScreen(getPrefContext(),null));
     return;

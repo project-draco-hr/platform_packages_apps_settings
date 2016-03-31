@@ -22,7 +22,7 @@
   }
  else   if (preference.getKey().equals(KEY_BUILD_NUMBER)) {
     if (!mUm.isAdminUser())     return true;
-    if (Settings.Global.getInt(getActivity().getContentResolver(),Settings.Global.DEVICE_PROVISIONED,0) == 0) {
+    if (!Utils.isDeviceProvisioned(getActivity())) {
       return true;
     }
     if (mUm.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES)) {

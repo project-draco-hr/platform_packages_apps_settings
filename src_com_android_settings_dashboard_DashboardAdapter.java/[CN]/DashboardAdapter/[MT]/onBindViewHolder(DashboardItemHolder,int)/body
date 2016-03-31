@@ -21,6 +21,7 @@ final Tile suggestion=(Tile)mItems.get(position);
 onBindTile(holder,suggestion);
 holder.itemView.setOnClickListener(new View.OnClickListener(){
 @Override public void onClick(View v){
+MetricsLogger.action(mContext,MetricsEvent.ACTION_SETTINGS_SUGGESTION,DashboardAdapter.getSuggestionIdentifier(mContext,suggestion));
 ((SettingsActivity)mContext).startSuggestion(suggestion.intent);
 }
 }

@@ -2,7 +2,7 @@
   if (preference instanceof RingtonePreference) {
     mRequestPreference=(RingtonePreference)preference;
     mRequestPreference.onPrepareRingtonePickerIntent(mRequestPreference.getIntent());
-    startActivityForResult(preference.getIntent(),mRequestPreference.getRequestCode());
+    startActivityForResult(preference.getIntent(),REQUEST_CODE);
     return true;
   }
   return super.onPreferenceTreeClick(preference);

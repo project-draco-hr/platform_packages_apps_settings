@@ -1,7 +1,6 @@
 {
   int profileQuality=mLockPatternUtils.getKeyguardStoredPasswordQuality(mProfileChallengeUserId);
-  mLockPatternUtils.clearLock(mProfileChallengeUserId);
-  mLockPatternUtils.setSeparateProfileChallengeEnabled(mProfileChallengeUserId,false);
+  mLockPatternUtils.setSeparateProfileChallengeEnabled(mProfileChallengeUserId,false,mCurrentProfilePassword);
   if (profileQuality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
     mLockPatternUtils.saveLockPattern(LockPatternUtils.stringToPattern(mCurrentProfilePassword),mCurrentDevicePassword,MY_USER_ID);
   }

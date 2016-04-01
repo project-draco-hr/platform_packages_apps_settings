@@ -36,7 +36,8 @@
   }
  else   if (!mWaitingForConfirmation) {
     ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this.getActivity(),this);
-    if (!helper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,getString(R.string.unlock_set_unlock_launch_picker_title),true,mUserId)) {
+    boolean managedProfileWithUnifiedLock=Utils.isManagedProfile(UserManager.get(getActivity()),mUserId) && !mLockPatternUtils.isSeparateProfileChallengeEnabled(mUserId);
+    if (managedProfileWithUnifiedLock || !helper.launchConfirmationActivity(CONFIRM_EXISTING_REQUEST,getString(R.string.unlock_set_unlock_launch_picker_title),true,mUserId)) {
       mPasswordConfirmed=true;
       updatePreferencesOrFinish();
     }

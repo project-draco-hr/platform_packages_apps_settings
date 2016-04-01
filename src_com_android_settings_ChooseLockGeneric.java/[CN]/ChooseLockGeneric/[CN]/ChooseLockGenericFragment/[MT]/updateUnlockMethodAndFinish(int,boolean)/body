@@ -9,7 +9,7 @@
     return;
   }
   if (quality == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
-    mLockPatternUtils.setSeparateProfileChallengeEnabled(mUserId,true);
+    mLockPatternUtils.setSeparateProfileChallengeEnabled(mUserId,true,mUserPassword);
     mChooseLockSettingsHelper.utils().clearLock(mUserId);
     mChooseLockSettingsHelper.utils().setLockScreenDisabled(disabled,mUserId);
     removeAllFingerprintTemplatesAndFinish();

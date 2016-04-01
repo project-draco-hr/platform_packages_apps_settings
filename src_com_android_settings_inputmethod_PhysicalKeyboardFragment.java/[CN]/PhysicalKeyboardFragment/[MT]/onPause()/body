@@ -1,6 +1,7 @@
 {
   super.onPause();
-  clearHardKeyboardsData();
+  clearLoader();
+  mLastHardKeyboards.clear();
   mIm.unregisterInputDeviceListener(this);
   mShowVirtualKeyboardSwitch.setOnPreferenceChangeListener(null);
   unregisterShowVirtualKeyboardSettingsObserver();

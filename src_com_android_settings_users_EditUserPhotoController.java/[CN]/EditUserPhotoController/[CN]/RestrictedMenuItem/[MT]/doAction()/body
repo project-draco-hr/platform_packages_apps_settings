@@ -1,0 +1,10 @@
+{
+  if (isRestrictedByBase()) {
+    return;
+  }
+  if (isRestrictedByAdmin()) {
+    RestrictedLockUtils.sendShowAdminSupportDetailsIntent(mContext,mAdmin);
+    return;
+  }
+  mAction.run();
+}

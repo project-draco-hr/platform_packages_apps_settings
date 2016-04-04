@@ -38,4 +38,10 @@
   initVibrateWhenRinging();
   updateRingerMode();
   updateEffectsSuppressor();
+  if (savedInstanceState != null) {
+    String selectedPreference=savedInstanceState.getString(SELECTED_PREFERENCE_KEY,null);
+    if (!TextUtils.isEmpty(selectedPreference)) {
+      mRequestPreference=(RingtonePreference)findPreference(selectedPreference);
+    }
+  }
 }

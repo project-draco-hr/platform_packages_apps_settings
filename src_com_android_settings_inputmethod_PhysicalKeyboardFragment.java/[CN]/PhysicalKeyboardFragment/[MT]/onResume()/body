@@ -1,5 +1,7 @@
 {
   super.onResume();
+  clearLoader();
+  mLastHardKeyboards.clear();
   updateHardKeyboards();
   mIm.registerInputDeviceListener(this,null);
   mShowVirtualKeyboardSwitch.setOnPreferenceChangeListener(mShowVirtualKeyboardSwitchPreferenceChangeListener);

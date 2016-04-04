@@ -1,0 +1,11 @@
+{
+  final ArrayList<HardKeyboardDeviceInfo> keyboards=new ArrayList<>();
+  final int[] devicesIds=InputDevice.getDeviceIds();
+  for (  int deviceId : devicesIds) {
+    final InputDevice device=InputDevice.getDevice(deviceId);
+    if (device != null && !device.isVirtual() && device.isFullKeyboard()) {
+      keyboards.add(new HardKeyboardDeviceInfo(device.getName(),device.getIdentifier()));
+    }
+  }
+  return keyboards;
+}

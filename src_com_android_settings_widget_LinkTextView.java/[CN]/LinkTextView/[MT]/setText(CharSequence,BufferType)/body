@@ -1,0 +1,9 @@
+{
+  super.setText(text,type);
+  if (text instanceof Spanned) {
+    final ClickableSpan[] spans=((Spanned)text).getSpans(0,text.length(),ClickableSpan.class);
+    if (spans.length > 0) {
+      setMovementMethod(LinkMovementMethod.getInstance());
+    }
+  }
+}

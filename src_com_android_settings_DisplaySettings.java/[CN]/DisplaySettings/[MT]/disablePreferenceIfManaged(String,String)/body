@@ -1,0 +1,12 @@
+{
+  final RestrictedPreference pref=(RestrictedPreference)findPreference(key);
+  if (pref != null) {
+    pref.setDisabledByAdmin(null);
+    if (RestrictedLockUtils.hasBaseUserRestriction(getActivity(),restriction,UserHandle.myUserId())) {
+      pref.setEnabled(false);
+    }
+ else {
+      pref.checkRestrictionAndSetDisabled(restriction);
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  if (mNewUserPhotoBitmap == null) {
+    return null;
+  }
+  try {
+    File file=new File(mContext.getCacheDir(),NEW_USER_PHOTO_FILE_NAME);
+    OutputStream os=new FileOutputStream(file);
+    mNewUserPhotoBitmap.compress(Bitmap.CompressFormat.PNG,100,os);
+    os.flush();
+    os.close();
+    return file;
+  }
+ catch (  IOException e) {
+    Log.e(TAG,"Cannot create temp file",e);
+  }
+  return null;
+}

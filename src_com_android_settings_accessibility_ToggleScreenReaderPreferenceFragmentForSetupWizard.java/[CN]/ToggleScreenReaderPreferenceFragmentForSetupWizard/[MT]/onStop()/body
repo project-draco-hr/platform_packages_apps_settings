@@ -1,0 +1,6 @@
+{
+  if (mToggleSwitch.isChecked() != mToggleSwitchWasInitiallyChecked) {
+    MetricsLogger.action(getContext(),MetricsEvent.SUW_ACCESSIBILITY_TOGGLE_SCREEN_READER,mToggleSwitch.isChecked());
+  }
+  super.onStop();
+}

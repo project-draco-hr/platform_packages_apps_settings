@@ -1,4 +1,4 @@
 {
-  final int passwordQuality=new ChooseLockSettingsHelper(this).utils().getActivePasswordQuality(mUserId);
+  final int passwordQuality=new ChooseLockSettingsHelper(this).utils().getActivePasswordQuality(mUserManager.getCredentialOwnerProfile(mUserId));
   mHasPassword=passwordQuality != DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
 }

@@ -1,4 +1,7 @@
 {
-  mSavedPhoto=(Bitmap)icicle.getParcelable(KEY_SAVED_PHOTO);
+  String pendingPhoto=icicle.getString(KEY_SAVED_PHOTO);
+  if (pendingPhoto != null) {
+    mSavedPhoto=EditUserPhotoController.loadNewUserPhotoBitmap(new File(pendingPhoto));
+  }
   mWaitingForActivityResult=icicle.getBoolean(KEY_AWAITING_RESULT,false);
 }

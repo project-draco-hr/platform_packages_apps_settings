@@ -1,6 +1,9 @@
 {
   if (mEditUserInfoDialog != null && mEditUserInfoDialog.isShowing() && mEditUserPhotoController != null) {
-    outState.putParcelable(KEY_SAVED_PHOTO,mEditUserPhotoController.getNewUserPhotoBitmap());
+    File file=mEditUserPhotoController.saveNewUserPhotoBitmap();
+    if (file != null) {
+      outState.putString(KEY_SAVED_PHOTO,file.getPath());
+    }
   }
   if (mWaitingForActivityResult) {
     outState.putBoolean(KEY_AWAITING_RESULT,mWaitingForActivityResult);

@@ -1,0 +1,11 @@
+{
+  CertHolder certHolder=getCurrentCertInfo();
+  LinearLayout nextCertLayout=getCertLayout(certHolder);
+  if (mCurrentCertLayout == null) {
+    mCurrentCertLayout=nextCertLayout;
+    mRootContainer.addView(mCurrentCertLayout);
+  }
+ else {
+    animateViewTransition(nextCertLayout);
+  }
+}

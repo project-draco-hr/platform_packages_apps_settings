@@ -1,0 +1,11 @@
+{
+  final CertHolder certHolder=getCurrentCertInfo();
+  new AlertDialog.Builder(mActivity).setMessage(getButtonConfirmation(certHolder)).setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+    @Override public void onClick(    DialogInterface dialog,    int id){
+      mDelegate.removeOrInstallCert(certHolder);
+      dialog.dismiss();
+      nextOrDismiss();
+    }
+  }
+).setNegativeButton(android.R.string.no,null).show();
+}

@@ -1,0 +1,7 @@
+{
+  final CertHolder certHolder=getCurrentCertInfo();
+  final boolean showRemoveButton=!mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS,new UserHandle(certHolder.getUserId()));
+  CharSequence displayText=mActivity.getText(getButtonLabel(certHolder));
+  mNegativeButton=updateButton(DialogInterface.BUTTON_NEGATIVE,displayText);
+  mNegativeButton.setVisibility(showRemoveButton ? View.VISIBLE : View.GONE);
+}

@@ -3,7 +3,8 @@
     IntentFilter intentFilter=new IntentFilter();
     intentFilter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
     intentFilter.addAction(Intent.ACTION_MANAGED_PROFILE_ADDED);
-    intentFilter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABILITY_CHANGED);
+    intentFilter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE);
+    intentFilter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);
     context.registerReceiver(this,intentFilter);
     listeningToManagedProfileEvents=true;
   }

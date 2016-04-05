@@ -3,7 +3,8 @@
   mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   mKeyguardManager=(KeyguardManager)getActivity().getSystemService(Context.KEYGUARD_SERVICE);
   IntentFilter filter=new IntentFilter();
-  filter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABILITY_CHANGED);
+  filter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE);
+  filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);
   filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNLOCKED);
   getActivity().registerReceiver(mWorkProfileChangedReceiver,filter);
 }

@@ -13,6 +13,7 @@
     return;
   }
   mCachedDeviceManager=mBluetoothManager.getCachedDeviceManager();
+  mPbapClientProfile=mBluetoothManager.getProfileManager().getPbapClientProfile();
   mDevice=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
   mType=intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_VARIANT,BluetoothDevice.ERROR);
 switch (mType) {

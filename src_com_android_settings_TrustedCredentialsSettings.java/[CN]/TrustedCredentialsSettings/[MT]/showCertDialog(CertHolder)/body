@@ -1,6 +1,7 @@
 {
   AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
   builder.setTitle(com.android.internal.R.string.ssl_certificate);
+  final DevicePolicyManager dpm=getActivity().getSystemService(DevicePolicyManager.class);
   final ArrayList<View> views=new ArrayList<View>();
   final ArrayList<String> titles=new ArrayList<String>();
   addCertChain(certHolder,views,titles);
@@ -29,42 +30,36 @@
     container.addView(certificateView);
   }
   builder.setView(container);
-  builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener(){
-    @Override public void onClick(    DialogInterface dialog,    int id){
-      dialog.dismiss();
+  if (certHolder.mTab == Tab.USER && !dpm.isCaCertApproved(certHolder.mAlias,certHolder.mProfileId)) {
+    builder.setPositiveButton(R.string.trusted_credentials_trust_label,new DialogInterface.OnClickListener(){
+      @Override public void onClick(      DialogInterface dialog,      int id){
+        dpm.approveCaCert(certHolder.mAlias,certHolder.mProfileId,true);
+      }
     }
-  }
 );
-  final Dialog certDialog=builder.create();
-  ViewGroup body=(ViewGroup)container.findViewById(com.android.internal.R.id.body);
-  LayoutInflater inflater=LayoutInflater.from(getActivity());
-  Button removeButton=(Button)inflater.inflate(R.layout.trusted_credential_details,body,false);
+  }
+ else {
+    builder.setPositiveButton(android.R.string.ok,null);
+  }
   if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_CREDENTIALS,new UserHandle(certHolder.mProfileId))) {
-    body.addView(removeButton);
-  }
-  removeButton.setText(certHolder.mTab.getButtonLabel(certHolder));
-  removeButton.setOnClickListener(new View.OnClickListener(){
-    @Override public void onClick(    View v){
-      AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-      builder.setMessage(certHolder.mTab.getButtonConfirmation(certHolder));
-      builder.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
-        @Override public void onClick(        DialogInterface dialog,        int id){
-          new AliasOperation(certHolder).execute();
-          dialog.dismiss();
-          certDialog.dismiss();
+    builder.setNegativeButton(certHolder.mTab.getButtonLabel(certHolder),new DialogInterface.OnClickListener(){
+      @Override public void onClick(      final DialogInterface parentDialog,      int i){
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        builder.setMessage(certHolder.mTab.getButtonConfirmation(certHolder));
+        builder.setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
+          @Override public void onClick(          DialogInterface dialog,          int id){
+            new AliasOperation(certHolder).execute();
+            dialog.dismiss();
+            parentDialog.dismiss();
+          }
         }
-      }
 );
-      builder.setNegativeButton(android.R.string.no,new DialogInterface.OnClickListener(){
-        @Override public void onClick(        DialogInterface dialog,        int id){
-          dialog.cancel();
-        }
+        builder.setNegativeButton(android.R.string.no,null);
+        AlertDialog alert=builder.create();
+        alert.show();
       }
-);
-      AlertDialog alert=builder.create();
-      alert.show();
     }
-  }
 );
-  certDialog.show();
+  }
+  builder.show();
 }

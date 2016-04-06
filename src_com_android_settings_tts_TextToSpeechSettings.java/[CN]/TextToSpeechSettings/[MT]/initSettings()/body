@@ -11,9 +11,9 @@
   mDefaultRatePref.setProgress(mDefaultRate);
   mDefaultRatePref.setOnPreferenceChangeListener(this);
   mDefaultRatePref.setMax(MAX_SPEECH_RATE);
-  mDefaultPitchPref.setProgress(mDefaultPitch);
+  mDefaultPitchPref.setProgress(getPitchSeekBarProgressFromSpeechPitchValue(mDefaultPitch));
   mDefaultPitchPref.setOnPreferenceChangeListener(this);
-  mDefaultPitchPref.setMax(MAX_SPEECH_PITCH);
+  mDefaultPitchPref.setMax(getPitchSeekBarProgressFromSpeechPitchValue(MAX_SPEECH_PITCH));
   mCurrentEngine=mTts.getCurrentEngine();
   SettingsActivity activity=null;
   if (getActivity() instanceof SettingsActivity) {

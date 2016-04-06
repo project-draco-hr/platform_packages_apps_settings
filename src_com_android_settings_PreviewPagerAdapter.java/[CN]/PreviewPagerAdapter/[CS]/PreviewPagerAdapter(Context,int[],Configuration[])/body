@@ -1,6 +1,5 @@
 {
   mPreviewFrames=new FrameLayout[previewSampleResIds.length];
-  final Configuration origConfig=context.getResources().getConfiguration();
   for (int i=0; i < previewSampleResIds.length; ++i) {
     mPreviewFrames[i]=new FrameLayout(context);
     mPreviewFrames[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
@@ -15,5 +14,4 @@
       mPreviewFrames[i].addView(sampleView);
     }
   }
-  context.createConfigurationContext(origConfig);
 }

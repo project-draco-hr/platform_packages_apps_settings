@@ -1,0 +1,7 @@
+{
+  final Resources res=getContext().getResources();
+  final DisplayMetrics metrics=res.getDisplayMetrics();
+  final float density=metrics.density;
+  final int minDimensionPx=Math.min(metrics.widthPixels,metrics.heightPixels);
+  return (int)(minDimensionPx / density);
+}

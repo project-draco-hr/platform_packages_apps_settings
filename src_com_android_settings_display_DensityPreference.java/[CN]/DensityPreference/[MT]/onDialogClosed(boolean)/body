@@ -1,0 +1,11 @@
+{
+  if (positiveResult) {
+    final Resources res=getContext().getResources();
+    final DisplayMetrics metrics=res.getDisplayMetrics();
+    final int newSwDp=Math.max(Integer.parseInt(getText()),320);
+    final int minDimensionPx=Math.min(metrics.widthPixels,metrics.heightPixels);
+    final int newDensity=DisplayMetrics.DENSITY_MEDIUM * minDimensionPx / newSwDp;
+    final int densityDpi=Math.max(newDensity,120);
+    DisplayDensityUtils.setForcedDisplayDensity(Display.DEFAULT_DISPLAY,densityDpi);
+  }
+}

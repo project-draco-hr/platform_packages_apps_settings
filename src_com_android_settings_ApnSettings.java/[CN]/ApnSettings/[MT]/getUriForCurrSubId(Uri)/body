@@ -1,0 +1,9 @@
+{
+  int subId=mSubscriptionInfo != null ? mSubscriptionInfo.getSubscriptionId() : SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+  if (SubscriptionManager.isValidSubscriptionId(subId)) {
+    return Uri.withAppendedPath(uri,"subId/" + String.valueOf(subId));
+  }
+ else {
+    return uri;
+  }
+}

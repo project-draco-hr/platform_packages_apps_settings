@@ -1,0 +1,4 @@
+{
+  final EnforcedAdmin admin=RestrictedLockUtils.checkIfPasswordQualityIsSet(context,userId);
+  return admin != null && dpm.getPasswordQuality(admin.component,userId) == DevicePolicyManager.PASSWORD_QUALITY_MANAGED;
+}

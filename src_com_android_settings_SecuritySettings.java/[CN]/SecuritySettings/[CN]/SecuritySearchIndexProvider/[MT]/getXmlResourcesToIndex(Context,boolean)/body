@@ -1,15 +1,14 @@
 {
   final List<SearchIndexableResource> index=new ArrayList<SearchIndexableResource>();
   final LockPatternUtils lockPatternUtils=new LockPatternUtils(context);
-  final EnforcedAdmin admin=RestrictedLockUtils.checkIfPasswordQualityIsSet(context,MY_USER_ID);
   final DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
   final UserManager um=UserManager.get(context);
-  if (admin == null || dpm.getPasswordQuality(admin.component) != DevicePolicyManager.PASSWORD_QUALITY_MANAGED) {
+  final int profileUserId=Utils.getManagedProfileId(um,MY_USER_ID);
+  if (!isPasswordManaged(MY_USER_ID,context,dpm) && (profileUserId == UserHandle.USER_NULL || lockPatternUtils.isSeparateProfileChallengeAllowed(profileUserId) || !isPasswordManaged(profileUserId,context,dpm))) {
     final int resId=getResIdForLockUnlockScreen(context,lockPatternUtils,MY_USER_ID);
     index.add(getSearchResource(context,resId));
   }
-  final int profileUserId=Utils.getManagedProfileId(um,MY_USER_ID);
-  if (profileUserId != UserHandle.USER_NULL && lockPatternUtils.isSeparateProfileChallengeAllowed(profileUserId)) {
+  if (profileUserId != UserHandle.USER_NULL && lockPatternUtils.isSeparateProfileChallengeAllowed(profileUserId) && !isPasswordManaged(profileUserId,context,dpm)) {
     index.add(getSearchResource(context,getResIdForLockUnlockScreen(context,lockPatternUtils,profileUserId)));
   }
   if (um.isAdminUser()) {

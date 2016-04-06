@@ -1,0 +1,7 @@
+{
+  final EnforcedAdmin admin=RestrictedLockUtils.checkIfPasswordQualityIsSet(getActivity(),userId);
+  if (admin != null && mDPM.getPasswordQuality(admin.component,userId) == DevicePolicyManager.PASSWORD_QUALITY_MANAGED) {
+    final RestrictedPreference pref=(RestrictedPreference)getPreferenceScreen().findPreference(preferenceKey);
+    pref.setDisabledByAdmin(admin);
+  }
+}

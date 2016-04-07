@@ -2,7 +2,9 @@
   super.onCreate(savedInstanceState);
   mAllowFpAuthentication=getActivity().getIntent().getBooleanExtra(ALLOW_FP_AUTHENTICATION,false);
   Intent intent=getActivity().getIntent();
-  mEffectiveUserId=Utils.getUserIdFromBundle(getActivity(),intent.getExtras());
+  mUserId=Utils.getUserIdFromBundle(getActivity(),intent.getExtras());
+  final UserManager userManager=UserManager.get(getActivity());
+  mEffectiveUserId=userManager.getCredentialOwnerProfile(mUserId);
   mAllowFpAuthentication=mAllowFpAuthentication && !isFingerprintDisabledByAdmin();
   mLockPatternUtils=new LockPatternUtils(getActivity());
 }

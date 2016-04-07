@@ -1,7 +1,8 @@
 {
   long challenge=getActivity().getIntent().getLongExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE,0);
   final int localEffectiveUserId=mEffectiveUserId;
-  mPendingLockCheck=LockPatternChecker.verifyPassword(mLockPatternUtils,pin,challenge,localEffectiveUserId,new LockPatternChecker.OnVerifyCallback(){
+  final int localUserId=mUserId;
+  final LockPatternChecker.OnVerifyCallback onVerifyCallback=new LockPatternChecker.OnVerifyCallback(){
     @Override public void onVerified(    byte[] token,    int timeoutMs){
       mPendingLockCheck=null;
       boolean matched=false;
@@ -9,8 +10,9 @@
         matched=true;
         intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
       }
-      mCredentialCheckResultTracker.setResult(matched,intent,timeoutMs,localEffectiveUserId);
+      mCredentialCheckResultTracker.setResult(matched,intent,timeoutMs,localUserId);
     }
   }
-);
+;
+  mPendingLockCheck=(localEffectiveUserId == localUserId) ? LockPatternChecker.verifyPassword(mLockPatternUtils,pin,challenge,localUserId,onVerifyCallback) : LockPatternChecker.verifyTiedProfileChallenge(mLockPatternUtils,pin,false,challenge,localUserId,onVerifyCallback);
 }

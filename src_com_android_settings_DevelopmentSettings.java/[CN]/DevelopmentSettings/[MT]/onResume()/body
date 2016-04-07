@@ -7,7 +7,7 @@
     getPreferenceScreen().removeAll();
     return;
   }
-  if (mDpm.getMaximumTimeToLock(null) > 0) {
+  if (mDpm.getMaximumTimeToLockForUserAndProfiles(UserHandle.myUserId()) > 0) {
     mDisabledPrefs.add(mKeepScreenOn);
   }
  else {

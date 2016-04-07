@@ -4,7 +4,7 @@
   mLockAfter.setOnPreferenceChangeListener(this);
   if (mDPM != null) {
     final EnforcedAdmin admin=RestrictedLockUtils.checkIfMaximumTimeToLockIsSet(getActivity());
-    final long adminTimeout=mDPM.getMaximumTimeToLock(null);
+    final long adminTimeout=mDPM.getMaximumTimeToLockForUserAndProfiles(UserHandle.myUserId());
     final long displayTimeout=Math.max(0,Settings.System.getInt(getContentResolver(),SCREEN_OFF_TIMEOUT,0));
     final long maxTimeout=Math.max(0,adminTimeout - displayTimeout);
     mLockAfter.removeUnusableTimeouts(maxTimeout,admin);

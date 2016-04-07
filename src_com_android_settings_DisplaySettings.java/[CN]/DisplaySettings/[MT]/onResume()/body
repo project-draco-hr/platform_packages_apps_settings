@@ -7,7 +7,7 @@
   final DevicePolicyManager dpm=(DevicePolicyManager)getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
   if (dpm != null) {
     final EnforcedAdmin admin=RestrictedLockUtils.checkIfMaximumTimeToLockIsSet(getActivity());
-    final long maxTimeout=dpm.getMaximumTimeToLock(null);
+    final long maxTimeout=dpm.getMaximumTimeToLockForUserAndProfiles(UserHandle.myUserId());
     mScreenTimeoutPreference.removeUnusableTimeouts(maxTimeout,admin);
   }
   updateTimeoutPreferenceDescription(currentTimeout);

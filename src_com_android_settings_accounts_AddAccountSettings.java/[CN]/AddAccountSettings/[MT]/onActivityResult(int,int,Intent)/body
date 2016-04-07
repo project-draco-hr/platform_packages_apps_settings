@@ -1,15 +1,23 @@
 {
 switch (requestCode) {
-case CHOOSE_ACCOUNT_REQUEST:
-    if (resultCode == RESULT_CANCELED) {
-      if (data != null) {
-        startActivityAsUser(data,mUserHandle);
-      }
-      setResult(resultCode);
-      finish();
-      return;
+case UNLOCK_WORK_PROFILE_REQUEST:
+    if (resultCode == Activity.RESULT_OK) {
+      requestChooseAccount();
     }
-  addAccount(data.getStringExtra(EXTRA_SELECTED_ACCOUNT));
+ else {
+      finish();
+    }
+  break;
+case CHOOSE_ACCOUNT_REQUEST:
+if (resultCode == RESULT_CANCELED) {
+  if (data != null) {
+    startActivityAsUser(data,mUserHandle);
+  }
+  setResult(resultCode);
+  finish();
+  return;
+}
+addAccount(data.getStringExtra(EXTRA_SELECTED_ACCOUNT));
 break;
 case ADD_ACCOUNT_REQUEST:
 setResult(resultCode);

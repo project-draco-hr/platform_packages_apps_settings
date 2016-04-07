@@ -1,8 +1,13 @@
 {
   super.onBindViewHolder(view);
-  if (mSystemApp) {
-    ((ImageView)view.findViewById(R.id.low_importance)).getDrawable().setTint(getContext().getColor(R.color.importance_disabled_tint));
+  mSummaryTextView=(TextView)view.findViewById(com.android.internal.R.id.summary);
+  mSeekBar=(SeekBar)view.findViewById(com.android.internal.R.id.seekbar);
+  final ImageView autoButton=(ImageView)view.findViewById(R.id.auto_importance);
+  applyAutoUi(autoButton);
+  autoButton.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      applyAuto(autoButton);
+    }
   }
-  view.setDividerAllowedAbove(false);
-  view.setDividerAllowedBelow(false);
+);
 }

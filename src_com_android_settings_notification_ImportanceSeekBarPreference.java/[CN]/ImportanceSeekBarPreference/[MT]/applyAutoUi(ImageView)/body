@@ -1,0 +1,13 @@
+{
+  mSeekBar.setEnabled(!mAutoOn);
+  final ColorStateList tint=mAutoOn ? mInactiveSliderTint : mActiveSliderTint;
+  Drawable icon=autoButton.getDrawable().mutate();
+  icon.setTintList(tint);
+  autoButton.setImageDrawable(icon);
+  mSeekBar.setProgressTintList(tint);
+  mSeekBar.setThumbTintList(tint);
+  if (mAutoOn) {
+    mSummary=getProgressSummary(NotificationListenerService.Ranking.IMPORTANCE_UNSPECIFIED);
+  }
+  mSummaryTextView.setText(mSummary);
+}

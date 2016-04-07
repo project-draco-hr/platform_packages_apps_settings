@@ -1,0 +1,22 @@
+{
+  if (mFingerprintManager != null && mFingerprintManager.isHardwareDetected() && mFingerprintManager.hasEnrolledFingerprints(userId)) {
+    mFingerprintManager.setActiveUser(userId);
+    mFingerprintManager.remove(new Fingerprint(null,userId,0,0),userId,new RemovalCallback(){
+      @Override public void onRemovalError(      Fingerprint fp,      int errMsgId,      CharSequence errString){
+        Log.v(TAG,"Fingerprint removed: " + fp.getFingerId());
+        if (fp.getFingerId() == 0) {
+          removeManagedProfileFingerprintsAndFinishIfNecessary(userId);
+        }
+      }
+      @Override public void onRemovalSucceeded(      Fingerprint fingerprint){
+        if (fingerprint.getFingerId() == 0) {
+          removeManagedProfileFingerprintsAndFinishIfNecessary(userId);
+        }
+      }
+    }
+);
+  }
+ else {
+    finish();
+  }
+}

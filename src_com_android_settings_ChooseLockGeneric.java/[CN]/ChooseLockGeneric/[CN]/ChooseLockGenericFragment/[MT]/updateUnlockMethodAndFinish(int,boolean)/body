@@ -12,10 +12,10 @@
     mLockPatternUtils.setSeparateProfileChallengeEnabled(mUserId,true,mUserPassword);
     mChooseLockSettingsHelper.utils().clearLock(mUserId);
     mChooseLockSettingsHelper.utils().setLockScreenDisabled(disabled,mUserId);
-    removeAllFingerprintTemplatesAndFinish();
+    removeAllFingerprintForUserAndFinish(mUserId);
     getActivity().setResult(Activity.RESULT_OK);
   }
  else {
-    removeAllFingerprintTemplatesAndFinish();
+    removeAllFingerprintForUserAndFinish(mUserId);
   }
 }

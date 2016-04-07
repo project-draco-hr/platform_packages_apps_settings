@@ -1,0 +1,20 @@
+{
+  mFingerprintManager.setActiveUser(UserHandle.myUserId());
+  final UserManager um=UserManager.get(getActivity());
+  boolean hasChildProfile=false;
+  if (!um.getUserInfo(parentUserId).isManagedProfile()) {
+    final List<UserInfo> profiles=um.getProfiles(parentUserId);
+    final int profilesSize=profiles.size();
+    for (int i=0; i < profilesSize; i++) {
+      final UserInfo userInfo=profiles.get(i);
+      if (userInfo.isManagedProfile() && !mLockPatternUtils.isSeparateProfileChallengeEnabled(userInfo.id)) {
+        removeAllFingerprintForUserAndFinish(userInfo.id);
+        hasChildProfile=true;
+        break;
+      }
+    }
+  }
+  if (!hasChildProfile) {
+    finish();
+  }
+}

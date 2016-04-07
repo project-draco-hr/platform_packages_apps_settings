@@ -28,6 +28,7 @@
  else {
     mUserId=targetUser;
   }
+  mManagedPasswordProvider=ManagedLockPasswordProvider.get(getActivity(),mUserId);
   if (mPasswordConfirmed) {
     updatePreferencesOrFinish();
     if (mForChangeCredRequiredForBoot) {

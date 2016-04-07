@@ -10,6 +10,8 @@ case DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC:
 case DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC:
 case DevicePolicyManager.PASSWORD_QUALITY_COMPLEX:
   return R.xml.security_settings_password_sub;
+case DevicePolicyManager.PASSWORD_QUALITY_MANAGED:
+return managedPasswordProvider.getResIdForLockUnlockSubScreen();
 }
 }
  else if (!lockPatternUtils.isLockScreenDisabled(MY_USER_ID)) {

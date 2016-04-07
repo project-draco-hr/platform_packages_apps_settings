@@ -36,6 +36,10 @@
         enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_COMPLEX;
         disabledByAdmin=adminEnforcedQuality > DevicePolicyManager.PASSWORD_QUALITY_COMPLEX;
       }
+ else       if (KEY_UNLOCK_SET_MANAGED.equals(key)) {
+        enabled=quality <= DevicePolicyManager.PASSWORD_QUALITY_MANAGED && mManagedPasswordProvider.isManagedPasswordChoosable();
+        disabledByAdmin=adminEnforcedQuality > DevicePolicyManager.PASSWORD_QUALITY_MANAGED;
+      }
       if (hideDisabled) {
         visible=enabled;
       }

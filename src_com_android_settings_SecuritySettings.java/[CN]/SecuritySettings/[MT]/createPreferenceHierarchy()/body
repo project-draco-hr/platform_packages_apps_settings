@@ -5,14 +5,14 @@
   }
   addPreferencesFromResource(R.xml.security_settings);
   root=getPreferenceScreen();
-  final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,MY_USER_ID);
+  final int resid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,mManagedPasswordProvider,MY_USER_ID);
   addPreferencesFromResource(resid);
   disableIfPasswordQualityManaged(KEY_UNLOCK_SET_OR_CHANGE,MY_USER_ID);
   mProfileChallengeUserId=Utils.getManagedProfileId(mUm,MY_USER_ID);
   if (mProfileChallengeUserId != UserHandle.USER_NULL && mLockPatternUtils.isSeparateProfileChallengeAllowed(mProfileChallengeUserId)) {
     addPreferencesFromResource(R.xml.security_settings_profile);
     addPreferencesFromResource(R.xml.security_settings_unification);
-    final int profileResid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,mProfileChallengeUserId);
+    final int profileResid=getResIdForLockUnlockScreen(getActivity(),mLockPatternUtils,mManagedPasswordProvider,mProfileChallengeUserId);
     addPreferencesFromResource(profileResid);
     maybeAddFingerprintPreference(root,mProfileChallengeUserId);
     if (!mLockPatternUtils.isSeparateProfileChallengeEnabled(mProfileChallengeUserId)) {

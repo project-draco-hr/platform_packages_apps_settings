@@ -1,0 +1,12 @@
+{
+  if (getIcon() == null) {
+    holder.itemView.post(new Runnable(){
+      @Override public void run(){
+        mApplicationsState.ensureIcon(mAppEntry);
+        setIcon(mAppEntry.icon);
+      }
+    }
+);
+  }
+  super.onBindViewHolder(holder);
+}

@@ -2,8 +2,10 @@
   super.onCreate(savedInstanceState);
   mContext=getActivity();
   mProfileChallengeUserId=Utils.getManagedProfileId(UserManager.get(mContext),UserHandle.myUserId());
-  mSecure=new LockPatternUtils(getActivity()).isSecure(UserHandle.myUserId());
-  mSecureProfile=(mProfileChallengeUserId != UserHandle.USER_NULL) && new LockPatternUtils(getActivity()).isSecure(mProfileChallengeUserId);
+  final LockPatternUtils utils=new LockPatternUtils(getActivity());
+  final boolean isUnified=!utils.isSeparateProfileChallengeEnabled(mProfileChallengeUserId);
+  mSecure=utils.isSecure(UserHandle.myUserId());
+  mSecureProfile=(mProfileChallengeUserId != UserHandle.USER_NULL) && (utils.isSecure(mProfileChallengeUserId) || (isUnified && mSecure));
   addPreferencesFromResource(R.xml.configure_notification_settings);
   initPulse();
   initLockscreenNotifications();

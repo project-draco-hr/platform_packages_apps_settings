@@ -1,0 +1,8 @@
+{
+  ArrayList<AppEntry> apps=mAppSession.getAllApps();
+  final int N=apps.size();
+  for (int i=0; i < N; i++) {
+    AppEntry app=apps.get(i);
+    updateExtraInfo(app,app.info.packageName,app.info.uid);
+  }
+}

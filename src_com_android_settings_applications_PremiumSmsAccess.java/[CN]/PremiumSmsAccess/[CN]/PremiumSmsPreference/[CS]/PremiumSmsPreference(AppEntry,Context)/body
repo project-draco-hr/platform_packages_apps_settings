@@ -1,0 +1,13 @@
+{
+  super(context);
+  mAppEntry=appEntry;
+  mAppEntry.ensureLabel(context);
+  setTitle(mAppEntry.label);
+  if (mAppEntry.icon != null) {
+    setIcon(mAppEntry.icon);
+  }
+  setEntries(R.array.security_settings_premium_sms_values);
+  setEntryValues(new CharSequence[]{String.valueOf(SmsUsageMonitor.PREMIUM_SMS_PERMISSION_ASK_USER),String.valueOf(SmsUsageMonitor.PREMIUM_SMS_PERMISSION_NEVER_ALLOW),String.valueOf(SmsUsageMonitor.PREMIUM_SMS_PERMISSION_ALWAYS_ALLOW)});
+  setValue(String.valueOf(getCurrentValue()));
+  setSummary("%s");
+}

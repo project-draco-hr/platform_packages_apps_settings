@@ -28,8 +28,8 @@
         final String delim=getString(R.string.notification_log_details_delimiter);
         sb.append(bold(getString(R.string.notification_log_details_package))).append(delim).append(info.pkg).append("\n").append(bold(getString(R.string.notification_log_details_key))).append(delim).append(sbn.getKey());
         sb.append("\n").append(bold(getString(R.string.notification_log_details_icon))).append(delim).append(n.getSmallIcon().toString());
-        if (!TextUtils.isEmpty(n.getGroup())) {
-          sb.append("\n").append(bold(getString(R.string.notification_log_details_group))).append(delim).append(n.getGroup());
+        if (sbn.isGroup()) {
+          sb.append("\n").append(bold(getString(R.string.notification_log_details_group))).append(delim).append(sbn.getGroupKey());
           if (n.isGroupSummary()) {
             sb.append(bold(getString(R.string.notification_log_details_group_summary)));
           }
@@ -62,10 +62,20 @@
           sb.append("\n").append(bold(getString(R.string.notification_log_details_public_version))).append(delim).append(getTitleString(n.publicVersion));
         }
         sb.append("\n").append(bold(getString(R.string.notification_log_details_priority))).append(delim).append(Notification.priorityToString(n.priority));
-        if (mRanking != null && mRanking.getRanking(sbn.getKey(),rank)) {
-          sb.append("\n").append(bold(getString(R.string.notification_log_details_importance))).append(delim).append(Ranking.importanceToString(rank.getImportance()));
-          if (rank.getImportanceExplanation() != null) {
-            sb.append("\n").append(bold(getString(R.string.notification_log_details_explanation))).append(delim).append(rank.getImportanceExplanation());
+        if (resultset == active) {
+          if (mRanking != null && mRanking.getRanking(sbn.getKey(),rank)) {
+            sb.append("\n").append(bold(getString(R.string.notification_log_details_importance))).append(delim).append(Ranking.importanceToString(rank.getImportance()));
+            if (rank.getImportanceExplanation() != null) {
+              sb.append("\n").append(bold(getString(R.string.notification_log_details_explanation))).append(delim).append(rank.getImportanceExplanation());
+            }
+          }
+ else {
+            if (mRanking == null) {
+              sb.append("\n").append(bold(getString(R.string.notification_log_details_ranking_null)));
+            }
+ else {
+              sb.append("\n").append(bold(getString(R.string.notification_log_details_ranking_none)));
+            }
           }
         }
         if (n.contentIntent != null) {

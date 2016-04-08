@@ -1,13 +1,6 @@
 {
   super(context,attrs,defStyleAttr,defStyleRes);
-  super.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
-    @Override public void onStopTrackingTouch(    SeekBar seekBar){
-    }
-    @Override public void onStartTrackingTouch(    SeekBar seekBar){
-    }
-    @Override public void onProgressChanged(    SeekBar seekBar,    int progress,    boolean fromUser){
-      sendClickEventForAccessibility(progress);
-    }
-  }
-);
+  mAccessHelper=new LabeledSeekBarExploreByTouchHelper(this);
+  ViewCompat.setAccessibilityDelegate(this,mAccessHelper);
+  super.setOnSeekBarChangeListener(mProxySeekBarListener);
 }

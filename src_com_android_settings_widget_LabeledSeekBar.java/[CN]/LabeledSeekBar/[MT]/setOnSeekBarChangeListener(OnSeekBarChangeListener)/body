@@ -1,16 +1,3 @@
 {
-  OnSeekBarChangeListener l2=new OnSeekBarChangeListener(){
-    @Override public void onStopTrackingTouch(    SeekBar seekBar){
-      l.onStopTrackingTouch(seekBar);
-    }
-    @Override public void onStartTrackingTouch(    SeekBar seekBar){
-      l.onStartTrackingTouch(seekBar);
-    }
-    @Override public void onProgressChanged(    SeekBar seekBar,    int progress,    boolean fromUser){
-      l.onProgressChanged(seekBar,progress,fromUser);
-      sendClickEventForAccessibility(progress);
-    }
-  }
-;
-  super.setOnSeekBarChangeListener(l2);
+  mOnSeekBarChangeListener=l;
 }

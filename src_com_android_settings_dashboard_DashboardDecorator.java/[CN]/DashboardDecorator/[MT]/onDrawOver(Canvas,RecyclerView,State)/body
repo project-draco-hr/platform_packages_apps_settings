@@ -1,0 +1,20 @@
+{
+  final int childCount=parent.getChildCount();
+  final int width=parent.getWidth();
+  final int bottom=parent.getBottom();
+  for (int i=1; i < childCount; i++) {
+    final View child=parent.getChildAt(i);
+    final ViewHolder holder=parent.getChildViewHolder(child);
+    if (holder.getItemViewType() == R.layout.dashboard_category) {
+      if (parent.getChildViewHolder(parent.getChildAt(i - 1)).getItemViewType() != R.layout.dashboard_tile) {
+        continue;
+      }
+    }
+ else     if (holder.getItemViewType() != R.layout.condition_card) {
+      continue;
+    }
+    int top=getChildTop(child);
+    mDivider.setBounds(0,top,width,top + mDivider.getIntrinsicHeight());
+    mDivider.draw(c);
+  }
+}

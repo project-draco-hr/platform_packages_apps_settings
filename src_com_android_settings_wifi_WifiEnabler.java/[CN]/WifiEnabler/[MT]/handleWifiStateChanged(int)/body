@@ -1,4 +1,5 @@
 {
+  mSwitchBar.setDisabledByAdmin(null);
 switch (state) {
 case WifiManager.WIFI_STATE_ENABLING:
     mSwitchBar.setEnabled(false);
@@ -20,5 +21,14 @@ default :
 setSwitchBarChecked(false);
 mSwitchBar.setEnabled(true);
 updateSearchIndex(false);
+}
+if (mayDisableTethering(!mSwitchBar.isChecked())) {
+if (RestrictedLockUtils.hasBaseUserRestriction(mContext,UserManager.DISALLOW_CONFIG_TETHERING,UserHandle.myUserId())) {
+mSwitchBar.setEnabled(false);
+}
+ else {
+final EnforcedAdmin admin=RestrictedLockUtils.checkIfRestrictionEnforced(mContext,UserManager.DISALLOW_CONFIG_TETHERING,UserHandle.myUserId());
+mSwitchBar.setDisabledByAdmin(admin);
+}
 }
 }

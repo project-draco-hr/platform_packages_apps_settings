@@ -1,7 +1,14 @@
 {
   if (index == 0) {
-    TetherUtil.setWifiTethering(false,mManager.getContext());
-    setActive(false);
+    final Context context=mManager.getContext();
+    final EnforcedAdmin admin=RestrictedLockUtils.checkIfRestrictionEnforced(context,UserManager.DISALLOW_CONFIG_TETHERING,UserHandle.myUserId());
+    if (admin != null) {
+      RestrictedLockUtils.sendShowAdminSupportDetailsIntent(context,admin);
+    }
+ else {
+      TetherUtil.setWifiTethering(false,context);
+      setActive(false);
+    }
   }
  else {
     throw new IllegalArgumentException("Unexpected index " + index);

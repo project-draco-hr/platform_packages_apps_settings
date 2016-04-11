@@ -1,6 +1,3 @@
 {
-  if (mAccessHelper != null && mAccessHelper.dispatchHoverEvent(event)) {
-    return true;
-  }
-  return super.dispatchHoverEvent(event);
+  return mAccessHelper.dispatchHoverEvent(event) || super.dispatchHoverEvent(event);
 }

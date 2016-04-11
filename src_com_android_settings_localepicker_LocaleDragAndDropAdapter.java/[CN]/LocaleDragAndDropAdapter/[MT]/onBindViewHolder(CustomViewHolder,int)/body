@@ -8,7 +8,7 @@
   dragCell.setShowCheckbox(mRemoveMode);
   dragCell.setShowMiniLabel(!mRemoveMode);
   dragCell.setShowHandle(!mRemoveMode && mDragEnabled);
-  dragCell.setChecked(false);
+  dragCell.setChecked(mRemoveMode ? feedItem.getChecked() : false);
   dragCell.setTag(feedItem);
   dragCell.getCheckbox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
     @Override public void onCheckedChanged(    CompoundButton buttonView,    boolean isChecked){

@@ -1,6 +1,10 @@
 {
+  if (mMenu == null) {
+    return;
+  }
   final MenuItem menuItemRemove=mMenu.findItem(MENU_ID_REMOVE);
   if (menuItemRemove != null) {
+    menuItemRemove.setShowAsAction(mRemoveMode ? MenuItem.SHOW_AS_ACTION_ALWAYS : MenuItem.SHOW_AS_ACTION_NEVER);
     menuItemRemove.setVisible(mAdapter.getItemCount() > 1);
   }
 }

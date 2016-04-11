@@ -5,24 +5,37 @@
     return;
   }
   if (checkedCount == mAdapter.getItemCount()) {
+    mShowingRemoveDialog=true;
     new AlertDialog.Builder(getActivity()).setTitle(R.string.dlg_remove_locales_error_title).setMessage(R.string.dlg_remove_locales_error_message).setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
       @Override public void onClick(      DialogInterface dialog,      int which){
+      }
+    }
+).setOnDismissListener(new DialogInterface.OnDismissListener(){
+      @Override public void onDismiss(      DialogInterface dialog){
+        mShowingRemoveDialog=false;
       }
     }
 ).create().show();
     return;
   }
   final String title=getResources().getQuantityString(R.plurals.dlg_remove_locales_title,checkedCount);
+  mShowingRemoveDialog=true;
   new AlertDialog.Builder(getActivity()).setTitle(title).setMessage(R.string.dlg_remove_locales_message).setNegativeButton(android.R.string.no,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
-      setRemoveMode(!mRemoveMode);
+      setRemoveMode(false);
     }
   }
 ).setPositiveButton(android.R.string.yes,new DialogInterface.OnClickListener(){
     @Override public void onClick(    DialogInterface dialog,    int which){
+      mRemoveMode=false;
+      mShowingRemoveDialog=false;
       mAdapter.removeChecked();
-      setRemoveMode(!mRemoveMode);
-      updateVisibilityOfRemoveMenu();
+      setRemoveMode(false);
+    }
+  }
+).setOnDismissListener(new DialogInterface.OnDismissListener(){
+    @Override public void onDismiss(    DialogInterface dialog){
+      mShowingRemoveDialog=false;
     }
   }
 ).create().show();

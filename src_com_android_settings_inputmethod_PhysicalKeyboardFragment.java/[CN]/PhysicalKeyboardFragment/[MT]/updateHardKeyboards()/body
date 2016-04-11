@@ -2,23 +2,10 @@
   final ArrayList<HardKeyboardDeviceInfo> newHardKeyboards=getHardKeyboards();
   if (!Objects.equal(newHardKeyboards,mLastHardKeyboards)) {
     clearLoader();
-    final PreferenceScreen preferenceScreen=getPreferenceScreen();
-    preferenceScreen.removeAll();
     mLastHardKeyboards.clear();
     mLastHardKeyboards.addAll(newHardKeyboards);
-    final int N=newHardKeyboards.size();
-    for (int i=0; i < N; ++i) {
-      final HardKeyboardDeviceInfo deviceInfo=newHardKeyboards.get(i);
-      final PreferenceCategory category=new PreferenceCategory(getPrefContext(),null);
-      category.setTitle(deviceInfo.mDeviceName);
-      category.setOrder(0);
-      getLoaderManager().initLoader(mNextLoaderId,null,new Callbacks(getContext(),this,deviceInfo.mDeviceIdentifier,category));
-      mLoaderIDs.add(mNextLoaderId);
-      ++mNextLoaderId;
-      preferenceScreen.addPreference(category);
-    }
-    mKeyboardAssistanceCategory.setOrder(1);
-    preferenceScreen.addPreference(mKeyboardAssistanceCategory);
+    getLoaderManager().initLoader(mNextLoaderId,null,new Callbacks(getContext(),this,mLastHardKeyboards));
+    mLoaderIDs.add(mNextLoaderId);
+    ++mNextLoaderId;
   }
-  updateShowVirtualKeyboardSwitch();
 }

@@ -1,11 +1,15 @@
 {
+  long startTime=System.currentTimeMillis();
   super.onResume();
   ((SettingsDrawerActivity)getActivity()).addCategoryListener(this);
   mSummaryLoader.setListening(true);
-  for (  Condition c : mConditionManager.getVisibleConditions()) {
-    MetricsLogger.visible(getContext(),c.getMetricsConstant());
+  for (  Condition c : mConditionManager.getConditions()) {
+    if (c.shouldShow()) {
+      MetricsLogger.visible(getContext(),c.getMetricsConstant());
+    }
   }
-  for (  Tile suggestion : mSuggestionParser.getSuggestions()) {
+  for (  Tile suggestion : mAdapter.getSuggestions()) {
     MetricsLogger.action(getContext(),MetricsEvent.ACTION_SHOW_SETTINGS_SUGGESTION,DashboardAdapter.getSuggestionIdentifier(getContext(),suggestion));
   }
+  if (DEBUG_TIMING)   Log.d(TAG,"onResume took " + (System.currentTimeMillis() - startTime) + " ms");
 }

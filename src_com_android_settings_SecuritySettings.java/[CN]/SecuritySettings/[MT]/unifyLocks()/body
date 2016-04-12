@@ -1,12 +1,12 @@
 {
   int profileQuality=mLockPatternUtils.getKeyguardStoredPasswordQuality(mProfileChallengeUserId);
-  mLockPatternUtils.setSeparateProfileChallengeEnabled(mProfileChallengeUserId,false,mCurrentProfilePassword);
   if (profileQuality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
     mLockPatternUtils.saveLockPattern(LockPatternUtils.stringToPattern(mCurrentProfilePassword),mCurrentDevicePassword,MY_USER_ID);
   }
  else {
     mLockPatternUtils.saveLockPassword(mCurrentProfilePassword,mCurrentDevicePassword,profileQuality,MY_USER_ID);
   }
+  mLockPatternUtils.setSeparateProfileChallengeEnabled(mProfileChallengeUserId,false,mCurrentProfilePassword);
   final boolean profilePatternVisibility=mLockPatternUtils.isVisiblePatternEnabled(mProfileChallengeUserId);
   mLockPatternUtils.setVisiblePatternEnabled(profilePatternVisibility,MY_USER_ID);
   mCurrentDevicePassword=null;

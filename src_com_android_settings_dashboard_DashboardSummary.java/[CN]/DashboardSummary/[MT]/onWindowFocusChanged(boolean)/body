@@ -1,4 +1,5 @@
 {
+  long startTime=System.currentTimeMillis();
   if (hasWindowFocus) {
     mConditionManager.addListener(this);
     mConditionManager.refreshAll();
@@ -6,4 +7,5 @@
  else {
     mConditionManager.remListener(this);
   }
+  if (DEBUG_TIMING)   Log.d(TAG,"onWindowFocusChanged took " + (System.currentTimeMillis() - startTime) + " ms");
 }

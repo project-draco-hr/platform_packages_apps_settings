@@ -1,11 +1,11 @@
 {
-  super.onCreate(savedInstanceState);
   long startTime=System.currentTimeMillis();
+  super.onCreate(savedInstanceState);
   List<DashboardCategory> categories=((SettingsActivity)getActivity()).getDashboardCategories();
   mSummaryLoader=new SummaryLoader(getActivity(),categories);
   setHasOptionsMenu(true);
-  if (DEBUG_TIMING)   Log.d(TAG,"onCreate took " + (System.currentTimeMillis() - startTime) + " ms");
   Context context=getContext();
   mConditionManager=ConditionManager.get(context);
   mSuggestionParser=new SuggestionParser(context,context.getSharedPreferences(SUGGESTIONS,0),R.xml.suggestion_ordering);
+  if (DEBUG_TIMING)   Log.d(TAG,"onCreate took " + (System.currentTimeMillis() - startTime) + " ms");
 }

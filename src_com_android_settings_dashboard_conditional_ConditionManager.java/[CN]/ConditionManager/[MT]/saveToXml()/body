@@ -8,12 +8,14 @@
     serializer.startTag("",TAG_CONDITIONS);
     final int N=mConditions.size();
     for (int i=0; i < N; i++) {
-      serializer.startTag("",TAG_CONDITION);
-      serializer.attribute("",ATTR_CLASS,mConditions.get(i).getClass().getName());
       PersistableBundle bundle=new PersistableBundle();
-      mConditions.get(i).saveState(bundle);
-      bundle.saveToXml(serializer);
-      serializer.endTag("",TAG_CONDITION);
+      if (mConditions.get(i).saveState(bundle)) {
+        serializer.startTag("",TAG_CONDITION);
+        final String clz=mConditions.get(i).getClass().getSimpleName();
+        serializer.attribute("",ATTR_CLASS,clz);
+        bundle.saveToXml(serializer);
+        serializer.endTag("",TAG_CONDITION);
+      }
     }
     serializer.endTag("",TAG_CONDITIONS);
     serializer.flush();

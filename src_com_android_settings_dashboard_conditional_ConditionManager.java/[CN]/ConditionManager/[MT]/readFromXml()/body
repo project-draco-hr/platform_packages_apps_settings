@@ -9,6 +9,9 @@
       if (TAG_CONDITION.equals(parser.getName())) {
         int depth=parser.getDepth();
         String clz=parser.getAttributeValue("",ATTR_CLASS);
+        if (!clz.startsWith(PKG)) {
+          clz=PKG + clz;
+        }
         Condition condition=createCondition(Class.forName(clz));
         PersistableBundle bundle=PersistableBundle.restoreFromXml(parser);
         if (DEBUG)         Log.d(TAG,"Reading " + clz + " -- "+ bundle);

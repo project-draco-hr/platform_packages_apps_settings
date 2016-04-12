@@ -1,5 +1,10 @@
 {
-  bundle.putBoolean(KEY_SILENCE,mIsSilenced);
-  bundle.putBoolean(KEY_ACTIVE,mIsActive);
-  bundle.putLong(KEY_LAST_STATE,mLastStateChange);
+  if (mIsSilenced) {
+    bundle.putBoolean(KEY_SILENCE,mIsSilenced);
+  }
+  if (mIsActive) {
+    bundle.putBoolean(KEY_ACTIVE,mIsActive);
+    bundle.putLong(KEY_LAST_STATE,mLastStateChange);
+  }
+  return mIsSilenced || mIsActive;
 }

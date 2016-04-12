@@ -1,4 +1,14 @@
 {
-  commit();
+  if (mPreviewPagerAdapter.isAnimating()) {
+    mPreviewPagerAdapter.setAnimationEndAction(new Runnable(){
+      @Override public void run(){
+        commit();
+      }
+    }
+);
+  }
+ else {
+    commit();
+  }
   mSeekByTouch=false;
 }

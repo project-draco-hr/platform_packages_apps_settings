@@ -19,7 +19,5 @@
     mVoiceInputPref.setAssistRestrict(currentAssist);
   }
   mScreenshotPref.setEnabled(mContextPref.isChecked());
-  if (!mContextPref.isChecked()) {
-    mScreenshotPref.setChecked(false);
-  }
+  mScreenshotPref.setChecked(mContextPref.isChecked() && Settings.Secure.getInt(getContentResolver(),Settings.Secure.ASSIST_SCREENSHOT_ENABLED,1) != 0);
 }

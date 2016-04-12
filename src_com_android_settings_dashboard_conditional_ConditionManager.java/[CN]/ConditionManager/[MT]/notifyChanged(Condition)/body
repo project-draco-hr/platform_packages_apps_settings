@@ -1,5 +1,6 @@
 {
   saveToXml();
+  Collections.sort(mConditions,CONDITION_COMPARATOR);
   final int N=mListeners.size();
   for (int i=0; i < N; i++) {
     mListeners.get(i).onConditionsChanged();

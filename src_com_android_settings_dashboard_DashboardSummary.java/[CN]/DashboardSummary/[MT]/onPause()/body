@@ -2,10 +2,12 @@
   super.onPause();
   ((SettingsDrawerActivity)getActivity()).remCategoryListener(this);
   mSummaryLoader.setListening(false);
-  for (  Condition c : mConditionManager.getVisibleConditions()) {
-    MetricsLogger.hidden(getContext(),c.getMetricsConstant());
+  for (  Condition c : mConditionManager.getConditions()) {
+    if (c.shouldShow()) {
+      MetricsLogger.hidden(getContext(),c.getMetricsConstant());
+    }
   }
-  for (  Tile suggestion : mSuggestionParser.getSuggestions()) {
+  for (  Tile suggestion : mAdapter.getSuggestions()) {
     MetricsLogger.action(getContext(),MetricsEvent.ACTION_HIDE_SETTINGS_SUGGESTION,DashboardAdapter.getSuggestionIdentifier(getContext(),suggestion));
   }
 }

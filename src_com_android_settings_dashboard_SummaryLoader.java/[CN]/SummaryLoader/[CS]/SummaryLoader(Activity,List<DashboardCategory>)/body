@@ -1,6 +1,6 @@
 {
   mHandler=new Handler();
-  mWorkerThread=new HandlerThread("SummaryLoader");
+  mWorkerThread=new HandlerThread("SummaryLoader",Process.THREAD_PRIORITY_BACKGROUND);
   mWorkerThread.start();
   mWorker=new Worker(mWorkerThread.getLooper());
   mActivity=activity;

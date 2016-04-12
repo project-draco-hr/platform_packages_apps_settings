@@ -1,4 +1,5 @@
 {
+  long startTime=System.currentTimeMillis();
   mDashboard=(FocusRecyclerView)view.findViewById(R.id.dashboard_container);
   mLayoutManager=new LinearLayoutManager(getContext());
   mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -12,9 +13,9 @@
   mDashboard.addItemDecoration(new DashboardDecorator(getContext()));
   mAdapter=new DashboardAdapter(getContext());
   mAdapter.setConditions(mConditionManager.getConditions());
-  mAdapter.setSuggestions(mSuggestionParser);
   mDashboard.setAdapter(mAdapter);
   mSummaryLoader.setAdapter(mAdapter);
   ConditionAdapterUtils.addDismiss(mDashboard);
+  if (DEBUG_TIMING)   Log.d(TAG,"onViewCreated took " + (System.currentTimeMillis() - startTime) + " ms");
   rebuildUI();
 }

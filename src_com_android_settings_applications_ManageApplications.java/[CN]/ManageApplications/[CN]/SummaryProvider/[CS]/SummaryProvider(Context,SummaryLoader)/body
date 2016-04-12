@@ -3,4 +3,5 @@
   mLoader=loader;
   mAppState=ApplicationsState.getInstance((Application)context.getApplicationContext());
   mSession=mAppState.newSession(this);
+  mHandler=new Handler(mAppState.getBackgroundLooper());
 }

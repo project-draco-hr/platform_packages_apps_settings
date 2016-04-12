@@ -7,7 +7,6 @@
   mContextPref.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ASSIST_STRUCTURE_ENABLED,1) != 0);
   mContextPref.setOnPreferenceChangeListener(this);
   mScreenshotPref=(SwitchPreference)findPreference(KEY_SCREENSHOT);
-  mScreenshotPref.setChecked(Settings.Secure.getInt(getContentResolver(),Settings.Secure.ASSIST_SCREENSHOT_ENABLED,1) != 0);
   mScreenshotPref.setOnPreferenceChangeListener(this);
   mVoiceInputPref=(VoiceInputListPreference)findPreference(KEY_VOICE_INPUT);
   updateUi();

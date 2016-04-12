@@ -3,13 +3,14 @@
   final SubscriptionInfo sir=mSubscriptionManager.getDefaultDataSubscriptionInfo();
   simPref.setTitle(R.string.cellular_data_title);
   if (DBG)   log("[updateCellularDataValues] mSubInfoList=" + mSubInfoList);
+  boolean callStateIdle=isCallStateIdle();
+  final boolean ecbMode=SystemProperties.getBoolean(TelephonyProperties.PROPERTY_INECM_MODE,false);
   if (sir != null) {
     simPref.setSummary(sir.getDisplayName());
+    simPref.setEnabled((mSelectableSubInfos.size() > 1) && callStateIdle && !ecbMode);
   }
  else   if (sir == null) {
     simPref.setSummary(R.string.sim_selection_required_pref);
+    simPref.setEnabled((mSelectableSubInfos.size() >= 1) && callStateIdle && !ecbMode);
   }
-  boolean callStateIdle=isCallStateIdle();
-  final boolean ecbMode=SystemProperties.getBoolean(TelephonyProperties.PROPERTY_INECM_MODE,false);
-  simPref.setEnabled((mSelectableSubInfos.size() >= 1) && callStateIdle && !ecbMode);
 }

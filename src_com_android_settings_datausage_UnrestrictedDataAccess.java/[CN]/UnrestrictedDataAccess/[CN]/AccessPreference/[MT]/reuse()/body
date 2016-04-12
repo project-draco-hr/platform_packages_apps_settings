@@ -1,4 +1,5 @@
 {
   setTitle(mEntry.label);
-  setChecked(((AppStateDataUsageBridge.DataUsageState)mEntry.extraInfo).isDataSaverWhitelisted);
+  final DataUsageState state=(DataUsageState)mEntry.extraInfo;
+  setChecked(state != null && state.isDataSaverWhitelisted);
 }

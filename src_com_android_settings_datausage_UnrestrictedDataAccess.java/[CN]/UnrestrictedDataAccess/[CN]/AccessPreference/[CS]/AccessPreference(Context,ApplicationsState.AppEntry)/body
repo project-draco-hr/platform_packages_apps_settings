@@ -3,7 +3,8 @@
   mEntry=entry;
   mEntry.ensureLabel(getContext());
   setTitle(entry.label);
-  setChecked(((AppStateDataUsageBridge.DataUsageState)entry.extraInfo).isDataSaverWhitelisted);
+  final DataUsageState state=(DataUsageState)entry.extraInfo;
+  setChecked(state != null && state.isDataSaverWhitelisted);
   if (mEntry.icon != null) {
     setIcon(mEntry.icon);
   }

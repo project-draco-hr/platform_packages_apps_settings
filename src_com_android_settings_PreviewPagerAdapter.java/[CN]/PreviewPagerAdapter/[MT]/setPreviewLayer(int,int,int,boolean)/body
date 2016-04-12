@@ -3,7 +3,7 @@
     if (currentIndex >= 0) {
       final View lastLayer=previewFrame.getChildAt(currentIndex);
       if (animate && previewFrame == mPreviewFrames[currentItem]) {
-        lastLayer.animate().alpha(0).setInterpolator(FADE_OUT_INTERPOLATOR).setDuration(CROSS_FADE_DURATION_MS).withEndAction(new Runnable(){
+        lastLayer.animate().alpha(0).setInterpolator(FADE_OUT_INTERPOLATOR).setDuration(CROSS_FADE_DURATION_MS).setListener(new PreviewFrameAnimatorListener()).withEndAction(new Runnable(){
           @Override public void run(){
             lastLayer.setVisibility(View.INVISIBLE);
           }
@@ -17,7 +17,7 @@
     }
     final View nextLayer=previewFrame.getChildAt(newIndex);
     if (animate && previewFrame == mPreviewFrames[currentItem]) {
-      nextLayer.animate().alpha(1).setInterpolator(FADE_IN_INTERPOLATOR).setDuration(CROSS_FADE_DURATION_MS).withStartAction(new Runnable(){
+      nextLayer.animate().alpha(1).setInterpolator(FADE_IN_INTERPOLATOR).setDuration(CROSS_FADE_DURATION_MS).setListener(new PreviewFrameAnimatorListener()).withStartAction(new Runnable(){
         @Override public void run(){
           nextLayer.setVisibility(View.VISIBLE);
         }

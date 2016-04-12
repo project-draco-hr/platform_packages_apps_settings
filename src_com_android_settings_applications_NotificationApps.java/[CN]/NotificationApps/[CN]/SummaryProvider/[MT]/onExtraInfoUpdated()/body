@@ -1,3 +1,8 @@
 {
-  updateSummary(mSession.rebuild(AppStateNotificationBridge.FILTER_APP_NOTIFICATION_BLOCKED,ApplicationsState.ALPHA_COMPARATOR));
+  mHandler.post(new Runnable(){
+    @Override public void run(){
+      updateSummary(mSession.rebuild(AppStateNotificationBridge.FILTER_APP_NOTIFICATION_BLOCKED,null,false));
+    }
+  }
+);
 }

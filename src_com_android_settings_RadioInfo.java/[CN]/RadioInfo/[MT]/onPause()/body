@@ -1,6 +1,5 @@
 {
   super.onPause();
   log("onPause: unregister phone & data intents");
-  mPhoneStateReceiver.unregisterIntent();
   mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
 }

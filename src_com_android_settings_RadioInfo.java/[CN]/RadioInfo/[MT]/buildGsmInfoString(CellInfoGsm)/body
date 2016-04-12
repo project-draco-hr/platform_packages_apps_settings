@@ -1,5 +1,5 @@
 {
   CellIdentityGsm cidGsm=ci.getCellIdentity();
   CellSignalStrengthGsm ssGsm=ci.getCellSignalStrength();
-  return String.format("%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-4.4s %-4.4s\n",ci.isRegistered() ? "S  " : "   ",getCellInfoDisplayString(cidGsm.getMcc()),getCellInfoDisplayString(cidGsm.getMnc()),getCellInfoDisplayString(cidGsm.getLac()),getCellInfoDisplayString(cidGsm.getCid()),"    ",getCellInfoDisplayString(ssGsm.getDbm()));
+  return String.format("%-3.3s %-3.3s %-3.3s %-5.5s %-5.5s %-6.6s %-4.4s %-4.4s\n",ci.isRegistered() ? "S  " : "   ",getCellInfoDisplayString(cidGsm.getMcc()),getCellInfoDisplayString(cidGsm.getMnc()),getCellInfoDisplayString(cidGsm.getLac()),getCellInfoDisplayString(cidGsm.getCid()),getCellInfoDisplayString(cidGsm.getArfcn()),getCellInfoDisplayString(cidGsm.getBsic()),getCellInfoDisplayString(ssGsm.getDbm()));
 }

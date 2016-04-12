@@ -1,0 +1,7 @@
+{
+  Resources r=getResources();
+  int signalDbm=signalStrength.getDbm();
+  int signalAsu=signalStrength.getAsuLevel();
+  if (-1 == signalAsu)   signalAsu=0;
+  dBm.setText(String.valueOf(signalDbm) + " " + r.getString(R.string.radioInfo_display_dbm)+ "   "+ String.valueOf(signalAsu)+ " "+ r.getString(R.string.radioInfo_display_asu));
+}

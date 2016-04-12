@@ -1,8 +1,6 @@
 {
-  if (phone != null) {
-    if (mImsManager != null) {
-      return mImsManager.isVolteProvisionedOnDevice(phone.getContext());
-    }
+  if (phone != null && mImsManager != null) {
+    return mImsManager.isVolteEnabledByPlatform(phone.getContext()) && mImsManager.isVolteProvisionedOnDevice(phone.getContext());
   }
   return false;
 }

@@ -5,6 +5,7 @@
   mUserId=Utils.getUserIdFromBundle(getActivity(),intent.getExtras());
   final UserManager userManager=UserManager.get(getActivity());
   mEffectiveUserId=userManager.getCredentialOwnerProfile(mUserId);
-  mAllowFpAuthentication=mAllowFpAuthentication && !isFingerprintDisabledByAdmin();
+  mIsStrongAuthRequired=isStrongAuthRequired();
+  mAllowFpAuthentication=mAllowFpAuthentication && !isFingerprintDisabledByAdmin() && !mIsStrongAuthRequired;
   mLockPatternUtils=new LockPatternUtils(getActivity());
 }

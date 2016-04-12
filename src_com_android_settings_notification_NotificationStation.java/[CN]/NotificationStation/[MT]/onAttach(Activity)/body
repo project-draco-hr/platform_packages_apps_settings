@@ -1,6 +1,7 @@
 {
   logd("onAttach(%s)",activity.getClass().getSimpleName());
   super.onAttach(activity);
+  mHandler=new Handler(activity.getMainLooper());
   mContext=activity;
   mPm=mContext.getPackageManager();
   mNoMan=INotificationManager.Stub.asInterface(ServiceManager.getService(Context.NOTIFICATION_SERVICE));

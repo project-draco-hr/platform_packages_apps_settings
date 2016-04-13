@@ -1,9 +1,10 @@
 {
   if (KEY_DEFAULT_RATE.equals(preference.getKey())) {
-    updateSpeechRate(((Integer)objValue).intValue());
+    updateSpeechRate((Integer)objValue);
   }
  else   if (KEY_DEFAULT_PITCH.equals(preference.getKey())) {
-    mDefaultPitch=((Integer)objValue).intValue();
+    int progress=(Integer)objValue;
+    mDefaultPitch=getSpeechPitchValueFromSeekBarProgress(progress);
     try {
       android.provider.Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_PITCH,mDefaultPitch);
       if (mTts != null) {

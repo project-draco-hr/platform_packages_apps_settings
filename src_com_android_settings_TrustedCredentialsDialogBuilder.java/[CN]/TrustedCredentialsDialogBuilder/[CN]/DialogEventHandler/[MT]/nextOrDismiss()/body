@@ -1,0 +1,13 @@
+{
+  mCurrentCertIndex++;
+  while (mCurrentCertIndex < mCertHolders.length && getCurrentCertInfo() == null) {
+    mCurrentCertIndex++;
+  }
+  if (mCurrentCertIndex >= mCertHolders.length) {
+    mDialog.dismiss();
+    return;
+  }
+  updateViewContainer();
+  updatePositiveButton();
+  updateNegativeButton();
+}

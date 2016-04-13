@@ -1,0 +1,10 @@
+{
+  final CertHolder[] arr=unapprovedCertHolders.toArray(new CertHolder[unapprovedCertHolders.size()]);
+  new TrustedCredentialsDialogBuilder(getActivity(),this).setCertHolders(arr).setOnDismissListener(new DialogInterface.OnDismissListener(){
+    @Override public void onDismiss(    DialogInterface dialogInterface){
+      getActivity().getIntent().removeExtra(ARG_SHOW_NEW_FOR_USER);
+      mTrustAllCaUserId=UserHandle.USER_NULL;
+    }
+  }
+).show();
+}

@@ -2,4 +2,5 @@
   super.onResume();
   reloadList();
   getContentResolver().registerContentObserver(Secure.getUriFor(Secure.ENABLED_NOTIFICATION_POLICY_ACCESS_PACKAGES),false,mObserver);
+  getContentResolver().registerContentObserver(Secure.getUriFor(Secure.ENABLED_NOTIFICATION_LISTENERS),false,mObserver);
 }

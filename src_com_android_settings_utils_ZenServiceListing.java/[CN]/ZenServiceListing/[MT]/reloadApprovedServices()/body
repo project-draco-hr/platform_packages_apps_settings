@@ -1,0 +1,24 @@
+{
+  mApprovedServices.clear();
+  String[] settings={mConfig.setting,mConfig.secondarySetting};
+  for (  String setting : settings) {
+    if (!TextUtils.isEmpty(setting)) {
+      final String flat=Settings.Secure.getString(mContentResolver,setting);
+      if (!TextUtils.isEmpty(flat)) {
+        final List<String> names=Arrays.asList(flat.split(":"));
+        List<ServiceInfo> services=new ArrayList<>();
+        getServices(mConfig,services,mContext.getPackageManager());
+        for (        ServiceInfo service : services) {
+          if (matchesApprovedPackage(names,service.getComponentName())) {
+            mApprovedServices.add(service);
+          }
+        }
+      }
+    }
+  }
+  if (!mApprovedServices.isEmpty()) {
+    for (    Callback callback : mZenCallbacks) {
+      callback.onServicesReloaded(mApprovedServices);
+    }
+  }
+}

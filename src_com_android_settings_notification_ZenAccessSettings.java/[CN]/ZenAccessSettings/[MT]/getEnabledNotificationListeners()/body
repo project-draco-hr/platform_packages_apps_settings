@@ -1,0 +1,14 @@
+{
+  ArraySet<String> packages=new ArraySet<>();
+  String settingValue=Settings.Secure.getString(getContext().getContentResolver(),Settings.Secure.ENABLED_NOTIFICATION_LISTENERS);
+  if (!TextUtils.isEmpty(settingValue)) {
+    String[] restored=settingValue.split(ENABLED_SERVICES_SEPARATOR);
+    for (int i=0; i < restored.length; i++) {
+      ComponentName value=ComponentName.unflattenFromString(restored[i]);
+      if (null != value) {
+        packages.add(value.getPackageName());
+      }
+    }
+  }
+  return packages;
+}

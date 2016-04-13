@@ -1,15 +1,20 @@
 {
+  final long backgroundBytes, foregroundBytes;
   if (mChartData == null || mStart == 0) {
-    return;
+    backgroundBytes=foregroundBytes=0;
+    mCycle.setVisible(false);
   }
-  final Context context=getContext();
-  final long now=System.currentTimeMillis();
-  NetworkStatsHistory.Entry entry=null;
-  entry=mChartData.detailDefault.getValues(mStart,mEnd,now,entry);
-  final long backgroundBytes=entry.rxBytes + entry.txBytes;
-  entry=mChartData.detailForeground.getValues(mStart,mEnd,now,entry);
-  final long foregroundBytes=entry.rxBytes + entry.txBytes;
+ else {
+    mCycle.setVisible(true);
+    final long now=System.currentTimeMillis();
+    NetworkStatsHistory.Entry entry=null;
+    entry=mChartData.detailDefault.getValues(mStart,mEnd,now,entry);
+    backgroundBytes=entry.rxBytes + entry.txBytes;
+    entry=mChartData.detailForeground.getValues(mStart,mEnd,now,entry);
+    foregroundBytes=entry.rxBytes + entry.txBytes;
+  }
   final long totalBytes=backgroundBytes + foregroundBytes;
+  final Context context=getContext();
   mTotalUsage.setSummary(Formatter.formatFileSize(context,totalBytes));
   mForegroundUsage.setSummary(Formatter.formatFileSize(context,foregroundBytes));
   mBackgroundUsage.setSummary(Formatter.formatFileSize(context,backgroundBytes));

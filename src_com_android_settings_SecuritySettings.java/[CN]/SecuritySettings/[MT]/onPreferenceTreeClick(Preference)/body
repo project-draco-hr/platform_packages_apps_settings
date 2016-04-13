@@ -4,6 +4,9 @@
     startFragment(this,"com.android.settings.ChooseLockGeneric$ChooseLockGenericFragment",R.string.lock_settings_picker_title,SET_OR_CHANGE_LOCK_METHOD_REQUEST,null);
   }
  else   if (KEY_UNLOCK_SET_OR_CHANGE_PROFILE.equals(key)) {
+    if (Utils.startQuiteModeDialogIfNecessary(this.getActivity(),mUm,mProfileChallengeUserId)) {
+      return false;
+    }
     Bundle extras=new Bundle();
     extras.putInt(Intent.EXTRA_USER_ID,mProfileChallengeUserId);
     startFragment(this,"com.android.settings.ChooseLockGeneric$ChooseLockGenericFragment",R.string.lock_settings_picker_title_profile,SET_OR_CHANGE_LOCK_METHOD_REQUEST_PROFILE,extras);

@@ -39,6 +39,7 @@
     }
   }
   if (mLockPatternView == null && !mCooldown) {
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     mHandler.postDelayed(new Runnable(){
       @Override public void run(){
         imm.showSoftInputUnchecked(0,null);

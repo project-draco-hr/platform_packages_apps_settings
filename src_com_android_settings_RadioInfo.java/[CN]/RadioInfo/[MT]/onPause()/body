@@ -2,4 +2,5 @@
   super.onPause();
   log("onPause: unregister phone & data intents");
   mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
+  phone.setCellInfoListRate(CELL_INFO_LIST_RATE_DISABLED);
 }

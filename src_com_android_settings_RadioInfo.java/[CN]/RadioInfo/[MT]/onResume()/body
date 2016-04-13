@@ -17,8 +17,11 @@
   mPingHostnameV6.setText(mPingHostnameResultV6);
   mHttpClientTest.setText(mHttpClientTestResult);
   cellInfoRefreshRateSpinner.setOnItemSelectedListener(mCellInfoRefreshRateHandler);
+  cellInfoRefreshRateSpinner.setSelection(mCellInfoRefreshRateIndex);
+  preferredNetworkType.setSelection(mPreferredNetworkTypeResult,true);
   preferredNetworkType.setOnItemSelectedListener(mPreferredNetworkHandler);
   radioPowerOnSwitch.setOnCheckedChangeListener(mRadioPowerOnChangeListener);
   imsVoLteProvisionedSwitch.setOnCheckedChangeListener(mImsVoLteCheckedChangeListener);
   mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_CALL_STATE | PhoneStateListener.LISTEN_DATA_CONNECTION_STATE | PhoneStateListener.LISTEN_DATA_ACTIVITY| PhoneStateListener.LISTEN_CELL_LOCATION| PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR| PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR| PhoneStateListener.LISTEN_CELL_INFO| PhoneStateListener.LISTEN_SERVICE_STATE| PhoneStateListener.LISTEN_SIGNAL_STRENGTHS| PhoneStateListener.LISTEN_DATA_CONNECTION_REAL_TIME_INFO);
+  smsc.clearFocus();
 }

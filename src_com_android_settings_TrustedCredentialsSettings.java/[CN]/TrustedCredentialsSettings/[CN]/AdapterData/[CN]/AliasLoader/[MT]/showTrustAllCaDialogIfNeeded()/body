@@ -1,0 +1,21 @@
+{
+  if (!isUserTabAndTrustAllCertMode()) {
+    return;
+  }
+  List<CertHolder> certHolders=mCertHoldersByUserId.get(mTrustAllCaUserId);
+  if (certHolders == null) {
+    return;
+  }
+  List<CertHolder> unapprovedUserCertHolders=new ArrayList<>();
+  final DevicePolicyManager dpm=mContext.getSystemService(DevicePolicyManager.class);
+  for (  CertHolder cert : certHolders) {
+    if (cert != null && !dpm.isCaCertApproved(cert.mAlias,mTrustAllCaUserId)) {
+      unapprovedUserCertHolders.add(cert);
+    }
+  }
+  if (unapprovedUserCertHolders.size() == 0) {
+    Log.w(TAG,"no cert is pending approval for user " + mTrustAllCaUserId);
+    return;
+  }
+  showTrustAllCaDialog(unapprovedUserCertHolders);
+}

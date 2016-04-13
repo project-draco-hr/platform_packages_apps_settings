@@ -1,0 +1,8 @@
+{
+  if (um.isQuietModeEnabled(UserHandle.of(userId))) {
+    final Intent intent=UnlaunchableAppActivity.createInQuietModeDialogIntent(userId);
+    context.startActivity(intent);
+    return true;
+  }
+  return false;
+}

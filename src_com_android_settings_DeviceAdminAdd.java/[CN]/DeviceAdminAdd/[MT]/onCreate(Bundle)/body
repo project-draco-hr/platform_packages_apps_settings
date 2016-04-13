@@ -9,6 +9,7 @@
     finish();
     return;
   }
+  mIsCalledFromSupportDialog=getIntent().getBooleanExtra(EXTRA_CALLED_FROM_SUPPORT_DIALOG,false);
   String action=getIntent().getAction();
   ComponentName who=(ComponentName)getIntent().getParcelableExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN);
   if (who == null) {

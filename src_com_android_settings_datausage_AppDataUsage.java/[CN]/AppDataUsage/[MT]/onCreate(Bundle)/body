@@ -29,16 +29,6 @@
       addUid(mAppItem.uids.keyAt(i));
     }
   }
-  if (mPackages.size() != 0) {
-    PackageManager pm=getPackageManager();
-    try {
-      ApplicationInfo info=pm.getApplicationInfo(mPackages.valueAt(0),0);
-      mIcon=info.loadIcon(pm);
-      mLabel=info.loadLabel(pm);
-    }
- catch (    PackageManager.NameNotFoundException e) {
-    }
-  }
   addPreferencesFromResource(R.xml.app_data_usage);
   mTotalUsage=findPreference(KEY_TOTAL_USAGE);
   mForegroundUsage=findPreference(KEY_FOREGROUND_USAGE);
@@ -46,6 +36,16 @@
   mCycle=(SpinnerPreference)findPreference(KEY_CYCLE);
   mCycleAdapter=new CycleAdapter(getContext(),mCycle,mCycleListener,false);
   if (UserHandle.isApp(mAppItem.key)) {
+    if (mPackages.size() != 0) {
+      PackageManager pm=getPackageManager();
+      try {
+        ApplicationInfo info=pm.getApplicationInfo(mPackages.valueAt(0),0);
+        mIcon=info.loadIcon(pm);
+        mLabel=info.loadLabel(pm);
+      }
+ catch (      PackageManager.NameNotFoundException e) {
+      }
+    }
     mRestrictBackground=(SwitchPreference)findPreference(KEY_RESTRICT_BACKGROUND);
     mRestrictBackground.setOnPreferenceChangeListener(this);
     mUnrestrictedData=(SwitchPreference)findPreference(KEY_UNRESTRICTED_DATA);
@@ -78,6 +78,12 @@
     }
   }
  else {
+    final int userId=UidDetailProvider.getUserIdForKey(mAppItem.key);
+    final UserManager um=UserManager.get(getActivity());
+    final UserInfo info=um.getUserInfo(userId);
+    final PackageManager pm=getPackageManager();
+    mIcon=Utils.getUserIcon(getActivity(),um,info);
+    mLabel=Utils.getUserLabel(getActivity(),info);
     removePreference(KEY_UNRESTRICTED_DATA);
     removePreference(KEY_APP_SETTINGS);
     removePreference(KEY_RESTRICT_BACKGROUND);

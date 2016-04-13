@@ -33,6 +33,7 @@ profile.ipsecServerCert=(String)mIpsecServerCert.getSelectedItem();
 }
 break;
 }
-profile.saveLogin=mSaveLogin.isChecked();
+final boolean hasLogin=!profile.username.isEmpty() || !profile.password.isEmpty();
+profile.saveLogin=mSaveLogin.isChecked() || (mEditing && hasLogin);
 return profile;
 }

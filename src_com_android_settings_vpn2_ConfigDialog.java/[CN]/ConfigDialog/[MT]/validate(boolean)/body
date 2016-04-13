@@ -2,6 +2,9 @@
   if (!editing) {
     return mUsername.getText().length() != 0 && mPassword.getText().length() != 0;
   }
+  if (mAlwaysOnVpn.isChecked() && !getProfile().isValidLockdownProfile()) {
+    return false;
+  }
   if (mName.getText().length() == 0 || mServer.getText().length() == 0 || !validateAddresses(mDnsServers.getText().toString(),false) || !validateAddresses(mRoutes.getText().toString(),true)) {
     return false;
   }

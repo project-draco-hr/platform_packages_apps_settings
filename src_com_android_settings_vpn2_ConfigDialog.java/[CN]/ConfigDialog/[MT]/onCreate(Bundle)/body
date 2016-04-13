@@ -60,6 +60,7 @@
     setTitle(R.string.vpn_edit);
     mView.findViewById(R.id.editor).setVisibility(View.VISIBLE);
     changeType(mProfile.type);
+    mSaveLogin.setVisibility(View.GONE);
     if (!mProfile.searchDomains.isEmpty() || !mProfile.dnsServers.isEmpty() || !mProfile.routes.isEmpty()) {
       showAdvancedOptions();
     }
@@ -70,7 +71,6 @@
   }
  else {
     setTitle(context.getString(R.string.vpn_connect_to,mProfile.name));
-    mView.findViewById(R.id.login).setVisibility(View.VISIBLE);
     setButton(DialogInterface.BUTTON_POSITIVE,context.getString(R.string.vpn_connect),mListener);
   }
   setButton(DialogInterface.BUTTON_NEGATIVE,context.getString(R.string.vpn_cancel),mListener);

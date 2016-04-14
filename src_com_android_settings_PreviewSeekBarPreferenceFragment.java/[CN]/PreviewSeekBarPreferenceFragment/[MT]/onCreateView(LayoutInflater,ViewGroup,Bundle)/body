@@ -40,36 +40,20 @@
   for (int i=0; i < mEntries.length; ++i) {
     configurations[i]=createConfig(origConfig,i);
   }
-  mPreviewPagerAdapter=new PreviewPagerAdapter(context,mPreviewSampleResIds,configurations);
   mPreviewPager=(ViewPager)content.findViewById(R.id.preview_pager);
-  mPreviewPager.setAdapter(mPreviewPagerAdapter);
-  mPreviewPager.addOnPageChangeListener(new OnPageChangeListener(){
-    @Override public void onPageScrollStateChanged(    int state){
+  if (mPreviewPager != null) {
+    mPreviewPagerAdapter=new PreviewPagerAdapter(context,mPreviewSampleResIds,configurations);
+    mPreviewPager.setAdapter(mPreviewPagerAdapter);
+    mPreviewPager.addOnPageChangeListener(mPreviewPageChangeListener);
+    mPageIndicator=(DotsPageIndicator)content.findViewById(R.id.page_indicator);
+    if (mPreviewSampleResIds.length > 1) {
+      mPageIndicator.setViewPager(mPreviewPager);
+      mPageIndicator.setVisibility(View.VISIBLE);
+      mPageIndicator.setOnPageChangeListener(mPageIndicatorPageChangeListener);
     }
-    @Override public void onPageScrolled(    int position,    float positionOffset,    int positionOffsetPixels){
-    }
-    @Override public void onPageSelected(    int position){
-      mPreviewPager.sendAccessibilityEvent(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-    }
-  }
-);
-  mPageIndicator=(DotsPageIndicator)content.findViewById(R.id.page_indicator);
-  if (mPreviewSampleResIds.length > 1) {
-    mPageIndicator.setViewPager(mPreviewPager);
-    mPageIndicator.setVisibility(View.VISIBLE);
-    mPageIndicator.setOnPageChangeListener(new OnPageChangeListener(){
-      @Override public void onPageScrollStateChanged(      int state){
-      }
-      @Override public void onPageScrolled(      int position,      float positionOffset,      int positionOffsetPixels){
-      }
-      @Override public void onPageSelected(      int position){
-        setPagerIndicatorContentDescription(position);
-      }
-    }
-);
-  }
  else {
-    mPageIndicator.setVisibility(View.GONE);
+      mPageIndicator.setVisibility(View.GONE);
+    }
   }
   setPreviewLayer(mInitialIndex,false);
   return root;

@@ -1,11 +1,8 @@
 {
   final int userId=UserHandle.getUserId(mPackageInfo.applicationInfo.uid);
   try {
-    final VpnConfig vpnConfig=mService.getVpnConfig(userId);
-    if (vpnConfig == null || vpnConfig.legacy) {
-      return;
-    }
-    if (mPackageInfo.packageName.equals(vpnConfig.user)) {
+    if (mPackageInfo.packageName.equals(getConnectedPackage(mService,userId))) {
+      mService.setAlwaysOnVpnPackage(userId,null);
       mService.prepareVpn(mPackageInfo.packageName,VpnConfig.LEGACY_VPN,userId);
     }
   }

@@ -1,5 +1,30 @@
 {
-  Intent request=new Intent(Intent.ACTION_GET_PERMISSIONS_COUNT);
-  request.putExtra(Intent.EXTRA_PACKAGE_NAME,pkg);
-  return sendPermissionRequest(context,ACTION_PERM_COUNT_RESPONSE,request,callback);
+  final RuntimePermissionPresenter presenter=RuntimePermissionPresenter.getInstance(context);
+  presenter.getAppPermissions(pkg,new RuntimePermissionPresenter.OnResultCallback(){
+    @Override public void onGetAppPermissions(    @NonNull List<RuntimePermissionPresentationInfo> permissions){
+      final int permissionCount=permissions.size();
+      int grantedStandardCount=0;
+      int grantedAdditionalCount=0;
+      int requestedCount=0;
+      List<CharSequence> grantedStandardLabels=new ArrayList<>();
+      for (int i=0; i < permissionCount; i++) {
+        RuntimePermissionPresentationInfo permission=permissions.get(i);
+        requestedCount++;
+        if (permission.isGranted()) {
+          if (permission.isStandard()) {
+            grantedStandardLabels.add(permission.getLabel());
+            grantedStandardCount++;
+          }
+ else {
+            grantedAdditionalCount++;
+          }
+        }
+      }
+      Collator collator=Collator.getInstance();
+      collator.setStrength(Collator.PRIMARY);
+      Collections.sort(grantedStandardLabels,collator);
+      callback.onPermissionSummaryResult(grantedStandardCount,requestedCount,grantedAdditionalCount,grantedStandardLabels);
+    }
+  }
+,null);
 }

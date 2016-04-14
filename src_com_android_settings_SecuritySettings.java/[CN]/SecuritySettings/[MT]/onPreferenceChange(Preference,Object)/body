@@ -3,13 +3,13 @@
   final String key=preference.getKey();
   final LockPatternUtils lockPatternUtils=mChooseLockSettingsHelper.utils();
   if (KEY_VISIBLE_PATTERN_PROFILE.equals(key)) {
-    if (Utils.startQuiteModeDialogIfNecessary(this.getActivity(),mUm,mProfileChallengeUserId)) {
+    if (Utils.startQuietModeDialogIfNecessary(this.getActivity(),mUm,mProfileChallengeUserId)) {
       return false;
     }
     lockPatternUtils.setVisiblePatternEnabled((Boolean)value,mProfileChallengeUserId);
   }
  else   if (KEY_UNIFICATION.equals(key)) {
-    if (Utils.startQuiteModeDialogIfNecessary(this.getActivity(),mUm,mProfileChallengeUserId)) {
+    if (Utils.startQuietModeDialogIfNecessary(this.getActivity(),mUm,mProfileChallengeUserId)) {
       return false;
     }
     if ((Boolean)value) {

@@ -3,6 +3,12 @@
     mRestrictBackground.setChecked(!getAppRestrictBackground());
   }
   if (mUnrestrictedData != null) {
-    mUnrestrictedData.setChecked(mDataSaverBackend.isWhitelisted(mAppItem.key));
+    if (getAppRestrictBackground()) {
+      mUnrestrictedData.setVisible(false);
+    }
+ else {
+      mUnrestrictedData.setVisible(true);
+      mUnrestrictedData.setChecked(mDataSaverBackend.isWhitelisted(mAppItem.key));
+    }
   }
 }

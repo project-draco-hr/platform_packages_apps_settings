@@ -22,7 +22,7 @@
     @Override public boolean onPreferenceClick(    Preference preference){
       final Context context=preference.getContext();
       final UserManager userManager=UserManager.get(context);
-      if (Utils.startQuiteModeDialogIfNecessary(context,userManager,userId)) {
+      if (Utils.startQuietModeDialogIfNecessary(context,userManager,userId)) {
         return false;
       }
       Intent intent=new Intent();

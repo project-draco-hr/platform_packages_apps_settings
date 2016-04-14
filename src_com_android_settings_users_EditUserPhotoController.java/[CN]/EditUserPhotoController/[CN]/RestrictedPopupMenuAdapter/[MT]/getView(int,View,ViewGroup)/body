@@ -1,0 +1,9 @@
+{
+  final View view=super.getView(position,convertView,parent);
+  final RestrictedMenuItem item=getItem(position);
+  final TextView text=(TextView)view.findViewById(R.id.text);
+  final ImageView image=(ImageView)view.findViewById(R.id.restricted_icon);
+  text.setEnabled(!item.isRestrictedByAdmin() && !item.isRestrictedByBase());
+  image.setVisibility(item.isRestrictedByAdmin() && !item.isRestrictedByBase() ? ImageView.VISIBLE : ImageView.GONE);
+  return view;
+}

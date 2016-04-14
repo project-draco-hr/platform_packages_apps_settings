@@ -1,0 +1,8 @@
+{
+  mContext=context;
+  mTitle=title;
+  mAction=action;
+  final int myUserId=UserHandle.myUserId();
+  mAdmin=RestrictedLockUtils.checkIfRestrictionEnforced(context,restriction,myUserId);
+  mIsRestrictedByBase=RestrictedLockUtils.hasBaseUserRestriction(mContext,restriction,myUserId);
+}

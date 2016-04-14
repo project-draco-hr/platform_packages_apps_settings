@@ -1,0 +1,17 @@
+{
+  final ArrayList<Keyboards.KeyboardInfo> keyboardInfoList=new ArrayList<>();
+  final InputMethodManager imm=getContext().getSystemService(InputMethodManager.class);
+  final InputManager im=getContext().getSystemService(InputManager.class);
+  if (imm != null && im != null) {
+    for (    InputMethodInfo imi : imm.getEnabledInputMethodList()) {
+      for (      InputMethodSubtype subtype : imm.getEnabledInputMethodSubtypeList(imi,true)) {
+        if (!IM_SUBTYPE_MODE_KEYBOARD.equalsIgnoreCase(subtype.getMode())) {
+          continue;
+        }
+        final KeyboardLayout layout=im.getKeyboardLayoutForInputDevice(deviceInfo.mDeviceIdentifier,imi,subtype);
+        keyboardInfoList.add(new Keyboards.KeyboardInfo(imi,subtype,layout));
+      }
+    }
+  }
+  return new Keyboards(deviceInfo,keyboardInfoList);
+}

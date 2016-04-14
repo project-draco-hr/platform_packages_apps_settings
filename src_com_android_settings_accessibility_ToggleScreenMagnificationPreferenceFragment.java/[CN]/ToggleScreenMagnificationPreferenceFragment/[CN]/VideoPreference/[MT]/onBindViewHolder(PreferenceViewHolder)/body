@@ -1,23 +1,14 @@
 {
   super.onBindViewHolder(view);
+  Resources res=getPrefContext().getResources();
+  final int backgroundAssetWidth=res.getDimensionPixelSize(R.dimen.screen_magnification_video_background_width);
+  final int videoAssetWidth=res.getDimensionPixelSize(R.dimen.screen_magnification_video_width);
+  final int videoAssetHeight=res.getDimensionPixelSize(R.dimen.screen_magnification_video_height);
+  final int videoAssetMarginTop=res.getDimensionPixelSize(R.dimen.screen_magnification_video_margin_top);
   view.setDividerAllowedAbove(false);
   view.setDividerAllowedBelow(false);
-  final RelativeLayout background=(RelativeLayout)view.findViewById(R.id.video_background);
-  VideoView videoView=(VideoView)view.findViewById(R.id.video);
-  Resources res=getPrefContext().getResources();
-  final int backgroundWidth=res.getDimensionPixelSize(R.dimen.screen_magnification_video_background_width);
-  final int backgroundHeight=res.getDimensionPixelSize(R.dimen.screen_magnification_video_background_height);
-  final int videoWidth=res.getDimensionPixelSize(R.dimen.screen_magnification_video_width);
-  final int videoHeight=res.getDimensionPixelSize(R.dimen.screen_magnification_video_height);
-  final int videoMarginTop=res.getDimensionPixelSize(R.dimen.screen_magnification_video_margin_top);
-  final int screenWidth=getScreenWidth(getPrefContext());
-  RelativeLayout.LayoutParams videoLp=new RelativeLayout.LayoutParams(screenWidth * videoWidth / backgroundWidth,screenWidth * videoHeight / backgroundWidth);
-  videoLp.setMargins(0,screenWidth * videoMarginTop / backgroundWidth,0,0);
-  videoView.setLayoutParams(videoLp);
-  RelativeLayout.LayoutParams backgroundLp=new RelativeLayout.LayoutParams(screenWidth,screenWidth * backgroundHeight / backgroundWidth);
-  background.setLayoutParams(backgroundLp);
-  background.setBackgroundResource(R.drawable.accessibility_screen_magnification_background);
-  background.setGravity(Gravity.CENTER_HORIZONTAL);
+  mVideoBackgroundView=(ImageView)view.findViewById(R.id.video_background);
+  final VideoView videoView=(VideoView)view.findViewById(R.id.video);
   videoView.setOnPreparedListener(new OnPreparedListener(){
     @Override public void onPrepared(    MediaPlayer mediaPlayer){
       mediaPlayer.setLooping(true);
@@ -26,5 +17,18 @@
 );
   videoView.setVideoURI(Uri.parse(String.format("%s://%s/%s",ContentResolver.SCHEME_ANDROID_RESOURCE,getPrefContext().getPackageName(),R.raw.accessibility_screen_magnification)));
   videoView.setMediaController(null);
-  videoView.start();
+  mLayoutListener=new OnGlobalLayoutListener(){
+    @Override public void onGlobalLayout(){
+      final int backgroundViewWidth=mVideoBackgroundView.getWidth();
+      LayoutParams videoLp=(LayoutParams)videoView.getLayoutParams();
+      videoLp.width=videoAssetWidth * backgroundViewWidth / backgroundAssetWidth;
+      videoLp.height=videoAssetHeight * backgroundViewWidth / backgroundAssetWidth;
+      videoLp.setMargins(0,videoAssetMarginTop * backgroundViewWidth / backgroundAssetWidth,0,0);
+      videoView.setLayoutParams(videoLp);
+      videoView.invalidate();
+      videoView.start();
+    }
+  }
+;
+  mVideoBackgroundView.getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
 }

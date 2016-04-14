@@ -16,9 +16,6 @@
   }
  else   if (preference instanceof AppPreference) {
     AppPreference pref=(AppPreference)preference;
-    if (pref.isAlwaysOn()) {
-      return true;
-    }
     boolean connected=(pref.getState() == AppPreference.STATE_CONNECTED);
     if (!connected) {
       try {

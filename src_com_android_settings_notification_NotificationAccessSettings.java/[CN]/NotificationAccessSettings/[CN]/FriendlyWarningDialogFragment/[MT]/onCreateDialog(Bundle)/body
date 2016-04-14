@@ -1,0 +1,20 @@
+{
+  super.onCreate(savedInstanceState);
+  final Bundle args=getArguments();
+  final String label=args.getString(KEY_LABEL);
+  final ComponentName cn=ComponentName.unflattenFromString(args.getString(KEY_COMPONENT));
+  final String summary=getResources().getString(R.string.notification_listener_disable_warning_summary,label);
+  return new AlertDialog.Builder(mContext).setMessage(summary).setCancelable(true).setPositiveButton(R.string.notification_listener_disable_warning_confirm,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int id){
+      mServiceListing.setEnabled(cn,false);
+      if (!mNm.isNotificationPolicyAccessGrantedForPackage(cn.getPackageName())) {
+        deleteRules(mContext,cn.getPackageName());
+      }
+    }
+  }
+).setNegativeButton(R.string.notification_listener_disable_warning_cancel,new DialogInterface.OnClickListener(){
+    public void onClick(    DialogInterface dialog,    int id){
+    }
+  }
+).create();
+}

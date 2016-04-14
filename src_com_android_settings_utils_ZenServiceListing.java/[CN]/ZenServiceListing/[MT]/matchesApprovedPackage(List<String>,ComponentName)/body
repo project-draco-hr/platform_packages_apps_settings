@@ -1,0 +1,15 @@
+{
+  String flatCn=serviceOwner.flattenToString();
+  if (approved.contains(flatCn) || approved.contains(serviceOwner.getPackageName())) {
+    return true;
+  }
+  for (  String entry : approved) {
+    if (!TextUtils.isEmpty(entry)) {
+      ComponentName approvedComponent=ComponentName.unflattenFromString(entry);
+      if (approvedComponent != null && approvedComponent.getPackageName().equals(serviceOwner.getPackageName())) {
+        return true;
+      }
+    }
+  }
+  return false;
+}

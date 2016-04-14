@@ -8,13 +8,13 @@
   if (mServiceListing != null) {
     bindType(defaultNewEvent());
     bindType(defaultNewSchedule());
-    mServiceListing.addCallback(mServiceListingCallback);
+    mServiceListing.addZenCallback(mServiceListingCallback);
     mServiceListing.reloadApprovedServices();
   }
   mDialog=new AlertDialog.Builder(context).setTitle(R.string.zen_mode_choose_rule_type).setView(v).setOnDismissListener(new OnDismissListener(){
     @Override public void onDismiss(    DialogInterface dialog){
       if (mServiceListing != null) {
-        mServiceListing.removeCallback(mServiceListingCallback);
+        mServiceListing.removeZenCallback(mServiceListingCallback);
       }
     }
   }

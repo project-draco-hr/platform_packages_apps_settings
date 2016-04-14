@@ -1,0 +1,12 @@
+{
+  if (!enable) {
+    if (!mServiceListing.isEnabled(service)) {
+      return true;
+    }
+    new FriendlyWarningDialogFragment().setServiceInfo(service,title).show(getFragmentManager(),"friendlydialog");
+    return false;
+  }
+ else {
+    return super.setEnabled(service,title,enable);
+  }
+}

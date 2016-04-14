@@ -1,4 +1,15 @@
 {
-  mCertHolder.mTab.postOperationUpdate(ok,mCertHolder);
+  if (ok) {
+    if (mCertHolder.mTab.mSwitch) {
+      mCertHolder.mDeleted=!mCertHolder.mDeleted;
+    }
+ else {
+      mCertHolder.mAdapter.remove(mCertHolder);
+    }
+    mCertHolder.mAdapter.notifyDataSetChanged();
+  }
+ else {
+    mCertHolder.mAdapter.load();
+  }
   mAliasOperation=null;
 }

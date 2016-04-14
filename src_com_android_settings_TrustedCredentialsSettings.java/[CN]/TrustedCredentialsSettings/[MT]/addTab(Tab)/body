@@ -1,2 +1,28 @@
 {
+  TabHost.TabSpec systemSpec=mTabHost.newTabSpec(tab.mTag).setIndicator(getActivity().getString(tab.mLabel)).setContent(tab.mView);
+  mTabHost.addTab(systemSpec);
+  final int profilesSize=mUserManager.getUserProfiles().size();
+  final GroupAdapter groupAdapter=new GroupAdapter(tab);
+  mGroupAdapters.add(groupAdapter);
+  if (profilesSize == 1) {
+    final ChildAdapter adapter=groupAdapter.getChildAdapter(0);
+    adapter.setContainerViewId(tab.mPersonalList);
+    adapter.prepare();
+  }
+ else   if (profilesSize == 2) {
+    final int workIndex=groupAdapter.getUserInfoByGroup(1).isManagedProfile() ? 1 : 0;
+    final int personalIndex=workIndex == 1 ? 0 : 1;
+    final ChildAdapter personalAdapter=groupAdapter.getChildAdapter(personalIndex);
+    personalAdapter.setContainerViewId(tab.mPersonalList);
+    personalAdapter.showHeader(true);
+    personalAdapter.prepare();
+    final ChildAdapter workAdapter=groupAdapter.getChildAdapter(workIndex);
+    workAdapter.setContainerViewId(tab.mWorkList);
+    workAdapter.showHeader(true);
+    workAdapter.showDivider(true);
+    workAdapter.prepare();
+  }
+ else   if (profilesSize >= 3) {
+    groupAdapter.setExpandableListView((ExpandableListView)mTabHost.findViewById(tab.mExpandableList));
+  }
 }

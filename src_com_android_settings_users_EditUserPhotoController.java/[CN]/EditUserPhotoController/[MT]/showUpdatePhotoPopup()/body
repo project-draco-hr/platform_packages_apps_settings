@@ -4,46 +4,43 @@
   if (!canTakePhoto && !canChoosePhoto) {
     return;
   }
-  Context context=mImageView.getContext();
-  final List<EditUserPhotoController.AdapterItem> items=new ArrayList<EditUserPhotoController.AdapterItem>();
-  if (canTakePhoto()) {
-    String title=mImageView.getContext().getString(R.string.user_image_take_photo);
-    EditUserPhotoController.AdapterItem item=new AdapterItem(title,POPUP_LIST_ITEM_ID_TAKE_PHOTO);
-    items.add(item);
+  final Context context=mImageView.getContext();
+  final List<EditUserPhotoController.RestrictedMenuItem> items=new ArrayList<>();
+  if (canTakePhoto) {
+    final String title=context.getString(R.string.user_image_take_photo);
+    final Runnable action=new Runnable(){
+      @Override public void run(){
+        takePhoto();
+      }
+    }
+;
+    items.add(new RestrictedMenuItem(context,title,UserManager.DISALLOW_SET_USER_ICON,action));
   }
   if (canChoosePhoto) {
-    String title=context.getString(R.string.user_image_choose_photo);
-    EditUserPhotoController.AdapterItem item=new AdapterItem(title,POPUP_LIST_ITEM_ID_CHOOSE_PHOTO);
-    items.add(item);
+    final String title=context.getString(R.string.user_image_choose_photo);
+    final Runnable action=new Runnable(){
+      @Override public void run(){
+        choosePhoto();
+      }
+    }
+;
+    items.add(new RestrictedMenuItem(context,title,UserManager.DISALLOW_SET_USER_ICON,action));
   }
   final ListPopupWindow listPopupWindow=new ListPopupWindow(context);
   listPopupWindow.setAnchorView(mImageView);
   listPopupWindow.setModal(true);
   listPopupWindow.setInputMethodMode(ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
-  ListAdapter adapter=new ArrayAdapter<EditUserPhotoController.AdapterItem>(context,R.layout.edit_user_photo_popup_item,items);
-  listPopupWindow.setAdapter(adapter);
+  listPopupWindow.setAdapter(new RestrictedPopupMenuAdapter(context,items));
   final int width=Math.max(mImageView.getWidth(),context.getResources().getDimensionPixelSize(R.dimen.update_user_photo_popup_min_width));
   listPopupWindow.setWidth(width);
   listPopupWindow.setDropDownGravity(Gravity.START);
   listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener(){
     @Override public void onItemClick(    AdapterView<?> parent,    View view,    int position,    long id){
-      EditUserPhotoController.AdapterItem item=items.get(position);
-switch (item.id) {
-case POPUP_LIST_ITEM_ID_CHOOSE_PHOTO:
-{
-          choosePhoto();
-          listPopupWindow.dismiss();
-        }
-      break;
-case POPUP_LIST_ITEM_ID_TAKE_PHOTO:
-{
-      takePhoto();
       listPopupWindow.dismiss();
+      final RestrictedMenuItem item=(RestrictedMenuItem)parent.getAdapter().getItem(position);
+      item.doAction();
     }
-  break;
-}
-}
-}
+  }
 );
-listPopupWindow.show();
+  listPopupWindow.show();
 }

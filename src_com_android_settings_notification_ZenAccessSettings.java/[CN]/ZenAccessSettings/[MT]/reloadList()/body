@@ -3,7 +3,7 @@
   screen.removeAll();
   final ArrayList<ApplicationInfo> apps=new ArrayList<>();
   final ArraySet<String> requesting=mNoMan.getPackagesRequestingNotificationPolicyAccess();
-  if (requesting != null && !requesting.isEmpty()) {
+  if (!requesting.isEmpty()) {
     final List<ApplicationInfo> installed=mPkgMan.getInstalledApplications(0);
     if (installed != null) {
       for (      ApplicationInfo app : installed) {
@@ -13,6 +13,8 @@
       }
     }
   }
+  ArraySet<String> autoApproved=getEnabledNotificationListeners();
+  requesting.addAll(autoApproved);
   Collections.sort(apps,new PackageItemInfo.DisplayNameComparator(mPkgMan));
   for (  ApplicationInfo app : apps) {
     final String pkg=app.packageName;
@@ -22,6 +24,10 @@
     pref.setIcon(app.loadIcon(mPkgMan));
     pref.setTitle(label);
     pref.setChecked(hasAccess(pkg));
+    if (autoApproved.contains(pkg)) {
+      pref.setEnabled(false);
+      pref.setSummary(getString(R.string.zen_access_disabled_package_warning));
+    }
     pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener(){
       @Override public boolean onPreferenceChange(      Preference preference,      Object newValue){
         final boolean access=(Boolean)newValue;

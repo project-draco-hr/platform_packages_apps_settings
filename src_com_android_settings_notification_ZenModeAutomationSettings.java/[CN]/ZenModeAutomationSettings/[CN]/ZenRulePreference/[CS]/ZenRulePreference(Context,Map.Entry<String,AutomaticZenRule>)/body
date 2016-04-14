@@ -21,7 +21,7 @@
   setTitle(rule.getName());
   setPersistent(false);
   final String action=isSchedule ? ZenModeScheduleRuleSettings.ACTION : isEvent ? ZenModeEventRuleSettings.ACTION : "";
-  ServiceInfo si=mServiceListing.findService(mContext,CONFIG,rule.getOwner());
+  ServiceInfo si=mServiceListing.findService(rule.getOwner());
   ComponentName settingsActivity=getSettingsActivity(si);
   setIntent(getRuleIntent(action,settingsActivity,mId));
   setSelectable(settingsActivity != null || isSystemRule);

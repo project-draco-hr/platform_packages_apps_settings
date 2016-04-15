@@ -3,6 +3,7 @@
   final List<SearchIndexableData> dataToDelete=params[0].dataToDelete;
   final Map<String,List<String>> nonIndexableKeys=params[0].nonIndexableKeys;
   final boolean forceUpdate=params[0].forceUpdate;
+  final boolean fullIndex=params[0].fullIndex;
   final SQLiteDatabase database=getWritableDatabase();
   if (database == null) {
     Log.e(LOG_TAG,"Cannot update Index as I cannot get a writable database");
@@ -21,6 +22,9 @@
   }
   finally {
     database.endTransaction();
+  }
+  if (fullIndex) {
+    setLocaleIndexed(localeStr);
   }
   return null;
 }

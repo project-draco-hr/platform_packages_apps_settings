@@ -1,16 +1,22 @@
 {
-  final Intent intent=new Intent(SearchIndexablesContract.PROVIDER_INTERFACE);
-  List<ResolveInfo> list=mContext.getPackageManager().queryIntentContentProviders(intent,0);
-  final int size=list.size();
-  for (int n=0; n < size; n++) {
-    final ResolveInfo info=list.get(n);
-    if (!isWellKnownProvider(info)) {
-      continue;
+  AsyncTask.execute(new Runnable(){
+    @Override public void run(){
+      final Intent intent=new Intent(SearchIndexablesContract.PROVIDER_INTERFACE);
+      List<ResolveInfo> list=mContext.getPackageManager().queryIntentContentProviders(intent,0);
+      final int size=list.size();
+      for (int n=0; n < size; n++) {
+        final ResolveInfo info=list.get(n);
+        if (!isWellKnownProvider(info)) {
+          continue;
+        }
+        final String authority=info.providerInfo.authority;
+        final String packageName=info.providerInfo.packageName;
+        addIndexablesFromRemoteProvider(packageName,authority);
+        addNonIndexablesKeysFromRemoteProvider(packageName,authority);
+      }
+      mDataToProcess.fullIndex=true;
+      updateInternal();
     }
-    final String authority=info.providerInfo.authority;
-    final String packageName=info.providerInfo.packageName;
-    addIndexablesFromRemoteProvider(packageName,authority);
-    addNonIndexablesKeysFromRemoteProvider(packageName,authority);
   }
-  updateInternal();
+);
 }

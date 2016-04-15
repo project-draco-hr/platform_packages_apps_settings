@@ -2,4 +2,7 @@
   final int uid=mAppItem.key;
   services.mPolicyManager.setUidPolicy(uid,restrictBackground ? POLICY_REJECT_METERED_BACKGROUND : POLICY_NONE);
   updatePrefs();
+  if (restrictBackground) {
+    MetricsLogger.action(getContext(),MetricsEvent.ACTION_DATA_SAVER_BLACKLIST,mPackageName);
+  }
 }

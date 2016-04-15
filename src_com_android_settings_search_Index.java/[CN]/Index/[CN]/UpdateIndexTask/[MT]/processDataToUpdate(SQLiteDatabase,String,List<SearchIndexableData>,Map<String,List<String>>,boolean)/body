@@ -12,7 +12,7 @@
       indexOneSearchIndexableData(database,localeStr,data,nonIndexableKeys);
     }
  catch (    Exception e) {
-      Log.e(LOG_TAG,"Cannot index: " + data.className + " for locale: "+ localeStr,e);
+      Log.e(LOG_TAG,"Cannot index: " + (data != null ? data.className : data) + " for locale: "+ localeStr,e);
     }
   }
   final long now=System.currentTimeMillis();

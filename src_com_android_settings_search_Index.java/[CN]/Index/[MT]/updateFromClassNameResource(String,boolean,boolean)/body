@@ -9,11 +9,16 @@
   }
   res.context=mContext;
   res.enabled=includeInSearchResults;
-  if (rebuild) {
-    deleteIndexableData(res);
+  AsyncTask.execute(new Runnable(){
+    @Override public void run(){
+      if (rebuild) {
+        deleteIndexableData(res);
+      }
+      addIndexableData(res);
+      mDataToProcess.forceUpdate=true;
+      updateInternal();
+      res.enabled=false;
+    }
   }
-  addIndexableData(res);
-  mDataToProcess.forceUpdate=true;
-  updateInternal();
-  res.enabled=false;
+);
 }

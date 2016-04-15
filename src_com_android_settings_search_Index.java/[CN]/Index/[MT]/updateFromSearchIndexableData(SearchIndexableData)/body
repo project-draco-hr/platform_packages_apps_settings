@@ -1,5 +1,10 @@
 {
-  addIndexableData(data);
-  mDataToProcess.forceUpdate=true;
-  updateInternal();
+  AsyncTask.execute(new Runnable(){
+    @Override public void run(){
+      addIndexableData(data);
+      mDataToProcess.forceUpdate=true;
+      updateInternal();
+    }
+  }
+);
 }

@@ -1,5 +1,5 @@
 {
-  mDefaultPitch=getSpeechPitchValueFromSeekBarProgress(speechPitchSeekBarProgress);
+  mDefaultPitch=getValueFromSeekBarProgress(KEY_DEFAULT_PITCH,speechPitchSeekBarProgress);
   try {
     android.provider.Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_PITCH,mDefaultPitch);
     if (mTts != null) {

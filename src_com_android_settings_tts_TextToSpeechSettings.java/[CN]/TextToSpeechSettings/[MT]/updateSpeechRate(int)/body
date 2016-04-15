@@ -1,5 +1,5 @@
 {
-  mDefaultRate=speechRate;
+  mDefaultRate=getValueFromSeekBarProgress(KEY_DEFAULT_RATE,speechRateSeekBarProgress);
   try {
     android.provider.Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_RATE,mDefaultRate);
     if (mTts != null) {

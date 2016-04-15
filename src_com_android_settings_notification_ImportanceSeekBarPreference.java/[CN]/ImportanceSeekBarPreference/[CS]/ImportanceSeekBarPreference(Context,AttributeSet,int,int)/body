@@ -1,4 +1,7 @@
 {
   super(context,attrs,defStyleAttr,defStyleRes);
   setLayoutResource(R.layout.preference_importance_slider);
+  mActiveSliderTint=ColorStateList.valueOf(context.getColor(R.color.importance_slider_color));
+  mInactiveSliderTint=ColorStateList.valueOf(context.getColor(R.color.importance_disabled_slider_color));
+  mHandler=new Handler();
 }

@@ -1,12 +1,19 @@
 {
-  if (menuItem.getItemId() == MENU_ID_REMOVE) {
+switch (menuItem.getItemId()) {
+case MENU_ID_REMOVE:
     if (mRemoveMode) {
-      removeLocaleWarningDialog();
+      showRemoveLocaleWarningDialog();
     }
  else {
       setRemoveMode(true);
     }
-    return true;
-  }
-  return super.onOptionsItemSelected(menuItem);
+  return true;
+case android.R.id.home:
+if (mRemoveMode) {
+  setRemoveMode(false);
+  return true;
+}
+break;
+}
+return super.onOptionsItemSelected(menuItem);
 }

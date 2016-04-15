@@ -1,0 +1,12 @@
+{
+  super.onViewStateRestored(savedInstanceState);
+  if (savedInstanceState != null) {
+    mRemoveMode=savedInstanceState.getBoolean(CFGKEY_REMOVE_MODE,false);
+    mShowingRemoveDialog=savedInstanceState.getBoolean(CFGKEY_REMOVE_DIALOG,false);
+  }
+  setRemoveMode(mRemoveMode);
+  mAdapter.restoreState(savedInstanceState);
+  if (mShowingRemoveDialog) {
+    showRemoveLocaleWarningDialog();
+  }
+}

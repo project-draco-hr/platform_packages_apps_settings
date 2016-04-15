@@ -1,0 +1,25 @@
+{
+  final ServiceInfo si=imi.getServiceInfo();
+  final ApplicationInfo ai=si.applicationInfo;
+  final String packageName=imi.getPackageName();
+  if (si == null || ai == null || packageName == null) {
+    return new ColorDrawable(Color.TRANSPARENT);
+  }
+  Drawable drawable=loadDrawable(packageManager,packageName,si.logo,ai);
+  if (drawable != null) {
+    return drawable;
+  }
+  drawable=loadDrawable(packageManager,packageName,si.icon,ai);
+  if (drawable != null) {
+    return drawable;
+  }
+  drawable=loadDrawable(packageManager,packageName,ai.logo,ai);
+  if (drawable != null) {
+    return drawable;
+  }
+  drawable=loadDrawable(packageManager,packageName,ai.icon,ai);
+  if (drawable != null) {
+    return drawable;
+  }
+  return new ColorDrawable(Color.TRANSPARENT);
+}

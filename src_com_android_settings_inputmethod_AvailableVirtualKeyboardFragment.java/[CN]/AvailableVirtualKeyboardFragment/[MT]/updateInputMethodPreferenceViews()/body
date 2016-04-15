@@ -3,20 +3,14 @@
   mInputMethodPreferenceList.clear();
   List<String> permittedList=mDpm.getPermittedInputMethodsForCurrentUser();
   final Context context=getPrefContext();
+  final PackageManager packageManager=getActivity().getPackageManager();
   final List<InputMethodInfo> imis=mInputMethodSettingValues.getInputMethodList();
   final int N=(imis == null ? 0 : imis.size());
   for (int i=0; i < N; ++i) {
     final InputMethodInfo imi=imis.get(i);
     final boolean isAllowedByOrganization=permittedList == null || permittedList.contains(imi.getPackageName());
-    Drawable icon;
-    try {
-      icon=getActivity().getPackageManager().getApplicationIcon(imi.getPackageName());
-    }
- catch (    Exception e) {
-      icon=NO_ICON;
-    }
     final InputMethodPreference pref=new InputMethodPreference(context,imi,true,isAllowedByOrganization,this);
-    pref.setIcon(icon);
+    pref.setIcon(getInputMethodIcon(packageManager,imi));
     mInputMethodPreferenceList.add(pref);
   }
   final Collator collator=Collator.getInstance();

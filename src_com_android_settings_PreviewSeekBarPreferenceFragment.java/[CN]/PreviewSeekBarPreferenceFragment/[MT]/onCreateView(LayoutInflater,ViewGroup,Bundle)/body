@@ -42,20 +42,18 @@
     configurations[i]=createConfig(origConfig,i);
   }
   mPreviewPager=(ViewPager)content.findViewById(R.id.preview_pager);
-  if (mPreviewPager != null) {
-    mPreviewPagerAdapter=new PreviewPagerAdapter(context,isLayoutRtl,mPreviewSampleResIds,configurations);
-    mPreviewPager.setAdapter(mPreviewPagerAdapter);
-    mPreviewPager.setCurrentItem(isLayoutRtl ? mPreviewSampleResIds.length - 1 : 0);
-    mPreviewPager.addOnPageChangeListener(mPreviewPageChangeListener);
-    mPageIndicator=(DotsPageIndicator)content.findViewById(R.id.page_indicator);
-    if (mPreviewSampleResIds.length > 1) {
-      mPageIndicator.setViewPager(mPreviewPager);
-      mPageIndicator.setVisibility(View.VISIBLE);
-      mPageIndicator.setOnPageChangeListener(mPageIndicatorPageChangeListener);
-    }
+  mPreviewPagerAdapter=new PreviewPagerAdapter(context,isLayoutRtl,mPreviewSampleResIds,configurations);
+  mPreviewPager.setAdapter(mPreviewPagerAdapter);
+  mPreviewPager.setCurrentItem(isLayoutRtl ? mPreviewSampleResIds.length - 1 : 0);
+  mPreviewPager.addOnPageChangeListener(mPreviewPageChangeListener);
+  mPageIndicator=(DotsPageIndicator)content.findViewById(R.id.page_indicator);
+  if (mPreviewSampleResIds.length > 1) {
+    mPageIndicator.setViewPager(mPreviewPager);
+    mPageIndicator.setVisibility(View.VISIBLE);
+    mPageIndicator.setOnPageChangeListener(mPageIndicatorPageChangeListener);
+  }
  else {
-      mPageIndicator.setVisibility(View.GONE);
-    }
+    mPageIndicator.setVisibility(View.GONE);
   }
   setPreviewLayer(mInitialIndex,false);
   return root;

@@ -1,0 +1,6 @@
+{
+  mPolicyManager.setUidPolicy(uid,blacklisted ? POLICY_REJECT_METERED_BACKGROUND : POLICY_NONE);
+  if (blacklisted) {
+    MetricsLogger.action(mContext,MetricsEvent.ACTION_DATA_SAVER_BLACKLIST,packageName);
+  }
+}

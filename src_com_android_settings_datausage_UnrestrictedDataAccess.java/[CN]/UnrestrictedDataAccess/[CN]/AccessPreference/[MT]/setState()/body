@@ -1,0 +1,9 @@
+{
+  setTitle(mEntry.label);
+  if (mState != null) {
+    setChecked(mState.isDataSaverWhitelisted);
+    if (mState.isDataSaverBlacklisted) {
+      setSummary(R.string.restrict_background_blacklisted);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  mAutoOn=!mAutoOn;
+  if (!mAutoOn) {
+    setProgress(NotificationListenerService.Ranking.IMPORTANCE_DEFAULT);
+    mCallback.onImportanceChanged(NotificationListenerService.Ranking.IMPORTANCE_DEFAULT,true);
+  }
+ else {
+    mCallback.onImportanceChanged(NotificationListenerService.Ranking.IMPORTANCE_UNSPECIFIED,true);
+  }
+  applyAutoUi(autoButton);
+}

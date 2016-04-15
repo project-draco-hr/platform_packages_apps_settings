@@ -1,11 +1,19 @@
 {
+  boolean showSlider=Settings.Secure.getInt(context.getContentResolver(),NOTIFICATION_TUNER_SETTING,0) == 1;
   List<String> summaryAttributes=new ArrayList<>();
   StringBuffer summary=new StringBuffer();
-  if (appRow.banned) {
-    summaryAttributes.add(context.getString(R.string.notifications_disabled));
+  if (showSlider) {
+    if (appRow.appImportance != Ranking.IMPORTANCE_UNSPECIFIED) {
+      summaryAttributes.add(context.getString(R.string.notification_summary_level,appRow.appImportance));
+    }
   }
- else   if (appRow.appImportance > NotificationListenerService.Ranking.IMPORTANCE_NONE && appRow.appImportance < NotificationListenerService.Ranking.IMPORTANCE_DEFAULT) {
-    summaryAttributes.add(context.getString(R.string.notifications_silenced));
+ else {
+    if (appRow.banned) {
+      summaryAttributes.add(context.getString(R.string.notifications_disabled));
+    }
+ else     if (appRow.appImportance > Ranking.IMPORTANCE_NONE && appRow.appImportance < Ranking.IMPORTANCE_DEFAULT) {
+      summaryAttributes.add(context.getString(R.string.notifications_silenced));
+    }
   }
   final boolean lockscreenSecure=new LockPatternUtils(context).isSecure(UserHandle.myUserId());
   if (lockscreenSecure) {

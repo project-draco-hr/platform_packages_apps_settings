@@ -4,7 +4,9 @@
     seekBar.setProgress(mMinProgress);
     progress=mMinProgress;
   }
-  if (fromTouch) {
-    mCallback.onImportanceChanged(progress);
+  if (mSummaryTextView != null) {
+    mSummary=getProgressSummary(progress);
+    mSummaryTextView.setText(mSummary);
   }
+  mCallback.onImportanceChanged(progress,fromTouch);
 }

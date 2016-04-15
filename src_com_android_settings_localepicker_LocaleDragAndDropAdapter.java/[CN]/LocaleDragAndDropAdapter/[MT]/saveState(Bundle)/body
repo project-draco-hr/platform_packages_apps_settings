@@ -1,0 +1,11 @@
+{
+  if (outInstanceState != null) {
+    final ArrayList<String> selectedLocales=new ArrayList<>();
+    for (    LocaleStore.LocaleInfo li : mFeedItemList) {
+      if (li.getChecked()) {
+        selectedLocales.add(li.getId());
+      }
+    }
+    outInstanceState.putStringArrayList(CFGKEY_SELECTED_LOCALES,selectedLocales);
+  }
+}

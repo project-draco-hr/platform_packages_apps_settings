@@ -1,0 +1,12 @@
+{
+  if (savedInstanceState != null && mRemoveMode) {
+    final ArrayList<String> selectedLocales=savedInstanceState.getStringArrayList(CFGKEY_SELECTED_LOCALES);
+    if (selectedLocales == null || selectedLocales.isEmpty()) {
+      return;
+    }
+    for (    LocaleStore.LocaleInfo li : mFeedItemList) {
+      li.setChecked(selectedLocales.contains(li.getId()));
+    }
+    notifyItemRangeChanged(0,mFeedItemList.size());
+  }
+}

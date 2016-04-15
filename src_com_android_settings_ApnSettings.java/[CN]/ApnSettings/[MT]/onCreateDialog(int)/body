@@ -1,6 +1,11 @@
 {
   if (id == DIALOG_RESTORE_DEFAULTAPN) {
-    ProgressDialog dialog=new ProgressDialog(getActivity());
+    ProgressDialog dialog=new ProgressDialog(getActivity()){
+      public boolean onTouchEvent(      MotionEvent event){
+        return true;
+      }
+    }
+;
     dialog.setMessage(getResources().getString(R.string.restore_default_apn));
     dialog.setCancelable(false);
     return dialog;

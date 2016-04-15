@@ -11,7 +11,7 @@
     @Override protected String doInBackground(    Void... values){
       UserInfo user=mUserManager.getUserInfo(UserHandle.myUserId());
       if (user.iconPath == null || user.iconPath.equals("")) {
-        assignProfilePhoto(user);
+        Utils.copyMeProfilePhoto(getActivity(),user);
       }
       return user.name;
     }

@@ -1,7 +1,7 @@
 {
   UserInfo newUserInfo=mUserManager.createUser(mAddingUserName,0);
   if (newUserInfo != null) {
-    assignDefaultPhoto(newUserInfo);
+    Utils.assignDefaultPhoto(getActivity(),newUserInfo.id);
   }
   return newUserInfo;
 }

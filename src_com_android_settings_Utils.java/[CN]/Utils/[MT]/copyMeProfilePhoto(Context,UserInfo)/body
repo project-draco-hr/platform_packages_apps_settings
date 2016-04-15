@@ -1,17 +1,18 @@
 {
   Uri contactUri=Profile.CONTENT_URI;
+  int userId=user != null ? user.id : UserHandle.myUserId();
   InputStream avatarDataStream=Contacts.openContactPhotoInputStream(context.getContentResolver(),contactUri,true);
   if (avatarDataStream == null) {
-    return false;
+    assignDefaultPhoto(context,userId);
   }
-  int userId=user != null ? user.id : UserHandle.myUserId();
-  UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
-  Bitmap icon=BitmapFactory.decodeStream(avatarDataStream);
-  um.setUserIcon(userId,icon);
+ else {
+    UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+    Bitmap icon=BitmapFactory.decodeStream(avatarDataStream);
+    um.setUserIcon(userId,icon);
+  }
   try {
     avatarDataStream.close();
   }
  catch (  IOException ioe) {
   }
-  return true;
 }

@@ -4,12 +4,11 @@
   InputStream avatarDataStream=Contacts.openContactPhotoInputStream(context.getContentResolver(),contactUri,true);
   if (avatarDataStream == null) {
     assignDefaultPhoto(context,userId);
+    return;
   }
- else {
-    UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
-    Bitmap icon=BitmapFactory.decodeStream(avatarDataStream);
-    um.setUserIcon(userId,icon);
-  }
+  UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  Bitmap icon=BitmapFactory.decodeStream(avatarDataStream);
+  um.setUserIcon(userId,icon);
   try {
     avatarDataStream.close();
   }

@@ -4,9 +4,6 @@
     filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
     filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
     filter.addAction(WifiManager.RSSI_CHANGED_ACTION);
-    mContext.registerReceiver(this,filter);
-  }
- else {
-    mContext.unregisterReceiver(this);
+    mSummaryLoader.registerReceiver(this,filter);
   }
 }

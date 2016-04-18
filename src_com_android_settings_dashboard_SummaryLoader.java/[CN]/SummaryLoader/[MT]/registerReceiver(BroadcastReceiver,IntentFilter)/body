@@ -1,0 +1,9 @@
+{
+synchronized (mReceivers) {
+    if (!mListening) {
+      return;
+    }
+    mReceivers.add(receiver);
+    mActivity.registerReceiver(receiver,filter);
+  }
+}

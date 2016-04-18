@@ -1,6 +1,7 @@
 {
   if (preference == mRestrictBackground) {
-    setAppRestrictBackground(!(Boolean)newValue);
+    mDataSaverBackend.setIsBlacklisted(mAppItem.key,mPackageName,!(Boolean)newValue);
+    updatePrefs();
     return true;
   }
  else   if (preference == mUnrestrictedData) {

@@ -1,0 +1,8 @@
+{
+  Bundle args=new Bundle();
+  args.putString(ARG_PACKAGE_NAME,appEntry.info.packageName);
+  args.putInt(ARG_PACKAGE_UID,appEntry.info.uid);
+  args.putBoolean(AppHeader.EXTRA_HIDE_INFO_BUTTON,true);
+  SettingsActivity sa=(SettingsActivity)caller.getActivity();
+  sa.startPreferencePanel(fragment.getName(),args,-1,title,caller,SUB_INFO_FRAGMENT);
+}

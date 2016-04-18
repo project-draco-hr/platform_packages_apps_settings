@@ -1,0 +1,10 @@
+{
+  mBlacklist=new SparseBooleanArray();
+  try {
+    for (    int uid : mIPolicyManager.getUidsWithPolicy(POLICY_REJECT_METERED_BACKGROUND)) {
+      mBlacklist.put(uid,true);
+    }
+  }
+ catch (  RemoteException e) {
+  }
+}

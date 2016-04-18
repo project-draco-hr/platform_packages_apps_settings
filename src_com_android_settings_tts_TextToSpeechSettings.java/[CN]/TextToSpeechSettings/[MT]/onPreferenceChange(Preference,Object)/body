@@ -3,18 +3,7 @@
     updateSpeechRate((Integer)objValue);
   }
  else   if (KEY_DEFAULT_PITCH.equals(preference.getKey())) {
-    int progress=(Integer)objValue;
-    mDefaultPitch=getSpeechPitchValueFromSeekBarProgress(progress);
-    try {
-      android.provider.Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_PITCH,mDefaultPitch);
-      if (mTts != null) {
-        mTts.setPitch(mDefaultPitch / 100.0f);
-      }
-      if (DBG)       Log.d(TAG,"TTS default pitch changed, now" + mDefaultPitch);
-    }
- catch (    NumberFormatException e) {
-      Log.e(TAG,"could not persist default TTS pitch setting",e);
-    }
+    updateSpeechPitchValue((Integer)objValue);
   }
   return true;
 }

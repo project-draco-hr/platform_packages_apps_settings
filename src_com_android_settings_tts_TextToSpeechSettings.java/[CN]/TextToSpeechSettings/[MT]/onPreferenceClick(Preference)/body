@@ -8,5 +8,11 @@
     updateSpeechRate(TextToSpeech.Engine.DEFAULT_RATE);
     return true;
   }
+ else   if (preference == mResetSpeechPitch) {
+    int pitchSeekbarProgress=getPitchSeekBarProgressFromSpeechPitchValue(TextToSpeech.Engine.DEFAULT_PITCH);
+    mDefaultPitchPref.setProgress(pitchSeekbarProgress);
+    updateSpeechPitchValue(pitchSeekbarProgress);
+    return true;
+  }
   return false;
 }

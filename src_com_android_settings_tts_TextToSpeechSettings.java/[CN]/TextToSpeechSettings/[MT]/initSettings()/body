@@ -2,12 +2,12 @@
   final ContentResolver resolver=getContentResolver();
   mDefaultRate=android.provider.Settings.Secure.getInt(resolver,TTS_DEFAULT_RATE,TextToSpeech.Engine.DEFAULT_RATE);
   mDefaultPitch=android.provider.Settings.Secure.getInt(resolver,TTS_DEFAULT_PITCH,TextToSpeech.Engine.DEFAULT_PITCH);
-  mDefaultRatePref.setProgress(mDefaultRate);
+  mDefaultRatePref.setProgress(getSeekBarProgressFromValue(KEY_DEFAULT_RATE,mDefaultRate));
   mDefaultRatePref.setOnPreferenceChangeListener(this);
-  mDefaultRatePref.setMax(MAX_SPEECH_RATE);
-  mDefaultPitchPref.setProgress(getPitchSeekBarProgressFromSpeechPitchValue(mDefaultPitch));
+  mDefaultRatePref.setMax(getSeekBarProgressFromValue(KEY_DEFAULT_RATE,MAX_SPEECH_RATE));
+  mDefaultPitchPref.setProgress(getSeekBarProgressFromValue(KEY_DEFAULT_PITCH,mDefaultPitch));
   mDefaultPitchPref.setOnPreferenceChangeListener(this);
-  mDefaultPitchPref.setMax(getPitchSeekBarProgressFromSpeechPitchValue(MAX_SPEECH_PITCH));
+  mDefaultPitchPref.setMax(getSeekBarProgressFromValue(KEY_DEFAULT_PITCH,MAX_SPEECH_PITCH));
   if (mTts != null) {
     mCurrentEngine=mTts.getCurrentEngine();
     mTts.setSpeechRate(mDefaultRate / 100.0f);

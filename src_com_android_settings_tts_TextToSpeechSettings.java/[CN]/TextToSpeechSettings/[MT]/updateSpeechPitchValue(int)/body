@@ -1,0 +1,14 @@
+{
+  mDefaultPitch=getSpeechPitchValueFromSeekBarProgress(speechPitchSeekBarProgress);
+  try {
+    android.provider.Settings.Secure.putInt(getContentResolver(),TTS_DEFAULT_PITCH,mDefaultPitch);
+    if (mTts != null) {
+      mTts.setPitch(mDefaultPitch / 100.0f);
+    }
+    if (DBG)     Log.d(TAG,"TTS default pitch changed, now" + mDefaultPitch);
+  }
+ catch (  NumberFormatException e) {
+    Log.e(TAG,"could not persist default TTS pitch setting",e);
+  }
+  return;
+}

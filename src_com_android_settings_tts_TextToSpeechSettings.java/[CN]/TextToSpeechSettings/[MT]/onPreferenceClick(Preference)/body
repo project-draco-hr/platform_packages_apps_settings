@@ -4,12 +4,13 @@
     return true;
   }
  else   if (preference == mResetSpeechRate) {
-    mDefaultRatePref.setProgress(TextToSpeech.Engine.DEFAULT_RATE);
-    updateSpeechRate(TextToSpeech.Engine.DEFAULT_RATE);
+    int speechRateSeekbarProgress=getSeekBarProgressFromValue(KEY_DEFAULT_RATE,TextToSpeech.Engine.DEFAULT_RATE);
+    mDefaultRatePref.setProgress(speechRateSeekbarProgress);
+    updateSpeechRate(speechRateSeekbarProgress);
     return true;
   }
  else   if (preference == mResetSpeechPitch) {
-    int pitchSeekbarProgress=getPitchSeekBarProgressFromSpeechPitchValue(TextToSpeech.Engine.DEFAULT_PITCH);
+    int pitchSeekbarProgress=getSeekBarProgressFromValue(KEY_DEFAULT_PITCH,TextToSpeech.Engine.DEFAULT_PITCH);
     mDefaultPitchPref.setProgress(pitchSeekbarProgress);
     updateSpeechPitchValue(pitchSeekbarProgress);
     return true;

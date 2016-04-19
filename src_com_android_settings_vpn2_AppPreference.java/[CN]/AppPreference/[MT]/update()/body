@@ -2,7 +2,6 @@
   if (mPackageName == null || mUserId == UserHandle.USER_NULL) {
     return;
   }
-  setSummary(getSummaryString(mState == STATE_DISCONNECTED ? STATE_NONE : mState));
   mName=mPackageName;
   Drawable icon=null;
   try {
@@ -25,5 +24,6 @@
   }
   setTitle(mName);
   setIcon(icon);
+  updateSummary();
   notifyHierarchyChanged();
 }

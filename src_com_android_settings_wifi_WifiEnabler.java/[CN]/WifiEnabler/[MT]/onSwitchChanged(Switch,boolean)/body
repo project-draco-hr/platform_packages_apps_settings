@@ -7,8 +7,7 @@
     mSwitchBar.setChecked(false);
     return;
   }
-  int wifiApState=mWifiManager.getWifiApState();
-  if (isChecked && ((wifiApState == WifiManager.WIFI_AP_STATE_ENABLING) || (wifiApState == WifiManager.WIFI_AP_STATE_ENABLED))) {
+  if (mayDisableTethering(isChecked)) {
     mWifiManager.setWifiApEnabled(null,false);
   }
   MetricsLogger.action(mContext,isChecked ? MetricsEvent.ACTION_WIFI_ON : MetricsEvent.ACTION_WIFI_OFF);

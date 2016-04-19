@@ -7,14 +7,4 @@
   if (mEntry.icon != null) {
     setIcon(mEntry.icon);
   }
-  setOnPreferenceClickListener(new OnPreferenceClickListener(){
-    @Override public boolean onPreferenceClick(    Preference pref){
-      if (mState.isDataSaverBlacklisted) {
-        InstalledAppDetails.startAppInfoFragment(AppDataUsage.class,context.getString(R.string.app_data_usage),UnrestrictedDataAccess.this,mEntry);
-        return false;
-      }
-      return true;
-    }
-  }
-);
 }

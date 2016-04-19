@@ -13,6 +13,7 @@
   }
   if (force && mNewApn && name.length() < 1 && apn.length() < 1) {
     getContentResolver().delete(mUri,null,null);
+    mUri=null;
     return false;
   }
   ContentValues values=new ContentValues();

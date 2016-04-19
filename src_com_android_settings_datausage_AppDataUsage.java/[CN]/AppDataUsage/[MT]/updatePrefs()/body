@@ -1,14 +1,3 @@
 {
-  if (mRestrictBackground != null) {
-    mRestrictBackground.setChecked(!getAppRestrictBackground());
-  }
-  if (mUnrestrictedData != null) {
-    if (getAppRestrictBackground()) {
-      mUnrestrictedData.setVisible(false);
-    }
- else {
-      mUnrestrictedData.setVisible(true);
-      mUnrestrictedData.setChecked(mDataSaverBackend.isWhitelisted(mAppItem.key));
-    }
-  }
+  updatePrefs(getAppRestrictBackground(),getUnrestrictData());
 }

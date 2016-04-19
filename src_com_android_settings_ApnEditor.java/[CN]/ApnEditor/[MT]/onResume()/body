@@ -1,4 +1,14 @@
 {
   super.onResume();
+  if (mUri == null && mNewApn) {
+    mUri=getContentResolver().insert(getIntent().getData(),new ContentValues());
+    if (mUri == null) {
+      Log.w(TAG,"Failed to insert new telephony provider into " + getIntent().getData());
+      finish();
+      return;
+    }
+    mCursor=managedQuery(mUri,sProjection,null,null);
+    mCursor.moveToFirst();
+  }
   getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 }

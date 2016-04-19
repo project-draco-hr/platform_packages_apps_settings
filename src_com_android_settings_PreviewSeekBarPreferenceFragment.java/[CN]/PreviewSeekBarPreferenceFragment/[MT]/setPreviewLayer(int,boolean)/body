@@ -2,9 +2,7 @@
   mLabel.setText(mEntries[index]);
   mSmaller.setEnabled(index > 0);
   mLarger.setEnabled(index < mEntries.length - 1);
-  if (mPreviewPager != null) {
-    setPagerIndicatorContentDescription(mPreviewPager.getCurrentItem());
-    mPreviewPagerAdapter.setPreviewLayer(index,mCurrentIndex,mPreviewPager.getCurrentItem(),animate);
-  }
+  setPagerIndicatorContentDescription(mPreviewPager.getCurrentItem());
+  mPreviewPagerAdapter.setPreviewLayer(index,mCurrentIndex,mPreviewPager.getCurrentItem(),animate);
   mCurrentIndex=index;
 }

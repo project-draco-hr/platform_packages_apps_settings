@@ -8,6 +8,6 @@
     }
 );
   }
-  holder.findViewById(android.R.id.widget_frame).setVisibility(mState.isDataSaverBlacklisted ? View.INVISIBLE : View.VISIBLE);
+  holder.findViewById(android.R.id.widget_frame).setVisibility(mState != null && mState.isDataSaverBlacklisted ? View.INVISIBLE : View.VISIBLE);
   super.onBindViewHolder(holder);
 }

@@ -1,0 +1,14 @@
+{
+  if (mRestrictBackground != null) {
+    mRestrictBackground.setChecked(!restrictBackground);
+  }
+  if (mUnrestrictedData != null) {
+    if (restrictBackground) {
+      mUnrestrictedData.setVisible(false);
+    }
+ else {
+      mUnrestrictedData.setVisible(true);
+      mUnrestrictedData.setChecked(unrestrictData);
+    }
+  }
+}

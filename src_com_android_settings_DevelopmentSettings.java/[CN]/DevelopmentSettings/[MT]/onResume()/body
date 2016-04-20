@@ -7,11 +7,13 @@
     getPreferenceScreen().removeAll();
     return;
   }
-  if (mDpm.getMaximumTimeToLockForUserAndProfiles(UserHandle.myUserId()) > 0) {
-    mDisabledPrefs.add(mKeepScreenOn);
+  final EnforcedAdmin admin=RestrictedLockUtils.checkIfMaximumTimeToLockIsSet(getActivity());
+  mKeepScreenOn.setDisabledByAdmin(admin);
+  if (admin == null) {
+    mDisabledPrefs.remove(mKeepScreenOn);
   }
  else {
-    mDisabledPrefs.remove(mKeepScreenOn);
+    mDisabledPrefs.add(mKeepScreenOn);
   }
   final ContentResolver cr=getActivity().getContentResolver();
   mLastEnabledState=Settings.Global.getInt(cr,Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,0) != 0;

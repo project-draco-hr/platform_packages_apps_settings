@@ -2,6 +2,9 @@
   final String key=pref.getKey();
   if (pref instanceof StorageVolumePreference) {
     final VolumeInfo vol=mStorageManager.findVolumeById(key);
+    if (vol == null) {
+      return false;
+    }
     if (vol.getState() == VolumeInfo.STATE_UNMOUNTED) {
       VolumeUnmountedFragment.show(this,vol.getId());
       return true;

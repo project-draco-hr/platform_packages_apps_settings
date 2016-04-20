@@ -4,7 +4,7 @@
   c.set(Calendar.MINUTE,minute);
   c.set(Calendar.SECOND,0);
   c.set(Calendar.MILLISECOND,0);
-  long when=c.getTimeInMillis();
+  long when=Math.max(c.getTimeInMillis(),MIN_DATE);
   if (when / 1000 < Integer.MAX_VALUE) {
     ((AlarmManager)context.getSystemService(Context.ALARM_SERVICE)).setTime(when);
   }

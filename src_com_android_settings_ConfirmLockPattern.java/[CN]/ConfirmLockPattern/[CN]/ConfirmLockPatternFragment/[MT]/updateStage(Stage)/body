@@ -10,11 +10,8 @@ case NeedToUnlock:
   if (mDetailsText != null) {
     mDetailsTextView.setText(mDetailsText);
   }
- else   if (!Utils.isManagedProfile(UserManager.get(getActivity()),mEffectiveUserId)) {
-    mDetailsTextView.setText(R.string.lockpassword_confirm_your_pattern_generic);
-  }
  else {
-    mDetailsTextView.setText(R.string.lockpassword_confirm_your_pattern_generic_profile);
+    mDetailsTextView.setText(getDefaultDetails());
   }
 mErrorTextView.setText("");
 if (isProfileChallenge()) {

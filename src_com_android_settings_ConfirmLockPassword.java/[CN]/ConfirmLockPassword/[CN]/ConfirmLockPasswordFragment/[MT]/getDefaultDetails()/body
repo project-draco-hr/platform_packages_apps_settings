@@ -1,9 +1,5 @@
 {
   boolean isProfile=Utils.isManagedProfile(UserManager.get(getActivity()),mEffectiveUserId);
-  if (mIsAlpha) {
-    return isProfile ? R.string.lockpassword_confirm_your_password_generic_profile : R.string.lockpassword_confirm_your_password_generic;
-  }
- else {
-    return isProfile ? R.string.lockpassword_confirm_your_pin_generic_profile : R.string.lockpassword_confirm_your_pin_generic;
-  }
+  int index=((mIsStrongAuthRequired ? 1 : 0) << 2) + ((isProfile ? 1 : 0) << 1) + (mIsAlpha ? 1 : 0);
+  return DETAIL_TEXTS[index];
 }

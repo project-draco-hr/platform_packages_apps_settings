@@ -3,6 +3,11 @@
   if (DEBUG)   Log.d(TAG,"Listening " + listening);
   mListening=listening;
   for (  SummaryProvider p : mSummaryMap.keySet()) {
-    p.setListening(listening);
+    try {
+      p.setListening(listening);
+    }
+ catch (    Exception e) {
+      Log.d(TAG,"Problem in setListening",e);
+    }
   }
 }

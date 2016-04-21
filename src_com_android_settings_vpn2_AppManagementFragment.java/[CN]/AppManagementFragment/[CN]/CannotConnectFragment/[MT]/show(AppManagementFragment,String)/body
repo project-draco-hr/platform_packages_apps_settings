@@ -1,0 +1,9 @@
+{
+  if (parent.getFragmentManager().findFragmentByTag(TAG) == null) {
+    final Bundle args=new Bundle();
+    args.putString(ARG_VPN_LABEL,vpnLabel);
+    final DialogFragment frag=new CannotConnectFragment();
+    frag.setArguments(args);
+    frag.show(parent.getFragmentManager(),TAG);
+  }
+}

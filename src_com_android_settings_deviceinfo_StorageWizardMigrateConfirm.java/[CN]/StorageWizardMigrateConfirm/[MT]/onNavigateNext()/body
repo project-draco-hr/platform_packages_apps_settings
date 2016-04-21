@@ -1,5 +1,26 @@
 {
-  final int moveId=getPackageManager().movePrimaryStorage(mVolume);
+  int moveId;
+  try {
+    moveId=getPackageManager().movePrimaryStorage(mVolume);
+  }
+ catch (  IllegalArgumentException e) {
+    StorageManager sm=(StorageManager)getSystemService(STORAGE_SERVICE);
+    if (Objects.equals(mVolume.getFsUuid(),sm.getPrimaryStorageVolume().getUuid())) {
+      final Intent intent=new Intent(this,StorageWizardReady.class);
+      intent.putExtra(DiskInfo.EXTRA_DISK_ID,mDisk.getId());
+      startActivity(intent);
+      finishAffinity();
+      return;
+    }
+ else {
+      throw e;
+    }
+  }
+catch (  IllegalStateException e) {
+    Toast.makeText(this,getString(R.string.another_migration_already_in_progress),Toast.LENGTH_LONG).show();
+    finishAffinity();
+    return;
+  }
   final Intent intent=new Intent(this,StorageWizardMigrateProgress.class);
   intent.putExtra(VolumeInfo.EXTRA_VOLUME_ID,mVolume.getId());
   intent.putExtra(PackageManager.EXTRA_MOVE_ID,moveId);

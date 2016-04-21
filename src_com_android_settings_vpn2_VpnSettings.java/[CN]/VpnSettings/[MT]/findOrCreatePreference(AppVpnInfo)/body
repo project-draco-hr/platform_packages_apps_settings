@@ -1,12 +1,10 @@
 {
   AppPreference pref=mAppPreferences.get(app);
   if (pref == null) {
-    pref=new AppPreference(getPrefContext());
+    pref=new AppPreference(getPrefContext(),app.userId,app.packageName);
     pref.setOnGearClickListener(mGearListener);
     pref.setOnPreferenceClickListener(this);
     mAppPreferences.put(app,pref);
   }
-  pref.setUserId(app.userId);
-  pref.setPackageName(app.packageName);
   return pref;
 }

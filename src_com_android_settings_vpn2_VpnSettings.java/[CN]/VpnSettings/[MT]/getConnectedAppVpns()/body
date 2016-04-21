@@ -1,5 +1,5 @@
 {
-  List<AppVpnInfo> connections=new ArrayList<>();
+  Set<AppVpnInfo> connections=new ArraySet<>();
   try {
     for (    UserHandle profile : mUserManager.getUserProfiles()) {
       VpnConfig config=mConnectivityService.getVpnConfig(profile.getIdentifier());

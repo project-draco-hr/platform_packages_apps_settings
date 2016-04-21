@@ -1,4 +1,9 @@
 {
+  final String oldLabel=(mProfile != null ? mProfile.name : null);
+  final String newLabel=(profile != null ? profile.name : null);
+  if (!TextUtils.equals(oldLabel,newLabel)) {
+    setTitle(newLabel);
+    notifyHierarchyChanged();
+  }
   mProfile=profile;
-  update();
 }

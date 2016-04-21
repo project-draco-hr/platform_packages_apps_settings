@@ -2,8 +2,8 @@
   mUpdater.removeMessages(RESCAN_MESSAGE);
   final List<VpnProfile> vpnProfiles=loadVpnProfiles(mKeyStore);
   final List<AppVpnInfo> vpnApps=getVpnApps(getActivity(),true);
-  final List<LegacyVpnInfo> connectedLegacyVpns=getConnectedLegacyVpns();
-  final List<AppVpnInfo> connectedAppVpns=getConnectedAppVpns();
+  final Map<String,LegacyVpnInfo> connectedLegacyVpns=getConnectedLegacyVpns();
+  final Set<AppVpnInfo> connectedAppVpns=getConnectedAppVpns();
   final Set<AppVpnInfo> alwaysOnAppVpnInfos=getAlwaysOnAppVpnInfos();
   final String lockdownVpnKey=VpnUtils.getLockdownVpn();
   getActivity().runOnUiThread(new Runnable(){
@@ -14,13 +14,23 @@
       final Set<Preference> updates=new ArraySet<>();
       for (      VpnProfile profile : vpnProfiles) {
         LegacyVpnPreference p=findOrCreatePreference(profile);
-        p.setState(LegacyVpnPreference.STATE_NONE);
+        if (connectedLegacyVpns.containsKey(profile.key)) {
+          p.setState(connectedLegacyVpns.get(profile.key).state);
+        }
+ else {
+          p.setState(LegacyVpnPreference.STATE_NONE);
+        }
         p.setAlwaysOn(lockdownVpnKey != null && lockdownVpnKey.equals(profile.key));
         updates.add(p);
       }
       for (      AppVpnInfo app : vpnApps) {
         AppPreference p=findOrCreatePreference(app);
-        p.setState(AppPreference.STATE_DISCONNECTED);
+        if (connectedAppVpns.contains(app)) {
+          p.setState(AppPreference.STATE_CONNECTED);
+        }
+ else {
+          p.setState(AppPreference.STATE_DISCONNECTED);
+        }
         p.setAlwaysOn(alwaysOnAppVpnInfos.contains(app));
         updates.add(p);
       }
@@ -38,18 +48,6 @@
       }
       for (      Preference pref : updates) {
         vpnGroup.addPreference(pref);
-      }
-      for (      LegacyVpnInfo info : connectedLegacyVpns) {
-        final LegacyVpnPreference preference=mLegacyVpnPreferences.get(info.key);
-        if (preference != null) {
-          preference.setState(info.state);
-        }
-      }
-      for (      AppVpnInfo app : connectedAppVpns) {
-        final AppPreference preference=mAppPreferences.get(app);
-        if (preference != null) {
-          preference.setState(AppPreference.STATE_CONNECTED);
-        }
       }
     }
   }

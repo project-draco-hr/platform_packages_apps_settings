@@ -1,0 +1,22 @@
+{
+  super.onInitializeAccessibilityNodeInfoForItem(recycler,state,host,info);
+  final int itemCount=this.getItemCount();
+  final int position=this.getPosition(host);
+  final LocaleDragCell dragCell=(LocaleDragCell)host;
+  final String description=(position + 1) + ", " + dragCell.getCheckbox().getContentDescription();
+  info.setContentDescription(description);
+  if (mAdapter.isRemoveMode()) {
+    return;
+  }
+  if (position > 0) {
+    info.addAction(mActionMoveUp);
+    info.addAction(mActionMoveTop);
+  }
+  if (position + 1 < itemCount) {
+    info.addAction(mActionMoveDown);
+    info.addAction(mActionMoveBottom);
+  }
+  if (itemCount > 1) {
+    info.addAction(mActionRemove);
+  }
+}

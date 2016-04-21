@@ -1,6 +1,6 @@
 {
   final RecyclerView list=(RecyclerView)view.findViewById(R.id.dragList);
-  final LinearLayoutManager llm=new LinearLayoutManager(this.getContext());
+  final LocaleLinearLayoutManager llm=new LocaleLinearLayoutManager(getContext(),mAdapter);
   llm.setAutoMeasureEnabled(true);
   list.setLayoutManager(llm);
   list.setHasFixedSize(true);

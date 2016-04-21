@@ -1,9 +1,14 @@
 {
+  final SetupWizardRecyclerLayout layout=(SetupWizardRecyclerLayout)findViewById(R.id.setup_wizard_layout);
+  final RecyclerItemAdapter adapter=(RecyclerItemAdapter)layout.getAdapter();
+  final Item nextItem=(Item)adapter.findItemById(R.id.next_button);
+  nextItem.setTitle(getText(R.string.security_settings_fingerprint_enroll_introduction_continue_setup));
+  final Item cancelItem=(Item)adapter.findItemById(R.id.cancel_button);
+  cancelItem.setTitle(getText(R.string.security_settings_fingerprint_enroll_introduction_cancel_setup));
   SetupWizardUtils.setImmersiveMode(this);
   getNavigationBar().setNavigationBarListener(this);
   Button nextButton=getNavigationBar().getNextButton();
   nextButton.setText(null);
   nextButton.setEnabled(false);
-  SetupWizardRecyclerLayout layout=(SetupWizardRecyclerLayout)getSetupWizardLayout();
   layout.setDividerInset(getResources().getDimensionPixelSize(R.dimen.suw_items_icon_divider_inset));
 }

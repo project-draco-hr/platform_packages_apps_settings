@@ -1,8 +1,9 @@
 {
-  mProfile=profile;
-  if (mProfile != null) {
-    setIcon(R.mipmap.ic_launcher_settings);
-    setTitle(mProfile.name);
+  final String oldLabel=(mProfile != null ? mProfile.name : null);
+  final String newLabel=(profile != null ? profile.name : null);
+  if (!TextUtils.equals(oldLabel,newLabel)) {
+    setTitle(newLabel);
+    notifyHierarchyChanged();
   }
-  notifyHierarchyChanged();
+  mProfile=profile;
 }

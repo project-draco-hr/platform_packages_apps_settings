@@ -1,4 +1,7 @@
 {
-  mState=state;
-  updateSummary();
+  if (mState != state) {
+    mState=state;
+    updateSummary();
+    notifyHierarchyChanged();
+  }
 }

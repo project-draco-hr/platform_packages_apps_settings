@@ -1,8 +1,8 @@
 {
-  if (mPackageName == null || mUserId == UserHandle.USER_NULL) {
-    return;
-  }
-  mName=mPackageName;
+  super(context,null);
+  super.setUserId(userId);
+  mPackageName=packageName;
+  String label=packageName;
   Drawable icon=null;
   try {
     Context userContext=getUserContext();
@@ -11,7 +11,7 @@
       PackageInfo pkgInfo=pm.getPackageInfo(mPackageName,0);
       if (pkgInfo != null) {
         icon=pkgInfo.applicationInfo.loadIcon(pm);
-        mName=VpnConfig.getVpnLabel(userContext,mPackageName).toString();
+        label=VpnConfig.getVpnLabel(userContext,mPackageName).toString();
       }
     }
  catch (    PackageManager.NameNotFoundException pkgNotFound) {
@@ -22,8 +22,7 @@
   }
  catch (  PackageManager.NameNotFoundException userNotFound) {
   }
+  mName=label;
   setTitle(mName);
   setIcon(icon);
-  updateSummary();
-  notifyHierarchyChanged();
 }

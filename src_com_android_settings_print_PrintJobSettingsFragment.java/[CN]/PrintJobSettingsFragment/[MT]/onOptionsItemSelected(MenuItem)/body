@@ -1,17 +1,20 @@
 {
+  PrintJob printJob=getPrintJob();
+  if (printJob != null) {
 switch (item.getItemId()) {
 case MENU_ITEM_ID_CANCEL:
 {
-      getPrintJob().cancel();
+        printJob.cancel();
+        finish();
+        return true;
+      }
+case MENU_ITEM_ID_RESTART:
+{
+      printJob.restart();
       finish();
       return true;
     }
-case MENU_ITEM_ID_RESTART:
-{
-    getPrintJob().restart();
-    finish();
-    return true;
-  }
+}
 }
 return super.onOptionsItemSelected(item);
 }

@@ -41,5 +41,8 @@ ArrayList<ApplicationsState.AppEntry> entries=mSession.rebuild(filterObj,compara
 if (entries == null && !eraseold) {
 return;
 }
+if (mFilterMode == FILTER_APPS_POWER_WHITELIST || mFilterMode == FILTER_APPS_POWER_WHITELIST_ALL) {
+entries=removeDuplicateIgnoringUser(entries);
+}
 onRebuildComplete(entries);
 }

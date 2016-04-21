@@ -8,7 +8,9 @@
     stats.add(new BatterySipper(type,null,use));
     use+=5;
   }
-  stats.add(new BatterySipper(DrainType.APP,new FakeUid(Process.FIRST_APPLICATION_UID),use));
+  for (int i=0; i < 100; i++) {
+    stats.add(new BatterySipper(DrainType.APP,new FakeUid(Process.FIRST_APPLICATION_UID + i),use));
+  }
   stats.add(new BatterySipper(DrainType.APP,new FakeUid(0),use));
   BatterySipper sipper=new BatterySipper(DrainType.APP,new FakeUid(UserHandle.getSharedAppGid(Process.FIRST_APPLICATION_UID)),10.0f);
   sipper.packageWithHighestDrain="dex2oat";

@@ -1,9 +1,12 @@
 {
-synchronized (mReceivers) {
-    if (!mListening) {
-      return;
+  mActivity.runOnUiThread(new Runnable(){
+    @Override public void run(){
+      if (!mListening) {
+        return;
+      }
+      mReceivers.add(receiver);
+      mActivity.registerReceiver(receiver,filter);
     }
-    mReceivers.add(receiver);
-    mActivity.registerReceiver(receiver,filter);
   }
+);
 }

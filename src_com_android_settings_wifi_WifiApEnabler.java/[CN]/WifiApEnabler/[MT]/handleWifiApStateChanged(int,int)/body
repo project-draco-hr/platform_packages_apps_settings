@@ -6,7 +6,7 @@ case WifiManager.WIFI_AP_STATE_ENABLING:
 break;
 case WifiManager.WIFI_AP_STATE_ENABLED:
 mSwitch.setChecked(true);
-mSwitch.setEnabled(true);
+mSwitch.setEnabled(!mDataSaverBackend.isDataSaverEnabled());
 break;
 case WifiManager.WIFI_AP_STATE_DISABLING:
 mSwitch.setSummary(R.string.wifi_tether_stopping);

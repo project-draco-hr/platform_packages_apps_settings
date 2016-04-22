@@ -1,0 +1,12 @@
+{
+  int itemCount=mFeedItemList.size();
+  if (itemCount <= 1) {
+    return;
+  }
+  if (position < 0 || position >= itemCount) {
+    return;
+  }
+  mFeedItemList.remove(position);
+  notifyDataSetChanged();
+  doTheUpdate();
+}

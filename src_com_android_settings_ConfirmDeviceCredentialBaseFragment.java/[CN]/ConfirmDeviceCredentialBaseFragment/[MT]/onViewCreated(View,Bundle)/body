@@ -1,9 +1,6 @@
 {
   super.onViewCreated(view,savedInstanceState);
   mCancelButton=(Button)view.findViewById(R.id.cancelButton);
-  if (mStrongAuthRequiredTextView != null) {
-    mStrongAuthRequiredTextView.setVisibility(mIsStrongAuthRequired ? View.VISIBLE : View.INVISIBLE);
-  }
   mFingerprintIcon=(ImageView)view.findViewById(R.id.fingerprintIcon);
   mFingerprintHelper=new FingerprintUiHelper(mFingerprintIcon,(TextView)view.findViewById(R.id.errorText),this,mEffectiveUserId);
   boolean showCancelButton=getActivity().getIntent().getBooleanExtra(SHOW_CANCEL_BUTTON,false);

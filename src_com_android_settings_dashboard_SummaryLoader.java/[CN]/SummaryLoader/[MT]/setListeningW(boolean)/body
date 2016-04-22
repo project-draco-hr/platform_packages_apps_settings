@@ -1,7 +1,5 @@
 {
-  if (mListening == listening)   return;
   if (DEBUG)   Log.d(TAG,"Listening " + listening);
-  mListening=listening;
   for (  SummaryProvider p : mSummaryMap.keySet()) {
     try {
       p.setListening(listening);

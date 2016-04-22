@@ -1,9 +1,9 @@
 {
-synchronized (mReceivers) {
-    for (int i=0; i < mReceivers.size(); i++) {
-      mActivity.unregisterReceiver(mReceivers.get(i));
-    }
-    mReceivers.clear();
+  if (mListening == listening)   return;
+  mListening=listening;
+  for (int i=0; i < mReceivers.size(); i++) {
+    mActivity.unregisterReceiver(mReceivers.get(i));
   }
+  mReceivers.clear();
   mWorker.obtainMessage(Worker.MSG_SET_LISTENING,listening ? 1 : 0,0).sendToTarget();
 }

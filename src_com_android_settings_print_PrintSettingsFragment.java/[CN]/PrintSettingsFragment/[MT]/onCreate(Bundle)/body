@@ -5,7 +5,7 @@
   mPrintServicesCategory=(PreferenceCategory)findPreference(PRINT_SERVICES_CATEGORY);
   getPreferenceScreen().removePreference(mActivePrintJobsCategory);
   mPrintJobsController=new PrintJobsController();
-  getActivity().getLoaderManager().initLoader(LOADER_ID_PRINT_JOBS_LOADER,null,mPrintJobsController);
+  getLoaderManager().initLoader(LOADER_ID_PRINT_JOBS_LOADER,null,mPrintJobsController);
   mPrintServicesController=new PrintServicesController();
-  getActivity().getLoaderManager().initLoader(LOADER_ID_PRINT_SERVICES,null,mPrintServicesController);
+  getLoaderManager().initLoader(LOADER_ID_PRINT_SERVICES,null,mPrintServicesController);
 }

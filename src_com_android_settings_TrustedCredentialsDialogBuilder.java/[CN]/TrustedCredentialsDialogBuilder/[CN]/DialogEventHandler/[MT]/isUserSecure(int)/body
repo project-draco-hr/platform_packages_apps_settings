@@ -1,0 +1,11 @@
+{
+  final LockPatternUtils lockPatternUtils=new LockPatternUtils(mActivity);
+  if (lockPatternUtils.isSecure(userId)) {
+    return true;
+  }
+  UserInfo parentUser=mUserManager.getProfileParent(userId);
+  if (parentUser == null) {
+    return false;
+  }
+  return lockPatternUtils.isSecure(parentUser.id);
+}

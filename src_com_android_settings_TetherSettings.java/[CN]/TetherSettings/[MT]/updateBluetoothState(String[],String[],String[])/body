@@ -22,7 +22,7 @@
     BluetoothPan bluetoothPan=mBluetoothPan.get();
     if (btState == BluetoothAdapter.STATE_ON && bluetoothPan != null && bluetoothPan.isTetheringOn()) {
       mBluetoothTether.setChecked(true);
-      mBluetoothTether.setEnabled(true);
+      mBluetoothTether.setEnabled(!mDataSaverEnabled);
       int bluetoothTethered=bluetoothPan.getConnectedDevices().size();
       if (bluetoothTethered > 1) {
         String summary=getString(R.string.bluetooth_tethering_devices_connected_subtext,bluetoothTethered);
@@ -39,7 +39,7 @@
       }
     }
  else {
-      mBluetoothTether.setEnabled(true);
+      mBluetoothTether.setEnabled(!mDataSaverEnabled);
       mBluetoothTether.setChecked(false);
       mBluetoothTether.setSummary(R.string.bluetooth_tethering_off_subtext);
     }

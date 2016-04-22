@@ -1,7 +1,7 @@
 {
   boolean isAirplaneMode=Settings.Global.getInt(mContext.getContentResolver(),Settings.Global.AIRPLANE_MODE_ON,0) != 0;
   if (!isAirplaneMode) {
-    mSwitch.setEnabled(true);
+    mSwitch.setEnabled(!mDataSaverBackend.isDataSaverEnabled());
   }
  else {
     mSwitch.setSummary(mOriginalSummary);

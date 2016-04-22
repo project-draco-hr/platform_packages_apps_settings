@@ -24,7 +24,7 @@
   }
   if (usbTethered) {
     mUsbTether.setSummary(R.string.usb_tethering_active_subtext);
-    mUsbTether.setEnabled(true);
+    mUsbTether.setEnabled(!mDataSaverEnabled);
     mUsbTether.setChecked(true);
   }
  else   if (usbAvailable) {
@@ -34,7 +34,7 @@
  else {
       mUsbTether.setSummary(R.string.usb_tethering_errored_subtext);
     }
-    mUsbTether.setEnabled(true);
+    mUsbTether.setEnabled(!mDataSaverEnabled);
     mUsbTether.setChecked(false);
   }
  else   if (usbErrored) {

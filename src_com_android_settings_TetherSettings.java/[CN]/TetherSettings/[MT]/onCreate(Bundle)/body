@@ -1,6 +1,9 @@
 {
   super.onCreate(icicle);
   addPreferencesFromResource(R.xml.tether_prefs);
+  mDataSaverBackend=new DataSaverBackend(getContext());
+  mDataSaverEnabled=mDataSaverBackend.isDataSaverEnabled();
+  mDataSaverFooter=findPreference(DATA_SAVER_FOOTER);
   setIfOnlyAvailableForAdmins(true);
   if (isUiRestricted()) {
     mUnavailable=true;
@@ -16,6 +19,7 @@
   Preference wifiApSettings=findPreference(WIFI_AP_SSID_AND_SECURITY);
   mUsbTether=(SwitchPreference)findPreference(USB_TETHER_SETTINGS);
   mBluetoothTether=(SwitchPreference)findPreference(ENABLE_BLUETOOTH_TETHERING);
+  mDataSaverBackend.addListener(this);
   mCm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
   mWifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
   mUsbRegexs=mCm.getTetherableUsbRegexs();
@@ -28,7 +32,7 @@
     getPreferenceScreen().removePreference(mUsbTether);
   }
   if (wifiAvailable && !Utils.isMonkeyRunning()) {
-    mWifiApEnabler=new WifiApEnabler(activity,mEnableWifiAp);
+    mWifiApEnabler=new WifiApEnabler(activity,mDataSaverBackend,mEnableWifiAp);
     initWifiTethering();
   }
  else {
@@ -47,4 +51,5 @@
       mBluetoothTether.setChecked(false);
     }
   }
+  onDataSaverChanged(mDataSaverBackend.isDataSaverEnabled());
 }

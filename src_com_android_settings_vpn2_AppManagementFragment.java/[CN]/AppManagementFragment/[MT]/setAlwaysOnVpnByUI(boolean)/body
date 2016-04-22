@@ -3,6 +3,8 @@
     VpnUtils.clearLockdownVpn(getContext());
   }
   mConnectivityManager.setAlwaysOnVpnPackageForUser(mUserId,isEnabled ? mPackageName : null);
+  if (isEnabled && !isVpnAlwaysOn()) {
+    CannotConnectFragment.show(this,mVpnLabel);
+  }
   updateUI();
-  showCantConnectNotificationIfNeeded(isEnabled);
 }

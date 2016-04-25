@@ -12,11 +12,20 @@
       Log.e(TAG,"Invalid intent extra",se);
     }
   }
-  if ((title == null) && Utils.isManagedProfile(UserManager.get(this),userId)) {
+  final boolean isManagedProfile=Utils.isManagedProfile(UserManager.get(this),userId);
+  if ((title == null) && isManagedProfile) {
     title=getTitleFromOrganizationName(userId);
   }
   ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(this);
-  if (!helper.launchConfirmationActivity(0,null,title,details,false,true,userId)) {
+  final LockPatternUtils lockPatternUtils=new LockPatternUtils(this);
+  boolean launched;
+  if (isManagedProfile && isInternalActivity() && !lockPatternUtils.isSeparateProfileChallengeEnabled(userId)) {
+    launched=helper.launchConfirmationActivity(0,null,title,details,0L,userId);
+  }
+ else {
+    launched=helper.launchConfirmationActivity(0,null,title,details,false,true,userId);
+  }
+  if (!launched) {
     Log.d(TAG,"No pattern, password or PIN set.");
     setResult(Activity.RESULT_OK);
   }

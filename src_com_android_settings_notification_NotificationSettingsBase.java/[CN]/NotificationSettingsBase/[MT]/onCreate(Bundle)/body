@@ -10,6 +10,7 @@
     return;
   }
   mPm=getPackageManager();
+  mUm=(UserManager)mContext.getSystemService(Context.USER_SERVICE);
   mPkg=args != null && args.containsKey(AppInfoBase.ARG_PACKAGE_NAME) ? args.getString(AppInfoBase.ARG_PACKAGE_NAME) : intent.getStringExtra(Settings.EXTRA_APP_PACKAGE);
   mUid=args != null && args.containsKey(AppInfoBase.ARG_PACKAGE_UID) ? args.getInt(AppInfoBase.ARG_PACKAGE_UID) : intent.getIntExtra(Settings.EXTRA_APP_UID,-1);
   if (mUid == -1 || TextUtils.isEmpty(mPkg)) {

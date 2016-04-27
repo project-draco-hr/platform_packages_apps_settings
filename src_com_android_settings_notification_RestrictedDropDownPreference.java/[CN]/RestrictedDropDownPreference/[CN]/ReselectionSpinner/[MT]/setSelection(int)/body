@@ -1,0 +1,11 @@
+{
+  int previousSelectedPosition=getSelectedItemPosition();
+  super.setSelection(position);
+  if (position == previousSelectedPosition && pref.isUserClicked()) {
+    pref.setUserClicked(false);
+    RestrictedItem item=pref.getRestrictedItemForPosition(position);
+    if (item != null) {
+      RestrictedLockUtils.sendShowAdminSupportDetailsIntent(getContext(),item.enforcedAdmin);
+    }
+  }
+}

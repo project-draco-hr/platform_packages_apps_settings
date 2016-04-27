@@ -1,12 +1,19 @@
 {
   ArrayList<CharSequence> entries=new ArrayList<>();
   ArrayList<CharSequence> values=new ArrayList<>();
+  mVisibilityOverride.clearRestrictedItems();
   if (getLockscreenNotificationsEnabled() && getLockscreenAllowPrivateNotifications()) {
-    entries.add(getString(R.string.lock_screen_notifications_summary_show));
-    values.add(Integer.toString(Ranking.VISIBILITY_NO_OVERRIDE));
+    final String summaryShowEntry=getString(R.string.lock_screen_notifications_summary_show);
+    final String summaryShowEntryValue=Integer.toString(Ranking.VISIBILITY_NO_OVERRIDE);
+    entries.add(summaryShowEntry);
+    values.add(summaryShowEntryValue);
+    setRestrictedIfNotificationFeaturesDisabled(summaryShowEntry,summaryShowEntryValue,DevicePolicyManager.KEYGUARD_DISABLE_SECURE_NOTIFICATIONS | DevicePolicyManager.KEYGUARD_DISABLE_UNREDACTED_NOTIFICATIONS);
   }
-  entries.add(getString(R.string.lock_screen_notifications_summary_hide));
-  values.add(Integer.toString(Notification.VISIBILITY_PRIVATE));
+  final String summaryHideEntry=getString(R.string.lock_screen_notifications_summary_hide);
+  final String summaryHideEntryValue=Integer.toString(Notification.VISIBILITY_PRIVATE);
+  entries.add(summaryHideEntry);
+  values.add(summaryHideEntryValue);
+  setRestrictedIfNotificationFeaturesDisabled(summaryHideEntry,summaryHideEntryValue,DevicePolicyManager.KEYGUARD_DISABLE_SECURE_NOTIFICATIONS);
   entries.add(getString(R.string.lock_screen_notifications_summary_disable));
   values.add(Integer.toString(Notification.VISIBILITY_SECRET));
   mVisibilityOverride.setEntries(entries.toArray(new CharSequence[entries.size()]));

@@ -5,7 +5,13 @@
   }
   MetricsLogger.action(mContext,MetricsEvent.ACTION_BLUETOOTH_TOGGLE,isChecked);
   if (mLocalAdapter != null) {
-    mLocalAdapter.setBluetoothEnabled(isChecked);
+    boolean status=mLocalAdapter.setBluetoothEnabled(isChecked);
+    if (isChecked && !status) {
+      switchView.setChecked(false);
+      mSwitch.setEnabled(true);
+      mSwitchBar.setTextViewLabel(false);
+      return;
+    }
   }
   mSwitch.setEnabled(false);
 }

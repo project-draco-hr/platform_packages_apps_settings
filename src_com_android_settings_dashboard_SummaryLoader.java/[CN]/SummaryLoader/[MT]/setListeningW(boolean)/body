@@ -1,4 +1,6 @@
 {
+  if (mWorkerListening == listening)   return;
+  mWorkerListening=listening;
   if (DEBUG)   Log.d(TAG,"Listening " + listening);
   for (  SummaryProvider p : mSummaryMap.keySet()) {
     try {

@@ -7,6 +7,8 @@
   final View scrollView=findViewById(R.id.suw_bottom_scroll_view);
   scrollView.setVerticalFadingEdgeEnabled(true);
   scrollView.setFadingEdgeLength(scrollView.getVerticalFadingEdgeLength() * 2);
-  final View title=findViewById(R.id.suw_layout_title);
-  title.setPadding(title.getPaddingLeft(),0,title.getPaddingRight(),title.getPaddingBottom());
+  if (findViewById(R.id.suw_layout_decor) instanceof Illustration) {
+    final View title=findViewById(R.id.suw_layout_title);
+    title.setPadding(title.getPaddingLeft(),0,title.getPaddingRight(),title.getPaddingBottom());
+  }
 }

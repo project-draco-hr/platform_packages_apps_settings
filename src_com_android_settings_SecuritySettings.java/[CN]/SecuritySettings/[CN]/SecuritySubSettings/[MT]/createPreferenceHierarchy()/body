@@ -37,13 +37,6 @@
       }
     }
   }
-  Preference requireCredForStartup=findPreference(KEY_REQUIRE_CRED_BEFORE_STARTUP);
-  if (requireCredForStartup instanceof SwitchPreference) {
-    ((SwitchPreference)requireCredForStartup).setChecked(mLockPatternUtils.isCredentialRequiredToDecrypt(false));
-    if (!canChangeRequireCredentialBeforeStartup(getContext())) {
-      removePreference(KEY_REQUIRE_CRED_BEFORE_STARTUP);
-    }
-  }
   for (int i=0; i < SWITCH_PREFERENCE_KEYS.length; i++) {
     final Preference pref=findPreference(SWITCH_PREFERENCE_KEYS[i]);
     if (pref != null)     pref.setOnPreferenceChangeListener(this);

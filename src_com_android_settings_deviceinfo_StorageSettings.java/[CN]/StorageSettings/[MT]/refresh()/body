@@ -60,7 +60,9 @@
   if (mInternalCategory.getPreferenceCount() == 2 && mExternalCategory.getPreferenceCount() == 0) {
     final Bundle args=new Bundle();
     args.putString(VolumeInfo.EXTRA_VOLUME_ID,VolumeInfo.ID_PRIVATE_INTERNAL);
-    startFragment(this,PrivateVolumeSettings.class.getCanonicalName(),-1,0,args);
+    Intent intent=Utils.onBuildStartFragmentIntent(getActivity(),PrivateVolumeSettings.class.getName(),args,null,R.string.apps_storage,null,false);
+    intent.putExtra(SettingsDrawerActivity.EXTRA_SHOW_MENU,true);
+    getActivity().startActivity(intent);
     finish();
   }
 }

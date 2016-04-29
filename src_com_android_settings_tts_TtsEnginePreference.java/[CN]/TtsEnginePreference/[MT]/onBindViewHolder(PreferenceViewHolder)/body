@@ -5,6 +5,7 @@
   }
   final RadioButton rb=(RadioButton)view.findViewById(R.id.tts_engine_radiobutton);
   rb.setOnCheckedChangeListener(mRadioChangeListener);
+  rb.setText(mEngineInfo.label);
   boolean isChecked=getKey().equals(mSharedState.getCurrentKey());
   if (isChecked) {
     mSharedState.setCurrentChecked(rb);
@@ -13,13 +14,6 @@
   rb.setChecked(isChecked);
   mPreventRadioButtonCallbacks=false;
   mRadioButton=rb;
-  View textLayout=view.findViewById(R.id.tts_engine_pref_text);
-  textLayout.setOnClickListener(new View.OnClickListener(){
-    @Override public void onClick(    View v){
-      onRadioButtonClicked(rb,!rb.isChecked());
-    }
-  }
-);
   mSettingsIcon=view.findViewById(R.id.tts_engine_settings);
   mSettingsIcon.setEnabled(isChecked && mVoiceCheckData != null);
   if (!isChecked) {

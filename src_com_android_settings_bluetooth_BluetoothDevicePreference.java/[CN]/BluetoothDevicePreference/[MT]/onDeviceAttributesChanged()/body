@@ -7,9 +7,10 @@
  else {
     setSummary(null);
   }
-  int iconResId=getBtClassDrawable();
-  if (iconResId != 0) {
-    setIcon(iconResId);
+  Pair<Integer,String> pair=getBtClassDrawableWithDescription();
+  if (pair.first != 0) {
+    setIcon(pair.first);
+    contentDescription=pair.second;
   }
   setEnabled(!mCachedDevice.isBusy());
   notifyHierarchyChanged();

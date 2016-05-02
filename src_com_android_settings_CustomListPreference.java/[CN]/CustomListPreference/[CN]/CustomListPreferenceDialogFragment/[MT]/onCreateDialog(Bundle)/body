@@ -1,5 +1,8 @@
 {
   Dialog dialog=super.onCreateDialog(savedInstanceState);
+  if (savedInstanceState != null) {
+    mClickedDialogEntryIndex=savedInstanceState.getInt(KEY_CLICKED_ENTRY_INDEX,mClickedDialogEntryIndex);
+  }
   getCustomizablePreference().onDialogCreated(dialog);
   return dialog;
 }

@@ -1,0 +1,8 @@
+{
+  super.onDialogStateRestored(dialog,savedInstanceState);
+  ListView listView=((AlertDialog)dialog).getListView();
+  int selectedPosition=listView.getCheckedItemPosition();
+  View panel=dialog.findViewById(com.android.internal.R.id.customPanel);
+  panel.setVisibility(checkboxVisibilityForSelectedIndex(selectedPosition,mShowRemoteInput));
+  mListener.setView(panel);
+}

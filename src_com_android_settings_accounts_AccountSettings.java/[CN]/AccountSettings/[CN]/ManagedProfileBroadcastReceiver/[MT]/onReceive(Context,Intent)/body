@@ -9,12 +9,5 @@
     getActivity().invalidateOptionsMenu();
     return;
   }
-  if (action.equals(Intent.ACTION_MANAGED_PROFILE_AVAILABLE) || action.equals(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE)) {
-    ProfileData profileData=mProfiles.valueAt(1);
-    if (intent.getIntExtra(Intent.EXTRA_USER_HANDLE,UserHandle.USER_NULL) == profileData.userInfo.id) {
-      profileData.workModeSwitch.setChecked(!mUm.isQuietModeEnabled(profileData.userInfo.getUserHandle()));
-    }
-    return;
-  }
   Log.w(TAG,"Cannot handle received broadcast: " + intent.getAction());
 }

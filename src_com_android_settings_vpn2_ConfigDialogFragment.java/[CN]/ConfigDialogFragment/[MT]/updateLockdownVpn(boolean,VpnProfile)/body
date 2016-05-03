@@ -5,7 +5,7 @@
       return;
     }
     final ConnectivityManager conn=ConnectivityManager.from(getActivity());
-    conn.setAlwaysOnVpnPackageForUser(UserHandle.myUserId(),null);
+    conn.setAlwaysOnVpnPackageForUser(UserHandle.myUserId(),null,false);
     VpnUtils.setLockdownVpn(getContext(),profile.key);
   }
  else {

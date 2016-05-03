@@ -2,7 +2,7 @@
   final int userId=UserHandle.getUserId(mPackageInfo.applicationInfo.uid);
   try {
     if (mPackageInfo.packageName.equals(getConnectedPackage(mService,userId))) {
-      mService.setAlwaysOnVpnPackage(userId,null);
+      mService.setAlwaysOnVpnPackage(userId,null,false);
       mService.prepareVpn(mPackageInfo.packageName,VpnConfig.LEGACY_VPN,userId);
     }
   }

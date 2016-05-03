@@ -1,8 +1,10 @@
 {
   if (listening) {
+    mSession=mAppState.newSession(this);
     mSession.resume();
   }
  else {
     mSession.pause();
+    mSession.release();
   }
 }

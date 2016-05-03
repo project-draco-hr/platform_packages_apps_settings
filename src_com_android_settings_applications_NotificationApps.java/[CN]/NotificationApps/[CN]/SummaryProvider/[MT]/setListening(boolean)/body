@@ -1,10 +1,14 @@
 {
   if (listening) {
+    mSession=mAppState.newSession(this);
+    mExtraInfoBridge=new AppStateNotificationBridge(mContext,mAppState,this,mNotifBackend);
     mSession.resume();
     mExtraInfoBridge.resume();
   }
  else {
     mSession.pause();
     mExtraInfoBridge.pause();
+    mSession.release();
+    mExtraInfoBridge.release();
   }
 }

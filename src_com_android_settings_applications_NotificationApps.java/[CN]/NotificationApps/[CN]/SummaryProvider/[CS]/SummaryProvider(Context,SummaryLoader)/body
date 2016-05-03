@@ -2,8 +2,6 @@
   mContext=context;
   mLoader=loader;
   mAppState=ApplicationsState.getInstance((Application)context.getApplicationContext());
-  mSession=mAppState.newSession(this);
   mNotifBackend=new NotificationBackend();
-  mExtraInfoBridge=new AppStateNotificationBridge(mContext,mAppState,this,mNotifBackend);
   mHandler=new Handler(mAppState.getBackgroundLooper());
 }

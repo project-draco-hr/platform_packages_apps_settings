@@ -1,0 +1,16 @@
+{
+  super.onCreate(icicle);
+  addPreferencesFromResource(R.xml.managed_profile_settings);
+  mWorkModePreference=(SwitchPreference)findPreference(KEY_WORK_MODE);
+  mWorkModePreference.setOnPreferenceChangeListener(this);
+  mContactPrefrence=(RestrictedSwitchPreference)findPreference(KEY_CONTACT);
+  mContactPrefrence.setOnPreferenceChangeListener(this);
+  mContext=getActivity().getApplicationContext();
+  mUserManager=(UserManager)getSystemService(Context.USER_SERVICE);
+  mManagedUser=getManagedUserFromArgument();
+  if (mManagedUser == null) {
+    getActivity().finish();
+  }
+  mManagedProfileBroadcastReceiver=new ManagedProfileBroadcastReceiver();
+  mManagedProfileBroadcastReceiver.register(getActivity());
+}

@@ -1,0 +1,11 @@
+{
+  if (mWorkModePreference != null) {
+    mWorkModePreference.setChecked(!mUserManager.isQuietModeEnabled(mManagedUser));
+  }
+  if (mContactPrefrence != null) {
+    int value=Settings.Secure.getIntForUser(getContentResolver(),MANAGED_PROFILE_CONTACT_REMOTE_SEARCH,0,mManagedUser.getIdentifier());
+    mContactPrefrence.setChecked(value != 0);
+    RestrictedLockUtils.EnforcedAdmin enforcedAdmin=RestrictedLockUtils.checkIfRemoteContactSearchDisallowed(mContext,mManagedUser.getIdentifier());
+    mContactPrefrence.setDisabledByAdmin(enforcedAdmin);
+  }
+}

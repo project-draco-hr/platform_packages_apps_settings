@@ -10,10 +10,8 @@
       String workGroupSummary=getWorkGroupSummary(context,userInfo);
       profileData.preferenceGroup.setSummary(workGroupSummary);
       ((AccessiblePreferenceCategory)profileData.preferenceGroup).setContentDescription(getString(R.string.accessibility_category_work,workGroupSummary));
-      profileData.workModeSwitch=newWorkModeSwitchPreference(context);
-      final UserHandle userHandle=profileData.userInfo.getUserHandle();
-      profileData.workModeSwitch.setChecked(!mUm.isQuietModeEnabled(userHandle));
       profileData.removeWorkProfilePreference=newRemoveWorkProfilePreference(context);
+      profileData.managedProfilePreference=newManagedProfileSettings();
     }
  else {
       profileData.preferenceGroup.setTitle(R.string.category_personal);

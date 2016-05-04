@@ -1,0 +1,17 @@
+{
+  if (preference == mWorkModePreference) {
+    if ((boolean)newValue) {
+      mUserManager.trySetQuietModeDisabled(mManagedUser.getIdentifier(),null);
+    }
+ else {
+      mUserManager.setQuietModeEnabled(mManagedUser.getIdentifier(),true);
+    }
+    return true;
+  }
+  if (preference == mContactPrefrence) {
+    int value=((boolean)newValue == true) ? 1 : 0;
+    Settings.Secure.putIntForUser(getContentResolver(),MANAGED_PROFILE_CONTACT_REMOTE_SEARCH,value,mManagedUser.getIdentifier());
+    return true;
+  }
+  return false;
+}

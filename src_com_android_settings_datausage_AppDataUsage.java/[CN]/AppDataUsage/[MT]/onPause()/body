@@ -1,4 +1,6 @@
 {
   super.onPause();
-  mDataSaverBackend.remListener(this);
+  if (mDataSaverBackend != null) {
+    mDataSaverBackend.remListener(this);
+  }
 }

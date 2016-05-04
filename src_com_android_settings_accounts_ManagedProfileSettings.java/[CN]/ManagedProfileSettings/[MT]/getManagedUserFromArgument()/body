@@ -1,0 +1,12 @@
+{
+  Bundle arguments=getArguments();
+  if (arguments != null) {
+    UserHandle userHandle=arguments.getParcelable(Intent.EXTRA_USER);
+    if (userHandle != null) {
+      if (mUserManager.isManagedProfile(userHandle.getIdentifier())) {
+        return userHandle;
+      }
+    }
+  }
+  return null;
+}

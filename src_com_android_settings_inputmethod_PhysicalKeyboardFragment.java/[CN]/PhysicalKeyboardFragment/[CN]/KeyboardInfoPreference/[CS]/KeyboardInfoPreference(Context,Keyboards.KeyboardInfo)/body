@@ -1,0 +1,9 @@
+{
+  super(context);
+  mImeName=info.mImi.loadLabel(context.getPackageManager());
+  mImSubtypeName=getImSubtypeName(context,info.mImi,info.mImSubtype);
+  setTitle(formatDisplayName(context,mImeName,mImSubtypeName));
+  if (info.mLayout != null) {
+    setSummary(info.mLayout.getLabel());
+  }
+}

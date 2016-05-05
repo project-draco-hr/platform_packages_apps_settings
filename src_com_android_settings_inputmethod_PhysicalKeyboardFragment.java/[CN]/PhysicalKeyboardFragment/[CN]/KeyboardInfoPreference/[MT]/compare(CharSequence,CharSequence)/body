@@ -1,0 +1,14 @@
+{
+  if (!TextUtils.isEmpty(lhs) && !TextUtils.isEmpty(rhs)) {
+    return collator.compare(lhs.toString(),rhs.toString());
+  }
+ else   if (TextUtils.isEmpty(lhs) && TextUtils.isEmpty(rhs)) {
+    return 0;
+  }
+ else   if (!TextUtils.isEmpty(lhs)) {
+    return -1;
+  }
+ else {
+    return 1;
+  }
+}

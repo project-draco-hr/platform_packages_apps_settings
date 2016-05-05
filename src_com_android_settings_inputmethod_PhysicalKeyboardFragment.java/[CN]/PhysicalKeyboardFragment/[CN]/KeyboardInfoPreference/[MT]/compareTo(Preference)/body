@@ -1,0 +1,11 @@
+{
+  if (!(object instanceof KeyboardInfoPreference)) {
+    return super.compareTo(object);
+  }
+  KeyboardInfoPreference another=(KeyboardInfoPreference)object;
+  int result=compare(mImeName,another.mImeName);
+  if (result == 0) {
+    result=compare(mImSubtypeName,another.mImSubtypeName);
+  }
+  return result;
+}

@@ -1,6 +1,8 @@
 {
   super.onResume();
-  mDataSaverBackend.addListener(this);
+  if (mDataSaverBackend != null) {
+    mDataSaverBackend.addListener(this);
+  }
   mPolicy=services.mPolicyEditor.getPolicy(mTemplate);
   getLoaderManager().restartLoader(LOADER_CHART_DATA,ChartDataLoader.buildArgs(mTemplate,mAppItem),mChartDataCallbacks);
   updatePrefs();

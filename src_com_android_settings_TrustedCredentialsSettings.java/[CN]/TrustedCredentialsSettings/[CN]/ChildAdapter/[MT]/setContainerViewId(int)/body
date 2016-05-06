@@ -1,0 +1,13 @@
+{
+  mContainerView=(LinearLayout)mTabHost.findViewById(viewId);
+  mContainerView.setVisibility(View.VISIBLE);
+  mListView=(ListView)mContainerView.findViewById(R.id.cert_list);
+  mListView.setAdapter(this);
+  mListView.setOnItemClickListener(this);
+  mHeaderView=(ViewGroup)mContainerView.findViewById(R.id.header_view);
+  mHeaderView.setOnClickListener(this);
+  mIndicatorView=(ImageView)mHeaderView.findViewById(R.id.group_indicator);
+  mIndicatorView.setImageDrawable(getGroupIndicator());
+  FrameLayout headerContentContainer=(FrameLayout)mHeaderView.findViewById(R.id.header_content_container);
+  headerContentContainer.addView(mParent.getGroupView(mGroupPosition,true,null,headerContentContainer));
+}

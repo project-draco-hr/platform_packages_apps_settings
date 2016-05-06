@@ -1,6 +1,7 @@
 {
   super.onActivityCreated(savedInstanceState);
   SettingsActivity activity=(SettingsActivity)getActivity();
+  mOldActivityTitle=activity.getActionBar().getTitle();
   mSwitchBar=activity.getSwitchBar();
   if (mBeamDisallowedByOnlyAdmin) {
     mSwitchBar.hide();

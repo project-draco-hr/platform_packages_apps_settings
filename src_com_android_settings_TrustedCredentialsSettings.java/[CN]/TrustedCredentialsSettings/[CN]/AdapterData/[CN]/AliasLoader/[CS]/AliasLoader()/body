@@ -1,4 +1,8 @@
 {
   mContext=getActivity();
-  mAliasLoaders.put(mTab,this);
+  mAliasLoaders.add(this);
+  List<UserHandle> profiles=mUserManager.getUserProfiles();
+  for (  UserHandle profile : profiles) {
+    mCertHoldersByUserId.put(profile.getIdentifier(),new ArrayList<CertHolder>());
+  }
 }

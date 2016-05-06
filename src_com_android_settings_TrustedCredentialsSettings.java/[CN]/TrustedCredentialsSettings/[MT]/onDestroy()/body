@@ -1,8 +1,10 @@
 {
   getActivity().unregisterReceiver(mWorkProfileChangedReceiver);
-  for (  AdapterData.AliasLoader aliasLoader : mAliasLoaders.values()) {
+  for (  AdapterData.AliasLoader aliasLoader : mAliasLoaders) {
     aliasLoader.cancel(true);
   }
+  mAliasLoaders.clear();
+  mGroupAdapters.clear();
   if (mAliasOperation != null) {
     mAliasOperation.cancel(true);
     mAliasOperation=null;

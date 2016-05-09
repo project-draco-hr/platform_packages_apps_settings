@@ -1,0 +1,21 @@
+{
+  final UserHandle groupUser=getGroup(groupPosition);
+  final int groupUserId=groupUser.getIdentifier();
+  if (mUserManager.isQuietModeEnabled(groupUser)) {
+    final Intent intent=UnlaunchableAppActivity.createInQuietModeDialogIntent(groupUserId);
+    if (startActivity) {
+      getActivity().startActivity(intent);
+    }
+    return false;
+  }
+ else   if (!mUserManager.isUserUnlocked(groupUser)) {
+    final LockPatternUtils lockPatternUtils=new LockPatternUtils(getActivity());
+    if (lockPatternUtils.isSeparateProfileChallengeEnabled(groupUserId)) {
+      if (startActivity) {
+        startConfirmCredential(groupUserId);
+      }
+      return false;
+    }
+  }
+  return true;
+}

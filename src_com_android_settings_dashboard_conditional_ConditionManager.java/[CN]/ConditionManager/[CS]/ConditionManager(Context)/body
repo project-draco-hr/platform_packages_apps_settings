@@ -1,9 +1,5 @@
 {
   mContext=context;
   mConditions=new ArrayList<Condition>();
-  mXmlFile=new File(context.getFilesDir(),FILE_NAME);
-  if (mXmlFile.exists()) {
-    readFromXml();
-  }
-  addMissingConditions();
+  new ConditionLoader().execute();
 }

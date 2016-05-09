@@ -1,4 +1,8 @@
 {
+  if (v.getId() == R.id.dashboard_tile) {
+    ((SettingsActivity)mContext).openTile((Tile)v.getTag());
+    return;
+  }
   if (v.getTag() == mExpandedCondition) {
     MetricsLogger.action(mContext,MetricsEvent.ACTION_SETTINGS_CONDITION_CLICK,mExpandedCondition.getMetricsConstant());
     mExpandedCondition.onPrimaryClick();

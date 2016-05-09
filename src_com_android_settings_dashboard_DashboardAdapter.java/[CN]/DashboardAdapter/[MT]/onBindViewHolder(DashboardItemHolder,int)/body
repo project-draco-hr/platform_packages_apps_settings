@@ -6,12 +6,8 @@ case R.layout.dashboard_category:
 case R.layout.dashboard_tile:
 final Tile tile=(Tile)mItems.get(position);
 onBindTile(holder,tile);
-holder.itemView.setOnClickListener(new View.OnClickListener(){
-@Override public void onClick(View v){
-((SettingsActivity)mContext).openTile(tile);
-}
-}
-);
+holder.itemView.setTag(tile);
+holder.itemView.setOnClickListener(this);
 break;
 case R.layout.suggestion_header:
 onBindSuggestionHeader(holder);

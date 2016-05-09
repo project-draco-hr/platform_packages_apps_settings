@@ -3,10 +3,7 @@
     Log.w(TAG,"Cannot build the DashboardSummary UI yet as the Fragment is not added");
     return;
   }
-  long start=System.currentTimeMillis();
   List<DashboardCategory> categories=((SettingsActivity)getActivity()).getDashboardCategories();
   mAdapter.setCategories(categories);
-  mAdapter.setSuggestions(mSuggestionParser);
-  long delta=System.currentTimeMillis() - start;
-  Log.d(TAG,"rebuildUI took: " + delta + " ms");
+  new SuggestionLoader().execute();
 }

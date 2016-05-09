@@ -8,8 +8,10 @@
       MetricsLogger.visible(getContext(),c.getMetricsConstant());
     }
   }
-  for (  Tile suggestion : mAdapter.getSuggestions()) {
-    MetricsLogger.action(getContext(),MetricsEvent.ACTION_SHOW_SETTINGS_SUGGESTION,DashboardAdapter.getSuggestionIdentifier(getContext(),suggestion));
+  if (mAdapter.getSuggestions() != null) {
+    for (    Tile suggestion : mAdapter.getSuggestions()) {
+      MetricsLogger.action(getContext(),MetricsEvent.ACTION_SHOW_SETTINGS_SUGGESTION,DashboardAdapter.getSuggestionIdentifier(getContext(),suggestion));
+    }
   }
   if (DEBUG_TIMING)   Log.d(TAG,"onResume took " + (System.currentTimeMillis() - startTime) + " ms");
 }

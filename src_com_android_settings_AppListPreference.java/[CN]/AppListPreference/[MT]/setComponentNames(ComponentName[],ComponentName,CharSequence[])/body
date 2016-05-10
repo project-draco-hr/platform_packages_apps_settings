@@ -8,15 +8,16 @@
   int selectedIndex=-1;
   for (int i=0; i < componentNames.length; i++) {
     try {
-      ApplicationInfo appInfo=pm.getApplicationInfoAsUser(componentNames[i].getPackageName().toString(),0,mUserId);
-      applicationNames.add(appInfo.loadLabel(pm));
+      ActivityInfo activityInfo=AppGlobals.getPackageManager().getActivityInfo(componentNames[i],0,mUserId);
+      if (activityInfo == null)       continue;
+      applicationNames.add(activityInfo.loadLabel(pm));
       validatedComponentNames.add(componentNames[i].flattenToString());
-      entryDrawables.add(appInfo.loadIcon(pm));
+      entryDrawables.add(activityInfo.loadIcon(pm));
       if (defaultCN != null && componentNames[i].equals(defaultCN)) {
         selectedIndex=i;
       }
     }
- catch (    NameNotFoundException e) {
+ catch (    RemoteException e) {
     }
   }
   if (mShowItemNone) {

@@ -1,7 +1,7 @@
 {
   PermissionState permissionState=new PermissionState(pkg,new UserHandle(UserHandle.getUserId(uid)));
   try {
-    permissionState.packageInfo=mIPackageManager.getPackageInfo(pkg,PackageManager.GET_PERMISSIONS,permissionState.userHandle.getIdentifier());
+    permissionState.packageInfo=mIPackageManager.getPackageInfo(pkg,PackageManager.GET_PERMISSIONS | PackageManager.MATCH_UNINSTALLED_PACKAGES,permissionState.userHandle.getIdentifier());
     String[] requestedPermissions=permissionState.packageInfo.requestedPermissions;
     int[] permissionFlags=permissionState.packageInfo.requestedPermissionsFlags;
     if (requestedPermissions != null) {

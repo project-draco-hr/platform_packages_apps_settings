@@ -1,0 +1,7 @@
+{
+  if (userInfo == null) {
+    return;
+  }
+  ComponentName settingsComponentName=new ComponentName(context,WebViewImplementation.class);
+  pm.setComponentEnabledSetting(settingsComponentName,userInfo.isAdmin() ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+}

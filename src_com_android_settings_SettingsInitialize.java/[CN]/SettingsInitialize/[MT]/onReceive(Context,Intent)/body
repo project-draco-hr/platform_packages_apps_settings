@@ -1,0 +1,7 @@
+{
+  final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
+  UserInfo userInfo=um.getUserInfo(UserHandle.myUserId());
+  final PackageManager pm=context.getPackageManager();
+  managedProfileSetup(context,pm,broadcast,userInfo);
+  webviewSettingSetup(context,pm,userInfo);
+}

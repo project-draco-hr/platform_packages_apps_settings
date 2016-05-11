@@ -1,0 +1,14 @@
+{
+  View rootView=super.getView(position,convertView,parent);
+  CharSequence entry=getItem(position);
+  boolean isEntryRestricted=isRestrictedForEntry(entry);
+  TextView text=(TextView)rootView.findViewById(TEXT_RES_ID);
+  if (text != null) {
+    text.setEnabled(!isEntryRestricted);
+  }
+  View restrictedIcon=rootView.findViewById(R.id.restricted_icon);
+  if (restrictedIcon != null) {
+    restrictedIcon.setVisibility(isEntryRestricted ? View.VISIBLE : View.GONE);
+  }
+  return rootView;
+}

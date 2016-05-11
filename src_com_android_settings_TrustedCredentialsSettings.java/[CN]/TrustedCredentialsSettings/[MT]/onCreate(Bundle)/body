@@ -3,6 +3,15 @@
   mUserManager=(UserManager)getActivity().getSystemService(Context.USER_SERVICE);
   mKeyguardManager=(KeyguardManager)getActivity().getSystemService(Context.KEYGUARD_SERVICE);
   mTrustAllCaUserId=getActivity().getIntent().getIntExtra(ARG_SHOW_NEW_FOR_USER,UserHandle.USER_NULL);
+  mConfirmedCredentialUsers=new ArraySet<>(2);
+  mConfirmingCredentialUser=UserHandle.USER_NULL;
+  if (savedInstanceState != null) {
+    mConfirmingCredentialUser=savedInstanceState.getInt(SAVED_CONFIRMING_CREDENTIAL_USER,UserHandle.USER_NULL);
+    ArrayList<Integer> users=savedInstanceState.getIntegerArrayList(SAVED_CONFIRMED_CREDENTIAL_USERS);
+    if (users != null) {
+      mConfirmedCredentialUsers.addAll(users);
+    }
+  }
   IntentFilter filter=new IntentFilter();
   filter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE);
   filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);

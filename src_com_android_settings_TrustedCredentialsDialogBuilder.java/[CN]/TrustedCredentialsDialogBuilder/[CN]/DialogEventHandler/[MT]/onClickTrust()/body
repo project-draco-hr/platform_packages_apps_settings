@@ -1,5 +1,7 @@
 {
   CertHolder certHolder=getCurrentCertInfo();
-  mDpm.approveCaCert(certHolder.getAlias(),certHolder.getUserId(),true);
-  nextOrDismiss();
+  if (!mDelegate.startConfirmCredentialIfNotConfirmed(certHolder.getUserId())) {
+    mDpm.approveCaCert(certHolder.getAlias(),certHolder.getUserId(),true);
+    nextOrDismiss();
+  }
 }

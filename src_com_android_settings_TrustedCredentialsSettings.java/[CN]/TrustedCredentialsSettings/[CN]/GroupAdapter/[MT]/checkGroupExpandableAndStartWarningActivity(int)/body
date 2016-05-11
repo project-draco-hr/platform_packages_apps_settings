@@ -1,17 +1,3 @@
 {
-  final UserHandle groupUser=getGroup(groupPosition);
-  final int groupUserId=groupUser.getIdentifier();
-  if (mUserManager.isQuietModeEnabled(groupUser)) {
-    final Intent intent=UnlaunchableAppActivity.createInQuietModeDialogIntent(groupUserId);
-    getActivity().startActivity(intent);
-    return false;
-  }
- else   if (!mUserManager.isUserUnlocked(groupUser)) {
-    final LockPatternUtils lockPatternUtils=new LockPatternUtils(getActivity());
-    if (lockPatternUtils.isSeparateProfileChallengeEnabled(groupUserId)) {
-      startWorkChallenge(groupUserId);
-      return false;
-    }
-  }
-  return true;
+  return checkGroupExpandableAndStartWarningActivity(groupPosition,true);
 }

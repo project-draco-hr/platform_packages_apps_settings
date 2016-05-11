@@ -1,0 +1,9 @@
+{
+  final Intent newIntent=mKeyguardManager.createConfirmDeviceCredentialIntent(null,null,userId);
+  if (newIntent == null) {
+    return false;
+  }
+  mConfirmingCredentialUser=userId;
+  startActivityForResult(newIntent,REQUEST_CONFIRM_CREDENTIALS);
+  return true;
+}

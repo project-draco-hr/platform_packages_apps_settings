@@ -21,6 +21,7 @@
     values.add(summaryHideEntryValue);
     setRestrictedIfNotificationFeaturesDisabled(summaryHideEntry,summaryHideEntryValue,KEYGUARD_DISABLE_SECURE_NOTIFICATIONS);
   }
+  mLockscreen.setRemoteInputRestricted(RestrictedLockUtils.checkIfKeyguardFeaturesDisabled(mContext,DevicePolicyManager.KEYGUARD_DISABLE_REMOTE_INPUT,mProfileChallengeUserId));
   mLockscreenProfile.setEntries(entries.toArray(new CharSequence[entries.size()]));
   mLockscreenProfile.setEntryValues(values.toArray(new CharSequence[values.size()]));
   mLockscreenProfile.setRemoteInputCheckBoxEnabled(false);

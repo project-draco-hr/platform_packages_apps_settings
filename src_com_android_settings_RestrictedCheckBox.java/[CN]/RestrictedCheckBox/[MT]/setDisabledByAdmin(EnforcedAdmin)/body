@@ -1,0 +1,14 @@
+{
+  final boolean disabled=(admin != null);
+  mEnforcedAdmin=admin;
+  if (mDisabledByAdmin != disabled) {
+    mDisabledByAdmin=disabled;
+    RestrictedLockUtils.setTextViewAsDisabledByAdmin(mContext,this,mDisabledByAdmin);
+    if (mDisabledByAdmin) {
+      getButtonDrawable().setColorFilter(mContext.getColor(R.color.disabled_text_color),PorterDuff.Mode.MULTIPLY);
+    }
+ else {
+      getButtonDrawable().clearColorFilter();
+    }
+  }
+}

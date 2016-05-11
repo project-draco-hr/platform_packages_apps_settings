@@ -1,4 +1,7 @@
 {
+  if (mSuggestionParser == null) {
+    return;
+  }
   if (mSuggestionParser.dismissSuggestion(suggestion)) {
     mContext.getPackageManager().setComponentEnabledSetting(suggestion.intent.getComponent(),PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
     mSuggestionParser.markCategoryDone(suggestion.category);

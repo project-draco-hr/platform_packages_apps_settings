@@ -1,0 +1,11 @@
+{
+  mSpinner=(ReselectionSpinner)view.itemView.findViewById(R.id.spinner);
+  mSpinner.setPreference(this);
+  super.onBindViewHolder(view);
+  mHelper.onBindViewHolder(view);
+  mSpinner.setOnItemSelectedListener(mItemSelectedListener);
+  final View restrictedIcon=view.findViewById(R.id.restricted_icon);
+  if (restrictedIcon != null) {
+    restrictedIcon.setVisibility(isDisabledByAdmin() ? View.VISIBLE : View.GONE);
+  }
+}

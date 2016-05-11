@@ -1,0 +1,7 @@
+{
+  EnforcedAdmin admin=RestrictedLockUtils.checkIfKeyguardFeaturesDisabled(mContext,keyguardNotificationFeatures,mUserId);
+  if (admin != null) {
+    RestrictedItem item=new RestrictedItem(entry,entryValue,admin);
+    mVisibilityOverride.addRestrictedItem(item);
+  }
+}

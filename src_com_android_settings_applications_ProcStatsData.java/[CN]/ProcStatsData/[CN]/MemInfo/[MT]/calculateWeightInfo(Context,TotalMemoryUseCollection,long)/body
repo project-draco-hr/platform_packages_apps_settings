@@ -3,7 +3,10 @@
   memReader.readMemInfo();
   realTotalRam=memReader.getTotalSize();
   freeWeight=totalMem.sysMemFreeWeight + totalMem.sysMemCachedWeight;
-  usedWeight=totalMem.sysMemKernelWeight + totalMem.sysMemNativeWeight + totalMem.sysMemZRamWeight;
+  usedWeight=totalMem.sysMemKernelWeight + totalMem.sysMemNativeWeight;
+  if (!totalMem.hasSwappedOutPss) {
+    usedWeight+=totalMem.sysMemZRamWeight;
+  }
   for (int i=0; i < ProcessStats.STATE_COUNT; i++) {
     if (i == ProcessStats.STATE_SERVICE_RESTARTING) {
       mMemStateWeights[i]=0;

@@ -1,11 +1,8 @@
 {
-  final UserManager um=(UserManager)context.getSystemService(Context.USER_SERVICE);
-  UserInfo userInfo=um.getUserInfo(UserHandle.myUserId());
   if (userInfo == null || !userInfo.isManagedProfile()) {
     return;
   }
   Log.i(TAG,"Received broadcast: " + broadcast.getAction() + ". Setting up intent forwarding for managed profile.");
-  final PackageManager pm=context.getPackageManager();
   pm.clearCrossProfileIntentFilters(userInfo.id);
   Intent intent=new Intent();
   intent.addCategory(Intent.CATEGORY_DEFAULT);

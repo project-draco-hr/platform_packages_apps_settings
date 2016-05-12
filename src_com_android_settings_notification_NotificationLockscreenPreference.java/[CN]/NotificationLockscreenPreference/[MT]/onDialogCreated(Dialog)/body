@@ -1,7 +1,14 @@
 {
   super.onDialogCreated(dialog);
   dialog.create();
-  CheckBox view=(CheckBox)dialog.findViewById(R.id.lockscreen_remote_input);
-  view.setChecked(!mAllowRemoteInput);
-  view.setOnCheckedChangeListener(mListener);
+  CheckBox checkbox=(CheckBox)dialog.findViewById(R.id.lockscreen_remote_input);
+  checkbox.setChecked(!mAllowRemoteInput);
+  checkbox.setOnCheckedChangeListener(mListener);
+  checkbox.setEnabled(mAdminRestrictingRemoteInput == null);
+  View restricted=dialog.findViewById(R.id.restricted_lock_icon_remote_input);
+  restricted.setVisibility(mAdminRestrictingRemoteInput == null ? View.GONE : View.VISIBLE);
+  if (mAdminRestrictingRemoteInput != null) {
+    checkbox.setClickable(false);
+    dialog.findViewById(com.android.internal.R.id.customPanel).setOnClickListener(mListener);
+  }
 }

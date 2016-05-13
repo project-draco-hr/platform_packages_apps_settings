@@ -2,10 +2,9 @@
 switch (dialogId) {
 case ACCESSIBILITY_WARNING_DIALOG:
 {
-      final int quality=new LockPatternUtils(getActivity()).getKeyguardStoredPasswordQuality(UserHandle.myUserId());
       final int titleId;
       final int messageId;
-switch (quality) {
+switch (mRequestedPasswordQuality) {
 case DevicePolicyManager.PASSWORD_QUALITY_SOMETHING:
         titleId=R.string.encrypt_talkback_dialog_require_pattern;
       messageId=R.string.encrypt_talkback_dialog_message_pattern;

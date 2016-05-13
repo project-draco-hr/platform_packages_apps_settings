@@ -3,7 +3,7 @@
     getActivity().finish();
     return;
   }
-  getActivity().setTitle(mStorageManager.getBestVolumeDescription(mVolume));
+  setTitle();
   getFragmentManager().invalidateOptionsMenu();
   final Context context=getActivity();
   final PreferenceScreen screen=getPreferenceScreen();
@@ -46,4 +46,5 @@
   mSummary.setSummary(getString(R.string.storage_volume_used,Formatter.formatFileSize(context,totalBytes)));
   mSummary.setPercent((int)((usedBytes * 100) / totalBytes));
   mMeasure.forceMeasure();
+  mNeedsUpdate=false;
 }

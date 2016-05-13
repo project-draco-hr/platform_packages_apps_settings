@@ -6,7 +6,10 @@
     return;
   }
   mStorageManager.registerListener(mStorageListener);
-  if (!mDetached) {
+  if (mNeedsUpdate) {
     update();
+  }
+ else {
+    setTitle();
   }
 }

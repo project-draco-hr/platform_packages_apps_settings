@@ -1,6 +1,6 @@
 {
   String key=null;
-  Cursor cursor=getContentResolver().query(PREFERAPN_URI,new String[]{"_id"},null,null,Telephony.Carriers.DEFAULT_SORT_ORDER);
+  Cursor cursor=getContentResolver().query(getUriForCurrSubId(PREFERAPN_URI),new String[]{"_id"},null,null,Telephony.Carriers.DEFAULT_SORT_ORDER);
   if (cursor.getCount() > 0) {
     cursor.moveToFirst();
     key=cursor.getString(ID_INDEX);

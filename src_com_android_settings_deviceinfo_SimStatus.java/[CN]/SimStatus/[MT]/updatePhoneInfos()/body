@@ -7,6 +7,10 @@
         return;
       }
       mPhone=phone;
+      if (mPhoneStateListener != null && mTelephonyManager != null) {
+        mTelephonyManager.listen(mPhoneStateListener,PhoneStateListener.LISTEN_NONE);
+        mPhoneStateListener=null;
+      }
       mPhoneStateListener=new PhoneStateListener(mSir.getSubscriptionId()){
         @Override public void onDataConnectionStateChanged(        int state){
           updateDataState();

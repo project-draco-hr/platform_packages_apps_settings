@@ -1,4 +1,8 @@
 {
+  updateRestrictions();
+  if (!mPreferenceForget.isEnabled()) {
+    return false;
+  }
   AppDialogFragment.show(this,mForgetVpnDialogFragmentListener,mPackageInfo,mVpnLabel,true,true);
   return true;
 }

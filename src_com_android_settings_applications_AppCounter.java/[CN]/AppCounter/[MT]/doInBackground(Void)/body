@@ -1,0 +1,16 @@
+{
+  int count=0;
+  for (  UserInfo user : mUm.getProfiles(UserHandle.myUserId())) {
+    try {
+      @SuppressWarnings("unchecked") ParceledListSlice<ApplicationInfo> list=mIpm.getInstalledApplications(PackageManager.GET_DISABLED_COMPONENTS | PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS | (user.isAdmin() ? PackageManager.GET_UNINSTALLED_PACKAGES : 0),user.id);
+      for (      ApplicationInfo info : list.getList()) {
+        if (includeInCount(info)) {
+          count++;
+        }
+      }
+    }
+ catch (    RemoteException e) {
+    }
+  }
+  return count;
+}

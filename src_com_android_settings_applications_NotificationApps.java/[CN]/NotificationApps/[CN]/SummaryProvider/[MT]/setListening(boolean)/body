@@ -1,14 +1,13 @@
 {
   if (listening) {
-    mSession=mAppState.newSession(this);
-    mExtraInfoBridge=new AppStateNotificationBridge(mContext,mAppState,this,mNotifBackend);
-    mSession.resume();
-    mExtraInfoBridge.resume();
-  }
- else {
-    mSession.pause();
-    mExtraInfoBridge.pause();
-    mSession.release();
-    mExtraInfoBridge.release();
+    new AppCounter(mContext){
+      @Override protected void onCountComplete(      int num){
+        updateSummary(num);
+      }
+      @Override protected boolean includeInCount(      ApplicationInfo info){
+        return mNotificationBackend.getNotificationsBanned(info.packageName,info.uid);
+      }
+    }
+.execute();
   }
 }

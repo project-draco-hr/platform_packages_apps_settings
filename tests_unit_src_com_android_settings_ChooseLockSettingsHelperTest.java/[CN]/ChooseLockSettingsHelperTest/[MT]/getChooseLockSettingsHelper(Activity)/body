@@ -1,0 +1,7 @@
+{
+  LockPatternUtils mockLockPatternUtils=mock(LockPatternUtils.class);
+  when(mockLockPatternUtils.getKeyguardStoredPasswordQuality(anyInt())).thenReturn(DevicePolicyManager.PASSWORD_QUALITY_SOMETHING);
+  ChooseLockSettingsHelper helper=new ChooseLockSettingsHelper(mockActivity);
+  helper.mLockPatternUtils=mockLockPatternUtils;
+  return helper;
+}

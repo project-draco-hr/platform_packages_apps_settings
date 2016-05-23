@@ -20,7 +20,7 @@
   final LockPatternUtils lockPatternUtils=new LockPatternUtils(this);
   boolean launched;
   if (isManagedProfile && isInternalActivity() && !lockPatternUtils.isSeparateProfileChallengeEnabled(userId)) {
-    launched=helper.launchConfirmationActivity(0,null,title,details,0L,userId);
+    launched=helper.launchConfirmationActivityWithExternalAndChallenge(0,null,title,details,true,0L,userId);
   }
  else {
     launched=helper.launchConfirmationActivity(0,null,title,details,false,true,userId);

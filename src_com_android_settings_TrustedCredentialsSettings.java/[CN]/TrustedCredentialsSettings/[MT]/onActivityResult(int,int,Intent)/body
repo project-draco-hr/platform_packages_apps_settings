@@ -1,8 +1,14 @@
 {
   if (requestCode == REQUEST_CONFIRM_CREDENTIALS) {
-    if (resultCode == Activity.RESULT_OK) {
-      mConfirmedCredentialUsers.add(mConfirmingCredentialUser);
-    }
+    int userId=mConfirmingCredentialUser;
+    IntConsumer listener=mConfirmingCredentialListener;
     mConfirmingCredentialUser=UserHandle.USER_NULL;
+    mConfirmingCredentialListener=null;
+    if (resultCode == Activity.RESULT_OK) {
+      mConfirmedCredentialUsers.add(userId);
+      if (listener != null) {
+        listener.accept(userId);
+      }
+    }
   }
 }

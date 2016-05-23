@@ -8,7 +8,9 @@
       boolean matched=false;
       if (token != null) {
         matched=true;
-        intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
+        if (mReturnCredentials) {
+          intent.putExtra(ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN,token);
+        }
       }
       mCredentialCheckResultTracker.setResult(matched,intent,timeoutMs,localUserId);
     }

@@ -1,0 +1,7 @@
+{
+  Activity mockActivity=mock(Activity.class);
+  when(mockActivity.getSystemService(Context.USER_SERVICE)).thenReturn(getContext().getSystemService(UserManager.class));
+  when(mockActivity.getContentResolver()).thenReturn(getContext().getContentResolver());
+  when(mockActivity.getIntent()).thenReturn(new Intent());
+  return mockActivity;
+}

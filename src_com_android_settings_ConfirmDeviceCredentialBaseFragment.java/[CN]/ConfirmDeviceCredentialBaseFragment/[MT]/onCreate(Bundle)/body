@@ -1,11 +1,12 @@
 {
   super.onCreate(savedInstanceState);
   mAllowFpAuthentication=getActivity().getIntent().getBooleanExtra(ALLOW_FP_AUTHENTICATION,false);
+  mReturnCredentials=getActivity().getIntent().getBooleanExtra(ChooseLockSettingsHelper.EXTRA_KEY_RETURN_CREDENTIALS,false);
   Intent intent=getActivity().getIntent();
   mUserId=Utils.getUserIdFromBundle(getActivity(),intent.getExtras());
   final UserManager userManager=UserManager.get(getActivity());
   mEffectiveUserId=userManager.getCredentialOwnerProfile(mUserId);
-  mIsStrongAuthRequired=isStrongAuthRequired();
-  mAllowFpAuthentication=mAllowFpAuthentication && !isFingerprintDisabledByAdmin() && !mIsStrongAuthRequired;
   mLockPatternUtils=new LockPatternUtils(getActivity());
+  mIsStrongAuthRequired=isFingerprintDisallowedByStrongAuth();
+  mAllowFpAuthentication=mAllowFpAuthentication && !isFingerprintDisabledByAdmin() && !mReturnCredentials&& !mIsStrongAuthRequired;
 }

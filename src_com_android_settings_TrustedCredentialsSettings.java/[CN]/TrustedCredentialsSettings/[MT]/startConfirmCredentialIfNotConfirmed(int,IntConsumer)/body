@@ -1,0 +1,10 @@
+{
+  if (mConfirmedCredentialUsers.contains(userId)) {
+    return false;
+  }
+  boolean result=startConfirmCredential(userId);
+  if (result) {
+    mConfirmingCredentialListener=onCredentialConfirmedListener;
+  }
+  return result;
+}

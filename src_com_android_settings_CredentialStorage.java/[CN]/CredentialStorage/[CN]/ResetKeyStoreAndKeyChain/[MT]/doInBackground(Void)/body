@@ -1,10 +1,5 @@
 {
-  final UserManager um=(UserManager)getSystemService(USER_SERVICE);
-  for (  int userId : um.getProfileIdsWithDisabled(UserHandle.myUserId())) {
-    for (    int uid : SYSTEM_CREDENTIAL_UIDS) {
-      mKeyStore.clearUid(UserHandle.getUid(userId,uid));
-    }
-  }
+  new LockPatternUtils(CredentialStorage.this).resetKeyStore(UserHandle.myUserId());
   try {
     KeyChainConnection keyChainConnection=KeyChain.bind(CredentialStorage.this);
     try {

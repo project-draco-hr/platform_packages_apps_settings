@@ -4,7 +4,7 @@
       mShowLatestAreaInfo=true;
     }
   }
-  PersistableBundle carrierConfig=mCarrierConfigManager.getConfig(mSir.getSubscriptionId());
+  PersistableBundle carrierConfig=mCarrierConfigManager.getConfigForSubId(mSir.getSubscriptionId());
   mShowICCID=carrierConfig.getBoolean(CarrierConfigManager.KEY_SHOW_ICCID_IN_SIM_STATUS_BOOL);
   String rawNumber=mTelephonyManager.getLine1Number(mSir.getSubscriptionId());
   String formattedNumber=null;

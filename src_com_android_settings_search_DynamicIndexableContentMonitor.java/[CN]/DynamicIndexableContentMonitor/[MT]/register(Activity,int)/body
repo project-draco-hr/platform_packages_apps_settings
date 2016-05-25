@@ -1,5 +1,13 @@
 {
   mContext=activity;
+  if (!mContext.getSystemService(UserManager.class).isUserUnlocked()) {
+    Log.w(TAG,"Skipping content monitoring because user is locked");
+    mRegistered=false;
+    return;
+  }
+ else {
+    mRegistered=true;
+  }
   boolean hasFeaturePrinting=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_PRINTING);
   mHasFeatureIme=mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_INPUT_METHODS);
   AccessibilityManager accessibilityManager=(AccessibilityManager)mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);

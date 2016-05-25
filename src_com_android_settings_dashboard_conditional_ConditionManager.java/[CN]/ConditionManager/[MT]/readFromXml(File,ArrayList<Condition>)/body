@@ -1,8 +1,8 @@
 {
-  if (DEBUG)   Log.d(TAG,"Reading from " + mXmlFile.toString());
+  if (DEBUG)   Log.d(TAG,"Reading from " + xmlFile.toString());
   try {
     XmlPullParser parser=Xml.newPullParser();
-    FileReader in=new FileReader(mXmlFile);
+    FileReader in=new FileReader(xmlFile);
     parser.setInput(in);
     int state=parser.getEventType();
     while (state != XmlPullParser.END_DOCUMENT) {
@@ -16,7 +16,7 @@
         PersistableBundle bundle=PersistableBundle.restoreFromXml(parser);
         if (DEBUG)         Log.d(TAG,"Reading " + clz + " -- "+ bundle);
         condition.restoreState(bundle);
-        mConditions.add(condition);
+        conditions.add(condition);
         while (parser.getDepth() > depth) {
           parser.next();
         }

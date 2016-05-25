@@ -1,8 +1,9 @@
 {
+  ArrayList<Condition> conditions=new ArrayList<>();
   mXmlFile=new File(mContext.getFilesDir(),FILE_NAME);
   if (mXmlFile.exists()) {
-    readFromXml();
+    readFromXml(mXmlFile,conditions);
   }
-  addMissingConditions();
-  return null;
+  addMissingConditions(conditions);
+  return conditions;
 }

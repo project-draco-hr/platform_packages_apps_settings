@@ -1,0 +1,11 @@
+{
+  mContext=context;
+  mConditions=new ArrayList<>();
+  if (loadConditionsNow) {
+    ConditionLoader loader=new ConditionLoader();
+    loader.onPostExecute(loader.doInBackground());
+  }
+ else {
+    new ConditionLoader().execute();
+  }
+}

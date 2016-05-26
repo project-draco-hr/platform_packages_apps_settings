@@ -1,12 +1,11 @@
 {
   mSeekBar.setEnabled(!mAutoOn);
-  final ColorStateList sliderTint=mAutoOn ? mInactiveSliderTint : mActiveSliderTint;
+  final float alpha=mAutoOn ? mInactiveSliderAlpha : mActiveSliderAlpha;
   final ColorStateList starTint=mAutoOn ? mActiveSliderTint : mInactiveSliderTint;
   Drawable icon=autoButton.getDrawable().mutate();
   icon.setTintList(starTint);
   autoButton.setImageDrawable(icon);
-  mSeekBar.setProgressTintList(sliderTint);
-  mSeekBar.setThumbTintList(sliderTint);
+  mSeekBar.setAlpha(alpha);
   if (mAutoOn) {
     setProgress(NotificationListenerService.Ranking.IMPORTANCE_DEFAULT);
     mSummary=getProgressSummary(NotificationListenerService.Ranking.IMPORTANCE_UNSPECIFIED);

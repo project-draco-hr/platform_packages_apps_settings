@@ -1,8 +1,9 @@
 {
   if (mResetConfirmed) {
     mResetConfirmed=false;
-    new ResetKeyStoreAndKeyChain().execute();
-    return;
+    if (confirmKeyGuard(CONFIRM_CLEAR_SYSTEM_CREDENTIAL_REQUEST)) {
+      return;
+    }
   }
   finish();
 }

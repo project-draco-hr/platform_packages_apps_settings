@@ -10,4 +10,11 @@
     }
     finish();
   }
+ else   if (requestCode == CONFIRM_CLEAR_SYSTEM_CREDENTIAL_REQUEST) {
+    if (resultCode == Activity.RESULT_OK) {
+      new ResetKeyStoreAndKeyChain().execute();
+      return;
+    }
+    finish();
+  }
 }

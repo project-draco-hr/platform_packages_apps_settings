@@ -8,8 +8,8 @@
     mDark=true;
   }
   super.onCreate(savedState);
-  boolean deviceLocked=getSystemService(KeyguardManager.class).isKeyguardLocked();
-  if (deviceLocked && getIntent().getBooleanExtra(ConfirmDeviceCredentialBaseFragment.SHOW_WHEN_LOCKED,false)) {
+  mIsKeyguardLocked=savedState == null ? getSystemService(KeyguardManager.class).isKeyguardLocked() : savedState.getBoolean(STATE_IS_KEYGUARD_LOCKED,false);
+  if (mIsKeyguardLocked && getIntent().getBooleanExtra(ConfirmDeviceCredentialBaseFragment.SHOW_WHEN_LOCKED,false)) {
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
   }
   CharSequence msg=getIntent().getStringExtra(ConfirmDeviceCredentialBaseFragment.TITLE_TEXT);

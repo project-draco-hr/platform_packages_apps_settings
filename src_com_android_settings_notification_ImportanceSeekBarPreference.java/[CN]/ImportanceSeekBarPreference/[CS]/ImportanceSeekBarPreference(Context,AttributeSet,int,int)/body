@@ -4,4 +4,7 @@
   mActiveSliderTint=ColorStateList.valueOf(context.getColor(R.color.importance_slider_color));
   mInactiveSliderTint=ColorStateList.valueOf(context.getColor(R.color.importance_disabled_slider_color));
   mHandler=new Handler();
+  final TypedArray ta=context.obtainStyledAttributes(attrs,com.android.internal.R.styleable.Theme,0,0);
+  mInactiveSliderAlpha=ta.getFloat(com.android.internal.R.styleable.Theme_disabledAlpha,0.5f);
+  ta.recycle();
 }

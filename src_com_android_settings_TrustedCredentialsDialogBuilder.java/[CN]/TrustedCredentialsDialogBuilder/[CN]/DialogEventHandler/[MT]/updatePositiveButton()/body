@@ -1,6 +1,7 @@
 {
   final CertHolder certHolder=getCurrentCertInfo();
   mNeedsApproval=!certHolder.isSystemCert() && isUserSecure(certHolder.getUserId()) && !mDpm.isCaCertApproved(certHolder.getAlias(),certHolder.getUserId());
-  CharSequence displayText=mActivity.getText(mNeedsApproval ? R.string.trusted_credentials_trust_label : android.R.string.ok);
+  final boolean isProfileOrDeviceOwner=RestrictedLockUtils.getProfileOrDeviceOwner(mActivity,certHolder.getUserId()) != null;
+  CharSequence displayText=mActivity.getText(!isProfileOrDeviceOwner && mNeedsApproval ? R.string.trusted_credentials_trust_label : android.R.string.ok);
   mPositiveButton=updateButton(DialogInterface.BUTTON_POSITIVE,displayText);
 }

@@ -1,4 +1,7 @@
 {
+  if (mFilterMode == FILTER_APPS_POWER_WHITELIST || mFilterMode == FILTER_APPS_POWER_WHITELIST_ALL) {
+    entries=removeDuplicateIgnoringUser(entries);
+  }
   mBaseEntries=entries;
   if (mBaseEntries != null) {
     mEntries=applyPrefixFilter(mCurFilterPrefix,mBaseEntries);

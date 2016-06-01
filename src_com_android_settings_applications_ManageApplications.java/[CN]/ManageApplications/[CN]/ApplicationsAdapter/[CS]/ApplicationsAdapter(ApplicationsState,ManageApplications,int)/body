@@ -1,5 +1,7 @@
 {
   mState=state;
+  mFgHandler=new Handler();
+  mBgHandler=new Handler(mState.getBackgroundLooper());
   mSession=state.newSession(this);
   mManageApplications=manageApplications;
   mContext=manageApplications.getActivity();

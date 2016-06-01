@@ -15,13 +15,10 @@
       mInvisibleAdapters.add(sa);
     }
   }
-  for (int i=0, n=mSwitches.size(); i < n; i++) {
-    getPreferenceScreen().removePreference(mSwitches.get(i));
-  }
-  mSwitches.clear();
   if (Log.isLoggable(TAG,Log.VERBOSE)) {
     Log.d(TAG,"looking for sync adapters that match account " + mAccount);
   }
+  cacheRemoveAllPrefs(getPreferenceScreen());
   for (int j=0, m=authorities.size(); j < m; j++) {
     final String authority=authorities.get(j);
     int syncState=ContentResolver.getIsSyncableAsUser(mAccount,authority,mUserHandle.getIdentifier());
@@ -32,8 +29,5 @@
       addSyncStateSwitch(mAccount,authority);
     }
   }
-  Collections.sort(mSwitches);
-  for (int i=0, n=mSwitches.size(); i < n; i++) {
-    getPreferenceScreen().addPreference(mSwitches.get(i));
-  }
+  removeCachedPrefs(getPreferenceScreen());
 }

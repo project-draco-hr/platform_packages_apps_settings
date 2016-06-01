@@ -1,5 +1,12 @@
 {
-  SyncStateSwitchPreference item=new SyncStateSwitchPreference(getPrefContext(),account,authority);
+  SyncStateSwitchPreference item=(SyncStateSwitchPreference)getCachedPreference(authority);
+  if (item == null) {
+    item=new SyncStateSwitchPreference(getPrefContext(),account,authority);
+    getPreferenceScreen().addPreference(item);
+  }
+ else {
+    item.setup(account,authority);
+  }
   item.setPersistent(false);
   final ProviderInfo providerInfo=getPackageManager().resolveContentProviderAsUser(authority,0,mUserHandle.getIdentifier());
   if (providerInfo == null) {
@@ -13,5 +20,4 @@
   String title=getString(R.string.sync_item_title,providerLabel);
   item.setTitle(title);
   item.setKey(authority);
-  mSwitches.add(item);
 }

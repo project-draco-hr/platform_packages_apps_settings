@@ -3,4 +3,19 @@
   if (mNeedToRevertToInitialFragment) {
     revertToInitialFragment();
   }
+  mDevelopmentPreferencesListener=new SharedPreferences.OnSharedPreferenceChangeListener(){
+    @Override public void onSharedPreferenceChanged(    SharedPreferences sharedPreferences,    String key){
+      updateTilesList();
+    }
+  }
+;
+  mDevelopmentPreferences.registerOnSharedPreferenceChangeListener(mDevelopmentPreferencesListener);
+  registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+  registerReceiver(mUserAddRemoveReceiver,new IntentFilter(Intent.ACTION_USER_ADDED));
+  registerReceiver(mUserAddRemoveReceiver,new IntentFilter(Intent.ACTION_USER_REMOVED));
+  mDynamicIndexableContentMonitor.register(this,LOADER_ID_INDEXABLE_CONTENT_MONITOR);
+  if (mDisplaySearch && !TextUtils.isEmpty(mSearchQuery)) {
+    onQueryTextSubmit(mSearchQuery);
+  }
+  updateTilesList();
 }

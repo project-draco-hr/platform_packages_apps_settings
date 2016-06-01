@@ -1,10 +1,14 @@
 {
+  updateRestrictions();
+  if (!mPreferenceAlwaysOn.isEnabled()) {
+    return false;
+  }
   if (mUserId == UserHandle.USER_SYSTEM) {
     VpnUtils.clearLockdownVpn(getContext());
   }
-  mConnectivityManager.setAlwaysOnVpnPackageForUser(mUserId,isEnabled ? mPackageName : null,false);
-  if (isEnabled && !isVpnAlwaysOn()) {
+  final boolean success=mConnectivityManager.setAlwaysOnVpnPackageForUser(mUserId,isEnabled ? mPackageName : null,false);
+  if (isEnabled && (!success || !isVpnAlwaysOn())) {
     CannotConnectFragment.show(this,mVpnLabel);
   }
-  updateUI();
+  return success;
 }

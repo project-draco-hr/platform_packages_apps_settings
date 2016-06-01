@@ -1,5 +1,8 @@
 {
   if (getTargetFragment() instanceof AppManagementFragment) {
-    ((AppManagementFragment)getTargetFragment()).setAlwaysOnVpnByUI(true);
+    final AppManagementFragment target=(AppManagementFragment)getTargetFragment();
+    if (target.setAlwaysOnVpnByUI(true)) {
+      target.updateUI();
+    }
   }
 }

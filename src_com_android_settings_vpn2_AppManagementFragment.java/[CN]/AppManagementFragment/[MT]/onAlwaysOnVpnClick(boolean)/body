@@ -1,0 +1,9 @@
+{
+  if (isChecked && isLegacyVpnLockDownOrAnotherPackageAlwaysOn()) {
+    ReplaceExistingVpnFragment.show(this);
+    return false;
+  }
+ else {
+    return setAlwaysOnVpnByUI(isChecked);
+  }
+}

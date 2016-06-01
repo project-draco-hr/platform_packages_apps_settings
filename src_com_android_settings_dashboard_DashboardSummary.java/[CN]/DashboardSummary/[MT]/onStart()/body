@@ -1,6 +1,6 @@
 {
   long startTime=System.currentTimeMillis();
-  super.onResume();
+  super.onStart();
   ((SettingsDrawerActivity)getActivity()).addCategoryListener(this);
   mSummaryLoader.setListening(true);
   for (  Condition c : mConditionManager.getConditions()) {
@@ -13,5 +13,5 @@
       MetricsLogger.action(getContext(),MetricsEvent.ACTION_SHOW_SETTINGS_SUGGESTION,DashboardAdapter.getSuggestionIdentifier(getContext(),suggestion));
     }
   }
-  if (DEBUG_TIMING)   Log.d(TAG,"onResume took " + (System.currentTimeMillis() - startTime) + " ms");
+  if (DEBUG_TIMING)   Log.d(TAG,"onStart took " + (System.currentTimeMillis() - startTime) + " ms");
 }

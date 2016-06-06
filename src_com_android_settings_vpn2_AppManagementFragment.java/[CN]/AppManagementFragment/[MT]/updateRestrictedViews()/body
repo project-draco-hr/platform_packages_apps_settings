@@ -2,5 +2,8 @@
   if (isAdded()) {
     mPreferenceAlwaysOn.checkRestrictionAndSetDisabled(UserManager.DISALLOW_CONFIG_VPN,mUserId);
     mPreferenceForget.checkRestrictionAndSetDisabled(UserManager.DISALLOW_CONFIG_VPN,mUserId);
+    if (!checkTargetVersion()) {
+      mPreferenceAlwaysOn.setEnabled(false);
+    }
   }
 }

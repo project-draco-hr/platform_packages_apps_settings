@@ -1,0 +1,13 @@
+{
+  if (mPackageInfo == null || mPackageInfo.applicationInfo == null) {
+    return true;
+  }
+  final int targetSdk=mPackageInfo.applicationInfo.targetSdkVersion;
+  if (targetSdk >= Build.VERSION_CODES.N) {
+    return true;
+  }
+  if (Log.isLoggable(TAG,Log.DEBUG)) {
+    Log.d(TAG,"Package " + mPackageName + " targets SDK version "+ targetSdk+ "; must"+ " target at least "+ Build.VERSION_CODES.N+ " to use always-on.");
+  }
+  return false;
+}

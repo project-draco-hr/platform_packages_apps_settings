@@ -1,8 +1,5 @@
 {
   super.onCreate(savedInstanceState);
-  final Context context=getApplicationContext();
-  final TelephonyManager tm=(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-  final int numSims=tm.getSimCount();
   if (Utils.isMonkeyRunning()) {
     finish();
     return;
@@ -31,25 +28,5 @@ break;
 }
 mPinDialog.setOnPinEnteredListener(this);
 getPreferenceScreen().setPersistent(false);
-if (numSims > 1) {
-setContentView(R.layout.icc_lock_tabs);
-mTabHost=(TabHost)findViewById(android.R.id.tabhost);
-mTabWidget=(TabWidget)findViewById(android.R.id.tabs);
-mListView=(ListView)findViewById(android.R.id.list);
-mTabHost.setup();
-mTabHost.setOnTabChangedListener(mTabListener);
-mTabHost.clearAllTabs();
-SubscriptionManager sm=SubscriptionManager.from(this);
-for (int i=0; i < numSims; ++i) {
-final SubscriptionInfo subInfo=sm.getActiveSubscriptionInfoForSimSlotIndex(i);
-mTabHost.addTab(buildTabSpec(String.valueOf(i),String.valueOf(subInfo == null ? context.getString(R.string.sim_editor_title,i + 1) : subInfo.getDisplayName())));
-}
-final SubscriptionInfo sir=sm.getActiveSubscriptionInfoForSimSlotIndex(0);
-mPhone=(sir == null) ? null : PhoneFactory.getPhone(SubscriptionManager.getPhoneId(sir.getSubscriptionId()));
-}
- else {
-mPhone=PhoneFactory.getDefaultPhone();
-}
 mRes=getResources();
-updatePreferences();
 }

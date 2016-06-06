@@ -1,6 +1,6 @@
 {
   super.onCreate(savedInstanceState);
-  mSubscriptionManager=SubscriptionManager.from(this);
+  mSubscriptionManager=SubscriptionManager.from(getContext());
   final TelephonyManager telephonyManager=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
   initPreferenceScreen(telephonyManager.getSimCount());
 }

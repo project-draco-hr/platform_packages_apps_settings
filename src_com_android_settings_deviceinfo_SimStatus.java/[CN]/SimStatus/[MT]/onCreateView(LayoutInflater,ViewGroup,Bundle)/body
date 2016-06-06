@@ -1,0 +1,25 @@
+{
+  if (mSelectableSubInfos == null) {
+    mSir=null;
+  }
+ else {
+    mSir=mSelectableSubInfos.size() > 0 ? mSelectableSubInfos.get(0) : null;
+    if (mSelectableSubInfos.size() > 1) {
+      View view=inflater.inflate(R.layout.icc_lock_tabs,container,false);
+      final ViewGroup prefs_container=(ViewGroup)view.findViewById(R.id.prefs_container);
+      Utils.prepareCustomPreferencesList(container,view,prefs_container,false);
+      View prefs=super.onCreateView(inflater,prefs_container,savedInstanceState);
+      prefs_container.addView(prefs);
+      mTabHost=(TabHost)view.findViewById(android.R.id.tabhost);
+      mTabWidget=(TabWidget)view.findViewById(android.R.id.tabs);
+      mListView=(ListView)view.findViewById(android.R.id.list);
+      mTabHost.setup();
+      mTabHost.setOnTabChangedListener(mTabListener);
+      mTabHost.clearAllTabs();
+      for (int i=0; i < mSelectableSubInfos.size(); i++) {
+        mTabHost.addTab(buildTabSpec(String.valueOf(i),String.valueOf(mSelectableSubInfos.get(i).getDisplayName())));
+      }
+    }
+  }
+  return super.onCreateView(inflater,container,savedInstanceState);
+}

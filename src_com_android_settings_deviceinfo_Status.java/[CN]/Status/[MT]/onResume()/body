@@ -1,6 +1,6 @@
 {
   super.onResume();
-  registerReceiver(mConnectivityReceiver,mConnectivityIntentFilter,android.Manifest.permission.CHANGE_NETWORK_STATE,null);
-  registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+  getContext().registerReceiver(mConnectivityReceiver,mConnectivityIntentFilter,android.Manifest.permission.CHANGE_NETWORK_STATE,null);
+  getContext().registerReceiver(mBatteryInfoReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
   mHandler.sendEmptyMessage(EVENT_UPDATE_STATS);
 }

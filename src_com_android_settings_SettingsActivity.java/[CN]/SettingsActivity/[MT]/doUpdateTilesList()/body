@@ -20,7 +20,7 @@
     for (    DashboardCategory category : categories) {
       for (      Tile tile : category.tiles) {
         ComponentName component=tile.intent.getComponent();
-        if (packageName.equals(component) && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,component.getClassName())) {
+        if (packageName.equals(component.getPackageName()) && !ArrayUtils.contains(SETTINGS_FOR_RESTRICTED,component.getClassName())) {
           setTileEnabled(component,false,isAdmin,pm);
         }
       }

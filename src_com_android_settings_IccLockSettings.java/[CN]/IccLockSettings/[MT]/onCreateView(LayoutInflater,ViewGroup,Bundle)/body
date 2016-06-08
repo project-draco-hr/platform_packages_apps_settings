@@ -1,0 +1,29 @@
+{
+  final TelephonyManager tm=(TelephonyManager)getContext().getSystemService(Context.TELEPHONY_SERVICE);
+  final int numSims=tm.getSimCount();
+  if (numSims > 1) {
+    View view=inflater.inflate(R.layout.icc_lock_tabs,container,false);
+    final ViewGroup prefs_container=(ViewGroup)view.findViewById(R.id.prefs_container);
+    Utils.prepareCustomPreferencesList(container,view,prefs_container,false);
+    View prefs=super.onCreateView(inflater,prefs_container,savedInstanceState);
+    prefs_container.addView(prefs);
+    mTabHost=(TabHost)view.findViewById(android.R.id.tabhost);
+    mTabWidget=(TabWidget)view.findViewById(android.R.id.tabs);
+    mListView=(ListView)view.findViewById(android.R.id.list);
+    mTabHost.setup();
+    mTabHost.setOnTabChangedListener(mTabListener);
+    mTabHost.clearAllTabs();
+    SubscriptionManager sm=SubscriptionManager.from(getContext());
+    for (int i=0; i < numSims; ++i) {
+      final SubscriptionInfo subInfo=sm.getActiveSubscriptionInfoForSimSlotIndex(i);
+      mTabHost.addTab(buildTabSpec(String.valueOf(i),String.valueOf(subInfo == null ? getContext().getString(R.string.sim_editor_title,i + 1) : subInfo.getDisplayName())));
+    }
+    final SubscriptionInfo sir=sm.getActiveSubscriptionInfoForSimSlotIndex(0);
+    mPhone=(sir == null) ? null : PhoneFactory.getPhone(SubscriptionManager.getPhoneId(sir.getSubscriptionId()));
+    return view;
+  }
+ else {
+    mPhone=PhoneFactory.getDefaultPhone();
+    return super.onCreateView(inflater,container,savedInstanceState);
+  }
+}

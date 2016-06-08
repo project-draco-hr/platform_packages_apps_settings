@@ -10,7 +10,7 @@
     }
   }
   mAddAccountGroup=getPreferenceScreen();
-  mUm=UserManager.get(this);
-  mUserHandle=Utils.getSecureTargetUser(getActivityToken(),mUm,null,getIntent().getExtras());
+  mUm=UserManager.get(getContext());
+  mUserHandle=Utils.getSecureTargetUser(getActivity().getActivityToken(),mUm,null,getIntent().getExtras());
   updateAuthDescriptions();
 }

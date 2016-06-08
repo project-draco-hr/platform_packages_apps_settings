@@ -4,7 +4,7 @@
   String mcc=checkNotSet(mMcc.getText());
   String mnc=checkNotSet(mMnc.getText());
   if (getErrorMsg() != null && !force) {
-    showDialog(ERROR_DIALOG_ID);
+    ErrorDialog.showError(this);
     return false;
   }
   if (!mCursor.moveToFirst()) {

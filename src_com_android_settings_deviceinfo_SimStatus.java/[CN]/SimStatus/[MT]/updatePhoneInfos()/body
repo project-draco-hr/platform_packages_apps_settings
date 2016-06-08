@@ -1,7 +1,7 @@
 {
   if (mSir != null) {
     final Phone phone=PhoneFactory.getPhone(SubscriptionManager.getPhoneId(mSir.getSubscriptionId()));
-    if (UserManager.get(this).isAdminUser() && SubscriptionManager.isValidSubscriptionId(mSir.getSubscriptionId())) {
+    if (UserManager.get(getContext()).isAdminUser() && SubscriptionManager.isValidSubscriptionId(mSir.getSubscriptionId())) {
       if (phone == null) {
         Log.e(TAG,"Unable to locate a phone object for the given Subscription ID.");
         return;

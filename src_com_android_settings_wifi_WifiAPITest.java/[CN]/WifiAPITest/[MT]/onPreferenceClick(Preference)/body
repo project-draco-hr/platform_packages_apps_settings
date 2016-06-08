@@ -3,10 +3,10 @@
     mWifiManager.disconnect();
   }
  else   if (pref == mWifiDisableNetwork) {
-    AlertDialog.Builder alert=new AlertDialog.Builder(this);
+    AlertDialog.Builder alert=new AlertDialog.Builder(getContext());
     alert.setTitle("Input");
     alert.setMessage("Enter Network ID");
-    final EditText input=new EditText(this);
+    final EditText input=new EditText(getPrefContext());
     alert.setView(input);
     alert.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
       public void onClick(      DialogInterface dialog,      int whichButton){
@@ -30,10 +30,10 @@
     alert.show();
   }
  else   if (pref == mWifiEnableNetwork) {
-    AlertDialog.Builder alert=new AlertDialog.Builder(this);
+    AlertDialog.Builder alert=new AlertDialog.Builder(getContext());
     alert.setTitle("Input");
     alert.setMessage("Enter Network ID");
-    final EditText input=new EditText(this);
+    final EditText input=new EditText(getPrefContext());
     alert.setView(input);
     alert.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
       public void onClick(      DialogInterface dialog,      int whichButton){

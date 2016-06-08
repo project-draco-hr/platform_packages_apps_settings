@@ -1,6 +1,6 @@
 {
   super.onPause();
-  unregisterReceiver(mBatteryInfoReceiver);
-  unregisterReceiver(mConnectivityReceiver);
+  getContext().unregisterReceiver(mBatteryInfoReceiver);
+  getContext().unregisterReceiver(mConnectivityReceiver);
   mHandler.removeMessages(EVENT_UPDATE_STATS);
 }

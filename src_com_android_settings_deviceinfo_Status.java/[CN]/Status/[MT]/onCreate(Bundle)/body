@@ -34,7 +34,7 @@
  else {
     removePreferenceFromScreen(KEY_SERIAL_NUMBER);
   }
-  if (!UserManager.get(this).isAdminUser() || Utils.isWifiOnly(this)) {
+  if (!UserManager.get(getContext()).isAdminUser() || Utils.isWifiOnly(getContext())) {
     removePreferenceFromScreen(KEY_SIM_STATUS);
     removePreferenceFromScreen(KEY_IMEI_INFO);
   }

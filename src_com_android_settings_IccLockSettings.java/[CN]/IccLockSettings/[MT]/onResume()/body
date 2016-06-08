@@ -1,7 +1,7 @@
 {
   super.onResume();
   final IntentFilter filter=new IntentFilter(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
-  registerReceiver(mSimStateReceiver,filter);
+  getContext().registerReceiver(mSimStateReceiver,filter);
   if (mDialogState != OFF_MODE) {
     showPinDialog();
   }

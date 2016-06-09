@@ -1,0 +1,8 @@
+{
+  if (subtype == null) {
+    return "";
+  }
+  final Locale locale=getDisplayLocale(context);
+  final CharSequence subtypeName=subtype.getDisplayName(context,inputMethodInfo.getPackageName(),inputMethodInfo.getServiceInfo().applicationInfo);
+  return LocaleHelper.toSentenceCase(subtypeName.toString(),locale);
+}

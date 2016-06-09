@@ -1,0 +1,17 @@
+{
+  if (context == null) {
+    return Locale.getDefault();
+  }
+  if (context.getResources() == null) {
+    return Locale.getDefault();
+  }
+  final Configuration configuration=context.getResources().getConfiguration();
+  if (configuration == null) {
+    return Locale.getDefault();
+  }
+  final Locale configurationLocale=configuration.getLocales().get(0);
+  if (configurationLocale == null) {
+    return Locale.getDefault();
+  }
+  return configurationLocale;
+}

@@ -1,0 +1,12 @@
+{
+  if (subtypes.isEmpty()) {
+    return "";
+  }
+  final Locale locale=getDisplayLocale(context);
+  final int subtypeCount=subtypes.size();
+  final CharSequence[] subtypeNames=new CharSequence[subtypeCount];
+  for (int i=0; i < subtypeCount; i++) {
+    subtypeNames[i]=subtypes.get(i).getDisplayName(context,inputMethodInfo.getPackageName(),inputMethodInfo.getServiceInfo().applicationInfo);
+  }
+  return LocaleHelper.toSentenceCase(ListFormatter.getInstance(locale).format(subtypeNames),locale);
+}

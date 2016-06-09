@@ -1,0 +1,9 @@
+{
+  final SpannableString amountTemplate=new SpannableString(context.getString(com.android.internal.R.string.fileSizeSuffix).replace("%1$s","^1").replace("%2$s","^2"));
+  verySmallSpanExcept(amountTemplate,"^1");
+  final Formatter.BytesResult usedResult=Formatter.formatBytes(context.getResources(),usageLevel,Formatter.FLAG_SHORTER);
+  final CharSequence formattedUsage=TextUtils.expandTemplate(amountTemplate,usedResult.value,usedResult.units);
+  final SpannableString fullTemplate=new SpannableString(template.replace("%1$s","^1"));
+  verySmallSpanExcept(fullTemplate,"^1");
+  return TextUtils.expandTemplate(fullTemplate,BidiFormatter.getInstance().unicodeWrap(formattedUsage));
+}

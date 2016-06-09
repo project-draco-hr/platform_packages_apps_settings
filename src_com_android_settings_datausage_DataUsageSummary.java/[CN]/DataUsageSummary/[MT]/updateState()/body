@@ -2,8 +2,7 @@
   DataUsageController.DataUsageInfo info=mDataUsageController.getDataUsageInfo(mDefaultTemplate);
   Context context=getContext();
   if (mSummaryPreference != null) {
-    Formatter.BytesResult usedResult=Formatter.formatBytes(context.getResources(),info.usageLevel,Formatter.FLAG_SHORTER);
-    mSummaryPreference.setTitle(TextUtils.expandTemplate(getText(mDataUsageTemplate),usedResult.value,usedResult.units));
+    mSummaryPreference.setTitle(formatTitle(context,getString(mDataUsageTemplate),info.usageLevel));
     long limit=info.limitLevel;
     if (limit <= 0) {
       limit=info.warningLevel;

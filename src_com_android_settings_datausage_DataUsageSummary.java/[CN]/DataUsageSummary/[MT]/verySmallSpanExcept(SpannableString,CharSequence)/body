@@ -1,0 +1,17 @@
+{
+  final float SIZE=0.8f * 0.8f;
+  final int FLAGS=Spannable.SPAN_INCLUSIVE_INCLUSIVE;
+  final int exceptionStart=TextUtils.indexOf(s,exception);
+  if (exceptionStart == -1) {
+    s.setSpan(new RelativeSizeSpan(SIZE),0,s.length(),FLAGS);
+  }
+ else {
+    if (exceptionStart > 0) {
+      s.setSpan(new RelativeSizeSpan(SIZE),0,exceptionStart,FLAGS);
+    }
+    final int exceptionEnd=exceptionStart + exception.length();
+    if (exceptionEnd < s.length()) {
+      s.setSpan(new RelativeSizeSpan(SIZE),exceptionEnd,s.length(),FLAGS);
+    }
+  }
+}

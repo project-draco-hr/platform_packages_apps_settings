@@ -1,11 +1,5 @@
 {
-  final Context context=getContext();
   final InputMethodManager imm=getInputMethodManager();
   final List<InputMethodSubtype> subtypes=imm.getEnabledInputMethodSubtypeList(mImi,true);
-  final ArrayList<CharSequence> subtypeLabels=new ArrayList<>();
-  for (  final InputMethodSubtype subtype : subtypes) {
-    final CharSequence label=subtype.getDisplayName(context,mImi.getPackageName(),mImi.getServiceInfo().applicationInfo);
-    subtypeLabels.add(label);
-  }
-  return TextUtils.join(", ",subtypeLabels);
+  return InputMethodAndSubtypeUtil.getSubtypeLocaleNameListAsSentence(subtypes,getContext(),mImi);
 }

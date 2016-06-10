@@ -79,6 +79,19 @@
   mLegacyDhcpClient=findAndInitSwitchPref(WIFI_LEGACY_DHCP_CLIENT_KEY);
   mMobileDataAlwaysOn=findAndInitSwitchPref(MOBILE_DATA_ALWAYS_ON);
   mLogdSize=addListPreference(SELECT_LOGD_SIZE_KEY);
+  if ("1".equals(SystemProperties.get("ro.debuggable","0"))) {
+    mLogpersist=addListPreference(SELECT_LOGPERSIST_KEY);
+  }
+ else {
+    mLogpersist=(ListPreference)findPreference(SELECT_LOGPERSIST_KEY);
+    if (mLogpersist != null) {
+      mLogpersist.setEnabled(false);
+      if (debugDebuggingCategory != null) {
+        debugDebuggingCategory.removePreference(mLogpersist);
+      }
+    }
+    mLogpersist=null;
+  }
   mUsbConfiguration=addListPreference(USB_CONFIGURATION_KEY);
   mBluetoothDisableAbsVolume=findAndInitSwitchPref(BLUETOOTH_DISABLE_ABSOLUTE_VOLUME_KEY);
   mWindowAnimationScale=addListPreference(WINDOW_ANIMATION_SCALE_KEY);

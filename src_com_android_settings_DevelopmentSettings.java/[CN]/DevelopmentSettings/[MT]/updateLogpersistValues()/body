@@ -1,0 +1,40 @@
+{
+  if (mLogpersist == null) {
+    return;
+  }
+  String currentValue=SystemProperties.get(SELECT_LOGPERSIST_PROPERTY);
+  if (currentValue == null) {
+    currentValue="";
+  }
+  String currentBuffers=SystemProperties.get(SELECT_LOGPERSIST_PROPERTY_BUFFER);
+  if ((currentBuffers == null) || (currentBuffers.length() == 0)) {
+    currentBuffers="all";
+  }
+  int index=0;
+  if (currentValue.equals(SELECT_LOGPERSIST_PROPERTY_SERVICE)) {
+    index=1;
+    if (!currentBuffers.equals("all") && !currentBuffers.contains("radio") && currentBuffers.contains("security")&& currentBuffers.contains("kernel")) {
+      index=2;
+      if (!currentBuffers.contains("default")) {
+        String[] contains={"main","events","system","crash"};
+        for (int i=0; i < contains.length; i++) {
+          if (!currentBuffers.contains(contains[i])) {
+            index=1;
+            break;
+          }
+        }
+      }
+    }
+  }
+  mLogpersist.setValue(getResources().getStringArray(R.array.select_logpersist_values)[index]);
+  mLogpersist.setSummary(getResources().getStringArray(R.array.select_logpersist_summaries)[index]);
+  mLogpersist.setOnPreferenceChangeListener(this);
+  if (index != 0) {
+    mLogpersistCleared=false;
+  }
+ else   if (!mLogpersistCleared) {
+    SystemProperties.set(SELECT_LOGPERSIST_PROPERTY,SELECT_LOGPERSIST_PROPERTY_CLEAR);
+    pokeSystemProperties();
+    mLogpersistCleared=true;
+  }
+}

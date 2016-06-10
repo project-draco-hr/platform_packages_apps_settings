@@ -4,6 +4,15 @@
     String currentValue=SystemProperties.get(SELECT_LOGD_SIZE_PROPERTY);
     if ((currentTag != null) && currentTag.startsWith(SELECT_LOGD_TAG_SILENCE)) {
       currentValue=SELECT_LOGD_OFF_SIZE_MARKER_VALUE;
+      if (mLogpersist != null) {
+        writeLogpersistOption(null,true);
+        mLogpersist.setEnabled(false);
+      }
+    }
+ else {
+      if ((mLogpersist != null) && mLastEnabledState) {
+        mLogpersist.setEnabled(true);
+      }
     }
     if ((currentValue == null) || (currentValue.length() == 0)) {
       currentValue=defaultLogdSizeValue();

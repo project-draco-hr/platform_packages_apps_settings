@@ -1,0 +1,8 @@
+{
+  SystemProperties.set(SELECT_LOGPERSIST_PROPERTY_BUFFER,"");
+  SystemProperties.set(SELECT_LOGPERSIST_PROPERTY,update ? "" : SELECT_LOGPERSIST_PROPERTY_STOP);
+  pokeSystemProperties();
+  if (update) {
+    updateLogpersistValues();
+  }
+}

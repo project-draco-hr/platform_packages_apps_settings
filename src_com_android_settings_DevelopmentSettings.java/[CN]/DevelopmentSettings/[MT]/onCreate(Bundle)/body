@@ -82,6 +82,19 @@
   mWifiAllowScansWithTraffic=findAndInitSwitchPref(WIFI_ALLOW_SCAN_WITH_TRAFFIC_KEY);
   mMobileDataAlwaysOn=findAndInitSwitchPref(MOBILE_DATA_ALWAYS_ON);
   mLogdSize=addListPreference(SELECT_LOGD_SIZE_KEY);
+  if ("1".equals(SystemProperties.get("ro.debuggable","0"))) {
+    mLogpersist=addListPreference(SELECT_LOGPERSIST_KEY);
+  }
+ else {
+    mLogpersist=(ListPreference)findPreference(SELECT_LOGPERSIST_KEY);
+    if (mLogpersist != null) {
+      mLogpersist.setEnabled(false);
+      if (debugDebuggingCategory != null) {
+        debugDebuggingCategory.removePreference(mLogpersist);
+      }
+    }
+    mLogpersist=null;
+  }
   mUsbConfiguration=addListPreference(USB_CONFIGURATION_KEY);
   mWebViewProvider=addListPreference(WEBVIEW_PROVIDER_KEY);
   mWebViewMultiprocess=findAndInitSwitchPref(WEBVIEW_MULTIPROCESS_KEY);

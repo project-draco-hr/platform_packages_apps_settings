@@ -1,5 +1,8 @@
 {
-  final int userId=UserHandle.getUserId(mPackageInfo.applicationInfo.uid);
+  if (isUiRestricted()) {
+    return;
+  }
+  final int userId=getUserId();
   try {
     if (mPackageInfo.packageName.equals(getConnectedPackage(mService,userId))) {
       mService.setAlwaysOnVpnPackage(userId,null,false);

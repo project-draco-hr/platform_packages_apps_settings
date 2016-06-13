@@ -1,5 +1,8 @@
 {
-  final int userId=UserHandle.getUserId(mPackageInfo.applicationInfo.uid);
+  if (isUiRestricted()) {
+    return;
+  }
+  final int userId=getUserId();
   try {
     mService.setVpnPackageAuthorization(mPackageInfo.packageName,userId,false);
     onDisconnect(dialog);

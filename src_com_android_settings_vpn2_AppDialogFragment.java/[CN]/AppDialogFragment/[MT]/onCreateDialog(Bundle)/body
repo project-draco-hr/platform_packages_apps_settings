@@ -9,7 +9,7 @@
   }
  else {
     AlertDialog.Builder dlog=new AlertDialog.Builder(getActivity()).setTitle(label).setMessage(getActivity().getString(R.string.vpn_disconnect_confirm)).setNegativeButton(getActivity().getString(R.string.vpn_cancel),null);
-    if (connected) {
+    if (connected && !isUiRestricted()) {
       dlog.setPositiveButton(getActivity().getString(R.string.vpn_disconnect),new DialogInterface.OnClickListener(){
         @Override public void onClick(        DialogInterface dialog,        int which){
           onDisconnect(dialog);

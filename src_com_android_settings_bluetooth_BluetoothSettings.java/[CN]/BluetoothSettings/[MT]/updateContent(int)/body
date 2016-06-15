@@ -29,7 +29,10 @@ addDeviceCategory(mAvailableDevicesCategory,R.string.bluetooth_preference_found_
 if (!mInitialScanStarted) {
 startScanning();
 }
-mMyDevicePreference.setSummary(getResources().getString(R.string.bluetooth_is_visible_message,mLocalAdapter.getName()));
+final Resources res=getResources();
+final Locale locale=res.getConfiguration().getLocales().get(0);
+final BidiFormatter bidiFormatter=BidiFormatter.getInstance(locale);
+mMyDevicePreference.setSummary(res.getString(R.string.bluetooth_is_visible_message,bidiFormatter.unicodeWrap(mLocalAdapter.getName())));
 getActivity().invalidateOptionsMenu();
 if (mInitiateDiscoverable) {
 mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE);

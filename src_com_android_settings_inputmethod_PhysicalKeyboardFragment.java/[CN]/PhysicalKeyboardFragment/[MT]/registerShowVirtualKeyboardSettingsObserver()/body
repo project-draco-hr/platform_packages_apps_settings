@@ -1,5 +1,5 @@
 {
   unregisterShowVirtualKeyboardSettingsObserver();
-  getActivity().getContentResolver().registerContentObserver(Secure.getUriFor(Secure.SHOW_IME_WITH_HARD_KEYBOARD),false,mContentObserver,USER_SYSTEM);
+  getActivity().getContentResolver().registerContentObserver(Secure.getUriFor(Secure.SHOW_IME_WITH_HARD_KEYBOARD),false,mContentObserver,UserHandle.myUserId());
   updateShowVirtualKeyboardSwitch();
 }

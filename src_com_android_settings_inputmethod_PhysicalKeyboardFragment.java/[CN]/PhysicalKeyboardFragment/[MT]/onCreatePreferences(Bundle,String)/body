@@ -2,7 +2,7 @@
   Activity activity=Preconditions.checkNotNull(getActivity());
   addPreferencesFromResource(R.xml.physical_keyboard_settings);
   mIm=Preconditions.checkNotNull(activity.getSystemService(InputManager.class));
-  mSettings=new InputMethodUtils.InputMethodSettings(activity.getResources(),getContentResolver(),new HashMap<>(),new ArrayList<>(),USER_SYSTEM,false);
+  mSettings=new InputMethodUtils.InputMethodSettings(activity.getResources(),getContentResolver(),new HashMap<>(),new ArrayList<>(),UserHandle.myUserId(),false);
   mKeyboardAssistanceCategory=Preconditions.checkNotNull((PreferenceCategory)findPreference(KEYBOARD_ASSISTANCE_CATEGORY));
   mShowVirtualKeyboardSwitch=Preconditions.checkNotNull((SwitchPreference)mKeyboardAssistanceCategory.findPreference(SHOW_VIRTUAL_KEYBOARD_SWITCH));
   findPreference(KEYBOARD_SHORTCUTS_HELPER).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){

@@ -1,5 +1,5 @@
 {
-  mLockscreen=(NotificationLockscreenPreference)getPreferenceScreen().findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
+  mLockscreen=(RestrictedDropDownPreference)getPreferenceScreen().findPreference(KEY_LOCK_SCREEN_NOTIFICATIONS);
   if (mLockscreen == null) {
     Log.i(TAG,"Preference not found: " + KEY_LOCK_SCREEN_NOTIFICATIONS);
     return;
@@ -20,7 +20,6 @@
     values.add(summaryHideEntryValue);
     setRestrictedIfNotificationFeaturesDisabled(summaryHideEntry,summaryHideEntryValue,KEYGUARD_DISABLE_SECURE_NOTIFICATIONS);
   }
-  mLockscreen.setRemoteInputRestricted(RestrictedLockUtils.checkIfKeyguardFeaturesDisabled(mContext,DevicePolicyManager.KEYGUARD_DISABLE_REMOTE_INPUT,UserHandle.myUserId()));
   mLockscreen.setEntries(entries.toArray(new CharSequence[entries.size()]));
   mLockscreen.setEntryValues(values.toArray(new CharSequence[values.size()]));
   updateLockscreenNotifications();

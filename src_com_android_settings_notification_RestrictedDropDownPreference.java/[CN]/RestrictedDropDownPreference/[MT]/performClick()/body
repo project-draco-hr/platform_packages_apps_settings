@@ -1,4 +1,7 @@
 {
+  if (mPreClickListener != null && mPreClickListener.onPreferenceClick(this)) {
+    return;
+  }
   if (!mHelper.performClick()) {
     mUserClicked=true;
     super.performClick();

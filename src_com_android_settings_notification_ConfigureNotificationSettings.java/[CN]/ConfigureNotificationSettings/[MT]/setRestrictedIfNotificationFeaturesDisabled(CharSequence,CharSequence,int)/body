@@ -1,13 +1,13 @@
 {
   EnforcedAdmin admin=RestrictedLockUtils.checkIfKeyguardFeaturesDisabled(mContext,keyguardNotificationFeatures,UserHandle.myUserId());
-  if (admin != null) {
-    RestrictedItem item=new RestrictedItem(entry,entryValue,admin);
+  if (admin != null && mLockscreen != null) {
+    RestrictedDropDownPreference.RestrictedItem item=new RestrictedDropDownPreference.RestrictedItem(entry,entryValue,admin);
     mLockscreen.addRestrictedItem(item);
   }
   if (mProfileChallengeUserId != UserHandle.USER_NULL) {
     EnforcedAdmin profileAdmin=RestrictedLockUtils.checkIfKeyguardFeaturesDisabled(mContext,keyguardNotificationFeatures,mProfileChallengeUserId);
-    if (profileAdmin != null) {
-      RestrictedItem item=new RestrictedItem(entry,entryValue,profileAdmin);
+    if (profileAdmin != null && mLockscreenProfile != null) {
+      RestrictedDropDownPreference.RestrictedItem item=new RestrictedDropDownPreference.RestrictedItem(entry,entryValue,profileAdmin);
       mLockscreenProfile.addRestrictedItem(item);
     }
   }

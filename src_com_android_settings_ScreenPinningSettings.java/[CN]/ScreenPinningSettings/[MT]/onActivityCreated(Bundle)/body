@@ -2,8 +2,6 @@
   super.onActivityCreated(savedInstanceState);
   final SettingsActivity activity=(SettingsActivity)getActivity();
   mLockPatternUtils=new LockPatternUtils(activity);
-  View emptyView=LayoutInflater.from(activity).inflate(R.layout.screen_pinning_instructions,null);
-  setEmptyView(emptyView);
   mSwitchBar=activity.getSwitchBar();
   mSwitchBar.addOnSwitchChangeListener(this);
   mSwitchBar.show();

@@ -11,6 +11,14 @@
       startTethering(TETHERING_WIFI);
     }
   }
+ else   if (action.equals(WifiManager.WIFI_AP_STATE_CHANGED_ACTION)) {
+    int state=intent.getIntExtra(WifiManager.EXTRA_WIFI_AP_STATE,0);
+    if (state == WifiManager.WIFI_AP_STATE_DISABLED && mRestartWifiApAfterConfigChange) {
+      mRestartWifiApAfterConfigChange=false;
+      Log.d(TAG,"Restarting WifiAp due to prior config change.");
+      startTethering(TETHERING_WIFI);
+    }
+  }
  else   if (action.equals(Intent.ACTION_MEDIA_SHARED)) {
     mMassStorageActive=true;
     updateState();

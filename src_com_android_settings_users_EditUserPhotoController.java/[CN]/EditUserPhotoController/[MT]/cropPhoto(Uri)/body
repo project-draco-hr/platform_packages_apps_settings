@@ -4,7 +4,13 @@
   appendOutputExtra(intent,mCropPictureUri);
   appendCropExtras(intent);
   if (intent.resolveActivity(mContext.getPackageManager()) != null) {
-    mFragment.startActivityForResult(intent,REQUEST_CODE_CROP_PHOTO);
+    try {
+      StrictMode.disableDeathOnFileUriExposure();
+      mFragment.startActivityForResult(intent,REQUEST_CODE_CROP_PHOTO);
+    }
+  finally {
+      StrictMode.enableDeathOnFileUriExposure();
+    }
   }
  else {
     onPhotoCropped(pictureUri,false);

@@ -1,3 +1,6 @@
 {
-  mSwitchBar.setChecked(isDataSaving);
+synchronized (this) {
+    mSwitchBar.setChecked(isDataSaving);
+    mSwitching=false;
+  }
 }

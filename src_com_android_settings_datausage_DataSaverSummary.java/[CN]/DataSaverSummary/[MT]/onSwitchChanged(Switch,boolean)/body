@@ -1,3 +1,9 @@
 {
-  mDataSaverBackend.setDataSaverEnabled(isChecked);
+synchronized (this) {
+    if (mSwitching) {
+      return;
+    }
+    mSwitching=true;
+    mDataSaverBackend.setDataSaverEnabled(isChecked);
+  }
 }

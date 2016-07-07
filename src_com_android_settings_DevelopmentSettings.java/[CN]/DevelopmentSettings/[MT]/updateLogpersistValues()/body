@@ -2,11 +2,11 @@
   if (mLogpersist == null) {
     return;
   }
-  String currentValue=SystemProperties.get(SELECT_LOGPERSIST_PROPERTY);
+  String currentValue=SystemProperties.get(ACTUAL_LOGPERSIST_PROPERTY);
   if (currentValue == null) {
     currentValue="";
   }
-  String currentBuffers=SystemProperties.get(SELECT_LOGPERSIST_PROPERTY_BUFFER);
+  String currentBuffers=SystemProperties.get(ACTUAL_LOGPERSIST_PROPERTY_BUFFER);
   if ((currentBuffers == null) || (currentBuffers.length() == 0)) {
     currentBuffers="all";
   }
@@ -36,7 +36,7 @@
     mLogpersistCleared=false;
   }
  else   if (!mLogpersistCleared) {
-    SystemProperties.set(SELECT_LOGPERSIST_PROPERTY,SELECT_LOGPERSIST_PROPERTY_CLEAR);
+    SystemProperties.set(ACTUAL_LOGPERSIST_PROPERTY,SELECT_LOGPERSIST_PROPERTY_CLEAR);
     pokeSystemProperties();
     mLogpersistCleared=true;
   }

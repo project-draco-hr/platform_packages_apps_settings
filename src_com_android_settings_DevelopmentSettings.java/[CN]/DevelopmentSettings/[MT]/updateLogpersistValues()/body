@@ -13,7 +13,10 @@
   int index=0;
   if (currentValue.equals(SELECT_LOGPERSIST_PROPERTY_SERVICE)) {
     index=1;
-    if (!currentBuffers.equals("all") && !currentBuffers.contains("radio") && currentBuffers.contains("security")&& currentBuffers.contains("kernel")) {
+    if (currentBuffers.equals("kernel")) {
+      index=3;
+    }
+ else     if (!currentBuffers.equals("all") && !currentBuffers.contains("radio") && currentBuffers.contains("security")&& currentBuffers.contains("kernel")) {
       index=2;
       if (!currentBuffers.contains("default")) {
         String[] contains={"main","events","system","crash"};

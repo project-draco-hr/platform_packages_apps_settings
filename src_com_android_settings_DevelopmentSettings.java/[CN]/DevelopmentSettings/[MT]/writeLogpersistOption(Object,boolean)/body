@@ -12,8 +12,8 @@
       mLogpersistCleared=false;
     }
  else     if (!mLogpersistCleared) {
-      String currentValue=SystemProperties.get(SELECT_LOGPERSIST_PROPERTY);
-      if ((currentValue != null) && (currentValue.length() != 0)) {
+      String currentValue=SystemProperties.get(ACTUAL_LOGPERSIST_PROPERTY);
+      if ((currentValue != null) && currentValue.equals(SELECT_LOGPERSIST_PROPERTY_SERVICE)) {
         if (mLogpersistClearDialog != null)         dismissDialogs();
         mLogpersistClearDialog=new AlertDialog.Builder(getActivity()).setMessage(getActivity().getResources().getString(R.string.dev_logpersist_clear_warning_message)).setTitle(R.string.dev_logpersist_clear_warning_title).setPositiveButton(android.R.string.yes,this).setNegativeButton(android.R.string.no,this).show();
         mLogpersistClearDialog.setOnDismissListener(this);
@@ -23,12 +23,23 @@
     setLogpersistOff(true);
     return;
   }
-  String currentBuffer=SystemProperties.get(SELECT_LOGPERSIST_PROPERTY_BUFFER);
+  String currentBuffer=SystemProperties.get(ACTUAL_LOGPERSIST_PROPERTY_BUFFER);
   if ((currentBuffer != null) && !currentBuffer.equals(newValue.toString())) {
     setLogpersistOff(false);
   }
   SystemProperties.set(SELECT_LOGPERSIST_PROPERTY_BUFFER,newValue.toString());
   SystemProperties.set(SELECT_LOGPERSIST_PROPERTY,SELECT_LOGPERSIST_PROPERTY_SERVICE);
   pokeSystemProperties();
+  for (int i=0; i < 3; i++) {
+    String currentValue=SystemProperties.get(ACTUAL_LOGPERSIST_PROPERTY);
+    if ((currentValue != null) && currentValue.equals(SELECT_LOGPERSIST_PROPERTY_SERVICE)) {
+      break;
+    }
+    try {
+      Thread.sleep(100);
+    }
+ catch (    InterruptedException e) {
+    }
+  }
   updateLogpersistValues();
 }

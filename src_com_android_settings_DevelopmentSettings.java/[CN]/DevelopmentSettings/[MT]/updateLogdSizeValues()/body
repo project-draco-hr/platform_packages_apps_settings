@@ -4,13 +4,14 @@
     String currentValue=SystemProperties.get(SELECT_LOGD_SIZE_PROPERTY);
     if ((currentTag != null) && currentTag.startsWith(SELECT_LOGD_TAG_SILENCE)) {
       currentValue=SELECT_LOGD_OFF_SIZE_MARKER_VALUE;
-      if (mLogpersist != null) {
+    }
+    if (mLogpersist != null) {
+      String currentLogpersistEnable=SystemProperties.get(ACTUAL_LOGPERSIST_PROPERTY_ENABLE);
+      if ((currentLogpersistEnable == null) || !currentLogpersistEnable.equals("true") || currentValue.equals(SELECT_LOGD_OFF_SIZE_MARKER_VALUE)) {
         writeLogpersistOption(null,true);
         mLogpersist.setEnabled(false);
       }
-    }
- else {
-      if ((mLogpersist != null) && mLastEnabledState) {
+ else       if (mLastEnabledState) {
         mLogpersist.setEnabled(true);
       }
     }

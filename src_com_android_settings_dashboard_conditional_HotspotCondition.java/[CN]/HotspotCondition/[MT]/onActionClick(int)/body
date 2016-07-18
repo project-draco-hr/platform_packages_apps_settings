@@ -6,7 +6,8 @@
       RestrictedLockUtils.sendShowAdminSupportDetailsIntent(context,admin);
     }
  else {
-      TetherUtil.setWifiTethering(false,context);
+      ConnectivityManager cm=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+      cm.stopTethering(ConnectivityManager.TETHERING_WIFI);
       setActive(false);
     }
   }

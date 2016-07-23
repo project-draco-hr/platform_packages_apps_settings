@@ -1,12 +1,13 @@
 {
   super.onCreate(savedInstanceState);
-  if (parseIntent()) {
+  setResult(RESULT_CANCELED);
+  if (!parseIntent()) {
     finish();
     return;
   }
-  createDialog();
-  if (getResources().getBoolean(R.bool.auto_confirm_bluetooth_activation_dialog) == true) {
+  if (getResources().getBoolean(R.bool.auto_confirm_bluetooth_activation_dialog)) {
     onClick(null,BUTTON_POSITIVE);
     dismiss();
   }
+  createDialog();
 }

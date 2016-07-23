@@ -1,6 +1,6 @@
 {
   int returnCode;
-  if (mEnableOnly) {
+  if (mRequest == REQUEST_ENABLE || mRequest == REQUEST_DISABLE) {
     returnCode=RESULT_OK;
   }
  else   if (mLocalAdapter.setScanMode(BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,mTimeout)) {

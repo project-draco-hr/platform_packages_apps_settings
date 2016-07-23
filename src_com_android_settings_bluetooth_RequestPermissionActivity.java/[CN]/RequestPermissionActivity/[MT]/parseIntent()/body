@@ -1,9 +1,16 @@
 {
   Intent intent=getIntent();
-  if (intent != null && intent.getAction().equals(BluetoothAdapter.ACTION_REQUEST_ENABLE)) {
-    mEnableOnly=true;
+  if (intent == null) {
+    return true;
   }
- else   if (intent != null && intent.getAction().equals(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE)) {
+  if (intent.getAction().equals(BluetoothAdapter.ACTION_REQUEST_ENABLE)) {
+    mRequest=REQUEST_ENABLE;
+  }
+ else   if (intent.getAction().equals(BluetoothAdapter.ACTION_REQUEST_DISABLE)) {
+    mRequest=REQUEST_DISABLE;
+  }
+ else   if (intent.getAction().equals(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE)) {
+    mRequest=REQUEST_ENABLE_DISCOVERABLE;
     mTimeout=intent.getIntExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,BluetoothDiscoverableEnabler.DEFAULT_DISCOVERABLE_TIMEOUT);
     Log.d(TAG,"Setting Bluetooth Discoverable Timeout = " + mTimeout);
     if (mTimeout < 1 || mTimeout > MAX_DISCOVERABLE_TIMEOUT) {

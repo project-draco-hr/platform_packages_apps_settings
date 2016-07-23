@@ -1,19 +1,27 @@
 {
   final AlertController.AlertParams p=mAlertParams;
-  if (mEnableOnly) {
-    p.mMessage=getString(R.string.bluetooth_ask_enablement);
-  }
+switch (mRequest) {
+case RequestPermissionActivity.REQUEST_ENABLE:
+{
+      if (mTimeout < 0) {
+        p.mMessage=getString(R.string.bluetooth_ask_enablement);
+      }
+ else       if (mTimeout == BluetoothDiscoverableEnabler.DISCOVERABLE_TIMEOUT_NEVER) {
+        p.mMessage=getString(R.string.bluetooth_ask_enablement_and_lasting_discovery);
+      }
  else {
-    if (mTimeout == BluetoothDiscoverableEnabler.DISCOVERABLE_TIMEOUT_NEVER) {
-      p.mMessage=getString(R.string.bluetooth_ask_enablement_and_lasting_discovery);
+        p.mMessage=getString(R.string.bluetooth_ask_enablement_and_discovery,mTimeout);
+      }
     }
- else {
-      p.mMessage=getString(R.string.bluetooth_ask_enablement_and_discovery,mTimeout);
-    }
-  }
-  p.mPositiveButtonText=getString(R.string.allow);
-  p.mPositiveButtonListener=this;
-  p.mNegativeButtonText=getString(R.string.deny);
-  p.mNegativeButtonListener=this;
-  setupAlert();
+  break;
+case RequestPermissionActivity.REQUEST_DISABLE:
+{
+  p.mMessage=getString(R.string.bluetooth_ask_disablement);
+}
+break;
+}
+p.mPositiveButtonText=getString(R.string.allow);
+p.mPositiveButtonListener=this;
+p.mNegativeButtonText=getString(R.string.deny);
+setupAlert();
 }

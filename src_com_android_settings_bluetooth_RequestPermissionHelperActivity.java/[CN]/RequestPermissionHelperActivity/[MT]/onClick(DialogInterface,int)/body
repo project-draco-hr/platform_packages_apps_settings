@@ -1,30 +1,17 @@
 {
-  int returnCode;
-switch (which) {
-case BUTTON_POSITIVE:
-    int btState=0;
-  try {
-    int retryCount=30;
-    do {
-      btState=mLocalAdapter.getBluetoothState();
-      Thread.sleep(100);
+switch (mRequest) {
+case RequestPermissionActivity.REQUEST_ENABLE:
+case RequestPermissionActivity.REQUEST_ENABLE_DISCOVERABLE:
+{
+      mLocalAdapter.enable();
+      setResult(Activity.RESULT_OK);
     }
- while (btState == BluetoothAdapter.STATE_TURNING_OFF && --retryCount > 0);
-  }
- catch (  InterruptedException ignored) {
-  }
-if (btState == BluetoothAdapter.STATE_TURNING_ON || btState == BluetoothAdapter.STATE_ON || mLocalAdapter.enable()) {
-  returnCode=RequestPermissionActivity.RESULT_BT_STARTING_OR_STARTED;
-}
- else {
-  returnCode=RESULT_CANCELED;
+  break;
+case RequestPermissionActivity.REQUEST_DISABLE:
+{
+  mLocalAdapter.disable();
+  setResult(Activity.RESULT_OK);
 }
 break;
-case BUTTON_NEGATIVE:
-returnCode=RESULT_CANCELED;
-break;
-default :
-return;
 }
-setResult(returnCode);
 }

@@ -1,20 +1,38 @@
 {
-  if (requestCode != REQUEST_CODE_START_BT) {
-    Log.e(TAG,"Unexpected onActivityResult " + requestCode + ' '+ resultCode);
-    setResult(RESULT_CANCELED);
-    finish();
+  if (resultCode != Activity.RESULT_OK) {
+    cancelAndFinish();
     return;
   }
-  if (resultCode != RESULT_BT_STARTING_OR_STARTED) {
-    setResult(resultCode);
-    finish();
-    return;
-  }
-  mUserConfirmed=true;
-  if (mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_ON) {
+switch (mRequest) {
+case REQUEST_ENABLE:
+case REQUEST_ENABLE_DISCOVERABLE:
+{
+      if (mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_ON) {
+        proceedAndFinish();
+      }
+ else {
+        mReceiver=new StateChangeReceiver();
+        registerReceiver(mReceiver,new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+        createDialog();
+      }
+    }
+  break;
+case REQUEST_DISABLE:
+{
+  if (mLocalAdapter.getBluetoothState() == BluetoothAdapter.STATE_OFF) {
     proceedAndFinish();
   }
  else {
+    mReceiver=new StateChangeReceiver();
+    registerReceiver(mReceiver,new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
     createDialog();
   }
+}
+break;
+default :
+{
+cancelAndFinish();
+}
+break;
+}
 }

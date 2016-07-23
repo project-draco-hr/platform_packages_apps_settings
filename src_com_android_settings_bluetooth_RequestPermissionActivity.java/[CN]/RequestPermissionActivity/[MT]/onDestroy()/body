@@ -1,6 +1,7 @@
 {
   super.onDestroy();
-  if (mNeededToEnableBluetooth) {
+  if (mReceiver != null) {
     unregisterReceiver(mReceiver);
+    mReceiver=null;
   }
 }

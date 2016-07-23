@@ -1,0 +1,23 @@
+{
+  if (intent == null) {
+    return;
+  }
+  final int currentState=intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothDevice.ERROR);
+switch (mRequest) {
+case REQUEST_ENABLE:
+case REQUEST_ENABLE_DISCOVERABLE:
+{
+      if (currentState == BluetoothAdapter.STATE_ON) {
+        proceedAndFinish();
+      }
+    }
+  break;
+case REQUEST_DISABLE:
+{
+  if (currentState == BluetoothAdapter.STATE_OFF) {
+    proceedAndFinish();
+  }
+}
+break;
+}
+}

@@ -1,22 +1,35 @@
 {
-  AlertDialog.Builder builder=new AlertDialog.Builder(this);
-  if (mNeededToEnableBluetooth) {
-    builder.setMessage(getString(R.string.bluetooth_turning_on));
-    builder.setCancelable(false);
-  }
- else {
-    if (mTimeout == BluetoothDiscoverableEnabler.DISCOVERABLE_TIMEOUT_NEVER) {
-      builder.setMessage(getString(R.string.bluetooth_ask_lasting_discovery));
-    }
- else {
-      builder.setMessage(getString(R.string.bluetooth_ask_discovery,mTimeout));
-    }
-    builder.setPositiveButton(getString(R.string.allow),this);
-    builder.setNegativeButton(getString(R.string.deny),this);
-  }
-  mDialog=builder.create();
-  mDialog.show();
-  if (getResources().getBoolean(R.bool.auto_confirm_bluetooth_activation_dialog) == true) {
+  if (getResources().getBoolean(R.bool.auto_confirm_bluetooth_activation_dialog)) {
     onClick(null,DialogInterface.BUTTON_POSITIVE);
+    return;
   }
+  AlertDialog.Builder builder=new AlertDialog.Builder(this);
+  if (mReceiver != null) {
+switch (mRequest) {
+case REQUEST_ENABLE:
+case REQUEST_ENABLE_DISCOVERABLE:
+{
+        builder.setMessage(getString(R.string.bluetooth_turning_on));
+      }
+    break;
+default :
+{
+    builder.setMessage(getString(R.string.bluetooth_turning_off));
+  }
+break;
+}
+builder.setCancelable(false);
+}
+ else {
+if (mTimeout == BluetoothDiscoverableEnabler.DISCOVERABLE_TIMEOUT_NEVER) {
+builder.setMessage(getString(R.string.bluetooth_ask_lasting_discovery));
+}
+ else {
+builder.setMessage(getString(R.string.bluetooth_ask_discovery,mTimeout));
+}
+builder.setPositiveButton(getString(R.string.allow),this);
+builder.setNegativeButton(getString(R.string.deny),this);
+}
+mDialog=builder.create();
+mDialog.show();
 }

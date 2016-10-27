@@ -1,36 +1,65 @@
 {
   super.onCreate(savedInstanceState);
+  setResult(Activity.RESULT_CANCELED);
   if (parseIntent()) {
     finish();
     return;
   }
   int btState=mLocalAdapter.getState();
+  if (mRequest == REQUEST_DISABLE) {
+switch (btState) {
+case BluetoothAdapter.STATE_OFF:
+case BluetoothAdapter.STATE_TURNING_OFF:
+{
+        proceedAndFinish();
+      }
+    break;
+case BluetoothAdapter.STATE_ON:
+case BluetoothAdapter.STATE_TURNING_ON:
+{
+    Intent intent=new Intent(this,RequestPermissionHelperActivity.class);
+    intent.setAction(RequestPermissionHelperActivity.ACTION_INTERNAL_REQUEST_BT_OFF);
+    startActivityForResult(intent,0);
+  }
+break;
+default :
+{
+Log.e(TAG,"Unknown adapter state: " + btState);
+cancelAndFinish();
+}
+break;
+}
+}
+ else {
 switch (btState) {
 case BluetoothAdapter.STATE_OFF:
 case BluetoothAdapter.STATE_TURNING_OFF:
 case BluetoothAdapter.STATE_TURNING_ON:
-    registerReceiver(mReceiver,new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
-  Intent intent=new Intent();
-intent.setClass(this,RequestPermissionHelperActivity.class);
-if (mEnableOnly) {
+{
+Intent intent=new Intent(this,RequestPermissionHelperActivity.class);
 intent.setAction(RequestPermissionHelperActivity.ACTION_INTERNAL_REQUEST_BT_ON);
-}
- else {
-intent.setAction(RequestPermissionHelperActivity.ACTION_INTERNAL_REQUEST_BT_ON_AND_DISCOVERABLE);
+if (mRequest == REQUEST_ENABLE_DISCOVERABLE) {
 intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,mTimeout);
 }
-startActivityForResult(intent,REQUEST_CODE_START_BT);
-mNeededToEnableBluetooth=true;
+startActivityForResult(intent,0);
+}
 break;
 case BluetoothAdapter.STATE_ON:
-if (mEnableOnly) {
+{
+if (mRequest == REQUEST_ENABLE) {
 proceedAndFinish();
 }
  else {
 createDialog();
 }
+}
 break;
 default :
+{
 Log.e(TAG,"Unknown adapter state: " + btState);
+cancelAndFinish();
+}
+break;
+}
 }
 }
